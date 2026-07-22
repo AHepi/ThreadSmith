@@ -42,3 +42,20 @@ This tranche was authorized separately after the intake was accepted. It impleme
 | Publication | Accepted PC2 tree is committed to and fetched back from remote `main`; remote and local tree identities match. | 0 | Delivery gate |
 
 The next bounded task is `PC3 scope intake and semantic freeze`; it is not authorized by this plan entry. PC2 acceptance does not authorize compiler semantics, resolution, identities, runtime, builder, providers, user surfaces, or release work.
+
+## PC2 Standard reconciliation tranche
+
+This bounded corrective tranche was authorized after the recovered Lattice Standard 0.3 exposed incompatibilities in the accepted PC2 parser boundary. The Standard supersedes the earlier reconstructed PC2 source assumptions where they conflict.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Normative reconciliation | Preserve the recovered Standard exactly and classify every accepted-PC2 deviation by lifecycle phase. | 2 | Complete |
+| Parser correction | PC2 returns only an NFC JSON-shaped restricted-YAML tree, without source validation or defaults. | 2 | Complete |
+| Focused conformance | Standard syntax, information preservation, signed scalars, forbidden YAML, duplicates, collisions, and deterministic output pass through the public API. | 2 | Complete |
+| Regression qualification | Formatting, all-target checks, Clippy, Foundation, PC1, PC2, locked/offline, provenance, and documentation consistency pass. | 2 | Complete |
+| Read-only acceptance | Separate implementation and closure passes have no open P0/P1 finding. | 2 | Complete after repair cycle 1 |
+| Publication | Accepted reconciliation is committed and remote/local `main` tree identities match. | 0 | Delivery gate |
+
+The implementation allowlist is `crates/threadsmith-compiler/src/lib.rs`, its PC2 focused test, `conformance/pc2/parser/**`, `docs/standard/LATTICE_STANDARD_0.3.md`, `docs/pc2/**`, and additive state entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. Cargo manifests, the lockfile, schema/canonical crates, Foundation/PC1 conformance, identities, package resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain excluded.
+
+Only after this tranche is accepted and published may the next bounded task return to `PC3 scope reconciliation and semantic freeze`. This plan entry does not authorize PC3 implementation.

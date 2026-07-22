@@ -1,5 +1,6 @@
 {
-  "profile": "threadsmith-pc2-parser-fixtures-0.1",
+  "profile": "threadsmith-pc2-standard-aligned-parser-fixtures-0.2",
+  "standard": "docs/standard/LATTICE_STANDARD_0.3.md",
   "semantic_freeze": "docs/pc2/PARSER_SEMANTIC_FREEZE.md",
   "cases": [
     {
@@ -7,42 +8,49 @@
       "class": "valid",
       "source": "conformance/pc2/parser/valid/minimal_blueprint.yaml",
       "expected": "conformance/pc2/parser/valid/minimal_blueprint.expected.json",
-      "covers": ["required root keys", "optional list defaults"]
+      "covers": ["Standard root keys", "no default insertion"]
     },
     {
       "id": "valid_complete_root_keys",
       "class": "valid",
       "source": "conformance/pc2/parser/valid/complete_root_keys.yaml",
       "expected": "conformance/pc2/parser/valid/complete_root_keys.expected.json",
-      "covers": ["complete permitted root keys", "array ordering"]
+      "covers": ["all Standard root keys", "array ordering"]
     },
     {
       "id": "valid_empty_optional_lists",
       "class": "valid",
       "source": "conformance/pc2/parser/valid/empty_optional_lists.yaml",
       "expected": "conformance/pc2/parser/valid/empty_optional_lists.expected.json",
-      "covers": ["explicit empty optional lists", "missing optional list defaults"]
+      "covers": ["explicit empty lists preserved"]
     },
     {
       "id": "valid_unicode_nfc",
       "class": "valid",
       "source": "conformance/pc2/parser/valid/unicode_nfc.yaml",
       "expected": "conformance/pc2/parser/valid/unicode_nfc.expected.json",
-      "covers": ["NFC value normalization", "double-quoted scalar"]
+      "covers": ["NFC value normalization"]
     },
     {
-      "id": "invalid_unknown_root_key",
-      "class": "invalid",
-      "source": "conformance/pc2/parser/invalid/unknown_root_key.yaml",
-      "expected": "conformance/pc2/parser/invalid/unknown_root_key.expected.json",
-      "covers": ["unknown root key"]
+      "id": "valid_deferred_source_validation",
+      "class": "valid",
+      "source": "conformance/pc2/parser/valid/deferred_source_validation.yaml",
+      "expected": "conformance/pc2/parser/valid/deferred_source_validation.expected.json",
+      "covers": ["missing required fields preserved", "unknown keys preserved", "profile checks deferred", "defaults deferred"]
     },
     {
-      "id": "invalid_missing_required_key",
-      "class": "invalid",
-      "source": "conformance/pc2/parser/invalid/missing_required_key.yaml",
-      "expected": "conformance/pc2/parser/invalid/missing_required_key.expected.json",
-      "covers": ["missing required key"]
+      "id": "valid_literal_block_string",
+      "class": "valid",
+      "source": "conformance/pc2/parser/valid/literal_block_string.yaml",
+      "expected": "conformance/pc2/parser/valid/literal_block_string.expected.json",
+      "covers": ["literal block string", "line preservation"]
+    },
+    {
+      "id": "valid_scalar_resolution",
+      "class": "valid",
+      "source": "conformance/pc2/parser/valid/scalar_resolution.yaml",
+      "expected": "conformance/pc2/parser/valid/scalar_resolution.expected.json",
+      "covers": ["YAML 1.2 Core scalar resolution", "signed i64 bounds", "date-like strings"]
     },
     {
       "id": "invalid_duplicate_key",
@@ -56,7 +64,7 @@
       "class": "invalid",
       "source": "conformance/pc2/parser/invalid/nfc_collision.yaml",
       "expected": "conformance/pc2/parser/invalid/nfc_collision.expected.json",
-      "covers": ["distinct keys with one NFC form", "collision precedence"]
+      "covers": ["distinct keys with one NFC form"]
     },
     {
       "id": "invalid_forbidden_anchor",
@@ -77,21 +85,28 @@
       "class": "invalid",
       "source": "conformance/pc2/parser/invalid/invalid_float_scalar.yaml",
       "expected": "conformance/pc2/parser/invalid/invalid_float_scalar.expected.json",
-      "covers": ["invalid scalar category"]
+      "covers": ["forbidden float"]
     },
     {
-      "id": "invalid_extended_unit_kind",
+      "id": "invalid_folded_block_string",
       "class": "invalid",
-      "source": "conformance/pc2/parser/invalid/extended_unit_kind.yaml",
-      "expected": "conformance/pc2/parser/invalid/extended_unit_kind.expected.json",
-      "covers": ["Extended-only unit kind rejection"]
+      "source": "conformance/pc2/parser/invalid/folded_block_string.yaml",
+      "expected": "conformance/pc2/parser/invalid/folded_block_string.expected.json",
+      "covers": ["forbidden folded block string"]
     },
     {
-      "id": "invalid_illegal_defaults",
+      "id": "invalid_integer_out_of_range",
       "class": "invalid",
-      "source": "conformance/pc2/parser/invalid/illegal_defaults.yaml",
-      "expected": "conformance/pc2/parser/invalid/illegal_defaults.expected.json",
-      "covers": ["profile-owned default override"]
+      "source": "conformance/pc2/parser/invalid/integer_out_of_range.yaml",
+      "expected": "conformance/pc2/parser/invalid/integer_out_of_range.expected.json",
+      "covers": ["signed i64 overflow"]
+    },
+    {
+      "id": "invalid_non_string_key",
+      "class": "invalid",
+      "source": "conformance/pc2/parser/invalid/non_string_key.yaml",
+      "expected": "conformance/pc2/parser/invalid/non_string_key.expected.json",
+      "covers": ["non-string mapping key"]
     }
   ]
 }

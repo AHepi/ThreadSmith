@@ -35,6 +35,9 @@ fn valid_conformance_fixtures() {
         "complete_root_keys",
         "empty_optional_lists",
         "unicode_nfc",
+        "deferred_source_validation",
+        "literal_block_string",
+        "scalar_resolution",
     ] {
         assert_valid(name);
     }
@@ -43,59 +46,154 @@ fn valid_conformance_fixtures() {
 #[test]
 fn invalid_conformance_fixtures() {
     for name in [
-        "unknown_root_key",
-        "missing_required_key",
         "duplicate_key",
         "nfc_collision",
         "forbidden_anchor",
         "forbidden_tag",
         "invalid_float_scalar",
-        "extended_unit_kind",
-        "illegal_defaults",
+        "folded_block_string",
+        "integer_out_of_range",
+        "non_string_key",
     ] {
         assert_invalid(name);
     }
 }
 
 #[test]
-fn supported_scalars_and_array_order_are_deterministic() {
-    let source = br#"
-profile: lattice-core-0.1
-module: scalar_fixture
-version: "1.0.0"
-purpose: scalar projection
-imports: [yes, true, false, null, 0, -7, 18446744073709551615, "1.0"]
-resources: [{z: last, a: first}]
-"#;
-    let expected = json!({
-        "profile": "lattice-core-0.1",
-        "module": "scalar_fixture",
-        "version": "1.0.0",
-        "purpose": "scalar projection",
-        "imports": ["yes", true, false, null, 0, -7, 18446744073709551615_u64, "1.0"],
-        "resources": [{"a": "first", "z": "last"}],
-        "contracts": [],
-        "units": [],
-        "links": [],
-        "policies": [],
-        "scenarios": []
-    });
-    for _ in 0..3 {
-        assert_eq!(parse_blueprint_source(source).unwrap(), expected);
+fn absent_and_explicit_empty_fields_remain_distinguishable() {
+    assert_eq!(parse_blueprint_source(b"{}\n").unwrap(), json!({}));
+    assert_eq!(
+        parse_blueprint_source(b"imports: []\nunits: []\n").unwrap(),
+        json!({"imports": [], "units": []})
+    );
+}
+
+#[test]
+fn source_validation_is_deferred_to_pc3() {
+    let source =
+        b"module: x\nunknown: retained\ndefaults: {policy: allow}\nunits: [{kind: store}]\n";
+    assert_eq!(
+        parse_blueprint_source(source).unwrap(),
+        json!({
+            "module": "x",
+            "unknown": "retained",
+            "defaults": {"policy": "allow"},
+            "units": [{"kind": "store"}]
+        })
+    );
+    assert_eq!(
+        parse_blueprint_source(b"[not, a, root, mapping]\n").unwrap(),
+        json!(["not", "a", "root", "mapping"])
+    );
+}
+
+#[test]
+fn yaml_core_scalars_are_json_shaped_and_i64_bounded() {
+    let source = b"values: [null, Null, NULL, ~, true, True, FALSE, 00, -0, +17, 0o17, 0x1f, yes, 1_000, '1.0']\nempty:\n";
+    assert_eq!(
+        parse_blueprint_source(source).unwrap(),
+        json!({
+            "values": [null, null, null, null, true, true, false, 0, 0, 17, 15, 31, "yes", "1_000", "1.0"],
+            "empty": null
+        })
+    );
+
+    for value in [
+        "9223372036854775808",
+        "-9223372036854775809",
+        "0x8000000000000000",
+    ] {
+        let source = format!("value: {value}\n");
+        assert_eq!(
+            parse_blueprint_source(source.as_bytes()).unwrap_err().code,
+            "SOURCE_INVALID_SCALAR",
+            "{value}"
+        );
     }
 }
 
 #[test]
-fn accepted_yaml_forms_project_identically() {
-    let lf = b"profile: lattice-core-0.1\nmodule: forms\nversion: '1.0.0'\npurpose: comments are discarded # comment\nunits: []\n";
-    let crlf = b"profile: lattice-core-0.1\r\nmodule: forms\r\nversion: '1.0.0'\r\npurpose: comments are discarded # comment\r\nunits: []\r\n";
+fn literal_strings_markers_and_yaml_12_directive_are_accepted() {
+    let bare = b"purpose: |\n  first\n  second\n";
+    let marked = b"---\npurpose: |\n  first\n  second\n...\n";
+    let directed = b"%YAML 1.2 # standard version\n---\npurpose: |\n  first\n  second\n...\n";
+    assert_eq!(parse_blueprint_source(bare), parse_blueprint_source(marked));
+    assert_eq!(
+        parse_blueprint_source(bare),
+        parse_blueprint_source(directed)
+    );
+}
+
+#[test]
+fn explicit_string_keys_are_accepted_but_collection_keys_are_not() {
+    assert_eq!(
+        parse_blueprint_source(b"? explicit\n: value\n").unwrap(),
+        json!({"explicit": "value"})
+    );
+    assert_eq!(
+        parse_blueprint_source(b"? [collection]\n: value\n")
+            .unwrap_err()
+            .code,
+        "SOURCE_NON_STRING_KEY"
+    );
+}
+
+#[test]
+fn yaml_core_tags_are_honored_and_custom_or_wrong_kind_tags_are_rejected() {
+    assert_eq!(
+        parse_blueprint_source(
+            b"string: !!str 123\ninteger: !!int '0x10'\nboolean: !!bool 'TRUE'\nnothing: !!null ''\nsequence: !!seq [one]\nmapping: !!map {key: value}\n? !!str true\n: string key\n"
+        )
+        .unwrap(),
+        json!({
+            "string": "123",
+            "integer": 16,
+            "boolean": true,
+            "nothing": null,
+            "sequence": ["one"],
+            "mapping": {"key": "value"},
+            "true": "string key"
+        })
+    );
+
+    for source in [
+        b"value: !custom text\n".as_slice(),
+        b"value: !!float 1.0\n".as_slice(),
+        b"value: !!binary bytes\n".as_slice(),
+        b"value: !!map scalar\n".as_slice(),
+        b"value: !!seq {}\n".as_slice(),
+    ] {
+        assert!(parse_blueprint_source(source).is_err());
+    }
+}
+
+#[test]
+fn arrays_preserve_order_and_objects_emit_deterministically() {
+    let source = b"z: last\na: first\nvalues: [third, first, second]\n";
+    let value = parse_blueprint_source(source).unwrap();
+    assert_eq!(value["values"], json!(["third", "first", "second"]));
+    for _ in 0..3 {
+        assert_eq!(parse_blueprint_source(source).unwrap(), value);
+    }
+    assert_eq!(
+        serde_json::to_string(&value).unwrap(),
+        r#"{"a":"first","values":["third","first","second"],"z":"last"}"#
+    );
+}
+
+#[test]
+fn accepted_line_endings_project_identically() {
+    let lf = b"purpose: |\n  line one\n  line two\n";
+    let crlf = b"purpose: |\r\n  line one\r\n  line two\r\n";
+    let cr = b"purpose: |\r  line one\r  line two\r";
     assert_eq!(parse_blueprint_source(lf), parse_blueprint_source(crlf));
+    assert_eq!(parse_blueprint_source(lf), parse_blueprint_source(cr));
 }
 
 #[test]
 fn nested_duplicate_and_collision_checks_fail_closed() {
-    let duplicate = b"profile: lattice-core-0.1\nmodule: nested\nversion: x\npurpose: x\nresources: [{name: one, name: two}]\n";
-    let collision = "profile: lattice-core-0.1\nmodule: nested\nversion: x\npurpose: x\nresources: [{Café: one, Cafe\u{301}: two}]\n";
+    let duplicate = b"resources: [{name: one, name: two}]\n";
+    let collision = "resources: [{Café: one, Cafe\u{301}: two}]\n";
     assert_eq!(
         parse_blueprint_source(duplicate).unwrap_err().code,
         "SOURCE_DUPLICATE_KEY"
@@ -111,13 +209,11 @@ fn nested_duplicate_and_collision_checks_fail_closed() {
 #[test]
 fn forbidden_yaml_surface_is_rejected() {
     let cases: &[&[u8]] = &[
-        b"---\nprofile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n...\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: |\n  block\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\nresources: [*missing]\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n? resources\n: []\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n? [resources]\n: []\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n<<: {}\n",
+        b"purpose: >\n  folded\n",
+        b"resources: [*missing]\n",
+        b"<<: {}\n",
+        b"purpose: !text tagged\n",
+        b"purpose: &anchor anchored\n",
     ];
     for source in cases {
         assert_eq!(
@@ -128,72 +224,38 @@ fn forbidden_yaml_surface_is_rejected() {
 }
 
 #[test]
-fn invalid_source_and_scalar_categories_are_rejected() {
-    let invalid_utf8 = b"profile: \xff";
+fn invalid_source_and_float_categories_are_rejected() {
     assert_eq!(
-        parse_blueprint_source(invalid_utf8).unwrap_err().code,
+        parse_blueprint_source(b"value: \xff").unwrap_err().code,
         "SOURCE_INVALID_UTF8"
     );
 
-    for version in ["01", "+1", "0x10", "0o10", "1_000", "1e3", ".inf", "-0"] {
-        let source =
-            format!("profile: lattice-core-0.1\nmodule: x\nversion: {version}\npurpose: x\n");
+    for value in ["1.0", "1e3", ".inf", "-.Inf", ".NAN"] {
+        let source = format!("value: {value}\n");
         assert_eq!(
             parse_blueprint_source(source.as_bytes()).unwrap_err().code,
             "SOURCE_INVALID_SCALAR",
-            "{version}"
+            "{value}"
         );
     }
-
-    let out_of_range_key = b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\nresources: [{18446744073709551616: value}]\n";
-    assert_eq!(
-        parse_blueprint_source(out_of_range_key).unwrap_err().code,
-        "SOURCE_INVALID_SCALAR"
-    );
-}
-
-#[test]
-fn parser_performs_no_deeper_compiler_validation() {
-    let source = b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\nunits: [{kind: program, unresolved: anything}]\nscenarios: []\n";
-    assert!(parse_blueprint_source(source).is_ok());
 }
 
 #[test]
 fn forbidden_yaml_has_global_precedence_over_scalar_validation() {
-    let source = b"profile: lattice-core-0.1\nmodule: x\nversion: 1.0\npurpose: &forbidden later\n";
+    let source = b"version: 1.0\npurpose: &forbidden later\n";
     let diagnostic = parse_blueprint_source(source).unwrap_err();
     assert_eq!(diagnostic.code, "SOURCE_FORBIDDEN_YAML");
     assert_eq!(diagnostic.path, "/purpose");
-    assert_eq!((diagnostic.line, diagnostic.column), (Some(4), Some(10)));
+    assert_eq!((diagnostic.line, diagnostic.column), (Some(2), Some(10)));
 }
 
 #[test]
-fn root_envelope_validation_is_shallow_and_deterministic() {
-    let cases: &[(&[u8], &str, &str)] = &[
-        (b"[]\n", "SOURCE_ROOT_TYPE", ""),
-        (
-            b"profile: wrong\nmodule: x\nversion: x\npurpose: x\n",
-            "SOURCE_INVALID_ROOT_VALUE",
-            "/profile",
-        ),
-        (
-            b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\nimports: null\n",
-            "SOURCE_INVALID_ROOT_VALUE",
-            "/imports",
-        ),
-    ];
-    for (source, code, path) in cases {
-        let diagnostic = parse_blueprint_source(source).unwrap_err();
-        assert_eq!(diagnostic.code, *code);
-        assert_eq!(diagnostic.path, *path);
-    }
-}
-
-#[test]
-fn directives_multiple_documents_and_forbidden_characters_fail_closed() {
+fn multiple_documents_wrong_directives_and_forbidden_characters_fail_closed() {
     let forbidden_yaml: &[&[u8]] = &[
-        b"%YAML 1.2\n---\nprofile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n",
-        b"profile: lattice-core-0.1\nmodule: x\nversion: x\npurpose: x\n---\nprofile: lattice-core-0.1\nmodule: y\nversion: y\npurpose: y\n",
+        b"value: one\n---\nvalue: two\n",
+        b"%YAML 1.1\n---\nvalue: one\n",
+        b"%TAG !e! tag:example.com,2026:\n---\nvalue: one\n",
+        b"%YAML 1.2\n%YAML 1.2\n---\nvalue: one\n",
     ];
     for source in forbidden_yaml {
         assert_eq!(
@@ -203,9 +265,8 @@ fn directives_multiple_documents_and_forbidden_characters_fail_closed() {
     }
 
     for source in [
-        b"\xef\xbb\xbfprofile: lattice-core-0.1\n".as_slice(),
-        b"profile: lattice-core-0.1\rmodule: x\n".as_slice(),
-        b"profile: lattice-core-0.1\0\n".as_slice(),
+        b"\xef\xbb\xbfvalue: one\n".as_slice(),
+        b"value: one\0\n".as_slice(),
     ] {
         assert_eq!(
             parse_blueprint_source(source).unwrap_err().code,

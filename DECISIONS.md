@@ -21,6 +21,8 @@ Document status: reconstructed on 2026-07-22 from the supplied recovery evidence
 
 These decisions are new PC2 preparation, not reconstructed Foundation/PC1 history.
 
+The later `PC2-R-*` reconciliation decisions supersede entries in this section and the implementation section wherever the recovered Standard proves a conflict. The original entries remain visible as historical provenance rather than active semantics.
+
 | Decision | Resolution | Boundary |
 |---|---|---|
 | PC2-I-001 | Select `saphyr-parser =0.0.11` with default features disabled and consume only its low-level event API. | The future `threadsmith-compiler` owns projection and validation. No dependency is added during intake. |
@@ -45,3 +47,16 @@ These decisions are new PC2 preparation, not reconstructed Foundation/PC1 histor
 | PC2-P-005 | Inject only the seven absent optional root lists and perform only the frozen root-envelope and portable unit-kind gates. | Scenario sufficiency, wiring, packages, contracts, policies, routes, and other compiler semantics remain out of scope. |
 | PC2-P-006 | Commit the exact `saphyr-parser =0.0.11` pin with default features disabled and the resolved Cargo lock. | The resolved graph matches intake; any version, feature, source, script, or licence change reopens dependency review. |
 | PC2-P-007 | Do not create a PC2 tag. | The existing tag names the reconstructed Foundation/PC1 provenance anchor; PC2 is a bounded capability acceptance, not a release or replacement baseline policy. |
+
+## PC2 Standard reconciliation decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC2-R-001 | Treat the recovered Lattice Standard 0.3 as controlling and preserve its supplied bytes under `docs/standard/`. | Earlier PC2 source decisions are superseded only where the Standard proves a conflict; Foundation/PC1 evidence remains historical and unchanged. |
+| PC2-R-002 | Restrict PC2 ownership to `Read`/`Parse` projection and remove root, declaration, profile, and default behavior. | PC3 owns `Source validate`; the later `Default` phase owns insertion. PC2 success is not Blueprint acceptance. |
+| PC2-R-003 | Preserve absent object members exactly and retain explicitly supplied empty lists. | The `serde_json::Value` boundary remains sufficient once default injection is removed; no enriched source representation is needed for the frozen PC3 input. |
+| PC2-R-004 | Use YAML 1.2 Core plain-scalar resolution, reject floats, and require resolved integers to fit signed `i64`. | This implements the Standard's JSON-shaped scalar categories without retaining the former decimal-only/positive-`u64` dialect. |
+| PC2-R-005 | Accept literal block strings, explicit string keys, matching YAML core JSON-category tags, one marked document, and an optional YAML 1.2 directive. | Folded strings, multiple documents, custom/tag directives, custom or mismatched tags, anchors, aliases, merge keys, and non-string keys remain parser-level errors. |
+| PC2-R-006 | Keep deterministic parser diagnostics but retire root/profile/default codes from PC2. | Later phases may use the Standard's stable compiler codes; PC2 exposes only parser-boundary codes. |
+| PC2-R-007 | Keep `saphyr-parser =0.0.11` and the accepted lock graph unchanged. | No dependency, licence, native, FFI, offline, or reproducibility policy is reopened. |
+| PC2-R-008 | Supersede incompatible fixtures instead of preserving false acceptance evidence as active conformance. | Historical PC2 ledgers and reports remain unchanged and continue to describe their original accepted trees. |
