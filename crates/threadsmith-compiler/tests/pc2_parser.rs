@@ -38,6 +38,7 @@ fn valid_conformance_fixtures() {
         "deferred_source_validation",
         "literal_block_string",
         "scalar_resolution",
+        "escaped_string_characters",
     ] {
         assert_valid(name);
     }
@@ -188,6 +189,39 @@ fn accepted_line_endings_project_identically() {
     let cr = b"purpose: |\r  line one\r  line two\r";
     assert_eq!(parse_blueprint_source(lf), parse_blueprint_source(crlf));
     assert_eq!(parse_blueprint_source(lf), parse_blueprint_source(cr));
+}
+
+#[test]
+fn yaml_escaped_strings_and_raw_nel_remain_json_shaped() {
+    let escaped = b"values: [\"\\0\", \"\\u001f\", \"\\x7f\", \"\\N\", \"\\_\"]\n";
+    assert_eq!(
+        parse_blueprint_source(escaped).unwrap(),
+        json!({"values": ["\0", "\u{001f}", "\u{007f}", "\u{0085}", "\u{00a0}"]})
+    );
+
+    let raw_nel = "quoted: \"before\u{0085}after\"\nplain: before\u{0085}after\n";
+    assert_eq!(
+        parse_blueprint_source(raw_nel.as_bytes()).unwrap(),
+        json!({"quoted": "before\u{0085}after", "plain": "before\u{0085}after"})
+    );
+
+    let raw_json_compatible = "values: [\"\u{007f}\", \"\u{0080}\", '\u{009f}']\n";
+    assert_eq!(
+        parse_blueprint_source(raw_json_compatible.as_bytes()).unwrap(),
+        json!({"values": ["\u{007f}", "\u{0080}", "\u{009f}"]})
+    );
+
+    for source in [
+        "value: before\u{007f}after\n",
+        "value: before\u{0080}after\n",
+        "value: |\n  before\u{009f}after\n",
+        "# before\u{0081}after\nvalue: okay\n",
+    ] {
+        assert_eq!(
+            parse_blueprint_source(source.as_bytes()).unwrap_err().code,
+            "SOURCE_FORBIDDEN_YAML"
+        );
+    }
 }
 
 #[test]

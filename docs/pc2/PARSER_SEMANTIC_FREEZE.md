@@ -35,7 +35,7 @@ The function name is retained for API continuity. A successful return is not a v
 
 - Input is UTF-8 without a BOM.
 - LF, CRLF, and CR line endings are accepted and normalized to LF before YAML parsing.
-- NUL and disallowed control characters are rejected.
+- Raw C0 characters outside YAML 1.2's permitted input character set are rejected. Non-C0 characters remain permitted inside quoted scalars, including NEL (`U+0085`) as a non-break character.
 - Exactly one YAML document is accepted.
 - A bare document or explicit `---` and `...` markers are accepted.
 - An optional `%YAML 1.2` directive is accepted. Other version directives, repeated YAML directives, and tag directives are rejected.
@@ -60,6 +60,8 @@ Without an explicit YAML core tag, quoted and literal scalars are strings. Plain
 | Any other plain scalar | String |
 
 Integer spelling is presentation only. `-0`, leading-zero decimal forms, a leading `+`, octal, and hexadecimal forms resolve to one signed integer value. Values outside `-9223372036854775808..=9223372036854775807` are rejected. Date- and timestamp-looking plain scalars remain strings because this profile does not resolve a timestamp type.
+
+Valid YAML 1.2 escapes in double-quoted strings are decoded and preserved as JSON string content, including escaped C0, DEL, C1, NEL, and non-breaking-space values. The raw source character restrictions do not become a second decoded-value restriction.
 
 ## Unicode, keys, and ordering
 
@@ -99,7 +101,7 @@ Parser-level precedence is:
 |---|---|
 | `SOURCE_INVALID_UTF8` | Input is not permitted UTF-8 source. |
 | `SOURCE_FORBIDDEN_YAML` | Syntax or a YAML feature lies outside the restricted profile. |
-| `SOURCE_INVALID_SCALAR` | A float, out-of-range integer, or forbidden decoded scalar was encountered. |
+| `SOURCE_INVALID_SCALAR` | A float or out-of-range integer was encountered. |
 | `SOURCE_NON_STRING_KEY` | A mapping key resolves to a non-string JSON category. |
 | `SOURCE_DUPLICATE_KEY` | One decoded string key occurs twice in a mapping. |
 | `SOURCE_NFC_COLLISION` | Distinct decoded keys normalize to the same NFC key. |

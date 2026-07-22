@@ -222,7 +222,8 @@ fn audit_yaml_features(source: &str) -> Result<(), SourceDiagnostic> {
     cursor.expect_document_start()?;
     cursor.audit_node(&Path::root())?;
     cursor.expect_document_end()?;
-    cursor.expect_stream_end()
+    cursor.expect_stream_end()?;
+    cursor.reject_unquoted_non_c0_source_characters()
 }
 
 #[derive(Clone, Debug)]
@@ -267,6 +268,7 @@ impl Path {
 struct Cursor<'source> {
     parser: Parser<'source, saphyr_parser::StrInput<'source>>,
     source: &'source str,
+    unquoted_non_c0_source_characters: Vec<Marker>,
 }
 
 impl<'source> Cursor<'source> {
@@ -274,7 +276,28 @@ impl<'source> Cursor<'source> {
         Self {
             parser: Parser::new_from_str(source),
             source,
+            unquoted_non_c0_source_characters: non_c0_source_character_markers(source),
         }
+    }
+
+    fn permit_quoted_source_characters(&mut self, style: ScalarStyle, span: Span) {
+        if matches!(style, ScalarStyle::SingleQuoted | ScalarStyle::DoubleQuoted) {
+            self.unquoted_non_c0_source_characters.retain(|marker| {
+                marker.index() < span.start.index() || marker.index() >= span.end.index()
+            });
+        }
+    }
+
+    fn reject_unquoted_non_c0_source_characters(&self) -> Result<(), SourceDiagnostic> {
+        self.unquoted_non_c0_source_characters
+            .first()
+            .map_or(Ok(()), |marker| {
+                Err(diagnostic_at(
+                    "SOURCE_FORBIDDEN_YAML",
+                    &Path::root(),
+                    *marker,
+                ))
+            })
     }
 
     fn next(&mut self, path: &Path) -> Result<(Event<'source>, Span), SourceDiagnostic> {
@@ -352,6 +375,7 @@ impl<'source> Cursor<'source> {
         match event {
             Event::Alias(_) => Err(diagnostic_at("SOURCE_FORBIDDEN_YAML", path, span.start)),
             Event::Scalar(_, style, anchor, tag) => {
+                self.permit_quoted_source_characters(style, span);
                 let marker = scalar_error_marker(
                     self.source,
                     span.start,
@@ -401,6 +425,7 @@ impl<'source> Cursor<'source> {
 
             let value_path = match event {
                 Event::Scalar(value, style, anchor, tag) => {
+                    self.permit_quoted_source_characters(style, span);
                     let marker = scalar_error_marker(
                         self.source,
                         span.start,
@@ -565,7 +590,7 @@ fn validate_source_bytes(source: &[u8]) -> Result<Cow<'_, str>, SourceDiagnostic
     for (index, character) in source.char_indices() {
         let forbidden = (index == 0 && character == '\u{feff}')
             || character == '\0'
-            || matches!(character, '\u{0001}'..='\u{0008}' | '\u{000b}' | '\u{000c}' | '\u{000e}'..='\u{001f}' | '\u{007f}'..='\u{009f}');
+            || matches!(character, '\u{0001}'..='\u{0008}' | '\u{000b}' | '\u{000c}' | '\u{000e}'..='\u{001f}');
         if forbidden {
             return Err(SourceDiagnostic {
                 code: "SOURCE_INVALID_UTF8",
@@ -621,6 +646,25 @@ fn byte_position(source: &[u8], offset: usize) -> (usize, usize) {
     (line, column)
 }
 
+fn non_c0_source_character_markers(source: &str) -> Vec<Marker> {
+    let mut markers = Vec::new();
+    let mut line = 1;
+    let mut column = 0;
+    for (index, character) in source.chars().enumerate() {
+        if matches!(character, '\u{007f}'..='\u{0084}' | '\u{0086}'..='\u{009f}' | '\u{fffe}' | '\u{ffff}')
+        {
+            markers.push(Marker::new(index, line, column));
+        }
+        if character == '\n' {
+            line += 1;
+            column = 0;
+        } else {
+            column += 1;
+        }
+    }
+    markers
+}
+
 fn reject_scalar_surface(
     style: ScalarStyle,
     anchor: usize,
@@ -649,9 +693,6 @@ fn parse_scalar(
     path: &Path,
     marker: Marker,
 ) -> Result<Node, SourceDiagnostic> {
-    if has_forbidden_decoded_character(source) {
-        return Err(diagnostic_at("SOURCE_INVALID_SCALAR", path, marker));
-    }
     match classify_scalar(source, style, tag) {
         Ok(PlainScalar::Null) => Ok(Node::Null),
         Ok(PlainScalar::Bool(value)) => Ok(Node::Bool(value)),
@@ -668,9 +709,6 @@ fn parse_key_scalar(
     path: &Path,
     marker: Marker,
 ) -> Result<String, SourceDiagnostic> {
-    if has_forbidden_decoded_character(source) {
-        return Err(diagnostic_at("SOURCE_INVALID_SCALAR", path, marker));
-    }
     match classify_scalar(source, style, tag) {
         Ok(PlainScalar::String) => Ok(source.to_owned()),
         Ok(_) => Err(diagnostic_at("SOURCE_NON_STRING_KEY", path, marker)),
@@ -775,13 +813,6 @@ fn is_core_float(value: &str) -> bool {
         !mantissa.is_empty() && mantissa.bytes().all(|byte| byte.is_ascii_digit())
     };
     mantissa_is_valid && (mantissa.contains('.') || exponent.is_some())
-}
-
-fn has_forbidden_decoded_character(value: &str) -> bool {
-    value.chars().any(|character| {
-        character == '\0'
-            || matches!(character, '\u{0001}'..='\u{0008}' | '\u{000b}' | '\u{000c}' | '\u{000e}'..='\u{001f}' | '\u{007f}'..='\u{009f}')
-    })
 }
 
 fn node_to_json(node: Node) -> Value {
