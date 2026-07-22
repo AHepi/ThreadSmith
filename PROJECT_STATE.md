@@ -19,6 +19,15 @@ State record status: reconstructed. Updated 2026-07-22.
 | Reconstructed files | 15 |
 | Missing or unresolved evidence categories | 9 |
 | Current provenance name | `threadsmith-foundation-pc1-reconstructed-0.1` |
-| Next bounded task | PC2 parser-dependency intake and semantic freeze |
+| PC2 parser intake started | true |
+| PC2 parser semantics frozen | true |
+| PC2 implementation started | false |
+| PC2 accepted | false |
+| Selected parser path | `saphyr-parser =0.0.11`, event API, dependency not yet added |
+| Builder authorized | false |
+| Runtime authorized | false |
+| Next bounded task | PC2 parser implementation against the frozen intake and fixtures |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
+
+The PC2 intake adds documentation and conformance fixtures only. Foundation/PC1 crates, semantics, manifests, lockfile, identities, canonical-byte rules, and authority boundaries remain unchanged. The parser will be owned by a future `threadsmith-compiler`; `threadsmith-schema` remains limited to schemas and data structures.
