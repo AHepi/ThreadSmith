@@ -1,0 +1,310 @@
+{
+  "profile": "threadsmith-pc5-blueprint-digest-fixtures-0.1",
+  "standard": "docs/standard/LATTICE_STANDARD_0.3.md",
+  "default_erratum": "docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md",
+  "canonical_json_erratum": "docs/standard/LATTICE_STANDARD_0.3_CANONICAL_JSON_ERRATUM.md",
+  "scope": "docs/pc5/PC5_SCOPE_RECONCILIATION.md",
+  "semantic_freeze": "docs/pc5/PC5_SEMANTIC_FREEZE.md",
+  "input_boundary": "PC4 DefaultedSource",
+  "output_boundary": "non-authoritative PC5 DigestedSource",
+  "canonical_json_vectors": [
+    {
+      "id": "empty_object",
+      "input": {},
+      "canonical_utf8_hex": "7b7d",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "covers": ["empty object", "no whitespace", "no trailing newline"]
+    },
+    {
+      "id": "empty_array",
+      "input": [],
+      "canonical_utf8_hex": "5b5d",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "covers": ["empty array", "no whitespace", "no trailing newline"]
+    },
+    {
+      "id": "closed_string_escapes",
+      "input": "\"\\\b\t\n\f\r\u0000\u0001\u000b\u001f/",
+      "canonical_utf8_hex": "225c225c5c5c625c745c6e5c665c725c75303030305c75303030315c75303030625c75303031662f22",
+      "sha256": "ed49d5e5247bc6c5fda43ebdb69c1344063aa96280daaccff2ae193ab24bb24c",
+      "covers": [
+        "quotation mark",
+        "reverse solidus",
+        "backspace short escape",
+        "tab short escape",
+        "line feed short escape",
+        "form feed short escape",
+        "carriage return short escape",
+        "NUL lowercase unicode escape",
+        "other C0 lowercase unicode escapes",
+        "solidus direct"
+      ]
+    },
+    {
+      "id": "direct_unicode_scalars",
+      "input": "\u007f\u0085\u00a0é漢😀\u2028\u2029",
+      "canonical_utf8_hex": "227fc285c2a0c3a9e6bca2f09f9880e280a8e280a922",
+      "sha256": "1bdc8861651e036db59fd97180cdab5527e4a5e11e28d58376326739a71b58bd",
+      "covers": [
+        "DEL direct",
+        "U+0085 direct",
+        "non-breaking space direct",
+        "non-ASCII BMP direct",
+        "supplementary scalar direct",
+        "U+2028 direct",
+        "U+2029 direct",
+        "no surrogate-pair escape"
+      ]
+    },
+    {
+      "id": "nfc_string",
+      "input": "Cafe\u0301",
+      "canonical_utf8_hex": "22436166c3a922",
+      "sha256": "e5e78ae5b702f7fbf134a768c5324df629488749e33950e746131273be7e0e9e",
+      "covers": ["NFC normalization before encoding"]
+    },
+    {
+      "id": "utf8_object_key_order",
+      "input": {"😀": 6, "Ā": 5, "é": 4, "z": 3, "aa": 2, "a": 1},
+      "canonical_utf8_hex": "7b2261223a312c226161223a322c227a223a332c22c3a9223a342c22c480223a352c22f09f9880223a367d",
+      "sha256": "6300101670c42de37976da534d74813de9f9a3659fa1050b1710a4565bb69c79",
+      "covers": ["UTF-8 byte ordering", "proper-prefix ordering", "key comparison before escaping"]
+    },
+    {
+      "id": "signed_i64_boundaries",
+      "input": [0, 1, -1, -9223372036854775808, 9223372036854775807],
+      "canonical_utf8_hex": "5b302c312c2d312c2d393232333337323033363835343737353830382c393232333337323033363835343737353830375d",
+      "sha256": "6eefcead3fcbba398d618ca2498d4a9829314d0be1691c0e47b6097042a5f014",
+      "covers": ["zero", "positive", "negative", "i64 minimum", "i64 maximum", "minimal base ten"]
+    },
+    {
+      "id": "booleans_and_null",
+      "input": [true, false, null],
+      "canonical_utf8_hex": "5b747275652c66616c73652c6e756c6c5d",
+      "sha256": "4d0f18de2133118249c26acc481838d4f6bb6bc1de882d99abbd19ae9397e8df",
+      "covers": ["true", "false", "null"]
+    }
+  ],
+  "source_equivalence_groups": [
+    {
+      "id": "presentation_and_default_equivalence",
+      "expected_defaulted_value": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "digest_example",
+        "version": "1.0.0",
+        "purpose": "Café digest",
+        "imports": [],
+        "inputs": [],
+        "contracts": [],
+        "resources": [],
+        "units": [
+          {
+            "unit": "writer",
+            "kind": "model",
+            "mode": "stateless",
+            "repair_attempts": 0,
+            "fallback": false
+          }
+        ],
+        "links": [
+          {
+            "link": "route",
+            "mode": "data",
+            "delivery": "multicast",
+            "when": {"all": []}
+          }
+        ],
+        "policies": [],
+        "exports": [],
+        "scenarios": []
+      },
+      "canonical_utf8_hex": "7b22636f6e747261637473223a5b5d2c226578706f727473223a5b5d2c22696d706f727473223a5b5d2c22696e70757473223a5b5d2c226c617474696365223a22302e33222c226c696e6b73223a5b7b2264656c6976657279223a226d756c746963617374222c226c696e6b223a22726f757465222c226d6f6465223a2264617461222c227768656e223a7b22616c6c223a5b5d7d7d5d2c226d6f64756c65223a226469676573745f6578616d706c65222c22706f6c6963696573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22707572706f7365223a22436166c3a920646967657374222c227265736f7572636573223a5b5d2c227363656e6172696f73223a5b5d2c22756e697473223a5b7b2266616c6c6261636b223a66616c73652c226b696e64223a226d6f64656c222c226d6f6465223a2273746174656c657373222c227265706169725f617474656d707473223a302c22756e6974223a22777269746572227d5d2c2276657273696f6e223a22312e302e30227d",
+      "sha256": "f622926e32cb82c37ba874e198c4a6d8362df9e9d9212decdac0c84f0de2ab8d",
+      "blueprint_digest": "lattice:blueprint:sha256:f622926e32cb82c37ba874e198c4a6d8362df9e9d9212decdac0c84f0de2ab8d",
+      "cases": [
+        {
+          "id": "omitted_root_and_nested_defaults",
+          "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+          "covers": ["omitted optional root lists", "omitted unit defaults", "omitted link defaults"]
+        },
+        {
+          "id": "explicit_equal_defaults",
+          "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nimports: []\ninputs: []\ncontracts: []\nresources: []\nunits:\n  - unit: writer\n    kind: model\n    mode: stateless\n    repair_attempts: 0\n    fallback: false\nlinks:\n  - link: route\n    mode: data\n    delivery: multicast\n    when:\n      all: []\npolicies: []\nexports: []\nscenarios: []\n",
+          "covers": ["explicit empty root lists", "explicit equal defaults"]
+        },
+        {
+          "id": "different_yaml_key_order",
+          "source_yaml": "links:\n  - link: route\nunits:\n  - kind: model\n    unit: writer\npurpose: \"Café digest\"\nversion: \"1.0.0\"\nmodule: digest_example\nprofile: lattice-core-0.1\nlattice: \"0.3\"\n",
+          "covers": ["root key order", "nested object key order"]
+        },
+        {
+          "id": "different_quoting_styles",
+          "source_yaml": "lattice: '0.3'\nprofile: \"lattice-core-0.1\"\nmodule: digest_example\nversion: '1.0.0'\npurpose: 'Café digest'\nunits:\n  - unit: 'writer'\n    kind: \"model\"\nlinks:\n  - link: 'route'\n",
+          "covers": ["single quoted", "double quoted", "plain string"]
+        },
+        {
+          "id": "nfc_equivalent_source_string",
+          "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Cafe\u0301 digest\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+          "covers": ["parser NFC normalization"]
+        }
+      ]
+    }
+  ],
+  "digest_distinction_cases": [
+    {
+      "id": "changed_module",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_other\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+      "sha256": "f6dfc5adaab516446a86147805d708934ea4b6bdc0b788f3a82e0c9dbac4d15d",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "changed_version",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.1\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+      "sha256": "2d8a2b55bfa168ffea0b558c5c77ba1506cbed2dee99ee12e559fa64cc6dff3b",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "changed_purpose",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest changed\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+      "sha256": "6d6201bce58880fc23f1f9fd46b086f21df34851121cbd62575672ab65c59a6f",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "changed_explicit_nondefault",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\n    fallback: true\nlinks:\n  - link: route\n",
+      "sha256": "f7cac060f93632e385b8f5d288d8c3572c1646046ed4b7fa47e72550e3a4b803",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "explicit_null_vs_omitted_default",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\n    fallback: null\nlinks:\n  - link: route\n",
+      "sha256": "0e5c83f4f8d5029b5f711e4010c7117859a9e4d6d3f62f916b0d23ddfe799649",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "explicit_nonempty_vs_empty_array",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nresources:\n  - resource: x\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+      "sha256": "ea0214fddf14873f36804895774458c9d589c9cbad74e9bad82a830e4c1d0aba",
+      "must_differ_from": "presentation_and_default_equivalence"
+    },
+    {
+      "id": "array_order_alpha_beta",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: alpha\n    kind: program\n  - unit: beta\n    kind: program\nlinks:\n  - link: route\n",
+      "sha256": "68f67bd30a3bddfc59c13b7b51776f549f951dd6b854ed5ec299eaccd12b5963",
+      "must_differ_from": "array_order_beta_alpha"
+    },
+    {
+      "id": "array_order_beta_alpha",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: beta\n    kind: program\n  - unit: alpha\n    kind: program\nlinks:\n  - link: route\n",
+      "sha256": "922cb374ae00971630b36a11c945bdf9c3faa04fa5ab1e9ea0ee5e220847a812",
+      "must_differ_from": "array_order_alpha_beta"
+    }
+  ],
+  "profile_boundary": {
+    "base_profile": {
+      "value": "lattice-core-0.1",
+      "sha256": "f622926e32cb82c37ba874e198c4a6d8362df9e9d9212decdac0c84f0de2ab8d",
+      "public_pc5_reachable": true
+    },
+    "alternate_profile_canonical_preimage": {
+      "value": "lattice-builder-0.1",
+      "sha256": "042914ed48c7e2a3b0d5a0ed319628e5573841e181950925c3ab9894666ca88d",
+      "public_pc5_reachable": false,
+      "reason": "accepted PC3 admits only lattice-core-0.1"
+    },
+    "pc3_rejection_source_yaml": "lattice: \"0.3\"\nprofile: lattice-builder-0.1\nmodule: digest_example\nversion: \"1.0.0\"\npurpose: \"Café digest\"\nunits:\n  - unit: writer\n    kind: model\nlinks:\n  - link: route\n",
+    "expected_pc3_diagnostic": {
+      "code": "SOURCE_INVALID_ROOT_VALUE",
+      "path": "/profile"
+    },
+    "requirements": [
+      "canonical preimage comparison proves the profile field is not excluded",
+      "public PC5 tests do not forge DefaultedSource",
+      "alternate profile is rejected before PC4 and PC5"
+    ]
+  },
+  "later_invalid_but_digestible_cases": [
+    {
+      "id": "duplicate_declaration_names",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_duplicate_names\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nunits:\n  - unit: dup\n    kind: program\n  - unit: dup\n    kind: program\n",
+      "sha256": "46d415d28f50e135c56940df0411565118f4cf74e68995f336654780af547b25",
+      "must_not_emit": "SOURCE_DUPLICATE_NAME"
+    },
+    {
+      "id": "invalid_unit_kind",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_invalid_kind\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nunits:\n  - unit: bad\n    kind: store\n",
+      "sha256": "4ad6032743fb8f102604dfc705870d3e2abf4ce2e874d9fbe23173065c807b32"
+    },
+    {
+      "id": "malformed_declaration_body",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_malformed_declaration\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nunits:\n  - null\n",
+      "sha256": "f1c015a2c10db0608c23da3faf75c985a1fb3369425261356f53d549f7a50ba8"
+    },
+    {
+      "id": "unknown_reference",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_unknown_reference\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nunits: []\nlinks:\n  - link: bad_ref\n    from: missing.out\n    to: missing.in\n",
+      "sha256": "a874514ecaba1a6ee9d82cd46563a2b054136792d5613b421f79f7dc2b7e4b28"
+    },
+    {
+      "id": "explicit_wrong_type",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_wrong_type\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nunits:\n  - unit: bad_model\n    kind: model\n    fallback: []\n",
+      "sha256": "7b13931050b3cfabae0919054d4922edf5b837e034e2375dc6204a28766e3b59"
+    },
+    {
+      "id": "unresolved_import",
+      "source_yaml": "lattice: \"0.3\"\nprofile: lattice-core-0.1\nmodule: digest_unresolved_import\nversion: \"1.0.0\"\npurpose: Later-invalid but digestible\nimports:\n  - use: missing_package\n    version: \"^1.0.0\"\n    as: missing\nunits: []\n",
+      "sha256": "d07cfbc79b217060d94450ea44c428ae641351470d7b69df5739b015aab48d6e"
+    }
+  ],
+  "output_binding_requirements": [
+    {
+      "id": "exact_input_preserved",
+      "assertion": "DigestedSource contains a DefaultedSource value equal to the exact consumed input"
+    },
+    {
+      "id": "digest_source_binding",
+      "assertion": "the contained BlueprintDigest is calculated from the contained DefaultedSource"
+    },
+    {
+      "id": "no_public_mismatch_constructor",
+      "assertion": "public API cannot construct DigestedSource from independently supplied source and digest"
+    },
+    {
+      "id": "repeatable_digest",
+      "assertion": "equal cloned DefaultedSource inputs produce equal BlueprintDigest values"
+    },
+    {
+      "id": "no_metadata_or_authority",
+      "assertion": "DigestedSource adds no canonical bytes, provenance, diagnostic, artifact, permission, Binding, or authority field"
+    }
+  ],
+  "deferred_identity_kinds": [
+    "package",
+    "resource",
+    "contract",
+    "unit",
+    "link",
+    "policy",
+    "scenario",
+    "lock",
+    "manifest",
+    "qualification",
+    "binding",
+    "envelope",
+    "event"
+  ],
+  "implementation_test_requirements": {
+    "decode_and_compare_every_canonical_utf8_hex": true,
+    "verify_every_canonical_vector_sha256": true,
+    "reject_bom_whitespace_and_trailing_newline_in_golden_output": true,
+    "exercise_reachable_sources_through_public_pc2_pc3_pc4_pc5_path": true,
+    "minimum_digest_runs_per_reachable_source": 3,
+    "assert_exact_digest_text": true,
+    "assert_source_preserved_in_digested_source": true,
+    "assert_no_public_source_digest_pairing": true,
+    "assert_no_pc5_source_diagnostics": true,
+    "assert_no_pc5_canonical_byte_output_field": true,
+    "assert_no_later_identity_or_authority": true
+  }
+}

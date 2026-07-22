@@ -144,3 +144,34 @@ This tranche was authorized after the PC4 scope and semantics were accepted. It 
 The production allowlist is `crates/threadsmith-compiler/src/lib.rs`; focused tests are limited to `crates/threadsmith-compiler/tests/pc4_default.rs`. Evidence may change under `docs/pc4/**`, `conformance/pc4/default/**`, and additive PC4 entries in the three durable state files. The accepted Standard and erratum, Cargo files, dependencies, Foundation through PC3 semantics, canonicalization, digests, identities, packages, resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain unchanged.
 
 The next bounded task is `PC5 Digest-phase scope reconciliation and semantic freeze`. PC4 acceptance does not authorize it, and no PC5 work begins in this tranche.
+
+## Lattice Standard 0.3 Canonical JSON Erratum and PC5 semantic-freeze tranche
+
+This documentation-only tranche was authorized after PC4 acceptance. It closes
+the Standard's identity-affecting JSON string-escape ambiguity and freezes only
+the immediately following `DefaultedSource -> DigestedSource` phase. It does
+not implement product code.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Canonical byte closure | One narrow normative erratum selects exact UTF-8, punctuation, NFC, object-key, array, integer, string-escape, Unicode, BOM, whitespace, and newline bytes without changing an artifact preimage. | 2 | Complete |
+| Lifecycle and identity ownership | PC5 owns only Standard `Digest`, consumes PC4 `DefaultedSource`, and creates exactly one Blueprint content identity before Package scan. | 2 | Complete |
+| Preimage and output binding | The complete post-default root is canonicalized and hashed; opaque `DigestedSource` binds the resulting `BlueprintDigest` to the exact input without exposing a mismatch constructor. | 2 | Complete |
+| Diagnostic and deferral boundary | PC5 is total over its accepted input, emits no source diagnostic, and digests duplicate names and every other later-invalid declaration form without semantic endorsement. | 2 | Complete |
+| Fixture design | Exact byte-hex/SHA-256, source-equivalence, distinction, profile-boundary, invalid-but-digestible, and output-binding cases are frozen. | 2 | Complete |
+| Regression and consistency verification | Foundation through PC4, both earlier authorities, the new erratum, fixture integrity, independently recalculated hashes, and repository-boundary checks pass. | 2 | Complete: 43 existing tests; all semantic fixture checks pass |
+| Read-only acceptance | A visibly separate adversarial semantic pass classifies P0-P3 and accepts only with no open P0/P1. | 2 | Complete after repair cycle 1; no open findings |
+
+The documentation allowlist is
+`docs/standard/LATTICE_STANDARD_0.3_CANONICAL_JSON_ERRATUM.md`, `docs/pc5/**`,
+`conformance/pc5/digest/**`, and additive PC5 entries in `PROJECT_STATE.md`,
+`IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. The recovered Standard, accepted
+Default Semantics Erratum, Rust source, Cargo files, dependencies, Foundation
+through PC4 conformance artifacts, package resolution, Lockfiles, import
+expansion, declaration validation, later identities, Manifests, qualification,
+Binding, runtime, Builder, providers, and user surfaces remain unchanged.
+
+The next bounded task is `PC5 Digest-phase implementation against the frozen
+semantics and fixtures`. That sequence statement does not authorize
+implementation, dependency mutation, commit, push, package work, or any later
+compiler or runtime phase.

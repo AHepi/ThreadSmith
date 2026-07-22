@@ -127,3 +127,36 @@ These decisions freeze preparation only. They do not implement or accept PC4 pro
 | PC4-P-006 | Represent constant true by constructing the accepted JSON value `{"all":[]}` at each absent link or policy predicate target. | PC4 adds no predicate operator, evaluation behavior, route, permission, or runtime meaning. |
 | PC4-P-007 | Test equality of post-default JSON values without implementing identity machinery. | Omitted and explicit defaults converge; explicit non-defaults differ, while PC5 canonicalization and digest remain unstarted. |
 | PC4-P-008 | Add no dependency, diagnostic, canonical serializer, digest, identity API, or authority mechanism. | PC4 remains deterministic identity preparation only; PC5 and every later phase require separate authorization. |
+
+## Lattice Standard 0.3 Canonical JSON Erratum decisions
+
+These decisions close canonical byte encoding for Standard 0.3 without
+implementing PC5 or selecting any additional artifact preimage.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC5-E-001 | Preserve the recovered Standard bytes and record a separate normative Canonical JSON Erratum. | Only byte encoding is clarified; every artifact-specific preimage and unaffected Standard rule remains controlling. |
+| PC5-E-002 | Encode canonical JSON as one compact UTF-8 sequence with no BOM, insignificant whitespace, or trailing newline. | No wrapper, path, metadata, length prefix, NUL, or stage marker is added implicitly. |
+| PC5-E-003 | Normalize object keys to NFC and order them by ascending unsigned UTF-8 bytes before escaping; preserve arrays unless an earlier semantic phase explicitly sorted them. | Canonical JSON never performs declaration or semantic collection sorting. |
+| PC5-E-004 | Freeze quotation mark, reverse solidus, five short control escapes, lowercase `\u00xx` for every other C0 control, direct solidus, and direct UTF-8 for every other scalar. | Optional JSON escaping, non-ASCII `\uXXXX`, surrogate-pair escaping, and escaped solidus are non-conforming. |
+| PC5-E-005 | Encode every integer already admitted by its owning schema in minimal ASCII base ten and encode booleans/null in lowercase. | PC5 remains signed-`i64` because PC2 established that input boundary; the erratum does not narrow the accepted Foundation generic arbitrary-integer preimage domain. |
+| PC5-E-006 | Treat unpaired surrogates and NFC-colliding object keys as internal invariant violations with no canonical representation. | Accepted PC2-to-PC5 values make both states unreachable; no new PC5 source diagnostic is created. |
+
+## PC5 Digest-phase scope-reconciliation decisions
+
+These decisions freeze preparation only. They do not implement or accept PC5
+product code.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC5-S-001 | Assign PC5 exactly the Standard `Digest` phase between PC4 Default and Package scan. | PC5 consumes only `DefaultedSource`; it does not repeat parsing, validation, or defaulting. |
+| PC5-S-002 | Define the Blueprint preimage as exactly canonical JSON of the complete post-default root before import expansion. | Original YAML, wrappers, files, paths, diagnostics, provenance, compiler metadata, and expanded imports are excluded unless represented as source values. |
+| PC5-S-003 | Create exactly one identity in PC5: `lattice:blueprint:sha256:<64 lowercase hex>`. | Package, declaration, Lockfile, Manifest, qualification, Binding, envelope, event, and every other identity remain deferred. |
+| PC5-S-004 | Keep phase ownership and source binding in `threadsmith-compiler` while reusing `threadsmith-canonical` and the accepted PC1 native identity vocabulary. | A second canonical encoder, hash path, identity format, or authority meaning is forbidden. |
+| PC5-S-005 | Freeze opaque `BlueprintDigest` and private-field `DigestedSource { defaulted_source, blueprint_digest }`, constructible only by consuming PC4 input through `digest_source`. | No public constructor, deserializer, or mutation may pair source A with source B's digest. A caller-created generic PC1 `NativeLatticeId` claim is not a PC5-produced `BlueprintDigest`. The wrapper and canonical bytes do not enter the preimage. |
+| PC5-S-006 | Make PC5 semantically total and source-diagnostic-free over accepted `DefaultedSource`. | Internal encoding impossibility is a compiler defect; it is not a normal source result or partial success. |
+| PC5-S-007 | Digest duplicate names, invalid kinds, malformed declarations, unknown references, wrong-type explicit values, and unresolved imports without validating them. | `SOURCE_DUPLICATE_NAME` and all later semantic failures remain for a later explicitly frozen owner. Digestibility is not acceptance. |
+| PC5-S-008 | Preserve every array order and every value in the identity preimage; equate only sources that PC2-PC4 reduce to equal `DefaultedSource` values. | PC5 does not predict or impose later Manifest normalization or sorting. |
+| PC5-S-009 | Prove root-profile participation at the canonical-preimage layer while requiring public PC5 tests to respect PC3's exact Core-profile gate. | An alternate profile cannot be forged into `DefaultedSource`; it is separately rejected by PC3. |
+| PC5-S-010 | Keep canonical bytes out of the new PC5 output and initial PC5-specific public API while binding exact byte hex and hashes in conformance fixtures. | Existing generic canonical testability remains; no PC5 metadata or audit surface is invented. |
+| PC5-S-011 | Freeze exact canonical, equivalence, distinction, later-invalid, binding, repeatability, and non-authority fixtures before implementation. | The fixture contract creates no Rust function, dependency, artifact, identity, or execution authority. |

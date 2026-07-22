@@ -51,9 +51,19 @@ State record status: reconstructed. Updated 2026-07-22.
 | PC4 implementation verification complete | true |
 | PC4 implementation read-only review complete | true; no P0, P1, P2, or P3 findings |
 | PC4 accepted | true |
+| Canonical JSON Erratum complete | true |
+| Canonical JSON Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_CANONICAL_JSON_ERRATUM.md` |
+| Canonical JSON Erratum verification complete | true |
+| Canonical JSON Erratum read-only review complete | true; no open P0 or P1 |
+| PC5 scope reconciled | true |
+| PC5 semantics frozen | true |
+| PC5 freeze verification complete | true |
+| PC5 freeze read-only review complete | true; no open P0 or P1 |
+| PC5 implementation started | false |
+| PC5 accepted | false |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC5 Digest-phase scope reconciliation and semantic freeze; not authorized by PC4 acceptance |
+| Next bounded task | PC5 Digest-phase implementation against the frozen semantics and fixtures; not authorized by the semantic freeze |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -69,4 +79,8 @@ The Default Semantics Erratum is a separate normative companion to the recovered
 
 The PC4 scope reconciliation and semantic freeze assign PC4 exactly the Standard `Default` phase. The future `threadsmith-compiler` boundary consumes PC3 `ValidatedSource` and produces non-authoritative `DefaultedSource` containing only the expanded JSON-shaped value for PC5. Exact fixtures bind every default target, explicit-value precedence, malformed-data preservation, non-recursive traversal, idempotence, and identity-preimage equality or distinction. No PC4 product code, diagnostic, dependency, identity, artifact, or authority behavior is introduced by the freeze.
 
-PC4 implementation adds the public `apply_blueprint_defaults` boundary and opaque `DefaultedSource` wrapper in `threadsmith-compiler`. It applies only the accepted erratum and frozen defaults, preserves every present or malformed value required by later phases, and emits no diagnostic or provenance metadata. Focused fixtures prove deterministic and idempotent expansion plus post-default equality and distinction; full locked/offline qualification passes with 43 tests. No canonical bytes, digest, identity, artifact, authority, or later compiler/runtime behavior is created. PC5 remains unstarted and unauthorized.
+PC4 implementation adds the public `apply_blueprint_defaults` boundary and opaque `DefaultedSource` wrapper in `threadsmith-compiler`. It applies only the accepted erratum and frozen defaults, preserves every present or malformed value required by later phases, and emits no diagnostic or provenance metadata. Focused fixtures prove deterministic and idempotent expansion plus post-default equality and distinction; full locked/offline qualification passes with 43 tests. No canonical bytes, digest, identity, artifact, authority, or later compiler/runtime behavior is created. At PC4 acceptance, PC5 remained unstarted and unauthorized.
+
+The Canonical JSON Erratum is a narrow normative companion to the recovered Standard and leaves the recovered Standard bytes unchanged. It closes exact UTF-8, punctuation, object-key ordering, array preservation, signed-integer, string-escape, direct-Unicode, BOM, whitespace, and trailing-newline rules for every Standard canonical JSON use. It adds no preimage, identity, phase, validation, artifact, or authority rule. Exact byte-hex and SHA-256 vectors bind the closed encoding, including PC2-preserved decoded control characters.
+
+The PC5 scope reconciliation and semantic freeze assign PC5 exactly the Standard `Digest` phase. The future `threadsmith-compiler` boundary consumes opaque PC4 `DefaultedSource`, reuses the single canonical Rust core, creates exactly one opaque `BlueprintDigest`, and returns non-authoritative `DigestedSource` binding that digest to the exact source. The preimage is the complete canonical JSON of the post-default root before import expansion. PC5 owns no source diagnostic and deliberately digests duplicate names and other later-invalid content. Exact fixtures bind canonical bytes, presentation/default equivalence, source distinctions, array order, the accepted PC3 profile boundary, later-invalid digestibility, output pairing, and authority absence. No PC5 Rust implementation, dependency change, commit, push, later identity, package phase, Lockfile, Manifest, Builder, runtime, provider, or user surface has started.
