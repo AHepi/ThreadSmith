@@ -1,0 +1,74 @@
+{
+  "vector_profile": "threadsmith-foundation-canonical-preimage-reconstructed-0.1",
+  "restoration_status": "reconstructed",
+  "evidence": {
+    "schema_source_sha256": "8174175061eb2701a8995349c2e919eb06342942d69485e734cd722bc1eec6ef",
+    "legacy_oracle_sha256": "f6643d5534d2bacb96ca20566c401bf0ffaabec4c29768d4293389052f349ef5",
+    "note": "Expected canonical bytes, digests, and typed claims were independently calculated through the supplied legacy oracle. These fixtures exercise already-resolved preimage mathematics only. They do not select or validate artifact-specific preimages, and the oracle is observational evidence rather than native semantic authority."
+  },
+  "valid": [
+    {
+      "name": "null",
+      "artifact_kind": "event",
+      "input": null,
+      "canonical_utf8": "null",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identity_claim": "lattice:event:sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "name": "sorted_keys",
+      "artifact_kind": "package",
+      "input": {"z": 1, "a": 2},
+      "canonical_utf8": "{\"a\":2,\"z\":1}",
+      "sha256": "c2985c5ba6f7d2a55e768f92490ca09388e95bc4cccb9fdf11b15f4d42f93e73",
+      "identity_claim": "lattice:package:sha256:c2985c5ba6f7d2a55e768f92490ca09388e95bc4cccb9fdf11b15f4d42f93e73"
+    },
+    {
+      "name": "unicode_nfc",
+      "artifact_kind": "resource",
+      "input": {
+        "purpose": "Cafe\u0301 response",
+        "nested": ["A\u030a", true, null, -7, 42]
+      },
+      "canonical_utf8": "{\"nested\":[\"Å\",true,null,-7,42],\"purpose\":\"Café response\"}",
+      "sha256": "257914502145705b2143cadc764748f8be48df1f45db1bae37eaabf5552055a1",
+      "identity_claim": "lattice:resource:sha256:257914502145705b2143cadc764748f8be48df1f45db1bae37eaabf5552055a1"
+    },
+    {
+      "name": "utf8_key_order",
+      "artifact_kind": "contract",
+      "input": {"é": "composed", "e\u0301x": "decomposed-prefix", "z": "last"},
+      "canonical_utf8": "{\"z\":\"last\",\"é\":\"composed\",\"éx\":\"decomposed-prefix\"}",
+      "sha256": "42eab6ec5d2c5feed7962c7d7c957d2d4ee45928fff83fceea28d099bf84f6f2",
+      "identity_claim": "lattice:contract:sha256:42eab6ec5d2c5feed7962c7d7c957d2d4ee45928fff83fceea28d099bf84f6f2"
+    },
+    {
+      "name": "arbitrary_size_integer",
+      "artifact_kind": "resource",
+      "input": {"big": 123456789012345678901234567890123456789012345678901234567890},
+      "canonical_utf8": "{\"big\":123456789012345678901234567890123456789012345678901234567890}",
+      "sha256": "bb7b93935ab382b7d6da8357b28d159f8e76dc4fb692031ef5f6ce38b3b0f602",
+      "identity_claim": "lattice:resource:sha256:bb7b93935ab382b7d6da8357b28d159f8e76dc4fb692031ef5f6ce38b3b0f602"
+    },
+    {
+      "name": "negative_zero",
+      "artifact_kind": "event",
+      "input": -0,
+      "canonical_utf8": "0",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "identity_claim": "lattice:event:sha256:5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    }
+  ],
+  "invalid": [
+    {
+      "name": "floating_point",
+      "input": 1.5,
+      "error_code": "SCHEMA_INVALID"
+    },
+    {
+      "name": "duplicate_key_after_nfc",
+      "input": {"Café": 1, "Cafe\u0301": 2},
+      "error_code": "SCHEMA_INVALID"
+    }
+  ]
+}
