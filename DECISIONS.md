@@ -33,3 +33,15 @@ These decisions are new PC2 preparation, not reconstructed Foundation/PC1 histor
 | PC2-I-008 | Freeze first-error diagnostic behavior independently of upstream wording. | Stable output is code, JSON Pointer path, and one-based source position, using a fixed validation order. |
 | PC2-I-009 | Preserve authority boundaries. | Parsing creates no identity, hash, Manifest, resolution, qualification, Binding, executable artifact, or authority. |
 | PC2-I-010 | Record third-party execution surfaces explicitly. | `arraydeque` contains internal Rust `unsafe`; `thiserror`, `proc-macro2`, and `quote` have pinned build scripts that probe the selected `rustc`. The graph has no native FFI, system libyaml, C/C++ compiler, or system-library probe. Any version, feature, source, script, or graph change reopens intake. |
+
+## PC2 parser implementation decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC2-P-001 | Add `threadsmith-compiler` and expose `parse_blueprint_source(&[u8]) -> Result<serde_json::Value, SourceDiagnostic>`. | The result is a non-authoritative source projection; no compiler output or identity API exists. |
+| PC2-P-002 | Run a complete event audit before scalar projection. | This preserves the frozen global precedence of YAML syntax and forbidden-feature diagnostics over scalar and tree validation. |
+| PC2-P-003 | Retain decoded pre-NFC mapping keys until duplicate and collision checks finish. | Equal decoded keys produce `SOURCE_DUPLICATE_KEY`; distinct decoded keys with one NFC form produce `SOURCE_NFC_COLLISION` at every depth. |
+| PC2-P-004 | Keep diagnostics to code, RFC 6901 path, and optional one-based source position. | Upstream parser prose is not exposed as a stable field. |
+| PC2-P-005 | Inject only the seven absent optional root lists and perform only the frozen root-envelope and portable unit-kind gates. | Scenario sufficiency, wiring, packages, contracts, policies, routes, and other compiler semantics remain out of scope. |
+| PC2-P-006 | Commit the exact `saphyr-parser =0.0.11` pin with default features disabled and the resolved Cargo lock. | The resolved graph matches intake; any version, feature, source, script, or licence change reopens dependency review. |
+| PC2-P-007 | Do not create a PC2 tag. | The existing tag names the reconstructed Foundation/PC1 provenance anchor; PC2 is a bounded capability acceptance, not a release or replacement baseline policy. |

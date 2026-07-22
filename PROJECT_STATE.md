@@ -21,13 +21,13 @@ State record status: reconstructed. Updated 2026-07-22.
 | Current provenance name | `threadsmith-foundation-pc1-reconstructed-0.1` |
 | PC2 parser intake started | true |
 | PC2 parser semantics frozen | true |
-| PC2 implementation started | false |
-| PC2 accepted | false |
-| Selected parser path | `saphyr-parser =0.0.11`, event API, dependency not yet added |
+| PC2 implementation started | true |
+| PC2 accepted | true |
+| Selected parser path | `saphyr-parser =0.0.11`, event API, exact pin committed in the workspace lock |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC2 parser implementation against the frozen intake and fixtures |
+| Next bounded task | PC3 scope intake and semantic freeze; not authorized by PC2 acceptance |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
-The PC2 intake adds documentation and conformance fixtures only. Foundation/PC1 crates, semantics, manifests, lockfile, identities, canonical-byte rules, and authority boundaries remain unchanged. The parser will be owned by a future `threadsmith-compiler`; `threadsmith-schema` remains limited to schemas and data structures.
+The accepted PC2 implementation adds `threadsmith-compiler` solely as the owner of UTF-8 restricted-YAML source projection into an NFC-normalized JSON-shaped tree. It adds no compilation, resolution, identity, digest, Manifest, execution, runtime, or builder behavior. Foundation/PC1 code, semantics, identities, canonical-byte rules, authority boundaries, and conformance evidence remain unchanged; `threadsmith-schema` remains limited to schemas and data structures.

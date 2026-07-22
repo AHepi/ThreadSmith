@@ -27,3 +27,18 @@ This later tranche was authorized separately and completed as preparation only. 
 The active allowlist is `docs/pc2/**`, `conformance/pc2/parser/**`, and additive PC2 state entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. Production crates, root Cargo files, Foundation/PC1 conformance, identities, compilation, package resolution, runtime, builder, planner, providers, user surfaces, and delivery actions remain excluded.
 
 If intake is accepted, the next bounded task is `PC2 parser implementation against the frozen intake and fixtures`. That statement records sequence only; it does not itself authorize implementation.
+
+## PC2 parser implementation tranche
+
+This tranche was authorized separately after the intake was accepted. It implements only the frozen source projection boundary.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Parser package | `threadsmith-compiler` projects one accepted UTF-8 YAML document into the frozen NFC JSON-shaped tree without compiling or creating authority. | 2 | Complete |
+| Focused conformance | All frozen valid/invalid fixtures and deterministic edge cases pass through the public parser API. | 2 | Complete |
+| Dependency qualification | Exact selected pin and resolved lock match intake; locked/offline graph, checksums, licences, and no-native boundary pass. | 2 | Complete |
+| Regression qualification | Formatting, all-target workspace check, Clippy with warnings denied, Foundation, PC1, and PC2 suites pass offline and locked. | 2 | Complete |
+| Read-only acceptance | Separate implementation and closure passes have no open P0/P1 finding. | 2 | Complete after repair cycles 1 and 2 |
+| Publication | Accepted PC2 tree is committed to and fetched back from remote `main`; remote and local tree identities match. | 0 | Delivery gate |
+
+The next bounded task is `PC3 scope intake and semantic freeze`; it is not authorized by this plan entry. PC2 acceptance does not authorize compiler semantics, resolution, identities, runtime, builder, providers, user surfaces, or release work.
