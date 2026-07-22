@@ -1,0 +1,384 @@
+{
+  "profile": "threadsmith-pc4-default-fixtures-0.1",
+  "standard": "docs/standard/LATTICE_STANDARD_0.3.md",
+  "erratum": "docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md",
+  "scope": "docs/pc4/PC4_SCOPE_RECONCILIATION.md",
+  "semantic_freeze": "docs/pc4/PC4_SEMANTIC_FREEZE.md",
+  "input_boundary": "PC3 ValidatedSource",
+  "output_boundary": "non-authoritative PC4 DefaultedSource",
+  "cases": [
+    {
+      "id": "omitted_optional_root_lists",
+      "class": "pc4_valid",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "minimal_defaults",
+        "version": "1.0.0",
+        "purpose": "Prove exact root defaults",
+        "units": []
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "minimal_defaults",
+          "version": "1.0.0",
+          "purpose": "Prove exact root defaults",
+          "imports": [],
+          "inputs": [],
+          "contracts": [],
+          "resources": [],
+          "units": [],
+          "links": [],
+          "policies": [],
+          "exports": [],
+          "scenarios": []
+        }
+      },
+      "covers": ["eight optional root lists", "no units default", "no convenience root"]
+    },
+    {
+      "id": "all_exact_default_targets",
+      "class": "pc4_valid",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "all_defaults",
+        "version": "1.0.0",
+        "purpose": "Exercise every exact default target",
+        "inputs": [{"input": "question"}],
+        "units": [
+          {"unit": "program_one", "kind": "program", "inputs": [{"port": "in"}], "outputs": [{"port": "out"}]},
+          {"unit": "model_one", "kind": "model"},
+          {"unit": "gate_one", "kind": "gate"},
+          {"unit": "controller_one", "kind": "controller", "transitions": [{"from": "a", "to": "b", "on": "go"}]},
+          {"unit": "broker_one", "kind": "broker"}
+        ],
+        "links": [{"link": "one_link"}],
+        "policies": [{"policy": "one_policy"}],
+        "exports": [{"export": "answer"}],
+        "scenarios": [{"scenario": "one_scenario"}]
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "all_defaults",
+          "version": "1.0.0",
+          "purpose": "Exercise every exact default target",
+          "imports": [],
+          "inputs": [{"input": "question", "required": true, "cardinality": "one", "on_absence": "block"}],
+          "contracts": [],
+          "resources": [],
+          "units": [
+            {"unit": "program_one", "kind": "program", "mode": "stateless", "inputs": [{"port": "in", "required": true, "cardinality": "one", "on_absence": "block"}], "outputs": [{"port": "out", "cardinality": "one"}]},
+            {"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false},
+            {"unit": "gate_one", "kind": "gate", "mode": "stateless"},
+            {"unit": "controller_one", "kind": "controller", "mode": "event_sourced", "transitions": [{"from": "a", "to": "b", "on": "go"}]},
+            {"unit": "broker_one", "kind": "broker", "mode": "external"}
+          ],
+          "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [{"policy": "one_policy", "when": {"all": []}}],
+          "exports": [{"export": "answer", "cardinality": "one"}],
+          "scenarios": [{"scenario": "one_scenario", "required": true}]
+        }
+      },
+      "covers": ["root ports", "unit ports", "all Core unit modes", "model repair", "model fallback", "link defaults", "link predicate", "policy predicate", "scenario required", "controller on excluded"]
+    },
+    {
+      "id": "explicit_values_and_empty_collections",
+      "class": "pc4_valid",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "explicit_values",
+        "version": "1.0.0",
+        "purpose": "Preserve explicit values",
+        "imports": [],
+        "inputs": [{"input": "question", "required": false, "cardinality": "many", "on_absence": "explicit_none"}],
+        "contracts": [],
+        "resources": [],
+        "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 2, "fallback": true}],
+        "links": [{"link": "one_link", "mode": "transition", "delivery": "exclusive", "when": {"eq": ["run.mode", "test"]}}],
+        "policies": [{"policy": "one_policy", "when": {"any": []}}],
+        "exports": [{"export": "answer", "cardinality": "many"}],
+        "scenarios": [{"scenario": "optional_scenario", "required": false}]
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "explicit_values",
+          "version": "1.0.0",
+          "purpose": "Preserve explicit values",
+          "imports": [],
+          "inputs": [{"input": "question", "required": false, "cardinality": "many", "on_absence": "explicit_none"}],
+          "contracts": [],
+          "resources": [],
+          "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 2, "fallback": true}],
+          "links": [{"link": "one_link", "mode": "transition", "delivery": "exclusive", "when": {"eq": ["run.mode", "test"]}}],
+          "policies": [{"policy": "one_policy", "when": {"any": []}}],
+          "exports": [{"export": "answer", "cardinality": "many"}],
+          "scenarios": [{"scenario": "optional_scenario", "required": false}]
+        }
+      },
+      "covers": ["explicit override precedence", "explicit empty root arrays", "explicit non-default values"]
+    },
+    {
+      "id": "already_expanded_is_unchanged",
+      "class": "pc4_valid",
+      "applications": 3,
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "already_expanded",
+        "version": "1.0.0",
+        "purpose": "Prove idempotence",
+        "imports": [],
+        "inputs": [],
+        "contracts": [],
+        "resources": [],
+        "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false}],
+        "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+        "policies": [{"policy": "one_policy", "when": {"all": []}}],
+        "exports": [],
+        "scenarios": [{"scenario": "one_scenario", "required": true}]
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "already_expanded",
+          "version": "1.0.0",
+          "purpose": "Prove idempotence",
+          "imports": [],
+          "inputs": [],
+          "contracts": [],
+          "resources": [],
+          "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false}],
+          "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [{"policy": "one_policy", "when": {"all": []}}],
+          "exports": [],
+          "scenarios": [{"scenario": "one_scenario", "required": true}]
+        }
+      },
+      "covers": ["already expanded", "repeated application", "idempotence"]
+    },
+    {
+      "id": "malformed_and_ambiguous_values_are_preserved",
+      "class": "boundary_deferred",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "deferred_invalid",
+        "version": "1.0.0",
+        "purpose": "Preserve later-invalid data",
+        "inputs": [null, {"input": "invalid", "required": null, "cardinality": [], "on_absence": {}}, {"input": "partial"}],
+        "units": [
+          null,
+          {"unit": "missing_kind", "inputs": {"not": "an_array"}, "outputs": [null, {"port": "out"}]},
+          {"unit": "numeric_kind", "kind": 7, "inputs": [{"port": "in"}]},
+          {"unit": "unknown_kind", "kind": "store", "outputs": [{"port": "out"}]},
+          {"unit": "model_invalid", "kind": "model", "mode": null, "repair_attempts": "many", "fallback": []}
+        ],
+        "links": [null, {"link": "invalid", "mode": null, "delivery": [], "when": false}, {"link": "partial"}],
+        "policies": [7, {"policy": "invalid", "when": null}, {"policy": "partial"}],
+        "exports": [7, {"export": "invalid", "cardinality": null}, {"export": "partial"}],
+        "scenarios": [false, {"scenario": "invalid", "required": null}, {"scenario": "partial"}]
+      },
+      "expected": {
+        "result": "expanded",
+        "semantic_status": "later_validation_deferred",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "deferred_invalid",
+          "version": "1.0.0",
+          "purpose": "Preserve later-invalid data",
+          "imports": [],
+          "inputs": [null, {"input": "invalid", "required": null, "cardinality": [], "on_absence": {}}, {"input": "partial", "required": true, "cardinality": "one", "on_absence": "block"}],
+          "contracts": [],
+          "resources": [],
+          "units": [
+            null,
+            {"unit": "missing_kind", "inputs": {"not": "an_array"}, "outputs": [null, {"port": "out", "cardinality": "one"}]},
+            {"unit": "numeric_kind", "kind": 7, "inputs": [{"port": "in", "required": true, "cardinality": "one", "on_absence": "block"}]},
+            {"unit": "unknown_kind", "kind": "store", "outputs": [{"port": "out", "cardinality": "one"}]},
+            {"unit": "model_invalid", "kind": "model", "mode": null, "repair_attempts": "many", "fallback": []}
+          ],
+          "links": [null, {"link": "invalid", "mode": null, "delivery": [], "when": false}, {"link": "partial", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [7, {"policy": "invalid", "when": null}, {"policy": "partial", "when": {"all": []}}],
+          "exports": [7, {"export": "invalid", "cardinality": null}, {"export": "partial", "cardinality": "one"}],
+          "scenarios": [false, {"scenario": "invalid", "required": null}, {"scenario": "partial", "required": true}]
+        }
+      },
+      "covers": ["non-object preservation", "invalid explicit preservation", "invalid nested container", "ambiguous unit kinds", "context-independent defaults", "no PC4 diagnostic"]
+    },
+    {
+      "id": "no_recursive_or_convenience_defaults",
+      "class": "boundary_deferred",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "target_boundary",
+        "version": "1.0.0",
+        "purpose": "Do not search arbitrary objects",
+        "contracts": [{"contract": "shape", "inputs": [{"port": "not_a_port_target"}], "when": null}],
+        "resources": [{"resource": "data", "outputs": [{"port": "not_an_output_target"}], "fallback": null}],
+        "units": [{"unit": "program_one", "kind": "program", "config": {"inputs": [{"port": "nested"}], "when": null}}]
+      },
+      "expected": {
+        "result": "expanded",
+        "semantic_status": "later_validation_deferred",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "target_boundary",
+          "version": "1.0.0",
+          "purpose": "Do not search arbitrary objects",
+          "imports": [],
+          "inputs": [],
+          "contracts": [{"contract": "shape", "inputs": [{"port": "not_a_port_target"}], "when": null}],
+          "resources": [{"resource": "data", "outputs": [{"port": "not_an_output_target"}], "fallback": null}],
+          "units": [{"unit": "program_one", "kind": "program", "mode": "stateless", "config": {"inputs": [{"port": "nested"}], "when": null}}],
+          "links": [],
+          "policies": [],
+          "exports": [],
+          "scenarios": []
+        }
+      },
+      "covers": ["exact target locations", "non-recursive traversal", "no convenience defaults", "no model defaults on program"]
+    },
+    {
+      "id": "identity_equivalence_omitted",
+      "class": "identity_preimage",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "identity_equivalent",
+        "version": "1.0.0",
+        "purpose": "Omitted defaults",
+        "units": [{"unit": "model_one", "kind": "model"}],
+        "links": [{"link": "one_link"}]
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "identity_equivalent",
+          "version": "1.0.0",
+          "purpose": "Omitted defaults",
+          "imports": [],
+          "inputs": [],
+          "contracts": [],
+          "resources": [],
+          "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false}],
+          "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [],
+          "exports": [],
+          "scenarios": []
+        }
+      }
+    },
+    {
+      "id": "identity_equivalence_explicit",
+      "class": "identity_preimage",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "identity_equivalent",
+        "version": "1.0.0",
+        "purpose": "Omitted defaults",
+        "imports": [],
+        "inputs": [],
+        "contracts": [],
+        "resources": [],
+        "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false}],
+        "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+        "policies": [],
+        "exports": [],
+        "scenarios": []
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "identity_equivalent",
+          "version": "1.0.0",
+          "purpose": "Omitted defaults",
+          "imports": [],
+          "inputs": [],
+          "contracts": [],
+          "resources": [],
+          "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": false}],
+          "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [],
+          "exports": [],
+          "scenarios": []
+        }
+      }
+    },
+    {
+      "id": "identity_distinction_explicit_nondefault",
+      "class": "identity_preimage",
+      "input": {
+        "lattice": "0.3",
+        "profile": "lattice-core-0.1",
+        "module": "identity_equivalent",
+        "version": "1.0.0",
+        "purpose": "Omitted defaults",
+        "units": [{"unit": "model_one", "kind": "model", "fallback": true}],
+        "links": [{"link": "one_link"}]
+      },
+      "expected": {
+        "result": "expanded",
+        "output": {
+          "lattice": "0.3",
+          "profile": "lattice-core-0.1",
+          "module": "identity_equivalent",
+          "version": "1.0.0",
+          "purpose": "Omitted defaults",
+          "imports": [],
+          "inputs": [],
+          "contracts": [],
+          "resources": [],
+          "units": [{"unit": "model_one", "kind": "model", "mode": "stateless", "repair_attempts": 0, "fallback": true}],
+          "links": [{"link": "one_link", "mode": "data", "delivery": "multicast", "when": {"all": []}}],
+          "policies": [],
+          "exports": [],
+          "scenarios": []
+        }
+      }
+    }
+  ],
+  "equivalence_groups": [
+    {
+      "id": "omitted_equals_explicit_defaults",
+      "cases": ["identity_equivalence_omitted", "identity_equivalence_explicit"],
+      "expectation": "expected outputs are equal"
+    }
+  ],
+  "distinction_groups": [
+    {
+      "id": "explicit_nondefault_remains_distinct",
+      "equal_case": "identity_equivalence_omitted",
+      "distinct_case": "identity_distinction_explicit_nondefault",
+      "expectation": "expected outputs are not equal"
+    }
+  ],
+  "implementation_test_requirements": {
+    "minimum_runs_per_case": 3,
+    "apply_again_to_expected_output": true,
+    "assert_exact_json_value_equality": true,
+    "assert_array_order_preserved": true,
+    "assert_no_unlisted_fields": true,
+    "assert_no_pc4_diagnostics": true
+  }
+}

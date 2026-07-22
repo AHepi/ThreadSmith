@@ -84,3 +84,46 @@ These decisions freeze preparation only. They do not implement or accept PC3 pro
 | PC3-P-003 | Reuse `SourceDiagnostic` with PC3 positions always absent. | PC3 owns only its four frozen codes and RFC 6901 path; it does not reuse later compiler errors. |
 | PC3-P-004 | Implement name and version recognition with standard Rust operations. | No regex/parser dependency or Cargo graph mutation is required. |
 | PC3-P-005 | Treat declaration array elements as opaque and return the input value unchanged. | No defaults, declaration validation, profile unit-kind gate, resolution, or static checking enters PC3. |
+
+## Lattice Standard 0.3 Default Semantics Erratum decisions
+
+These decisions resolve only ambiguities already present in Standard section 16. They do not implement PC4 or authorize any later phase.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC4-E-001 | Preserve the recovered Standard bytes and record a separate normative Default Semantics Erratum. | Only the four authorized ambiguity classes are clarified; every unaffected Standard rule remains controlling. |
+| PC4-E-002 | Expand a missing link or policy `when` to `{"all":[]}`. | The existing empty-`all` rule supplies constant true; controller transition triggers and other fields are not default targets. |
+| PC4-E-003 | Own model fallback at `units[*].fallback` for exact `kind: model` and encode the default as JSON `false`. | Source fallback grants no authority and does not replace Run Binding reconciliation. |
+| PC4-E-004 | Apply input defaults to root inputs and unit input ports; apply output cardinality to root exports and unit output ports. | Expansion occurs before imports and does not search arbitrary nested data. |
+| PC4-E-005 | Treat object-member presence as absolute explicit-value precedence, even for empty, null, contradictory, wrong-type, or later-invalid values. | PC4 neither repairs nor validates present data; later phases retain responsibility. |
+| PC4-E-006 | Leave non-object elements and invalid nested containers unchanged; omit kind-dependent defaults when unit kind is missing, non-string, or unknown. | PC4 remains deterministic and non-validating while unambiguous defaults at other exact targets still apply. |
+| PC4-E-007 | Insert no provenance or convenience metadata and require idempotent expansion. | Omitted and explicit default values converge to one post-default identity preimage; explicit non-default values remain distinct. |
+| PC4-E-008 | Require exhaustive exact-value, preservation, invalid/deferred, idempotence, and identity-preimage fixtures in the later PC4 freeze. | The erratum defines fixture obligations but creates no PC4 fixture or product implementation. |
+
+## PC4 Default-phase scope-reconciliation decisions
+
+These decisions freeze preparation only. They do not implement or accept PC4 product code.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC4-S-001 | Assign PC4 exactly the Standard `Default` phase between PC3 and PC5. | PC4 consumes `ValidatedSource`; PC5 Digest is the only immediate downstream phase. |
+| PC4-S-002 | Keep ownership in `threadsmith-compiler` and freeze the conceptual output type as `DefaultedSource`. | The wrapper contains only the expanded JSON-shaped value and is non-authoritative. |
+| PC4-S-003 | Apply every target, exact value, traversal rule, and malformed-data rule from the accepted Default Semantics Erratum without reinterpretation. | Resolved erratum decisions are not reopened or extended. |
+| PC4-S-004 | Retain no serialized provenance, source-presence ledger, default marker, source span, diagnostic, compiler metadata, or sidecar. | Only expanded values reach the PC5 identity preimage; wrapper type state is non-serialized. |
+| PC4-S-005 | Own no PC4 semantic diagnostic. | PC3-invalid roots cannot enter through `ValidatedSource`; later-invalid declaration data is preserved for later owners. |
+| PC4-S-006 | Preserve explicit members absolutely and preserve malformed or ambiguous elements while still applying independent unambiguous defaults. | PC4 expansion is total, deterministic, non-validating, and idempotent. |
+| PC4-S-007 | Freeze nine exact input/output fixtures plus equality and distinction groups. | The future public implementation must replay every case, reapply defaults, preserve array order, and insert no unlisted field. |
+| PC4-S-008 | Defer canonical bytes, hashing, identities, packages, resolution, Lockfiles, expansion, normalization, static checks, Manifests, qualification, Binding, and runtime. | PC4 prepares identity-bearing data but creates neither identity nor authority. |
+
+## PC4 Default-phase implementation decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC4-P-001 | Expose `apply_blueprint_defaults(ValidatedSource) -> DefaultedSource` in `threadsmith-compiler`. | PC4 consumes only PC3-validated root data and cannot parse or repeat root validation. |
+| PC4-P-002 | Keep `DefaultedSource.value` private and expose only immutable borrowing and consuming extraction. | The wrapper proves only that frozen expansion ran; it carries no serialized metadata, identity, artifact, or authority meaning. |
+| PC4-P-003 | Use exact object-member presence to decide insertion and preserve all present values unchanged. | Empty, null, wrong-type, contradictory, and later-invalid values retain explicit precedence and remain for later owners. |
+| PC4-P-004 | Traverse only the frozen root arrays and unit port arrays, preserving array order and ignoring non-object elements or invalid containers. | PC4 performs no recursive convenience defaulting and emits no later-phase validation diagnostic. |
+| PC4-P-005 | Dispatch kind-dependent defaults only for exact recognized string kinds while applying independent port defaults separately. | Missing, non-string, or unknown kinds receive no mode, repair, or fallback inference. |
+| PC4-P-006 | Represent constant true by constructing the accepted JSON value `{"all":[]}` at each absent link or policy predicate target. | PC4 adds no predicate operator, evaluation behavior, route, permission, or runtime meaning. |
+| PC4-P-007 | Test equality of post-default JSON values without implementing identity machinery. | Omitted and explicit defaults converge; explicit non-defaults differ, while PC5 canonicalization and digest remain unstarted. |
+| PC4-P-008 | Add no dependency, diagnostic, canonical serializer, digest, identity API, or authority mechanism. | PC4 remains deterministic identity preparation only; PC5 and every later phase require separate authorization. |

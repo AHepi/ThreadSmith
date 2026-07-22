@@ -37,9 +37,23 @@ State record status: reconstructed. Updated 2026-07-22.
 | PC3 accepted | true |
 | PC3 implementation verification complete | true |
 | PC3 implementation read-only review complete | true |
+| Default Semantics Erratum complete | true |
+| Default Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md` |
+| Default Semantics Erratum verification complete | true |
+| Default Semantics Erratum read-only review complete | true; no open P0 or P1 |
+| Original Lattice Standard 0.3 bytes changed | false |
+| PC4 ready | true |
+| PC4 scope reconciled | true |
+| PC4 semantics frozen | true |
+| PC4 freeze verification complete | true |
+| PC4 freeze read-only review complete | true; no open P0 or P1 |
+| PC4 implementation started | true |
+| PC4 implementation verification complete | true |
+| PC4 implementation read-only review complete | true; no P0, P1, P2, or P3 findings |
+| PC4 accepted | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC4 Default-phase scope reconciliation and semantic freeze; not authorized by this acceptance |
+| Next bounded task | PC5 Digest-phase scope reconciliation and semantic freeze; not authorized by PC4 acceptance |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -50,3 +64,9 @@ The recovered Lattice Standard 0.3 subsequently proved that accepted PC2 had abs
 The PC3 scope reconciliation assigns PC3 exactly the Standard `Source validate` phase and its `Valid root shape` output. The freeze validates only the Core root envelope and compatibility selectors, preserves the PC2 value unchanged, and leaves defaults, declaration semantics, resolution, identities, static checking, Manifests, and authority to later named phases. At freeze acceptance, PC3 implementation remained unstarted.
 
 PC3 implementation adds the public `validate_blueprint_source` boundary and non-authoritative `ValidatedSource` wrapper in `threadsmith-compiler`. It performs only the frozen root checks, returns the unchanged PC2 value, adds no dependency, and is accepted after focused verification, full regression qualification, one bounded test-coverage repair, and a fresh read-only closure review. Publication identities remain external because they cannot be embedded self-referentially in this state file.
+
+The Default Semantics Erratum is a separate normative companion to the recovered Standard and leaves the recovered Standard bytes unchanged. It resolves only exact default targets, values, expanded JSON representations, deterministic traversal, identity-preimage participation, invalid-data deferral, and fixture obligations. It adds no product code, declaration, feature, phase, authority, or runtime behavior. PC4 is ready for a separately authorized scope reconciliation and semantic freeze; PC4 implementation has not started.
+
+The PC4 scope reconciliation and semantic freeze assign PC4 exactly the Standard `Default` phase. The future `threadsmith-compiler` boundary consumes PC3 `ValidatedSource` and produces non-authoritative `DefaultedSource` containing only the expanded JSON-shaped value for PC5. Exact fixtures bind every default target, explicit-value precedence, malformed-data preservation, non-recursive traversal, idempotence, and identity-preimage equality or distinction. No PC4 product code, diagnostic, dependency, identity, artifact, or authority behavior is introduced by the freeze.
+
+PC4 implementation adds the public `apply_blueprint_defaults` boundary and opaque `DefaultedSource` wrapper in `threadsmith-compiler`. It applies only the accepted erratum and frozen defaults, preserves every present or malformed value required by later phases, and emits no diagnostic or provenance metadata. Focused fixtures prove deterministic and idempotent expansion plus post-default equality and distinction; full locked/offline qualification passes with 43 tests. No canonical bytes, digest, identity, artifact, authority, or later compiler/runtime behavior is created. PC5 remains unstarted and unauthorized.

@@ -91,3 +91,56 @@ This tranche was authorized after the PC3 scope and semantics were accepted. It 
 | Publication | Accepted PC3 tree is committed to and fetched back from remote `main`; local and remote tree identities match. | 0 | Delivery gate; record externally |
 
 The production allowlist is `crates/threadsmith-compiler/src/lib.rs`; focused tests are limited to `crates/threadsmith-compiler/tests/pc3_source_validate.rs`. Evidence may change under `docs/pc3/**`, `conformance/pc3/source_validate/**`, and additive PC3 entries in the three durable state files. Cargo files, accepted Foundation/PC1/PC2 semantics, defaults, declarations, resolution, identities, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, user surfaces, and PC4 remain excluded.
+
+## Lattice Standard 0.3 Default Semantics Erratum tranche
+
+This documentation-only tranche was authorized after the initial PC4 inquiry found that Standard 0.3 did not uniquely identify several identity-affecting default targets and encodings. The recovered Standard remains byte-exact; the erratum is a narrow normative companion.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Predicate resolution | Exact source targets and the canonical constant-true JSON expression are defined without adding a predicate operator. | 2 | Complete |
+| Model fallback resolution | Source ownership and JSON encoding are exact while Run Binding authority remains unchanged. | 2 | Complete |
+| Port target resolution | Module and unit input/output target scopes are exhaustive and no similarly named fields are captured. | 2 | Complete |
+| Invalid-data behavior | Present, malformed, and ambiguous data has deterministic preservation and deferral behavior without declaration validation. | 2 | Complete |
+| Identity and determinism | Post-default representation, idempotence, ordering, provenance absence, and identity-preimage participation are explicit. | 2 | Complete |
+| Fixture obligations | Exact valid, invalid/deferred, idempotence, no-convenience-default, and identity-equivalence cases are required for the later PC4 freeze. | 2 | Complete |
+| Regression and read-only review | Foundation through PC3 regressions and a separate adversarial semantic review find no open P0/P1. | 2 | Complete: 40 tests; no open P0/P1 |
+
+The erratum allowlist is `docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md` plus additive state entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. The recovered Standard, conformance fixtures, Rust source, Cargo files, dependencies, PC2, PC3, declaration validation, resolution, Lockfiles, identities, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain unchanged.
+
+After verification and review, the next bounded task is `PC4 Default-phase scope reconciliation and semantic freeze against Standard 0.3 plus its Default Semantics Erratum`. This sequence statement does not authorize PC4 implementation.
+
+## PC4 Default-phase scope reconciliation and semantic-freeze tranche
+
+This documentation-only tranche was authorized after the Default Semantics Erratum removed the identity-affecting ambiguity. It freezes the exact `ValidatedSource -> DefaultedSource` boundary without implementing product code.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Lifecycle and ownership | PC4 owns only Standard `Default` in `threadsmith-compiler`, consumes PC3 output, and feeds PC5 Digest. | 2 | Complete |
+| Output boundary | `DefaultedSource` contains only the expanded JSON-shaped value and remains non-authoritative. | 2 | Complete |
+| Exact semantics | Every erratum target, value, traversal rule, explicit-value rule, malformed-data rule, and idempotence rule is frozen. | 2 | Complete |
+| Diagnostics and deferral | PC4 owns no semantic diagnostic and cannot absorb PC3 or later validation errors. | 2 | Complete |
+| Fixture design | Nine exact cases cover all targets, overrides, empty values, malformed preservation, ambiguity, non-recursion, repetition, and identity-preimage comparisons. | 2 | Complete |
+| Regression and consistency verification | Foundation through PC3, Standard, erratum, fixture, documentation, and repository-boundary checks pass. | 2 | Complete: 40 tests; all consistency checks pass |
+| Read-only acceptance | A separate adversarial semantic pass classifies P0–P3 and accepts only with no open P0/P1. | 2 | Complete: no findings |
+
+The documentation allowlist is `docs/pc4/**`, `conformance/pc4/default/**`, and additive PC4 entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. The accepted Standard and erratum, Rust source, Cargo files, dependencies, Foundation, PC1, PC2, PC3, identity, resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain unchanged.
+
+If verification and review accept this freeze, the next bounded task is `PC4 Default-phase implementation against the frozen semantics and fixtures`. That sequence statement does not authorize implementation, commit, push, or release work.
+
+## PC4 Default-phase implementation tranche
+
+This tranche was authorized after the PC4 scope and semantics were accepted. It implements only the frozen `ValidatedSource -> DefaultedSource` transformation.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Public boundary | `threadsmith-compiler` consumes PC3 `ValidatedSource` and returns an opaque, non-authoritative `DefaultedSource`. | 2 | Complete |
+| Frozen behavior | Exact absent-member insertion, explicit-value precedence, malformed-data preservation, bounded traversal, and idempotence match the freeze. | 2 | Complete |
+| Focused conformance | Every frozen target and preservation case passes through the public boundary, including deterministic replay and identity-preimage comparisons. | 2 | Complete: 3 tests; all 9 fixtures |
+| Regression qualification | Formatting, all-target checks, Clippy, Foundation, PC1, PC2, and PC3 pass locked and offline. | 2 | Complete: 43 tests total |
+| Read-only acceptance | A separate implementation review classifies P0–P3 and accepts only with no open finding. | 2 | Complete: no findings; no repair cycle |
+| Publication | Accepted PC4 tree is committed to and fetched back from remote `main`; local and remote identities are recorded externally. | 0 | Delivery gate |
+
+The production allowlist is `crates/threadsmith-compiler/src/lib.rs`; focused tests are limited to `crates/threadsmith-compiler/tests/pc4_default.rs`. Evidence may change under `docs/pc4/**`, `conformance/pc4/default/**`, and additive PC4 entries in the three durable state files. The accepted Standard and erratum, Cargo files, dependencies, Foundation through PC3 semantics, canonicalization, digests, identities, packages, resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain unchanged.
+
+The next bounded task is `PC5 Digest-phase scope reconciliation and semantic freeze`. PC4 acceptance does not authorize it, and no PC5 work begins in this tranche.

@@ -1,12 +1,13 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice source parsing and root validation.
+//! Restricted Lattice source parsing, root validation, and default expansion.
 //!
 //! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
 //! JSON-shaped value tree and the PC3 boundary from that tree to a validated
-//! Core root shape. Source defaults, declaration validation, compilation,
-//! identity, authority, manifests, package resolution, and executable output
-//! belong to later phases.
+//! Core root shape. It also owns the PC4 boundary from validated source to a
+//! non-authoritative default-expanded value. Declaration validation,
+//! compilation, identity, authority, manifests, package resolution, and
+//! executable output belong to later phases.
 
 use core::fmt;
 use saphyr_parser::{Event, Marker, Parser, ScalarStyle, Span, Tag};
@@ -62,6 +63,31 @@ impl ValidatedSource {
     }
 }
 
+/// Non-authoritative PC4 output carrying only the default-expanded value tree.
+///
+/// Construction is restricted to [`apply_blueprint_defaults`]. This wrapper
+/// proves only that the frozen Standard defaults were applied. It contains no
+/// default provenance, source-presence metadata, identity, Manifest, Binding,
+/// or execution authority.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct DefaultedSource {
+    value: Value,
+}
+
+impl DefaultedSource {
+    /// Borrow the expanded JSON-shaped value used by the later Digest phase.
+    #[must_use]
+    pub fn as_value(&self) -> &Value {
+        &self.value
+    }
+
+    /// Consume the wrapper and return the expanded JSON-shaped value.
+    #[must_use]
+    pub fn into_value(self) -> Value {
+        self.value
+    }
+}
+
 /// Parse one PC2 Lattice source document.
 ///
 /// The returned value is a source projection, not a validated Blueprint or an
@@ -108,6 +134,17 @@ const PERMITTED_ROOT_KEYS: [&str; 14] = [
 
 const REQUIRED_ROOT_KEYS: [&str; 6] = [
     "lattice", "profile", "module", "version", "purpose", "units",
+];
+
+const OPTIONAL_ROOT_LISTS: [&str; 8] = [
+    "imports",
+    "inputs",
+    "contracts",
+    "resources",
+    "links",
+    "policies",
+    "exports",
+    "scenarios",
 ];
 
 /// Validate the frozen PC3 Core root shape without changing the value tree.
@@ -172,6 +209,105 @@ pub fn validate_blueprint_source(value: Value) -> Result<ValidatedSource, Source
     }
 
     Ok(ValidatedSource { value })
+}
+
+/// Apply the frozen PC4 source defaults without validating declaration bodies.
+///
+/// Explicit members always take precedence, including empty, null, malformed,
+/// and later-invalid values. Non-object elements and invalid nested containers
+/// remain unchanged. The transformation is deterministic and idempotent and
+/// creates no diagnostic, canonical bytes, identity, authority, or executable
+/// artifact.
+#[must_use]
+pub fn apply_blueprint_defaults(source: ValidatedSource) -> DefaultedSource {
+    let mut value = source.into_value();
+    let root = value
+        .as_object_mut()
+        .expect("ValidatedSource always contains a root object");
+
+    for key in OPTIONAL_ROOT_LISTS {
+        root.entry(key).or_insert_with(|| Value::Array(Vec::new()));
+    }
+
+    apply_to_object_elements(root.get_mut("inputs"), apply_input_defaults);
+    apply_to_object_elements(root.get_mut("exports"), apply_output_defaults);
+
+    apply_to_object_elements(root.get_mut("units"), |unit| {
+        let kind_defaults = match unit.get("kind").and_then(Value::as_str) {
+            Some("program" | "gate") => Some(("stateless", false)),
+            Some("model") => Some(("stateless", true)),
+            Some("controller") => Some(("event_sourced", false)),
+            Some("broker") => Some(("external", false)),
+            _ => None,
+        };
+
+        if let Some((mode, is_model)) = kind_defaults {
+            unit.entry("mode")
+                .or_insert_with(|| Value::String(mode.to_owned()));
+            if is_model {
+                unit.entry("repair_attempts")
+                    .or_insert_with(|| Value::Number(Number::from(0)));
+                unit.entry("fallback").or_insert_with(|| Value::Bool(false));
+            }
+        }
+
+        apply_to_object_elements(unit.get_mut("inputs"), apply_input_defaults);
+        apply_to_object_elements(unit.get_mut("outputs"), apply_output_defaults);
+    });
+
+    apply_to_object_elements(root.get_mut("links"), |link| {
+        link.entry("mode")
+            .or_insert_with(|| Value::String("data".to_owned()));
+        link.entry("delivery")
+            .or_insert_with(|| Value::String("multicast".to_owned()));
+        link.entry("when").or_insert_with(constant_true_predicate);
+    });
+    apply_to_object_elements(root.get_mut("policies"), |policy| {
+        policy.entry("when").or_insert_with(constant_true_predicate);
+    });
+    apply_to_object_elements(root.get_mut("scenarios"), |scenario| {
+        scenario
+            .entry("required")
+            .or_insert_with(|| Value::Bool(true));
+    });
+
+    DefaultedSource { value }
+}
+
+fn apply_to_object_elements(
+    value: Option<&mut Value>,
+    mut apply: impl FnMut(&mut Map<String, Value>),
+) {
+    let Some(Value::Array(elements)) = value else {
+        return;
+    };
+    for element in elements {
+        if let Value::Object(object) = element {
+            apply(object);
+        }
+    }
+}
+
+fn apply_input_defaults(input: &mut Map<String, Value>) {
+    input.entry("required").or_insert_with(|| Value::Bool(true));
+    input
+        .entry("cardinality")
+        .or_insert_with(|| Value::String("one".to_owned()));
+    input
+        .entry("on_absence")
+        .or_insert_with(|| Value::String("block".to_owned()));
+}
+
+fn apply_output_defaults(output: &mut Map<String, Value>) {
+    output
+        .entry("cardinality")
+        .or_insert_with(|| Value::String("one".to_owned()));
+}
+
+fn constant_true_predicate() -> Value {
+    let mut predicate = Map::new();
+    predicate.insert("all".to_owned(), Value::Array(Vec::new()));
+    Value::Object(predicate)
 }
 
 fn is_local_name(value: &str) -> bool {
