@@ -1,11 +1,12 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice YAML source projection.
+//! Restricted Lattice source parsing and root validation.
 //!
-//! This crate owns only the PC2 boundary from UTF-8 YAML source to an
-//! NFC-normalized, JSON-shaped value tree. Root-shape validation, source
-//! defaults, compilation, identity, authority, manifests, package resolution,
-//! and executable output belong to later phases.
+//! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
+//! JSON-shaped value tree and the PC3 boundary from that tree to a validated
+//! Core root shape. Source defaults, declaration validation, compilation,
+//! identity, authority, manifests, package resolution, and executable output
+//! belong to later phases.
 
 use core::fmt;
 use saphyr_parser::{Event, Marker, Parser, ScalarStyle, Span, Tag};
@@ -15,10 +16,11 @@ use std::borrow::Cow;
 use std::collections::{BTreeMap, BTreeSet};
 use unicode_normalization::UnicodeNormalization;
 
-/// Stable PC2 source diagnostic.
+/// Stable source diagnostic for PC2 parsing and PC3 root validation.
 ///
-/// Only these four fields are normative. Upstream parser messages are never
-/// exposed through this API.
+/// Upstream parser messages are never exposed through this API. PC2 freezes
+/// all four fields; PC3 freezes `code` and `path` and always leaves the source
+/// position fields as `None`.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct SourceDiagnostic {
     pub code: &'static str,
@@ -34,6 +36,31 @@ impl fmt::Display for SourceDiagnostic {
 }
 
 impl std::error::Error for SourceDiagnostic {}
+
+/// Non-authoritative PC3 output carrying an unchanged PC2 value tree.
+///
+/// Construction is restricted to [`validate_blueprint_source`]. This wrapper
+/// proves only that the frozen Core root-shape checks passed. It is not a
+/// compiled Blueprint, an identity preimage, a Manifest, or execution
+/// authority.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct ValidatedSource {
+    value: Value,
+}
+
+impl ValidatedSource {
+    /// Borrow the unchanged PC2 value tree.
+    #[must_use]
+    pub fn as_value(&self) -> &Value {
+        &self.value
+    }
+
+    /// Consume the wrapper and return the unchanged PC2 value tree.
+    #[must_use]
+    pub fn into_value(self) -> Value {
+        self.value
+    }
+}
 
 /// Parse one PC2 Lattice source document.
 ///
@@ -60,6 +87,133 @@ pub fn parse_blueprint_source(source: &[u8]) -> Result<Value, SourceDiagnostic> 
     cursor.expect_stream_end()?;
 
     Ok(node_to_json(root.value))
+}
+
+const PERMITTED_ROOT_KEYS: [&str; 14] = [
+    "lattice",
+    "profile",
+    "module",
+    "version",
+    "purpose",
+    "imports",
+    "inputs",
+    "contracts",
+    "resources",
+    "units",
+    "links",
+    "policies",
+    "exports",
+    "scenarios",
+];
+
+const REQUIRED_ROOT_KEYS: [&str; 6] = [
+    "lattice", "profile", "module", "version", "purpose", "units",
+];
+
+/// Validate the frozen PC3 Core root shape without changing the value tree.
+///
+/// Validation is limited to the root object, its exact key set, required keys,
+/// Core selectors, module metadata, and root collection categories. Array
+/// elements are deliberately opaque to PC3. No defaults are inserted and no
+/// identity, resolution, compilation, Manifest, Binding, or authority is
+/// created.
+///
+/// # Errors
+///
+/// Returns the first diagnostic in the precedence frozen by PC3: root type,
+/// UTF-8-ordered unknown key, required-key order, then permitted-key value
+/// order. PC3 diagnostics have no source line or column because the PC2 value
+/// boundary does not retain source locations.
+pub fn validate_blueprint_source(value: Value) -> Result<ValidatedSource, SourceDiagnostic> {
+    let Some(root) = value.as_object() else {
+        return Err(source_validation_diagnostic("SOURCE_ROOT_TYPE", ""));
+    };
+
+    if let Some(key) = root
+        .keys()
+        .filter(|key| !PERMITTED_ROOT_KEYS.contains(&key.as_str()))
+        .min_by(|left, right| left.as_bytes().cmp(right.as_bytes()))
+    {
+        return Err(source_validation_diagnostic(
+            "SOURCE_UNKNOWN_KEY",
+            &json_pointer_key(key),
+        ));
+    }
+
+    for key in REQUIRED_ROOT_KEYS {
+        if !root.contains_key(key) {
+            return Err(source_validation_diagnostic(
+                "SOURCE_REQUIRED_KEY_MISSING",
+                &json_pointer_key(key),
+            ));
+        }
+    }
+
+    for key in PERMITTED_ROOT_KEYS {
+        let Some(root_value) = root.get(key) else {
+            continue;
+        };
+        let valid = match key {
+            "lattice" => root_value.as_str() == Some("0.3"),
+            "profile" => root_value.as_str() == Some("lattice-core-0.1"),
+            "module" => root_value.as_str().is_some_and(is_local_name),
+            "version" => root_value.as_str().is_some_and(is_core_version),
+            "purpose" => root_value.is_string(),
+            "imports" | "inputs" | "contracts" | "resources" | "units" | "links" | "policies"
+            | "exports" | "scenarios" => root_value.is_array(),
+            _ => unreachable!("permitted root keys are exhaustively matched"),
+        };
+        if !valid {
+            return Err(source_validation_diagnostic(
+                "SOURCE_INVALID_ROOT_VALUE",
+                &json_pointer_key(key),
+            ));
+        }
+    }
+
+    Ok(ValidatedSource { value })
+}
+
+fn is_local_name(value: &str) -> bool {
+    let mut segments = value.split('_');
+    let Some(first) = segments.next() else {
+        return false;
+    };
+    let mut characters = first.chars();
+    characters
+        .next()
+        .is_some_and(|character| character.is_ascii_lowercase())
+        && characters.all(|character| character.is_ascii_lowercase() || character.is_ascii_digit())
+        && segments.all(|segment| {
+            !segment.is_empty()
+                && segment
+                    .chars()
+                    .all(|character| character.is_ascii_lowercase() || character.is_ascii_digit())
+        })
+}
+
+fn is_core_version(value: &str) -> bool {
+    let mut components = value.split('.');
+    let valid_component = |component: &str| {
+        !component.is_empty() && component.bytes().all(|byte| byte.is_ascii_digit())
+    };
+    components.next().is_some_and(valid_component)
+        && components.next().is_some_and(valid_component)
+        && components.next().is_some_and(valid_component)
+        && components.next().is_none()
+}
+
+fn json_pointer_key(key: &str) -> String {
+    format!("/{}", key.replace('~', "~0").replace('/', "~1"))
+}
+
+fn source_validation_diagnostic(code: &'static str, path: &str) -> SourceDiagnostic {
+    SourceDiagnostic {
+        code,
+        path: path.to_owned(),
+        line: None,
+        column: None,
+    }
 }
 
 fn audit_yaml_features(source: &str) -> Result<(), SourceDiagnostic> {

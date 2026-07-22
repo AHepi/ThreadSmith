@@ -59,3 +59,35 @@ This bounded corrective tranche was authorized after the recovered Lattice Stand
 The implementation allowlist is `crates/threadsmith-compiler/src/lib.rs`, its PC2 focused test, `conformance/pc2/parser/**`, `docs/standard/LATTICE_STANDARD_0.3.md`, `docs/pc2/**`, and additive state entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. Cargo manifests, the lockfile, schema/canonical crates, Foundation/PC1 conformance, identities, package resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, and user surfaces remain excluded.
 
 Only after this tranche is accepted and published may the next bounded task return to `PC3 scope reconciliation and semantic freeze`. This plan entry does not authorize PC3 implementation.
+
+## PC3 scope reconciliation and semantic-freeze tranche
+
+This documentation-only tranche was authorized after PC2 became Standard-aligned. It maps PC3 to the immediately following lifecycle stage without implementing product code.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Lifecycle reconciliation | PC3 is derived from the Standard pipeline rather than convenience or future architecture. | 2 | Complete |
+| Responsibility freeze | `Source validate` owns exact Core root-envelope checks and produces only `Valid root shape`. | 2 | Complete |
+| Authority and deferral boundary | Defaults, identities, resolution, declaration normalization, static checking, Manifests, qualification, Binding, and runtime remain later. | 2 | Complete |
+| Fixture design | Root-valid, root-invalid, precedence, preservation, and deferred-semantics cases have exact expected outcomes. | 2 | Complete |
+| Regression and consistency verification | Foundation, PC1, PC2, Standard, fixture, documentation, and provenance checks pass. | 2 | Complete |
+| Read-only acceptance | A separate adversarial pass classifies P0-P3 and accepts only with no open P0/P1. | 2 | Complete after repair cycle 1 |
+
+The documentation allowlist is `docs/pc3/**`, `conformance/pc3/source_validate/**`, and additive PC3 state entries in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. Rust source, Cargo files, accepted conformance artifacts, PC2 semantics, defaults, identities, packages, resolution, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, user surfaces, and delivery actions remain excluded.
+
+If this freeze passes verification and review, the next bounded task is `PC3 Source validate implementation against the frozen root-envelope fixtures`. That sequence statement does not authorize implementation.
+
+## PC3 Source validate implementation tranche
+
+This tranche was authorized after the PC3 scope and semantics were accepted. It implements only the frozen `Source validate -> Valid root shape` boundary.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Public boundary | `threadsmith-compiler` validates one PC2 value and returns a non-authoritative wrapper over the unchanged tree. | 2 | Complete |
+| Frozen behavior | Root type, key allowlist, required keys, selectors, metadata syntax, collection categories, and deterministic precedence match the freeze. | 2 | Complete |
+| Focused conformance | All 19 frozen fixtures and focused grammar, exhaustive categories, precedence, preservation, and non-ownership tests pass. | 2 | Complete: 7 tests |
+| Regression qualification | Formatting, all-target checks, Clippy, Foundation, PC1, and PC2 pass locked and offline. | 2 | Complete: 39 tests total |
+| Read-only acceptance | Separate implementation and closure reviews have no open P0/P1 finding. | 2 | Complete after repair cycle 1 |
+| Publication | Accepted PC3 tree is committed to and fetched back from remote `main`; local and remote tree identities match. | 0 | Delivery gate; record externally |
+
+The production allowlist is `crates/threadsmith-compiler/src/lib.rs`; focused tests are limited to `crates/threadsmith-compiler/tests/pc3_source_validate.rs`. Evidence may change under `docs/pc3/**`, `conformance/pc3/source_validate/**`, and additive PC3 entries in the three durable state files. Cargo files, accepted Foundation/PC1/PC2 semantics, defaults, declarations, resolution, identities, Lockfiles, Manifests, qualification, Binding, runtime, builder, providers, user surfaces, and PC4 remain excluded.

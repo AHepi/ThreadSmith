@@ -60,3 +60,27 @@ The later `PC2-R-*` reconciliation decisions supersede entries in this section a
 | PC2-R-006 | Keep deterministic parser diagnostics but retire root/profile/default codes from PC2. | Later phases may use the Standard's stable compiler codes; PC2 exposes only parser-boundary codes. |
 | PC2-R-007 | Keep `saphyr-parser =0.0.11` and the accepted lock graph unchanged. | No dependency, licence, native, FFI, offline, or reproducibility policy is reopened. |
 | PC2-R-008 | Supersede incompatible fixtures instead of preserving false acceptance evidence as active conformance. | Historical PC2 ledgers and reports remain unchanged and continue to describe their original accepted trees. |
+
+## PC3 scope-reconciliation decisions
+
+These decisions freeze preparation only. They do not implement or accept PC3 product code.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC3-S-001 | Assign PC3 exactly the Standard `Source validate` phase, whose output is `Valid root shape`. | The explicit output prevents declaration normalization or cross-declaration static checking from being pulled forward. |
+| PC3-S-002 | Keep ownership in `threadsmith-compiler` and represent success conceptually as a non-authoritative wrapper over the unchanged PC2 value. | `threadsmith-schema` remains data structures; PC3 creates no identity, artifact, Manifest, Binding, or authority. |
+| PC3-S-003 | Validate the exact root allowlist, six required keys, metadata scalar categories, Core lattice/profile selectors, module-name grammar, Core version form, and declaration-list container categories. | PC3 applies no declaration-element validation and no defaults. |
+| PC3-S-004 | Preserve absent versus explicit members and every array order without mutation. | Standard section 16 insertion belongs to `Default`; canonical collection ordering belongs to `Sort`. |
+| PC3-S-005 | Freeze first error as root type, UTF-8-sorted unknown key, Standard-ordered missing key, then Standard-ordered invalid root value. | Diagnostics use stable code and RFC 6901 path; source positions are unavailable at the accepted PC2 value boundary. |
+| PC3-S-006 | Defer declaration forms, name uniqueness, unit-profile checks, references, contracts, ports, links, policies, routes, controls, budgets, secrets, and completeness. | Deferral is not semantic acceptance; later lifecycle intakes must allocate and freeze these rules. |
+| PC3-S-007 | Add no dependency during scope freeze. | Existing JSON data and standard Rust operations suffice; any dependency reopens licence and provenance intake. |
+
+## PC3 implementation decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC3-P-001 | Expose `validate_blueprint_source(Value) -> Result<ValidatedSource, SourceDiagnostic>` in `threadsmith-compiler`. | The caller supplies accepted PC2 data; PC3 neither reparses YAML nor revalidates PC2 syntax. |
+| PC3-P-002 | Keep `ValidatedSource.value` private and expose only immutable borrowing and consuming extraction. | The wrapper proves only frozen root shape and carries no identity, canonical-byte, Manifest, Binding, or authority meaning. |
+| PC3-P-003 | Reuse `SourceDiagnostic` with PC3 positions always absent. | PC3 owns only its four frozen codes and RFC 6901 path; it does not reuse later compiler errors. |
+| PC3-P-004 | Implement name and version recognition with standard Rust operations. | No regex/parser dependency or Cargo graph mutation is required. |
+| PC3-P-005 | Treat declaration array elements as opaque and return the input value unchanged. | No defaults, declaration validation, profile unit-kind gate, resolution, or static checking enters PC3. |

@@ -29,14 +29,24 @@ State record status: reconstructed. Updated 2026-07-22.
 | PC2 Standard aligned | true |
 | PC2 reconciliation verification complete | true |
 | PC2 reconciliation read-only review complete | true |
-| PC3 scope reconciled | false |
-| PC3 implementation started | false |
+| PC3 scope reconciled | true |
+| PC3 semantics frozen | true |
+| PC3 freeze verification complete | true |
+| PC3 freeze read-only review complete | true |
+| PC3 implementation started | true |
+| PC3 accepted | true |
+| PC3 implementation verification complete | true |
+| PC3 implementation read-only review complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC3 scope reconciliation and semantic freeze; not authorized by this PC2 acceptance |
+| Next bounded task | PC4 Default-phase scope reconciliation and semantic freeze; not authorized by this acceptance |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
 The accepted PC2 implementation adds `threadsmith-compiler` solely as the owner of UTF-8 restricted-YAML source projection into an NFC-normalized JSON-shaped tree. It adds no compilation, resolution, identity, digest, Manifest, execution, runtime, or builder behavior. Foundation/PC1 code, semantics, identities, canonical-byte rules, authority boundaries, and conformance evidence remain unchanged; `threadsmith-schema` remains limited to schemas and data structures.
 
 The recovered Lattice Standard 0.3 subsequently proved that accepted PC2 had absorbed root validation, default insertion, and profile checks belonging to later compiler phases and had rejected Standard-permitted syntax. The accepted reconciliation corrects PC2 to the Standard's `Parse` phase only. It preserves absent fields for `Source validate`, adds no later compiler behavior, and leaves PC3 unstarted. Commit and remote-tree identities are external delivery evidence because they cannot be embedded self-referentially in this file.
+
+The PC3 scope reconciliation assigns PC3 exactly the Standard `Source validate` phase and its `Valid root shape` output. The freeze validates only the Core root envelope and compatibility selectors, preserves the PC2 value unchanged, and leaves defaults, declaration semantics, resolution, identities, static checking, Manifests, and authority to later named phases. At freeze acceptance, PC3 implementation remained unstarted.
+
+PC3 implementation adds the public `validate_blueprint_source` boundary and non-authoritative `ValidatedSource` wrapper in `threadsmith-compiler`. It performs only the frozen root checks, returns the unchanged PC2 value, adds no dependency, and is accepted after focused verification, full regression qualification, one bounded test-coverage repair, and a fresh read-only closure review. Publication identities remain external because they cannot be embedded self-referentially in this state file.

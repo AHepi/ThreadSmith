@@ -1,0 +1,138 @@
+{
+  "profile": "threadsmith-pc3-source-validate-fixtures-0.1",
+  "standard": "docs/standard/LATTICE_STANDARD_0.3.md",
+  "scope": "docs/pc3/PC3_SCOPE_RECONCILIATION.md",
+  "semantic_freeze": "docs/pc3/PC3_SEMANTIC_FREEZE.md",
+  "input_boundary": "PC2 NFC-normalized JSON-shaped value",
+  "cases": [
+    {
+      "id": "valid_minimal_root",
+      "class": "valid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"tiny_writer","version":"1.0.0","purpose":"Minimal","units":[]},
+      "expected": {"result":"valid_unchanged"},
+      "covers": ["required root keys", "no optional default insertion"]
+    },
+    {
+      "id": "valid_complete_root",
+      "class": "valid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"complete_core","version":"1.0.0","purpose":"Complete root","imports":[],"inputs":[],"contracts":[],"resources":[],"units":[],"links":[],"policies":[],"exports":[],"scenarios":[]},
+      "expected": {"result":"valid_unchanged"},
+      "covers": ["all permitted root keys", "explicit empty lists"]
+    },
+    {
+      "id": "valid_presence_and_order_preserved",
+      "class": "boundary",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"presence_case","version":"01.002.0003","purpose":"","units":[3,1,2],"links":[]},
+      "expected": {"result":"valid_unchanged"},
+      "covers": ["absent versus explicit", "array order", "no unstated purpose or leading-zero rule", "declaration elements deferred"]
+    },
+    {
+      "id": "deferred_valid_looking_core_declarations",
+      "class": "boundary_deferred",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"valid_looking_pass_through","version":"1.0.0","purpose":"Later semantics","inputs":[{"input":"question"}],"contracts":[{"contract":"question","version":"1.0.0","codec":"utf8"}],"resources":[{"resource":"writer_program","kind":"program","path":"bin/writer","sha256":"0000"}],"units":[{"unit":"writer","kind":"program","inputs":[{"port":"question","contract":"question"}],"outputs":[{"port":"answer","contract":"question"}]}],"links":[{"link":"writer_answer","from":"writer.answer","to":"writer.question"}],"policies":[{"policy":"deny_default","scope":"broker_request","when":{"all":[]},"decision":"deny"}],"exports":[{"export":"answer"}],"scenarios":[{"scenario":"smoke","kind":"fixture"}]},
+      "expected": {"result":"valid_unchanged","semantic_status":"deferred"},
+      "covers": ["valid-looking declarations", "references", "contracts", "ports and links", "policies", "no semantic endorsement"]
+    },
+    {
+      "id": "deferred_invalid_declaration_semantics",
+      "class": "boundary_deferred",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"invalid_semantic_pass_through","version":"1.0.0","purpose":"Later failures","contracts":[{"contract":"Bad-Name"},{"contract":"Bad-Name"}],"units":[{"unit":"writer","kind":"store","inputs":[{"port":"in","contract":"missing"}],"limits":{"model_calls":-1}},{"unit":"loop","kind":"controller","transitions":[{"from":"a","to":"a"}]}],"links":[{"link":"bad_route","from":"missing.output","to":"writer.in","predicate":{"payload":"forbidden"}}],"policies":[{"policy":"bad_operator","when":{"invented":[]}}],"resources":[{"resource":"secret_literal","secret":"plaintext"}]},
+      "expected": {"result":"valid_unchanged","semantic_status":"deferred"},
+      "covers": ["invalid declaration name", "duplicate name", "missing fields and references", "Extended-only kind", "invalid route and policy", "unbounded control", "invalid budget", "secret value"]
+    },
+    {
+      "id": "invalid_non_object_root",
+      "class": "invalid",
+      "input": [],
+      "expected": {"code":"SOURCE_ROOT_TYPE","path":""}
+    },
+    {
+      "id": "invalid_unknown_root_key_precedes_missing",
+      "class": "invalid",
+      "input": {"compiler":"not_source"},
+      "expected": {"code":"SOURCE_UNKNOWN_KEY","path":"/compiler"}
+    },
+    {
+      "id": "invalid_unknown_key_utf8_order",
+      "class": "invalid",
+      "input": {"zeta":1,"alpha":2},
+      "expected": {"code":"SOURCE_UNKNOWN_KEY","path":"/alpha"}
+    },
+    {
+      "id": "invalid_unknown_key_pointer_escape",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"pointer_escape","version":"1.0.0","purpose":"Wrong","units":[],"~/":"unknown"},
+      "expected": {"code":"SOURCE_UNKNOWN_KEY","path":"/~0~1"}
+    },
+    {
+      "id": "invalid_missing_required_order",
+      "class": "invalid",
+      "input": {"module":"partial","version":"1.0.0","purpose":"Partial","units":[]},
+      "expected": {"code":"SOURCE_REQUIRED_KEY_MISSING","path":"/lattice"}
+    },
+    {
+      "id": "invalid_lattice_value",
+      "class": "invalid",
+      "input": {"lattice":"0.4","profile":"lattice-core-0.1","module":"wrong_lattice","version":"1.0.0","purpose":"Wrong","units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/lattice"}
+    },
+    {
+      "id": "invalid_lattice_type",
+      "class": "invalid",
+      "input": {"lattice":3,"profile":"lattice-core-0.1","module":"wrong_lattice_type","version":"1.0.0","purpose":"Wrong","units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/lattice"}
+    },
+    {
+      "id": "invalid_profile_value",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-builder-0.1","module":"wrong_profile","version":"1.0.0","purpose":"Wrong","units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/profile"}
+    },
+    {
+      "id": "invalid_module_name",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"Bad-Name","version":"1.0.0","purpose":"Wrong","units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/module"}
+    },
+    {
+      "id": "invalid_version_form",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"bad_version","version":"1.0.0-beta","purpose":"Wrong","units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/version"}
+    },
+    {
+      "id": "invalid_purpose_type",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"bad_purpose","version":"1.0.0","purpose":null,"units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/purpose"}
+    },
+    {
+      "id": "invalid_collection_type",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"bad_units","version":"1.0.0","purpose":"Wrong","units":{}},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/units"}
+    },
+    {
+      "id": "invalid_optional_collection_type",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"bad_imports","version":"1.0.0","purpose":"Wrong","imports":{},"units":[]},
+      "expected": {"code":"SOURCE_INVALID_ROOT_VALUE","path":"/imports"}
+    },
+    {
+      "id": "forbidden_authority_root",
+      "class": "invalid",
+      "input": {"lattice":"0.3","profile":"lattice-core-0.1","module":"authority_attempt","version":"1.0.0","purpose":"Wrong","units":[],"binding":{"run_id":"not_authority"}},
+      "expected": {"code":"SOURCE_UNKNOWN_KEY","path":"/binding"},
+      "covers": ["source cannot add root authority"]
+    }
+  ],
+  "later_phase_fixture_requirements": [
+    {"category":"declaration forms and required fields","pc3_expectation":"deferred unchanged","future_owner":"Normalize intake to resolve"},
+    {"category":"declaration names and duplicates","pc3_expectation":"deferred unchanged","future_owner":"later compiler intake to resolve"},
+    {"category":"references, contracts, ports, links, labels","pc3_expectation":"deferred unchanged","future_owner":"Static check"},
+    {"category":"policy expressions and routes","pc3_expectation":"deferred unchanged","future_owner":"Static check"},
+    {"category":"controller bounds and budgets","pc3_expectation":"deferred unchanged","future_owner":"Static check"},
+    {"category":"secrets and ambient authority","pc3_expectation":"deferred unless expressed as an unknown root key","future_owner":"Static check"},
+    {"category":"Extended-only unit kinds","pc3_expectation":"deferred unchanged","future_owner":"later profile-validation intake to resolve"}
+  ]
+}
