@@ -160,3 +160,37 @@ product code.
 | PC5-S-009 | Prove root-profile participation at the canonical-preimage layer while requiring public PC5 tests to respect PC3's exact Core-profile gate. | An alternate profile cannot be forged into `DefaultedSource`; it is separately rejected by PC3. |
 | PC5-S-010 | Keep canonical bytes out of the new PC5 output and initial PC5-specific public API while binding exact byte hex and hashes in conformance fixtures. | Existing generic canonical testability remains; no PC5 metadata or audit surface is invented. |
 | PC5-S-011 | Freeze exact canonical, equivalence, distinction, later-invalid, binding, repeatability, and non-authority fixtures before implementation. | The fixture contract creates no Rust function, dependency, artifact, identity, or execution authority. |
+
+## PC5 Digest-phase implementation decisions
+
+These decisions record implementation choices only. Their later verification,
+independent review, and acceptance are recorded by separate gates below.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC5-P-001 | Replace delegation to generic JSON serialization with one exact writer inside `threadsmith-canonical`. | The existing public canonical API and SHA-256 owner remain unchanged; the writer closes only erratum bytes. |
+| PC5-P-002 | Encode integers from `serde_json::Number::as_str`, rejecting floating syntax and normalizing only negative zero. | The existing `arbitrary_precision` Foundation domain remains intact while PC5 inputs remain signed `i64`. |
+| PC5-P-003 | Normalize keys, sort their UTF-8 bytes before escaping, reject normalized collisions, and preserve arrays recursively. | Canonical encoding performs no semantic collection sort or declaration validation. |
+| PC5-P-004 | Add only existing `threadsmith-canonical` and `threadsmith-schema` workspace path edges to `threadsmith-compiler`. | Cargo.lock records only those local dependency edges; the external graph is unchanged. |
+| PC5-P-005 | Wrap the canonical Blueprint-kind `NativeLatticeId` in private-field `BlueprintDigest`. | Generic caller-created native claims retain their PC1 meaning but cannot become PC5-produced digests through the public API. |
+| PC5-P-006 | Construct private-field `DigestedSource` only through `digest_source(DefaultedSource)`. | No constructor, deserializer, mutation, or replacement can publicly pair an independent source and digest. |
+| PC5-P-007 | Treat canonical encoding failure for public PC5 input as an internal invariant failure. | PC5 returns no `SourceDiagnostic` and does not validate duplicate names or any later-invalid declaration content. |
+| PC5-P-008 | Keep canonical bytes transient and expose only immutable digest/source borrows plus consuming source recovery. | No canonical-byte metadata, provenance, authority, artifact, or later identity is stored. |
+| PC5-P-009 | At the earlier unavailable-toolchain checkpoint, stop rather than installing software or using non-Rust substitutes as acceptance evidence. | Fixture/hash/static checks were recorded separately at that checkpoint; verification later completed after the pinned toolchain was restored. Review and acceptance remain separate gates. |
+
+## PC5 Digest-phase totality repair decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC5-R-001 | Admit caller-created `serde_json::Value` input to the frozen PC2 value domain before PC3 root validation can construct `ValidatedSource`. Reject failure with `SOURCE_VALUE_DOMAIN_INVALID`. | This is phase-input domain admission, not declaration validation or a PC5 diagnostic. Genuine PC2 output and frozen PC3 diagnostic precedence are unchanged. |
+| PC5-R-002 | Walk arrays by increasing index and objects by ascending raw UTF-8 key bytes, depth first. Check each object's key set before its child values; report the later raw-sorted key for a post-NFC collision and otherwise the first raw-sorted non-NFC key. | Diagnostic paths use the existing RFC 6901 pointer representation and have no source line or column because raw values carry no source coordinates. |
+| PC5-R-003 | Reject non-NFC strings or keys, non-minimal/non-`i64` numbers, and post-NFC key collisions without normalizing or mutating caller input. | `digest_source(DefaultedSource) -> DigestedSource`, the canonical writer, digest preimage, declaration-validation ownership, and later-phase semantics are unchanged. |
+
+## PC5 Digest-phase acceptance decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC5-A-001 | Accept the verified, totality-repaired PC5 implementation after its final independent read-only review reported P0=0, P1=0, P2=2, and P3=1. | Qualification passed 52 tests with the pinned Rust 1.97.1 toolchain; no acceptance-blocking finding remains. |
+| PC5-A-002 | Retain the two generic/test-hardening P2 findings and the rustdoc P3 finding as explicit non-blocking debt. | Acceptance neither conceals nor repairs that debt and does not change canonical bytes, the Blueprint preimage, source binding, or phase ownership. |
+| PC5-A-003 | Accept PC5 only within the frozen `DefaultedSource -> digest_source -> DigestedSource` boundary. | Acceptance creates no package, Lockfile, Manifest, qualification, Binding, Builder, runtime, provider, or execution authority. |
+| PC5-A-004 | Require PC6 Package scan to undergo its own scope reconciliation and semantic freeze before any implementation. | PC5 acceptance does not authorize PC6 implementation or any later compiler or product layer. |

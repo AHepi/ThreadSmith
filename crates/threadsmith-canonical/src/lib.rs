@@ -2,7 +2,6 @@
 
 use serde_json::{Number, Value};
 use sha2::{Digest, Sha256};
-use std::collections::BTreeMap;
 use threadsmith_schema::{ArtifactKind, NativeLatticeId, SchemaError, Sha256Digest, error_code};
 use unicode_normalization::UnicodeNormalization;
 
@@ -11,13 +10,9 @@ use unicode_normalization::UnicodeNormalization;
 /// Strings and object keys are normalized to NFC, object keys are sorted,
 /// whitespace is omitted, and floating-point numbers are rejected.
 pub fn canonical_bytes(value: &Value) -> Result<Vec<u8>, SchemaError> {
-    let normalized = normalize_value(value)?;
-    serde_json::to_vec(&normalized).map_err(|error| {
-        SchemaError::new(
-            error_code::SCHEMA_INVALID,
-            format!("canonical JSON serialization failed: {error}"),
-        )
-    })
+    let mut output = Vec::new();
+    write_canonical_value(value, &mut output)?;
+    Ok(output)
 }
 
 /// Calculates SHA-256 over the canonical byte form.
@@ -85,41 +80,58 @@ pub fn sha256_digest(bytes: &[u8]) -> Sha256Digest {
     Sha256Digest::from_bytes(output)
 }
 
-fn normalize_value(value: &Value) -> Result<Value, SchemaError> {
+fn write_canonical_value(value: &Value, output: &mut Vec<u8>) -> Result<(), SchemaError> {
     match value {
-        Value::Null | Value::Bool(_) => Ok(value.clone()),
-        Value::Number(number) => normalize_number(number),
-        Value::String(text) => Ok(Value::String(text.nfc().collect())),
-        Value::Array(values) => values
-            .iter()
-            .map(normalize_value)
-            .collect::<Result<Vec<_>, _>>()
-            .map(Value::Array),
+        Value::Null => output.extend_from_slice(b"null"),
+        Value::Bool(true) => output.extend_from_slice(b"true"),
+        Value::Bool(false) => output.extend_from_slice(b"false"),
+        Value::Number(number) => write_canonical_number(number, output)?,
+        Value::String(text) => write_canonical_string(text, output),
+        Value::Array(values) => {
+            output.push(b'[');
+            for (index, value) in values.iter().enumerate() {
+                if index != 0 {
+                    output.push(b',');
+                }
+                write_canonical_value(value, output)?;
+            }
+            output.push(b']');
+        }
         Value::Object(values) => {
-            let mut normalized = BTreeMap::new();
+            let mut normalized = Vec::with_capacity(values.len());
             for (raw_key, raw_value) in values {
                 let key: String = raw_key.nfc().collect();
-                match normalized.entry(key) {
-                    std::collections::btree_map::Entry::Vacant(entry) => {
-                        entry.insert(normalize_value(raw_value)?);
-                    }
-                    std::collections::btree_map::Entry::Occupied(entry) => {
-                        return Err(SchemaError::new(
-                            error_code::SCHEMA_INVALID,
-                            format!(
-                                "duplicate canonical object key after NFC normalization: {:?}",
-                                entry.key()
-                            ),
-                        ));
-                    }
+                normalized.push((key, raw_value));
+            }
+            normalized.sort_by(|left, right| left.0.as_bytes().cmp(right.0.as_bytes()));
+            for pair in normalized.windows(2) {
+                if pair[0].0 == pair[1].0 {
+                    return Err(SchemaError::new(
+                        error_code::SCHEMA_INVALID,
+                        format!(
+                            "duplicate canonical object key after NFC normalization: {:?}",
+                            pair[0].0
+                        ),
+                    ));
                 }
             }
-            Ok(Value::Object(normalized.into_iter().collect()))
+
+            output.push(b'{');
+            for (index, (key, value)) in normalized.into_iter().enumerate() {
+                if index != 0 {
+                    output.push(b',');
+                }
+                write_canonical_string(&key, output);
+                output.push(b':');
+                write_canonical_value(value, output)?;
+            }
+            output.push(b'}');
         }
     }
+    Ok(())
 }
 
-fn normalize_number(number: &Number) -> Result<Value, SchemaError> {
+fn write_canonical_number(number: &Number, output: &mut Vec<u8>) -> Result<(), SchemaError> {
     let text = number.as_str();
     if text.bytes().any(|byte| matches!(byte, b'.' | b'e' | b'E')) {
         return Err(SchemaError::new(
@@ -128,9 +140,39 @@ fn normalize_number(number: &Number) -> Result<Value, SchemaError> {
         ));
     }
     if text == "-0" {
-        return Ok(Value::Number(Number::from(0)));
+        output.push(b'0');
+    } else {
+        output.extend_from_slice(text.as_bytes());
     }
-    Ok(Value::Number(number.clone()))
+    Ok(())
+}
+
+fn write_canonical_string(text: &str, output: &mut Vec<u8>) {
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+
+    output.push(b'"');
+    for character in text.nfc() {
+        match character {
+            '"' => output.extend_from_slice(br#"\""#),
+            '\\' => output.extend_from_slice(br#"\\"#),
+            '\u{0008}' => output.extend_from_slice(br"\b"),
+            '\t' => output.extend_from_slice(br"\t"),
+            '\n' => output.extend_from_slice(br"\n"),
+            '\u{000c}' => output.extend_from_slice(br"\f"),
+            '\r' => output.extend_from_slice(br"\r"),
+            character if character <= '\u{001f}' => {
+                let byte = character as u8;
+                output.extend_from_slice(br"\u00");
+                output.push(HEX[usize::from(byte >> 4)]);
+                output.push(HEX[usize::from(byte & 0x0f)]);
+            }
+            character => {
+                let mut encoded = [0_u8; 4];
+                output.extend_from_slice(character.encode_utf8(&mut encoded).as_bytes());
+            }
+        }
+    }
+    output.push(b'"');
 }
 
 #[cfg(test)]

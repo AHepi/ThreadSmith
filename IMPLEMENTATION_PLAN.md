@@ -175,3 +175,38 @@ The next bounded task is `PC5 Digest-phase implementation against the frozen
 semantics and fixtures`. That sequence statement does not authorize
 implementation, dependency mutation, commit, push, package work, or any later
 compiler or runtime phase.
+
+## PC5 Digest-phase implementation tranche
+
+This tranche implemented and focused-tested only the frozen
+`DefaultedSource -> DigestedSource` boundary. Independent review and acceptance
+completed as separate gates; every later phase remains separate and
+unauthorized.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Canonical core closure | The single accepted Rust encoder emits every Canonical JSON Erratum byte while retaining the Foundation arbitrary-integer domain. | 2 | Complete: all 8 golden byte/hash vectors and the arbitrary-integer regression pass |
+| Public PC5 boundary | Opaque `BlueprintDigest` and `DigestedSource` bind one exact post-default source through `digest_source`. | 2 | Complete: public-path tests pass |
+| Focused conformance | Every canonical, equivalence, distinction, profile, later-invalid, binding, repeatability, non-authority, and public-input-domain requirement uses the public path where reachable. | 2 | Complete: 9 focused PC5 tests |
+| Totality repair | Caller-created values outside the frozen PC2 domain fail closed before `ValidatedSource`; genuine PC2 values and later-invalid domain-valid declarations retain their accepted paths. | 1 | Complete, verified, and independently reviewed |
+| Regression qualification | Formatting, all-target check/test, all-feature Clippy, dependency tree, Foundation, and PC1-PC4 pass locked and offline. | 2 | Complete post-repair: Rust 1.97.1, 52 tests total; 43 prior-phase regressions |
+| Independent implementation review | A separate read-only reviewer examines the repaired verified implementation and classifies actionable findings. | 2 | Complete: no open P0/P1; P0=0, P1=0, P2=2, P3=1 |
+| Acceptance | Accept only after complete verification and repaired independent review. | 0 | Complete within the frozen PC5 Digest boundary |
+| Publication | Publish the complete accepted tree only through the separately authorized, single-commit, non-force Git Data procedure; record commit identity externally. | 0 | Complete only through that publication procedure; identity remains external |
+
+The implementation allowlist is the two canonical/compiler source files, two
+focused test files, compiler manifest, mechanically updated lockfile, one
+verification report, and additive PC5 implementation state entries. No external
+dependency or later compiler/runtime behavior is permitted.
+
+The accepted review retains three non-blocking debt items: the generic
+canonical API can accept hidden unchecked `+1` and `01` number spellings outside
+the PC5-admitted domain; permanent tests do not cover every externally probed
+ordering, signed-boundary, non-minimal-number, and RFC 6901 case; and
+`SourceDiagnostic` rustdoc omits pre-PC3 domain admission. These P2/P2/P3 items
+do not alter the accepted PC5 bytes, preimage, totality, opacity, binding, or
+phase ownership and are not repaired by this gate.
+
+The next bounded task is `PC6 Package-scan scope reconciliation and semantic freeze`.
+This does not authorize PC6 implementation, Builder, runtime, provider, or any
+execution behavior.

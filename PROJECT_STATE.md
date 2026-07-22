@@ -1,6 +1,6 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-22.
+State record status: reconstructed. Updated 2026-07-23.
 
 | Field | Value |
 |---|---|
@@ -59,11 +59,16 @@ State record status: reconstructed. Updated 2026-07-22.
 | PC5 semantics frozen | true |
 | PC5 freeze verification complete | true |
 | PC5 freeze read-only review complete | true; no open P0 or P1 |
-| PC5 implementation started | false |
-| PC5 accepted | false |
+| PC5 implementation started | true |
+| PC5 implementation verification complete | true; post-repair Rust 1.97.1 frozen, network-silent qualification passes 52 tests |
+| PC5 totality repair complete | true |
+| PC5 repair read-only review complete | true |
+| PC5 implementation read-only review complete | true; final repaired review found P0=0, P1=0, P2=2, P3=1 |
+| PC5 review findings | P0=0, P1=0, P2=2, P3=1; P2/P3 retained as non-blocking debt |
+| PC5 accepted | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC5 Digest-phase implementation against the frozen semantics and fixtures; not authorized by the semantic freeze |
+| Next bounded task | PC6 Package-scan scope reconciliation and semantic freeze |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -83,4 +88,6 @@ PC4 implementation adds the public `apply_blueprint_defaults` boundary and opaqu
 
 The Canonical JSON Erratum is a narrow normative companion to the recovered Standard and leaves the recovered Standard bytes unchanged. It closes exact UTF-8, punctuation, object-key ordering, array preservation, signed-integer, string-escape, direct-Unicode, BOM, whitespace, and trailing-newline rules for every Standard canonical JSON use. It adds no preimage, identity, phase, validation, artifact, or authority rule. Exact byte-hex and SHA-256 vectors bind the closed encoding, including PC2-preserved decoded control characters.
 
-The PC5 scope reconciliation and semantic freeze assign PC5 exactly the Standard `Digest` phase. The future `threadsmith-compiler` boundary consumes opaque PC4 `DefaultedSource`, reuses the single canonical Rust core, creates exactly one opaque `BlueprintDigest`, and returns non-authoritative `DigestedSource` binding that digest to the exact source. The preimage is the complete canonical JSON of the post-default root before import expansion. PC5 owns no source diagnostic and deliberately digests duplicate names and other later-invalid content. Exact fixtures bind canonical bytes, presentation/default equivalence, source distinctions, array order, the accepted PC3 profile boundary, later-invalid digestibility, output pairing, and authority absence. No PC5 Rust implementation, dependency change, commit, push, later identity, package phase, Lockfile, Manifest, Builder, runtime, provider, or user surface has started.
+The PC5 scope reconciliation and semantic freeze assign PC5 exactly the Standard `Digest` phase. The future `threadsmith-compiler` boundary consumes opaque PC4 `DefaultedSource`, reuses the single canonical Rust core, creates exactly one opaque `BlueprintDigest`, and returns non-authoritative `DigestedSource` binding that digest to the exact source. The preimage is the complete canonical JSON of the post-default root before import expansion. PC5 owns no source diagnostic and deliberately digests duplicate names and other later-invalid content. Exact fixtures bind canonical bytes, presentation/default equivalence, source distinctions, array order, the accepted PC3 profile boundary, later-invalid digestibility, output pairing, and authority absence. At semantic-freeze acceptance, no PC5 Rust implementation, dependency change, commit, push, later identity, package phase, Lockfile, Manifest, Builder, runtime, provider, or user surface had started.
+
+The authorized PC5 implementation tranche has written the exact canonical JSON encoder closure, opaque Blueprint digest binding, existing workspace path edges, and focused fixture tests. A bounded totality repair now admits caller-created values to the frozen PC2 value domain before PC3 construction, so every publicly reachable `DefaultedSource` remains canonically encodable without moving declaration validation into PC3 or PC5. Post-repair qualification with the pinned Rust 1.97.1 toolchain passes formatting, frozen all-target compilation, all-feature Clippy with warnings denied, the frozen dependency tree, and all 52 workspace tests: 43 Foundation-through-PC4 regressions and 9 focused PC5 tests. Fixture, golden-hash, controlling-document, prior-conformance, dependency-inventory, and edit-boundary checks also pass without an external package or connection. The final repaired read-only review found P0=0, P1=0, P2=2, and P3=1 and recommended acceptance. PC5 is accepted within the frozen Digest boundary; the P2/P3 findings remain explicit non-blocking debt. Builder, runtime, and PC6 implementation remain unauthorized. The next bounded task is PC6 Package-scan scope reconciliation and semantic freeze.

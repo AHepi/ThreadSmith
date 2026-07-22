@@ -1,13 +1,14 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice source parsing, root validation, and default expansion.
+//! Restricted Lattice source parsing, validation, defaults, and Blueprint digest.
 //!
 //! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
 //! JSON-shaped value tree and the PC3 boundary from that tree to a validated
 //! Core root shape. It also owns the PC4 boundary from validated source to a
-//! non-authoritative default-expanded value. Declaration validation,
-//! compilation, identity, authority, manifests, package resolution, and
-//! executable output belong to later phases.
+//! non-authoritative default-expanded value and the PC5 boundary that binds
+//! that exact value to its Blueprint digest. Declaration validation, package
+//! resolution, later identities, authority, manifests, and executable output
+//! belong to later phases.
 
 use core::fmt;
 use saphyr_parser::{Event, Marker, Parser, ScalarStyle, Span, Tag};
@@ -15,6 +16,8 @@ use serde::Serialize;
 use serde_json::{Map, Number, Value};
 use std::borrow::Cow;
 use std::collections::{BTreeMap, BTreeSet};
+use threadsmith_canonical::canonical_sha256;
+use threadsmith_schema::{ArtifactKind, NativeLatticeId};
 use unicode_normalization::UnicodeNormalization;
 
 /// Stable source diagnostic for PC2 parsing and PC3 root validation.
@@ -88,6 +91,82 @@ impl DefaultedSource {
     }
 }
 
+/// Opaque PC5-produced Blueprint content identity.
+///
+/// Construction is restricted to [`digest_source`]. A caller-created generic
+/// [`NativeLatticeId`] claim is not a `BlueprintDigest` and cannot be promoted
+/// into one through this API. This digest identifies source content only and
+/// grants no compilation or execution authority.
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct BlueprintDigest {
+    identity: NativeLatticeId,
+}
+
+impl BlueprintDigest {
+    /// Borrow the accepted native textual identity representation.
+    #[must_use]
+    pub const fn as_native_id(&self) -> &NativeLatticeId {
+        &self.identity
+    }
+}
+
+impl fmt::Display for BlueprintDigest {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(&self.identity, formatter)
+    }
+}
+
+/// Non-authoritative PC5 output binding one digest to its exact source.
+///
+/// Both fields are private and construction is restricted to [`digest_source`]
+/// so public callers cannot pair one source with another source's digest. The
+/// wrapper stores no canonical bytes, provenance, diagnostic, Manifest,
+/// Binding, permission, or authority metadata.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct DigestedSource {
+    defaulted_source: DefaultedSource,
+    blueprint_digest: BlueprintDigest,
+}
+
+impl DigestedSource {
+    /// Borrow the exact PC4 value consumed by [`digest_source`].
+    #[must_use]
+    pub const fn defaulted_source(&self) -> &DefaultedSource {
+        &self.defaulted_source
+    }
+
+    /// Borrow the Blueprint digest calculated from the contained source.
+    #[must_use]
+    pub const fn blueprint_digest(&self) -> &BlueprintDigest {
+        &self.blueprint_digest
+    }
+
+    /// Consume the binding and recover its exact default-expanded source.
+    #[must_use]
+    pub fn into_defaulted_source(self) -> DefaultedSource {
+        self.defaulted_source
+    }
+}
+
+/// Canonically digest one accepted PC4 source and bind the result to it.
+///
+/// The complete post-default root is encoded by `threadsmith-canonical` and
+/// SHA-256 is calculated there. Encoding is total for publicly constructible
+/// `DefaultedSource`; failure indicates an internal invariant violation rather
+/// than a user-source diagnostic.
+#[must_use]
+pub fn digest_source(source: DefaultedSource) -> DigestedSource {
+    let digest = canonical_sha256(source.as_value())
+        .expect("DefaultedSource must remain canonically encodable");
+    let blueprint_digest = BlueprintDigest {
+        identity: NativeLatticeId::from_canonical_digest(ArtifactKind::Blueprint, digest),
+    };
+    DigestedSource {
+        defaulted_source: source,
+        blueprint_digest,
+    }
+}
+
 /// Parse one PC2 Lattice source document.
 ///
 /// The returned value is a source projection, not a validated Blueprint or an
@@ -147,6 +226,77 @@ const OPTIONAL_ROOT_LISTS: [&str; 8] = [
     "scenarios",
 ];
 
+const SOURCE_VALUE_DOMAIN_INVALID: &str = "SOURCE_VALUE_DOMAIN_INVALID";
+
+fn admit_pc2_value_domain(value: &Value, path: &Path) -> Result<(), SourceDiagnostic> {
+    match value {
+        Value::Null | Value::Bool(_) => Ok(()),
+        Value::Number(number) => {
+            let Some(integer) = number.as_i64() else {
+                return Err(source_validation_diagnostic(
+                    SOURCE_VALUE_DOMAIN_INVALID,
+                    &path.0,
+                ));
+            };
+            if number.as_str() != integer.to_string() {
+                return Err(source_validation_diagnostic(
+                    SOURCE_VALUE_DOMAIN_INVALID,
+                    &path.0,
+                ));
+            }
+            Ok(())
+        }
+        Value::String(text) => {
+            if !text.nfc().eq(text.chars()) {
+                return Err(source_validation_diagnostic(
+                    SOURCE_VALUE_DOMAIN_INVALID,
+                    &path.0,
+                ));
+            }
+            Ok(())
+        }
+        Value::Array(values) => {
+            for (index, value) in values.iter().enumerate() {
+                admit_pc2_value_domain(value, &path.index(index))?;
+            }
+            Ok(())
+        }
+        Value::Object(values) => {
+            let mut entries = values
+                .iter()
+                .map(|(key, value)| (key.as_str(), value))
+                .collect::<Vec<_>>();
+            entries.sort_by(|left, right| left.0.as_bytes().cmp(right.0.as_bytes()));
+
+            let mut normalized_keys = BTreeMap::new();
+            let mut first_non_nfc = None;
+            for (key, _) in &entries {
+                let normalized: String = key.nfc().collect();
+                if normalized_keys.insert(normalized.clone(), *key).is_some() {
+                    return Err(source_validation_diagnostic(
+                        SOURCE_VALUE_DOMAIN_INVALID,
+                        &path.key(key).0,
+                    ));
+                }
+                if normalized != *key && first_non_nfc.is_none() {
+                    first_non_nfc = Some(path.key(key));
+                }
+            }
+            if let Some(path) = first_non_nfc {
+                return Err(source_validation_diagnostic(
+                    SOURCE_VALUE_DOMAIN_INVALID,
+                    &path.0,
+                ));
+            }
+
+            for (key, value) in entries {
+                admit_pc2_value_domain(value, &path.key(key))?;
+            }
+            Ok(())
+        }
+    }
+}
+
 /// Validate the frozen PC3 Core root shape without changing the value tree.
 ///
 /// Validation is limited to the root object, its exact key set, required keys,
@@ -162,6 +312,8 @@ const OPTIONAL_ROOT_LISTS: [&str; 8] = [
 /// order. PC3 diagnostics have no source line or column because the PC2 value
 /// boundary does not retain source locations.
 pub fn validate_blueprint_source(value: Value) -> Result<ValidatedSource, SourceDiagnostic> {
+    admit_pc2_value_domain(&value, &Path::root())?;
+
     let Some(root) = value.as_object() else {
         return Err(source_validation_diagnostic("SOURCE_ROOT_TYPE", ""));
     };
