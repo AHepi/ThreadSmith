@@ -194,3 +194,27 @@ independent review, and acceptance are recorded by separate gates below.
 | PC5-A-002 | Retain the two generic/test-hardening P2 findings and the rustdoc P3 finding as explicit non-blocking debt. | Acceptance neither conceals nor repairs that debt and does not change canonical bytes, the Blueprint preimage, source binding, or phase ownership. |
 | PC5-A-003 | Accept PC5 only within the frozen `DefaultedSource -> digest_source -> DigestedSource` boundary. | Acceptance creates no package, Lockfile, Manifest, qualification, Binding, Builder, runtime, provider, or execution authority. |
 | PC5-A-004 | Require PC6 Package scan to undergo its own scope reconciliation and semantic freeze before any implementation. | PC5 acceptance does not authorize PC6 implementation or any later compiler or product layer. |
+
+## PC6 Package Scan erratum-acceptance decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC6-E-001 | Accept the exact fourth repaired Package Scan candidate as the normative Standard 0.3 companion after its independent review reported P0=0, P1=0, P2=0, and P3=0. | Acceptance records supplied review evidence and is not another independent review. |
+| PC6-E-002 | Preserve the candidate's complete normative algorithm, diagnostic vocabulary and precedence, fixture model, authoritative bytes, golden vectors, package identities, and expected outcomes. | Only procedural header, review-history, acceptance-disposition, and final-state wording may change. |
+| PC6-E-003 | Record both the reviewed-candidate SHA-256 and the final accepted-companion SHA-256 in the acceptance verification evidence. | The accepted file does not contain its own self-referential hash. |
+| PC6-E-004 | Preserve the original Standard, Default Semantics Erratum, Canonical JSON Erratum, ADR, and PC1-PC5 authority unchanged. | The companion closes Package Scan omissions only. |
+
+## PC6 Package Scan semantic-freeze decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC6-S-001 | Assign PC6 exactly the Standard `Package scan` phase between PC5 Digest and Resolve. | PC6 consumes `DigestedSource`; Resolve is the only immediate downstream phase. |
+| PC6-S-002 | Require an explicit complete immutable portable snapshot bounded to exact lookup of the optional `packages` subtree. | Ambient directories, environment variables, source content, live rereads, and runtime authority cannot supply the snapshot. |
+| PC6-S-003 | Own exact local discovery, descriptor parsing and schema admission, directory agreement, declared-path admission, metadata no-link audit, and declared-file verification. | PC6 neither selects a version nor parses imported module meaning. |
+| PC6-S-004 | Bind every admitted package descriptor and identity to the exact immutable bytes verified for every declared logical path. | Later phases consume retained content only; source, identity, and bytes have no mismatch constructor. |
+| PC6-S-005 | Construct the exact six-member canonical package descriptor and create the sole phase-produced `lattice:package:sha256:...` identity. | Package identity proves content identity only and grants no authority. |
+| PC6-S-006 | Return one deterministic primary diagnostic from the accepted 31-code vocabulary and no partial scanned result. | Snapshot-acquisition and operational exhaustion failures remain non-semantic failures outside `PackageScanOutcome`. |
+| PC6-S-007 | Bind the ordered scanned packages to the exact consumed `DigestedSource` in a non-authoritative `ScannedSource`. | No public construction, deserialization, replacement, mutation, live path, or capability may break the binding. |
+| PC6-S-008 | Defer Resolve, version selection, Lockfile behavior, import expansion, declaration validation, normalization, static checking, declaration identities, Manifest, qualification, Binding, runtime, providers, installation, networking, and authority. | Deferral is not acceptance and does not allocate incomplete later-phase semantics to PC6. |
+| PC6-S-009 | Treat Rust unavailability as non-blocking for this documentation-only gate after exact baseline-tree comparison proves all compilable, Cargo, implementation, and PC1-PC5 conformance inputs unchanged. | No Rust command, installation, dependency resolution, or implementation qualification is claimed. |
+| PC6-S-010 | Set the next bounded task to PC6 Package Scan implementation only. | PC6 implementation remains unstarted and PC6, Builder, and runtime remain unaccepted or unauthorized. |

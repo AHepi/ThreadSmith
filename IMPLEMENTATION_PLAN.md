@@ -210,3 +210,32 @@ phase ownership and are not repaired by this gate.
 The next bounded task is `PC6 Package-scan scope reconciliation and semantic freeze`.
 This does not authorize PC6 implementation, Builder, runtime, provider, or any
 execution behavior.
+
+## PC6 Package Scan erratum-acceptance and semantic-freeze tranche
+
+This documentation-only tranche accepts the independently reviewed Package Scan
+Semantics Erratum and freezes PC6 without implementing it.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Scope reconciliation | Preserve the completed ambiguity analysis and close its identified gaps only through the accepted normative companion. | 0 | Complete |
+| Erratum acceptance | Derive the accepted companion from the exact fourth repaired candidate without changing its normative algorithm, fixtures, vectors, diagnostics, or identities. | 0 | Complete |
+| Independent review evidence | Record the supplied complete fourth-repair review accurately without presenting this acceptance task as another independent review. | 0 | Complete: P0=0, P1=0, P2=0, P3=0 |
+| Semantic freeze | Freeze exact input, output, ownership, immutable-byte continuity, package identity, diagnostics, non-authority, and deferred behavior. | 0 | Complete |
+| Golden verification | Recompute authoritative constants, package vectors and identities, fixture populations, diagnostic expectations and vocabulary, normative-region equality, and DATA_CHANGED identity. | 0 | Complete |
+| Tree-boundary qualification | Prove every Rust, Cargo, PC1-PC5 implementation, conformance, and authority path byte-identical to baseline. | 0 | Complete; Rust toolchain unavailable and non-blocking because no compilable or dependency input changed |
+| Publication | Commit the exact seven-path documentation/state inventory once and publish one non-force child of the required baseline. | 0 | Delivery gate |
+
+The only permitted paths are the accepted Package Scan Erratum,
+`docs/pc6/PC6_SCOPE_RECONCILIATION.md`,
+`docs/pc6/PC6_SEMANTIC_FREEZE.md`,
+`docs/pc6/PC6_ERRATUM_ACCEPTANCE_AND_FREEZE_VERIFICATION.md`, and additive
+updates to `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`.
+Rust source, tests, Cargo files, dependencies, existing conformance fixtures,
+Foundation and PC1-PC5 semantics, Resolve, Lock, Expand, Normalize, Static
+check, Manifest, Builder, runtime, providers, and product surfaces remain
+unchanged.
+
+The next bounded task is `PC6 Package Scan implementation only`. This records
+sequence; it does not begin implementation or authorize Builder, runtime,
+provider, package-product, CLI, MCP, UI, Android, or execution work.
