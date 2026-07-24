@@ -218,3 +218,32 @@ independent review, and acceptance are recorded by separate gates below.
 | PC6-S-008 | Defer Resolve, version selection, Lockfile behavior, import expansion, declaration validation, normalization, static checking, declaration identities, Manifest, qualification, Binding, runtime, providers, installation, networking, and authority. | Deferral is not acceptance and does not allocate incomplete later-phase semantics to PC6. |
 | PC6-S-009 | Treat Rust unavailability as non-blocking for this documentation-only gate after exact baseline-tree comparison proves all compilable, Cargo, implementation, and PC1-PC5 conformance inputs unchanged. | No Rust command, installation, dependency resolution, or implementation qualification is claimed. |
 | PC6-S-010 | Set the next bounded task to PC6 Package Scan implementation only. | PC6 implementation remains unstarted and PC6, Builder, and runtime remain unaccepted or unauthorized. |
+
+## PC6 Package Scan implementation decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC6-P-001 | Add `package_scan` as a private compiler module and re-export only the frozen public boundary. | PC2-PC5 functions and behavior remain unchanged; Resolve and later phases are not introduced. |
+| PC6-P-002 | Model snapshot acquisition input as owned immutable object-class nodes and names, then consume it into a private portable tree sorted by NFC UTF-8 bytes. | The API represents only the exact optional `packages` child; unrelated project-root entries and ambient filesystem access are absent. |
+| PC6-P-003 | Keep `SnapshotAcquisitionError` separate from `PackageScanDiagnostic`. | Unrepresentable names, malformed UTF-16, namespace aliasing, incomplete views, concurrent mutation, exhaustion, and inconsistent host state create no semantic PC6 outcome. |
+| PC6-P-004 | Execute structural discovery, parser, shallow schema, collections, metadata audit, declared-file verification, and canonical derivation as global passes. | Every pass completes across candidates before the next begins; structural UTF-8 order and successful numeric version order remain distinct. |
+| PC6-P-005 | Reuse `parse_blueprint_source` for descriptor parsing and map only its six stable outcomes. | No second YAML dialect, Blueprint root validation, or finer parser reclassification is introduced. |
+| PC6-P-006 | Define the admitted six-member descriptor and verified-file records inside `threadsmith-compiler`, with private fields and read-only accessors. | Recovered `threadsmith-schema::PackageDescriptor` remains compatibility evidence and is not used to override the accepted PC6 grammar. |
+| PC6-P-007 | Reuse `threadsmith-canonical` for exact raw SHA-256, canonical JSON, and package-descriptor hashing, then privately wrap the resulting Package-kind identity. | No serializer, hash implementation, arbitrary package-identity constructor, or unchecked generic-ID promotion is added. |
+| PC6-P-008 | Retain declared bytes as immutable shared byte slices keyed by sorted logical paths inside each inseparable package record. | Hard-linked entries may share storage but remain distinct logical paths; later consumers receive retained bytes only. |
+| PC6-P-009 | Preserve the complete frozen fixture populations in one JSON manifest and add public-path integration tests plus external compile-fail opacity examples. | The current loader closes population counts and golden arithmetic only; an adversarial pass found that notation-string inputs do not yet satisfy the required independently executable fixture model. |
+| PC6-P-010 | Make no Cargo or dependency change. | Existing compiler, canonical, schema, parser, JSON, Unicode, and SHA-256 dependencies are sufficient. |
+| PC6-P-011 | Leave the implementation uncommitted and unaccepted because the pinned toolchain is unavailable. | Mechanical verification is recorded, but compilation, formatting, tests, Clippy, and PC1-PC5 regression qualification are not claimed or substituted. |
+| PC6-P-012 | Classify the missing closed 184-row fixture interpreter as acceptance-blocking rather than treating population validation as execution. | Repair must preserve every frozen fixture and exact operation, construct its exact source/snapshot or acquisition failure, and compare its exact public PC6 outcome before qualification or acceptance. |
+
+## PC6 Package Scan acceptance decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC6-A-001 | Accept the bounded PC2 explicit-tag diagnostic-precedence repair as part of the PC6 publication candidate. | The shared three-outcome classifier and 18 focused parser tests preserve accepted PC2 behavior; no declaration validation or independent PC6 semantics move into PC2. |
+| PC6-A-002 | Record PC6 implementation verification as complete after the isolated Rust 1.97.1 frozen/offline workspace sequence passed exactly 67 tests. | The result comprises 54 Foundation-through-PC5 tests and 13 PC6 tests with zero failure, ignore, measured, or filter; no Cargo or lockfile change is accepted. |
+| PC6-A-003 | Accept the separate independent read-only implementation review with P0=0, P1=0, P2=0, and P3=0. | The review changed no repository file, granted no acceptance itself, reproduced qualification, and found no acceptance-blocking or non-blocking implementation finding. |
+| PC6-A-004 | Accept PC6 only within the frozen `DigestedSource + PortableProjectSnapshot -> ScannedSource` Package Scan boundary. | Acceptance covers snapshot intake, discovery, descriptor admission, declared-file verification, immutable retained bytes, package content identities, deterministic diagnostics, and source binding only. |
+| PC6-A-005 | Retain the two reviewed operational residual risks as non-conformance, non-blocking risks. | The accepted freeze defines no semantic resource maxima, and a future real host adapter must establish an alias-free point-in-time snapshot and translate host failures into `SnapshotAcquisitionError`. |
+| PC6-A-006 | Keep Builder and runtime unauthorized and leave PC7 unstarted. | PC6 acceptance creates no Resolve, Lockfile, imported-module, declaration, Manifest, Binding, installation, provider, product, filesystem, network, secret, model, runtime, or execution authority. |
+| PC6-A-007 | Make PC6 publication the next bounded task after acceptance. | The committed acceptance records may describe publication as pending; the GitHub ref update and resulting commit identity remain external delivery evidence. |

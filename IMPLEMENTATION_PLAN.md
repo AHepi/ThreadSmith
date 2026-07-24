@@ -239,3 +239,61 @@ unchanged.
 The next bounded task is `PC6 Package Scan implementation only`. This records
 sequence; it does not begin implementation or authorize Builder, runtime,
 provider, package-product, CLI, MCP, UI, Android, or execution work.
+
+## PC6 Package Scan implementation tranche
+
+This separately authorized tranche implements only the frozen
+`DigestedSource + PortableProjectSnapshot -> ScannedSource` boundary.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Snapshot boundary | Exact optional `packages` lookup result is acquired into one immutable portable subtree with a non-semantic acquisition error surface. | 2 | Implemented; focused public-path qualification passes |
+| Public PC6 boundary | Private-field wrappers bind the exact source, admitted descriptor, phase-produced package identity, and retained verified bytes without mismatch constructors. | 2 | Implemented; focused public-path and opacity checks pass |
+| Frozen semantics | Structural discovery, numeric candidate order, accepted-PC2 parser mapping, closed schema, paths, metadata audit, raw-byte verification, canonical package construction, and all 31 diagnostics match the accepted erratum. | 2 | Complete; all focused frozen cases and the independent review pass |
+| Durable conformance | Machine-readable material preserves 34 byte constants, six canonical vectors, 19 identities, 18 presentations, 18 path scalars, six pointers, 184 fixture IDs, 124 expectations, and 31 codes. | 2 | Complete; exact-byte plan materialization, closed vocabularies, all population/golden arithmetic, and all 184 executed rows pass |
+| Focused qualification | The public PC6 path executes the complete fixture set, exact package results, exact diagnostics, identity vectors, ordering, source binding, retained bytes, and opacity checks. | 2 | Complete: 13 tests, 184 unique fixtures, 180 scan runs, 123 diagnostics, 53 successes, eight acquisition cases, 124 expectations, and 31 codes |
+| Regression qualification | Formatting, all-target checks/tests, all-feature Clippy, Foundation, and PC1-PC5 pass locked and offline. | 2 | Complete: Rust 1.97.1 frozen/offline formatting, workspace all-target check, all 67 workspace tests, all-workspace/all-feature Clippy with warnings denied, frozen dependency tree, executable-plan closure, golden/authority checks, and repository immutability pass |
+| Read-only acceptance | A separate adversarial review accepts only with no open P0/P1 and no false-positive fixture path. | 2 | Complete: P0=0, P1=0, P2=0, P3=0 |
+| Acceptance | Accept PC6 only after implementation verification and the separate read-only review complete successfully. | 0 | Complete within the frozen Package Scan boundary |
+| Delivery | Publish the exact accepted thirteen-path tree only through the separately authorized single-commit, non-force Git Data procedure. | 0 | Publication pending |
+
+The implementation allowlist is compiler source, compiler PC6 tests,
+`conformance/pc6/package_scan/**`, one PC6 implementation-verification
+document, and additive PC6 implementation entries in the three durable state
+files. Cargo manifests, `Cargo.lock`, the canonical and schema crates, accepted
+Standard and errata, PC1-PC5 fixtures and evidence, Resolve and every later
+phase, Builder, runtime, providers, and product surfaces remain unchanged.
+
+The isolated Rust 1.97.1 toolchain is available under
+`/tmp/threadsmith-rustup/toolchains/1.97.1-x86_64-unknown-linux-gnu/bin/`.
+Rust commit `8bab26f4f68e0e26f0bb7960be334d5b520ea452`, Cargo commit
+`c980f4866141969fab6254a680546a277789d6f0`, rustfmt 1.9.0-stable, and
+Clippy 0.1.97 are verified. Dependencies were already cached. Every Cargo
+qualification command ran frozen and offline, and no network operation
+occurred.
+
+The fixture-infrastructure repair closes the notation-only gap with a
+deterministic generated plan and an unknown-field-rejecting Rust interpreter.
+The generator proves all 184 rows are uniquely dispatched, every
+source/base/node/operation is constructible without implicit filesystem state,
+all fixed results are complete, and all authoritative data is reachable. The
+plan repair materializes every `REPLACE_HEX` operand as direct exact lowercase
+hex. The accepted-PC2 precedence repair passes 18 focused tests. A final
+two-file test-harness repair replaces manual parity checks with
+`is_multiple_of` and groups stable comparison inputs without changing any
+assertion or expected result. The complete focused matrix now passes:
+formatting, frozen all-target compilation, 13 focused PC6 tests, all 184
+fixtures and 180 public scan runs, all-feature Clippy with warnings denied, the
+deterministic plan checker, and textual-diff checks. Full frozen workspace
+qualification also passes with exactly 67 tests, workspace all-target checking,
+all-workspace/all-feature Clippy with warnings denied, frozen dependency-tree
+resolution, the executable-plan and golden checks, accepted-authority hashes,
+and byte-identical non-status repository inputs. Implementation verification is
+complete. The separate independent read-only review reproduced the frozen
+qualification and complete fixture evidence, reported P0=0, P1=0, P2=0, and
+P3=0, and recommended acceptance. The bounded PC2 explicit-tag
+diagnostic-precedence repair is accepted as part of the PC6 publication
+candidate. PC6 is accepted within the frozen Package Scan boundary. The next
+bounded task is `PC6 publication`; the publication ref update remains pending,
+PC7 has not started, and Builder, runtime, providers, and every later phase
+remain unauthorized.

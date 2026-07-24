@@ -1,6 +1,6 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-23.
+State record status: reconstructed. Updated 2026-07-24.
 
 | Field | Value |
 |---|---|
@@ -29,6 +29,7 @@ State record status: reconstructed. Updated 2026-07-23.
 | PC2 Standard aligned | true |
 | PC2 reconciliation verification complete | true |
 | PC2 reconciliation read-only review complete | true |
+| PC2 diagnostic-precedence repair complete | true; accepted as part of the published PC6 candidate after the shared explicit-tag classifier and 18 focused parser tests passed verification and independent review |
 | PC3 scope reconciled | true |
 | PC3 semantics frozen | true |
 | PC3 freeze verification complete | true |
@@ -72,11 +73,18 @@ State record status: reconstructed. Updated 2026-07-23.
 | Package Scan fourth-repair independent review | complete; P0=0, P1=0, P2=0, P3=0 |
 | PC6 semantics frozen | true |
 | PC6 freeze verification complete | true; documentation, golden arithmetic, and exact baseline-tree boundaries pass |
-| PC6 implementation started | false |
-| PC6 accepted | false |
+| PC6 implementation started | true |
+| PC6 focused qualification | complete; isolated Rust 1.97.1, 18 PC2 tests, all-target compiler check, 13 PC6 tests, all-feature Clippy with warnings denied, executable-plan check, and `git diff --check` pass frozen and offline |
+| PC6 fixture interpreter | complete; all 184 unique fixtures and 180 public scan runs execute with 123 diagnostic cases, 53 successful cases, eight acquisition cases, 124 diagnostic expectations, and all 31 codes |
+| PC6 mechanical verification | complete for exact `REPLACE_HEX` materialization, 184-case dispatch, all frozen populations, golden byte/hash/identity arithmetic, DATA_CHANGED, allowed repair boundaries, and `git diff --check` |
+| PC6 implementation verification complete | true; full frozen/offline Rust 1.97.1 workspace qualification passes 67 tests, workspace all-target checking, all-feature Clippy with warnings denied, frozen dependency-tree resolution, executable-plan closure, golden population checks, authority hashes, and repository immutability |
+| PC6 implementation review complete | true; separate read-only review found P0=0, P1=0, P2=0, P3=0 and recommended acceptance |
+| PC6 review findings | P0=0, P1=0, P2=0, P3=0 |
+| PC6 accepted | true |
+| Push complete | false; publication remains the next separate action |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC6 Package Scan implementation only |
+| Next bounded task | PC6 publication |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -110,6 +118,64 @@ canonical package construction, package content identity, deterministic
 diagnostics, and a source-bound non-authoritative scanned result. Rust
 qualification was not run for this documentation-only acceptance because the
 toolchain was unavailable; exact baseline comparison proves every Rust, Cargo,
-PC1-PC5 implementation, and conformance path unchanged. PC6 implementation has
-not started, PC6 is not accepted, and Builder and runtime remain unauthorized.
-The next bounded task is PC6 Package Scan implementation only.
+PC1-PC5 implementation, and conformance path unchanged. At that
+documentation-only gate, PC6 implementation had not started; PC6 was not
+accepted, and Builder and runtime remained unauthorized.
+The authorized PC6 production implementation now adds the compiler-owned
+immutable snapshot boundary, exact global staged Package Scan, opaque
+package/source bindings, all 31 diagnostics, retained verified bytes, canonical
+package identity construction, focused external tests, and a durable
+machine-readable fixture manifest carrying all frozen populations. The
+fixture-infrastructure repair adds a closed deterministic plan and Rust
+interpreter for all 184 authoritative rows. The accepted-PC2 precedence repair,
+exact `REPLACE_HEX` materialization, and final two-file Clippy repair now pass
+the complete focused matrix with the isolated Rust 1.97.1 toolchain and cached
+dependencies: formatting, 18 PC2 tests, frozen all-target compilation, 13 PC6
+tests, all 184 fixtures and 180 public scan runs, all-feature Clippy with
+warnings denied, the deterministic plan checker, and textual-diff checks. No
+network operation, Cargo/dependency change, production-semantic change,
+fixture-authority change, review, acceptance, commit, or push occurred. Full
+frozen workspace qualification then passed formatting, workspace all-target
+checking, all 67 workspace tests, all-workspace/all-feature Clippy with
+warnings denied, frozen dependency-tree resolution, executable-plan closure,
+golden population and authority-hash checks, and textual-diff checks. The
+workspace tests comprise 54 Foundation-through-PC5 tests and 13 PC6 tests.
+All Cargo and lockfile bytes, accepted authorities, source, tests, fixtures,
+generator, and executable plan remained unchanged during qualification.
+Implementation verification is complete. A separate independent read-only
+review reproduced the complete frozen/offline qualification and fixture,
+diagnostic, vector, identity, opacity, phase, authority, regression, and
+evidence checks. It found P0=0, P1=0, P2=0, and P3=0 and recommended
+acceptance. The bounded PC2 explicit-tag diagnostic-precedence repair is
+accepted as part of this PC6 candidate. PC6 is accepted within the frozen
+Package Scan boundary. Publication remains pending as the next separate
+action; PC7 has not started, and Builder and runtime remain unauthorized.
+
+```text
+FOUNDATION_ACCEPTED=true
+PC1_ACCEPTED=true
+PC2_ACCEPTED=true
+PC2_DIAGNOSTIC_PRECEDENCE_REPAIR_COMPLETE=true
+PC3_ACCEPTED=true
+DEFAULT_ERRATUM_COMPLETE=true
+CANONICAL_JSON_ERRATUM_COMPLETE=true
+PC4_ACCEPTED=true
+PC5_ACCEPTED=true
+PACKAGE_SCAN_ERRATUM_ACCEPTED=true
+PC6_SCOPE_RECONCILED=true
+PC6_SEMANTICS_FROZEN=true
+PC6_IMPLEMENTATION_STARTED=true
+PC6_FIXTURE_INTERPRETER_COMPLETE=true
+PC6_FOCUSED_QUALIFICATION_COMPLETE=true
+PC6_IMPLEMENTATION_VERIFICATION_COMPLETE=true
+PC6_IMPLEMENTATION_REVIEW_COMPLETE=true
+PC6_REVIEW_P0=0
+PC6_REVIEW_P1=0
+PC6_REVIEW_P2=0
+PC6_REVIEW_P3=0
+PC6_ACCEPTED=true
+PUSH_COMPLETE=false
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+NEXT_BOUNDED_TASK=PC6 publication
+```

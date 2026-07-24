@@ -1,14 +1,24 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice source parsing, validation, defaults, and Blueprint digest.
+//! Restricted Lattice source parsing through Package Scan.
 //!
 //! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
 //! JSON-shaped value tree and the PC3 boundary from that tree to a validated
 //! Core root shape. It also owns the PC4 boundary from validated source to a
-//! non-authoritative default-expanded value and the PC5 boundary that binds
-//! that exact value to its Blueprint digest. Declaration validation, package
-//! resolution, later identities, authority, manifests, and executable output
-//! belong to later phases.
+//! non-authoritative default-expanded value, the PC5 boundary that binds that
+//! exact value to its Blueprint digest, and the PC6 boundary that binds it to
+//! verified local package descriptors and immutable declared-file bytes.
+//! Package resolution, declaration validation, later identities, authority,
+//! manifests, and executable output belong to later phases.
+
+mod package_scan;
+
+pub use package_scan::{
+    PackageDescriptorFile, PackageIdentity, PackageScanDiagnostic, PortableProjectSnapshot,
+    ScannedPackage, ScannedPackageDescriptor, ScannedSource, SnapshotAcquisitionError,
+    SnapshotEntry, SnapshotName, SnapshotNode, VerifiedPackageFile, acquire_project_snapshot,
+    package_scan_diagnostic_codes, scan_packages,
+};
 
 use core::fmt;
 use saphyr_parser::{Event, Marker, Parser, ScalarStyle, Span, Tag};
@@ -662,7 +672,7 @@ impl<'source> Cursor<'source> {
     ) -> Result<(), SourceDiagnostic> {
         match event {
             Event::Alias(_) => Err(diagnostic_at("SOURCE_FORBIDDEN_YAML", path, span.start)),
-            Event::Scalar(_, style, anchor, tag) => {
+            Event::Scalar(value, style, anchor, tag) => {
                 self.permit_quoted_source_characters(style, span);
                 let marker = scalar_error_marker(
                     self.source,
@@ -670,7 +680,7 @@ impl<'source> Cursor<'source> {
                     style,
                     anchor != 0 || tag.is_some(),
                 );
-                reject_scalar_surface(style, anchor, tag.as_deref(), path, marker)
+                reject_scalar_surface(value.as_ref(), style, anchor, tag.as_deref(), path, marker)
             }
             Event::SequenceStart(anchor, tag) => {
                 if anchor != 0 || !collection_tag_is(tag.as_deref(), "seq") {
@@ -720,7 +730,14 @@ impl<'source> Cursor<'source> {
                         style,
                         anchor != 0 || tag.is_some(),
                     );
-                    reject_scalar_surface(style, anchor, tag.as_deref(), path, marker)?;
+                    reject_scalar_surface(
+                        value.as_ref(),
+                        style,
+                        anchor,
+                        tag.as_deref(),
+                        path,
+                        marker,
+                    )?;
                     let key: String = value.nfc().collect();
                     if style == ScalarStyle::Plain && key == "<<" {
                         return Err(diagnostic_at(
@@ -760,7 +777,14 @@ impl<'source> Cursor<'source> {
                     style,
                     anchor != 0 || tag.is_some(),
                 );
-                reject_scalar_surface(style, anchor, tag.as_deref(), path, metadata_marker)?;
+                reject_scalar_surface(
+                    value.as_ref(),
+                    style,
+                    anchor,
+                    tag.as_deref(),
+                    path,
+                    metadata_marker,
+                )?;
                 parse_scalar(value.as_ref(), style, tag.as_deref(), path, span.start)?
             }
             Event::SequenceStart(anchor, tag) => {
@@ -839,7 +863,14 @@ impl<'source> Cursor<'source> {
 
         let metadata_marker =
             scalar_error_marker(self.source, span.start, style, anchor != 0 || tag.is_some());
-        reject_scalar_surface(style, anchor, tag.as_deref(), path, metadata_marker)?;
+        reject_scalar_surface(
+            value.as_ref(),
+            style,
+            anchor,
+            tag.as_deref(),
+            path,
+            metadata_marker,
+        )?;
         if style == ScalarStyle::Folded {
             return Err(diagnostic_at("SOURCE_FORBIDDEN_YAML", path, span.start));
         }
@@ -954,6 +985,7 @@ fn non_c0_source_character_markers(source: &str) -> Vec<Marker> {
 }
 
 fn reject_scalar_surface(
+    value: &str,
     style: ScalarStyle,
     anchor: usize,
     tag: Option<&Tag>,
@@ -962,7 +994,8 @@ fn reject_scalar_surface(
 ) -> Result<(), SourceDiagnostic> {
     if anchor != 0
         || style == ScalarStyle::Folded
-        || tag.is_some_and(|tag| !tag.is_yaml_core_schema())
+        || tag
+            .is_some_and(|tag| matches!(classify_tagged_scalar(value, tag), TaggedScalar::Mismatch))
     {
         Err(diagnostic_at("SOURCE_FORBIDDEN_YAML", path, marker))
     } else {
@@ -1011,6 +1044,12 @@ enum PlainScalar {
     String,
 }
 
+enum TaggedScalar {
+    Value(PlainScalar),
+    OutOfRange,
+    Mismatch,
+}
+
 fn classify_scalar(value: &str, style: ScalarStyle, tag: Option<&Tag>) -> Result<PlainScalar, ()> {
     let Some(tag) = tag else {
         return if style == ScalarStyle::Plain {
@@ -1020,25 +1059,38 @@ fn classify_scalar(value: &str, style: ScalarStyle, tag: Option<&Tag>) -> Result
         };
     };
 
+    match classify_tagged_scalar(value, tag) {
+        TaggedScalar::Value(value) => Ok(value),
+        TaggedScalar::OutOfRange | TaggedScalar::Mismatch => Err(()),
+    }
+}
+
+fn classify_tagged_scalar(value: &str, tag: &Tag) -> TaggedScalar {
+    if !tag.is_yaml_core_schema() {
+        return TaggedScalar::Mismatch;
+    }
+
     match tag.suffix.as_str() {
-        "str" => Ok(PlainScalar::String),
-        "null" if matches!(value, "" | "null" | "Null" | "NULL" | "~") => Ok(PlainScalar::Null),
-        "bool" if matches!(value, "true" | "True" | "TRUE") => Ok(PlainScalar::Bool(true)),
-        "bool" if matches!(value, "false" | "False" | "FALSE") => Ok(PlainScalar::Bool(false)),
-        "int" => parse_core_integer(value)
-            .and_then(Result::ok)
-            .map(PlainScalar::Integer)
-            .ok_or(()),
-        _ => Err(()),
+        "str" => TaggedScalar::Value(PlainScalar::String),
+        "null" if is_core_null(value) => TaggedScalar::Value(PlainScalar::Null),
+        "bool" => parse_core_bool(value)
+            .map(PlainScalar::Bool)
+            .map_or(TaggedScalar::Mismatch, TaggedScalar::Value),
+        "int" => match parse_core_integer(value) {
+            Some(Ok(value)) => TaggedScalar::Value(PlainScalar::Integer(value)),
+            Some(Err(())) => TaggedScalar::OutOfRange,
+            None => TaggedScalar::Mismatch,
+        },
+        _ => TaggedScalar::Mismatch,
     }
 }
 
 fn classify_plain_scalar(value: &str) -> Result<PlainScalar, ()> {
-    match value {
-        "" | "null" | "Null" | "NULL" | "~" => return Ok(PlainScalar::Null),
-        "true" | "True" | "TRUE" => return Ok(PlainScalar::Bool(true)),
-        "false" | "False" | "FALSE" => return Ok(PlainScalar::Bool(false)),
-        _ => {}
+    if is_core_null(value) {
+        return Ok(PlainScalar::Null);
+    }
+    if let Some(value) = parse_core_bool(value) {
+        return Ok(PlainScalar::Bool(value));
     }
 
     if let Some(integer) = parse_core_integer(value) {
@@ -1048,6 +1100,18 @@ fn classify_plain_scalar(value: &str) -> Result<PlainScalar, ()> {
         return Err(());
     }
     Ok(PlainScalar::String)
+}
+
+fn is_core_null(value: &str) -> bool {
+    matches!(value, "" | "null" | "Null" | "NULL" | "~")
+}
+
+fn parse_core_bool(value: &str) -> Option<bool> {
+    match value {
+        "true" | "True" | "TRUE" => Some(true),
+        "false" | "False" | "FALSE" => Some(false),
+        _ => None,
+    }
 }
 
 fn parse_core_integer(value: &str) -> Option<Result<i64, ()>> {

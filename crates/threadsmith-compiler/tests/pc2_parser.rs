@@ -28,6 +28,22 @@ fn assert_invalid(name: &str) {
     assert_eq!(serde_json::to_value(actual).unwrap(), expected);
 }
 
+fn assert_diagnostic(source: &[u8], code: &str, path: &str) {
+    let diagnostic = parse_blueprint_source(source).unwrap_err();
+    assert_eq!(diagnostic.code, code);
+    assert_eq!(diagnostic.path, path);
+}
+
+fn assert_diagnostic_at(source: &[u8], code: &str, path: &str, line: usize, column: usize) {
+    let diagnostic = parse_blueprint_source(source).unwrap_err();
+    assert_eq!(diagnostic.code, code);
+    assert_eq!(diagnostic.path, path);
+    assert_eq!(
+        (diagnostic.line, diagnostic.column),
+        (Some(line), Some(column))
+    );
+}
+
 #[test]
 fn valid_conformance_fixtures() {
     for name in [
@@ -105,11 +121,7 @@ fn yaml_core_scalars_are_json_shaped_and_i64_bounded() {
         "0x8000000000000000",
     ] {
         let source = format!("value: {value}\n");
-        assert_eq!(
-            parse_blueprint_source(source.as_bytes()).unwrap_err().code,
-            "SOURCE_INVALID_SCALAR",
-            "{value}"
-        );
+        assert_diagnostic(source.as_bytes(), "SOURCE_INVALID_SCALAR", "/value");
     }
 }
 
@@ -131,12 +143,7 @@ fn explicit_string_keys_are_accepted_but_collection_keys_are_not() {
         parse_blueprint_source(b"? explicit\n: value\n").unwrap(),
         json!({"explicit": "value"})
     );
-    assert_eq!(
-        parse_blueprint_source(b"? [collection]\n: value\n")
-            .unwrap_err()
-            .code,
-        "SOURCE_NON_STRING_KEY"
-    );
+    assert_diagnostic(b"? [collection]\n: value\n", "SOURCE_NON_STRING_KEY", "");
 }
 
 #[test]
@@ -161,11 +168,46 @@ fn yaml_core_tags_are_honored_and_custom_or_wrong_kind_tags_are_rejected() {
         b"value: !custom text\n".as_slice(),
         b"value: !!float 1.0\n".as_slice(),
         b"value: !!binary bytes\n".as_slice(),
-        b"value: !!map scalar\n".as_slice(),
         b"value: !!seq {}\n".as_slice(),
+        b"value: !!map [scalar]\n".as_slice(),
     ] {
-        assert!(parse_blueprint_source(source).is_err());
+        assert_diagnostic(source, "SOURCE_FORBIDDEN_YAML", "/value");
     }
+}
+
+#[test]
+fn incompatible_explicit_core_scalar_tags_are_forbidden_before_projection() {
+    for source in [
+        b"value: !!int alpha\n".as_slice(),
+        b"value: !!bool alpha\n".as_slice(),
+        b"value: !!null alpha\n".as_slice(),
+        b"value: !!seq scalar\n".as_slice(),
+        b"value: !!map scalar\n".as_slice(),
+        b"value: !!int 0o8\n".as_slice(),
+        b"value: !!int 0xGG\n".as_slice(),
+        b"value: !!int 1.0\n".as_slice(),
+        b"value: !!timestamp 2026-01-01\n".as_slice(),
+    ] {
+        assert_diagnostic_at(source, "SOURCE_FORBIDDEN_YAML", "/value", 1, 9);
+    }
+
+    for source in [
+        b"value: !!int 9223372036854775808\n".as_slice(),
+        b"value: !!int -9223372036854775809\n".as_slice(),
+    ] {
+        assert_diagnostic(source, "SOURCE_INVALID_SCALAR", "/value");
+    }
+}
+
+#[test]
+fn explicit_integer_tag_precedence_for_mapping_keys_is_exact() {
+    assert_diagnostic(b"!!int alpha: value\n", "SOURCE_FORBIDDEN_YAML", "");
+    assert_diagnostic(b"!!int 1: value\n", "SOURCE_NON_STRING_KEY", "");
+    assert_diagnostic(
+        b"!!int 9223372036854775808: value\n",
+        "SOURCE_INVALID_SCALAR",
+        "",
+    );
 }
 
 #[test]
@@ -266,11 +308,7 @@ fn invalid_source_and_float_categories_are_rejected() {
 
     for value in ["1.0", "1e3", ".inf", "-.Inf", ".NAN"] {
         let source = format!("value: {value}\n");
-        assert_eq!(
-            parse_blueprint_source(source.as_bytes()).unwrap_err().code,
-            "SOURCE_INVALID_SCALAR",
-            "{value}"
-        );
+        assert_diagnostic(source.as_bytes(), "SOURCE_INVALID_SCALAR", "/value");
     }
 }
 
