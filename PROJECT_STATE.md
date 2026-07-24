@@ -1,6 +1,6 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-24.
+State record status: reconstructed. Updated 2026-07-25.
 
 | Field | Value |
 |---|---|
@@ -81,10 +81,24 @@ State record status: reconstructed. Updated 2026-07-24.
 | PC6 implementation review complete | true; separate read-only review found P0=0, P1=0, P2=0, P3=0 and recommended acceptance |
 | PC6 review findings | P0=0, P1=0, P2=0, P3=0 |
 | PC6 accepted | true |
-| Push complete | false; publication remains the next separate action |
+| PC7 scope reconciled | true |
+| Resolve Erratum candidate complete | true |
+| Resolve Erratum candidate review complete | true |
+| Resolve Erratum repair complete | true |
+| Resolve Erratum repair review complete | true |
+| Resolve Erratum second repair complete | true |
+| Resolve Erratum second-repair review complete | true; P0=0, P1=0, P2=0, P3=1, independence uncompromised |
+| Resolve Semantics Erratum accepted | true |
+| Resolve Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md` |
+| PC7 semantics frozen | true |
+| PC7 fixture maturity | specified; 96 current fixtures and three non-dispatchable future vectors; not dispatchable, executable, or qualified |
+| PC7 retained review debt | one P3 nonnormative provenance cell mislabels the second repair as the first repair |
+| PC7 implementation started | false |
+| PC7 accepted | false |
+| Push complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC6 publication |
+| Next bounded task | PC7 Resolve implementation only |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -148,8 +162,33 @@ diagnostic, vector, identity, opacity, phase, authority, regression, and
 evidence checks. It found P0=0, P1=0, P2=0, and P3=0 and recommended
 acceptance. The bounded PC2 explicit-tag diagnostic-precedence repair is
 accepted as part of this PC6 candidate. PC6 is accepted within the frozen
-Package Scan boundary. Publication remains pending as the next separate
-action; PC7 has not started, and Builder and runtime remain unauthorized.
+Package Scan boundary. Its publication is the accepted baseline for the PC7
+gate below. Builder and runtime remain unauthorized.
+
+The independently reviewed second repaired Resolve Semantics Erratum is now
+accepted as the controlling Standard 0.3 companion only for Resolve and the
+validation of optionally supplied existing Lockfile bytes needed by Resolve.
+The accepted erratum preserves the reviewed normative and fixture-criteria
+regions byte-for-byte. Its complete standalone machine-readable criteria remain
+at maturity `specified`: 96 current fixtures, three separately recorded
+non-dispatchable future composition vectors, 43 registered new choices, 21
+unique Resolve diagnostic codes, 62 diagnostic fixtures, and 118 closed schema
+categories. The review reported P0=0, P1=0, P2=0, and P3=1 with independence
+uncompromised; all five earlier P1 findings were recomputed closed. The P3 is
+retained as non-blocking debt because it affects only one nonnormative
+provenance label.
+
+PC7 semantics are frozen around the exact opaque ScannedSource plus optional
+immutable ExistingLockfileInput, source-bound successful ResolvedSource,
+retained PC6 bytes and parsed-module continuity, active-profile eligibility,
+per-package lock reuse, arbitrary-size numeric selection, simultaneous
+fixed-point passes, contribution retraction, unchanged-pass success, the
+256-pass boundary, canonical cycle selection, total diagnostic precedence,
+exact logical paths, and non-authority. Resolve creates no identity and does
+not generate or persist a Lockfile. No Rust implementation, fixture
+interpreter, deterministic plan generator, Cargo change, dependency, Builder,
+runtime, provider, installation, CLI, MCP, UI, Android, or product work began.
+Only the later PC7 Resolve implementation gate is authorized.
 
 ```text
 FOUNDATION_ACCEPTED=true
@@ -174,8 +213,23 @@ PC6_REVIEW_P1=0
 PC6_REVIEW_P2=0
 PC6_REVIEW_P3=0
 PC6_ACCEPTED=true
-PUSH_COMPLETE=false
+PC7_SCOPE_RECONCILED=true
+RESOLVE_ERRATUM_CANDIDATE_COMPLETE=true
+RESOLVE_ERRATUM_CANDIDATE_REVIEW_COMPLETE=true
+RESOLVE_ERRATUM_REPAIR_COMPLETE=true
+RESOLVE_ERRATUM_REPAIR_REVIEW_COMPLETE=true
+RESOLVE_ERRATUM_SECOND_REPAIR_COMPLETE=true
+RESOLVE_ERRATUM_SECOND_REPAIR_REVIEW_COMPLETE=true
+RESOLVE_ERRATUM_REVIEW_P0=0
+RESOLVE_ERRATUM_REVIEW_P1=0
+RESOLVE_ERRATUM_REVIEW_P2=0
+RESOLVE_ERRATUM_REVIEW_P3=1
+RESOLVE_ERRATUM_ACCEPTED=true
+PC7_SEMANTICS_FROZEN=true
+PC7_IMPLEMENTATION_STARTED=false
+PC7_ACCEPTED=false
+PUSH_COMPLETE=true
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-NEXT_BOUNDED_TASK=PC6 publication
+NEXT_BOUNDED_TASK=PC7 Resolve implementation only
 ```

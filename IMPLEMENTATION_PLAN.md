@@ -255,7 +255,7 @@ This separately authorized tranche implements only the frozen
 | Regression qualification | Formatting, all-target checks/tests, all-feature Clippy, Foundation, and PC1-PC5 pass locked and offline. | 2 | Complete: Rust 1.97.1 frozen/offline formatting, workspace all-target check, all 67 workspace tests, all-workspace/all-feature Clippy with warnings denied, frozen dependency tree, executable-plan closure, golden/authority checks, and repository immutability pass |
 | Read-only acceptance | A separate adversarial review accepts only with no open P0/P1 and no false-positive fixture path. | 2 | Complete: P0=0, P1=0, P2=0, P3=0 |
 | Acceptance | Accept PC6 only after implementation verification and the separate read-only review complete successfully. | 0 | Complete within the frozen Package Scan boundary |
-| Delivery | Publish the exact accepted thirteen-path tree only through the separately authorized single-commit, non-force Git Data procedure. | 0 | Publication pending |
+| Delivery | Publish the exact accepted thirteen-path tree only through the separately authorized single-commit, non-force Git Data procedure. | 0 | Complete; accepted PC6 publication baseline |
 
 The implementation allowlist is compiler source, compiler PC6 tests,
 `conformance/pc6/package_scan/**`, one PC6 implementation-verification
@@ -294,6 +294,48 @@ qualification and complete fixture evidence, reported P0=0, P1=0, P2=0, and
 P3=0, and recommended acceptance. The bounded PC2 explicit-tag
 diagnostic-precedence repair is accepted as part of the PC6 publication
 candidate. PC6 is accepted within the frozen Package Scan boundary. The next
-bounded task is `PC6 publication`; the publication ref update remains pending,
-PC7 has not started, and Builder, runtime, providers, and every later phase
-remain unauthorized.
+bounded task after its completed publication was the separately authorized PC7
+Resolve semantic gate. Builder, runtime, providers, and every later product
+phase remain unauthorized.
+
+## PC7 Resolve erratum-acceptance and semantic-freeze tranche
+
+This documentation-only tranche accepts the independently reviewed second
+repaired Resolve Semantics Erratum and freezes PC7 without implementing
+Resolve.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Baseline and scope intake | Verify the accepted PC6 bundle, required commit/tree/parent/subject, local and remote `main`, and exact preserved PC7 scope report. | 0 | Complete |
+| Reviewed-artifact intake | Verify exact candidate, final review, and preregistration identities, complete byte properties, and review disposition. | 0 | Complete |
+| Erratum acceptance | Add only procedural acceptance metadata while preserving every reviewed normative and fixture-criteria byte. | 0 | Complete |
+| Durable specified criteria | Retain the complete strict JSON manifest containing exact schemas, constructors, references, inputs, expected results, bytes, hashes, selectors, relations, coverage, and future vectors. | 0 | Complete; 96 current fixtures and three non-dispatchable future vectors at maturity `specified` |
+| Independent review evidence | Record the supplied final review without conducting another semantic review. | 0 | Complete: all five prior P1 findings closed; P0=0, P1=0, P2=0, P3=1; independence uncompromised |
+| Semantic freeze | Bind exact ScannedSource and optional immutable Lockfile input, source/byte/output continuity, lock reuse, numeric selection, fixed-point behavior, selected-module intake, cycles, diagnostics, paths, non-authority, and deferrals. | 0 | Complete |
+| Criteria verification | Strict-parse and schema-check the manifest; recompute populations, references, identities, constructibility, relations, pass boundaries, and two independent canonical preimages. | 0 | Complete |
+| Tree-boundary qualification | Prove every Rust, Cargo, earlier implementation, existing conformance, and path outside the eight-path allowlist byte-identical to baseline. | 0 | Complete; no Rust or dependency command required or run |
+| Publication | Create one documentation-only child commit and publish one non-force fast-forward update of `main`. | 0 | Complete |
+
+The exact allowlist is
+`docs/pc7/PC7_SCOPE_RECONCILIATION.md`,
+`docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md`,
+`docs/pc7/PC7_RESOLVE_SPECIFIED_CONFORMANCE_MANIFEST.json`,
+`docs/pc7/PC7_SEMANTIC_FREEZE.md`,
+`docs/pc7/PC7_ERRATUM_ACCEPTANCE_AND_FREEZE_VERIFICATION.md`,
+`PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`.
+
+Rust source, tests, Cargo files, dependencies, existing conformance fixtures,
+earlier accepted errata and phase documents, Lock, Expand, declaration
+processing, Manifest, qualification, Binding, Builder, runtime, providers,
+installation, CLI, MCP, UI, Android, and every product surface remain
+unchanged.
+
+The retained criteria contain 43 registered new choices, 21 unique Resolve
+diagnostic codes, 62 diagnostic fixtures, 29 ordinary success fixtures, five
+relation fixtures, 118 schema categories, 11 rank comparisons, eight mandatory
+gate-order criteria, and exact chain-255 preimages. The sole P3 remains
+nonnormative provenance debt and does not authorize a repair.
+
+The next bounded task is `PC7 Resolve implementation only`. This sequence
+statement authorizes no Lock implementation, product layer, Builder, runtime,
+provider, installation, CLI, MCP, UI, Android, or execution work.

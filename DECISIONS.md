@@ -247,3 +247,32 @@ independent review, and acceptance are recorded by separate gates below.
 | PC6-A-005 | Retain the two reviewed operational residual risks as non-conformance, non-blocking risks. | The accepted freeze defines no semantic resource maxima, and a future real host adapter must establish an alias-free point-in-time snapshot and translate host failures into `SnapshotAcquisitionError`. |
 | PC6-A-006 | Keep Builder and runtime unauthorized and leave PC7 unstarted. | PC6 acceptance creates no Resolve, Lockfile, imported-module, declaration, Manifest, Binding, installation, provider, product, filesystem, network, secret, model, runtime, or execution authority. |
 | PC6-A-007 | Make PC6 publication the next bounded task after acceptance. | The committed acceptance records may describe publication as pending; the GitHub ref update and resulting commit identity remain external delivery evidence. |
+
+## PC7 Resolve erratum-acceptance decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC7-E-001 | Accept the exact independently reviewed second repaired Resolve candidate as the normative Standard 0.3 companion for Resolve and optional existing-Lockfile intake needed by Resolve. | Acceptance records the completed review and is not another semantic review. |
+| PC7-E-002 | Preserve the candidate region beginning at Normative Section 1 through its final byte and extract the embedded strict JSON value exactly from opening `{` through closing `}`. | Only procedural acceptance metadata outside the reviewed normative and fixture regions differs. |
+| PC7-E-003 | Retain the complete machine-readable manifest as durable specified criteria. | Criteria include schemas, constructors, references, exact inputs and outcomes, canonical bytes and hashes, diagnostics and paths, precedence, selectors, relations, coverage, and future vectors rather than count-only claims. |
+| PC7-E-004 | Keep fixture maturity exactly `specified`. | No strict deterministic plan generator, public-boundary interpreter, production Resolve implementation, complete execution, or qualification evidence exists. |
+| PC7-E-005 | Record the final independent disposition as P0=0, P1=0, P2=0, P3=1 with independence uncompromised and all five prior P1 findings closed. | The sole P3 is non-blocking nonnormative provenance debt and does not authorize candidate modification. |
+| PC7-E-006 | Interpret the reported diagnostic populations by label: 21 unique phase diagnostic codes and 62 current diagnostic fixture rows. | Fixture rows intentionally reuse codes across distinct paths, failure forms, precedence pairs, and boundary discriminators. |
+| PC7-E-007 | Preserve Lattice Standard 0.3 as primary and each earlier erratum only within its stated scope. | Existing Rust types, current behavior, and implementation convenience remain nonnormative evidence. |
+
+## PC7 Resolve semantic-freeze decisions
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC7-S-001 | Assign PC7 exactly the Standard Resolve phase between accepted PC6 Package Scan and the later Lock phase. | Resolve consumes the opaque PC6 ScannedSource and creates no Lockfile or later artifact. |
+| PC7-S-002 | Freeze the complete input as one exact ScannedSource plus optional ExistingLockfileInput represented only as Absent or one immutable supplied byte sequence. | Absent and zero bytes differ; no live path, filesystem, network, fetch, install, provider, clock, randomness, or host capability enters. |
+| PC7-S-003 | Close the current candidate universe to `ScannedSource.packages()` and preserve the three duplicate-composition cases only as non-dispatchable future vectors. | PC7 creates no composition seam and no current fixture fabricates an invalid ScannedSource. |
+| PC7-S-004 | Apply exact profile eligibility, arbitrary-size numeric version ordering, compatible per-package lock reuse, and greatest eligible satisfying fallback after identical-record collapse. | Missing group, profile incompatibility, and no common version remain distinct diagnostics; Resolve verifies but never creates `lock_id`. |
+| PC7-S-005 | Recompute root reachability and contribution provenance from the pass-start state, calculate the next selection simultaneously, and retract deselected or unreachable contributions before the next pass. | Ever-seen requirement accumulation, within-pass contribution, and stale selection retention are non-conforming. |
+| PC7-S-006 | Permit passes 1 through 256 and require one unchanged pass for success; a changed pass 256 returns the pass-limit diagnostic at forbidden pass 257. | A repeated non-adjacent historical state is not success, and operational exhaustion is not a semantic diagnostic. |
+| PC7-S-007 | Parse selected modules only from exact immutable PC6-retained bytes using the accepted PC2 operation and frozen Resolve crosswalk, envelope, metadata, and import rules. | No reread, competing parser source, imported declaration defaulting, expansion, normalization, generated insertion, or static checking occurs. |
+| PC7-S-008 | Construct the converged import graph and select cycles by the exact directed-edge token, rotation, and bytewise-minimum rules only after an unchanged pass. | Traversal implementation form, call-stack use, caching, and scheduling are nonnormative when observations are identical. |
+| PC7-S-009 | Return either one total-order primary diagnostic or one opaque twelve-member ResolvedSource binding exact source, selections, retained modules, requirements, pass trace, reuse decisions, and graph. | Failure returns no partial output; success contains empty created identities and artifacts, literal no authority, and no PC7 identity. |
+| PC7-S-010 | Freeze exact logical paths, within-gate rank comparison, mandatory gate order, and complete-path tie breaking for all 21 Resolve codes. | A later-gate diagnostic does not exist early merely because its numeric rank is lower. |
+| PC7-S-011 | Retain 96 current fixtures, three future vectors, 43 registered choices, 118 schema categories, 11 rank comparisons, eight gate-order criteria, and the exact chain-255 fixture and plan preimages. | A later PC7 implementation gate must add strict dispatch, public-boundary execution, complete result comparison, and qualification before maturity advances. |
+| PC7-S-012 | Authorize only the later PC7 Resolve implementation gate. | Lock, Expand, declaration processing, Manifest, qualification, Binding, Builder, runtime, providers, installation, CLI, MCP, UI, Android, and every product surface remain unauthorized. |
