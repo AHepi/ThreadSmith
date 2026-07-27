@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice source parsing through Package Scan.
+//! Restricted Lattice source processing through Resolve.
 //!
 //! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
 //! JSON-shaped value tree and the PC3 boundary from that tree to a validated
@@ -8,16 +8,22 @@
 //! non-authoritative default-expanded value, the PC5 boundary that binds that
 //! exact value to its Blueprint digest, and the PC6 boundary that binds it to
 //! verified local package descriptors and immutable declared-file bytes.
-//! Package resolution, declaration validation, later identities, authority,
-//! manifests, and executable output belong to later phases.
+//! It also owns the PC7 boundary that resolves an accepted PC6 `ScannedSource`
+//! against optional immutable existing-Lockfile bytes into a `ResolvedSource`.
+//! Declaration validation and phases after Resolve remain out of scope.
 
 mod package_scan;
+mod resolve;
 
 pub use package_scan::{
     PackageDescriptorFile, PackageIdentity, PackageScanDiagnostic, PortableProjectSnapshot,
     ScannedPackage, ScannedPackageDescriptor, ScannedSource, SnapshotAcquisitionError,
     SnapshotEntry, SnapshotName, SnapshotNode, VerifiedPackageFile, acquire_project_snapshot,
     package_scan_diagnostic_codes, scan_packages,
+};
+pub use resolve::{
+    ExistingLockfileInput, ResolveCycleEdge, ResolveDiagnostic, ResolvedSource,
+    resolve_diagnostic_codes, resolve_source,
 };
 
 use core::fmt;

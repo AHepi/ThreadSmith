@@ -365,3 +365,63 @@ unauthorized. Exactly one bounded task is active:
 ```text
 NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
 ```
+
+## PC7 Resolve implementation-acceptance and publication tranche
+
+This 2026-07-28 tranche accepts and publishes only the exact independently
+qualified PC7 Resolve implementation and executable-conformance candidate. It
+does not repair, refactor, regenerate substantively, reinterpret semantics,
+modify accepted authority, reopen findings, or begin PC8.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Baseline authentication | Required branch, HEAD, tree, local `main`, cached `origin/main`, fresh remote `main`, empty index, and exact six-path unstaged candidate match. | 0 | Complete |
+| Candidate identity | All six reviewed path hashes equal the qualified identities and remain unchanged through durable-state authoring. | 0 | Complete |
+| Governing evidence | Semantic publication, final repair, implementation re-review, focused qualification, and qualification-review hashes and byte formats match. | 0 | Complete |
+| Acceptance eligibility | The qualification review records 168 recomputed claims, no unresolved claim class, P0=0, P1=0, P2=0, P3=0, and `PASS`. | 0 | Complete |
+| Regression spine | Rust 1.97.1 formatting, workspace all-target checking, full tests, warning-denied Clippy, frozen dependency tree, and textual-diff checks pass offline with external targets. | 0 | Complete; 78 of 78 workspace tests pass |
+| Executable conformance | The unfiltered public-boundary PC7 binary, generator admission and rejection self-tests, checked plan, Python syntax, and fixture-set equality pass. | 0 | Complete; 11 of 11 PC7 tests and 118 of 118 current fixtures pass |
+| Determinism | Two authenticated disposable regenerations equal one another and the checked plan byte-for-byte. | 0 | Complete; 34,460,681 bytes at SHA-256 `4e1e5ef85dadeea5c1d0d3cd0ef9231dae887237b5860e89c8925db9420b9d9d` |
+| Durable acceptance | Amend only `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`; create only the PC7 acceptance record. | 0 | Complete |
+| Staged boundary | Reauthenticate all inputs, then stage exactly the ten authorized paths with no unstaged difference. | 0 | Complete through the separately authorized delivery procedure |
+| Publication | Create one child commit with the required subject and publish only `refs/heads/main` by normal non-force fast-forward after a fresh remote check. | 0 | Complete through the separately authorized delivery procedure |
+
+The six accepted implementation and executable-criteria paths are
+`conformance/pc7/resolve/build_executable_fixture_plan.py`,
+`conformance/pc7/resolve/executable_fixture_plan.json`,
+`crates/threadsmith-compiler/src/lib.rs`,
+`crates/threadsmith-compiler/src/resolve.rs`,
+`crates/threadsmith-compiler/tests/pc7_resolve.rs`, and
+`crates/threadsmith-compiler/tests/support/pc7_fixture_interpreter.rs`. The
+four durable paths are `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`,
+`DECISIONS.md`, and
+`docs/pc7/PC7_IMPLEMENTATION_ACCEPTANCE_AND_PUBLICATION.md`. No other path may
+enter the commit.
+
+The complete workspace suite passes exactly 78 tests: 67 retained
+Foundation-through-PC6 tests and 11 PC7 tests, with zero failure, ignore,
+measured, or filter. The PC7 binary separately passes all 11 unfiltered tests.
+Its strict interpreter proves exact set equality across 118 defined, 118
+generated, and 118 executed current fixture IDs. Four future vectors remain
+non-dispatchable and excluded. The sorted fixture-ID preimage is 2,576 bytes
+at SHA-256
+`ab7b72bdb33a255d2539a204cd880fa7aedab61b8672cfa3f02d8342d510f221`.
+Fixture maturity advances from `specified` to `qualified` only for the frozen
+PC7 Resolve boundary.
+
+The historical semantic review state
+`RESOLVE_ERRATUM_REVIEW_P3=1` remains intact and distinct. Current PC7
+implementation and qualification-review findings are P0=0, P1=0, P2=0, and
+P3=0. Acceptance creates no new Lockfile, `lock_id`, Manifest, Binding,
+identity, authority, persistence, installation, provider, model, network,
+Builder, runtime, CLI, MCP, UI, Android, or other product behavior.
+
+The final commit, tree, remote, and push identities are deliberately excluded
+from this self-referential tranche and are recorded only by the external
+operator report. Publication makes the prospective durable state
+authoritative; PC8 remains unstarted, Builder and runtime remain unauthorized,
+and exactly one bounded task follows:
+
+```text
+NEXT_BOUNDED_TASK=PC8 Lock scope reconciliation and semantic freeze only
+```

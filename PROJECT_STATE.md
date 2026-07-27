@@ -1,6 +1,6 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-25.
+State record status: reconstructed. Updated 2026-07-28.
 
 | Field | Value |
 |---|---|
@@ -91,14 +91,21 @@ State record status: reconstructed. Updated 2026-07-25.
 | Resolve Semantics Erratum accepted | true |
 | Resolve Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md` |
 | PC7 semantics frozen | true |
-| PC7 fixture maturity | specified; 96 current fixtures and three non-dispatchable future vectors; not dispatchable, executable, or qualified |
-| PC7 retained review debt | one P3 nonnormative provenance cell mislabels the second repair as the first repair |
-| PC7 implementation started | false |
-| PC7 accepted | false |
+| PC7 fixture maturity | qualified; 118 current fixtures are dispatchable and execute through the public Resolve boundary; four future vectors remain non-dispatchable and excluded |
+| PC7 retained review debt | `RESOLVE_ERRATUM_REVIEW_P3=1`; the dormant future-only semantic P3 remains distinct from the zero-finding implementation and qualification reviews |
+| PC7 implementation started | true |
+| PC7 fixture interpreter complete | true |
+| PC7 focused qualification complete | true |
+| PC7 implementation verification complete | true |
+| PC7 implementation review complete | true |
+| PC7 qualification review complete | true |
+| PC7 implementation and qualification review findings | P0=0, P1=0, P2=0, P3=0 |
+| PC7 accepted | true; limited to the frozen Resolve boundary |
 | Push complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| Next bounded task | PC7 Resolve implementation only |
+| PC8 started | false |
+| Next bounded task | PC8 Lock scope reconciliation and semantic freeze only |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -242,17 +249,90 @@ PC7_SEMANTIC_AND_CRITERIA_REPAIR_ACCEPTED=true
 PC7_SEMANTIC_AND_CRITERIA_REPAIR_PUBLISHED=true
 PC7_SEMANTICS_FROZEN=true
 PC7_IMPLEMENTATION_STARTED=true
-PC7_FOCUSED_QUALIFICATION_COMPLETE=false
-PC7_IMPLEMENTATION_VERIFICATION_COMPLETE=false
-PC7_IMPLEMENTATION_REVIEW_COMPLETE=false
-PC7_ACCEPTED=false
+PC7_FIXTURE_INTERPRETER_COMPLETE=true
+PC7_FOCUSED_QUALIFICATION_COMPLETE=true
+PC7_IMPLEMENTATION_VERIFICATION_COMPLETE=true
+PC7_IMPLEMENTATION_REVIEW_COMPLETE=true
+PC7_QUALIFICATION_REVIEW_COMPLETE=true
+PC7_REVIEW_P0=0
+PC7_REVIEW_P1=0
+PC7_REVIEW_P2=0
+PC7_REVIEW_P3=0
+PC7_ACCEPTED=true
 PUSH_COMPLETE=true
+PC8_STARTED=false
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-FIXTURE_MATURITY=specified
+FIXTURE_MATURITY=qualified
 REVIEW_P0=0
 REVIEW_P1=0
 REVIEW_P2=0
 REVIEW_P3=1
-NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
+NEXT_BOUNDED_TASK=PC8 Lock scope reconciliation and semantic freeze only
 ```
+
+## 2026-07-28 PC7 implementation-acceptance amendment
+
+This amendment accepts the exact independently qualified six-path PC7 Resolve
+implementation and executable-conformance candidate. The accepted candidate
+identities are:
+
+| Path | SHA-256 |
+|---|---|
+| `conformance/pc7/resolve/build_executable_fixture_plan.py` | `02968be53c6403953fe3e7c691a3acd36eba0dc5c6c5ec6462a75e5c2201764b` |
+| `conformance/pc7/resolve/executable_fixture_plan.json` | `4e1e5ef85dadeea5c1d0d3cd0ef9231dae887237b5860e89c8925db9420b9d9d` |
+| `crates/threadsmith-compiler/src/lib.rs` | `00e726435f9b8442da89992971ce18b382c881849401b57693c4c6554a6d9a87` |
+| `crates/threadsmith-compiler/src/resolve.rs` | `bc9a8e8718702ffd9ef1077cf9c4da3c731f0faee27865bdb80405a535f9c2ca` |
+| `crates/threadsmith-compiler/tests/pc7_resolve.rs` | `df7d77543102979f8fd02e991a547d9cd2e1ff339a4f753b7d475110d5e533f1` |
+| `crates/threadsmith-compiler/tests/support/pc7_fixture_interpreter.rs` | `3efdbfe63ec403b737e05a0444956efe09e3d059d2a4b064a9622f65976fe326` |
+
+Acceptance is controlled by the semantic-publication report at SHA-256
+`48a9cb9b90e83397ede415515574ece94a64d78f05585d48aaf074f5ae2710e8`,
+the final implementation repair at
+`c4e26cd22737a2e807a5d23b2ca8323e5fcc7460d0a494439c47d70bb2c12600`,
+the implementation re-review at
+`710fec8d3b48aeeee57da272bf2d5f0062840fb809b01aa2e34f0e150517668e`,
+the refreshed focused qualification at
+`1c4ecf8ec5ea238ca4b833d28b3f575592c547decd511434fc7253c26768be27`,
+and its independent review at
+`8bc60be961f2a81fdf7ac82ae1ecaf2d7dd2bb05e7c39d555f23e1e73b69605d`.
+The last review records `RECOMPUTED=168`, no derived, refuted,
+underdetermined, or unverified claim, P0=0, P1=0, P2=0, P3=0, and disposition
+`PASS`.
+
+The final acceptance regression used the already available Rust 1.97.1
+toolchain, cached dependencies, offline Cargo operation, repository-external
+targets, and repository-external Python caches. Formatting, workspace
+all-target checking, 78 of 78 complete workspace tests, all-target/all-feature
+Clippy with warnings denied, frozen dependency-tree resolution, 11 of 11
+unfiltered PC7 tests, generator rejection self-tests, checked-plan
+verification, Python syntax checking, two authenticated disposable
+regenerations, and Git textual-diff checks all passed with zero failures,
+ignores, or filters.
+
+All 118 defined current fixture IDs equal the 118 generated plan IDs and the
+118 public-boundary executed IDs. Exactly four future vectors remain excluded
+and non-dispatchable. The fixture-ID preimage is 2,576 bytes with SHA-256
+`ab7b72bdb33a255d2539a204cd880fa7aedab61b8672cfa3f02d8342d510f221`.
+Both regenerated plans equal each other and the checked 34,460,681-byte plan
+at SHA-256
+`4e1e5ef85dadeea5c1d0d3cd0ef9231dae887237b5860e89c8925db9420b9d9d`.
+Fixture maturity is therefore `qualified` for the frozen PC7 Resolve scope.
+
+Acceptance remains limited to opaque PC6 `ScannedSource` plus optional
+immutable existing-Lockfile input through the frozen Resolve outcome. It
+creates no Lockfile, `lock_id`, Manifest, Binding, authority, persistence,
+installation, provider, model, network, Builder, runtime, CLI, MCP, UI,
+Android, or other product behavior. The historical dormant future-only
+semantic finding remains `RESOLVE_ERRATUM_REVIEW_P3=1`; it is not a PC7
+implementation or qualification-review finding and is neither closed nor
+reclassified here.
+
+Publication is limited to one normal non-force fast-forward update of
+`refs/heads/main` containing the six reviewed candidate paths and the four
+durable acceptance paths. The commit, tree, remote, and push identities are
+self-excluded from repository state and belong only in the external operator
+report. This durable record becomes accepted publication authority only when
+that exact commit is published. PC8 remains unstarted, Builder and runtime
+remain unauthorized, and the sole next bounded task is PC8 Lock scope
+reconciliation and semantic freeze only.
