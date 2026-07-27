@@ -249,5 +249,217 @@ PC7_ACCEPTED=false
 PUSH_COMPLETE=true
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-NEXT_BOUNDED_TASK=PC7 Resolve implementation only
+HISTORICAL_NEXT_BOUNDED_TASK=PC7 Resolve implementation only
+```
+
+## 2026-07-27 fifth-repair acceptance amendment
+
+This amendment preserves the preceding 2026-07-25 acceptance record as
+historical evidence and supersedes only its PC7 semantic-repair status,
+fixture populations, implementation-evidence state, and active next task.
+
+### Authenticated fifth-repair authority
+
+| Artifact | Bytes | Lines | SHA-256 |
+|---|---:|---:|---|
+| Fifth candidate archive | 371839 | — | `d644efd834d04b12f855780db1a5abeec75246db295c08ad319f829a64521a8e` |
+| Fifth author report | 63131 | 1328 | `c7fd546f72e7d1c2d4edff87f62ffb7ed2035ae13fa04e2cd312e6e0a588d676` |
+| Fifth candidate manifest | 4482 | 142 | `8061b3d4db6f01b2ace78da352760b755f0486c40a28e92cb42e9abc804e5197` |
+| Fifth checksum closure | 1241 | 11 | `8463cbfbf4d8eee3eed7c5d94628f86ab18a9c80751fbb3289206b1496d4ac5b` |
+| Governing fifth independent review | 51422 | 1413 | `6f664ac7218c45be2244bfa029f5ae915a9a53739d5355ef286f1dedeea0aef9` |
+
+The fifth archive has exactly 12 regular and four directory members. Its
+paths are safe, unique, relative, and unsigned-UTF-8 ordered; regular modes
+are 0644, directory modes are 0755, UID and GID are zero, owner and group
+names are empty, mtime is zero, and gzip carries neither an original filename
+nor a timestamp. Its 11-entry `SHA256SUMS` is exact closure over every regular
+member except itself.
+
+The five-repair chain is complete. The first and second repairs closed the
+original semantic and criteria findings; the third completed strict
+actual-registry-byte precedence; the fourth completed Unicode-scalar strict
+JSON intake and exposed the missing durable raw discriminator; the fifth
+added exactly that discriminator and its schema and NC-46 bindings. The
+governing fifth review recomputed:
+
+```text
+PC7-SR4-IR-P1-01=RECOMPUTED_CLOSED
+REVIEW_P0=0
+REVIEW_P1=0
+REVIEW_P2=0
+REVIEW_P3=1
+FIXTURE_MATURITY=specified
+```
+
+PC7-AJ-P3-01 remains open, dormant, future-only, non-dispatchable, excluded
+from every current population, and non-blocking. This acceptance does not
+repair, delete, reclassify, dispatch, or close it.
+
+### Accepted authority identities and byte boundaries
+
+| Accepted path | Bytes | SHA-256 |
+|---|---:|---|
+| `docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md` | 1413209 | `a0ab4b4eaa0e06d0105fd43b06e684c7581e7b359d6a89cc76eb44b9057fc72e` |
+| `docs/pc7/PC7_RESOLVE_SPECIFIED_CONFORMANCE_MANIFEST.json` | 1306575 | `da33daef1526e21a921c8b7bb847045f6e137567f2c0b3b3e6f2af9a796c123c` |
+| `docs/pc7/PC7_SEMANTIC_FREEZE.md` | 30129 | `47f2b65f3807e0fe4940c7c6c15475fa472f0a578dba2bccaaba670e43654169` |
+| `docs/pc7/PC7_AUTHORITY_REGISTRY_V1.json` | 2041 | `7f39265be8bfd6db9fc93cedf357572eb5fab960000b9d6897ef983021112161` |
+
+The complete accepted erratum suffix beginning with `NORMATIVE SECTION 1 —
+Authority, amendment, and precedence` is byte-identical to the reviewed fifth
+candidate through end of file:
+
+```text
+NORMATIVE_REGION_BYTES=1409774
+NORMATIVE_REGION_SHA256=46ccf5b09295f5ba81a3244d0e742119281f31e61d47f660f1e730df661576a6
+NORMATIVE_REGION_BYTE_EQUAL=true
+```
+
+The 1,306,575 bytes between the embedded-manifest boundary lines are exactly
+the standalone manifest, including its single final LF:
+
+```text
+STANDALONE_EMBEDDED_MANIFEST_BYTE_EQUAL=true
+STANDALONE_EMBEDDED_MANIFEST_SHA256=da33daef1526e21a921c8b7bb847045f6e137567f2c0b3b3e6f2af9a796c123c
+```
+
+The accepted-to-reviewed semantic difference contains only pre-normative
+acceptance metadata, semantic-freeze procedure, mechanically dependent
+registry bindings, durable state, acceptance evidence, and unavoidable
+publication bookkeeping. It contains zero substantive semantic or
+conformance event.
+
+### Exact-set criteria recomputation
+
+The unchanged standalone manifest strict-parses with duplicate-key rejection
+at every depth, integer-only number admission, invalid-UTF-8 rejection, and
+the repaired Unicode-scalar rule. Recursive admission traversed all 127 schema
+categories with 11,483 schema visits and 1,892 exact-one union checks. Closed
+enums and object-member partitions pass.
+
+| Population | Exact recomputed value |
+|---|---:|
+| Current fixtures | 118 |
+| Diagnostic fixtures | 81 |
+| Ordinary success fixtures | 31 |
+| Success-relation fixtures | 6 |
+| Non-dispatchable future vectors | 4 |
+| New normative choices | 45 |
+| Schema categories | 127 |
+| Schema discriminators | 15 |
+| Diagnostic codes | 21 |
+| Byte constants | 105 |
+| Lock inputs | 38 |
+| Module oracles | 57 |
+| Package records | 67 |
+| Resolve inputs | 112 |
+| Successful outputs | 31 |
+| Reachable rank comparisons | 11 |
+| Mandatory gate-order criteria | 10 |
+| Path-order criteria | 1 |
+| Generated chain records | 255 |
+
+The exact fixture, discriminator, choice, schema, diagnostic, input, output,
+package, module-oracle, lock-input, byte-constant, coverage, and future-vector
+sets close. All fixture IDs are unique; the fixture class sets are disjoint.
+NC-01 through NC-39 and NC-41 through NC-46 are exact, with NC-40 absent.
+Every current input and successful output has reverse fixture reachability;
+all forward references resolve exactly once; all authoritative byte constants
+are reached. The 14 previously existing discriminator rows are unchanged, and
+`AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE` is the sole added row. Therefore
+14 to 15 schema discriminators is the fifth repair's sole substantive
+population change.
+
+The unsigned-UTF-8-sorted exact 118-fixture ID set, with one LF after every
+complete ID, recomputes as:
+
+```text
+FIXTURE_ID_PREIMAGE_BYTES=2576
+FIXTURE_ID_PREIMAGE_SHA256=ab7b72bdb33a255d2539a204cd880fa7aedab61b8672cfa3f02d8342d510f221
+FIXTURE_ID_PREIMAGE_FINAL_LF=exactly_one
+```
+
+### Final registry and NC-46 raw discriminator
+
+The V1 registry retains root member order `format`, `baseline_commit`,
+`baseline_tree`, `documents`, fixed document-row and row-member order,
+two-space JSON, UTF-8 without BOM, LF-only newlines, and one final LF. Relative
+to the reviewed fifth registry, only the erratum and semantic-freeze `bytes`
+and `sha256` values change. The unchanged manifest row and all unaffected
+bytes remain exact. The overlay provenance remains:
+
+```text
+baseline_commit=ded743ea3577ffc2b955565dee9159287ec98e05
+baseline_tree=e26180101c53c5cf44e4f270a9e868a4582be392
+```
+
+| Registry key | Path | Bytes | SHA-256 |
+|---|---|---:|---|
+| `lattice_standard` | `docs/standard/LATTICE_STANDARD_0.3.md` | 66657 | `33e3e5606cdabfce86dbef2895608ba6b2bb4d3daf3ce711dc91c62ae17e5379` |
+| `default_semantics_erratum` | `docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md` | 10019 | `ed5d32095abe2f834f19cef20d27f20d60469ecf0ac1367ed75e4725e2527766` |
+| `canonical_json_erratum` | `docs/standard/LATTICE_STANDARD_0.3_CANONICAL_JSON_ERRATUM.md` | 6173 | `ac772adc17a98bb9ecd6f9916717d696a1614918e79fc996546742f0cd6015b7` |
+| `package_scan_semantics_erratum` | `docs/standard/LATTICE_STANDARD_0.3_PACKAGE_SCAN_SEMANTICS_ERRATUM.md` | 152906 | `235ae8026676905b9f410167b18a902cd63dc449ecf073a96821e5d2d40e6c25` |
+| `resolve_semantics_erratum` | `docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md` | 1413209 | `a0ab4b4eaa0e06d0105fd43b06e684c7581e7b359d6a89cc76eb44b9057fc72e` |
+| `pc7_scope_reconciliation` | `docs/pc7/PC7_SCOPE_RECONCILIATION.md` | 38667 | `4cee5f0beacd663ee9ab3bb9c05060342de18c1d6d7b56d3a477c46c15d80243` |
+| `pc7_semantic_freeze` | `docs/pc7/PC7_SEMANTIC_FREEZE.md` | 30129 | `47f2b65f3807e0fe4940c7c6c15475fa472f0a578dba2bccaaba670e43654169` |
+| `pc7_specified_conformance_manifest` | `docs/pc7/PC7_RESOLVE_SPECIFIED_CONFORMANCE_MANIFEST.json` | 1306575 | `da33daef1526e21a921c8b7bb847045f6e137567f2c0b3b3e6f2af9a796c123c` |
+
+The raw discriminator replaces only the 36-byte JSON string content of the
+root `format` member with the six ASCII bytes `\ud800`, preserves both quotes
+and every other registry byte, and produces:
+
+```text
+FINAL_REGISTRY_MUTATION_BYTES=2011
+FINAL_REGISTRY_MUTATION_SHA256=12d85749fc0995e9637255939caef14bbf43547c176e13a93a32e747c68b8a5e
+Code=PC7_AUTHORITY_PREFLIGHT_REJECTED
+Gate=registry_strict_json_parse
+Path=authority#/registry
+Reason=UTF-8/BOM/JSON/duplicate failure
+```
+
+The criterion requires dispatch of the complete mutated raw bytes through
+`PC7AuthorityInputsV1.registry_bytes`. Parsed-object substitution, projection,
+host preprocessing, replacement characters, and direct internal-validator
+invocation are all forbidden, and fixture dispatch must not start.
+
+### Repository boundary and publication procedure
+
+The accepted working-tree and staged diffs contain exactly the eight
+authorized paths. Every Rust source, Cargo manifest, `Cargo.lock`, build
+configuration, executable fixture plan, generator, interpreter, test,
+Foundation-through-PC6 implementation and conformance path, prior erratum, and
+non-allowlisted path is byte-identical to baseline
+`ded743ea3577ffc2b955565dee9159287ec98e05`. No Cargo, rustc, rustfmt, Clippy,
+dependency installation, product execution, or implementation qualification
+was run. `git diff --check` and `git diff --cached --check` pass.
+
+Publication uses exactly one documentation-only child commit with subject
+`Accept and freeze PC7 semantic and criteria repair`, followed by one
+non-force compare-and-set update of `refs/heads/main`. The resulting commit
+and tree cannot appear in their own tree and are retained only in the external
+operator report. No branch, tag, pull request, merge, rebase, squash, amend, or
+second metadata commit is permitted.
+
+```text
+PC7_SEMANTIC_FREEZE_REOPENED=false
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_ACCEPTED=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_PUBLISHED=true
+PC7_SEMANTICS_FROZEN=true
+PC7_IMPLEMENTATION_STARTED=true
+PC7_FOCUSED_QUALIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_VERIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_REVIEW_COMPLETE=false
+PC7_ACCEPTED=false
+PUSH_COMPLETE=true
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+FIXTURE_MATURITY=specified
+REVIEW_P0=0
+REVIEW_P1=0
+REVIEW_P2=0
+REVIEW_P3=1
+NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
 ```

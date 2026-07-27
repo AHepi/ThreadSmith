@@ -1,48 +1,68 @@
 Lattice Standard 0.3 Resolve Semantics Erratum
-Erratum acceptance date: 2026-07-25.
-Status: accepted normative companion to Lattice Standard 0.3; PC7 semantics frozen.
+Fifth semantic and conformance-criteria repair acceptance date: 2026-07-27.
+Status: the independently reviewed fifth repair is accepted, the repaired PC7
+semantic authority is frozen, and this documentation-only revision is
+committed for publication. Overall PC7 acceptance remains false.
 
-This accepted erratum is derived from the independently reviewed second
-repaired candidate whose SHA-256 is
-96b791052be2231f25e2e0cf05ef7e0bd769e811a5947f31c538d205fe5c95b9.
-The final independent review reported P0=0, P1=0, P2=0, and P3=1 with
-INDEPENDENCE_COMPROMISED=false. All five prior P1 findings were independently
-recomputed closed. The sole retained P3 is non-blocking provenance debt: one
-nonnormative rule-provenance cell says “unaccepted first repair” in the
-reviewed second-repair bytes.
+The previously accepted Resolve Semantics Erratum at SHA-256
+4507fdfe2147f460c2f791b494517878c0d04620d020a6b8c512294aab868b24
+remains the repair-overlay baseline. Independent adjudication at SHA-256
+4d22f38aff643fa8ad1469935f1e1372c22e51a4009e6bf24aeb629662193060
+found five P1, three P2, and one P3 open findings. The completed five-repair
+chain addressed only the authorized semantic and durable-criteria boundary.
+No repair candidate served as its own review or acceptance evidence.
 
-Acceptance changes no reviewed normative or fixture-criteria byte. The
-candidate-status statements retained below record the reviewed candidate's own
-authority boundary; this header records the later acceptance and freeze gate
-that those statements deferred. Lattice Standard 0.3 remains primary, and this
-erratum is controlling only within its stated Resolve and optional existing
-Lockfile-intake scope.
+The governing independent fourth-repair review at SHA-256
+96c501942269b9b694ec1df01a9330c547bd24ce355810c6bfa9a1daca78a65a
+derived the fourth candidate's repaired Unicode-scalar strict-parse semantics,
+retained PC7-AJ-P3-01 dormant and open, and found only
+PC7-SR4-IR-P1-01 acceptance-blocking. This fifth candidate changes only the
+durable raw-registry surrogate discriminator, its closed-schema and NC-46
+bindings, and mechanically dependent provenance, state, embedded-manifest,
+hash, and byte-count bindings.
 
-The embedded and separately retained machine-readable material remains at
-fixture maturity specified. It is not dispatchable, executable, or qualified.
-This acceptance authorizes only a later PC7 Resolve implementation gate. It
-does not implement Resolve or authorize Lock, Builder, runtime, providers,
-installation, CLI, MCP, UI, Android, or any product layer.
+The governing fifth-repair independent review at SHA-256
+6f664ac7218c45be2244bfa029f5ae915a9a53739d5355ef286f1dedeea0aef9
+recomputed PC7-SR4-IR-P1-01 closed with REVIEW_P0=0, REVIEW_P1=0,
+REVIEW_P2=0, and REVIEW_P3=1. PC7-AJ-P3-01 remains open, dormant,
+future-only, non-dispatchable, excluded from current populations, and
+non-blocking.
 
-PC7_SCOPE_RECONCILED=true
-RESOLVE_ERRATUM_CANDIDATE_COMPLETE=true
-RESOLVE_ERRATUM_CANDIDATE_REVIEW_COMPLETE=true
-RESOLVE_ERRATUM_REPAIR_COMPLETE=true
-RESOLVE_ERRATUM_REPAIR_REVIEW_COMPLETE=true
-RESOLVE_ERRATUM_SECOND_REPAIR_COMPLETE=true
-RESOLVE_ERRATUM_SECOND_REPAIR_REVIEW_COMPLETE=true
-RESOLVE_ERRATUM_REVIEW_P0=0
-RESOLVE_ERRATUM_REVIEW_P1=0
-RESOLVE_ERRATUM_REVIEW_P2=0
-RESOLVE_ERRATUM_REVIEW_P3=1
-RESOLVE_ERRATUM_ACCEPTED=true
+Lattice Standard 0.3 and every published accepted erratum remain normative
+authority. This accepted repair replaces the prior Resolve companion within
+its stated scope and is bound with the semantic freeze and exact standalone
+manifest through the V1 authority registry. Its changed rules remain
+classified inline as [S], [C], [N], or [D].
+
+The embedded and separately retained machine-readable material has fixture
+maturity exactly specified. It is not dispatchable, executable, qualified,
+implementation-verified, or implementation-reviewed. Historical PC7
+implementation bytes remain evidence only and are not changed here.
+
+PC7_SEMANTIC_FREEZE_REOPENED=false
+PC7_SEMANTIC_AND_CRITERIA_THIRD_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_THIRD_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_ACCEPTED=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_PUBLISHED=true
 PC7_SEMANTICS_FROZEN=true
-PC7_IMPLEMENTATION_STARTED=false
+PC7_IMPLEMENTATION_STARTED=true
+PC7_FOCUSED_QUALIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_VERIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_REVIEW_COMPLETE=false
 PC7_ACCEPTED=false
 PUSH_COMPLETE=true
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-NEXT_BOUNDED_TASK=PC7 Resolve implementation only
+FIXTURE_MATURITY=specified
+REVIEW_P0=0
+REVIEW_P1=0
+REVIEW_P2=0
+REVIEW_P3=1
+NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
 
 
 NORMATIVE SECTION 1 — Authority, amendment, and precedence
@@ -69,19 +89,26 @@ enumerated in Normative Section 20, and is included in that section's
 provenance ledger. Headings, examples, data labels, and explicitly
 non-normative notes are not independent rules.
 
-The exact controlling accepted identities used while authoring are:
+The exact controlling accepted baseline is commit
+ded743ea3577ffc2b955565dee9159287ec98e05 and tree
+e26180101c53c5cf44e4f270a9e868a4582be392. The accepted document identities
+used while authoring are:
 
-Standard repository baseline commit:
-75ea1adbf90aba4297d6238f2563029a1d436bd2
+Document | SHA-256
+-------- | -------
+Lattice Standard 0.3 | 33e3e5606cdabfce86dbef2895608ba6b2bb4d3daf3ce711dc91c62ae17e5379
+Default Semantics Erratum | ed5d32095abe2f834f19cef20d27f20d60469ecf0ac1367ed75e4725e2527766
+Canonical JSON Erratum | ac772adc17a98bb9ecd6f9916717d696a1614918e79fc996546742f0cd6015b7
+Package Scan Semantics Erratum | 235ae8026676905b9f410167b18a902cd63dc449ecf073a96821e5d2d40e6c25
+Resolve Semantics Erratum | 4507fdfe2147f460c2f791b494517878c0d04620d020a6b8c512294aab868b24
+PC7 Scope Reconciliation | 4cee5f0beacd663ee9ab3bb9c05060342de18c1d6d7b56d3a477c46c15d80243
+PC7 Semantic Freeze | 48ac10106028f8e6ace85ee9f633bd1e0319e3b5575b9b33a0ca5f0fc99b0672
+PC7 Specified Conformance Manifest | 1fb0c0588310a32c4a5c4fa7ff9d9a268ab940a61ae913d00bb465eb2a83ef10
 
-Standard repository baseline tree:
-c7215691dc1f7fcb84bf5737e57539d255f7a28e
-
-Package Scan Semantics Erratum SHA-256:
-235ae8026676905b9f410167b18a902cd63dc449ecf073a96821e5d2d40e6c25
-
-PC6 Semantic Freeze SHA-256:
-4e444eaac263b453d5d80252f28a63db919fa36efb9fef0dc98319ca0e7e0204
+The authenticated adjudication controls this repair's finding classifications
+and severity boundary. The authenticated external blind derivation and final
+consultation report are advisory evidence only. Their recommendations do not
+become normative rules unless independently supported and classified here.
 
 NORMATIVE SECTION 2 — Resolve scope and exclusions
 
@@ -318,6 +345,15 @@ Duplicate conflicts are ordered by package name UTF-8 bytes, numeric version,
 then package identity UTF-8 bytes. Their path is
 packages/<package>/<version>. Deduplication runs before root import admission.
 
+[D] PC7-AJ-P3-01 records future composition-seam debt. A historical
+implementation orders competing duplicate diagnostics by their rendered
+textual version paths, which would place 10.0.0 before 2.0.0. That behavior is
+not the rule above. It is unreachable through the accepted PC6 ScannedSource
+boundary. The specified future vector with conflicts at 2.0.0 and 10.0.0 is
+non-dispatchable and requires packages/duplicate_pkg/2.0.0 if a later
+accepted composition seam makes it constructible. This candidate creates no
+composition facility and authorizes no implementation repair.
+
 [NC-06] A candidate is active-profile eligible exactly when its descriptor
 profiles array contains the active profile as an equal string. No fallback,
 profile widening, or declaration-body inference exists. A higher ineligible
@@ -352,10 +388,43 @@ equal the supplied bytes exactly.
 
 Lockfile source intake first checks UTF-8 and byte-order mark, then one complete
 JSON value, then mapping-key uniqueness while scanning lexical byte order, then
-canonical re-encoding equality. JSON numbers at this gate are restricted to
-the accepted canonical integer domain; floating-point spellings are source
-failures. Invalid UTF-8, a byte-order mark, incomplete or
-extra JSON text, a non-object root, and noncanonical presentation use lock#.
+canonical re-encoding equality.
+
+[NC-45] [N] The direct ExistingLockfileInput JSON integer domain is exactly
+the set of all mathematical integers. It has no minimum and no maximum.
+Negative integers are admitted at the source gate. An integer lexeme is
+canonical exactly when it is `0` or matches `-?[1-9][0-9]*`. A leading zero,
+leading plus sign, fraction, exponent, negative zero, nonfinite spelling, or
+other number spelling is forbidden independently of magnitude.
+
+The source gate owns integer-domain admission. Because the selected domain is
+unbounded, every syntactically canonical integer denotes an admitted value.
+The set of syntactically canonical integers outside the admitted source domain
+is therefore empty: no range-rejection source diagnostic or range-rejection
+path exists. A forbidden integer spelling encountered as the value of
+lock_version produces RESOLVE_LOCK_SOURCE_INVALID at
+lock#/lock_version. A canonical admitted integer other than 1 reaches closed
+schema stage 4 and produces RESOLVE_LOCK_SCHEMA_INVALID at
+lock#/lock_version.
+
+These exact boundary outcomes are normative:
+
+Integer lexeme | Gate | Code | Path
+-------------- | ---- | ---- | ----
+-9223372036854775809 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+-9223372036854775808 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+9223372036854775807 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+9223372036854775808 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+18446744073709551615 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+18446744073709551616 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+100000000000000000000000000000000000000000000000000000000000000000000000000000000 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+-100000000000000000000000000000000000000000000000000000000000000000000000000000000 | closed schema stage 4 | RESOLVE_LOCK_SCHEMA_INVALID | lock#/lock_version
+
+Source intake completes before closed schema admission. A forbidden lexical
+form therefore prevents the fixed-value failure from becoming eligible.
+Invalid UTF-8, a byte-order mark, incomplete or extra JSON text, a non-object
+root, and noncanonical presentation use lock# unless the exact offending
+member pointer has already been established by the rules above.
 For a repeated decoded key or NFC-colliding key, the later lexical occurrence
 owns the RFC-6901 pointer. When more than one such occurrence exists, the
 smallest starting byte offset wins. This source gate produces only
@@ -408,6 +477,25 @@ After source intake, the closed schema is checked in these exact stages:
     index; and
 15. requested_by nondecreasing order by package index then first offending
     requested_by index.
+
+[C] Every numbered schema stage is a global gate. Resolve completes the scan
+of every eligible candidate in one stage, selects that stage's primary
+failure, and returns it before the next stage begins. Implementations MUST NOT
+interleave two stages inside an outer package or array-index loop.
+
+For the stage-3/stage-4 discriminator, lock_version is canonical integer 2 and
+lattice is Boolean false while every other top-level member has the admitted
+type. The required result is RESOLVE_LOCK_SCHEMA_INVALID at lock#/lattice.
+The complete top-level type scan therefore finishes before the earlier field's
+fixed-value failure becomes eligible.
+
+For the stage-14/stage-15 discriminator, packages[0].requested_by decreases
+from module zeta to module alpha, while packages[1].name is alpha after
+packages[0].name zeta. The required result is
+RESOLVE_LOCK_SCHEMA_INVALID at lock#/packages/1/name. The complete
+package-name scan therefore finishes before the lower-index requested_by
+failure at lock#/packages/0/requested_by/1/module becomes eligible.
+Stage-14-only and stage-15-only controls bind those two paths separately.
 
 Every schema failure uses RESOLVE_LOCK_SCHEMA_INVALID at the exact offending
 member or element. A missing member path names the missing member. An order or
@@ -688,6 +776,16 @@ bytes. Each code has one rank, so code comparison is not a remaining
 tie-break. Two candidates with the same code and path are observationally one
 primary candidate.
 
+[S] Path comparison is over the complete rendered UTF-8 byte sequence, not
+over numerically interpreted RFC-6901 array-index tokens. For co-reachable
+rank-2 RESOLVE_IMPORT_INVALID candidates at root import indexes 2 and 10,
+both at member as, the exact primary path is root#/imports/10/as because the
+byte `1` in the complete path precedes byte `2`. A separate index-2-only
+control returns root#/imports/2/as. Increasing array traversal determines
+which candidates are gathered; it does not replace the final rank-then-path
+selection rule. Filler imports at indexes 0, 1, and 3 through 9 are complete,
+valid three-member imports with unique aliases and introduce no candidate.
+
 The preflight gates are, in order: candidate deduplication; gathered root
 import admission; Lockfile source; Lockfile schema; lock_id; and Lockfile
 context. The first failing gate returns its primary diagnostic and prevents
@@ -745,6 +843,14 @@ Every member is immutable through the public phase boundary. No mutable path,
 provider capability, runtime permission, diagnostic, clock, random value, or
 compiler implementation metadata is a member.
 
+[S] The scanned_source member is the exact pre-Resolve ScannedSource, not a
+reconstructed lookalike. Conformance criteria for its semantic projection
+must nevertheless build the expected four-member projection independently
+from the fixture's accepted PC2-through-PC6 input before Resolve is called.
+The actual ResolvedSource output MUST NOT be read, copied, substituted,
+erased, or normalized to obtain any expected scanned_source value. This is an
+evidence-construction rule and does not change the opaque semantic binding.
+
 [NC-33] PC7 creates no identity. In particular, ResolvedSource, a selected
 package set, the resolution trace, and the import graph receive no Lattice
 identity. Existing package identities remain PC6 identities. Existing lock_id
@@ -795,7 +901,7 @@ NORMATIVE SECTION 18 — Closed conformance-manifest interpretation
 [NC-42] The single JSON value in Normative Section 19 is normative conformance
 criteria at maturity specified. It is not an execution result. Its fixture
 class vocabulary is exactly diagnostic, success, and success_relation. Its
-relation-operation vocabulary is exactly the five tagged operations in
+relation-operation vocabulary is exactly the six tagged operations in
 construction_schema.relation_operation_vocabulary. No key, class, operation,
 constructor, reference form, or expected-object variant outside the closed
 schema is admitted.
@@ -807,10 +913,250 @@ Every object and array in the manifest must match exactly one applicable
 catalog entry. Intentional semantic inputs under test use the explicitly
 recursive pc2_json_value type; that type permits arbitrary JSON object keys
 because unknown source members are test data, not manifest-language
-extensions.
+extensions. ExistingLockfileInput parsed values instead use the closed
+canonical_json_value type, whose integer member is the unbounded NC-45 domain.
 
-The runner admission order is exact: strict JSON parse with duplicate-key and
-non-integer-number rejection; recursive closed-schema validation; byte,
+[NC-46] [N] Ordinary generator and interpreter execution begins with an
+eight-document authority preflight. It verifies the exact bytes of Lattice
+Standard 0.3; the Default Semantics, Canonical JSON, Package Scan Semantics,
+and Resolve Semantics errata; PC7 Scope Reconciliation; PC7 Semantic Freeze;
+and the PC7 Specified Conformance Manifest.
+
+The exact durable trust-root carrier is
+docs/pc7/PC7_AUTHORITY_REGISTRY_V1.json. Its format is exactly
+threadsmith-pc7-authority-registry-1. The root is one object with exactly
+format, baseline_commit, baseline_tree, and documents in that order.
+documents is an array of exactly eight objects in the manifest's
+preflight_order. Each row has exactly key, path, bytes, and sha256 in that
+order. key and path equal the corresponding manifest authority key and path;
+bytes is the exact final-file byte count as an unbounded nonnegative integer;
+sha256 is the lowercase SHA-256 of those exact bytes. Duplicate keys, unknown
+or missing members, extra or missing rows, row reordering, path substitution,
+and every other value are forbidden.
+
+[N, NC-46] `registry_strict_json_parse` admits every JSON string value and
+every object-member name, recursively at every depth, only as a sequence of
+Unicode scalar values. A non-surrogate `\uXXXX` escape denotes the scalar
+having that hexadecimal value.
+
+A high-surrogate escape from `\uD800` through `\uDBFF` is admitted only when
+it is immediately followed in the same JSON string by a low-surrogate escape
+from `\uDC00` through `\uDFFF`. For admitted hexadecimal values `H` and `L`,
+the pair denotes exactly one scalar:
+
+```text
+0x10000 + ((H - 0xD800) << 10) + (L - 0xDC00)
+```
+
+A lone high surrogate, lone low surrogate, high surrogate followed by a
+non-low-surrogate escape, high surrogate followed by an ordinary character,
+high-high sequence, low-low sequence, low-high or other reversed pair,
+truncated pair, or surrogate separated from its required mate by any
+character is a strict-parse failure. An invalid surrogate MUST NOT be replaced
+by U+FFFD, preserved as a code unit, deleted, normalized, deferred, or passed
+to `registry_canonical_bytes`.
+
+A directly UTF-8-encoded supplementary scalar and its valid escaped
+surrogate-pair spelling denote the same parsed scalar value. Raw UTF-8 remains
+strict: a byte sequence encoding a surrogate code point, an overlong encoding,
+a malformed continuation, a truncation, or a value above U+10FFFF is rejected.
+This stage performs no NFC normalization. Duplicate-key rejection compares
+decoded valid member names; therefore one literal supplementary scalar and
+its valid surrogate-pair spelling are a duplicate member name.
+
+[N, NC-46] The V1 pre-schema serializer is total over every value admitted by
+`registry_strict_json_parse` after `registry_unknown_members` completes
+without a candidate. It consumes the same parsed value produced from the
+actual supplied registry bytes. It never consumes a schema projection,
+member-dropped or defaulted value, reordered copy, or separately constructed
+object.
+
+The serializer emits UTF-8 without BOM, LF only, and exactly one final LF. It
+uses the conventional two-space JSON layout. An empty object or array is `{}`
+or `[]`. Each nonempty object or array has its opening delimiter at the value
+position, one member or element per following line indented two spaces per
+depth, a comma after every nonfinal member or element, and its closing
+delimiter on the following line at the containing depth. Object keys have one
+colon and one following space. Arrays retain parsed order.
+
+At the root, present recognized members are emitted in relative order
+`format`, `baseline_commit`, `baseline_tree`, `documents`. In each
+object-valued element of an array-valued root `documents` member, present
+recognized row members are emitted in relative order `key`, `path`, `bytes`,
+`sha256`. Every other object position orders NFC-normalized keys by unsigned
+UTF-8 bytes; a normalized-key collision has no serialization. Strings and
+keys use the accepted Canonical JSON erratum's NFC and exact escaping rules.
+
+JSON numbers are interpreted as exact finite decimal values. An integral
+value emits as the Canonical JSON integer. A nonintegral value emits without
+an exponent as one minimal decimal point, with at least one digit on each
+side, no leading plus or unnecessary leading integer zero, and no trailing
+fractional zero. Negative zero emits `0`. `true`, `false`, and `null` use those
+exact lowercase tokens.
+
+The standalone registry file is the only admitted schema-valid V1 serialized
+value. Its schema-valid strings are printable ASCII and therefore appear
+unescaped; its `bytes` values are canonical nonnegative integers. Comparing
+the supplied bytes with the pre-schema serialization rejects alternate
+whitespace, member order, escapes, number spellings, encodings, BOMs, and
+newline forms without preventing later missing-member, member-type, format,
+baseline, document-order, or path-binding stages from receiving a canonically
+laid-out invalid value. Any incompatible schema, serialization, or meaning
+requires a new format and versioned path; a V1 consumer neither negotiates nor
+upgrades.
+
+baseline_commit means the exact pre-repair commit
+ded743ea3577ffc2b955565dee9159287ec98e05. baseline_tree means that commit's
+exact root tree e26180101c53c5cf44e4f270a9e868a4582be392. The later acceptance
+operator MUST verify from the complete authenticated bundle that this commit
+exists with that tree, parent 75ea1adbf90aba4297d6238f2563029a1d436bd2,
+and subject “Accept and freeze PC7 Resolve semantics”, and MUST reconstruct
+the prospective paths as an overlay on that baseline. Ordinary generator and
+interpreter runs compare the two registry members literally to these values;
+they do not require a Git checkout. These members identify the authoring
+baseline and do not require the later acceptance commit or tree to equal it.
+
+Both later tools receive one explicit PC7AuthorityInputsV1 argument containing
+exactly authority_root, a read-only directory capability, and registry_bytes,
+the immutable bytes read from the fixed registry path under that capability.
+A CLI adapter MUST require exactly one --pc7-authority-root <DIRECTORY> and
+one --pc7-authority-registry <FILE>. Neither input has a default, may repeat,
+or may be obtained from an environment variable, search path, network,
+current-directory inference, author report, or compiled fallback constant.
+The registry argument MUST designate the fixed path relative to the supplied
+root. The generator records the registry byte count and SHA-256 in its plan.
+The interpreter receives the same explicit inputs, repeats the preflight before
+plan interpretation, and rejects unless its registry bytes have that recorded
+count and SHA-256.
+
+Every authority-preflight failure uses
+`PC7_AUTHORITY_PREFLIGHT_REJECTED`. The fourteen stages are exactly:
+
+1. `invocation_authority_root`
+2. `invocation_registry_binding`
+3. `registry_read`
+4. `registry_strict_json_parse`
+5. `registry_unknown_members`
+6. `registry_canonical_bytes`
+7. `registry_missing_members`
+8. `registry_member_types`
+9. `registry_format`
+10. `registry_baseline_commit`
+11. `registry_baseline_tree`
+12. `registry_document_key_order`
+13. `registry_document_path_bindings`
+14. `authority_document_bytes`
+
+Each stage completes before the next begins. A missing, repeated,
+non-directory, or unreadable root input uses `authority#/root`. A missing or
+repeated registry input, wrong registry path, or missing or unreadable
+registry file uses `authority#/registry`.
+
+`registry_strict_json_parse` consumes the actual immutable `registry_bytes`
+member of `PC7AuthorityInputsV1`. It applies the complete Unicode-scalar
+string rule above to every value and member name. Invalid UTF-8, BOM,
+malformed JSON, an invalid surrogate construction, or a duplicate decoded
+member name rejects at `authority#/registry` with reason
+`UTF-8/BOM/JSON/duplicate failure`; no later registry stage is reached. On
+success it produces exactly one parsed value for all later registry stages.
+
+[C] `registry_unknown_members` inspects only that parsed value before any
+canonical-byte comparison. It performs no projection, member dropping,
+default insertion, reordering, or parsed-object substitution. When the root is
+an object it inspects its members. When that root has an array-valued
+`documents` member, it also inspects the members of every object-valued row.
+A nonobject position contributes no unknown-member candidate and remains
+available to later type validation.
+
+For each unknown member, form its complete path from
+`authority#/registry` and its RFC-6901 member path. Escape each member token by
+replacing `~` with `~0` and then `/` with `~1`; row indexes are minimal
+unsigned decimal. Order candidates by the unsigned UTF-8 bytes of the complete
+rendered paths. The least candidate wins with gate
+`registry_unknown_members`, its complete path, and reason
+`unknown registry member`.
+
+`registry_canonical_bytes` then serializes that same parsed value using the V1
+pre-schema serializer and compares the result byte-for-byte with the actual
+supplied registry bytes. Inequality or absence of a serialization rejects at
+`authority#/registry` with reason
+`registry bytes have no admitted V1 serialization`.
+
+Missing members are considered in top-level member order, then document-array
+order, then row-member order. Type and value failures use the same preorder.
+Wrong version, baseline commit, or baseline tree therefore uses
+`authority#/registry/format`, `authority#/registry/baseline_commit`, or
+`authority#/registry/baseline_tree`. A wrong document count, key, order, or
+path uses `authority#/registry/documents` or the exact
+`authority#/registry/documents/<index>/<member>` path.
+
+The specified raw-byte discriminator starts with the final supplied canonical
+registry bytes, inserts one root member named `zzz` using otherwise two-space
+LF-only JSON, and supplies those mutated bytes through
+`PC7AuthorityInputsV1.registry_bytes`. It MUST reject with the exact tuple
+`PC7_AUTHORITY_PREFLIGHT_REJECTED`,
+`registry_unknown_members`, `authority#/registry/zzz`,
+`unknown registry member`. A separately constructed or directly mutated
+parsed object is not this criterion.
+
+[C] `AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE` starts with the complete final
+supplied V1 registry bytes at `PC7AuthorityInputsV1.registry_bytes`. Under the
+fixed V1 layout, the following complete root-member line occurs exactly once:
+
+```text
+source_member_line_hex=202022666f726d6174223a2022746872656164736d6974682d7063372d617574686f726974792d72656769737472792d31222c0a
+source_content_hex=746872656164736d6974682d7063372d617574686f726974792d72656769737472792d31
+```
+
+Replace only that complete 36-byte JSON string content with the six ASCII
+bytes whose hexadecimal form is `5c7564383030`, retaining the opening and
+closing quotes and every other byte. The unique resulting line is:
+
+```text
+result_member_line_hex=202022666f726d6174223a20225c7564383030222c0a
+```
+
+Supply the complete mutated byte sequence unchanged through
+`PC7AuthorityInputsV1.registry_bytes`. It MUST reject with code
+`PC7_AUTHORITY_PREFLIGHT_REJECTED`, gate `registry_strict_json_parse`, path
+`authority#/registry`, and reason `UTF-8/BOM/JSON/duplicate failure`.
+Parsed-object substitution, projection, host-parser preprocessing,
+replacement characters, reserialization, and direct internal-validator
+invocation are forbidden. The authenticated fourth-registry construction of
+this rule is retained as provenance at 2,011 bytes and SHA-256
+`f3ba4869cdb8097f7143d98d22f56e8e5eff5509db1a9d132d5498db8dbd9a92`;
+the final fifth-registry mutation is reconstructed afresh from the final
+registry and is not substituted by that prior byte sequence.
+
+Only after all registry rules pass are authority documents read. Each document
+is completed in preflight_order before the next begins. A missing, unreadable,
+byte-count-mismatched, or SHA-256-mismatched document uses
+authority#/<authority-document-key>. Byte count is compared before SHA-256.
+When several documents mismatch, the first preflight_order key wins. All
+registry stages finish before any document stage. Rejection is not a Resolve
+diagnostic, creates no ResolveOutcome, and occurs before manifest parsing,
+plan generation, plan interpretation, fixture construction, dispatch, or
+Resolve execution.
+
+The later acceptance operator MUST finalize the three repaired hashed
+documents without a final registry hash or byte count inside them, compute
+their exact byte counts and SHA-256 values, and construct the registry once
+with those values and the five unchanged document identities. An independent
+reproducer MUST then regenerate all four byte sequences, verify the exact
+four-path overlay and the registry's eight document bindings, and review and
+publish the four artifacts together. No final commit or final tree identity is
+required, and no fifth artifact supplies normative bytes. This is acyclic:
+the three hashed documents name only the registry path, format, schema, and
+role, while the registry alone contains their final sizes and hashes.
+
+Changing “The first failing gate returns its primary diagnostic” to “The last
+failing gate returns its primary diagnostic” while the registry and manifest
+remain unchanged MUST reject at authority#/resolve_semantics_erratum before
+fixture processing.
+
+After authority preflight, the runner admission order is exact: strict JSON
+parse with duplicate-key and non-integer-number rejection; recursive
+closed-schema validation; byte,
 digest, identity, and constructor checks; reference closure and
 exactly-once resolution; authoritative-data reachability; declared-population
 equality; current public-boundary construction; fixture-plan generation; then
@@ -831,8 +1177,12 @@ as enumerated by construction_schema.reference_expansion_rule.
 Locator terminals are exactly existing_lock_output.input_ref,
 successful_output.scanned_source_ref, selection_record.record_ref, and the
 four selected_module members imports_ref, parsed_module_ref, record_ref, and
-retained_bytes_ref. Each locator's unique target is validated once, but the
-locator string is retained and is never substituted.
+retained_bytes_ref. Each locator's unique target is validated once. All remain
+stored criteria strings. During expected successful-output materialization
+only, scanned_source_ref is consumed as a recipe locator and replaced by the
+independently constructed pre-Resolve projection defined below. No value from
+actual ResolvedSource output participates in that replacement. Every other
+locator remains a scalar and is never substituted.
 
 After strict schema validation, locator targets are checked; current fixture
 links and their input-construction links are resolved; generator families are resolved;
@@ -846,7 +1196,8 @@ second attempt is PC7_MANIFEST_REFERENCE_INVALID at the original reference path.
 For chain255 let C be exactly the twelve-member value obtained by copying
 successful_outputs.output_chain_255 and replacing its six generator markers,
 in successful-output field order, with the six constructor products. Scalar
-scanned_source_ref and record_ref locators remain strings. C itself, with no
+scanned_source_ref and record_ref locators remain strings in this stored
+criteria root; expected-output materialization occurs only later. C itself, with no
 wrapper, is the canonical fixture-byte root. The canonical generated-plan root
 is exactly {"expected":C,"fixture_id":"RES-S-PASS-256","input_ref":"chain_255"}.
 Accepted canonical JSON is applied once to each root. No BOM, whitespace, media
@@ -866,17 +1217,44 @@ current_input_construction, and obtains ScannedSource only from successful
 Package Scan. No fixture constructs, deserializes, or mutates ScannedSource
 directly.
 
-The three same-name/same-version composition cases are retained only in
+[C] To construct expected scanned_source, the runner completes that public
+PC2-through-PC6 sequence before invoking Resolve. From the resulting
+pre-Resolve ScannedSource it constructs exactly active_profile,
+blueprint_digest, defaulted_root, and packages. packages is the complete PC6
+ordered sequence; each entry contains the full descriptor, exact package_id,
+and every retained verified file with path, declared digest, and all bytes as
+lowercase hexadecimal. construction_schema.scanned_source_expectation fixes
+every constituent and member order. The runner then compares the complete
+twelve-member actual output to the complete independently materialized
+expected output.
+
+RES-S-SCANNED-SOURCE-INDEPENDENT also forms a comparison copy in which only
+scanned_source is replaced by
+{"deliberately_wrong_scanned_source":true}. The correct complete comparison
+MUST be equal and the wrong-member complete comparison MUST be unequal. A
+materializer that obtains expected scanned_source from actual output fails
+this criterion.
+
+The four same-name/same-version composition cases are retained only in
 non_dispatchable_future_vectors. They are design vectors for NC-15 and NC-35,
 are not ScannedSource values, have no current public constructor, and are not
 fixtures, resolve_inputs, generated plans, executed rows, or current
-coverage totals.
+coverage totals. The fourth records the deferred numeric 2.0.0-before-10.0.0
+duplicate-conflict ordering debt.
 
 Every diagnostic fixture admits exactly its named code and path, plus exact
 cycle detail only where present, and requires a null successful output. Every
 success fixture resolves one complete twelve-member successful-output criteria
 recipe. Every success_relation fixture resolves its named stored recipes in listed
 order and applies exactly one closed relation operation.
+
+[C] Every fixture_id_array uses one rule: strict ascending fixture-ID unsigned
+UTF-8 bytes. There is no accepted-presentation exception. The nine repaired
+required_behavior_coverage arrays use that presentation. A valid permutation
+with a first adjacent inversion is rejected with
+PC7_MANIFEST_SCHEMA_VALUE_INVALID at the later element's exact JSON Pointer.
+The manifest discriminator swaps constraint_intersection and requires
+/coverage/required_behavior_coverage/constraint_intersection/1.
 
 [NC-44] A field selector is exactly $ or a lower-snake-case MEMBER followed by
 zero or more .MEMBER or [*] tokens. Dot means object-member traversal; it
@@ -931,11 +1309,23 @@ versions 2 and 10, so that case tests their shared numeric comparator and an
 exact 10.0.0 selection while multiple-compatible selection is separately
 tested inside major version 1.
 
-This second-repair material remains specified, not executable or qualified. A later
-implementation must still supply a strict plan generator, unknown-field
-rejection, public-boundary interpreter, equality of defined, generated, and
-executed fixture-ID sets, complete expected-outcome comparison, focused
-qualification, and frozen regression qualification.
+The arbitrary-size criteria additionally retain u128::MAX and its adjacent
+successor as complete version strings, plus adjacent 80- and 81-digit patch
+components whose lexical and numeric orders differ. Root and transitive caret
+fixtures both require selection of
+1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000.
+These vectors distinguish signed-i64, unsigned-u64, u128, fixed-30-digit,
+lexical, saturating, and truncating implementations.
+
+This repair material remains specified, not dispatchable, executable,
+qualified, implementation-verified, or implementation-reviewed.
+Implementation remains blocked until fresh independent review, acceptance,
+commit, and publication of the three replacement documents and the registry.
+A later bounded implementation gate owns the stage-14/stage-15 repair,
+independent scanned_source materialization, authority preflight, repaired
+order and closure validation, plan regeneration, strict public dispatch and
+interpretation, focused and full qualification, and independent
+implementation review.
 
 NORMATIVE SECTION 19 — Embedded specified conformance manifest
 
@@ -945,7 +1335,98 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
     "package_scan_erratum_sha256": "235ae8026676905b9f410167b18a902cd63dc449ecf073a96821e5d2d40e6c25",
     "pc6_semantic_freeze_sha256": "4e444eaac263b453d5d80252f28a63db919fa36efb9fef0dc98319ca0e7e0204",
     "scope_report_sha256": "4cee5f0beacd663ee9ab3bb9c05060342de18c1d6d7b56d3a477c46c15d80243",
-    "standard": "docs/standard/LATTICE_STANDARD_0.3.md"
+    "standard": "docs/standard/LATTICE_STANDARD_0.3.md",
+    "baseline_commit": "ded743ea3577ffc2b955565dee9159287ec98e05",
+    "baseline_tree": "e26180101c53c5cf44e4f270a9e868a4582be392",
+    "canonical_json_erratum_sha256": "ac772adc17a98bb9ecd6f9916717d696a1614918e79fc996546742f0cd6015b7",
+    "default_semantics_erratum_sha256": "ed5d32095abe2f834f19cef20d27f20d60469ecf0ac1367ed75e4725e2527766",
+    "lattice_standard_sha256": "33e3e5606cdabfce86dbef2895608ba6b2bb4d3daf3ce711dc91c62ae17e5379",
+    "resolve_semantics_erratum_accepted_sha256": "4507fdfe2147f460c2f791b494517878c0d04620d020a6b8c512294aab868b24",
+    "semantic_freeze_accepted_sha256": "48ac10106028f8e6ace85ee9f633bd1e0319e3b5575b9b33a0ca5f0fc99b0672",
+    "specified_conformance_manifest_accepted_sha256": "1fb0c0588310a32c4a5c4fa7ff9d9a268ab940a61ae913d00bb465eb2a83ef10",
+    "preflight": {
+      "accepted_baseline_sha256": {
+        "canonical_json_erratum": "ac772adc17a98bb9ecd6f9916717d696a1614918e79fc996546742f0cd6015b7",
+        "default_semantics_erratum": "ed5d32095abe2f834f19cef20d27f20d60469ecf0ac1367ed75e4725e2527766",
+        "lattice_standard": "33e3e5606cdabfce86dbef2895608ba6b2bb4d3daf3ce711dc91c62ae17e5379",
+        "package_scan_semantics_erratum": "235ae8026676905b9f410167b18a902cd63dc449ecf073a96821e5d2d40e6c25",
+        "pc7_scope_reconciliation": "4cee5f0beacd663ee9ab3bb9c05060342de18c1d6d7b56d3a477c46c15d80243",
+        "pc7_semantic_freeze": "48ac10106028f8e6ace85ee9f633bd1e0319e3b5575b9b33a0ca5f0fc99b0672",
+        "pc7_specified_conformance_manifest": "1fb0c0588310a32c4a5c4fa7ff9d9a268ab940a61ae913d00bb465eb2a83ef10",
+        "resolve_semantics_erratum": "4507fdfe2147f460c2f791b494517878c0d04620d020a6b8c512294aab868b24"
+      },
+      "adversarial_case": {
+        "changed_document": "resolve_semantics_erratum",
+        "expected_code": "PC7_AUTHORITY_PREFLIGHT_REJECTED",
+        "expected_path": "authority#/resolve_semantics_erratum",
+        "fixture_dispatch_started": false,
+        "manifest_bytes_unchanged": true,
+        "mutation": "replace \"The first failing gate returns its primary diagnostic\" with \"The last failing gate returns its primary diagnostic\"",
+        "plan_bytes_unchanged": true
+      },
+      "registry_unknown_member_discriminator": {
+        "expected_code": "PC7_AUTHORITY_PREFLIGHT_REJECTED",
+        "expected_gate": "registry_unknown_members",
+        "expected_path": "authority#/registry/zzz",
+        "expected_reason": "unknown registry member",
+        "fixture_dispatch_started": false,
+        "input_boundary": "PC7AuthorityInputsV1.registry_bytes",
+        "mutation": "insert one root member named zzz into the final supplied V1 registry bytes using otherwise two-space LF-only JSON",
+        "parsed_object_substitution_permitted": false
+      },
+      "baseline_identity_rule": "baseline_commit is the exact pre-repair commit ded743ea3577ffc2b955565dee9159287ec98e05 and baseline_tree is that commit's exact root tree e26180101c53c5cf44e4f270a9e868a4582be392. At acceptance, the complete authenticated bundle must prove the commit exists, has that tree, parent 75ea1adbf90aba4297d6238f2563029a1d436bd2, and subject \"Accept and freeze PC7 Resolve semantics\"; the four prospective paths are then compared as an overlay on that baseline. At ordinary generator and interpreter preflight, the two registry members are compared literally to these values. They are provenance for the repaired authority, not a requirement that the later acceptance commit or working tree have either identity; ordinary preflight requires no Git repository.",
+      "candidate_replacement_keys": [
+        "pc7_semantic_freeze",
+        "pc7_specified_conformance_manifest",
+        "resolve_semantics_erratum"
+      ],
+      "consumer_interface": "Both later tools receive one explicit required PC7AuthorityInputsV1 argument with exactly authority_root, a read-only directory capability, and registry_bytes, the immutable bytes read from registry_path beneath that capability. A CLI adapter exposes exactly one --pc7-authority-root <DIRECTORY> and one --pc7-authority-registry <FILE>; neither flag has a default, may repeat, or may be supplied through an environment variable, search path, network fetch, current-directory inference, author report, or compiled fallback constant. The registry flag must designate exactly docs/pc7/PC7_AUTHORITY_REGISTRY_V1.json relative to the supplied root. The generator records the registry byte count and SHA-256 in its plan; the interpreter receives the same two explicit inputs, reruns preflight before plan interpretation, and rejects unless its registry bytes have the recorded count and SHA-256.",
+      "failure_code": "PC7_AUTHORITY_PREFLIGHT_REJECTED",
+      "failure_order": [
+        "invocation_authority_root",
+        "invocation_registry_binding",
+        "registry_read",
+        "registry_strict_json_parse",
+        "registry_unknown_members",
+        "registry_canonical_bytes",
+        "registry_missing_members",
+        "registry_member_types",
+        "registry_format",
+        "registry_baseline_commit",
+        "registry_baseline_tree",
+        "registry_document_key_order",
+        "registry_document_path_bindings",
+        "authority_document_bytes"
+      ],
+      "failure_path_rule": "Every failure uses PC7_AUTHORITY_PREFLIGHT_REJECTED. A missing, repeated, non-directory, or unreadable authority-root input uses authority#/root. A missing or repeated registry input, registry path other than the fixed registry_path, or missing or unreadable registry file uses authority#/registry. registry_strict_json_parse consumes the actual supplied registry bytes and rejects invalid UTF-8, BOM, malformed JSON, a duplicate decoded member name, or any string or member name outside registry_string_domain at authority#/registry with reason UTF-8/BOM/JSON/duplicate failure. registry_unknown_members then inspects only that parsed value, before canonical-byte comparison and without projection, member dropping, defaulting, or object substitution. It inspects root members when the root is an object and row members for every object-valued element of an array-valued root documents member; nonobject positions contribute no unknown-member candidate and remain available to later type checks. Every candidate is the complete authority#/registry path plus its RFC-6901 member path, with each member token escaped by replacing ~ with ~0 and then / with ~1. Decimal row indexes are minimal unsigned decimal. Candidates are ordered by complete rendered-path unsigned UTF-8 bytes and the least wins with reason unknown registry member. registry_canonical_bytes next compares the actual supplied bytes with the V1 pre-schema serialization of that same parsed value and rejects inequality at authority#/registry with reason registry bytes have no admitted V1 serialization. Missing members are then considered in declared top-level member order, documents array order, and document-row member order. Type and value failures use the same preorder. Wrong format, baseline commit, or baseline tree uses authority#/registry/format, authority#/registry/baseline_commit, or authority#/registry/baseline_tree. Wrong document count, key, order, or path uses authority#/registry/documents or the exact authority#/registry/documents/<index>/<member> path. After every registry rule passes, a missing, unreadable, byte-count-mismatched, or SHA-256-mismatched authority document uses authority#/<document-key>; multiple document failures select the first key in preflight_order. The failure_order array is stage order and every stage completes before the next begins.",
+      "paths": {
+        "canonical_json_erratum": "docs/standard/LATTICE_STANDARD_0.3_CANONICAL_JSON_ERRATUM.md",
+        "default_semantics_erratum": "docs/standard/LATTICE_STANDARD_0.3_DEFAULT_SEMANTICS_ERRATUM.md",
+        "lattice_standard": "docs/standard/LATTICE_STANDARD_0.3.md",
+        "package_scan_semantics_erratum": "docs/standard/LATTICE_STANDARD_0.3_PACKAGE_SCAN_SEMANTICS_ERRATUM.md",
+        "pc7_scope_reconciliation": "docs/pc7/PC7_SCOPE_RECONCILIATION.md",
+        "pc7_semantic_freeze": "docs/pc7/PC7_SEMANTIC_FREEZE.md",
+        "pc7_specified_conformance_manifest": "docs/pc7/PC7_RESOLVE_SPECIFIED_CONFORMANCE_MANIFEST.json",
+        "resolve_semantics_erratum": "docs/standard/LATTICE_STANDARD_0.3_RESOLVE_SEMANTICS_ERRATUM.md"
+      },
+      "preflight_order": [
+        "lattice_standard",
+        "default_semantics_erratum",
+        "canonical_json_erratum",
+        "package_scan_semantics_erratum",
+        "resolve_semantics_erratum",
+        "pc7_scope_reconciliation",
+        "pc7_semantic_freeze",
+        "pc7_specified_conformance_manifest"
+      ],
+      "registry_format": "threadsmith-pc7-authority-registry-1",
+      "registry_path": "docs/pc7/PC7_AUTHORITY_REGISTRY_V1.json",
+      "registry_schema": "The root is one JSON object with exactly format, baseline_commit, baseline_tree, and documents in that member order. format is the exact registry_format string. baseline_commit and baseline_tree are exactly 40 lowercase hexadecimal characters and equal the baseline_identity_rule constants. documents is an array of exactly eight objects in preflight_order. Each document object has exactly key, path, bytes, and sha256 in that order: key is the corresponding authority_document, path is its exact paths value, bytes is the nonnegative decimal byte count of the final file, and sha256 is the lowercase 64-hex SHA-256 of those exact bytes. Unknown or missing members, duplicate keys, extra or missing rows, row reordering, path substitution, and any other JSON value are rejected.",
+      "registry_serialization": "The V1 pre-schema serializer is total over every value admitted by registry_strict_json_parse after registry_unknown_members completes without a candidate. It consumes the same parsed value and never a schema-projected, member-dropped, defaulted, reordered, or separately constructed object. It emits UTF-8 without BOM, LF only, and exactly one final LF using the conventional two-space JSON layout: an empty object or array is {} or []; each nonempty object or array has its opening delimiter at the value position, one member or element per following line indented two spaces per depth, a comma after every nonfinal member or element, and its closing delimiter on the following line at the containing depth; object keys have one colon and one following space. Arrays retain parsed order. At the root, present recognized members are emitted in the relative order format, baseline_commit, baseline_tree, documents. In each object-valued element of an array-valued root documents member, present recognized row members are emitted in the relative order key, path, bytes, sha256. Every other object position orders NFC-normalized keys by unsigned UTF-8 bytes; a normalized-key collision has no serialization. Strings and keys use the accepted Canonical JSON erratum's NFC and exact escaping rules. JSON numbers are interpreted as exact finite decimal values; an integral value emits as the Canonical JSON integer, while a nonintegral value emits without exponent as one minimal decimal point, at least one digit on each side, no leading plus or unnecessary leading integer zero, and no trailing fractional zero; negative zero emits 0. true, false, and null use those exact lowercase tokens. The standalone registry file is the only admitted schema-valid V1 serialized value. Its schema-valid strings are printable ASCII and therefore appear unescaped; its bytes values are canonical nonnegative integers. Comparing supplied bytes with this pre-schema serialization rejects alternate whitespace, member order, escapes, number spellings, encodings, BOMs, and newline forms without preventing later missing-member, member-type, format, baseline, document-order, or path-binding stages from receiving a canonically laid-out invalid value.",
+      "registry_string_domain": "registry_strict_json_parse applies recursively to every JSON string value and every object member name and admits only sequences of Unicode scalar values. A non-surrogate \\uXXXX escape denotes the scalar with that hexadecimal value. A high-surrogate escape from \\uD800 through \\uDBFF is admitted only when immediately followed in the same JSON string by a low-surrogate escape from \\uDC00 through \\uDFFF; for high value H and low value L the one resulting scalar is 0x10000 + ((H - 0xD800) << 10) + (L - 0xDC00). A lone high surrogate, lone low surrogate, high surrogate followed by a non-low-surrogate escape or ordinary character, high-high sequence, low-low sequence, low-high or other reversed pair, truncated pair, or surrogate separated from its required mate by any character is a strict-parse failure. An invalid surrogate is never replaced by U+FFFD, preserved as a code unit, deleted, normalized, deferred, or passed to registry_canonical_bytes. A directly UTF-8-encoded supplementary scalar and its valid escaped surrogate pair denote the same parsed scalar value. Raw UTF-8 remains strict and rejects any byte sequence encoding a surrogate code point, an overlong encoding, malformed continuation, truncation, or a value above U+10FFFF. registry_strict_json_parse performs no NFC normalization. Duplicate-key rejection compares decoded valid member names, so one literal supplementary scalar and its valid surrogate-pair spelling are one duplicate member name.",
+      "registry_version_rule": "V1 admits only format threadsmith-pc7-authority-registry-1 at the fixed registry_path. Any schema, member, serialization, or semantic change requires a new format and a new versioned registry path; a V1 consumer must reject every other format at authority#/registry/format and must not negotiate, upgrade, or apply defaults.",
+      "verification_rule": "Complete every stage in failure_order before beginning the next. registry_strict_json_parse applies registry_string_domain to the actual supplied registry bytes before it produces one parsed value; registry_unknown_members and registry_canonical_bytes receive only that value, and a caller cannot supply a parsed object independently. Only after all registry stages pass, in preflight_order read the exact regular-file bytes at the fixed path beneath authority_root, compare their byte count to documents[index].bytes before comparing SHA-256, and finish that document before the next. Any rejection occurs before manifest parsing, plan generation, plan interpretation, fixture construction, dispatch, or Resolve execution and creates no ResolveOutcome. The registry is the published trust-root input and is never inferred from the documents it authenticates."
+    }
   },
   "byte_constants": {
     "bytes_alpha_100": {
@@ -1403,9 +1884,183 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "encoding": "lowercase_hex",
       "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a207a65726f5f706b670a76657273696f6e3a2022302e332e30220a707572706f73653a20227a65726f5f706b67207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
       "sha256": "609dd2632bed94f4a4a80044bb399cb41caae4c85c0db91a003676c580769bc0"
+    },
+    "bytes_lock_integer_neg_i64_beyond": {
+      "bytes": 309,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a2d393232333337323033363835343737353830392c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "92c63534a9b8cafadc4c4317353292413ceaef955725d865003ca229abff580a"
+    },
+    "bytes_lock_integer_i64_min": {
+      "bytes": 309,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a2d393232333337323033363835343737353830382c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "9ce2471ddf2e12744c49ff2042b968816be84a762c7c135b39fa7057ffbfa7fc"
+    },
+    "bytes_lock_integer_i64_max": {
+      "bytes": 308,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a393232333337323033363835343737353830372c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "08d68a4542377e282fcc53461415262a492429be38bbf5815425b5c859a4d610"
+    },
+    "bytes_lock_integer_i64_max_plus_one": {
+      "bytes": 308,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a393232333337323033363835343737353830382c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "629b0f1cc2efee63d5caa5d448395ab73fd1690ab3ba0a97aec4d2aab9c4cc1d"
+    },
+    "bytes_lock_integer_u64_max": {
+      "bytes": 309,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a31383434363734343037333730393535313631352c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "a74b98d267e5369fc465cb0d357843f00698df9f05e96203487ab2b1a7e3e2fd"
+    },
+    "bytes_lock_integer_u64_max_plus_one": {
+      "bytes": 309,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a31383434363734343037333730393535313631362c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "acbd5e471d080808c7ec32b0c7b488924ab23b9cb8f589af10612fa90cc47468"
+    },
+    "bytes_lock_integer_extreme_positive": {
+      "bytes": 370,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a3130303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030302c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "5eebe471ee00c80753622474f23e6f20ce7f63bbaf5b1bae33a037444725e520"
+    },
+    "bytes_lock_integer_extreme_negative": {
+      "bytes": 371,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a2d3130303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030302c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "af656b703608008667604b9cb28e2d8b96527e5dcfec8b3b43e21e61abe59ca0"
+    },
+    "bytes_lock_integer_plus_sign": {
+      "bytes": 19,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c6f636b5f76657273696f6e223a2b317d",
+      "sha256": "16c2445e8afe19386803315d26ccc01638c441fb5f32ff5f3e12d4ea7523a23b"
+    },
+    "bytes_lock_integer_leading_zero": {
+      "bytes": 19,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c6f636b5f76657273696f6e223a30317d",
+      "sha256": "aadeaa5db431428b14d1847585f1513751129edda35e041abcab4af7fe847d2b"
+    },
+    "bytes_lock_integer_fraction": {
+      "bytes": 20,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c6f636b5f76657273696f6e223a312e307d",
+      "sha256": "360a74310c5a125068bafdde4ed3299eb5bfe7dd2af48665385ba86667133187"
+    },
+    "bytes_lock_integer_exponent": {
+      "bytes": 20,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c6f636b5f76657273696f6e223a3165307d",
+      "sha256": "20a6cf517b81692fd91df7a5c1c5e780a9e4445660cda6ae12964ba57efdf8dd"
+    },
+    "bytes_lock_stage3_control": {
+      "bytes": 290,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a66616c73652c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a312c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "e8b1b9177893c36dab0c22b12e8cd3d42df6d0f66d5e344ebd54b4cd9b7c6158"
+    },
+    "bytes_lock_stage3_4_dual": {
+      "bytes": 290,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a66616c73652c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a322c227061636b61676573223a5b5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "c5a77a8c5ac1d983bdb90fde7f37f8bab992f57591dcdc8dff5961fb30d8c484"
+    },
+    "bytes_lock_stage14_control": {
+      "bytes": 764,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a312c227061636b61676573223a5b7b226e616d65223a227a657461222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a31313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131222c227265717565737465645f6279223a5b7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d2c7b226e616d65223a22616c706861222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a32323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232222c227265717565737465645f6279223a5b7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "09beac611e2d4a8f349b4d937f2c20843372f8a0dc53dae99b496ed5fb3ae49a"
+    },
+    "bytes_lock_stage15_control": {
+      "bytes": 764,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a312c227061636b61676573223a5b7b226e616d65223a22616c706861222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a31313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131222c227265717565737465645f6279223a5b7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d2c7b226e616d65223a227a657461222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a32323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232222c227265717565737465645f6279223a5b7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "3dab497cd4ab65ef31f765887bebf1ec65ad050876c5c3851d19aac5a12e30c8"
+    },
+    "bytes_lock_stage14_15_dual": {
+      "bytes": 764,
+      "encoding": "lowercase_hex",
+      "hex": "7b226c617474696365223a22302e33222c226c6f636b5f6964223a226c6174746963653a6c6f636b3a7368613235363a30303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030222c226c6f636b5f76657273696f6e223a312c227061636b61676573223a5b7b226e616d65223a227a657461222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a31313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131222c227265717565737465645f6279223a5b7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d2c7b226e616d65223a22616c706861222c227061636b6167655f6964223a226c6174746963653a7061636b6167653a7368613235363a32323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232222c227265717565737465645f6279223a5b7b226d6f64756c65223a22616c706861222c22726571756972656d656e74223a225e312e302e30227d2c7b226d6f64756c65223a227a657461222c22726571756972656d656e74223a225e312e302e30227d5d2c2276657273696f6e223a22312e302e30227d5d2c2270726f66696c65223a226c6174746963652d636f72652d302e31222c22726f6f745f626c75657072696e745f646967657374223a226c6174746963653a626c75657072696e743a7368613235363a65363064353337333239306562643331303530323733396563363934316635633631306431383862343938396239383733663535316236633435643163303737227d",
+      "sha256": "19b7291dabfc301e2365b1b77be1770ceedc54a24627202ae1248e09f3a29a08"
+    },
+    "bytes_alpha_u128_max": {
+      "bytes": 172,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20616c7068610a76657273696f6e3a2022312e302e333430323832333636393230393338343633343633333734363037343331373638323131343535220a707572706f73653a2022616c706861206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "f6adc7ad348fdfc266f0c5c25c3c18b6b3b8b8ba4cadf27060f967c26a63dc75"
+    },
+    "bytes_alpha_u128_plus_one": {
+      "bytes": 172,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20616c7068610a76657273696f6e3a2022312e302e333430323832333636393230393338343633343633333734363037343331373638323131343536220a707572706f73653a2022616c706861206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "28387cc07ae2becbc3cb2f0bde75aa24bf0e03d2f9aab7829ea39c84a6e9bc78"
+    },
+    "bytes_alpha_cross_digit_lower": {
+      "bytes": 213,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20616c7068610a76657273696f6e3a2022312e302e3939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939220a707572706f73653a2022616c706861206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "e254cfa9d3365e14398e41300c00227e8824be5f757a61935b9ca3f9e62407bb"
+    },
+    "bytes_alpha_cross_digit_upper": {
+      "bytes": 214,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20616c7068610a76657273696f6e3a2022312e302e313030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030220a707572706f73653a2022616c706861206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "2f6186320a1ca61dd2212804b25692474ee921a38d3f6a50857881fabef2fb7b"
+    },
+    "bytes_beta_u128_max": {
+      "bytes": 170,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20626574610a76657273696f6e3a2022312e302e333430323832333636393230393338343633343633333734363037343331373638323131343535220a707572706f73653a202262657461206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "f232d94c6e0af26c2f56cc2e0c87be97d878975e62237fe7785b2aa40871020d"
+    },
+    "bytes_beta_u128_plus_one": {
+      "bytes": 170,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20626574610a76657273696f6e3a2022312e302e333430323832333636393230393338343633343633333734363037343331373638323131343536220a707572706f73653a202262657461206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "c433b94d693c74cb84a5e6ac97b12e363cdb1285a247f8878ba22b6bf4f6a233"
+    },
+    "bytes_beta_cross_digit_lower": {
+      "bytes": 211,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20626574610a76657273696f6e3a2022312e302e3939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939393939220a707572706f73653a202262657461206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "1bddfa2bf8479415de40f288c197896e7bc54790c7f0ea84af403c4cce6d8fb0"
+    },
+    "bytes_beta_cross_digit_upper": {
+      "bytes": 212,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a20626574610a76657273696f6e3a2022312e302e313030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030220a707572706f73653a202262657461206172626974726172792d73697a65207061636b616765220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "7d746bb8e5d0429b9aeffef2b0a04a3c981acb433893bd7d187a193de26f4bd2"
+    },
+    "bytes_dup_2_a": {
+      "bytes": 146,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a206475706c69636174655f706b670a76657273696f6e3a2022322e302e30220a707572706f73653a20226475706c69636174655f706b672066757475726520636f6e666c696374203261220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "eeb89a0c4a09c994b8565ed65217f1ed0c8c510be682b9716a7705be31125331"
+    },
+    "bytes_dup_2_b": {
+      "bytes": 146,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a206475706c69636174655f706b670a76657273696f6e3a2022322e302e30220a707572706f73653a20226475706c69636174655f706b672066757475726520636f6e666c696374203262220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "df4c9ed798f26309837241fc5d4870f6b5a35b8d0644f0e9563b18953232bb39"
+    },
+    "bytes_dup_10_a": {
+      "bytes": 148,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a206475706c69636174655f706b670a76657273696f6e3a202231302e302e30220a707572706f73653a20226475706c69636174655f706b672066757475726520636f6e666c69637420313061220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "de4e40df472c15cc191f016206ec8e670cb2963ae238ada7ea3dbe052150153b"
+    },
+    "bytes_dup_10_b": {
+      "bytes": 148,
+      "encoding": "lowercase_hex",
+      "hex": "6c6174746963653a2022302e33220a70726f66696c653a206c6174746963652d636f72652d302e310a6d6f64756c653a206475706c69636174655f706b670a76657273696f6e3a202231302e302e30220a707572706f73653a20226475706c69636174655f706b672066757475726520636f6e666c69637420313062220a696d706f7274733a205b5d0a756e6974733a205b5d0a",
+      "sha256": "c9693f7fed9b96c1b1ea751634a82da716ea9c4cd300795b6924cf3d4dfe4a6d"
     }
   },
-  "candidate_status": "unaccepted_second_bounded_repair_author_candidate",
+  "candidate_status": "unaccepted_pc7_semantic_and_criteria_repair_candidate",
   "construction_schema": {
     "chain255_expansion": {
       "base_output_rule": "Start from an exact deep copy of successful_outputs.output_chain_255. Preserve its six non-generator members byte-for-byte as JSON values. Replace only the six named generator_marker members; the replacement products are defined below.",
@@ -1458,10 +2113,13 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
     },
     "fixture_dispatch_rule": {
       "current_fixture_order": "ascending fixture id UTF-8 bytes",
-      "defined_generated_executed_requirement": "defined fixture IDs must equal generated plan IDs and, only at a later executable gate, executed fixture IDs",
+      "defined_generated_executed_requirement": "at specified maturity the exact defined set is retained; a later generator and interpreter must prove defined fixture IDs equal generated plan IDs equal executed fixture IDs, with no skipped, filtered, duplicated, or undispatched current row",
       "diagnostic": "one input_ref, exact code/path, null successful_output",
       "success": "one input_ref, exact complete successful_output_ref, null primary diagnostic",
-      "success_relation": "one or more input_refs, exact output refs, exactly one closed relation operation"
+      "success_relation": "one or more input_refs, exact output refs, exactly one closed relation operation",
+      "defined_fixture_id_preimage_bytes": 2576,
+      "defined_fixture_id_preimage_sha256": "ab7b72bdb33a255d2539a204cd880fa7aedab61b8672cfa3f02d8342d510f221",
+      "defined_fixture_id_preimage_rule": "sort the exact defined fixture-ID set by unsigned UTF-8 bytes, encode each complete ID followed by one LF, concatenate with no wrapper, and hash those exact bytes"
     },
     "generator_vocabulary": {
       "chain255_existing_lock_v1": "construct exactly chain255_expansion.existing_lock_rule using D_i from selection_rule",
@@ -1476,16 +2134,23 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "not_claimed": [
         "dispatchable",
         "executable",
+        "implementation_reviewed",
+        "implementation_verified",
         "qualified"
       ],
       "remaining_gates": [
-        "strict plan generator",
-        "recursive unknown-field rejection",
-        "public-boundary interpreter",
+        "fresh independent strictly read-only review of the fifth semantic and criteria repair candidate",
+        "acceptance, commit, and publication of the three replacement documents and the registry",
+        "stage-14/stage-15 implementation repair",
+        "independent scanned_source expected materialization",
+        "generator authority preflight",
+        "generator validation of ordering and closure",
+        "fixture-plan regeneration",
+        "strict public-boundary dispatch and interpretation",
         "defined/generated/executed fixture-ID set equality",
         "complete expected-outcome comparison",
-        "focused qualification",
-        "frozen regression qualification"
+        "focused and full qualification",
+        "fresh independent implementation review"
       ]
     },
     "reference_expansion_rule": {
@@ -1645,10 +2310,35 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "selector_failure": "A nonempty host-capability array fails at required_empty_host_capabilities; selector failures point to the selector element.",
         "successful_output_operand_count": 2,
         "whole_operand_assertion": "retained_boundary"
+      },
+      "assert_scanned_source_independent_projection": {
+        "comparison_representation": "Complete canonical JSON bytes of the independently materialized twelve-member expected value and actual successful projection.",
+        "discriminators": [
+          "The correct independently projected scanned_source compares equal.",
+          "Replacing only scanned_source by {deliberately_wrong_scanned_source:true} compares unequal.",
+          "Reading actual.scanned_source while constructing expected is forbidden and makes the criterion invalid."
+        ],
+        "input_operand_count": 1,
+        "operand_transform": "none",
+        "required_members": [
+          "correct_expected_source",
+          "kind",
+          "required_correct_comparison",
+          "required_wrong_comparison",
+          "wrong_scanned_source",
+          "wrong_scanned_source_field"
+        ],
+        "result": "Construct expected scanned_source from the pre-Resolve public-boundary input, require complete correct equality, then replace only that expected member with the declared wrong value and require complete inequality.",
+        "selector_arguments": {},
+        "selector_assertions": {},
+        "selector_failure": "Whole-output comparison failure points to operation.kind.",
+        "successful_output_operand_count": 1,
+        "whole_operand_assertion": "scanned_source_independent"
       }
     },
     "runner_rejection_rule": {
       "codes_in_priority_order": [
+        "PC7_AUTHORITY_PREFLIGHT_REJECTED",
         "PC7_MANIFEST_JSON_INVALID",
         "PC7_MANIFEST_SCHEMA_UNKNOWN_MEMBER",
         "PC7_MANIFEST_SCHEMA_MEMBER_MISSING",
@@ -1664,7 +2354,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "PC7_MANIFEST_RELATION_OPERATION_INVALID"
       ],
       "path_rule": "JSON Pointer from manifest root; object members compare by UTF-8 bytes and array indexes numerically; within one code least path wins",
-      "result_rule": "runner rejection creates no ResolveOutcome and is not a Resolve diagnostic"
+      "result_rule": "runner rejection creates no ResolveOutcome and is not a Resolve diagnostic",
+      "authority_path_rule": "authority#/<authority-document-key> under preflight_order; authority rejection occurs before manifest-root JSON Pointer ordering applies"
     },
     "schema_catalog": {
       "authority": {
@@ -1675,20 +2366,47 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "package_scan_erratum_sha256": "sha256_hex",
           "pc6_semantic_freeze_sha256": "sha256_hex",
           "scope_report_sha256": "sha256_hex",
-          "standard": "string"
+          "standard": "string",
+          "baseline_commit": "string",
+          "baseline_tree": "string",
+          "canonical_json_erratum_sha256": "sha256_hex",
+          "default_semantics_erratum_sha256": "sha256_hex",
+          "lattice_standard_sha256": "sha256_hex",
+          "resolve_semantics_erratum_accepted_sha256": "sha256_hex",
+          "semantic_freeze_accepted_sha256": "sha256_hex",
+          "specified_conformance_manifest_accepted_sha256": "sha256_hex",
+          "preflight": "schema:authority_preflight"
         },
         "optional_members": [],
         "permitted_members": [
           "package_scan_erratum_sha256",
           "pc6_semantic_freeze_sha256",
           "scope_report_sha256",
-          "standard"
+          "standard",
+          "baseline_commit",
+          "baseline_tree",
+          "canonical_json_erratum_sha256",
+          "default_semantics_erratum_sha256",
+          "lattice_standard_sha256",
+          "resolve_semantics_erratum_accepted_sha256",
+          "semantic_freeze_accepted_sha256",
+          "specified_conformance_manifest_accepted_sha256",
+          "preflight"
         ],
         "required_members": [
           "package_scan_erratum_sha256",
           "pc6_semantic_freeze_sha256",
           "scope_report_sha256",
-          "standard"
+          "standard",
+          "baseline_commit",
+          "baseline_tree",
+          "canonical_json_erratum_sha256",
+          "default_semantics_erratum_sha256",
+          "lattice_standard_sha256",
+          "resolve_semantics_erratum_accepted_sha256",
+          "semantic_freeze_accepted_sha256",
+          "specified_conformance_manifest_accepted_sha256",
+          "preflight"
         ],
         "unknown_members": "reject"
       },
@@ -1926,7 +2644,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_catalog": "map<schema_name,schema:schema_catalog_entry>",
           "schema_discriminators": "schema:schema_discriminator_array",
           "schema_language": "schema:schema_language",
-          "version_comparison_assertion": "schema:version_comparison_assertion"
+          "version_comparison_assertion": "schema:version_comparison_assertion",
+          "lock_integer_domain_assertion": "schema:lock_integer_domain_assertion",
+          "scanned_source_expectation": "schema:scanned_source_expectation"
         },
         "optional_members": [],
         "permitted_members": [
@@ -1942,7 +2662,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_catalog",
           "schema_discriminators",
           "schema_language",
-          "version_comparison_assertion"
+          "version_comparison_assertion",
+          "lock_integer_domain_assertion",
+          "scanned_source_expectation"
         ],
         "required_members": [
           "chain255_expansion",
@@ -1957,7 +2679,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_catalog",
           "schema_discriminators",
           "schema_language",
-          "version_comparison_assertion"
+          "version_comparison_assertion",
+          "lock_integer_domain_assertion",
+          "scanned_source_expectation"
         ],
         "unknown_members": "reject"
       },
@@ -1973,7 +2697,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "rank_comparison_coverage": "map<rank_boundary,schema:fixture_id_array>",
           "repair_coverage": "map<finding_id,schema:repair_coverage_row>",
           "required_behavior_coverage": "map<coverage_name,schema:fixture_id_array>",
-          "successful_output_field_coverage": "map<successful_output_field,schema:successful_output_name_array>"
+          "successful_output_field_coverage": "map<successful_output_field,schema:successful_output_name_array>",
+          "path_order_coverage": "map<path_order_boundary,schema:fixture_id_array>"
         },
         "optional_members": [],
         "permitted_members": [
@@ -1984,7 +2709,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "rank_comparison_coverage",
           "repair_coverage",
           "required_behavior_coverage",
-          "successful_output_field_coverage"
+          "successful_output_field_coverage",
+          "path_order_coverage"
         ],
         "required_members": [
           "declared_populations",
@@ -1994,7 +2720,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "rank_comparison_coverage",
           "repair_coverage",
           "required_behavior_coverage",
-          "successful_output_field_coverage"
+          "successful_output_field_coverage",
+          "path_order_coverage"
         ],
         "unknown_members": "reject"
       },
@@ -2089,7 +2816,13 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "reachable_rank_comparisons": "nonnegative_integer",
           "resolve_inputs": "nonnegative_integer",
           "success_relation_fixtures": "nonnegative_integer",
-          "successful_outputs": "nonnegative_integer"
+          "successful_outputs": "nonnegative_integer",
+          "authority_documents": "nonnegative_integer",
+          "defined_current_fixture_ids": "nonnegative_integer",
+          "path_order_criteria": "nonnegative_integer",
+          "scanned_source_discriminators": "nonnegative_integer",
+          "schema_categories": "nonnegative_integer",
+          "schema_discriminators": "nonnegative_integer"
         },
         "optional_members": [],
         "permitted_members": [
@@ -2111,7 +2844,13 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "reachable_rank_comparisons",
           "resolve_inputs",
           "success_relation_fixtures",
-          "successful_outputs"
+          "successful_outputs",
+          "authority_documents",
+          "defined_current_fixture_ids",
+          "path_order_criteria",
+          "scanned_source_discriminators",
+          "schema_categories",
+          "schema_discriminators"
         ],
         "required_members": [
           "byte_constants",
@@ -2132,7 +2871,13 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "reachable_rank_comparisons",
           "resolve_inputs",
           "success_relation_fixtures",
-          "successful_outputs"
+          "successful_outputs",
+          "authority_documents",
+          "defined_current_fixture_ids",
+          "path_order_criteria",
+          "scanned_source_discriminators",
+          "schema_categories",
+          "schema_discriminators"
         ],
         "unknown_members": "reject"
       },
@@ -2418,7 +3163,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "cross_field_constraints": [],
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
-          "operation": "one_of<schema:relation_compare_fields, schema:relation_no_later_artifacts, schema:relation_erased_compare, schema:relation_bytes_equal, schema:relation_retained_boundary>",
+          "operation": "one_of<schema:relation_compare_fields, schema:relation_no_later_artifacts, schema:relation_erased_compare, schema:relation_bytes_equal, schema:relation_retained_boundary, schema:relation_scanned_source_independent>",
           "primary_diagnostic": "null",
           "result": "const:success_relation",
           "successful_output_refs": "schema:successful_output_ref_array"
@@ -2479,8 +3224,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "fixture_diagnostic": {
         "array_order": "not_an_array",
         "cross_field_constraints": [
-          "at most one of gate_order_boundary and rank_comparison is present",
-          "competing_codes is present exactly when either boundary member is present"
+          "at most one of gate_order_boundary, path_order_boundary, and rank_comparison is present",
+          "competing_codes is present exactly when one boundary member is present",
+          "same-code stage or path boundaries use a one-element competing_codes array"
         ],
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
@@ -2491,12 +3237,14 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "gate_order_boundary": "gate_boundary",
           "id": "fixture_id",
           "input_ref": "ref:resolve_inputs",
-          "rank_comparison": "rank_boundary"
+          "rank_comparison": "rank_boundary",
+          "path_order_boundary": "path_order_boundary"
         },
         "optional_members": [
           "competing_codes",
           "gate_order_boundary",
-          "rank_comparison"
+          "rank_comparison",
+          "path_order_boundary"
         ],
         "permitted_members": [
           "class",
@@ -2506,7 +3254,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "input_ref",
           "competing_codes",
           "gate_order_boundary",
-          "rank_comparison"
+          "rank_comparison",
+          "path_order_boundary"
         ],
         "required_members": [
           "class",
@@ -2526,7 +3275,10 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "defined_generated_executed_requirement": "string",
           "diagnostic": "string",
           "success": "string",
-          "success_relation": "string"
+          "success_relation": "string",
+          "defined_fixture_id_preimage_bytes": "positive_integer",
+          "defined_fixture_id_preimage_sha256": "sha256_hex",
+          "defined_fixture_id_preimage_rule": "string"
         },
         "optional_members": [],
         "permitted_members": [
@@ -2534,20 +3286,28 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "defined_generated_executed_requirement",
           "diagnostic",
           "success",
-          "success_relation"
+          "success_relation",
+          "defined_fixture_id_preimage_bytes",
+          "defined_fixture_id_preimage_sha256",
+          "defined_fixture_id_preimage_rule"
         ],
         "required_members": [
           "current_fixture_order",
           "defined_generated_executed_requirement",
           "diagnostic",
           "success",
-          "success_relation"
+          "success_relation",
+          "defined_fixture_id_preimage_bytes",
+          "defined_fixture_id_preimage_sha256",
+          "defined_fixture_id_preimage_rule"
         ],
         "unknown_members": "reject"
       },
       "fixture_id_array": {
-        "array_order": "ascending fixture-id UTF-8 bytes unless an owning discriminator names semantic order",
-        "cross_field_constraints": [],
+        "array_order": "strict ascending fixture-ID unsigned UTF-8 bytes",
+        "cross_field_constraints": [
+          "the first adjacent inversion rejects at the later element's exact JSON Pointer"
+        ],
         "duplicate_rule": "fixture id unique",
         "member_types": {
           "items": "fixture_id"
@@ -2684,7 +3444,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
           "code": "const:RESOLVE_DUPLICATE_VERSION",
-          "path": "const:packages/duplicate_pkg/1.0.0"
+          "path": "enum:packages/duplicate_pkg/1.0.0|packages/duplicate_pkg/2.0.0"
         },
         "optional_members": [],
         "permitted_members": [
@@ -2999,7 +3759,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
           "bytes_ref": "ref:byte_constants",
-          "parsed_value": "one_of<non_null_pc2_json_value,null>"
+          "parsed_value": "one_of<non_null_canonical_json_value,null>"
         },
         "optional_members": [],
         "permitted_members": [
@@ -3032,7 +3792,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "member_types": {
           "authority": "schema:authority",
           "byte_constants": "schema:byte_constants_map",
-          "candidate_status": "const:unaccepted_second_bounded_repair_author_candidate",
+          "candidate_status": "const:unaccepted_pc7_semantic_and_criteria_repair_candidate",
           "construction_schema": "schema:construction_schema",
           "coverage": "schema:coverage",
           "diagnostic_definitions": "schema:diagnostic_definitions_array",
@@ -3176,7 +3936,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "module_oracles_map": {
         "array_order": "object member order is non-semantic; keys compare by UTF-8 bytes",
         "cross_field_constraints": [
-          "key set equals package_records key set",
+          "key set equals package_records key set minus exactly alpha_cross_digit_lower, alpha_u128_max, alpha_u128_plus_one, beta_cross_digit_lower, beta_u128_max, beta_u128_plus_one, dup_10_a, dup_10_b, dup_2_a, dup_2_b; the first six are current unselected extreme-version records whose module bytes never reach selected-module PC2 parsing, and the final four exist only in PC7-FV-DUPLICATE-CONFLICT-NUMERIC-ORDER, which is non-dispatchable",
           "each value is the exact PC2 parse result or exact primary diagnostic for the same-key package record's retained module_file bytes"
         ],
         "duplicate_rule": "duplicate map keys rejected during strict JSON parse",
@@ -3191,20 +3951,26 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       },
       "new_choice_coverage_row": {
         "array_order": "not_an_array",
-        "cross_field_constraints": [],
+        "cross_field_constraints": [
+          "raw_registry_discriminator is present exactly on NC-46 and equals AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE; discriminator retains AUTHORITY-D-RESOLVE-SENTENCE-MUTATION; both values resolve to exactly one construction_schema.schema_discriminators id"
+        ],
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
-          "classification": "enum:semantic_discriminator|operational_non_result|non_dispatchable_future_design_vector|manifest_admission_discriminator",
+          "classification": "enum:semantic_discriminator|operational_non_result|non_dispatchable_future_design_vector|manifest_admission_discriminator|authority_preflight_discriminator",
           "discriminator": "string",
           "fixture_ids": "schema:fixture_id_array",
-          "observable_difference": "string"
+          "observable_difference": "string",
+          "raw_registry_discriminator": "string"
         },
-        "optional_members": [],
+        "optional_members": [
+          "raw_registry_discriminator"
+        ],
         "permitted_members": [
           "classification",
           "discriminator",
           "fixture_ids",
-          "observable_difference"
+          "observable_difference",
+          "raw_registry_discriminator"
         ],
         "required_members": [
           "classification",
@@ -3216,7 +3982,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       },
       "non_dispatchable_future_vector": {
         "array_order": "not_an_array",
-        "cross_field_constraints": [],
+        "cross_field_constraints": [
+          "PC7-FV-DIFFERENT-IDENTITY-DUPLICATE and PC7-FV-DUPLICATE-BEFORE-ROOT-IMPORT require diagnostic path packages/duplicate_pkg/1.0.0; PC7-FV-DUPLICATE-CONFLICT-NUMERIC-ORDER requires diagnostic path packages/duplicate_pkg/2.0.0; PC7-FV-IDENTICAL-DUPLICATE requires the collapse outcome and has no diagnostic path; no other vector/path combination is admitted"
+        ],
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
           "abstract_candidate_record_refs": "schema:future_candidate_record_ref_array",
@@ -3224,7 +3992,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "current_public_dispatch": "const:false",
           "excluded_from_current_populations": "const:true",
           "expected_abstract_outcome": "one_of<schema:future_collapse_outcome,schema:future_diagnostic_outcome>",
-          "kind": "enum:identical_record_collapse|different_identity_diagnostic|abstract_gate_order",
+          "kind": "enum:identical_record_collapse|different_identity_diagnostic|abstract_gate_order|duplicate_conflict_numeric_order",
           "reason": "const:No accepted PC6 or later composition boundary can construct same-name/same-version duplicates.",
           "status": "const:non_dispatchable_future_composition_design_vector",
           "vector_id": "future_vector_id"
@@ -3269,7 +4037,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "selector_assertions": "map<member_name,enum:ordered_equal|ordered_different|each_empty>",
           "selector_failure": "string",
           "successful_output_operand_count": "positive_integer",
-          "whole_operand_assertion": "enum:none|canonical_bytes_equal|no_later_artifacts|retained_boundary"
+          "whole_operand_assertion": "enum:none|canonical_bytes_equal|no_later_artifacts|retained_boundary|scanned_source_independent"
         },
         "optional_members": [],
         "permitted_members": [
@@ -3722,7 +4490,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "canonical_output_bytes_equal": "schema:operation_vocabulary_entry",
           "compare_after_source_path_erasure": "schema:operation_vocabulary_entry",
           "compare_fields": "schema:operation_vocabulary_entry",
-          "retained_boundary_repeatability": "schema:operation_vocabulary_entry"
+          "retained_boundary_repeatability": "schema:operation_vocabulary_entry",
+          "assert_scanned_source_independent_projection": "schema:operation_vocabulary_entry"
         },
         "optional_members": [],
         "permitted_members": [
@@ -3730,14 +4499,16 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "canonical_output_bytes_equal",
           "compare_after_source_path_erasure",
           "compare_fields",
-          "retained_boundary_repeatability"
+          "retained_boundary_repeatability",
+          "assert_scanned_source_independent_projection"
         ],
         "required_members": [
           "assert_no_later_artifacts",
           "canonical_output_bytes_equal",
           "compare_after_source_path_erasure",
           "compare_fields",
-          "retained_boundary_repeatability"
+          "retained_boundary_repeatability",
+          "assert_scanned_source_independent_projection"
         ],
         "unknown_members": "reject"
       },
@@ -3969,18 +4740,21 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "member_types": {
           "codes_in_priority_order": "schema:string_array",
           "path_rule": "string",
-          "result_rule": "string"
+          "result_rule": "string",
+          "authority_path_rule": "string"
         },
         "optional_members": [],
         "permitted_members": [
           "codes_in_priority_order",
           "path_rule",
-          "result_rule"
+          "result_rule",
+          "authority_path_rule"
         ],
         "required_members": [
           "codes_in_priority_order",
           "path_rule",
-          "result_rule"
+          "result_rule",
+          "authority_path_rule"
         ],
         "unknown_members": "reject"
       },
@@ -4061,20 +4835,68 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       },
       "schema_discriminator": {
         "array_order": "not_an_array",
-        "cross_field_constraints": [],
+        "cross_field_constraints": [
+          "AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE is the sole record admitting the raw-registry optional members; that record requires every such member, the exact PC7AuthorityInputsV1.registry_bytes boundary, the exact source-content, replacement-content, source-line, and result-line hexadecimal values, the governing fourth mutation identity, the complete strict-parse tuple, fixture_dispatch_started false, and every substitution, projection, preprocessing, replacement-character, and internal-validator permission false; every other discriminator omits every raw-registry optional member"
+        ],
         "duplicate_rule": "object members unique; duplicate JSON keys rejected",
         "member_types": {
+          "direct_internal_validator_invocation_permitted": "const:false",
           "expected_code": "string",
-          "expected_path": "json_pointer",
+          "expected_gate": "string",
+          "expected_path": "one_of<json_pointer,conformance_tool_path>",
+          "expected_reason": "string",
+          "fixture_dispatch_started": "const:false",
+          "governing_fourth_mutation_bytes": "positive_integer",
+          "governing_fourth_mutation_sha256": "sha256_hex",
+          "host_parser_preprocessing_permitted": "const:false",
           "id": "string",
-          "mutation": "string"
+          "input_boundary": "string",
+          "mutation": "string",
+          "parsed_object_substitution_permitted": "const:false",
+          "projection_permitted": "const:false",
+          "replacement_characters_permitted": "const:false",
+          "replacement_content_hex": "lowercase_even_hex",
+          "result_member_line_hex": "lowercase_even_hex",
+          "source_content_hex": "lowercase_even_hex",
+          "source_member_line_hex": "lowercase_even_hex"
         },
-        "optional_members": [],
+        "optional_members": [
+          "direct_internal_validator_invocation_permitted",
+          "expected_gate",
+          "expected_reason",
+          "fixture_dispatch_started",
+          "governing_fourth_mutation_bytes",
+          "governing_fourth_mutation_sha256",
+          "host_parser_preprocessing_permitted",
+          "input_boundary",
+          "parsed_object_substitution_permitted",
+          "projection_permitted",
+          "replacement_characters_permitted",
+          "replacement_content_hex",
+          "result_member_line_hex",
+          "source_content_hex",
+          "source_member_line_hex"
+        ],
         "permitted_members": [
+          "direct_internal_validator_invocation_permitted",
           "expected_code",
+          "expected_gate",
           "expected_path",
+          "expected_reason",
+          "fixture_dispatch_started",
+          "governing_fourth_mutation_bytes",
+          "governing_fourth_mutation_sha256",
+          "host_parser_preprocessing_permitted",
           "id",
-          "mutation"
+          "input_boundary",
+          "mutation",
+          "parsed_object_substitution_permitted",
+          "projection_permitted",
+          "replacement_characters_permitted",
+          "replacement_content_hex",
+          "result_member_line_hex",
+          "source_content_hex",
+          "source_member_line_hex"
         ],
         "required_members": [
           "expected_code",
@@ -4117,7 +4939,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_union_rule": "string",
           "source_path_index_erasure": "string",
           "type_expression_grammar": "string",
-          "type_expression_vocabulary": "schema:string_array"
+          "type_expression_vocabulary": "schema:string_array",
+          "canonical_json_value": "string",
+          "non_null_canonical_json_value": "string"
         },
         "optional_members": [],
         "permitted_members": [
@@ -4137,7 +4961,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_union_rule",
           "source_path_index_erasure",
           "type_expression_grammar",
-          "type_expression_vocabulary"
+          "type_expression_vocabulary",
+          "canonical_json_value",
+          "non_null_canonical_json_value"
         ],
         "required_members": [
           "array_rule",
@@ -4156,7 +4982,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "schema_union_rule",
           "source_path_index_erasure",
           "type_expression_grammar",
-          "type_expression_vocabulary"
+          "type_expression_vocabulary",
+          "canonical_json_value",
+          "non_null_canonical_json_value"
         ],
         "unknown_members": "reject"
       },
@@ -4458,18 +5286,384 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "member_types": {
           "expected": "const:left_less_than_right",
           "left": "canonical_version",
-          "right": "canonical_version"
+          "right": "canonical_version",
+          "cross_digit_expected": "const:left_less_than_right",
+          "cross_digit_left": "canonical_version",
+          "cross_digit_right": "canonical_version",
+          "mutants_refuted": "schema:string_array",
+          "root_expected_selection": "canonical_version",
+          "root_fixture_id": "fixture_id",
+          "transitive_expected_selection": "canonical_version",
+          "transitive_fixture_id": "fixture_id",
+          "u128_expected": "const:left_less_than_right",
+          "u128_left": "canonical_version",
+          "u128_right": "canonical_version"
         },
         "optional_members": [],
         "permitted_members": [
           "expected",
           "left",
-          "right"
+          "right",
+          "cross_digit_expected",
+          "cross_digit_left",
+          "cross_digit_right",
+          "mutants_refuted",
+          "root_expected_selection",
+          "root_fixture_id",
+          "transitive_expected_selection",
+          "transitive_fixture_id",
+          "u128_expected",
+          "u128_left",
+          "u128_right"
         ],
         "required_members": [
           "expected",
           "left",
-          "right"
+          "right",
+          "cross_digit_expected",
+          "cross_digit_left",
+          "cross_digit_right",
+          "mutants_refuted",
+          "root_expected_selection",
+          "root_fixture_id",
+          "transitive_expected_selection",
+          "transitive_fixture_id",
+          "u128_expected",
+          "u128_left",
+          "u128_right"
+        ],
+        "unknown_members": "reject"
+      },
+      "authority_adversarial_case": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "changed_document": "authority_document",
+          "expected_code": "const:PC7_AUTHORITY_PREFLIGHT_REJECTED",
+          "expected_path": "conformance_tool_path",
+          "fixture_dispatch_started": "const:false",
+          "manifest_bytes_unchanged": "const:true",
+          "mutation": "string",
+          "plan_bytes_unchanged": "const:true"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "changed_document",
+          "expected_code",
+          "expected_path",
+          "fixture_dispatch_started",
+          "manifest_bytes_unchanged",
+          "mutation",
+          "plan_bytes_unchanged"
+        ],
+        "required_members": [
+          "changed_document",
+          "expected_code",
+          "expected_path",
+          "fixture_dispatch_started",
+          "manifest_bytes_unchanged",
+          "mutation",
+          "plan_bytes_unchanged"
+        ],
+        "unknown_members": "reject"
+      },
+      "authority_registry_unknown_member_discriminator": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [
+          "expected_gate equals registry_unknown_members; expected_path equals authority#/registry/zzz; expected_reason equals unknown registry member; input_boundary equals PC7AuthorityInputsV1.registry_bytes; mutation adds root member zzz to the final supplied registry bytes using otherwise admitted layout; parsed_object_substitution_permitted and fixture_dispatch_started are false"
+        ],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "expected_code": "const:PC7_AUTHORITY_PREFLIGHT_REJECTED",
+          "expected_gate": "string",
+          "expected_path": "conformance_tool_path",
+          "expected_reason": "string",
+          "fixture_dispatch_started": "const:false",
+          "input_boundary": "string",
+          "mutation": "string",
+          "parsed_object_substitution_permitted": "const:false"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "expected_code",
+          "expected_gate",
+          "expected_path",
+          "expected_reason",
+          "fixture_dispatch_started",
+          "input_boundary",
+          "mutation",
+          "parsed_object_substitution_permitted"
+        ],
+        "required_members": [
+          "expected_code",
+          "expected_gate",
+          "expected_path",
+          "expected_reason",
+          "fixture_dispatch_started",
+          "input_boundary",
+          "mutation",
+          "parsed_object_substitution_permitted"
+        ],
+        "unknown_members": "reject"
+      },
+      "authority_preflight": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [
+          "accepted_baseline_sha256 and paths have exactly the eight authority_document keys; preflight_order equals the exact eight-key order declared by authority.preflight",
+          "candidate_replacement_keys equals [pc7_semantic_freeze,pc7_specified_conformance_manifest,resolve_semantics_erratum] in unsigned UTF-8 order; their final hashes and byte counts occur only in the standalone registry and no hashed document contains its own final SHA-256",
+          "failure_order equals the exact fourteen-stage array declared by authority.preflight with registry_unknown_members immediately before registry_canonical_bytes; registry_path and registry_format equal their fixed V1 constants",
+          "registry_unknown_member_discriminator matches its schema's exact raw-byte mutation, boundary, code, gate, path, reason, and no-dispatch values",
+          "registry_string_domain completely defines Unicode-scalar string admission, escaped-surrogate pairing, raw UTF-8 scalar validity, decoded-name duplicate rejection, and the absence of parse-stage NFC normalization"
+        ],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "accepted_baseline_sha256": "map<authority_document,sha256_hex>",
+          "adversarial_case": "schema:authority_adversarial_case",
+          "registry_unknown_member_discriminator": "schema:authority_registry_unknown_member_discriminator",
+          "baseline_identity_rule": "string",
+          "candidate_replacement_keys": "schema:string_array",
+          "consumer_interface": "string",
+          "failure_code": "const:PC7_AUTHORITY_PREFLIGHT_REJECTED",
+          "failure_order": "schema:string_array",
+          "failure_path_rule": "string",
+          "paths": "map<authority_document,string>",
+          "preflight_order": "schema:string_array",
+          "registry_format": "const:threadsmith-pc7-authority-registry-1",
+          "registry_path": "const:docs/pc7/PC7_AUTHORITY_REGISTRY_V1.json",
+          "registry_schema": "string",
+          "registry_serialization": "string",
+          "registry_string_domain": "string",
+          "registry_version_rule": "string",
+          "verification_rule": "string"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "accepted_baseline_sha256",
+          "adversarial_case",
+          "registry_unknown_member_discriminator",
+          "baseline_identity_rule",
+          "candidate_replacement_keys",
+          "consumer_interface",
+          "failure_code",
+          "failure_order",
+          "failure_path_rule",
+          "paths",
+          "preflight_order",
+          "registry_format",
+          "registry_path",
+          "registry_schema",
+          "registry_serialization",
+          "registry_string_domain",
+          "registry_version_rule",
+          "verification_rule"
+        ],
+        "required_members": [
+          "accepted_baseline_sha256",
+          "adversarial_case",
+          "registry_unknown_member_discriminator",
+          "baseline_identity_rule",
+          "candidate_replacement_keys",
+          "consumer_interface",
+          "failure_code",
+          "failure_order",
+          "failure_path_rule",
+          "paths",
+          "preflight_order",
+          "registry_format",
+          "registry_path",
+          "registry_schema",
+          "registry_serialization",
+          "registry_string_domain",
+          "registry_version_rule",
+          "verification_rule"
+        ],
+        "unknown_members": "reject"
+      },
+      "lock_integer_vector": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "expected_code": "diagnostic_code",
+          "expected_path": "canonical_resolve_path",
+          "expected_stage": "enum:closed_schema_stage_4|source_intake",
+          "lexeme": "string"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "expected_code",
+          "expected_path",
+          "expected_stage",
+          "lexeme"
+        ],
+        "required_members": [
+          "expected_code",
+          "expected_path",
+          "expected_stage",
+          "lexeme"
+        ],
+        "unknown_members": "reject"
+      },
+      "lock_integer_result": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "code": "diagnostic_code",
+          "path": "canonical_resolve_path",
+          "stage": "enum:closed_schema_stage_4|source_intake"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "code",
+          "path",
+          "stage"
+        ],
+        "required_members": [
+          "code",
+          "path",
+          "stage"
+        ],
+        "unknown_members": "reject"
+      },
+      "lock_integer_vectors_array": {
+        "array_order": "declared boundary-vector order",
+        "cross_field_constraints": [
+          "lexemes are complete signed decimal strings and are not hashes"
+        ],
+        "duplicate_rule": "lexeme unique",
+        "member_types": {
+          "items": "schema:lock_integer_vector"
+        },
+        "optional_members": [],
+        "permitted_members": [],
+        "required_members": [],
+        "unknown_members": "not_applicable"
+      },
+      "lock_integer_domain_assertion": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "admitted_domain": "const:all_mathematical_integers",
+          "canonical_lexeme_grammar": "string",
+          "canonical_outside_domain": "const:empty_set",
+          "fixed_member_schema_result": "schema:lock_integer_result",
+          "forbidden_lexical_forms": "schema:string_array",
+          "global_precedence": "string",
+          "maximum": "null",
+          "minimum": "null",
+          "negative_source_admitted": "const:true",
+          "outside_domain_result": "string",
+          "range_admission_gate": "string",
+          "source_lexical_result": "schema:lock_integer_result",
+          "vectors": "schema:lock_integer_vectors_array"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "admitted_domain",
+          "canonical_lexeme_grammar",
+          "canonical_outside_domain",
+          "fixed_member_schema_result",
+          "forbidden_lexical_forms",
+          "global_precedence",
+          "maximum",
+          "minimum",
+          "negative_source_admitted",
+          "outside_domain_result",
+          "range_admission_gate",
+          "source_lexical_result",
+          "vectors"
+        ],
+        "required_members": [
+          "admitted_domain",
+          "canonical_lexeme_grammar",
+          "canonical_outside_domain",
+          "fixed_member_schema_result",
+          "forbidden_lexical_forms",
+          "global_precedence",
+          "maximum",
+          "minimum",
+          "negative_source_admitted",
+          "outside_domain_result",
+          "range_admission_gate",
+          "source_lexical_result",
+          "vectors"
+        ],
+        "unknown_members": "reject"
+      },
+      "scanned_source_expectation": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "actual_output_member": "const:scanned_source",
+          "comparison_rule": "string",
+          "descriptor_projection_member_order": "schema:member_name_array",
+          "expected_recipe_member": "const:scanned_source_ref",
+          "forbidden_sources": "schema:string_array",
+          "input_construction": "string",
+          "package_projection_member_order": "schema:member_name_array",
+          "projection_member_order": "schema:member_name_array",
+          "projection_rules": "map<member_name,string>",
+          "verified_file_projection_member_order": "schema:member_name_array"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "actual_output_member",
+          "comparison_rule",
+          "descriptor_projection_member_order",
+          "expected_recipe_member",
+          "forbidden_sources",
+          "input_construction",
+          "package_projection_member_order",
+          "projection_member_order",
+          "projection_rules",
+          "verified_file_projection_member_order"
+        ],
+        "required_members": [
+          "actual_output_member",
+          "comparison_rule",
+          "descriptor_projection_member_order",
+          "expected_recipe_member",
+          "forbidden_sources",
+          "input_construction",
+          "package_projection_member_order",
+          "projection_member_order",
+          "projection_rules",
+          "verified_file_projection_member_order"
+        ],
+        "unknown_members": "reject"
+      },
+      "relation_scanned_source_independent": {
+        "array_order": "not_an_array",
+        "cross_field_constraints": [],
+        "duplicate_rule": "object members unique; duplicate JSON keys rejected",
+        "member_types": {
+          "correct_expected_source": "const:pre_resolve_pc2_through_pc6_projection",
+          "kind": "const:assert_scanned_source_independent_projection",
+          "required_correct_comparison": "const:equal",
+          "required_wrong_comparison": "const:different",
+          "wrong_scanned_source": "pc2_json_value",
+          "wrong_scanned_source_field": "const:scanned_source"
+        },
+        "optional_members": [],
+        "permitted_members": [
+          "correct_expected_source",
+          "kind",
+          "required_correct_comparison",
+          "required_wrong_comparison",
+          "wrong_scanned_source",
+          "wrong_scanned_source_field"
+        ],
+        "required_members": [
+          "correct_expected_source",
+          "kind",
+          "required_correct_comparison",
+          "required_wrong_comparison",
+          "wrong_scanned_source",
+          "wrong_scanned_source_field"
         ],
         "unknown_members": "reject"
       }
@@ -4546,6 +5740,39 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "expected_path": "/fixtures/87/expected/operation/equal_fields/3",
         "id": "MANIFEST-D-RELATION-ERASURE-SCOPE",
         "mutation": "At the relation-operation stage only, set output_order_a.resolution_passes[0].active_requirements[0].source_path to packages/pkg2/10.0.0/module.yaml#/imports/0 and the second operand's same path in output_order_b to packages/pkg3/11.0.0/module.yaml#/imports/1. Narrow erasure leaves the first projected values unequal; replacing any decimal run outside the imports-index token is forbidden."
+      },
+      {
+        "expected_code": "PC7_AUTHORITY_PREFLIGHT_REJECTED",
+        "expected_path": "authority#/resolve_semantics_erratum",
+        "id": "AUTHORITY-D-RESOLVE-SENTENCE-MUTATION",
+        "mutation": "Change the outcome-controlling first-failing-gate sentence in the Resolve erratum while leaving manifest and plan bytes unchanged; ordinary generator and interpreter preflight reject before fixture dispatch."
+      },
+      {
+        "direct_internal_validator_invocation_permitted": false,
+        "expected_code": "PC7_AUTHORITY_PREFLIGHT_REJECTED",
+        "expected_gate": "registry_strict_json_parse",
+        "expected_path": "authority#/registry",
+        "expected_reason": "UTF-8/BOM/JSON/duplicate failure",
+        "fixture_dispatch_started": false,
+        "governing_fourth_mutation_bytes": 2011,
+        "governing_fourth_mutation_sha256": "f3ba4869cdb8097f7143d98d22f56e8e5eff5509db1a9d132d5498db8dbd9a92",
+        "host_parser_preprocessing_permitted": false,
+        "id": "AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE",
+        "input_boundary": "PC7AuthorityInputsV1.registry_bytes",
+        "mutation": "Take the complete final supplied V1 registry bytes exactly as received at input_boundary. Require source_member_line_hex to occur exactly once as the root format member under the fixed V1 layout. Within that occurrence replace only the complete 36-byte JSON string content source_content_hex with the six ASCII bytes replacement_content_hex, producing result_member_line_hex while retaining the opening and closing quotes and every other raw byte unchanged. Supply the complete mutated bytes unchanged through input_boundary; do not parse, project, normalize, replace, reserialize, or invoke an internal validator directly.",
+        "parsed_object_substitution_permitted": false,
+        "projection_permitted": false,
+        "replacement_characters_permitted": false,
+        "replacement_content_hex": "5c7564383030",
+        "result_member_line_hex": "202022666f726d6174223a20225c7564383030222c0a",
+        "source_content_hex": "746872656164736d6974682d7063372d617574686f726974792d72656769737472792d31",
+        "source_member_line_hex": "202022666f726d6174223a2022746872656164736d6974682d7063372d617574686f726974792d72656769737472792d31222c0a"
+      },
+      {
+        "expected_code": "PC7_MANIFEST_SCHEMA_VALUE_INVALID",
+        "expected_path": "/coverage/required_behavior_coverage/constraint_intersection/1",
+        "id": "MANIFEST-D-FIXTURE-ID-ARRAY-ORDER",
+        "mutation": "After universal UTF-8 sorting, swap the two valid fixture IDs in coverage.required_behavior_coverage.constraint_intersection; reject the later element of the first adjacent inversion."
       }
     ],
     "schema_language": {
@@ -4575,7 +5802,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "coverage_name": "a nonempty snake_case coverage key",
         "diagnostic_code": "an exact code in diagnostic_definitions",
         "field_selector": "a Unicode string passed unchanged through schema admission to the relation-operation selector parser; field_selector_grammar and the operation-specific exact selector_arguments are applied only at the relation-operation stage",
-        "finding_id": "one of PC7-RV-P1-01 through PC7-RV-P1-07 or PC7-FRR-P1-01 through PC7-FRR-P1-05",
+        "finding_id": "one of PC7-RV-P1-01 through PC7-RV-P1-07, PC7-FRR-P1-01 through PC7-FRR-P1-05, PC7-AJ-P1-01 through PC7-AJ-P1-05, PC7-AJ-P2-01 through PC7-AJ-P2-03, or PC7-AJ-P3-01",
         "fixture_id": "a unique manifest fixture id",
         "future_vector_id": "a unique PC7-FV-* identifier",
         "future_vector_name": "an exact key of non_dispatchable_future_vectors",
@@ -4601,7 +5828,10 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "scanned_source_locator": "an exact resolve_inputs key whose scanned_source is the criteria target, retained as a scalar locator",
         "schema_name": "an exact key of construction_schema.schema_catalog",
         "successful_output_field": "one of the twelve Normative Section 15 output fields",
-        "successful_output_name": "an exact key of successful_outputs"
+        "successful_output_name": "an exact key of successful_outputs",
+        "authority_document": "one of the eight exact keys in authority.preflight.preflight_order",
+        "conformance_tool_path": "exactly authority#/root, authority#/registry optionally followed by an RFC-6901 pointer suffix, or authority#/<authority-document-key>; it never begins with / and is therefore disjoint from json_pointer",
+        "path_order_boundary": "one exact key of coverage.path_order_coverage"
       },
       "pc2_json_value": "recursive union of object with unique string keys, array, Unicode string, signed i64 integer, boolean, and null; floating and nonfinite numbers are forbidden",
       "projection_equality_rule": "A projection is represented for comparison as one JSON array whose elements are the projected values in exact projection order. Encode that array by the accepted Canonical JSON Erratum with no trailing newline. Equality is byte equality of those canonical arrays. JSON types are distinct, object member presentation order is irrelevant, nested array order is significant, and projection multiplicity is significant; equality is never set or multiset equality.",
@@ -4641,36 +5871,184 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "ref:<closed reference_targets key>",
         "schema:<schema_catalog key>",
         "sha256_hex",
-        "string"
-      ]
+        "string",
+        "canonical_json_value",
+        "non_null_canonical_json_value"
+      ],
+      "canonical_json_value": "recursive union of object with unique string keys, array, Unicode string, unbounded mathematical integer, boolean, and null; integer lexemes are 0|-?[1-9][0-9]* and floats, fractions, exponents, and nonfinite values are forbidden",
+      "non_null_canonical_json_value": "canonical_json_value excluding null"
     },
     "version_comparison_assertion": {
       "expected": "left_less_than_right",
       "left": "2.0.0",
-      "right": "10.0.0"
+      "right": "10.0.0",
+      "cross_digit_expected": "left_less_than_right",
+      "cross_digit_left": "1.0.99999999999999999999999999999999999999999999999999999999999999999999999999999999",
+      "cross_digit_right": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "mutants_refuted": [
+        "fixed_30_digit_cap",
+        "lexical_comparison_without_length",
+        "saturation",
+        "signed_i64_conversion",
+        "truncation",
+        "u128_conversion",
+        "unsigned_u64_conversion"
+      ],
+      "root_expected_selection": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "root_fixture_id": "RES-S-ARBITRARY-SIZE-ROOT-EXTREME",
+      "transitive_expected_selection": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "transitive_fixture_id": "RES-S-ARBITRARY-SIZE-TRANSITIVE-EXTREME",
+      "u128_expected": "left_less_than_right",
+      "u128_left": "1.0.340282366920938463463374607431768211455",
+      "u128_right": "1.0.340282366920938463463374607431768211456"
+    },
+    "lock_integer_domain_assertion": {
+      "admitted_domain": "all_mathematical_integers",
+      "canonical_lexeme_grammar": "0|-?[1-9][0-9]*",
+      "canonical_outside_domain": "empty_set",
+      "fixed_member_schema_result": {
+        "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+        "path": "lock#/lock_version",
+        "stage": "closed_schema_stage_4"
+      },
+      "forbidden_lexical_forms": [
+        "exponent",
+        "fraction",
+        "leading_zero",
+        "plus_sign"
+      ],
+      "global_precedence": "UTF-8/BOM, complete JSON, key uniqueness, canonical integer lexical admission, and canonical re-encoding complete before closed schema; a source failure prevents every schema candidate",
+      "maximum": null,
+      "minimum": null,
+      "negative_source_admitted": true,
+      "outside_domain_result": "not_applicable: every syntactically canonical integer denotes one admitted mathematical integer, so no canonical range-rejected source value and no range diagnostic path exist",
+      "range_admission_gate": "source_intake_vacuous_for_unbounded_domain",
+      "source_lexical_result": {
+        "code": "RESOLVE_LOCK_SOURCE_INVALID",
+        "path": "lock#/lock_version",
+        "stage": "source_intake"
+      },
+      "vectors": [
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "-9223372036854775809"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "-9223372036854775808"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "9223372036854775807"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "9223372036854775808"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "18446744073709551615"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "18446744073709551616"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "expected_code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "expected_path": "lock#/lock_version",
+          "expected_stage": "closed_schema_stage_4",
+          "lexeme": "-100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    "scanned_source_expectation": {
+      "actual_output_member": "scanned_source",
+      "comparison_rule": "Before Resolve invocation, construct ScannedSource only through the public PC2-PC6 sequence and project the exact four-member expected value. Replace scanned_source_ref in the expected recipe with that projection. Compare the complete twelve-member actual output to the complete independently materialized expected output.",
+      "descriptor_projection_member_order": [
+        "files",
+        "lattice",
+        "module_file",
+        "package",
+        "profiles",
+        "version"
+      ],
+      "expected_recipe_member": "scanned_source_ref",
+      "forbidden_sources": [
+        "actual ResolvedSource semantic_projection scanned_source member",
+        "actual ResolvedSource output bytes",
+        "copy, substitution, erasure, or normalization from actual output",
+        "fabricated or deserialized ScannedSource"
+      ],
+      "input_construction": "resolve_inputs[scanned_source_ref].scanned_source; canonical root bytes; PC2 parse; PC3 validate; PC4 defaults with exact equality to defaulted_root; PC5 digest equality; PC6 exact portable snapshot and successful Package Scan",
+      "package_projection_member_order": [
+        "descriptor",
+        "package_id",
+        "verified_files"
+      ],
+      "projection_member_order": [
+        "active_profile",
+        "blueprint_digest",
+        "defaulted_root",
+        "packages"
+      ],
+      "projection_rules": {
+        "active_profile": "exact profile string from the pre-Resolve ScannedSource bound DefaultedSource",
+        "blueprint_digest": "exact PC5 Blueprint identity string from the pre-Resolve ScannedSource DigestedSource",
+        "defaulted_root": "complete PC4 value from the pre-Resolve ScannedSource DigestedSource, without reread or reparse",
+        "packages": "complete PC6 ordered ScannedPackage sequence; each element is descriptor with every files path/digest, lattice, module_file, package, profiles, and version; exact package_id; and every verified file in descriptor order with path, declared sha256, and bytes object {encoding:lowercase_hex,hex:<all retained bytes>}"
+      },
+      "verified_file_projection_member_order": [
+        "bytes",
+        "path",
+        "sha256"
+      ]
     }
   },
   "coverage": {
     "declared_populations": {
-      "byte_constants": 76,
-      "current_fixtures": 96,
+      "byte_constants": 105,
+      "current_fixtures": 118,
       "diagnostic_codes": 21,
-      "diagnostic_fixtures": 62,
+      "diagnostic_fixtures": 81,
       "existing_standard_diagnostic_codes": 3,
-      "gate_order_criteria": 8,
+      "gate_order_criteria": 10,
       "generated_chain_records": 255,
-      "lock_inputs": 21,
-      "module_oracles": 55,
+      "lock_inputs": 38,
+      "module_oracles": 57,
       "new_diagnostic_codes": 18,
-      "new_normative_choices": 43,
-      "non_dispatchable_future_vectors": 3,
-      "ordinary_success_fixtures": 29,
-      "package_records": 55,
+      "new_normative_choices": 45,
+      "non_dispatchable_future_vectors": 4,
+      "ordinary_success_fixtures": 31,
+      "package_records": 67,
       "precedence_ranks": 21,
       "reachable_rank_comparisons": 11,
-      "resolve_inputs": 91,
-      "success_relation_fixtures": 5,
-      "successful_outputs": 29
+      "resolve_inputs": 112,
+      "success_relation_fixtures": 6,
+      "successful_outputs": 31,
+      "authority_documents": 8,
+      "defined_current_fixture_ids": 118,
+      "path_order_criteria": 1,
+      "scanned_source_discriminators": 1,
+      "schema_categories": 127,
+      "schema_discriminators": 15
     },
     "diagnostic_definition_coverage": {
       "RESOLVE_CONSTRAINT_INVALID": [
@@ -4699,6 +6077,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "RES-D-IMPORT-MISSING",
         "RES-D-IMPORT-NONOBJECT",
         "RES-D-IMPORT-PACKAGE-NAME",
+        "RES-D-IMPORT-PATH-BYTE-2-10",
+        "RES-D-IMPORT-PATH-INDEX-2-CONTROL",
         "RES-D-IMPORT-PATH-TIE",
         "RES-D-IMPORT-TYPE",
         "RES-D-IMPORT-UNKNOWN",
@@ -4716,12 +6096,29 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "RES-P-07-08"
       ],
       "RESOLVE_LOCK_SCHEMA_INVALID": [
+        "RES-D-LOCK-INTEGER-EXTREME-NEGATIVE",
+        "RES-D-LOCK-INTEGER-EXTREME-POSITIVE",
+        "RES-D-LOCK-INTEGER-I64-MAX",
+        "RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE",
+        "RES-D-LOCK-INTEGER-I64-MIN",
+        "RES-D-LOCK-INTEGER-NEG-I64-BEYOND",
+        "RES-D-LOCK-INTEGER-U64-MAX",
+        "RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE",
         "RES-D-LOCK-SCHEMA",
+        "RES-D-LOCK-STAGE-03-CONTROL",
+        "RES-D-LOCK-STAGE-14-CONTROL",
+        "RES-D-LOCK-STAGE-15-CONTROL",
         "RES-D-LOCK-UNKNOWN-ROOT",
-        "RES-P-06-07"
+        "RES-P-06-07",
+        "RES-P-LOCK-STAGE-03-04",
+        "RES-P-LOCK-STAGE-14-15"
       ],
       "RESOLVE_LOCK_SOURCE_INVALID": [
         "RES-D-LOCK-DUPLICATE-KEY",
+        "RES-D-LOCK-INTEGER-EXPONENT",
+        "RES-D-LOCK-INTEGER-FRACTION",
+        "RES-D-LOCK-INTEGER-LEADING-ZERO",
+        "RES-D-LOCK-INTEGER-PLUS-SIGN",
         "RES-D-LOCK-SOURCE",
         "RES-D-LOCK-ZERO-BYTES",
         "RES-P-05-06"
@@ -4801,6 +6198,12 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       ],
       "8>9": [
         "RES-P-08-09"
+      ],
+      "lock_schema_stage_3>4": [
+        "RES-P-LOCK-STAGE-03-04"
+      ],
+      "lock_schema_stage_14>15": [
+        "RES-P-LOCK-STAGE-14-15"
       ]
     },
     "new_choice_coverage": {
@@ -4817,8 +6220,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-P-02-03, RES-D-IMPORT-PATH-TIE",
         "fixture_ids": [
-          "RES-P-02-03",
-          "RES-D-IMPORT-PATH-TIE"
+          "RES-D-IMPORT-PATH-TIE",
+          "RES-P-02-03"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -4852,8 +6255,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-S-PROFILE-ELIGIBLE, RES-D-PROFILE-INCOMPATIBLE",
         "fixture_ids": [
-          "RES-S-PROFILE-ELIGIBLE",
-          "RES-D-PROFILE-INCOMPATIBLE"
+          "RES-D-PROFILE-INCOMPATIBLE",
+          "RES-S-PROFILE-ELIGIBLE"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -4913,8 +6316,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-S-LOCK-STALE, RES-S-LOCK-IDENTITY-STALE",
         "fixture_ids": [
-          "RES-S-LOCK-STALE",
-          "RES-S-LOCK-IDENTITY-STALE"
+          "RES-S-LOCK-IDENTITY-STALE",
+          "RES-S-LOCK-STALE"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -4954,8 +6357,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-S-PASS-256, RES-D-PASS-LIMIT",
         "fixture_ids": [
-          "RES-S-PASS-256",
-          "RES-D-PASS-LIMIT"
+          "RES-D-PASS-LIMIT",
+          "RES-S-PASS-256"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -5022,8 +6425,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-S-TRANSITIVE, RES-D-CYCLE-SELF",
         "fixture_ids": [
-          "RES-S-TRANSITIVE",
-          "RES-D-CYCLE-SELF"
+          "RES-D-CYCLE-SELF",
+          "RES-S-TRANSITIVE"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -5049,9 +6452,9 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-D-PACKAGE-MISSING, RES-D-PROFILE-INCOMPATIBLE, RES-D-NO-COMMON",
         "fixture_ids": [
+          "RES-D-NO-COMMON",
           "RES-D-PACKAGE-MISSING",
-          "RES-D-PROFILE-INCOMPATIBLE",
-          "RES-D-NO-COMMON"
+          "RES-D-PROFILE-INCOMPATIBLE"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
       },
@@ -5069,8 +6472,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "classification": "semantic_discriminator",
         "discriminator": "RES-P-02-03, RES-D-IMPORT-PATH-TIE, RES-P-09-10",
         "fixture_ids": [
-          "RES-P-02-03",
           "RES-D-IMPORT-PATH-TIE",
+          "RES-P-02-03",
           "RES-P-09-10"
         ],
         "observable_difference": "Expected success, exact selection, exact output, or exact code/path differs under a plausible alternative."
@@ -5170,6 +6573,32 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "RES-S-RETAINED-BYTES"
         ],
         "observable_difference": "Literal-name, invalid-wildcard, missing-member, wrong-container, unordered, set, multiset, and overbroad-erasure readings produce a different relation admission or assertion result."
+      },
+      "NC-45": {
+        "classification": "semantic_discriminator",
+        "discriminator": "RES-D-LOCK-INTEGER-EXPONENT, RES-D-LOCK-INTEGER-EXTREME-NEGATIVE, RES-D-LOCK-INTEGER-EXTREME-POSITIVE, RES-D-LOCK-INTEGER-FRACTION, RES-D-LOCK-INTEGER-I64-MAX, RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE, RES-D-LOCK-INTEGER-I64-MIN, RES-D-LOCK-INTEGER-LEADING-ZERO, RES-D-LOCK-INTEGER-NEG-I64-BEYOND, RES-D-LOCK-INTEGER-PLUS-SIGN, RES-D-LOCK-INTEGER-U64-MAX, RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE",
+        "fixture_ids": [
+          "RES-D-LOCK-INTEGER-EXPONENT",
+          "RES-D-LOCK-INTEGER-EXTREME-NEGATIVE",
+          "RES-D-LOCK-INTEGER-EXTREME-POSITIVE",
+          "RES-D-LOCK-INTEGER-FRACTION",
+          "RES-D-LOCK-INTEGER-I64-MAX",
+          "RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE",
+          "RES-D-LOCK-INTEGER-I64-MIN",
+          "RES-D-LOCK-INTEGER-LEADING-ZERO",
+          "RES-D-LOCK-INTEGER-NEG-I64-BEYOND",
+          "RES-D-LOCK-INTEGER-PLUS-SIGN",
+          "RES-D-LOCK-INTEGER-U64-MAX",
+          "RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE"
+        ],
+        "observable_difference": "Bounded or nonnegative source-domain readings change source versus schema stage, exact code, and exact path."
+      },
+      "NC-46": {
+        "classification": "authority_preflight_discriminator",
+        "discriminator": "AUTHORITY-D-RESOLVE-SENTENCE-MUTATION",
+        "fixture_ids": [],
+        "observable_difference": "Ordinary regeneration rejects outcome-changing governing bytes before manifest parsing or fixture dispatch; the raw registry criterion rejects the exact unpaired-surrogate mutation at registry_strict_json_parse through PC7AuthorityInputsV1.registry_bytes rather than permitting host-dependent parsing or any later disposition.",
+        "raw_registry_discriminator": "AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE"
       }
     },
     "rank_comparison_coverage": {
@@ -5441,16 +6870,191 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "41-choice exhaustive register",
           "section provenance ledger"
         ]
+      },
+      "PC7-AJ-P1-01": {
+        "changed_fixture_ids": [
+          "RES-D-LOCK-INTEGER-NEG-I64-BEYOND",
+          "RES-D-LOCK-INTEGER-I64-MIN",
+          "RES-D-LOCK-INTEGER-I64-MAX",
+          "RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE",
+          "RES-D-LOCK-INTEGER-U64-MAX",
+          "RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE",
+          "RES-D-LOCK-INTEGER-EXTREME-POSITIVE",
+          "RES-D-LOCK-INTEGER-EXTREME-NEGATIVE",
+          "RES-D-LOCK-INTEGER-PLUS-SIGN",
+          "RES-D-LOCK-INTEGER-LEADING-ZERO",
+          "RES-D-LOCK-INTEGER-FRACTION",
+          "RES-D-LOCK-INTEGER-EXPONENT"
+        ],
+        "changed_sections": [
+          9,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "NC-45 unbounded mathematical-integer source domain",
+          "exact lexical and boundary vector matrix",
+          "canonical lock byte constants and hashes"
+        ]
+      },
+      "PC7-AJ-P1-02": {
+        "changed_fixture_ids": [
+          "RES-D-LOCK-STAGE-14-CONTROL",
+          "RES-D-LOCK-STAGE-15-CONTROL",
+          "RES-P-LOCK-STAGE-14-15"
+        ],
+        "changed_sections": [
+          9,
+          14,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "global stage-14 completion before stage 15",
+          "dual-defect public-boundary discriminator and controls"
+        ]
+      },
+      "PC7-AJ-P1-03": {
+        "changed_fixture_ids": [
+          "RES-S-SCANNED-SOURCE-INDEPENDENT"
+        ],
+        "changed_sections": [
+          15,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "pre-Resolve PC2-PC6 expected scanned_source construction",
+          "complete correct-versus-deliberately-wrong relation",
+          "relation_scanned_source_independent schema category"
+        ]
+      },
+      "PC7-AJ-P1-04": {
+        "changed_fixture_ids": [
+          "MANIFEST-D-FIXTURE-ID-ARRAY-ORDER"
+        ],
+        "changed_sections": [
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "nine required_behavior_coverage arrays reordered",
+          "seven new_choice_coverage fixture_id arrays mechanically reordered",
+          "one universal ascending fixture-ID UTF-8 rule",
+          "first-offending-element permutation rejection"
+        ]
+      },
+      "PC7-AJ-P1-05": {
+        "changed_fixture_ids": [
+          "RES-D-LOCK-STAGE-03-CONTROL",
+          "RES-P-LOCK-STAGE-03-04",
+          "RES-D-LOCK-STAGE-14-CONTROL",
+          "RES-D-LOCK-STAGE-15-CONTROL",
+          "RES-P-LOCK-STAGE-14-15",
+          "RES-S-SCANNED-SOURCE-INDEPENDENT"
+        ],
+        "changed_sections": [
+          1,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "missing public-boundary discriminators added",
+          "fixture maturity reset and retained as specified",
+          "manifest completeness claim scoped to specified criteria"
+        ]
+      },
+      "PC7-AJ-P2-01": {
+        "changed_fixture_ids": [
+          "AUTHORITY-D-RESOLVE-SENTENCE-MUTATION"
+        ],
+        "changed_sections": [
+          1,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "eight-document accepted identity registry",
+          "external acceptance constant solves self-reference",
+          "pre-dispatch authority rejection",
+          "NC-46 registration"
+        ]
+      },
+      "PC7-AJ-P2-02": {
+        "changed_fixture_ids": [
+          "RES-S-ARBITRARY-SIZE-ROOT-EXTREME",
+          "RES-S-ARBITRARY-SIZE-TRANSITIVE-EXTREME"
+        ],
+        "changed_sections": [
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "complete u128-adjacent and cross-digit version strings",
+          "root and transitive expected selections",
+          "PC2-PC6 package bytes, digests, and package identities"
+        ]
+      },
+      "PC7-AJ-P2-03": {
+        "changed_fixture_ids": [
+          "RES-D-IMPORT-PATH-BYTE-2-10",
+          "RES-D-IMPORT-PATH-INDEX-2-CONTROL"
+        ],
+        "changed_sections": [
+          14,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "equal-rank index-2/index-10 path-byte discriminator",
+          "separate traversal control",
+          "complete filler imports"
+        ]
+      },
+      "PC7-AJ-P3-01": {
+        "changed_fixture_ids": [
+          "PC7-FV-DUPLICATE-CONFLICT-NUMERIC-ORDER"
+        ],
+        "changed_sections": [
+          8,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mechanical_consequences": [
+          "future composition-seam debt recorded",
+          "numeric 2.0.0 before 10.0.0 conflict vector",
+          "vector remains non-dispatchable"
+        ]
       }
     },
     "required_behavior_coverage": {
       "arbitrary_size_numeric": [
-        "RES-S-ARBITRARY-SIZE"
+        "RES-S-ARBITRARY-SIZE",
+        "RES-S-ARBITRARY-SIZE-ROOT-EXTREME",
+        "RES-S-ARBITRARY-SIZE-TRANSITIVE-EXTREME"
       ],
       "binding_repeatability_non_authority": [
-        "RES-S-RETAINED-BYTES",
+        "RES-S-NO-LATER-ARTIFACT",
         "RES-S-REPEAT",
-        "RES-S-NO-LATER-ARTIFACT"
+        "RES-S-RETAINED-BYTES"
       ],
       "constraint_boundaries": [
         "RES-S-CARET-MAJOR",
@@ -5458,65 +7062,102 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "RES-S-CARET-ZERO-PATCH"
       ],
       "constraint_intersection": [
-        "RES-S-INTERSECTION",
-        "RES-D-NO-COMMON"
+        "RES-D-NO-COMMON",
+        "RES-S-INTERSECTION"
       ],
       "empty_resolution": [
         "RES-S-EMPTY"
       ],
       "fixed_point": [
+        "RES-D-PASS-LIMIT",
         "RES-S-MULTI-PASS",
-        "RES-S-PASS-256",
-        "RES-D-PASS-LIMIT"
+        "RES-S-PASS-256"
       ],
       "gather_then_rank_and_path_tie": [
+        "RES-D-IMPORT-PATH-TIE",
         "RES-P-02-03",
-        "RES-P-03-04",
-        "RES-D-IMPORT-PATH-TIE"
+        "RES-P-03-04"
       ],
       "lockfile_absent_vs_zero_bytes": [
-        "RES-S-SINGLE-EXACT",
-        "RES-D-LOCK-ZERO-BYTES"
+        "RES-D-LOCK-ZERO-BYTES",
+        "RES-S-SINGLE-EXACT"
       ],
       "lockfile_matrix": [
-        "RES-S-LOCK-REUSE",
-        "RES-S-LOCK-CONSTRAINT-FALLBACK",
-        "RES-S-LOCK-STALE",
-        "RES-S-LOCK-PARTIAL",
-        "RES-S-LOCK-EXTRA",
-        "RES-S-LOCK-MISSING",
-        "RES-S-LOCK-IDENTITY-STALE",
-        "RES-S-LOCK-PROFILE-ENTRY",
-        "RES-D-LOCK-SOURCE",
-        "RES-D-LOCK-SCHEMA",
+        "RES-D-LOCK-CONTEXT-PROFILE",
         "RES-D-LOCK-ID",
-        "RES-D-LOCK-CONTEXT-PROFILE"
+        "RES-D-LOCK-SCHEMA",
+        "RES-D-LOCK-SOURCE",
+        "RES-S-LOCK-CONSTRAINT-FALLBACK",
+        "RES-S-LOCK-EXTRA",
+        "RES-S-LOCK-IDENTITY-STALE",
+        "RES-S-LOCK-MISSING",
+        "RES-S-LOCK-PARTIAL",
+        "RES-S-LOCK-PROFILE-ENTRY",
+        "RES-S-LOCK-REUSE",
+        "RES-S-LOCK-STALE"
       ],
       "module_intake": [
-        "RES-S-TRANSITIVE",
-        "RES-S-SELECTED-MODULE-IMPORTS-ABSENT",
+        "RES-D-MODULE-ENVELOPE",
+        "RES-D-MODULE-METADATA",
         "RES-D-MODULE-UTF8",
         "RES-D-MODULE-YAML",
-        "RES-D-MODULE-ENVELOPE",
-        "RES-D-MODULE-METADATA"
+        "RES-S-SELECTED-MODULE-IMPORTS-ABSENT",
+        "RES-S-TRANSITIVE"
       ],
       "numeric_2_vs_10": [
         "RES-S-NUMERIC-2-10"
       ],
       "profile": [
-        "RES-S-PROFILE-ELIGIBLE",
-        "RES-D-PROFILE-INCOMPATIBLE"
+        "RES-D-PROFILE-INCOMPATIBLE",
+        "RES-S-PROFILE-ELIGIBLE"
       ],
       "transitive_replacement_retraction": [
-        "RES-S-TRANSITIVE",
         "RES-S-REPLACEMENT",
-        "RES-S-RETRACTION"
+        "RES-S-RETRACTION",
+        "RES-S-TRANSITIVE"
+      ],
+      "lockfile_integer_domain": [
+        "RES-D-LOCK-INTEGER-EXPONENT",
+        "RES-D-LOCK-INTEGER-EXTREME-NEGATIVE",
+        "RES-D-LOCK-INTEGER-EXTREME-POSITIVE",
+        "RES-D-LOCK-INTEGER-FRACTION",
+        "RES-D-LOCK-INTEGER-I64-MAX",
+        "RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE",
+        "RES-D-LOCK-INTEGER-I64-MIN",
+        "RES-D-LOCK-INTEGER-LEADING-ZERO",
+        "RES-D-LOCK-INTEGER-NEG-I64-BEYOND",
+        "RES-D-LOCK-INTEGER-PLUS-SIGN",
+        "RES-D-LOCK-INTEGER-U64-MAX",
+        "RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE"
+      ],
+      "lock_schema_stage_order": [
+        "RES-D-LOCK-STAGE-03-CONTROL",
+        "RES-D-LOCK-STAGE-14-CONTROL",
+        "RES-D-LOCK-STAGE-15-CONTROL",
+        "RES-P-LOCK-STAGE-03-04",
+        "RES-P-LOCK-STAGE-14-15"
+      ],
+      "diagnostic_path_byte_order_index_2_10": [
+        "RES-D-IMPORT-PATH-BYTE-2-10",
+        "RES-D-IMPORT-PATH-INDEX-2-CONTROL"
+      ],
+      "scanned_source_independent_projection": [
+        "RES-S-SCANNED-SOURCE-INDEPENDENT"
+      ],
+      "relation_operand_successes": [
+        "RES-S-ALIAS-DISTINCT",
+        "RES-S-DUPLICATE-CONSTRAINTS",
+        "RES-S-LOCK-REQUESTED-BY-IRRELEVANT",
+        "RES-S-ORDER-A",
+        "RES-S-ORDER-B"
       ]
     },
     "successful_output_field_coverage": {
       "active_profile": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5548,6 +7189,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "applicable_requirements": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5579,6 +7222,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "authority": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5610,6 +7255,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "created_artifacts": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5641,6 +7288,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "created_identities": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5672,6 +7321,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "existing_lock": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5703,6 +7354,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "import_graph": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5734,6 +7387,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "phase_status": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5765,6 +7420,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "resolution_passes": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5796,6 +7453,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "scanned_source_ref": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5827,6 +7486,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "selected_modules": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5858,6 +7519,8 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "selected_packages": [
         "output_alias_distinct",
         "output_arbitrary_size",
+        "output_arbitrary_size_root_extreme",
+        "output_arbitrary_size_transitive_extreme",
         "output_caret_major_boundary",
         "output_caret_zero_minor",
         "output_caret_zero_patch",
@@ -5885,6 +7548,11 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "output_selected_module_imports_absent",
         "output_single_exact",
         "output_transitive"
+      ]
+    },
+    "path_order_coverage": {
+      "rank2_root_import_index_2_vs_10": [
+        "RES-D-IMPORT-PATH-BYTE-2-10"
       ]
     }
   },
@@ -6037,7 +7705,7 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "rank": 21
     }
   ],
-  "fixture_manifest_version": "threadsmith-pc7-resolve-erratum-second-repair-candidate-0.3",
+  "fixture_manifest_version": "threadsmith-pc7-semantic-and-criteria-repair-candidate-0.4",
   "fixtures": [
     {
       "class": "diagnostic",
@@ -7776,6 +9444,432 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       },
       "id": "RES-S-TRANSITIVE",
       "input_ref": "transitive"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer -9223372036854775809",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-NEG-I64-BEYOND",
+      "input_ref": "diag_integer_neg_i64_beyond"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer -9223372036854775808",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-I64-MIN",
+      "input_ref": "diag_integer_i64_min"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer 9223372036854775807",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-I64-MAX",
+      "input_ref": "diag_integer_i64_max"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer 9223372036854775808",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-I64-MAX-PLUS-ONE",
+      "input_ref": "diag_integer_i64_max_plus_one"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer 18446744073709551615",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-U64-MAX",
+      "input_ref": "diag_integer_u64_max"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer 18446744073709551616",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-U64-MAX-PLUS-ONE",
+      "input_ref": "diag_integer_u64_max_plus_one"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer 100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-EXTREME-POSITIVE",
+      "input_ref": "diag_integer_extreme_positive"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "direct Lockfile JSON integer -100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "unbounded mathematical-integer source admission",
+        "stage-4 fixed-value rejection",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-EXTREME-NEGATIVE",
+      "input_ref": "diag_integer_extreme_negative"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "plus sign forbidden independently of magnitude",
+        "source gate precedes closed schema",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SOURCE_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-PLUS-SIGN",
+      "input_ref": "diag_integer_plus_sign"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "leading zero forbidden independently of magnitude",
+        "source gate precedes closed schema",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SOURCE_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-LEADING-ZERO",
+      "input_ref": "diag_integer_leading_zero"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "fraction forbidden independently of magnitude",
+        "source gate precedes closed schema",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SOURCE_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-FRACTION",
+      "input_ref": "diag_integer_fraction"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "exponent forbidden independently of magnitude",
+        "source gate precedes closed schema",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SOURCE_INVALID",
+          "path": "lock#/lock_version"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-INTEGER-EXPONENT",
+      "input_ref": "diag_integer_exponent"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "top-level type stage-3-only control",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lattice"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-STAGE-03-CONTROL",
+      "input_ref": "diag_stage3_control"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "complete top-level type stage 3 precedes fixed-value stage 4",
+        "lock_version fixed-value defect at lower field position",
+        "lattice type defect at later field position",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/lattice"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-P-LOCK-STAGE-03-04",
+      "input_ref": "diag_stage3_4_dual",
+      "competing_codes": [
+        "RESOLVE_LOCK_SCHEMA_INVALID"
+      ],
+      "gate_order_boundary": "lock_schema_stage_3>4"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "stage-14 package-name-order-only control",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/packages/1/name"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-STAGE-14-CONTROL",
+      "input_ref": "diag_stage14_control"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "stage-15 requested_by-order-only control",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/packages/0/requested_by/1/module"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-LOCK-STAGE-15-CONTROL",
+      "input_ref": "diag_stage15_control"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "complete Lockfile schema stage 14 precedes stage 15",
+        "stage-15 defect has lower package index",
+        "stage-14 defect has higher package index",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_LOCK_SCHEMA_INVALID",
+          "path": "lock#/packages/1/name"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-P-LOCK-STAGE-14-15",
+      "input_ref": "diag_stage14_15_dual",
+      "competing_codes": [
+        "RESOLVE_LOCK_SCHEMA_INVALID"
+      ],
+      "gate_order_boundary": "lock_schema_stage_14>15"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "co-reachable equal-rank failures at root import indexes 2 and 10",
+        "complete unsigned UTF-8 path order differs from numeric index order",
+        "all filler imports are complete and independently valid",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_IMPORT_INVALID",
+          "path": "root#/imports/10/as"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-IMPORT-PATH-BYTE-2-10",
+      "input_ref": "diag_import_path_2_10",
+      "competing_codes": [
+        "RESOLVE_IMPORT_INVALID"
+      ],
+      "path_order_boundary": "rank2_root_import_index_2_vs_10"
+    },
+    {
+      "class": "diagnostic",
+      "covers": [
+        "increasing array traversal control with only index 2 defective",
+        "index 10 filler is valid",
+        "canonical cycle detail absent"
+      ],
+      "expected": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_IMPORT_INVALID",
+          "path": "root#/imports/2/as"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "id": "RES-D-IMPORT-PATH-INDEX-2-CONTROL",
+      "input_ref": "diag_import_path_2_control"
+    },
+    {
+      "class": "success",
+      "covers": [
+        "root caret requirement selects complete 81-digit version component",
+        "u128 maximum and adjacent u128-plus-one candidates",
+        "adjacent values across 80- and 81-digit lengths",
+        "length-aware numeric ordering",
+        "saturation and truncation distinction"
+      ],
+      "expected": {
+        "primary_diagnostic": null,
+        "result": "success",
+        "successful_output_ref": "output_arbitrary_size_root_extreme"
+      },
+      "id": "RES-S-ARBITRARY-SIZE-ROOT-EXTREME",
+      "input_ref": "arbitrary_size_root_extreme"
+    },
+    {
+      "class": "success",
+      "covers": [
+        "transitive caret requirement selects complete 81-digit version component",
+        "u128 maximum and adjacent u128-plus-one candidates",
+        "adjacent values across 80- and 81-digit lengths",
+        "length-aware numeric ordering",
+        "saturation and truncation distinction"
+      ],
+      "expected": {
+        "primary_diagnostic": null,
+        "result": "success",
+        "successful_output_ref": "output_arbitrary_size_transitive_extreme"
+      },
+      "id": "RES-S-ARBITRARY-SIZE-TRANSITIVE-EXTREME",
+      "input_ref": "arbitrary_size_transitive_extreme"
+    },
+    {
+      "class": "success_relation",
+      "covers": [
+        "expected scanned_source is constructed before Resolve from accepted PC2-PC6 boundaries",
+        "complete correct successful-output comparison succeeds",
+        "wrong scanned_source with every other member unchanged compares unequal",
+        "actual output cannot supply either side of its scanned_source assertion"
+      ],
+      "expected": {
+        "operation": {
+          "correct_expected_source": "pre_resolve_pc2_through_pc6_projection",
+          "kind": "assert_scanned_source_independent_projection",
+          "required_correct_comparison": "equal",
+          "required_wrong_comparison": "different",
+          "wrong_scanned_source": {
+            "deliberately_wrong_scanned_source": true
+          },
+          "wrong_scanned_source_field": "scanned_source"
+        },
+        "primary_diagnostic": null,
+        "result": "success_relation",
+        "successful_output_refs": [
+          "output_single_exact"
+        ]
+      },
+      "id": "RES-S-SCANNED-SOURCE-INDEPENDENT",
+      "input_refs": [
+        "single_exact"
+      ]
     }
   ],
   "generated_package_families": {
@@ -19872,6 +21966,258 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
     "zero_bytes": {
       "bytes_ref": "bytes_lock_zero",
       "parsed_value": null
+    },
+    "integer_neg_i64_beyond": {
+      "bytes_ref": "bytes_lock_integer_neg_i64_beyond",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": -9223372036854775809,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_i64_min": {
+      "bytes_ref": "bytes_lock_integer_i64_min",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": -9223372036854775808,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_i64_max": {
+      "bytes_ref": "bytes_lock_integer_i64_max",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 9223372036854775807,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_i64_max_plus_one": {
+      "bytes_ref": "bytes_lock_integer_i64_max_plus_one",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 9223372036854775808,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_u64_max": {
+      "bytes_ref": "bytes_lock_integer_u64_max",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 18446744073709551615,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_u64_max_plus_one": {
+      "bytes_ref": "bytes_lock_integer_u64_max_plus_one",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 18446744073709551616,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_extreme_positive": {
+      "bytes_ref": "bytes_lock_integer_extreme_positive",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 100000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_extreme_negative": {
+      "bytes_ref": "bytes_lock_integer_extreme_negative",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": -100000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "integer_plus_sign": {
+      "bytes_ref": "bytes_lock_integer_plus_sign",
+      "parsed_value": null
+    },
+    "integer_leading_zero": {
+      "bytes_ref": "bytes_lock_integer_leading_zero",
+      "parsed_value": null
+    },
+    "integer_fraction": {
+      "bytes_ref": "bytes_lock_integer_fraction",
+      "parsed_value": null
+    },
+    "integer_exponent": {
+      "bytes_ref": "bytes_lock_integer_exponent",
+      "parsed_value": null
+    },
+    "stage3_control": {
+      "bytes_ref": "bytes_lock_stage3_control",
+      "parsed_value": {
+        "lattice": false,
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 1,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "stage3_4_dual": {
+      "bytes_ref": "bytes_lock_stage3_4_dual",
+      "parsed_value": {
+        "lattice": false,
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 2,
+        "packages": [],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "stage14_control": {
+      "bytes_ref": "bytes_lock_stage14_control",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 1,
+        "packages": [
+          {
+            "name": "zeta",
+            "package_id": "lattice:package:sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "requested_by": [
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          },
+          {
+            "name": "alpha",
+            "package_id": "lattice:package:sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "requested_by": [
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          }
+        ],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "stage15_control": {
+      "bytes_ref": "bytes_lock_stage15_control",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 1,
+        "packages": [
+          {
+            "name": "alpha",
+            "package_id": "lattice:package:sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "requested_by": [
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          },
+          {
+            "name": "zeta",
+            "package_id": "lattice:package:sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "requested_by": [
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          }
+        ],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
+    },
+    "stage14_15_dual": {
+      "bytes_ref": "bytes_lock_stage14_15_dual",
+      "parsed_value": {
+        "lattice": "0.3",
+        "lock_id": "lattice:lock:sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "lock_version": 1,
+        "packages": [
+          {
+            "name": "zeta",
+            "package_id": "lattice:package:sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "requested_by": [
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          },
+          {
+            "name": "alpha",
+            "package_id": "lattice:package:sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "requested_by": [
+              {
+                "module": "alpha",
+                "requirement": "^1.0.0"
+              },
+              {
+                "module": "zeta",
+                "requirement": "^1.0.0"
+              }
+            ],
+            "version": "1.0.0"
+          }
+        ],
+        "profile": "lattice-core-0.1",
+        "root_blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077"
+      }
     }
   },
   "module_oracles": {
@@ -20730,6 +23076,30 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "units": [],
         "version": "0.3.0"
       }
+    },
+    "alpha_cross_digit_upper": {
+      "imports": [],
+      "parsed_value": {
+        "imports": [],
+        "lattice": "0.3",
+        "module": "alpha",
+        "profile": "lattice-core-0.1",
+        "purpose": "alpha arbitrary-size package",
+        "units": [],
+        "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    "beta_cross_digit_upper": {
+      "imports": [],
+      "parsed_value": {
+        "imports": [],
+        "lattice": "0.3",
+        "module": "beta",
+        "profile": "lattice-core-0.1",
+        "purpose": "beta arbitrary-size package",
+        "units": [],
+        "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
     }
   },
   "non_dispatchable_future_vectors": {
@@ -20805,6 +23175,31 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
       "reason": "No accepted PC6 or later composition boundary can construct same-name/same-version duplicates.",
       "status": "non_dispatchable_future_composition_design_vector",
       "vector_id": "PC7-FV-IDENTICAL-DUPLICATE"
+    },
+    "future_duplicate_conflict_numeric_order": {
+      "abstract_candidate_record_refs": [
+        "dup_2_a",
+        "dup_2_b",
+        "dup_10_a",
+        "dup_10_b"
+      ],
+      "abstract_root_imports": [
+        null
+      ],
+      "current_public_dispatch": false,
+      "excluded_from_current_populations": true,
+      "expected_abstract_outcome": {
+        "primary_diagnostic": {
+          "code": "RESOLVE_DUPLICATE_VERSION",
+          "path": "packages/duplicate_pkg/2.0.0"
+        },
+        "result": "diagnostic",
+        "successful_output": null
+      },
+      "kind": "duplicate_conflict_numeric_order",
+      "reason": "No accepted PC6 or later composition boundary can construct same-name/same-version duplicates.",
+      "status": "non_dispatchable_future_composition_design_vector",
+      "vector_id": "PC7-FV-DUPLICATE-CONFLICT-NUMERIC-ORDER"
     }
   },
   "package_records": {
@@ -22180,6 +24575,306 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "bytes_ref": "bytes_zero_030",
           "path": "module.yaml",
           "sha256": "609dd2632bed94f4a4a80044bb399cb41caae4c85c0db91a003676c580769bc0"
+        }
+      ]
+    },
+    "alpha_u128_max": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "f6adc7ad348fdfc266f0c5c25c3c18b6b3b8b8ba4cadf27060f967c26a63dc75"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "alpha",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.340282366920938463463374607431768211455"
+      },
+      "package_id": "lattice:package:sha256:d73aa6338da23818994971322df99252e711c0764e361be8ec534e7cb6517b0f",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_alpha_u128_max",
+          "path": "module.yaml",
+          "sha256": "f6adc7ad348fdfc266f0c5c25c3c18b6b3b8b8ba4cadf27060f967c26a63dc75"
+        }
+      ]
+    },
+    "alpha_u128_plus_one": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "28387cc07ae2becbc3cb2f0bde75aa24bf0e03d2f9aab7829ea39c84a6e9bc78"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "alpha",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.340282366920938463463374607431768211456"
+      },
+      "package_id": "lattice:package:sha256:e4ebd31801d721a6cb34774fffe5c41f07f4d58705920808bc159e6e653b0325",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_alpha_u128_plus_one",
+          "path": "module.yaml",
+          "sha256": "28387cc07ae2becbc3cb2f0bde75aa24bf0e03d2f9aab7829ea39c84a6e9bc78"
+        }
+      ]
+    },
+    "alpha_cross_digit_lower": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "e254cfa9d3365e14398e41300c00227e8824be5f757a61935b9ca3f9e62407bb"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "alpha",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.99999999999999999999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "package_id": "lattice:package:sha256:b66e4620dc6e70b4768394682ae06e7a014a97620aab0d8976a25a61f527eac0",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_alpha_cross_digit_lower",
+          "path": "module.yaml",
+          "sha256": "e254cfa9d3365e14398e41300c00227e8824be5f757a61935b9ca3f9e62407bb"
+        }
+      ]
+    },
+    "alpha_cross_digit_upper": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "2f6186320a1ca61dd2212804b25692474ee921a38d3f6a50857881fabef2fb7b"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "alpha",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_alpha_cross_digit_upper",
+          "path": "module.yaml",
+          "sha256": "2f6186320a1ca61dd2212804b25692474ee921a38d3f6a50857881fabef2fb7b"
+        }
+      ]
+    },
+    "beta_u128_max": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "f232d94c6e0af26c2f56cc2e0c87be97d878975e62237fe7785b2aa40871020d"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "beta",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.340282366920938463463374607431768211455"
+      },
+      "package_id": "lattice:package:sha256:3d497d38dfc0eaf09b375c272e914897c98e41414796850d9031b4917ed56147",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_beta_u128_max",
+          "path": "module.yaml",
+          "sha256": "f232d94c6e0af26c2f56cc2e0c87be97d878975e62237fe7785b2aa40871020d"
+        }
+      ]
+    },
+    "beta_u128_plus_one": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "c433b94d693c74cb84a5e6ac97b12e363cdb1285a247f8878ba22b6bf4f6a233"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "beta",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.340282366920938463463374607431768211456"
+      },
+      "package_id": "lattice:package:sha256:6f4e0d258959421a01d920f07c862847ea703a9dc5716048e775ed3c49cb8e02",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_beta_u128_plus_one",
+          "path": "module.yaml",
+          "sha256": "c433b94d693c74cb84a5e6ac97b12e363cdb1285a247f8878ba22b6bf4f6a233"
+        }
+      ]
+    },
+    "beta_cross_digit_lower": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "1bddfa2bf8479415de40f288c197896e7bc54790c7f0ea84af403c4cce6d8fb0"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "beta",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.99999999999999999999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "package_id": "lattice:package:sha256:dd2634e2e827e9f34da596ea8d53c5a93ccbb62af4e8fabff6caa53de4cada4d",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_beta_cross_digit_lower",
+          "path": "module.yaml",
+          "sha256": "1bddfa2bf8479415de40f288c197896e7bc54790c7f0ea84af403c4cce6d8fb0"
+        }
+      ]
+    },
+    "beta_cross_digit_upper": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "7d746bb8e5d0429b9aeffef2b0a04a3c981acb433893bd7d187a193de26f4bd2"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "beta",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_beta_cross_digit_upper",
+          "path": "module.yaml",
+          "sha256": "7d746bb8e5d0429b9aeffef2b0a04a3c981acb433893bd7d187a193de26f4bd2"
+        }
+      ]
+    },
+    "dup_2_a": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "eeb89a0c4a09c994b8565ed65217f1ed0c8c510be682b9716a7705be31125331"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "duplicate_pkg",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "2.0.0"
+      },
+      "package_id": "lattice:package:sha256:d999b11b990fe6bbfe4fb7106d02acaefb5898a4e9b016200e7bfa316c38bb59",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_dup_2_a",
+          "path": "module.yaml",
+          "sha256": "eeb89a0c4a09c994b8565ed65217f1ed0c8c510be682b9716a7705be31125331"
+        }
+      ]
+    },
+    "dup_2_b": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "df4c9ed798f26309837241fc5d4870f6b5a35b8d0644f0e9563b18953232bb39"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "duplicate_pkg",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "2.0.0"
+      },
+      "package_id": "lattice:package:sha256:4d7ce982750b0606df1ea123147af76ce56282dcd24a2c5b1ec17681a7b809be",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_dup_2_b",
+          "path": "module.yaml",
+          "sha256": "df4c9ed798f26309837241fc5d4870f6b5a35b8d0644f0e9563b18953232bb39"
+        }
+      ]
+    },
+    "dup_10_a": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "de4e40df472c15cc191f016206ec8e670cb2963ae238ada7ea3dbe052150153b"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "duplicate_pkg",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "10.0.0"
+      },
+      "package_id": "lattice:package:sha256:76b9cda9c4f8ca47f948bfa6fec08cd1b236199f37595c9ebc4d9910e03f21b0",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_dup_10_a",
+          "path": "module.yaml",
+          "sha256": "de4e40df472c15cc191f016206ec8e670cb2963ae238ada7ea3dbe052150153b"
+        }
+      ]
+    },
+    "dup_10_b": {
+      "descriptor": {
+        "files": [
+          {
+            "path": "module.yaml",
+            "sha256": "c9693f7fed9b96c1b1ea751634a82da716ea9c4cd300795b6924cf3d4dfe4a6d"
+          }
+        ],
+        "lattice": "0.3",
+        "module_file": "module.yaml",
+        "package": "duplicate_pkg",
+        "profiles": [
+          "lattice-core-0.1"
+        ],
+        "version": "10.0.0"
+      },
+      "package_id": "lattice:package:sha256:68386718dd4956efa82b28062caf8a1ef81946375331e703a16276abaa7e09ac",
+      "verified_files": [
+        {
+          "bytes_ref": "bytes_dup_10_b",
+          "path": "module.yaml",
+          "sha256": "c9693f7fed9b96c1b1ea751634a82da716ea9c4cd300795b6924cf3d4dfe4a6d"
         }
       ]
     }
@@ -25467,6 +28162,823 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
         "package_records": [
           "transitive_alpha",
           "beta_150"
+        ]
+      }
+    },
+    "diag_integer_neg_i64_beyond": {
+      "existing_lock_ref": "integer_neg_i64_beyond",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_i64_min": {
+      "existing_lock_ref": "integer_i64_min",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_i64_max": {
+      "existing_lock_ref": "integer_i64_max",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_i64_max_plus_one": {
+      "existing_lock_ref": "integer_i64_max_plus_one",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_u64_max": {
+      "existing_lock_ref": "integer_u64_max",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_u64_max_plus_one": {
+      "existing_lock_ref": "integer_u64_max_plus_one",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_extreme_positive": {
+      "existing_lock_ref": "integer_extreme_positive",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_extreme_negative": {
+      "existing_lock_ref": "integer_extreme_negative",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_plus_sign": {
+      "existing_lock_ref": "integer_plus_sign",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_leading_zero": {
+      "existing_lock_ref": "integer_leading_zero",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_fraction": {
+      "existing_lock_ref": "integer_fraction",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_integer_exponent": {
+      "existing_lock_ref": "integer_exponent",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_stage3_control": {
+      "existing_lock_ref": "stage3_control",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_stage3_4_dual": {
+      "existing_lock_ref": "stage3_4_dual",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_stage14_control": {
+      "existing_lock_ref": "stage14_control",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_stage15_control": {
+      "existing_lock_ref": "stage15_control",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_stage14_15_dual": {
+      "existing_lock_ref": "stage14_15_dual",
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_120"
+        ]
+      }
+    },
+    "diag_import_path_2_10": {
+      "existing_lock_ref": null,
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:9d2a829a76caeb68d0a3a093c9b0524354feac13ede53abbd18c33131b62d86b",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "pkg00",
+              "use": "pkg00",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg01",
+              "use": "pkg01",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "Bad",
+              "use": "pkg02",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg03",
+              "use": "pkg03",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg04",
+              "use": "pkg04",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg05",
+              "use": "pkg05",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg06",
+              "use": "pkg06",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg07",
+              "use": "pkg07",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg08",
+              "use": "pkg08",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg09",
+              "use": "pkg09",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "Bad",
+              "use": "pkg10",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": []
+      }
+    },
+    "diag_import_path_2_control": {
+      "existing_lock_ref": null,
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:2a961e2956ab0dbb62d9187283cca7b35eee57c9dd82af1cd19f4fbebd2ea8b0",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "pkg00",
+              "use": "pkg00",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg01",
+              "use": "pkg01",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "Bad",
+              "use": "pkg02",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg03",
+              "use": "pkg03",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg04",
+              "use": "pkg04",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg05",
+              "use": "pkg05",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg06",
+              "use": "pkg06",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg07",
+              "use": "pkg07",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg08",
+              "use": "pkg08",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg09",
+              "use": "pkg09",
+              "version": "^1.0.0"
+            },
+            {
+              "as": "pkg10",
+              "use": "pkg10",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": []
+      }
+    },
+    "arbitrary_size_root_extreme": {
+      "existing_lock_ref": null,
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:e60d5373290ebd310502739ec6941f5c610d188b4989b9873f551b6c45d1c077",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "^1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "alpha_u128_max",
+          "alpha_u128_plus_one",
+          "alpha_cross_digit_lower",
+          "alpha_cross_digit_upper"
+        ]
+      }
+    },
+    "arbitrary_size_transitive_extreme": {
+      "existing_lock_ref": null,
+      "host_capabilities": [],
+      "scanned_source": {
+        "active_profile": "lattice-core-0.1",
+        "blueprint_digest": "lattice:blueprint:sha256:9db58baa8f7b01eab1ab7598402567997299ad7d229b03dec892b1d3b7598df4",
+        "construction": "pc6_successful_scan",
+        "defaulted_root": {
+          "contracts": [],
+          "exports": [],
+          "imports": [
+            {
+              "as": "alpha",
+              "use": "alpha",
+              "version": "1.0.0"
+            }
+          ],
+          "inputs": [],
+          "lattice": "0.3",
+          "links": [],
+          "module": "root_app",
+          "policies": [],
+          "profile": "lattice-core-0.1",
+          "purpose": "PC7 specified Resolve criterion",
+          "resources": [],
+          "scenarios": [],
+          "units": [],
+          "version": "1.0.0"
+        },
+        "package_records": [
+          "transitive_alpha",
+          "beta_u128_max",
+          "beta_u128_plus_one",
+          "beta_cross_digit_lower",
+          "beta_cross_digit_upper"
         ]
       }
     }
@@ -32393,6 +35905,544 @@ NORMATIVE SECTION 19 — Embedded specified conformance manifest
           "version": "1.5.0"
         }
       ]
+    },
+    "output_arbitrary_size_root_extreme": {
+      "active_profile": "lattice-core-0.1",
+      "applicable_requirements": [
+        {
+          "alias": "alpha",
+          "constraint": "^1.0.0",
+          "contributor": {
+            "kind": "root",
+            "module": "root_app"
+          },
+          "interval": {
+            "kind": "caret",
+            "lower_inclusive": "1.0.0",
+            "upper_exclusive": "2.0.0"
+          },
+          "package": "alpha",
+          "source_path": "root#/imports/0"
+        }
+      ],
+      "authority": "none",
+      "created_artifacts": [],
+      "created_identities": [],
+      "existing_lock": {
+        "input_ref": null,
+        "input_sha256": null,
+        "package_decisions": [
+          {
+            "lock_entry": null,
+            "package": "alpha",
+            "selected_by": "greatest",
+            "selected_package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+            "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "status": "no_lock_input"
+          }
+        ],
+        "unreferenced_entries": []
+      },
+      "import_graph": {
+        "edges": [
+          {
+            "alias": "alpha",
+            "constraint": "^1.0.0",
+            "from": "root",
+            "source_path": "root#/imports/0",
+            "to": "package:alpha@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589"
+          }
+        ],
+        "nodes": [
+          {
+            "kind": "root",
+            "module": "root_app",
+            "node": "root"
+          },
+          {
+            "kind": "package",
+            "name": "alpha",
+            "node": "package:alpha@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+            "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+            "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          }
+        ]
+      },
+      "phase_status": "non_authoritative_resolved_source",
+      "resolution_passes": [
+        {
+          "active_requirements": [
+            {
+              "alias": "alpha",
+              "constraint": "^1.0.0",
+              "contributor": {
+                "kind": "root",
+                "module": "root_app"
+              },
+              "interval": {
+                "kind": "caret",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": "2.0.0"
+              },
+              "package": "alpha",
+              "source_path": "root#/imports/0"
+            }
+          ],
+          "changes": {
+            "alpha": {
+              "from": null,
+              "to": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589"
+            }
+          },
+          "input_selection": [],
+          "output_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+              "record_ref": "alpha_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "pass": 1,
+          "selection_decisions": [
+            {
+              "lock_entry": null,
+              "package": "alpha",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+              "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "status": "no_lock_input"
+            }
+          ],
+          "unchanged": false
+        },
+        {
+          "active_requirements": [
+            {
+              "alias": "alpha",
+              "constraint": "^1.0.0",
+              "contributor": {
+                "kind": "root",
+                "module": "root_app"
+              },
+              "interval": {
+                "kind": "caret",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": "2.0.0"
+              },
+              "package": "alpha",
+              "source_path": "root#/imports/0"
+            }
+          ],
+          "changes": {},
+          "input_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+              "record_ref": "alpha_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "output_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+              "record_ref": "alpha_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "pass": 2,
+          "selection_decisions": [
+            {
+              "lock_entry": null,
+              "package": "alpha",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+              "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "status": "no_lock_input"
+            }
+          ],
+          "unchanged": true
+        }
+      ],
+      "scanned_source_ref": "arbitrary_size_root_extreme",
+      "selected_modules": [
+        {
+          "imports_ref": "module_oracles.alpha_cross_digit_upper.imports",
+          "module_file": "module.yaml",
+          "node": "package:alpha@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+          "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+          "parsed_module_ref": "module_oracles.alpha_cross_digit_upper.parsed_value",
+          "record_ref": "alpha_cross_digit_upper",
+          "retained_bytes_ref": "bytes_alpha_cross_digit_upper",
+          "retained_bytes_sha256": "2f6186320a1ca61dd2212804b25692474ee921a38d3f6a50857881fabef2fb7b"
+        }
+      ],
+      "selected_packages": [
+        {
+          "name": "alpha",
+          "package_id": "lattice:package:sha256:b173596bcd34653c2a110f0826efe5d28df1115edbe8b9d35a8417b0f9f9b589",
+          "record_ref": "alpha_cross_digit_upper",
+          "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    "output_arbitrary_size_transitive_extreme": {
+      "active_profile": "lattice-core-0.1",
+      "applicable_requirements": [
+        {
+          "alias": "alpha",
+          "constraint": "1.0.0",
+          "contributor": {
+            "kind": "root",
+            "module": "root_app"
+          },
+          "interval": {
+            "kind": "exact",
+            "lower_inclusive": "1.0.0",
+            "upper_exclusive": null
+          },
+          "package": "alpha",
+          "source_path": "root#/imports/0"
+        },
+        {
+          "alias": "beta",
+          "constraint": "^1.0.0",
+          "contributor": {
+            "kind": "package",
+            "package": "alpha",
+            "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+            "version": "1.0.0"
+          },
+          "interval": {
+            "kind": "caret",
+            "lower_inclusive": "1.0.0",
+            "upper_exclusive": "2.0.0"
+          },
+          "package": "beta",
+          "source_path": "packages/alpha/1.0.0/module.yaml#/imports/0"
+        }
+      ],
+      "authority": "none",
+      "created_artifacts": [],
+      "created_identities": [],
+      "existing_lock": {
+        "input_ref": null,
+        "input_sha256": null,
+        "package_decisions": [
+          {
+            "lock_entry": null,
+            "package": "alpha",
+            "selected_by": "greatest",
+            "selected_package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+            "selected_version": "1.0.0",
+            "status": "no_lock_input"
+          },
+          {
+            "lock_entry": null,
+            "package": "beta",
+            "selected_by": "greatest",
+            "selected_package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+            "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "status": "no_lock_input"
+          }
+        ],
+        "unreferenced_entries": []
+      },
+      "import_graph": {
+        "edges": [
+          {
+            "alias": "beta",
+            "constraint": "^1.0.0",
+            "from": "package:alpha@1.0.0#lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+            "source_path": "packages/alpha/1.0.0/module.yaml#/imports/0",
+            "to": "package:beta@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae"
+          },
+          {
+            "alias": "alpha",
+            "constraint": "1.0.0",
+            "from": "root",
+            "source_path": "root#/imports/0",
+            "to": "package:alpha@1.0.0#lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5"
+          }
+        ],
+        "nodes": [
+          {
+            "kind": "root",
+            "module": "root_app",
+            "node": "root"
+          },
+          {
+            "kind": "package",
+            "name": "alpha",
+            "node": "package:alpha@1.0.0#lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+            "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+            "version": "1.0.0"
+          },
+          {
+            "kind": "package",
+            "name": "beta",
+            "node": "package:beta@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+            "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+            "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          }
+        ]
+      },
+      "phase_status": "non_authoritative_resolved_source",
+      "resolution_passes": [
+        {
+          "active_requirements": [
+            {
+              "alias": "alpha",
+              "constraint": "1.0.0",
+              "contributor": {
+                "kind": "root",
+                "module": "root_app"
+              },
+              "interval": {
+                "kind": "exact",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": null
+              },
+              "package": "alpha",
+              "source_path": "root#/imports/0"
+            }
+          ],
+          "changes": {
+            "alpha": {
+              "from": null,
+              "to": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5"
+            }
+          },
+          "input_selection": [],
+          "output_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "record_ref": "transitive_alpha",
+              "version": "1.0.0"
+            }
+          ],
+          "pass": 1,
+          "selection_decisions": [
+            {
+              "lock_entry": null,
+              "package": "alpha",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "selected_version": "1.0.0",
+              "status": "no_lock_input"
+            }
+          ],
+          "unchanged": false
+        },
+        {
+          "active_requirements": [
+            {
+              "alias": "alpha",
+              "constraint": "1.0.0",
+              "contributor": {
+                "kind": "root",
+                "module": "root_app"
+              },
+              "interval": {
+                "kind": "exact",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": null
+              },
+              "package": "alpha",
+              "source_path": "root#/imports/0"
+            },
+            {
+              "alias": "beta",
+              "constraint": "^1.0.0",
+              "contributor": {
+                "kind": "package",
+                "package": "alpha",
+                "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+                "version": "1.0.0"
+              },
+              "interval": {
+                "kind": "caret",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": "2.0.0"
+              },
+              "package": "beta",
+              "source_path": "packages/alpha/1.0.0/module.yaml#/imports/0"
+            }
+          ],
+          "changes": {
+            "beta": {
+              "from": null,
+              "to": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae"
+            }
+          },
+          "input_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "record_ref": "transitive_alpha",
+              "version": "1.0.0"
+            }
+          ],
+          "output_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "record_ref": "transitive_alpha",
+              "version": "1.0.0"
+            },
+            {
+              "name": "beta",
+              "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+              "record_ref": "beta_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "pass": 2,
+          "selection_decisions": [
+            {
+              "lock_entry": null,
+              "package": "alpha",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "selected_version": "1.0.0",
+              "status": "no_lock_input"
+            },
+            {
+              "lock_entry": null,
+              "package": "beta",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+              "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "status": "no_lock_input"
+            }
+          ],
+          "unchanged": false
+        },
+        {
+          "active_requirements": [
+            {
+              "alias": "alpha",
+              "constraint": "1.0.0",
+              "contributor": {
+                "kind": "root",
+                "module": "root_app"
+              },
+              "interval": {
+                "kind": "exact",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": null
+              },
+              "package": "alpha",
+              "source_path": "root#/imports/0"
+            },
+            {
+              "alias": "beta",
+              "constraint": "^1.0.0",
+              "contributor": {
+                "kind": "package",
+                "package": "alpha",
+                "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+                "version": "1.0.0"
+              },
+              "interval": {
+                "kind": "caret",
+                "lower_inclusive": "1.0.0",
+                "upper_exclusive": "2.0.0"
+              },
+              "package": "beta",
+              "source_path": "packages/alpha/1.0.0/module.yaml#/imports/0"
+            }
+          ],
+          "changes": {},
+          "input_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "record_ref": "transitive_alpha",
+              "version": "1.0.0"
+            },
+            {
+              "name": "beta",
+              "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+              "record_ref": "beta_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "output_selection": [
+            {
+              "name": "alpha",
+              "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "record_ref": "transitive_alpha",
+              "version": "1.0.0"
+            },
+            {
+              "name": "beta",
+              "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+              "record_ref": "beta_cross_digit_upper",
+              "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ],
+          "pass": 3,
+          "selection_decisions": [
+            {
+              "lock_entry": null,
+              "package": "alpha",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+              "selected_version": "1.0.0",
+              "status": "no_lock_input"
+            },
+            {
+              "lock_entry": null,
+              "package": "beta",
+              "selected_by": "greatest",
+              "selected_package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+              "selected_version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "status": "no_lock_input"
+            }
+          ],
+          "unchanged": true
+        }
+      ],
+      "scanned_source_ref": "arbitrary_size_transitive_extreme",
+      "selected_modules": [
+        {
+          "imports_ref": "module_oracles.transitive_alpha.imports",
+          "module_file": "module.yaml",
+          "node": "package:alpha@1.0.0#lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+          "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+          "parsed_module_ref": "module_oracles.transitive_alpha.parsed_value",
+          "record_ref": "transitive_alpha",
+          "retained_bytes_ref": "bytes_transitive_alpha",
+          "retained_bytes_sha256": "dfcb96e27930b7a7a3dd24e362a6cf1bb0c915e5c8c07fd90f52b296005ed7a1"
+        },
+        {
+          "imports_ref": "module_oracles.beta_cross_digit_upper.imports",
+          "module_file": "module.yaml",
+          "node": "package:beta@1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000#lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+          "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+          "parsed_module_ref": "module_oracles.beta_cross_digit_upper.parsed_value",
+          "record_ref": "beta_cross_digit_upper",
+          "retained_bytes_ref": "bytes_beta_cross_digit_upper",
+          "retained_bytes_sha256": "7d746bb8e5d0429b9aeffef2b0a04a3c981acb433893bd7d187a193de26f4bd2"
+        }
+      ],
+      "selected_packages": [
+        {
+          "name": "alpha",
+          "package_id": "lattice:package:sha256:6b75fac12ff9a6b3659b29abc9595200b9392c45bd60b701d569be4b5537f8b5",
+          "record_ref": "transitive_alpha",
+          "version": "1.0.0"
+        },
+        {
+          "name": "beta",
+          "package_id": "lattice:package:sha256:e5a48016de184537259a98830bb16caa1346f41560b6f768c10fee4cef0603ae",
+          "record_ref": "beta_cross_digit_upper",
+          "version": "1.0.100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ]
     }
   }
 }
@@ -32404,8 +36454,8 @@ Every row below is a choice added by this candidate to close a gap not fully
 determined by accepted authority. None is represented as an earlier accepted
 fact. The original candidate's NC-40 is intentionally absent: parse count and
 cache behavior are now explicitly non-normative implementation guidance.
-Identifiers are stable labels, not a claim of contiguity. The second-repair
-population is 43.
+Identifiers are stable labels, not a claim of contiguity. The repair-candidate
+population is 45.
 
 ID | New normative choice
 -- | --------------------
@@ -32452,50 +36502,60 @@ NC-41 | Selection-state equality uses exactly package-name keys and PC6 package 
 NC-42 | The conformance manifest has a closed recursive schema, strict runner-rejection order, closed fixture vocabulary, exact population and reachability checks, public-boundary-only current construction, and explicit exclusion of non-dispatchable future vectors.
 NC-43 | Reference roles are schema-directed; named locator terminals do not expand; every true construction reference is resolved exactly once without recursive eligibility; and chain255 uses the exact C and generated-plan roots, canonical-byte boundaries, counts, and hashes declared in Section 18 and the manifest.
 NC-44 | Relation selectors use the closed dot-and-[*] grammar, ordered projection semantics, canonical ordered structural equality, exact operation allowlists and cardinalities, narrow source_path imports-index erasure, and exact relation-failure classification and paths.
+NC-45 | Direct existing-Lockfile JSON integers use the canonical integer lexical grammar and an unbounded mathematical-integer source domain; magnitude never causes source rejection, and fixed-value member violations remain closed-schema failures.
+NC-46 | Every ordinary generator or interpreter run receives the durable V1 registry and authority root explicitly, strictly validates its Unicode-scalar JSON string domain and complete V1 registry contract, and verifies all eight ordered controlling document paths, byte counts, and SHA-256 identities before manifest or plan interpretation; the exact first registry or document failure is a conformance-tool rejection.
 
 Rule-provenance ledger
 
 Section | Complete classification of rule bundles
 ------- | ---------------------------------------
-Candidate status | [D] unaccepted first repair; independent review, acceptance, freeze, implementation, publication, Builder, and runtime remain later.
-1 | [S] controlling Standard and accepted companions; [C] in-scope amendment precedence and explicit provenance method; [D] no present authority.
+Candidate status | [D] unaccepted semantic and conformance-criteria repair candidate; fresh independent review, acceptance, commit, publication, implementation repair, qualification, Builder, and runtime remain later.
+1 | [S] controlling Standard and accepted companions, exact accepted baseline identities, and accepted-authority hierarchy; [C] in-scope amendment precedence and explicit provenance method; [D] this candidate has no present authority and authenticated consultation material remains advisory.
 2 | [S] Resolve phase position, local-only candidate boundary, selection ownership, and non-authority; [C] selected-module intake is limited to transitive discovery; [D] every named later phase and host action.
 3 | [S] active profile, candidate record, candidate universe, root source, and retained PC6 binding; [N] NC-08, NC-32, NC-33, and NC-41 exact input, output, and state-equality representations.
 4 | [S] exact opaque ScannedSource and PC6 preconditions; [N] NC-08 absent-versus-supplied bytes including zero bytes; [D] no repeated PC6 or host discovery.
 5 | [N] NC-20 canonical ordering and NC-28 exact logical diagnostic anchors and encoding.
 6 | [N] NC-01, NC-02, NC-03, and NC-39 closed imports, gather/reachability, aliases, and shared root/module meaning.
 7 | [S] Standard exact and caret intervals and numeric comparison; [N] NC-04 and NC-05 lexical grammar and arbitrary-size mechanics.
-8 | [S] one version, no fetch, compatible lock preference, greatest satisfying fallback, and Standard-owned diagnostics; [N] NC-06, NC-15, NC-16, NC-29, and NC-35.
-9 | [S] compatible lock preference, six-member Standard Lockfile root example, existing lock_id preimage, and later Lock ownership; [C] exhaustive root cardinality is six; [N] NC-08 through NC-14 and NC-36 exact intake, schema, verification, context, reuse, staleness, and extras.
+8 | [S] one version, no fetch, compatible lock preference, greatest satisfying fallback, and Standard-owned diagnostics; [N] NC-06, NC-15, NC-16, NC-29, and NC-35; [D] unreachable duplicate-conflict textual-version path ordering remains future composition-seam debt and no composition facility is created.
+9 | [S] compatible lock preference, six-member Standard Lockfile root example, existing lock_id preimage, later Lock ownership, and global stage completion in ascending stage order; [C] exhaustive root cardinality is six and every eligible candidate in one stage is gathered before the next stage; [N] NC-08 through NC-14, NC-36, and NC-45 exact intake, unbounded integer domain, schema, verification, context, reuse, staleness, and extras.
 10 | [S] root and transitive contribution participation; [N] NC-19 retraction/reachability and NC-20 provenance ordering; [C] exact provenance is retained for later Lock.
 11 | [S] consume only retained PC6 bytes and accepted PC2 semantics; [N] NC-07, NC-21 through NC-25, NC-38, and NC-39 parser, envelope, metadata, absent imports, retention, and gathering; [D] declaration defaults, bodies, expansion, normalization, and static checks; parse-count/cache text is non-normative guidance.
 12 | [S] restart, unchanged-pass success, and Standard 256-pass bound; [N] NC-17, NC-18, NC-19, NC-31, and NC-41 exact simultaneous transition, replacement, retraction, selection-gate failure, equality, and bound.
 13 | [S] Resolve-owned cycle rejection; [N] NC-26, NC-27, and NC-37 graph, representative, path, and post-convergence timing; traversal-form text is explicitly non-normative implementation guidance.
-14 | [S] three Standard Resolve codes; [N] NC-30, NC-31, and NC-38 added codes, ranks, within-gate comparison, path ties, and failure gathering; [C] explicit distinction between rank comparison and mandatory gate order.
-15 | [S] exact source, selected PC6 records, retained bytes, requirements, graph, no identity, and non-authority; [N] NC-32 and NC-33 complete output and trace; [D] Lock and every authority artifact.
+14 | [S] three Standard Resolve codes and complete rendered UTF-8 diagnostic-path comparison, including the index-10-before-index-2 result; [N] NC-30, NC-31, and NC-38 added codes, ranks, within-gate comparison, path ties, and failure gathering; [C] explicit distinction between array traversal, rank comparison, final path-byte ordering, and mandatory gate order.
+15 | [S] exact source, selected PC6 records, retained bytes, requirements, graph, no identity, non-authority, and retention of the exact consumed ScannedSource; [C] independently constructing the expected scanned_source projection from authoritative PC2-through-PC6 fixture inputs is required to test that accepted meaning without consulting actual output; [N] NC-32 and NC-33 complete output and trace; [D] Lock and every authority artifact.
 16 | [S] semantic results cannot depend on ambient host state; [N] NC-34 operational non-result and deterministic finite semantics; non-normative traversal/cache guidance has no observable requirement.
 17 | [D] Lock generation and persistence, Expand, imported defaults, declaration phases, Manifest, qualification, Binding, Builder, runtime, providers, products, and user surfaces.
-18 | [N] NC-42 closed fixture language and admission, NC-43 schema-directed reference roles and exact chain preimages, and NC-44 selector, projection, comparison, erasure, and relation failure semantics; public-boundary construction, population closure, future-vector exclusion, and specified maturity remain.
-19 | [N] NC-42, NC-43, and NC-44 embedded machine-readable criteria; it is not implementation or execution evidence.
-20 | [N] exhaustive NC-01 through NC-39 plus NC-41 through NC-44 register and discriminator allocation; [C] former NC-40 remains demoted because it had no semantic observation.
-21 | [D] fresh independent review, acceptance, semantic freeze, implementation, publication, Builder, and runtime remain later.
+18 | [N] NC-42 closed fixture language and admission, NC-43 schema-directed reference roles and exact chain preimages, NC-44 selector, projection, comparison, erasure, and relation failure semantics, and NC-46 durable authority-registry construction, explicit consumer interface, Unicode-scalar strict-parse string domain, version, total pre-schema serialization, baseline meaning, preflight order, and exact failures; [C] registry_unknown_members now consumes the parsed actual registry-byte intake and completes before registry_canonical_bytes, the exact raw-byte unknown-member and unpaired-surrogate discriminators close the internally required NC-46 precedence and scalar-intake distinctions, and one strict fixture-ID UTF-8 ordering rule, independent expected scanned_source construction, complete expected-output comparison, global Lockfile stage discriminators, arbitrary-size version distinctions, path-order distinctions, exact module-oracle set equality, disjoint expected-path union, closed NC-46 classification, vector-specific future diagnostic paths, reverse references, and honest specified maturity repair the durable criteria without changing unrelated Resolve semantics; [D] the duplicate-conflict vector remains non-dispatchable and generator, interpreter, implementation, dispatch, execution, and qualification remain later.
+19 | [N] NC-42, NC-43, NC-44, NC-45, and NC-46 embedded machine-readable criteria and exact distinctions, including the complete scalar-string admission rule; [C] the raw-byte unknown-member and unpaired-surrogate discriminators and corrected stage order repair NC-46 without registering a new normative choice; they are not implementation, dispatch, execution, or qualification evidence.
+20 | [N] exhaustive NC-01 through NC-39 plus NC-41 through NC-46 register and discriminator allocation; [C] former NC-40 remains demoted because it had no semantic observation.
+21 | [D] fresh independent review, acceptance, commit, publication, semantic freeze, implementation repair, fixture execution, qualification, Builder, and runtime remain later.
 
 
 NORMATIVE SECTION 21 — Candidate boundary and acceptance condition
 
-[D] This second repair is semantically complete only as a repair candidate.
+[D] This bounded semantic and conformance-criteria repair is complete only as
+an unaccepted candidate.
 Two conforming implementations applying all normative sections and the closed
 fixture construction schema to the same accepted input MUST produce the same
 requirements, candidates, eligible versions, lock decisions, selections, pass
 sequence, retractions, selected-module representations, retained bytes, graph,
 canonical cycle, primary diagnostic, or successful ResolvedSource.
 
-[D] The embedded material is specified criteria. No strict plan generator or
-public-boundary interpreter has executed it, so it is not executable or
-qualified evidence. Fresh independent review, acceptance, repository
-conversion, semantic freeze, implementation, fixture execution, focused and
-frozen regression qualification, and publication remain later gates. This
-document itself performs or authorizes none of them.
+[D] The embedded material has fixture maturity exactly specified. The
+existing generator and interpreter do not yet implement these repaired
+criteria. No strict plan generator or public-boundary interpreter has
+dispatched or executed them, so they are not dispatchable, executable,
+qualified, implementation-verified, or implementation-reviewed evidence.
+Fresh independent review, acceptance, commit, publication, semantic freeze,
+implementation repair, fixture-plan regeneration, strict dispatch and
+interpretation, focused qualification, and full qualification remain later
+gates. This document itself performs or authorizes none of them.
+
+FIXTURE_MATURITY=specified
+REPAIR_ATTEMPTED=true
+REVIEW_STATUS=fresh_independent_review_required
 
 BOUNDED FIRST-REPAIR COVERAGE LEDGER
 
@@ -32536,6 +36596,129 @@ population update is a direct mechanical consequence of one of these five
 rows. No Resolve selection rule, diagnostic rank, cycle selection rule,
 fixed-point rule, successful-output meaning, Lockfile behavior, profile rule,
 identity, authority, or phase owner is changed.
+
+BOUNDED ADJUDICATED-REPAIR COVERAGE LEDGER
+
+This non-normative ledger maps the present candidate changes to every
+adjudicated finding. It records an attempted repair and its mechanical
+consequences; it does not independently close, downgrade, accept, or freeze
+any finding.
+
+Finding | Changed clauses | Changed fixtures and schema | Dependent mechanical changes | Provenance | Deferred implementation
+------- | --------------- | --------------------------- | ---------------------------- | ---------- | -----------------------
+PC7-AJ-P1-01 | Sections 9, 18, 19, and 20 | Twelve direct-Lockfile integer fixtures; integer-domain and Lock-source/schema categories | Fixture, diagnostic, Lock-input, coverage, reference, and population closure | [N] NC-45 | Generator and interpreter admission and comparison
+PC7-AJ-P1-02 | Sections 9, 14, 18, and 19 | Stage-14-only, stage-15-only, and packages[0]/packages[1] dual-defect fixtures; Lock stage category | Gate-order and reverse-coverage closure | [S] global gates; [C] full-stage gathering discriminator | Stage-14/stage-15 implementation repair
+PC7-AJ-P1-03 | Sections 15, 18, and 19 | Independent scanned_source success relation and wrong-projection operand | Relation vocabulary, operand reverse references, and success-relation population | [S] exact retained ScannedSource; [C] independent expected construction | Independent expected scanned_source materialization and strict comparison
+PC7-AJ-P1-04 | Sections 18 and 19 | Nine required-behavior arrays and seven new-choice fixture-ID arrays reordered; one negative valid-permutation discriminator | Fixture-ID array order, pointer, coverage, and canonical manifest bytes | [C] one declared UTF-8 comparator | Generator validation of repaired order rule
+PC7-AJ-P1-05 | Sections 9, 14, 15, 18, 19, and 21 | Public-boundary stage, path, scanned_source, and arbitrary-version distinctions | All current populations, set-equality, reverse-reference, and coverage closure; maturity set to specified | [S]/[C] discriminating criteria; [D] no implementation claim | Fixture-plan regeneration, strict dispatch/interpretation, focused and full qualification
+PC7-AJ-P2-01 | Sections 1, 18, 19, and 20 | Authority-registry schema, adversarial mutation criterion, and exact rejection | Eight accepted authority identities and pre-dispatch closure | [N] NC-46 | Generator and interpreter authority preflight
+PC7-AJ-P2-02 | Sections 18 and 19; Section 7 retained byte-identically | Root and transitive versions beyond i64, u64, u128, and 30 digits | Full version strings, package bytes/IDs, Blueprint digests, outputs, and populations | [S] arbitrary-size numeric comparison; [C] refuting distinctions | Public-boundary generation and interpretation
+PC7-AJ-P2-03 | Sections 14, 18, and 19 | Co-reachable indexes 2 and 10 plus index-2-only control | Exact code, path, detail, path-order coverage, and populations | [S] complete UTF-8 path order; [C] traversal/order separation | Generator and interpreter fixture support
+PC7-AJ-P3-01 | Sections 8, 18, and 19 | One non-dispatchable future duplicate-conflict vector | Future-vector population and closure only | [D] future composition-seam debt | No composition facility; later seam design only
+
+Every added current fixture is constructible only through the accepted public
+PC2-through-PC6 boundaries. The duplicate-conflict vector remains
+non-dispatchable. No unrelated Resolve selection, fixed-point, cycle, profile,
+identity, phase-ownership, or later Lock rule is changed.
+
+BOUNDED INDEPENDENT-REVIEW SECOND-REPAIR COVERAGE LEDGER
+
+This non-normative ledger maps every present second-repair change to exactly
+one governing independent-review finding. It records attempted repair scope
+and does not independently close, accept, freeze, or publish any finding.
+
+Finding | Exact repaired region | Mechanical consequence | Provenance
+------- | --------------------- | ---------------------- | ----------
+PC7-IR-P1-01 | Header and Sections 1, 18 through 21; manifest authority.preflight and authority_preflight schema; freeze authority, bindings, criteria, and state; new registry file | Exact V1 durable path, schema, serialization, baseline meaning, explicit consumer interface, failure order, eight final path/size/hash rows, acyclic acceptance construction, and outcome-changing preflight discriminator | [N] completion of NC-46; [D] implementation remains later
+PC7-IR-P1-02 | Manifest fixture_diagnostic.optional_members only | path_order_boundary has exactly optional status; current path-order fixture bytes and meaning remain unchanged | [C] closed member partition
+PC7-IR-P1-03 | Manifest module_oracles_map first cross-field constraint only | Exact 57-key set equals 67 package records minus the six named unselected extreme records and four named non-dispatchable future records | [C] exact construction-derived set
+PC7-IR-P1-04 | Manifest conformance_tool_path terminal only | authority paths and manifest-root JSON Pointers are disjoint while schema_discriminator retains exact-one one_of admission and every stored expected path | [C] non-overlapping terminal boundary
+PC7-IR-P1-05 | Manifest new_choice_coverage_row classification enum only | authority_preflight_discriminator is the closed fifth classification; NC-46 coverage content is unchanged | [C] closed registered classification
+PC7-IR-P1-06 | Manifest future_duplicate_primary_diagnostic path enum and non_dispatchable_future_vector exact binding only | The two older diagnostic vectors require 1.0.0, the numeric-order vector requires 2.0.0, the collapse vector has no path, and every unrelated or cross-bound path is rejected | [D] exact future-only criterion; no composition seam or implementation
+
+No current fixture, fixture ID, package record, version, selection, future
+vector, expected outcome, authority-document population, schema-category
+population, or registered-choice population changes. The counts remain 118
+current fixtures, 4 non-dispatchable future vectors, 126 schema categories,
+14 schema discriminators, and 45 registered choices. NC-46 remains one
+registered [N] choice: its durable carrier, serialization, interface,
+precedence, and acceptance construction complete the one preflight decision
+and introduce no separately observable semantic choice.
+
+BOUNDED THIRD-REPAIR COVERAGE LEDGER
+
+This non-normative ledger maps every third-repair semantic change to the sole
+governing finding. It records an author-side repair attempt and does not
+independently close, accept, freeze, qualify, or publish the finding.
+
+Finding | Exact repaired region | Mechanical consequence | Provenance
+------- | --------------------- | ---------------------- | ----------
+PC7-SR2-IR-P1-01 | Header and Sections 18 through 21; manifest authority.preflight, authority_preflight schema, one discriminator schema, and declared schema-category population; freeze authority, preflight, criteria, and state; registry final document bindings | registry_unknown_members moves before registry_canonical_bytes; both consume the one parsed value produced from actual supplied registry bytes; the total V1 pre-schema serializer preserves all later discriminators; one raw-byte unknown-member criterion fixes the exact code, gate, path, reason, and no-substitution boundary; embedded manifest, hashes, byte counts, diffs, provenance, and state are regenerated | [C] required stage precedence and actual-byte provenance; [N, NC-46] total pre-schema serializer completes the already registered NC-46 invalid-input diagnostic choice; no NC-47 or other new registered choice; [D] implementation and fresh independent review remain later
+
+All 118 current fixture IDs and meanings, 4 future vectors, 21 diagnostic
+codes, 14 schema discriminators, 45 registered choices, 57 exact
+module-oracle keys, fixture-diagnostic member partition, expected-path union,
+future-vector bindings, and every Resolve semantic population are unchanged
+from the authenticated second candidate. The sole direct population change is
+one new closed criteria schema for the raw-byte discriminator, so the schema
+catalog and declared schema-category population are now 127. The authority
+registry changes only its three repaired-document byte-count and SHA-256
+bindings.
+
+PC7-IR-P1-02 through PC7-IR-P1-06 remain independently recomputed.
+PC7-AJ-P3-01 remains dormant, open, future-only, and non-dispatchable.
+The governing third-repair review recomputed the concrete repair of
+PC7-SR2-IR-P1-01 and found only the distinct PC7-SR3-IR-P1-01 strict-parse
+gap.
+
+BOUNDED FOURTH-REPAIR COVERAGE LEDGER
+
+This non-normative ledger maps every fourth-repair semantic change to the sole
+governing finding. It records an author-side repair attempt and does not
+independently close, accept, freeze, qualify, or publish the finding.
+
+Finding | Exact repaired region | Mechanical consequence | Provenance
+------- | --------------------- | ---------------------- | ----------
+PC7-SR3-IR-P1-01 | Header and Sections 18 through 21; manifest authority.preflight, authority_preflight schema, NC-46 discriminator text, and maturity state; freeze authority, preflight, criteria, and state; registry final document bindings | registry_strict_json_parse admits only Unicode-scalar sequences in all string values and member names; escaped surrogate pairs are combined by the exact formula; every unpaired surrogate and invalid raw UTF-8 scalar form rejects with the strict-parse tuple; decoded supplementary-name duplicates reject at parse; no NFC occurs at parse; embedded manifest, hashes, byte counts, diffs, provenance, and state are regenerated | [N, NC-46] substantive completion of the already registered authority-preflight JSON intake choice; no NC-47 or other new registered choice; [D] implementation and fresh independent review remain later
+
+All 118 current fixture IDs and meanings, 4 future vectors, 21 diagnostic
+codes, 127 schema categories, 14 schema discriminators, 45 registered choices,
+57 exact module-oracle keys, the fixture-diagnostic member partition,
+expected-path union, future-vector bindings, and every Resolve semantic
+population are unchanged from the authenticated third candidate. The new
+`registry_string_domain` member is a required string inside the existing
+`authority_preflight` schema; it adds no schema category. The authority
+registry changes only its three repaired-document byte-count and SHA-256
+bindings.
+
+PC7-IR-P1-02 through PC7-IR-P1-06 remain independently recomputed.
+PC7-AJ-P3-01 remains dormant, open, future-only, and non-dispatchable.
+PC7-SR3-IR-P1-01 has `REPAIR_ATTEMPTED=true` and requires fresh independent
+review.
+
+BOUNDED FIFTH-REPAIR COVERAGE LEDGER
+
+This non-normative ledger maps every fifth-repair criteria change to the sole
+governing finding. It records an author-side repair attempt and does not
+independently close, accept, freeze, qualify, or publish the finding.
+
+Finding | Exact repaired region | Mechanical consequence | Provenance
+------- | --------------------- | ---------------------- | ----------
+PC7-SR4-IR-P1-01 | Header and Sections 18 through 21; manifest schema_discriminator admission, one new schema-discriminator record, NC-46 direct binding, declared discriminator population, and maturity state; freeze criteria and state; registry final document bindings | `AUTHORITY-D-REGISTRY-UNPAIRED-SURROGATE` retains exact source and result line bytes, content replacement, actual raw boundary, governing fourth identity, complete strict tuple, and all false-green prohibitions; the existing authority-document discriminator remains unchanged; embedded manifest, hashes, byte counts, diffs, provenance, and state are regenerated | [C] durable specified discrimination for the already selected [N, NC-46] scalar-intake semantics; no NC-47 or other new registered choice; [D] implementation and fresh independent review remain later
+
+All 118 current fixture IDs and meanings, 4 future vectors, 21 diagnostic
+codes, 127 schema categories, 45 registered choices, 57 exact module-oracle
+keys, the fixture-diagnostic member partition, expected-path union,
+future-vector bindings, and every Resolve semantic population are unchanged
+from the authenticated fourth candidate. The sole population change is
+`schema_discriminators` from 14 to 15. The generic closed discriminator schema
+admits the new record's optional raw-registry fields only for its exact ID, so
+no schema category is added. The authority registry changes only its three
+repaired-document byte-count and SHA-256 bindings.
+
+PC7-SR4-IR-P1-01 has `REPAIR_ATTEMPTED=true` and requires fresh independent
+review. PC7-IR-P1-02 through PC7-IR-P1-06 remain independently recomputed.
+PC7-AJ-P3-01 remains dormant, open, future-only, and non-dispatchable.
 
 SECOND-REPAIR PREIMAGE RECOMPUTATION EVIDENCE
 

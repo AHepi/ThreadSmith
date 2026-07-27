@@ -276,3 +276,21 @@ independent review, and acceptance are recorded by separate gates below.
 | PC7-S-010 | Freeze exact logical paths, within-gate rank comparison, mandatory gate order, and complete-path tie breaking for all 21 Resolve codes. | A later-gate diagnostic does not exist early merely because its numeric rank is lower. |
 | PC7-S-011 | Retain 96 current fixtures, three future vectors, 43 registered choices, 118 schema categories, 11 rank comparisons, eight gate-order criteria, and the exact chain-255 fixture and plan preimages. | A later PC7 implementation gate must add strict dispatch, public-boundary execution, complete result comparison, and qualification before maturity advances. |
 | PC7-S-012 | Authorize only the later PC7 Resolve implementation gate. | Lock, Expand, declaration processing, Manifest, qualification, Binding, Builder, runtime, providers, installation, CLI, MCP, UI, Android, and every product surface remain unauthorized. |
+
+## PC7 fifth-repair acceptance and refreeze decisions
+
+The decisions below supersede only the procedural acceptance, maturity, and
+next-task state recorded by the earlier PC7 acceptance tranche. They do not
+alter any reviewed normative or conformance-criteria byte.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC7-R5-A-001 | Accept the exact fifth semantic and conformance-criteria repair after the governing independent review recomputed PC7-SR4-IR-P1-01 closed with P0=0, P1=0, P2=0, and P3=1. | Acceptance records the supplied review; it is not another semantic review. |
+| PC7-R5-A-002 | Preserve the complete reviewed region beginning at `NORMATIVE SECTION 1 — Authority, amendment, and precedence` and the standalone-to-embedded manifest equality byte-for-byte. | Only pre-normative procedural status, semantic-freeze procedure, mechanically dependent registry bindings, durable state, acceptance evidence, and publication bookkeeping may differ. |
+| PC7-R5-A-003 | Keep fixture maturity exactly `specified`. | The repaired criteria are non-dispatchable, non-executable, non-qualified, implementation-unverified, and implementation-unreviewed. |
+| PC7-R5-A-004 | Retain PC7-AJ-P3-01 as open, dormant, future-only, non-dispatchable, excluded from every current population, and non-blocking. | Acceptance does not repair, delete, reclassify, dispatch, or close the future vector. |
+| PC7-R5-A-005 | Reconstruct the V1 authority registry from final accepted bytes while retaining the repair-overlay baseline commit and tree. | Relative to the fifth candidate registry, only the erratum and semantic-freeze `bytes` and `sha256` fields may change; the unchanged manifest row and every unaffected byte remain exact. |
+| PC7-R5-A-006 | Treat the increase from 14 to 15 schema discriminators as the fifth repair's sole substantive population change. | All 118 fixtures, 45 choices, 127 schema categories, existing discriminator rows, identifiers, references, outcomes, and future dispositions remain unchanged. |
+| PC7-R5-A-007 | Invalidate earlier focused qualification, implementation verification, and implementation review against the refrozen authority while retaining `PC7_IMPLEMENTATION_STARTED=true` and `PC7_ACCEPTED=false`. | Semantic acceptance does not qualify existing implementation or authorize Builder, runtime, or a later phase. |
+| PC7-R5-A-008 | Publish the exact eight-path documentation/state inventory as one non-force child of the required baseline. | The resulting commit and tree are self-excluded publication evidence and are recorded only in the external operator report. |
+| PC7-R5-A-009 | Make a separate read-only PC7 implementation and executable-conformance impact assessment the sole active next task. | The assessment may identify exact bounded implementation, generator, interpreter, plan, and qualification deltas but must not modify repository content. |

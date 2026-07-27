@@ -336,6 +336,32 @@ relation fixtures, 118 schema categories, 11 rank comparisons, eight mandatory
 gate-order criteria, and exact chain-255 preimages. The sole P3 remains
 nonnormative provenance debt and does not authorize a repair.
 
-The next bounded task is `PC7 Resolve implementation only`. This sequence
-statement authorizes no Lock implementation, product layer, Builder, runtime,
-provider, installation, CLI, MCP, UI, Android, or execution work.
+At the 2026-07-25 publication, the then-recorded next task was `PC7 Resolve
+implementation only`. That historical sequence was superseded when subsequent
+implementation review exposed semantic and executable-criteria defects.
+
+## PC7 five-repair acceptance, refreeze, and publication tranche
+
+This documentation-only tranche accepts the exact independently reviewed
+fifth repair and refreezes PC7 without executing implementation qualification.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Authenticated intake | Verify the consult package, fifth candidate, author report, candidate manifest, checksum closure, governing fifth review, bundle, checkout, and fresh remote baseline. | 0 | Complete |
+| Fifth review disposition | Record PC7-SR4-IR-P1-01 recomputed closed and retain PC7-AJ-P3-01 dormant, open, future-only, non-dispatchable, outside current populations, and non-blocking. | 0 | Complete; P0=0, P1=0, P2=0, P3=1 |
+| Exact semantic acceptance | Preserve every byte from `NORMATIVE SECTION 1 — Authority, amendment, and precedence` through the reviewed fifth candidate's final byte. | 0 | Complete |
+| Durable criteria | Copy the complete standalone manifest byte-for-byte and prove equality with the embedded copy. | 0 | Complete; 118 current fixtures, 45 choices, 15 schema discriminators, maturity `specified` |
+| Authority registry | Rebind only the accepted erratum and semantic-freeze procedural byte counts and SHA-256 values; keep all other V1 bytes and overlay-baseline provenance unchanged. | 0 | Complete |
+| Acceptance evidence | Amend the historical PC7 acceptance record with the five-repair chain, exact identities, recomputations, dormant P3, tree boundary, and publication procedure. | 0 | Complete |
+| Evidence reset | Keep implementation started while resetting focused qualification, implementation verification, implementation review, and overall PC7 acceptance to false against the refrozen authority. | 0 | Complete |
+| Tree boundary | Prove every Rust, Cargo, executable-plan, implementation, test, prior-conformance, prior-erratum, and non-allowlisted path byte-identical to baseline. | 0 | Complete; no product or toolchain execution |
+| Publication | Create exactly one documentation-only child commit and publish one non-force fast-forward update of `main`; record the self-excluded commit and tree identities externally. | 0 | Complete through the separately authorized publication procedure |
+
+The accepted criteria remain specified rather than dispatchable, executable,
+qualified, implementation-verified, or implementation-reviewed. PC7 remains
+unaccepted; Builder, runtime, and every later product phase remain
+unauthorized. Exactly one bounded task is active:
+
+```text
+NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
+```

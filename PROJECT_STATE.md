@@ -165,20 +165,24 @@ accepted as part of this PC6 candidate. PC6 is accepted within the frozen
 Package Scan boundary. Its publication is the accepted baseline for the PC7
 gate below. Builder and runtime remain unauthorized.
 
-The independently reviewed second repaired Resolve Semantics Erratum is now
-accepted as the controlling Standard 0.3 companion only for Resolve and the
-validation of optionally supplied existing Lockfile bytes needed by Resolve.
-The accepted erratum preserves the reviewed normative and fixture-criteria
-regions byte-for-byte. Its complete standalone machine-readable criteria remain
-at maturity `specified`: 96 current fixtures, three separately recorded
-non-dispatchable future composition vectors, 43 registered new choices, 21
-unique Resolve diagnostic codes, 62 diagnostic fixtures, and 118 closed schema
-categories. The review reported P0=0, P1=0, P2=0, and P3=1 with independence
-uncompromised; all five earlier P1 findings were recomputed closed. The P3 is
-retained as non-blocking debt because it affects only one nonnormative
-provenance label.
+The earlier second-repair acceptance is retained as history and is superseded
+by the completed five-repair semantic and conformance-criteria chain. The
+governing fifth-repair review at SHA-256
+`6f664ac7218c45be2244bfa029f5ae915a9a53739d5355ef286f1dedeea0aef9`
+recomputed PC7-SR4-IR-P1-01 closed and reported P0=0, P1=0, P2=0, and P3=1.
+PC7-AJ-P3-01 remains open, dormant, future-only, non-dispatchable, excluded
+from current populations, and non-blocking.
 
-PC7 semantics are frozen around the exact opaque ScannedSource plus optional
+The fifth repair is accepted and published as the controlling Standard 0.3
+companion only for Resolve and the validation of optionally supplied existing
+Lockfile bytes needed by Resolve. Its complete normative region and embedded
+manifest remain byte-identical to the reviewed fifth candidate. The exact
+standalone manifest remains at maturity `specified`: 118 current fixtures, 45
+registered new choices, 15 schema discriminators, and four non-dispatchable
+future vectors. The increase from 14 to 15 schema discriminators is the fifth
+repair's sole substantive population change.
+
+PC7 semantics are refrozen around the exact opaque ScannedSource plus optional
 immutable ExistingLockfileInput, source-bound successful ResolvedSource,
 retained PC6 bytes and parsed-module continuity, active-profile eligibility,
 per-package lock reuse, arbitrary-size numeric selection, simultaneous
@@ -187,8 +191,12 @@ fixed-point passes, contribution retraction, unchanged-pass success, the
 exact logical paths, and non-authority. Resolve creates no identity and does
 not generate or persist a Lockfile. No Rust implementation, fixture
 interpreter, deterministic plan generator, Cargo change, dependency, Builder,
-runtime, provider, installation, CLI, MCP, UI, Android, or product work began.
-Only the later PC7 Resolve implementation gate is authorized.
+runtime, provider, installation, CLI, MCP, UI, Android, or product byte changed
+in this documentation-only publication. PC7 implementation had already
+started before the repair chain, but all earlier focused qualification,
+implementation verification, and implementation-review claims are invalidated
+against the refrozen authority. The sole active next task is a separate
+read-only impact assessment; it authorizes no repository modification.
 
 ```text
 FOUNDATION_ACCEPTED=true
@@ -225,11 +233,26 @@ RESOLVE_ERRATUM_REVIEW_P1=0
 RESOLVE_ERRATUM_REVIEW_P2=0
 RESOLVE_ERRATUM_REVIEW_P3=1
 RESOLVE_ERRATUM_ACCEPTED=true
+PC7_SEMANTIC_FREEZE_REOPENED=false
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FOURTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_CANDIDATE_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_FIFTH_REPAIR_REVIEW_COMPLETE=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_ACCEPTED=true
+PC7_SEMANTIC_AND_CRITERIA_REPAIR_PUBLISHED=true
 PC7_SEMANTICS_FROZEN=true
-PC7_IMPLEMENTATION_STARTED=false
+PC7_IMPLEMENTATION_STARTED=true
+PC7_FOCUSED_QUALIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_VERIFICATION_COMPLETE=false
+PC7_IMPLEMENTATION_REVIEW_COMPLETE=false
 PC7_ACCEPTED=false
 PUSH_COMPLETE=true
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-NEXT_BOUNDED_TASK=PC7 Resolve implementation only
+FIXTURE_MATURITY=specified
+REVIEW_P0=0
+REVIEW_P1=0
+REVIEW_P2=0
+REVIEW_P3=1
+NEXT_BOUNDED_TASK=separate read-only PC7 implementation and executable-conformance impact assessment against the refrozen semantic authority; identify the exact bounded implementation, generator, interpreter, plan, and qualification deltas without modifying repository content
 ```
