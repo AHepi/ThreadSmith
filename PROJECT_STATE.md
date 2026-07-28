@@ -1,6 +1,7 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-28.
+State record status: reconstructed. Updated 2026-07-29; the latest V2
+criteria amendment is operative only under its exact publication condition.
 
 | Field | Value |
 |---|---|
@@ -104,17 +105,26 @@ State record status: reconstructed. Updated 2026-07-28.
 | Push complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| PC8 started | true; semantic/specification acceptance only |
+| PC8 started | true; semantics are frozen, implementation Task 1 is accepted, and Task 2 remains unaccepted |
 | Lock Semantics Erratum accepted | true |
 | Lock Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_LOCK_SEMANTICS_ERRATUM.md` |
 | PC8 semantic re-review complete | true; P0=0, P1=0, P2=0, P3=0, `PC8-RR-P2-01` closed, final disposition `PASS` |
 | PC8 semantics frozen | true |
 | PC8 specified-conformance criteria accepted | true |
-| PC8 fixture maturity | specified; 20 current fixtures, 19 relations, 41 discriminators, four preimage registries, and four non-dispatchable future rows; no generator or interpreter exists |
+| PC8 specified-conformance V1 current | false after operative V2 publication; preserved as immutable authentic superseded history |
+| PC8 specified-conformance V2 reviewed | true; governing superseding review is `PASS` with zero findings or unverified claims |
+| PC8 specified-conformance V2 accepted | true when the exact V2 acceptance commit is published |
+| PC8 specified-conformance V2 published | true only when that exact commit becomes operative under the external publication record |
+| PC8 fixture maturity | specified; V2 retains 20 current fixtures, 19 relations, 41 discriminators, four preimage registries, and four non-dispatchable future rows; the failed V1-bound generator and plan are invalid evidence |
 | PC8 documentation published | true |
-| PC8 implementation started | false |
+| PC8 implementation started | true |
+| PC8 Task 1 accepted | true |
+| PC8 Task 2 accepted | false |
+| PC8 Task 3 authorized | false |
+| PC8 open conformance-criteria defects | 0 after operative V2 publication |
+| PC8 open implementation defects | 2; `PC8-T2-SM-02`, `PC8-T2-SC-03` |
 | PC8 accepted | false |
-| Next bounded task | Separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority |
+| Next bounded task | Repair the Task 2 generator against registry/manifest V2 for `PC8-T2-SM-02` and `PC8-T2-SC-03`, regenerate the checked plan, and submit it to fresh independent Task 2 review; Task 3 remains closed |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -273,11 +283,23 @@ PC8_STARTED=true
 PC8_RR_P2_01_CLOSED=true
 PC8_SEMANTICS_ACCEPTED=true
 PC8_SPECIFIED_CONFORMANCE_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V1_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V2_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V2_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V2_PUBLISHED=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=1
+POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0
 PC8_SEMANTIC_FREEZE_COMPLETE=true
 PC8_SEMANTICS_FROZEN=true
 PC8_DOCUMENTATION_PUBLISHED=true
-PC8_IMPLEMENTATION_STARTED=false
+PC8_IMPLEMENTATION_STARTED=true
+PC8_TASK_1_ACCEPTED=true
+PC8_TASK_2_ACCEPTED=false
+PC8_TASK_3_AUTHORIZED=false
 PC8_ACCEPTED=false
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=2
+OPEN_IMPLEMENTATION_DEFECT_IDS=PC8-T2-SM-02,PC8-T2-SC-03
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
 FIXTURE_MATURITY=specified
@@ -286,7 +308,7 @@ REVIEW_P1=0
 REVIEW_P2=0
 REVIEW_P3=0
 FINAL_DISPOSITION=PASS
-NEXT_BOUNDED_TASK=separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority
+NEXT_BOUNDED_TASK=repair Task 2 generator against registry/manifest V2 for PC8-T2-SM-02 exact inner-constant isolation and dual-defect control, and PC8-T2-SC-03 declaration-resolved consumer traversal plus full-branch dormant-cycle rejection; regenerate the checked plan and submit it to a fresh independent Task 2 review; Task 3 remains closed
 ```
 
 ## 2026-07-28 PC7 implementation-acceptance amendment
@@ -404,3 +426,81 @@ frozen; PC8 implementation remains unstarted, overall PC8 acceptance remains
 false, Builder and runtime remain unauthorized, and the sole next bounded
 task is a separate read-only PC8 implementation and executable-conformance
 impact assessment against this newly frozen authority.
+
+## 2026-07-29 PC8 specified-conformance criteria V2 acceptance amendment
+
+This amendment is the latest PC8 gate state only when the exact acceptance
+commit is published. Until that publication becomes operative, the preceding
+published state remains authoritative.
+
+The exact reviewed V2 manifest is 1,053,112 bytes and 25,732 lines at
+SHA-256
+`314e1cd73f23c07067e167d37e84782c7a301b13b4c6458d62a37d0423c4482a`
+and Git blob `980157274af8222a56189c9ce51f4a2ea9fe15d3`. The governing superseding
+independent review is 27,635 bytes and 814 lines at SHA-256
+`91d802e08fc2f22ccc41765a2b8a2e2be84a0ef64ed6168c42631736869ea1b2`.
+It records `PASS`, P0=0, P1=0, P2=0, P3=0, zero refuted,
+underdetermined, or unverified claims, and both required criteria-acceptance
+aliases true.
+
+The unchanged historical review remains 27,461 bytes and 810 lines at
+SHA-256
+`3d39d13a5e1b6a0b3791dce1314b877be63b0ab10b88ebb4caabc6f919989fdc`.
+The superseding report differs by exactly four inserted alias lines and zero
+other changes. This procedural correction changes no evidence, finding,
+disposition, candidate identity, semantic result, or normative authority.
+
+The V1 authority registry and V1 manifest remain immutable, authentic
+superseded criteria history. After operative publication, only V2 is current
+for PC8 specified-criteria dispatch. Frozen PC8 Lock semantics remain
+accepted and byte-identical:
+
+```text
+PC8_SEMANTICS_ACCEPTED=true
+PC8_SEMANTICS_FROZEN=true
+PC8_SPECIFIED_CONFORMANCE_V1_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V2_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V2_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V2_PUBLISHED=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=1
+POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0
+```
+
+The failed V1-bound Task 2 checked plan, its author `PASS`, and all dependent
+conformance claims remain invalidated. The failed generator and plan are
+preserved only as evidence; V2 criteria publication does not rehabilitate
+them. Current implementation gate state after operative publication is:
+
+```text
+PC8_IMPLEMENTATION_STARTED=true
+PC8_TASK_1_ACCEPTED=true
+PC8_TASK_2_ACCEPTED=false
+PC8_TASK_3_AUTHORIZED=false
+PC8_ACCEPTED=false
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=2
+OPEN_IMPLEMENTATION_DEFECT_IDS=PC8-T2-SM-02,PC8-T2-SC-03
+```
+
+The acceptance publication is exactly one documentation-only normal
+non-force fast-forward child of
+`89fe4493a7642cffa76e731911bcabf225dacc7a` on `main` at
+`refs/heads/main`, with subject
+`Accept PC8 Lock specified-conformance criteria V2`. Its exact six paths are
+the three durable state files, registry V2, the acceptance/supersession
+record, and the unchanged reviewed V2 manifest. All five implementation
+overlay paths remain excluded and byte-identical.
+
+The same-tree hashes, prospective tree, commit, push, and final ref
+identities are self-excluded and belong only in:
+
+```text
+/workspace/ThreadSmith/PC8/handoffs/pc8-lock-specified-conformance-criteria-v2-acceptance/output/THREADSMITH_PC8_LOCK_SPECIFIED_CONFORMANCE_CRITERIA_V2_ACCEPTANCE_SUPERSESSION_AND_PUBLICATION.txt
+```
+
+After operative publication, the sole next bounded task is to repair the
+Task 2 generator against registry/manifest V2 for `PC8-T2-SM-02` exact
+inner-constant isolation and dual-defect control, and `PC8-T2-SC-03`
+declaration-resolved consumer traversal plus full-branch dormant-cycle
+rejection; regenerate the checked plan and submit it to a fresh independent
+Task 2 review. Task 3 remains closed.

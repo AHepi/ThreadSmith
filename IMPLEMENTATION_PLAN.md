@@ -464,3 +464,49 @@ Exactly one bounded task follows:
 ```text
 NEXT_BOUNDED_TASK=separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority
 ```
+
+## PC8 Lock specified-conformance criteria V2 acceptance and supersession tranche
+
+This 2026-07-29 tranche is procedural acceptance preparation for the exact
+reviewed V2 manifest. It becomes operative only with the exact publication
+contract below. It does not alter frozen semantics, repair Task 2, authorize
+Task 3, accept PC8 overall, perform persistence, or begin Builder, runtime,
+product, Expand, PC9, or later work.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Baseline authentication | Required `main`, HEAD `89fe4493a7642cffa76e731911bcabf225dacc7a`, tree `c7e2d30b718bc162c09b2b30387329dac8b38e9e`, matching cached remote, empty real index, exact V2 candidate, and exact five-path implementation overlay authenticate. | 0 | Complete for acceptance preparation |
+| Review closure | Impact assessment, V2 author report, unchanged historical review, and governing superseding review authenticate; the superseding report adds exactly four alias lines and changes no evidence or semantic result. | 0 | Complete; governing disposition `PASS`, zero findings and unverified claims |
+| Authority routing | Preserve V1 registry/manifest as immutable superseded history, preserve all normative authority, and route only the exact V2 manifest after operative publication. | 0 | Complete in registry V2; no semantic change |
+| Durable acceptance | Add only registry V2, the acceptance/supersession record, and durable V2 entries in `DECISIONS.md`, `IMPLEMENTATION_PLAN.md`, and `PROJECT_STATE.md`; include the reviewed V2 manifest unchanged. | 0 | Complete in the prospective six-path envelope |
+| Tree boundary | Independently reproduce one six-path prospective tree from two temporary indexes initialized from the required parent; exclude and reauthenticate all five implementation paths. | 0 | Required before publication; resulting tree identity is self-excluded |
+| Publication | Create one documentation-only commit with subject `Accept PC8 Lock specified-conformance criteria V2` and normally fast-forward `refs/heads/main` from the exact parent. | 0 | Operative only when the external operator report records successful publication and converged refs |
+
+The operative status transition is:
+
+```text
+PC8_SEMANTICS_ACCEPTED=true
+PC8_SEMANTICS_FROZEN=true
+PC8_SPECIFIED_CONFORMANCE_V1_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V2_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V2_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V2_PUBLISHED=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=1
+POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0
+PC8_IMPLEMENTATION_STARTED=true
+PC8_TASK_1_ACCEPTED=true
+PC8_TASK_2_ACCEPTED=false
+PC8_TASK_3_AUTHORIZED=false
+PC8_ACCEPTED=false
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=2
+OPEN_IMPLEMENTATION_DEFECT_IDS=PC8-T2-SM-02,PC8-T2-SC-03
+```
+
+The failed V1-bound Task 2 generator and checked plan remain invalid and are
+preserved only as evidence. Exactly one bounded task follows operative
+publication:
+
+```text
+NEXT_BOUNDED_TASK=repair Task 2 generator against registry/manifest V2 for PC8-T2-SM-02 exact inner-constant isolation and dual-defect control, and PC8-T2-SC-03 declaration-resolved consumer traversal plus full-branch dormant-cycle rejection; regenerate the checked plan and submit it to a fresh independent Task 2 review; Task 3 remains closed
+```
