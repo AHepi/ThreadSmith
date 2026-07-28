@@ -104,8 +104,17 @@ State record status: reconstructed. Updated 2026-07-28.
 | Push complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| PC8 started | false |
-| Next bounded task | PC8 Lock scope reconciliation and semantic freeze only |
+| PC8 started | true; semantic/specification acceptance only |
+| Lock Semantics Erratum accepted | true |
+| Lock Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_LOCK_SEMANTICS_ERRATUM.md` |
+| PC8 semantic re-review complete | true; P0=0, P1=0, P2=0, P3=0, `PC8-RR-P2-01` closed, final disposition `PASS` |
+| PC8 semantics frozen | true |
+| PC8 specified-conformance criteria accepted | true |
+| PC8 fixture maturity | specified; 20 current fixtures, 19 relations, 41 discriminators, four preimage registries, and four non-dispatchable future rows; no generator or interpreter exists |
+| PC8 documentation published | true |
+| PC8 implementation started | false |
+| PC8 accepted | false |
+| Next bounded task | Separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -260,15 +269,24 @@ PC7_REVIEW_P2=0
 PC7_REVIEW_P3=0
 PC7_ACCEPTED=true
 PUSH_COMPLETE=true
-PC8_STARTED=false
+PC8_STARTED=true
+PC8_RR_P2_01_CLOSED=true
+PC8_SEMANTICS_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_ACCEPTED=true
+PC8_SEMANTIC_FREEZE_COMPLETE=true
+PC8_SEMANTICS_FROZEN=true
+PC8_DOCUMENTATION_PUBLISHED=true
+PC8_IMPLEMENTATION_STARTED=false
+PC8_ACCEPTED=false
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-FIXTURE_MATURITY=qualified
+FIXTURE_MATURITY=specified
 REVIEW_P0=0
 REVIEW_P1=0
 REVIEW_P2=0
-REVIEW_P3=1
-NEXT_BOUNDED_TASK=PC8 Lock scope reconciliation and semantic freeze only
+REVIEW_P3=0
+FINAL_DISPOSITION=PASS
+NEXT_BOUNDED_TASK=separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority
 ```
 
 ## 2026-07-28 PC7 implementation-acceptance amendment
@@ -336,3 +354,53 @@ report. This durable record becomes accepted publication authority only when
 that exact commit is published. PC8 remains unstarted, Builder and runtime
 remain unauthorized, and the sole next bounded task is PC8 Lock scope
 reconciliation and semantic freeze only.
+
+## 2026-07-28 PC8 semantic-acceptance and freeze amendment
+
+This amendment accepts and freezes the exact independently reviewed PC8 Lock
+semantic and specified-conformance candidate. The governing superseding
+independent review is 37,745 bytes and 975 lines at SHA-256
+`87a5b71c241310ea6011201035f55493ee624c116a226fbb708f343b2d9a21ce`.
+It records P0=0, P1=0, P2=0, P3=0, no refuted, underdetermined, or unverified
+claim, `PC8-RR-P2-01` closed, and final disposition `PASS`.
+
+The complete 1,040,963-byte standalone manifest remains byte-identical at
+SHA-256
+`72a680a44a6d49388f1e26bac46e7e59862a1e502a74a72c239a8c908bf03399`.
+Its candidate-status members remain historical reviewed-candidate data.
+Procedural acceptance is recorded in the PC8 authority registry, acceptance
+verification, this durable state, the publication commit, and the external
+operator report.
+
+The substantive scope-reconciliation region remains 32,651 exact bytes at
+SHA-256
+`5e884174e982fcd4a5bfc15ef31458948d30941e99c95c41c0cf245e6a15d21c`;
+the frozen semantic region remains 13,633 exact bytes at
+`71a46c1dd55c462bf580f095ef9bfc11664f594a22f85e21e6d34e4687eb3973`;
+and Lock Erratum Normative Sections 1 through 17 remain 23,788 exact bytes at
+`9b1b47824f4c4c0b69ab9a25349bf9b7266c1c36fd75f78bd10fee7fa8894f47`.
+Only procedural metadata and post-region status envelopes change.
+
+Fixture maturity is `specified`: the frozen criteria retain 20 exact
+public-PC7 source-bound fixtures, 19 relations, 41 discriminators, 12 isolated
+schema mutations, four gap-free preimage registries covering 235 byte spans,
+and four future-only non-dispatchable rows. No deterministic plan generator,
+strict public-boundary interpreter, executable plan, production Lock
+implementation, focused qualification, implementation review, or physical
+Lockfile persistence has begun.
+
+The documentation-only publication contains exactly the four accepted PC8
+subject paths, `PC8_AUTHORITY_REGISTRY_V1.json`,
+`PC8_ERRATUM_ACCEPTANCE_AND_FREEZE_VERIFICATION.md`, and additive updates to
+this file, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. All implementation,
+test, Cargo, dependency, earlier authority, earlier conformance, generated
+plan, and unrelated repository paths remain byte-identical to the accepted
+PC7 baseline.
+
+The commit, tree, push, cached-remote, and fresh-remote identities are
+self-excluded from this same commit and are recorded only in the external
+operator report. PC8 semantics and specified criteria are accepted and
+frozen; PC8 implementation remains unstarted, overall PC8 acceptance remains
+false, Builder and runtime remain unauthorized, and the sole next bounded
+task is a separate read-only PC8 implementation and executable-conformance
+impact assessment against this newly frozen authority.

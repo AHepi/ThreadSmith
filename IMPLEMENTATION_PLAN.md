@@ -425,3 +425,42 @@ and exactly one bounded task follows:
 ```text
 NEXT_BOUNDED_TASK=PC8 Lock scope reconciliation and semantic freeze only
 ```
+
+## PC8 Lock semantic-acceptance, freeze, and documentation-publication tranche
+
+This 2026-07-28 tranche accepts and freezes only the exact independently
+reviewed PC8 Lock semantic and specified-conformance candidate. It does not
+repair or reinterpret semantics, implement Lock, construct executable
+conformance, perform physical Lockfile persistence, qualify product code,
+accept PC8 overall, or begin Expand or any later phase.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Baseline authentication | Required branch, HEAD, tree, local `main`, cached `origin/main`, fresh remote `main`, empty index, absent tracked differences, and exact four-path overlay match. | 0 | Complete |
+| Governing evidence | Superseding review, unchanged historical source, author repair report, and exact four-line procedural serialization correction authenticate. | 0 | Complete; governing P0=0, P1=0, P2=0, P3=0 and `PASS` |
+| Exact semantic acceptance | Preserve the substantive regions of the scope reconciliation, semantic freeze, and Lock Erratum byte-for-byte while changing only procedural metadata and status envelopes. | 0 | Complete; all three region hashes and byte counts equal |
+| Durable specified criteria | Preserve the complete standalone manifest byte-for-byte and advance only procedural maturity to `specified`. | 0 | Complete; 20 fixtures, 19 relations, 41 discriminators, four registries, 235 spans, four future-only rows |
+| Authority registry | Bind accepted PC1-PC7 authority, reviewed and accepted PC8 identities, governing review, acceptance path, required commit parent and subject, publication mode, and external evidence boundary. | 0 | Complete |
+| Acceptance verification | Record authentication, review closure, immutable-region equality, populations, accepted identities, durable status, exact publication boundary, and self-excluded final evidence. | 0 | Complete |
+| Durable state | Amend only `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`; keep implementation unstarted and overall PC8 acceptance false. | 0 | Complete |
+| Tree boundary | Prove the complete repository delta is exactly the declared nine-path acceptance envelope and every other baseline path is byte-identical. | 0 | Complete through the separately authorized publication procedure |
+| Publication | Create exactly one documentation-only child of `54b8b2b380606428f0d41f33d5d32c985c18c7ea` and publish one normal non-force fast-forward update of `refs/heads/main`; record self-excluded identities externally. | 0 | Complete through the separately authorized publication procedure |
+
+The standalone manifest remains the exact reviewed 1,040,963-byte file at
+SHA-256
+`72a680a44a6d49388f1e26bac46e7e59862a1e502a74a72c239a8c908bf03399`.
+Its reviewed candidate-status members are intentionally unchanged. The
+accepted procedural state is recorded by the V1 authority registry,
+acceptance verification, durable state, commit, and publication evidence.
+
+The accepted criteria remain specified rather than dispatchable, executable,
+qualified, implementation-verified, or implementation-reviewed. The
+non-ASCII package-name case, proper-prefix package-name case, non-Core
+profile case, and physical persistence adapter remain future-only and
+non-dispatchable.
+
+Exactly one bounded task follows:
+
+```text
+NEXT_BOUNDED_TASK=separate read-only PC8 implementation and executable-conformance impact assessment against the newly frozen authority
+```
