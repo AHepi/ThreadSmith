@@ -6,8 +6,8 @@ use std::fs;
 use std::path::PathBuf;
 use threadsmith_canonical::{canonical_bytes, sha256_digest};
 use threadsmith_compiler::{
-    ExistingLockfileInput, ScannedPackage, ScannedSource, SnapshotEntry, SnapshotName,
-    SnapshotNode, acquire_project_snapshot, apply_blueprint_defaults, digest_source,
+    ExistingLockfileInput, ResolvedSource, ScannedPackage, ScannedSource, SnapshotEntry,
+    SnapshotName, SnapshotNode, acquire_project_snapshot, apply_blueprint_defaults, digest_source,
     parse_blueprint_source, resolve_source, scan_packages, validate_blueprint_source,
 };
 use unicode_normalization::UnicodeNormalization;
@@ -1360,30 +1360,85 @@ fn compare_selectors(
 }
 
 fn construct_input(manifest: &Value, input_ref: &str) -> (ScannedSource, ExistingLockfileInput) {
+    construct_input_with_root_mutation(manifest, input_ref, |_| {}, false)
+}
+
+// Shared with pc8_lock; unused when this module is compiled by pc7_resolve alone.
+#[allow(dead_code)]
+pub fn construct_resolved_source_for_pc8<F>(
+    input_ref: &str,
+    mutate_root: F,
+    reverse_package_visitation: bool,
+) -> ResolvedSource
+where
+    F: FnOnce(&mut Value),
+{
+    let manifest: Value =
+        serde_json::from_slice(MANIFEST_BYTES).expect("valid accepted PC7 manifest JSON");
+    let (scanned, lock) = construct_input_with_root_mutation(
+        &manifest,
+        input_ref,
+        mutate_root,
+        reverse_package_visitation,
+    );
+    resolve_source(scanned, lock).expect("accepted PC7 success recipe")
+}
+
+// Shared with pc8_lock; unused when this module is compiled by pc7_resolve alone.
+#[allow(dead_code)]
+pub fn materialize_resolved_source_for_pc8(
+    expected: &Value,
+    input_ref: &str,
+    source: &ResolvedSource,
+) -> Value {
+    let manifest: Value =
+        serde_json::from_slice(MANIFEST_BYTES).expect("valid accepted PC7 manifest JSON");
+    let scanned =
+        scanned_source_oracle::PreResolveProjection::from_scanned(source.scanned_source());
+    let mut materialized = materialize_output(expected, input_ref, &manifest, &scanned);
+    if materialized["scanned_source"]["construction"] == "pc6_successful_scan" {
+        materialized["scanned_source"] =
+            scanned_source_oracle::MaterializationSource::value(&scanned).clone();
+    }
+    materialized
+}
+
+fn construct_input_with_root_mutation<F>(
+    manifest: &Value,
+    input_ref: &str,
+    mutate_root: F,
+    reverse_package_visitation: bool,
+) -> (ScannedSource, ExistingLockfileInput)
+where
+    F: FnOnce(&mut Value),
+{
     let input = &manifest["resolve_inputs"][input_ref];
     assert_eq!(input["host_capabilities"], Value::Array(Vec::new()));
     let scanned_plan = &input["scanned_source"];
     assert_eq!(scanned_plan["construction"], "pc6_successful_scan");
 
-    let root_bytes =
-        canonical_bytes(&scanned_plan["defaulted_root"]).expect("canonical defaulted root");
+    let mut root_value = scanned_plan["defaulted_root"].clone();
+    mutate_root(&mut root_value);
+    let root_bytes = canonical_bytes(&root_value).expect("canonical defaulted root");
     let parsed = parse_blueprint_source(&root_bytes).expect("PC2 root construction");
     let validated = validate_blueprint_source(parsed).expect("PC3 root construction");
     let defaulted = apply_blueprint_defaults(validated);
     assert_eq!(
         defaulted.as_value(),
-        &scanned_plan["defaulted_root"],
+        &root_value,
         "{input_ref}: PC4 idempotent defaulted root"
     );
     let digested = digest_source(defaulted);
-    assert_eq!(
-        digested.blueprint_digest().to_string(),
-        scanned_plan["blueprint_digest"]
-            .as_str()
-            .expect("blueprint digest")
-    );
+    if root_value == scanned_plan["defaulted_root"] {
+        assert_eq!(
+            digested.blueprint_digest().to_string(),
+            scanned_plan["blueprint_digest"]
+                .as_str()
+                .expect("blueprint digest")
+        );
+    }
 
-    let record_locators = scanned_plan["package_records"]
+    let mut record_locators = scanned_plan["package_records"]
         .as_array()
         .expect("package records")
         .iter()
@@ -1405,6 +1460,9 @@ fn construct_input(manifest: &Value, input_ref: &str) -> (ScannedSource, Existin
                 }),
         )
         .collect::<Vec<_>>();
+    if reverse_package_visitation {
+        record_locators.reverse();
+    }
     let snapshot = package_snapshot(manifest, &record_locators);
     let scanned = scan_packages(
         digested,

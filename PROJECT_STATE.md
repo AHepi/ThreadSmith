@@ -1,7 +1,8 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-29; the latest V2
-criteria amendment is operative only under its exact publication condition.
+State record status: reconstructed. Updated 2026-07-29; the latest PC8
+implementation-acceptance amendment is operative only under its exact
+publication condition.
 
 | Field | Value |
 |---|---|
@@ -105,7 +106,7 @@ criteria amendment is operative only under its exact publication condition.
 | Push complete | true |
 | Builder authorized | false |
 | Runtime authorized | false |
-| PC8 started | true; semantics are frozen, implementation Task 1 is accepted, and Task 2 remains unaccepted |
+| PC8 started | true; the exact Lock implementation and executable-conformance candidate is qualified and accepted only when the final eleven-path publication becomes operative |
 | Lock Semantics Erratum accepted | true |
 | Lock Semantics Erratum controlling companion | `docs/standard/LATTICE_STANDARD_0.3_LOCK_SEMANTICS_ERRATUM.md` |
 | PC8 semantic re-review complete | true; P0=0, P1=0, P2=0, P3=0, `PC8-RR-P2-01` closed, final disposition `PASS` |
@@ -115,16 +116,23 @@ criteria amendment is operative only under its exact publication condition.
 | PC8 specified-conformance V2 reviewed | true; governing superseding review is `PASS` with zero findings or unverified claims |
 | PC8 specified-conformance V2 accepted | true when the exact V2 acceptance commit is published |
 | PC8 specified-conformance V2 published | true only when that exact commit becomes operative under the external publication record |
-| PC8 fixture maturity | specified; V2 retains 20 current fixtures, 19 relations, 41 discriminators, four preimage registries, and four non-dispatchable future rows; the failed V1-bound generator and plan are invalid evidence |
+| PC8 fixture maturity | qualified; V2 retains 20 current fixtures, 19 relations, 41 discriminators, four preimage registries, and four non-dispatchable future rows; the failed V1-bound generator and plan remain invalid history |
 | PC8 documentation published | true |
 | PC8 implementation started | true |
 | PC8 Task 1 accepted | true |
-| PC8 Task 2 accepted | false |
-| PC8 Task 3 authorized | false |
+| PC8 Task 2 accepted | true; both bounded generator defects are closed and the checked V2 plan is deterministic |
+| PC8 Task 3 accepted | true; strict public-boundary execution covers all 20 current fixtures and 19 relations |
+| PC8 Task 4 complete and accepted | true; Q01-Q29 pass without inherited PASS |
+| PC8 qualified | true; 88 workspace tests and 10 focused PC8 tests pass under the pinned offline toolchain |
+| PC8 implementation verification complete | true |
+| PC8 implementation review complete | true; governing superseding Task 5 review and its procedural-repair review pass |
+| PC8 qualification review complete | true |
+| PC8 implementation and qualification review findings | P0=0, P1=0, P2=0, P3=0 |
 | PC8 open conformance-criteria defects | 0 after operative V2 publication |
-| PC8 open implementation defects | 2; `PC8-T2-SM-02`, `PC8-T2-SC-03` |
-| PC8 accepted | false |
-| Next bounded task | Repair the Task 2 generator against registry/manifest V2 for `PC8-T2-SM-02` and `PC8-T2-SC-03`, regenerate the checked plan, and submit it to fresh independent Task 2 review; Task 3 remains closed |
+| PC8 open implementation defects | 0 |
+| PC8 accepted | true only when the exact final eleven-path commit is successfully published |
+| PC9 started | false |
+| Next bounded task | PC9 Expand scope reconciliation and semantic freeze only |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -294,21 +302,36 @@ PC8_SEMANTICS_FROZEN=true
 PC8_DOCUMENTATION_PUBLISHED=true
 PC8_IMPLEMENTATION_STARTED=true
 PC8_TASK_1_ACCEPTED=true
-PC8_TASK_2_ACCEPTED=false
-PC8_TASK_3_AUTHORIZED=false
-PC8_ACCEPTED=false
+PC8_TASK_2_ACCEPTED=true
+PC8_TASK_3_ACCEPTED=true
+PC8_TASK_4_COMPLETE=true
+PC8_TASK_4_ACCEPTED=true
+PC8_TASK_5_ACCEPTED=true
+PC8_EXECUTABLE_CONFORMANCE_COMPLETE=true
+PC8_FIXTURE_INTERPRETER_COMPLETE=true
+PC8_FOCUSED_QUALIFICATION_COMPLETE=true
+PC8_QUALIFIED=true
+PC8_IMPLEMENTATION_VERIFICATION_COMPLETE=true
+PC8_IMPLEMENTATION_REVIEW_COMPLETE=true
+PC8_QUALIFICATION_REVIEW_COMPLETE=true
+PC8_REVIEW_P0=0
+PC8_REVIEW_P1=0
+PC8_REVIEW_P2=0
+PC8_REVIEW_P3=0
+PC8_ACCEPTED=true
+OPEN_NORMATIVE_DEFECTS=0
 OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
-OPEN_IMPLEMENTATION_DEFECTS=2
-OPEN_IMPLEMENTATION_DEFECT_IDS=PC8-T2-SM-02,PC8-T2-SC-03
+OPEN_IMPLEMENTATION_DEFECTS=0
 BUILDER_AUTHORIZED=false
 RUNTIME_AUTHORIZED=false
-FIXTURE_MATURITY=specified
+FIXTURE_MATURITY=qualified
 REVIEW_P0=0
 REVIEW_P1=0
 REVIEW_P2=0
 REVIEW_P3=0
 FINAL_DISPOSITION=PASS
-NEXT_BOUNDED_TASK=repair Task 2 generator against registry/manifest V2 for PC8-T2-SM-02 exact inner-constant isolation and dual-defect control, and PC8-T2-SC-03 declaration-resolved consumer traversal plus full-branch dormant-cycle rejection; regenerate the checked plan and submit it to a fresh independent Task 2 review; Task 3 remains closed
+PC9_STARTED=false
+NEXT_BOUNDED_TASK=PC9 Expand scope reconciliation and semantic freeze only
 ```
 
 ## 2026-07-28 PC7 implementation-acceptance amendment
@@ -504,3 +527,75 @@ inner-constant isolation and dual-defect control, and `PC8-T2-SC-03`
 declaration-resolved consumer traversal plus full-branch dormant-cycle
 rejection; regenerate the checked plan and submit it to a fresh independent
 Task 2 review. Task 3 remains closed.
+
+## 2026-07-29 PC8 Lock implementation-acceptance amendment
+
+This amendment becomes operative only when the exact eleven-path acceptance
+commit is published by a normal non-force fast-forward update of
+`refs/heads/main`. Until then, the preceding published V2 gate remains the
+durable remote state.
+
+The accepted candidate is exactly the seven paths recorded in
+`docs/pc8/PC8_IMPLEMENTATION_ACCEPTANCE_AND_PUBLICATION.md`. Task 1, the
+repaired deterministic V2 generator and checked plan, the strict
+public-boundary interpreter, Q01-Q29 qualification, and the fresh R1-R15
+independent review all pass against those exact bytes.
+
+The governing Task 5 report is the 19,485-byte, 458-line superseding report at
+SHA-256
+`90f7fa8f56c5d7df7014d13349c7a098b0566d94ee651c86d3656369ec89cbbc`.
+Its immutable original remains non-governing history at SHA-256
+`4fe408ff266c5470478bcbe9e0229807779af2922098a82075195c115a2b38f1`.
+The superseding copy changes exactly 13 Section 7 SHA-256 assignment lines
+and no other byte. The separate 9,150-byte procedural-repair review at
+SHA-256
+`1edb4d84cf5e5fb3411f4d33855403e51d7ebeff7ea90569c3207f5c80ec68dc`
+independently proves 17/17 evidence identities and preserves the substantive
+Task 5 `PASS`.
+
+The complete accepted result is:
+
+```text
+PC8_TASK_1_ACCEPTED=true
+PC8_TASK_2_ACCEPTED=true
+PC8_TASK_3_ACCEPTED=true
+PC8_TASK_4_COMPLETE=true
+PC8_TASK_4_ACCEPTED=true
+PC8_TASK_5_ACCEPTED=true
+PC8_EXECUTABLE_CONFORMANCE_COMPLETE=true
+PC8_FIXTURE_INTERPRETER_COMPLETE=true
+PC8_FOCUSED_QUALIFICATION_COMPLETE=true
+PC8_QUALIFIED=true
+PC8_IMPLEMENTATION_VERIFICATION_COMPLETE=true
+PC8_IMPLEMENTATION_REVIEW_COMPLETE=true
+PC8_QUALIFICATION_REVIEW_COMPLETE=true
+PC8_REVIEW_P0=0
+PC8_REVIEW_P1=0
+PC8_REVIEW_P2=0
+PC8_REVIEW_P3=0
+PC8_ACCEPTED=true
+FIXTURE_MATURITY=qualified
+OPEN_NORMATIVE_DEFECTS=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=0
+PUSH_COMPLETE=true
+PC9_STARTED=false
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+NEXT_BOUNDED_TASK=PC9 Expand scope reconciliation and semantic freeze only
+```
+
+V1 and both failed Task 4 attempts remain immutable history; no failed gate
+contributes inherited PASS. The physical Lockfile Persistence Adapter,
+Builder, runtime, providers, installation, and product surfaces remain
+unauthorized. The Standard and frozen Lock authority fix the semantic
+successor as `Expand`; naming PC9 authorizes only its separate scope
+reconciliation and semantic freeze.
+
+The exact publication contract is one single-parent commit with subject
+`Implement and accept PC8 Lock`, parent
+`eb6f1e35d314f3c436402f122f4752e4ecc34073`, and exactly the seven candidate
+paths plus this file, `IMPLEMENTATION_PLAN.md`, `DECISIONS.md`, and
+`docs/pc8/PC8_IMPLEMENTATION_ACCEPTANCE_AND_PUBLICATION.md`. Resulting tree,
+commit, push, and final ref identities remain self-excluded and are recorded
+only in the external operator report.

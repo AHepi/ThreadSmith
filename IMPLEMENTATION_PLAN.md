@@ -510,3 +510,92 @@ publication:
 ```text
 NEXT_BOUNDED_TASK=repair Task 2 generator against registry/manifest V2 for PC8-T2-SM-02 exact inner-constant isolation and dual-defect control, and PC8-T2-SC-03 declaration-resolved consumer traversal plus full-branch dormant-cycle rejection; regenerate the checked plan and submit it to a fresh independent Task 2 review; Task 3 remains closed
 ```
+
+## PC8 Lock implementation-acceptance and publication tranche
+
+This 2026-07-29 tranche accepts the exact independently qualified seven-path
+PC8 Lock implementation and executable-conformance candidate. It becomes
+operative only through the exact eleven-path publication contract below. It
+does not change frozen Lock semantics or V2 specified criteria, perform
+physical Lockfile persistence, authorize Builder or runtime, or implement
+Expand.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Entry authentication | Required `main`, HEAD `eb6f1e35d314f3c436402f122f4752e4ecc34073`, tree `2297b01c9ed65b6ccd4b7d54bd33e5256a4c0405`, matching cached remote, empty index, exact seven-path overlay, and absent repository build/cache residue authenticate. | 0 | Complete |
+| Task 1 | Public pure Lock boundary and focused tests pass against frozen authority. | Closed | Accepted |
+| Task 2 | Strict declaration-resolved generator, deterministic checked V2 plan, mutation isolation, full-branch cycle rejection, and fresh repair review pass. | Closed only for `PC8-T2-SM-02` and `PC8-T2-SC-03` | Accepted |
+| Task 3 | Strict public-boundary interpreter executes all current fixtures and relations, rejects future/duplicate/omitted dispatch, and survives both bounded repairs plus Q17 amendment. | Closed only for `F-PC8-T3-001`, `F-PC8-T3-002`, and `PC8-T4-Q17-01` | Accepted |
+| Task 4 | One complete Q01-Q29 attempt restarts without inherited PASS and passes the pinned frozen/offline matrix. | 0 during successful attempt | Complete and accepted |
+| Task 5 | Fresh Phase 1/2 oracles, fresh Phase 3 baseline, R1-R15, and 15 registered mutants pass with P0=P1=P2=P3=0. | 0 implementation repair | Accepted through the governing superseding report |
+| Procedural repair | Preserve the original Task 5 report, replace exactly 13 incorrect Section 7 SHA-256 values in a superseding copy, and independently prove 17/17 identities with zero other change. | Exactly 13 SHA-256 line substitutions | Complete; procedural defect closed |
+| Durable acceptance | Add only the final PC8 acceptance record and current-state amendments in `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. | 0 substantive changes | Complete in the prospective envelope |
+| Tree boundary | Reproduce one eleven-path prospective tree from two independent temporary indexes initialized from the required parent. | 0 | Required before publication; identity self-excluded |
+| Publication | Create one single-parent commit with subject `Implement and accept PC8 Lock` and normally fast-forward `refs/heads/main` from the exact parent. | 0 | Operative only after external publication evidence proves tree and ref convergence |
+
+The accepted candidate identities are:
+
+| Path | SHA-256 |
+|---|---|
+| `crates/threadsmith-compiler/src/lib.rs` | `899896e905050c8615d0a0737072bae77451d117ec58d2ca0d71ca1e2ca9e99a` |
+| `crates/threadsmith-compiler/src/lock.rs` | `894ff6a938869d8a3161d348134ec525edee221411095f6688e8cdfa7a4b0e0e` |
+| `conformance/pc8/lock/build_executable_fixture_plan.py` | `1f09749f8290eb85f09f25d35c1d51c0bf3079b9f10aa551f5b1b4aadb36ec35` |
+| `conformance/pc8/lock/executable_fixture_plan.json` | `f95b8feb6d6e012b76239a974eb39f709a50f7ac98a2b6dddddac01e52d1a0f6` |
+| `crates/threadsmith-compiler/tests/pc8_lock.rs` | `5c006a901951562d05f463d93510e09bd8539aa4b803c46438c9000c87c9c0fb` |
+| `crates/threadsmith-compiler/tests/support/pc7_fixture_interpreter.rs` | `88e0635fb75e15a5dc1483fdd8f86ab2be59c389030c4ade16552c1f8225a71b` |
+| `crates/threadsmith-compiler/tests/support/pc8_fixture_interpreter.rs` | `5cca941058bb2147bff198a50b3608b82b7eadee44f82fc0c25cca8ed4e94916` |
+
+The final evidence state is:
+
+```text
+Q01_Q29=PASS
+WORKSPACE_TESTS=88/88
+FOCUSED_PC8_TESTS=10/10
+DEFINED_GENERATED_EXECUTED_FIXTURES=20/20/20
+DEFINED_EVALUATED_RELATIONS=19/19
+EXCLUDED_FUTURE_ROWS=4
+R1_R15=PASS
+MUTANTS_KILLED=15
+MUTANTS_SURVIVED=0
+MUTANTS_WRONG_REASON=0
+PC8_REVIEW_P0=0
+PC8_REVIEW_P1=0
+PC8_REVIEW_P2=0
+PC8_REVIEW_P3=0
+FIXTURE_MATURITY=qualified
+```
+
+The operative status transition is:
+
+```text
+PC8_TASK_1_ACCEPTED=true
+PC8_TASK_2_ACCEPTED=true
+PC8_TASK_3_ACCEPTED=true
+PC8_TASK_4_COMPLETE=true
+PC8_TASK_4_ACCEPTED=true
+PC8_TASK_5_ACCEPTED=true
+PC8_EXECUTABLE_CONFORMANCE_COMPLETE=true
+PC8_QUALIFIED=true
+PC8_IMPLEMENTATION_VERIFICATION_COMPLETE=true
+PC8_IMPLEMENTATION_REVIEW_COMPLETE=true
+PC8_QUALIFICATION_REVIEW_COMPLETE=true
+PC8_ACCEPTED=true
+OPEN_NORMATIVE_DEFECTS=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=0
+PUSH_COMPLETE=true
+PC9_STARTED=false
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+```
+
+V1 criteria/routing history, one specified-criteria supersession, zero Lock
+normative supersessions, both failed Task 4 attempts, the blocked Task 5
+pre-amendment run, and the original non-governing Task 5 report remain
+explicit history. Physical persistence remains a separate future tranche.
+
+Exactly one bounded task follows operative publication:
+
+```text
+NEXT_BOUNDED_TASK=PC9 Expand scope reconciliation and semantic freeze only
+```

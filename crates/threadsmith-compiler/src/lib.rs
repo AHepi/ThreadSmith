@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-//! Restricted Lattice source processing through Resolve.
+//! Restricted Lattice source processing through Lock.
 //!
 //! This crate owns the PC2 boundary from UTF-8 YAML source to an NFC-normalized,
 //! JSON-shaped value tree and the PC3 boundary from that tree to a validated
@@ -9,12 +9,19 @@
 //! exact value to its Blueprint digest, and the PC6 boundary that binds it to
 //! verified local package descriptors and immutable declared-file bytes.
 //! It also owns the PC7 boundary that resolves an accepted PC6 `ScannedSource`
-//! against optional immutable existing-Lockfile bytes into a `ResolvedSource`.
-//! Declaration validation and phases after Resolve remain out of scope.
+//! against optional immutable existing-Lockfile bytes into a `ResolvedSource`,
+//! and the PC8 boundary that projects that exact result into a canonical,
+//! non-authoritative `LockedSource`. Declaration validation and phases after
+//! Lock remain out of scope.
 
+pub mod lock;
 mod package_scan;
 mod resolve;
 
+pub use lock::{
+    CreatedLockArtifact, LockAuthority, LockIdentity, LockPhaseStatus, LockedPackage, LockedSource,
+    Lockfile, RequestedBy, lock_source,
+};
 pub use package_scan::{
     PackageDescriptorFile, PackageIdentity, PackageScanDiagnostic, PortableProjectSnapshot,
     ScannedPackage, ScannedPackageDescriptor, ScannedSource, SnapshotAcquisitionError,
