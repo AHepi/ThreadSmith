@@ -599,3 +599,82 @@ Exactly one bounded task follows operative publication:
 ```text
 NEXT_BOUNDED_TASK=PC9 Expand scope reconciliation and semantic freeze only
 ```
+
+## PC9 Expand semantic-acceptance, freeze, and documentation-publication tranche
+
+This 2026-07-29 tranche accepts the exact independently reviewed PC9 Expand
+semantic and specified-conformance candidate. It becomes operative only
+through the exact nine-path publication contract below. It does not implement
+Expand, construct executable conformance, qualify code, accept PC9 overall,
+perform physical Lockfile persistence, begin Normalize, or authorize Builder,
+runtime, providers, installation, or product surfaces.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Entry authentication | Required `main`, HEAD `630b664af272afaffb514b9dde8275cfc95357e9`, tree `f0d0303b3734da350f423f8ad146bcd4f32b5eee`, matching cached and fresh remote, empty index, no tracked differences, no applicable `AGENTS.md`, and the exact four-path reviewed overlay authenticate. | 0 | Complete |
+| Independent evidence | Governing rereview authenticates at 34,759 bytes, 1,051 lines, SHA-256 `4ea76f7448c00a83abff29a4b48040ed5e39b21970d7ebda0a83e1b0853448c8`, closes all four findings, and returns `PASS` with P0=P1=P2=P3=0 and no refuted, underdetermined, or unverified verdict. | 0 | Complete |
+| Semantic preservation | Preserve the erratum rule region, scope reconciliation region, and semantic-freeze region exactly while changing only procedural metadata and acceptance/status envelopes. | 0 substantive changes | Required and independently rechecked before commit |
+| Criteria preservation | Preserve `PC9_EXPAND_SPECIFIED_CONFORMANCE_MANIFEST.json` at its exact reviewed whole-file identity. | 0 | Required and independently rechecked before commit |
+| Authority routing | Add strict registry V1 binding the complete accepted Standard-through-PC9 hierarchy, current specified criteria, procedural records, governing evidence, publication contract, and next transition. | 0 semantic invention | Complete only after every recorded identity reauthenticates |
+| Durable acceptance | Add the PC9 acceptance verification and append current-state amendments to `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. | 0 historical deletion | Complete in the prospective nine-path envelope |
+| Tree boundary | Reproduce one exact nine-path prospective tree in a temporary index, then require the real staged tree to equal it with no unstaged or unauthorized path. | 0 | Required before publication; identity is self-excluded |
+| Publication | Create one commit with parent `630b664af272afaffb514b9dde8275cfc95357e9`, subject `Accept and freeze PC9 Expand semantics`, and normally fast-forward `refs/heads/main`. | 0 | Operative only after the external report proves successful publication and ref convergence |
+
+The frozen specified-conformance boundary is:
+
+```text
+RULE_PROVENANCE=49
+RULE_PROVENANCE_S=12
+RULE_PROVENANCE_C=10
+RULE_PROVENANCE_N=19
+RULE_PROVENANCE_D=8
+POPULATION_CLOSURE=14/14
+AUTHORITY_IDENTITIES=21/21
+REACHABLE_SCHEMAS=23/23
+DOMAIN_REFERENCES=311/311
+SCHEMA_MUTATION_ISOLATION=10/10
+PUBLIC_CONSTRUCTIONS=20/20
+RELATIONS=15/15
+SELECTOR_PROBES=7/7
+BOUNDARY_PROBES=2/2
+FUTURE_ONLY=5/5
+FIXTURE_MATURITY=specified
+```
+
+The operative status transition is:
+
+```text
+PC8_ACCEPTED=true
+PC9_STARTED=true
+PC9_SEMANTICS_ACCEPTED=true
+PC9_SPECIFIED_CONFORMANCE_ACCEPTED=true
+PC9_SEMANTIC_FREEZE_COMPLETE=true
+PC9_SEMANTICS_FROZEN=true
+PC9_DOCUMENTATION_PUBLISHED=true
+PC9_IMPLEMENTATION_STARTED=false
+PC9_EXECUTABLE_CONFORMANCE_COMPLETE=false
+PC9_FIXTURE_INTERPRETER_COMPLETE=false
+PC9_FOCUSED_QUALIFICATION_COMPLETE=false
+PC9_QUALIFIED=false
+PC9_IMPLEMENTATION_VERIFICATION_COMPLETE=false
+PC9_IMPLEMENTATION_REVIEW_COMPLETE=false
+PC9_ACCEPTED=false
+PC9_REVIEW_P0=0
+PC9_REVIEW_P1=0
+PC9_REVIEW_P2=0
+PC9_REVIEW_P3=0
+OPEN_NORMATIVE_DEFECTS=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=0
+OPEN_PROCEDURAL_DEFECTS=0
+FIXTURE_MATURITY=specified
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+PUSH_COMPLETE=true
+```
+
+Exactly one bounded task follows operative publication:
+
+```text
+NEXT_BOUNDED_TASK=separate read-only PC9 implementation and executable-conformance impact assessment against the newly frozen authority
+```

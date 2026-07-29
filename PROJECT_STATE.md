@@ -1,8 +1,8 @@
 # ThreadSmith Project State
 
-State record status: reconstructed. Updated 2026-07-29; the latest PC8
-implementation-acceptance amendment is operative only under its exact
-publication condition.
+State record status: reconstructed. Updated 2026-07-29; the latest PC9
+semantic-acceptance amendment is operative only under its exact publication
+condition.
 
 | Field | Value |
 |---|---|
@@ -131,8 +131,22 @@ publication condition.
 | PC8 open conformance-criteria defects | 0 after operative V2 publication |
 | PC8 open implementation defects | 0 |
 | PC8 accepted | true only when the exact final eleven-path commit is successfully published |
-| PC9 started | false |
-| Next bounded task | PC9 Expand scope reconciliation and semantic freeze only |
+| PC9 started | true; exact reviewed Expand semantics and specified criteria are accepted and frozen only when the nine-path publication becomes operative |
+| PC9 semantic independent re-review complete | true; `PC9-SEM-001` and `PC9-CRI-001/002/003` are closed with P0=0, P1=0, P2=0, P3=0 |
+| PC9 semantics accepted | true only under the exact publication condition |
+| PC9 specified-conformance criteria accepted | true only under the exact publication condition |
+| PC9 semantic freeze complete | true only under the exact publication condition |
+| PC9 semantics frozen | true only under the exact publication condition |
+| PC9 documentation published | true only when the exact acceptance commit is published and final refs converge |
+| PC9 implementation started | false |
+| PC9 accepted | false |
+| PC9 fixture maturity | specified; 20 public constructions and fixtures, 15 relations, 32 discriminators, 10 schema mutations, 7 selector probes, 2 boundary probes, and 5 future-only rows |
+| PC9 review findings | P0=0, P1=0, P2=0, P3=0 |
+| Open normative defects | 0 |
+| Open conformance-criteria defects | 0 |
+| Open implementation defects | 0 |
+| Open procedural defects | 0 |
+| Next bounded task | separate read-only PC9 implementation and executable-conformance impact assessment against the newly frozen authority |
 
 The recovered files are evidence, not a complete repository snapshot. No entry in this record claims that reconstructed files match the lost workspace byte for byte.
 
@@ -599,3 +613,90 @@ paths plus this file, `IMPLEMENTATION_PLAN.md`, `DECISIONS.md`, and
 `docs/pc8/PC8_IMPLEMENTATION_ACCEPTANCE_AND_PUBLICATION.md`. Resulting tree,
 commit, push, and final ref identities remain self-excluded and are recorded
 only in the external operator report.
+
+## 2026-07-29 PC9 Expand semantic-acceptance and freeze amendment
+
+This amendment becomes operative only when the exact nine-path acceptance
+commit is published by a normal non-force fast-forward update of
+`refs/heads/main`. Until then, the published PC8 implementation-acceptance
+state remains the durable remote state.
+
+The exact repaired PC9 candidate passed its separate zero-history independent
+rereview. The governing 34,759-byte, 1,051-line report at SHA-256
+`4ea76f7448c00a83abff29a4b48040ed5e39b21970d7ebda0a83e1b0853448c8`
+records `PASS`, P0=0, P1=0, P2=0, P3=0, zero refuted,
+underdetermined, or unverified atomic verdicts, and closure of
+`PC9-SEM-001`, `PC9-CRI-001`, `PC9-CRI-002`, and `PC9-CRI-003`.
+
+Acceptance preserves the complete standalone PC9 manifest byte-for-byte. The
+substantive reviewed regions of the Expand Semantics Erratum, scope
+reconciliation, and semantic freeze are byte-identical; only procedural
+metadata and post-region acceptance/status envelopes change. The resulting
+registry distinguishes normative authority, specified criteria, procedural
+records, and external evidence and makes the latter two non-dispatchable.
+
+The specified criteria retain exact closed populations:
+
+```text
+authority=21
+boundary_probes=2
+collections=8
+discriminators=32
+fixtures=20
+future_only=5
+normative_choices=19
+public_constructions=20
+relations=15
+rule_provenance=49
+schema_mutations=10
+schemas=23
+selector_probes=7
+validators=1
+```
+
+The rule ledger remains exactly 12 `[S]`, 10 `[C]`, 19 `[N]`, and 8 `[D]`.
+All 23 schemas are reachable, 311 domain references resolve, all 10 schema
+mutations isolate their named mechanism, all 20 public constructions and
+expected results recompute, all 15 relations pass, all 7 selector probes kill
+their declared alternative, both boundary probes pass, and the 5 future-only
+rows remain non-dispatchable.
+
+The operative status transition is:
+
+```text
+PC8_ACCEPTED=true
+PC9_STARTED=true
+PC9_SEMANTICS_ACCEPTED=true
+PC9_SPECIFIED_CONFORMANCE_ACCEPTED=true
+PC9_SEMANTIC_FREEZE_COMPLETE=true
+PC9_SEMANTICS_FROZEN=true
+PC9_DOCUMENTATION_PUBLISHED=true
+PC9_IMPLEMENTATION_STARTED=false
+PC9_EXECUTABLE_CONFORMANCE_COMPLETE=false
+PC9_FIXTURE_INTERPRETER_COMPLETE=false
+PC9_FOCUSED_QUALIFICATION_COMPLETE=false
+PC9_QUALIFIED=false
+PC9_IMPLEMENTATION_VERIFICATION_COMPLETE=false
+PC9_IMPLEMENTATION_REVIEW_COMPLETE=false
+PC9_ACCEPTED=false
+PC9_REVIEW_P0=0
+PC9_REVIEW_P1=0
+PC9_REVIEW_P2=0
+PC9_REVIEW_P3=0
+FIXTURE_MATURITY=specified
+OPEN_NORMATIVE_DEFECTS=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS=0
+OPEN_IMPLEMENTATION_DEFECTS=0
+OPEN_PROCEDURAL_DEFECTS=0
+BUILDER_AUTHORIZED=false
+RUNTIME_AUTHORIZED=false
+PUSH_COMPLETE=true
+NEXT_BOUNDED_TASK=separate read-only PC9 implementation and executable-conformance impact assessment against the newly frozen authority
+```
+
+This gate does not implement Expand, build executable conformance, qualify
+code, accept PC9 overall, perform physical Lockfile persistence, begin
+Normalize, or authorize Builder, runtime, providers, installation, CLI, MCP,
+UI, Android, or any product surface. The exact commit, tree, push, and final
+ref identities remain self-excluded and are recorded only in the external
+operator report.
