@@ -766,3 +766,102 @@ All source, Cargo, test, generator, interpreter, executable-plan, frozen PC9
 candidate, and unrelated repository paths remain excluded and byte-identical.
 The commit, tree, push, and final ref identities are self-excluded and are
 recorded only in the external operator report.
+
+## PC8 V3 prospective procedural ratification state correction
+
+This is an additive later-state correction. Every earlier byte remains
+immutable historical text, but the earlier V3 amendment's claims that the
+original acceptance chain authenticates, that V3 is operatively current, and
+that overall `PC8_ACCEPTED=true` are not current authority. The unavailable
+old author report, old review, adjudication, and original operator report do
+not authenticate merely because their identities appear in historical text.
+
+Four different facts must remain separate:
+
+| Fact | Current preparation-state value |
+|---|---|
+| Physical remote presence | Exact subject commit `e181fa0f2892d98e149674704f185fc4efd3de77` and tree `1787dadf448025d5b64d4ee53756a723b1387311` are physically present on fresh remote `main`: `true`. |
+| Content-subject procedural ratification | The exact seven-path subject is retained and substantively reviewed, but conditional procedural acceptance is pending fresh overlay verification: accepted `false`. |
+| Ratification-overlay publication | The five-path overlay is prepared but not committed, pushed, or operative: published `false`, operative `false`. |
+| Overall PC8 product acceptance | The executable spine remains V2-bound and lacks V3 qualification, verification, and independent review: `PC8_ACCEPTED=false`. |
+
+The exact state projection is:
+
+| Field | After combined preparation | After independent verification `PASS` / publication ready | After authorized ratification publication |
+|---|---|---|---|
+| `PC8_V3_SUBJECT_RETAINED` | `true` | `true` | `true` |
+| `PC8_V3_SUBJECT_BYTES_ALREADY_ON_REMOTE_MAIN` | `true` | `true` | `true` |
+| `PC8_V3_RATIFICATION_PREPARED` | `true` | `true` | `true` |
+| `PC8_V3_RATIFICATION_INDEPENDENTLY_VERIFIED` | `false` | `true` | `true` |
+| `PC8_V3_RATIFICATION_ACCEPTED` | `false` | `true` | `true` |
+| `PC8_V3_RATIFICATION_PUBLISHED` | `false` | `false` | `true` |
+| `PC8_V3_RATIFICATION_OPERATIVE` | `false` | `false` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V2_CURRENT` | `true` | `true` | `false` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_REVIEWED` | `true` | `true` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_ACCEPTED` | `false` | `true` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_PUBLISHED` | `false` | `false` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_CURRENT` | `false` | `false` | `true` |
+| `POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS` | `2` | `2` | `2` |
+| `POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS` | `0` | `0` | `0` |
+| `PC8_V2_PRODUCT_ACCEPTANCE_HISTORICAL` | `true` | `true` | `true` |
+| `PC8_ACCEPTED` | `false` | `false` | `false` |
+| `PC8_EXECUTABLE_SPINE_BOUND_TO_V3` | `false` | `false` | `false` |
+| `PC8_REQUALIFIED_AGAINST_V3` | `false` | `false` | `false` |
+| `PC8_IMPLEMENTATION_VERIFIED_AGAINST_V3` | `false` | `false` | `false` |
+| `PC8_EXECUTABLE_SPINE_INDEPENDENTLY_REVIEWED_AGAINST_V3` | `false` | `false` | `false` |
+| `V2_QUALIFICATION_INHERITED_BY_V3` | `false` | `false` | `false` |
+| `OPEN_PC8_V3_RATIFICATION_FINDINGS` | `6` | `6` with prospective dispositions not yet operative | `0` with all six historical dispositions retained |
+| `PC9_SEMANTICS_ACCEPTED` | `true` | `true` | `true` |
+| `PC9_ACCEPTED` | `false` | `false` | `false` |
+| `PC9_MUTATION_AUTHORIZED` | `false` | `false` | `false` |
+| `PC10_OR_LATER_AUTHORIZED` | `false` | `false` | `false` |
+| `PUBLICATION_AUTHORIZED` | `false` | `false` | `false` after the one-shot token is consumed |
+| `NEXT_BOUNDED_TASK` | fresh independent verification of the exact five-path overlay | mandatory top checkpoint and request one-shot publication authorization for the exact verified tree | `PC8-V3-EXECUTABLE-SPINE-IMPACT-SCOPE-001` |
+
+Only the first column is current. Thus:
+
+```text
+PC8_V3_RATIFICATION_PREPARED=true
+PC8_V3_RATIFICATION_INDEPENDENTLY_VERIFIED=false
+PC8_V3_RATIFICATION_ACCEPTED=false
+PC8_V3_RATIFICATION_PUBLISHED=false
+PC8_V3_RATIFICATION_OPERATIVE=false
+PC8_SPECIFIED_CONFORMANCE_V3_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V3_ACCEPTED=false
+PC8_SPECIFIED_CONFORMANCE_V3_PUBLISHED=false
+PC8_SPECIFIED_CONFORMANCE_V3_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V2_CURRENT=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=2
+POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0
+PC8_ACCEPTED=false
+PC8_EXECUTABLE_SPINE_BOUND_TO_V3=false
+PC8_REQUALIFIED_AGAINST_V3=false
+PC8_IMPLEMENTATION_VERIFIED_AGAINST_V3=false
+PC8_EXECUTABLE_SPINE_INDEPENDENTLY_REVIEWED_AGAINST_V3=false
+V2_QUALIFICATION_INHERITED_BY_V3=false
+OPEN_PC8_V3_RATIFICATION_FINDINGS=6
+PC9_ACCEPTED=false
+PC9_MUTATION_AUTHORIZED=false
+PC10_OR_LATER_AUTHORIZED=false
+PUBLICATION_AUTHORIZED=false
+NEXT_BOUNDED_TASK=fresh independent verification of the exact five-path overlay
+```
+
+The six findings remain open during preparation and have only these
+prospective post-publication dispositions:
+
+| Finding | Current preparation status | Exact post-publication disposition |
+|---|---|---|
+| `PC8-V3-IR-001` | P2, `REFUTED`; old 17,977-byte author report remains unavailable. | `CLOSED_BY_PROSPECTIVE_REPLACEMENT`; the combined preparation report authenticates only the new overlay. |
+| `PC8-V3-IR-002` | P2, `REFUTED`; old 27,664-byte review remains unavailable. | `CLOSED_BY_PROSPECTIVE_REPLACEMENT`; quarantine review governs the retained subject and fresh verification governs the overlay. |
+| `PC8-V3-IR-003` | P2, `REFUTED`; old 32,792-byte adjudication remains unavailable. | `CLOSED_BY_PROSPECTIVE_PROCEDURAL_SUPERSESSION`; top decision and independent recomputation control. |
+| `PC8-V3-IR-004` | P2, `REFUTED`; original operator report and transaction proof remain unavailable. | `CLOSED_BY_NEW_PUBLICATION_EVIDENCE`; the new report proves only the later ratification publication. |
+| `PC8-V3-IR-005` | P3, `RECOMPUTED`; three historical two-space suffixes remain immutable. | `DISPOSED_AS_PRESERVED_NONBLOCKING_HISTORY`; the new five-path delta is clean. |
+| `PC8-V3-IR-006` | P3, `UNVERIFIED`; normalized SHA-256 `646c8d9c41f8ed88f1f63ce1e8534a23659188614fc1e0865cef520bf1c222e9` has no defined preimage. | `DISPOSED_AS_UNVERIFIED_NONCONTROLLING_HISTORY`; direct `69=9+4+56` structural proof controls. |
+
+The V3 executable spine is still byte-identical to the V2-bound subject. It
+is not qualified, verified, or independently reviewed against V3, and V2
+evidence is not inherited. Accepted/frozen PC9 semantics remain unchanged,
+but PC9 stays stopped and no PC9 or later mutation is authorized. The sole
+post-publication transition is the fresh read-only
+`PC8-V3-EXECUTABLE-SPINE-IMPACT-SCOPE-001` gate.

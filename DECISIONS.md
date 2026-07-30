@@ -416,3 +416,41 @@ routing, and durable lifecycle status.
 | PC8-V3-009 | Publish exactly the seven-path documentation-only envelope as one normal non-force fast-forward child of `ce9126b3a55660a46151bcfcfcbac75622f483d2` on `main` at `refs/heads/main`, with subject `Accept PC8 external publication evidence criteria V3`. | No force option, alternate ref, second commit, branch, tag, PR, merge, rebase, amend, hook mutation, harness repair, or unrelated path is authorized. |
 | PC8-V3-010 | Make the repository records operative only after the external operator report proves two independently reproduced prospective trees equal the staged and published tree and all local, cached, and fresh remote refs converge cleanly. | Same-tree hashes, tree, commit, push result, and final refs are self-excluded from the repository acceptance record. |
 | PC8-V3-011 | Make the sole next bounded task the exact three-path PC8 executable-spine repair against registry V3, manifest V3, and the committed PC7 attestation, followed by fresh qualification and independent review without inherited PASS. | This acceptance and publication gate does not begin or authorize any mutation in that successor. |
+
+## PC8 V3 prospective procedural ratification decisions
+
+This later tranche controls procedural status only. It preserves every
+pre-existing byte above, including the earlier `PC8-V3-001..011` decisions, as
+immutable historical text; it neither deletes nor rewrites that history. The
+ratified subject is exact commit
+`e181fa0f2892d98e149674704f185fc4efd3de77`, tree
+`1787dadf448025d5b64d4ee53756a723b1387311`, parent
+`ce9126b3a55660a46151bcfcfcbac75622f483d2`, and parent tree
+`c3179302ac2399e9a22153597619989a149f93d9`.
+
+The seven retained committed path identities are:
+
+| Path | Git blob | Bytes | LF lines | SHA-256 |
+|---|---|---:|---:|---|
+| `DECISIONS.md` | `195d99cc3189192e07e416de0d3c53541653666f` | 70,237 | 418 | `b8446febe7980716988693c1c44f75cf76636b1c7870fe464b5add13cfa3b6e1` |
+| `IMPLEMENTATION_PLAN.md` | `341adc64dd879d9c09b9be99dc9950b9e3cfe07e` | 60,219 | 726 | `6202d7704edd2ec4cf0e453e0a553e887983f76f109f7d2da7de80136340a5d3` |
+| `PROJECT_STATE.md` | `81a1d85936fd778b7ad23b89459d24f179f58c88` | 45,260 | 768 | `409c93c72651874227f6ebcaea0e7493ea56eb35ae0d1ac4df70898057bbdbdf` |
+| `docs/pc7/PC7_IMPLEMENTATION_PUBLICATION_ATTESTATION_V2.md` | `ce853884394146a9cab2953c9a38c295d5cd94d7` | 7,989 | 171 | `33c157a5ed3f6dd3b005993381968f873a8e9bf2e7546f6e4f38eb86200ce94f` |
+| `docs/pc8/PC8_AUTHORITY_REGISTRY_V3.json` | `4a26a84f278ff2b28ceba975847d598da8a181b7` | 25,591 | 600 | `63b437cae1fc8c1b3b5cd56d9ef44501178a8dcda129399c685efc8f953f9584` |
+| `docs/pc8/PC8_LOCK_SPECIFIED_CONFORMANCE_MANIFEST_V3.json` | `4e67874e5327b0252da9679b569884947e16f564` | 1,053,571 | 25,742 | `fa3c921a3e32ca9f2642813cdebd0cf8cb51c928958199851865e3f3d4660a04` |
+| `docs/pc8/PC8_SPECIFIED_CONFORMANCE_CRITERIA_V3_ACCEPTANCE_AND_SUPERSESSION.md` | `d5099624b3c0b21e03057bbee7145daa6c366f0a` | 11,514 | 265 | `7b81341f3c90b5cc2a2fc87056824f464658da9d7b00bc2b3b2b68a7d6c14a08` |
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| `PC8-V3-RAT-001` | Retain and prospectively ratify the exact commit, tree, parent, parent tree, and seven committed path identities above. | Physical remote presence is preserved as fact but is not treated as historical acceptance evidence. |
+| `PC8-V3-RAT-002` | Classify this ratification as purely procedural. It consumes zero normative supersessions and zero specified-criteria supersessions. | `POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0` and `POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=2` remain unchanged. |
+| `PC8-V3-RAT-003` | Preserve byte-for-byte the V3 registry, V3 manifest, V3 criteria record, PC7 attestation, semantic and freeze authority, and all existing acceptance history. | No semantic, criteria, implementation, conformance, test, Cargo, PC9, or unspecified path may change. |
+| `PC8-V3-RAT-004` | Add only `docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE.md` and `docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_REGISTRY_SUPPLEMENT_V1.json` as the new repository records. | Both records are procedural, non-normative, non-dispatchable, and cannot alter registry V3 routing. |
+| `PC8-V3-RAT-005` | Prospectively replace the unavailable V3 author report, prior review, adjudication, and original operator report without reconstructing or impersonating any old body. | Each historical identity remains unavailable history and supplies no current claim. |
+| `PC8-V3-RAT-006` | Bind substantive preservation to the governing quarantine review's direct proof of `69 = 9 + 4 + 56` structural operations and exact substantive-region equality. | Normalized SHA-256 `646c8d9c41f8ed88f1f63ce1e8534a23659188614fc1e0865cef520bf1c222e9` remains unverified and non-controlling; no preimage is invented. |
+| `PC8-V3-RAT-007` | Preserve the three historical two-space suffixes in the PC7 attestation and require the entire new five-path delta against `e181fa0f2892d98e149674704f185fc4efd3de77` to pass scoped `git diff --check`. | Historical whitespace is not cleaned up, normalized, or copied into the new delta. |
+| `PC8-V3-RAT-008` | Prohibit inheritance of V2 qualification or review by V3 and keep overall `PC8_ACCEPTED=false`. | The V3 executable spine remains V2-bound, unqualified, unverified, and independently unreviewed against V3. |
+| `PC8-V3-RAT-009` | Bind the prospective repository overlay to exactly `M DECISIONS.md`, `M IMPLEMENTATION_PLAN.md`, `M PROJECT_STATE.md`, `A docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE.md`, and `A docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_REGISTRY_SUPPLEMENT_V1.json`. | Cardinality is five, the three modified paths are EOF-append-only, the two added paths were absent at baseline, and no sixth path is permitted. |
+| `PC8-V3-RAT-010` | Require one fresh combined ratification-and-acceptance preparation worker, one fresh zero-history independent verification worker, and one-shot publication evidence, with no role collapse and no separate post-verification acceptance worker or report. | Preparation authors only a conditional acceptance rule; a matching verification `PASS` supplies the independent evidence that satisfies it and advances directly to top publication authorization. |
+| `PC8-V3-RAT-011` | Keep PC9 stopped, `PC9_ACCEPTED=false`, `PC9_MUTATION_AUTHORIZED=false`, and `PC10_OR_LATER_AUTHORIZED=false`. | This tranche creates no successor-PC authority or campaign. |
+| `PC8-V3-RAT-012` | After operative publication, permit only `PC8-V3-EXECUTABLE-SPINE-IMPACT-SCOPE-001`, performed by a fresh read-only PC8 V3 executable-spine impact and exact-scope worker. | That later gate has no mutation authority and may not repair, build, qualify, review, accept, publish, or open PC9. |

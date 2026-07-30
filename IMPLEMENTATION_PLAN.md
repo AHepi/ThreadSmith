@@ -724,3 +724,153 @@ Exactly one bounded task follows operative publication:
 ```text
 NEXT_BOUNDED_TASK=repair exactly the three-path PC8 executable spine to bind registry V3, manifest V3, and the committed PC7 publication attestation; then requalify and independently review without inherited PASS
 ```
+
+## PC8 V3 prospective procedural ratification tranche
+
+This additive tranche supersedes the current procedural overclaims in the
+earlier V3 tranche without changing any pre-existing byte. Its exact baseline
+is commit `e181fa0f2892d98e149674704f185fc4efd3de77`, tree
+`1787dadf448025d5b64d4ee53756a723b1387311`, parent
+`ce9126b3a55660a46151bcfcfcbac75622f483d2`, and parent tree
+`c3179302ac2399e9a22153597619989a149f93d9` on `main` at
+`refs/heads/main` for canonical origin
+`https://github.com/AHepi/ThreadSmith.git`.
+
+### Exact repository boundary
+
+The candidate overlay is the following ordered set of cardinality five:
+
+```text
+M DECISIONS.md
+M IMPLEMENTATION_PLAN.md
+M PROJECT_STATE.md
+A docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE.md
+A docs/pc8/PC8_V3_PROCEDURAL_RATIFICATION_REGISTRY_SUPPLEMENT_V1.json
+```
+
+Each `M` path must equal its exact `e181fa0f` blob followed by one appended
+suffix, with no deletion or changed pre-existing byte. Each `A` path must be
+absent at `e181fa0f`. Every other repository path is immutable.
+
+The immutable ratification subject is:
+
+| Path | Git blob | Bytes | LF lines | SHA-256 |
+|---|---|---:|---:|---|
+| `DECISIONS.md` | `195d99cc3189192e07e416de0d3c53541653666f` | 70,237 | 418 | `b8446febe7980716988693c1c44f75cf76636b1c7870fe464b5add13cfa3b6e1` |
+| `IMPLEMENTATION_PLAN.md` | `341adc64dd879d9c09b9be99dc9950b9e3cfe07e` | 60,219 | 726 | `6202d7704edd2ec4cf0e453e0a553e887983f76f109f7d2da7de80136340a5d3` |
+| `PROJECT_STATE.md` | `81a1d85936fd778b7ad23b89459d24f179f58c88` | 45,260 | 768 | `409c93c72651874227f6ebcaea0e7493ea56eb35ae0d1ac4df70898057bbdbdf` |
+| `docs/pc7/PC7_IMPLEMENTATION_PUBLICATION_ATTESTATION_V2.md` | `ce853884394146a9cab2953c9a38c295d5cd94d7` | 7,989 | 171 | `33c157a5ed3f6dd3b005993381968f873a8e9bf2e7546f6e4f38eb86200ce94f` |
+| `docs/pc8/PC8_AUTHORITY_REGISTRY_V3.json` | `4a26a84f278ff2b28ceba975847d598da8a181b7` | 25,591 | 600 | `63b437cae1fc8c1b3b5cd56d9ef44501178a8dcda129399c685efc8f953f9584` |
+| `docs/pc8/PC8_LOCK_SPECIFIED_CONFORMANCE_MANIFEST_V3.json` | `4e67874e5327b0252da9679b569884947e16f564` | 1,053,571 | 25,742 | `fa3c921a3e32ca9f2642813cdebd0cf8cb51c928958199851865e3f3d4660a04` |
+| `docs/pc8/PC8_SPECIFIED_CONFORMANCE_CRITERIA_V3_ACCEPTANCE_AND_SUPERSESSION.md` | `d5099624b3c0b21e03057bbee7145daa6c366f0a` | 11,514 | 265 | `7b81341f3c90b5cc2a2fc87056824f464658da9d7b00bc2b3b2b68a7d6c14a08` |
+
+### Three-stage gate sequence
+
+These are the only ordered phases. `AUTONOMOUS_RETRY=false` for each phase.
+There is no separate post-verification acceptance worker or report.
+
+| Phase | Entry predicates | Completion predicates | Output and restart |
+|---|---|---|---|
+| `PREPARATION` | All five controlling inputs rehash; canonical origin, fresh/cached/local `main`, exact graph and seven-path subject authenticate without fetch; real index, tracked worktree, and untracked inventory are empty; operation/lock state and equivalent campaigns are absent; both new repository paths and all corrected candidate/report paths are absent; the four unavailable historical bodies remain unavailable. | Exact five-path append/add overlay exists; JSON and Markdown records satisfy their closed contracts; bundle contains exactly five byte-equal regular files; manifest and checksum closure are complete; all immutable identities hold; direct proof recomputes `69=9+4+56`; the scoped delta passes `git diff --check`; two separately initialized temporary indexes yield one equal prospective tree; combined report binds tuple `C`; real index remains empty. | Combined preparation report only; `FIRST_UNFINISHED_OPERATION=INDEPENDENT_VERIFICATION`. |
+| `INDEPENDENT_VERIFICATION` | Preparation report, all five controlling inputs, manifest, checksum closure, and five bundled files exist and rehash; repository baseline and campaign exclusion still authenticate; a fresh zero-history read-only verifier owns the gate. | All twenty scope verification predicates as corrected pass: exact identities and path set; append-only/absence proofs; strict serialization; representation agreement; no normative, criteria, routing, qualification, PC8-product, PC9, or later-PC claim; immutable hashes; historical-body absence and exact supersession mapping; historical whitespace preserved and new delta clean; direct structural proof; no normalization preimage; independent prospective tree equality; empty real index; exact preparation state; P0=P1=0 and no contradiction, unauthorized path, or unresolved choice. The verification report rebinds unchanged tuple `C`, returns `DISPOSITION=PASS`, and thereby satisfies the predeclared conditional procedural acceptance. | Verification report only; `FIRST_UNFINISHED_OPERATION=TOP_PUBLICATION_AUTHORIZATION`. |
+| `AUTHORIZED_PUBLICATION` | A mandatory top checkpoint receives an authentic verification `PASS`, unchanged tuple `C`, one independently rebound prospective tree, and the satisfied conditional acceptance. A one-shot token exactly names PC8, baseline parent, five paths, tree, one commit, subject, ref, and `FORCE=false`. | Dedicated publication worker proves unchanged evidence and immutable boundary; fresh remote is still baseline; real index begins empty and stages only five accepted bodies; staged tree equals the verified tree; one commit with parent `e181fa0f2892d98e149674704f185fc4efd3de77` and subject `Ratify PC8 V3 procedural acceptance` is normally fast-forwarded once to `refs/heads/main`; local/cached/fresh refs converge; repository closes cleanly; durable publication report is finalized and later rehashed; PC9 and PC10 remain untouched. | Publication report and separately authorized transaction only; `FIRST_UNFINISHED_OPERATION=NONE` after full closure. |
+
+No expected prospective tree may be asserted before all five candidate byte
+sequences exist. Candidate files self-exclude their same-tree Git blobs,
+SHA-256 values, and prospective tree. Preparation evidence may declare the
+single tree only after the bytes exist; fresh verification must independently
+recompute and rebind it before publication readiness.
+
+The exact candidate and evidence locations are:
+
+| Artifact | Exact path |
+|---|---|
+| Candidate root | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-and-acceptance/candidate` |
+| Overlay root | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-and-acceptance/candidate/overlay` |
+| Candidate manifest | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-and-acceptance/candidate/THREADSMITH_PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE_CANDIDATE_MANIFEST.json` |
+| Checksum closure | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-and-acceptance/candidate/THREADSMITH_PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE_CANDIDATE_SHA256SUMS.txt` |
+| Combined preparation report | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-and-acceptance/output/THREADSMITH_PC8_V3_PROCEDURAL_RATIFICATION_AND_ACCEPTANCE_REPORT.md` |
+| Independent verification report | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-verification/output/THREADSMITH_PC8_V3_PROCEDURAL_RATIFICATION_VERIFICATION_REPORT.md` |
+| Publication report | `/workspace/ThreadSmith/PC8/handoffs/v3-procedural-ratification-publication/output/THREADSMITH_PC8_V3_PROCEDURAL_RATIFICATION_PUBLICATION_REPORT.md` |
+
+The complete restart vocabulary is:
+
+```text
+AUTHOR_OVERLAY
+INDEPENDENT_VERIFICATION
+TOP_PUBLICATION_AUTHORIZATION
+PUBLICATION_PREFLIGHT
+REMOTE_FAST_FORWARD
+PUBLICATION_REPORT_FINALIZATION
+NONE
+```
+
+Every report records exactly one value. Failure stops at the first unfinished
+operation, and no worker retries automatically.
+
+### Conditional acceptance and exact state projection
+
+`CONDITIONAL_PROCEDURAL_ACCEPTANCE(C)` is satisfied if and only if the fresh
+verification report exists at its exact path, rehashes the five controlling
+inputs and combined preparation report, returns `DISPOSITION=PASS`,
+independently recomputes every identity in `C`, proves the overlay and closure
+bytes unchanged, independently constructs the same prospective tree, passes
+all corrected substantive/immutable/quality/structural/state/no-choice
+predicates, and records
+`FIRST_UNFINISHED_OPERATION=TOP_PUBLICATION_AUTHORIZATION`. Preparation does
+not satisfy its own condition. A mismatch or non-PASS result leaves it
+unsatisfied.
+
+| Field | After combined preparation | After independent verification `PASS` / publication ready | After authorized ratification publication |
+|---|---|---|---|
+| `PC8_V3_SUBJECT_RETAINED` | `true` | `true` | `true` |
+| `PC8_V3_SUBJECT_BYTES_ALREADY_ON_REMOTE_MAIN` | `true` | `true` | `true` |
+| `PC8_V3_RATIFICATION_PREPARED` | `true` | `true` | `true` |
+| `PC8_V3_RATIFICATION_INDEPENDENTLY_VERIFIED` | `false` | `true` | `true` |
+| `PC8_V3_RATIFICATION_ACCEPTED` | `false` | `true` | `true` |
+| `PC8_V3_RATIFICATION_PUBLISHED` | `false` | `false` | `true` |
+| `PC8_V3_RATIFICATION_OPERATIVE` | `false` | `false` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V2_CURRENT` | `true` | `true` | `false` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_REVIEWED` | `true` | `true` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_ACCEPTED` | `false` | `true` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_PUBLISHED` | `false` | `false` | `true` |
+| `PC8_SPECIFIED_CONFORMANCE_V3_CURRENT` | `false` | `false` | `true` |
+| `POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS` | `2` | `2` | `2` |
+| `POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS` | `0` | `0` | `0` |
+| `PC8_V2_PRODUCT_ACCEPTANCE_HISTORICAL` | `true` | `true` | `true` |
+| `PC8_ACCEPTED` | `false` | `false` | `false` |
+| `PC8_EXECUTABLE_SPINE_BOUND_TO_V3` | `false` | `false` | `false` |
+| `PC8_REQUALIFIED_AGAINST_V3` | `false` | `false` | `false` |
+| `PC8_IMPLEMENTATION_VERIFIED_AGAINST_V3` | `false` | `false` | `false` |
+| `PC8_EXECUTABLE_SPINE_INDEPENDENTLY_REVIEWED_AGAINST_V3` | `false` | `false` | `false` |
+| `V2_QUALIFICATION_INHERITED_BY_V3` | `false` | `false` | `false` |
+| `OPEN_PC8_V3_RATIFICATION_FINDINGS` | `6` | `6` with prospective dispositions not yet operative | `0` with all six historical dispositions retained |
+| `PC9_SEMANTICS_ACCEPTED` | `true` | `true` | `true` |
+| `PC9_ACCEPTED` | `false` | `false` | `false` |
+| `PC9_MUTATION_AUTHORIZED` | `false` | `false` | `false` |
+| `PC10_OR_LATER_AUTHORIZED` | `false` | `false` | `false` |
+| `PUBLICATION_AUTHORIZED` | `false` | `false` | `false` after the one-shot token is consumed |
+| `NEXT_BOUNDED_TASK` | fresh independent verification of the exact five-path overlay | mandatory top checkpoint and request one-shot publication authorization for the exact verified tree | `PC8-V3-EXECUTABLE-SPINE-IMPACT-SCOPE-001` |
+
+The current column after this tranche is only the preparation column.
+Specifically, the unavailable 27,664-byte review at SHA-256
+`86fc913dca7c2d196efe31cf9c736cab49401ccf7ed299ba97de65d7d5e77981`
+does not authenticate, and normalized SHA-256
+`646c8d9c41f8ed88f1f63ce1e8534a23659188614fc1e0865cef520bf1c222e9`
+is not reproducible authority. The six quarantine findings remain open
+pending operative publication. Overall `PC8_ACCEPTED=false`; PC9 remains
+stopped.
+
+### Sole post-publication gate
+
+After operative publication, the only permitted next gate is:
+
+```text
+GATE_ID=PC8-V3-EXECUTABLE-SPINE-IMPACT-SCOPE-001
+ROLE=fresh read-only PC8 V3 executable-spine impact and exact-scope worker
+MUTATION_ALLOWLIST=NONE
+```
+
+It must derive the later spine boundary from accepted V3 authority. It may not
+assume the earlier three-path phrase is complete, and it may not repair,
+build, qualify, review, accept, publish, begin PC9, or begin PC10.
