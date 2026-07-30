@@ -678,3 +678,49 @@ Exactly one bounded task follows operative publication:
 ```text
 NEXT_BOUNDED_TASK=separate read-only PC9 implementation and executable-conformance impact assessment against the newly frozen authority
 ```
+
+## PC8 external-publication-evidence V3 acceptance and publication tranche
+
+This 2026-07-30 documentation-only tranche accepts the exact independently
+reviewed V3 publication-provenance and specified-criteria candidate. It
+becomes operative only through the exact seven-path publication contract
+below. It does not repair the PC8 executable spine, run or inherit V3
+qualification, modify PC9, accept PC9 overall, perform physical Lockfile
+persistence, or authorize Builder, runtime, providers, installation, product
+surfaces, Normalize, PC10, or later work.
+
+| Gate | Definition of done | Repair limit | State |
+|---|---|---:|---|
+| Entry authentication | Required `main`, HEAD `ce9126b3a55660a46151bcfcfcbac75622f483d2`, tree `c3179302ac2399e9a22153597619989a149f93d9`, matching cached and fresh remote, empty index, no tracked differences, exact three-path candidate, and both recovery closures authenticate. | 0 | Complete |
+| Independent evidence | Author report authenticates at SHA-256 `e9dc31bed5e5a0d92ef8538aa8f171d8e39456050098dc5889bec2dbfa52a0bb`; governing review authenticates at SHA-256 `86fc913dca7c2d196efe31cf9c736cab49401ccf7ed299ba97de65d7d5e77981`, with A01-A12 all recomputed, `PASS`, and zero blockers. | 0 | Complete |
+| Reviewed-subject preservation | Preserve the attestation, registry V3, and manifest V3 at their exact complete-file SHA-256 identities. | 0 | Required and rechecked before commit |
+| Substantive preservation | Preserve frozen PC8 authority and V1/V2 history; reproduce registry protected-region equality, the exact 69-operation manifest delta, and normalized substantive SHA-256 `646c8d9c41f8ed88f1f63ce1e8534a23659188614fc1e0865cef520bf1c222e9`. | 0 substantive changes | Required and rechecked before commit |
+| Durable acceptance | Add the V3 acceptance/supersession record and append only the authorized V3 lifecycle transition to `PROJECT_STATE.md`, `IMPLEMENTATION_PLAN.md`, and `DECISIONS.md`. | 0 historical deletion | Complete in the prospective seven-path envelope |
+| Tree boundary | Reproduce the exact seven-path prospective tree twice using independently initialized temporary indexes, then require the real staged tree to equal both. | 0 | Required before publication; identity is self-excluded |
+| Publication | Create one commit with parent `ce9126b3a55660a46151bcfcfcbac75622f483d2`, subject `Accept PC8 external publication evidence criteria V3`, and normally fast-forward `refs/heads/main`. | 0 | Operative only after the external report proves publication and ref convergence |
+
+The operative V3 criteria status is:
+
+```text
+PC8_SPECIFIED_CONFORMANCE_V2_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V3_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V3_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V3_PUBLISHED=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=2
+PC8_EXECUTABLE_SPINE_BOUND_TO_V3=false
+PC8_REQUALIFIED_AGAINST_V3=false
+PC9_REQUALIFIED_ON_V3_SUCCESSOR=false
+OPEN_PROCEDURAL_DEFECTS_IN_V3_CRITERIA=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS_IN_V3_CRITERIA=0
+REQUIRED_NEXT_TRANSITION=focused PC8 executable-spine repair against accepted V3
+```
+
+Accepted PC7, frozen and historically accepted PC8, accepted PC9 semantics,
+zero PC8 normative supersessions, and `PC9_ACCEPTED=false` remain unchanged.
+Historical V2 qualification is not V3 qualification.
+
+Exactly one bounded task follows operative publication:
+
+```text
+NEXT_BOUNDED_TASK=repair exactly the three-path PC8 executable spine to bind registry V3, manifest V3, and the committed PC7 publication attestation; then requalify and independently review without inherited PASS
+```

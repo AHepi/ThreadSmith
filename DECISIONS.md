@@ -395,3 +395,24 @@ specified-criteria boundary.
 | PC9-E-012 | Publish exactly the nine authorized paths as one normal non-force fast-forward child of `630b664af272afaffb514b9dde8275cfc95357e9` on `main` at `refs/heads/main`, with subject `Accept and freeze PC9 Expand semantics`. | No force option, alternate ref, second commit, branch, tag, PR, merge, rebase, amend, implementation path, generated plan, or unrelated path is authorized. |
 | PC9-E-013 | Make the repository records operative only after external evidence proves the published tree equals the independently reproduced staged tree and local, cached, and fresh remote identities converge cleanly. | Same-commit file hashes, tree, commit, push result, and final refs are self-excluded from the repository acceptance record. |
 | PC9-E-014 | Make a separate read-only PC9 implementation and executable-conformance impact assessment the sole next bounded task. | The assessment may identify exact production, generator, interpreter, fixture, plan, test, and qualification deltas but may not modify repository content. |
+
+## PC8 external-publication-evidence V3 acceptance and supersession decisions
+
+These decisions become operative only when the exact seven-path commit is
+published under `PC8-V3-009`. Earlier PC8 and PC9 decisions remain authentic
+historical state; this tranche changes only PC8 specified-criteria provenance,
+routing, and durable lifecycle status.
+
+| Decision | Resolution | Boundary |
+|---|---|---|
+| PC8-V3-001 | Accept only the exact reviewed PC7 publication attestation, PC8 authority registry V3, and PC8 Lock specified-conformance manifest V3 at their recorded whole-file identities. | Acceptance consumes completed independent review and permits no candidate edit, regeneration, semantic reinterpretation, or embedded-status rewrite. |
+| PC8-V3-002 | Treat the 27,664-byte independent review at SHA-256 `86fc913dca7c2d196efe31cf9c736cab49401ccf7ed299ba97de65d7d5e77981` as governing. | A01-A12 are all `RECOMPUTED — PASS`; every finding, uncertainty, substantive-change, historical-overreach, and false-green-survivor count is zero. |
+| PC8-V3-003 | Preserve all frozen PC8 normative authority and all V1/V2 registry and manifest bytes as immutable history. | V3 repairs provenance and criteria routing only; it consumes a specified-criteria supersession and zero normative supersessions. |
+| PC8-V3-004 | Route V3 as the sole current PC8 specified criteria only after operative publication; mark V1 and V2 non-current while retaining them as authentic history. | Procedural records and external evidence remain non-normative and non-dispatchable. |
+| PC8-V3-005 | Preserve historical V2 qualification only for its V2 subject and record the PC8 executable spine as unbound and unqualified against V3. | No historical V2 PASS is inherited by V3 or by PC9 on the V3 successor. |
+| PC8-V3-006 | Record two post-freeze PC8 specified-criteria supersessions, zero Lock normative supersessions, and zero open procedural or conformance-criteria defects in V3. | The operative successor remains a focused executable-spine repair, not another criteria or semantic change. |
+| PC8-V3-007 | Reaffirm accepted PC7, frozen and historically accepted PC8, accepted PC9 semantics, and `PC9_ACCEPTED=false`. | This criteria publication changes no PC7, PC8 product, PC9 semantic, implementation, qualification, or product-acceptance subject. |
+| PC8-V3-008 | Bind acceptance to exactly the three unchanged reviewed artifacts, three additive durable-state files, and the new V3 acceptance/supersession record. | Every source, Cargo, test, generator, interpreter, plan, frozen PC9 candidate, and unrelated repository path remains immutable and excluded. |
+| PC8-V3-009 | Publish exactly the seven-path documentation-only envelope as one normal non-force fast-forward child of `ce9126b3a55660a46151bcfcfcbac75622f483d2` on `main` at `refs/heads/main`, with subject `Accept PC8 external publication evidence criteria V3`. | No force option, alternate ref, second commit, branch, tag, PR, merge, rebase, amend, hook mutation, harness repair, or unrelated path is authorized. |
+| PC8-V3-010 | Make the repository records operative only after the external operator report proves two independently reproduced prospective trees equal the staged and published tree and all local, cached, and fresh remote refs converge cleanly. | Same-tree hashes, tree, commit, push result, and final refs are self-excluded from the repository acceptance record. |
+| PC8-V3-011 | Make the sole next bounded task the exact three-path PC8 executable-spine repair against registry V3, manifest V3, and the committed PC7 attestation, followed by fresh qualification and independent review without inherited PASS. | This acceptance and publication gate does not begin or authorize any mutation in that successor. |

@@ -700,3 +700,69 @@ Normalize, or authorize Builder, runtime, providers, installation, CLI, MCP,
 UI, Android, or any product surface. The exact commit, tree, push, and final
 ref identities remain self-excluded and are recorded only in the external
 operator report.
+
+## 2026-07-30 PC8 external-publication-evidence V3 acceptance amendment
+
+This amendment becomes operative only when the exact seven-path acceptance
+commit is published by a normal non-force fast-forward update of
+`refs/heads/main`. Until then, the published PC9 semantic-acceptance state at
+`ce9126b3a55660a46151bcfcfcbac75622f483d2` remains the durable remote state.
+
+The exact reviewed V3 candidate consists of:
+
+| Path | SHA-256 |
+|---|---|
+| `docs/pc7/PC7_IMPLEMENTATION_PUBLICATION_ATTESTATION_V2.md` | `33c157a5ed3f6dd3b005993381968f873a8e9bf2e7546f6e4f38eb86200ce94f` |
+| `docs/pc8/PC8_AUTHORITY_REGISTRY_V3.json` | `63b437cae1fc8c1b3b5cd56d9ef44501178a8dcda129399c685efc8f953f9584` |
+| `docs/pc8/PC8_LOCK_SPECIFIED_CONFORMANCE_MANIFEST_V3.json` | `fa3c921a3e32ca9f2642813cdebd0cf8cb51c928958199851865e3f3d4660a04` |
+
+The governing 27,664-byte, 749-line independent review at SHA-256
+`86fc913dca7c2d196efe31cf9c736cab49401ccf7ed299ba97de65d7d5e77981`
+records `PASS`; A01-A12 are all `RECOMPUTED`; P0=P1=P2=P3=0; and refuted,
+underdetermined, unverified, normative-change, substantive-fixture-change,
+historical-overreach, false-green-survivor, and open-finding counts are zero.
+
+Acceptance preserves all three reviewed artifacts as complete byte
+sequences, preserves frozen PC8 Lock authority and V1/V2 history, and changes
+no semantic rule, fixture, relation, discriminator, preimage, schema-language
+behavior, production behavior, or PC9 authority. The exact 69 authorized
+manifest operations remain limited to evidence, version, and supersession
+mirrors; the normalized substantive SHA-256 remains
+`646c8d9c41f8ed88f1f63ce1e8534a23659188614fc1e0865cef520bf1c222e9`.
+
+The operative status is:
+
+```text
+PC7_ACCEPTED=true
+PC8_SEMANTICS_ACCEPTED=true
+PC8_SEMANTICS_FROZEN=true
+PC8_SPECIFIED_CONFORMANCE_V1_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V2_CURRENT=false
+PC8_SPECIFIED_CONFORMANCE_V3_REVIEWED=true
+PC8_SPECIFIED_CONFORMANCE_V3_ACCEPTED=true
+PC8_SPECIFIED_CONFORMANCE_V3_PUBLISHED=true
+POST_FREEZE_PC8_SPECIFIED_CRITERIA_SUPERSESSIONS=2
+POST_FREEZE_PC8_LOCK_NORMATIVE_SUPERSESSIONS=0
+PC8_ACCEPTED=true
+PC8_EXECUTABLE_SPINE_BOUND_TO_V3=false
+PC8_REQUALIFIED_AGAINST_V3=false
+PC9_SEMANTICS_ACCEPTED=true
+PC9_ACCEPTED=false
+PC9_REQUALIFIED_ON_V3_SUCCESSOR=false
+OPEN_PROCEDURAL_DEFECTS_IN_V3_CRITERIA=0
+OPEN_CONFORMANCE_CRITERIA_DEFECTS_IN_V3_CRITERIA=0
+REQUIRED_NEXT_TRANSITION=focused PC8 executable-spine repair against accepted V3
+NEXT_BOUNDED_TASK=repair exactly the three-path PC8 executable spine to bind registry V3, manifest V3, and the committed PC7 publication attestation; then requalify and independently review without inherited PASS
+```
+
+Historical V2 qualification remains valid only for its V2 subject. The
+existing PC8 executable spine remains unbound and unqualified against V3, and
+no V2 result is inherited by V3 or by PC9 on the V3 successor.
+
+The exact publication envelope is the three unchanged reviewed artifacts,
+this file, `IMPLEMENTATION_PLAN.md`, `DECISIONS.md`, and
+`docs/pc8/PC8_SPECIFIED_CONFORMANCE_CRITERIA_V3_ACCEPTANCE_AND_SUPERSESSION.md`.
+All source, Cargo, test, generator, interpreter, executable-plan, frozen PC9
+candidate, and unrelated repository paths remain excluded and byte-identical.
+The commit, tree, push, and final ref identities are self-excluded and are
+recorded only in the external operator report.
