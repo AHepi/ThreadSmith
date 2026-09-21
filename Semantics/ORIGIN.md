@@ -4,7 +4,7 @@
 
 A later version exists, `20 Claude Fable Semantics - revised standalone theory.md`. The other model was given it for the audit (log 26). Claude has not been given it as of log 26, and no later log entry says otherwise.
 
-**Neither file is in this repository.** Both bundles left out "the theory and research pages and their plans" on purpose. Adding file 10 and file 20 to `authority/` is the first thing this project needs; until then every quotation of the theory here is second-hand, through the project story, the skill's word list, and the audit instructions.
+**File 10 is in this repository** as [authority/10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>), added at log 56 on the owner's word (decision 45), unchanged. Both bundles had left out "the theory and research pages and their plans" on purpose, so until log 56 every quotation of the theory here was second-hand. **File 20 is still not here.** Adding it to `authority/` is the next thing this project needs.
 
 ## What the theory says, as the record reports it
 - An explanation must meet four conditions: component fidelity, question fidelity, non-circular dependence, non-vacuity (file 24, "The one move you make").

@@ -10,7 +10,7 @@ Status words used: **stated** (written in a file as a claim, not tested), **seen
 **Claim.** The ledger language's core meaning comes from the authority document: "a line means the difference it makes to what follows and what clashes when the checker removes it or changes what fills a slot; this is the authority document's definition of a kind, used as the whole semantics."
 **Current status.** Stated (log 18). The mapping from the theory's terms to the language's properties is written out in the project story ("Words from the authority document, and the plain words used here"): Contract -> the question frozen; Transport -> what the translator does; Provenance -> source marks; Kinds as edit-signatures -> property 2; Non-vacuity -> the leftover bin; Indistinguishable is identical -> the sameness test.
 **Evidence.** [project story](<records/Checked reasoning language - project story.md>), sections "Word list" and "Log" 18, 20. Every test plan names the authority document at its head.
-**Open question.** The language was built against file 10; the other model audited file 20, a revised theory Claude has not been given (log 26). Which version the language now answers to is unsettled.
+**Open question.** The language was built against file 10 (in the repository since log 56); the other model audited file 20, a revised theory Claude has not been given (log 26). Which version the language now answers to is unsettled.
 **Related items.** `Language/authority/38 ...`, `Semantics/ORIGIN.md`.
 
 ## R2. The hard-to-vary skill is sharpened by the semantics

@@ -29,7 +29,7 @@ The later chat started with an empty computer and none of these files, so it num
 - **22 / 21 Test plan and Test results** - the Mondays paragraph and the Markus paragraph, each with its predictions frozen first.
 
 ## Left out on purpose
-Everything named in the earlier bundle's read-me stays out: rulebooks 20, 23, 33, 34; language 36; rig bundles 07, 10, 17, 21, 22, 34, 36; skills 05, 08, 10, 11, 14, 17, 21, 22, 29; instruction 29; the theory and research pages and their plans. Added to that list: the later chat's "addition to the project records", folded into the four record files; and its own zip of itself, whose contents are all here.
+One exception since log 56: the authority document, "10 Claude Fable Semantics - standalone theory.md", is in the repository at Semantics/authority/, on the owner's word (decision 45). Otherwise everything named in the earlier bundle's read-me stays out: rulebooks 20, 23, 33, 34; language 36; rig bundles 07, 10, 17, 21, 22, 34, 36; skills 05, 08, 10, 11, 14, 17, 21, 22, 29; instruction 29; the theory and research pages and their plans. Added to that list: the later chat's "addition to the project records", folded into the four record files; and its own zip of itself, whose contents are all here.
 
 ## Traps
 - **Taking the rig bundle as matching an older test write-up.** It holds the checkers as they are now. The write-ups say what the checkers said on the day.

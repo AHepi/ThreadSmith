@@ -45,6 +45,7 @@ A ledger of decisions, with your words as written.
 42. Run the corpus. "Great. Do it."
 43. Patch the rig, then run the rest. "Ok. Have you raised or removed token ceilings? Or streaming instead so that failed outputs don't happen?" then "Ok go!"
 44. The audit continues on the other model's Stage B return; the authority document is the fixed point to read it against. The return, pasted whole (kept as file 55 in Semantics/results), and then the theory uploaded again: "Remember this."
+45. Put the authority document in the repository. "you need to push the authority semantics I shared with you to main." (the file "10 Claude Fable Semantics - standalone theory.md", uploaded again the day before with "Remember this.")
 
 ## Open, for you to decide
 - Whether to reopen decision 5 (external checker essential) in light of the argument-mapping finding on page 04. Not reopened by Claude.

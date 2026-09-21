@@ -5,7 +5,7 @@ The audit of the authority document as a timeline. Numbers are log entries in th
 ## Research state: the theory
 | | |
 | --- | --- |
-| Authority | `10 Claude Fable Semantics - standalone theory.md` - **not in bundle**. Revised: `20 ...revised standalone theory.md` - **not in bundle**, never given to Claude. |
+| Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Revised: `20 ...revised standalone theory.md` - **not in bundle**, never given to Claude. |
 | Story | Decision 7 (why the document is here); [ORIGIN.md](ORIGIN.md). |
 | Relations | Quoted as authority by every Language test plan and by the skill. See [RELATIONS.md](../RELATIONS.md) R1, R2. |
 
@@ -58,4 +58,4 @@ The audit of the authority document as a timeline. Numbers are log entries in th
 ## Files in this project, by folder
 - `tests/`: 24 (two files), 27, 28, 30, 41, 55.
 - `results/`: 55 (the other model's return on 41, unchanged) and a note on the earlier returns that are not here.
-- `authority/`: a note only; see the folder's file.
+- `authority/`: file 10, frozen, and a note on file 20, which is not here.

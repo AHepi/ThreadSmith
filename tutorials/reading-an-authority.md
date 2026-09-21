@@ -13,7 +13,7 @@ Now open the log in the [project story](<../records/Checked reasoning language -
 ## Contrast
 - **Authority is not a test.** File 38 defines the language. It gives no task. File 39, the translator prompt, is what you hand over with it, and a plan such as 37 says what was expected of a run.
 - **Authority is not the record.** The project story tells you how 38 came to be; 38 itself says only what the language is.
-- **An authority can be missing.** The semantics' authority document (file 10, and the revised 20) is not in either bundle. [Semantics/authority/](<../Semantics/authority/>) says so rather than pretending.
+- **An authority can be missing.** The semantics' revised authority document (file 20) is not in either bundle, and the original (file 10) was absent until log 56. [Semantics/authority/](<../Semantics/authority/>) says so rather than pretending.
 
 ## Where to find it
 `<project>/authority/`. The project's `INDEX.md` says which one is current and what it superseded.
