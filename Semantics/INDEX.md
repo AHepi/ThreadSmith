@@ -56,16 +56,17 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Interpretation | Log 57: five cards placed, two on rows already borrowed, all seven verdicts agreeing with the thoughtful person; O4 placed by the handed-over distinction, marked as such; H declared input, G and C stated open points, A homeless. The "finding for the top" is about one front-matter sentence the body qualifies. Quotations checked against file 10: first concrete sight of what file 20 changed (anchors with properness and resolution conditions; a merit condition with its own refutation entry). |
 | Lessons | [Lesson 50](<../Language/records/Checked reasoning language - Lessons.md>): file 55 named a claim of the theory as a target from Part 0 alone; Part V already qualified it. |
 
-## Research state: Stage D and the report (log 57) - live
+## Research state: Stage D and the report (logs 57, S62) - live
 | | |
 | --- | --- |
-| Story | Fix cards for the amendments the round moved (A, C, G, H), the top finding at its size, the two anchoring passages in full, then the round's report. |
-| Test | [57 Stage D fix cards and the report](<tests/57 Next instruction for the other model - Stage D fix cards and the report.md>) |
-| Raw result | None yet. |
-| Next | Paste 57 to the other model; bring back the fix cards and passages, type "continue", bring back the report (project story, "Next step"). |
+| Story | Fix cards for the amendments the round moved (A, C, G, H), each clause run on all fourteen cases, the top finding at its size, the anchoring passages compared case by case, near-case coverage of the whole table, the theory's own attack list walked, every quotation listed, then the round's report; returned as one zip. |
+| Test | [S62 Stage D, clause tests, coverage and the report, returned as a zip](<tests/S62 Next instruction for the other model - Stage D, clause tests, coverage and the report, returned as a zip.md>); replaces [57](<tests/57 Next instruction for the other model - Stage D fix cards and the report.md>), written and never sent. |
+| Raw result | None yet. Goes into `results/` as `S62 Stage D and report - return/`, unchanged. |
+| What it gives up | Part 5 describes near cases and writes none; the cases are the next round's. |
+| Next | Paste S62 to the other model; unpack its zip into `results/`; read from the quotation list and the manifest (project story, "Next step"). |
 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62.
 - `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.
