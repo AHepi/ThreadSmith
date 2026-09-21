@@ -85,7 +85,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64, S65.
-- `results/`: 55, 57, the folders `S62 Stage D and report - return/` and `S64 Near cases - return/`, and S65 (the saved page's messages).
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64, S65, S70; the pack read-me and build script (unnumbered).
+- `results/`: 55, 57, the folders `S62 Stage D and report - return/`, `S64 Near cases - return/` and `S65 Near cases - return/`, and S65 (the saved page's messages).
 - Reconciliation: [S68](<records/Semantics - project story.md#s68-status-reconciliation-21-september-2026>) verifies the S64 import and current pointers without changing the raw evidence.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.

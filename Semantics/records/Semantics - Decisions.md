@@ -16,6 +16,7 @@ S2. The next instruction inline, longer, returned as a zip. "Can you return next
 S3. Unpack the S62 return into results, log the reading, and write the next instruction around the three steps named (file 20 in, the 32 rows recovered, near cases by an outside author on the ten rows). "Do it"
 S4. The revised theory (file 20) is set aside; the earlier version (file 10) is the authority. "No no. 20 was a regression. Hence I never supplied it"
 S5. From S65 on, each instruction goes to a fresh agent as a self-contained zip. "Oh I'll need zip files from here on. Each new step will be performed by a separate agent"
+S6. Push to main, always; edit only inside this project's folder. "Also always push to main and never edit anything outside your own folded"
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
