@@ -47,15 +47,24 @@ The audit of the authority document as a timeline. Numbers are log entries in th
 | What it gives up | "Bounded to cases that already exist. Gives up: a row that no outside case has strained keeps its far-apart pair unchallenged." |
 | Lessons | [Lesson 49](<../records/Checked reasoning language - Lessons.md>): file 41 left the model to find the theory's own distinction for O4, and it built a mechanism instead. |
 
-## Research state: Stage C, the outside cases (log 55) - live
+## Research state: Stage C, the outside cases (logs 55, 57)
 | | |
 | --- | --- |
 | Story | Run the seven outside cases written at log 30 (O8 to O14) with the near-case field; place O4 from the theory's own words; sort the surviving judgement phrases by where the theory puts them. |
 | Test | [55 Stage C, the outside cases](<tests/55 Next instruction for the other model - Stage C, the outside cases.md>) |
+| Raw result | [57 Stage C return](<results/57 Stage C return - the other model's seven case cards, O4 placed, phrases sorted.md>) - seven cards, the O4 pair, the three lists; kept exactly as received. |
+| Interpretation | Log 57: five cards placed, two on rows already borrowed, all seven verdicts agreeing with the thoughtful person; O4 placed by the handed-over distinction, marked as such; H declared input, G and C stated open points, A homeless. The "finding for the top" is about one front-matter sentence the body qualifies. Quotations checked against file 10: first concrete sight of what file 20 changed (anchors with properness and resolution conditions; a merit condition with its own refutation entry). |
+| Lessons | [Lesson 50](<../records/Checked reasoning language - Lessons.md>): file 55 named a claim of the theory as a target from Part 0 alone; Part V already qualified it. |
+
+## Research state: Stage D and the report (log 57) - live
+| | |
+| --- | --- |
+| Story | Fix cards for the amendments the round moved (A, C, G, H), the top finding at its size, the two anchoring passages in full, then the round's report. |
+| Test | [57 Stage D fix cards and the report](<tests/57 Next instruction for the other model - Stage D fix cards and the report.md>) |
 | Raw result | None yet. |
-| Next | Paste 55 to the other model; bring back its seven cards, its O4 pair and its sorted list (project story, "Next step"). |
+| Next | Paste 57 to the other model; bring back the fix cards and passages, type "continue", bring back the report (project story, "Next step"). |
 
 ## Files in this project, by folder
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55.
-- `results/`: 55 (the other model's return on 41, unchanged) and a note on the earlier returns that are not here.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57.
+- `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.

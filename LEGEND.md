@@ -37,5 +37,5 @@ log entry number
 
 ## Three examples, decoded
 - `22 Test plan - your Mondays paragraph.md`: made under log 22; a frozen plan; for the owner's Mondays paragraph. Its pair is `22 Test results - your Mondays paragraph.html`.
-- `41 Next instruction for the other model - finish Stage B and near cases.md`: log 41 (the later chat); an audit round to hand to the other model; asks it to finish its Stage B table and hold each pair against a near case. Returned (log 55); 55 is the live one; 27, 28, 30 and 41 are rounds already run.
+- `41 Next instruction for the other model - finish Stage B and near cases.md`: log 41 (the later chat); an audit round to hand to the other model; asks it to finish its Stage B table and hold each pair against a near case. Returned (log 55); 57 is the live one; 27, 28, 30, 41 and 55 are rounds already run.
 - `Language/rigs/rig 1 - arguments/ledger_T07B.json`: rig 1; the other model's literary text, family 7, base text; the ledger as data. Its run is in `raw_log.txt`; its reading is in `37 Test results`.
