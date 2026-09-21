@@ -10,7 +10,8 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Audited from outside (log 45):** the other model's audit of 38 and 39 is in [results/](results/), unchanged: fifteen findings on the wording, twelve repairs, sixty new texts, six of its own translations, nothing run. Four findings hold up against the text (F01, F02, F04, F15). [Plan 45](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) is frozen and not yet run: compare its six ledgers with Claude's, and sort the fifteen findings by running their cases.
 - **Live instruction:** [46](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the eight texts of plan 37 for the other model to translate under 38 and 39, so the comparison runs both ways. Not yet sent.
 - **Execution attempt (log 58):** the other model tried plan 45 and was blocked by the missing runtime; its attempt is kept in [results/](results/). The runtime now runs here and reproduces the recorded T05-B run.
-- **Next step (from the log):** run plan 45 here; paste 46.
+- **Handoff (L60):** a new agent runs plan 45 from [the brief](<tests/L60 Handoff - a new agent runs plan 45.md>); the tools it needs are in `tools/`.
+- **Next step (from the log):** the new agent's return; or run plan 45 here; paste 46.
 
 ## Where to start
 This thread keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the three projects began with, which is kept unchanged in the same folder. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md); worked examples on its files are in [tutorials/](tutorials/).
@@ -28,6 +29,7 @@ authority/     38 (the language), 39 (the translator's task)
 tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39; 46 the next instruction for the other model
 results/       21 and 22 (html pages), 37 (md): what happened, with predictions ticked; 45: the other model's package, as received
 rigs/          the working checkers, frozen and patched, every ledger, the bridge, and raw_log.txt
+tools/         sameness.py (the sameness test as a program), install_scasp.sh and the expected smoke report
 ```
 `rigs/` is this project's own addition to the shared layout: the rig is at once the build of the theory, the apparatus for every test, and (in `raw_log.txt` and the ledgers) the raw evidence.
 
