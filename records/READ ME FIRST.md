@@ -19,7 +19,8 @@ The later chat started with an empty computer and none of these files, so it num
 - **37 Test plan / 37 Test results** - the blind sample from the other model's literary corpus: eight outside texts, seven matched its answer keys.
 - **35 Test plan** - what was expected of the third pile of changes, frozen before building.
 - **30 Skill - hard-to-vary** - the reasoning skill, modular, with its router and map.
-- **41 / 30 / 28 / 27 Next instruction for the other model** - the audit prompts. 41 is the live one: it finishes the other model's judgement-phrase table and holds each pair against a near case. 30, 28 and 27 are the rounds already run, kept because their cases are referred to by name.
+- **55 / 41 / 30 / 28 / 27 Next instruction for the other model** - the audit prompts. 55 is the live one: Stage C's seven case cards, one pair for O4 built from the theory's own words, and the surviving judgement phrases sorted. 41, 30, 28 and 27 are the rounds already run, kept because their cases are referred to by name.
+- **55 Stage B return** - the other model's return on 41, kept exactly as received (the finished table, near cases, tighter pairs). Its reading is log 55.
 - **42 Test plan / 43 Corpus / 47 Addendum** - the first design of the skill test, rigged and never sent.
 - **48 Test plan** - Claude readers on rebuilt contested theories; stopped by the owner, unmarked.
 - **49 Plan / 50 Corpus / 52 Marking plan** - the skill test that ran: outside papers, DeepSeek V4.1 Flash as reader, three ways of handing over the skill; the 49 sources; how the reports were marked, frozen before reading.

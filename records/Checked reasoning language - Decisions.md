@@ -44,6 +44,7 @@ A ledger of decisions, with your words as written.
 41. Run the pilot. "Go."
 42. Run the corpus. "Great. Do it."
 43. Patch the rig, then run the rest. "Ok. Have you raised or removed token ceilings? Or streaming instead so that failed outputs don't happen?" then "Ok go!"
+44. The audit continues on the other model's Stage B return; the authority document is the fixed point to read it against. The return, pasted whole (kept as file 55 in Semantics/results), and then the theory uploaded again: "Remember this."
 
 ## Open, for you to decide
 - Whether to reopen decision 5 (external checker essential) in light of the argument-mapping finding on page 04. Not reopened by Claude.

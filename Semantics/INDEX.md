@@ -37,15 +37,25 @@ The audit of the authority document as a timeline. Numbers are log entries in th
 | Interpretation | Log 31: all four changes in and well joined; three sound guards of its own added. Log 41: 32 rows cover A, B, C and three of D; E to J missing; zero BORROWED: JUDGEMENT marks. |
 | Lessons | [Lesson 35](<../records/Checked reasoning language - Lessons.md>): the pass could be passed by any phrase; far-apart changes are always available. |
 
-## Research state: near cases (log 41) - live
+## Research state: near cases (logs 41, 55)
 | | |
 | --- | --- |
 | Story | Finish the table; make each pair earn its place by placing a case that sits close to the line. |
 | Test | [41 Finish Stage B, then hold each pair against a near case](<tests/41 Next instruction for the other model - finish Stage B and near cases.md>) |
-| Raw result | None yet. |
+| Raw result | [55 Stage B return](<results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md>) - 80 more rows (D to J), seven near-case lines, five tighter pairs, the Stage C field; kept exactly as received. |
+| Interpretation | Log 55: the gauge moved (two table rows BORROWED; six of seven near cases unplaced by the original pairs; three then placed by tighter pairs; O1, O4, O7 open). The two table rows sit on the theory's declared normative input; O4 is placeable by the theory's own contract distinction; O7 lands on its stated sufficiency attack point; O1 has no declared home. |
 | What it gives up | "Bounded to cases that already exist. Gives up: a row that no outside case has strained keeps its far-apart pair unchallenged." |
-| Next | Paste 41 to the other model; bring back its finished table (project story, "Next step"). |
+| Lessons | [Lesson 49](<../records/Checked reasoning language - Lessons.md>): file 41 left the model to find the theory's own distinction for O4, and it built a mechanism instead. |
+
+## Research state: Stage C, the outside cases (log 55) - live
+| | |
+| --- | --- |
+| Story | Run the seven outside cases written at log 30 (O8 to O14) with the near-case field; place O4 from the theory's own words; sort the surviving judgement phrases by where the theory puts them. |
+| Test | [55 Stage C, the outside cases](<tests/55 Next instruction for the other model - Stage C, the outside cases.md>) |
+| Raw result | None yet. |
+| Next | Paste 55 to the other model; bring back its seven cards, its O4 pair and its sorted list (project story, "Next step"). |
 
 ## Files in this project, by folder
-- `tests/`: 24 (two files), 27, 28, 30, 41.
-- `authority/`, `results/`: notes only; see each folder's file.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55.
+- `results/`: 55 (the other model's return on 41, unchanged) and a note on the earlier returns that are not here.
+- `authority/`: a note only; see the folder's file.
