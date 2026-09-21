@@ -35,6 +35,7 @@ rigs/          the programs and raw returns: 147 runs, 12 dialogues, the hidden 
 - **Running a reader under test:** every run saved as it came, with its finish reason; a run that returns empty is kept and run once more, recorded as a second attempt; the key is read from the environment and written to no file.
 - **A change to the skill is a new numbered skill file**, made only after a test has forced it; proposed changes are held in the results file that proposes them.
 - **Third-party texts fetched for a test are not kept;** the manifest and fetcher that rebuild them are.
+- **The skill judges; it does not choose** (decision H5, RELATIONS R6). Its report ends with one next step offered, never taken. Which test to run, how often, when to stop, what a result forces and what is held out are planning decisions, made in a plan file under the shared conventions and not by the skill.
 - **Never a Fable 5.1 reader under test. Never a Fable 5.1 or Opus 5 subagent without the owner's explicit permission** (decision H4). Readers so far: DeepSeek V4.1 Flash; Claude Sonnet 5 from plan H56 (decision H3), run as Claude Code subagents under addendum H61.
 
 ## Words used in this project

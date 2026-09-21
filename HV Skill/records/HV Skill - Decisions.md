@@ -24,5 +24,7 @@ H2. The repeatability run and, if forced, skill file 31; the skill first, the la
 H3. A second reader for plan H56. "One last thing, test also on Claude Sonnet 5. Not Opus 5."
 H4. Which models may never be readers or subagents without the owner's word. "Never test on Fable 5.1 subagents. Never spawn Fable 5.1 subagents or Opus 5 subagents without my explicit permission."
 
+H5. Draw the line between the skill and the planning work. "It sounds like you're moving into planning territory which was the next move. Decide where the planning and HV boundary sits"
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
