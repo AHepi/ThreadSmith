@@ -15,9 +15,9 @@ Status words used: **stated** (written in a file as a claim, not tested), **seen
 
 ## R2. The hard-to-vary skill is sharpened by the semantics
 **Claim.** "This skill sharpens [Deutsch's idea] using a formal theory supplied by the user, 'Claude Fable Semantics'. That theory's terms are mapped to plain words in references/word-list.md."
-**Current status.** Stated, in the skill's own front matter. The DeepSeek test (plan 42) is the first designed test of whether the skill's words do work in a reader that never saw the theory. Unrun.
-**Evidence.** [SKILL.md](<HV Skill/authority/hard-to-vary/SKILL.md>); [word-list.md](<HV Skill/authority/hard-to-vary/references/word-list.md>); [42 Test plan](<HV Skill/tests/42 Test plan - hard-to-vary skill read by DeepSeek.md>).
-**Open question.** Whether good results so far came from the skill's words or from Claude having read the theory (the question plan 42 freezes).
+**Current status.** Stated, in the skill's own front matter; and the skill's words are now **seen** to do work in a reader that never saw the theory (log 54: DeepSeek V4.1 Flash on 49 outside documents, the semantics withheld). What the semantics adds over the skill's plain words was not tested; the reader was never given it.
+**Evidence.** [SKILL.md](<HV Skill/authority/hard-to-vary/SKILL.md>); [word-list.md](<HV Skill/authority/hard-to-vary/references/word-list.md>); [49 Plan](<HV Skill/tests/49 Plan - the skill on outside papers, read by DeepSeek V4.1 Flash.md>); [54 Results](<HV Skill/results/54 Results - where the skill breaks, on outside papers read by DeepSeek.md>).
+**Open question.** Whether the semantics document, given beside the skill, changes what a reader finds (plan 48 designed that comparison and was stopped). And whether the two breaks found in the skill's wording recur (the repeatability run in file 54).
 
 ## R3. The skill built and kept improving the language
 **Claim.** The language's twelve properties were worked out with the hard-to-vary skill (log 01), and the skill was improved from what each stage of the language work taught (logs 02, 05, 08, 14, 21, 22, 30).

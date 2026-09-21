@@ -13,12 +13,13 @@ The rules the work is done under. The first part is copied from the project stor
 - **To edit the documentation:** add a log entry to the project story, update Status, add to Decisions or Lessons if one applies. The log is added to, never rewritten. Decisions holds the owner's words. Lessons holds only things that failed while being built or tested.
 - **Every result names what it did not test.** A clean report is not a pass mark.
 - **Whose cases:** say whether a result is seen on Claude's own cases or on someone else's.
-- **Handing things to the other model:** it reinterprets negative instructions and follows positive ones. Give it file 24 in place of the skill; give it file 39 with file 38, never 38 alone. Never show a reader under test the answer key (files 42, 43).
-- **Starting a new chat:** upload the current set first. That is how the numbering clashed (Lesson 37).
+- **Handing things to the other model:** it reinterprets negative instructions and follows positive ones. Give it file 24 in place of the skill; give it file 39 with file 38, never 38 alone. Never show a reader under test the answer key or a source's standing (files 42, 43, 49, 50, 52; `keys.json` and `cases.json` in the rigs).
+- **Starting a new chat:** upload the current set first, and check main's last log number before the first new file, not only at the start; two chats appending to one sequence clashed even so (Lessons 37, 48).
+- **Running a reader under test:** every run saved as it came, with its finish reason; a run that returns empty is kept and run once more, recorded as a second attempt; the key is read from the environment and written to no file.
 
 ## What this repository adds
 - **Folders name kinds, not versions.** A new authority version is a new numbered file in `authority/`, beside the old one. Never a `v2/` folder.
-- **Raw evidence is never edited.** Files under `results/` and `rigs/` are kept as they came. Reinterpret in a new file or a log entry.
+- **Raw evidence is never edited.** Files under `results/` and `rigs/` are kept as they came. Reinterpret in a new file or a log entry. Third-party texts fetched for a test are not kept; the manifest and fetcher that rebuild them are.
 - **A numbered file lives in exactly one place**, chosen by what it is about: Semantics (the authority document and its audit), Language (the ledger language, rigs, translations, their tests), HV Skill (the skill and tests of the skill). If a file belongs to two, put it where its number was made and link from the other project's INDEX.
 - **The records stay together** in `records/`, as one set. They span all three projects. Each project's `INDEX.md` cites log entries by number.
 - **Each INDEX marks what is missing.** A research state whose files are not in the repository is still listed, with "not in bundle" and the log entry that describes it.

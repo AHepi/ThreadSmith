@@ -20,7 +20,10 @@ The later chat started with an empty computer and none of these files, so it num
 - **35 Test plan** - what was expected of the third pile of changes, frozen before building.
 - **30 Skill - hard-to-vary** - the reasoning skill, modular, with its router and map.
 - **41 / 30 / 28 / 27 Next instruction for the other model** - the audit prompts. 41 is the live one: it finishes the other model's judgement-phrase table and holds each pair against a near case. 30, 28 and 27 are the rounds already run, kept because their cases are referred to by name.
-- **42 Test plan / 43 Corpus** - the unrun test of whether the skill's words do work in a reader that has never seen it, and the twenty contested theories plus five controls it uses.
+- **42 Test plan / 43 Corpus / 47 Addendum** - the first design of the skill test, rigged and never sent.
+- **48 Test plan** - Claude readers on rebuilt contested theories; stopped by the owner, unmarked.
+- **49 Plan / 50 Corpus / 52 Marking plan** - the skill test that ran: outside papers, DeepSeek V4.1 Flash as reader, three ways of handing over the skill; the 49 sources; how the reports were marked, frozen before reading.
+- **51 Pilot results / 53 Corpus run / 54 Results** - the nine-run pilot; the 147-run corpus run as a program sees it; where the skill breaks.
 - **24 Workflow / 24 Owner's guide** - what to hand the other model for auditing the theory, and how to run it.
 - **22 / 21 Test plan and Test results** - the Mondays paragraph and the Markus paragraph, each with its predictions frozen first.
 
@@ -32,6 +35,6 @@ Everything named in the earlier bundle's read-me stays out: rulebooks 20, 23, 33
 - **Handing file 38 to a translator on its own.** It defines the language; file 39 gives the task.
 - **Handing the hard-to-vary skill to the other model.** Its wording is full of "never" and "may not". File 24 is the version written for that model.
 - **Reading a test result as a pass mark.** Every one of them names what it did not test.
-- **Showing file 42 or file 43 to a reader under test.** Both hold the answer key.
+- **Showing file 42, 43, 49, 50 or 52 to a reader under test.** They hold the answer keys and the sources' standing.
 - **Trusting "Stage" and "Where things stand".** In the project story and in Status, both still describe the project as it was around file 17. They have not been brought up to date, and the log is the record.
-- **Starting a new chat without uploading this zip.** That is how the numbering clashed.
+- **Starting a new chat without uploading this zip.** That is how the numbering clashed the first time; the second time (Lesson 48) the zip was uploaded and the repository had moved on meanwhile, so check main's last number too.

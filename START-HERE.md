@@ -8,19 +8,20 @@ The owner wants a way to check reasoning. You write a few sentences in ordinary 
 ## Who is who
 - **The owner.** Sets the questions, supplies the paragraphs, makes the decisions. The Decisions file holds their words as written.
 - **Claude.** Did the building, translating, testing and record-keeping. Almost every case so far is Claude's own; the record says so where it matters ("seen, on my own cases" / "on someone else's").
-- **The other model.** A second language model, given the theory and a workflow, asked to audit it and try to break it. Its outputs are quoted in the log but are not in this repository.
+- **The other model.** A second language model, given the theory and a workflow, asked to audit it and try to break it. Its outputs are quoted in the log; its audit of 38 and 39 is in `Language/results/`.
+- **The reader.** DeepSeek V4.1 Flash, given the skill and one document at a time and never the answer key, in the HV Skill test. Its 147 reports and twelve dialogues are in `HV Skill/rigs/`.
 
 ## The three projects, one sentence each
 - **Semantics/** - the audit of "Claude Fable Semantics - standalone theory": rounds of described situations where the theory's verdict and a thoughtful person's verdict might come apart.
 - **Language/** - the ledger language, defined in one clean file (38), with two checker rigs built on s(CASP), tests frozen before each run, and results kept as they came.
-- **HV Skill/** - the hard-to-vary skill (file 30), improved seven times from what each stage taught, and a designed but unrun test of whether its words do any work in a reader that is not Claude.
+- **HV Skill/** - the hard-to-vary skill (file 30), improved seven times from what each stage taught, and tested on 49 outside documents read by DeepSeek V4.1 Flash: its words do work in a reader that is not Claude, and file 54 says where they break.
 
 ## Three ways to read
 **New reader.** This page -> [GLOSSARY.md](GLOSSARY.md) -> [tutorials/](tutorials/) -> a project `README.md`.
 
 **Research review.** A project's `INDEX.md` -> its authority -> a test plan -> the result -> the log entry and lesson that followed. The whole log is in [records/](records/).
 
-**Agent or checker.** A project's `INDEX.md` -> the exact files it names -> raw evidence in `Language/rigs/` (`raw_log.txt`, the ledgers) -> [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md).
+**Agent or checker.** A project's `INDEX.md` -> the exact files it names -> raw evidence in `Language/rigs/` (`raw_log.txt`, the ledgers) and `HV Skill/rigs/` (the runs and the marks) -> [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md).
 
 ## Two things to know before reading any result
 1. **A test plan is frozen before its run.** Files called "Test plan" say what was expected, written first and not edited after. Files called "Test results" say what happened. Read them as a pair.
