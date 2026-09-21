@@ -60,7 +60,7 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Rig | [rigs/](rigs/) as of these two patches ("38 Checker rigs - both, current"). |
 | Next | Give 38 and 39 to the other model with one of its own texts; compare ledgers line by line. |
 
-## 7. The other model's audit of 38 and 39 (log 45) - plan frozen, not run
+## 7. The other model's audit of 38 and 39 (logs 45, 58, L62) - plan run, no change built
 | | |
 | --- | --- |
 | Story | Decision 35. The next step at log 39 was to give the other model 38 and 39 and compare ledgers line by line; its return is an audit of both files instead, with six translations of its own texts and none of Claude's. |
@@ -69,10 +69,13 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Test | [45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) - Part A: six ledgers compared by the sameness test; Part B: fifteen findings sorted into the three piles of log 33 by running each forcing case on the rig as it stands. |
 | Instruction | [46 Next instruction for the other model - translate the eight texts of plan 37](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the live one: the eight texts of plan 37 under 38 and 39, one family per stage, then three short answers (why its six are TOLD; what "02" is; which skill it read). Not yet sent. |
 | Execution attempt | [58 Execution attempt - the other model on plan 45](<results/58 Execution attempt - the other model on plan 45/>) - the other model was handed plan 45; blocked before Part A with no s(CASP) on its machine. Kept unchanged. It exported its six tables as `.json`/`.pl` pairs (unparsed, not run), registered the fifteen Part B rows with every observed pile null, and recorded three discrepancies against the plan's predictions (N17, N22, N03-B), which stand beside the plan; the plan is unchanged. |
-| Next | Run plan 45 here: the runtime is installed and the driver reproduces the recorded T05-B run (log 58). Paste 46. Two decisions for the owner: fixture as actual ledger or TOLD world (46 chooses the actual ledger; changeable before sending); what "02" is. |
+| Run | By OpenAI Codex as worker, from the brief [L60](<tests/L60 Handoff - a new agent runs plan 45.md>); its return kept whole at [L62 Return - plan 45 run by OpenAI Codex](<results/L62 Return - plan 45 run by OpenAI Codex/>); eight of its runs repeated here in [45 Reruns by the orchestrator](<results/45 Reruns by the orchestrator/>). |
+| Results | [45 Test results](<results/45 Test results - the 38 and 39 audit package, ledgers compared and findings sorted.md>): Part A five of six the same content; Part B F04, F09, F15 in pile 2, F09 and F15 confirmed failures of the language; twelve of fifteen piles as predicted. |
+| Lessons | Language Lessons 51 to 53 and L2 (the driver's NO FAULT FOUND cannot tell an answered question from one it could not ask). |
+| Next | On the owner's word: the F15 change on N18-A, control N18-B, every ledger rerun. Held: fixture standing; R06; F04's scope; what "02" is. |
 
 ## Files in this project, by folder
 - `authority/`: 38, 39.
 - `tests/`: 21, 22, 35, 37, 45, 46.
-- `results/`: 21 (html), 22 (html), 37; the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt on plan 45, 67 files, of which 25 are a second copy of 45).
+- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator".
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).
