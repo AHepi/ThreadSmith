@@ -74,8 +74,15 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Lessons | Language Lessons 51 to 53 and L2 (the driver's NO FAULT FOUND cannot tell an answered question from one it could not ask). |
 | Next | On the owner's word: the F15 change on N18-A, control N18-B, every ledger rerun. Held: fixture standing; R06; F04's scope; what "02" is. |
 
+## 8. Scope as a contract (L63) - draft for the owner
+| | |
+| --- | --- |
+| Story | Decisions L4 and L5: the experiment is for parsing prose for an external checker, faults and now consequences; four error sources; scope first. Five steps approved. |
+| Authority | [L63 Scope - the contract the language claims, first version](<authority/L63 Scope - the contract the language claims, first version.md>) - the question in the authority document's form, the jobs by whose they are, texts and findings in scope with the run that saw each, exclusions with gauges and proposed thresholds, the four error sources with what each may cost, pairs that pull, what would show it wrong, what is left to the owner. Never edited; the owner's strikes make L64. |
+| Next | The strikes; then the consequences prototype (prediction first); the read-back test; the blind-translator test; F15 and F09. |
+
 ## Files in this project, by folder
-- `authority/`: 38, 39.
+- `authority/`: 38, 39; L63 (the scope contract, draft).
 - `tests/`: 21, 22, 35, 37, 45, 46.
 - `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator".
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).

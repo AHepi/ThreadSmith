@@ -11,7 +11,8 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Live instruction:** [46](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the eight texts of plan 37 for the other model to translate under 38 and 39, so the comparison runs both ways. Not yet sent.
 - **Execution attempt (log 58):** the other model tried plan 45 and was blocked by the missing runtime; its attempt is kept in [results/](results/). The runtime now runs here and reproduces the recorded T05-B run.
 - **Plan 45 run (L62):** by a worker from [the brief L60](<tests/L60 Handoff - a new agent runs plan 45.md>), checked and partly repeated here. [45 Test results](<results/45 Test results - the 38 and 39 audit package, ledgers compared and findings sorted.md>): F09 and F15 are confirmed failures of the language; F04 needs the owner's word on scope; no change built.
-- **Next step (from the log):** on the owner's word, the F15 change; paste 46.
+- **Direction (L63):** faults and, now, consequences; scope first. The scope is written as a contract, [L63](<authority/L63 Scope - the contract the language claims, first version.md>), a draft for the owner to strike through.
+- **Next step (from the log):** the owner's strikes on L63; then the consequences prototype.
 
 ## Where to start
 This thread keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the three projects began with, which is kept unchanged in the same folder. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md); worked examples on its files are in [tutorials/](tutorials/).
@@ -25,7 +26,7 @@ records/       this thread's own log, Decisions, Lessons and Status, from 21 Sep
 RELATIONS.md   this project's claims about its connections to the other two, with status and evidence
 tutorials/     three worked examples on this project's files: reading an authority, following a test, reading a result
 INDEX.md       every research state from the first theory to file 39, with what is and is not here
-authority/     38 (the language), 39 (the translator's task)
+authority/     38 (the language), 39 (the translator's task), L63 (the scope as a contract, draft)
 tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39; 46 the next instruction for the other model
 results/       21 and 22 (html pages), 37 (md): what happened, with predictions ticked; 45: the other model's package, as received
 rigs/          the working checkers, frozen and patched, every ledger, the bridge, and raw_log.txt
