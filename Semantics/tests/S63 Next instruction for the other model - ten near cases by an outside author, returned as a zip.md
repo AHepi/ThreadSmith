@@ -51,7 +51,7 @@ For every row marked BORROWED: JUDGEMENT in Part 1, write one tighter pair, two 
 Close with: PAIRS AND FIX CARDS COMPLETE.
 
 ## Part 3 - Clause tests on all cases (`03 Clause tests on all cases.md`)
-For every clause proposed in Part 2, and for each of the four S62 clauses, one table with a row per case O1 to O24: the thoughtful person's verdict; the verdict under R2 with the S62 clauses; the verdict under the clause; SAME or CHANGED, with one sentence where CHANGED saying which way. Under each table, the cases where the clause is silent, and one sentence saying whether every CHANGED row moves toward the thoughtful person. A clause with a row moving away returns to Part 2 for one revision, both versions kept, the earlier marked WITHDRAWN with the row that withdrew it. Where Part 2 proposed nothing, this file holds the four S62 clauses' tables on O15 to O24 only.
+For every clause proposed in Part 2, and for each of the four S62 clauses, one table with a row per case O1 to O24: the thoughtful person's verdict; the verdict under R2 with the S62 clauses; the verdict under the clause; SAME or CHANGED, with one sentence where CHANGED saying which way. Under each table, the cases where the clause is silent, and one sentence saying whether every CHANGED row moves toward the thoughtful person. A clause with a row moving away returns to Part 2 for one revision, both versions kept, the earlier marked WITHDRAWN with the row that withdrew it. Where every row in Part 1 is PLACED and Part 2 holds only its one sentence, this file holds the four S62 clauses' tables on O15 to O24 only.
 
 Close with: CLAUSE TESTS COMPLETE.
 
