@@ -1,6 +1,6 @@
 # The record set - one record for three projects
 
-The four record files in this folder (project story, Decisions, Lessons, Status) are shared by the three research projects in this repository: Semantics, Language and HV Skill. Their filenames begin "Checked reasoning language" because the record began with that project, and the names were kept so that the bundles and the log still match. The log, the decisions and the lessons each run in one numbered sequence across all three projects; which project an entry belongs to is the folder its output file sits in. Status is grouped by project.
+The four record files in this folder (project story, Decisions, Lessons, Status) are shared by the three research projects in this repository: Semantics, Language and HV Skill. Their filenames begin "Checked reasoning language" because the record began with that project, and the names were kept so that the bundles and the log still match. The log, the decisions and the lessons each run in one numbered sequence across all three projects; which project an entry belongs to is the folder its output file sits in. Status is grouped by project. These files are complete to log 59. From 21 September 2026 the Semantics and Language projects keep their own records in `Semantics/records/` and `Language/records/`, in the same four files, and do not update these; their new entries are lettered (S60, L60 onward). HV Skill still writes here.
 
 The rest of this page is the bundle read-me as it came, brought up to date: it lists the numbered files across all three projects.
 

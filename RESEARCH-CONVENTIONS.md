@@ -3,7 +3,7 @@
 The rules the work is done under. The first part is copied from the project story's "How to work on this project" and the bundle read-me, which remain the authority; the second part is what this repository adds so that the tree stays readable.
 
 ## The project's own rules (from the record)
-- **To read:** start with the project story, then the newest numbered file in the log.
+- **To read:** start with the project story (a project's own, in its `records/`, where it has one; the shared one at the root otherwise), then the newest numbered file in the log.
 - **To change a project file:** check Decisions first; make the change as a new numbered file; never overwrite an old numbered file.
 - **To write a ledger:** follow the language definition (38). If something will not fit, put it in the bin with the reason, and log it as a candidate new kind of line.
 - **To change the checker:** never edit the frozen copy. For every patch, record what it gives up as well as what it fixes. Change the patched copy, log the patch with the paragraph that forced it and the layer it changed, then rerun every ledger.

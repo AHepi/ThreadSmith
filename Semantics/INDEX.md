@@ -1,6 +1,6 @@
 # Semantics - index
 
-The audit of the authority document as a timeline. Numbers are log entries in the [project story](<../records/Checked reasoning language - project story.md>). "Not in bundle" means the artifact exists (it is described in the log) but was not in either zip, so it is not here.
+The audit of the authority document as a timeline. Numbers are log entries; the Semantics entries are in this project's own [project story](<records/Semantics - project story.md>) (copied from the shared one at the root, where they also remain), and new ones are S-numbered there. "Not in bundle" means the artifact exists (it is described in the log) but was not in either zip, so it is not here.
 
 ## Research state: the theory
 | | |
@@ -65,6 +65,7 @@ The audit of the authority document as a timeline. Numbers are log entries in th
 | Next | Paste 57 to the other model; bring back the fix cards and passages, type "continue", bring back the report (project story, "Next step"). |
 
 ## Files in this project, by folder
+- `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
 - `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57.
 - `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.

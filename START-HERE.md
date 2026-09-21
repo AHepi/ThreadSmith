@@ -23,7 +23,7 @@ This repository is three separate research projects, each in its own folder. The
 ## Three ways to read
 **New reader.** This page -> [GLOSSARY.md](GLOSSARY.md) -> [tutorials/](tutorials/) -> a project `README.md`.
 
-**Research review.** A project's `INDEX.md` -> its authority -> a test plan -> the result -> the log entry and lesson that followed. The whole log is in [records/](records/).
+**Research review.** A project's `INDEX.md` -> its authority -> a test plan -> the result -> the log entry and lesson that followed. Semantics and Language keep their logs in their own `records/`; the shared log in [records/](records/) holds everything to log 59 and HV Skill's entries.
 
 **Agent or checker.** A project's `INDEX.md` -> the exact files it names -> raw evidence in `Language/rigs/` (`raw_log.txt`, the ledgers) and `HV Skill/rigs/` (the runs and the marks) -> [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md).
 

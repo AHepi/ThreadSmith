@@ -11,7 +11,7 @@ This repository holds **three separate research projects**, each in its own fold
 The three sit beside one another. How they relate is itself a research question; see [RELATIONS.md](RELATIONS.md).
 
 ## What is shared, and what is not
-- **Shared: the numbered sequence of the record, and the record up to log 59.** The four files in [records/](records/) (project story, Decisions, Lessons, Status) hold every entry up to log 59 for all three projects; their filenames begin "Checked reasoning language" because the record began with that project and the names were kept. From log 60 on, each project keeps its own record inside its folder (`Semantics/records/` first; decision 47), with the same entry numbers, and the shared files continue only for entries that belong to the repository as a whole. The log, the decisions and the lessons each stay one numbered sequence across the three, so a new entry takes the next number after the last one used anywhere.
+- **Shared: the record up to log 59.** The four files in [records/](records/) (project story, Decisions, Lessons, Status) hold every entry up to log 59 for all three projects; their filenames begin "Checked reasoning language" because the record began with that project and the names were kept. From 21 September 2026, Semantics and Language each keep their own record inside their folder (`Semantics/records/`, `Language/records/`), in the same four files plus a read-me: the entries copied from the shared record keep their numbers, and new entries carry the project's letter and the shared sequence's next number (S60, L60), with new decisions and lessons from S1 and L1. HV Skill still writes to the shared files. The shared record is not updated by the two split projects after that date.
 - **Shared: the numbering.** Every numbered file, in any folder, takes its number from the log entry that made it, so the numbers in `Semantics/`, `Language/` and `HV Skill/` interleave (see [LEGEND.md](LEGEND.md)).
 - **Not shared: everything else.** Each project has its own authority, its own tests and results, and its own next step. Work on the semantics audit lands in `Semantics/`; on the ledger language in `Language/`; on the hard-to-vary skill in `HV Skill/`.
 
@@ -24,13 +24,13 @@ The three sit beside one another. How they relate is itself a research question;
 ## The tree
 ```
 README.md, START-HERE.md, GLOSSARY.md, LEGEND.md, RELATIONS.md, RESEARCH-CONVENTIONS.md
-records/       the four shared record files (project story, Decisions, Lessons, Status), complete to log 59, then repository-wide entries only; and the bundle read-me
+records/       the four shared record files (project story, Decisions, Lessons, Status), complete to log 59; and the bundle read-me
 tutorials/     four short worked demonstrations on real files
 Semantics/     README, ORIGIN, INDEX; records/ (the project's own story, Decisions, Lessons, Status); authority/ (file 10, frozen; file 20 not here); tests/ (the audit workflow and rounds); results/ (the Stage B and Stage C returns; earlier returns not here)
-Language/      README, ORIGIN, INDEX; authority/ (the language, the translator prompt); tests/; results/; rigs/ (the working checkers)
+Language/      README, ORIGIN, INDEX; records/ (the project's own story, Decisions, Lessons, Status); authority/ (the language, the translator prompt); tests/; results/; rigs/ (the working checkers)
 HV Skill/      README, ORIGIN, INDEX; authority/ (the skill, unpacked and as .skill); tests/ (42, 43, 47, 48, 49, 50, 52); results/ (51, 53, 54); rigs/ (runs, dialogues, marks)
 ```
-Each project has the same shape: `README.md` (front door), `ORIGIN.md` (where it began), `INDEX.md` (its ledger of research states, with links), `records/` (its own record; Semantics has one, the other two still write to the shared files), and shallow folders named by artifact kind, never by version. Folder names describe what a thing is; the files and indexes say which version and state it belongs to.
+Each project has the same shape: `README.md` (front door), `ORIGIN.md` (where it began), `INDEX.md` (its ledger of research states, with links), `records/` (its own record; Semantics and Language have one, HV Skill still writes to the shared files), and shallow folders named by artifact kind, never by version. Folder names describe what a thing is; the files and indexes say which version and state it belongs to.
 
 ## How this repository came to be
 The earlier contents of `main` (a Rust workspace, ThreadSmith) were removed on 21 September 2026 at the owner's request; they remain in git history before commit `06aef52`.

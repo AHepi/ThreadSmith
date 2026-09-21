@@ -1,6 +1,6 @@
 # Semantics - Decisions
 
-*The Semantics project's own record, split out of the shared record in `records/` at log 60 (decision 47). Entry numbers are the shared sequence's and are unchanged, so every reference in the repository still holds. From log 60 on, entries whose output lands in `Semantics/` are written here; the shared record keeps the entries up to log 59 and continues only for entries that belong to the repository as a whole.*
+*The Semantics project's own record, kept here from 21 September 2026 (decision S1), in the same four files as the shared record at the root. The entries copied from the shared record keep their numbers, so every reference in the repository still holds. New entries here carry the letter S and the next number in the shared sequence at the time of writing, S60 first, so they read against the shared sequence and cannot collide with it. See READ ME FIRST in this folder.*
 
 A ledger of decisions, with your words as written.
 
@@ -11,6 +11,7 @@ A ledger of decisions, with your words as written.
 30. Continue the audit from Stage B in a new chat, and write the next prompt. "I've given you access to the context of my previous conversation. Read the following and continue where it left off. Also, I need the next prompt."
 44. The audit continues on the other model's Stage B return; the authority document is the fixed point to read it against. The return, pasted whole (kept as file 55 in Semantics/results), and then the theory uploaded again: "Remember this."
 45. Put the authority document in the repository. "you need to push the authority semantics I shared with you to main." (the file "10 Claude Fable Semantics - standalone theory.md", uploaded again the day before with "Remember this.")
+S1. Each project's files stay inside its own folder; only the read-me and navigation files sit outside. "Actually, can you recreate all the files outside the semantics subfolder that currently write to inside the semantics subfolder. I'm going to ensure all files remain withing their relative folders except the readme and other navigation related files"
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
