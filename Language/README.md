@@ -8,7 +8,8 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Tested on:** five of Claude's paragraphs, three of the owner's (ball and coin, Markus, Mondays), 21 of the other model's audit cases, and a blind sample of eight of its literary texts (seven matched its keys). Every run had its plan frozen first.
 - **Strength of evidence:** the translating has always been Claude's. "Not tested: a translator other than Claude" appears in every results file.
 - **Audited from outside (log 45):** the other model's audit of 38 and 39 is in [results/](results/), unchanged: fifteen findings on the wording, twelve repairs, sixty new texts, six of its own translations, nothing run. Four findings hold up against the text (F01, F02, F04, F15). [Plan 45](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) is frozen and not yet run: compare its six ledgers with Claude's, and sort the fifteen findings by running their cases.
-- **Next step (from the log):** run plan 45; then hand the other model the eight texts of plan 37 so the comparison runs both ways.
+- **Live instruction:** [46](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the eight texts of plan 37 for the other model to translate under 38 and 39, so the comparison runs both ways. Not yet sent.
+- **Next step (from the log):** paste 46; run plan 45.
 
 ## Where to start
 [INDEX.md](INDEX.md) for the timeline. [ORIGIN.md](ORIGIN.md) for the goal in the owner's words and the twelve properties. For the language itself, file 38. For what the checkers actually do, `rigs/READ ME FIRST.md`.
@@ -18,7 +19,7 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 ORIGIN.md      the goal, the twelve properties, how the pieces fit
 INDEX.md       every research state from the first theory to file 39, with what is and is not here
 authority/     38 (the language), 39 (the translator's task)
-tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39
+tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39; 46 the next instruction for the other model
 results/       21 and 22 (html pages), 37 (md): what happened, with predictions ticked; 45: the other model's package, as received
 rigs/          the working checkers, frozen and patched, every ledger, the bridge, and raw_log.txt
 ```

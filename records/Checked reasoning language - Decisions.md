@@ -44,3 +44,4 @@ A ledger of decisions, with your words as written.
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
 35. Check the other model's return on 38 and 39 for completeness, then write the next document. "Does this contain everything? Next document please"
+36. The instruction to the other model comes before the plan runs. "Cool. But first, the next instruction document to send to the agent."
