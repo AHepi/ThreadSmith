@@ -12,7 +12,7 @@ A later version exists, `20 Claude Fable Semantics - revised standalone theory.m
 - A **contract** (Part III) fixes the question and its list of changes covered.
 - **Transport** (Part IV) carries prose over into a formal form; provenance is declared, selected or constructed.
 - Non-vacuity and stated scope (Part V); approximate transport and error growth (Part VIII); "indistinguishable is identical" (Derivation 2).
-- The record's plain-word mapping of these terms is in the [project story](<../records/Checked reasoning language - project story.md>), "Words from the authority document"; the skill's is in [word-list.md](<../HV Skill/authority/hard-to-vary/references/word-list.md>).
+- The record's plain-word mapping of these terms is in the [project story](<../Language/records/Checked reasoning language - project story.md>), "Words from the authority document"; the skill's is in [word-list.md](<../HV Skill/authority/hard-to-vary/references/word-list.md>).
 
 ## How the audit began
 Log 24: while a second translator worked on the Mondays paragraph, the owner asked for "a strongly bounded workflow to give another model, to audit and try to break the authority document itself, in a way that fits the hard-to-vary method", with one constraint: that model "thinks too computationally and reinterprets negative instructions, but follows positive ones". The answer was two files, the workflow (24) and the owner's guide (24), in positive wording only.

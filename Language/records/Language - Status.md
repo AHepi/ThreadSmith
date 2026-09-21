@@ -12,4 +12,4 @@
 
 ## Traps
 - Letting this file drift from the project story in this folder. The log is the record; this file is the summary.
-- Reading the shared Status at the root for this project after 21 September. It is not updated from here.
+- Reading the shared Status beside this file for this project after 21 September. It is not updated from here.

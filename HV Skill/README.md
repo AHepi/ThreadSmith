@@ -12,17 +12,33 @@ The skill is also the method the whole project was built with: the language's tw
 - **Two earlier designs, not run to a result:** [42 Test plan](<tests/42 Test plan - hard-to-vary skill read by DeepSeek.md>) with [43 Corpus](<tests/43 Corpus - contested theories for the DeepSeek test.md>) and [47 Addendum](<tests/47 Addendum to test plan 42 - the corpus run, settings and expectations.md>), rigged and dry-run but never sent; [48](<tests/48 Test plan - the skill on well-constructed contested explanations (stopped).md>), Claude readers on rebuilt contested theories, stopped by the owner part-way and unmarked.
 
 ## Where to start
+This project keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the projects began with. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md).
+
 Read [SKILL.md](<authority/hard-to-vary/SKILL.md>): the idea in one example (seasons: a grieving goddess against the tilt of the earth), the three things that can change, and the router table saying which module to open when. [INDEX.md](INDEX.md) has the timeline. [ORIGIN.md](ORIGIN.md) says where the skill came from.
 
 ## What is in this folder
 ```
 ORIGIN.md      Deutsch's idea; the skill's relation to the semantics; how it entered the project
+records/       this thread's own log, Decisions, Lessons and Status, from 21 September 2026
+RELATIONS.md   this project's claims about its connections to the other two, with status and evidence
 INDEX.md       every improvement, what prompted it, and the unrun test
 authority/     hard-to-vary/ (SKILL.md + references/), and the .skill archive as uploaded
 tests/         42, 43, 47 (the first design and its corpus); 48 (stopped); 49, 50, 52 (the outside-papers plan, corpus and marking plan)
 results/       51 (pilot), 53 (the run as a program sees it), 54 (where the skill breaks)
 rigs/          the programs and raw returns: 147 runs, 12 dialogues, the hidden reports and the marks
 ```
+
+## Rules of this project
+- **Never show a reader under test the answer key or a source's standing** (files 42, 43, 49, 50, 52; `keys.json` and `cases.json` in the rigs).
+- **Running a reader under test:** every run saved as it came, with its finish reason; a run that returns empty is kept and run once more, recorded as a second attempt; the key is read from the environment and written to no file.
+- **A change to the skill is a new numbered skill file**, made only after a test has forced it; proposed changes are held in the results file that proposes them.
+- **Third-party texts fetched for a test are not kept;** the manifest and fetcher that rebuild them are.
+
+## Words used in this project
+Short form; the skill's own word list, mapping the theory's terms to plain words, is `authority/hard-to-vary/references/word-list.md`.
+- **The eight marks.** Held / held if / two routes / loose / idle / borrowed / fixed / unknown: how firmly a part of an explanation is held in place.
+- **Seen / claimed / worked out / recalled.** How a thing about a tool is known. Seen: watched it happen. Claimed: a source says so. Worked out: follows from tagged things. Recalled: memory only. "Seen" is further marked "on my own cases" or "on someone else's".
+- **Passage, answer key, setup, control (DeepSeek test).** What the reader under test is sent; what its reply is marked against, which it never sees; what it is given alongside the case; a sound case there to catch a reader that criticises everything.
 
 ## Traps
 - **Showing file 42, 43, 49, 50 or 52 to a reader under test.** They hold the answer keys and the sources' standing.

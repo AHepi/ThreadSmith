@@ -11,20 +11,31 @@ The audit of the authority document, **"Claude Fable Semantics - standalone theo
 - **What the record now says about the gauge:** it read zero on first use (Lesson 35) and moved once near cases were added (log 55): two table rows and six of seven near cases were marked BORROWED: JUDGEMENT against the original pairs; three near cases were then placed by tighter pairs. Open: A's scope row (O1), C's local-dependence row for O4 and O7. Lesson 49: file 41 left the model to find the theory's own distinction for O4 and it built a mechanism instead.
 
 ## Where to start
-[INDEX.md](INDEX.md) for the timeline with links. [ORIGIN.md](ORIGIN.md) for what the theory is and how it entered the project. This project keeps its own record in [records/](records/) from 21 September 2026: [project story](<records/Semantics - project story.md>) (the log), [Decisions](<records/Semantics - Decisions.md>) (the owner's words), [Lessons](<records/Semantics - Lessons.md>) (failures only), [Status](<records/Semantics - Status.md>) (the summary); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record at the root. For the method behind the audit, the [Owner's guide](<tests/24 Owner's guide - running the audit workflow.md>).
+[INDEX.md](INDEX.md) for the timeline with links. [ORIGIN.md](ORIGIN.md) for what the theory is and how it entered the project. This project keeps its own record in [records/](records/) from 21 September 2026: [project story](<records/Semantics - project story.md>) (the log), [Decisions](<records/Semantics - Decisions.md>) (the owner's words), [Lessons](<records/Semantics - Lessons.md>) (failures only), [Status](<records/Semantics - Status.md>) (the summary); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the projects began with. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md); a worked example on its files is in [tutorials/](tutorials/). For the method behind the audit, the [Owner's guide](<tests/24 Owner's guide - running the audit workflow.md>).
 
 ## What is in this folder
 ```
 ORIGIN.md      what the authority document is and how it entered the project
 records/       this thread's own log, Decisions, Lessons and Status, from 21 September 2026
+RELATIONS.md   this project's claims about its connections to the other two, with status and evidence
+tutorials/     one worked example: tracing a lesson through this project's files
 INDEX.md       the audit as a timeline, with what is and is not in the repository
 authority/     10 Claude Fable Semantics - standalone theory.md (frozen); NOT-IN-BUNDLE.md - file 20 is not here
 tests/         the audit workflow pair (24) and the six instruction rounds (27, 28, 30, 41, 55, 57)
 results/       55 Stage B return and 57 Stage C return (the other model's returns on 41 and 55, unchanged); NOT-IN-BUNDLE.md for the earlier returns, quoted in the log and not held here
 ```
 
+## Rules of this project
+- **Handing things to the other model:** it reinterprets negative instructions and follows positive ones. Give it file 24 in place of the hard-to-vary skill. Every instruction's paste part is searched by program for negative wording before it goes.
+- **Every return is kept as it came** in `results/`, named by the log entry that received it; the reading goes in the log, never inside the return.
+- **The authority is frozen.** File 10 is not edited; a revision is a new numbered file in `authority/`.
+
+## Words used in this project
+Short form; the theory's own terms are in the authority document, and their plain-word mapping is in the shared project story's "Words from the authority document" (in `../Language/records/`) and the skill's word list.
+- **Case (audit).** A short described situation about ordinary things, with a thoughtful person's verdict and the theory's verdict, condition by condition. A **break** is where the two differ and the difference survives the best reply on the theory's behalf.
+- **Pair, near case, gauge (audit).** For a phrase that asks the reader to judge: two picturable changes, one showing it met and one unmet; a case that sits close to the line between them; the list of phrases still marked BORROWED: JUDGEMENT.
+
 ## Traps
-- Handing the other model the hard-to-vary skill. It reinterprets "never" and "may not". Hand it file 24.
 - Reading the R2 amendments as Claude's. They are the other model's, against a revised theory Claude has not seen (log 26).
 - Treating rounds 27 and 28 as still open. They ran; the owner paused the clause rounds at log 30 to return to the audit itself.
 - Reading the returns in `results/55` and `results/57` as Claude's. They are the other model's, word for word; Claude's readings are logs 55 and 57 and are kept out of the files.

@@ -7,7 +7,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | --- | --- |
 | Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Revised: `20 ...revised standalone theory.md` - **not in bundle**, never given to Claude. |
 | Story | Decision 7 (why the document is here); [ORIGIN.md](ORIGIN.md). |
-| Relations | Quoted as authority by every Language test plan and by the skill. See [RELATIONS.md](../RELATIONS.md) R1, R2. |
+| Relations | Quoted as authority by every Language test plan and by the skill. See [RELATIONS.md](<RELATIONS.md>) R1, R2. |
 
 ## Research state: the audit workflow (log 24)
 | | |
@@ -35,7 +35,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Test | [30 Update your audit workflow, then audit again](<tests/30 Next instruction for the other model - workflow update and re-audit.md>) - Stage A: four changes to the skill (author tag, judgement-phrase pass, fix card, POKE records whether the part moved); Stage B: the pass over every amendment. |
 | Raw result | Stage A return (changed sections printed) - **not in bundle**. Stage B table, 32 rows - **not in bundle**. |
 | Interpretation | Log 31: all four changes in and well joined; three sound guards of its own added. Log 41: 32 rows cover A, B, C and three of D; E to J missing; zero BORROWED: JUDGEMENT marks. |
-| Lessons | [Lesson 35](<../records/Checked reasoning language - Lessons.md>): the pass could be passed by any phrase; far-apart changes are always available. |
+| Lessons | [Lesson 35](<../Language/records/Checked reasoning language - Lessons.md>): the pass could be passed by any phrase; far-apart changes are always available. |
 
 ## Research state: near cases (logs 41, 55)
 | | |
@@ -45,7 +45,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Raw result | [55 Stage B return](<results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md>) - 80 more rows (D to J), seven near-case lines, five tighter pairs, the Stage C field; kept exactly as received. |
 | Interpretation | Log 55: the gauge moved (two table rows BORROWED; six of seven near cases unplaced by the original pairs; three then placed by tighter pairs; O1, O4, O7 open). The two table rows sit on the theory's declared normative input; O4 is placeable by the theory's own contract distinction; O7 lands on its stated sufficiency attack point; O1 has no declared home. |
 | What it gives up | "Bounded to cases that already exist. Gives up: a row that no outside case has strained keeps its far-apart pair unchallenged." |
-| Lessons | [Lesson 49](<../records/Checked reasoning language - Lessons.md>): file 41 left the model to find the theory's own distinction for O4, and it built a mechanism instead. |
+| Lessons | [Lesson 49](<../Language/records/Checked reasoning language - Lessons.md>): file 41 left the model to find the theory's own distinction for O4, and it built a mechanism instead. |
 
 ## Research state: Stage C, the outside cases (logs 55, 57)
 | | |
@@ -54,7 +54,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Test | [55 Stage C, the outside cases](<tests/55 Next instruction for the other model - Stage C, the outside cases.md>) |
 | Raw result | [57 Stage C return](<results/57 Stage C return - the other model's seven case cards, O4 placed, phrases sorted.md>) - seven cards, the O4 pair, the three lists; kept exactly as received. |
 | Interpretation | Log 57: five cards placed, two on rows already borrowed, all seven verdicts agreeing with the thoughtful person; O4 placed by the handed-over distinction, marked as such; H declared input, G and C stated open points, A homeless. The "finding for the top" is about one front-matter sentence the body qualifies. Quotations checked against file 10: first concrete sight of what file 20 changed (anchors with properness and resolution conditions; a merit condition with its own refutation entry). |
-| Lessons | [Lesson 50](<../records/Checked reasoning language - Lessons.md>): file 55 named a claim of the theory as a target from Part 0 alone; Part V already qualified it. |
+| Lessons | [Lesson 50](<../Language/records/Checked reasoning language - Lessons.md>): file 55 named a claim of the theory as a target from Part 0 alone; Part V already qualified it. |
 
 ## Research state: Stage D and the report (log 57) - live
 | | |

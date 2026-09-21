@@ -1,6 +1,6 @@
 # Checked reasoning language - project story
 
-*One record for three separate projects, Semantics, Language and HV Skill. The name is the first project's, kept. Entries run in one numbered sequence across all three; an entry belongs to the project whose folder holds its output file.*
+*The shared record the three projects began with, complete to log 59 and not updated since 21 September 2026. Kept unchanged in the Language project's folder because the record began there and carries its name. Each project's own record continues in its own `records/` folder, with copies of its entries from here.*
 
 Authority document: "Claude Fable Semantics - standalone theory" (uploaded as "10 Claude Fable Semantics - standalone theory.md"). Frozen: not edited. A later version exists, "20 Claude Fable Semantics - revised standalone theory.md"; Claude has not been given it (as of log 26).
 

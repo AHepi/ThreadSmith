@@ -1,46 +1,21 @@
-# Three research projects - Semantics, Language, HV Skill
+# Research repository - navigation
 
-This repository holds **three separate research projects**, each in its own folder with its own front door, origin, index, authority, tests and results. They are run by the owner with Claude and audited from outside by a second language model ("the other model"). They quote one another, and how they relate is a research question of its own, but no one of them is the repository: a change to one folder is a change to that project alone.
+Three separate research projects, each in its own folder. Everything outside the project folders is general: conventions every project follows, and this navigation page. Nothing project-specific lives at the root.
 
-| Folder | What it holds | One line |
-| --- | --- | --- |
-| [Semantics/](Semantics/) | The audit of the authority document, "Claude Fable Semantics - standalone theory" | A theory of what it takes for something to count as an explanation, and the rounds of outside audit that try to break it |
-| [Language/](Language/) | The ledger language, its checker rigs, tests and results | A formal language that everyday reasoning prose can be turned into, so that a fixed-rule checker can find the faults |
-| [HV Skill/](<HV Skill/>) | The hard-to-vary skill, its tests, rigs and results | A Claude skill for testing whether an explanation is hard to vary (Deutsch), sharpened with the semantics, and tested on outside papers read by DeepSeek |
+| Folder | Front door | Timeline | Record |
+| --- | --- | --- | --- |
+| [Semantics/](Semantics/) | [README](Semantics/README.md) | [INDEX](Semantics/INDEX.md) | [records/](Semantics/records/) |
+| [Language/](Language/) | [README](Language/README.md) | [INDEX](Language/INDEX.md) | [records/](Language/records/) |
+| [HV Skill/](<HV Skill/>) | [README](<HV Skill/README.md>) | [INDEX](<HV Skill/INDEX.md>) | [records/](<HV Skill/records/>) |
 
-The three sit beside one another. How they relate is itself a research question; see [RELATIONS.md](RELATIONS.md).
+Each project's README says what it is, where it stands, its own rules and its own words. Its INDEX is the timeline of research states with links. Its `records/` is its log, the owner's decisions, the lessons and the status. Its RELATIONS.md holds its claims about the other projects.
 
-## What is shared, and what is not
-- **Shared: the record up to log 59.** The four files in [records/](records/) (project story, Decisions, Lessons, Status) hold every entry up to log 59 for all three projects; their filenames begin "Checked reasoning language" because the record began with that project and the names were kept. From 21 September 2026, Semantics and Language each keep their own record inside their folder (`Semantics/records/`, `Language/records/`), in the same four files plus a read-me: the entries copied from the shared record keep their numbers, and new entries carry the project's letter and the shared sequence's next number (S60, L60), with new decisions and lessons from S1 and L1. HV Skill still writes to the shared files. The shared record is not updated by the two split projects after that date.
-- **Shared: the numbering.** Every numbered file, in any folder, takes its number from the log entry that made it, so the numbers in `Semantics/`, `Language/` and `HV Skill/` interleave (see [LEGEND.md](LEGEND.md)).
-- **Not shared: everything else.** Each project has its own authority, its own tests and results, and its own next step. Work on the semantics audit lands in `Semantics/`; on the ledger language in `Language/`; on the hard-to-vary skill in `HV Skill/`.
+## The general files
+- [START-HERE.md](START-HERE.md) - how to read any project here: who is in it, three ways to read, two things to know before reading a result.
+- [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md) - the rules every project follows, and the standard shape of a project folder.
+- [LEGEND.md](LEGEND.md) - how to read a filename: the number, the kind, the subject; the record files; file types.
+- [GLOSSARY.md](GLOSSARY.md) - the words used for the repository itself. Each project's own words are in its README.
+- [tutorials/](tutorials/) - four short guides to the chain every project keeps: authority, test, raw result, interpretation, lesson. Worked examples on real files are inside the projects, in their own `tutorials/` folders.
 
-## Where to start
-- New to all of it: [START-HERE.md](START-HERE.md), then [GLOSSARY.md](GLOSSARY.md), then [tutorials/](tutorials/).
-- Reviewing the research: [records/](records/) holds the one record shared by the three projects. Its [READ ME FIRST](<records/READ ME FIRST.md>) says what to read in what order; the [project story](<records/Checked reasoning language - project story.md>) is the log; [Status](<records/Checked reasoning language - Status.md>) is the summary.
-- Decoding a filename: [LEGEND.md](LEGEND.md).
-- The rules the work is done under: [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md).
-
-## The tree
-```
-README.md, START-HERE.md, GLOSSARY.md, LEGEND.md, RELATIONS.md, RESEARCH-CONVENTIONS.md
-records/       the four shared record files (project story, Decisions, Lessons, Status), complete to log 59; and the bundle read-me
-tutorials/     four short worked demonstrations on real files
-Semantics/     README, ORIGIN, INDEX; records/ (the project's own story, Decisions, Lessons, Status); authority/ (file 10, frozen; file 20 not here); tests/ (the audit workflow and rounds); results/ (the Stage B and Stage C returns; earlier returns not here)
-Language/      README, ORIGIN, INDEX; records/ (the project's own story, Decisions, Lessons, Status); authority/ (the language, the translator prompt); tests/; results/; rigs/ (the working checkers)
-HV Skill/      README, ORIGIN, INDEX; authority/ (the skill, unpacked and as .skill); tests/ (42, 43, 47, 48, 49, 50, 52); results/ (51, 53, 54); rigs/ (runs, dialogues, marks)
-```
-Each project has the same shape: `README.md` (front door), `ORIGIN.md` (where it began), `INDEX.md` (its ledger of research states, with links), `records/` (its own record; Semantics and Language have one, HV Skill still writes to the shared files), and shallow folders named by artifact kind, never by version. Folder names describe what a thing is; the files and indexes say which version and state it belongs to.
-
-## How this repository came to be
-The earlier contents of `main` (a Rust workspace, ThreadSmith) were removed on 21 September 2026 at the owner's request; they remain in git history before commit `06aef52`.
-
-The research files arrived as two zip bundles, both made on 20 September 2026:
-- `Language.zip` (12:28): twenty files plus a read-me.
-- `Semantics.zip` (12:35): the same twenty, byte for byte, plus three later documents (41, 42, 43), with the four record files and the read-me brought up to date.
-
-The first was imported as one commit and the second on top of it, so the earlier state of the record files is in history. Despite their names, neither bundle was specific to one project: both held the whole set. The files were sorted into the three folders here by what each is about; the [project INDEX](Language/INDEX.md) files say where every file went and why.
-
-Not in either bundle, and so not here: the revised authority document (file 20; the original, file 10, was added on the owner's word at log 56), most of the other model's outputs (its amendments, audit package, Stage A return and the first 32 rows of its Stage B table, rulebook audit V3; the rest of Stage B and all of Stage C are held as Semantics/results/55 and 57), and the earlier numbered files the read-me lists as superseded and left out on purpose. Each project's INDEX marks these. Added after the bundles, on 21 September: the other model's audit of files 38 and 39 (`Language/results/45 ...`), which also carries the 324-input literary corpus of log 37. Added on 21 September from the chat that ran the skill test: `HV Skill/` files 47 to 54 and its three rigs (logs 47 to 54), renumbered on import from 45 to 52 because the repository had gone on to 45 and 46 meanwhile (Lesson 48).
-
-The structure follows a written proposal for a human-first research repository (research lineage: authority -> story -> test -> raw result -> interpretation -> lessons). Naming, numbering and conventions remain the owner's; see LEGEND.md and RESEARCH-CONVENTIONS.md.
+## Where the shared history is
+The three projects began as one record. That record (four files named "Checked reasoning language - ...", complete to log 59, plus the read-me of the bundles it came in) is kept unchanged in `Language/records/`, the project it began with. Each project's own `records/` holds copies of its entries from it, numbers unchanged, and every entry made since. Git history holds the repository's own changes: the imports of the two bundles, the sorting into three folders, and the split of the record.

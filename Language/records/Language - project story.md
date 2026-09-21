@@ -1,6 +1,6 @@
 # Language - project story
 
-The record of the Language project from 21 September 2026. Logs 01 to 44 are in the shared project story at the repository root and are the history of the language, its rigs and its tests up to the day the repository was made. Entries 45, 46 and 58 below are copied verbatim from that shared record; every entry after them is written here first and numbered L60 onward (see READ ME FIRST).
+The record of the Language project from 21 September 2026. Logs 01 to 44 are in the shared project story beside this file ("Checked reasoning language - project story.md") and are the history of the language, its rigs and its tests up to the day the repository was made. Entries 45, 46 and 58 below are copied verbatim from that shared record; every entry after them is written here first and numbered L60 onward (see READ ME FIRST).
 
 Authority document: "Claude Fable Semantics - standalone theory" (file 10, at Semantics/authority/). Language under test: file 38, with the translator prompt 39. The rigs: `rigs/`, patches 1 to 16 on rig 1, 1 to 3 on rig 2.
 

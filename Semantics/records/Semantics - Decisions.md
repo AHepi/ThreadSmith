@@ -1,6 +1,6 @@
 # Semantics - Decisions
 
-*The Semantics project's own record, kept here from 21 September 2026 (decision S1), in the same four files as the shared record at the root. The entries copied from the shared record keep their numbers, so every reference in the repository still holds. New entries here carry the letter S and the next number in the shared sequence at the time of writing, S60 first, so they read against the shared sequence and cannot collide with it. See READ ME FIRST in this folder.*
+*The Semantics project's own record, kept here from 21 September 2026 (decision S1), in the same four files as the shared record (now kept in `Language/records/`). The entries copied from the shared record keep their numbers, so every reference in the repository still holds. New entries here carry the letter S and the next number in the shared sequence at the time of writing, S60 first, so they read against the shared sequence and cannot collide with it. See READ ME FIRST in this folder.*
 
 A ledger of decisions, with your words as written.
 

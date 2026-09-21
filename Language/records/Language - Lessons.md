@@ -1,6 +1,6 @@
 # Language - Lessons
 
-Only cases where something failed while being made or tested on the Language project, and how it was fixed. Lessons 1 to 50 are in the shared Lessons file at the root; 51 to 53 are copied from it. New lessons here are numbered L1 onward.
+Only cases where something failed while being made or tested on the Language project, and how it was fixed. Lessons 1 to 50 are in the shared Lessons file beside this one; 51 to 53 are copied from it. New lessons here are numbered L1 onward.
 
 51. Plan 45's predictions for N17 (a LETS line against a stated tendency) and N22 (SO THAT answering "cannot tell") were written from the audit report's one-line descriptions of those cases, not from the case texts. N17-A says "assisted", which is HELPS, and states no tendency; N22-A supplies both the dependency and the change, so the plan check can fire. Found by the other model before any run. Fix: a forcing case's prediction quotes the text it will be run on; the plan stays as written and the discrepancies stand beside it.
 52. The rig bundle holds no program for the sameness test, though plan 45 names it as a thing to run; logs 19 and 20 ran it by hand. Found when the other model looked for its command. Fix: write it down as a program before Part A, named as new, and log what it compares.

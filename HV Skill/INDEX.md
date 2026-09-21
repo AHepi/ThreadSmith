@@ -1,6 +1,6 @@
 # HV Skill - index
 
-The skill's lineage, as the log records it. Each improvement is a research state: what prompted it, what was added, and what tested it. Numbers are log entries in the [project story](<../records/Checked reasoning language - project story.md>). Skill files before 30 are **not in bundle** (superseded, left out on purpose).
+The skill's lineage, as the log records it. Each improvement is a research state: what prompted it, what was added, and what tested it. Numbers are log entries; the skill's entries are in this project's own [project story](<records/HV Skill - project story.md>) (copied from the shared record, where they also remain), and new ones are H-numbered there. Skill files before 30 are **not in bundle** (superseded, left out on purpose).
 
 | Log | Skill file | Prompted by | What changed | Tested by |
 | --- | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Cases | [43 Corpus](<tests/43 Corpus - contested theories for the DeepSeek test.md>) - 20 contested theories in a supporter's voice (the passage), what critics name as the weak point (the answer key, never shown), and 5 controls. Source-checked on the day: seven keys changed. |
 | Rig | [rigs/plan 42 rig](<rigs/plan 42 rig - DeepSeek, unrun/>) - runner, hider, table-maker; dry-run on a stub. |
 | Raw result | None. Never sent: the owner redirected the test to outside papers (decision 39) before a key was used on it. |
-| Lessons | [Lesson 36](<../records/Checked reasoning language - Lessons.md>) (add-ons stalled), [37](<../records/Checked reasoning language - Lessons.md>) (numbering), [38](<../records/Checked reasoning language - Lessons.md>) (renaming does not transfer to real theories), [39](<../records/Checked reasoning language - Lessons.md>) (the record disagreed with itself about the source check). |
+| Lessons | [Lesson 36](<../Language/records/Checked reasoning language - Lessons.md>) (add-ons stalled), [37](<../Language/records/Checked reasoning language - Lessons.md>) (numbering), [38](<../Language/records/Checked reasoning language - Lessons.md>) (renaming does not transfer to real theories), [39](<../Language/records/Checked reasoning language - Lessons.md>) (the record disagreed with itself about the source check). |
 
 ## Research state: Claude readers on well-built contested explanations (log 48) - stopped
 | | |
@@ -34,7 +34,7 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Story | Decision 37: continue the skill test, not the language test, on well-constructed explanations widely known to be contested. Decision 38: "No stop". |
 | Test | [48 Test plan](<tests/48 Test plan - the skill on well-constructed contested explanations (stopped).md>) - twelve contested theories rebuilt in their supporters' strongest form plus four controls; three setups (report shape; the skill; the skill with the semantics); reader a fresh Claude agent. |
 | Raw result | [rigs/plan 48](<rigs/plan 48 - Claude readers, stopped/>) - 31 of 48 replies, written before the owner stopped the run. Unmarked; nothing read. |
-| Lessons | [Lesson 40](<../records/Checked reasoning language - Lessons.md>) (thirty readers launched before the owner had seen the plan), [41](<../records/Checked reasoning language - Lessons.md>) (a Claude reader was never what the owner wanted). |
+| Lessons | [Lesson 40](<../Language/records/Checked reasoning language - Lessons.md>) (thirty readers launched before the owner had seen the plan), [41](<../Language/records/Checked reasoning language - Lessons.md>) (a Claude reader was never what the owner wanted). |
 
 ## Research state: the skill on outside papers, read by DeepSeek V4.1 Flash (logs 49 to 54) - run and marked
 | | |
@@ -45,7 +45,7 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Cases | [50 Corpus](<tests/50 Corpus - outside sources for the skill test.md>) - 49 sources, 429,268 words: 18 science, 7 computability, 6 economics, 6 philosophy, 6 fiction, 2 designs, 2 rules, 2 instructions; five pairs (a claim beside its critique); eight controls; every substitution recorded with its reason. The texts are rebuilt by `fetch.py` and are not in the repository. |
 | Raw result | [rigs/plan 49 rig](<rigs/plan 49 rig - DeepSeek on outside papers/>) - 147 single-shot runs (`runs/`), two first attempts that came back empty, twelve conversation dialogues (`conv/`), the hidden reports and the marks (`marking/`). |
 | Interpretation | [51 Pilot results](<results/51 Pilot results - nine runs on three outside sources.md>) - the introduction works: none of the six things watched for happened; the router opened modules unprompted. [53 Corpus run](<results/53 Corpus run - what happened, before any report was marked.md>) - the run as a program sees it: the method's form in 40 of 49 (pasted) and 49 of 49 (router) reports, none without the skill; two empty replies re-run once. [54 Results](<results/54 Results - where the skill breaks, on outside papers read by DeepSeek.md>) - the answer: two breaks in the skill's wording (the flip test fires on a derived conclusion; two vocabularies let a free design choice be marked "fixed"), one gap (look inside has almost no purchase on a single document), no CANNOT mark anywhere, three misreads all in the pasted-whole mode, controls standing, six same-explanation-at-this-level verdicts from the skill modes and none from the bare reader; conversation mode works and the author concedes under the skill's questions. Three changes to the skill proposed and held. |
-| Lessons | [Lessons 42 to 48](<../records/Checked reasoning language - Lessons.md>): fetch failures a status code does not show; trimming by marker; the crashed pilot; empty replies with no error; the marker judging from the first search hit (ten marks wrong, corrected); readers asking several questions a turn; the third numbering clash. |
+| Lessons | [Lessons 42 to 48](<../Language/records/Checked reasoning language - Lessons.md>): fetch failures a status code does not show; trimming by marker; the crashed pilot; empty replies with no error; the marker judging from the first search hit (ten marks wrong, corrected); readers asking several questions a turn; the third numbering clash. |
 | Not tested | Repeatability (one run per box; two runs on one paper disagreed on the flip); 33 of the 49 sources beyond their shape; a second marker; the semantics as content. |
 | Next | On the owner's word: P3 and F4 three more runs each under both skill modes, skill unchanged; if the breaks recur, the three changes in file 54, then the same six runs again. |
 

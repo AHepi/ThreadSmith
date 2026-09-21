@@ -17,3 +17,7 @@ Sixteen well-built cases (`cases.json`, keys inside; `passages_only.json` is wha
 - `marking/`: `to_mark.md` (48 reports, labels hidden, as the marker saw them), `secret_mapping.json` (opened after marking), `close_marks_all.json` (the marks as given, with the marker's corrections noted in place), `close_marks_restored.json` (the same with the labels back), `shape_by_program.json`, `cannot_candidates.json`, the staged batches.
 
 The key for DeepSeek's service was read from the environment and is in no file here.
+
+## Inside the skill rigs - the names
+- `runs/<source>-m<mode>.json`: one DeepSeek return; `source` is the id in `sources.json` (S1 to S18 science, E economics, P philosophy, C computability, F fiction, D design, R rules, I instructions; `b` a paired critique), `mode` 0 no skill, 1 skill pasted whole, 2 router live. `conv/<source>-conv.json`: a conversation dialogue with its report.
+- `marking/to_mark.md` is what the marker saw (labels hidden); `secret_mapping.json` restores them; `close_marks_restored.json` is the marks with the labels back.

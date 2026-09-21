@@ -1,10 +1,8 @@
 # Tutorials
 
-Four short demonstrations, each on real files in this repository. The glossary says what a word means; these show what it looks like.
+Four short guides to the chain every project keeps: authority -> test -> raw result -> interpretation -> lesson. The glossary says what a word means; these say what to open and what to look for. They name no project; worked examples on real files are inside the projects, in their own `tutorials/` folders.
 
-1. [Reading an authority](reading-an-authority.md) - the ledger language, file 38, and why the number matters.
-2. [Following a test](following-a-test.md) - the Markus paragraph: plan first, then the run, then what changed.
-3. [Reading a result](reading-a-result.md) - the blind sample of literary texts: raw log, ledger, results page, and the difference between them.
-4. [Tracing a lesson](tracing-a-lesson.md) - Lesson 35, from a zero on a gauge back to the file that fixed it.
-
-Each follows the same chain: authority -> test -> raw result -> interpretation -> lesson.
+1. [Reading an authority](<../Language/tutorials/reading-an-authority.md>) - the thing under test, and why its number matters.
+2. [Following a test](<../Language/tutorials/following-a-test.md>) - plan first, then the run, then what changed.
+3. [Reading a result](<../Language/tutorials/reading-a-result.md>) - raw result, interpretation, and the difference between them.
+4. [Tracing a lesson](<../Semantics/tutorials/tracing-a-lesson.md>) - from a failure back to the test that exposed it and forward to the file that fixed it.

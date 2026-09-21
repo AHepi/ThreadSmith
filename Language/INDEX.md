@@ -1,6 +1,6 @@
 # Language - index
 
-Every research state of the ledger language, in order, with links. Numbers are log entries in the [project story](<../records/Checked reasoning language - project story.md>), which is the full account. "Not in bundle" means the file is described in the log but was left out of both zips as superseded; it is not here.
+Every research state of the ledger language, in order, with links. Numbers are log entries in the [project story](<records/Checked reasoning language - project story.md>), which is the full account. "Not in bundle" means the file is described in the log but was left out of both zips as superseded; it is not here.
 
 ## 1. The first theory and its research (logs 01 to 05)
 | | |
