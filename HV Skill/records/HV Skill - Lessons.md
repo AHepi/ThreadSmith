@@ -1,6 +1,6 @@
 # HV Skill - Lessons
 
-*The HV Skill project's own record, kept here from 21 September 2026, in the same four files as the shared record (now in `Language/records/`, complete to log 59). The entries copied from the shared record keep their numbers. New entries here carry the letter H and the next number in the shared sequence at the time of writing, H60 first; new decisions and lessons are numbered H1 onward. See READ ME FIRST in this folder.*
+*The HV Skill project's own record, kept here from 21 September 2026, in the same four files as the shared record (now in `Language/records/`, complete to log 59). The entries copied from the shared record keep their numbers. New entries here carry the letter H and one more than the highest number this log has used, H55 first; new decisions and lessons are numbered H1 onward. See READ ME FIRST in this folder.*
 
 Only cases where something failed while being made or tested, and how it was fixed.
 

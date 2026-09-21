@@ -1,6 +1,6 @@
 # HV Skill - Decisions
 
-*The HV Skill project's own record, kept here from 21 September 2026, in the same four files as the shared record (now in `Language/records/`, complete to log 59). The entries copied from the shared record keep their numbers. New entries here carry the letter H and the next number in the shared sequence at the time of writing, H60 first; new decisions and lessons are numbered H1 onward. See READ ME FIRST in this folder.*
+*The HV Skill project's own record, kept here from 21 September 2026, in the same four files as the shared record (now in `Language/records/`, complete to log 59). The entries copied from the shared record keep their numbers. New entries here carry the letter H and one more than the highest number this log has used, H55 first; new decisions and lessons are numbered H1 onward. See READ ME FIRST in this folder.*
 
 A ledger of decisions, with your words as written.
 
@@ -16,6 +16,8 @@ A ledger of decisions, with your words as written.
 41. Run the pilot. "Go."
 42. Run the corpus. "Great. Do it."
 43. Patch the rig, then run the rest. "Ok. Have you raised or removed token ceilings? Or streaming instead so that failed outputs don't happen?" then "Ok go!"
+
+H1. Numbers are each project's own, and work on one project edits nothing in another. "The numbers should be project independent. If they aren't, that needs to change. Work on one project should never edit anything in another project either. Can you fix only that. The only things shared are a conventions surface when they come together later."
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

@@ -4,7 +4,7 @@ From 21 September 2026 the HV Skill project keeps its own record here, in the sa
 
 ## How the two records relate
 - **Before this folder existed**, every HV Skill entry was in the shared record, which now lives in `Language/records/` under its original name ("Checked reasoning language - ..."), complete to log 59. The skill's log entries there (02, 05, 08, 14, 42, 43, 47 to 54), the owner's decisions on the skill (8, 22, 31 to 33, 37 to 43) and the skill lessons (4, 6, 36, 38 to 48) are copied here verbatim, numbers unchanged, so this folder reads on its own. The copies are marked.
-- **From here on**, an HV Skill entry is written in this folder only. A new log entry carries the letter H and the next number in the shared sequence at the time of writing (H60 first); a file made under it is named "H60 ...". New decisions and lessons are numbered H1 onward. The letter says the thread; the number says roughly when.
+- **From here on**, an HV Skill entry is written in this folder only. A new log entry carries the letter H and one more than the highest number this log has used (H55 first, after 54); a file made under it is named "H55 ...". What the other projects have numbered is not looked at (decision H1). New decisions and lessons are numbered H1 onward. The letter says the project; the number says where in this log.
 - **The shared record** is not updated after 21 September.
 
 ## Read in this order
@@ -15,4 +15,5 @@ From 21 September 2026 the HV Skill project keeps its own record here, in the sa
 
 ## Traps
 - Editing a copied entry. The copies are the shared record's text; a correction is a new entry.
-- Numbering a new file by the shared record's last number alone. Use this log's H-number.
+- Numbering a new file by a number seen outside this folder, in the shared record or another project. The next number is one more than this log's highest.
+- Editing a file in another project's folder from work done here. Read it and link it; change nothing there.

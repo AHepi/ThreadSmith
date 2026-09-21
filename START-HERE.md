@@ -36,4 +36,5 @@ tutorials/     (optional) worked examples on the project's own files
 ## Traps
 - **Reading a project's apparatus as matching an older result.** A `rigs/` folder holds the apparatus as it is now; an older results file says what it said on the day.
 - **Reading the shared history as a project's current record.** The record the projects began with is kept, complete to its last shared entry, in the project it began with; each project's own `records/` is where its record continues.
-- **Numbering a new file by a number seen in another project.** The numbers interleave across projects; the rule is in [LEGEND.md](LEGEND.md).
+- **Numbering a new file by a number seen in another project.** Each project counts on its own from its own log's highest number; the numbers below 60 interleave only because the projects once shared one record. The rule is in [LEGEND.md](LEGEND.md).
+- **Editing a file in another project's folder while working in one.** Read it and link it; change nothing there. The root is the only shared surface.

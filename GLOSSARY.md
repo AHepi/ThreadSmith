@@ -2,7 +2,7 @@
 
 The words used for the repository itself. Each project keeps its own words in its README ("Words used in this project"); the authority for a project's words is the project's own files.
 
-- **Project.** One folder at the root, with the standard shape (see [START-HERE.md](START-HERE.md)). Three exist; each is separate, with its own authority, record and next step.
+- **Project.** One folder at the root, with the standard shape (see [START-HERE.md](START-HERE.md)). Three exist; each is separate, with its own authority, record, numbering and next step. Work on a project touches only its own folder; the root is the one shared surface.
 - **Authority.** The thing actually under test at a research state. Once used in a recorded test it is preserved, never silently changed; a new version is a new numbered file. Lives in a project's `authority/`.
 - **Research state.** One row of a project's INDEX: a story (what was wanted and expected), a test, a raw result, an interpretation, and the lessons that followed.
 - **Story.** Intent before evidence: what was wanted, expected and uncertain at a stage. Written into each frozen test plan and into the log entry that opens a stage.

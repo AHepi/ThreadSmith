@@ -7,12 +7,13 @@ The rules every project in this repository follows. A project may add rules of i
 - **Every project has** a README (front door), ORIGIN (where it began), INDEX (the timeline of research states), RELATIONS (its claims about the other projects), and `records/` (its log, Decisions, Lessons, Status, and a read-me).
 - **A numbered file lives in exactly one place,** chosen by what it is about. If it belongs to two projects, it lives where its number was made and the other project's INDEX links to it.
 - **Nothing project-specific lives at the root.** The root holds navigation and these conventions only.
+- **Work on one project edits only that project's folder.** Nothing in another project's folder is changed, however small, and nothing at the root unless the owner is changing the conventions themselves. What a project needs from another it reads and links; what it claims about another goes in its own RELATIONS.md. The root is the one shared surface, conventions and navigation, for when the projects come together later.
 
 ## The record
 - **The log is the record.** Every piece of work is a numbered entry in the project story: what was asked, what was done, what came out, what was not tested, and the output files, which take the entry's number. The log is added to, never rewritten.
 - **Decisions holds the owner's words** as written, and nothing else. **Lessons holds only things that failed** while being built or tested, and how each was fixed. **Status is the summary** and drifts from the log at its peril.
 - **To edit the documentation:** add a log entry, update Status, add to Decisions or Lessons if one applies.
-- **Numbering:** check the last number used anywhere in the repository before the first new file, not only at the start of a chat; a project's new entries carry its letter (see [LEGEND.md](LEGEND.md)).
+- **Numbering is each project's own.** A new entry takes the project's letter and one more than the highest number that project's log has used, whatever the other projects have done since; check that log's highest number before the first new file, not only at the start of a chat. A number seen in another project means nothing here (see [LEGEND.md](LEGEND.md)).
 - **Starting a new chat:** read the project's `records/` read-me and its Status first, then the newest numbered file in its log.
 
 ## Tests and results
