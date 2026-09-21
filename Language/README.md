@@ -9,7 +9,8 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Strength of evidence:** the translating has always been Claude's. "Not tested: a translator other than Claude" appears in every results file.
 - **Audited from outside (log 45):** the other model's audit of 38 and 39 is in [results/](results/), unchanged: fifteen findings on the wording, twelve repairs, sixty new texts, six of its own translations, nothing run. Four findings hold up against the text (F01, F02, F04, F15). [Plan 45](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) is frozen and not yet run: compare its six ledgers with Claude's, and sort the fifteen findings by running their cases.
 - **Live instruction:** [46](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the eight texts of plan 37 for the other model to translate under 38 and 39, so the comparison runs both ways. Not yet sent.
-- **Next step (from the log):** paste 46; run plan 45.
+- **Execution attempt (log 58):** the other model tried plan 45 and was blocked by the missing runtime; its attempt is kept in [results/](results/). The runtime now runs here and reproduces the recorded T05-B run.
+- **Next step (from the log):** run plan 45 here; paste 46.
 
 ## Where to start
 [INDEX.md](INDEX.md) for the timeline. [ORIGIN.md](ORIGIN.md) for the goal in the owner's words and the twelve properties. For the language itself, file 38. For what the checkers actually do, `rigs/READ ME FIRST.md`.
@@ -29,5 +30,5 @@ rigs/          the working checkers, frozen and patched, every ledger, the bridg
 - **The rig bundle matches no older results file.** It holds the checkers as they are now. The results files say what the checkers said on the day.
 - **A clean report means the lines fit together**, not that the reasoning is right. On a story it may only mean "not the kind of text the checker was built for".
 - **Patches 4 and 5 are not general.** Each was forced by one paragraph.
-- **The joined script points at the folder the rigs were built in.** Change that one path (`/home/claude/rig2/...` in `rigs/rig 1 - arguments/joined/run_joined.py`) to run it elsewhere.
+- **Both drivers point at the machine the rigs were built on.** `run_check.py` and `check2.py` call `/home/claude/sCASP/scasp`, and the joined script reads `/home/claude/rig2/patched/laws.pl`. To run elsewhere, put s(CASP) at that path (a symlink does) or change the one line; this is what blocked the other model's execution attempt (log 58).
 - **Compare reports without the GAUGE line.** It carries timings that change run to run.
