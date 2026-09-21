@@ -1,6 +1,6 @@
-# Checked reasoning language - research repository
+# Three research projects - Semantics, Language, HV Skill
 
-One repository for three related, evolving research programs, run by the owner with Claude, and audited from outside by a second language model ("the other model").
+This repository holds **three separate research projects**, each in its own folder with its own front door, origin, index, authority, tests and results. They are run by the owner with Claude and audited from outside by a second language model ("the other model"). They quote one another, and how they relate is a research question of its own, but no one of them is the repository: a change to one folder is a change to that project alone.
 
 | Folder | What it holds | One line |
 | --- | --- | --- |
@@ -10,9 +10,14 @@ One repository for three related, evolving research programs, run by the owner w
 
 The three sit beside one another. How they relate is itself a research question; see [RELATIONS.md](RELATIONS.md).
 
+## What is shared, and what is not
+- **Shared: the record.** The four files in [records/](records/) (project story, Decisions, Lessons, Status) are one record for all three projects. Their filenames begin "Checked reasoning language" because the record began with that project and the names were kept; the log, the decisions and the lessons each run in one numbered sequence across the three. Which project an entry belongs to is the folder its output file went to. Status is grouped by project.
+- **Shared: the numbering.** Every numbered file, in any folder, takes its number from the log entry that made it, so the numbers in `Semantics/`, `Language/` and `HV Skill/` interleave (see [LEGEND.md](LEGEND.md)).
+- **Not shared: everything else.** Each project has its own authority, its own tests and results, and its own next step. Work on the semantics audit lands in `Semantics/`; on the ledger language in `Language/`; on the hard-to-vary skill in `HV Skill/`.
+
 ## Where to start
 - New to all of it: [START-HERE.md](START-HERE.md), then [GLOSSARY.md](GLOSSARY.md), then [tutorials/](tutorials/).
-- Reviewing the research: [records/](records/) holds the record of the whole project. Its [READ ME FIRST](<records/READ ME FIRST.md>) says what to read in what order; the [project story](<records/Checked reasoning language - project story.md>) is the log; [Status](<records/Checked reasoning language - Status.md>) is the summary.
+- Reviewing the research: [records/](records/) holds the one record shared by the three projects. Its [READ ME FIRST](<records/READ ME FIRST.md>) says what to read in what order; the [project story](<records/Checked reasoning language - project story.md>) is the log; [Status](<records/Checked reasoning language - Status.md>) is the summary.
 - Decoding a filename: [LEGEND.md](LEGEND.md).
 - The rules the work is done under: [RESEARCH-CONVENTIONS.md](RESEARCH-CONVENTIONS.md).
 

@@ -2,8 +2,12 @@
 
 You do not need to know Git, or any of the history, to read this repository. This page says what it is, who is in it, and where to go next.
 
-## The story in one paragraph
-The owner wants a way to check reasoning. You write a few sentences in ordinary prose. A translator (a language model) turns them into short, fixed-form lines called a ledger. A checker (a program with fixed rules, never guessing) reads the ledger and finds where the lines clash, where a step is a jump, where a thing is treated as the wrong kind of thing. A read-back turns the findings into plain words that point at your own sentences. Anything that could not be written as lines goes into a leftover bin, and the bin is always listed. That is the **Language** project. The theory of meaning that says what counts as an explanation, and what a "kind" is, is the **Semantics** project: it is the authority document everything else quotes. The method used to build and criticise all of this, "is every part of this explanation doing work?", is a Claude skill, the **HV Skill** ("hard to vary", from David Deutsch).
+## Three projects, not one
+This repository is three separate research projects, each in its own folder. They quote one another, and one shared record logs all three, but each has its own question, its own authority, its own tests and its own next step.
+
+- **Semantics/** - a theory of meaning, "Claude Fable Semantics - standalone theory", which says what it takes for something to count as an explanation and what a "kind" is. The project is the audit of that theory: rounds of described situations, handed to the other model, where the theory's verdict and a thoughtful person's verdict might come apart. The theory is the authority the other two projects quote.
+- **Language/** - a way to check reasoning. You write a few sentences in ordinary prose. A translator (a language model) turns them into short, fixed-form lines called a ledger. A checker (a program with fixed rules, never guessing) reads the ledger and finds where the lines clash, where a step is a jump, where a thing is treated as the wrong kind of thing. A read-back turns the findings into plain words that point at your own sentences. Anything that could not be written as lines goes into a leftover bin, and the bin is always listed.
+- **HV Skill/** - a Claude skill for asking "is every part of this explanation doing work?" ("hard to vary", from David Deutsch), sharpened with the semantics. It was the method the other two projects were built with, and it is now a project of its own: tested on 49 outside documents read by DeepSeek V4.1 Flash, with file 54 saying where its words break.
 
 ## Who is who
 - **The owner.** Sets the questions, supplies the paragraphs, makes the decisions. The Decisions file holds their words as written.
@@ -11,10 +15,10 @@ The owner wants a way to check reasoning. You write a few sentences in ordinary 
 - **The other model.** A second language model, given the theory and a workflow, asked to audit it and try to break it. Its outputs are quoted in the log; its audit of 38 and 39 is in `Language/results/`.
 - **The reader.** DeepSeek V4.1 Flash, given the skill and one document at a time and never the answer key, in the HV Skill test. Its 147 reports and twelve dialogues are in `HV Skill/rigs/`.
 
-## The three projects, one sentence each
-- **Semantics/** - the audit of "Claude Fable Semantics - standalone theory": rounds of described situations where the theory's verdict and a thoughtful person's verdict might come apart.
-- **Language/** - the ledger language, defined in one clean file (38), with two checker rigs built on s(CASP), tests frozen before each run, and results kept as they came.
-- **HV Skill/** - the hard-to-vary skill (file 30), improved seven times from what each stage taught, and tested on 49 outside documents read by DeepSeek V4.1 Flash: its words do work in a reader that is not Claude, and file 54 says where they break.
+## Where each project stands, one line each
+- **Semantics/** - Stage C of the second audit pass is returned (file 57); the live instruction is Stage D's fix cards and the report. The authority (file 10) is in the repository; the revised version the other model audits (file 20) is not.
+- **Language/** - the language is one clean file (38) with a translator prompt (39); two checker rigs on s(CASP); the other model's audit of 38 and 39 is in hand and plan 45 to sort it is frozen, unrun.
+- **HV Skill/** - the skill (file 30) tested on outside papers; file 54 names two breaks, one gap and three held changes; the repeatability run is the next step, on the owner's word.
 
 ## Three ways to read
 **New reader.** This page -> [GLOSSARY.md](GLOSSARY.md) -> [tutorials/](tutorials/) -> a project `README.md`.
@@ -29,5 +33,5 @@ The owner wants a way to check reasoning. You write a few sentences in ordinary 
 
 ## Traps
 The bundle read-me and the project story each keep a Traps list. Two matter most on first reading:
-- "Stage" and "Where things stand" in the project story and in Status still describe the project as it was around log 17. The log is the record.
+- The record files in `records/` are named "Checked reasoning language" but they record all three projects; the name is the first project's, kept. "The goal" and "Where things stand" in the project story are the Language project's and still describe it as it was around log 17. The log is the record.
 - The rig bundle holds the checkers as they are **now**. An older test write-up says what the checkers said on that day.

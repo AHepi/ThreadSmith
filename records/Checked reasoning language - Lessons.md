@@ -1,5 +1,7 @@
 # Checked reasoning language - Lessons
 
+*One record for three separate projects, Semantics, Language and HV Skill. The name is the first project's, kept. Entries run in one numbered sequence across all three; an entry belongs to the project whose folder holds its output file.*
+
 Only cases where something failed while being made or tested, and how it was fixed.
 
 1. The first round-trip picture was laid out sideways with a loop. It came out very wide and too small to read on a phone. Fix: rebuilt it top to bottom, with no loop and fewer boxes.

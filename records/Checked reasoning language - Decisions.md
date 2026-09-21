@@ -1,5 +1,7 @@
 # Checked reasoning language - Decisions
 
+*One record for three separate projects, Semantics, Language and HV Skill. The name is the first project's, kept. Entries run in one numbered sequence across all three; an entry belongs to the project whose folder holds its output file.*
+
 A ledger of decisions, with your words as written.
 
 1. Purpose. "It's purpose is to aid in reasoning. So it checks for logical inconsistencies, contradictions, jumps in reasoning, mismatches in category, properties or type. Basically anything that will aid in reasoning."
@@ -46,6 +48,7 @@ A ledger of decisions, with your words as written.
 43. Patch the rig, then run the rest. "Ok. Have you raised or removed token ceilings? Or streaming instead so that failed outputs don't happen?" then "Ok go!"
 44. The audit continues on the other model's Stage B return; the authority document is the fixed point to read it against. The return, pasted whole (kept as file 55 in Semantics/results), and then the theory uploaded again: "Remember this."
 45. Put the authority document in the repository. "you need to push the authority semantics I shared with you to main." (the file "10 Claude Fable Semantics - standalone theory.md", uploaded again the day before with "Remember this.")
+46. The three folders are three separate research projects, and the repository is to say so. "The files are the three different research projects. If that's not made clear by the readme, or anything else in the repo, can you change that?"
 
 ## Open, for you to decide
 - Whether to reopen decision 5 (external checker essential) in light of the argument-mapping finding on page 04. Not reopened by Claude.

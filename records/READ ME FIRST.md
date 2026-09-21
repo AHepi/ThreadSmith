@@ -1,4 +1,8 @@
-# Checked reasoning language - the current set
+# The record set - one record for three projects
+
+The four record files in this folder (project story, Decisions, Lessons, Status) are shared by the three research projects in this repository: Semantics, Language and HV Skill. Their filenames begin "Checked reasoning language" because the record began with that project, and the names were kept so that the bundles and the log still match. The log, the decisions and the lessons each run in one numbered sequence across all three projects; which project an entry belongs to is the folder its output file sits in. Status is grouped by project.
+
+The rest of this page is the bundle read-me as it came, brought up to date: it lists the numbered files across all three projects.
 
 Twenty-three files. Everything here is live. This set is the twenty from the earlier bundle, plus three documents made in a later chat, with the four record files brought up to date.
 
@@ -6,7 +10,7 @@ Twenty-three files. Everything here is live. This set is the twenty from the ear
 The later chat started with an empty computer and none of these files, so it numbered its own documents 37, 38 and 39. Those numbers were already taken. They are now 41, 42 and 43, and every file number inside them has been corrected. Its separate "addition to the project records" file has been dropped: its entries are appended to the four record files themselves, as log 41 to 44, decisions 30 to 34 and lessons 35 to 37.
 
 ## Read in this order
-1. **Checked reasoning language - project story.md** - the whole record: goal, how the pieces fit, word list, the numbered log, next step.
+1. **Checked reasoning language - project story.md** - the whole record for all three projects: the numbered log, the next step for each, the word list. (Its opening sections, "The goal" and "Where things stand", are the Language project's.) For one project alone, start at that project's README and INDEX instead.
 2. **38 The ledger language - complete definition.md** - the language itself, clean, with no history in it.
 3. **39 Prompt - translate a text into the ledger language.md** - hand this to a translator together with file 38.
 4. **Checked reasoning language - Status.md** - the short summary.

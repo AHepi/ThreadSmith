@@ -16,7 +16,7 @@ log entry number
 - **The kinds** that appear: Test plan (frozen before a run), Test results and Results (what happened), Plan and Addendum (a design and what was fixed before running it), Marking plan (how replies are marked, frozen before reading), Pilot results and Corpus run (a run as it happened, before any reading), Next instruction for the other model (an audit round), Workflow and Owner's guide (the audit pair), Skill, Prompt (a translator's task), Corpus (cases with answer keys), Checker rigs. Kinds named in the log but not in the bundles: Theory, Research plan, Research, Reference, Rulebook.
 
 ## The record files
-`Checked reasoning language - project story.md`, `- Decisions.md`, `- Lessons.md`, `- Status.md` carry no number. They are overwritten in place and only ever appended to. The **log** in the project story is the record; Status is the summary; Decisions holds the owner's words; Lessons holds only failures.
+`Checked reasoning language - project story.md`, `- Decisions.md`, `- Lessons.md`, `- Status.md` carry no number. They are one record for all three projects (the name is the first project's, kept). They are overwritten in place and only ever appended to. The **log** in the project story is the record; Status is the summary; Decisions holds the owner's words; Lessons holds only failures.
 
 ## Inside the rigs (`Language/rigs/`)
 - `rig 1 - arguments/`, `rig 2 - causes/`: the two checker set-ups. `frozen/` is untouched since the freeze, with `fingerprints.txt` (SHA-256 of the frozen files and the time). `patched/` is the working copy. `joined/` runs rig 1's driver with rig 2's laws and `bridge.pl` added.
