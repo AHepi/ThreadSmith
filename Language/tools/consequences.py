@@ -24,7 +24,7 @@ def load_driver():
 def stated_facts(pl_text):
     """Facts a line states directly: clause heads whose only body goal is line(N)."""
     out = set()
-    for head, body in re.findall(r"^\s*([a-z_]+\([^:]*?\))\s*:-\s*([^.]+)\.", pl_text, re.M):
+    for head, body in re.findall(r"^([a-z_]+\([^:.\n]*?\))\s*:-\s*([^.]+)\.", pl_text, re.M):
         if re.fullmatch(r"\s*line\(\w+\)\s*", body): out.add(norm(head))
     return out
 

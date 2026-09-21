@@ -81,8 +81,18 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Authority | [L64 Scope - the contract the language claims, second version](<authority/L64 Scope - the contract the language claims, second version.md>), superseding [L63](<authority/L63 Scope - the contract the language claims, first version.md>) which misread the owner on meaning preservation (Lesson L3) - the question in the authority document's form, the jobs by whose they are, texts and findings in scope with the run that saw each, exclusions with gauges and proposed thresholds, the four error sources with what each may cost, pairs that pull, what would show it wrong, what is left to the owner. Never edited; the owner's strikes make L65. |
 | Next | The strikes; then the consequences prototype (prediction first); the read-back test; the blind-translator test; F15 and F09. |
 
+## 9. Consequences, a prototype (L65) - run
+| | |
+| --- | --- |
+| Story | Step two of the five approved at L63: is the pull between many consequences and exact read-back real? |
+| Test | [L65 Test plan](<tests/L65 Test plan - consequences, a prototype on the tomato ledger.md>), frozen at 7f12100. |
+| Raw result | [L65 Consequences prototype - the tomato ledger](<results/L65 Consequences prototype - the tomato ledger/>): the program's output, both runs, and the raw log of 140 queries. Program: `tools/consequences.py`. |
+| Interpretation | [L65 Test results](<results/L65 Test results - consequences, a prototype on the tomato ledger.md>): 10 derived facts, 4 of them consequences; 32 delta lines; 7 s; five of six expectations right; the pull is not real at this size. |
+| Lessons | L4 (a new program's first output). |
+| Next | The read-back test (step three), plan first; the program on a fault-free and on the longest ledger. |
+
 ## Files in this project, by folder
 - `authority/`: 38, 39; L63 and L64 (the scope contract, draft; L64 is current).
-- `tests/`: 21, 22, 35, 37, 45, 46.
-- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator".
+- `tests/`: 21, 22, 35, 37, 45, 46, L60 (handoff), L65.
+- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator"; L65 (results) and the folder "L65 Consequences prototype".
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).

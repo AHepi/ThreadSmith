@@ -1,0 +1,65 @@
+LEDGER A tomato: 13 lines; 11 facts stated directly; 19 facts found; 10 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+  changes(move(thermometer),reading(thermometer))   <- lines 4, k1
+  contradiction(dies(door_plant))   <- lines 2, 5, 7, 9
+  depends(dies(balcony_plants),reached(the_cold,balcony_plants))   <- lines 1, 5
+  depends(dies(door_plant),reached(the_cold,door_plant))   <- lines 2, 5
+  depends_on(dies(balcony_plants),reached(the_cold,balcony_plants))   <- lines 1, 5
+  depends_on(dies(door_plant),reached(the_cold,door_plant))   <- lines 2, 5
+  depends_on(reading(thermometer),reached(the_cold,thermometer))   <- lines 11
+  holds(dies(door_plant))   <- lines 2, 5, 7
+  produced(dies(balcony_plants))   <- lines 1, 5, 6
+  produced(dies(door_plant))   <- lines 2, 5, 7
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line 1 [said]: the balcony plants are tomato plants
+      no longer: depends(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends_on(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: kind(balcony_plants,tomato_plant)
+      no longer: produced(dies(balcony_plants))
+  take out line 2 [said]: the plant by the door is a tomato plant
+      no longer: contradiction(dies(door_plant))
+      no longer: depends(dies(door_plant),reached(the_cold,door_plant))
+      no longer: depends_on(dies(door_plant),reached(the_cold,door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: kind(door_plant,tomato_plant)
+      no longer: produced(dies(door_plant))
+  take out line 3 [said]: the cold is weather
+      no longer: kind(the_cold,weather)
+  take out line 4 [filled in]: the thermometer is a measuring device
+      no longer: changes(move(thermometer),reading(thermometer))
+      no longer: kind(thermometer,measuring_device)
+  take out line 5 [said]: cold ALWAYS kills a tomato plant it reaches
+      no longer: contradiction(dies(door_plant))
+      no longer: depends(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends(dies(door_plant),reached(the_cold,door_plant))
+      no longer: depends_on(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends_on(dies(door_plant),reached(the_cold,door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: produced(dies(balcony_plants))
+      no longer: produced(dies(door_plant))
+  take out line 6 [said]: the cold reached the balcony plants
+      no longer: holds(reached(the_cold,balcony_plants))
+      no longer: produced(dies(balcony_plants))
+  take out line 7 [said]: the cold reached the plant by the door
+      no longer: contradiction(dies(door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: holds(reached(the_cold,door_plant))
+      no longer: produced(dies(door_plant))
+  take out line 8 [said]: the balcony plants died
+      nothing changes
+  take out line 9 [said]: the plant by the door did not die
+      no longer: contradiction(dies(door_plant))
+      no longer: denied(dies(door_plant))
+  take out line 10 [said]: the balcony plants died BECAUSE the cold reached them
+      nothing changes
+  take out line 11 [said]: the thermometer's reading depends on the cold
+      no longer: depends(reading(thermometer),reached(the_cold,thermometer))
+      no longer: depends_on(reading(thermometer),reached(the_cold,thermometer))
+  take out line 12 [said]: PLAN: move the thermometer SO THAT the plants do not die
+      nothing changes
+  take out line k1 [usual case]: moving a measuring device changes its reading
+      no longer: changes(move(thermometer),reading(thermometer))
+
+TOTAL delta lines over 13 removals: 32. Time: 7 s.
