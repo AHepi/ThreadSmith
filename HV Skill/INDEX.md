@@ -50,23 +50,23 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Not tested | Repeatability (one run per box; two runs on one paper disagreed on the flip); 33 of the 49 sources beyond their shape; a second marker; the semantics as content. |
 | Next | On the owner's word: P3 and F4 three more runs each under both skill modes, skill unchanged; if the breaks recur, the three changes in file 54, then the same six runs again. |
 
-## Research state: the two breaks on repeat, and skill file 31 (H56 to H59) - run and marked, DeepSeek; Sonnet 5 arm waiting
+## Research state: the two breaks on repeat, and skill file 31 (H56 to H62) - run and marked, DeepSeek and Sonnet 5
 | | |
 | --- | --- |
 | Story | Decision H2: the repeatability run first, file 31 only if forced, then a bundle for an adversarial audit; the owner names the larger aim (a general-purpose reasoning engine) and puts it after getting the skill right. Decision H3: Claude Sonnet 5 as a second reader, not Opus 5. Decision H4: never a Fable 5.1 reader; no Fable 5.1 or Opus 5 subagent without permission. |
-| Authority under test | File 30 (plan H56), then file 31 (plan H58). Readers: DeepSeek V4.1 Flash (run); Claude Sonnet 5 (waiting on a key). |
+| Authority under test | File 30 (plan H56), then file 31 (plan H58). Readers: DeepSeek V4.1 Flash through the rig; Claude Sonnet 5 as Claude Code subagents under [H61 Addendum](<tests/H61 Addendum to plans H56 and H58 - the Sonnet 5 arm run as Claude Code subagents.md>), the model expected and not verified. |
 | Test | [H56 Plan](<tests/H56 Plan - repeatability of the two breaks, P3 and F4 three runs each.md>) - P3 and F4, modes 1 and 2, three repeats each, per reader; what counts as each break recurring, frozen; six predictions; one observation frozen before the run (file 54's change 2 aimed at a line already present). [H58 Plan](<tests/H58 Plan - the same twelve under skill file 31.md>) - the same twelve under file 31, five predictions. |
 | Rig | `runs_repeat/` and `runs_repeat_31/` in [rigs/plan 49 rig](<rigs/plan 49 rig - DeepSeek on outside papers/>), `run.py` (repeat index, authority selection, --dry), `run_sonnet.py`, `repeat_check.py`, the run logs and shape checks. |
-| Raw result | 24 DeepSeek returns, all complete, kept as they came. |
-| Interpretation | [H57 Results](<results/H57 Results - the two breaks on repeat, DeepSeek arm of plan H56.md>) - under file 30, break 1 did not recur (0 of 6, one borderline quoted), break 2 recurred once (the levers *fixed*, "the owner set it"); file 31 forced. [H59 Results](<results/H59 Results - the same twelve under skill file 31, DeepSeek.md>) - under file 31, neither break in twelve runs, the flip redirected not dropped, *fixed* used properly three times, no new fault; one shift recorded (*borrowed* to *fixed* on a premise the author declares given). |
+| Raw result | 24 DeepSeek returns and 24 Sonnet 5 returns, all complete, kept as they came; every Sonnet reader's tool calls audited against the files it was allowed. |
+| Interpretation | [H57 Results](<results/H57 Results - the two breaks on repeat, DeepSeek arm of plan H56.md>) - under file 30, break 1 did not recur (0 of 6, one borderline quoted), break 2 recurred once (the levers *fixed*, "the owner set it"); file 31 forced. [H59 Results](<results/H59 Results - the same twelve under skill file 31, DeepSeek.md>) - under file 31, neither break in twelve runs, the flip redirected not dropped, *fixed* used properly three times, no new fault; one shift recorded (*borrowed* to *fixed* on a premise the author declares given). [H62 Results](<results/H62 Results - the Sonnet 5 arm of plans H56 and H58, as Claude Code subagents.md>) - Sonnet 5: neither break under file 30 or file 31; two new faults under file 31, one run each (*Asserted* as a mark; *fixed* on a derivation); three attribution misreads; the frozen question moved to the room's belief in two F4 runs. |
 | Lessons | [Lesson H1](<records/HV Skill - Lessons.md>) (the PDF extractor missing in a fresh session). |
-| Not tested | Sonnet 5; a second marker; blinding of the mode and version from the marker; repeatability beyond three per box; change 3 of file 54. |
-| Next | The Sonnet 5 arm when a key is supplied; the audit bundle. |
+| Not tested | Sonnet 5 through the plans' transport; a second marker; blinding of the mode and version from the marker; repeatability beyond three per box; whether the two new faults recur; change 3 of file 54. |
+| Next | The owner's call on file 31 against H62; a held-out test on the 33 unread sources under a frozen split. |
 
 ## Files in this project, by folder
 - `authority/`: `31/hard-to-vary/` (current, 8 files) with its `.skill` archive; `hard-to-vary/` (file 30, 8 files) with its archive.
-- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58.
-- `results/`: 51, 53, 54; H57, H59.
+- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum).
+- `results/`: 51, 53, 54; H57, H59, H62.
 - `rigs/`: `plan 42 rig - DeepSeek, unrun/`; `plan 48 - Claude readers, stopped/`; `plan 49 rig - DeepSeek on outside papers/` (147 runs, 12 dialogues, the marks). See [rigs/README.md](rigs/README.md).
 
 ## Numbering note
