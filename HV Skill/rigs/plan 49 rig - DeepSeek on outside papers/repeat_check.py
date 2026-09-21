@@ -18,7 +18,7 @@ def passages(rep, word):
             out.append(line.strip())
     return out
 rows = []
-folders = [a for a in sys.argv[1:] if not a.startswith("--")] or ["runs_repeat", "runs_sonnet5"]
+folders = [a for a in sys.argv[1:] if not a.startswith("--")] or ["runs_repeat", "runs_sonnet5", "runs_repeat_31", "runs_sonnet5_31"]
 for d in [f"{HERE}/{f}" for f in folders]:
   if not os.path.isdir(d): continue
   for fn in sorted(os.listdir(d)):

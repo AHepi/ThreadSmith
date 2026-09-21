@@ -9,7 +9,7 @@ so the router is live). Mode 0 is accepted but not part of plan H56. Adaptive th
 effort high, ceiling 24,000 as in plan 49, streamed. Resumable: a run whose file exists is skipped.
 """
 import os, sys, json, time, threading, concurrent.futures as cf
-from run import (HERE, MODULES, FRAMING, BARE, MAX_TOKENS, MAX_TOOL_CALLS, SKILL,
+from run import (HERE, MODULES, FRAMING, BARE, MAX_TOKENS, MAX_TOOL_CALLS, SKILL, SKILL_FILE, _SUF,
                  skill_all, module_text, source_text, check_skill)
 
 MODEL = "claude-sonnet-5"
@@ -25,8 +25,8 @@ TOOLS = [{"name": "open_module",
 _lock = threading.Lock()
 
 def out_path(sid, mode, k):
-    os.makedirs(f"{HERE}/runs_sonnet5", exist_ok=True)
-    return f"{HERE}/runs_sonnet5/{sid}-m{mode}-r{k}.json"
+    os.makedirs(f"{HERE}/runs_sonnet5{_SUF}", exist_ok=True)
+    return f"{HERE}/runs_sonnet5{_SUF}/{sid}-m{mode}-r{k}.json"
 
 def do_run(client, sid, mode, k):
     tag = f"{sid}:{mode}:r{k}"
@@ -70,7 +70,7 @@ def do_run(client, sid, mode, k):
             messages.append({"role": "assistant", "content": resp.content})
             continue
         break
-    rec = {"source": sid, "mode": mode, "repeat": k, "model": MODEL, "effort": EFFORT,
+    rec = {"source": sid, "mode": mode, "repeat": k, "skill_file": SKILL_FILE, "model": MODEL, "effort": EFFORT,
            "reply": "\n".join(texts), "reasoning": "\n\n".join(thinking), "reasoning_is_summary": True,
            "modules_opened": opened, "tool_calls": calls, "finish_reasons": stops,
            "usage_total": {kk: sum((u.get(kk) or 0) for u in usages)
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         if ":" in a:
             s, m, k = a.split(":"); jobs.append((s, int(m), int(k)))
     files = check_skill()
-    print(f"skill copy checked against authority: {len(files)} files identical")
+    print(f"skill copy checked against authority (file {SKILL_FILE}): {len(files)} files identical")
     for s, m, k in jobs:
         if not os.path.exists(f"{HERE}/corpus/{s}.txt"): raise SystemExit(f"no corpus text for {s}; run fetch.py {s}. Nothing sent.")
     if dry:

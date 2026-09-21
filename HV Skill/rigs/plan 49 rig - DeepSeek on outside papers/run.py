@@ -8,6 +8,7 @@ The key is read from the environment and is written to no file.
                                                        #   writes runs_repeat/<sid>-m<mode>-r<k>.json
   python3 run.py --dry P3:1:1                           # sends nothing: checks skill, corpus, paths
 
+Patch (plan H58): SKILL_FILE=31 in the environment selects authority/31/, the copy skill_31/, and runs_repeat_31/.
 Patch (plan H56): repeat runs go to runs_repeat/ so the skip rule never hides a repeat behind an original;
 the skill copy is diffed against ../../authority/hard-to-vary before any call (Lesson 44, now in code);
 --dry runs every check and sends nothing. Gives up nothing: a job with no k runs exactly as before.
@@ -28,8 +29,11 @@ MODEL = "deepseek-flash"
 EFFORT = "high"
 MAX_TOKENS = 24000
 MAX_TOOL_CALLS = 12
-SKILL = f"{HERE}/skill/hard-to-vary"
-AUTHORITY = os.path.normpath(f"{HERE}/../../authority/hard-to-vary")
+SKILL_FILE = os.environ.get("SKILL_FILE", "30")          # plan H58: SKILL_FILE=31 selects authority/31/
+_SUF = "" if SKILL_FILE == "30" else f"_{SKILL_FILE}"
+SKILL = f"{HERE}/skill{_SUF}/hard-to-vary"
+AUTHORITY = os.path.normpath(f"{HERE}/../../authority/hard-to-vary" if SKILL_FILE == "30"
+                             else f"{HERE}/../../authority/{SKILL_FILE}/hard-to-vary")
 MODULES = ["the-idea-in-depth", "question-bank", "by-domain", "building",
            "testing-against-cases", "reporting", "word-list"]
 
@@ -58,8 +62,8 @@ def check_skill():
 def out_path(sid, mode, k=None):
     if k is None:
         return f"{HERE}/runs/{sid}-m{mode}.json"
-    os.makedirs(f"{HERE}/runs_repeat", exist_ok=True)
-    return f"{HERE}/runs_repeat/{sid}-m{mode}-r{k}.json"
+    os.makedirs(f"{HERE}/runs_repeat{_SUF}", exist_ok=True)
+    return f"{HERE}/runs_repeat{_SUF}/{sid}-m{mode}-r{k}.json"
 
 def module_text(name):
     return open(f"{SKILL}/references/{name}.md", encoding="utf-8").read()
@@ -172,7 +176,7 @@ def do_run(sid, mode, key, k=None):
                 body["messages"].append({"role": "tool", "tool_call_id": tc["id"], "content": text})
             continue
         break
-    rec = {"source": sid, "mode": mode, "repeat": k, "model": MODEL, "effort": EFFORT,
+    rec = {"source": sid, "mode": mode, "repeat": k, "skill_file": SKILL_FILE, "model": MODEL, "effort": EFFORT,
            "reply": msg.get("content", ""), "reasoning": msg.get("reasoning_content", ""),
            "modules_opened": opened, "tool_calls": calls, "finish_reasons": finishes,
            "automatic_retries": attempts,
@@ -213,7 +217,7 @@ if __name__ == "__main__":
                 parts = a.split(":")
                 jobs.append((parts[0], int(parts[1]), int(parts[2]) if len(parts) > 2 else None))
     files = check_skill()
-    print(f"skill copy checked against authority: {len(files)} files identical")
+    print(f"skill copy checked against authority (file {SKILL_FILE}): {len(files)} files identical")
     for s, m, k in jobs:
         if s not in srcs: raise SystemExit(f"unknown source {s}. Nothing sent.")
         if not os.path.exists(f"{HERE}/corpus/{s}.txt"): raise SystemExit(f"no corpus text for {s}; run fetch.py {s}. Nothing sent.")
