@@ -63,10 +63,22 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Not tested | Sonnet 5 through the plans' transport; a second marker; blinding of the mode and version from the marker; repeatability beyond three per box; whether the two new faults recur; change 3 of file 54. |
 | Next | The owner's call on file 31 against H62; a held-out test on the 33 unread sources under a frozen split. |
 
+## Research state: blind second marking (H63, H64) - run and read
+| | |
+| --- | --- |
+| Story | The owner's "Go" on item 1 of the testing method proposed after H62: check the one marker who wrote the skill, chose the corpus, marked, changed the skill and marked the change against a second marker that saw none of that. |
+| Authority under test | The first marker's marks (files 54, H57, H59, H62), not the skill. |
+| Test | [H63 Plan](<tests/H63 Plan - blind second marking by Sonnet 5 of the 96 marked reports.md>) - 48 hidden plan 49 reports under plan 52; 48 repeat reports, reader, version, mode and repeat stripped, under the H56 criteria; one Sonnet 5 agent per report; seven predictions. |
+| Rig | `second_marker.py`, `marking/first_marker_repeat_marks.json`, `marking/secret_mapping_repeat.json`, `marking/second_marker_comparison.json`, the tool audit. |
+| Raw result | 96 structured marks in the workflow journal, aligned in `marking/second_marker_comparison.json`. |
+| Interpretation | [H64 Results](<results/H64 Results - blind second marking by Sonnet 5, agreement with the first marker.md>) - both breaks shared; recurrence 48 of 48; RAN-versus-not 84%; controls 6 of 6; no CANNOT; three fields unreliable as marked; twelve further breaks of four kinds, quoted from the skill; the first marker wrong twice on attribution. |
+| Not tested | A third reading where the markers disagree; the 99 light-marked reports; the second marker's own consistency. |
+| Next | The owner's call on file 31 and the four change candidates; answer-keyed tests; the frozen split. |
+
 ## Files in this project, by folder
 - `authority/`: `31/hard-to-vary/` (current, 8 files) with its `.skill` archive; `hard-to-vary/` (file 30, 8 files) with its archive.
-- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum).
-- `results/`: 51, 53, 54; H57, H59, H62.
+- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum), H63.
+- `results/`: 51, 53, 54; H57, H59, H62, H64.
 - `rigs/`: `plan 42 rig - DeepSeek, unrun/`; `plan 48 - Claude readers, stopped/`; `plan 49 rig - DeepSeek on outside papers/` (147 runs, 12 dialogues, the marks). See [rigs/README.md](rigs/README.md).
 
 ## Numbering note
