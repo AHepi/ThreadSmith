@@ -16,6 +16,7 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | 29 | `29 ...` | Round 4 | Never run; content sits inside instruction 30 | |
 | 30 | **[30 Skill - hard-to-vary - modular, with router and map.skill](<authority/30 Skill - hard-to-vary - modular, with router and map.skill>)** - current | Log 30: rebuilt as modules with a router table and a flowchart map | One main file, seven references: the idea in depth, question bank, by domain, building, testing against cases, reporting, word list | Used as the test for the other model's workflow update (log 30, 31); opened and counted at log 43 |
 | H58 | **[31 Skill - hard-to-vary - flip not for derived conclusions, fixed only for what the owner put outside the test.skill](<authority/31 Skill - hard-to-vary - flip not for derived conclusions, fixed only for what the owner put outside the test.skill>)** - current, unpacked in `authority/31/` | H57: break 2 recurred once in the repeatability run | Five passages: the flip is not for a derived conclusion (change 1 of file 54); *fixed* only for what the owner put outside the test, never an asserted part or a free choice (change 2, reworded) | Plan H58, results H59: neither break in twelve runs, no new fault |
+| H67 | [32 Skill - ... .skill](<authority/32 Skill - hard-to-vary - two vocabularies never mixed, the report names every test, held if reaches parts.skill>) - draft, unpacked in `authority/32/` | H62 and H64: the two-list collision, the template's missing slots, held if for parts, "added" twice, fixed on a derivation | Five passages, one change | Plan H67, waiting on the owner's word |
 | 42 | (no change) | The owner asked whether anything needs adding | One line proposed for the poke test (two changes close together) plus a trap; **held out until tested**. Found: the skill already asks for a "near neighbour" in swaps, says nothing about closeness in pokes | Plan 42, never sent; the line stayed out of the skill through the outside-papers test (log 54) |
 
 ## Research state: the DeepSeek test (logs 42, 43, 47) - designed, rigged, not sent
@@ -76,8 +77,8 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Next | The owner's call on file 31 and the four change candidates; answer-keyed tests; the frozen split. |
 
 ## Files in this project, by folder
-- `authority/`: `31/hard-to-vary/` (current, 8 files) with its `.skill` archive; `hard-to-vary/` (file 30, 8 files) with its archive.
-- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum), H63.
+- `authority/`: `32/hard-to-vary/` (draft, plan H67) with its archive; `31/hard-to-vary/` (current, 8 files) with its archive; `hard-to-vary/` (file 30, 8 files) with its archive.
+- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum), H63, H67.
 - `results/`: 51, 53, 54; H57, H59, H62, H64.
 - `rigs/`: `plan 42 rig - DeepSeek, unrun/`; `plan 48 - Claude readers, stopped/`; `plan 49 rig - DeepSeek on outside papers/` (147 runs, 12 dialogues, the marks). See [rigs/README.md](rigs/README.md).
 

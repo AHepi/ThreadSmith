@@ -5,6 +5,7 @@ A Claude skill for testing whether an explanation is **hard to vary**: whether e
 The skill is also the method the whole project was built with: the language's twelve properties were worked out with it (log 01), and it was improved from what each stage taught.
 
 ## Current state
+- **Draft file 32** (`authority/32/`, log H67): file 31 with one change answering every fault H62 and H64 left open; not the authority until plan H67 runs and the skill is frozen.
 - **Authority:** [file 31](<authority/31/hard-to-vary/SKILL.md>), made under log H58 after the repeatability run (H57) forced it: file 30 with two changes (the flip is not for a derived conclusion; *fixed* is only for what the owner put outside the test). Unpacked in `authority/31/hard-to-vary/`, the archive `31 Skill - ... .skill` beside it. Tested in plan H58 (H59): neither break recurred in twelve runs, no new fault. [File 30](<authority/hard-to-vary/SKILL.md>), "modular, with router and map" (8 files, 13,614 words; log 43), stays in `authority/hard-to-vary/` with its archive: it is the version every test up to H57 ran on.
 - **Improved eight times** (02, 05, 08, 14, 21, 22, 30, 31 as the log counts them, with 10, 11, 17 and 29 as further named files). Earlier skill files are not in the bundles; each improvement is logged with the case that prompted it.
 - **One line proposed, held out** (log 42): for the poke test, pick the two changes close together, because far-apart changes can be found for any label. Kept out of the skill until tested.
