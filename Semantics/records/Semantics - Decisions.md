@@ -14,6 +14,7 @@ A ledger of decisions, with your words as written.
 S1. Each project's files stay inside its own folder; only the read-me and navigation files sit outside. "Actually, can you recreate all the files outside the semantics subfolder that currently write to inside the semantics subfolder. I'm going to ensure all files remain withing their relative folders except the readme and other navigation related files"
 S2. The next instruction inline, longer, returned as a zip. "Can you return next step inline please. Can you make it include more steps because the ones so far only take 3 minutes. And can you add instructions to return a zip file instead."
 S3. Unpack the S62 return into results, log the reading, and write the next instruction around the three steps named (file 20 in, the 32 rows recovered, near cases by an outside author on the ten rows). "Do it"
+S4. The revised theory (file 20) is set aside; the earlier version (file 10) is the authority. "No no. 20 was a regression. Hence I never supplied it"
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

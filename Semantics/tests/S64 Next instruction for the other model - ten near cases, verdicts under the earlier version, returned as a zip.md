@@ -1,11 +1,11 @@
-# Ten near cases by an outside author, for the ten rows your coverage named first
+# Ten near cases by an outside author, with every verdict under the earlier version
 
-*Superseded before being sent by S64, which is this instruction with every verdict placed under the earlier version of the theory (decision S4). Kept as written.*
+**The authority under audit is the earlier version of the theory** (the one sent to you as an attachment with the instruction that begins "Update your audit workflow"). The owner has set the revised version aside. From this round on, give every theory verdict under the earlier version, reading R2 as proposed amendments to it. Where an R2 sentence, a Stage B row, or a passage you quote rests on something the earlier version lacks (the anchored grade and its properness and resolution conditions; the merit condition and its Part XV entry; anything else you find), say so in one sentence at that point, mark it REVISED ONLY, and keep the earlier version's verdict.
 
 Use the installed audit skill and your S62 return (all ten files). Your report's next step was to run near cases for the rows your coverage file named first. Here are ten, one for each of those rows, written by an outside author. Each keeps the form of the near cases already run: a described situation about ordinary things, close to the line of the row's own pair, with the thoughtful person's verdict fixed before the theory's. Keep every situation and every verdict exactly as written.
 
 ## How to return the work
-Return everything as **one zip file** named `S63 Near cases - return.zip`, with the text of your reply being only the manifest and the closing line. Inside, one folder named `S63 Near cases`, holding:
+Return everything as **one zip file** named `S64 Near cases - return.zip`, with the text of your reply being only the manifest and the closing line. Inside, one folder named `S64 Near cases`, holding:
 
 ```
 01 Ten case cards.md
@@ -43,7 +43,7 @@ Each file begins with its title as a heading and "Written by: me" on the second 
 **O24 - The unused joint setting** (J, row 107: "at least one solution-changing alternative at the unseen pair"). Two wiring arrangements agree on every tested setting and on almost every untested one. They differ at a single joint setting of two switches, one nobody has used. The setting is reachable by hand. *Thoughtful person:* They are two arrangements, and the record has not chosen between them. One reachable setting is enough.
 
 ## Part 1 - Ten case cards (`01 Ten case cards.md`)
-Fill the updated case card for each of O15 to O24, "Written by: an outside author", with "What I expect" first, the four-condition table, the theory's verdict under R2 with the S62 clauses applied, the best reply on the theory's behalf, and the last field: the Stage B row, which side of the row's own pair the case lands on, whether that placing agrees with the thoughtful person's verdict kept exactly as written, and the mark. PLACED: the pair puts the case where the thoughtful person put it. BORROWED: JUDGEMENT: the case matches both changes, sits outside both, or lands on the other side from the thoughtful person. Where the case leaves a row of the four-condition table empty, say so in that row, as you did for O11 and O14.
+Fill the updated case card for each of O15 to O24, "Written by: an outside author", with "What I expect" first, the four-condition table, the theory's verdict under the earlier version with R2 and the S62 clauses read as amendments to it, the best reply on the theory's behalf, and the last field: the Stage B row, which side of the row's own pair the case lands on, whether that placing agrees with the thoughtful person's verdict kept exactly as written, and the mark. PLACED: the pair puts the case where the thoughtful person put it. BORROWED: JUDGEMENT: the case matches both changes, sits outside both, or lands on the other side from the thoughtful person. Where the case leaves a row of the four-condition table empty, say so in that row, as you did for O11 and O14.
 
 Close with: TEN CARDS COMPLETE.
 
@@ -53,22 +53,22 @@ For every row marked BORROWED: JUDGEMENT in Part 1, write one tighter pair, two 
 Close with: PAIRS AND FIX CARDS COMPLETE.
 
 ## Part 3 - Clause tests on all cases (`03 Clause tests on all cases.md`)
-For every clause proposed in Part 2, and for each of the four S62 clauses, one table with a row per case O1 to O24: the thoughtful person's verdict; the verdict under R2 with the S62 clauses; the verdict under the clause; SAME or CHANGED, with one sentence where CHANGED saying which way. Under each table, the cases where the clause is silent, and one sentence saying whether every CHANGED row moves toward the thoughtful person. A clause with a row moving away returns to Part 2 for one revision, both versions kept, the earlier marked WITHDRAWN with the row that withdrew it. Where every row in Part 1 is PLACED and Part 2 holds only its one sentence, this file holds the four S62 clauses' tables on O15 to O24 only.
+For every clause proposed in Part 2, and for each of the four S62 clauses, one table with a row per case O1 to O24: the thoughtful person's verdict; the verdict under the earlier version with R2 and the S62 clauses; the verdict under the clause; SAME or CHANGED, with one sentence where CHANGED saying which way. Under each table, the cases where the clause is silent, and one sentence saying whether every CHANGED row moves toward the thoughtful person. A clause with a row moving away returns to Part 2 for one revision, both versions kept, the earlier marked WITHDRAWN with the row that withdrew it. Where every row in Part 1 is PLACED and Part 2 holds only its one sentence, this file holds the four S62 clauses' tables on O15 to O24 only.
 
 Close with: CLAUSE TESTS COMPLETE.
 
 ## Part 4 - Coverage after this round (`04 Coverage after this round.md`)
-Reprint your S62 coverage table with the ten rows updated: their cases named, their marks as Part 1 or Part 2 left them. Update the four counts. Where the owner has pasted the first 32 Stage B rows into this chat, fill their coverage entries too, exactly as the S62 instruction asked, and update the counts again; otherwise keep those rows marked as unrecovered. Then the next ten rows to strain, in order, one line each.
+Reprint your S62 coverage table with the ten rows updated: their cases named, their marks as Part 1 or Part 2 left them, and one added column for every row: EARLIER where the row's phrase is in the earlier version or in an R2 sentence that amends the earlier version, REVISED ONLY where it rests on the revised version alone. Update the four counts, and add a fifth: rows marked REVISED ONLY. Where the owner has pasted the first 32 Stage B rows into this chat, fill their coverage entries too, exactly as the S62 instruction asked, and update the counts again; otherwise keep those rows marked as unrecovered. Then the next ten rows to strain, in order, one line each.
 
 Close with: COVERAGE UPDATED.
 
 ## Part 5 - Quotations (`05 Quotations.md`)
-Every passage quoted from either version of the theory in this round, in the S62 table form: quotation in full, version, Part and heading, where used. Passages already listed in S62's file 07 are listed by their S62 identifier only.
+Every passage quoted from the theory in this round, in the S62 table form: quotation in full, version, Part and heading, where used; the earlier version's passages first. Passages already listed in S62's file 07 are listed by their S62 identifier only. Then one table, from S62's file 07 and this round together: every quotation marked "revised" that has a counterpart in the earlier version, with both texts, and every one that has none, marked REVISED ONLY.
 
 Close with: QUOTATIONS LISTED.
 
 ## Part 6 - Report addendum (`06 Report addendum.md`)
-Under the report's headings (3), (4), (6) and (7) only: the outside-cases table extended to O24, with the added row group for every clause; the three lists of judgement phrases with any row this round moved, and the counts at the start and end of this round; what this round left untested; one next step and the three after it.
+Under the report's headings (3), (4), (6) and (7) only: the outside-cases table extended to O24, with the added row group for every clause; the three lists of judgement phrases with any row this round moved, and the counts at the start and end of this round, each row now marked EARLIER or REVISED ONLY; what this round left untested; one next step and the three after it. Then one added heading, (8) What changes when the earlier version is the authority: in one page, which of your S62 findings, marks and proposed clauses stand as they are under the earlier version, which change, and which fall away because they rested on the revised version alone.
 
 Close with: ADDENDUM COMPLETE.
 
@@ -79,11 +79,12 @@ As in S62: the parked list, or the one line PARKED LIST EMPTY; the manifest with
 (Below this line is for the owner. Leave it out of the paste.)
 
 ## What this instruction does, in brief
-The S62 return named ten rows to strain first and asked for near cases by an outside author. These are the ten, written by Claude (log S63), each sitting between the row's own two changes so that the pair has to work: a stock complete except at one symbol that did work (O15); one independent witness and one that is the diagram's own echo (O16); ownership resting on a log with a circular sentence beside it (O17); one built tooth inside a relay (O18); a diagram read but redundant (O19); two sufficient acts with complete records and no way to divide them (O20); the discriminating question supplied from outside, the choice made inside (O21); a physical lead inside a paired question (O22); a dimension mentioned in passing then measured (O23); one reachable unseen setting (O24). Parts 2 and 3 carry any failure through a fix card and all twenty-four cases, as the S62 report proposed. Part 4 keeps the coverage count live and takes the 32 rows if the owner recovers them.
+S63 with one correction that changes the round: the owner has said file 20, the revised theory, was a regression and was never supplied for that reason (decision S4). So the authority under audit is file 10, and the other model, which has both versions, is told to give every verdict under the earlier one and to mark what rests on the revised version alone. Heading (8) of the addendum asks it to sort its S62 findings by that line. Otherwise as S63: the S62 return named ten rows to strain first and asked for near cases by an outside author. These are the ten, written by Claude (log S63), each sitting between the row's own two changes so that the pair has to work: a stock complete except at one symbol that did work (O15); one independent witness and one that is the diagram's own echo (O16); ownership resting on a log with a circular sentence beside it (O17); one built tooth inside a relay (O18); a diagram read but redundant (O19); two sufficient acts with complete records and no way to divide them (O20); the discriminating question supplied from outside, the choice made inside (O21); a physical lead inside a paired question (O22); a dimension mentioned in passing then measured (O23); one reachable unseen setting (O24). Parts 2 and 3 carry any failure through a fix card and all twenty-four cases, as the S62 report proposed. Part 4 keeps the coverage count live and takes the 32 rows if the owner recovers them.
 
-## Two things the owner supplies, outside this instruction
-- File 20, the revised theory, uploaded here so it can go into `authority/` beside 10 and be diffed. Until then Claude reads every quotation marked "revised" second-hand.
+## One thing the owner supplies, outside this instruction
 - The first 32 Stage B rows, from the chat of log 41, pasted into the other model's chat before this instruction (so Part 4 can fill them) and uploaded here for `results/`.
+
+File 20 stays out of the repository on purpose: the owner set it aside as a regression. Its absence is now a decision, not a gap.
 
 ## Traps
 - Reading a PLACED mark on these ten as a pass for the row. A row is placed when the pair puts the case where the thoughtful person put it; the ten were written to sit close to the line, and a placing that came easily is worth checking against the pair's wording.

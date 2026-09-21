@@ -5,7 +5,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 ## Research state: the theory
 | | |
 | --- | --- |
-| Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Revised: `20 ...revised standalone theory.md` - **not in bundle**, never given to Claude. |
+| Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Revised: `20 ...revised standalone theory.md` - set aside by the owner as a regression (decision S4), kept out on purpose; the other model audited it from log 26 to S62. |
 | Story | Decision 7 (why the document is here); [ORIGIN.md](ORIGIN.md). |
 | Relations | Quoted as authority by every Language test plan and by the skill. See [RELATIONS.md](<RELATIONS.md>) R1, R2. |
 
@@ -69,14 +69,14 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | | |
 | --- | --- |
 | Story | Strain the ten rows the coverage named first with cases written to sit between each row's own two changes; carry any failure through a fix card and all twenty-four cases; a version update is earned the first time a case changes a verdict. |
-| Test | [S63 Ten near cases by an outside author, returned as a zip](<tests/S63 Next instruction for the other model - ten near cases by an outside author, returned as a zip.md>) - O15 to O24, written by Claude. |
-| Raw result | None yet. Goes into `results/` as `S63 Near cases - return/`. |
-| Waits on | The owner: file 20 for `authority/`; the first 32 Stage B rows from the chat of log 41. |
-| Next | Paste S63 to the other model; bring back its zip (project story, "Next step"). |
+| Test | [S64 Ten near cases, verdicts under the earlier version, returned as a zip](<tests/S64 Next instruction for the other model - ten near cases, verdicts under the earlier version, returned as a zip.md>) - O15 to O24, written by Claude; replaces [S63](<tests/S63 Next instruction for the other model - ten near cases by an outside author, returned as a zip.md>), unsent, after decision S4 set file 20 aside. |
+| Raw result | None yet. Goes into `results/` as `S64 Near cases - return/`. |
+| Waits on | The owner: the first 32 Stage B rows from the chat of log 41. Open: whether to restart the audit from file 10 after the sort S64 asks for. |
+| Next | Paste S64 to the other model; bring back its zip (project story, "Next step"). |
 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64.
 - `results/`: 55, 57, and the folder `S62 Stage D and report - return/`.
 - `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.

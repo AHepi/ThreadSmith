@@ -2,9 +2,9 @@
 
 **Authority document:** "Claude Fable Semantics - standalone theory", uploaded to the project as `10 Claude Fable Semantics - standalone theory.md`. Frozen: not edited. The owner's words, Decision 7: "The above attachment will help you understand what I'm trying to achieve."
 
-A later version exists, `20 Claude Fable Semantics - revised standalone theory.md`. The other model was given it for the audit (log 26). Claude has not been given it as of log 26, and no later log entry says otherwise.
+A later version exists, `20 Claude Fable Semantics - revised standalone theory.md`. The other model was given it for the audit (log 26). The owner set it aside as a regression and never supplied it to Claude (decision S4, log S64); file 10 is the authority.
 
-**File 10 is in this repository** as [authority/10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>), added at log 56 on the owner's word (decision 45), unchanged. Both bundles had left out "the theory and research pages and their plans" on purpose, so until log 56 every quotation of the theory here was second-hand. **File 20 is still not here.** Adding it to `authority/` is the next thing this project needs.
+**File 10 is in this repository** as [authority/10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>), added at log 56 on the owner's word (decision 45), unchanged. Both bundles had left out "the theory and research pages and their plans" on purpose, so until log 56 every quotation of the theory here was second-hand. **File 20 is kept out on purpose** (decision S4). What the other model's audit says about 20 alone is evidence about a rejected version; S64 asks for the sort.
 
 ## What the theory says, as the record reports it
 - An explanation must meet four conditions: component fidelity, question fidelity, non-circular dependence, non-vacuity (file 24, "The one move you make").
