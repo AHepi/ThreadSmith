@@ -37,5 +37,9 @@ Only cases where something failed while being made or tested, and how it was fix
 33. A told story written as a named what-if case produced a false contradiction (text T07-B of the other model's corpus). Predicted before the run. Fix: rig 1 patch 15, a told world stands alone.
 34. A plan about which the ledger said nothing was reported as a kind mistake that "cannot work". Found by comparing with the corpus answer key for T10-B. Fix: rig 1 patch 16, "cannot tell".
 
+35. The judgement-phrase pass written into file 30 could be passed by any phrase at all: it asked for one change showing "met" and one showing "unmet", and far-apart changes are always available. Shown on first use: zero marks in 32 rows, and both phrases already known to rest on judgement passed. Fix: each pair is held against a near case (file 41).
+36. Compiling the corpus was begun through the research add-ons, which ask the owner for permission each time; the permissions did not arrive and one add-on was out of searches for the month. Two calls were spent before this showed. Fix: compiled from Claude's own knowledge, with "not looked up in this chat" stated in the file and a source check named as a step before the run.
+37. Three documents made in a new chat were numbered 37, 38 and 39 while the other chat had already used those numbers and gone on to log entry 40. Found only when the owner uploaded the current set. Fix: renumbered 41, 42 and 43, with every file number inside them corrected. The cause was a new chat starting with an empty computer and no record files.
+
 ## Traps
 - Assuming a picture has updated because the board has. Look at the picture itself before using it.

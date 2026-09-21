@@ -32,6 +32,12 @@ A ledger of decisions, with your words as written.
 28. Why the corpus is literary. "Yeah I told it to pull from poetry and high literary fiction since both play with words with much imagination. And often in ways I can't interpret myself. So they're a good test ground."
 29. How the bundle is to be assembled. "Please return the last 20 files created inline in a downloadable zip. But only include the latest Status, Lessons and story. Earlier versions are just unnecessary duplications. Also ensure other duplications do not enter."
 
+30. Continue the audit from Stage B in a new chat, and write the next prompt. "I've given you access to the context of my previous conversation. Read the following and continue where it left off. Also, I need the next prompt."
+31. Design a test of the skill with a different reader, and hold the run. "Design a test for hard to vary using Deepseek V4.1 flash. Don't run it just yet though."
+32. Compile a corpus of contested theories before running, then hold. "Run the experiment. But first, compile a corpus of known scientific theories that are highly contested. You will need about 20 from all kinds of sources: physics, psychology, social science, anthropology, economics, coding practices, computer science and so on. I've added a ton of add-ons you can search through. First compile the corpus. Once done, tell me and I'll signal when to start."
+33. Restart the corpus without the add-ons. "Start again. I didn't get the permissions. And if you can turn them off, then great!"
+34. Bundle this chat's files with the current set. "Actually. Return the last 20 files that were generated here in a zip file. Ensure no duplicates enter. And return only the latest documents that are appended -only." Then, uploading the set from the other chat: "Here. Add them from this"
+
 ## Open, for you to decide
 - Whether to reopen decision 5 (external checker essential) in light of the argument-mapping finding on page 04. Not reopened by Claude.
 
