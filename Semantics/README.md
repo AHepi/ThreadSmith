@@ -11,7 +11,7 @@ The audit of the authority document, **"Claude Fable Semantics - standalone theo
 - **What the record now says about the gauge:** it read zero on first use (Lesson 35) and moved once near cases were added (log 55): two table rows and six of seven near cases were marked BORROWED: JUDGEMENT against the original pairs; three near cases were then placed by tighter pairs. Open: A's scope row (O1), C's local-dependence row for O4 and O7. Lesson 49: file 41 left the model to find the theory's own distinction for O4 and it built a mechanism instead.
 
 ## Where to start
-[INDEX.md](INDEX.md) for the timeline with links. [ORIGIN.md](ORIGIN.md) for what the theory is and how it entered the project. For the method behind the audit, the [Owner's guide](<tests/24 Owner's guide - running the audit workflow.md>).
+[INDEX.md](INDEX.md) for the timeline with links. [ORIGIN.md](ORIGIN.md) for what the theory is and how it entered the project. The project's own record is in [records/](records/): [project story](<records/Semantics - project story.md>) (the log), [Decisions](<records/Semantics - Decisions.md>) (the owner's words), [Lessons](<records/Semantics - Lessons.md>) (failures only), [Status](<records/Semantics - Status.md>) (the summary). Entry numbers are the repository's one sequence. For the method behind the audit, the [Owner's guide](<tests/24 Owner's guide - running the audit workflow.md>).
 
 ## What is in this folder
 ```
