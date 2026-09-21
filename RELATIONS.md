@@ -35,7 +35,7 @@ Status words used: **stated** (written in a file as a claim, not tested), **seen
 **Claim.** The other model, set up to audit the semantics, also audited Claude's rulebook (file 23) and found 25 real faults, which drove the second and third piles of rig changes and the clean language file (logs 32 to 36). Its literary stress test supplied the first outside texts the language was run on (log 37).
 **Current status.** Seen. Five of its cases were run through the rigs to sort the findings by evidence (log 33); seven of eight blind-sample texts matched its keys (log 37).
 **Evidence.** Logs 32 to 38; [35 Test plan](<Language/tests/35 Test plan - the third pile.md>); [37 Test results](<Language/results/37 Test results - blind sample from the literary stress test.md>); ledgers `K..` and `T..` in `Language/rigs/`.
-**Open question.** The other model never had file 36 or 38; it used its own rewritten rulebook as a stand-in. The next step in the log is to give it 38 and the prompt (39) and compare ledgers line by line. Not done.
+**Open question.** The other model now has 38 and 39 and has audited both (log 45; the package is in `Language/results/`). It translated six of its own texts and none of Claude's, so the line-by-line comparison still has no shared text; plan 45 makes the overlap from Claude's side and predicts the same facts with a different standing throughout. Whether a fixture is written as the actual ledger or as a TOLD world is a decision for the owner.
 
 ## Not claimed
 - That the three projects form one system. The folder tree keeps them side by side on purpose.

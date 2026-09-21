@@ -49,7 +49,7 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Interpretation | Log 33: rig 1 was right where the page was wrong (F04, F13). Log 34: patches 8 to 11, all earlier ledgers unchanged. Log 35: patches 12 to 14, the rigs joined (`joined/`), one known limit (two causes, one withdrawn: K22b). |
 | Authority | `33 Rulebook`, `34 Rulebook`, `36 The ledger language - complete definition.md` - **not in bundle**, superseded by 38. The other model's "Rulebook Audit and Repaired V3" - **not in bundle**. |
 
-## 6. The blind sample and the clean language (logs 37 to 39) - current
+## 6. The blind sample and the clean language (logs 37 to 39)
 | | |
 | --- | --- |
 | Story | The other model's literary stress test: 324 inputs, keys held apart, never run by it. The owner chose the literary corpus on purpose (log 39). |
@@ -60,8 +60,17 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Rig | [rigs/](rigs/) as of these two patches ("38 Checker rigs - both, current"). |
 | Next | Give 38 and 39 to the other model with one of its own texts; compare ledgers line by line. |
 
+## 7. The other model's audit of 38 and 39 (log 45) - plan frozen, not run
+| | |
+| --- | --- |
+| Story | Decision 35. The next step at log 39 was to give the other model 38 and 39 and compare ledgers line by line; its return is an audit of both files instead, with six translations of its own texts and none of Claude's. |
+| Raw result | [45 Audit package - the other model on 38 and 39](<results/45 Audit package - the other model on 38 and 39/>) - kept unchanged; its `README.md` is the way in and `tools/validate_package.py` checks its hashes and counts. Includes the 324-input literary corpus of log 37, which was not in the earlier bundles. |
+| Interpretation | Log 45: what it holds, what it does not, four findings confirmed against the text of 38 and 39 (F01, F02, F04, F15), two references the record cannot place ("02"; the skill read from a GitHub repository). |
+| Test | [45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) - Part A: six ledgers compared by the sameness test; Part B: fifteen findings sorted into the three piles of log 33 by running each forcing case on the rig as it stands. |
+| Next | Translate, run, sort; then the next instruction for the other model (the eight texts of plan 37) and the first forced change. Two decisions for the owner: fixture as actual ledger or TOLD world; what "02" is. |
+
 ## Files in this project, by folder
 - `authority/`: 38, 39.
-- `tests/`: 21, 22, 35, 37.
-- `results/`: 21 (html), 22 (html), 37.
+- `tests/`: 21, 22, 35, 37, 45.
+- `results/`: 21 (html), 22 (html), 37; the folder 45 (the other model's package, 25 files).
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).
