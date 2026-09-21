@@ -11,7 +11,8 @@
 - Sonnet 5 arm run as Claude Code subagents (H61, addendum) and marked (H62): neither break under file 30 or 31; two new faults under file 31, one run each (*Asserted* as a mark; *fixed* on a derivation); the frozen question moved on F4 in two runs.
 - Audit bundle made (H60) and rebuilt with the Sonnet arm.
 - Blind second marking by Sonnet 5 (H63, H64): both file 54 breaks shared; recurrence on the repeat set agreed 48 of 48; RAN-versus-not 84%; controls 6 of 6; no CANNOT. Shape's PART boundary, "turned own test" and the same-explanation count unreliable as marked. Twelve further breaks of four kinds, held as change candidates (the two-list collision; the report template's missing slots; held-if for part-to-part dependency; "added" twice). The first marker wrong twice on attribution.
-- Next step: the owner's call on file 31 and the four candidates; then answer-keyed tests and the frozen split for a held-out test; the Sonnet 5 arm under file 30 and then 31 when the key arrives; then the audit bundle.
+- Boundary drawn (H65, decision H5, RELATIONS R6): the skill judges, planning chooses; testing-against-cases.md is planning content on loan.
+- Next step: the owner's word on a planning project; the open planning decisions (file 31 against H62; the four candidates of H64; answer-keyed tests; the frozen split) wait there.
 
 ## Traps
 - Letting this file drift from the project story in this folder. The log is the record; this file is the summary.
