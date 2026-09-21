@@ -13,7 +13,8 @@ Current as of 21 September 2026, reconciled in [log S68](<Semantics - project st
 | S64 | Completed and imported as `results/S64 Near cases - return/` at S65. All eight files match the saved return byte for byte; receipt in S68. |
 | S64 outcomes | Five cases placed directly, O16/O22/O23 placed by tighter pairs; O20/H90 and O21/I96 remain borrowed. Six clause groups × 24 cases = 144 SAME comparisons. H64/I64 are proposals, not adopted amendments. |
 | Coverage and version sort | 34/80 recovered rows have outside cases, 46 have NONE; first 32 remain unrecovered. Six wholly revised-only rows and three mixed rows. Grouped live judgement rows: six (one declared input, four stated open points, one homeless). |
-| S65 | Thirteen-case handoff prepared in `tests/`; no return or verified dispatch established by the sources checked. |
+| S65 | Thirteen-case handoff prepared in `tests/`; sent to the owner as an instruction pack (zip) for a fresh agent (decision S5, log S69); return pending. |
+| Instruction packs | From S65 on each instruction travels as one zip built by `tests/S65 Instruction pack - build.py`: read-me for the agent, instruction, file 10, files 24 and 30, earlier rounds, every return. The R2 amendments in full are the owner's to add. |
 | Version update | None. Completion of the return does not establish a successful repair or authorize a revised theory. |
 
 The current handoff is [S65](<../tests/S65 Next instruction for the other model - thirteen near cases, two attribution tests, returned as a zip.md>): O25/O26 test H64, O27 tests I64, and O28–O37 address the next ten coverage rows. Its dispatch and return have not been verified; send it if still unsent, otherwise receive its return. Recover the original first 32 rows without reconstructing them from later fragments. The completed S62 and S64 rounds stay complete, and no new audit run is part of this reconciliation.

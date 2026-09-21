@@ -33,6 +33,7 @@ results/       55 Stage B return, 57 Stage C return, S62 and S64 return folders 
 ```
 
 ## Rules of this project
+- **Each instruction travels as a pack** (decision S5): one zip built by `tests/S65 Instruction pack - build.py` holding the read-me for the agent, the instruction's paste part, file 10, files 24 and 30, the earlier instructions and every return. A fresh agent reads the read-me first. The R2 amendments in full are the owner's to add.
 - **Handing things to the other model:** it reinterprets negative instructions and follows positive ones. Give it file 24 in place of the hard-to-vary skill. Every instruction's paste part is searched by program for negative wording before it goes.
 - **Every return is kept as it came** in `results/`, named by the log entry that received it; the reading goes in the log, never inside the return.
 - **The authority is frozen.** File 10 is not edited; a revision is a new numbered file in `authority/`.
