@@ -1,0 +1,24 @@
+# Checked reasoning language - Status
+
+- Stage: two theories (01; 15, which merges 11 and 12), two rounds of research (04, 12), two rigs built and run (10, 17). Skill improved seven times (latest: file 17).
+- Latest files: "38 The ledger language - complete definition.md", "37 Test results - blind sample from the literary stress test.md"; earlier: "36 The ledger language - complete definition.md", "36 Checker rigs - both, joined.zip"; earlier: "34 Rulebook - what counts as a legal line.md", "34 Checker rigs - both, after the second pile.zip"; earlier: "33 Rulebook - what counts as a legal line.md", "30 Skill - hard-to-vary - modular, with router and map.skill", "30 Next instruction for the other model - workflow update and re-audit.md"; earlier: "23 Rulebook - what counts as a legal line.md", "22 Test results - your Mondays paragraph.html", "22 Checker rig 1 - rules, driver, ledgers, raw log.zip", "22 Skill - hard-to-vary - improved after the Mondays paragraph.skill"; earlier: "21 Test results - your Markus paragraph.html", "21 Checker rig 1 - rules, driver, ledgers, raw log.zip", "21 Skill - hard-to-vary - improved after the Markus paragraph.skill"; earlier: "20 Rulebook - what counts as a legal line.md", "18 Reference - what meanings the system captures.md"; earlier: "17 Test results - the merged theory built and run.html", "17 Checker rig 2 - laws, driver, ledgers, raw log.zip", "17 Skill - hard-to-vary - improved after the build test.skill", "15 Theory - merged - the one theory the build will test.html".
+- Rig 1 (arguments): contradiction; "because" that follows / follows on unstated assumptions / jumps / circles; plans that cannot work; exceptions and departures with no reason; likeness.
+- Rig 2 (causes as pressing patterns): which slot failed (strength, direction, a letting that produced something new, change from nothing); word does not fit the slots; what-ifs by removing a line or changing a slot; proposed abstraction; "cannot tell" and "not checked", with a count of verbs that have no shape.
+- Main result of log 17: the owner's ball and coin paragraph comes out right from general laws alone, with no line written for either oddity. A clean sweep on Claude's own cases was followed by two hostile cases that both broke the frozen rig.
+- Known gaps: the two rigs are not joined; influences that are not bodies (wind, cold, gravity) need a class; positions; amounts; inside and outside; who believes what; acting on purpose; a translator other than Claude; the sameness test.
+- Strength of evidence: one paragraph from the owner per rig; everything else is Claude's own cases.
+- Open for you: whether the external-checker requirement should be reopened (page 04).
+- Reference (18): inventory of what meanings the two rigs capture, in three levels (checked, carried, lost). Not yet one language: two vocabularies, no rule for a legal line.
+- Rulebook (20): one vocabulary for both rigs; five fixed parts per line, fourteen kinds of content, twelve rules. New slot: standing (claimed / given / supposed), working in the sameness test only. Not built: only-ways lines; BECAUSE across both rigs; any program that checks a ledger is legal.
+- Markus paragraph (21): the habit carries the prediction; "always crude" does no work. Forced patch 6: SINCE (a reason to expect) and naming the conclusion. Rig 2 could not check "smash"; results need change of state.
+- Mondays paragraph (22): 2 of 7 steps hold; first break at "Monday is a suggestion"; the supposition undoes itself. Forced patch 7 (chains). The word shifts were visible only as splits Claude made.
+- Rulebook updated (23): SINCE, BECOMES, working habits, three new rules.
+- Rulebook 33: the other model's audit of rulebook 23 found 25 real faults; 19 wording faults fixed (four checked by running its cases through rig 1); 5 small rig changes and 6 new language features still to do. Its own rewrite (V3) is kept as the design for the last pile; unrun.
+- Second pile done (34): five small rig changes, each run on its forcing case; all 25 earlier ledgers unchanged. One hostile case shows the new MAKE NOT SO what-if cannot yet handle a result that other lines produce (third pile).
+- Third pile built (35): named what-if cases, set-aside results, a denied BECAUSE, stages as a translator rule, and the two rigs joined. All earlier ledgers unchanged; one known limit (two causes, one withdrawn).
+- The language as one clean file (36). Supersedes rulebooks 23, 33 and 34.
+- Blind sample from the other model's literary stress test (37): eight outside texts, seven matched its answer keys; the one miss (a told story) was predicted, then fixed. The language file is now 38.
+- Next step: the remaining case families, ten at a time, plan first, keys after.
+
+## Traps
+- Letting this file drift from the project story. The project story's log is the record; this file is the summary.
