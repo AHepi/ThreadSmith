@@ -62,3 +62,35 @@ The audit: S64 returned and read (log S65). Paste S65 to the other model and bri
 - Reading the other model's quotations as quotations of file 10. It audits file 20; log 57 checked four of its quotations against 10 and two were absent from 10.
 - Typing "continue" before the closing line the instruction asks for has appeared.
 - Handing the other model the hard-to-vary skill. It reinterprets "never" and "may not". Hand it file 24.
+
+
+## S68. Status reconciliation, 21 September 2026
+
+S68. The owner asked to reconcile GitHub status, logs and next-step pointers with today's completed ThreadSmith sessions, preserving frozen plans and raw returns and changing only the append-only record and current-status surfaces. Initial baseline: commit `102bbcde6381db1d6e38fe994437c4659df9c668`. Before publication, another session advanced main to `b61d75b6da311aeb682adaa8cba9387c97b88d2a`, importing the S64 return, saved session messages, log S65 and the S65 thirteen-case instruction. This reconciliation was reapplied to that newer baseline, preserving its additions. The current record now includes both returned rounds and the prepared S65 follow-up. This entry supersedes the earlier “Next step” as a current instruction while preserving every earlier entry and its wording.
+
+The saved archive `S64 Near cases - return.zip` was created in the 21 September session (saved timestamp `2026-09-21T10:50:24.257591Z`; source identity `libfile_4285bf865a3481918c73cac2abf467bc`). It was read for this reconciliation. It contains eight Markdown files in `S64 Near cases/`, 49,924 whitespace-separated words in total. Every manifest word count and closing line agrees with the actual files, including `RETURN COMPLETE.` and `PARKED LIST EMPTY.`. The archive has 77,474 bytes and SHA-256 `10d9b46f3efa9aa8936b524142761ad31d933b3d5166f82e1bef0df481a7c2b4`. Every one of its eight member files is byte-identical to `results/S64 Near cases - return/` as imported in the concurrent S65 commit. This reconciliation adds no raw evidence and changes none. The receipt below identifies the exact bytes checked against that import. The manifest method gives 49,924 words; the different word count printed at S65 does not indicate a different return, because all eight files match byte for byte.
+
+| Archive member, beneath `S64 Near cases/` | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `01 Ten case cards.md` | 43199 | `7c3c2a75699b2cc11d15e630b68be1fac6f984a4c08e3bd65f9fcc7b7125eb59` |
+| `02 Tighter pairs and fix cards.md` | 22743 | `2c52bd8347248a598b73d672943f3747e8a6ee9f1b951ffa008ade394b4dc5cd` |
+| `03 Clause tests on all cases.md` | 98060 | `cee57cf236e6c3c6b3f526cbba67a80bd8799231c16f38f0dae56322dc1c69e0` |
+| `04 Coverage after this round.md` | 47732 | `336df42fd20229f7b5cbc46d4c0148d16776a8b6ba44a2c9f6e793434da0af34` |
+| `05 Quotations.md` | 73083 | `4c6276adc52a6f36b84cea96bd02dacb58217834a5c0c6e70c9c92eb9d94775f` |
+| `06 Report addendum.md` | 26900 | `d3d963df331082bc4ac9e962a254d8870013aec1c3f9fd2f65a3a43c2891878a` |
+| `MANIFEST.md` | 1918 | `a5c785e3b0fc66238649f3a4cce8e00c68fab5fecff93a7488eac5ad6a393c7f` |
+| `PARKED.md` | 44 | `4c43cd80270df405c42a0dca009a76b56178c0604fb0ea98b55eefc7a7c86119` |
+
+The ten O15–O24 situations and fixed thoughtful-person verdicts match frozen S64 verbatim. Five cases are placed by their original pairs; O16, O22 and O23 are placed by tighter pairs; O20/H90 and O21/I96 remain BORROWED: JUDGEMENT after tightening. H64 and I64 are proposed clauses, with losses and attacks preserved in file 02. File 03 has six groups of 24 case comparisons, all 144 marked SAME. These are recorded comparisons, not independent confirmations or a demonstration that the open attribution questions were solved.
+
+File 04 preserves the 80 recovered Stage B amendment/phrase cells verbatim from S62. Its independently recounted coverage is 34 rows with an outside case and 46 with NONE, up from 24 and 56. The original first 32 rows remain unavailable; `COVERAGE UPDATED.` does not mean full 112-row recovery. Its version sort reports six wholly REVISED ONLY rows (73, 74, 75, 76, 78, 79) and three mixed rows (77, 80, 85). The grouped judgement inventory in file 06 grows from four to six: one declared input, four stated open points, one homeless requirement. The two additions are H90 and I96; local placements did not erase the older open rows.
+
+File 06's earlier-authority sort is complete as a returned analysis. It retains the production/identification distinction and the table finding at its proper size; it separates revised-only anchored-grade, adequacy and merit restrictions from file 10. S64-E01 through S64-E09 were checked against file 10 with only table markup and whitespace normalized. The full revised/R2 quotation register was not independently verified against its source originals in this reconciliation. This is receipt and status verification, not a fresh semantic audit. No amendment adoption, theory revision, restart decision or follow-up experiment was performed.
+
+A count correction to log S63, with its text retained: the S62 quotation register has 89 quotation rows, not 90—22 earlier-source rows, 25 revised-source rows and 42 R2 rows. The earlier reference to “67 quotations marked revised” combines the 25 revised and 42 R2 rows. This corrects source accounting, not any raw quotation or theory verdict.
+
+Current surfaces updated with this receipt: `Semantics/README.md`, `Semantics/INDEX.md`, and `Semantics/records/Semantics - Status.md`. S62 and S64 are completed and imported; S63 was superseded unsent; S65 is the prepared next handoff, with no dispatch or return established by the checked sources. The frozen instructions keep their original dispatch-era wording. File 10 alone remains the authority under decision S4; file 20 is not requested. All pre-existing log bytes, frozen plans, authority files, returns and rigs are preserved.
+
+### Current next step after S68
+
+The concurrent S65 instruction already implements S64's proposed next work: O25 and O26 test H64 on explicit operating histories, O27 tests I64 on the recipient's reinterpretation, and O28–O37 strain rows 38, 56, 92, 99, 101, 67, 71, 82, 104 and 109. S65 is prepared; no dispatch or return was established by the sources checked. Send it if still unsent, otherwise receive its return. Recover the original first 32 Stage B rows alongside that work and keep their absence explicit until the exact texts arrive. S62 and S64 are not pending reruns. This reconciliation neither sends S65 nor executes its cases.

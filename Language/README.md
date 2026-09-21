@@ -3,18 +3,21 @@
 A formal language that everyday reasoning prose can be turned into, so that an external checker with fixed rules can find the faults (contradictions, jumps, kind mistakes, parts that do no work) and its findings can be turned back into plain prose that points at your sentences. "The external checker is the one essential thing" (Decision 5).
 
 ## Current state
+
+Reconciled 21 September 2026 in [L67](<records/Language - project story.md#l67-status-reconciliation-21-september-2026>). Historical plans and returns remain as written.
+
 - **Authority:** [38 The ledger language - complete definition](<authority/38 The ledger language - complete definition.md>): purpose, what a line means, the five parts of a line, fourteen kinds of content, the fixed lists, strength, the laws, how arguments and what-ifs are tested, everything the checker can say, sixteen translator rules, what is outside the language, traps. Supersedes 36, and the rulebooks 34, 33, 23, 20 before it. Handed to a translator together with [39 Prompt - translate a text into the ledger language](<authority/39 Prompt - translate a text into the ledger language.md>), never alone.
 - **Built:** two checker rigs on s(CASP), joined by a bridge, in [rigs/](rigs/). Rig 1 checks arguments; rig 2 checks causes written as pressing patterns in five slots. Sixteen logged patches on rig 1 and three on rig 2, each with what it gives up ([project story](<records/Checked reasoning language - project story.md>), "What each patch gave up").
-- **Tested on:** five of Claude's paragraphs, three of the owner's (ball and coin, Markus, Mondays), 21 of the other model's audit cases, and a blind sample of eight of its literary texts (seven matched its keys). Every run had its plan frozen first.
-- **Strength of evidence:** the translating has always been Claude's. "Not tested: a translator other than Claude" appears in every results file.
-- **Audited from outside (log 45):** the other model's audit of 38 and 39 is in [results/](results/), unchanged: fifteen findings on the wording, twelve repairs, sixty new texts, six of its own translations, nothing run. Four findings hold up against the text (F01, F02, F04, F15). [Plan 45](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) is frozen and not yet run: compare its six ledgers with Claude's, and sort the fifteen findings by running their cases.
-- **Live instruction:** [46](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the eight texts of plan 37 for the other model to translate under 38 and 39, so the comparison runs both ways. Not yet sent.
-- **Execution attempt (log 58):** the other model tried plan 45 and was blocked by the missing runtime; its attempt is kept in [results/](results/). The runtime now runs here and reproduces the recorded T05-B run.
+- **Earlier tests:** five of Claude's paragraphs, three of the owner's (ball and coin, Markus, Mondays), 21 of the other model's audit cases, and a blind sample of eight of its literary texts (seven matched its keys). Every run had its plan frozen first.
+- **Strength of evidence:** L62 includes OpenAI Codex translations and comparisons with the audit author's six. This is a comparison after prior exposure, not blind validation. Instruction 46 has also begun in the other session; the separate L66 blind run has no verified return yet.
+- **Audited from outside (log 45):** the other model's audit of 38 and 39 is in [results/](results/), unchanged: fifteen findings on the wording, twelve repairs, sixty new texts, six of its own translations, nothing run. Four findings hold up against the text (F01, F02, F04, F15). [Plan 45](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) remains frozen and was run at L62: six ledgers compared by OpenAI Codex with the audit author's, and the fifteen findings sorted from forcing cases and recorded dispositions.
+- **Instruction 46:** [the eight texts of plan 37](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) were issued in the other session. Stage 1, T05-B and T05-D, was returned in chat; the remaining stages and the full return have not been verified or archived here. Recover that continuation before commissioning duplicate work; this is separate from plan 45.
+- **Execution attempt (log 58):** the other model tried plan 45 and was blocked by the missing runtime; its attempt is kept in [results/](results/). The orchestrator subsequently installed the runtime and reproduced the recorded T05-B run at log 58.
 - **Plan 45 run (L62):** by a worker from [the brief L60](<tests/L60 Handoff - a new agent runs plan 45.md>), checked and partly repeated here. [45 Test results](<results/45 Test results - the 38 and 39 audit package, ledgers compared and findings sorted.md>): F09 and F15 are confirmed failures of the language; F04 needs the owner's word on scope; no change built.
-- **Direction (L63):** faults and, now, consequences; scope first. The scope is written as a contract, [L64](<authority/L64 Scope - the contract the language claims, second version.md>), a draft for the owner to strike through (L63 stands, superseded: it misread the owner on meaning preservation).
+- **Direction (L63):** faults and, now, consequences; scope first. The scope is written as a contract, [L64](<authority/L64 Scope - the contract the language claims, second version.md>), accepted by the owner at decision L7 (L63 stands, superseded: it misread the owner on meaning preservation).
 - **Consequences (L65):** a prototype on the tomato ledger: 10 derived facts, 4 worth a reader's eye, 32 delta lines, 7 seconds; the feared pull with exact read-back is not real at this size. `tools/consequences.py`.
-- **The blind corpus (L66):** eighteen sealed passages, Lucretius to Kropotkin, six with a planted alteration, the group-selection dispute for and against; plan frozen; a worker translates blind, a reader reads reports alone.
-- **Next step (from the log):** the worker's return on L66; then the consequences prototype.
+- **The blind corpus (L66):** eighteen sealed passages, Lucretius to Kropotkin, six with a planted alteration, the group-selection dispute for and against; plan frozen. The matching input bundle was supplied to this reconciliation session; no worker return or reader answers have been verified. The key remains sealed.
+- **Next step (from the log):** recover instruction 46's remaining session evidence; obtain and check the L66 worker return, then the reader's answers from reports alone, then open the key and mark E1 to E8. Check the modern passages' sources before drawing conclusions. L65's consequences prototype is already complete; F15 and F09 changes remain later work on the owner's word.
 
 ## Where to start
 This thread keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the three projects began with, which is kept unchanged in the same folder. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md); worked examples on its files are in [tutorials/](tutorials/).
@@ -27,10 +30,10 @@ ORIGIN.md      the goal, the twelve properties, how the pieces fit
 records/       this thread's own log, Decisions, Lessons and Status, from 21 September 2026; beside them the shared record the three projects began with, unchanged
 RELATIONS.md   this project's claims about its connections to the other two, with status and evidence
 tutorials/     three worked examples on this project's files: reading an authority, following a test, reading a result
-INDEX.md       every research state from the first theory to file 39, with what is and is not here
-authority/     38 (the language), 39 (the translator's task), L63, L64 (the scope as a contract, draft; L64 current)
-tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39; 46 the next instruction for the other model
-results/       21 and 22 (html pages), 37 (md): what happened, with predictions ticked; 45: the other model's package, as received
+INDEX.md       research states through L67, with evidence and the current next step
+authority/     38 (the language), 39 (the translator's task), L63, L64 (the scope as a contract; L64 current and accepted)
+tests/         frozen plans 21, 22, 35, 37, 45, L65 and L66; instruction 46; L60 and L66 handoffs; L66 reader brief
+results/       earlier results; audit 45; attempt 58; L62 return, plan-45 results and reruns; L65 prototype; sealed L66 inputs
 rigs/          the working checkers, frozen and patched, every ledger, the bridge, and raw_log.txt
 tools/         sameness.py (the sameness test as a program), consequences.py (what follows, and what changes), install_scasp.sh and the expected smoke report
 ```

@@ -55,3 +55,27 @@ The worker's return on L66; then the reader's answers from the reports alone; th
 - Taking the rig bundle as matching an older results file. It holds the checkers as they are now.
 - Running a driver on another machine without s(CASP) at the path it expects: the raw log stays empty and the exit code is 1 (Lesson 53).
 - Writing a forcing case's prediction from a description of the case instead of its text (Lesson 51).
+
+## L67. Status reconciliation, 21 September 2026
+
+The owner reported that plan 45, instruction 46 and the later Semantics handoffs had been worked through in today's sessions, while the current README still described some as unrun or unsent. Reconciled this thread's current surfaces against repository commit `102bbcde6381db1d6e38fe994437c4659df9c668`, the located session receipt and the attached L66 input bundle. Earlier log entries retain what was known when they were written; this entry corrects the present-tense summary, not the historical record.
+
+| Step | Evidence inspected or recovered | Reconciled status |
+| --- | --- | --- |
+| Plan 45 / L62 | The preserved L62 worker return, the orchestrator's plan-45 results and eight reruns, entry L62, and the recovered `Plan45_execution_OpenAI_Codex.zip` | Completed and already checked by the orchestrator: six translations compared and fifteen findings sorted. No pile-2 change built. This reconciliation did not rerun the experiment. |
+| Instruction 46 | In the session “Compile Literary Test Corpus”, the owner supplied the instruction-46 URL; the located response at `2026-09-21T03:56:46Z` contains the T05-B and T05-D translations | Issued and Stage 1 returned in chat. A full eight-text return, Stages 2–4 and the Stage 5 answers have not been verified or archived in this repository. The owner's broader completion report is recorded above; recover the remaining session output before concluding that it is missing or commissioning a rerun. Plan 45's six-text return is not evidence that instruction 46's eight-text round is complete. |
+| Scope L64 | Decision L7 and entry L65 record acceptance without strikes | Current and accepted. L63 remains superseded; the accepted authority text is unchanged. |
+| Consequences L65 | Frozen plan, raw prototype output, results and entry L65 | Completed on the tomato ledger. It is not a pending step after L66. Wider testing is distinct from this completed prototype. |
+| Blind corpus L66 | `L66_blind_corpus.zip`, supplied in the current reconciliation session: 166 files; its brief and all 21 corpus assets are byte-identical to the repository | Input handoff available; no completed worker return or reader answers verified. Attachment receipt is not execution. The key was not decrypted. |
+
+The recovered plan-45 archive has SHA-256 `14b2629b3933b2397a13347f681c2dcd9d62be1a34c59157d707f68747151e53`; all 1,146 file entries are present and byte-identical in the repository's L62 return directory. The earlier L62 entry and results introduction say 1,145; they remain unchanged, with this count correction alongside them.
+
+The attached L66 archive's SHA-256 is `e214dc14f6e78900be906085d0f12ab506bd2c8145ad49a4dca782098667101d`. The archive contains the brief, authorities, scope, sealed corpus, rigs, tools and earlier examples. Its earlier examples are not new L66 results.
+
+Updated `README.md`, `INDEX.md`, `Language - Status.md` and appended the current next-step pointer below, which supersedes the earlier Next step section. The evidence summary now names the non-Claude translations actually present at L62 and retains their prior-exposure limitation. Removed stale pending work for plan 45 and the completed L65 prototype. No frozen plan, authority, checker, corpus, raw return, earlier log entry or shared record was changed. The pending evidence remains instruction 46's continuation and L66's worker and reader returns; the source check and any F15/F09 changes follow in the previously recorded order.
+
+## Current next step after L67
+
+This pointer supersedes the earlier Next step section; the earlier section remains a historical snapshot.
+
+Recover instruction 46's remaining session evidence before commissioning duplicate work. For L66, obtain and check the worker's return; then the reader's answers from reports alone; then open the key, mark E1 to E8 and write the results. Check the two modern group-selection passages' sources before drawing conclusions. Plan 45 and L65's consequences prototype are complete. After the L66 sequence, on the owner's word: the F15 change on N18-A with N18-B as control and every ledger rerun; then F09 after its layer is settled. Held: the operating thresholds in L64; fixture standing; R06; F04's scope; what "02" is.
