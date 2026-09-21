@@ -19,5 +19,7 @@ Only cases where something failed while being made or tested, and how it was fix
 47. In conversation mode one reader wrote its whole report in its sixth turn before being told the conversation was over, and all twelve asked three to five questions a turn against the skill's "one part and one change at a time". Neither was caught by the rig, which counts turns and not questions. Fix: recorded in file 54; a question count per turn is now printed by the shape check.
 48. The numbering clashed a third time, and this time the rule from Lesson 37 had been followed: the chat started from the current zip (file 44). The set on main had moved on to 45 and 46 while the chat worked, so the chat's 45 to 52 met the repository's 45 and 46 on import. Fix: renumbered 47 to 54 (decisions 37 to 43) by a script that rewrote every reference inside the files; the map is in this entry. The cause is two chats appending to one numbered sequence from different starting points; the rule now is to check main's last number before the first new file, not only at the start.
 
+H1. fetch.py failed on P3 in the fresh session because the PDF extractor (PyMuPDF) was not installed there; the probe reported the failure by name and nothing was sent. Fix: installed it; the rig's read-me now names the two packages a fresh session needs (requests, pymupdf) and the third for the Sonnet runner (anthropic).
+
 ## Traps
 - Letting a lesson drift from the log entry that records the failure. The log is the record; a lesson points at it.
