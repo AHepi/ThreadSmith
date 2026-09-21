@@ -70,13 +70,22 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | --- | --- |
 | Story | Strain the ten rows the coverage named first with cases written to sit between each row's own two changes; carry any failure through a fix card and all twenty-four cases; a version update is earned the first time a case changes a verdict. |
 | Test | [S64 Ten near cases, verdicts under the earlier version, returned as a zip](<tests/S64 Next instruction for the other model - ten near cases, verdicts under the earlier version, returned as a zip.md>) - O15 to O24, written by Claude; replaces [S63](<tests/S63 Next instruction for the other model - ten near cases by an outside author, returned as a zip.md>), unsent, after decision S4 set file 20 aside. |
-| Raw result | None yet. Goes into `results/` as `S64 Near cases - return/`. |
-| Waits on | The owner: the first 32 Stage B rows from the chat of log 41. Open: whether to restart the audit from file 10 after the sort S64 asks for. |
-| Next | Paste S64 to the other model; bring back its zip (project story, "Next step"). |
+| Raw result | [S64 Near cases - return/](<results/S64 Near cases - return/>) - eight files, 49,098 words, unchanged; [S65 Saved page](<results/S65 Saved page - the other model's chat, S62 and S64 manifests and timings.md>) for the manifests and timings. |
+| Interpretation | Log S65: five cases placed by the original pairs, three by tighter pairs, two open with the model's own clauses H64 and I64; six clauses by 24 cases all SAME; coverage 34 of 80; the S62 findings sorted under file 10 (what falls away: the anchored grade, attack F, the adequacy pass, the merit gate, their Part XV entries). Gauge six live rows. Version update still unearned. |
+| What it gives up | The two new clauses name a judgement rather than replace it; whether they state a usable distinction is untested until S65. |
+
+## Research state: two attribution tests and the next ten rows (log S65) - live
+| | |
+| --- | --- |
+| Story | Test H64 on two O20 histories (preemption; both routes) and I64 on a recipient's reinterpretation; strain the next ten rows the coverage named. |
+| Test | [S65 Thirteen near cases, two attribution tests, returned as a zip](<tests/S65 Next instruction for the other model - thirteen near cases, two attribution tests, returned as a zip.md>) - O25 to O37, written by Claude. |
+| Raw result | None yet. Goes into `results/` as `S65 Near cases - return/`. |
+| Waits on | The owner, still: the first 32 Stage B rows. |
+| Next | Paste S65 to the other model; bring back its zip (project story, "Next step"). |
 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64.
-- `results/`: 55, 57, and the folder `S62 Stage D and report - return/`.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64, S65.
+- `results/`: 55, 57, the folders `S62 Stage D and report - return/` and `S64 Near cases - return/`, and S65 (the saved page's messages).
 - `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.
