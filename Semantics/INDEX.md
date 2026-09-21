@@ -61,12 +61,22 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | --- | --- |
 | Story | Fix cards for the amendments the round moved (A, C, G, H), each clause run on all fourteen cases, the top finding at its size, the anchoring passages compared case by case, near-case coverage of the whole table, the theory's own attack list walked, every quotation listed, then the round's report; returned as one zip. |
 | Test | [S62 Stage D, clause tests, coverage and the report, returned as a zip](<tests/S62 Next instruction for the other model - Stage D, clause tests, coverage and the report, returned as a zip.md>); replaces [57](<tests/57 Next instruction for the other model - Stage D fix cards and the report.md>), written and never sent. |
-| Raw result | None yet. Goes into `results/` as `S62 Stage D and report - return/`, unchanged. |
-| What it gives up | Part 5 describes near cases and writes none; the cases are the next round's. |
-| Next | Paste S62 to the other model; unpack its zip into `results/`; read from the quotation list and the manifest (project story, "Next step"). |
+| Raw result | [S62 Stage D and report - return/](<results/S62 Stage D and report - return/>) - ten files, 33,618 words, unchanged. |
+| Interpretation | Log S63: 56 clause-by-case comparisons all SAME; four judgement rows unchanged; the top finding at its size; the anchored grade of file 20 printed beside file 10's argument against one; coverage 24 of 80 recovered rows, 32 unrecovered; ten rows named to strain first; quotations from the earlier version check against file 10. Version update: not yet. |
+| What it gives up | Part 5 describes near cases and writes none; the first 32 rows were unavailable to the model. |
+
+## Research state: ten near cases by an outside author (log S63) - live
+| | |
+| --- | --- |
+| Story | Strain the ten rows the coverage named first with cases written to sit between each row's own two changes; carry any failure through a fix card and all twenty-four cases; a version update is earned the first time a case changes a verdict. |
+| Test | [S63 Ten near cases by an outside author, returned as a zip](<tests/S63 Next instruction for the other model - ten near cases by an outside author, returned as a zip.md>) - O15 to O24, written by Claude. |
+| Raw result | None yet. Goes into `results/` as `S63 Near cases - return/`. |
+| Waits on | The owner: file 20 for `authority/`; the first 32 Stage B rows from the chat of log 41. |
+| Next | Paste S63 to the other model; bring back its zip (project story, "Next step"). |
 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
-- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62.
+- `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63.
+- `results/`: 55, 57, and the folder `S62 Stage D and report - return/`.
 - `results/`: 55 and 57 (the other model's returns on 41 and 55, unchanged) and a note on the earlier returns that are not here.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.

@@ -13,6 +13,7 @@ A ledger of decisions, with your words as written.
 45. Put the authority document in the repository. "you need to push the authority semantics I shared with you to main." (the file "10 Claude Fable Semantics - standalone theory.md", uploaded again the day before with "Remember this.")
 S1. Each project's files stay inside its own folder; only the read-me and navigation files sit outside. "Actually, can you recreate all the files outside the semantics subfolder that currently write to inside the semantics subfolder. I'm going to ensure all files remain withing their relative folders except the readme and other navigation related files"
 S2. The next instruction inline, longer, returned as a zip. "Can you return next step inline please. Can you make it include more steps because the ones so far only take 3 minutes. And can you add instructions to return a zip file instead."
+S3. Unpack the S62 return into results, log the reading, and write the next instruction around the three steps named (file 20 in, the 32 rows recovered, near cases by an outside author on the ten rows). "Do it"
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
