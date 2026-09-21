@@ -91,8 +91,17 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Lessons | L4 (a new program's first output). |
 | Next | The read-back test (step three), plan first; the program on a fault-free and on the longest ledger. |
 
+## 10. The blind corpus: lyrical argument and group selection (L66) - sealed, not yet run
+| | |
+| --- | --- |
+| Story | Decision L8: the blind-translator and read-back tests folded onto new data; lyrical prose that argues; a contested science. |
+| Corpus | [L66 Corpus - lyrical argument and group selection](<results/L66 Corpus - lyrical argument and group selection/>): P01 to P18, MANIFEST.json, SOURCES.md, KEY.enc (sealed). |
+| Test | [L66 Test plan](<tests/L66 Test plan - the blind run on a lyrical and a contested corpus.md>) - eight expectations, written knowing the plants. |
+| Briefs | [L66 Handoff](<tests/L66 Handoff - a new agent translates and runs the blind corpus.md>) for the worker; [L66 Reader brief](<tests/L66 Reader brief - the read-back test.md>) for the reader. |
+| Next | The worker's return; the reader's answers; the key opened last. |
+
 ## Files in this project, by folder
 - `authority/`: 38, 39; L63 and L64 (the scope contract, draft; L64 is current).
-- `tests/`: 21, 22, 35, 37, 45, 46, L60 (handoff), L65.
-- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator"; L65 (results) and the folder "L65 Consequences prototype".
+- `tests/`: 21, 22, 35, 37, 45, 46, L60 (handoff), L65, L66 (plan, handoff, reader brief).
+- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator"; L65 (results) and the folder "L65 Consequences prototype"; the folder "L66 Corpus".
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).

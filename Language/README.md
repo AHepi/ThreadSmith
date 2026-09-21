@@ -13,7 +13,8 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Plan 45 run (L62):** by a worker from [the brief L60](<tests/L60 Handoff - a new agent runs plan 45.md>), checked and partly repeated here. [45 Test results](<results/45 Test results - the 38 and 39 audit package, ledgers compared and findings sorted.md>): F09 and F15 are confirmed failures of the language; F04 needs the owner's word on scope; no change built.
 - **Direction (L63):** faults and, now, consequences; scope first. The scope is written as a contract, [L64](<authority/L64 Scope - the contract the language claims, second version.md>), a draft for the owner to strike through (L63 stands, superseded: it misread the owner on meaning preservation).
 - **Consequences (L65):** a prototype on the tomato ledger: 10 derived facts, 4 worth a reader's eye, 32 delta lines, 7 seconds; the feared pull with exact read-back is not real at this size. `tools/consequences.py`.
-- **Next step (from the log):** the read-back test, plan first; then the consequences prototype.
+- **The blind corpus (L66):** eighteen sealed passages, Lucretius to Kropotkin, six with a planted alteration, the group-selection dispute for and against; plan frozen; a worker translates blind, a reader reads reports alone.
+- **Next step (from the log):** the worker's return on L66; then the consequences prototype.
 
 ## Where to start
 This thread keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record the three projects began with, which is kept unchanged in the same folder. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md); worked examples on its files are in [tutorials/](tutorials/).
