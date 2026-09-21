@@ -4,13 +4,23 @@ The key is read from the environment and is written to no file.
   DEEPSEEK_API_KEY=... python3 run.py --pilot          # 3 sources x 3 modes = 9 runs
   DEEPSEEK_API_KEY=... python3 run.py --all            # every source x modes 0,1,2
   DEEPSEEK_API_KEY=... python3 run.py S7:2             # one run
+  DEEPSEEK_API_KEY=... python3 run.py P3:1:1 P3:1:2     # repeat runs (plan H56): a third field k
+                                                       #   writes runs_repeat/<sid>-m<mode>-r<k>.json
+  python3 run.py --dry P3:1:1                           # sends nothing: checks skill, corpus, paths
+
+Patch (plan H56): repeat runs go to runs_repeat/ so the skip rule never hides a repeat behind an original;
+the skill copy is diffed against ../../authority/hard-to-vary before any call (Lesson 44, now in code);
+--dry runs every check and sends nothing. Gives up nothing: a job with no k runs exactly as before.
 
 Modes. 0: no skill, a bare instruction (the fair rival). 1: the whole skill in the system message.
 2: SKILL.md only, with a tool the reader calls to open a reference file, so the router is live.
 Resumable: a run whose file exists is skipped. Ten at a time, as the service allows.
 """
-import os, sys, json, time, re, threading, concurrent.futures as cf
-import requests
+import os, sys, json, time, re, threading, filecmp, concurrent.futures as cf
+try:
+    import requests
+except ImportError:
+    requests = None
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 URL = "https://api.deepseek.com/chat/completions"
@@ -19,6 +29,7 @@ EFFORT = "high"
 MAX_TOKENS = 24000
 MAX_TOOL_CALLS = 12
 SKILL = f"{HERE}/skill/hard-to-vary"
+AUTHORITY = os.path.normpath(f"{HERE}/../../authority/hard-to-vary")
 MODULES = ["the-idea-in-depth", "question-bank", "by-domain", "building",
            "testing-against-cases", "reporting", "word-list"]
 
@@ -33,6 +44,22 @@ FRAMING = ("Below is a method for judging whether an explanation holds up. It is
 
 BARE = ("The document in the next message gives an explanation. Judge whether its explanation holds up. "
   "Say which parts do the work, which are loose, and what would test it. Keep your reply under 1,200 words.")
+
+def check_skill():
+    """The copy sent to the reader must be file 30 exactly (Lesson 44)."""
+    if not os.path.isdir(SKILL):
+        raise SystemExit(f"no skill copy at {SKILL}; copy {AUTHORITY} there first. Nothing sent.")
+    files = ["SKILL.md"] + [f"references/{m}.md" for m in MODULES]
+    bad = [f for f in files if not filecmp.cmp(f"{SKILL}/{f}", f"{AUTHORITY}/{f}", shallow=False)]
+    if bad:
+        raise SystemExit(f"skill copy differs from authority in {bad}. Nothing sent.")
+    return files
+
+def out_path(sid, mode, k=None):
+    if k is None:
+        return f"{HERE}/runs/{sid}-m{mode}.json"
+    os.makedirs(f"{HERE}/runs_repeat", exist_ok=True)
+    return f"{HERE}/runs_repeat/{sid}-m{mode}-r{k}.json"
 
 def module_text(name):
     return open(f"{SKILL}/references/{name}.md", encoding="utf-8").read()
@@ -104,9 +131,9 @@ def post(body, key, tag):
         time.sleep(delay); delay = min(delay * 2, 90)
     raise RuntimeError(f"{tag}: gave up, {err}")
 
-def do_run(sid, mode, key):
-    tag = f"{sid}:{mode}"
-    out = f"{HERE}/runs/{sid}-m{mode}.json"
+def do_run(sid, mode, key, k=None):
+    tag = f"{sid}:{mode}" + (f":r{k}" if k else "")
+    out = out_path(sid, mode, k)
     if os.path.exists(out): return "skip"
     t0 = time.time()
     paper = source_text(sid)
@@ -145,7 +172,7 @@ def do_run(sid, mode, key):
                 body["messages"].append({"role": "tool", "tool_call_id": tc["id"], "content": text})
             continue
         break
-    rec = {"source": sid, "mode": mode, "model": MODEL, "effort": EFFORT,
+    rec = {"source": sid, "mode": mode, "repeat": k, "model": MODEL, "effort": EFFORT,
            "reply": msg.get("content", ""), "reasoning": msg.get("reasoning_content", ""),
            "modules_opened": opened, "tool_calls": calls, "finish_reasons": finishes,
            "automatic_retries": attempts,
@@ -170,25 +197,41 @@ def cost_so_far():
     return hit, miss, outt, hit/1e6*0.003 + miss/1e6*0.15 + outt/1e6*0.6
 
 if __name__ == "__main__":
-    key = os.environ.get("DEEPSEEK_API_KEY", "")
-    if not key: raise SystemExit("DEEPSEEK_API_KEY not set. Nothing sent.")
     args = sys.argv[1:]
+    dry = "--dry" in args
+    key = os.environ.get("DEEPSEEK_API_KEY", "")
+    if not key and not dry: raise SystemExit("DEEPSEEK_API_KEY not set. Nothing sent.")
     srcs = [s["id"] for s in json.load(open(f"{HERE}/sources.json"))]
     if "--pilot" in args:
-        jobs = [(s, m) for s in ("S7", "F1", "R1") for m in (0, 1, 2)]
+        jobs = [(s, m, None) for s in ("S7", "F1", "R1") for m in (0, 1, 2)]
     elif "--all" in args:
-        jobs = [(s, m) for s in srcs for m in (0, 1, 2)]
+        jobs = [(s, m, None) for s in srcs for m in (0, 1, 2)]
     else:
         jobs = []
         for a in args:
-            if ":" in a: s, m = a.split(":"); jobs.append((s, int(m)))
+            if ":" in a:
+                parts = a.split(":")
+                jobs.append((parts[0], int(parts[1]), int(parts[2]) if len(parts) > 2 else None))
+    files = check_skill()
+    print(f"skill copy checked against authority: {len(files)} files identical")
+    for s, m, k in jobs:
+        if s not in srcs: raise SystemExit(f"unknown source {s}. Nothing sent.")
+        if not os.path.exists(f"{HERE}/corpus/{s}.txt"): raise SystemExit(f"no corpus text for {s}; run fetch.py {s}. Nothing sent.")
+    if dry:
+        for s, m, k in jobs:
+            out = out_path(s, m, k)
+            print(f"  would run {s} mode {m}" + (f" repeat {k}" if k else "") +
+                  f" ({len(source_text(s).split())} words) -> {os.path.relpath(out, HERE)}" +
+                  (" [exists, would skip]" if os.path.exists(out) else ""))
+        raise SystemExit("dry run: nothing sent.")
+    if requests is None: raise SystemExit("the requests package is not installed. Nothing sent.")
     print(f"{len(jobs)} runs; model {MODEL}, effort {EFFORT}")
     done = 0
     with cf.ThreadPoolExecutor(max_workers=10) as ex:
-        futs = {ex.submit(do_run, s, m, key): (s, m) for s, m in jobs}
+        futs = {ex.submit(do_run, s, m, key, k): (s, m, k) for s, m, k in jobs}
         for f in cf.as_completed(futs):
-            s, m = futs[f]
+            s, m, k = futs[f]
             res = f.result(); done += 1
-            print(f"  [{done}/{len(jobs)}] {s} mode {m}: {res}", flush=True)
+            print(f"  [{done}/{len(jobs)}] {s} mode {m}" + (f" repeat {k}" if k else "") + f": {res}", flush=True)
     h, mi, o, usd = cost_so_far()
     print(f"\ntokens: cache-hit {h:,}, cache-miss {mi:,}, out {o:,}  ->  about ${usd:.2f} at off-peak prices")

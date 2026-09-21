@@ -19,5 +19,10 @@ A ledger of decisions, with your words as written.
 
 H1. Numbers are each project's own, and work on one project edits nothing in another. "The numbers should be project independent. If they aren't, that needs to change. Work on one project should never edit anything in another project either. Can you fix only that. The only things shared are a conventions surface when they come together later."
 
+H2. The repeatability run and, if forced, skill file 31; the skill first, the larger aim later; an audit bundle after. "1 and 2 first. I actually intend on eventually making your project a general purpose reasoning engine. So you're nowhere near finished. But first, getting HV right. Once the tests are done, give me a zip folder with all the information necessary to do a adversarial audit."
+
+H3. A second reader for plan H56. "One last thing, test also on Claude Sonnet 5. Not Opus 5."
+H4. Which models may never be readers or subagents without the owner's word. "Never test on Fable 5.1 subagents. Never spawn Fable 5.1 subagents or Opus 5 subagents without my explicit permission."
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
