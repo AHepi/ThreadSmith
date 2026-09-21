@@ -8,5 +8,7 @@ L1. The Language project keeps its own record; nothing outside its folder change
 
 L2. A new agent replaces the stalled one and gets a bundle to start from. "New strategy. The old agent is stalled. I need a new one. So can you return a zip folder with all the relevant info so it can get started on its own."
 
+L3. The orchestrator stays; the new agent is a worker for one plan. "Ok but you're still orchestrator. I'm not handing the whole project over"
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

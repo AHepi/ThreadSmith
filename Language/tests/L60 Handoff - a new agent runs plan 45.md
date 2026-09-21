@@ -1,6 +1,8 @@
 # L60 Handoff - a new agent runs plan 45
 
-You are a new agent taking over one piece of the Language project: **running test plan 45**. The plan is frozen; your job is to do what it says, keep every raw output as it comes, and return the evidence. The agent that wrote the audit under test stalled; you are not it, and you are not Claude. Where the plan says "Claude translates", the translator is you: say so by name in every file you write.
+You are a new agent given one piece of the Language project: **running test plan 45**. The plan is frozen; your job is to do what it says, keep every raw output as it comes, and return the evidence. The agent that wrote the audit under test stalled; you are not it, and you are not Claude. Where the plan says "Claude translates", the translator is you: say so by name in every file you write.
+
+**Who keeps the record.** The orchestrator, Claude working in the repository with the owner, keeps the project's record, checks what you return the way it checked the packages in `results/45` and `results/58` (hashes, counts, every claim against the file it points to), and decides what enters the repository. Nothing you write enters the record until then. You return materials and drafts; you change nothing in the record folder.
 
 ## What is in this bundle
 ```
@@ -38,10 +40,10 @@ Then write each as a `.json` and `.pl` pair in `rigs/rig 1 - arguments/`, named 
 
 **4. The sort.** Only after every run: put each finding in one of the three piles the plan defines, by what the rig said, and say for each whether the plan's prediction was right, wrong, or not tested. Where a run shows a pile-2 change is needed, describe what the forcing case did and **stop there**: the change itself is the next round, on the owner's word, and it records what it gives up.
 
-**5. The write-up.** One file, "45 Test results - the 38 and 39 audit package: ledgers compared, findings sorted.md", in the form of `results/37 Test results ...`: the plan's expectation beside what happened, row by row; what was seen and what was worked out; what this run did not test; traps. Then one log entry in the project's voice for `records/Language - project story.md`, numbered **L61**, saying what was done, what was not, and what the outputs are.
+**5. The write-up, as a draft.** One file, "DRAFT 45 Test results - the 38 and 39 audit package: ledgers compared, findings sorted.md", in the form of `results/37 Test results ...`: the plan's expectation beside what happened, row by row; what was seen and what was worked out; what this run did not test; traps. The orchestrator checks it against your raw logs and writes the results file and the log entry; the draft stays beside them as yours.
 
 ## What to return
-One zip: the twelve ledger pairs; `raw_log.txt` from both rigs (whole files); every report as printed; the six sameness outputs with your hand decisions; every Part B ledger pair and report; the six translations in five-section form; the results file; the L61 entry; and a short list of anything you had to choose that the plan or 39 did not settle, each with the choice made. Nothing edited after the fact: if you correct something, the correction is a new file beside the old one.
+One zip: the twelve ledger pairs; `raw_log.txt` from both rigs (whole files); every report as printed; the six sameness outputs with your hand decisions; every Part B ledger pair and report; the six translations in five-section form; the draft results file; and a short list of anything you had to choose that the plan or 39 did not settle, each with the choice made. Hashes of every file in a manifest, as `results/58/BUNDLE_MANIFEST.json` does it.
 
 ## Rules this project works by
 - The plan is frozen. Discrepancies go beside it, never into it.
@@ -60,4 +62,5 @@ One zip: the twelve ledger pairs; `raw_log.txt` from both rigs (whole files); ev
 - Inventing a producer to fit the Result form (F04's case). Use a Fact and say so.
 - Taking the export in `results/58` as a run. It was never parsed; if s(CASP) rejects a line of it, that is a finding about the export, recorded, not fixed silently.
 - Patching the rig in this round. The sort ends the round.
-- Numbering a file by the shared record's sequence. This project's next entries are L61 onward.
+- Writing into the record. The log, Decisions, Lessons and Status are the orchestrator's; your draft is the input to them.
+- Numbering a file by the shared record's sequence. Files you make are named as this brief names them; the orchestrator numbers what enters the repository.
