@@ -13,11 +13,14 @@ A formal language that everyday reasoning prose can be turned into, so that an e
 - **Next step (from the log):** run plan 45 here; paste 46.
 
 ## Where to start
+This thread keeps its own record in [records/](records/) from 21 September 2026 (log, Decisions, Lessons, Status); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the shared record at the root.
+
 [INDEX.md](INDEX.md) for the timeline. [ORIGIN.md](ORIGIN.md) for the goal in the owner's words and the twelve properties. For the language itself, file 38. For what the checkers actually do, `rigs/READ ME FIRST.md`.
 
 ## What is in this folder
 ```
 ORIGIN.md      the goal, the twelve properties, how the pieces fit
+records/       this thread's own log, Decisions, Lessons and Status, from 21 September 2026
 INDEX.md       every research state from the first theory to file 39, with what is and is not here
 authority/     38 (the language), 39 (the translator's task)
 tests/         frozen plans: 21 Markus, 22 Mondays, 35 the third pile, 37 the blind sample, 45 the audit of 38 and 39; 46 the next instruction for the other model

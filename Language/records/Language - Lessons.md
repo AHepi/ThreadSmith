@@ -1,0 +1,11 @@
+# Language - Lessons
+
+Only cases where something failed while being made or tested on the Language project, and how it was fixed. Lessons 1 to 50 are in the shared Lessons file at the root; 51 to 53 are copied from it. New lessons here are numbered L1 onward.
+
+51. Plan 45's predictions for N17 (a LETS line against a stated tendency) and N22 (SO THAT answering "cannot tell") were written from the audit report's one-line descriptions of those cases, not from the case texts. N17-A says "assisted", which is HELPS, and states no tendency; N22-A supplies both the dependency and the change, so the plan check can fire. Found by the other model before any run. Fix: a forcing case's prediction quotes the text it will be run on; the plan stays as written and the discrepancies stand beside it.
+52. The rig bundle holds no program for the sameness test, though plan 45 names it as a thing to run; logs 19 and 20 ran it by hand. Found when the other model looked for its command. Fix: write it down as a program before Part A, named as new, and log what it compares.
+53. The two drivers call s(CASP) at a fixed path on the machine the rigs were built on. On any other machine the first query dies with "no such file", the driver exits 1, and the raw log is empty, which can pass for a run that found nothing. Found in the other model's execution attempt, which read the empty log correctly. Fix: a link at that path, or one changed line; the trap is now in Language/README.
+L1. Two chats wrote the one shared record in the same hour and both took entry number 57; the second push to main was rejected and the entry had to be rebuilt as 58. Then it happened again the same day at 58, caught only because the second chat pulled before writing. Fix: this folder's own record, with L-numbered entries that cannot collide (decision L1).
+
+## Traps
+- Letting a lesson drift from the log entry that records the failure. The log is the record; a lesson points at it.
