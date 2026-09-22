@@ -59,7 +59,7 @@ def main():
               headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"})
         t0 = time.time()
         try:
-            with urllib.request.urlopen(req, timeout=900) as r: text = r.read().decode()
+            with urllib.request.urlopen(req, timeout=2400) as r: text = r.read().decode()
             status = 200
         except urllib.error.HTTPError as e:
             status, text = e.code, e.read().decode(errors="replace")
