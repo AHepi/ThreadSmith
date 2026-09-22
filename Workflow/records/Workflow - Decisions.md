@@ -10,5 +10,7 @@ W3. File 11 is the authority; phase 1 begins; five Opus 5 agents at extra effort
 
 W4. The agents may research on the internet. "Also give them access to internet for research if it's possible"
 
+W5. The owner's assessment of W9, and the next steps named. "W9 is a serious, honest bridge between a formal semantics and the messy reality of LLM agents. Its main contributions are the text-grain physics, the provenance discipline, the two-loss harness account, and the placement table. Its main risks are the fourth clause, the training-as-selection analogy, and the fragility of the placement rule. If those hold, W9 is a powerful framework. If the fourth clause fails, most representation claims become declared, and W9 becomes a taxonomy of what can be said without representation. The most valuable next step is exactly what W9 recommends: run the port-setting arm, test the fourth clause against a trainer's record, and run the re-identification arm."
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
