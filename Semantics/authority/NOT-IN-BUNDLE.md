@@ -8,3 +8,5 @@ This folder holds the frozen versions of the authority document. Neither was in 
 File 10 is not edited; a further revision is a new numbered file beside it. `11 Claude Fable Semantics - standalone theory, revision 1.md` is that file (log S76): a rewrite for coherence with one claim changed, under test in round S76; file 10 stays the authority until the round returns with its prediction held.
 
 `12 Claude Fable Semantics - causality, standalone theory.md` (log S77, decision S9) is the theory of file 11 written again with causation as its object, with nothing built on how a correspondence came to hold. It is a draft beside 10 and 11 and is under no round.
+
+`00 FW5 JUMP from FW2+FW3+FW4 - Explanatory construction (predecessor, 8 September 2026).md` (log S79) is an older, richer predecessor of file 10, uploaded by the owner and held unchanged for the question whether the richness lost in the rewrites is worth losing. Its links point to files outside this repository. It is a predecessor, and neither an authority nor a candidate.

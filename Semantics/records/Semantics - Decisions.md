@@ -21,6 +21,7 @@ S7. Each round from here runs as two stages by two agents, testing then audit, w
 S8. Draft the new version, as a full rewrite for coherence. "Cool. Revision time." Then, while the four-sentence patch was being written: "Actually, rewrite the entire theory to be more coherent."
 S9. Write the theory again with causation as its object, and leave out every notion built on how a correspondence came to hold. "Can you return 11 inline first, then rewrite the whole theory causality. No mention of provenance."
 S10. Five Opus 5 subagents at extra effort, each armed with the hard-to-vary skill, review whether the two-stage testing pattern makes sense, before any round for file 12. "Before doing that, use 5 Opus 5 subagents on extra effort to review whether the review patterns make sense. Arm each with the hard to vary skill" and, on the target, "I meant the two stage testing".
+S11. Run the seeded-error round. "Do seeded error round."
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

@@ -12,7 +12,9 @@ INSTRUCTION = {"S65": T + "S65 Next instruction for the other model - thirteen n
                "S72-1": T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md",
                "S72-2": T + "S72 Stage 2 audit - check the testing return, then build the draft list from what survives, returned as a zip.md",
                "S76-1": T + "S76 Stage 1 testing - file 11 against every case, returned as a zip.md",
-               "S76-2": T + "S76 Stage 2 audit - check the file 11 test, returned as a zip.md"}[NUM]
+               "S76-2": T + "S76 Stage 2 audit - check the file 11 test, returned as a zip.md",
+               "S79-1": T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md",
+               "S79-2": T + "S72 Stage 2 audit - check the testing return, then build the draft list from what survives, returned as a zip.md"}[NUM]
 README = T + "Instruction pack - read me first for the agent.md"
 EARLIER = [
  ("27 Next instruction for the other model - round 3, outside cases.md", "27 Round 3 - outside cases O1 to O4.md"),
@@ -29,7 +31,7 @@ RETURNS = [
  ("S62 Stage D and report - return", None), ("S64 Near cases - return", None), ("S65 Near cases - return", None), ("S70 Near cases - return", None),
 ]
 # A later stage of a split round takes the earlier stage's return when it is in results/.
-EXTRA = {"S72-2": ["S72 Stage 1 testing - return"], "S76-1": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return"], "S76-2": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return", "S76 Stage 1 testing - return"]}
+EXTRA = {"S72-2": ["S72 Stage 1 testing - return"], "S76-1": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return"], "S76-2": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return", "S76 Stage 1 testing - return"], "S79-2": ["S79 Stage 1 testing - return"]}
 RETURNS += [(x, None) for x in EXTRA.get(NUM, []) if os.path.isdir(R + x)]
 def paste(src):
     s = open(src, encoding="utf-8").read(); i = s.find("\n---\n(Below this line")
@@ -40,14 +42,16 @@ def put(src, dst, strip=False):
     open(d, "w", encoding="utf-8").write(paste(src)) if strip else shutil.copy(src, d)
 put(README, "00 READ ME FIRST.md")
 put(INSTRUCTION, f"01 Instruction - {NUM}.md", strip=True)
-if NUM == "S72-2":
+if NUM in ("S72-2", "S79-2"):
     put(T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md", "earlier rounds/S72 Stage 1 instruction - testing.md", strip=True)
 if NUM.startswith("S76"):
     put(T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md", "earlier rounds/S72 Stage 1 instruction - testing.md", strip=True)
     put(f"{S}/results/S75 Results - the bare version test, audited: what a new version of the theory is built from.md", "returns/S75 Results - the bare version test, audited.md")
 if NUM == "S76-2":
     put(T + "S76 Stage 1 testing - file 11 against every case, returned as a zip.md", "earlier rounds/S76 Stage 1 instruction - testing.md", strip=True)
-put(f"{S}/authority/10 Claude Fable Semantics - standalone theory.md", "authority/10 Claude Fable Semantics - standalone theory.md")
+# S79 is the seeded-error round (log S79): the S72 instructions unchanged, run against file 10 with two planted errors, under file 10's name.
+AUTH = f"{S}/tests/S79 Seeded authority - file 10 with two planted errors.md" if NUM.startswith("S79") else f"{S}/authority/10 Claude Fable Semantics - standalone theory.md"
+put(AUTH, "authority/10 Claude Fable Semantics - standalone theory.md")
 if NUM.startswith("S76"):
     put(f"{S}/authority/11 Claude Fable Semantics - standalone theory, revision 1.md", "authority/11 Claude Fable Semantics - standalone theory, revision 1.md")
 put(T + "24 Workflow - audit the semantics - give this to the other model.md", "skill/24 Workflow - audit the semantics.md")
