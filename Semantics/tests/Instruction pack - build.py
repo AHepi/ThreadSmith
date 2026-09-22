@@ -7,7 +7,8 @@ NUM = sys.argv[1] if len(sys.argv) > 1 else "S65"
 OUT = sys.argv[2] if len(sys.argv) > 2 else "/tmp/pack"
 S = "Semantics"; T = f"{S}/tests/"; R = f"{S}/results/"
 INSTRUCTION = {"S65": T + "S65 Next instruction for the other model - thirteen near cases, two attribution tests, returned as a zip.md",
-               "S70": T + "S70 Next instruction for the other model - twelve near cases, the protected condition stated first, returned as a zip.md"}[NUM]
+               "S70": T + "S70 Next instruction for the other model - twelve near cases, the protected condition stated first, returned as a zip.md",
+               "S71": T + "S71 Next instruction for the other model - the bare earlier version against every case, and three more, returned as a zip.md"}[NUM]
 README = T + "Instruction pack - read me first for the agent.md"
 EARLIER = [
  ("27 Next instruction for the other model - round 3, outside cases.md", "27 Round 3 - outside cases O1 to O4.md"),
@@ -16,11 +17,12 @@ EARLIER = [
  ("S62 Next instruction for the other model - Stage D, clause tests, coverage and the report, returned as a zip.md", "S62 Instruction - Stage D, clause tests, coverage and the report.md"),
  ("S64 Next instruction for the other model - ten near cases, verdicts under the earlier version, returned as a zip.md", "S64 Instruction - ten near cases under the earlier version.md"),
  ("S65 Next instruction for the other model - thirteen near cases, two attribution tests, returned as a zip.md", "S65 Instruction - thirteen near cases, two attribution tests.md"),
+ ("S70 Next instruction for the other model - twelve near cases, the protected condition stated first, returned as a zip.md", "S70 Instruction - twelve near cases, the protected condition stated first.md"),
 ]
 RETURNS = [
  ("55 Stage B return - the other model's finished table, near cases and tighter pairs.md", "55 Stage B return - table, near cases, tighter pairs.md"),
  ("57 Stage C return - the other model's seven case cards, O4 placed, phrases sorted.md", "57 Stage C return - cards O8 to O14, O4 placed, phrases sorted.md"),
- ("S62 Stage D and report - return", None), ("S64 Near cases - return", None), ("S65 Near cases - return", None),
+ ("S62 Stage D and report - return", None), ("S64 Near cases - return", None), ("S65 Near cases - return", None), ("S70 Near cases - return", None),
 ]
 def paste(src):
     s = open(src, encoding="utf-8").read(); i = s.find("\n---\n(Below this line")

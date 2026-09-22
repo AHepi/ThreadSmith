@@ -4,7 +4,7 @@ You are a fresh agent. Nothing in this audit has passed through you before; ever
 
 ## Who is who
 - **The owner** runs this audit and will paste your return into the record.
-- **You** are "the other model" in every file here. Earlier rounds were run by earlier agents in the same role; their returns are in `returns/`. Where the instruction says "your S62 return", "your S64 return" or "your S65 return", it means the return of that name in this pack. Their "Written by: me" tags are those agents'; yours are yours.
+- **You** are "the other model" in every file here. Earlier rounds were run by earlier agents in the same role; their returns are in `returns/`. Where the instruction says "your S62 return", "your S64 return", "your S65 return" or "your S70 return", it means the return of that name in this pack. Their "Written by: me" tags are those agents'; yours are yours.
 - **An outside author** is whoever wrote the cases and verdicts you are given. Every situation and every thoughtful person's verdict in this pack is kept exactly as written; you write your own situations only where an instruction asks for one, and tag them "Written by: me".
 
 ## What is under audit
@@ -20,8 +20,8 @@ You are a fresh agent. Nothing in this audit has passed through you before; ever
 2. `01 Instruction - ...md` - what to do and what to return.
 3. `authority/10 ...` - the theory.
 4. `skill/24 ...`, then the Stage A section of `skill/30 ...`.
-5. `earlier rounds/` - the cases O1 to O7 (27, 28) and O8 to O14 (30), the near-case routine (41), the instructions the returns answer (S62, S64, S65; the later ones hold the cases O15 onward).
-6. `returns/` - the Stage B table (55), the Stage C cards (57), the S62 return (fix cards, clause tests, coverage, quotations, report), the S64 return (cards O15 to O24, the proposed clauses H64 and I64) and the S65 return (cards O25 to O37, the proposed clause H65). The newest return's coverage file is where the row numbers in the instruction come from.
+5. `earlier rounds/` - the cases O1 to O7 (27, 28) and O8 to O14 (30), the near-case routine (41), the instructions the returns answer (S62, S64, S65, S70; the later ones hold the cases O15 onward).
+6. `returns/` - the Stage B table (55), the Stage C cards (57), the S62 return (fix cards, clause tests, coverage, quotations, report), the S64 return (cards O15 to O24, the proposed clauses H64 and I64) the S65 return (cards O25 to O37, the proposed clause H65) and the S70 return (cards O38 to O49, and the draft list under its heading (11)). The newest return's coverage file is where the row numbers in the instruction come from.
 
 ## What to return
 One zip, named and laid out exactly as the instruction file says, with the text of your reply being the manifest and the closing line only.
