@@ -47,7 +47,7 @@ EXTRA_KINDS = [
     ("D4 searched lines", r"^\s*(?:Lines searched|Cause's lines|Reason's lines|Effect's direct lines|Expected's direct lines|Plan line|Claim line):"),
     ("D5 outcomes block", r"^\s*OUTCOMES:|^\s*[a-z' ]+: (?:asked, |not asked, no line of that kind|ran out of time)"),
     ("D2 outside count", r"^\s*\d+ findings? inside '[^']+' would not stand"),
-    ("D7 gauge counts", r"^\s*(?:bin sentences|sentences with no line|filled in against said|bin entries):"),
+    ("D7 gauge counts", r"^\s*(?:bin sentences|sentences with no line(?: and no bin entry)?|filled in against said|bin entries):"),
     ("D8 claim and deny", r"^YOU CLAIM AND DENY THE SAME CAUSE"),
     ("D6 world verdict", r"^\s*Every line needed is inside the world\.$"),
     ("D2 world no-finding", r"^\s*no contradiction\.$"),
@@ -81,6 +81,7 @@ def parse(text):
             i += 1; continue
         if line.startswith("GAUGE:"):
             # D7: only the marks part of the gauge is a finding; the rest is text
+            world = ""   # the gauge ends any world section
             m = re.match(r"^GAUGE: (\d+) lines said, (\d+) filled in, (\d+) usual case", line)
             findings.append(("", "GAUGE", m.group(0) if m else line[:60], ""))
             i += 1; continue
@@ -156,6 +157,14 @@ def compare(old_text, new_text):
     bad_added = [f for f in added if not (f[0] or f[1] in ("CLAIM AND DENY",))]
     old_text_extras = set(e[1] for e in oe if e[0] == "text")
     unlisted = [e for e in ne if e[0] == "text" and e[1] not in old_text_extras]
+    # A1 also promises the old line ids and the old text survive: every old extra that
+    # must persist has to reappear. D6 replaces the supposition verdict, so it is exempt.
+    D6_GONE = ("THE SUPPOSITION UNDOES ITSELF",)
+    MUST_KEEP = ("text", "D4 described lines", "D3 not-written note")
+    new_extra_set = set(ne)
+    dropped = [e for e in oe if e[0] in MUST_KEEP and e not in new_extra_set
+               and not any(g in e[1] for g in D6_GONE)]
+    unlisted = unlisted + [("dropped from new", e[1]) for e in dropped]
     ok = not missing and not bad_added and not unlisted
     return ok, missing, bad_added, unlisted, (of, nf, ne)
 
