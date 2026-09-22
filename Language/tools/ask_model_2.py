@@ -70,6 +70,7 @@ def main():
     ap.add_argument("--tag", default="call"); ap.add_argument("--max-tokens", type=int, default=16000)
     ap.add_argument("--temperature", type=float, default=0.2); ap.add_argument("--idle", type=float, default=600.0)
     ap.add_argument("--effort", choices=["low", "medium", "high"], help="sent as reasoning_effort; omitted means the provider's default")
+    ap.add_argument("--extra", help="a JSON object merged into the request body (for provider-specific fields such as a reasoning budget); recorded in the request file")
     a = ap.parse_args()
     p = PROVIDERS[a.provider]
     key = os.environ.get(p["key"])
@@ -80,6 +81,7 @@ def main():
     messages.append({"role": "user", "content": open(a.user).read()})
     body = {"model": p["model"], "messages": messages, "max_tokens": a.max_tokens, "temperature": a.temperature, "stream": True}
     if a.effort: body["reasoning_effort"] = a.effort
+    if a.extra: body.update(json.loads(a.extra))
     raw = json.dumps(body, ensure_ascii=False, sort_keys=True).encode()
     req_hash = hashlib.sha256(raw).hexdigest()
     open(os.path.join(a.out, a.tag + ".request.json"), "wb").write(raw)
