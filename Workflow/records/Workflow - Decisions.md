@@ -22,5 +22,7 @@ W9. "Atria and Mimo request cap at 30RPM please." Taken as: the Atria and MiMo c
 
 W10. "Keep a handover in case important information is lost during automatic context compact. It's a fail mode I've suffered from in the past." Taken as: a live handover file, `records/HANDOVER.md`, kept current at every step and committed, holding what a fresh session needs to continue this round without the conversation.
 
+W11. On the two consequences put after log W10 (W10.8's three-round cap; W3 P3.4's rewording count): "As long as each completed round is versioned and saved, keep going until no faults can be found. This why iterative versions are to be saved, so that the only thing lost is time and tokens. The work is saved, and the generated data can be mined afterwards. If I disagree with a version, rewind is simple. And lessons learned." Taken as: the fix loop has no round cap; it runs until a review returns zero faults of any severity; every completed round is committed and tagged as its own version before the next starts; stage B starts after that, with the rewording count recorded as it stands.
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

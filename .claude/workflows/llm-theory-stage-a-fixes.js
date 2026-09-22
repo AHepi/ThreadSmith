@@ -1,6 +1,6 @@
 export const meta = {
   name: 'llm-theory-stage-a-fixes',
-  description: 'Plan W10 stage A, the fix round under addendum W11: three Opus 5 fixers in the makers roles (harness, instrument, corpus), then the Opus 5 reviewer again with a dry run on a corpus document; at most three rounds',
+  description: 'Plan W10 stage A fix loop (addenda W11, W13): one round per run from args - Opus 5 fixers in the makers roles (harness, instrument, corpus) in parallel, then the Opus 5 reviewer with a dry run on a corpus document; the loop and the versioning are done by Claude between runs',
   phases: [{ title: 'Fix', detail: 'up to three Opus 5 fixers at xhigh in parallel' }, { title: 'Re-review', detail: 'one Opus 5 reviewer at xhigh, dry run on a corpus document' }],
 }
 
@@ -11,16 +11,16 @@ const W8 = `${ROOT}/Workflow/authority/W8 Model - an LLM agent in the language o
 const W3 = `${ROOT}/Workflow/tests/W3 Research plan - a model of LLM agents in the semantics' terms, the instrument, the arrangements, the skill map, the workflow (frozen).md`
 const W10 = `${ROOT}/Workflow/tests/W10 Plan - getting the LLM theory right; the harness, the corpus, the fourth clause, the instrument, the arms, the cross-examination.md`
 const W11 = `${ROOT}/Workflow/tests/W11 Addendum to W10 - the decisions stage A's reviewer forced before stages B and C; the fix round.md`
+const W13 = `${ROOT}/Workflow/tests/W13 Addendum to W10 - the fix loop runs until no fault is found, every round a saved version (decision W11).md`
 const OUT = `${ROOT}/Workflow/rigs/W10 harness/`
 const RETURNS = `${OUT}stage-A returns/`
 const TEXTS = (args && args.texts_dir) || '/tmp/claude-0/-home-user-ThreadSmith/00bda300-7321-5714-a655-4358c87aab9b/scratchpad/w10texts'
-const MAX_ROUNDS = 3
 
 const PREAMBLE = `You are one agent of the fix round of plan W10 stage A, under addendum W11. You work under the hard-to-vary skill and will be held to it.
 
 FIRST read the skill in full, once: ${SKILL}SKILL.md, then references/the-idea-in-depth.md, building.md, testing-against-cases.md, reporting.md, question-bank.md, word-list.md in ${SKILL}references/. One correction you carry: the skill's word list maps "fitted" to an older, unqualified Derivation 3; the authority, file 11, qualifies it: "A correspondence produced by selection is faithful where it was tested and, wherever its population admits an alternative, unconstrained where it was not." Never use the unqualified form yourself. Addendum W11 decision D3 says this qualification is NOT sent to any reader under test; do not put it into any file a reader is handed.
 
-THEN read: addendum W11 in full (${W11}); plan W10 in full (${W10}); the reviewer's return ${RETURNS}A5-reviewer.json in full (its "faults" are numbered 0 to 23 in array order; the addendum uses those numbers); the stage-A return of the maker whose role you take (named in your task); the harness read-me ${OUT}code/README.md; W8 (${W8}) parts your task names; W3 section 5 (${W3}); file 11 (${F11}) where a fault touches the theory.
+THEN read: addendum W11 in full (${W11}) and addendum W13 (${W13}: the loop now runs until a review returns zero faults, every round a saved version); plan W10 in full (${W10}); the reviewer's return ${RETURNS}A5-reviewer.json in full (its "faults" are numbered 0 to 23 in array order; the addendum uses those numbers); the stage-A return of the maker whose role you take (named in your task); the harness read-me ${OUT}code/README.md; W8 (${W8}) parts your task names; W3 section 5 (${W3}); file 11 (${F11}) where a fault touches the theory.
 
 RULES. Write only under ${OUT}. Never edit anything under ${RETURNS} nor any file under Workflow/tests, Workflow/records, Workflow/authority; the other four projects are read only. Fix only what a numbered fault or a W11 decision forces; do not improve what no fault names; if you decline a fault, say why in your return with evidence. No key exists in the environment and nothing is to be sent to any API; every program you touch must still read a key only from the environment and write it to no file. Shell is allowed to run dry runs and tests under ${OUT} (python3, sending nothing) and, for the corpus fetcher only, to fetch a document to ${TEXTS} (outside the repository; keep no fetched text under ${OUT}). Web research beyond that: none is needed; if you do read anything outside the repository, it is CLAIMED and quoted with address and date. Every change you make is listed in your return with the file, the fault number and how you verified it by running.
 
@@ -84,28 +84,18 @@ THE FIXERS' RETURNS THIS ROUND:
 ${fixes}`
 }
 
-const ASSIGN = { 'A1-harness': [0, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20], 'A4-instrument': [3, 4, 5, 18], 'A2-corpus': [21, 22] }
-const roleOf = (d) => d.startsWith('A1') ? 'A1-harness' : d.startsWith('A4') ? 'A4-instrument' : d.startsWith('A2') ? 'A2-corpus' : d.startsWith('A6') ? 'A1-harness' : 'A1-harness'
-
-let assign = ASSIGN
-let prior = null
-const rounds = []
-for (let round = 1; round <= MAX_ROUNDS; round++) {
-  const roles = Object.keys(assign).filter(k => assign[k].length)
-  log(`round ${round}: fixers ${roles.join(', ')}`)
-  const fixes = await parallel(roles.map(role => () =>
-    agent(fixerPrompt(role, assign[role], round, prior), { label: `fix:${role}:r${round}`, phase: 'Fix', model: 'opus', effort: 'xhigh', schema: FIX_SCHEMA })))
-  const fixMap = {}
-  roles.forEach((role, i) => { fixMap[role] = fixes[i] })
-  const review = await agent(reviewerPrompt(round, JSON.stringify(fixMap, null, 1)), { label: `review:r${round}`, phase: 'Re-review', model: 'opus', effort: 'xhigh', schema: REVIEW_SCHEMA })
-  rounds.push({ round, fixes: fixMap, review })
-  if (!review) { log(`round ${round}: reviewer returned nothing`); break }
-  const blocking = (review.faults || []).filter(f => (f.severity || '').startsWith('blocks'))
-  log(`round ${round}: ${review.faults.length} faults returned, ${blocking.length} blocking`)
-  if (!blocking.length) break
-  const next = { 'A1-harness': [], 'A4-instrument': [], 'A2-corpus': [] }
-  for (const f of blocking) next[roleOf(f.deliverable || '')].push(f.fault)
-  assign = next
-  prior = JSON.stringify(review, null, 1)
-}
-return { rounds }
+const round = (args && args.round) || 1
+const assign = (args && args.assign) || { 'A1-harness': [0, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20], 'A4-instrument': [3, 4, 5, 18], 'A2-corpus': [21, 22] }
+const priorPath = args && args.prior_review_path
+const prior = priorPath ? `The previous round's review is the file ${priorPath}; read it in full before touching anything. Its faults are numbered as the addenda number them (original faults 0 to 23; later ones 24 upward).` : null
+const roles = Object.keys(assign).filter(k => assign[k] && assign[k].length)
+log(`round ${round}: fixers ${roles.join(', ') || '(none: review-only round)'}`)
+const fixes = await parallel(roles.map(role => () =>
+  agent(fixerPrompt(role, assign[role], round, prior), { label: `fix:${role}:r${round}`, phase: 'Fix', model: 'opus', effort: 'xhigh', schema: FIX_SCHEMA })))
+const fixMap = {}
+roles.forEach((role, i) => { fixMap[role] = fixes[i] })
+const reviewIntro = priorPath ? `Your previous review is the file ${priorPath}; read it first: the faults it returned are what this round's fixers were assigned, and every earlier round's review sits beside it under the same folder.` : ''
+const review = await agent(reviewerPrompt(round, `${reviewIntro}\n${JSON.stringify(fixMap, null, 1)}`), { label: `review:r${round}`, phase: 'Re-review', model: 'opus', effort: 'xhigh', schema: REVIEW_SCHEMA })
+const blocking = review ? (review.faults || []).filter(f => (f.severity || '').startsWith('blocks')) : []
+log(`round ${round}: ${review ? review.faults.length : 'no'} faults returned, ${blocking.length} blocking`)
+return { round, fixes: fixMap, review }
