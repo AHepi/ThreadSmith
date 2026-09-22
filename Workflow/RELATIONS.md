@@ -4,8 +4,8 @@ A hypothesis ledger, as in the other projects. Each entry is a claim, its status
 
 ---
 
-## W-R1. The semantics is the authority, and only file 10
-**Claim.** Every term the programme uses is file 10's, quoted at the sentence; where the programme builds an object the theory permits but does not contain, it says so. File 20 is set aside (Semantics decision S4) and nothing rests on it.
+## W-R1. The semantics is the authority: file 11 read beside file 10
+**Claim.** Every term the programme uses is the theory's, quoted at the sentence with its Part and the file it sits in; where the programme builds an object the theory permits but does not contain, it says so. From log W4 the theory followed is file 11 (revision 1, Semantics decision S8, handed to this project by decision W2), read beside file 10; every row of phase 1's word list is marked "10 and 11" or "11 only", the Semantics project's own S64 device, because that project's record holds file 11 as drafted and under test (round S76), not yet its authority. File 20 is set aside (S4) and nothing rests on it.
 **Current status.** Seen on the plan itself: a judge checked draft W1 sentence by sentence against file 10 (log W2) and found nine passages read wider than written or cited to the wrong Part, all corrected in W3; every quotation in W3 is checked by program for presence and Part (`rigs/W3 quote check/`). Two attack points of the theory are named where the plan rests on them ((D) under M2, (B) under M8a).
 **Open question.** Which of the owner's six unknowns the theory as written cannot reach (W3 prediction P1.2). Already recorded as not reached by this programme: the attention half of Q1 and the generation half of Q5. An unknown the theory cannot reach is written here as an ask for the owner, never as a change to the theory.
 
