@@ -1,0 +1,185 @@
+## 1. The ledger
+
+| Number | Standing | Content | Source mark | Sentence |
+|---|---|---|---|---|
+| lamp | CLAIMED | lamp is a lamp; it answers a press as not stated | said | 1 |
+| burning | CLAIMED | lamp was burning | said | 1 |
+| inspector | GIVEN | inspector is a person; it answers a press as not stated | said | 1 |
+| iw_lamp | TOLD in world inspector_world | lamp is a lamp; it answers a press as not stated | said | 1 |
+| iw_burning | TOLD in world inspector_world | lamp was burning | said | 1 |
+| iw_visitor | TOLD in world inspector_world | visitor is a visitor; it answers a press as not stated | said | 1 |
+| iw_returned | TOLD in world inspector_world | visitor had returned | said | 1 |
+| iw_since | TOLD in world inspector_world | line iw_returned SINCE line iw_burning | said | 1 |
+| visitor | GIVEN | visitor is a visitor; it answers a press as not stated | said | 2 |
+| returned | GIVEN | visitor returned | filled in | 2 |
+| deny | CLAIMED | NOT [line returned BECAUSE line burning] | said | 2 |
+
+## 2. The bin
+
+- **Sentence 1, "the inspector's reason for concluding"** — an attributed conclusion together with its reason. Who concludes what is outside the language, so the attribution is retained here: it scopes the reported return, the burning lamp as premise, and the reason relation to inspector_world. The inspector's concluding is not claimed in the actual ledger.
+
+## 3. Words I split
+
+None. "return" is used in one sense throughout ("had returned", "made the visitor return").
+
+## 4. Readings I chose
+
+- **Sentence 1.** Open readings: the writer endorses the visitor's return as an actual fact, or only reports the inspector's conclusion. Chosen: only the reported conclusion — the return and its reason are TOLD in inspector_world; in the actual ledger the writer commits only to the lamp burning.
+- **Sentence 1.** Open readings: "reason for concluding" is a cause of the return or a reason to believe it. Chosen: a reason to believe — encoded as SINCE inside inspector_world, not as BECAUSE anywhere.
+- **Sentence 2.** Open readings: "what made the visitor return" presupposes the return, or commits to nothing about it. Chosen: the return is taken for granted — written as a GIVEN actual fact, marked filled in, so the denial has a fact to be about; the alternative would leave the denial pointing at a return stated nowhere.
+- **Sentence 2.** Open readings: "made" claims production or merely correlation. Chosen: production — the denial is NOT [returned BECAUSE burning], a denied BECAUSE, not a denied SINCE.
+
+## 5. The count
+
+- Lines said: 10
+- Lines filled in: 1
+- Lines usual case: 0
+- Sentences: 2
+- Sentences that lost something to the bin: 1 (sentence 1)
+
+```json
+{
+  "paragraph": "B99",
+  "whose": "Claude (Anthropic), under L82",
+  "sentences": {
+    "1": "The burning lamp was the inspector’s reason for concluding that a visitor had returned.",
+    "2": "It was not what made the visitor return."
+  },
+  "bin": [
+    {
+      "sentence": 1,
+      "words": "the inspector’s reason for concluding",
+      "reason": "An attributed conclusion together with its reason. Who concludes what is outside the language, so the attribution is retained here: it scopes the reported return, the burning lamp as premise, and the reason relation to inspector_world. The inspector’s concluding is not claimed in the actual ledger."
+    }
+  ],
+  "leftover": [
+    "Sentence 1: the inspector’s reason for concluding — An attributed conclusion together with its reason. Who concludes what is outside the language, so the attribution is retained here: it scopes the reported return, the burning lamp as premise, and the reason relation to inspector_world. The inspector’s concluding is not claimed in the actual ledger."
+  ],
+  "whatifs": [],
+  "lines": {
+    "lamp": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "CLAIMED",
+      "text": "[CLAIMED] lamp is a lamp; it answers a press as not stated",
+      "prolog_clauses": [
+        "kind(lamp, lamp) :- line(lamp).",
+        "body(lamp, not_stated) :- line(lamp)."
+      ]
+    },
+    "burning": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "CLAIMED",
+      "text": "[CLAIMED] lamp was burning",
+      "prolog_clauses": [
+        "holds(burning(lamp)) :- line(burning)."
+      ]
+    },
+    "inspector": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "GIVEN",
+      "text": "[GIVEN] inspector is a person; it answers a press as not stated",
+      "prolog_clauses": [
+        "kind(inspector, person) :- line(inspector).",
+        "body(inspector, not_stated) :- line(inspector)."
+      ]
+    },
+    "iw_lamp": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "TOLD in world inspector_world",
+      "text": "[TOLD in world inspector_world] lamp is a lamp; it answers a press as not stated",
+      "case": "inspector_world",
+      "case_kind": "told",
+      "prolog_clauses": [
+        "kind(lamp, lamp) :- line(iw_lamp).",
+        "body(lamp, not_stated) :- line(iw_lamp)."
+      ]
+    },
+    "iw_burning": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "TOLD in world inspector_world",
+      "text": "[TOLD in world inspector_world] lamp was burning",
+      "case": "inspector_world",
+      "case_kind": "told",
+      "prolog_clauses": [
+        "holds(burning(lamp)) :- line(iw_burning)."
+      ]
+    },
+    "iw_visitor": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "TOLD in world inspector_world",
+      "text": "[TOLD in world inspector_world] visitor is a visitor; it answers a press as not stated",
+      "case": "inspector_world",
+      "case_kind": "told",
+      "prolog_clauses": [
+        "kind(visitor, visitor) :- line(iw_visitor).",
+        "body(visitor, not_stated) :- line(iw_visitor)."
+      ]
+    },
+    "iw_returned": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "TOLD in world inspector_world",
+      "text": "[TOLD in world inspector_world] visitor had returned",
+      "case": "inspector_world",
+      "case_kind": "told",
+      "prolog_clauses": [
+        "holds(returned(visitor)) :- line(iw_returned)."
+      ]
+    },
+    "iw_since": {
+      "mark": "said",
+      "sentence": 1,
+      "standing": "TOLD in world inspector_world",
+      "text": "[TOLD in world inspector_world] line iw_returned SINCE line iw_burning",
+      "case": "inspector_world",
+      "case_kind": "told",
+      "prolog_clauses": [
+        "claim_since(iw_since, returned(visitor), burning(lamp)) :- line(iw_since)."
+      ]
+    },
+    "visitor": {
+      "mark": "said",
+      "sentence": 2,
+      "standing": "GIVEN",
+      "text": "[GIVEN] visitor is a visitor; it answers a press as not stated",
+      "prolog_clauses": [
+        "kind(visitor, visitor) :- line(visitor).",
+        "body(visitor, not_stated) :- line(visitor)."
+      ]
+    },
+    "returned": {
+      "mark": "filled in",
+      "sentence": 2,
+      "standing": "GIVEN",
+      "text": "[GIVEN] visitor returned; the part I added is taking the nominal as presupposing the return",
+      "prolog_clauses": [
+        "holds(returned(visitor)) :- line(returned)."
+      ]
+    },
+    "deny": {
+      "mark": "said",
+      "sentence": 2,
+      "standing": "CLAIMED",
+      "text": "[CLAIMED] NOT [line returned BECAUSE line burning]",
+      "prolog_clauses": [
+        "denied_because(deny, returned(visitor), burning(lamp)) :- line(deny)."
+      ]
+    }
+  },
+  "words_split": [],
+  "readings_chosen": [
+    "Sentence 1: open readings — the writer endorses the visitor’s return as an actual fact, or only reports the inspector’s conclusion; chosen: only the reported conclusion, so the return and its reason are TOLD in inspector_world and the actual ledger commits only to the lamp burning.",
+    "Sentence 1: open readings — ‘reason for concluding’ is a cause of the return or a reason to believe it; chosen: a reason to believe, encoded as SINCE inside inspector_world, never as BECAUSE.",
+    "Sentence 2: open readings — ‘what made the visitor return’ presupposes the return or commits to nothing about it; chosen: taken for granted as a GIVEN actual fact, marked filled in, so the denial has a fact to be about.",
+    "Sentence 2: open readings — ‘made’ claims production or merely correlation; chosen: production, so the denial is NOT [returned BECAUSE burning], a denied BECAUSE."
+  ]
+}
+```
+
+TRANSLATION COMPLETE

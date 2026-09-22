@@ -1,0 +1,333 @@
+Let me translate this text into the ledger language following the task, guide, and language definition.
+
+Text: B99
+"The burning lamp was the inspector's reason for concluding that a visitor had returned. It was not what made the visitor return."
+
+Let me number the sentences:
+1. "The burning lamp was the inspector's reason for concluding that a visitor had returned."
+2. "It was not what made the visitor return."
+
+Analysis:
+
+Sentence 1: "The burning lamp was the inspector's reason for concluding that a visitor had returned."
+- Things: lamp, inspector, visitor
+- The lamp is burning (fact)
+- The inspector concluded that a visitor had returned — this is an attributed belief/conclusion. Per the rules: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world."
+- So: the attribution "the inspector's reason for concluding" goes to the bin, and "a visitor had returned" is TOLD in the inspector's world.
+- The lamp burning is a fact in the actual world (CLAIMED).
+
+Wait, but "was the inspector's reason for concluding" — the sentence asserts the lamp was the reason. Hmm. The structure: "The burning lamp was the inspector's reason for concluding that a visitor had returned." This asserts: (a) the lamp was burning, (b) the inspector concluded that a visitor had returned, (c) the lamp was the inspector's reason for that conclusion.
+
+Per rule: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world."
+
+So the content "a visitor had returned" is TOLD in world inspector_world. The attribution (the inspector concluding, and the lamp being the reason) goes to the bin.
+
+Actually, let me think more carefully. The example T10D: "The account says opening the window caused the letter to stay dry." — the attribution "The account says" was binned, and the contents (opening, dryness, causal claim) were all TOLD in account_world.
+
+Similarly here: "the inspector's reason for concluding that a visitor had returned" — the inspector's concluding is the attribution; the content "a visitor had returned" is TOLD in inspector_world. The reason relation (lamp was the reason) — is that part of the attribution or a claim in the actual world?
+
+Hmm. The sentence says "The burning lamp was the inspector's reason for concluding..." This is a claim about the inspector's reasoning: the lamp was the reason. This is like a SINCE claim from the inspector's perspective: the inspector expected/believed the visitor returned since the lamp was burning. Actually "reason for concluding" = a reason to believe, which is SINCE semantics.
+
+So within inspector_world: the inspector concludes visitor returned; the lamp burning is the reason. That's a SINCE relation inside the told world: claim_since(...).
+
+But wait — is the lamp's burning inside the told world too? The inspector saw the burning lamp (presumably). The sentence's main assertion in the actual world: the lamp was burning (CLAIMED, actual). And the inspector's conclusion and its reason are attributed content.
+
+Hmm, but the reason relation: "The burning lamp was the inspector's reason" — is this asserted in the actual world or is it part of the reported content? In T10D, "opening the window caused the letter to stay dry" was entirely within account_world because it was reported by the account. Here, "The burning lamp was the inspector's reason for concluding" — the sentence structure asserts in the actual world that the inspector had a reason and that reason was the burning lamp. But the rules say to send attributions to the bin and write content as TOLD in that person's world.
+
+I think the cleanest treatment, matching T10D:
+- Actual ledger: lamp is a lamp; lamp is burning (CLAIMED — the sentence asserts the lamp was burning, as a plain fact). Inspector is a person. Visitor is a visitor.
+- inspector_world (TOLD): the visitor returned; the lamp was burning (the inspector observed it — well, the reason must be available in the world); and the SINCE relation: the inspector concluded visitor returned SINCE the lamp was burning.
+
+Hmm, but does the actual ledger claim the lamp was burning? Yes — "The burning lamp" presupposes/asserts the lamp was burning. It's a plain fact stated by the writer. So CLAIMED in actual: holds(burning(lamp)).
+
+The inspector's concluding and the reason: bin the attribution "the inspector's reason for concluding", and in inspector_world: holds(returned(visitor)), and claim_since(conclusion, returned(visitor), burning(lamp)).
+
+Wait — but a told world doesn't inherit the actual ledger. So inside inspector_world I need to state the lamp was burning too, if the SINCE claim needs it. Actually the SINCE claim just points at terms; the checker tests it "on what follows by any route". Inside the world, if burning(lamp) isn't stated, the SINCE would rest on nothing. To be safe, state in inspector_world: the lamp was burning (TOLD, said). Hmm, but is that double-booking? The actual ledger has burning(lamp) as CLAIMED. The told world is separate; it doesn't inherit. The inspector's reasoning includes the lamp burning as premise. I think it's fine to include it in the world as TOLD said-content, since the sentence reports the inspector's conclusion was based on the burning lamp.
+
+Actually, let me reconsider. Maybe simpler: the attribution goes to the bin entirely ("the inspector's reason for concluding"), and the content "a visitor had returned" is TOLD in inspector_world. Then the reason relation — is it worth a line? The sentence asserts the lamp was the reason. That's a SINCE-like claim about the inspector's belief. I could encode it as a SINCE inside inspector_world: claim_since(id, returned(visitor), burning(lamp)).
+
+Sentence 2: "It was not what made the visitor return."
+- "It" = the burning lamp.
+- NOT [the burning lamp made the visitor return] — a denied cause. This is a denied BECAUSE: NOT [returned(visitor) BECAUSE burning(lamp)].
+- Wait, "what made the visitor return" — the lamp made the visitor return. Denied: the lamp did not make the visitor return. In the actual world? Hmm. The visitor returning — in the actual world, is it claimed? Sentence 1 only says the inspector concluded it. Sentence 2 says "It was not what made the visitor return" — this presupposes the visitor returned (or at least talks about it).
+
+Hmm, tricky. Sentence 2: "It was not what made the visitor return." The writer asserts the lamp was not the cause of the visitor's return. Does the writer assert the visitor returned? "what made the visitor return" — a nominalization that presupposes the visitor returned. But the presupposition is about the actual world... Actually the writer of sentence 2 seems to assert in the actual world: the lamp did not cause the visitor's return.
+
+But the visitor's return itself — is it claimed in the actual world? Sentence 1 attributes the conclusion to the inspector. Sentence 2's "the visitor return" presupposes the return. Hmm. I could treat the denied BECAUSE as being about the actual world: denied_because(id, returned(visitor), burning(lamp)). And the return fact — sentence 2 presupposes it; I might mark it GIVEN in the actual world? Or leave it only in inspector_world?
+
+Let me think about what the checker would do. denied_because(id, returned(visitor), burning(lamp)) — the checker checks whether the ledger's own lines make the lamp produce the return. In the actual ledger, we have burning(lamp) claimed. Do we have returned(visitor) in the actual ledger? If not, the denial test... The denial is fine unless the ledger's own lines make C produce E. Since no line in the actual ledger makes burning produce returned, the denial passes.
+
+But should returned(visitor) be in the actual ledger at all? Sentence 2 presupposes it. I think a GIVEN line in the actual world: "the visitor returned" — hmm, but is that right? The writer says "It was not what made the visitor return" — the writer is talking about the actual visitor return as a real thing (presupposed). Actually, one could argue the whole thing is framed within what the inspector concluded. But sentence 2 reads like the narrator's own assertion: the lamp wasn't the cause.
+
+Hmm, but wait: if the visitor's return is only in the inspector's world (TOLD), then sentence 2's denial in the actual world about "the visitor return" — the visitor would be the same visitor. Let me consider: maybe the visitor's return is GIVEN in the actual world (presupposed by sentence 2's nominalization). And also TOLD in inspector_world (as the inspector concluded).
+
+Actually, I think the cleanest reading:
+- Sentence 1 asserts: lamp burning (CLAIMED, actual). The inspector's concluding + reason → bin as attribution; content "visitor returned" TOLD in inspector_world, with a SINCE line inside that world (the inspector concluded it SINCE the lamp was burning).
+- Sentence 2 asserts: NOT [the lamp made the visitor return] — denied BECAUSE in the actual world. The visitor's return is presupposed (GIVEN, actual): the visitor returned.
+
+Hmm, but is the visitor's return really given in the actual world? The text never confirms it outside the inspector's conclusion. Sentence 2's phrasing presupposes it though. "It was not what made the visitor return" — to deny causing X, X is presupposed. I'll mark it GIVEN in the actual ledger, filled in? No — it's said (presupposed by the writer's own sentence). Actually GIVEN + said is fine: grammar clue — the nominalization "what made the visitor return" is a subordinate, so GIVEN.
+
+Hmm, wait. Let me reconsider whether sentence 2's denial should be in the actual world or about the inspector's world. The "It" refers to the burning lamp (actual). "was not what made the visitor return" — the writer's own denial. I'll put it in the actual ledger as CLAIMED, denied_because.
+
+Also note the interesting interplay: sentence 1 says the lamp was the inspector's reason for concluding (a SINCE in the inspector's world), and sentence 2 denies the lamp was what made the visitor return (a denied BECAUSE in the actual world). These are different relations (reason to believe vs. cause), so no contradiction. Good — that's the point of the text.
+
+Now, things:
+- lamp: a lamp; response to a press not stated. Kind: lamp. Response class: not stated.
+- inspector: a person (DOER?). The inspector concludes — but the conclusion is binned attribution. Do I need an inspector thing line? The inspector is mentioned in the attribution which goes to the bin. Per rule 3, "Every thing in a happening must have a thing line of its own." Is there a happening involving the inspector? The concluding is binned (attribution). Hmm, but in the told world, the inspector's concluding... Actually in T10D, the account was given a thing line (GIVEN) because the attribution was retained in the bin scoping contents. Similarly here, inspector gets a thing line: "inspector is a person; response to a press not stated" — GIVEN, said, sentence 1.
+
+Hmm, should inspector be in the actual ledger as GIVEN? In T10D, "account" was GIVEN in the actual ledger. Yes, mirror that: inspector is a person, GIVEN, said.
+
+- visitor: a visitor; response not stated. In inspector_world (TOLD) for the return. Also in actual ledger? The visitor is referred to in sentence 2's denial (actual). So visitor thing line in actual: CLAIMED or GIVEN? The visitor appears in both worlds. I'll give the actual one: "visitor is a visitor; response to a press not stated" — CLAIMED? It's introduced by sentence 1's reported content... but sentence 2 mentions the visitor in the actual world. I think: actual ledger visitor line, sentence 2, CLAIMED (part of the writer's assertion). Hmm, or sentence 1 GIVEN. Let me make it sentence 1, GIVEN (it appears in a subordinate/attribution context), and sentence 2 uses it. Actually simpler: one visitor thing line in actual, sentence 2, CLAIMED. And in inspector_world, a visitor thing line TOLD.
+
+Wait, but do told-world things need their own thing lines? Rule 3: every thing in a happening must have a thing line. In inspector_world, the happening is... the visitor returned (a fact, not a happening with a verb shape). "returned" — is that a happening? Return is a movement verb. Hmm, "a visitor had returned" — the visitor returned (to the place). As a fact: holds(returned(visitor)). In T10D, "the letter stayed dry" was a Fact, and "window was opened" was a Fact (eventive, opener unnamed). So here "the visitor returned" is a Fact. The visitor needs a thing line in the world.
+
+Let me also think: is "return" a verb with a shape? Return isn't in the shape book (throw, toss, hurl, push, pull, lean on, hit, drop, let go of, open a fist on, hold, close a fist on). So if I wrote it as a happening, it'd be "not checked". Better to write it as a Fact like T10D did with "opened" and "stayed dry". The guide's T10D example used holds(opened(window)) and holds(stayed_dry(letter)) — facts, not happenings. Good, follow that.
+
+So the ledger:
+
+Actual ledger:
+- lamp (thing): lamp is a lamp; response to a press not stated. CLAIMED? GIVEN? Sentence 1 introduces "The burning lamp" — main clause subject, so CLAIMED. said.
+- lamp_burning (fact): the lamp was burning. CLAIMED, said, sentence 1.
+- inspector (thing): the inspector is a person; response not stated. GIVEN, said, sentence 1.
+- visitor (thing): the visitor is a visitor; response not stated. CLAIMED, said, sentence 2? Hmm. Or GIVEN sentence 1. The visitor first appears in sentence 1 within the inspector's conclusion. I'll put it at sentence 1, GIVEN... but actually in the actual ledger, the visitor only shows up in sentence 2's denial. Hmm, but the same visitor is in the inspector's world. I think one actual-ledger visitor line, sentence 2, CLAIMED is defensible since sentence 2 is where the writer actually uses "the visitor" in the actual world. Hmm, but sentence 1 mentions "a visitor" too (inside the reported conclusion). The bin entry for the attribution will cover sentence 1's mention.
+
+Let me just do: visitor thing line, sentence 1, GIVEN (it's inside the reported content, which is binned... no wait). Hmm.
+
+Alternative cleaner approach: In the actual ledger, the visitor appears only via sentence 2. So visitor thing line: sentence 2, CLAIMED, said. In inspector_world: visitor thing line TOLD said sentence 1; returned fact TOLD said sentence 1; SINCE line TOLD said sentence 1.
+
+Hmm, but should the SINCE line be in the inspector's world? "The burning lamp was the inspector's reason for concluding that a visitor had returned." The reason relation is asserted by the writer in the actual world, but it's about the inspector's belief. In T10D, the causal claim was placed inside account_world. Here, similarly, the reason-for-concluding is part of the reported mental state. I'll place the SINCE inside inspector_world: claim_since(id, returned(visitor), burning(lamp)) — and the world needs burning(lamp) stated in it: TOLD said sentence 1 "the lamp was burning".
+
+Wait, but the lamp burning is also CLAIMED in the actual world. Is that a problem? No — told worlds don't inherit and aren't compared with the actual ledger. The inspector observed the burning lamp; stating it in the world is fine.
+
+Hmm, but is it double-booking? It's fine per the rules; a world is looked at alone and needs its own premises.
+
+Actually, hold on. Let me reconsider: maybe the SINCE claim should be in the actual ledger, since the writer asserts "The burning lamp was the inspector's reason for concluding..." — the writer is asserting in the actual world that the lamp was the reason. But the rules say: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world." The "content" is what is concluded: "a visitor had returned". The attribution includes the concluding and the reason relation. So bin: "the inspector's reason for concluding" — attribution retained here, scoping contents to inspector_world.
+
+Then in inspector_world: returned(visitor) TOLD; and the reason: SINCE line TOLD. I think including the SINCE in the world is right, mirroring how T10D put the BECAUSE inside account_world.
+
+Also in the actual world: is there a line for "the inspector concluded"? No — binned.
+
+Sentence 2: "It was not what made the visitor return."
+- denied_because(id, returned(visitor), burning(lamp)) — CLAIMED, said, sentence 2. In the actual ledger.
+- Also the visitor return presupposed: GIVEN line "the visitor returned" in actual? Hmm. If I add it, then the actual ledger has returned(visitor) as GIVEN. Then the denied_because checks whether the ledger's lines make burning produce returned — they don't (no general rule), so the denial passes. And there's no writer BECAUSE claim for the same pair, so no extra finding.
+
+Should I add the GIVEN return fact? The nominalization "what made the visitor return" presupposes the return happened. I'll add it as GIVEN, said, sentence 2: "the visitor returned". Hmm — but wait, does that conflict with the TOLD world? No, worlds are separate.
+
+Hmm, actually, is the presupposition really there? "It was not what made the visitor return." Denying that X caused Y doesn't strictly commit to Y happening (you can deny "the lamp made the visitor return" without the visitor returning — well, idiomatically it does presuppose). The phrase "the visitor return" with the infinitive in a nominal... I think treating it as GIVEN (presupposed) is a reasonable reading, and I should record it under "Readings I chose". Alternatively, don't state it. Let me include it as GIVEN and note the reading choice. Actually — hmm, careful: if returned(visitor) is GIVEN in the actual ledger, and the inspector_world also has it, fine.
+
+But wait: there's a subtlety. If the actual ledger has returned(visitor) GIVEN and burning(lamp) CLAIMED, and the denied_because... the checker tests NOT[E BECAUSE C] — "fine unless the ledger's own lines make C produce E". No line makes burning produce returning. Passes. Good.
+
+Also, should I add a general line or anything? No.
+
+Now the counts:
+- Lines said: let me count.
+  1. lamp (thing) — said, CLAIMED, s1
+  2. lamp_burning (fact) — said, CLAIMED, s1
+  3. inspector (thing) — said, GIVEN, s1
+  4. visitor (thing, actual) — said, GIVEN or CLAIMED, s2 (hmm, or s1)
+  5. visitor_returned_actual (fact) — said, GIVEN, s2
+  6. denied_because — said, CLAIMED, s2
+  7. iw_visitor (thing) — said, TOLD inspector_world, s1
+  8. iw_lamp (thing) — said, TOLD, s1
+  9. iw_lamp_burning (fact) — said, TOLD, s1
+  10. iw_returned (fact) — said, TOLD, s1
+  11. iw_since — said, TOLD, s1
+
+All said, no filled in, no usual case. Hmm — is that OK? Every line I added must carry "filled in" or "usual case". Lines I added: the actual visitor thing line and the GIVEN return fact are readings of mine (presupposition) — should they be "filled in"? The presupposition reading is mine; the words are the writer's. Hmm. Per rule: "Where part was said and part is your choice, split the line if you can." The return fact: the writer's sentence presupposes it; I read it as GIVEN. I'd mark it "filled in" and note that the presupposition is my reading? Or "said" since the words imply it?
+
+Let me think about the visitor thing line in the actual ledger: the writer says "the visitor" in sentence 2 — that's said. The return fact: "It was not what made the visitor return" — the return is presupposed, not asserted. Marking it GIVEN + filled in seems honest: I filled in the presupposed return. Hmm, but GIVEN means "what it takes for granted along the way" — the writer takes the return for granted here. I could mark it "said" (the writer's sentence commits to it via presupposition) — but the guide says mark every line you add as filled in. The return-as-fact is arguably an addition of mine (reading the presupposition). I'll mark it "filled in" and note it in Readings I chose. Hmm, actually...
+
+Let me reconsider. In example_A, line 9 "the plant by the door did not die" was said. Presuppositions there... In example P14, line f "group structure exists" was said (from "remove the structure"). So existence presupposed by a nominal was marked "said" there. Hmm, "remove the structure and the spread stops" — the structure's existence is GIVEN said.
+
+For consistency with P14 line f, I'll mark the visitor's return as GIVEN, said — the writer's own sentence presupposes it. Hmm, but P14's f was from "remove the structure" which is a fairly direct presupposition. Here "what made the visitor return" similarly presupposes the return. I'll go with GIVEN, said, and record the reading choice. Hmm...
+
+Actually wait. Let me reconsider whether to include the actual-world return fact at all. Risk: if returned(visitor) is in the actual ledger as GIVEN, then... the checker might find nothing. It's harmless. But is it what the text commits to? The writer says "It was not what made the visitor return" — committing to "the visitor returned" as a presupposition. I think including it is right and faithful. And it makes the denial meaningful.
+
+Hmm, but there's a tension: sentence 1 only reports the inspector's conclusion; the actual return is not confirmed by the writer. Sentence 2 presupposes it. So GIVEN (taken for granted) is exactly right.
+
+Now, the visitor thing line in the actual ledger: sentence 2, CLAIMED? The thing "the visitor" — in sentence 2, main clause "It was not what made the visitor return" — the visitor is inside a nominal. GIVEN, said, s2? I'll say GIVEN, said, s2. Hmm, or CLAIMED. The visitor's existence is presupposed. GIVEN feels right. But honestly, thing lines' standing — in T10D, window and letter (inside the reported world) were TOLD; account was GIVEN. Here visitor in actual: I'll use GIVEN since it's presupposed by sentence 2's nominal. Hmm, wait — but actually, is the visitor in the actual ledger at all? The writer never says "the visitor" outside the reported conclusion and the presupposed nominal. Both are non-assertive contexts. GIVEN it is.
+
+Hmm, hold on — one more consideration. Maybe the actual-world visitor line should be at sentence 1, since "a visitor" first appears there (inside the reported content, which is binned). The bin entry covers the attribution. The visitor thing in the actual world is really only needed for sentence 2's denial. I'll attach it to sentence 2.
+
+Wait, actually — should the actual-world denial even reference a visitor thing line? Yes, rule 3: every thing in a happening must have a thing line. The denial is about returned(visitor). So visitor needs a line in the actual ledger. OK.
+
+Let me also double check the denied_because term spelling: it must match holds(...) of the lines it points at. The effect fact: returned(visitor) — from the GIVEN line holds(returned(visitor)). The cause fact: burning(lamp) — from holds(burning(lamp)). So denied_because(deny, returned(visitor), burning(lamp)).
+
+And in inspector_world: claim_since(iw_since, returned(visitor), burning(lamp)) — with holds(returned(visitor)) and holds(burning(lamp)) in that world. Good, terms match.
+
+Now the bin:
+- Sentence 1: "the inspector's reason for concluding" — attribution retained here; scopes the reported conclusion to inspector_world. The inspector's concluding and the lamp being the reason are the inspector's own mental doings, not claims about the actual world.
+- Anything else? "The burning lamp was the inspector's reason" — hmm, the whole attribution phrase. Also maybe "concluding" as a mental act — outside the language (who concludes what). Yes, bin it.
+
+Also sentence 2: "what made the visitor return" — "made" = caused; that's handled by the denied BECAUSE. Nothing to bin there. The presupposition is kept as GIVEN.
+
+Hmm, what about "It" — pronoun reference to the burning lamp; that's just naming, no bin needed.
+
+Words split: none? "return" appears as "had returned" and "made the visitor return" — same sense (come back). No split needed. Actually, hmm: "concluding" vs "returning"... no. No words split.
+
+Readings I chose:
+1. Sentence 1: "The burning lamp was the inspector's reason for concluding that a visitor had returned." Open readings: (a) the writer endorses the return as actual; (b) the writer only reports the inspector's conclusion. Chosen: (b) — the return is TOLD in inspector_world; only the lamp's burning is claimed in the actual ledger.
+2. Sentence 1: "reason for concluding" — a reason to believe, not a cause: SINCE inside inspector_world, not BECAUSE. (Also the attribution is binned.)
+3. Sentence 2: "It was not what made the visitor return." Open readings: the nominal presupposes the visitor returned, or not. Chosen: presupposed, GIVEN in the actual ledger (filled in? said?). Hmm — I need to decide said vs filled in.
+
+Let me decide: the return fact is a reading of the presupposition → mark it "filled in"? In P14, line f (group structure exists) was "said". The structure's existence was presupposed by "remove the structure". Marked said. I'll follow that: GIVEN, said. But then in the count, lines said includes it. Hmm, but the guide says "Mark every line you add as 'filled in'...". The return fact isn't exactly added — it's read off the writer's own words. P14 precedent: said. I'll go with said, and record the reading choice. Hmm, actually, let me reconsider once more...
+
+The distinction: "said" = the writer wrote it. The writer wrote "the visitor return" — yes, those words are the writer's. The fact "the visitor returned" is a presupposition of those words. P14's f was the same pattern. OK: GIVEN, said.
+
+Hmm, but wait — actually, is it more honest to mark it filled in? The reading "the sentence presupposes the return" is my reading. But P14's precedent is clear enough. Also, the visitor thing line: GIVEN, said, s2.
+
+Actually hmm, one more thought: maybe I should mark the actual-world return fact as "filled in" because the writer never asserts the return in the actual world — the only assertion of return is the inspector's (TOLD). The presupposition reading is genuinely a choice. The instructions say: "When you feel a missing step is obvious: write it as its own line, marked 'filled in'." And "Where you are unsure whether words are literal, write both readings in the bin and mark any line you wrote from them 'filled in'."
+
+I'll mark it "filled in" to be safe and honest, and record the reading. Hmm, but then... the checker's "added lines" test: added lines tested by taking out writer's lines — fine either way.
+
+Decision: line "visitor_returned" (actual): GIVEN, filled in, s2 — the presupposed return, my reading. And record under Readings I chose: sentence 2 presupposes the return; I keep it as GIVEN; the alternative (no commitment) would leave the denial about a non-actual return.
+
+Hmm, hmm. Actually, you know, let me think about which is better for the checker's story. The text's point: the lamp was the inspector's reason to believe, but not the cause. The denied BECAUSE in the actual world: NOT [returned(visitor) BECAUSE burning(lamp)]. For this to be a meaningful denial, returned(visitor) should be in the actual ledger. If it's only in the told world, the denial in the actual world references a fact not in the actual ledger — the checker would still test it (does any actual line make burning produce returned? no → passes). Either way it passes.
+
+I'll include it as GIVEN filled in. Hmm, wait — but "GIVEN" + "filled in" is a fine combination (standing and source mark are independent).
+
+Actually, let me reconsider using "said" one final time. Rule: "Mark what the writer wrote as 'said'." The writer wrote "the visitor return" — the words are there. The fact extracted is a presupposition, not an assertion. P14 line f set the precedent of marking a presupposed existence as "said". But P14's f was the structure's existence from "remove the structure" — very direct. Here it's similar. Ugh.
+
+OK here's my final call: I'll mark it "filled in" because the presupposition reading is one of two open readings (the other being that the writer commits to nothing about the return), and the guide explicitly says to mark lines written from uncertain readings as filled in. I'll note both readings in "Readings I chose". This is the more conservative, honest choice.
+
+Hmm, but then the count: lines said = 10, filled in = 1, usual case = 0. Fine.
+
+Wait, let me recount lines:
+
+Actual:
+1. lamp — thing — CLAIMED — said — s1
+2. lamp_burning — fact — CLAIMED — said — s1
+3. inspector — thing — GIVEN — said — s1
+4. visitor — thing — GIVEN — said — s2
+5. visitor_returned — fact — GIVEN — filled in — s2
+6. deny — denied BECAUSE — CLAIMED — said — s2
+
+inspector_world:
+7. iw_lamp — thing — TOLD — said — s1
+8. iw_lamp_burning — fact — TOLD — said — s1
+9. iw_visitor — thing — TOLD — said — s1
+10. iw_returned — fact — TOLD — said — s1
+11. iw_since — SINCE — TOLD — said — s1
+
+Count: said = 10, filled in = 1, usual case = 0. Sentences losing to bin: sentence 1 loses the attribution to the bin (partially — the return content is kept as TOLD, so it's "in both"). Sentence 1 appears in ledger and bin. Sentence 2 appears in ledger only. So sentences that lost something to the bin: 1.
+
+Now, do I need an inspector thing line in the actual ledger? The inspector is only in the binned attribution. In T10D, the account got a thing line (GIVEN) because the attribution was retained in the bin. Mirror that: inspector thing line, GIVEN, said, s1. Yes, keep it.
+
+Should the inspector also appear in inspector_world? The concluding is binned; the world contains the content of the conclusion, not the inspector's act. In T10D, account_world didn't include the account. So no inspector in the world. Good.
+
+Prolog clauses:
+
+line ids: lamp, burning, inspector, visitor, returned, deny, iw_lamp, iw_burning, iw_visitor, iw_returned, iw_since.
+
+lamp: kind(lamp, lamp) :- line(lamp). body(lamp, not_stated) :- line(lamp).
+burning: holds(burning(lamp)) :- line(burning).
+inspector: kind(inspector, person) :- line(inspector). body(inspector, not_stated) :- line(inspector).
+visitor: kind(visitor, visitor) :- line(visitor). body(visitor, not_stated) :- line(visitor).
+returned: holds(returned(visitor)) :- line(returned).
+deny: denied_because(deny, returned(visitor), burning(lamp)) :- line(deny).
+
+iw_lamp: kind(lamp, lamp)... wait — same atom names in different worlds. In Prolog, the told world's lines are presumably scoped by the driver. Use the same atom `lamp`? In T10D, the world's window was `window` and the actual account was `account`. There was no overlap. Here lamp appears in both actual and world. Since told worlds are looked at alone, the driver presumably separates them. I'll use the same atom names — hmm, but that could conflate. Maybe use distinct atoms like `iw_lamp`? But the guide says fact terms must match across pointing lines. Within the world, iw_since points at iw_returned and iw_burning, so terms must match within the world. If I write holds(burning(lamp)) in the world and holds(burning(lamp)) in actual, they'd be the same Prolog fact if worlds aren't separated — but the driver handles case scoping (case field). I'll keep the same atom names within each world; the case field separates them. Actually, to be safe from any conflation, I could name the world's lamp distinctly... but the checker's world separation should handle it. T10D used the same `letter`/`window` atoms that don't appear in actual. Hmm.
+
+I'll use the same names (lamp, visitor) in the world — the case/case_kind fields scope them. That matches the spirit of T10D where the world's things are plain names.
+
+iw_lamp: kind(lamp, lamp) :- line(iw_lamp). body(lamp, not_stated) :- line(iw_lamp).
+iw_burning: holds(burning(lamp)) :- line(iw_burning).
+iw_visitor: kind(visitor, visitor) :- line(iw_visitor). body(visitor, not_stated) :- line(iw_visitor).
+iw_returned: holds(returned(visitor)) :- line(iw_returned).
+iw_since: claim_since(iw_since, returned(visitor), burning(lamp)) :- line(iw_since).
+
+Wait — should the SINCE be a claim about lines pointing at line numbers? Kind 13: "line E SINCE line C". The text form: "line iw_returned SINCE line iw_burning". The Prolog: claim_since(id, expected, reason). Good.
+
+Also for the denied BECAUSE text form: "NOT [line returned BECAUSE line burning]" — i.e., "NOT [the visitor returned BECAUSE the lamp was burning]".
+
+Now the five sections output:
+
+**1. The ledger** — table with Number | Standing | Content | Source mark | Sentence.
+
+**2. The bin** — list.
+
+**3. Words I split** — none.
+
+**4. Readings I chose.**
+
+**5. The count.**
+
+Then the JSON block, then TRANSLATION COMPLETE.
+
+Also the PARKED list — the prompt says judgements about reasoning go in a PARKED list at the very end. The print form says close with TRANSLATION COMPLETE then wait. The parking place section says PARKED at the very end, one line each, then return to the line in hand. Since there are no judgements I need to park... I can include an empty PARKED list or omit. The output form says exactly five sections then closing line. The PARKED instruction is for when I have such judgements. I have none substantial. Maybe include a brief PARKED note? The final checks say "The output has all five sections and the closing line." I'll skip PARKED since nothing to park, or include it empty. I'll just not include it — actually, to be safe, I could add "PARKED: (none)". Hmm, the task says the parking place is where judgements go "at the very end". Since I have no such judgements, I'll omit it. Actually, one small judgement: the text's contrast between reason-for-concluding and cause is the whole point; the writer's reasoning is fine. No parking needed.
+
+Let me now also double-check: sentence 1 — "The burning lamp was the inspector's reason for concluding that a visitor had returned." Is the lamp's burning CLAIMED in the actual world? Yes, main clause subject "The burning lamp" — the writer asserts the lamp was burning. Good.
+
+Is there anything else in sentence 1 to bin? "reason for concluding" — binned. The rest is covered. Also "the inspector's" — possession, fine.
+
+Sentence 2: "It was not what made the visitor return." — denial of causation, covered. "made" = produced → BECAUSE semantics. Good.
+
+Also — should I add a line about the lamp not being the cause in the actual world as a plain denied fact? No, denied_because is the right form.
+
+One more check on rule 9 for added lines: the filled-in return fact may not be the claimed line in other words etc. Fine.
+
+Also, should the inspector_world include a line for the inspector concluding? Binned. Yes.
+
+Let me also consider: is "reason for concluding" maybe better treated as SINCE in the actual ledger (the writer asserts the lamp was a reason)? The rule "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world." — the concluding is the inspector's. The reason is the inspector's reason. So it belongs with the attribution. I'll bin the whole "the inspector's reason for concluding" and put the SINCE inside inspector_world. This matches T10D's treatment of the account's causal claim. And I'll note this reading choice.
+
+Hmm, one concern: putting the SINCE in the world means the actual ledger has no line for sentence 1's reason claim except the burning fact. Is sentence 1 fully accounted for? It appears in the ledger (burning, inspector thing, world lines) and in the bin (attribution). Yes — "Every sentence of the text appears in the ledger, in the bin, or in both." Good.
+
+Now write it all out.
+
+For the table, columns: Number | Standing | Content | Source mark | Sentence.
+
+Rows:
+1. lamp | CLAIMED | lamp is a lamp; it answers a press as not stated | said | 1
+2. burning | CLAIMED | lamp was burning | said | 1
+3. inspector | GIVEN | inspector is a person; it answers a press as not stated | said | 1
+4. iw_lamp | TOLD in world inspector_world | lamp is a lamp; it answers a press as not stated | said | 1
+5. iw_burning | TOLD in world inspector_world | lamp was burning | said | 1
+6. iw_visitor | TOLD in world inspector_world | visitor is a visitor; it answers a press as not stated | said | 1
+7. iw_returned | TOLD in world inspector_world | visitor had returned | said | 1
+8. iw_since | TOLD in world inspector_world | line iw_returned SINCE line iw_burning | said | 1
+9. visitor | GIVEN | visitor is a visitor; it answers a press as not stated | said | 2
+10. returned | GIVEN | visitor returned | filled in | 2
+11. deny | CLAIMED | NOT [line returned BECAUSE line burning] | said | 2
+
+Wait, "it answers a press as not stated" — the response class is "not stated". Good.
+
+Hmm, for the inspector: "inspector is a person" — kind person. Response: not stated. Is a person "heavy and standing"? The text doesn't say; the inspector isn't pressed. not stated. Good.
+
+Count: lines said = 10, filled in = 1, usual case = 0. Sentences: 2. Sentences losing to bin: 1 (sentence 1).
+
+Bin entries:
+- Sentence 1: "the inspector's reason for concluding" — attribution of a conclusion and its reason to the inspector; retained here. It scopes the reported return and the reason relation to inspector_world; the inspector's concluding is not claimed in the actual ledger.
+
+Leftover array: same as bin entries as strings.
+
+Readings I chose:
+- Sentence 1: open readings: the writer endorses the visitor's return as an actual fact, or only reports the inspector's conclusion. Chosen: only the reported conclusion — the return is TOLD in inspector_world; in the actual ledger only the lamp's burning is claimed.
+- Sentence 1: "reason for concluding" is a reason to believe, not a cause: encoded as SINCE inside inspector_world, and the attribution binned; not a BECAUSE in the actual ledger.
+- Sentence 2: "what made the visitor return" presupposes the return, or commits to nothing about it. Chosen: the return is taken as GIVEN in the actual ledger (marked filled in), so the denial has a fact to deny about; the alternative would leave the denial about a return nowhere stated.
+- Sentence 2: "made" claims production, so the denial is NOT [returned BECAUSE burning], a denied BECAUSE, not a denied SINCE.
+
+Also maybe: "It" = the burning lamp — trivial, skip or include briefly. I'll include a short note? Not needed. Skip.
+
+Words split: none. I'll write "None."
+
+Now the JSON. Fields: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen.
+
+whose: I'm Claude (Anthropic). "Claude, under L82" — the guide says "<your name, the model you are>, under L82". I'll write "Claude (Anthropic), under L82".
+
+whatifs: [].
+
+Let me write the JSON carefully.
+
+Also note the encoding guide mentions "names" in T10D but it's not in the required schema list. The required fields per the schema: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. I'll include those.
+
+Let me write the final output.
+
+Double-check Prolog clauses each end with full stop and start with line(id).
+
+For the denied_because: the guide says "A denied BECAUSE (NOT [X because Y]): denied_because(id, <effect>, <cause>) :- line(id)." Good.
+
+For claim_since: claim_since(id, <what is expected>, <the reason>). Good.
+
+Now, also the text form of lines in the JSON "text" field: "[CLAIMED] lamp is a lamp; response to a press not stated" etc.
+
+Let me finalize.
