@@ -11,7 +11,8 @@ Providers (keys from the environment, never from a file in the repository):
 Both are OpenAI-shaped; streamed chunks carry `delta.content` and `delta.reasoning_content`; the receipt keeps both.
 
 Usage:
-  ask_model_2.py PROVIDER --system FILE --user FILE --out DIR [--tag NAME] [--max-tokens N] [--temperature T] [--idle S]
+  ask_model_2.py PROVIDER --system FILE --user FILE --out DIR [--tag NAME] [--max-tokens N] [--temperature T] [--idle S] [--effort low|medium|high]
+(--effort is sent as `reasoning_effort`, which both providers accept; the request body records it)
 Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.receipt.json (provider, model, request
 SHA-256, response id, token counts when the stream's last chunk carries usage, finish reason, chunk count, the last attempt's
 seconds, the whole call's total_seconds, attempt count and the labelled status and seconds of every attempt, "stream": true),
@@ -68,6 +69,7 @@ def main():
     ap.add_argument("--system"); ap.add_argument("--user", required=True); ap.add_argument("--out", required=True)
     ap.add_argument("--tag", default="call"); ap.add_argument("--max-tokens", type=int, default=16000)
     ap.add_argument("--temperature", type=float, default=0.2); ap.add_argument("--idle", type=float, default=600.0)
+    ap.add_argument("--effort", choices=["low", "medium", "high"], help="sent as reasoning_effort; omitted means the provider's default")
     a = ap.parse_args()
     p = PROVIDERS[a.provider]
     key = os.environ.get(p["key"])
@@ -77,6 +79,7 @@ def main():
     if a.system: messages.append({"role": "system", "content": open(a.system).read()})
     messages.append({"role": "user", "content": open(a.user).read()})
     body = {"model": p["model"], "messages": messages, "max_tokens": a.max_tokens, "temperature": a.temperature, "stream": True}
+    if a.effort: body["reasoning_effort"] = a.effort
     raw = json.dumps(body, ensure_ascii=False, sort_keys=True).encode()
     req_hash = hashlib.sha256(raw).hexdigest()
     open(os.path.join(a.out, a.tag + ".request.json"), "wb").write(raw)
@@ -113,7 +116,7 @@ def main():
     open(os.path.join(a.out, a.tag + ".reasoning.txt"), "w").write(reasoning)
     receipt = {"provider": a.provider, "url": p["url"], "model": (last or {}).get("model", p["model"]), "request_sha256": req_hash,
                "response_id": rid, "created": (last or {}).get("created"), "finish_reason": finish, "chunks": chunks,
-               "usage": (last or {}).get("usage"), "seconds": round(seconds, 1), "total_seconds": round(time.time() - started, 1), "attempts": attempts, "attempt_history": history,
+               "usage": (last or {}).get("usage"), "seconds": round(seconds, 1), "total_seconds": round(time.time() - started, 1), "attempts": attempts, "attempt_history": history, "effort": a.effort,
                "response_sha256": hashlib.sha256(content.encode()).hexdigest(), "stream": True, "tag": a.tag,
                "system_file": a.system, "user_file": a.user, "asked_at_unix": int(started)}
     open(os.path.join(a.out, a.tag + ".receipt.json"), "w").write(json.dumps(receipt, indent=1))
