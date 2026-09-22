@@ -8,5 +8,7 @@ W2. The theory's revision 1 (Semantics file 11) handed to this project, to be us
 
 W3. File 11 is the authority; phase 1 begins; five Opus 5 agents at extra effort, armed with the hard-to-vary skill, help. "11 is the new authority. Also, if the research is done and corpus compiled, time to describe LLMs within the language of 11. Use 5 Opus 5 agents with extra effort armed with current hard to vary to help."
 
+W4. The agents may research on the internet. "Also give them access to internet for research if it's possible"
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
