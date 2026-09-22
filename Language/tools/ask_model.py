@@ -72,7 +72,7 @@ def main():
             try: data = json.loads(text)
             except Exception: status = -1
         if status == 200 and data.get("choices") and ((data["choices"][0].get("message") or {}).get("content") or "").strip(): break
-        if status == 200: status = -2   # a well-formed answer with no content: retried like a failure
+        if status == 200: status = -2 if data.get("choices") else -3   # -2: an answer with no content; -3: a 200 with no choices; both retried
         final = status in (400, 401, 403, 404, 413, 422)   # a request the provider rejects outright: no retry
         if final or attempts >= 6:
             open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s after %d attempt(s)%s\n%s" % (status, attempts, " (not retried)" if final else "", text[:4000]))

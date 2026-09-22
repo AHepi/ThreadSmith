@@ -7,15 +7,17 @@
 # the request rate under the limit); 2 both drivers on every valid ledger; 3 consequences_2 on every valid ledger;
 # 4 sameness_2 within pairs per translator and across translators per text, then a COUNTS file (said, filled in,
 # usual case, TOLD and SUPPOSED lines, world names) per ledger; 5 the blind reader (Atria) on every report, shuffled
-# under neutral names, eight lanes, the heading line replaced, every world name replaced by world_1, world_2, ...
-# in order of first appearance (in the driver's quoted headings, after "world" in line texts, and everywhere for a
-# name with an underscore or a digit; a plain-word name left elsewhere is listed in the key) and the leftover bin's
-# quotations cut from the GAUGE line (the key records the map and the cut);
+# under neutral names, eight lanes: the heading line is replaced; every world name becomes world_1, world_2, ... in order
+# of first appearance, substituted through NUL-delimited placeholders in two passes (so a world already named world_k
+# cannot collide with another's neutral name) in the driver's quoted headings, after "world" or "case" in line texts
+# (the guide's "[TOLD in world x]" and "[SUPPOSED in case x]" prefixes) and, for a name with an underscore or a digit,
+# wherever it appears as a word; the leftover bin's quotations are cut from the GAUGE line; a plain-word name still
+# present after the cut is listed in the key (name_still_present); the key records the map and the cut;
 # 6 the prose reader (Mimo) on every new-driver report with its passage, eight lanes, world names left as written
 # (its part 3 needs them); 7 a manifest. Every call leaves a receipt. Failed and skipped calls are listed in
 # FAILED.txt (a non-zero exit, or an empty answer, exit 99) and SKIPPED.txt (an empty report) in the reader and prose_reader
 # directories. Nothing is written outside OUT_DIR. No other caller of either provider may run while this script runs: the
-# lock is shared within one run only.
+# lock is shared within one run only, so the script refuses to start while another ask_model.py process is running.
 # Timings printed: translations, drivers, consequences, rig (drivers + consequences), reader, prose reader.
 set -u
 [ $# -eq 3 ] || { echo "usage: L82_run.sh CORPUS_DIR OUT_DIR PAIRS_FILE" >&2; exit 2; }
@@ -26,6 +28,7 @@ CORPUS="$(cd "$1" && pwd)" || { echo "no corpus dir $1" >&2; exit 2; }
 PAIRS="$(cd "$(dirname "$3")" && pwd)/$(basename "$3")"
 if [ -e "$2" ] && [ -n "$(ls -A "$2" 2>/dev/null)" ]; then echo "OUT_DIR $2 exists and is not empty; the drivers append to raw logs, so use a fresh directory" >&2; exit 2; fi
 mkdir -p "$2"; OUT="$(cd "$2" && pwd)"
+if pgrep -f "ask_model.py" > /dev/null 2>&1; then echo "another ask_model.py caller is running; it would share neither lock; stop it first" >&2; exit 2; fi
 mkdir -p "$OUT/translations" "$OUT/ledgers" "$OUT/reports" "$OUT/consequences" "$OUT/sameness" "$OUT/reader" "$OUT/prose_reader" "$OUT/scratch"
 export ASK_MODEL_LOCKDIR="$OUT"   # one lock per provider for every step of this run
 TEXTS=$(ls "$CORPUS" | grep -E '^B[0-9]+\.txt$' | sed 's/\.txt$//')
