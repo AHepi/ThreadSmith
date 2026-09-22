@@ -16,5 +16,7 @@ W6. The go for getting the LLM theory right, with the rules of the round. "I wil
 
 W7. Two keys supplied, DeepSeek and Atria Asi, with the rule for Atria. The keys themselves are not recorded here or in any file (root conventions); the owner's words otherwise as written: "Deepseek [key] Atria Asi [key] Use Atria Asi for complex analysis with hard to vary skill as well. Only 1 at a time. Make it's token ceilings significantly larger because it tends to fail otherwise."
 
+W8. A third model family, MiMo 2.6 Pro, with its key. The owner asked "Should we use mimo 2.6 max?"; Claude answered that a third family is worth most as a stage E examiner beside DeepSeek and Atria, held back from stage C for now, and that it needs a key, a researched client with a dry run, and an addendum before it runs. The owner's words then, the key itself not recorded here or in any file: "Mimo 2.6 pro [key]". Taken as: MiMo 2.6 Pro is used, as a stage E examiner family, under addendum W12.
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
