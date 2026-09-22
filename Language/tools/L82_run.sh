@@ -18,6 +18,8 @@
 # FAILED.txt (a non-zero exit, or an empty answer, exit 99) and SKIPPED.txt (an empty report) in the reader and prose_reader
 # directories. Nothing is written outside OUT_DIR. No other caller of either provider may run while this script runs: the
 # lock is shared within one run only, so the script refuses to start while another ask_model.py process is running.
+# Token caps: 60000 for a translation (the pilot saw Mimo's reasoning alone reach 24000 on T11-B), 30000 for a reader
+# or prose-reader call (Mimo's reasoning ran to 10800 tokens on the pilot's 12000-token prompt).
 # Timings printed: translations, drivers, consequences, rig (drivers + consequences), reader, prose reader.
 set -u
 [ $# -eq 3 ] || { echo "usage: L82_run.sh CORPUS_DIR OUT_DIR PAIRS_FILE" >&2; exit 2; }
@@ -107,7 +109,7 @@ for code, entry in key.items():
 json.dump(key, open(os.path.join(OUT, "reader", "KEY_report_names.json"), "w"), indent=1)
 def call(job):
     code, up = job
-    r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "atria", "--user", up, "--out", os.path.join(OUT, "reader"), "--tag", code, "--max-tokens", "4000", "--temperature", "0.1"], capture_output=True, text=True)
+    r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "atria", "--user", up, "--out", os.path.join(OUT, "reader"), "--tag", code, "--max-tokens", "30000", "--temperature", "0.1"], capture_output=True, text=True)
     rc = r.returncode
     if rc == 0:
         resp = os.path.join(OUT, "reader", code + ".response.txt")
@@ -138,7 +140,7 @@ for name in sorted(f for f in os.listdir(os.path.join(OUT, "reports")) if f.ends
     jobs.append((tag, up))
 def call(job):
     tag, up = job
-    r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "mimo", "--user", up, "--out", os.path.join(OUT, "prose_reader"), "--tag", tag, "--max-tokens", "4000", "--temperature", "0.1"], capture_output=True, text=True)
+    r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "mimo", "--user", up, "--out", os.path.join(OUT, "prose_reader"), "--tag", tag, "--max-tokens", "30000", "--temperature", "0.1"], capture_output=True, text=True)
     rc = r.returncode
     if rc == 0:
         resp = os.path.join(OUT, "prose_reader", tag + ".response.txt")

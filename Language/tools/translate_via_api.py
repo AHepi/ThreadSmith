@@ -111,7 +111,7 @@ def main():
     for attempt in range(1, attempts + 1):
         if feedback: open(user_path, "w").write(prompt(text_id, text) + "\n\n===== YOUR PREVIOUS ANSWER DID NOT VALIDATE =====\n" + feedback + "\nPrint the whole output again, corrected.\n")
         tag = "%s.%s.attempt%d" % (text_id, provider, attempt)
-        rc = subprocess.run([sys.executable, os.path.join(HERE, "ask_model.py"), provider, "--user", user_path, "--out", out_dir, "--tag", tag, "--max-tokens", "24000", "--temperature", "0.2"]).returncode
+        rc = subprocess.run([sys.executable, os.path.join(HERE, "ask_model.py"), provider, "--user", user_path, "--out", out_dir, "--tag", tag, "--max-tokens", "60000", "--temperature", "0.2"]).returncode
         if rc != 0: feedback = "the call failed"; continue
         response = open(os.path.join(out_dir, tag + ".response.txt")).read()
         open(os.path.join(out_dir, "%s.%s.translation.md" % (text_id, provider)), "w").write(response)
