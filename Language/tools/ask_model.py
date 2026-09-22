@@ -9,7 +9,7 @@ Both are OpenAI-shaped and return `reasoning_content` beside `content`; the rece
 Usage:
   ask_model.py PROVIDER --system FILE --user FILE --out DIR [--tag NAME] [--max-tokens N] [--temperature T]
 Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.receipt.json
-(provider, model, request SHA-256, response id from the provider, token counts, the successful attempt's seconds, attempt count and the status and seconds of every attempt),
+(provider, model, request SHA-256, response id from the provider, token counts, the last attempt's seconds, the whole call's total_seconds, attempt count and the labelled status and seconds of every attempt),
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/timeouts
 with backoff, at most 6 attempts; a 400/401/403/404/413/422 is not retried; an answer with empty content is retried. A failed call leaves DIR/<tag>.error.txt and a receipt with "failed": true. Rate limit kept per provider by a
 lock file in DIR, or in $ASK_MODEL_LOCKDIR when set (so every step of one run shares one lock).
@@ -67,17 +67,19 @@ def main():
             status, text = e.code, e.read().decode(errors="replace")
         except Exception as e:
             status, text = 0, repr(e)
-        seconds = time.time() - t0; history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1)})
+        seconds = time.time() - t0
         if status == 200:
             try: data = json.loads(text)
             except Exception: status = -1
-        if status == 200 and data.get("choices") and ((data["choices"][0].get("message") or {}).get("content") or "").strip(): break
+        if status == 200 and data.get("choices") and ((data["choices"][0].get("message") or {}).get("content") or "").strip():
+            history.append({"attempt": attempts, "status": 200, "seconds": round(seconds, 1)}); break
         if status == 200: status = -2 if data.get("choices") else -3   # -2: an answer with no content; -3: a 200 with no choices; both retried
+        history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1)})   # the labelled status: -1 unparsable, -2 empty content, -3 no choices, 0 exception
         final = status in (400, 401, 403, 404, 413, 422)   # a request the provider rejects outright: no retry
         if final or attempts >= 6:
             open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s after %d attempt(s)%s\n%s" % (status, attempts, " (not retried)" if final else "", text[:4000]))
             open(os.path.join(a.out, a.tag + ".receipt.json"), "w").write(json.dumps({"provider": a.provider, "url": p["url"], "model": p["model"], "request_sha256": req_hash,
-                "failed": True, "status": status, "attempts": attempts, "attempt_history": history, "seconds": round(time.time() - started, 1), "tag": a.tag, "user_file": a.user, "asked_at_unix": int(started)}, indent=1))
+                "failed": True, "status": status, "attempts": attempts, "attempt_history": history, "seconds": round(seconds, 1), "total_seconds": round(time.time() - started, 1), "tag": a.tag, "user_file": a.user, "asked_at_unix": int(started)}, indent=1))
             print("failed after %d attempt(s): status %s%s" % (attempts, status, " (not retried)" if final else ""), file=sys.stderr); return 1
         time.sleep(min(120, 5 * 2 ** attempts))
     msg = data["choices"][0]["message"]
@@ -87,7 +89,7 @@ def main():
     open(os.path.join(a.out, a.tag + ".reasoning.txt"), "w").write(reasoning)
     receipt = {"provider": a.provider, "url": p["url"], "model": data.get("model", p["model"]), "request_sha256": req_hash,
                "response_id": data.get("id"), "created": data.get("created"), "finish_reason": data["choices"][0].get("finish_reason"),
-               "usage": data.get("usage"), "seconds": round(seconds, 1), "attempts": attempts, "attempt_history": history,
+               "usage": data.get("usage"), "seconds": round(seconds, 1), "total_seconds": round(time.time() - started, 1), "attempts": attempts, "attempt_history": history,
                "response_sha256": hashlib.sha256(content.encode()).hexdigest(), "tag": a.tag,
                "system_file": a.system, "user_file": a.user, "asked_at_unix": int(started)}
     open(os.path.join(a.out, a.tag + ".receipt.json"), "w").write(json.dumps(receipt, indent=1))
