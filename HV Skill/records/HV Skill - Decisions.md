@@ -32,5 +32,13 @@ H7. Harden from the results in hand, look in the other projects, and which subag
 
 H8. The other projects are read only. "Do not ever edit or touch other projects. This is read only."
 
+*Five more decisions on the skill, copied from the shared record on 22 September 2026 (log H69), numbers unchanged; they were left out of the copy of 21 September:*
+
+2. Theory first, by the hard-to-vary skill. "Actually first, use the hard to vary skill to come up with a theory about the properties a candidate language would need to achieve this kind of goals. The candidate may need to account for mapping properties that I did not outline above."
+9. Run the real checker, on more than the tomato paragraph, and keep improving the skill. "Yup do it. And a few other genuinely unique paragraphs as well. See what happens. While doing it, see if you can make additions to the skill or change things."
+17. Go ahead with the build, skill first. "Go. First modify skill if it needs and and then test."
+23. Back to the audit, with a workflow update in the prompt, and the rebuilt skill used as the test. "Hold on. It's time to get back to the audit. This time, the prompt should include how to update it's audit workflow to get better results. So next prompt with instructions, use the hard to vary skill you just constructed as a test."
+26. Do the whole third pile, then return the language as one clean file. "Ok. Just do the whole thing. Can you return, inline, both the completed updated skill, canonical with zero provenance. And a single MD file with everything in the skill in the one document." Corrected at once: "Sorry not the skill. I meant the language. My bad. It's a single file anyway"
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

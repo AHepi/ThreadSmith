@@ -8,7 +8,7 @@ Status words used: **stated** (written in a file as a claim, not tested), **seen
 
 ## R2. The hard-to-vary skill is sharpened by the semantics
 **Claim.** "This skill sharpens [Deutsch's idea] using a formal theory supplied by the user, 'Claude Fable Semantics'. That theory's terms are mapped to plain words in references/word-list.md."
-**Current status.** Stated, in the skill's own front matter; and the skill's words are now **seen** to do work in a reader that never saw the theory (log 54: DeepSeek V4.1 Flash on 49 outside documents, the semantics withheld). What the semantics adds over the skill's plain words was not tested; the reader was never given it.
+**Current status.** Stated, in the skill's own front matter; the skill's words **seen** to do work in a reader that never saw the theory (log 54); and the word list **checked row by row against file 10** (log H69, an Opus 5 judge armed with the skill, read only): held for the theory's account machinery, often in file 10's own words; nine rows loose, each with a nearer neighbour in file 10 named in the rig's return; two rows mismatched and corrected in file 33 (the job tags are the skill's own; K3 says nothing of a test that passes); eleven notions of file 10 the skill uses without a row, held for the research plan. What the semantics adds over the skill's plain words in a reader's hands was still not tested.
 **Evidence.** [SKILL.md](<authority/hard-to-vary/SKILL.md>); [word-list.md](<authority/hard-to-vary/references/word-list.md>); [49 Plan](<tests/49 Plan - the skill on outside papers, read by DeepSeek V4.1 Flash.md>); [54 Results](<results/54 Results - where the skill breaks, on outside papers read by DeepSeek.md>).
 **Open question.** Whether the semantics document, given beside the skill, changes what a reader finds (plan 48 designed that comparison and was stopped). And whether the two breaks found in the skill's wording recur (the repeatability run in file 54).
 
@@ -18,6 +18,16 @@ Status words used: **stated** (written in a file as a claim, not tested), **seen
 **Current status.** Stated, by decision H5. Seen in this session's own record: every step from H55 to H64 that chose what to run, how often, and when a change was forced was planning done inside this project's log because no other home existed; the skill's own outputs (marks, breaks, candidates) were never the thing that decided.
 **Evidence.** `authority/31/hard-to-vary/SKILL.md` ("This skill is a way of criticising, not a truth-meter"; the report's seven headings, ending in "One next step"); `references/testing-against-cases.md`; `RESEARCH-CONVENTIONS.md` at the root; plans H56, H58, H63 and results H57, H59, H62, H64 as the planning record.
 **Open question.** Whether the planning work is a fourth project with its own letter and record, and whether the shared conventions stay as they are once it exists. Both are the owner's.
+
+## R7. The Language project's claim about this skill
+**Claim.** (Language/RELATIONS.md, its R3, read only.) The language's twelve properties were worked out with the skill, and the skill was improved from what each stage of the language work taught; its open question is how much of the skill is tested against fitted, the building module having been first used for real at log 30.
+**Current status.** Stated there; the same open question is this project's, and H69's part-by-part marking answers it as far as the record allows (105 of 146 parts held by a quoted holder; four never exercised; seven loose).
+**Evidence.** The shared record's entries 01 to 30 (in `Language/records/`); H69.
+
+## R8. The Semantics project's claim about this skill
+**Claim.** (Semantics/RELATIONS.md, its R4, read only.) Its file 24 restates the skill's method as positive instructions and cards for a model that reinterprets negative wording; the skill itself is not handed over; the rebuilt skill was the test for that model's workflow update at log 30; the near-case routine was kept in the workflow and out of the skill. The scout of H69 adds, from file 24's own list: six of the eleven tests (reverse, hunt the answer in the starting points, add a job, pull, check the patches, look inside) were left out of the version carried over.
+**Current status.** Stated there and seen on one audit. This project's README trap ("handing the skill to the other model") rests on it.
+**Evidence.** Semantics file 24 (both files), file 30; the scout's return in `rigs/H68 hardening - Opus 5 judges/`.
 
 ## Not claimed
 - That the skill and the other two projects form one system. The folder tree keeps them side by side on purpose.

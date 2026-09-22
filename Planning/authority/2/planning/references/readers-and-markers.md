@@ -1,0 +1,9 @@
+# Readers and markers
+
+**A reader under test** is a model given the thing under test and a document, and never the key, the source's standing, earlier results or the plan. It is run through a rig that checks the thing under test against its authority by difference before every call, saves every return as it came with its finish reason, keeps an empty return and runs it once more as a recorded second attempt, and reads keys from the environment only. When the transport gives the reader tools, the prompt names the only files it may read, and every tool call is audited afterwards against that list; a reader that read outside is reported and its runs counted with and without it.
+
+**A marker** reads reports against frozen criteria and checks every claim about a document against the document's words, printing every hit before calling a claim absent. It keeps three layers apart and names the one at fault on every report: the document, the thing under test, and the reader; a finding the document contradicts is the reader's unless the thing under test's wording pushed it there. The first marker names its conflicts (wrote the thing under test, chose the corpus). **A second marker** sees neither the labels nor the first marks; reports are shuffled and numbered by program, the mapping kept closed until the marks are saved. Agreement is read by field: the fields that agree carry the claims; the fields that do not are struck as marked and their criteria reworded; disagreements are listed with both markers' words; a third reading settles them, and until it has run nothing is settled.
+
+**Never** a Fable 5.1 reader under test, and never a Fable 5.1 subagent, with permission or without. An Opus 5 subagent needed the owner's explicit permission and has it from HV decision H7: geared with the hard-to-vary skill, at effort "extra", not max.
+
+Where these came from: HV Skill plan 49, plan 52, Lessons 44 to 47 and H1, addendum H61, plan H63, results H64.

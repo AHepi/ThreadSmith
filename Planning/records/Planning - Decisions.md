@@ -8,6 +8,7 @@ P1. (HV decision H5.) "It sounds like you're moving into planning territory whic
 P2. (HV decision H6, the part that concerns this project.) "Which skills to have, and where the boundaries lie is the first step. Right now we have planning and HV. Nothing else can move forward without a sense of how LLMs fit into the larger semantics picture. First goal is the research. Harden HV and planning right now, freeze them, then move to a structure research plan based on semantics 10."
 
 P3. (HV decision H7.) "No no you harden with the current results. Also look inside the other projects for more info relating to HV skills. Use Opus 5 as subagents. Gear them with the HV dicipline and set their effort levels to Extra, not max. Never use Fable 5.1 as subagents."
+P4. (HV decision H8.) "Do not ever edit or touch other projects. This is read only."
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

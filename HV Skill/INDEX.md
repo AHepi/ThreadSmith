@@ -13,9 +13,10 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | 17 | `17 Skill - improved after the build test.skill` | Rig 2 build and hostile cases | (log 17) | |
 | 21 | `21 Skill - improved after the Markus paragraph.skill` | Log 21 | (log 21) | |
 | 22 | `22 Skill - improved after the Mondays paragraph.skill` | Log 22 | (log 22) | |
-| 29 | `29 ...` | Round 4 | Never run; content sits inside instruction 30 | |
-| 30 | **[30 Skill - hard-to-vary - modular, with router and map.skill](<authority/30 Skill - hard-to-vary - modular, with router and map.skill>)** - current | Log 30: rebuilt as modules with a router table and a flowchart map | One main file, seven references: the idea in depth, question bank, by domain, building, testing against cases, reporting, word list | Used as the test for the other model's workflow update (log 30, 31); opened and counted at log 43 |
+| 29 | `29 Skill - hard-to-vary - modular, with router and map.skill` (not in bundle) | Round 4 of the audit (the other model found a fault in each of Claude's two clauses) and decision 22 | The rebuild: a router table and a map of where to look and when, an admission test for any addition, the overgrown reference file replaced by three short modules (building; testing against cases; reporting); and four content changes (watch the part as well as the outcome; loose says nothing about how a part got there; run a test you write on the thing it should catch and on its nearest innocent neighbour; a narrowed range is a part and a fix is a new part). The *instruction* file 29 of the same entry was never run and was folded into instruction 30; this row had merged the two (corrected at log H69 from the shared record's entry 29) | Log 30 |
+| 30 | [30 Skill - hard-to-vary - modular, with router and map.skill](<authority/30 Skill - hard-to-vary - modular, with router and map.skill>) | Log 30: the rebuilt skill used as the test for the other model's workflow update; its router sent that to the building module | File 29 with one line added to building.md after that use (the module was missing exactly one line, log 30); eight files | Used at log 30 and 31; opened and counted at log 43; the version every test to H57 ran on |
 | H58 | **[31 Skill - hard-to-vary - flip not for derived conclusions, fixed only for what the owner put outside the test.skill](<authority/31 Skill - hard-to-vary - flip not for derived conclusions, fixed only for what the owner put outside the test.skill>)** - current, unpacked in `authority/31/` | H57: break 2 recurred once in the repeatability run | Five passages: the flip is not for a derived conclusion (change 1 of file 54); *fixed* only for what the owner put outside the test, never an asserted part or a free choice (change 2, reworded) | Plan H58, results H59: neither break in twelve runs, no new fault |
+| H69 | **[33 Skill - hard-to-vary - hardened from the results in hand.skill](<authority/33 Skill - hard-to-vary - hardened from the results in hand.skill>)** - current, frozen, unpacked in `authority/33/` | H68: five Opus 5 judges armed with the skill, the results in hand, the other projects read | Every edit the judges' evidence forced: 35 lines in six files (see H69) | Not run; frozen by decision H6 |
 | H67 | [32 Skill - ... .skill](<authority/32 Skill - hard-to-vary - two vocabularies never mixed, the report names every test, held if reaches parts.skill>) - draft, unpacked in `authority/32/` | H62 and H64: the two-list collision, the template's missing slots, held if for parts, "added" twice, fixed on a derivation | Five passages, one change | Plan H67, waiting on the owner's word |
 | 42 | (no change) | The owner asked whether anything needs adding | One line proposed for the poke test (two changes close together) plus a trap; **held out until tested**. Found: the skill already asks for a "near neighbour" in swaps, says nothing about closeness in pokes | Plan 42, never sent; the line stayed out of the skill through the outside-papers test (log 54) |
 
@@ -76,10 +77,21 @@ The skill's lineage, as the log records it. Each improvement is a research state
 | Not tested | A third reading where the markers disagree; the 99 light-marked reports; the second marker's own consistency. |
 | Next | The owner's call on file 31 and the four change candidates; answer-keyed tests; the frozen split. |
 
+## Research state: hardening from the results in hand (H68, H69) - read, frozen
+| | |
+| --- | --- |
+| Story | Decision H7: harden with the current results, look inside the other projects, Opus 5 subagents geared with the skill at effort "extra", never Fable 5.1; H8: the other projects read only; then "5 tops". |
+| Authority under test | Draft file 32, against the results in hand (54, H57, H59, H62, H64) and the record. |
+| Test | [H68 Plan](<tests/H68 Plan - hardening from the results in hand, with Opus 5 judges geared with the skill.md>) - five predictions; run as five agents after the owner's correction. |
+| Rig | `rigs/H68 hardening - Opus 5 judges/`: the five raw returns and the tool audit. |
+| Interpretation | [H69 Results](<results/H69 Results - hardening from the results in hand, five Opus 5 judges; file 33 frozen.md>) - twenty-nine findings from the other projects; the word list against file 10; the five changes marked; 146 parts marked; twelve two-reading passages given one reading; file 33 made and frozen. |
+| Not tested | Any reader under file 32 or 33; the judges' independence of the record they judged. |
+| Next | None for the skill. The research plan from Semantics file 10. |
+
 ## Files in this project, by folder
-- `authority/`: `32/hard-to-vary/` (draft, plan H67) with its archive; `31/hard-to-vary/` (current, 8 files) with its archive; `hard-to-vary/` (file 30, 8 files) with its archive.
-- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum), H63, H67.
-- `results/`: 51, 53, 54; H57, H59, H62, H64.
+- `authority/`: `33/hard-to-vary/` (current, frozen) with its archive; `32/hard-to-vary/` (draft, plan H67); `31/hard-to-vary/` (the version tested in H58, H59, H62); `hard-to-vary/` (file 30, the version tested to H57); each with its archive.
+- `tests/`: 42, 43, 47, 48, 49, 50, 52; H56, H58, H60 (audit brief), H61 (addendum), H63, H67 (not run), H68.
+- `results/`: 51, 53, 54; H57, H59, H62, H64, H69.
 - `rigs/`: `plan 42 rig - DeepSeek, unrun/`; `plan 48 - Claude readers, stopped/`; `plan 49 rig - DeepSeek on outside papers/` (147 runs, 12 dialogues, the marks). See [rigs/README.md](rigs/README.md).
 
 ## Numbering note
