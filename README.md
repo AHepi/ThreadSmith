@@ -1,6 +1,6 @@
 # Research repository - navigation
 
-Four separate research projects, each in its own folder (the fourth, Planning, made 21 September 2026 on the owner's word). Everything outside the project folders is general: conventions every project follows, and this navigation page. Nothing project-specific lives at the root.
+Five separate research projects, each in its own folder (the fourth, Planning, made 21 September 2026 and the fifth, Workflow, 22 September 2026, both on the owner's word). Everything outside the project folders is general: conventions every project follows, and this navigation page. Nothing project-specific lives at the root.
 
 | Folder | Front door | Timeline | Record |
 | --- | --- | --- | --- |
@@ -8,6 +8,7 @@ Four separate research projects, each in its own folder (the fourth, Planning, m
 | [Language/](Language/) | [README](Language/README.md) | [INDEX](Language/INDEX.md) | [records/](Language/records/) |
 | [HV Skill/](<HV Skill/>) | [README](<HV Skill/README.md>) | [INDEX](<HV Skill/INDEX.md>) | [records/](<HV Skill/records/>) |
 | [Planning/](Planning/) | [README](Planning/README.md) | [INDEX](Planning/INDEX.md) | [records/](Planning/records/) |
+| [Workflow/](Workflow/) | [README](Workflow/README.md) | [INDEX](Workflow/INDEX.md) | [records/](Workflow/records/) |
 
 Each project's README says what it is, where it stands, its own rules and its own words. Its INDEX is the timeline of research states with links. Its `records/` is its log, the owner's decisions, the lessons and the status. Its RELATIONS.md holds its claims about the other projects.
 
