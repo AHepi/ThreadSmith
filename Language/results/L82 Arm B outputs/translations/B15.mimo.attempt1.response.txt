@@ -1,0 +1,258 @@
+**1. The ledger**
+
+| Number | Standing | Content | Source mark | Sentence |
+|---|---|---|---|---|
+| surveyor | GIVEN | surveyor is a building_surveyor; it answers a press as not_stated; it may be a DOER | said | 1 |
+| report | GIVEN | report is a report; it answers a press as not_stated | said | 1 |
+| flood | GIVEN | flood is a flood; it answers a press as not_stated | said | 1 |
+| p1 | CLAIMED | p1: surveyor filed report | said | 1 |
+| about | GIVEN | report is about the flood | said | 1 |
+| cellar | TOLD in world report_world | cellar is a cellar; it answers a press as not_stated | said | 2 |
+| valve | TOLD in world report_world | valve is a valve; it answers a press as not_stated | said | 2 |
+| flooded | TOLD in world report_world | cellar flooded | said | 2 |
+| open | TOLD in world report_world | valve was left open | said | 2 |
+| cause1 | TOLD in world report_world | line flooded BECAUSE line open | said | 2 |
+| water | TOLD in world report_world | water is a water; it answers a press as not_stated | said | 3 |
+| step | TOLD in world report_world | step is a step; it answers a press as not_stated | said | 3 |
+| reached | TOLD in world report_world | water reached step | said | 3 |
+| caretaker | TOLD in world report_world | caretaker is a caretaker; it answers a press as not_stated; it may be a DOER | said | 4 |
+| away | TOLD in world report_world | caretaker was away | said | 4 |
+
+**2. The bin**
+
+1. Sentence 1, "short": how much (the report's length); outside the language.
+2. Sentence 1, "in the cellar": where things are (the flood's location); outside the language.
+3. Sentence 2, "She wrote that": attribution; "she" refers to the surveyor; scopes content to report_world.
+4. Sentence 3, "The report noted that": attribution; scopes content to report_world.
+5. Sentence 3, "second": a number (ordinal identifying which step); outside the language (numbers).
+6. Sentence 3, "by morning": when (time); outside the language.
+7. Sentence 4, "It also recorded that": attribution; "it" refers to the report; scopes content to report_world.
+8. Sentence 4, "for the weekend": when (time duration); outside the language.
+
+**3. Words I split**
+
+None.
+
+**4. Readings I chose**
+
+1. Sentence 1: "on the flood" — "on" could mean "about/concerning" (the report's subject) or "physically on top of"; chosen: "about/concerning" (standard usage for "a report on X").
+2. Sentence 2: "had been left open" — "left" could be the past participle of "leave" (to allow to remain) or the direction "left"; chosen: past participle of "leave" (to allow to remain in the open state).
+3. Sentence 2: "because" — could be BECAUSE (one thing produced another) or SINCE (a reason to expect or believe); chosen: BECAUSE (the valve being open produced the flooding).
+4. Sentence 3: "reached" — could be a happening (the water moved to reach the step) or a fact (the water was at the step level); chosen: fact (water reached step) — the past perfect "had reached" describes a completed state.
+5. Sentence 3: "second step" — "second" is an ordinal number; numbers go to the bin; the thing is named "step"; "second" identifies which step and is binned.
+
+**5. The count**
+
+- Lines said: 15
+- Lines filled in: 0
+- Lines usual case: 0
+- Sentences that lost something to the bin: 4 (sentences 1, 2, 3, 4)
+
+```json
+{
+ "paragraph": "B15",
+ "whose": "Claude, under L82",
+ "sentences": {
+   "1": "The building surveyor filed a short report on the flood in the cellar.",
+   "2": "She wrote that the cellar had flooded because the valve had been left open.",
+   "3": "The report noted that the water had reached the second step by morning.",
+   "4": "It also recorded that the caretaker had been away for the weekend."
+ },
+ "bin": [
+   {"sentence": 1, "words": "short", "reason": "how much (the report's length); outside the language"},
+   {"sentence": 1, "words": "in the cellar", "reason": "where things are (the flood's location); outside the language"},
+   {"sentence": 2, "words": "She wrote that", "reason": "attribution; 'she' refers to the surveyor; scopes content to report_world"},
+   {"sentence": 3, "words": "The report noted that", "reason": "attribution; scopes content to report_world"},
+   {"sentence": 3, "words": "second", "reason": "a number (ordinal identifying which step); outside the language (numbers)"},
+   {"sentence": 3, "words": "by morning", "reason": "when (time); outside the language"},
+   {"sentence": 4, "words": "It also recorded that", "reason": "attribution; 'it' refers to the report; scopes content to report_world"},
+   {"sentence": 4, "words": "for the weekend", "reason": "when (time duration); outside the language"}
+ ],
+ "leftover": [
+   "Sentence 1: short — how much (the report's length); outside the language",
+   "Sentence 1: in the cellar — where things are (the flood's location); outside the language",
+   "Sentence 2: She wrote that — attribution; 'she' refers to the surveyor; scopes content to report_world",
+   "Sentence 3: The report noted that — attribution; scopes content to report_world",
+   "Sentence 3: second — a number (ordinal identifying which step); outside the language (numbers)",
+   "Sentence 3: by morning — when (time); outside the language",
+   "Sentence 4: It also recorded that — attribution; 'it' refers to the report; scopes content to report_world",
+   "Sentence 4: for the weekend — when (time duration); outside the language"
+ ],
+ "whatifs": [],
+ "lines": {
+   "surveyor": {
+     "mark": "said",
+     "sentence": 1,
+     "standing": "GIVEN",
+     "text": "[GIVEN] surveyor is a building_surveyor; it answers a press as not_stated; it may be a DOER",
+     "prolog_clauses": [
+       "kind(surveyor, building_surveyor) :- line(surveyor).",
+       "body(surveyor, not_stated) :- line(surveyor)."
+     ]
+   },
+   "report": {
+     "mark": "said",
+     "sentence": 1,
+     "standing": "GIVEN",
+     "text": "[GIVEN] report is a report; it answers a press as not_stated",
+     "prolog_clauses": [
+       "kind(report, report) :- line(report).",
+       "body(report, not_stated) :- line(report)."
+     ]
+   },
+   "flood": {
+     "mark": "said",
+     "sentence": 1,
+     "standing": "GIVEN",
+     "text": "[GIVEN] flood is a flood; it answers a press as not_stated",
+     "prolog_clauses": [
+       "kind(flood, flood) :- line(flood).",
+       "body(flood, not_stated) :- line(flood)."
+     ]
+   },
+   "p1": {
+     "mark": "said",
+     "sentence": 1,
+     "standing": "CLAIMED",
+     "text": "[CLAIMED] p1: surveyor filed report",
+     "prolog_clauses": [
+       "holds(filed(surveyor, report)) :- line(p1)."
+     ]
+   },
+   "about": {
+     "mark": "said",
+     "sentence": 1,
+     "standing": "GIVEN",
+     "text": "[GIVEN] report is about the flood",
+     "prolog_clauses": [
+       "holds(about(report, flood)) :- line(about)."
+     ]
+   },
+   "cellar": {
+     "mark": "said",
+     "sentence": 2,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] cellar is a cellar; it answers a press as not_stated",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "kind(cellar, cellar) :- line(cellar).",
+       "body(cellar, not_stated) :- line(cellar)."
+     ]
+   },
+   "valve": {
+     "mark": "said",
+     "sentence": 2,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] valve is a valve; it answers a press as not_stated",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "kind(valve, valve) :- line(valve).",
+       "body(valve, not_stated) :- line(valve)."
+     ]
+   },
+   "flooded": {
+     "mark": "said",
+     "sentence": 2,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] cellar flooded",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "holds(flooded(cellar)) :- line(flooded)."
+     ]
+   },
+   "open": {
+     "mark": "said",
+     "sentence": 2,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] valve was left open",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "holds(left_open(valve)) :- line(open)."
+     ]
+   },
+   "cause1": {
+     "mark": "said",
+     "sentence": 2,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] line flooded BECAUSE line open",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "claim_because(cause1, flooded(cellar), left_open(valve)) :- line(cause1)."
+     ]
+   },
+   "water": {
+     "mark": "said",
+     "sentence": 3,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] water is a water; it answers a press as not_stated",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "kind(water, water) :- line(water).",
+       "body(water, not_stated) :- line(water)."
+     ]
+   },
+   "step": {
+     "mark": "said",
+     "sentence": 3,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] step is a step; it answers a press as not_stated",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "kind(step, step) :- line(step).",
+       "body(step, not_stated) :- line(step)."
+     ]
+   },
+   "reached": {
+     "mark": "said",
+     "sentence": 3,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] water reached step",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "holds(reached(water, step)) :- line(reached)."
+     ]
+   },
+   "caretaker": {
+     "mark": "said",
+     "sentence": 4,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] caretaker is a caretaker; it answers a press as not_stated; it may be a DOER",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "kind(caretaker, caretaker) :- line(caretaker).",
+       "body(caretaker, not_stated) :- line(caretaker)."
+     ]
+   },
+   "away": {
+     "mark": "said",
+     "sentence": 4,
+     "standing": "TOLD in world report_world",
+     "text": "[TOLD in world report_world] caretaker was away",
+     "case": "report_world",
+     "case_kind": "told",
+     "prolog_clauses": [
+       "holds(away(caretaker)) :- line(away)."
+     ]
+   }
+ },
+ "words_split": [],
+ "readings_chosen": [
+   "Sentence 1: 'on the flood' — 'on' could mean 'about/concerning' or 'physically on top of'; chosen: 'about/concerning' (standard usage for 'a report on X')",
+   "Sentence 2: 'had been left open' — 'left' could be the past participle of 'leave' (to allow to remain) or the direction 'left'; chosen: past participle of 'leave' (to allow to remain in the open state)",
+   "Sentence 2: 'because' — could be BECAUSE (one thing produced another) or SINCE (a reason to expect or believe); chosen: BECAUSE (the valve being open produced the flooding)",
+   "Sentence 3: 'reached' — could be a happening (the water moved to reach the step) or a fact (the water was at the step level); chosen: fact (water reached step) — the past perfect 'had reached' describes a completed state",
+   "Sentence 3: 'second step' — 'second' is an ordinal number; numbers go to the bin; the thing is named 'step'; 'second' identifies which step and is binned"
+ ]
+}
+```
+
+TRANSLATION COMPLETE
