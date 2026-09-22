@@ -47,3 +47,5 @@ A short plan on two ledgers the checker reports clean (candidates: T05-D, one li
 ## Traps
 - Reading "C right with no change" as "nothing found". It means the opposite.
 - Counting E4's miss as evidence that H is a weak argument. The count measures how many facts lean on each line, not whether the argument holds.
+
+Note, added after the rebase onto main: the plan was frozen as commit 936ce21 on the working branch; rebasing onto main (which had moved by one Semantics commit) renumbered that commit 2b39096. Its content is unchanged; `git show 2b39096` is the frozen plan.
