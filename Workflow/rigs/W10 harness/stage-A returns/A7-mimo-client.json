@@ -1,0 +1,155 @@
+{
+ "files_written": [
+  "/home/user/ThreadSmith/Workflow/rigs/W10 harness/code/clients/mimo_client.py",
+  "/home/user/ThreadSmith/Workflow/rigs/W10 harness/code/clients/README.md"
+ ],
+ "what_was_found": "ALL CLAIMED, read on the web 22 September 2026, quoted with address, kept as no file. The service was found; MIMO_BASE_URL is an override here, not a requirement.\n\nSERVICE. \"MiMo 2.6 Pro\" is model id `mimo-v2.6-pro` (lower case; the page's display name \"MiMo-V2.6-Pro\" is not the id), Xiaomi's flagship text model on the Xiaomi MiMo API Open Platform (mimo.mi.com/docs; platform.xiaomimimo.com 302-redirects to the same pages).\n\nENDPOINT AND BASE URLS (https://mimo.mi.com/docs/en-US/quick-start/summary/first-api-call, 22 Sep 2026): pay-as-you-go \"https://api.xiaomimimo.com/v1\" (OpenAI) or \"https://api.xiaomimimo.com/anthropic\"; batch \"https://batch-api-cn.xiaomimimo.com/v1\"; Token Plan \"https://token-plan-cn.xiaomimimo.com/v1\". Key formats on the same page: \"sk-xxxxx\" pay-as-you-go, \"tp-xxxxx\" Token Plan (Individual), \"ttp-xxxxx\" Token Plan (Team). THE OWNER'S KEY BEGINS \"tp-\", so it is a Token Plan key and belongs on a Token Plan host, not on api.xiaomimimo.com. https://mimo.mi.com/docs/en-US/tokenplan/Token%20Plan/quick-access gives three regional Token Plan clusters, OpenAI protocol: cn \"https://token-plan-cn.xiaomimimo.com/v1\", sgp \"https://token-plan-sgp.xiaomimimo.com/v1\", ams \"https://token-plan-ams.xiaomimimo.com/v1\"; OpenAI path \"/chat/completions\"; and that tp-/sk- keys are \"distinct\" and \"cannot be used interchangeably\". Client default: token-plan-cn (MIMO_REGION picks sgp/ams; MIMO_BASE_URL overrides outright).\n\nAUTHENTICATION. The API page's own curl (https://mimo.mi.com/docs/en-US/api/chat/openai-api) uses `--header \"api-key: $MIMO_API_KEY\"`. The FAQ (https://mimo.mi.com/docs/en-US/quick-start/faq/api-integration) gives '\"api-key: $MIMO_API_KEY\" or \"Authorization: Bearer $MIMO_API_KEY\"' for pay-as-you-go. A third-party issue (https://github.com/openclaw/openclaw/issues/77692, 5 May 2026, open, no maintainer reply) reports for token-plan-cn: \"api-key header -> token-plan-cn -> 401 Invalid API Key\" and \"Authorization: Bearer -> token-plan-cn -> 200 OK\". The sources disagree, so the client sends BOTH by default (MIMO_AUTH_STYLE=api-key|bearer|both). The provider's own Python sample reads the key from `os.environ.get(\"MIMO_API_KEY\")` - the same variable the task fixes.\n\nCONTEXT. 1M tokens (https://mimo.mi.com/models/en-US/mimo-v2.6-pro \"Context Window: 1M tokens\"; https://mimo.mi.com/docs/en-US/quick-start/summary/model table \"1M\"); openclaw's provider page gives 1,048,576.\n\nOUTPUT CEILING. Model page \"Max Output: 128K tokens\"; API page `max_completion_tokens` \"1 to 131072\", \"default varies by model\"; Anthropic-compatible page `max_tokens` \"[1, 131072]\". Client MAX_TOKENS = 131072, sent under the documented name `max_completion_tokens`, a parameter everywhere; `build_body(max_tokens=...)` is accepted as an alias for driver portability and mapped to the documented name.\n\nRATE AND CONCURRENCY LIMITS (https://mimo.mi.com/docs/en-US/api/guidance/rate-limit): mimo-v2.6-pro RPM 100, TPM 10M. \"The platform sets a model concurrency limit for each account\" - NO NUMBER GIVEN. Nothing published for Token Plan keys specifically. So the provider's published limit is not lower than five, and the client keeps five worker threads (W12 section 3), plus the owner's 30-a-minute pacer (decision W9, which clients/README.md says applies here) at 2 s between the starts of two HTTP attempts, retries included.\n\nTOOL CALLING: supported. API page lists `tools`, and `tool_choice` \"Available options: auto\" with \"When a value other than auto is passed to tool_choice, the backend will remove this field by default\"; model page lists \"Tool Call\". Streamed tool_calls assemble across chunks.\n\nSYSTEM MESSAGE: supported. API page roles \"developer\", \"system\", \"user\", \"assistant\", \"tool\".\n\nPREFILLED ASSISTANT MESSAGE: NOT documented anywhere found - unknown, not absent. `prefill_message()` adds no invented flag and every record whose last message is an assistant message carries `prefill_untested: True`. Stage E does not need it (arm (e) is DeepSeek's).\n\nOTHER DOCUMENTED FACTS USED: `thinking` object type enabled|disabled, default \"enabled\" for this model; in thinking mode temperature and top_p are \"forcibly overridden\" (so the client sends neither); reply carries `reasoning_content`; finish_reason one of \"stop|length|tool_calls|content_filter|repetition_truncation\"; usage carries prompt_tokens_details.cached_tokens and completion_tokens_details.reasoning_tokens; stop \"up to 4 sequences\"; response_format type \"text\"; stream default false. Error codes (https://mimo.mi.com/docs/en-US/api/guidance/error-codes): 400, 401, 402 \"Insufficient account balance\", 403, 404, 421 Content Filter, 429 \"Implement exponential backoff and retry logic\", 500, 503.\n\nPRICE. Model page, pay-as-you-go per million tokens: input cache hit $0.0036, input cache miss $0.435, output $0.87. Token Plan (https://mimo.mi.com/docs/en-US/price/token-plan) is a monthly Credits subscription - Lite $6/¥39 (4.1bn Credits), Standard $16/¥99 (11bn), Pro $50/¥329 (38bn), Max $100/¥659 (82bn); \"all plans support the latest flagship models mimo-v2.6-pro, mimo-v2.6-flash\"; \"When the monthly total quota of the package is used up, the system will suspend the service\". No Credit-per-token rate is published, so the client's cost() is explicitly what the same traffic would have cost on pay-as-you-go, not a bill.",
+ "could_not_find": [
+  "Which region the owner's Token Plan subscription is in - cn, sgp or ams. Nothing in a key's text says, and no page ties a key to a region. The client defaults to cn (the cluster the documentation lists first) and takes MIMO_REGION or MIMO_BASE_URL. What a wrong-region base returns (401? 404?) is also unknown.",
+  "Which authentication header the Token Plan host actually reads. The provider's curl says api-key; its FAQ offers Bearer but about the pay-as-you-go call; an openclaw issue says token-plan-cn refuses api-key and wants Bearer. The client sends both; running the live check once with MIMO_AUTH_STYLE=api-key and once with =bearer would settle it.",
+  "Whether Token Plan keys share the pay-as-you-go RPM 100 / TPM 10M or have limits of their own. The Token Plan pages give no numbers at all.",
+  "The account's concurrency limit. The rate-limit page says one exists for each account and gives no number. Five is W12's number, not the service's.",
+  "Which status code an exhausted Token Plan quota returns. The price page says the service is suspended; the error table's 402 is about account balance, not about a plan.",
+  "The default of max_completion_tokens when it is omitted for mimo-v2.6-pro ('default varies by model'; only mimo-v2.5's 32768 is given, on the Anthropic page).",
+  "Whether the legacy name max_tokens is accepted on the OpenAI endpoint. No page found says; the client sends max_completion_tokens and says out loud on stderr if a driver's body arrives carrying max_tokens.",
+  "Whether stream_options {\"include_usage\": true} is accepted. Not documented here, so a streamed reply may carry no usage at all; the usage_missing gauge counts it and include_usage=True tries it.",
+  "Whether the endpoint continues a prefilled assistant message (DeepSeek's prefix completion). Nothing found says either way.",
+  "The model page lists 'Structured Output' as a capability while the API page documents response_format type 'text' only - two of the provider's own pages disagree. The client sends nothing but text and asks for structure in words.",
+  "Whether any rate-limit response headers exist. The documentation names none; the client keeps every response header, so the first live record shows what actually comes back.",
+  "A second, independent provider address for the Token Plan base URLs: platform.xiaomimimo.com redirects to mimo.mi.com, so the base URLs rest on one site (plus openclaw, a third party)."
+ ],
+ "dry_run": "`python3 mimo_client.py --dry` (optionally `--save DIR`) builds every request shape stage E needs and sends nothing. Result today: 71 checks passed, 0 failed, SENDS=0, ending \"Nothing sent.\" Exit 0. Without --dry the file refuses to run (\"this file is a library\"), exit 1.\n\n`stage_e_shapes()` builds the ten shapes the dry run checks and --save writes: examiner (skill as a system message + marked results as a user message), blind re-mark, structured reply (with the one documented response_format), tools (open_module, tool_choice auto), the second thinking turn keeping reasoning_content as the FAQ asks, non-streamed, streamed-with-usage, thinking off, a small ceiling, and the untested assistant-prefill.\n\nWhat the 71 checks cover: the documented model id and its case; the ceiling at 131072 under the documented name and as a parameter; max_tokens= mapped to the documented name; ceilings out of range, more than 4 stops, tool_choice other than auto and response_format other than text all raising; that nothing undocumented is in the default body (exactly model, messages, max_completion_tokens, stream, thinking) and that no temperature or top_p is sent; endpoint defaults and the MIMO_BASE_URL / MIMO_REGION / MIMO_MODEL / MIMO_AUTH_STYLE overrides; the key/base guard both ways round and its escape hatch; the three auth styles' headers; six workers raising and five allowed; SSE assembly of content, reasoning_content, tool calls across chunks, finish reason, usage, cached and reasoning tokens; the non-streamed path; the four gauges (truncated, repetition_truncated, usage_missing, thinking_seen); a 429 retried with Retry-After honoured and the retry counted as an attempt not a request; a 401 and a 402 not retried and carrying their record and the service's words unedited; five jobs overlapping at five workers and not at one (the control); the 30-rpm pacer's waits on a still clock (0, 1.5, 1.4 s) and paced_seconds on every attempt; the key in the headers and in no record; assert_no_key firing; SENDS == 0.\n\nThe dry run can fail, checked three ways: MIMO_MODEL=mimo-v9 gives 1 FAIL; a key present in the environment gives 2 FAILs (W12's rule is that none is present while it builds); before a fix, MIMO_AUTH_STYLE=bearer gave 2 FAILs from env-coupled checks, which is why the header checks now name the style rather than read the environment.\n\nAlso run and passed, sending nothing: the three clients' send() signatures read back side by side from an unrelated working directory - all `(body, key, tag='', stream_path=None, tries=7)`; importing clients.mimo_client there left SENDS at 0; `--dry --save` wrote the ten request texts with no key in any of them; and the read-me's live-check snippet run against a stub, which made exactly one request, read back model \"mimo-v2.6-pro\" and never touched the network.",
+ "claims": [
+  {
+   "claim": "\"MiMo 2.6 Pro\" is mimo-v2.6-pro on the Xiaomi MiMo API Open Platform, an OpenAI-compatible chat endpoint at /v1/chat/completions.",
+   "evidence": "https://mimo.mi.com/docs/en-US/api/chat/openai-api and .../quick-start/summary/first-api-call, read 22 Sep 2026: POST https://api.xiaomimimo.com/v1/chat/completions with an OpenAI Python sample using model=\"mimo-v2.6-pro\".",
+   "tag": "claimed",
+   "would_count_against": "A 404 or a non-OpenAI error shape from the endpoint, or a reply whose model field is not mimo-v2.6-pro. LOOKED: on the web only; no request was sent, so nothing here is seen."
+  },
+  {
+   "claim": "The owner's tp- key is a Token Plan (Individual) key and belongs on a token-plan-* host, not on api.xiaomimimo.com.",
+   "evidence": "first-api-call: keys \"sk-xxxxx\" pay-as-you-go, \"tp-xxxxx\" Token Plan (Individual), \"ttp-xxxxx\" Team; Token Plan base \"https://token-plan-cn.xiaomimimo.com/v1\". Token Plan quick-access: the two kinds are \"distinct\" and \"cannot be used interchangeably\".",
+   "tag": "claimed",
+   "would_count_against": "A 200 from api.xiaomimimo.com with the tp- key - which the client's check_mix=False path makes testable in one request. LOOKED: yes, at the provider's own two pages; not tried live."
+  },
+  {
+   "claim": "The default base here, token-plan-cn, is the owner's cluster.",
+   "evidence": "None. The documentation lists cn first among cn/sgp/ams; nothing ties a key to a region.",
+   "tag": "worked out",
+   "would_count_against": "A 401 or 404 from token-plan-cn that token-plan-sgp or token-plan-ams answers with a 200. LOOKED: yes, and found nothing - this is a guess with an override (MIMO_REGION, MIMO_BASE_URL) and it is named as a question for the owner."
+  },
+  {
+   "claim": "Sending both api-key and Authorization: Bearer is accepted, and is safer than picking one.",
+   "evidence": "The provider's curl uses api-key; its FAQ gives Bearer as an alternative; openclaw issue 77692 (5 May 2026, third party, no maintainer reply) reports api-key -> 401 and Bearer -> 200 on token-plan-cn for TTS.",
+   "tag": "claimed",
+   "would_count_against": "A 400 or 401 on a both-headers request that one header alone answers with a 200. LOOKED: yes; no page found forbids sending both, and no page confirms it either - MIMO_AUTH_STYLE exists to settle it in one request each way."
+  },
+  {
+   "claim": "The documented maximum output is 131072 tokens, under the parameter name max_completion_tokens.",
+   "evidence": "API page: max_completion_tokens integer \"1 to 131072\"; model page \"Max Output: 128K tokens\"; Anthropic page max_tokens \"[1, 131072]\"; openclaw gives 131,072.",
+   "tag": "claimed",
+   "would_count_against": "A 400 at 131072, or a documented larger number elsewhere. LOOKED: yes, on three provider pages and one third-party page, which agree."
+  },
+  {
+   "claim": "The context window is 1,048,576 tokens (1M).",
+   "evidence": "Model page \"Context Window: 1M tokens\"; model table \"1M\"; openclaw \"1,048,576\".",
+   "tag": "claimed",
+   "would_count_against": "A 400 for context overflow well below 1M on a long stage E prompt. LOOKED: yes; the client records request_bytes rather than guessing a token count, so an overflow shows as the service's own words."
+  },
+  {
+   "claim": "Tool calling and a system message are supported; tool_choice takes only \"auto\".",
+   "evidence": "API page roles \"developer, system, user, assistant, tool\"; tools array; \"Available options: auto\" and \"When a value other than auto is passed to tool_choice, the backend will remove this field by default\"; model page capability \"Tool Call\".",
+   "tag": "claimed",
+   "would_count_against": "A 400 on a body carrying tools, or a reply that ignores the system message (a stage E examiner that answers as if unarmed). LOOKED: yes; not exercised live."
+  },
+  {
+   "claim": "A prefilled assistant message is not documented for this service.",
+   "evidence": "Nothing found on the OpenAI-compatibility page, the Anthropic-compatibility page, the FAQ or a targeted search says the last message may be an assistant turn to continue.",
+   "tag": "claimed",
+   "would_count_against": "A provider page describing prefix/prefill/continuation. LOOKED: yes, four addresses and one targeted search - and \"found nowhere\" is unknown, not \"unsupported\": the record's prefill_untested flag keeps that open."
+  },
+  {
+   "claim": "RPM 100 and TPM 10M are the published limits for this model, and the account concurrency number is not published.",
+   "evidence": "https://mimo.mi.com/docs/en-US/api/guidance/rate-limit and .../quick-start/summary/model: RPM 100, TPM 10M for mimo-v2.6-pro; \"The platform sets a model concurrency limit for each account\" with no number.",
+   "tag": "claimed",
+   "would_count_against": "A 429 at a rate below 30 a minute, or a provider page giving a concurrency number. LOOKED: yes, two pages and two searches; the number was not found, which is why five stands on W12's authority and not the service's."
+  },
+  {
+   "claim": "Five worker threads are allowed here, because nothing published is lower.",
+   "evidence": "W12 section 3 (in the repository, seen) fixes at most five; the service's published RPM 100 is far above five concurrent examiner runs; no concurrency number is published.",
+   "tag": "worked out",
+   "would_count_against": "A published or observed concurrency limit below five - then MAX_WORKERS is wrong and the run would show 429s under five threads. LOOKED: yes, and found no number."
+  },
+  {
+   "claim": "402 should not be retried: an exhausted Token Plan quota cannot be fixed by asking again.",
+   "evidence": "Price page: \"When the monthly total quota of the package is used up, the system will suspend the service\"; error table 402 \"Insufficient account balance\" -> \"Check your account balance and recharge\".",
+   "tag": "claimed",
+   "would_count_against": "A 402 that a later attempt answers with a 200. LOOKED: yes; the two pages do not say which code a spent plan returns, so the client's error message names that gap rather than hiding it."
+  },
+  {
+   "claim": "Thinking mode is on by default and overrides temperature and top_p, so neither is sent.",
+   "evidence": "API page: thinking type default \"enabled\" for mimo-v2.6-pro; Anthropic page: in thinking mode temperature and top_p are \"forcibly overridden\" with 1.0 and 0.95.",
+   "tag": "claimed",
+   "would_count_against": "thinking_seen false on a live 200, or a reply whose temperature visibly followed a sent value. LOOKED: yes; the gauge is in every record so the claim can be caught out on the first live call."
+  },
+  {
+   "claim": "A streamed reply may carry no usage without stream_options, which this service does not document.",
+   "evidence": "The API page documents stream and the chunk shape but not stream_options/include_usage; a search returned the sentence about include_usage from OpenAI's own docs, not from MiMo's.",
+   "tag": "claimed",
+   "would_count_against": "A streamed live call whose last chunk carries usage - then usage_missing stays false and the worry was idle. LOOKED: yes, a targeted fetch and a search; the gauge is the only evidence there will be until a live call."
+  },
+  {
+   "claim": "Price is $0.435/M input (cache miss), $0.0036/M (cache hit), $0.87/M output on pay-as-you-go; a tp- key spends plan Credits instead.",
+   "evidence": "Model page price block; price page Credits tiers (Lite $6/¥39 4.1bn Credits ... Max $100/¥659 82bn) covering mimo-v2.6-pro.",
+   "tag": "claimed",
+   "would_count_against": "A Credit-per-token rate published anywhere, or a bill against the card while a plan is active. LOOKED: yes; no Credit rate found, which is why cost() is called a comparison and not a bill."
+  },
+  {
+   "claim": "The three clients' send seams are interchangeable, so a stage E driver written for one holds this one.",
+   "evidence": "Signatures read back side by side from an unrelated working directory: all three are (body, key, tag='', stream_path=None, tries=7), returning (message, finish_reason, usage, http).",
+   "tag": "seen",
+   "would_count_against": "A driver that unpacks a fifth value, or one that reads a DeepSeek-only field of http. LOOKED: yes, in this session, by importing all three."
+  },
+  {
+   "claim": "Nothing was sent to the service, and no key was written anywhere.",
+   "evidence": "SENDS==0 in every dry run; the ten --save request texts contain no key; a repository-wide grep for a fragment of the owner's key returns nothing; assert_no_key runs over every record and over each saved text.",
+   "tag": "seen",
+   "would_count_against": "A non-zero SENDS, an HTTP log, or the key appearing in any file. LOOKED: yes, in this session."
+  }
+ ],
+ "dropped": [
+  {
+   "item": "A per-client min_gap setting, which I wrote first",
+   "why": "The read-me changed on disk mid-task with decision W9 (30 requests a minute, the same cap for this client) and the Atria client now holds it with a module-level pacer. Two mechanisms for one number can disagree, so the per-client setting went and the same pacer, under the same names (_pace, MIN_GAP, RPM_CAP, paced_seconds, rpm_cap), came in."
+  },
+  {
+   "item": "The Anthropic-compatible interface (/anthropic/v1/messages) and the batch endpoint",
+   "why": "Stage E needs one shape, and the OpenAI-compatible endpoint is the one the other two clients' seam is built on. Both are quoted in the client's head so a later addendum does not have to look again."
+  },
+  {
+   "item": "response_format json_object, and any Structured Output parameter",
+   "why": "The API page documents type 'text' only while the model page lists 'Structured Output' as a capability. The two disagree, so the client sends the documented one and raises on the other, with extra= as the way to test the other reading once and record that it was tested."
+  },
+  {
+   "item": "reasoning_effort and any thinking-effort value",
+   "why": "That is DeepSeek's parameter and, separately, a client config in another provider's repository. No MiMo page names it, and an undocumented parameter is a way to earn a 400 on every call."
+  },
+  {
+   "item": "A token-count guard against the 1M context",
+   "why": "A character-based estimate would be a guess that could block a valid request. The record carries request_bytes instead, and an overflow comes back in the service's own words."
+  },
+  {
+   "item": "Adding MIMO_API_KEY to rig.py's KEY_ENV list",
+   "why": "rig.write_json only refuses what is in KEY_ENV = [DEEPSEEK_API_KEY, ATRIA_API_KEY], so a MiMo key would pass that check. rig.py is outside the clients folder and the task allowed writing only there, so the gap is named in the read-me for the reviewer instead of being patched."
+  },
+  {
+   "item": "Editing the two existing clients, and the read-me's DeepSeek and Atria sections",
+   "why": "The task forbids it. The only shared lines I touched are the title, the intro (three files, not two), the check counts as measured today, the environment table, and three sentences that said 'both clients' where there are now three."
+  },
+  {
+   "item": "A gateway route (OpenRouter, Vercel AI Gateway, CometAPI, DeepInfra, ModelsLab listings)",
+   "why": "They are not the provider's word, they carry their own model ids (xiaomi/mimo-v2.6-pro), and the owner's key is the provider's. They were read only as a cross-check on context and output size."
+  }
+ ],
+ "tools_used": "TOOLS: Read (the skill SKILL.md), Bash (file reads via cat/sed/grep/wc, python3 dry runs, git status), Write (mimo_client.py), Edit (mimo_client.py fixes, README.md sections), ToolSearch (to load WebSearch/WebFetch), WebSearch (8 searches), WebFetch (11 fetches), StructuredOutput. No other tool. Nothing was sent to any model API.\n\nSHELL COMMANDS (all read-only or python3 dry runs; no network): ls/cat/sed/grep/wc over the skill references, the W10/W11/W12 plans and the three client files; `python3 mimo_client.py --dry` repeatedly, plus under MIMO_REGION=sgp|ams, MIMO_BASE_URL=..., MIMO_MODEL=mimo-v2.6-flash|mimo-v9, MIMO_AUTH_STYLE=bearer|api-key, MIMO_API_KEY=sk-pretend-wrong-kind (a made-up string, never the owner's key); `python3 deepseek_client.py --dry` and `python3 atria_client.py --dry` (both still pass, 37 and 35); `python3 -m py_compile mimo_client.py`; a python3 -c that imported all three clients from /tmp and printed their send signatures; a python3 heredoc that ran the read-me's live-check snippet against a local stub; `python3 mimo_client.py --dry --save <scratchpad>/mimo-dry`; `git status --short`, `git diff --stat`; a repository-wide grep for a fragment of the owner's key (no hits).\n\nSEARCHES (WebSearch, 22 Sep 2026): \"MiMo 2.6 Pro\" API documentation; Xiaomi MiMo API key \"tp-\" platform; mimo.mi.com docs rate limits concurrency RPM TPM xiaomimimo; Xiaomi MiMo Token Plan tp- key concurrency limit models included Pro Max plan; mimo.mi.com docs api chat completions parameters max_completion_tokens reasoning_content prefix; Xiaomi MiMo API assistant prefill prefix continuation \"partial\"; mimo.mi.com docs error codes 429 401 \"Retry-After\"; \"token-plan\" xiaomimimo base url \"api-key\" OR \"Authorization\" curl example; mimo.mi.com docs anthropic api messages compatibility prefill; mimo.mi.com docs streaming SSE \"data: [DONE]\" usage chunk stream_options.\n\nADDRESSES FETCHED (WebFetch): https://mimo.mi.com/docs/en-US/quick-start/summary/first-api-call; https://mimo.mi.com/docs/en-US/tokenplan/Token%20Plan/quick-access; https://mimo.mi.com/models/en-US/mimo-v2.6-pro; https://mimo.mi.com/docs/en-US/quick-start/faq/api-integration; https://mimo.mi.com/docs/en-US/api/chat/openai-api (twice, the second with targeted questions); https://mimo.mi.com/docs/en-US/api/chat/anthropic-api; https://mimo.mi.com/docs/en-US/api/guidance/rate-limit; https://mimo.mi.com/docs/en-US/quick-start/summary/model; https://mimo.mi.com/docs/en-US/api/guidance/error-codes; https://mimo.mi.com/docs/en-US/price/token-plan; https://docs.openclaw.ai/providers/xiaomi; https://github.com/openclaw/openclaw/issues/77692; https://platform.xiaomimimo.com/docs/en-US/price/tokenplan/quick-access (302 to mimo.mi.com, not followed); https://mimo.mi.com/docs/en-US/api/chat/ and https://mimo.mi.com/docs/en-US/price/tokenplan/quick-access (both returned only \"Xiaomi MiMo Home\" - no content read). Nothing read on the web was kept as a file; everything from it is CLAIMED and quoted with its address in the head of mimo_client.py.\n\nFILES WRITTEN OUTSIDE THE CLIENTS FOLDER: yes, once, and only in the session scratchpad, never in the repository - `python3 mimo_client.py --dry --save /tmp/claude-0/-home-user-ThreadSmith/00bda300-7321-5714-a655-4358c87aab9b/scratchpad/mimo-dry` wrote the ten request-shape JSON files there to check that the --save path works and carries no key (it does not; a grep for \"tp-\" across them returns nothing). Inside the repository I wrote only the new mimo_client.py and edited clients/README.md; `git status` for that folder shows exactly those two. No key exists in this environment, none was written, and no request was sent to any API."
+}
