@@ -24,6 +24,10 @@ A hypothesis ledger, as in the other projects. Each entry is a claim, its status
 **Current status.** Stated (plan W3, section 6), narrowed by two W2 judges from the draft's wider claim. Read only; nothing asked of Language.
 **Candidate, held.** The rival judge of W2 named L64's own variation test (change the prose, translate again, the ledger changes as the commitments do and nowhere else) as a marker-free read-out phase 4 could use; it trespasses on that project's open job ("Not tested: a translator other than Claude") and needs the path fix its README names, so it is held here as an ask if a phase plan wants it, and nothing is written there.
 
+## W-R5. What the model says about the HV Skill, and a fourth ask
+**Claim.** Model W8 places the skill's operations: checking an account (E), support and the marks (S), (B), (D), kinds (K), the query (Q) and bearing (K1) are placed *at one call* (held if C11's first rider); representation (R) of the skill's method by a reader is claimed for no reader, because the record's evidence runs both ways and is fitting, and because the method has never been written as an organization in Part II's sense (part A8); copying the method's form is relay, not construction (part A9). **A fourth ask of the HV Skill, after phase 1:** the arm (k) test of A8 needs a copy of file 33 with one clause edited for the test; that copy is a test artifact made by this project under W3 section 2 ("a copy edited for a test is not an edit to the authority") and the HV project is told which clause, so that it can say whether the edit is one its own record would license.
+**Current status.** Stated (W8, parts A8, A9, table rows 2 to 9). Nothing run.
+
 ## Not claimed
 - That the five projects form one system now. This project is the one that would make them one, and it has not.
 - That any agent belongs to the theory's classes. File 10: "It does not prove that any human, machine, institution, or lineage belongs to the classes defined. It defines the classes."
