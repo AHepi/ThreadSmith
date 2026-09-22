@@ -1,0 +1,252 @@
+Let me translate this text into the ledger language following all the rules.
+
+The text:
+1. The building surveyor filed a short report on the flood in the cellar.
+2. She wrote that the cellar had flooded because the valve had been left open.
+3. The report noted that the water had reached the second step by morning.
+4. It also recorded that the caretaker had been away for the weekend.
+
+Analysis: This is a report about a report. The surveyor filed a report. The report's contents are TOLD in a named world (report_world). The attribution ("She wrote that", "The report noted that", "It also recorded that") goes to the bin.
+
+Sentence 1: The building surveyor filed a short report on the flood in the cellar.
+- CLAIMED: surveyor filed a report (a happening). The report is about the flood in the cellar.
+- "short" - degree, to bin.
+- Things: surveyor (a person - heavy and standing), report (a report), cellar (a room?), flood.
+
+Sentence 2: She wrote that the cellar had flooded because the valve had been left open.
+- TOLD in world report_world: the cellar flooded; the valve had been left open; the flooding BECAUSE the valve was left open.
+- Things: cellar, valve.
+- "had been left open" - a state; the valve was open.
+
+Sentence 3: The report noted that the water had reached the second step by morning.
+- TOLD: water reached the second step; by morning (time - bin).
+- Things: water, step.
+
+Sentence 4: It also recorded that the caretaker had been away for the weekend.
+- TOLD: caretaker was away for the weekend.
+- Things: caretaker.
+- "for the weekend" - time extent, bin.
+
+Now the ledger lines:
+
+Actual ledger (sentence 1):
+- surveyor is a person; response to a press: heavy and standing (a person) — but is that stated? The text doesn't say how she answers a press. Rule 3: write "not stated" if the text doesn't say. Actually the response classes list "heavy and standing (a person)" as a class. But the rule says "Where the text is silent on how a thing answers a press, write 'not stated'." The class list gives examples: "heavy and standing (a person)". Hmm, the examples in the list seem to be defaults. But the translator rule says a class you guess is a filled-in line. The text says she's a building surveyor — a person. I could mark "heavy and standing" as filled in, or just "not stated". Safer: "not stated" for most things, since the text is silent. Actually for a person, "heavy and standing" seems like the usual case. Let me mark it "usual case" for the surveyor and caretaker (people), and "not stated" for the valve, water, step, cellar, report, flood.
+
+Hmm, but is that over-stepping? The response class list explicitly pairs "a person" with "heavy and standing". I think it's reasonable as a usual-case line. Actually, let me be careful — the instruction says "Where the text is silent on how a thing answers a press, write 'not stated'." The safest reading: the text is silent on all of these. But the class list's parentheticals suggest defaults. I'll mark people as heavy and standing with "usual case" and others as not stated. Hmm, but even that might be too much. Let me just do: surveyor — heavy and standing, marked "usual case" (since the class list pairs persons with heavy and standing). Caretaker — same. Valve, water, step, cellar, report — not stated.
+
+Actually, for water: "not a body (wind, cold, heat...)" — water is a body though. Not stated is fine.
+
+Happenings:
+- s1: surveyor filed report (a happening: surveyor FILED report). Verb "file" — not in the shape book, so "not checked". That's fine; happenings with verbs not in the shape book are reported "not checked".
+
+Wait — do I need thing lines for everything? Rule 3: every thing in a happening must have a thing line. Things in happenings: surveyor, report. Also facts mention cellar, flood, valve, water, step, caretaker.
+
+Let me structure:
+
+Actual ledger lines:
+1. surveyor is a building surveyor (a person); answers a press as heavy and standing — usual case for the class. Hmm, "building surveyor" as kind. kind(surveyor, building_surveyor)? Or kind(surveyor, person). I'll say "surveyor is a person" and note she is a building surveyor as a fact. Simpler: kind(surveyor, person), and a fact "surveyor is a building surveyor".
+
+Let me write:
+
+Line a (said, s1, CLAIMED): surveyor is a person; response to a press not stated... hmm I said usual case heavy and standing. Let me decide: I'll write "surveyor is a person; it answers a press as heavy and standing" marked "usual case" for the class assignment. Actually the mark field is per line. The line is about the surveyor; the text says she is a building surveyor (said) but says nothing about her response class. Splitting: I could write two lines, but simpler: one line, mark "usual case"? But then the kind "person" is also from the text implicitly... The text says "The building surveyor" — that she is a surveyor is said. That she answers a press as heavy and standing is usual case. Rule 15: split if you can. So:
+
+Line a (said, s1, CLAIMED): surveyor is a building surveyor.
+Line b (usual case, s1, CLAIMED): surveyor answers a press as heavy and standing (a person).
+
+Hmm, but the kind for the checker: kind(surveyor, person). Let me make line a: "surveyor is a person" — is that said? "The building surveyor" implies personhood. I think it's fine as said: kind(surveyor, person), plus fact holds(is_building_surveyor(surveyor)). Actually simpler to combine: kind(surveyor, building_surveyor) and body(surveyor, heavy_standing) as usual case. But the checker's laws use response classes; "heavy and standing" is a class name. Let me use body(surveyor, heavy_and_standing).
+
+Hmm, I'm overcomplicating. Let me look at example T10D: "kind(account, account) :- line(account). body(account, not_stated) :- line(account)." So they use the kind from the text and body not_stated. For the surveyor, I'll do kind(surveyor, building_surveyor) said, and body(surveyor, not_stated) said (text silent). That's cleanest and follows the rule "Where the text is silent on how a thing answers a press, write 'not stated'". I'll not guess classes. Good — simpler and rule-following.
+
+Wait, but then "heavy and standing (a person)" — the parenthetical in the class list is just an example of what a class might be. The rule is clear: silent → not stated. OK, not stated for everything.
+
+Lines:
+
+Actual ledger:
+- a (said, s1, CLAIMED): surveyor is a building surveyor; response to a press not stated.
+  kind(surveyor, building_surveyor) :- line(a). body(surveyor, not_stated) :- line(a).
+- b (said, s1, CLAIMED): report is a report; response to a press not stated.
+  kind(report, report) :- line(b). body(report, not_stated) :- line(b).
+- c (said, s1, CLAIMED): cellar is a cellar; response to a press not stated.
+  kind(cellar, cellar) :- line(c). body(cellar, not_stated) :- line(c).
+- d (said, s1, CLAIMED): flood is a flood; response to a press not stated.
+  kind(flood, flood) :- line(d). body(flood, not_stated) :- line(d).
+- e (said, s1, CLAIMED): happening e: surveyor FILED report.
+  happening... how to encode? The guide doesn't give an exact predicate for happenings. Example A doesn't have a happening line either. Hmm. The examples don't show a happening clause. Let me think: maybe `happening(e, surveyor, filed, report)`? The guide lists predicates: thing line, fact, denied fact, general line, BECAUSE, denied BECAUSE, SINCE, plan, likeness, what-if, TOLD/SUPPOSED. No happening predicate listed. Hmm.
+
+"Use only these predicates (the checker asks about exactly these)". So happenings... The language definition says a Happening line is "NAME: DOER VERB THING [DIRECTION]". But the encoding guide doesn't give a predicate for it. Maybe I should encode the filing as a fact: holds(filed(surveyor, report))? The guide says "A fact that is claimed or given: holds(<fact>)". Since there's no happening predicate in the allowed list, I'll write the happening as a fact: holds(filed(surveyor, report)) :- line(e). And note the verb "file" has no shape (not in the shape book) → verbs_without_shape.
+
+Also the report is "on the flood in the cellar" — a fact: holds(about(report, flood_in(cellar))) or holds(concerns(report, flood)). I'll write: holds(concerns(report, flood)) and the flood is in the cellar: holds(in(flood, cellar)). Hmm, "Where things are; inside, outside and openings" — that's outside the language, goes to bin! The "Outside the language" list includes "Where things are; inside, outside and openings." So "in the cellar" goes to the bin. And "on the flood" is what the report concerns — that's arguably essential to what was filed. Hmm. "filed a short report on the flood in the cellar" — the report's topic. I could keep "the report concerns the flood" as a fact and bin "in the cellar" as location. But "the flood in the cellar" — the flood's location is part of identifying it. Since location is outside the language, bin it. But then sentence 1's content is just "surveyor filed a report" + "report concerns a flood". Hmm, and "short" (degree) → bin.
+
+Actually, maybe keep it minimal: sentence 1 gives us the surveyor, the report, the flood, the cellar as things, and the happening that the surveyor filed the report. The rest ("short", "on the flood in the cellar") — "on the flood" I'll keep as concerns since it's the report's subject matter and not a spatial relation. Hmm, but "concerns" is a bit like a topic, not location. I'll keep holds(concerns(report, flood)) as said. And bin "short" and "in the cellar" (location).
+
+Hmm wait, but the flood in the cellar is the same flood that sentence 2 says flooded the cellar. The cellar is a thing. Fine.
+
+Report world (TOLD in world report_world):
+- valve is a valve; not stated. (said, s2)
+- water is water; not stated. (said, s3)
+- step is a step; not stated. (said, s3)
+- caretaker is a caretaker; not stated. (said, s4)
+- The cellar flooded: holds(flooded(cellar)) (said, s2, TOLD)
+- The valve had been left open: holds(left_open(valve)) (said, s2, TOLD). "had been left open" — state of the valve: open. Maybe holds(open(valve)). "left open" implies someone left it. I'll write "valve was open" as the fact: holds(open(valve)). And note "had been left" implies an unnamed actor — bin? The passive with unnamed agent: like example T10D's "opening the window has no named actor" — they kept it as a fact "window was opened". So here: "the valve was open" as a fact. Good.
+- BECAUSE: the cellar flooded BECAUSE the valve was open. claim_because(because, flooded(cellar), open(valve)). (said, s2, TOLD)
+- The water reached the second step: holds(reached(water, step)). (said, s3, TOLD). "by morning" — time → bin. "second" — number → bin. Hmm, "the second step" — ordinal, a number. Bin "second"? The "Outside the language" list includes numbers. But "the second step" identifies which step. I could name the thing "second_step" and bin the ordinal as identifying info... The rule: "Some, most, few, and numbers" go to bin. I'll bin "second" as a number, and name the thing "step". Hmm, but then which step? It doesn't matter for the ledger. I'll name it "step" and note in the bin that "second" is a number. Also "the water had reached the second step" — a happening? "reach" is not in the shape book. Encode as fact holds(reached(water, step)).
+- The caretaker had been away for the weekend: holds(away(caretaker)). "for the weekend" — time extent → bin.
+
+Do the report-world lines need the cellar as a thing in that world? The cellar is a thing in the actual ledger (sentence 1 mentions it). In the told world, the cellar is referred to. Example T10D put window and letter as TOLD things in the account world. Here, the cellar is introduced in sentence 1 (actual) and sentence 2 (report content). Since a told world doesn't inherit the actual ledger, I should also have a cellar thing line in the report world. Yes — rule: every thing in a happening must have a thing line of its own; and told worlds are looked at alone. So add: cellar is a cellar (TOLD, s2). And valve (TOLD, s2), water (TOLD, s3), step (TOLD, s3), caretaker (TOLD, s4).
+
+Bin entries:
+- s1: "short" — degree/how much, outside the language.
+- s1: "in the cellar" — where things are (location), outside the language. Hmm, but do I also bin "on the flood"? I kept "concerns" as a fact. I'll note in the bin? No — I kept it as a line. Fine.
+- s2: "She wrote that" — attribution; scopes contents to report_world.
+- s3: "The report noted that" — attribution.
+- s3: "by morning" — when, outside the language.
+- s3: "second" — number, outside the language. Hmm, or keep as part of the name? I'll bin it with a note.
+- s4: "It also recorded that" — attribution.
+- s4: "for the weekend" — when/extent, outside the language.
+
+Also "had been left" in sentence 2 — passive, unnamed leaver. Note in bin? Example T10D handled it in readings. I'll mention in readings_chosen.
+
+Sentences that lost something to the bin: 1 (short, in the cellar), 2 (attribution — though the content is in the world; the attribution itself is binned), 3 (by morning, second, attribution), 4 (for the weekend, attribution). All four sentences have bin entries. So sentences losing to bin: 4. Hmm — but the content of sentences 2-4 is fully recorded as TOLD lines; only the attribution words went to the bin. The count asks "sentences that lost something to the bin" — all four lost something. I'll say 4.
+
+Counts: lines said: let me count.
+Actual: a (surveyor thing), b (report thing), c (cellar thing), d (flood thing), e (filed happening), f (concerns fact) = 6 said.
+Report world: valve thing, water thing, step thing, caretaker thing, cellar thing, flooded fact, open valve fact, BECAUSE, reached fact, away fact = 10 said.
+Total said: 16. Filled in: 0. Usual case: 0.
+
+Hmm, should I add any filled-in lines? E.g., a general line "an open valve lets water through"? The text doesn't say that. Don't invent. The BECAUSE claim stands alone.
+
+Should the "filed" happening have a result? No.
+
+Also, do I need a thing line for "water" in actual? No, water only appears in the report world.
+
+Wait — sentence 1: "The building surveyor filed a short report on the flood in the cellar." Is the flood a thing in the actual ledger? Yes, mentioned. And the cellar. Good.
+
+Also should I record the report's existence as GIVEN? Example T10D: "The account's existence is GIVEN". Here sentence 1 asserts the surveyor filed a report — that's CLAIMED (main clause). The report's existence follows. I have the happening fact.
+
+Names: surveyor, report, flood, cellar, valve, water, step, caretaker.
+
+Words split: none. Maybe "filed" vs "filed (a report)"? No splits needed. Actually "report" — the report itself vs the reported content? No, keep one sense. Words split: none.
+
+Readings chosen:
+- Sentence 1: "filed a short report on the flood in the cellar" — "on the flood" read as the report's subject (kept as a fact), "in the cellar" read as location (binned).
+- Sentence 2: "the valve had been left open" — passive with unnamed leaver; read as the state of the valve (open), no actor invented.
+- Sentence 2: "because" — production, BECAUSE not SINCE.
+- Sentence 3: "the second step" — ordinal number binned; the step kept as a thing.
+- Sentence 4: "had been away" — state of being away, kept as a fact; "for the weekend" binned as time.
+
+Now the JSON. Line ids: a, b, c, d, e, f for actual; then valve, water, step, caretaker, cellar2? No — same name "cellar" but it's a separate line in the told world. Id must be unique. Use "cellar_r"? Names shouldn't end in underscore+number, but "cellar_r" is fine? "Use words." I'll use "cellar_in_report" as id but the thing name is cellar. Hmm, in Prolog the kind is kind(cellar, cellar). The line id is just an id. I'll use ids: surv, rep, cell, flood, filed, concerns; then v_valve... let me pick clean words: "valve", "water", "step", "caretaker", "cellar_w" (w for world). Hmm. Maybe "cellar2"? Not allowed (ends in number after underscore... actually "cellar2" has no underscore; the rule is about names ending in an underscore and a number). "Names that end in an underscore and a number" — cellar2 doesn't have an underscore. But to be safe, use "cellar_report". Let me use ids: surveyor, report, cellar, flood, filed, concerns, valve, water, step, caretaker, cellar_report, flooded, valve_open, because, reached, away.
+
+Wait, "report" as both a thing name and... the thing is "report", fine.
+
+Prolog clauses:
+
+line surveyor: kind(surveyor, building_surveyor) :- line(surveyor). body(surveyor, not_stated) :- line(surveyor).
+line report: kind(report, report) :- line(report). body(report, not_stated) :- line(report).
+line cellar: kind(cellar, cellar) :- line(cellar). body(cellar, not_stated) :- line(cellar).
+line flood: kind(flood, flood) :- line(flood). body(flood, not_stated) :- line(flood).
+line filed: holds(filed(surveyor, report)) :- line(filed).
+line concerns: holds(concerns(report, flood)) :- line(concerns).
+
+Report world lines (case: report_world, case_kind: told):
+line valve: kind(valve, valve) :- line(valve). body(valve, not_stated) :- line(valve).
+line water: kind(water, water) :- line(water). body(water, not_stated) :- line(water).
+line step: kind(step, step) :- line(step). body(step, not_stated) :- line(step).
+line caretaker: kind(caretaker, caretaker) :- line(caretaker). body(caretaker, not_stated) :- line(caretaker).
+line cellar_report: kind(cellar, cellar) :- line(cellar_report). body(cellar, not_stated) :- line(cellar_report).
+line flooded: holds(flooded(cellar)) :- line(flooded).
+line valve_open: holds(open(valve)) :- line(valve_open).
+line because: claim_because(because, flooded(cellar), open(valve)) :- line(because).
+line reached: holds(reached(water, step)) :- line(reached).
+line away: holds(away(caretaker)) :- line(away).
+
+Verbs without shape: "file" (line filed), "flood" (line flooded — though encoded as fact, the text's verb is "flooded"), "reach" (line reached), "left open" (line valve_open). Since I encoded these as facts rather than happenings, note in verbs_without_shape? The guide's example T10D listed "open" as a verb without shape. I'll list file, flood, reach with coverage notes. Actually the translation_gauge field isn't in the required JSON schema — looking at the schema: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. T10D had extra fields (names, translation_gauge, author_note, status). The required fields are those in the schema. I'll include the required ones plus maybe nothing extra. Keep it to the schema. Actually the schema says "Every field below is required unless marked optional" — none marked optional. So: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. OK.
+
+whatifs: [].
+
+Now write the five sections as the task asks (the human-readable table, bin, words split, readings, count), then the JSON block, then TRANSLATION COMPLETE.
+
+The table columns: Number | Standing | Content | Source mark | Sentence.
+
+Let me write the ledger table with all lines.
+
+Also, the PARKED list: "Judgements about whether the writer's reasoning is good... go in a PARKED list at the very end." The parking place section says put them at the very end, one line each. There's a note "Then return to the line in hand" — that's for during translation. I'll add a brief PARKED note at the end after the count? The print order says sections 1-5 then close with TRANSLATION COMPLETE. The PARKED list is "at the very end". Hmm, conflicting. The 39 prompt says print sections 1-5, close with TRANSLATION COMPLETE, then wait. The parking place says PARKED at the very end. I'll put PARKED after section 5 but before TRANSLATION COMPLETE... Actually "at the very end" — I'll put it after the JSON block? The encoding guide says after the five sections, print the JSON, and "Nothing else goes in that block". Then TRANSLATION COMPLETE. I'll put PARKED as a short section after section 5, before the JSON, or after TRANSLATION COMPLETE. The task says "ending with the JSON block and then the words TRANSLATION COMPLETE." So the JSON comes right before TRANSLATION COMPLETE. PARKED then goes before the JSON, as part of the printed output. Hmm, but "at the very end"... I'll put PARKED right after section 5 and before the JSON. Actually, do I have anything to park? The reasoning here is trivial — a report of a report. I could note: "The report's causal claim (flood because valve open) is not supported by any stated mechanism inside the report world; the ledger records the claim, not its soundness." That's a judgement about reasoning → park it. I'll include one or two lines.
+
+Let me also double check: should sentence 1's "filed" be a happening with the surveyor as doer? Yes: "surveyor FILED report". Since there's no happening predicate in the allowed list, I encode as a fact holds(filed(surveyor, report)) and in the table write it as a happening: "filed: surveyor FILED report". Fine.
+
+Also, should the report's topic be a line? "report concerns the flood" — I'll include as fact.
+
+One more consideration: sentence 2's "the cellar had flooded" — in the report world. And sentence 1's flood in the cellar — actual. These are different flood-events? The report is about the flood; the report says the cellar flooded. Arguably the same flood. But per told-world rules, the world is looked at alone. I have flood as an actual thing and flooded(cellar) as a told fact. That's fine.
+
+Now counts: lines said = 16, filled in = 0, usual case = 0. Sentences losing something to bin = 4 (all sentences have bin entries).
+
+Let me write the leftover strings matching bin entries.
+
+Bin entries:
+1. s1: "short" — degree, outside the language (how much).
+2. s1: "in the cellar" — where the flood was; location is outside the language.
+3. s2: "She wrote that" — attribution; scopes the cellar flooding, the open valve and the causal claim to report_world.
+4. s3: "The report noted that" — attribution; scopes the water reaching the step to report_world.
+5. s3: "by morning" — when; outside the language.
+6. s3: "second" — a number; outside the language. (The step itself is kept as a thing.)
+7. s4: "It also recorded that" — attribution; scopes the caretaker's absence to report_world.
+8. s4: "for the weekend" — how long; outside the language.
+
+Readings chosen:
+- Sentence 1: "on the flood" could be the report's subject or a spatial relation; chosen: subject, kept as a fact that the report concerns the flood.
+- Sentence 1: "filed" has no shape in the shape book; kept as a happening/fact with verb "file", reported as not checked.
+- Sentence 2: "the valve had been left open" — passive with no named leaver; chosen: the valve's state (open), no actor invented.
+- Sentence 2: "because" — production; BECAUSE, not SINCE.
+- Sentence 3: "the second step" — the ordinal could identify the step or be a quantity; chosen: keep the step as a thing, bin the number.
+- Sentence 4: "had been away" — a state; kept as a fact that the caretaker was away.
+
+Words split: none. Maybe "report": the document vs the reported content? I'll say none — one sense throughout (the document the surveyor filed; its contents are in report_world). Hmm, actually there might be a case: "filed a short report" (document) vs "The report noted" (same document). Same sense. None.
+
+Now write it all out. The table:
+
+| Number | Standing | Content | Source mark | Sentence |
+| a | CLAIMED | surveyor is a building surveyor; it answers a press as not stated | said | 1 |
+| b | CLAIMED | report is a report; it answers a press as not stated | said | 1 |
+| c | CLAIMED | cellar is a cellar; it answers a press as not stated | said | 1 |
+| d | CLAIMED | flood is a flood; it answers a press as not stated | said | 1 |
+| e | CLAIMED | e: surveyor FILED report | said | 1 |
+| f | CLAIMED | report concerns the flood | said | 1 |
+| g | TOLD in world report_world | valve is a valve; it answers a press as not stated | said | 2 |
+| h | TOLD in world report_world | cellar is a cellar; it answers a press as not stated | said | 2 |
+| i | TOLD in world report_world | water is water; it answers a press as not stated | said | 3 |
+| j | TOLD in world report_world | step is a step; it answers a press as not stated | said | 3 |
+| k | TOLD in world report_world | caretaker is a caretaker; it answers a press as not stated | said | 4 |
+| l | TOLD in world report_world | the cellar flooded | said | 2 |
+| m | TOLD in world report_world | the valve was open | said | 2 |
+| n | TOLD in world report_world | line l BECAUSE line m | said | 2 |
+| o | TOLD in world report_world | the water reached the step | said | 3 |
+| p | TOLD in world report_world | the caretaker was away | said | 4 |
+
+That's 16 lines. Good.
+
+JSON line ids: a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p.
+
+Prolog:
+a: kind(surveyor, building_surveyor) :- line(a). body(surveyor, not_stated) :- line(a).
+b: kind(report, report) :- line(b). body(report, not_stated) :- line(b).
+c: kind(cellar, cellar) :- line(c). body(cellar, not_stated) :- line(c).
+d: kind(flood, flood) :- line(d). body(flood, not_stated) :- line(d).
+e: holds(filed(surveyor, report)) :- line(e).
+f: holds(concerns(report, flood)) :- line(f).
+g: kind(valve, valve) :- line(g). body(valve, not_stated) :- line(g).
+h: kind(cellar, cellar) :- line(h). body(cellar, not_stated) :- line(h).
+i: kind(water, water) :- line(i). body(water, not_stated) :- line(i).
+j: kind(step, step) :- line(j). body(step, not_stated) :- line(j).
+k: kind(caretaker, caretaker) :- line(k). body(caretaker, not_stated) :- line(k).
+l: holds(flooded(cellar)) :- line(l).
+m: holds(open(valve)) :- line(m).
+n: claim_because(n, flooded(cellar), open(valve)) :- line(n).
+o: holds(reached(water, step)) :- line(o).
+p: holds(away(caretaker)) :- line(p).
+
+TOLD lines need case and case_kind fields.
+
+whose: I'm an AI model; the guide says "<your name, the model you are>, under L82". I'll write "Claude (Anthropic), under L82".
+
+paragraph: "B15".
+
+Now write the final output.
