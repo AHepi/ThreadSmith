@@ -62,3 +62,7 @@ Anything at the grain of weights; the skill's own faults (held for HV); the theo
 
 ## 12. Traps
 Summing readers or arms; reading a DeepSeek disagreement as a verdict; moving a mark on a count alone; reading a Sonnet skeleton as a port-setting harness; spending the 33 held-out sources; keeping a key in a file.
+
+---
+## Addendum, before the first agent started (decision W7)
+The owner supplied a DeepSeek key and an Atria Asi key, with a rule for Atria: complex analysis, armed with the skill, one request at a time, token ceilings set significantly larger because it tends to fail otherwise. Stage A gains a fifth builder, A6, which writes the two API clients (DeepSeek with prefix completion and five threads; Atria with one thread and large ceilings) and finds out what Atria Asi is; stage E's cross-examination may use Atria beside the five DeepSeek examiners for the analysis the owner names, one at a time. Keys are read from the environment and written to no file; the owner is told to delete both at the providers when the round ends, and to rotate them now, since they were pasted into a chat. What this gives up: nothing of the predictions; the five-at-a-time cap for Claude subagents is unchanged (A1 to A6 run five at a time under the workflow's own cap, set to five).

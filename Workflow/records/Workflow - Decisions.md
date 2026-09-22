@@ -14,5 +14,7 @@ W5. The owner's assessment of W9, and the next steps named. "W9 is a serious, ho
 
 W6. The go for getting the LLM theory right, with the rules of the round. "I will supply a key. Getting the LLM theory right is priority. Do what you can here first. Few rules. /workflows Use Opus 5, Extra effort for data collection, review, coding. Sonnet 5, effort high for running actual harness that you design along with Deepseek V4.1 flash. Deepseek V4.1 flash for independent cross examination. ALL agents must be loaded with hard to vary skill set. This workflow should be saved. Oh and only 5 Opus and Sonnet subagents at a time. Deepseek can run 5 independent agents on top of the Claude model limits. Ok, go! I've put all other works on hold while this completes. Please don't limit DeepSeek token spend. It is cheaper than you and Opus 5. If anything can be settled by running more Deepseek runs, do it without hesitation. Ok, go!"
 
+W7. Two keys supplied, DeepSeek and Atria Asi, with the rule for Atria. The keys themselves are not recorded here or in any file (root conventions); the owner's words otherwise as written: "Deepseek [key] Atria Asi [key] Use Atria Asi for complex analysis with hard to vary skill as well. Only 1 at a time. Make it's token ceilings significantly larger because it tends to fail otherwise."
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
