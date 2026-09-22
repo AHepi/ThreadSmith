@@ -59,6 +59,7 @@ Today both dry runs pass: 37 checks for DeepSeek, 34 for Atria, 0 sent.
 - **Endpoint.** `https://api.atria-asi.ai/v1/chat/completions`, overridable with
   `ATRIA_BASE_URL`. Model `Atria-Dawn-Preview` (the documentation says the id is
   case-sensitive), overridable with `ATRIA_MODEL`.
+- **At most 30 requests a minute,** the owner's rule (Workflow decision W9), held by a pacer in the file: the start of every HTTP attempt, retries included, waits until two seconds have passed since the last one; the wait is recorded on the attempt (`paced_seconds`) and the cap on the record (`rpm_cap`). The same cap applies to the MiMo client.
 - **One request at a time,** the owner's rule. A lock in this file is held for the whole
   exchange, the streamed read included, so a request counts as in flight until its reply is
   complete. The lock is here and not in the caller because a caller that forgets is the very

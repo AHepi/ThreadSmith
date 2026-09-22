@@ -102,6 +102,8 @@ MAX_TOKENS = 65536               # the documented maximum, and the default here
 KEY_ENV = "ATRIA_API_KEY"
 KEY_PREFIX = "atr_"
 RPM = 60                         # x-rpm-limit, as the documentation shows it
+RPM_CAP = 30                     # the owner's rule (Workflow decision W9): at most 30 requests a minute
+MIN_GAP = 60.0 / RPM_CAP         # seconds between the starts of two HTTP attempts
 TIMEOUT = (30, 1800)             # connect, read
 TRIES = 7
 DELAY0 = 4.0
@@ -114,6 +116,37 @@ RETRY_STATUS = (408, 409, 425, 429, 500, 502, 503, 504)
 ONE_AT_A_TIME = threading.Lock()     # the owner's rule, kept here and not in the caller
 _print_lock = threading.Lock()
 _SLEEP = time.sleep                  # named so the dry run can hold the clock still
+_PACE_LOCK = threading.Lock()
+_PACE_SLEEP = time.sleep             # the pacer's own sleep, so the dry run can stub it apart from the backoff's
+_LAST_START = [float("-inf")]        # wall-clock time of the last HTTP attempt's start
+
+
+def _pace(now=None):
+    """Hold the process to RPM_CAP: wait until MIN_GAP seconds have passed since the last
+    attempt started, then claim this start. Retries count as attempts, so a 429 storm
+    cannot exceed the cap either. Returns the seconds waited (the dry run reads it)."""
+    with _PACE_LOCK:
+        t = time.time() if now is None else now
+        wait = max(0.0, _LAST_START[0] + MIN_GAP - t)
+        if wait > 0:
+            _PACE_SLEEP(wait)
+        _LAST_START[0] = time.time() if now is None else t + wait
+        return wait
+
+
+def _pace_check():
+    """The pacer's own check on a still clock: starts asked at t = 0, 0.5 and 2.6 s are held
+    to t = 0, 2.0 and 4.0, so the waits are 0, 1.5 and 1.4 s."""
+    global _PACE_SLEEP
+    real, waited = _PACE_SLEEP, []
+    _PACE_SLEEP = lambda w: waited.append(round(w, 3))
+    try:
+        _LAST_START[0] = float("-inf")
+        w = [_pace(now=0.0), _pace(now=0.5), _pace(now=2.6)]
+    finally:
+        _PACE_SLEEP = real
+        _LAST_START[0] = float("-inf")
+    return [round(x, 3) for x in w], waited
 SENDS = 0                            # live HTTP attempts made by this process; --dry asserts 0
 
 
@@ -298,7 +331,7 @@ def call(body, key, *, tag="", url=None, stream_path=None, tries=TRIES, timeout=
     stream = bool(body.get("stream"))
     rec = {"client": "clients.atria_client", "tag": tag, "url": url,
            "model": body.get("model"), "max_tokens": body.get("max_tokens"),
-           "one_at_a_time": True,
+           "one_at_a_time": True, "rpm_cap": RPM_CAP,
            "request": {k: v for k, v in body.items() if k != "_endpoint"},
            "request_text": text, "request_bytes": len(payload),
            "headers_sent": {"Authorization": "Bearer <redacted>",
@@ -313,6 +346,7 @@ def call(body, key, *, tag="", url=None, stream_path=None, tries=TRIES, timeout=
             a = {"n": n, "at": _stamp(), "status": None, "error": None, "seconds": None}
             ta = time.time()
             try:
+                a["paced_seconds"] = round(_pace(), 3)
                 SENDS += 1
                 r = requests.post(url, data=payload, headers=headers, timeout=timeout,
                                   stream=stream)
@@ -511,8 +545,9 @@ class _StubRequests:
 
 
 def _stub_checks(check):
-    global requests, _SLEEP, SENDS
-    real_requests, real_sleep, sends0 = requests, _SLEEP, SENDS
+    global requests, _SLEEP, SENDS, _PACE_SLEEP
+    real_requests, real_sleep, sends0, real_pace = requests, _SLEEP, SENDS, _PACE_SLEEP
+    _PACE_SLEEP = lambda s: None      # the dry run does not wait out the 30 rpm cap on stubbed calls
     waited = []
     good = _StubResponse(200, lines=CANNED, headers={"x-rpm-limit": "60",
                                                      "x-rpm-remaining": "59"})
@@ -606,6 +641,10 @@ def _stub_checks(check):
               peak_without > 1, f"peak without the lock = {peak_without}; if this is 1 the "
                                 f"one-at-a-time check above is measuring nothing")
 
+        pw, pwaited = _pace_check()
+        check("the pacer holds RPM_CAP = 30: starts asked at 0, 0.5 and 2.6 s wait 0, 1.5 and 1.4 s",
+              pw == [0.0, 1.5, 1.4] and pwaited == [1.5, 1.4], f"waits {pw}, slept {pwaited}")
+
         m, fin, us, http = send({"model": MODEL, "stream": True, "max_tokens": MAX_TOKENS,
                                  "messages": [{"role": "user", "content": "t"}]},
                                 "atr_not-a-real-key", tag="seam")
@@ -614,7 +653,8 @@ def _stub_checks(check):
               and us["total_tokens"] == 15 and http["status"] == 200
               and http["truncated"] is False)
     finally:
-        requests, _SLEEP, SENDS = real_requests, real_sleep, sends0
+        requests, _SLEEP, SENDS, _PACE_SLEEP = real_requests, real_sleep, sends0, real_pace
+        _LAST_START[0] = float("-inf")
 
 
 def _raises(fn, kind=Exception):
@@ -687,7 +727,8 @@ def _dry(save_dir=None):
     print(f"\nendpoint  {endpoint()}   (override with ATRIA_BASE_URL)")
     print(f"model     {MODEL}   (override with ATRIA_MODEL)")
     print(f"ceiling   max_tokens {MAX_TOKENS}, the documented maximum; a parameter everywhere")
-    print(f"threads   one at a time, held by a lock in this file; documented limit {RPM} rpm")
+    print(f"threads   one at a time, held by a lock in this file; documented limit {RPM} rpm; "
+          f"the owner's cap {RPM_CAP} rpm held by a pacer in this file (decision W9)")
     print(f"key       read from {KEY_ENV} at call time; "
           f"{'present' if k else 'not present'} in this environment")
     if save_dir:
