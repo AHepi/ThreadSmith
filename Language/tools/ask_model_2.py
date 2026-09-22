@@ -17,8 +17,10 @@ Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.
 SHA-256, response id, token counts when the stream's last chunk carries usage, finish reason, chunk count, the last attempt's
 seconds, the whole call's total_seconds, attempt count and the labelled status and seconds of every attempt, "stream": true),
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/disconnects/silence with backoff,
-at most 6 attempts; a 400/401/403/404/413/422 is not retried; an empty answer whose finish reason is `length` is not retried
-(the same cap gives the same answer) and is recorded as status -4; an empty answer with no finish reason (a stream that
+at most 6 attempts; a 400/401/403/404/413/422 is not retried; an empty answer whose finish reason is `length` is recorded
+as status -4 and retried like any other failure, because the same prompt at the same cap has answered on one attempt and
+exhausted the cap on another (the probes of 22 September: B01 on Atria, 39,997 tokens and a valid ledger on one call, all
+60,000 on reasoning and no content on another); an empty answer with no finish reason (a stream that
 carried chunks and then closed cleanly, Atria's cut) or with any finish reason other than `length` is retried (-2); a 200
 whose stream yields no parsable chunk (-3; a chunk that does not parse is skipped, so an unparsable body arrives as no
 chunks); a raised exception (0): a connection closed without any response, a reset, or silence for --idle seconds. A failed call leaves DIR/<tag>.error.txt and a
@@ -108,7 +110,7 @@ def main():
         elif status == 200 and not content.strip(): status = -4 if finish == "length" else -2
         history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1), "finish": finish, "chunks": chunks})   # this attempt's own, reset at the top of the loop
         if status == 200: break
-        final = status in (400, 401, 403, 404, 413, 422, -4)
+        final = status in (400, 401, 403, 404, 413, 422)   # -4 (length) is retried: the same prompt at the same cap has answered on one attempt and exhausted on another (probes, 22 September)
         if final or attempts >= a.attempts:
             open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s after %d attempt(s)%s\nfinish %s, %d chunks, %d reasoning chars, %d content chars\n%s" % (
                 status, attempts, " (not retried)" if final else "", finish, chunks, len(reasoning), len(content), text[:4000]))
