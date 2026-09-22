@@ -20,5 +20,7 @@ W8. A third model family, MiMo 2.6 Pro, with its key. The owner asked "Should we
 
 W9. "Atria and Mimo request cap at 30RPM please." Taken as: the Atria and MiMo clients hold every request, retries included, to at most thirty a minute, in the client and not in the caller.
 
+W10. "Keep a handover in case important information is lost during automatic context compact. It's a fail mode I've suffered from in the past." Taken as: a live handover file, `records/HANDOVER.md`, kept current at every step and committed, holding what a fresh session needs to continue this round without the conversation.
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
