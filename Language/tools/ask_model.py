@@ -11,7 +11,8 @@ Usage:
 Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.receipt.json
 (provider, model, request SHA-256, response id from the provider, token counts, timings, attempt count),
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/timeouts
-with backoff, at most 6 attempts. Rate limit kept per provider by a lock file in DIR.
+with backoff, at most 6 attempts; a 400/401/403/404/413/422 is not retried. Rate limit kept per provider by a
+lock file in DIR, or in $ASK_MODEL_LOCKDIR when set (so every step of one run shares one lock).
 Written under decision L11, 22 September 2026. A new version is a new file beside this one.
 """
 import argparse, hashlib, json, os, sys, time, urllib.request, urllib.error, fcntl
@@ -23,11 +24,12 @@ PROVIDERS = {
 
 def wait_for_slot(lockdir, provider, rpm):
     """Crude but safe: one call per (60/rpm) seconds per provider, serialised by a lock file."""
+    lockdir = os.environ.get("ASK_MODEL_LOCKDIR") or lockdir   # a shared lock dir for a whole run
     path = os.path.join(lockdir, ".rate_%s" % provider)
     with open(path, "a+") as f:
         fcntl.flock(f, fcntl.LOCK_EX)
         f.seek(0); last = float(f.read().strip() or 0)
-        gap = 60.0 / rpm
+        gap = 60.0 / rpm * 1.1   # a tenth over the minimum gap, so a fixed-window count never reaches rpm + 1
         now = time.time()
         if now - last < gap: time.sleep(gap - (now - last))
         f.seek(0); f.truncate(); f.write(str(time.time())); f.flush()
@@ -70,6 +72,7 @@ def main():
             try: data = json.loads(text)
             except Exception: status = -1
         if status == 200 and data.get("choices"): break
+        if status in (400, 401, 403, 404, 413, 422): attempts = 6   # a request the provider rejects outright: no retry
         if attempts >= 6:
             open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s\n%s" % (status, text[:4000]))
             print("failed after %d attempts: status %s" % (attempts, status), file=sys.stderr); return 1
