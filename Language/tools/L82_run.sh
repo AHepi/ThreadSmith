@@ -3,6 +3,7 @@
 # Usage: L82_run.sh CORPUS_DIR OUT_DIR PAIRS_FILE   (keys in the environment; run from the repository root)
 # PAIRS_FILE: one pair per line, "B03 B06" (F-side first), used for the within-pair sameness runs.
 # Steps: 1 translate (Atria and Mimo in parallel, texts sequential per provider); 2 both drivers on every ledger;
+# (translations run in four lanes per provider; the tool's per-provider lock keeps the request rate under the limit)
 # 3 consequences_2 on every ledger; 4 sameness_2 within pairs per translator and across translators per text;
 # 5 the blind reader (Atria) on every report, shuffled under neutral names; 6 the prose reader (Mimo) on every new report
 # with its passage; 7 a manifest. Every call leaves a receipt. Nothing is written outside OUT_DIR.
@@ -11,8 +12,10 @@ CORPUS="$1"; OUT="$2"; PAIRS="$3"; ROOT="$(pwd)"; T="$ROOT/Language/tools"; RIG=
 mkdir -p "$OUT/translations" "$OUT/ledgers" "$OUT/reports" "$OUT/consequences" "$OUT/sameness" "$OUT/reader" "$OUT/prose_reader" "$OUT/scratch"
 TEXTS=$(ls "$CORPUS" | grep -E '^B[0-9]+\.txt$' | sed 's/\.txt$//')
 echo "step 1: translations $(date -u +%H:%M:%S)"; T1=$(date +%s)
-( for t in $TEXTS; do python3 "$T/translate_via_api.py" atria "$t" "$CORPUS/$t.txt" "$OUT/translations"; done ) > "$OUT/translations/atria.log" 2>&1 &
-( for t in $TEXTS; do python3 "$T/translate_via_api.py" mimo  "$t" "$CORPUS/$t.txt" "$OUT/translations"; done ) > "$OUT/translations/mimo.log" 2>&1 &
+# four lanes per provider: lane k takes every fourth text; the tool's per-provider lock keeps the request rate under the limit
+for p in atria mimo; do for k in 0 1 2 3; do
+  ( i=0; for t in $TEXTS; do if [ $((i % 4)) -eq $k ]; then python3 "$T/translate_via_api.py" $p "$t" "$CORPUS/$t.txt" "$OUT/translations"; fi; i=$((i+1)); done ) > "$OUT/translations/$p.lane$k.log" 2>&1 &
+done; done
 wait; echo "translations took $(( $(date +%s) - T1 )) s"
 # gather valid ledgers into a scratch rig
 cp -r "$RIG/patched" "$OUT/scratch/patched"; cp -r "$RIG/frozen" "$OUT/scratch/frozen" 2>/dev/null
