@@ -14,7 +14,13 @@ then write the transport's own record of that subagent's tool calls to `meta` as
 {"tool_calls": [...], "modules_read": [...], "requests": n}; then call `next` again. The rig
 never asks the reader what it opened: W8 part C4 says the reader's own list is the reader's
 report, and P4.9 compares the two. `modules_read` must come from the session's record of tool
-calls; what the reader says in its answer is picked up separately by wrap_sonnet.py.
+calls; what the reader says in its answer is A4's marked field, filled by a marker.
+
+Every run also gets a plan record at `<scratch>/w10/plan/<run>.json`, written whenever `plan` or
+`next` builds the run: the question identity, the question as sent, the change-list flag, arm
+(x)'s exchange record and arm (k)'s skill variant, which `wrap_sonnet.py` copies into the run
+record (fault 13 of the stage-A review; W10 section 4 requires the question-identity field on
+every run, and PA.3 needs the exchange counts).
 
 What the Sonnet transport cannot do, said plainly:
  - It cannot prefill an emission. Arm (e) here is the control W10 section 10 names: the skeleton
@@ -56,11 +62,12 @@ class SonnetRun:
             if self.exchange_rec["void"]:
                 raise SystemExit(f"{self.rid}: arm (x) replaced one of the two names zero times.")
         self.text = text
-        self.q = question.for_document(row)
+        # arm (x): the frozen question quotes the document the reader was handed (fault 8)
+        self.q = question.for_document(row, exchanged=(self.cfg["document"] == "exchanged"))
         self.with_cl = self.cfg["question"] != "no_change_list"
         self.qblock = question.render(self.q, self.with_cl)
         skill_md = skillcheck.skill_main()
-        self.removed = []
+        self.removed = {"table_rows": [], "graph_lines": [], "sentences": []}
         if self.cfg["skill_variant"]:
             skill_md, self.removed = arms.skill_variant(skill_md, self.cfg["skill_variant"])
         self.sys = arms.system_message(arm, "sonnet", skill_md, refs_dir=self.refs)
@@ -82,6 +89,8 @@ class SonnetRun:
         got = self.reply_of("01-S1234")
         if got is None:
             return ["01-S1234"]
+        # a parts pass carrying cross-step material stops this run (fault 10)
+        partition.gate(partition.leak_check(got), self.rid)
         parts = partition.parse_parts(got)
         plan = partition.calls(parts, TEST_IDS, g=self.opts.groups, mode=self.opts.split)
         out = ["01-S1234"] + [f"{i:02d}-SONE-{t}-g{gi}" for i, (t, gi, _) in enumerate(plan, 2)]
@@ -143,7 +152,29 @@ class SonnetRun:
         rec.update(extra)
         return rec
 
+    def plan_record(self):
+        """What wrap_sonnet.py copies into the run record (fault 13). The Sonnet run record
+        carried none of these five, and without them the Sonnet half of stage C cannot show
+        that every arm was handed the same question, nor how large arm (x)'s edit was."""
+        return {"run": self.rid, "arm": self.arm, "document": self.doc, "repeat": self.repeat,
+                "question": question.identity(self.q, self.with_cl),
+                "question_as_sent": self.qblock,
+                "change_list_withheld": not self.with_cl,
+                "exchange": self.exchange_rec,
+                "skill_variant": ({"kind": self.cfg["skill_variant"], "removed": self.removed,
+                                   "removed_lines": (self.removed["table_rows"]
+                                                     + self.removed["graph_lines"]
+                                                     + self.removed["sentences"])}
+                                  if self.cfg["skill_variant"] else None),
+                "derivation3_qualification_sent": rig.DERIVATION3_QUALIFICATION_SENT,
+                "derivation3_qualification_reason": rig.DERIVATION3_REASON,
+                "written_at": stamp()}
+
+    def write_plan_record(self):
+        return write_json(os.path.join(self.b, "plan", self.rid + ".json"), self.plan_record())
+
     def next_call(self):
+        self.write_plan_record()
         for c in self.call_list():
             if self.opts.dry or self.reply_of(c) is None:
                 if not self.opts.dry:
@@ -157,7 +188,7 @@ class SonnetRun:
 
 def setup(opts, rows):
     b = base(opts.scratch) if not opts.dry else os.path.join(RIG, "dry", READER)
-    for d in ("prompts", "replies", "meta"):
+    for d in ("prompts", "replies", "meta", "plan"):
         os.makedirs(os.path.join(b, d), exist_ok=True)
     dst = os.path.join(b, "hard-to-vary")
     if os.path.isdir(dst):

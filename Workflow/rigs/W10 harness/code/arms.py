@@ -86,23 +86,70 @@ def fixture(name):
         return f.read()
 
 
+# Arm (k), P4.8 (fault 16 of the stage-A review). Removing the router table's rows alone leaves
+# the mermaid graph, which does the same routing: under the skill's own marks the table and the
+# graph are two routes to one job, and removing one of two routes tests nothing. The sentences
+# below name the table, the graph or a row; left standing they both point at the removed rows
+# and give the reader the routing back in words. The list is closed: a sentence this rig expects
+# and does not find stops the run, so a later edit of file 33 cannot leave one in silently.
+ROUTER_SENTENCES = [
+    "Open one only when its row applies.",
+    "When a module is added, split or changed, update the table and the graph in the same edit.",
+    "A module with no row is unreachable: give it a row or remove it.",
+    "Every module has a row there and a node in the graph.",
+]
+
+
 def skill_variant(skill_md, kind):
-    """Arm (k), P4.8: the router table's rows removed. Returns (text, removed_lines)."""
+    """Arm (k), P4.8: the router table's rows, the mermaid graph that does the same routing,
+    and the sentences that name them, removed in memory. Returns (text, removed), where
+    removed is {"table_rows": [...], "graph_lines": [...], "sentences": [...]}."""
     if not kind:
-        return skill_md, []
+        return skill_md, {"table_rows": [], "graph_lines": [], "sentences": []}
     if kind != "no_router_table":
         raise SystemExit(f"unknown skill variant {kind!r}")
-    out, removed, inside = [], [], False
+    out, rows, graph, inside, in_graph = [], [], [], False, False
     for line in skill_md.split("\n"):
         if line.startswith("## "):
             inside = line.strip().lower().startswith("## where to look")
+            in_graph = False
+        fence = inside and line.strip().startswith("```")
+        if inside and (in_graph or fence):
+            graph.append(line)
+            if fence:
+                in_graph = not in_graph
+            continue
         if inside and line.lstrip().startswith("|"):
-            removed.append(line)
+            rows.append(line)
             continue
         out.append(line)
-    if not removed:
+    missing = [s for s in ROUTER_SENTENCES if s not in "\n".join(out)]
+    if missing:
+        raise SystemExit(f"arm (k): SKILL.md does not contain the sentence(s) {missing} this "
+                         f"variant removes; the edit is not the one P4.8 names. Nothing sent.")
+    kept, gone = [], []
+    for line in out:
+        new = line
+        for s in ROUTER_SENTENCES:
+            if s in new:
+                new = new.replace(s, "")
+                gone.append(s)
+        if new == line:
+            kept.append(line)
+            continue
+        new = re.sub(r"[ \t]{2,}", " ", new).strip()
+        # only a line a sentence was cut from is collapsed, and only when nothing of it is left
+        if not new or re.fullmatch(r"\*\*[^*]+\*\*[.:]?", new):
+            gone.append(line.strip())
+            continue
+        kept.append(new)
+    text = "\n".join(kept)
+    if not rows:
         raise SystemExit("arm (k): no router table rows found in SKILL.md; the variant would change nothing.")
-    return "\n".join(out), removed
+    if not graph:
+        raise SystemExit("arm (k): no router graph found in SKILL.md; the variant would leave the "
+                         "second route to the same job. Nothing sent.")
+    return text, {"table_rows": rows, "graph_lines": graph, "sentences": gone}
 
 
 def steps_for(arm, transport):
@@ -135,16 +182,30 @@ def _carrier_block(carrier, text):
     return f"{head}\n{text.strip()}\n=== END ===\n\n"
 
 
+# W11 decision D1 (fault 9 of the stage-A review): the assembling call of the partition arm is
+# handed the frozen question, its step and the pile of answers, and no document block. W3
+# section 5 gives the assembler "the pile of answers to write the report"; W8 B12's ground is
+# that "A final call handed a pile of answers assesses no support that any call wrote". With the
+# document in front of it the assembler could assess the whole candidate in one context, and
+# arm (d) matching arm (a) on the cross-step fields would then falsify P4.3 for a reason that is
+# the rig's. What this gives up, as D1 records it: an assembler that can check a quotation
+# against the text, so an arm (d) report's quotations are the test calls' quotations, and a
+# marker who finds a misquotation in an arm (d) report attributes it to the call that wrote it.
+NO_DOCUMENT_STEPS = {"SASM"}
+
+
 def user_message(arm, step, doc_text, question_block, carrier_text=None,
                  test=None, group_text=None, pile_text=None, skeleton=None):
     """The user turn of one call. The order is fixed for every arm: what is carried in,
-    then the frozen question, then the document, then the step's task."""
+    then the frozen question, then the document, then the step's task. The assembling step
+    SASM is handed no document block (W11 D1)."""
     a = ARMS[arm]
     out = ""
     if a["carrier"] in ("transcript", "summary", "summary_control", "carryover"):
         out += _carrier_block(a["carrier"], carrier_text)
     out += question_block + "\n\n"
-    out += f"=== THE DOCUMENT TO JUDGE ===\n\n{doc_text}\n\n=== END OF DOCUMENT ===\n\n"
+    if step not in NO_DOCUMENT_STEPS:
+        out += f"=== THE DOCUMENT TO JUDGE ===\n\n{doc_text}\n\n=== END OF DOCUMENT ===\n\n"
     if step == "SONE":
         t = TEST_BY_ID[test]
         out += (f"=== YOUR STEP ===\n{STEP_TITLE['SONE']}\n\n"

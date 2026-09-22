@@ -31,6 +31,21 @@ MARKS = ["held", "held if", "two routes", "loose", "idle", "borrowed", "fixed", 
 
 KEY_ENV = ["DEEPSEEK_API_KEY", "ATRIA_API_KEY"]
 
+# W11 decision D3 (fault 17 of the stage-A review): what every run record says, on both
+# transports, about the qualification of Derivation 3. It is a field of the record and of the
+# read-me; it is in no file any reader under test is handed.
+DERIVATION3_QUALIFICATION_SENT = False
+DERIVATION3_REASON = (
+    "Not sent to the reader. The thing under test is HV file 33 as it stands, so the skill copy "
+    "is byte-identical to HV Skill/authority/33/hard-to-vary/ and its word list carries the "
+    "unqualified form of Derivation 3. A correction to that word list would change the thing "
+    "under test: arm (k) and W8 part A8 both turn on which edits of the skill the reader saw. "
+    "W10 section 2's sentence is narrowed by W11 decision D3 to the agents that are not under "
+    "test - the builders, fixers, reviewers, markers of stages B and D, the stage E examiners "
+    "and the stage F reviewers - who receive the qualification in their prompts, as stage A's "
+    "did. What this gives up: a reader's report may carry the unqualified Derivation 3, and a "
+    "marker who sees it marks it as file 33's and not the reader's.")
+
 
 def assert_no_key(text, where):
     """Refuse to write anything that contains a key that is in the environment.

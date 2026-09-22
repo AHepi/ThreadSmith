@@ -12,10 +12,19 @@ returns. The marking itself is done by the agents the plan names (W10 stage D, S
 The marker never sees the run's arm, its repeat or its reader: the prompt carries a report
 number and the document's id only. That is the first marker's blindness to the arm; the second
 marker (second_marker.py) is blind to the report's identity as well.
+
+A field whose `source` is "the run record" is never asked of a marker (fault 2 of the stage-A
+review). criteria.json's own words: "source='the run record' means a program fills it from the
+transport's own record and the marker leaves it null." Those fields are left out of the prompt
+and filled at `collect` from <rig>/runs/<reader>/<run>.json. Asked of a marker who has only the
+report, they come back null, or worse guessed, and P4.6 then has no field and arm (e) never
+names its ports.
 """
 import os, sys, json, argparse
 import rig, marks as M
 from rig import RUNS, MARKING, write_json, write_text, read_json, stamp
+
+FROM_THE_RUN_RECORD = "the run record"
 
 HEAD = ("You are marking one report against criteria that were frozen before any report was read. "
         "You are not judging the report and you are not judging the document. You are recording, "
@@ -40,14 +49,73 @@ def field_block(f):
     return "\n".join(lines)
 
 
+def marker_fields(crit):
+    """The fields a marker is asked for: every field whose source is not the run record."""
+    return [f for f in crit["fields"] if f.get("source") != FROM_THE_RUN_RECORD]
+
+
+def from_the_record_fields(crit):
+    return [f for f in crit["fields"] if f.get("source") == FROM_THE_RUN_RECORD]
+
+
 def prompt_for(num, doc, report, crit, out_path):
+    fs = marker_fields(crit)
     body = [HEAD, f"Report number: {num}    Document: {doc}", "", "=== THE FIELDS ===", ""]
-    for f in crit["fields"]:
+    for f in fs:
         body.append(field_block(f)); body.append("")
     body += ["=== THE REPORT ===", "", report.strip(), "", "=== END OF THE REPORT ===", "",
-             "Write one JSON object with these keys: " + ", ".join(f["name"] for f in crit["fields"]),
+             "Write one JSON object with these keys: " + ", ".join(f["name"] for f in fs),
              f"Output path (use Write, once, the JSON only): {out_path}", ""]
     return "\n".join(body)
+
+
+def from_the_record(rec, crit):
+    """The fields criteria.json marks source='the run record', filled by program (fault 2).
+    Each value follows that field's own criterion, whose wording is quoted in the comments."""
+    out = {}
+    names = {f["name"] for f in from_the_record_fields(crit)}
+    reader = rec.get("reader", "")
+    arm = rec.get("arm", "")
+    calls = rec.get("calls") or []
+    if "modules_served" in names:
+        # "Filled by program from the transport's own record of the calls it served"
+        out["modules_served"] = sorted(set(rec.get("modules_served") or []))
+    if "requests" in names:
+        # "The number of requests the run made, the number of steps, and the tool-loop requests
+        #  counted apart."
+        r, s, t = rec.get("requests"), rec.get("steps"), rec.get("tool_loop_requests")
+        if r is None:
+            out["requests"] = "requests unknown; the record carries no count"
+        else:
+            tl = ("not observed on this transport" if t is None else t)
+            out["requests"] = f"requests {r}; steps {s}; tool-loop requests {tl}"
+    if "request_text_saved" in names:
+        # "'present, n of n' when a saved request file exists for every request the run made,
+        #  'missing, m of n' otherwise, with the run named."
+        want = [c.get("request") or c.get("prompt") for c in calls]
+        want = [p for p in want if p]
+        have = [p for p in want if os.path.exists(p)]
+        n = len(want) or (rec.get("requests") or 0)
+        if not want:
+            out["request_text_saved"] = f"missing, 0 of {n or 'unknown'} ({rec.get('run_id')})"
+        elif len(have) == len(want):
+            out["request_text_saved"] = f"present, {len(have)} of {len(want)}"
+        else:
+            out["request_text_saved"] = (f"missing, {len(want) - len(have)} of {len(want)} "
+                                         f"({rec.get('run_id')})")
+    if "ports_set" in names:
+        # "for arm (e) only; every other arm takes 'not arm (e)'. ... On the Sonnet transport the
+        #  value is 'none set; the skeleton was placed in the context'."
+        if arm != "e":
+            out["ports_set"] = "not arm (e)"
+        elif reader == "sonnet" or rec.get("port_set") is False or not rec.get("prefix_used"):
+            out["ports_set"] = "none set; the skeleton was placed in the context"
+        else:
+            sk = read_json(os.path.join(rig.FIXTURES, "report_skeleton.json"), "the skeleton")
+            lines = [f"set: {x}" for x in sk["ports_set"]] + \
+                    [f"not set: {x}" for x in sk["ports_not_set"]]
+            out["ports_set"] = "\n".join(lines)
+    return out
 
 
 def run_records(reader, only=None):
@@ -111,16 +179,30 @@ def main():
         return
     if o.cmd == "collect":
         index = read_json(os.path.join(base, "index.json"))["reports"]
-        out, missing = {}, []
+        recs = {r["run_id"]: r for r in (run_records(o.reader) if not o.dry else [])}
+        out, missing, no_record = {}, [], []
         for num, meta in index.items():
             p_ = os.path.join(base, "marks", f"{num}.json")
             if not os.path.exists(p_):
                 missing.append(num); continue
-            out[meta["run"]] = read_json(p_)
+            row = read_json(p_)
+            # the fields whose source is the run record are filled here, not by the marker
+            rec = recs.get(meta["run"])
+            if rec is None:
+                no_record.append(meta["run"])
+            else:
+                row.update(from_the_record(rec, crit))
+            out[meta["run"]] = row
         f = os.path.join(MARKING, f"marks_{o.tag}_{o.reader}.json")
         write_json(f, {"marker": o.tag, "reader": o.reader,
-                       "criteria_version": crit.get("version"), "made_at": stamp(), "marks": out})
-        print(f"{len(out)} marked, {len(missing)} missing {missing[:5]}; written {f}")
+                       "criteria_version": crit.get("version"), "made_at": stamp(),
+                       "fields_filled_from_the_run_record":
+                           [x["name"] for x in from_the_record_fields(crit)],
+                       "runs_with_no_run_record": no_record, "marks": out})
+        print(f"{len(out)} marked, {len(missing)} missing {missing[:5]}; "
+              f"{len(out) - len(no_record)} had the run-record fields filled by program"
+              + (f"; NO RUN RECORD for {no_record[:5]}" if no_record else "")
+              + f"; written {f}")
 
 
 if __name__ == "__main__":

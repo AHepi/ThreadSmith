@@ -38,8 +38,13 @@ URL = "https://api.deepseek.com/chat/completions"
 URL_BETA = "https://api.deepseek.com/beta/chat/completions"
 MODEL = "deepseek-flash"
 EFFORT = "high"
-MAX_TOKENS = 32000        # the service allows 393,216; a report under 1,200 words needs far less.
-                          # W10 section 2: "token spend not limited". Raise it with --max-tokens.
+# W10 section 2: "token spend not limited". The documented maximum is 384K (393,216 tokens) and
+# A6's clients/deepseek_client.py defaults to it; this constant is the value actually sent, so a
+# lower number here was the ceiling whatever the client's default said (fault 14 of the stage-A
+# review). The ceiling costs nothing unused and a truncated report is a lost run: arm (e)'s
+# prefixed report and arm (d)'s 24-answer assembler are the long calls. finish_reason is saved
+# per call in the reply record, so a truncation shows.
+MAX_TOKENS = 393216       # the documented maximum. Lower it for one run with --max-tokens.
 _lock = threading.Lock()
 
 CLIENT = "deepseek_transport"

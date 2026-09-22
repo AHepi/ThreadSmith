@@ -17,8 +17,15 @@ calls per run under <rig>/calls/deepseek/<run>/, each call saved twice: NN-step.
 file exists is skipped; inside a run, a call whose reply file exists is reused and not resent.
 
 Every module the tool loop serves is recorded by the rig (`modules_served`), never by the
-reader; the reader's own mention of modules is kept apart as `modules_self_reported`
-(W8 part C4, prediction P4.9).
+reader (W8 part C4). What the reader says it opened is A4's marked field
+`modules_self_reported`, which a marker fills by A4's criterion; this rig writes no field of
+that name. What it writes is `modules_named_in_report`, a raw aid: a substring sweep for the
+seven file names over the report text, which fires on ordinary English ("building a case" is
+not the building module) and is never a field. P4.9 is read over the marked field against
+`modules_served` (fault 11 of the stage-A review).
+
+The qualification of Derivation 3 is not in any reader's context, and every run record says so
+in `derivation3_qualification_sent` with the reason (W11 decision D3).
 """
 import os, sys, json, time, argparse, concurrent.futures as cf
 
@@ -38,7 +45,12 @@ def dry_reply(step):
     return DRY_REPLIES.get(step, "(dry run: no reply)")
 
 
-def self_reported_modules(text):
+def modules_named_in_report(text):
+    """A raw aid, not a field. A substring sweep for the seven file names over the report text.
+    It fires on ordinary English: "building a case" gives ['building'] and "I am reporting what
+    happened" gives ['reporting']. A4's criterion for modules_self_reported says the opposite
+    ("An ordinary use of a word that is also a file name does not count"), so the marked field
+    is the marker's and P4.9 is read over it, never over this (fault 11)."""
     low = (text or "").lower()
     return [m for m in MODULES if m in low]
 
@@ -59,16 +71,15 @@ class Run:
             if self.exchange_rec["void"]:
                 raise SystemExit(f"{self.rid}: arm (x) replaced one of the two names zero times. Nothing sent.")
         self.text = text
-        self.q = question.for_document(row)
+        # arm (x): the frozen question quotes the document the reader was handed (fault 8)
+        self.q = question.for_document(row, exchanged=(self.cfg["document"] == "exchanged"))
         self.with_cl = self.cfg["question"] != "no_change_list"
         self.qblock = question.render(self.q, self.with_cl)
         self.skill_md = skillcheck.skill_main()
-        self.removed = []
+        self.removed = {"table_rows": [], "graph_lines": [], "sentences": []}
         if self.cfg["skill_variant"]:
             self.skill_md, self.removed = arms.skill_variant(self.skill_md, self.cfg["skill_variant"])
         self.sys = arms.system_message(arm, "deepseek", self.skill_md)
-        if not self.with_cl:
-            question.check_withheld(self.sys + self.text, self.q)
         self.skeleton = None
         if self.cfg["prefix"]:
             self.skeleton = arms.fixture("report_skeleton.md")
@@ -82,6 +93,12 @@ class Run:
         msgs = list(messages)
         if prefix_text is not None:
             msgs = msgs + [{"role": "assistant", "content": prefix_text, "prefix": True}]
+        if not self.with_cl:
+            # the arm (f) gauge, over the assembled messages of this call, as the Sonnet driver
+            # runs it over the whole prompt body (fault 20). Run once at construction on the
+            # system message and the document alone, it never reached the user turn where the
+            # question block sits, and the docstrings said it did.
+            question.check_withheld("\n".join(str(m.get("content") or "") for m in msgs), self.q)
         body = T.body_for(msgs, tools=(arms.TOOL if self.opts.router else None),
                           prefix=bool(prefix_text), max_tokens=self.opts.max_tokens,
                           effort=self.opts.effort, model=self.opts.model,
@@ -161,14 +178,22 @@ class Run:
                "model": self.opts.model, "effort": self.opts.effort, "stream": self.opts.stream,
                "max_tokens": self.opts.max_tokens, "client": T.CLIENT,
                "skill_file": rig.SKILL_FILE, "skill_digests": skillcheck.check(),
-               "skill_variant": ({"kind": cfg["skill_variant"], "removed_lines": self.removed}
+               "skill_variant": ({"kind": cfg["skill_variant"], "removed": self.removed,
+                                  "removed_lines": (self.removed["table_rows"]
+                                                    + self.removed["graph_lines"]
+                                                    + self.removed["sentences"])}
                                  if cfg["skill_variant"] else None),
+               "derivation3_qualification_sent": rig.DERIVATION3_QUALIFICATION_SENT,
+               "derivation3_qualification_reason": rig.DERIVATION3_REASON,
                "question": question.identity(self.q, self.with_cl), "question_as_sent": self.qblock,
                "change_list_withheld": not self.with_cl,
                "router_live": self.opts.router, "modules_served": self.modules,
                "modules_served_by": "the rig's tool loop, not the reader",
-               "modules_self_reported": self_reported_modules(report),
-               "modules_self_reported_by": "module names found in the reader's own report text",
+               "modules_named_in_report": modules_named_in_report(report),
+               "modules_named_in_report_by": ("a substring sweep of the report text for the seven "
+                                              "file names; a raw aid, not a field. It fires on "
+                                              "ordinary English. A4's marked modules_self_reported "
+                                              "is the field, and P4.9 is read over that"),
                "requests": self.requests, "tool_loop_requests": self.tool_loop_requests,
                "steps": len([c for c in self.calls if not c.get("tool_loop")]),
                "calls": self.calls, "step_replies": self.replies, "report": report,
@@ -235,6 +260,8 @@ class Run:
                                             {"role": "user", "content": user}])
         self.replies["S1234"] = text
         leaks = partition.leak_check(text)
+        self.parts_pass_leaks = leaks
+        partition.gate(leaks, self.rid)        # a leaking parts pass stops this run (fault 10)
         parts = partition.parse_parts(text)
         plan = partition.calls(parts, TEST_IDS, g=self.opts.groups, mode=self.opts.split)
         answers = []
@@ -252,17 +279,32 @@ class Run:
         return {"partition": {"parts": parts, "n_parts": len(parts), "groups": self.opts.groups,
                               "split_mode": self.opts.split, "test_calls": len(plan),
                               "parts_pass_leaks": leaks,
-                              "leak_gauge": "lines of the parts pass carrying cross-step material; "
-                                            "a run with any is reported, never silently counted"}}
+                              "leak_gauge": "lines of the parts pass carrying cross-step material, "
+                                            "in the skill's words or in plain words; a run with "
+                                            "any is stopped and not counted (partition.gate)"}}
 
 
 def jobs(opts, rows):
+    try:
+        sp = corpus.split(opts.split_file, rows)
+    except SystemExit:
+        sp = None                       # a fixture run with no split file of its own
     if opts.docs:
         docs = opts.docs
+        # a held-out document is never handed to a driver (fault 19). split.json: "They are not
+        # spares to be swapped in silently: using one is a change to the split and a new claim."
+        held = set(sp["held_out"]) if sp else set()
+        asked = [d for d in docs if d in held]
+        if asked:
+            raise SystemExit(f"{sorted(asked)} are held out of the split ({sp['from']}) and are "
+                             f"not spent this round (W10 section 12). Using one is a change to "
+                             f"the split and a new claim. Nothing sent.")
     else:
-        sp = corpus.split(opts.split_file, rows)
+        if sp is None:
+            raise SystemExit("no split and no --docs. Nothing sent.")
         print(f"  the split comes from {sp['from']}: {len(sp['arms'])} for the arms, "
-              f"{len(sp['reserve'])} in reserve")
+              f"{len(sp['reserve'])} in reserve, {len(sp['held_out'])} held out and not "
+              f"handed to any driver")
         docs = sp["arms"]
     armlist = arms.ARM_IDS if opts.arms == ["all"] else opts.arms
     for a in armlist:
@@ -319,7 +361,17 @@ def main():
         r = Run(rows[doc], corpus.document(doc, tdir, rows[doc])[0], arm, k, o)
         if not o.dry and os.path.exists(r.out) and not o.force:
             return "skip"
-        rec = r.go()
+        try:
+            rec = r.go()
+        except partition.Leak as e:
+            # the run is stopped and not counted: no run record is written, so nothing marks it.
+            # What was flagged is written beside its calls for a person to read (fault 10).
+            write_json(os.path.join(r.dir, "run.stopped.json"),
+                       {"run_id": r.rid, "reader": READER, "arm": arm, "document": doc,
+                        "repeat": k, "stopped_because": str(e),
+                        "parts_pass_leaks": getattr(r, "parts_pass_leaks", []),
+                        "parts_pass": r.replies.get("S1234", ""), "stopped_at": stamp()})
+            return f"STOPPED: {e}"
         return (f"{rec['requests']} requests ({rec['tool_loop_requests']} of them tool-loop), "
                 f"{len(rec['report'].split())} words, modules {rec['modules_served']}")
 

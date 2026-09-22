@@ -48,8 +48,12 @@ STEP_TASK = {
          "method's eight marks on every part. Keep the report under 1,200 words."),
  "S1234": ("Do Steps 1 to 4 of the method's procedure, and nothing else: freeze the question, list the jobs, take the "
          "explanation apart into numbered parts, write the change list.\n"
-         "Do not run any test. Do not name a pair of parts that pull against each other. Do not build a rival. "
-         "Do not write a report. Those come later, in other hands."),
+         "Do not run any test. Do not name a pair of parts that pull against each other, in those words or in any "
+         "others (that making one stronger makes another weaker, which gives way, where the line is). Do not build "
+         "a rival, and do not say that nothing separates this explanation from another or that two accounts are the "
+         "same at this level. Do not say that two parts are two routes to one job, and do not say what happens when "
+         "parts are removed in groups. Do not put a mark on any part. Do not write a report. Those come later, in "
+         "other hands."),
  "SASM": ("You are handed the answers other readers gave to single tests, each on some of the parts. "
          "Do Step 7: write the report in the form the method gives, with one of the method's eight marks on every part. "
          "Use only what is below. Keep the report under 1,200 words."),

@@ -23,9 +23,46 @@ stop if it is not there. `--criteria PATH` points them elsewhere.
       "layer":     the document | the thing under test | the reader     (plan 52's three layers)
       "criterion": the rule in words a stranger could apply
       "example":   { "report": which report of the record, "value": ..., "quote": the sentence }
+      "source":    the report | the run record
+      "certified_candidate": true | false
     } ]
+  "corpus_affordance": optional; W11 decision D4's table (see below)
 }
 ```
+
+Two keys the counts turn on, both added after the stage-A review.
+
+**`source`.** "the report" means a marker reads it. "the run record" means a program fills it and
+the marker never sees it: `first_marker.py` leaves such a field out of the marking prompt and
+fills it at `collect` from `<rig>/runs/<reader>/<run>.json`. Asked of a marker who has only the
+report, those fields come back null or guessed, and P4.6 then has no field and arm (e) never
+names its ports. A field with no `source` is read as the report's.
+
+**`certified_candidate`.** True when stage B can certify the field on the 96 reports in hand.
+`agreement.py` reads P4.1, P4.2, P4.3, P4.4, P4.5 and PA.3 over fields with it true — and over
+stage B's own certified list when one is passed with `--certified` — and prints the read-outs
+and the gauges beside every count, never inside one. A field with no `certified_candidate` is
+not certified, so a criteria file that omits the key carries no arm difference anywhere and the
+counts file says so.
+
+**The corpus-affordance table** (W11 decision D4) names, for every cross-step field the corpus
+records, which of the eight arms documents afford it; P4.2 and P4.3 are read over the fields at
+least one affords, and over every cross-step field the table does not name. A field the corpus
+records neither way is not named in the table at all (fault 28 of the fix round's review), so
+the rule two paragraphs below reaches it: found nowhere means unknown.
+`marks.affordance()` looks for it in the criteria file's `corpus_affordance`,
+`cross_step_affordance`, `affordance` or `what_the_corpus_affords` key, then at
+`<rig>/instrument/affordance.json`, `corpus_affordance.json`, `cross_step_affordance.json`.
+Either shape is read:
+
+```
+{"fields": {"test_flip": ["W8","W9"], "test_patches": []}}
+{"fields": [ {"field": "test_flip", "affords": ["W8","W9"]}, ... ]}
+```
+
+A field the table does not name is read, not excluded: "found nowhere means unknown". A field
+the table names with no arms document is left out of P4.2 and P4.3, and the counts file says
+which and why.
 
 What each kind means for agreement is in `marks.py`: enum, int and bool agree when equal; a set
 agrees when the sets are equal; a map_enum agrees when the whole map is equal; text is never
