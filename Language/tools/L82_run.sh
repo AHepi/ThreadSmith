@@ -17,7 +17,8 @@
 # (its part 3 needs them); 7 a manifest. Every call leaves a receipt. Failed and skipped calls are listed in
 # FAILED.txt (a non-zero exit, or an empty answer, exit 99) and SKIPPED.txt (an empty report) in the reader and prose_reader
 # directories. Nothing is written outside OUT_DIR. No other caller of either provider may run while this script runs: the
-# lock is shared within one run only, so the script refuses to start while another ask_model.py process is running.
+# lock is shared within one run only, so the script refuses to start while another ask_model.py, translate_via_api.py or
+# L82_run.sh process (other than itself and its ancestors) is alive.
 # Token caps: 60000 for a translation (the pilot saw Mimo's reasoning alone reach 24000 on T11-B), 30000 for a reader
 # or prose-reader call (Mimo's reasoning ran to 10800 tokens on the pilot's 12000-token prompt).
 # Timings printed: translations, drivers, consequences, rig (drivers + consequences), reader, prose reader.
@@ -30,7 +31,10 @@ CORPUS="$(cd "$1" && pwd)" || { echo "no corpus dir $1" >&2; exit 2; }
 PAIRS="$(cd "$(dirname "$3")" && pwd)/$(basename "$3")"
 if [ -e "$2" ] && [ -n "$(ls -A "$2" 2>/dev/null)" ]; then echo "OUT_DIR $2 exists and is not empty; the drivers append to raw logs, so use a fresh directory" >&2; exit 2; fi
 mkdir -p "$2"; OUT="$(cd "$2" && pwd)"
-if pgrep -f "ask_model.py" > /dev/null 2>&1; then echo "another ask_model.py caller is running; it would share neither lock; stop it first" >&2; exit 2; fi
+# start guard: no caller, translator or runner may be alive (between calls included), other than this script and its ancestors
+ANC=""; q=$$; while [ "$q" -gt 1 ] 2>/dev/null; do ANC="$ANC $q"; q=$(ps -o ppid= -p "$q" 2>/dev/null | tr -d ' '); [ -n "$q" ] || break; done
+OTHERS=$(pgrep -f 'ask_model\.py|translate_via_api\.py|L82_run\.sh' 2>/dev/null | while read -r pid; do case " $ANC " in *" $pid "*) ;; *) echo "$pid";; esac; done)
+if [ -n "$OTHERS" ]; then echo "another caller, translator or runner is running (pids:$(echo $OTHERS | tr '\n' ' ')); it would share neither lock; stop it first" >&2; exit 2; fi
 mkdir -p "$OUT/translations" "$OUT/ledgers" "$OUT/reports" "$OUT/consequences" "$OUT/sameness" "$OUT/reader" "$OUT/prose_reader" "$OUT/scratch"
 export ASK_MODEL_LOCKDIR="$OUT"   # one lock per provider for every step of this run
 TEXTS=$(ls "$CORPUS" | grep -E '^B[0-9]+\.txt$' | sed 's/\.txt$//')
