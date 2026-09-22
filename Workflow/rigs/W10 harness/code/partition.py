@@ -81,11 +81,55 @@ class Leak(Exception):
 # out by the fringe count"), which is a false alarm this narrowing does not remove. The gate is
 # set the strict way round on purpose and every flagged line is written into the stopped run's
 # record, so a person can see which it was.
+#
+# --------------------------------------------------------------------------------------------
+# The pull family, widened again (fault 29 of the fix round's review).
+#
+# Fault 27's bill, arriving on the input neither fixer had used: the 3,292 lines of the 96 real
+# reports of the record, written by readers under file 33 who knew nothing of this gate. The
+# narrowing above asks for a part reference WRITTEN OUT ("part 2"), and a reader names its parts
+# "P2", "P10", "(1)", "N-bar_I", or by quotation, and writes the verdict under a heading. Of the
+# 41 pull / stronger-weaker lines in those reports exactly ONE carries "part N"; the narrowed
+# rules caught 21, and 15 of the 20 missed open with a pull heading:
+#   "**Pull.** P10 (complexity more relevant) pulls against P12 (modesty)."
+#   "*Pull:* P2/P5 pull against J3."
+#   "- **Pull.** N-bar_I and f_P pull against each other: push N-bar_I up and f_P must fall"
+# So the pull family gets the heading clause the rival family already has, and a report's own
+# label shape counts as a part reference beside "part 2":
+#   pull ... against  - the line opens with the word as a heading ("**Pull.**", "*Pull:*",
+#                       "- **Pull.**", "3. Pull:"), or "pull ... against" stands in it beside a
+#                       part reference of either shape ("part 2", "P2", "P10").
+#   stronger/weaker   - unchanged: "part 2", written out. The label shape is NOT given to this
+#                       rule, and running the 96 says why. Three of their lines carry a
+#                       label-shaped reference: one is a pull verdict the heading clause catches
+#                       anyway, one is a marks-table row CELL_MARK already catches, and one is
+#                       innocent - "- **Direction.** ... via P4 ... distinguishing his weaker
+#                       principle from the stronger" - which fault 29's own evidence names as a
+#                       line that must stay clean. A line under a "Pull." heading fires whatever
+#                       words follow it, so a stronger/weaker verdict written under the heading
+#                       is not lost by this.
+# On the 96 real reports this takes the catch from 21 of 41 to 38, and fires on none of fault
+# 27's seven innocent lines, neither innocent line of fault 29's evidence, and none of the 325
+# numbered sentences of W1, W9 and W12.
+#
+# What it gives up, and it is in the read-me too: a pull named with neither a heading nor a part
+# reference of either shape ("Comprehensiveness pulls against journal word limits", "Pulls
+# against the next row") is caught by nothing; a stronger/weaker verdict with a label-shaped
+# reference and no heading ("Making P1 stronger makes P4 weaker") is caught by nothing; and the
+# heading clause would fire on a numbered part of a document whose own line opened "3. Pull: ...",
+# which none of W1, W9 and W12 has.
 _PART_REF_WRITTEN = re.compile(r"(?i)\bparts?\s+\d{1,2}\b")
+# A report's own label shape for a part, beside "part 2" (fault 29): "P2", "P10", "P 3".
+_PART_REF_LABEL = re.compile(r"(?i)\bparts?\s+\d{1,2}\b|\bP\s?\d{1,2}\b")
 _PULL_AGAINST = re.compile(r"(?i)\bpull(s|ing)?\b[^.]{0,80}\bagainst\b")
 _STRONGER_WEAKER = re.compile(
     r"(?i)\b(stronger|strengthen(s|ing|ed)?)\b[^.]{0,80}\b(weaker|weaken(s|ing|ed)?)\b"
     r"|\b(weaker|weaken(s|ing|ed)?)\b[^.]{0,80}\b(stronger|strengthen(s|ing|ed)?)\b")
+# "**Pull.**", "*Pull:*", "- **Pull.**", "3. Pull:": the word, at the head of the line, with
+# a heading's separator after it. The rival family's rule, built for the pull family
+# (fault 29).
+_PULL_HEADING = re.compile(
+    r"(?i)^[\s>*_`#\-]*(?:\d{1,2}[.)\]][ \t]*)?[\s*_`]*pulls?\b[\s*_`]*[:.–—\-]")
 # "Rival:", "- **Rivals.**", "1. Rival - the harbour works": the word, at the head of the line,
 # with a heading's separator after it.
 _RIVAL_HEADING = re.compile(
@@ -102,12 +146,16 @@ _BUILD_NEAR_RIVAL = re.compile(
 
 
 def _pull_against(s):
-    """"pull … against" as a cross-step verdict: a part reference written out in the line."""
-    return bool(_PULL_AGAINST.search(s) and _PART_REF_WRITTEN.search(s))
+    """"pull … against" as a cross-step verdict: the line opens with the word as a heading
+    (fault 29), or a part reference stands in the line, written out or label-shaped."""
+    return bool(_PULL_HEADING.match(s)
+                or (_PULL_AGAINST.search(s) and _PART_REF_LABEL.search(s)))
 
 
 def _stronger_weaker(s):
-    """Stronger/weaker as a cross-step verdict: a part reference written out in the line."""
+    """Stronger/weaker as a cross-step verdict: a part reference written out in the line. The
+    label shape is deliberately not given to this rule; the comment above says what running
+    the 96 real reports showed, and a line under a "Pull." heading fires by the rule above."""
     return bool(_STRONGER_WEAKER.search(s) and _PART_REF_WRITTEN.search(s))
 
 
@@ -121,8 +169,9 @@ def _rival_built(s):
 
 #
 # Three of the plain-word patterns below are narrowed the way fault 24's last rule was
-# narrowed (fault 27 of the fix round's review); the predicates are defined just above the
-# list and the reason is written there.
+# narrowed (fault 27 of the fix round's review), and two of those three - the pull family -
+# are widened again by fault 29. The predicates are defined just above the list and both
+# reasons are written there.
 LEAK = [
     (r"(?i)\bpairs? that pull\b", "a pulling pair"),
     (_pull_against, "a pulling pair"),
@@ -355,6 +404,31 @@ if __name__ == "__main__":
         "4. The rival accounts of aberration were both current in 1887.",
         "5. The screw pulls the mirror against the casting until the fringes settle.",
         "7. A stronger source gives a brighter fringe and a weaker one a fainter.",
+    ]:
+        got = leak_check(line)
+        print(f"  {'FLAGGED ' + got[0][0] if got else 'clean':52} {line[:70]}")
+
+    # Fault 29: the pull family fires on the two forms a reader really writes - the verdict under
+    # a heading, and a report's own label for a part. All four lines are real report lines of the
+    # record's 96, quoted in fault 29's evidence.
+    print("\nthe four pull forms of fault 29, in the 96 real reports' own words "
+          "(all must fire):")
+    for line in [
+        "**Pull.** P10 (complexity more relevant) pulls against P12 (modesty).",
+        "*Pull:* P2/P5 pull against J3.",
+        "- **Pull.** N\u0304_I and f_P pull against each other: push N\u0304_I up and f_P must fall",
+        "That is the paper's central pull: **P3 and P7 pull against each other.**",
+    ]:
+        got = leak_check(line)
+        print(f"  {'CAUGHT ' + got[0][0] if got else 'MISSED':52} {line[:70]}")
+    print("\nthe two innocent lines of fault 29's evidence, also real report lines "
+          "(neither may fire):")
+    for line in [
+        "**Change list.** Covers: P vs NP resolution; efficient vs lookup-table AI; finite vs "
+        "infinite conversation; weaker vs stronger reducing class.",
+        "- **Direction.** The reasoning runs from a population fact to a personal credence, via "
+        "P4 \u2014 a \"what can we tell\" step, not a causal one. Bostrom keeps this straight, "
+        "distinguishing his weaker principle from the stronger, more contested one.",
     ]:
         got = leak_check(line)
         print(f"  {'FLAGGED ' + got[0][0] if got else 'clean':52} {line[:70]}")

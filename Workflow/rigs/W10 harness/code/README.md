@@ -234,7 +234,7 @@ itself, and shows only that the harness runs.
   "2. loose — any near neighbour would do", "| 1 | held | … |"), or it is the whole content of a
   table cell ("| A | held | … |", which the first rule missed altogether). Every other pattern
   and the gate itself are unchanged; `python3 partition.py` runs the four verdict forms, the
-  five innocent lines, and fault 27's fourteen below. What this gives up, both ways: a mark
+  five innocent lines, fault 27's fourteen and fault 29's six below. What this gives up, both ways: a mark
   written as a sentence about a part
   ("Part 4 is idle") is now caught by nothing, because the wording that would catch it is the
   wording that fires on "the mirror is loose in its mounting"; and a Step 4 change-list table
@@ -258,9 +258,10 @@ itself, and shows only that the harness runs.
   it, or the line also says the rival is ruled out, told apart or separated, or a build word
   stands within forty characters of it. *pull … against* and *stronger/weaker* fire only where a
   part reference is **written out** in the line ("part 2", "parts 3 and 4"); the line's own
-  leading number does not count, which is what fault 24 tripped on. Every other pattern and the
-  gate are unchanged, and "Pairs that pull: 1 against 4" is still caught by the unnarrowed first
-  pattern. What this gives up, said as fault 24's give-ups are said: a rival built in a sentence
+  leading number does not count, which is what fault 24 tripped on. Fault 29, in the next
+  paragraph, widens *pull … against* again and leaves *stronger/weaker* as this sentence
+  says. Every other pattern and the gate are unchanged, and "Pairs that pull: 1 against 4"
+  is still caught by the unnarrowed first pattern. What this gives up, said as fault 24's give-ups are said: a rival built in a sentence
   that neither opens with the word nor uses one of those verbs ("Stokes's account is a rival to
   Fresnel's") is now caught by nothing; a pulling pair named without writing out a part number
   ("making the first stronger makes the second weaker") is caught by nothing; a part written in
@@ -268,6 +269,33 @@ itself, and shows only that the harness runs.
   on a parts pass whose own document rules a rival out in its own words ("2. The rival
   hypothesis of Stokes is ruled out by the fringe count"), which is a false alarm this narrowing
   does not remove.
+- **The pull family counts a heading, and a report's own label for a part** (fault 29). Fault
+  27's narrowing asked for a part reference **written out** ("part 2"), and it was written
+  without running the rules on the English a reader actually writes. Run on the 3,292 lines of
+  the record's 96 marked reports — written by readers under file 33 who knew nothing of this
+  gate — the two pull rules were nearly inert: of the 41 pull / stronger-weaker lines in them
+  exactly **one** carries "part N", the gate caught 21, and 15 of the 20 it missed open with a
+  pull heading ("**Pull.** P10 (complexity more relevant) pulls against P12 (modesty)",
+  "*Pull:* P2/P5 pull against J3", "- **Pull.** N̄_I and f_P pull against each other"). A reader
+  names its parts "P2", "P10", "(1)" or by quotation, and writes the verdict under a heading. So
+  *pull … against* now fires where the line opens with the word as a heading, built exactly as
+  the rival rule's heading clause is built, or where a part reference stands in the line in
+  either shape ("part 2", "P2", "P10"). On those 96 the catch goes from 21 of 41 to 38; no line
+  the gate caught before is lost; the 27 lines newly flagged across all 3,292 are pull verdicts,
+  and the 10 of them that carry no "pull … against" at all are caught by the heading alone.
+  *stronger/weaker* keeps "part 2" written out, and running says why: of the three
+  stronger/weaker lines in the 96 that carry a label-shaped reference, one is a pull verdict the
+  heading clause catches anyway, one is a marks-table row `CELL_MARK` already catches, and the
+  third is innocent — "- **Direction.** … via P4 … distinguishing his weaker principle from the
+  stronger" — which fault 29's own evidence names as a line that must stay clean; and a
+  stronger/weaker verdict written under a "Pull." heading is caught by the heading clause
+  whatever words follow it. What this gives up, said as fault 24's and 27's give-ups are said: a
+  pull named with neither a heading nor a part reference of either shape ("Comprehensiveness
+  pulls against journal word limits", "Pulls against the next row") is caught by nothing; a
+  stronger/weaker verdict with a label-shaped reference and no heading ("Making P1 stronger
+  makes P4 weaker") is caught by nothing; and the heading clause would fire on a document's own
+  numbered line opening "3. Pull: …", which none of W1, W9 and W12 has. Every pattern other than
+  the two pull rules, and the gate, are unchanged.
 - **Arm (d)'s assembling call is handed no document** (W11 decision D1). It gets the frozen
   question, its step and the pile of answers. W3 section 5 gives the assembler "the pile of
   answers to write the report" and W8 B12's ground is that "A final call handed a pile of
