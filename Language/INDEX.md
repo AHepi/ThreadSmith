@@ -1,6 +1,6 @@
 # Language - index
 
-Every research state of the ledger language, in order, with links. Numbers are log entries in the [project story](<records/Checked reasoning language - project story.md>), which is the full account. "Not in bundle" means the file is described in the log but was left out of both zips as superseded; it is not here.
+Every research state of the ledger language, in order, with links. Numbers through the shared history refer to the [shared project story](<records/Checked reasoning language - project story.md>); L60 onward refer to the [Language project story](<records/Language - project story.md>). Current pointers were reconciled at L67 on 21 September 2026. "Not in bundle" means the file is described in the log but was left out of both zips as superseded; it is not here.
 
 ## 1. The first theory and its research (logs 01 to 05)
 | | |
@@ -58,7 +58,7 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Interpretation | [37 Test results](<results/37 Test results - blind sample from the literary stress test.md>): seven of eight matched; the miss (T07B, a told story) was predicted, then fixed by patch 15 (a told world stands alone). Patch 16: "cannot tell" for a plan the ledger knows nothing about. |
 | Authority | [38 The ledger language - complete definition](<authority/38 The ledger language - complete definition.md>) - TOLD as a fourth standing; "cannot tell" under SO THAT. [39 Prompt - translate a text into the ledger language](<authority/39 Prompt - translate a text into the ledger language.md>) - the translator's task, in positive wording. |
 | Rig | [rigs/](rigs/) as of these two patches ("38 Checker rigs - both, current"). |
-| Next | Give 38 and 39 to the other model with one of its own texts; compare ledgers line by line. |
+| Next at that stage | Give 38 and 39 to the other model with one of its own texts; compare ledgers line by line. Subsequently done for six audit texts at L62; instruction 46 is the separate reverse comparison. |
 
 ## 7. The other model's audit of 38 and 39 (logs 45, 58, L62) - plan run, no change built
 | | |
@@ -67,19 +67,19 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Raw result | [45 Audit package - the other model on 38 and 39](<results/45 Audit package - the other model on 38 and 39/>) - kept unchanged; its `README.md` is the way in and `tools/validate_package.py` checks its hashes and counts. Includes the 324-input literary corpus of log 37, which was not in the earlier bundles. |
 | Interpretation | Log 45: what it holds, what it does not, four findings confirmed against the text of 38 and 39 (F01, F02, F04, F15), two references the record cannot place ("02"; the skill read from a GitHub repository). |
 | Test | [45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted](<tests/45 Test plan - the 38 and 39 audit package, ledgers compared and findings sorted.md>) - Part A: six ledgers compared by the sameness test; Part B: fifteen findings sorted into the three piles of log 33 by running each forcing case on the rig as it stands. |
-| Instruction | [46 Next instruction for the other model - translate the eight texts of plan 37](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - the live one: the eight texts of plan 37 under 38 and 39, one family per stage, then three short answers (why its six are TOLD; what "02" is; which skill it read). Not yet sent. |
+| Instruction | [46 Next instruction for the other model - translate the eight texts of plan 37](<tests/46 Next instruction for the other model - translate the eight texts of plan 37.md>) - issued in the other session: Stage 1 (T05-B and T05-D) returned in chat. The remaining families and Stage 5 answers have not been verified or archived here; recover the continuation before repeating work. See the session receipt at L67. |
 | Execution attempt | [58 Execution attempt - the other model on plan 45](<results/58 Execution attempt - the other model on plan 45/>) - the other model was handed plan 45; blocked before Part A with no s(CASP) on its machine. Kept unchanged. It exported its six tables as `.json`/`.pl` pairs (unparsed, not run), registered the fifteen Part B rows with every observed pile null, and recorded three discrepancies against the plan's predictions (N17, N22, N03-B), which stand beside the plan; the plan is unchanged. |
 | Run | By OpenAI Codex as worker, from the brief [L60](<tests/L60 Handoff - a new agent runs plan 45.md>); its return kept whole at [L62 Return - plan 45 run by OpenAI Codex](<results/L62 Return - plan 45 run by OpenAI Codex/>); eight of its runs repeated here in [45 Reruns by the orchestrator](<results/45 Reruns by the orchestrator/>). |
 | Results | [45 Test results](<results/45 Test results - the 38 and 39 audit package, ledgers compared and findings sorted.md>): Part A five of six the same content; Part B F04, F09, F15 in pile 2, F09 and F15 confirmed failures of the language; twelve of fifteen piles as predicted. |
 | Lessons | Language Lessons 51 to 53 and L2 (the driver's NO FAULT FOUND cannot tell an answered question from one it could not ask). |
-| Next | On the owner's word: the F15 change on N18-A, control N18-B, every ledger rerun. Held: fixture standing; R06; F04's scope; what "02" is. |
+| Remaining after L62 | No plan-45 rerun is pending. F15 on N18-A, control N18-B, and every-ledger regression remain unbuilt; the L63–L66 scope, consequences and blind/read-back sequence now precedes that change. Held: fixture standing; R06; F04's scope; what "02" is. |
 
-## 8. Scope as a contract (L63, corrected as L64) - draft for the owner
+## 8. Scope as a contract (L63, corrected as L64) - accepted at decision L7
 | | |
 | --- | --- |
 | Story | Decisions L4 and L5: the experiment is for parsing prose for an external checker, faults and now consequences; four error sources; scope first. Five steps approved. |
-| Authority | [L64 Scope - the contract the language claims, second version](<authority/L64 Scope - the contract the language claims, second version.md>), superseding [L63](<authority/L63 Scope - the contract the language claims, first version.md>) which misread the owner on meaning preservation (Lesson L3) - the question in the authority document's form, the jobs by whose they are, texts and findings in scope with the run that saw each, exclusions with gauges and proposed thresholds, the four error sources with what each may cost, pairs that pull, what would show it wrong, what is left to the owner. Never edited; the owner's strikes make L65. |
-| Next | The strikes; then the consequences prototype (prediction first); the read-back test; the blind-translator test; F15 and F09. |
+| Authority | [L64 Scope - the contract the language claims, second version](<authority/L64 Scope - the contract the language claims, second version.md>), superseding [L63](<authority/L63 Scope - the contract the language claims, first version.md>) which misread the owner on meaning preservation (Lesson L3) - the question in the authority document's form, the jobs by whose they are, texts and findings in scope with the run that saw each, exclusions with gauges and proposed thresholds, the four error sources with what each may cost, pairs that pull, what would show it wrong, what is left to the owner. Accepted without strikes at decision L7; L65 is the completed consequences prototype. The accepted scope file remains unchanged. |
+| Progression | Scope accepted; consequences prototype completed at L65; read-back and blind translation combined in L66. F15 and F09 remain later work. |
 
 ## 9. Consequences, a prototype (L65) - run
 | | |
@@ -89,10 +89,25 @@ Every research state of the ledger language, in order, with links. Numbers are l
 | Raw result | [L65 Consequences prototype - the tomato ledger](<results/L65 Consequences prototype - the tomato ledger/>): the program's output, both runs, and the raw log of 140 queries. Program: `tools/consequences.py`. |
 | Interpretation | [L65 Test results](<results/L65 Test results - consequences, a prototype on the tomato ledger.md>): 10 derived facts, 4 of them consequences; 32 delta lines; 7 s; five of six expectations right; the pull is not real at this size. |
 | Lessons | L4 (a new program's first output). |
-| Next | The read-back test (step three), plan first; the program on a fault-free and on the longest ledger. |
+| Progression | The read-back and blind-translator tests are now combined under frozen plan L66. L65's tomato run is complete; broader consequences evidence awaits the next run. |
+
+## 10. The blind corpus: lyrical argument and group selection (L66) - inputs packaged, no verified return
+| | |
+| --- | --- |
+| Story | Decision L8: the blind-translator and read-back tests folded onto new data; lyrical prose that argues; a contested science. |
+| Corpus | [L66 Corpus - lyrical argument and group selection](<results/L66 Corpus - lyrical argument and group selection/>): P01 to P18, MANIFEST.json, SOURCES.md, KEY.enc (sealed). |
+| Test | [L66 Test plan](<tests/L66 Test plan - the blind run on a lyrical and a contested corpus.md>) - eight expectations, written knowing the plants. |
+| Briefs | [L66 Handoff, second version](<tests/L66 Handoff - a new agent translates and runs the blind corpus, second version.md>) for the worker (the first version's handover did no work, log L68); [L66 Reader brief](<tests/L66 Reader brief - the read-back test.md>) for the reader. |
+| Receipt | The attached `L66_blind_corpus.zip` is the input handoff, not a completed run. Its brief and all 21 corpus assets match the repository; the reconciliation receipt is at L67. |
+| Return | [L69 Return - L66 run by OpenAI Codex](<results/L69 Return - L66 run by OpenAI Codex/>): checked (manifest, corpus identity, thirteen reruns identical, [L69 Reruns by the orchestrator](<results/L69 Reruns by the orchestrator/>)). Key still sealed. |
+| Next | The reader's answers from the reports-only bundle; then open the key, mark E1 to E8, write the results; then the source check of the modern passages. |
+
+## 11. Current-status reconciliation (L67)
+
+[The append-only receipt](<records/Language - project story.md#l67-status-reconciliation-21-september-2026>) distinguishes the completed L62 run, accepted L64 scope and completed L65 prototype from the instruction-46 session evidence and the pending L66 return. Frozen plans, authority files and raw returns are unchanged.
 
 ## Files in this project, by folder
-- `authority/`: 38, 39; L63 and L64 (the scope contract, draft; L64 is current).
-- `tests/`: 21, 22, 35, 37, 45, 46, L60 (handoff), L65.
-- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,145 files); the folder "45 Reruns by the orchestrator"; L65 (results) and the folder "L65 Consequences prototype".
+- `authority/`: 38, 39; L63 and L64 (the scope contract; L64 is current and accepted).
+- `tests/`: 21, 22, 35, 37, 45, 46, L60 (handoff), L65, L66 (plan, handoff, reader brief).
+- `results/`: 21 (html), 22 (html), 37, 45 (results); the folder 45 (the other model's package, 25 files); the folder 58 (its execution attempt, 67 files); the folder L62 (the worker's return, 1,146 files verified at L67); the folder "45 Reruns by the orchestrator"; L65 (results) and the folder "L65 Consequences prototype"; the folder "L66 Corpus".
 - `rigs/`: `READ ME FIRST.md`; `rig 1 - arguments/` (frozen, patched, joined, 36 ledgers as .json/.pl pairs, raw_log.txt); `rig 2 - causes/` (frozen, patched, 14 ledgers, raw_log.txt).

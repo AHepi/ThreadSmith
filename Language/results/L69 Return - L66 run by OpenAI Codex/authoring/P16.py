@@ -1,0 +1,16 @@
+# Written by OpenAI Codex under L66.
+from ledger_writer import Ledger
+p=Ledger('P16')
+p.add('a',1,'ALWAYS SHOWS: if injustice is NOT part of necessary governmental friction, government will wear out; figurative forecast with the supplied negative condition','holds(wears_out(government)) :- $, denied(part_of(injustice,necessary_governmental_friction)).','filled in')
+p.b(1,'machine; let it go, let it go; perchance it will wear smooth; certainly','Machine/friction imagery, commands, possible smoothing and certainty. a retains only the categorical wear-out forecast under the explicitly negative antecedent; no actual antecedent is asserted.')
+p.b(2,p.sentences['2'],'Conditional commands, perhaps/may consideration, comparative evaluation and requires as obligation/necessity, with mechanical-parts imagery. No breaking of law or acting unjustly is asserted.')
+p.add('b',3,'Do [make life counter-friction] SO THAT [government stops]; a proposed plan, not an achieved goal','claim_plan(b, make_life_counterfriction, stops(government)) :- $.','filled in')
+p.b(3,'Let your life be a counter friction; machine','Imperative force and mechanical metaphor; b retains the explicitly stated purpose as a plan, without an actual friction event, a stated effect or an invented control link.')
+p.b(4,p.sentences['4'],'Duty and intended avoidance, with self-lending image and condemnation attitude. It does not assert that the writer has actually avoided participation.')
+p.fact('c',5,'State has provided ways for remedying the evil','provided(state,remedial_ways)',standing='GIVEN')
+p.b(5,'As for adopting; for remedying the evil; I know not of such ways','Contemplated adoption, purpose and lack of knowledge; no actual adoption, effective remedy or objective absence of ways is asserted.')
+p.b(6,p.sentences['6'],'Excess duration and temporal claim that life will be gone by then. No present death or numeric deadline is asserted.')
+p.r(1,'is not part as printed or a suspected extra not','retain not; rule antecedent is denied(part_of(...)), not positive membership')
+p.r(3,'a literal press or a figurative proposed resistance plan','figurative plan, filled in; the explicit to stop purpose fits SO THAT, but the action/goal remain mentioned and no occurrence is asserted')
+p.r(5,'not knowing ways means none exist or only no knowledge of them','knowledge only; provided ways remains GIVEN from which the State has provided')
+p.finish()

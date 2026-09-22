@@ -12,5 +12,6 @@ test -x /tmp/sCASP/scasp || { echo "scasp was not built; see /tmp/scasp_make.log
 mkdir -p /home/claude/sCASP && ln -sf /tmp/sCASP/scasp /home/claude/sCASP/scasp
 /home/claude/sCASP/scasp --version
 echo "Now the smoke test, from the folder 'rigs/rig 1 - arguments':"
-echo "  python3 patched/run_check.py ledger_T05B.pl /tmp/raw_log_smoke.txt"
-echo "Expected: 'NO FAULT FOUND in the lines that were checked.' and a GAUGE of 2 lines said."
+echo "  python3 patched/run_check.py ledger_A.pl /tmp/raw_log_smoke.txt"
+echo "Expected: the report in tools/smoke_expected_report_A.txt (a contradiction about the plant by the door, a BECAUSE that follows)."
+echo "Older bundles used ledger_T05B.pl and tools/smoke_expected_report_T05B.txt instead; either is a valid smoke test where its ledger is present."

@@ -1,0 +1,17 @@
+# Written by OpenAI Codex under L66.
+from ledger_writer import Ledger
+p=Ledger('P06')
+p.add('a',1,'ALWAYS SHOWS: matter is alive; quick read as alive in the image','holds(alive(X)) :- $, kind(X, matter).','filled in','GIVEN')
+p.b(1,'See, through this air, this ocean, and this earth; bursting into birth','Imperative, spatial extension and birth image. a preserves the descriptive alive reading of quick; it is not an observed birth event.')
+p.b(2,p.sentences['2'],'Exclamatory degree/location and possibility may. No actual ascent is asserted.')
+p.b(3,p.sentences['3'],'Exclamation and question about spatial extent; no checked direction or movement is asserted.')
+p.fact('b',4,'the order of beings began from God','began_from(order_of_beings,god)','filled in')
+p.b(4,'Vast chain of being!; natures ethereal, human, angel, man, beast, bird, fish, insect, what no eye can see, no glass can reach; from Infinite to thee, from thee to nothing','Chain/rank imagery, magnitude and unseen/unreachable modality. The enumeration is retained here; membership in a literal material chain and a finite numerical scale are not inferred.')
+p.add('c',5,'ALWAYS MAKES: striking any link of Nature\'s chain breaks Nature\'s chain; causal reading of the image, with strike kept','produced(broken(natures_chain)) :- $, holds(struck_link(natures_chain)).','filled in')
+p.b(5,'On superior powers were we to press, inferior might on ours: or in the full creation leave a void, where, one step broken, the great scale\'s destroyed; tenth or ten thousandth; alike','Conditional possibility, hierarchical/spatial image, ordinals and equal degree. c retains only the generic strike/break relation inside the metaphor; no actual striking or literal pressing on a body is asserted.')
+p.b(6,p.sentences['6'],'The consequent whole must fall is modal; graded rolling, least confusion and whole-falling are images/amounts. No actual fall or sufficient physical cause is asserted.')
+p.r(1,'quick as fast or living','living; marked filled in, with no speed assertion. The imperative does not itself assert an observation occurred')
+p.r(4,'a literal linked object or an order of beings','order of beings, filled in; source attribution to God remains the passage\'s own, not a story in a TOLD world')
+p.r(5,'literal bodily press/strike or a chain image for order','image; only a filled-in generic strike/break relation is kept. It has no invented body classes or actual incident')
+p.v('strike',5,'conditional image, no physical happening');p.v('break',5,'image consequence, no shape')
+p.finish()

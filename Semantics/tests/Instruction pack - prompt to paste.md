@@ -1,0 +1,3 @@
+# Prompt to paste to the agent, with the pack attached
+
+The zip attached is your whole brief. Unzip it and read `00 READ ME FIRST.md` before anything else; it says who is who, what is under audit, which files are your audit skill, and the order to read the rest in. Then do exactly what `01 Instruction - ....md` says, part by part, in order. Return your work as one zip, named and laid out as that instruction says, attached to your reply. The text of your reply is the manifest the instruction asks for, then the closing line, and nothing else. Keep every situation and every verdict you are given exactly as written. Where a file the read-me mentions is absent from the pack, say so once in the manifest and work from what the pack holds.

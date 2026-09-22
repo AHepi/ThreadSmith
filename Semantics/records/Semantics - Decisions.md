@@ -15,6 +15,10 @@ S1. Each project's files stay inside its own folder; only the read-me and naviga
 S2. The next instruction inline, longer, returned as a zip. "Can you return next step inline please. Can you make it include more steps because the ones so far only take 3 minutes. And can you add instructions to return a zip file instead."
 S3. Unpack the S62 return into results, log the reading, and write the next instruction around the three steps named (file 20 in, the 32 rows recovered, near cases by an outside author on the ten rows). "Do it"
 S4. The revised theory (file 20) is set aside; the earlier version (file 10) is the authority. "No no. 20 was a regression. Hence I never supplied it"
+S5. From S65 on, each instruction goes to a fresh agent as a self-contained zip. "Oh I'll need zip files from here on. Each new step will be performed by a separate agent"
+S6. Push to main, always; edit only inside this project's folder. "Also always push to main and never edit anything outside your own folded"
+S7. Each round from here runs as two stages by two agents, testing then audit, with Claude reading both and determining the results. "Can you split into two stages. The testing phase and the audit phase. You read both and determine results."
+S8. Draft the new version, as a full rewrite for coherence. "Cool. Revision time." Then, while the four-sentence patch was being written: "Actually, rewrite the entire theory to be more coherent."
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.

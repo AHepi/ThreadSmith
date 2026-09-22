@@ -14,6 +14,12 @@ Held here, from log 55 on:
 - "55 Stage B return" - the rest of the table (80 rows), near cases O1 to O7, tighter pairs, the Stage C field (log 55). The first return kept in the repository.
 - "57 Stage C return" - seven case cards O8 to O14, the O4 pair from the theory's own distinction, the three lists of surviving judgement phrases (log 57).
 - `S62 Stage D and report - return/` - the first return that came as a zip: ten files, unchanged (log S63). The zip itself is dropped; its hash is in the log entry.
+- `S64 Near cases - return/` - eight files, unchanged (log S65); zip dropped, hash in the log.
+- `S65 Near cases - return/` - eight files, unchanged (log S70); zip dropped, hash in the log.
+- `S70 Near cases - return/` - eight files, unchanged (log S71); zip dropped, hash in the log.
+- `S72 Stage 1 testing - return/` - seven files, unchanged (log S74); zip dropped, hash in the commit.
+- `S72 Stage 2 audit - return/` - seven files, unchanged (log S75); zip dropped, hash in the commit.
+- "S65 Saved page" - the messages of the other model's chat, pulled out of a saved web page by program, as at log 26; the page itself is dropped.
 
 Still not here, and asked for: the first 32 Stage B rows (pasted into the chat of log 41 and never uploaded). File 20 is kept out on purpose (decision S4).
 

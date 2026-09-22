@@ -1,0 +1,18 @@
+# Written by OpenAI Codex under L66.
+from ledger_writer import Ledger
+p=Ledger('P08')
+p.b(1,p.sentences['1'],'A conditional judgement of the true place for a just person, combining norm and location. No actual government imprisonment or actual just prisoner is instantiated.')
+p.fact('a',2,'Massachusetts has provided prisons for her freer spirits','provided_prisons(massachusetts,freer_spirits)','said','GIVEN')
+p.fact('b',2,'freer spirits have already dissociated themselves from the State through their principles','dissociated_by_principles(freer_spirits,state)','filled in','GIVEN')
+p.b(2,'proper place today, the only place; freer and less desponding; to be put out and locked out of the State by her own act','Normative propriety, exclusivity/location, time and degree, intended exclusion and lock-out image. b retains an institutional dissociation reading of already put themselves out; no physical exit is asserted.')
+p.b(3,p.sentences['3'],'Normative should and can abide with honor, spatial placement, comparative freedom/honor and imagery. The proposed meeting is not asserted to happen; the embedded State-placing description remains spatial, with its exact wording retained here.')
+p.b(4,p.sentences['4'],'Attributed thought and ignorance, modal would/can, spatial enemy image, and strength/eloquence/effectiveness comparisons. Retain would not be lost exactly; do not repair it to would be lost or assert an actual loss of influence.')
+p.b(5,p.sentences['5'],'Command with voting/whole-influence imagery. No actual vote, influence or paper-only alternative is asserted.')
+p.add('c',6,'ALWAYS SHOWS: when a minority conforms to the majority, it is powerless; generic descriptive reading','holds(powerless(X)) :- $, kind(X, minority), holds(conforms(X,majority)).','filled in')
+p.add('d',6,'ALWAYS SHOWS: when a minority conforms to the majority, it is NOT a minority then; preserve the stated reclassification','denied(is_minority_at_conformity_stage(X)) :- $, kind(X, minority), holds(conforms(X,majority)).','filled in')
+p.b(6,'while; then; irresistible when it clogs by its whole weight','Stage retained by naming the conforming stage, but duration is not checked. Irresistibility, the clogging image and whole-weight qualification are not silently turned into a literal press or unqualified resistance claim.')
+p.r(2,'physical departure or principled separation from the State','principled institutional dissociation, filled in; the words are not changed')
+p.r(4,'would not be lost as printed or a possible authorial/transcription slip for would be lost','the printed not is retained; no emendation')
+p.r(6,'an immediate contradiction about a fixed thing or reclassification while conforming','the stated temporal stage is named in d; no actual conforming minority is invented, and generic kind membership is not a present-stage assertion')
+p.v('conform',6,'generic antecedent, not physical happening')
+p.finish()

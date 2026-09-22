@@ -1,0 +1,40 @@
+LEDGER C henhouse: 9 lines; 6 facts stated directly; 9 facts found; 4 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+  contradiction(got_inside(fox))   <- lines 2, 3, 4, 5, u1, u2
+  denied(got_inside(fox))   <- lines 2, 3, 4, u2
+  holds(got_inside(fox))   <- lines 5, u1
+  produced(gone(hens))   <- lines 5, u3
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line 1 [said]: the hens are gone
+      nothing changes
+  take out line 2 [said]: the fence has no gap
+      no longer: contradiction(got_inside(fox))
+      no longer: denied(got_inside(fox))
+      no longer: denied(has_gap(fence))
+  take out line 3 [said]: a fox cannot climb this fence
+      no longer: contradiction(got_inside(fox))
+      no longer: denied(can_climb(fox,fence))
+      no longer: denied(got_inside(fox))
+  take out line 4 [said]: nobody opened the gate
+      no longer: contradiction(got_inside(fox))
+      no longer: denied(got_inside(fox))
+      no longer: denied(opened(gate))
+  take out line 5 [said]: a fox took the hens
+      no longer: contradiction(got_inside(fox))
+      no longer: holds(got_inside(fox))
+      no longer: holds(took(fox,hens))
+      no longer: produced(gone(hens))
+  take out line 6 [filled in]: the hens are gone BECAUSE a fox took them
+      nothing changes
+  take out line u1 [usual case]: to take the hens, a fox must get inside the fence
+      no longer: contradiction(got_inside(fox))
+      no longer: holds(got_inside(fox))
+  take out line u2 [usual case]: the only ways inside are a gap, climbing, or an opened gate
+      no longer: contradiction(got_inside(fox))
+      no longer: denied(got_inside(fox))
+  take out line u3 [usual case]: hens that a fox took are gone
+      no longer: produced(gone(hens))
+
+TOTAL delta lines over 9 removals: 18. Time: 5 s.
