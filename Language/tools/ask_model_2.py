@@ -18,8 +18,10 @@ SHA-256, response id, token counts when the stream's last chunk carries usage, f
 seconds, the whole call's total_seconds, attempt count and the labelled status and seconds of every attempt, "stream": true),
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/disconnects/silence with backoff,
 at most 6 attempts; a 400/401/403/404/413/422 is not retried; an empty answer whose finish reason is `length` is not retried
-(the same cap gives the same answer) and is recorded as status -4; an empty answer with any other finish reason is retried
-(-2); a 200 whose stream yields no parsable chunk (-3; a chunk that does not parse is skipped, so an unparsable body arrives as no chunks), an exception, a closed connection or silence (0). A failed call leaves DIR/<tag>.error.txt and a
+(the same cap gives the same answer) and is recorded as status -4; an empty answer with no finish reason (a stream that
+carried chunks and then closed cleanly, Atria's cut) or with any finish reason other than `length` is retried (-2); a 200
+whose stream yields no parsable chunk (-3; a chunk that does not parse is skipped, so an unparsable body arrives as no
+chunks); a raised exception (0): a connection closed without any response, a reset, or silence for --idle seconds. A failed call leaves DIR/<tag>.error.txt and a
 receipt with "failed": true. Rate limit kept per provider by a lock file in DIR, or in $ASK_MODEL_LOCKDIR when set.
 Written under decision L11, 22 September 2026.
 """
