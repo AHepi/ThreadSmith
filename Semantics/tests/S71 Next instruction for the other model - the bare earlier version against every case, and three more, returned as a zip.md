@@ -1,6 +1,6 @@
 # The bare earlier version against every case, and three more cases
 
-The authority under audit is the earlier version of the theory; the revised version stays set aside. Until now every verdict has been given under the earlier version *with* R2 and the proposed clauses read into it, and every clause test has compared that reading with and without one clause. What remains untested is R2 itself: whether any amendment changes the earlier version's verdict on any case. The S70 addendum's heading (11) found one place where it does (O24 and O48 against Derivation 3). This round finds every such place, since that list, and only that list, is what a new version of the theory would be built from.
+The authority under audit is the earlier version of the theory; the revised version stays set aside. Until now every verdict has been given under the earlier version *with* R2 and the proposed clauses read into it, and every clause test has compared that reading with one clause read in and with it left out. What remains untested is R2 itself: whether any amendment changes the earlier version's verdict on any case. The S70 addendum's heading (11) found one place where it does (O24 and O48 against Derivation 3). This round finds every such place, since that list, and only that list, is what a new version of the theory would be built from.
 
 Use the audit skill, the returns in this pack, and this instruction. Keep every situation and every verdict exactly as written.
 
@@ -68,7 +68,7 @@ As in S70: every passage quoted from the theory in this round, the earlier versi
 Close with: QUOTATIONS LISTED.
 
 ## Part 7 - Report addendum (`07 Report addendum.md`)
-Under headings (3), (4), (6) and (7) as in S70, extended to O52. Then heading (11), revised: the list of what a clarifying draft of the earlier version would contain, rebuilt from Part 1 and Part 3: one line per sentence, marked WORDING or CLAIM, each carrying the case that warrants it *and* the column-5 entry of Part 1 that shows the earlier version's reading changing there; a line whose case shows no change between the bare earlier version and the amended reading is kept in a second list headed "Explicit already; every case agreed". Then heading (12) The order of a new version: the CLAIM lines first, the WORDING lines after, each with the Part of the earlier version it would go into, and one sentence on what the new version would give up relative to file 10.
+Under headings (3), (4), (6) and (7) as in S70, extended to O52. Then heading (11), revised: the list of what a clarifying draft of the earlier version would contain, rebuilt from Part 1 and Part 3: one line per sentence, marked WORDING or CLAIM, each carrying the case that warrants it *and* the column-5 entry of Part 1 that shows the earlier version's reading changing there; a line whose case shows the same reading under the bare earlier version and the amended one is kept in a second list headed "Explicit already; every case agreed". Then heading (12) The order of a new version: the CLAIM lines first, the WORDING lines after, each with the Part of the earlier version it would go into, and one sentence on what the new version would give up relative to file 10.
 
 Close with: ADDENDUM COMPLETE.
 
