@@ -14,6 +14,7 @@ L5. The five steps approved; scope first. "I can't see fault with the proposals 
 L6. What the remark in L5 meant; meaning preservation is essential here. "Oh no. I only meant that we are testing computable variations, not testing semantics by avoiding reduction to computability. In our case, meaning preservation is as essential as the contract says it is."
 L7. L64 accepted without strikes; go on. "Perfect. What next"
 L8. The blind test folded onto a new corpus; two corpora named; structure left to Claude and approved as proposed. "Ok. Fold the blind test on top of generating more data on a different corpus. Something deliberately difficult, but consistent. Can you propose such a body of text with lyrical and poetic type prose but definite consistent argumentation. Also, test on a science highly contested: Group Selection. I don't know how to structure this though." Then: "Great. Generate test instructions. I'm using a new agent, so may need zip with all relevant info."
+L9. The two agents named and the work split; both fresh from now on. "A is Astra Pro, B is Astra Ultra. So I suppose splitting the workload is a good idea now. So next zip please. Both are always fresh from now on."
 
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
