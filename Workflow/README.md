@@ -6,7 +6,8 @@ The project is named by the owner's word for the end thing. It is not the kind o
 
 ## Current state
 - **Authority: none yet.** The first authority file will be the model (phase 1 of the plan), once its predictions are frozen and the owner has given the word.
-- **The plan:** [W1 Research plan (draft)](<tests/W1 Research plan - a model of LLM agents in the semantics' terms, then the skills and their boundaries, then the workflow (draft).md>), written 22 September 2026: five phases (the model; the reading of the evidence in hand; the first run that separates stateful from stateless agents and tests the partition harness; the skill map; the workflow), a first sketch of the model in ten parts each with what would count against it, a first sketch of the skill map as a hypothesis, predictions as counts that could fail, and the owner's-word gate before each phase. Judged by five Opus 5 agents armed with the hard-to-vary skill (log W2); the frozen plan is the numbered file that follows.
+- **The plan: [W3 Research plan (frozen)](<tests/W3 Research plan - a model of LLM agents in the semantics' terms, the instrument, the arrangements, the skill map, the workflow (frozen).md>), 22 September 2026.** Six phases, each with its own frozen plan when its turn comes, each on the owner's word: the model of an LLM agent in file 10's terms; the reading of the evidence in hand under it; the instrument (the marking certified on the 96 reports in hand before any arrangement is measured with it); the arrangements (the arms that separate stateful from stateless, the partition harness, the port-setting harness, the context with one item withheld, the router criticised); the skill map; the workflow and its first run on the clean part of the reserve. The model is sketched in ten parts, each on a quoted sentence of file 10 with its Part and what would count against it; the skill map is sketched from Part XIV with a row for every operation; the predictions are counts that are falsifiers and never verdicts. It is [draft W1](<tests/W1 Research plan - a model of LLM agents in the semantics' terms, then the skills and their boundaries, then the workflow (draft).md>) with every edit five Opus 5 judges armed with the hard-to-vary skill forced ([W2 Results](<results/W2 Results - five Opus 5 judges on the draft research plan; what they forced into W3.md>)).
+- **What the plan asks** (W3 section 12): of the HV Skill, after phase 1, one change to its word list under its own plan; of the owner, the "5 tops" sentence into HV Decisions, the two root navigation edits confirmed, the harness material for Q1 if any, and whether the 33 held-out sources of file 50 stay held for HV plan H67.
 
 ## Where to start
 [INDEX.md](INDEX.md) for the timeline. [ORIGIN.md](ORIGIN.md) for the owner's words and where the programme's content came from. This project keeps its own record in [records/](records/): [project story](<records/Workflow - project story.md>) (the log), [Decisions](<records/Workflow - Decisions.md>), [Lessons](<records/Workflow - Lessons.md>), [Status](<records/Workflow - Status.md>); its [READ ME FIRST](<records/READ ME FIRST.md>) says how it relates to the other projects. Its claims about the other projects are in [RELATIONS.md](RELATIONS.md).
@@ -18,9 +19,9 @@ records/       this project's own log, Decisions, Lessons and Status, from 22 Se
 RELATIONS.md   this project's claims about the other four, with status and evidence; what it asks of them
 INDEX.md       the timeline of research states
 authority/     (empty until phase 1 freezes the model)
-tests/         frozen plans: W1 (draft), and the frozen plan that follows it
-results/       what the judges found, kept as it came in rigs/ and read here
-rigs/          the raw returns of the judges and their tool audit
+tests/         W1 (draft); W3 (frozen, current)
+results/       W2: what the judges found and what it forced
+rigs/          W2 judges/ (five returns, tool audit); W3 quote check/ (program and output)
 ```
 
 ## Rules of this project
