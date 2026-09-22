@@ -1,0 +1,20 @@
+# Written by OpenAI Codex under L66.
+from ledger_writer import Ledger
+p=Ledger('P04');p.rig2=True
+p.b(1,p.sentences['1'],'Confess is a command; can and must express modality; seeds and gentle fields of air carry generative/spatial imagery. The impossibility of becoming from nothing is not converted to a claim about an observed event.')
+p.add('a',2,'ALWAYS MAKES: when Nature dissolves a thing, that thing becomes primal bodies again; conditional causal reading of the generic dissolution','produced(primal_bodies_again(X)) :- $, holds(dissolves(nature,X)).','filled in')
+p.add('b',2,'ALWAYS SHOWS: a thing does NOT perish to annihilation; SHOWS chosen for the universal denial','denied(annihilated(X)) :- $, kind(X, thing).','filled in')
+p.b(2,'Hence too it comes; all; again; ever','The hence points to the modal principle in sentence 1, which has no signed executable premise here. Recurrence and unrestricted time are not checked. Line a records the mode of dissolution, not an assertion that every thing has already dissolved.')
+p.b(3,p.sentences['3'],'A supposed condition whose asserted consequents are might be destroyed and no force needed. Modal necessity/possibility, part structure, location and bonds imagery are outside the admitted forms; no actual mortal-all-parts specimen is invented.')
+p.add('c',4,'ALWAYS SHOWS: existing things have imperishable seed; SHOWS is the reading of the descriptive universal','holds(imperishable_seed(X)) :- $, kind(X, thing).','filled in')
+p.add('d',4,'destruction of a thing NEEDS ONE OF: an outward force shatters it by a blow, inward craft dissolves it; atemporal necessity extracted from until','denied(destroyed(X)) :- $, denied(shattered_by_outward_force(X)), denied(dissolved_by_inward_craft(X)).','filled in')
+p.add('e',4,'collapse of a thing NEEDS ONE OF: an outward force shatters it by a blow, inward craft dissolves it; atemporal necessity extracted from until','denied(collapsed(X)) :- $, denied(shattered_by_outward_force(X)), denied(dissolved_by_inward_craft(X)).','filled in')
+p.b(4,'Nature allows; because; until some outward force may; inward craft, entering its hollow cells','The line asserts a restriction, not an actual LETS event. Modality, temporal until, number, interior space and personification remain in the bin. The BECAUSE relates a general restriction to seed imperishability; the driver has no first-class rule proposition for that pointer, so no causal production bridge is invented.')
+for s in [5,6,7,8]:p.b(s,p.sentences[str(s)],'Question, retained as mentioned. Personifications, quantities, spatial descriptions, modality and the hypothetical total destruction are not promoted to actual happenings or actual results.')
+p.b(9,p.sentences['9'],'Counterfactual/modal must else, infinite duration and Time-eating imagery. It is not an actual claim that all mortal shapes have been consumed.')
+p.r(2,'a claim of completed annihilation or a generic account of dissolution into constituents','generic account; annihilation is expressly denied, not repaired or softened')
+p.r(4,'allows as a LETS event or a restriction on what can be destroyed','a restriction, represented only by filled-in atemporal only-ways lines d/e; no tendency inferred')
+p.r(4,'Nature allows destruction nor collapse as supplied, or an emended neither/allows no construction','take the nor construction as a shared negative restriction on both outcomes until an admitted destructive route; record the grammatical reading without changing source words')
+p.r('5–8','questions that assert their imagined events or questions mentioning possibilities','mentioned questions only; no imagined event supplies a rig-2 producer')
+p.v('dissolve',2,'generic law; no actual happening instantiation');p.v('shatter',4,'only mentioned in necessary alternative, not actual');p.v('dissolve',4,'only mentioned in necessary alternative, not actual')
+p.finish()

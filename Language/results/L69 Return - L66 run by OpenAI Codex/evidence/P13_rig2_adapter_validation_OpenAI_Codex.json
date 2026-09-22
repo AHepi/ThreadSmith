@@ -1,0 +1,35 @@
+{
+  "author": "OpenAI Codex",
+  "scope": "P13 rig-2 adapter correction only; no rig-1 or consequences rerun requested or performed.",
+  "knowledge": "seen: exact query log and answer tree; worked out: hash agreement and assertions below.",
+  "receipt": "evidence/rig2/P13_correction1_OpenAI_Codex.receipt.json",
+  "checks": {
+    "release_hashes_match": true,
+    "receipt_output_hashes_match": true,
+    "ledger_and_metadata_hashes_match": true,
+    "saved_prolog_clauses_identical_to_original": true,
+    "only_saved_prolog_difference_is_new_attribution_comment": true,
+    "subprocess_exit_zero": true,
+    "stderr_empty": true,
+    "no_query_timeout": true,
+    "swap_tuple_logged": true,
+    "swapped_query_returns_answer": true,
+    "moves_answer_source_is_d": true,
+    "report_says_whatif_fails": true,
+    "no_unexpected_scasp_errors": true
+  },
+  "requested_swap": [
+    "holds(decline_from_course(atoms)) :- line(e).",
+    "denied(decline_from_course(atoms)) :- line(e)."
+  ],
+  "actual_moves_answer_source_lines": [
+    "d"
+  ],
+  "raw_query_block_exact": "\n=== query: holds(moves(atoms,down)) | removed: [] | swap: ('holds(decline_from_course(atoms)) :- line(e).', 'denied(decline_from_course(atoms)) :- line(e).') | 0.05s | timed out: False ===\n% Query\nI would like to know if\n   holds holds for moves(atoms,down)?\n% \u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\n%                         Answer 1 (0.000 sec)                          \n% \u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\u2015\n% Justification\n   holds holds for moves(atoms,down), because\n      line d is in the ledger\n\n% Model\n   \u2022 holds holds for moves(atoms,down)\n   \u2022 line holds for d\n% No bindings\ntrue\n\n\n",
+  "expected_absent_predicate_error_headlines": [
+    "ERROR: scasp_predicate `said_stays/2' does not exist",
+    "ERROR: scasp_predicate `social/5' does not exist"
+  ],
+  "unexpected_error_headlines": [],
+  "interpretation": "The unchanged supplied driver asserts the old clause exists and replaces it before invoking s(CASP). Successful exit plus the explicit swap in this raw block verifies execution of the supported adapter. The returned movement still comes directly from source line d; this does not derive movement from a physical law. The printed what-if result is FAILS; bears remains NOT CHECKED. Saved Prolog differs from original only by one added attribution comment."
+}

@@ -99,7 +99,8 @@ Every research state of the ledger language, in order, with links. Numbers throu
 | Test | [L66 Test plan](<tests/L66 Test plan - the blind run on a lyrical and a contested corpus.md>) - eight expectations, written knowing the plants. |
 | Briefs | [L66 Handoff, second version](<tests/L66 Handoff - a new agent translates and runs the blind corpus, second version.md>) for the worker (the first version's handover did no work, log L68); [L66 Reader brief](<tests/L66 Reader brief - the read-back test.md>) for the reader. |
 | Receipt | The attached `L66_blind_corpus.zip` is the input handoff, not a completed run. Its brief and all 21 corpus assets match the repository; the reconciliation receipt is at L67. |
-| Next | Obtain and check the worker's return; obtain the reader's answers from reports alone; open the key last; mark E1 to E8 and check the modern passages' sources before conclusions. |
+| Return | [L69 Return - L66 run by OpenAI Codex](<results/L69 Return - L66 run by OpenAI Codex/>): checked (manifest, corpus identity, thirteen reruns identical, [L69 Reruns by the orchestrator](<results/L69 Reruns by the orchestrator/>)). Key still sealed. |
+| Next | The reader's answers from the reports-only bundle; then open the key, mark E1 to E8, write the results; then the source check of the modern passages. |
 
 ## 11. Current-status reconciliation (L67)
 
