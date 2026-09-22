@@ -5,7 +5,10 @@ export const meta = {
 }
 const ROOT = '/home/user/ThreadSmith'
 const SKILL = `${ROOT}/HV Skill/authority/33/hard-to-vary/`
-const jobs = (args && args.prompts) || []
+const pad = (i) => String(i).padStart(3, '0')
+const jobs = (args && args.prompts) || [].concat(
+  Array.from({ length: (args && args.n1) || 96 }, (_, i) => `${args.dir1}/M${pad(i + 1)}.txt`),
+  Array.from({ length: (args && args.n2) || 96 }, (_, i) => `${args.dir2}/R${pad(i + 1)}.txt`))
 const POOL = (args && args.pool) || 5
 const SCHEMA = {
   type: 'object',
