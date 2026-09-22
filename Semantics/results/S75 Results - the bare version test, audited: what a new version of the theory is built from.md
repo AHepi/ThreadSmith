@@ -1,0 +1,34 @@
+# S75 Results - the bare version test, audited: what a new version of the theory is built from
+
+Written after both returns of round S72 were read (Stage 1, testing, log S74; Stage 2, audit, this entry), against file 10. The two returns are in this folder unchanged. This file is Claude's determination, as decision S7 asks.
+
+## The question the round froze
+Whether any amendment (R2, the S62 clauses, H64, I64, H65) changes the verdict that file 10, read bare, gives on any of the 52 outside cases; and, from the confirmed changes only, what a new version of the theory would contain.
+
+## What the two agents found, and where they differed
+- Stage 1 gave every case two verdicts, bare and amended, and marked two rows CHANGED toward the thoughtful person (O24, O48), none away, and eight SILENT. It gave an identifier to every verdict.
+- Stage 2 audited 19 of the 52 rows (every CHANGED, SILENT and disagreeing row, and every fifth of the rest) and left 33 unaudited. On the bare-version column it agreed with Stage 1 on 19 of 19; on the amended column, 19 of 19; on SAME or CHANGED, 18 of 19. It checked 119 quotations against the sources: 119 verbatim, none differing, none absent. On the clause table, 9 of 9 cells agreed.
+- The one disagreement is O24, the unused joint setting. Stage 1 called it CHANGED because R2 J narrows Derivation 3's reach; Stage 2 says the case's own verdict (two arrangements, the record has not chosen) is the same under both readings, so the change is to the theorem's scope and the case is a positive control. Stage 2 is right on the instruction's own terms: column 5 asks whether the verdict on the case changes, and it does not.
+- Stage 2 also disputed one mark on the three new cards: O52 was called PLACED by row 90's own pair, but that pair's first side is a record of two workers who jointly stopped the flow, and in O52 one route jammed. O52 is placed by the proposed clause H64, which gives its verdict from the operating log alone, and by nothing in the row's original pair. Row 90 stays where it was.
+
+## The determination
+1. **One amendment changes one verdict.** R2 J's sentence, "the population hypothesis must permit at least one solution-changing alternative at the unseen pair being discussed; mere presence of an unseen pair does not supply that alternative", changes file 10's verdict on O48, the forbidden wire, from wrong to the thoughtful person's. Both agents agree, the quotation is verbatim, and an outside reader reached the same point from the text alone (log S73). This is the only confirmed case in 52.
+2. **Amendments A to H and I change no verdict.** On every case that warranted them, file 10 read bare already gives the thoughtful person's verdict. Their sentences are wording. Stage 2's inventory of twelve such lines (W01 to W12) is explicit already in the Parts it names.
+3. **Eight cases are SILENT under both readings**, and no amendment speaks: O1 (the serial retreat), O12 (the value of a question), O35 (the unstated protected condition), and O20, O21, O27, O40, O50 (dividing credit, and "mostly"). These are the seven live rows of the gauge seen from the other side: the theory declares an input there, or attribution asks for a comparison it does not supply. No draft line closes them, and none should pretend to.
+4. **What the claim change is.** File 10, Part XVI, Derivation 3, claims: for every unseen pair there exists a transport, also surviving the history, with a different value there. Its proof alters a component relation "to any other admitted relation", which assumes such a relation exists, and its Part IV definition of selection makes the survivor a member of a population, which the claim's t' need not be. O48 is a population with no such member at the unseen setting. The restated claim (Stage 2's D3-1 and D3-2, one claim in two sentences): survival on a finite history leaves the value at a specified unseen pair underdetermined among the survivors when another admitted, realizable transport in the same population also survives the history and differs there; the presence of an unseen pair alone establishes no such alternative.
+5. **Where the change reaches.** Three sentences of file 10 restate Derivation 3 and carry its unqualified form: Part 0's answer to grievance 3 ("selected transports are *always* underdetermined on unseen changes"), attack point (D) ("a selected transport can be non-underdetermined on unseen changes (against Derivation 3)"), and Part XV's entry "A non-fallible selected transport ... This refutes Derivation 3". Each needs the same one qualification. Derivation 4 (surprise) does not rest on Derivation 3's universal form and stands.
+6. **What a new version gives up.** The universal guarantee of a differing survivor at every unseen pair, and with it the blanket consequence that every untested value is unconstrained; it keeps the conditional result wherever the population admits an alternative.
+
+## What this does not show
+- The 33 rows Stage 2 did not audit are Stage 1's word alone; the audited sample of every fifth row agreed 19 of 19 on both columns, which is reason to trust the rest and not proof of it.
+- The first 32 Stage B rows are still unrecovered, so the coverage count stays at 80 of 112 and the gauge may have rows nobody has strained.
+- R2 was read from the sentences the returns quote; the full R2 file has never been in the repository.
+- Nothing here bears on whether file 10 is true; it bears on what file 10 says and where one sentence says more than its proof gives.
+
+## Proposed change to file 10, held for the owner's word
+A new version, file 11, would differ from file 10 in one claim and three sentences that restate it, and in nothing else:
+- Part XVI, Derivation 3: replace the claim with the conditional statement in point 4, and the consequence with one that keeps "faithful where it was tested" and drops "unconstrained where it was not" in favour of "unconstrained wherever the population admits an alternative there".
+- Part 0, grievance 3: "*always* underdetermined" becomes "underdetermined wherever its population admits an alternative at the unseen change".
+- Part 0, attack (D): the first limb reads against the qualified Derivation 3.
+- Part XV, "A non-fallible selected transport": a survivor determined off the history *in a population that admits an alternative there* refutes Derivation 3; a population with no alternative is the qualification, not a refutation.
+The twelve wording lines are not part of the change; they are an inventory of what the text already says, kept in the S72 Stage 2 return for anyone who later wants a clearer edition. Drafting file 11 is the owner's call. If the word is given, the next round's test is set: the same 52 cases against file 11, with O48 the one row whose verdict must change and every other row's verdict required to stay.
