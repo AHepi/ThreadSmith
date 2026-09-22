@@ -1,0 +1,149 @@
+{
+ "task": "W10 stage A, task A6: the two API clients. Read DeepSeek's documentation and the plan 49 rig's post(), write code/clients/deepseek_client.py (retries, at most five worker threads, request body and reply both returned whole, prefix completion, no token limit below the service's maximum, --dry). Find out what Atria Asi is and how it is called, write code/clients/atria_client.py (one request at a time, ceiling far above a default and a parameter, retries with backoff, request and reply whole, --dry), and code/clients/README.md saying what each does, what it needs in the environment, and what could not be found out about Atria. No key present; nothing sent; nothing written outside the W10 harness folder.",
+ "files_written": [
+  "/home/user/ThreadSmith/Workflow/rigs/W10 harness/code/clients/deepseek_client.py - the DeepSeek V4.1 Flash client. 743 lines. Standard and beta (prefix) endpoints chosen from the messages; prefix_message() for arm (e); max_tokens default 393216, the documented maximum; at most five worker threads, six raises; seven retries with jitter and Retry-After; one record per request with the body as sent, the exact request text, every attempt, the assembled message and the raw return; send() is the four-value seam A1's deepseek_transport.py imports; --dry and --dry --save DIR send nothing.",
+  "/home/user/ThreadSmith/Workflow/rigs/W10 harness/code/clients/atria_client.py - the Atria Asi (Atria Dawn Preview) client. 717 lines. https://api.atria-asi.ai/v1/chat/completions, model Atria-Dawn-Preview; one request at a time held by a lock in the file (each(), no many()); max_tokens default 65536, the documented maximum, a parameter everywhere, with a 'truncated' gauge on it; retries with backoff and Retry-After; rate-limit headers kept; nothing undocumented sent; ATRIA_BASE_URL and ATRIA_MODEL override; --dry and --dry --save DIR send nothing.",
+  "/home/user/ThreadSmith/Workflow/rigs/W10 harness/code/clients/README.md - 190 lines. What each client does, the four environment variables, what Atria Asi is with every address and the date, eight open questions for the owner, how the two files sit in the rig (why there is no __init__.py; no driver holds Atria yet), how to count requests for PA.1, one thing for the reviewer (A1's max_tokens 32000 against A6's 393216), and what nothing on the web settles."
+ ],
+ "what_it_does": "Two libraries, one per service. Neither sends anything on import; the only command either runs is --dry.\n\nDeepSeek client. Serves stage C's DeepSeek half and stage E's five examiners. (1) Prefix completion, the device W8 part B10 names as the only real test of the port-setting arm: prefix_message() builds the assistant message with prefix true, and the host is chosen from the messages, so a prefix can never go to the standard endpoint where the feature is off. (2) Both sides whole, for PA.1: the client serialises the body itself and posts those bytes, so the saved request text is the text sent; the record carries the body, the exact text, the endpoint, headers with the key redacted, every attempt, the assembled message, finish reason, usage, and the raw SSE lines or the whole JSON. A failure carries the same record out on the exception. (3) Requests and retries kept apart, because PA.1 predicts one request per step in arms (b), (c), (c') and (d) and a retry is a second attempt at the same request, not a second request. (4) Five worker threads at most, W10 section 2's number; six raises with the plan quoted rather than being clamped. (5) max_tokens defaults to 393216, the documented maximum. (6) send() matches, exactly, the seam A1 already wrote into deepseek_transport.py, so that module now reports CLIENT = clients.deepseek_client.\n\nAtria client. Serves stage E's Atria examiner. It keeps the owner's two rules in the file, not in the caller: a lock held across the whole exchange including the streamed read, so only one request is ever in flight; and a ceiling of 65536, the documented maximum, default and parameter, with a gauge - every record carries truncated, true when the finish reason is length - so that if the ceiling was not the cause of the owner's failures it shows. Nothing undocumented is sent (no reasoning_effort, no thinking object), since the service's own page names neither. The same four-value send() shape, so a driver written for one can hold the other.\n\nMapping to W8: B10 and W3 P4.4 (arm e) get their device; PA.1 gets the request as sent and the reply as returned; A7 and B4 get run-to-run records that can be compared because the raw return is kept; C4 and P4.9 get tool_calls returned whole so a driver can serve the router and record what was opened.",
+ "dry_run": "Everything below sends nothing. No key is in the environment (checked: both DEEPSEEK_API_KEY and ATRIA_API_KEY unset), and both clients assert at the end of --dry that their live-attempt counter is zero.\n\n1. python3 deepseek_client.py --dry -> 37 checks passed, 0 failed, \"Nothing sent.\" exit 0.\n2. python3 atria_client.py --dry -> 34 checks passed, 0 failed, \"Nothing sent.\" exit 0.\n3. python3 deepseek_client.py --dry --save DIR and python3 atria_client.py --dry --save DIR -> six request-text files written to the session scratchpad (plain, prefix, tools; plain, small, tools), each checked to contain no key. The prefix one reads: {\"model\": \"deepseek-flash\", \"messages\": [..., {\"role\": \"assistant\", \"content\": \"## 1. The question, frozen\\n\", \"prefix\": true}], \"max_tokens\": 393216, \"reasoning_effort\": \"high\", \"stream\": true, \"thinking\": {\"type\": \"enabled\"}, \"stream_options\": {\"include_usage\": true}, \"stop\": [\"\\n## 8.\"]}.\n4. The transport paths are driven inside --dry against a stand-in for the requests module that reaches no network: a 200 with a canned SSE stream, a 429 with Retry-After then a 200, a 400 (DeepSeek) and a 401 (Atria), and a non-streamed JSON document. Checked: the reply assembles across chunks including a tool call split over two deltas; a keep-alive comment and blank lines are skipped and the raw lines kept; the retry is recorded as an attempt and not as a second request; the not-retryable status stops at once and keeps its record; the service's words come back unedited; the key is in the header and in no record.\n5. Concurrency, with controls. DeepSeek: five jobs at five workers overlap (peak 5), the same five at one worker do not (peak 1). Atria: five threads calling at once are served one at a time (peak 1), and the same run with the lock taken out gives peak 5 - so the check can fail.\n6. The seam, for real: from an unrelated working directory, python3 -c importing A1's deepseek_transport gave CLIENT = clients.deepseek_client; then a scratchpad script drove T.send() with T.body_for(prefix=True, max_tokens=32000) through my client with the stubbed transport. It posted to the beta URL, stripped _endpoint from the payload, kept the prefix message intact, sent max_tokens as the caller gave it, and returned the four values A1 unpacks.\n7. python3 -W error::SyntaxWarning -m py_compile on both files: clean. Grep for the two real keys from the request across the whole folder: no match.\n8. Byte-cache directories the seam test created under code/ and code/clients/ were removed afterwards; both are git-ignored by the folder's own .gitignore.",
+ "predictions_bearing": [
+  "W10.1 (stage A): the harness dry-runs every arm on one document sending nothing, with the request text saved. Both clients have --dry and --dry --save; the arm (e) prefix shape is among the shapes saved. Falsified by any arm that cannot be dry-run - the prefix shape can be.",
+  "W8 PA.1 (compliance count, A1): every run's record carries the number of requests and the text of each request as sent. The client posts the bytes it serialised and returns that text; retries are listed inside the one record so the count PA.1 makes is not inflated by them.",
+  "W8 B10 and W3 P4.4 (arm e, the port-setting harness): the test, as W10 section 10 says, is DeepSeek's prefix completion. The client supports it on the beta host with the assistant prefix message the documentation requires.",
+  "W10 section 2 (the agents and their limits): five DeepSeek agents at a time through its API. The client will not run more than five worker threads and raises rather than clamping.",
+  "W10 addendum, decision W7 (Atria): complex analysis, one request at a time, token ceilings significantly larger. The lock is in the client; the ceiling is the service's maximum and a parameter; truncated is the gauge on that decision.",
+  "W3 P4.6 and W8 P4.9 (the modules-opened trace): tool_calls are assembled and returned whole across streamed chunks, so a driver can serve the router and take the trace from the transport's own record rather than the reader's list.",
+  "W8 A7 and B4 (a difference read only beyond the run-to-run spread): the raw return is kept as it came, so two repeats can be compared on what the service actually sent, not on a summary of it.",
+  "Not served by this deliverable: W10.3 and the fourth clause (A3's task), W10.2 (A2's corpus), W10.4 (the reviewer), and every stage B to F prediction - none of which a client can bear on."
+ ],
+ "claims": [
+  {
+   "claim": "DeepSeek's chat completions endpoint is POST /chat/completions; max_tokens ranges 1 to 384K (393216) with defaults 8K non-thinking, 64K thinking, 128K at reasoning_effort max; reasoning_effort takes none/low/high/max, default high; thinking is an object with type enabled/disabled; stop takes up to 16 sequences; stream is SSE ended by data: [DONE].",
+   "evidence": "https://api-docs.deepseek.com/api/create-chat-completion/ , read 22 September 2026. deepseek-flash's Max Output is given as 'MAXIMUM: 384K' with context '1M' at https://api-docs.deepseek.com/quick_start/pricing , same date.",
+   "tag": "claimed",
+   "would_count_against": "A page of the same documentation giving a different range or a per-model cap below 393216; or a live 400 naming a smaller maximum. Nothing was sent, so no live call has tested it."
+  },
+  {
+   "claim": "Prefix completion is a Beta feature: the base URL must be https://api.deepseek.com/beta and the last message must have role assistant with prefix true; the sample uses stop to end the completion; for thinking mode the last assistant message's reasoning_content is the input for the chain of thought and prefix must be true.",
+   "evidence": "https://api-docs.deepseek.com/guides/chat_prefix_completion/ , read 22 September 2026, code sample quoted verbatim in the head of deepseek_client.py; the thinking-mode sentence came from the search result for that same page.",
+   "tag": "claimed",
+   "would_count_against": "The page showing the flag elsewhere in the body rather than inside the message, or the feature working on the standard host. A live call with prefix true against the standard host would settle it; none was made."
+  },
+  {
+   "claim": "The full prefix URL is https://api.deepseek.com/beta/chat/completions.",
+   "evidence": "The documentation gives base_url='https://api.deepseek.com/beta' to the OpenAI SDK, which appends /chat/completions. A1's deepseek_transport.py, written independently in this same stage, reaches the same URL string.",
+   "tag": "worked out",
+   "would_count_against": "A 404 from that address on a live call. Two agents agreeing is not a second witness: we read the same page."
+  },
+  {
+   "claim": "deepseek-flash allows 2500 concurrent connections; over the limit the service returns 429; under load it keeps the connection alive with empty lines (non-streaming) or ': keep-alive' comments (streaming); a request that has not started inference in ten minutes is closed.",
+   "evidence": "https://api-docs.deepseek.com/quick_start/rate_limit , read 22 September 2026.",
+   "tag": "claimed",
+   "would_count_against": "A live run hitting 429 well under five concurrent requests. This is why the five in the client is marked as the plan's number and not the service's."
+  },
+  {
+   "claim": "DeepSeek's 400, 401, 402 and 422 all have 'change your request' as their documented remedy, while 500 and 503 say to retry after a brief wait.",
+   "evidence": "https://api-docs.deepseek.com/quick_start/error_codes , read 22 September 2026.",
+   "tag": "claimed",
+   "would_count_against": "A 422 that clears on a retry with an identical body, which would show the split between NO_RETRY and RETRY_STATUS is drawn in the wrong place."
+  },
+  {
+   "claim": "The old rig posts to https://api.deepseek.com/chat/completions with model deepseek-flash, effort high, MAX_TOKENS 24000, ten threads, seven attempts, a 4-second delay doubling to 90, SystemExit on 400/401/402, and its own docstring says streaming captures partial output and the finish reason even when the service ends early.",
+   "evidence": "Read in full: /home/user/ThreadSmith/HV Skill/rigs/plan 49 rig - DeepSeek on outside papers/run.py .",
+   "tag": "seen",
+   "would_count_against": "Nothing: this is what the file says. What it does not show is that the retry schedule is right - it is fitted on that rig's runs and carried over here untested."
+  },
+  {
+   "claim": "A1's deepseek_transport.py already declares the seam: it imports 'send' from clients.deepseek_client, calls it as send(body, key, tag=, stream_path=, tries=), unpacks four values (message, finish_reason, usage, http), passes a body carrying a private _endpoint key, and sets its own MAX_TOKENS = 32000.",
+   "evidence": "Read in full: /home/user/ThreadSmith/Workflow/rigs/W10 harness/code/deepseek_transport.py , and the call site at lines 95-145 of run_deepseek.py in the same folder.",
+   "tag": "seen",
+   "would_count_against": "A1 changing that file after I read it - we ran in parallel, so this is a reading of a moving file and the reviewer should re-check it."
+  },
+  {
+   "claim": "My send() fills that seam. Driving A1's transport through my client with a stubbed poster: it posted to the beta URL, stripped _endpoint from the payload, kept the prefix message, sent the caller's max_tokens of 32000 unchanged, and returned the four values A1 unpacks.",
+   "evidence": "I ran it: a scratchpad script importing A1's deepseek_transport from an unrelated working directory, with clients.deepseek_client bound (CLIENT = clients.deepseek_client) and requests replaced by a stand-in that reaches no network.",
+   "tag": "seen",
+   "would_count_against": "A stand-in is not the service. It shows the shapes line up, not that a live call returns what the stand-in returned."
+  },
+  {
+   "claim": "Atria Asi is a hosted agentic model, Atria Dawn Preview, with an OpenAI-compatible API: base https://api.atria-asi.ai/v1, chat completions at /v1/chat/completions (also /v1/messages Anthropic-shaped with x-api-key, and /v1/responses), model id Atria-Dawn-Preview and case-sensitive, Authorization: Bearer with an atr_-prefixed key, 256K context, text only, SSE streaming, max_tokens an integer from 1 to 65,536, x-rpm-limit 60 with x-rpm-remaining, 429 with Retry-After, and three error classes 401/429/5xx.",
+   "evidence": "https://api.atria-asi.ai/docs , read 22 September 2026, with the page's own curl sample and its sentence on the ceiling quoted in the head of atria_client.py. Corroborated for the base URL and OpenAI compatibility by https://llmgateway.io/providers/atria and a search result for https://api.atria-asi.ai/ , same date.",
+   "tag": "claimed",
+   "would_count_against": "A live 404 on that path, a 401 on a Bearer header, or a 400 on max_tokens 65536. Nothing was sent, so none of this is seen."
+  },
+  {
+   "claim": "65,536 is the model's maximum output, from a second source independent of the API page.",
+   "evidence": "https://github.com/atria-asi/Atria-Dawn-Preview , read 22 September 2026: 'max_output_size = 65536'.",
+   "tag": "claimed",
+   "would_count_against": "The console showing a per-account cap below 65,536, which no page covered."
+  },
+  {
+   "claim": "The effort list ['low','medium','high','xhigh','max'] with default 'max' that appears in Atria's repository is a client tool's configuration, not the HTTP API's parameter list, so reasoning_effort is not sent.",
+   "evidence": "The list appears in that repository beside a named client's configuration block; the service's own integration page at https://api.atria-asi.ai/docs , fetched twice with different questions, names no such parameter.",
+   "tag": "worked out",
+   "would_count_against": "A live call showing the API accepts reasoning_effort, which would make the omission a lost setting rather than a caution. The client takes extra={} for exactly that case."
+  },
+  {
+   "claim": "Both dry runs pass and send nothing: 37 checks for DeepSeek, 34 for Atria, live-attempt counter zero in each.",
+   "evidence": "I ran both, repeatedly, and read the output; the last line of each is 'Nothing sent.' and exit is 0.",
+   "tag": "seen",
+   "would_count_against": "The checks are mine, written with the code, so they show the parts do what I built them to do and nothing about the service. Two of them found real faults, which is the only reason to trust them at all."
+  },
+  {
+   "claim": "The lock in atria_client.py, not the caller, is what keeps Atria to one request at a time.",
+   "evidence": "I ran the same five-thread burst twice inside --dry: with the lock, one request in flight at the peak; with the lock replaced by a no-op, five. Both numbers are printed by the dry run.",
+   "tag": "seen",
+   "would_count_against": "A caller that imports call() in a second process. The lock is per-process; nothing here stops two processes running at once, and the reviewer should say whether that matters."
+  },
+  {
+   "claim": "Five worker threads do five jobs at once and one worker does not.",
+   "evidence": "I ran both inside --dry against the stand-in: peak in flight 5 at five workers, 1 at one worker.",
+   "tag": "seen",
+   "would_count_against": "Nothing found. The number five is the plan's, not the service's - the service allows 2500 - so this shows the cap works, not that it is the right cap."
+  },
+  {
+   "claim": "Neither file contains a key, neither writes one, and a key that reaches a record stops the run.",
+   "evidence": "Grep for both real keys across the folder: no match. assert_no_key is run over every record before it is returned; --dry checks that it fires on a planted key and passes a clean record. Every record's headers read 'Bearer <redacted>'.",
+   "tag": "seen",
+   "would_count_against": "A path that returns a record without going through assert_no_key. Every return and every raise in call() now goes through it; that was not true of the raise paths until I fixed them."
+  }
+ ],
+ "dropped": [
+  {
+   "item": "An __init__.py under clients/.",
+   "why": "Idle, and worse than idle. I checked the import first: A1's 'from clients.deepseek_client import send' works as an implicit namespace package, verified from an unrelated working directory. A namespace package also merges with any other clients/ on sys.path where an __init__.py would let the first one hide this one. Cut, and the reason is in the read-me."
+  },
+  {
+   "item": "Clamping a caller's worker count to five.",
+   "why": "A silent clamp loses the plan's number: nobody reading the run could tell whether five was chosen or imposed. Replaced with a raise that quotes W10 section 2."
+  },
+  {
+   "item": "Raising a caller's max_tokens to the service maximum inside send().",
+   "why": "A1's driver writes its .request.json before calling send(). Rewriting the body underneath it would make the saved text describe a request that was not sent, and PA.1 rests on exactly that text. Replaced with a one-line stderr note per call and an entry in the read-me for the reviewer, so the disagreement between A1's 32000 and A6's 393216 is visible at run time and decided by a person."
+  },
+  {
+   "item": "Sending reasoning_effort or a thinking object to Atria.",
+   "why": "Nothing on the service's own page says the HTTP API takes either; the effort list I found is a client tool's config. An undocumented parameter is a way to earn a 400 on every call. Left out, with extra={} to add it once a live call shows it is accepted."
+  },
+  {
+   "item": "Capping an honoured Retry-After at the backoff cap (90s / 120s).",
+   "why": "Asking what would show the choice wrong: a service that asks for five minutes would be retried early five more times and the attempts spent on refusals. Replaced with RETRY_AFTER_CAP = 300 in both files, deliberately above the backoff cap."
+  },
+  {
+   "item": "The first version of the one-at-a-time check.",
+   "why": "It passed whether or not my lock existed: the stand-in decremented its in-flight counter inside its own lock, so two callers could never overlap there. A test that its target and its target's innocent neighbour both pass measures something else. Rewritten so the stand-in holds the count up outside its lock, and a control now runs the same burst with my lock removed and shows peak 5."
+  },
+  {
+   "item": "A shared _common.py for the code both clients repeat.",
+   "why": "The task names two files and a read-me; each file is readable on its own, as the old rig's files are. This is a free choice and therefore loose: a reviewer who prefers one module is not contradicted by anything here."
+  },
+  {
+   "item": "SystemExit on a bad status, as the old rig does.",
+   "why": "A library should not kill the caller's process. Replaced with a DeepSeekError/AtriaError carrying status, the service's own words, a retryable flag, and the whole record; the driver decides. What this gives up: a rig that relied on the old SystemExit to halt a whole batch must now catch the error itself."
+  }
+ ],
+ "could_not_settle": "Nothing was sent, so nothing here is settled by the service. Every claim about behaviour under load, about what the service accepts, and about what it returns is claimed from documentation or worked out, never seen.\n\nDeepSeek, not settled and named in the file: (1) whether the beta prefix endpoint accepts thinking mode on deepseek-flash - no page found says, and the client does not drop thinking to make a request succeed, because a run under a different thinking setting is a different arm; (2) whether the service refuses a max_tokens that, with the prompt, would overrun the 1M context, which is the thing that would show the 393216 default wrong.\n\nAtria, eight questions, all in the read-me and none answerable from the web: what the owner's failure actually looked like (the client assumes a cut-off reply and gauges it, but a timeout or a 429 would mean the retry schedule or the read timeout is the thing to move); what max_tokens is when omitted; whether the HTTP API takes reasoning_effort or thinking; whether the reply carries a reasoning field and under what name; whether tool calls are accepted on the chat-completions path, which matters if an Atria examiner is ever to open a skill module; whether there is a concurrency limit separate from 60 requests a minute; whether any prefill of the assistant turn exists; and what it costs.\n\nAlso unsettled: I read A1's deepseek_transport.py while A1 was still working, so my reading of that seam is of a moving file. And the lock that keeps Atria to one at a time is per-process; two processes would defeat it, and nothing here stops that.",
+ "for_the_reviewer": "Press first on the token ceiling. The task for A6 says \"no token limit below the service's maximum\". I read that as being about the client's own default and not as a veto on a caller's value, so the client defaults to 393216 and sends A1's 32000 unchanged with a stderr note. If the plan meant the stronger reading, the client is wrong and should refuse a low ceiling - but then A1's transport and my client cannot both be right, and one of the two files has to change. Decide it, and note that arm (e) prefills the emission and the port-setting reports are the long ones.\n\nSecond, the Atria diagnosis. The owner said it \"tends to fail otherwise\", and I assumed the failure is truncation and built a ceiling at the maximum plus a truncated gauge. The assumption is a guess dressed in a gauge. If the owner remembers a timeout or a 429 instead, the ceiling is idle and the retry schedule or the read timeout is the part that should have moved. Ask the owner question 1 of the read-me before stage E spends anything.\n\nThird, streaming on by default for Atria. The reason is carried over from the DeepSeek rig's docstring - fitted on another service, untested here. Atria's page says SSE is supported and says nothing about partial output.\n\nFourth, my checks are my own. I wrote the code, the stand-in and the cases, so a clean sweep proves little; the two things worth weighing are that two of the checks caught real faults (a non-retryable failure threw the request record away, and Retry-After: 0 was falsy and fell through to a four-second backoff), and that the one-at-a-time and five-worker checks now each carry a control that fails. Every other check would pass on a client that never works against the real service.\n\nFifth, I read A1's deepseek_transport.py while A1 was still writing. Re-check the seam before stage C.",
+ "tools_used": "Tools: Read, Bash, Write, Edit, ToolSearch, WebSearch, WebFetch. No other tool. No git, no network from any shell command.\n\nShell commands, in order: ls of the skill references folder and the plan 49 rig folder; cat of the-idea-in-depth.md; cat of building.md, testing-against-cases.md, reporting.md; cat of question-bank.md; cat of word-list.md; wc -w and cat of the W10 plan; wc -w and grep of headings in W8; sed -n '355,410p' of W8 (B10, B11, B12); sed -n '664,690p' of W8 (section 5, section 6); sed -n '184,202p' of W8 (A10); sed -n '116,133p' of W8 (A6); grep '^## ' of W3; sed -n '64,131p;163,172p' of W3; sed -n '94,131p' of W3; cat of the old rig's run.py; cat of sonnet_agent.py and repeat_check.py; head of second_marker.py and fetch.py; python3 -V, a requests version print, a check that neither key is set, ls of Workflow/rigs; find of the W10 harness folder; wc -l and cat of A1's deepseek_transport.py; grep of run_deepseek.py; sed -n '95,145p' of run_deepseek.py; mkdir -p of code/clients and ls; python3 deepseek_client.py --dry (seven times across the edits); python3 -c importing A1's deepseek_transport from /tmp; a heredoc writing a scratchpad seam test and python3 running it (twice); python3 atria_client.py --dry (five times); greps of the dry-run output; rm -rf of a scratch dir, both --dry --save runs, ls and cat of the six saved request texts; a python3 heredoc doing an in-place edit of RETRY_AFTER_CAP in both client files; python3 -W error::SyntaxWarning -m py_compile on both and a python3 ast check for unused imports; sed -i on README.md updating the check counts, grep for both real keys across the folder and grep for key-shaped strings; ls and find -newermt over the harness folder; cat of code/.gitignore, ls of code/__pycache__, rm -rf of code/__pycache__ and code/clients/__pycache__; wc -l and a duplicate-definition grep; a grep listing every def and class in both files; and a last pair of --dry runs with a final rm -rf of __pycache__.\n\nWeb research (permitted by W4; everything CLAIMED, quoted with address and today's date, 22 September 2026, and no fetched text kept as a file). Fetched: https://api-docs.deepseek.com/guides/chat_prefix_completion , /quick_start/rate_limit , /api/create-chat-completion , /quick_start/pricing , /guides/reasoning_model (returned nothing useful), /quick_start/error_codes ; https://api.atria-asi.ai/ ; https://api.atria-asi.ai/docs (three times, different questions); https://llmgateway.io/providers/atria ; https://huggingface.co/internlm/Atria-Dawn-Preview ; https://github.com/atria-asi/Atria-Dawn-Preview . Searched: \"DeepSeek API chat prefix completion beta thinking mode reasoning_content assistant prefix true\" (restricted to api-docs.deepseek.com); \"\\\"Atria Asi\\\" API\"; \"atria-asi.ai API docs base_url \\\"api.atria-asi.ai/v1\\\" chat completions max_tokens\".\n\nFiles outside my folder. No repository file outside code/clients/ was written or edited; the other four projects were read only. Two things were written elsewhere and are declared: a scratchpad seam test and six saved request texts under the session scratchpad at /tmp/claude-0/-home-user-ThreadSmith/00bda300-7321-5714-a655-4358c87aab9b/scratchpad/ (outside the repository, not part of the deliverable); and Python byte-cache directories that the interpreter created at code/__pycache__ and code/clients/__pycache__ while running the seam test, both removed afterwards and both git-ignored by code/.gitignore. Nothing was sent to any API. No key exists in the environment and no key was written to any file."
+}
