@@ -1,0 +1,344 @@
+
+=== C henhouse | query: contradiction(F) | removed: [] | 0.05s | timed out: False ===
+% Query
+I would like to know if
+   the ledger both gives and denies: anything?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   the ledger both gives and denies: got_inside(fox), because
+      it follows or was said that: got_inside(fox), because
+         line u1 is in the ledger, and
+         it follows or was said that: took(fox,hens), because
+            line 5 is in the ledger
+      you said this is not so: got_inside(fox), because
+         line u2 is in the ledger, and
+         you said this is not so: has_gap(fence), because
+            line 2 is in the ledger
+         you said this is not so: can_climb(fox,fence), because
+            line 3 is in the ledger
+         you said this is not so: opened(gate), because
+            line 4 is in the ledger
+
+% Model
+   • contradiction holds for got_inside(fox)
+   • denied holds for got_inside(fox)
+   • denied holds for has_gap(fence)
+   • denied holds for opened(gate)
+   • denied holds for can_climb(fox,fence)
+   • holds holds for got_inside(fox)
+   • holds holds for took(fox,hens)
+   • line holds for 2
+   • line holds for 3
+   • line holds for 4
+   • line holds for 5
+   • line holds for u1
+   • line holds for u2
+% Bindings
+F = got_inside(fox)
+
+
+
+=== C henhouse | query: claim_because(N, E, C) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   claim_because holds for anything, anything, and anything?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   claim_because holds for 6, gone(hens), and took(fox,hens), because
+      line 6 is in the ledger
+
+% Model
+   • line holds for 6
+   • claim_because holds for 6, gone(hens), and took(fox,hens)
+% Bindings
+C = took(fox,hens),
+E = gone(hens),
+N = 6
+
+
+
+=== C henhouse | query: holds(gone(hens)) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   it follows or was said that: gone(hens)?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: gone(hens), because
+      something in the ledger makes this happen: gone(hens), because
+         line u3 is in the ledger, and
+         it follows or was said that: took(fox,hens), because
+            line 5 is in the ledger
+
+% Model
+   • holds holds for gone(hens)
+   • holds holds for took(fox,hens)
+   • line holds for 5
+   • line holds for u3
+   • produced holds for gone(hens)
+% No bindings
+true
+
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 2 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: gone(hens), because
+      line 1 is in the ledger
+
+% Model
+   • holds holds for gone(hens)
+   • line holds for 1
+% No bindings
+true
+
+
+
+=== C henhouse | query: produced(gone(hens)) | removed: ['1'] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   something in the ledger makes this happen: gone(hens)?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   something in the ledger makes this happen: gone(hens), because
+      line u3 is in the ledger, and
+      it follows or was said that: took(fox,hens), because
+         line 5 is in the ledger
+
+% Model
+   • holds holds for took(fox,hens)
+   • line holds for 5
+   • line holds for u3
+   • produced holds for gone(hens)
+% No bindings
+true
+
+
+
+=== C henhouse | query: holds(took(fox,hens)) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   it follows or was said that: took(fox,hens)?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: took(fox,hens), because
+      line 5 is in the ledger
+
+% Model
+   • holds holds for took(fox,hens)
+   • line holds for 5
+% No bindings
+true
+
+
+
+=== C henhouse | query: produced(gone(hens)) | removed: ['1', '5'] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   something in the ledger makes this happen: gone(hens)?
+Warning: s(CASP): No models (0.000 seconds)
+
+
+=== C henhouse | query: claim_since(N, E, C) | removed: [] | 0.05s | timed out: False ===
+ERROR: scasp_predicate `claim_since/3' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([claim_since(_322,_324,_326),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmp89fflhc2.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_464,_466)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
+
+=== C henhouse | query: claim_plan(N, A, F) | removed: [] | 0.04s | timed out: False ===
+ERROR: scasp_predicate `claim_plan/3' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([claim_plan(_322,_324,_326),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmp4ph3zavl.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_464,_466)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
+
+=== C henhouse | query: exception(N, X) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   anything is a known exception to line anything?
+Warning: s(CASP): No models (0.000 seconds)
+
+
+=== C henhouse | query: claim_like(N, A, B) | removed: [] | 0.05s | timed out: False ===
+ERROR: scasp_predicate `claim_like/3' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([claim_like(_322,_324,_326),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmppo6hk7al.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_464,_466)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
+
+=== C henhouse | query: holds(F) | removed: [] | 0.05s | timed out: False ===
+% Query
+I would like to know if
+   it follows or was said that: anything?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: gone(hens), because
+      something in the ledger makes this happen: gone(hens), because
+         line u3 is in the ledger, and
+         it follows or was said that: took(fox,hens), because
+            line 5 is in the ledger
+
+% Model
+   • holds holds for gone(hens)
+   • holds holds for took(fox,hens)
+   • line holds for 5
+   • line holds for u3
+   • produced holds for gone(hens)
+% Bindings
+F = gone(hens)
+
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 2 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: gone(hens), because
+      line 1 is in the ledger
+
+% Model
+   • holds holds for gone(hens)
+   • line holds for 1
+% Bindings
+F = gone(hens)
+
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 3 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: took(fox,hens), because
+      line 5 is in the ledger
+
+% Model
+   • holds holds for took(fox,hens)
+   • line holds for 5
+% Bindings
+F = took(fox,hens)
+
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 4 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   it follows or was said that: got_inside(fox), because
+      line u1 is in the ledger, and
+      it follows or was said that: took(fox,hens), because
+         line 5 is in the ledger
+
+% Model
+   • holds holds for got_inside(fox)
+   • holds holds for took(fox,hens)
+   • line holds for 5
+   • line holds for u1
+% Bindings
+F = got_inside(fox)
+
+
+
+=== C henhouse | query: denied(gone(hens)) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   you said this is not so: gone(hens)?
+Warning: s(CASP): No models (0.000 seconds)
+
+
+=== C henhouse | query: denied(took(fox,hens)) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   you said this is not so: took(fox,hens)?
+Warning: s(CASP): No models (0.000 seconds)
+
+
+=== C henhouse | query: exempt(N, X) | removed: [] | 0.05s | timed out: False ===
+ERROR: scasp_predicate `exempt/2' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([exempt(_322,_324),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmppzj748fi.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_462,_464)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
+
+=== C henhouse | query: claim_because(N, E, C) | removed: [] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   claim_because holds for anything, anything, and anything?
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Justification
+   claim_because holds for 6, gone(hens), and took(fox,hens), because
+      line 6 is in the ledger
+
+% Model
+   • line holds for 6
+   • claim_because holds for 6, gone(hens), and took(fox,hens)
+% Bindings
+C = took(fox,hens),
+E = gone(hens),
+N = 6
+
+
+
+=== C henhouse | query: holds(gone(hens)) | removed: ['1', '2', '3', '4', '5'] | 0.04s | timed out: False ===
+% Query
+I would like to know if
+   it follows or was said that: gone(hens)?
+Warning: s(CASP): No models (0.000 seconds)
+
+
+=== C henhouse | query: claim_since(N, E, C) | removed: [] | 0.05s | timed out: False ===
+ERROR: scasp_predicate `claim_since/3' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([claim_since(_322,_324,_326),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmpn8gmsiiy.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_464,_466)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
+
+=== C henhouse | query: denied_because(N, E, C) | removed: [] | 0.04s | timed out: False ===
+ERROR: scasp_predicate `denied_because/3' does not exist
+ERROR: In:
+ERROR:   [22] throw(error(existence_error(scasp_predicate,...),_268))
+ERROR:   [19] apply:maplist_([denied_because(_322,_324,_326),o_nmr_check],scasp_compile:check_existence(scasp_main)) at /usr/lib/swi-prolog/library/apply.pl:225
+ERROR:   [15] scasp_main:main(['/tmp/tmp2wzb3imp.pl'],[tree(true),...|...]) at /tmp/sCASP/prolog/scasp/main.pl:67
+ERROR:   [13] catch(scasp_main:(...,...),error(existence_error(scasp_predicate,...),context(_464,_466)),scasp_main:error(...)) at /usr/lib/swi-prolog/boot/init.pl:565
+ERROR:   [12] catch_with_backtrace('<garbage_collected>','<garbage_collected>','<garbage_collected>') at /usr/lib/swi-prolog/boot/init.pl:645
+ERROR: 
+ERROR: Note: some frames are missing due to last-call optimization.
+ERROR: Re-run your program in debug mode (:- debug.) to get more detail.
+
