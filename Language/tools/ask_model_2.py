@@ -19,7 +19,7 @@ seconds, the whole call's total_seconds, attempt count and the labelled status a
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/disconnects/silence with backoff,
 at most 6 attempts; a 400/401/403/404/413/422 is not retried; an empty answer whose finish reason is `length` is not retried
 (the same cap gives the same answer) and is recorded as status -4; an empty answer with any other finish reason is retried
-(-2); a 200 with no choices (-3), an unparsable body (-1), an exception (0). A failed call leaves DIR/<tag>.error.txt and a
+(-2); a 200 whose stream yields no parsable chunk (-3; a chunk that does not parse is skipped, so an unparsable body arrives as no chunks), an exception, a closed connection or silence (0). A failed call leaves DIR/<tag>.error.txt and a
 receipt with "failed": true. Rate limit kept per provider by a lock file in DIR, or in $ASK_MODEL_LOCKDIR when set.
 Written under decision L11, 22 September 2026.
 """
@@ -44,7 +44,7 @@ def wait_for_slot(lockdir, provider, rpm):
         fcntl.flock(f, fcntl.LOCK_UN)
 
 def stream(url, key, raw, idle):
-    """One streamed request. Returns (status, content, reasoning, finish, last_chunk, chunks, text_on_error)."""
+    """One streamed request. Returns (content, reasoning, finish, last_chunk, chunks, response_id); raises on an HTTP error, on silence for `idle` seconds, or on a closed connection."""
     req = urllib.request.Request(url, data=raw, method="POST",
           headers={"Authorization": "Bearer " + key, "Content-Type": "application/json", "Accept": "text/event-stream"})
     content, reasoning, finish, last, chunks, rid = "", "", None, None, 0, None
@@ -90,6 +90,7 @@ def main():
     content = reasoning = ""; finish = last = rid = None; chunks = 0; text = ""
     while True:
         attempts += 1
+        content = reasoning = ""; finish = last = rid = None; chunks = 0; text = ""   # each attempt starts clean
         wait_for_slot(a.out, a.provider, p["rpm"])
         t0 = time.time()
         try:
@@ -103,7 +104,7 @@ def main():
         seconds = time.time() - t0
         if status == 200 and not chunks: status = -3
         elif status == 200 and not content.strip(): status = -4 if finish == "length" else -2
-        history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1), "finish": finish, "chunks": chunks})
+        history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1), "finish": finish, "chunks": chunks})   # this attempt's own, reset at the top of the loop
         if status == 200: break
         final = status in (400, 401, 403, 404, 413, 422, -4)
         if final or attempts >= a.attempts:
