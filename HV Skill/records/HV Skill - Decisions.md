@@ -28,5 +28,9 @@ H5. Draw the line between the skill and the planning work. "It sounds like you'r
 
 H6. The owner's notes on the end goal, and the order of work from here. "The end goal is an entire workflow that embodies the yet incomplete semantics theory HV is based on. I learned that creating a determinist harness that serves as an attention and token distribution system is difficult to implement without destroying the already latent LLM capabilities. The capabilities seem to be centred around statefull vs stateless agents. It turns out built in context should consume part of the reasoning architecture specified in the semantics. As for exactly what is to be determined. Externalising parts of memory are still important, and relevant to managing attention. As to how, I'm unsure. Whether LLMs guide attention in planning, exploration and execution is yet unknown. Maybe it needs to handle bits of attention and bits generation. But which, I'm not sure. To understand which, designing a model of LLMs within the language of the semantics needs to be resolved. Which skills to have, and where the boundaries lie is the first step. Right now we have planning and HV. Nothing else can move forward without a sense of how LLMs fit into the larger semantics picture. First goal is the research. Harden HV and planning right now, freeze them, then move to a structure research plan based on semantics 10."
 
+H7. Harden from the results in hand, look in the other projects, and which subagents may run. "No no you harden with the current results. Also look inside the other projects for more info relating to HV skills. Use Opus 5 as subagents. Gear them with the HV dicipline and set their effort levels to Extra, not max. Never use Fable 5.1 as subagents."
+
+H8. The other projects are read only. "Do not ever edit or touch other projects. This is read only."
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
