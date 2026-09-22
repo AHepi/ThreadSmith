@@ -1,0 +1,783 @@
+Let me carefully work through this task. I need to translate the text into the ledger language, following all the rules, and produce output including a JSON block.
+
+The text (B01):
+1. "The farm foreman kept notes on his evening rounds."
+2. "He wrote that the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+3. "The foreman added, from what he saw himself, that the lower field was empty of grass."
+4. "The note ended with the time the rounds had finished."
+
+Let me analyze this carefully.
+
+Sentence 1: "The farm foreman kept notes on his evening rounds."
+- The foreman is a person. He kept notes. This is a CLAIMED fact about the actual world.
+- Things: foreman, notes.
+- "on his evening rounds" - this is a description of when/where; the language doesn't handle "when" beyond order, so this goes to the bin perhaps. Actually "kept notes on his evening rounds" - the notes are about his evening rounds? Or he kept notes while on his rounds? Ambiguous reading. Let me record this.
+
+Sentence 2: "He wrote that the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+
+This is a reported content. "He wrote that..." - the foreman wrote. What he wrote is TOLD in a named world (the note's world / what the note says). Inside that world:
+- the shepherd had concluded the flock must be in the top field
+- since the gate stood open
+- and the shepherd always left that gate open only once the flock had been driven through it
+
+So the note's content: the shepherd concluded (attribution - goes to bin, content as TOLD in the shepherd's world? Or in the note's world?). Hmm. Let's think.
+
+The structure: The foreman wrote [that the shepherd had concluded X, since Y, and the shepherd always did Z].
+
+The whole thing after "wrote that" is TOLD in world "note" (what the note says). Within that, "the shepherd had concluded" is an attribution — the shepherd believes/concludes. Per the rules: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world."
+
+So the shepherd's conclusion content: "the flock must be in the top field" — TOLD in world "shepherd_conclusion" or similar. And the reasons: "since the gate stood open" — this is a SINCE claim (reason to believe). And "the shepherd always left that gate open only once the flock had been driven through it" — a general line, ALWAYS.
+
+Hmm, but wait — is the "always" claim part of what the shepherd concluded, or is it the foreman's own observation? The sentence structure: "He wrote that the shepherd had concluded [the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it]." The whole bracketed content is what the shepherd concluded, arguably. Actually, "concluded X, since Y, and Z" — the "since" clause gives the reason for the conclusion. And "the shepherd always left that gate open only once..." is another premise. It's ambiguous whether the always-claim is part of the shepherd's reasoning or the foreman's own knowledge. Reading: it's all within "wrote that", so it's TOLD in the note's world. The shepherd's conclusion is attributed, so the conclusion content goes to the shepherd's world (TOLD in world shepherd_thinking), while the premises... hmm.
+
+Actually, let me simplify. The attribution "the shepherd had concluded" scopes the conclusion. The "since" clause and the "always" clause are premises supporting the conclusion. Are they the shepherd's premises or the note's? The sentence says the shepherd concluded the flock must be in the top field since the gate stood open — so the gate standing open is the shepherd's reason. And "the shepherd always left that gate open only once the flock had been driven through it" — this is stated as fact within the note's world, supporting the inference.
+
+I think the cleanest treatment:
+- TOLD in world "note" (what the note says): the gate stood open; the shepherd always left that gate open only once the flock had been driven through it (general line); the shepherd concluded the flock is in the top field.
+- The conclusion attribution: bin it, and write the content as TOLD in world "shepherd" (the shepherd's world): the flock is in the top field.
+- The SINCE claim: the shepherd's conclusion SINCE the gate stood open — this is a claim about lines, TOLD in the note's world (or the shepherd's world). Since it's the shepherd's reasoning, it belongs to the shepherd's world. Hmm, but the SINCE is reported by the note as the shepherd's reason.
+
+Let me think about who is reasoning. The note says: shepherd concluded FLOCK_IN_TOP_FIELD SINCE GATE_OPEN (and ALWAYS rule). The SINCE claim is about the shepherd's conclusion. I'd put the SINCE line in the shepherd's world, pointing at the conclusion line and the gate-open line. But the gate-open line is in the note's world... A told world is looked at alone. Hmm, that's a problem: if the SINCE line is in the shepherd's world and points at lines in the note's world, the checker looking at the shepherd's world alone wouldn't see them.
+
+Alternative: put everything in one world "note" — the note's world contains: gate stood open, the always rule, the flock in top field (as the content of the shepherd's conclusion, with the attribution binned), and the SINCE claim. That keeps it self-contained. The attribution "the shepherd had concluded" goes to the bin with a note that the conclusion content is TOLD in world note.
+
+Hmm, but the rules say "write the content as TOLD in that person's world". The person here is the shepherd. But the shepherd's world would need the gate-open fact restated. Actually, since the note reports the shepherd's conclusion and its reasons, and the note's world contains all of it, I could treat the shepherd's conclusion as living in the note's world with the attribution binned. But the guide says to write content as TOLD in that person's world.
+
+Let me reconsider: maybe two worlds is fine but I state the needed facts in both. Actually the language definition says "A told world is looked at alone. It does not inherit the actual ledger". It doesn't say two told worlds can't share facts. But the SINCE line points at other lines by number — those lines must be in the same world for the check to work. So I should put the SINCE line in whichever world contains the lines it points at.
+
+Simplest coherent design: one told world, "note" (what the note says). Inside it:
+- gate is a gate; response not stated
+- flock is a flock (of sheep?); response not stated
+- top field is a field
+- shepherd is a person
+- the gate stood open (fact)
+- ALWAYS: when the shepherd has left that gate open, then the flock had been driven through it (MAKES? SHOWS?) — "the shepherd always left that gate open only once the flock had been driven through it". This is a general line: ALWAYS, when the gate is left open by the shepherd, then the flock had been driven through it. Is it MAKES or SHOWS? "only once" — the gate being left open indicates the flock was driven through. It's more of a SHOWS (reading off) than a cause... Actually "only once" means: the shepherd leaves the gate open only after driving the flock through. So gate-open SHOWS flock-driven-through. Hmm, but one could also read it as: driving the flock through is what MAKES the shepherd leave the gate open. The text says "always left that gate open only once the flock had been driven through it" — the condition for leaving the gate open is that the flock had been driven through. I'll treat it as ALWAYS SHOWS: when the gate stands left-open by the shepherd, then the flock was driven through it. Hmm, actually let me think about MAKES vs SHOWS more carefully.
+
+MAKES: this produces that. SHOWS: this is how we can tell. "The shepherd always left that gate open only once the flock had been driven through it" — the flock being driven through is the occasion/condition for leaving the gate open. Does driving the flock through produce the open gate? In a causal sense, the shepherd drives the flock through and then leaves the gate open — the driving-through is the reason the gate is left open. That's arguably MAKES (the driving produces the leaving-open, in the sense of occasioning). But it could be SHOWS (the open gate is evidence the flock went through). The text's "only once" suggests a necessary condition: gate open → flock driven through. As a general line: ALWAYS: when the shepherd leaves that gate open, then the flock had been driven through it. Kind: this is tricky. I'll mark it SHOWS with a filled-in choice, since the open gate is a sign of the flock having passed. Hmm, but actually, in the shepherd's reasoning, the open gate is evidence for the flock being in the top field. The general line is used to link gate-open → flock-driven-through → flock-in-top-field. Wait, does the text say the flock was driven through the gate into the top field? It says "the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it". So the reasoning: gate open → (by the always rule) flock was driven through it → flock is in the top field. The "flock is in the top field" step requires that driving through the gate puts them in the top field — a missing step! The text doesn't say the gate is the top field's gate or that driving through it lands them in the top field. That's a missing step I should write as filled in, or note in readings.
+
+Actually, hold on. Let me re-read: "the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it." So the two premises: (a) the gate stood open; (b) the shepherd always left that gate open only once the flock had been driven through it. Conclusion: flock in top field. The missing link: the gate is at/in the top field, so driving the flock through it puts them there. I'll write a filled-in line: the gate opens onto the top field (or driving the flock through the gate puts the flock in the top field). Hmm, but that's a big fill. Alternatively, record it in "readings I chose" and as a filled-in fact in the note's world.
+
+Wait — actually, maybe simpler: the general line could be written as "ALWAYS: when the gate stands open (left by the shepherd), then the flock is in the top field" — no, that's not what the text says. The text says the flock had been driven through it. So the general line's effect is "flock driven through the gate". Then a separate filled-in link: flock driven through the gate → flock in the top field (needs the gate to be the top field's gate).
+
+Hmm, this is getting complex. Let me lay out the note's world lines:
+
+World "note" (what the note says), all TOLD:
+- n_gate: gate is a gate; response not stated
+- n_flock: flock is a flock; response not stated
+- n_shepherd: shepherd is a person; response not stated (heavy and standing? A person is "heavy and standing" per response classes. But the text doesn't say; rule 3 says if not stated, write "not stated". A person is a body... The response classes list "heavy and standing (a person)". But rule: "Where the text is silent on how a thing answers a press, write 'not stated'." The text is silent. So "not stated".)
+- n_field: the top field is a field; response not stated
+- n_open: the gate stood open (fact)
+- n_always: ALWAYS: when the shepherd leaves that gate open, then the flock had been driven through it; SHOWS (filled in choice) — hmm, or MAKES?
+- n_conclusion: the flock is in the top field (TOLD in world note — the content of the shepherd's conclusion; attribution binned)
+- n_since: line n_conclusion SINCE line n_open (and the always rule) — the shepherd's reason to expect. Actually SINCE claims: "C is a reason to expect or believe E". Here: gate open is the reason to believe flock in top field. So claim_since(n_since, in_top_field(flock), stood_open(gate)). But the full reasoning also uses the always rule. The text gives both premises with "since... and...". So the SINCE claim's reason could be the conjunction. In the ledger, a SINCE line points at lines. I could write: line n_conclusion SINCE line n_open, and separately the always rule supports it. Or write one SINCE line pointing at both? The language: "line E SINCE line C" — points at one line. Hmm, but I can write two SINCE lines, or make the reason the always-rule applied. Let me think about what the checker does: SINCE is tested on what follows by any route. So claim_since(id, expected, reason). The reason term is a fact term. If I want both premises, I might need the reason to be a conjunction... The encoding guide shows claim_since(id, <what is expected>, <the reason>) with a single term. I could use a compound term like and(stood_open(gate), driven_through(flock, gate)). Hmm, but then it wouldn't match a holds(...) fact. The guide says "Every fact term used in a claim_because, claim_since, denied_because or claim_plan is spelled exactly as in the holds(...) of the line it points at". A compound and(...) wouldn't match. 
+
+Alternative approach: two SINCE lines:
+- n_since1: conclusion SINCE gate-open
+- n_since2: conclusion SINCE flock-driven-through (which follows from gate-open via the always rule)
+
+Hmm, but the text's actual reasoning is: gate open + always rule → flock driven through → flock in top field. The "flock driven through" is derived, not a premise stated as a fact. Hmm.
+
+Actually wait. Let me re-read again: "the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+
+Parse: the shepherd concluded [the flock must be in the top field], since [the gate stood open], and [the shepherd always left that gate open only once the flock had been driven through it].
+
+So both the gate-open fact and the always-habit are the shepherd's reasons. The conclusion: flock in top field.
+
+The missing step: that driving the flock through that gate results in them being in the top field. The text doesn't say the gate leads to the top field. This is a genuine gap — the checker would report a jump with candidate missing lines. I should write the conclusion as TOLD, the SINCE claim as TOLD, and NOT fill in the missing step as a line? Hmm, but the translator's rules say "When you feel a missing step is obvious: write it as its own line, marked 'filled in'." Is it obvious that the gate opens onto the top field? It's plausible but not obvious. Hmm. Actually, wait — maybe the always rule should be read differently: "the shepherd always left that gate open only once the flock had been driven through it" — maybe the gate in question is the top field's gate, and driving the flock through it is how they get into the top field. The text doesn't say. I'll record this as a reading choice and add a filled-in line for the gate opening onto the top field, marked filled in, so the argument can be checked. Actually, hmm — should I? Rule 9: "An added line... may not be the claimed line in other words, may not take the place of the reason the writer actually gives, and may not let the opposite follow just as well." A filled-in line stating "driving the flock through the gate puts the flock in the top field" would be doing the writer's (shepherd's) work. The checker tests added lines by taking out the writer's lines. It's fine to add it as a candidate missing step, marked filled in. The report will note it leans on an added line. I think that's the honest approach: the argument as stated has a gap; I fill it in and mark it.
+
+Alternatively, I keep it simpler and let the checker find the jump. But the checker isn't running here; I'm just producing the ledger. The translator's rules say to write obvious missing steps as filled-in lines. This step is somewhat obvious (a gate you drive a flock through leads somewhere; the conclusion says where). I'll include it as filled in, and note it in readings.
+
+Hmm, wait. Let me reconsider. Actually maybe I'm overcomplicating. Let me re-read once more.
+
+"the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+
+Actually — maybe the intended reading is simpler: the gate is the top field's gate. The shepherd always left that gate open only once the flock had been driven through it — i.e., the gate being open means the flock was driven through it into the top field. The conclusion follows. The missing step is "the gate is at the top field" / "driving through the gate puts the flock in the top field". I'll fill that in.
+
+Now, the always rule as a general line: "the shepherd always left that gate open only once the flock had been driven through it". 
+
+As a general line: ALWAYS: when the flock has been driven through the gate, then the shepherd left the gate open? No wait — "only once" means "only after" / "only when". So: the shepherd left the gate open ONLY WHEN the flock had been driven through it. Since it's "always", it's ALWAYS: when the shepherd leaves that gate open, then the flock had been driven through it. Direction: gate-open (condition) → flock-driven-through (effect). Hmm, or: ALWAYS: when the flock has not been driven through the gate, then the shepherd does not leave it open. The natural reading for the inference: gate open ⇒ flock driven through.
+
+MAKES or SHOWS? Does the flock being driven through MAKE the shepherd leave the gate open? Or does the open gate SHOW that the flock was driven through? The word "only once" (only after/only when) states a condition, not a cause. I read it as: the shepherd's habit is to leave the gate open only after driving the flock through. So the open gate is a sign that the flock went through. SHOWS. But one could argue the driving-through occasions the leaving-open (MAKES). The text doesn't settle it; I'll choose SHOWS and mark filled in. Hmm, wait. Actually, let me think about which makes the argument work. The shepherd's argument: gate open → flock driven through → flock in top field. For the argument, the general line is used as: from gate-open, infer flock-driven-through. That's an inference rule — SHOWS fits ("this is how we can tell"). Yes, SHOWS.
+
+Hmm, but hold on: is the general line ALWAYS? "the shepherd always left that gate open only once..." — yes, "always" → ALWAYS.
+
+Now for the Prolog encoding of a general line:
+- ALWAYS SHOWS: `holds(<conclusion>(X)) :- line(id), <goals>.`
+- ALWAYS MAKES: `produced(<effect>(X)) :- line(id), kind(X, <kind>), holds(<condition>(X)).` plus `depends(...)`.
+
+For SHOWS: `holds(driven_through(flock, gate)) :- line(n_always), holds(left_open(shepherd, gate)).` Something like that. The conclusion is "flock had been driven through it" — a fact about the flock and gate. The condition: "the shepherd left that gate open". 
+
+Hmm, but the conclusion of the whole argument is "flock in top field", which is derived via the filled-in link. Let me write the filled-in link as a general line too? Or as a fact? The missing step: "driving the flock through the gate puts the flock in the top field" — that's a general line: ALWAYS: when the flock is driven through the gate, then the flock is in the top field; SHOWS or MAKES? Driving through puts them there — MAKES-ish, or just definitional. Hmm. Actually, maybe simpler: state it as a fact in the note's world: "the gate opens onto the top field" — then the movement through the gate into the field. Hmm.
+
+Alternatively — and maybe cleaner — treat the missing step as: the gate is the gate of the top field (a fact), so a flock driven through it is in the top field. But "in the top field" from "driven through the gate" still needs a link.
+
+Let me simplify: filled-in general line, ALWAYS SHOWS: when the flock has been driven through the gate, then the flock is in the top field. Mark filled in. That carries the inference.
+
+Hmm, actually, is SHOWS right? "Driven through the gate → in the top field" — if the gate opens onto the top field, then being driven through it puts the flock in the field. That's more like MAKES (the driving produces the being-there) or just a spatial fact. I'll use SHOWS (how we can tell) — hmm. Honestly either. Let me use MAKES? "A press can move a thing only if..." — driving is a press-ish thing... no, let's not overthink. The relation is spatial/definitional: through the gate → in the field. I'll mark it SHOWS, filled in, and note the choice in readings. Hmm, wait — actually, for the argument to work, we need the general line to license the inference from driven-through to in-top-field. SHOWS licenses inference. MAKES would be causal. Since it's about location resulting from movement, MAKES might fit better ("driving the flock through the gate puts them in the top field"). Ugh. Let me pick MAKES with produced/depends? The produced form requires a kind condition. `produced(in_top_field(F)) :- line(x), kind(F, flock), holds(driven_through(F, gate)).` That works: for any flock, if driven through the gate, it is in the top field. Hmm, but "produced" for a location fact is odd but acceptable.
+
+Actually, you know what — let me step back and consider whether to include this missing step at all. The alternative: don't fill it in; the SINCE claim then rests on gate-open alone plus the always rule, and the gap remains visible. The instructions say "When you feel a missing step is obvious: write it as its own line, marked 'filled in'." I do think readers assume the gate is the top field gate. But it's an assumption. I'll include it as a filled-in line and record the reading. That seems most in the spirit.
+
+Hmm, wait, actually, let me reconsider whether the always-rule's conclusion should be "flock driven through the gate" at all, versus directly supporting "flock in top field". Let me re-read the English once more: "the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+
+Yes: gate open (fact) + always rule (gate open only after flock driven through) → flock driven through the gate. And then → flock in top field (needs the gate to lead to the top field). The text's "that gate" — "the gate stood open... that gate" — refers to a specific gate, presumably the top field's gate, but not stated. OK, my plan stands.
+
+Now sentence 3: "The foreman added, from what he saw himself, that the lower field was empty of grass."
+- "The foreman added" — the note says more; still TOLD in world note. "from what he saw himself" — the foreman saw it himself; this is an attribution of perception. Bin "from what he saw himself" as the foreman's own observation grounding it? The content: "the lower field was empty of grass" — TOLD in world note. The "empty of grass" — a fact: the lower field has no grass / is without grass. "Empty of grass" might be hyperbole (a field is never truly empty of grass). Hmm — figure of speech? "was empty of grass" could be literal (no grass at all) or figurative (little grass). I'll note both readings in "readings I chose" and write the plain fact: the lower field is without grass. Actually, per the rules on figures of speech: write the plain fact, send the image to the bin if needed. "Empty of grass" — the plain fact: the lower field had no grass. I'll treat it as a plain fact (the sentence states it) but note the possible hyperbole in readings. Hmm, keep it simple: it's a fact. Maybe note in readings that "empty of grass" could be literal or exaggerated; I take it as stated (no grass). Mark said.
+
+Also: "the lower field" — a thing: lower field is a field. And "the top field" — a thing. Two different fields.
+
+Sentence 4: "The note ended with the time the rounds had finished."
+- The note's ending includes the time. "The time the rounds had finished" — when; the language doesn't handle "when" beyond order. So: the note states the time the rounds finished. Hmm. What does this commit to? The note contains a record of the finish time. As a fact: "the rounds finished" (the foreman's rounds ended) and "the note records the time". Hmm. The time itself is a "when" — goes to bin. But the sentence asserts: the note ended with [the time the rounds had finished]. So the note's content includes the finish time of the rounds. I could write, TOLD in world note: the rounds finished (the foreman's evening rounds ended). And bin "the time" (when is outside the language). Actually, "the note ended with X" means X is the last content of the note. The ordering of the note's content — is that expressible? Not really; "the note ended with" is about the note's structure, not a fact about the world. Hmm. I think: TOLD in world note: the foreman's rounds finished. And bin "the time" (a when) and "ended with" (the note's arrangement, not a world-fact)? Or keep "the note ended with the time..." as: the note says the rounds finished at some time.
+
+Let me think about what's claimable. The sentence: "The note ended with the time the rounds had finished." Plain facts: (a) the note has content; (b) the rounds finished; (c) the note records when the rounds finished. Since "when" is outside the language, the specific time is binned. The fact that the rounds finished is expressible. The fact that the note records it — the note's world includes "the rounds finished". And "the note ended with" — the ordering of the note's contents — I'd bin that too (it's about the note's composition, not the world), or just not claim it. Hmm, but every sentence must appear in the ledger or bin. Let me bin "the time" (when) and "ended with" (the note's arrangement), and record TOLD: the rounds finished.
+
+Actually wait, is "the rounds finished" even part of the note's content? "The note ended with the time the rounds had finished" — the note contains the finish time. So yes, the note's content includes that the rounds finished (at that time). I'll write TOLD in world note: the foreman's rounds finished. Hmm, and whose rounds — the foreman's. OK.
+
+Also sentence 1: "The farm foreman kept notes on his evening rounds." Facts: the foreman is a person; the foreman kept notes; the notes are notes. "on his evening rounds" — he kept notes during/on his rounds? Or the notes are about his rounds? Ambiguous. Reading: he kept notes while doing his evening rounds (or about them). The "evening" is a when — bin "evening". "his evening rounds" — the foreman's rounds. Hmm, I could write: the foreman made rounds (habit?) and kept notes. Actually "kept notes on his evening rounds" — I'd read: while on his evening rounds, he kept notes. The plain facts: the foreman kept notes; the foreman made rounds. "evening" → bin (when). 
+
+Hmm, is "kept notes on his evening rounds" a habit (usually) or a one-off event? "The farm foreman kept notes on his evening rounds" — past tense, a specific action or a habit? It reads like a general statement about his practice, or a specific evening. Given sentence 4 mentions "the rounds had finished" (specific rounds), sentence 1 is probably about the same specific rounds — he kept notes on his evening rounds (that evening). I'll treat it as a happening/fact: the foreman kept notes. And the rounds: the foreman made evening rounds. Hmm.
+
+Let me now decide the overall structure and names.
+
+Things (actual ledger):
+- foreman (a person)
+- notes (notes)
+- rounds (the foreman's rounds) — hmm, maybe not needed as a thing.
+
+Actual ledger lines:
+- a1: foreman is a person; response to a press not stated. (said, sentence 1, CLAIMED)
+- a2: notes are notes; response not stated. (said, sentence 1, CLAIMED)
+- a3: the foreman kept notes. (said, sentence 1, CLAIMED) — fact: holds(kept_notes(foreman)). Hmm, "kept notes" — a fact.
+- Maybe: the foreman made rounds (evening). Bin "evening" (when). Hmm, "on his evening rounds" — I could write a fact "the foreman made rounds" and bin "evening". Or bin the whole phrase as a when-circumstance. The rules: "When, beyond the order of a chain and the stage named in a fact" is outside the language → bin. "evening" is a when. But "his evening rounds" also asserts he made rounds. I'll write: the foreman made rounds (fact), and bin "evening" as a when. Hmm, is that worth it? The sentence's commitment: he kept notes, and he did rounds. I think two facts: foreman kept notes; foreman made rounds. And bin "evening".
+
+Hmm, wait — actually "kept notes on his evening rounds" might mean the notes concern his rounds (notes about his rounds). The reading ambiguity: (i) he kept notes while on his rounds; (ii) he kept notes about his rounds. Either way, he kept notes and he made rounds. Fine.
+
+Sentence 2 actual-ledger part: "He wrote that..." — the foreman wrote. The writing is an actual fact: the foreman wrote the notes (or wrote in the notes). And the content is TOLD in world note. So:
+- a4: the foreman wrote (in the notes) — fact, said, sentence 2, CLAIMED. holds(wrote(foreman, notes))? Something like that.
+- Then all the note's content is TOLD in world "note".
+
+Bin from sentence 2: "He wrote that" — the attribution scoping content to the note's world. Actually per the T10D example, "The account says" was binned with the reason that it scopes content to account_world, and the account's existence was GIVEN. Here similarly: "He wrote that" → bin, scopes content to world "note". Hmm, in T10D they made "account is an account" GIVEN in the actual ledger. Here I have "notes are notes" and "the foreman kept notes" from sentence 1, and "the foreman wrote" from sentence 2. The writing itself: is it CLAIMED or GIVEN? In T10D, the account's existence was GIVEN (taken for granted along the way). Hmm, they said "The account's existence is GIVEN". Here, "He wrote that..." — the writing is asserted by the sentence (main clause "He wrote"), so CLAIMED. Actually in T10D: "The account says opening the window caused..." — the account's saying is the main clause; they marked the account's existence GIVEN. Hmm, interesting. But for us, sentence 1 already establishes the foreman kept notes, and sentence 2 says he wrote [content]. I'll mark the writing as CLAIMED (it's the main clause assertion) — or GIVEN like T10D? Let me follow the grammar rule from L80 rule 4: "the main clause is CLAIMED". "He wrote that X" — main clause: he wrote. That's CLAIMED. The X content is TOLD. OK: a4 CLAIMED said: the foreman wrote in the notes.
+
+Hmm, but actually, is "the foreman wrote" worth a line, or should it be binned like "The account says"? In T10D, "The account says" was binned entirely, and the account's existence was GIVEN via a thing line. Here, sentence 1 gives us the foreman and notes as actual things. Sentence 2's "He wrote that" — I'll bin the attribution phrase "He wrote that" (it scopes the content to world note) but also record the actual fact that the foreman wrote. Hmm, that seems duplicative. Let me look at T10D again: they binned "The account says" and did NOT write an actual-ledger line "the account said...". They only had the account as a GIVEN thing. 
+
+For consistency: bin "He wrote that" as the attribution scoping content to world note, with the note's existence already GIVEN/CLAIMED from sentence 1 (the notes). So no actual "wrote" line; instead the notes thing line covers it. Hmm. But sentence 2's "He wrote" is an actual assertion (he wrote). Eh. I think either is defensible. Let me write an actual line: "the foreman wrote in the notes" CLAIMED said sentence 2, and bin the quotative "that" as introducing the reported content. Hmm, actually, hmm.
+
+Let me reconsider. The task: "write down what the text commits its writer to". Sentence 2 commits: the foreman wrote something; that something is the note's content. The writing is a real commitment. I'll include it: holds(wrote_in(foreman, notes)) — CLAIMED, said, sentence 2. And bin "that" (the quotative marker introducing reported content, scoped to world note). Hmm, but then the bin entry for "He wrote that..." — I'll bin the phrase "He wrote that" with reason: the writing frames the following as the note's content, which is TOLD in world note; the writing itself is recorded as an actual fact. Wait, that's contradictory — if I record the writing as a fact, I shouldn't bin "He wrote that" as unrepresentable. Let me bin only "that" as the quotative... Actually, binned items are "words from the text" with reasons. I can bin "He wrote that" with the reason: "the quotative frames what follows as the note's content; that content is TOLD in world note. The writing itself is line a4." Hmm, that's fine — the bin records that these words are handled by the world-scoping, not dropped.
+
+Hmm, actually, let me simplify and follow T10D more closely: bin "He wrote that" with the reason that it scopes the reported content to world note, and the foreman's writing is recorded as an actual fact (line). Both. The bin entry explains where the words went.
+
+Now the note's world (world "note"), all TOLD, said:
+
+Things:
+- t_gate: the gate is a gate; response not stated. (sentence 2)
+- t_flock: the flock is a flock; response not stated. (sentence 2)
+- t_shepherd: the shepherd is a person; response not stated. (sentence 2)
+- t_topfield: the top field is a field; response not stated. (sentence 2)
+- t_lowfield: the lower field is a field; response not stated. (sentence 3)
+
+Facts:
+- t_open: the gate stood open. (sentence 2) holds(stood_open(gate)).
+- t_concl: the flock is in the top field. (sentence 2) — content of the shepherd's conclusion; attribution binned. holds(in_top_field(flock)).
+- t_low: the lower field is without grass. (sentence 3) holds(without_grass(lower_field)).
+- t_rounds_done: the foreman's rounds finished. (sentence 4) holds(finished(rounds)). Hmm — "the rounds had finished". In world note. OK.
+
+General line:
+- t_always: ALWAYS: when the shepherd leaves the gate open, then the flock had been driven through the gate; SHOWS. (said, sentence 2). Hmm — the text: "the shepherd always left that gate open only once the flock had been driven through it". Condition: the shepherd left the gate open. Conclusion: the flock had been driven through the gate. As Prolog SHOWS: `holds(driven_through(flock, gate)) :- line(t_always), holds(left_open(shepherd, gate)).` But wait — the gate "stood open" (t_open) — is that the same as "the shepherd left it open"? The text says the gate stood open, and the shepherd left it open (only once...). "Left open" implies the shepherd's action. The gate standing open is the observable. Hmm: "the gate stood open" (fact) vs "the shepherd left that gate open" (the always rule's condition). For the inference to run, we need the gate's open state to trigger the rule. The rule's condition as stated in the text is "the shepherd left that gate open". The fact is "the gate stood open". A missing mini-step: if the gate stood open, the shepherd left it open? Not necessarily — someone else could have left it open. Hmm! Actually the text says "the shepherd always left that gate open only once..." — this is about the shepherd's own habit. The gate standing open + the shepherd's habit → the shepherd left it open → flock driven through. Hmm, or does "the gate stood open" just mean it was open, and the always rule is "gate open only after flock driven through"?
+
+Let me re-read: "since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it." So premise 1: the gate stood open. Premise 2: the shepherd always left that gate open only once the flock had been driven through it. The inference: the flock had been driven through it (and is now in the top field).
+
+For the general line, the condition should match the fact. The fact is "the gate stood open". The rule: "the shepherd always left that gate open only once the flock had been driven through it" — i.e., whenever the shepherd left the gate open, the flock had been driven through. To connect "stood open" to "left open by the shepherd", I need the assumption that it was the shepherd who left it open. Hmm. OR I read the rule as: the gate stands open only when the flock has been driven through — no, the subject is the shepherd's action.
+
+Option A: general line condition = "the shepherd left the gate open"; add filled-in fact "the shepherd left the gate open" (from "the gate stood open" + the shepherd's habit? no...). Hmm, that's circular-ish.
+
+Option B: general line condition = "the gate stands open" (reading "left that gate open" as "the gate was left open by the shepherd", and the standing-open fact instantiates it). I.e., treat "the shepherd left that gate open" and "the gate stood open" as matching: the gate's open state is the shepherd's leaving-open. This conflates slightly but is the natural reading: the gate that stood open is the gate the shepherd left open. I'll write the general line as: ALWAYS SHOWS: when the gate stands open (left by the shepherd), then the flock had been driven through it. And in Prolog: condition holds(stood_open(gate)) → holds(driven_through(flock, gate)). Hmm, but then the shepherd drops out of the condition. Alternatively use a fact term "left_open(shepherd, gate)" for the always rule and a filled-in line linking stood_open to left_open. That's more precise but adds lines.
+
+Hmm, let me think about what's cleanest for the checker and the reader. The text's logic: gate open + (shepherd leaves gate open only after driving flock through) → flock driven through. The mismatch between "stood open" and "left open" is minor; the natural reading is that the open gate is the shepherd's leaving-open. I'll write:
+
+- t_open (fact, said): the gate stood open. holds(stood_open(gate)).
+- t_always (general line, said): ALWAYS SHOWS: when the shepherd has left the gate open, then the flock has been driven through the gate. Prolog: holds(driven_through(flock, gate)) :- line(t_always), holds(left_open(shepherd, gate)).
+- t_link_open (filled in, sentence 2): the gate standing open is the shepherd having left it open. Hmm — how to encode? As a fact: holds(left_open(shepherd, gate)) — but that's asserting the shepherd left it open, which the text doesn't exactly say (it says the gate stood open and the shepherd has a habit about leaving it open). Writing "the shepherd left the gate open" as a filled-in fact is a reasonable reading: the open gate is attributed to the shepherd. Then the rule fires.
+
+Alternatively, make the general line's condition "the gate stands open" directly and keep the shepherd in the text of the line. I think that's simpler and defensible: "the shepherd always left that gate open only once the flock had been driven through it" — the condition is the gate being left open by the shepherd; the observed fact is the gate standing open; I treat them as the same state. Let me write the general line as: ALWAYS SHOWS: when the gate stands left open by the shepherd, then the flock had been driven through it; and use fact term left_open(shepherd,gate) for the rule, with a filled-in line: the gate stood open, left by the shepherd — hmm.
+
+OK here's my decision, keeping it clean:
+- t_open: the gate stood open — fact: holds(stood_open(gate)). said, sentence 2.
+- t_always: ALWAYS SHOWS: when the gate stands open, the flock had been driven through the gate — with the shepherd's leaving named in the line text. Prolog: holds(driven_through(flock, gate)) :- line(t_always), holds(stood_open(gate)). 
+
+Wait, but that drops the shepherd from the condition entirely. The text says the shepherd left it open. Hmm, but the only open-fact we have is "stood open". If I use left_open(shepherd,gate) as the condition, I need a fact line for it. Let me just do:
+
+- t_open: the gate stood open, left by the shepherd — no, "left by the shepherd" is my addition.
+
+Ugh. OK let me be decisive. Two lines:
+- t_open (said): the gate stood open. holds(stood_open(gate)).
+- t_shepherd_left (filled in, sentence 2): the shepherd left the gate open. holds(left_open(shepherd, gate)). Reason: the always rule speaks of the shepherd leaving the gate open; the note's open gate is read as his leaving-open. Mark filled in; note in readings.
+- t_always (said): ALWAYS SHOWS: when the shepherd leaves the gate open, then the flock had been driven through the gate. holds(driven_through(flock, gate)) :- line(t_always), holds(left_open(shepherd, gate)).
+
+Hmm, that's honest. But is the filled-in line "the shepherd left the gate open" justified? The text: "the gate stood open, and the shepherd always left that gate open only once..." — "that gate" refers to the gate that stood open. The shepherd's habit concerns that gate. The natural reading: the gate stood open because the shepherd left it open (after driving the flock through). I think it's a fair filled-in step. Alternatively I could avoid it by using stood_open as the rule's condition. You know, I'll use the rule's condition as "the gate stands open" and phrase the general line as "when the gate stands open (left by the shepherd), the flock had been driven through it" — no. 
+
+Decision: I'll go with the filled-in line t_shepherd_left. It's a genuine reading step and marking it is exactly what the source-mark system is for. Actually hmm, wait. Let me reconsider — one more idea: the general line could be written with the condition being the shepherd's leaving-open, and I treat "the gate stood open" as GIVEN-ish evidence... no. Filled-in line it is. Hmm, actually, hold on. Let me reconsider once more whether it's needed at all.
+
+Actually, simpler: what if the always rule is read as: "the shepherd always left that gate open only once the flock had been driven through it" = "whenever the gate is open, the flock has been driven through it" (the shepherd's leaving being the cause of openness)? The phrase "left that gate open" is the passive state of the gate being open due to the shepherd. The fact "the gate stood open" is exactly that state. So the rule's condition can be the gate's open state, with the shepherd named as the one who left it. In the line text: "ALWAYS SHOWS: when the gate stands open (the shepherd having left it), then the flock had been driven through it". Prolog condition: holds(stood_open(gate)). This avoids the extra filled-in line and treats "stood open" = "left open by the shepherd" as a reading recorded in "readings I chose". 
+
+I like this better — fewer lines, and the reading is recorded. But is it defensible to drop the shepherd from the condition? The rule in English: "the shepherd always left that gate open only once the flock had been driven through it". The condition for the flock-having-been-driven-through is the gate being left open by the shepherd. The note's fact is the gate standing open. Reading them as the same state is the natural interpretation. I'll do that, and record the reading choice. The line text will keep the shepherd: "ALWAYS SHOWS: when the shepherd leaves the gate open (the gate standing open), then the flock had been driven through the gate". Prolog: holds(driven_through(flock, gate)) :- line(t_always), holds(stood_open(gate)).
+
+Hmm, hmm. But strictly, the condition in Prolog (stood_open(gate)) differs from the text's condition (shepherd left it open). The checker tests the SINCE claim: does gate-open support flock-in-top-field? The route: stood_open → (via t_always) driven_through → (via filled-in link) in_top_field. That works with stood_open as the condition. Good. And the reading that "the gate standing open" instantiates "the shepherd left it open" is recorded in readings. 
+
+Now the missing step to "in top field":
+- t_link (filled in, sentence 2): ALWAYS SHOWS: when the flock has been driven through the gate, then the flock is in the top field. Prolog: holds(in_top_field(flock)) :- line(t_link), holds(driven_through(flock, gate)). Mark filled in; reading: the gate is read as opening onto the top field.
+
+Hmm, should this be MAKES? "driving the flock through the gate puts the flock in the top field" — the driving produces the location. MAKES: produced(in_top_field(flock)) :- line(t_link), kind(flock, flock), holds(driven_through(flock, gate)). plus depends(in_top_field(flock), driven_through(flock, gate)). Hmm. For the SINCE test, either works. The relation is really spatial: through the gate → in the field. I'll use SHOWS (inference licensing) — hmm, but MAKES is about production. Being driven through a gate into a field — the driving does produce the being-in-the-field. Honestly, I'll use MAKES for this one since the driving-through is what puts them there. Hmm, but wait — with MAKES, the checker tests "produced" via the laws (press shapes etc.)? No — the laws apply to happenings (verb shapes). The produced/depends form is for general lines. The checker checks MAKES lines by... the definition says general lines are "Checked" — MAKES: this produces that. For people/groups/rules only causal words are tested. I think either is fine. Let me use SHOWS for both general lines to be safe (SHOWS = "this is how we can tell" — an inference rule), since the argument is an inference from signs, and mark the choice filled in where the text doesn't settle it. Actually for t_always the text says "always" but not MAKES/SHOWS; I choose SHOWS (the open gate is how the shepherd tells). For t_link, filled in, SHOWS. Both filled-in for the kind choice? Rule 7: "Every general line says MAKES or SHOWS. If the text does not settle it, the choice is a filled-in line." So both general lines get mark "filled in" for the MAKES/SHOWS choice — but the rest of the line is said. Rule 15: one line one mark; where part is said and part is yours, split or mark the whole line filled in and say which part. Hmm. For t_always: the content (the always rule) is said; the MAKES/SHOWS choice is mine. Per rule 15, I could mark it "said" with... no, must be one mark. Options: mark "filled in" and note "the always rule is said; MAKES/SHOWS choice filled in". Or split into two lines (same content, different marks)? Splitting identical content into two lines is odd. I'll mark t_always as "said" — hmm, but rule 7 says the choice is a filled-in line. 
+
+Let me look at example P14: line a is "filled in", sentence 4, ALWAYS SHOWS — the whole general line was filled in (derived from sentence 4's content). Line m similarly filled in. In example_A, line 5 "cold ALWAYS kills a tomato plant it reaches" is marked "said" — and in the .pl file it's encoded as produced/depends (MAKES). So "always kills" → MAKES, marked said. So when the text's own words settle it ("kills" = produces = MAKES), it's said. When the text doesn't settle it, filled in.
+
+For our t_always: "the shepherd always left that gate open only once the flock had been driven through it" — does this settle MAKES vs SHOWS? "Only once" states a condition/occasion, not a cause. I read it as SHOWS (the open gate shows the flock went through). But one could argue the driving-through occasions the leaving-open (MAKES). The text doesn't settle it → filled in, and note the choice. So t_always: mark "filled in", with text noting "the always rule is the shepherd's stated habit; MAKES/SHOWS not settled by the text, SHOWS chosen". Hmm, but then the "said" content is marked filled in. Rule 15 allows: mark the whole line filled in and say in it which part you added. OK: t_always marked "filled in" with a note in the text that the rule itself is said and only the kind choice is filled in. Hmm, wait — but actually, is that right? Let me reconsider: maybe cleaner to have the line marked "said" for the always-content and accept that the MAKES/SHOWS pick is a translator's choice recorded in readings. The instructions in 39 say: "General lines. Mark each as ALWAYS or USUALLY, and as MAKES or SHOWS. When the text leaves that open, choose, and mark your choice 'filled in'." — "mark your choice 'filled in'". So the line gets mark "filled in". OK, t_always: filled in. I'll say in the line text: "the always rule is said; the SHOWS choice is filled in".
+
+Hmm, hold on. Actually, let me reconsider. "the shepherd always left that gate open only once the flock had been driven through it" — I now think MAKES might actually be the better reading: the flock being driven through is what occasions the shepherd leaving the gate open. "Only once" = "only after". So: the shepherd left the gate open only after the flock had been driven through. The driving-through is the occasion/cause of the leaving-open. As a general line: ALWAYS: when the flock has been driven through the gate, then the shepherd leaves the gate open — MAKES (the driving produces the leaving-open)? But that's the wrong direction for the shepherd's inference! The shepherd infers from gate-open to flock-driven-through. If the general line is driving→left-open, then from left-open you can't directly infer driving... well, with ALWAYS + "only once" you can: if always left-open only after driving, then left-open → driving happened. An ALWAYS MAKES rule "driving produces leaving-open" doesn't license the backward inference formally. An ALWAYS SHOWS rule "left-open shows driving-happened" licenses exactly the inference used. Since the text uses the rule for inference (gate open ⇒ flock driven through), SHOWS is the right encoding. Good: SHOWS.
+
+So t_always: ALWAYS SHOWS: when the shepherd leaves the gate open, then the flock had been driven through the gate. Condition fact: stood_open(gate) (with the reading that the standing-open is the shepherd's leaving-open). Effect: driven_through(flock, gate).
+
+Hmm, one more consideration: "only once" — should I also write the contrapositive (if the flock has not been driven through, the gate is not left open)? The language has ONLY-WAYS lines. "The shepherd left the gate open only once the flock had been driven through it" — the only way for the gate to be left open is the flock having been driven through. That's an only-ways line: [gate left open] NEEDS ONE OF: [flock driven through]. Written out as a general line: when every listed way is denied, the content is denied. Hmm — that's the same as the SHOWS rule essentially (gate open → driven through). I'll stick with the single general line; the "only" is captured by ALWAYS + the inference direction. I might mention in readings that "only once" gives the necessity. Keep it simple.
+
+Now the SINCE claim:
+- t_since (said, sentence 2, TOLD in world note): line t_concl SINCE line t_open. The shepherd's reason to expect the flock in the top field is the gate standing open. claim_since(t_since, in_top_field(flock), stood_open(gate)).
+
+Should the SINCE claim also reference the always rule? The text: "concluded X since Y, and Z" — both Y and Z are reasons. The SINCE line points at one line (t_open). The always rule is another premise. I could add a second SINCE line pointing at t_always? claim_since(t_since2, in_top_field(flock), driven_through(flock,gate))? Hmm, but driven_through isn't a stated fact; it's derived. The reason the shepherd gives is the gate standing open (and his habit). I think one SINCE line pointing at t_open captures the stated reason; the always rule is the connecting general line. The checker tests the SINCE by "what follows by any route" — from stood_open, via t_always and t_link, in_top_field follows. So the route works. Good. But should I also record that the always rule is part of the reason? I could write the SINCE line text as "line t_concl SINCE line t_open (with line t_always as the connecting rule)". The text of the line can mention it. The Prolog just uses the fact terms. OK.
+
+Also the attribution: "the shepherd had concluded" → bin. Reason: attribution of concluding; the content is TOLD in world note as line t_concl. Per 39: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world." Hmm — "in that person's world". So should t_concl be TOLD in world "shepherd" rather than world "note"? The shepherd's conclusion is the shepherd's world-content. But the premises (gate open, the always rule) are in the note's world. If t_concl lives in world "shepherd", the SINCE line in world "shepherd" would point at t_open in world "note" — cross-world pointing, which the checker can't use (worlds are looked at alone).
+
+Hmm. Let me think. Options:
+(A) Everything in one world "note". The shepherd's concluding is binned as attribution; the conclusion content is a fact in world note. The SINCE claim is in world note. Simple, self-contained, checkable.
+(B) Two worlds: "note" (premises) and "shepherd" (conclusion + SINCE), with the premises restated in the shepherd's world. More faithful to the attribution rule but duplicative.
+
+The 39 rule says write the content as TOLD in that person's world. But it also says a told world is looked at alone. If I put the conclusion in the shepherd's world, I must also put the gate-open fact and the always rule there (they're the shepherd's premises as reported). Actually — the whole sentence 2 content is what the foreman wrote = the note's world. Within the note, the shepherd's conclusion is attributed. The note reports the shepherd's reasoning. So the note's world contains a sub-attribution. The cleanest: world "note" contains everything the note says, including the shepherd's conclusion content and the SINCE claim; the attribution "the shepherd had concluded" is binned. This matches T10D's approach (they binned "The account says" and put the content in account_world, without making a sub-world for the letter-writer). 
+
+But hmm, 39 explicitly says for attributions of believing/concluding: "write the content as TOLD in that person's world". So maybe I should have world "shepherd" for the conclusion. But then the SINCE... The SINCE claim is also part of the reported reasoning. Ugh.
+
+Let me go with a middle path that I think is most defensible: 
+- World "note" (what the note says): the gate stood open; the always rule; the lower field without grass; the rounds finished; AND the shepherd's conclusion content (flock in top field) with the attribution binned; AND the SINCE claim.
+
+Wait, actually, hmm. Let me reconsider. The attribution rule in 39: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world." The person here is the shepherd. The content: "the flock must be in the top field". So t_concl should be TOLD in world "shepherd". And the SINCE claim — whose is it? The note reports: the shepherd concluded X since Y. The "since" is the shepherd's reasoning. So the SINCE claim is also the shepherd's. If both t_concl and t_since are in world "shepherd", they need t_open in world "shepherd" too. And the always rule is the shepherd's habit — also in world "shepherd"? The note states it as fact ("the shepherd always left that gate open only once..."). It's within the "wrote that" scope, so it's note-world content, but it's also the shepherd's premise.
+
+You know what, I think the pragmatic and defensible choice: put the shepherd's reasoning (conclusion + since + the premises it uses) in world "shepherd", and the rest of the note's content (lower field, rounds finished) in world "note". But the gate-open fact and the always rule are used by the shepherd's reasoning — so they belong in world "shepherd". But they're also note content. Two worlds with duplicated facts is allowed (a told world doesn't inherit, but nothing forbids stating the same fact in two worlds). Hmm, but is the gate-open fact the shepherd's or the note's? The note says the gate stood open — that's the note's (foreman's) report. The shepherd's reasoning uses it. 
+
+Honestly, I think single world "note" is cleaner and the checker can actually run on it. The instruction "write the content as TOLD in that person's world" — I'll interpret "that person's world" loosely: the conclusion content is TOLD in world "note" (the world of the writing that reports it), with the attribution binned explaining that the conclusion is the shepherd's. Hmm, no wait. Let me re-read the 39 rule once more: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world."
+
+OK here's another thought: make the world name reflect both: world "note" for the note's reported content, and within it the shepherd's conclusion is a fact. The bin entry for "the shepherd had concluded" says: attribution of concluding; the content (flock in top field) is TOLD in world note as line t_concl, and the shepherd's reasoning is the SINCE line t_since. I think that satisfies the spirit: the attribution is binned, the content is TOLD in a named world. The world is "note" rather than "shepherd" — I'll note this choice in "readings I chose": the shepherd's conclusion and its reasons are all reported within the note, so they share one world to keep the SINCE claim checkable; a separate shepherd-world would need the premises restated.
+
+Hmm, alternatively — two worlds where world "shepherd" contains: t_concl, t_since, and the premises (gate open, always rule, link) restated. And world "note" contains: the premises (as the note's content), the lower field fact, the rounds fact. That's more faithful but doubles the lines. And the note's world would then not contain the conclusion... but the note does report the conclusion! The note says the shepherd concluded X — so X is note-world content too (as reported). Ugh, duplication everywhere.
+
+Decision: single told world "note". All reported content lives there. The shepherd-attribution is binned with a clear reason. This is checkable and clean. I'll record the choice in readings. 
+
+Hmm, wait, actually, let me reconsider using world name "shepherd" for the reasoning lines... no. Single world "note". Final.
+
+Actually hold on, let me reconsider one more time. There's a subtlety: is the "always" habit stated as a fact of the note's world, or is it the foreman's own knowledge? "He wrote that the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it." The "and the shepherd always left..." clause — is it inside the shepherd's concluding (i.e., the shepherd's belief) or the foreman's added premise? Grammatically it's within "wrote that", so it's note content. Whether it's the shepherd's belief or the note's assertion — it's reported by the note. In world "note" either way. Fine.
+
+Now sentence 3: "The foreman added, from what he saw himself, that the lower field was empty of grass."
+- "The foreman added" — more note content. Bin "The foreman added" as the quotative (scopes the following into world note). 
+- "from what he saw himself" — the foreman's own observation; an attribution of perception/grounding. Bin it: the foreman saw it himself; perception and epistemic grounding are outside the language (who knows what). Reason: the foreman's seeing is his own observation; the content is TOLD in world note.
+- Content: the lower field was empty of grass → TOLD in world note: the lower field is without grass. 
+
+Sentence 4: "The note ended with the time the rounds had finished."
+- Bin "the time" (when — outside the language). Bin "ended with"? The note's arrangement — hmm. "The note ended with X" means X is the note's final content. Is that expressible? It's about the note's composition, not a world-fact. I'll bin "ended with" as the note's ordering of content (not a world-fact), and record TOLD in world note: the rounds finished. Hmm, or should the whole sentence go to the bin? The sentence does assert something about the world: the rounds finished. And that the note records it. Let me write:
+  - t_rounds (said, sentence 4, TOLD in world note): the foreman's rounds finished. holds(finished(rounds)).
+  - Bin: "the time" — a when, outside the language. And "The note ended with" — the note's ordering of its own content; not a world-fact; the rounds' finishing is recorded as world note content. Hmm, actually "the note ended with the time..." — maybe simply: the note contains the finish time. Since time is binned, what remains is "the rounds finished". I'll bin "the time" and "ended with" together? Let me make two bin entries or one. I'll do one entry: "The note ended with the time" — reason: the note's arrangement and the finish time (a when) are outside the language; the rounds' finishing is recorded as TOLD in world note. Hmm, but "the note ended with" does commit to the note having that content last. Since we can't express ordering of note content, bin it. OK.
+
+Wait, also — should the rounds be a thing? "the rounds" — the foreman's evening rounds. A thing line? Rule 3: every thing in a happening must have a thing line. Is "the rounds finished" a happening (verb: finish)? "The rounds had finished" — the rounds finished. Hmm, "finish" as a verb — is it in the shape book? No (press/release/hold/press-then-release are the shapes; throw/toss/hurl/push/pull/lean on/hit/drop/let go of/open a fist on/close a fist on/hold). "Finish" isn't listed → "not checked" verb. Hmm. Do I need a thing line for "rounds"? If I write the fact "the rounds finished", rounds is a thing in a happening → needs a thing line. Let me add: rounds is a round-of-rounds... hmm, kind: "the foreman's rounds" — kind: rounds? A "kind" should be a category. Let me say: the rounds are rounds (a kind). Response to a press: not stated. Hmm, that's awkward but required by rule 3 if rounds appears in a happening.
+
+Alternatively, avoid the happening: write the fact as "the foreman's rounds were finished" — still a thing in a fact. Rule 3 says "Every thing in a happening must have a thing line of its own." Facts also reference things; the examples (T10D) gave thing lines for window/letter even in facts. To be safe, give thing lines for: foreman, notes, gate, flock, shepherd, top field, lower field, rounds. That's 8 thing lines. Fine.
+
+Hmm, wait — but do I want "the rounds finished" as a line at all? Sentence 4: "The note ended with the time the rounds had finished." The commitment: the rounds finished (at some time, recorded in the note). I'll include t_rounds: the foreman's rounds finished. And a thing line for rounds. And in the actual ledger, sentence 1 mentions the foreman's rounds: "on his evening rounds" — so rounds is a thing there too. One name "rounds" throughout: the foreman's evening rounds.
+
+Actual ledger lines (let me now enumerate):
+
+1. foreman: foreman is a person; response to a press not stated. — said, s1, CLAIMED. kind(foreman, person), body(foreman, not_stated).
+2. notes: notes are notes; response not stated. — said, s1, CLAIMED. kind(notes, notes), body(notes, not_stated).
+3. rounds: rounds are rounds; response not stated. — said, s1, CLAIMED. Hmm, kind(rounds, rounds)? The kind should be a category: "rounds". OK: kind(rounds, rounds). Hmm, ugly. Maybe kind(rounds, evening_rounds)? "evening" is binned. I'll use kind(rounds, rounds). Hmm, alternatively skip a kind and just... no, thing lines need a kind. Fine.
+4. kept_notes: the foreman kept notes on his rounds. — said, s1, CLAIMED. holds(kept_notes(foreman, notes)). Hmm, "on his rounds" — include? The fact: the foreman kept notes. And the rounds are his. Maybe: holds(kept(foreman, notes)). And bin "evening" (when). And "on his evening rounds" — the circumstance. Hmm, I could write the fact as "the foreman kept notes while making rounds" — but "while" is GIVEN-ish description. Let me write two facts? Or one: "the foreman kept notes on his rounds" — holds(kept_notes_on(foreman, notes, rounds))? Keep it simple: the foreman kept notes (fact); the foreman made rounds (fact)? Hmm, "kept notes on his evening rounds" — does it assert he made rounds? Yes, "his evening rounds" presupposes he has/makes rounds. GIVEN. Let me write:
+   - kept: the foreman kept notes. said, s1, CLAIMED. holds(kept(foreman, notes)).
+   - made_rounds: the foreman made rounds. — hmm, is this said or filled in? "his evening rounds" presupposes the rounds exist/are his; the making is implied. I'd say GIVEN, and mark... the words "his evening rounds" are said; the claim "he made rounds" is a reading. Actually "kept notes on his evening rounds" — the rounds are his and he was on them. I'll write: the rounds are the foreman's (GIVEN, said) — hmm.
+
+Let me simplify sentence 1 to: 
+- foreman thing line (CLAIMED said)
+- notes thing line (CLAIMED said)
+- rounds thing line (CLAIMED said, kind rounds) — hmm, or GIVEN? The rounds are introduced as his; I'll make it CLAIMED said since sentence 1 introduces them. Actually standing: sentence 1's main clause is "The farm foreman kept notes on his evening rounds" — the whole is the assertion. The things are CLAIMED (they're asserted to exist). In example_A, thing lines 1-3 are "said" with standing not shown in the JSON example (example_A.json doesn't have standing fields! interesting — example_A.json lacks "standing"). But the encoding guide requires standing. I'll include standing for all.
+- kept: the foreman kept notes. CLAIMED said s1. holds(kept(foreman, notes)).
+- on_rounds: the foreman was on his rounds. Hmm. Or "the foreman made rounds". I'll write: the foreman made his rounds — hmm, "evening" binned. Let me write the fact: the foreman kept notes on his rounds — as one fact: holds(kept_notes_on_rounds(foreman, notes, rounds))? That's clunky. 
+
+Alternative: skip the "on his rounds" circumstance in the ledger and bin "on his evening rounds" as a when-circumstance? But it does assert the rounds happened. Hmm. The bin is for things the language has no form for. "On his evening rounds" — the language has no form for "when" or circumstance-attaching. But the rounds' existence is claimable. I'll write a fact: the foreman made rounds (the rounds are the foreman's). holds(made(foreman, rounds))? "made rounds" — verb "make", not in shape book → not checked. Hmm.
+
+Actually, maybe simplest and most honest: 
+- Line: the foreman kept notes. (CLAIMED said s1)
+- Line: the foreman was on rounds. (CLAIMED said s1) — hmm "was on rounds" as a fact description: holds(on_rounds(foreman)). 
+- Bin: "evening" — a when, outside the language.
+
+Hmm, "on his evening rounds" — I'll record the fact as "the foreman was on his rounds" and bin "evening". OK. Actually, let me reconsider: is "the foreman was on his rounds" needed? The sentence's main commitment: he kept notes, and the context is his evening rounds. For completeness (rebuildability), the rounds matter because sentence 4 refers to "the rounds". So yes, establish the rounds as things and that the foreman was on them. OK.
+
+Hmm, one concern: too many fiddly lines. But completeness is valued. Let me keep:
+- a_foreman (thing, said, s1, CLAIMED)
+- a_notes (thing, said, s1, CLAIMED)
+- a_rounds (thing, said, s1, CLAIMED)
+- a_kept (fact: the foreman kept notes; said, s1, CLAIMED)
+- a_onrounds (fact: the foreman was on the rounds; said, s1, CLAIMED) — hmm, GIVEN? "on his evening rounds" is a prepositional phrase, GIVEN by the grammar rule (like "while" descriptions). Rule 4: "who, which, as, while and -ing descriptions are GIVEN". A prepositional circumstance is GIVEN-ish. But it's part of the main assertion... The main clause is "kept notes"; "on his evening rounds" is a circumstance → GIVEN. I'll mark a_onrounds as GIVEN said s1. Hmm, but the rounds' existence — "his evening rounds" — is presupposed, so GIVEN fits. OK: a_onrounds GIVEN.
+
+Wait, but then in sentence 4, "the rounds had finished" — TOLD in world note. And the rounds thing line is in the actual ledger. A told world doesn't inherit the actual ledger! So world "note" needs its own thing line for rounds if t_rounds references it. Hmm. Rule: "A told world does not inherit the actual ledger; state inside it every fact its argument needs." So in world note, I need thing lines for everything: gate, flock, shepherd, top field, lower field, rounds, foreman(?), notes(?). Does the note's world need foreman/notes? t_rounds: "the rounds finished" — the rounds are the foreman's. If I write holds(finished(rounds)) in world note, I need kind(rounds, rounds) in world note. Do I need foreman in world note? Only if a fact references him. t_rounds could be "the foreman's rounds finished" — rounds(foreman)? Let me keep t_rounds as holds(finished(rounds)) with a thing line for rounds in world note. The foreman's ownership of the rounds — binned or just not stated in the world. Hmm, "the rounds had finished" — whose rounds? The foreman's (from context). In world note, I'll write the thing line: rounds are rounds (not stated response), and the fact: the rounds finished. The foreman connection is implicit; I could add "the rounds are the foreman's" as a fact in world note — said? The note doesn't say "the foreman's rounds"; the narrator does. Hmm. In world note, the content is what the note says. The note "ended with the time the rounds had finished" — the rounds are referred to definitively (the foreman's rounds, from sentence 1). I'll include in world note: the rounds are the foreman's rounds — hmm, is that said? The note's world content includes the definite reference "the rounds", which in context are the foreman's. I'll write it as a fact in world note, mark said (the reference is in the text), or filled in (the foreman-ownership is from context). Let me mark it said with text "the rounds are the foreman's" — hmm, the words "the rounds" are said; "the foreman's" is from sentence 1's context. Mark filled in? Rule 15... I'll mark it "filled in" and say the ownership comes from sentence 1. Hmm, or simpler: don't include ownership in world note; just "the rounds finished". The actual ledger establishes whose rounds. But the world is looked at alone... For a contradiction check, ownership doesn't matter. I'll include a filled-in fact "the rounds are the foreman's" in world note for completeness. Hmm, actually — you know, let me not over-engineer. World note gets: rounds thing line + rounds finished fact. I'll note in readings that the rounds are the foreman's from context. Hmm, but "state inside it every fact its argument needs" — the argument (the rounds finished) needs the rounds thing. Ownership isn't needed. OK skip ownership.
+
+Wait, actually, hmm: does world note need thing lines for foreman and notes? The note's world contains facts about the gate, flock, shepherd, fields, rounds. The foreman and notes are the note's author and medium — not content. So no. Good.
+
+Now, does the actual ledger need thing lines for gate/flock/shepherd/fields? No — they only appear inside the note's content, so their thing lines live in world note. Good.
+
+World "note" lines (all TOLD in world note):
+
+Things:
+- n_gate: the gate is a gate; response to a press not stated. (said, s2)
+- n_flock: the flock is a flock; response not stated. (said, s2)
+- n_shepherd: the shepherd is a person; response not stated. (said, s2)
+- n_top: the top field is a field; response not stated. (said, s2)
+- n_low: the lower field is a field; response not stated. (said, s3)
+- n_rounds: the rounds are rounds; response not stated. (said, s4)
+
+Facts:
+- n_open: the gate stood open. (said, s2) holds(stood_open(gate)).
+- n_concl: the flock is in the top field. (said, s2) holds(in_top_field(flock)). — content of the shepherd's conclusion (attribution binned).
+- n_grass: the lower field is without grass. (said, s3) holds(without_grass(lower_field)).
+- n_done: the rounds finished. (said, s4) holds(finished(rounds)).
+
+General lines:
+- n_always: ALWAYS SHOWS: when the gate stands open (left by the shepherd), then the flock had been driven through the gate. (filled in for the SHOWS choice; the always rule itself is said, s2). Prolog: holds(driven_through(flock, gate)) :- line(n_always), holds(stood_open(gate)).
+- n_link: ALWAYS SHOWS: when the flock has been driven through the gate, then the flock is in the top field. (filled in, s2 — the missing step: the gate is read as opening onto the top field). Prolog: holds(in_top_field(flock)) :- line(n_link), holds(driven_through(flock, gate)).
+
+SINCE claim:
+- n_since: line n_concl SINCE line n_open. (said, s2). claim_since(n_since, in_top_field(flock), stood_open(gate)). Text: "[TOLD in world note] line n_concl SINCE line n_open; the shepherd's stated reason, with line n_always and line n_link as the connecting rules".
+
+Hmm wait — should the SINCE claim be marked "said"? The words "since the gate stood open" are the shepherd's stated reason. Yes, said. But the SINCE claim's framing (that it's the shepherd's reason) — the note reports it. It's TOLD in world note either way. Mark said. Good.
+
+Hmm, now — is there a BECAUSE anywhere? "since" here is clearly a reason-to-believe (the shepherd concluded X since Y) → SINCE, not BECAUSE. Good, one SINCE line.
+
+Also — "the flock must be in the top field" — "must" is a modal (outside the language: "may, must, should, can"). Bin "must"? The "must" signals the conclusion's necessity. The content: the flock is in the top field. I'll bin "must" as a modal. Reason: modality outside the language; the content is recorded as the conclusion's content.
+
+Now the actual-ledger sentence 2 line for "He wrote":
+- a_wrote: the foreman wrote in the notes. (said, s2, CLAIMED) holds(wrote(foreman, notes)). And bin "that" (quotative scoping content to world note). Hmm, or bin "He wrote that" entirely and skip a_wrote? Let me keep a_wrote (the writing is an actual commitment) and bin "that" as the quotative. Hmm, actually — "He wrote that X" — the commitment is: he wrote, and X is what he wrote. a_wrote covers the writing; world note covers X; the bin entry for "that" notes the quotative role. Hmm, is "that" worth a bin entry? The bin should account for words that can't be represented. "that" is representable as the world-scoping. Let me make the bin entry: words "He wrote that" — reason: the writing is line a_wrote; the quotative frames the following clauses as the note's content, TOLD in world note. That accounts for the words. OK.
+
+Hmm, wait — actually, should a_wrote be CLAIMED or GIVEN? Following T10D (account's existence GIVEN), and rule 4 (main clause CLAIMED)... The main clause "He wrote" → CLAIMED. I'll go CLAIMED. Hmm, but T10D marked the account GIVEN... In T10D the account was a thing (existence GIVEN). Here the writing is an event-ish fact. I'll mark CLAIMED said. Fine.
+
+Sentence 3 actual part: "The foreman added, from what he saw himself, that the lower field was empty of grass."
+- The "added" is another quotative — bin it (scopes content into world note). No actual line needed (the adding is covered by world note containing it). Hmm, or a line "the foreman added to the notes"? That's redundant with a_wrote + world note. I'll bin "The foreman added" as the quotative. And bin "from what he saw himself" (the foreman's perception/grounding — who saw what is outside the language). Content → world note (n_grass).
+
+Sentence 4: "The note ended with the time the rounds had finished."
+- Bin: "the time" (a when — outside the language). Bin: "The note ended with" (the note's arrangement of its content — not a world-fact; the rounds' finishing is recorded as world note line n_done). Hmm, or one bin entry for the whole sentence with the reason. Let me do one entry: words "The note ended with the time" — reason: the note's ordering and the finish time (a when) are outside the language; the rounds' finishing is TOLD in world note (line n_done). And n_done is the ledger line for the sentence. Good — the sentence appears both in the ledger (n_done) and the bin. That's allowed ("or both").
+
+Sentence 1: "The farm foreman kept notes on his evening rounds."
+- Bin: "evening" (a when). Ledger: foreman/notes/rounds thing lines, kept-notes fact, on-rounds fact. Hmm — "on his evening rounds": I have a_onrounds (the foreman was on the rounds) and bin "evening". OK.
+
+Wait, also "farm" — "the farm foreman" — the foreman of a farm. Kind: person. "farm" as adjective — not needed. Skip or bin? It's a descriptor; the kind is person. I won't bin "farm" separately... hmm, "Every sentence of the text appears in the ledger, in the bin, or in both." The word "farm" appears in the ledger via the thing line "the foreman is a person"? The thing line doesn't capture "farm". Strictly, words not captured... The requirement is sentence-level, not word-level. "The farm foreman kept notes on his evening rounds" appears in the ledger (lines a_foreman, a_notes, a_rounds, a_kept, a_onrounds) and "evening" in the bin. Good enough. I could bin "farm" as a descriptor outside the language... nah, the kind line covers the foreman. Actually, to be safe, maybe bin "farm" — no, that's over-scrupulous. The sentence is in the ledger. Fine.
+
+Hmm, wait — one more thought on a_onrounds. "The farm foreman kept notes on his evening rounds." Is "the foreman was on the rounds" a real commitment? Yes — he was on his evening rounds. But "evening" binned. OK.
+
+Also — should a_kept and a_onrounds be separate or combined? "The foreman kept notes on his rounds" — one happening: foreman kept notes, circumstance: on rounds. Two lines: the happening (kept notes) and the GIVEN circumstance (was on rounds). Good.
+
+Now — hmm, do I need a thing line for "grass"? "the lower field was empty of grass" — grass is a thing in the fact. Rule 3: "Every thing in a happening must have a thing line." n_grass is a fact, not a happening. But facts reference things too. In example T10D, "the letter stayed dry" — letter got a thing line; "dry" is a description, not a thing. Here "without grass" — is grass a thing? It's a mass noun referenced in the description. To be safe, add a thing line for grass in world note: grass is grass; response not stated. Hmm. "empty of grass" — the fact is about the field's state; grass is what's absent. I'll add n_grass_thing: grass is grass. Hmm, is that overkill? Rule 3 is about happenings. But the definition's thing line is for "every thing in a happening". Facts can mention things too. The safest complete approach: give grass a thing line. But then "without grass" as a fact — fine. Hmm, alternatively write the fact as "the lower field had no grass" → denied(has_grass(lower_field))? "Empty of grass" = NOT [the lower field has grass]. Ooh — that's a nice use of NOT! "was empty of grass" denies the presence of grass. So: n_grass: NOT [the lower field has grass]. denied(has_grass(lower_field)). And a thing line for grass? If I use has_grass(lower_field), grass isn't a term. Hmm. Or denied(with_grass(lower_field)). Then no grass thing needed. 
+
+Hmm, which is better: "the lower field is without grass" (positive fact) or "NOT [the lower field has grass]" (denied)? The text says "empty of grass" — a negative state. I like the denial: NOT [the lower field has grass]. But is "empty of grass" really a denial? It states the absence. Yes: the field has no grass. I'll write: n_grass: NOT [the lower field has grass]. denied(has_grass(lower_field)). Hmm, but then "grass" as a word — the thing "grass" isn't in the ledger. The bin? No — the concept is captured by the denial. I think that's fine. Hmm, but wait — figure of speech concern: "empty of grass" might be hyperbole (a field rarely has literally no grass). Readings: literal (no grass at all) vs figurative (little grass). I'll note both in readings and take the literal (as stated). Mark said. And maybe note that if figurative, the line overstates. Record in "readings I chose".
+
+Hmm, actually, hold on. Let me reconsider: "the lower field was empty of grass" — for a farm, a field "empty of grass" might mean grazed bare. The plain fact: the lower field has no grass. I'll go with the denial form and note the reading. Actually, hmm, denial vs positive fact — let me use the positive description form to avoid the figure-of-speech trap? No — the denial is more faithful ("empty of"). Let me use: n_grass: the lower field is without grass — hmm. 
+
+Decision: I'll write it as a denial: NOT [the lower field has grass]. It exercises the NOT form and is faithful. And in readings, note the literal-vs-figurative question, and that I took it as stated (literal absence). Mark said.
+
+Hmm, wait, but if it's figurative, then the denial is wrong. The rules say: "Where you are unsure whether words are literal, write both readings in the bin and mark any line you wrote from them 'filled in'." Am I unsure? "Empty of grass" for a field — I'm fairly confident it's meant literally here (the point is the field is bare). But there's a real chance it's emphasis. To be safe: mark n_grass "filled in"? Hmm. The line's content (the field lacks grass) is said; the literalness is my reading. Per rule 15, mark the whole line filled in and say which part I added? That seems heavy. Alternative: write the line as said (the denial is what the words state) and record the literal/figurative question in "readings I chose" — the readings section is exactly for this. The instruction says write both readings in the bin and mark lines from them filled in — that's for genuine uncertainty. I'll put the two readings in "readings I chose" (the section 39 designates for readings) and keep the line marked said, since the words themselves state the absence. Hmm, but the trap guidance says for literal-or-figurative uncertainty, write both readings under "Readings I chose" and mark what you wrote "filled in". 
+
+Ugh. OK let me split the difference honestly: I am not deeply unsure — "empty of grass" in this note-like text reads as a plain observation. I'll record the two readings in "readings I chose" and mark the line said, noting that I took the words at face value. That's defensible. Actually — hmm, let me mark it "said" because the sentence does state the field's state; the figure question is recorded. Fine.
+
+Now, let me reconsider the count of "sentences that lost something to the bin": sentences 1 (evening), 2 (must, attribution, quotative), 3 (added, from what he saw himself), 4 (the time, ended with). So all 4 sentences lost something to the bin. Count: 4.
+
+Lines said / filled in / usual case:
+Actual ledger: a_foreman (said), a_notes (said), a_rounds (said), a_kept (said), a_onrounds (said), a_wrote (said). = 6 said.
+World note: n_gate, n_flock, n_shepherd, n_top, n_low, n_rounds (6 said), n_open, n_concl, n_grass, n_done (4 said), n_always (filled in), n_link (filled in), n_since (said). = 11 said, 2 filled in.
+Total: 17 said, 2 filled in, 0 usual case.
+
+Hmm, wait — n_always: the always rule is said; the MAKES/SHOWS choice is filled in. Per rule 15, mark the whole line "filled in" and say in it which part I added. Hmm, but then the count of "said" lines drops. Alternatively mark it "said" and record the choice in readings. Rule 7 of L80: "If the text does not settle it, the choice is a filled-in line." Hmm, "the choice is a filled-in line" — I read that as: the line gets mark "filled in". But that misrepresents the content as not-said. Rule 15 says: where part was said and part is your choice, split the line if you can; if you cannot, mark the whole line filled in and say in it which part you added. I cannot split a general line's kind from its content. So: mark n_always "filled in" with text noting "the always rule is the text's own; the SHOWS kind is my choice (the text does not settle MAKES or SHOWS)". OK. Same for n_link — but n_link is entirely mine (the missing step), so filled in anyway.
+
+So: said = 6 + 10 = 16; filled in = 2 (n_always, n_link); usual case = 0. Total 18 lines.
+
+Hmm, let me recount world note said lines: n_gate, n_flock, n_shepherd, n_top, n_low, n_rounds (6), n_open, n_concl, n_grass, n_done (4), n_since (1) = 11 said. Plus n_always, n_link filled in = 13 world lines. Actual: 6 said. Total 19 lines, 17 said, 2 filled in. Wait: 6 + 11 = 17 said, 2 filled in. Total 19. Let me recount actual ledger: a_foreman, a_notes, a_rounds, a_kept, a_onrounds, a_wrote = 6. Yes. World: 6 things + 4 facts + 1 since + 2 general = 13. Total 19 lines: 17 said, 2 filled in, 0 usual case.
+
+Hmm, do I want a "usual case" line anywhere? "the shepherd always left that gate open only once the flock had been driven through it" — "always" → ALWAYS, not USUALLY. No usual-case lines needed. OK, 0 usual case. That's fine — the count just reports it.
+
+Wait, one thing: should the always rule be ALWAYS or USUALLY? "always" → ALWAYS. Yes.
+
+Now — the whatifs array: any what-if? The text has no explicit what-if ("remove the structure and..."). No. Empty array. Hmm — should I add one? The P14 example had one from "remove the structure and the spread stops". Our text has no counterfactual. Leave empty.
+
+Now let me double check the SINCE claim's terms: claim_since(n_since, in_top_field(flock), stood_open(gate)). The expected fact in_top_field(flock) matches n_concl's holds(in_top_field(flock)). The reason stood_open(gate) matches n_open's holds(stood_open(gate)). Good.
+
+The general lines:
+- n_always (SHOWS): holds(driven_through(flock, gate)) :- line(n_always), holds(stood_open(gate)). 
+- n_link (SHOWS): holds(in_top_field(flock)) :- line(n_link), holds(driven_through(flock, gate)).
+
+Wait — for ALWAYS SHOWS, the guide says: `holds(<conclusion>(X)) :- line(id), <goals>.` Good, matches.
+
+For ALWAYS MAKES: produced/depends. Not used here. OK.
+
+Hmm, one question: should n_link be MAKES instead? "when the flock has been driven through the gate, then the flock is in the top field" — this is really a spatial/definitional link. SHOWS (how we can tell) works. Keep SHOWS.
+
+Also, should n_always's condition include the shepherd? I decided: condition = stood_open(gate), with the reading recorded. In the line text I'll write: "ALWAYS SHOWS: when the gate stands open (the shepherd having left it open), then the flock had been driven through the gate". Hmm, the Prolog only uses stood_open(gate). The parenthetical in the text notes the shepherd. And in readings: "the gate 'stood open' is read as the shepherd's leaving it open, as the always rule's condition speaks of the shepherd leaving that gate open". Good.
+
+Hmm, wait. Actually, let me reconsider — maybe I should be more careful and add the filled-in fact n_left: the shepherd left the gate open. Then n_always's condition is holds(left_open(shepherd, gate)), and n_left provides it. But n_left from n_open (gate stood open) needs its own link... The gate standing open doesn't strictly imply the shepherd left it open. But in context ("that gate" + the shepherd's habit), it's the natural reading. Adding n_left as filled in makes the reasoning chain explicit and checkable, and honestly records the reading. Hmm. Two options:
+
+Option 1 (fewer lines): n_always condition = stood_open(gate). Reading recorded.
+Option 2 (more explicit): n_left (filled in): the shepherd left the gate open. n_always condition = left_open(shepherd, gate). 
+
+Option 2 is more precise about what's text vs. mine. But it adds a line that's really just a restatement of n_open under the reading. Rule 9: an added line may not be the claimed line in other words... n_left isn't the claimed line; it's a bridge. Hmm. I think Option 1 is cleaner and the reading is recorded. But Option 1 bakes the reading into the rule's condition without a separate line. The checker would treat n_always as a rule from stood_open — fine.
+
+Hmm, but there's a subtle issue with Option 1: the text's rule is "the shepherd left that gate open only once the flock had been driven through it". If the condition is just "gate stands open", the rule becomes "whenever the gate stands open, the flock was driven through it" — stronger than the text (the text only covers the shepherd's leaving-open; someone else could open the gate). But within the note's world, the gate's openness is the shepherd's. It's fine. I'll go with Option 1 and record the reading clearly. Actually... hmm, let me go with Option 2-lite: no. Option 1. Final. Record in readings: "the gate standing open is read as the shepherd's leaving it open, so the always rule's condition is the gate's open state; the alternative (a separate filled-in line 'the shepherd left the gate open') was not taken, to avoid a line that merely restates the open state under another name."
+
+Hmm, that's a nice touch for the readings section.
+
+Now, the "words_split" section: any word used in two senses? "field" — top field and lower field are two things, but "field" is one sense (two instances). "notes" — the foreman's notes; one sense. "rounds" — one sense. "left" — "the shepherd always left that gate open" — "left" as in "left open" (a state), not "departed". Hmm, "left" could be read as "departed" — no, "left that gate open" is clearly the causative-left (leave open). Not a real ambiguity. "concluded" — one sense. "empty" — one sense. I don't think there's a genuine two-sense word. Maybe "note"? "The farm foreman kept notes" and "The note ended" — "notes" (plural, the records) vs "the note" (singular, the whole record). Hmm! "kept notes" vs "the note ended with the time". Are these the same thing? The foreman kept notes (plural); the note (singular) ended with the time. Possibly the notes collectively form "the note", or "the note" is one of the notes. This is a mild ambiguity. I could split: "notes" (the records the foreman kept) and "note" (the record that ended with the time). Hmm. Are they one thing? Sentence 2: "He wrote that..." — he wrote in his notes. Sentence 4: "The note ended with the time..." — the note = the record of that evening's rounds. I think "the note" is the whole record (the notes for that evening). I'll treat them as one thing: the notes (the foreman's record). Hmm, but "the note ended" — singular. Let me split to be safe: "notes" = the foreman's ongoing records; "note" = the particular record that ended with the finish time. Hmm, but then I need thing lines for both, and the note's world is... the world is named "note" — confusing. Let me rename the world: "note_world" or "what_the_note_says". Hmm, in T10D the world was "account_world". I'll use "note_world" — hmm, or "foreman_note". Let me use "note_world".
+
+Hmm, actually, do I want to split notes/note? Let me think about whether they're really two senses. "The farm foreman kept notes on his evening rounds. He wrote that... The note ended with the time the rounds had finished." — "the note" likely refers to the notes he kept that evening (the record). I think it's one thing in two grammatical numbers. But the language wants one name per thing. If I treat them as one thing "notes", then "the note ended with the time" is about the notes — the notes ended with the time. Hmm, awkward but OK. If I split, I get two things and no stated link between them (a missing step: the note is one of the notes / the notes make up the note). 
+
+I'll split, honestly: "notes" (the foreman's records, kept on his rounds) and "note" (the record whose ending gives the finish time). And record the split in words_split: "note: the foreman's ongoing records (plural) / the particular record that ended with the finish time". And add a filled-in line linking them? "the note is among the foreman's notes" — hmm, that's a missing step. Or treat "the note" as the same as "the notes" — one sense. 
+
+Ugh, over-thinking. Let me decide: treat them as ONE thing, "notes", since "the note" is clearly the record the foreman kept (the notes of that evening's rounds). The singular/plural is grammatical, not two senses. Then sentence 4's "the note ended with the time the rounds had finished" → bin "the note ended with the time" (the notes' arrangement + the when), and the rounds' finishing is TOLD in note_world. Hmm, but then the notes thing line is in the actual ledger, and the note's content is in note_world. The note/note_world connection: the notes are what the foreman wrote (a_wrote: the foreman wrote in the notes) and note_world is what the notes say. That's coherent: the notes are the physical record; note_world is their content. 
+
+Hmm, but wait — "The note ended with the time..." — if "the note" = the notes, then the sentence is about the notes' content. The bin entry covers the arrangement + time. OK. But hmm, actually — is there a slight sense difference? "kept notes" (habit/ongoing) vs "the note" (this specific evening's record)? I'll record this in words_split as a borderline case... no. Decision: one thing, "notes". Actually hold on — hmm. Let me reconsider once more. "The farm foreman kept notes on his evening rounds" — general practice. "He wrote that [long content]" — that evening's writing. "The note ended with the time the rounds had finished" — that evening's note. So "the note" = the evening's record; "notes" = his practice of recording. Two senses? The things are: the general notes (habit) and this specific note. Hmm. In the ledger, I have a_notes (thing) and a_kept (the foreman kept notes — a fact). If "the note" is a different thing, I need a "note" thing line. And the note's content = note_world. 
+
+OK final decision: split them. It's the more careful reading, and the language asks for splits when one word covers two things. 
+- "notes": the foreman's records (what he keeps on his rounds) — thing line a_notes, fact a_kept (the foreman kept notes).
+- "note": the particular record the foreman wrote that evening — thing line a_note (said, s2 or s4?), and note_world holds what it says. And a filled-in link: the note is one of the foreman's notes? Hmm, or is that obvious? The text: "He wrote that..." then "The note ended with..." — "the note" is the thing he wrote. So: a_wrote: the foreman wrote the note. (said, s2 — "He wrote that" → he wrote the note; the "that" content is note_world.) Then a_note: the note is a note (thing, said, s2). And sentence 4's "the note ended with the time" → bin the arrangement + time; n_done in note_world.
+
+Hmm, and words_split: "note: the foreman's ongoing notes (his keeping of records) / the particular record he wrote, whose content is note_world and whose ending gives the finish time". And do I need a line linking the note to the notes? "the note is among the notes"? That's a filled-in missing step. Hmm — is it needed for anything? Not really for the argument. I'll skip it but mention in readings that the note is read as that evening's record among the foreman's notes. Hmm, actually — to keep it simpler, maybe I should NOT split and just use "notes" for both. 
+
+You know what, let me just split — it's cleaner semantically and demonstrates the split mechanism. The link between them: I'll add a filled-in line? No. The words_split entry records the two senses. The readings entry can note that the note is read as the evening's record. Fine.
+
+Hmm, hold on, wait. Let me reconsider the whole thing once more. If "the note" is a separate thing, then a_wrote should be "the foreman wrote the note" (not "wrote in the notes"). And a_notes/a_kept stay for sentence 1. Then:
+- a_notes (thing, said, s1, CLAIMED): the notes are notes; response not stated.
+- a_note (thing, said, s2, CLAIMED): the note is a note; response not stated.
+- a_kept (fact, said, s1, CLAIMED): the foreman kept notes.
+- a_wrote (fact, said, s2, CLAIMED): the foreman wrote the note.
+- note_world: what the note says.
+
+And the bin entry for "He wrote that": the writing is line a_wrote; the quotative frames the following as the note's content (note_world). Good, that's clean.
+
+And sentence 4: "The note ended with the time the rounds had finished." → bin ("the note ended with the time" — the note's arrangement and the finish time, a when, are outside the language; the rounds' finishing is TOLD in note_world, line n_done). Good.
+
+Now — hmm, one more: should note_world's name be "note_world"? And the note thing is "note". Fine.
+
+Let me also double check: does the actual ledger need a thing line for "the flock"? No — flock only appears in note_world. Good.
+
+Now the "leftover" array: one string per bin entry: 'Sentence N: <words> — <reason>'. Let me construct the bin entries:
+
+Bin entries:
+1. Sentence 1: "evening" — a time of day; when is outside the language (only the order of a chain and stages named in a fact are kept). Hmm, also "on his evening rounds" — the circumstance. Let me bin "evening" only, and keep "on his rounds" as line a_onrounds. Hmm, wait — do I have a_onrounds? Let me re-examine. Sentence 1: "The farm foreman kept notes on his evening rounds." Lines: a_foreman, a_notes, a_rounds (thing), a_kept (kept notes), a_onrounds (the foreman was on the rounds). Bin: "evening". Hmm, is a_onrounds worth it? "on his evening rounds" — the circumstance of the keeping. I'll keep it as a GIVEN line: the foreman was on the rounds. Hmm, wait — but "his evening rounds" — the rounds are his. a_rounds thing line + a_onrounds fact. OK.
+
+Hmm, actually, hmm: "kept notes on his evening rounds" — alternative reading: the notes were about his rounds (notes on = notes about). Reading: he kept notes while on his rounds, or about his rounds. Either way: he kept notes; he was on rounds. I'll record the reading in readings_chosen: "on his evening rounds" read as the circumstance of the note-keeping (while on his rounds); the alternative (the notes are about the rounds) is not taken, since the notes' content reported in sentence 2 is about the flock and fields, not about the rounds themselves. Hmm, interesting — actually the note does end with the rounds' finish time, so the notes do concern the rounds. Meh. Both readings converge on the same lines. I'll note it briefly.
+
+2. Sentence 2: "He wrote that" — the writing is line a_wrote; the quotative frames what follows as the note's content, TOLD in world note_world. Hmm, and "that" specifically. Let me phrase: words "He wrote that"; reason: the writing itself is line a_wrote; the quotative "that" scopes the following clauses into note_world, so nothing in them is claimed about the actual world.
+3. Sentence 2: "the shepherd had concluded" — attribution of concluding; who concludes what is outside the language. The content (the flock is in the top field) is TOLD in note_world, line n_concl, and the shepherd's reason is line n_since.
+4. Sentence 2: "must" — a modal; modality is outside the language. The content is recorded without it.
+5. Sentence 3: "The foreman added" — another quotative; scopes the following into note_world. Hmm, and "added" implies the note has more content — covered by note_world containing it.
+6. Sentence 3: "from what he saw himself" — the foreman's own seeing; perception and epistemic grounding are outside the language. The content is TOLD in note_world, line n_grass.
+7. Sentence 4: "The note ended with the time" — the note's ordering of its content and the finish time (a when) are outside the language; the rounds' finishing is TOLD in note_world, line n_done.
+
+Hmm, also sentence 2's "since" — no, that's the SINCE line (n_since), in the ledger. Good.
+
+Wait — also sentence 2: "the gate stood open" — that's n_open (in the ledger, note_world). "the shepherd always left that gate open only once the flock had been driven through it" — n_always (ledger). "the flock must be in the top field" — n_concl + "must" binned. Good.
+
+Sentence 3: "the lower field was empty of grass" — n_grass. Good.
+
+Sentence 4: "the rounds had finished" — n_done. Good.
+
+Sentence 1: all in ledger + "evening" binned. Good.
+
+Sentences losing something to the bin: 1, 2, 3, 4 → 4.
+
+Now, readings_chosen entries:
+1. Sentence 1: "on his evening rounds" — readings: (a) the circumstance in which he kept notes (while on his rounds); (b) the subject of the notes (notes about his rounds). Chosen: (a), with the rounds as a thing the foreman was on; either reading gives the same lines. And "evening" binned as a when.
+2. Sentence 2: "since" — readings: a reason to expect (SINCE) or a cause (BECAUSE). Chosen: SINCE — the gate's standing open is the shepherd's reason to conclude, not a cause of the flock's location. Hmm, is that right? "concluded X since Y" — Y is the evidence. Yes, SINCE.
+3. Sentence 2: the always rule's condition — "the shepherd left that gate open" vs "the gate stood open". Chosen: the gate's open state (n_open) is read as the shepherd's leaving-open, so the rule runs from the gate standing open; the alternative (a separate filled-in line "the shepherd left the gate open") was not taken to avoid a line that restates the open state.
+4. Sentence 2: the missing step from "the flock had been driven through the gate" to "the flock is in the top field" — the text does not say the gate opens onto the top field. Chosen: filled-in general line n_link (driven through the gate → in the top field), marked filled in; the alternative was to leave the gap for the checker to report as a jump.
+5. Sentence 2: MAKES or SHOWS for the always rule — the text does not settle it. Chosen: SHOWS (the open gate is how the shepherd tells the flock went through); the rule is the text's own, only the kind is filled in.
+6. Sentence 2: "the shepherd had concluded" — attribution; chosen: binned, content TOLD in note_world (not a separate shepherd world), so the SINCE claim and its premises share one checkable world; a shepherd-world would need the premises restated.
+7. Sentence 3: "empty of grass" — readings: literal (no grass) or figurative (little grass). Chosen: literal, as stated, written as NOT [the lower field has grass].
+8. Sentence 3/4: "note" vs "notes" — split: the foreman's ongoing records vs the particular record he wrote. Chosen: two things (notes, note), the note being that evening's record whose content is note_world.
+
+Hmm, that's a good set. Also maybe: sentence 4 "the note ended with the time the rounds had finished" — reading: the note records the finish time; chosen: the rounds' finishing is TOLD in note_world, the time and the note's ordering binned. Covered by the bin entry; maybe a readings entry too. I'll include a brief one.
+
+Now, the PARKED list: judgements about the reasoning, ideas for procedures. The prompt says the PARKED list goes at the very end. Hmm — "Close with: TRANSLATION COMPLETE. Then wait." and the PARKED list "at the very end, one line each. Then return to the line in hand." So PARKED comes... after TRANSLATION COMPLETE? The prompt says "Close with: TRANSLATION COMPLETE. Then wait." and separately the parking place says PARKED at the very end. Hmm, conflicting. The encoding guide says: after the five sections, print the ledger once more as ONE JSON object, then "Nothing else goes in that block." And the task says "ending with the JSON block and then the words TRANSLATION COMPLETE."
+
+So the order: five sections → JSON block → TRANSLATION COMPLETE. Where does PARKED go? "at the very end, one line each. Then return to the line in hand." Since the task says end with the JSON block and then TRANSLATION COMPLETE, I'll put PARKED before the JSON block (as part of the five sections' tail) or after TRANSLATION COMPLETE? "at the very end" — after TRANSLATION COMPLETE would be the very end. But the task says "ending with the JSON block and then the words TRANSLATION COMPLETE". Hmm. The PARKED list is part of the printed output per the task's "parking place" section. I'll put PARKED right after section 5 (the count), before the JSON block, then JSON, then TRANSLATION COMPLETE. Hmm, but "at the very end" suggests after everything... 
+
+Let me re-read: "## The parking place — Judgements about whether the writer's reasoning is good, and ideas for procedures, graphs, algorithms or scoring, go in a PARKED list at the very end, one line each. Then return to the line in hand." — "at the very end" of the output. And "Close with: TRANSLATION COMPLETE. Then wait." — the closing line is TRANSLATION COMPLETE. So PARKED should come before TRANSLATION COMPLETE. And the JSON block — the task says "ending with the JSON block and then the words TRANSLATION COMPLETE". So: sections 1-5, PARKED, JSON block, TRANSLATION COMPLETE. Hmm, but then PARKED isn't "at the very end"... 
+
+Alternatively: sections 1-5, JSON block, TRANSLATION COMPLETE, PARKED. But then it doesn't end with TRANSLATION COMPLETE. 
+
+I'll go with: sections 1–5, then PARKED, then the JSON block, then TRANSLATION COMPLETE. That satisfies "ending with the JSON block and then the words TRANSLATION COMPLETE" and PARKED is at the end of the prose output before the machine-readable block. Hmm, actually — "at the very end" — I think putting PARKED just before the JSON block is the best compromise, since the JSON must be the last thing before TRANSLATION COMPLETE. Actually wait, re-reading the user's final instruction: "print exactly what the task and the guide ask for, ending with the JSON block and then the words TRANSLATION COMPLETE." So the very last things are the JSON block and TRANSLATION COMPLETE. PARKED must go before the JSON block. OK: sections 1-5, PARKED, JSON, TRANSLATION COMPLETE.
+
+Hmm, do I have anything to PARK? Judgements about the writer's reasoning: the shepherd's inference depends on an unstated link (the gate opening onto the top field) — that's a candidate missing line, already handled. Ideas for procedures: none really. Maybe park: "The shepherd's conclusion rests on the gate being the top field's gate, which the text never states; the checker would report a jump with candidate missing line n_link." And: "Whether 'empty of grass' is literal bears checking against the farm's records; if figurative, n_grass overstates." One or two lines. OK.
+
+Now — the JSON structure. Fields: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. The examples also had "names", "translation_gauge", "author_note", "status" in T10D — but the guide's template lists: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. I'll follow the guide's template exactly. Hmm, the guide says "Every field below is required unless marked optional" and lists those. I'll include exactly those. Maybe add "names"? Not in the guide's template. Skip it. The task's five printed sections: 1. The ledger (table), 2. The bin (list), 3. Words I split, 4. Readings I chose, 5. The count. Then PARKED, then JSON.
+
+For the JSON "whose": "<your name, the model you are>, under L82" — I'm Claude (Anthropic). I'll write "Claude (Anthropic), under L82". Hmm, "under L82" per the guide. OK.
+
+"paragraph": "B01".
+
+Let me now write out all the lines with ids, marks, standings, sentences, texts, and Prolog clauses.
+
+ACTUAL LEDGER:
+- a_foreman: mark said, sentence 1, standing CLAIMED. Text: "[CLAIMED] foreman is a person; response to a press not stated". Clauses: kind(foreman, person) :- line(a_foreman). body(foreman, not_stated) :- line(a_foreman).
+- a_notes: said, s1, CLAIMED. "[CLAIMED] notes are notes; response to a press not stated". kind(notes, notes) :- line(a_notes). body(notes, not_stated) :- line(a_notes).
+- a_rounds: said, s1, CLAIMED. "[CLAIMED] rounds are rounds; response to a press not stated". kind(rounds, rounds) :- line(a_rounds). body(rounds, not_stated) :- line(a_rounds).
+- a_note: said, s2, CLAIMED. "[CLAIMED] note is a note; response to a press not stated". kind(note, note) :- line(a_note). body(note, not_stated) :- line(a_note).
+- a_kept: said, s1, CLAIMED. "[CLAIMED] foreman kept notes". holds(kept(foreman, notes)) :- line(a_kept).
+- a_onrounds: said, s1, GIVEN. "[GIVEN] foreman was on the rounds". holds(on_rounds(foreman, rounds)) :- line(a_onrounds).
+- a_wrote: said, s2, CLAIMED. "[CLAIMED] foreman wrote the note". holds(wrote(foreman, note)) :- line(a_wrote).
+
+Hmm, wait: a_note's standing — sentence 2 introduces "the note" via "He wrote that..." — actually "the note" first appears in sentence 4 ("The note ended..."). Sentence 2 says "He wrote that" — the thing written is the note. So a_note from sentence 2 (via the writing) is fine; sentence 4 confirms. I'll set a_note's sentence to 2. Hmm, or 4? The thing is introduced by "He wrote" (s2) and named "the note" (s4). I'll use sentence 2 for a_note and a_wrote, since the writing establishes it. Hmm, but "the note" as a word appears in s4. The line's sentence field: "the number of the sentence it came from". a_note came from... the note is what he wrote (s2) and is called "the note" (s4). I'll assign sentence 2 and mention s4 in the bin. Actually, hmm — let me assign a_note to sentence 4, since "the note" is named there, and a_wrote to sentence 2 ("He wrote"). But then a_wrote "the foreman wrote the note" references the note from s4 — fine, cross-sentence reference is normal. Hmm, but which is cleaner? The thing line for the note: sentence 4 names it. But the writing (s2) establishes the note exists. I'll put a_note at sentence 2 (established by the writing) — the note is what was written. Eh, either. Let me use sentence 2 for both a_note and a_wrote, and the bin entry for s4 mentions the note. Fine.
+
+Hmm, wait — actually, is a_note needed as separate from a_notes? I decided to split. Then "the note" (s4) = the evening's record. And a_wrote (s2): the foreman wrote the note. Yes, consistent.
+
+Hmm, but one more consideration: with the split, is there a line linking the note to the notes? Not needed. But rebuildability: "could rebuild what the writer committed to" — the writer committed: foreman kept notes (ongoing); he wrote the note (that evening); the note says X. A reader can rebuild. The unstated link (the note is one of the notes / that evening's notes) — I'll note in readings. OK.
+
+WORLD note_world (all TOLD in world note_world, case "note_world", case_kind "told"):
+
+- n_gate: said, s2. "[TOLD in world note_world] gate is a gate; response to a press not stated". kind(gate, gate) :- line(n_gate). body(gate, not_stated) :- line(n_gate).
+- n_flock: said, s2. "[TOLD in world note_world] flock is a flock; response to a press not stated". kind(flock, flock) :- line(n_flock). body(flock, not_stated) :- line(n_flock).
+- n_shepherd: said, s2. "[TOLD in world note_world] shepherd is a person; response to a press not stated". kind(shepherd, person) :- line(n_shepherd). body(shepherd, not_stated) :- line(n_shepherd).
+- n_top: said, s2. "[TOLD in world note_world] top_field is a field; response to a press not stated". kind(top_field, field) :- line(n_top). body(top_field, not_stated) :- line(n_top).
+- n_low: said, s3. "[TOLD in world note_world] lower_field is a field; response to a press not stated". kind(lower_field, field) :- line(n_low). body(lower_field, not_stated) :- line(n_low).
+- n_rounds: said, s4. "[TOLD in world note_world] rounds are rounds; response to a press not stated". kind(rounds, rounds) :- line(n_rounds). body(rounds, not_stated) :- line(n_rounds).
+- n_open: said, s2. "[TOLD in world note_world] gate stood open". holds(stood_open(gate)) :- line(n_open).
+- n_concl: said, s2. "[TOLD in world note_world] flock is in the top_field". holds(in_top_field(flock)) :- line(n_concl).
+- n_grass: said, s3. "[TOLD in world note_world] NOT [lower_field has grass]". denied(has_grass(lower_field)) :- line(n_grass).
+- n_done: said, s4. "[TOLD in world note_world] rounds finished". holds(finished(rounds)) :- line(n_done).
+- n_always: filled in, s2. "[TOLD in world note_world] ALWAYS SHOWS: when gate stands open (the shepherd having left it open), then flock had been driven through gate; the always rule is the text's own, the SHOWS kind is filled in". holds(driven_through(flock, gate)) :- line(n_always), holds(stood_open(gate)).
+- n_link: filled in, s2. "[TOLD in world note_world] ALWAYS SHOWS: when flock has been driven through gate, then flock is in the top_field; filled in, the gate is read as opening onto the top_field". holds(in_top_field(flock)) :- line(n_link), holds(driven_through(flock, gate)).
+- n_since: said, s2. "[TOLD in world note_world] line n_concl SINCE line n_open; the shepherd's stated reason, with lines n_always and n_link as the connecting rules". claim_since(n_since, in_top_field(flock), stood_open(gate)) :- line(n_since).
+
+Wait — careful with the fact terms: in_top_field(flock) — I wrote kind(top_field, field) with the thing named "top_field", but the fact term is in_top_field(flock) — the field isn't an argument. Hmm, "the flock is in the top field" — the fact term could be in_top_field(flock) where the field is implicit, or in_field(flock, top_field). Better: in_field(flock, top_field)? Hmm, but then the n_link conclusion must match: holds(in_field(flock, top_field)). Let me use in_top_field(flock) — a plain name for the state. Hmm, the definition says descriptions are free names. Either works. But for clarity and to involve the top_field thing, maybe use in_field(flock, top_field). Hmm. But "in the top field" as a description: in_top_field(flock). I'll use in_top_field(flock) — simpler, and the top_field thing line still exists (kind checked wherever another line speaks about that kind). Hmm, but if no fact mentions top_field as a term, the kind line is unused. Eh — the thing line is required regardless. Let me use in_field(flock, top_field) to keep the field in the fact. Hmm, but then "the flock is in the top field" — the fact term in_field(flock, top_field). And n_link: holds(in_field(flock, top_field)) :- line(n_link), holds(driven_through(flock, gate)). And n_since: claim_since(n_since, in_field(flock, top_field), stood_open(gate)). OK, that's cleaner and uses the thing. 
+
+Similarly "the lower field has no grass": has_grass(lower_field) — uses lower_field. Good.
+
+"the gate stood open": stood_open(gate). Good.
+"the flock had been driven through the gate": driven_through(flock, gate). Good.
+"the rounds finished": finished(rounds). Good.
+
+Now, hmm, one issue: n_always's condition is stood_open(gate), but the text says "the shepherd left that gate open". My line text says "(the shepherd having left it open)". The Prolog condition is stood_open(gate). The reading is recorded. OK.
+
+Also — hmm, should n_always be USUALLY instead of ALWAYS? "always" → ALWAYS. Yes.
+
+Now, is there any exception or habit line? "the shepherd always left that gate open only once the flock had been driven through it" — this is a general line, not a habit line (kind 3). Kind 3 (Habit) is "THING usually DOES VERB THING on occasions of KIND" — checked as a USUALLY line. But the text says "always", so ALWAYS general line (kind 7). Good.
+
+Hmm, wait — could the always rule be encoded as a HABIT (kind 3)? "The shepherd usually leaves the gate open on occasions of the flock having been driven through" — but the text says always, and the direction for the inference is gate-open → driven-through. The general line kind 7 is right. OK.
+
+Now let me reconsider whether n_link should exist at all, one more time. The shepherd's conclusion: flock in top field, from gate open. The stated connecting rule: gate open → flock driven through (the always rule). The step "driven through → in top field" is missing. Without n_link, the SINCE claim's route fails (jump). With n_link (filled in), the route works but leans on an added line — the checker would report "follows only on assumptions nobody stated" or note the added line. That's the honest outcome: the shepherd's reasoning as reported does rest on an unstated assumption. Including n_link as filled in makes the chain checkable and flags the dependence. I'm comfortable. 
+
+Also, hmm — should I add a what-if? The text has none. The whatifs array stays empty. Hmm, the guide's template includes whatifs; empty array is fine.
+
+Now the count section (5): lines said: 17, lines filled in: 2, lines usual case: 0, sentences that lost something to the bin: 4. Let me recount said lines: actual: a_foreman, a_notes, a_rounds, a_note, a_kept, a_onrounds, a_wrote = 7 said. World: n_gate, n_flock, n_shepherd, n_top, n_low, n_rounds, n_open, n_concl, n_grass, n_done, n_since = 11 said. Total said = 18. Filled in: n_always, n_link = 2. Total lines = 20. Usual case = 0.
+
+Wait, let me recount actual: a_foreman(1), a_notes(2), a_rounds(3), a_note(4), a_kept(5), a_onrounds(6), a_wrote(7). Yes, 7. World said: n_gate, n_flock, n_shepherd, n_top, n_low, n_rounds (6 things), n_open, n_concl, n_grass, n_done (4 facts), n_since (1) = 11. Total 18 said + 2 filled in = 20 lines.
+
+Hmm, do I really need both a_rounds (actual) and n_rounds (world)? Yes — the actual ledger establishes the foreman's rounds (s1), and note_world needs its own (world looked at alone). OK.
+
+Also — hmm, a_onrounds: "the foreman was on the rounds" — is "on the rounds" a fact the language can hold? It's a plain description: holds(on_rounds(foreman, rounds)). Fine. Standing GIVEN (circumstance). Mark said. OK.
+
+Hmm, wait — one more check on a_wrote's standing. "He wrote that the shepherd had concluded..." — main clause "He wrote" → CLAIMED. Yes.
+
+And should a_wrote be "the foreman wrote the note" or "the foreman wrote in the notes"? With the split, "the note" is the evening's record. "He wrote that [content]" — he wrote the note containing that content. So: the foreman wrote the note. And note_world = what the note says. Good. Hmm, but strictly, "He wrote that X" doesn't say "the note" — the note is named in s4. The connection (the thing he wrote = the note) is a reading. Mark a_wrote said? The writing is said; the identification of the written thing as "the note" is my reading (from s4). Per rule 15... hmm. I could mark a_wrote "said" since both the writing (s2) and the note (s4) are in the text, and the identification is the natural coreference. Or split: a_wrote said "the foreman wrote" + the note identification filled in. Hmm. Let me keep a_wrote as said with text "foreman wrote the note" — the words "He wrote" (s2) and "the note" (s4) are both the writer's; the coreference is a reading I'll record in readings_chosen. Hmm, but the mark should reflect that the line as written is partly my reading... 
+
+OK you know what, I'll mark a_wrote "said" and record in readings: "'He wrote that' (s2) is read as the foreman writing the note that sentence 4 names; the note is that evening's record." The line's content (foreman wrote the note) is the writer's own commitment under this coreference. It's fine. Actually hmm, alternatively mark it "filled in" — no. The coreference is near-certain. said. OK.
+
+Now, the bin entries — let me also double-check sentence coverage:
+- s1: lines a_foreman, a_notes, a_rounds, a_kept, a_onrounds; bin "evening". ✓
+- s2: lines a_note, a_wrote; world lines n_gate, n_flock, n_shepherd, n_top, n_open, n_concl, n_always, n_link, n_since; bin "He wrote that", "the shepherd had concluded", "must". ✓
+- s3: world lines n_low, n_grass; bin "The foreman added", "from what he saw himself". ✓
+- s4: world lines n_rounds, n_done; bin "The note ended with the time". ✓
+
+All sentences covered. 
+
+Now — hmm, wait. One thing about n_grass as a denial: "the lower field was empty of grass" → NOT [the lower field has grass]. The denial form: denied(has_grass(lower_field)) :- line(n_grass). Good. And the line text: "[TOLD in world note_world] NOT [lower_field has grass]". Good.
+
+Hmm, also — should I add a thing line for grass? The denial mentions grass only in the predicate name has_grass. No thing "grass" appears as a term. Rule 3 is about things in happenings. I'll skip a grass thing line. Fine.
+
+Now, the "sentences" JSON: verbatim sentences 1-4.
+
+Let me write the JSON:
+
+{
+ "paragraph": "B01",
+ "whose": "Claude (Anthropic), under L82",
+ "sentences": {
+  "1": "The farm foreman kept notes on his evening rounds.",
+  "2": "He wrote that the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it.",
+  "3": "The foreman added, from what he saw himself, that the lower field was empty of grass.",
+  "4": "The note ended with the time the rounds had finished."
+ },
+ "bin": [
+  {"sentence": 1, "words": "evening", "reason": "A time of day; when is outside the language (only the order of a chain and stages named in a fact are kept). The foreman being on his rounds is line a_onrounds."},
+  {"sentence": 2, "words": "He wrote that", "reason": "The writing itself is line a_wrote (the foreman wrote the note); the quotative 'that' frames the following clauses as the note's content, TOLD in world note_world, so nothing in them is claimed about the actual world."},
+  {"sentence": 2, "words": "the shepherd had concluded", "reason": "Attribution of concluding; who concludes what is outside the language. The content (the flock is in the top field) is TOLD in note_world as line n_concl, and the shepherd's reason is line n_since."},
+  {"sentence": 2, "words": "must", "reason": "A modal; modality is outside the language. The concluded content is recorded without it."},
+  {"sentence": 3, "words": "The foreman added", "reason": "A second quotative; it scopes the following clause into note_world (the note's content), and adds nothing claimable about the actual world beyond the note's already-recorded writing."},
+  {"sentence": 3, "words": "from what he saw himself", "reason": "The foreman's own seeing; perception and epistemic grounding are outside the language. The content is TOLD in note_world as line n_grass."},
+  {"sentence": 4, "words": "The note ended with the time", "reason": "The note's ordering of its own content and the finish time (a when) are outside the language; the rounds' finishing is TOLD in note_world as line n_done."}
+ ],
+ "leftover": [
+  "Sentence 1: evening — A time of day; when is outside the language (only the order of a chain and stages named in a fact are kept). The foreman being on his rounds is line a_onrounds.",
+  ... (one per bin entry)
+ ],
+ "whatifs": [],
+ "lines": { ... },
+ "words_split": [
+  "note: the foreman's ongoing records, the notes he keeps on his rounds (sentence 1) / the particular record he wrote, whose content is note_world and whose ending gives the finish time (sentences 2 and 4)"
+ ],
+ "readings_chosen": [ ... ]
+}
+
+Hmm, the leftover format: "'Sentence 3: <words> — <reason>'". OK.
+
+Now the lines in the JSON — each with mark, sentence, standing, text, and prolog_clauses. For TOLD lines, case and case_kind.
+
+Let me write them all out.
+
+Actual:
+"a_foreman": mark "said", sentence 1, standing "CLAIMED", text "[CLAIMED] foreman is a person; response to a press not stated", clauses: ["kind(foreman, person) :- line(a_foreman).", "body(foreman, not_stated) :- line(a_foreman)."]
+
+"a_notes": said, 1, CLAIMED, "[CLAIMED] notes are notes; response to a press not stated", ["kind(notes, notes) :- line(a_notes).", "body(notes, not_stated) :- line(a_notes)."]
+
+"a_rounds": said, 1, CLAIMED, "[CLAIMED] rounds are rounds; response to a press not stated", ["kind(rounds, rounds) :- line(a_rounds).", "body(rounds, not_stated) :- line(a_rounds)."]
+
+"a_note": said, 2, CLAIMED, "[CLAIMED] note is a note; response to a press not stated", ["kind(note, note) :- line(a_note).", "body(note, not_stated) :- line(a_note)."]
+
+"a_kept": said, 1, CLAIMED, "[CLAIMED] foreman kept notes", ["holds(kept(foreman, notes)) :- line(a_kept)."]
+
+"a_onrounds": said, 1, GIVEN, "[GIVEN] foreman was on the rounds", ["holds(on_rounds(foreman, rounds)) :- line(a_onrounds)."]
+
+"a_wrote": said, 2, CLAIMED, "[CLAIMED] foreman wrote the note", ["holds(wrote(foreman, note)) :- line(a_wrote)."]
+
+World note_world:
+"n_gate": said, 2, "TOLD in world note_world", case note_world, case_kind told, "[TOLD in world note_world] gate is a gate; response to a press not stated", ["kind(gate, gate) :- line(n_gate).", "body(gate, not_stated) :- line(n_gate)."]
+
+"n_flock": said, 2, TOLD..., "[TOLD in world note_world] flock is a flock; response to a press not stated", ["kind(flock, flock) :- line(n_flock).", "body(flock, not_stated) :- line(n_flock)."]
+
+"n_shepherd": said, 2, TOLD..., "[TOLD in world note_world] shepherd is a person; response to a press not stated", ["kind(shepherd, person) :- line(n_shepherd).", "body(shepherd, not_stated) :- line(n_shepherd)."]
+
+"n_top": said, 2, TOLD..., "[TOLD in world note_world] top_field is a field; response to a press not stated", ["kind(top_field, field) :- line(n_top).", "body(top_field, not_stated) :- line(n_top)."]
+
+"n_low": said, 3, TOLD..., "[TOLD in world note_world] lower_field is a field; response to a press not stated", ["kind(lower_field, field) :- line(n_low).", "body(lower_field, not_stated) :- line(n_low)."]
+
+"n_rounds": said, 4, TOLD..., "[TOLD in world note_world] rounds are rounds; response to a press not stated", ["kind(rounds, rounds) :- line(n_rounds).", "body(rounds, not_stated) :- line(n_rounds)."]
+
+"n_open": said, 2, TOLD..., "[TOLD in world note_world] gate stood open", ["holds(stood_open(gate)) :- line(n_open)."]
+
+"n_concl": said, 2, TOLD..., "[TOLD in world note_world] flock is in the top_field", ["holds(in_field(flock, top_field)) :- line(n_concl)."]
+
+"n_grass": said, 3, TOLD..., "[TOLD in world note_world] NOT [lower_field has grass]", ["denied(has_grass(lower_field)) :- line(n_grass)."]
+
+"n_done": said, 4, TOLD..., "[TOLD in world note_world] rounds finished", ["holds(finished(rounds)) :- line(n_done)."]
+
+"n_always": filled in, 2, TOLD..., "[TOLD in world note_world] ALWAYS SHOWS: when the gate stands open (the shepherd having left it open), then the flock had been driven through the gate; the always rule is the text's own, the SHOWS kind is filled in", ["holds(driven_through(flock, gate)) :- line(n_always), holds(stood_open(gate))."]
+
+"n_link": filled in, 2, TOLD..., "[TOLD in world note_world] ALWAYS SHOWS: when the flock has been driven through the gate, then the flock is in the top_field; filled in — the gate is read as opening onto the top_field, which the text does not say", ["holds(in_field(flock, top_field)) :- line(n_link), holds(driven_through(flock, gate))."]
+
+"n_since": said, 2, TOLD..., "[TOLD in world note_world] line n_concl SINCE line n_open; the shepherd's stated reason, with lines n_always and n_link as the connecting rules", ["claim_since(n_since, in_field(flock, top_field), stood_open(gate)) :- line(n_since)."]
+
+Wait — the guide says for TOLD/SUPPOSED lines, include "case" and "case_kind" fields. The standing string: "TOLD in world note_world". Good.
+
+Hmm, one issue: the fact term in n_concl is in_field(flock, top_field), and n_since uses the same. Good. n_open: stood_open(gate). n_since's reason: stood_open(gate). Good. n_always produces driven_through(flock, gate); n_link consumes it. Good.
+
+Now — the ledger table (section 1). Columns: Number | Standing | Content | Source mark | Sentence. I'll list all 20 lines in order.
+
+Let me also double check the "usual case" count is 0 — yes, no usual-case lines. Hmm, is there anything everyone assumes? The n_link is a filled-in reading, not a universal assumption. Could n_link be "usual case"? "A gate you drive a flock through opens onto a field" — hmm, that's more of a reading than a universal assumption. Keep filled in. OK, 0 usual case. Fine — the count just reports.
+
+Hmm, wait — actually, let me reconsider n_link's mark once more. The options: "filled in" (my reading/missing step) vs "usual case" (something everyone assumes). The gate opening onto the top field — is that "something everyone assumes"? Not exactly; it's a specific spatial assumption. "filled in" is right.
+
+Now, readings_chosen (section 4 and JSON):
+
+1. "Sentence 1: 'on his evening rounds' — readings: (a) the circumstance in which the notes were kept (while on his rounds); (b) the subject of the notes (notes about his rounds). Chosen: (a); either reading yields the same lines, and 'evening' is binned as a when."
+2. "Sentence 2: 'since' — readings: a reason to expect or believe (SINCE) or a cause (BECAUSE). Chosen: SINCE; the gate's standing open is the shepherd's reason to conclude, not something that produced the flock's location."
+3. "Sentence 2: the always rule's condition — readings: the shepherd's leaving the gate open (needing a separate filled-in line 'the shepherd left the gate open') or the gate's standing open as that same state. Chosen: the latter; the rule runs from line n_open, and the reading that the standing-open gate is the shepherd's leaving-open is recorded here rather than as a restating line."
+4. "Sentence 2: the step from 'the flock had been driven through the gate' to 'the flock is in the top field' — readings: leave the gap (the checker would report a jump) or fill in the gate as opening onto the top field. Chosen: filled in as line n_link, marked filled in, so the chain is checkable and its dependence on an added line is visible."
+5. "Sentence 2: MAKES or SHOWS for the always rule — the text does not settle it. Chosen: SHOWS (the open gate is how the shepherd tells the flock went through); the rule's content is the text's own, so only the kind is the filled-in part."
+6. "Sentence 2: 'the shepherd had concluded' — readings: give the conclusion its own shepherd-world, or keep it in the note's world with the attribution binned. Chosen: the latter, so the SINCE claim and its premises share one checkable world; a shepherd-world would need the premises restated, since told worlds are looked at alone."
+7. "Sentence 3: 'empty of grass' — readings: literal (the field has no grass) or figurative (the field has little grass). Chosen: literal, as stated, written as NOT [the lower field has grass]; if figurative, the line overstates."
+8. "Sentences 2 and 4: 'note' — readings: the foreman's ongoing records (sentence 1's 'notes') or the particular record he wrote that evening. Chosen: split into two things, notes and note; 'He wrote that' (sentence 2) is read as the foreman writing the note that sentence 4 names."
+
+Also maybe: "Sentence 4: 'the note ended with the time the rounds had finished' — readings: the note records the finish time (a when) or the note's ending is itself a fact. Chosen: the rounds' finishing is TOLD in note_world (line n_done); the time and the note's ordering are binned." I'll fold this into the bin entry; maybe add as a readings entry too. I'll add it briefly.
+
+Hmm, that's 8-9 entries. Fine.
+
+PARKED list:
+- "The shepherd's conclusion, as reported, rests on the gate opening onto the top field, which the text never states; the checker would report the SINCE claim as following only on the added line n_link."
+- "If 'empty of grass' is emphasis rather than literal, line n_grass overstates; a check against the farm's grazing records would settle it."
+Maybe also: "The foreman's own observation ('from what he saw himself') is the note's warrant for the lower-field claim, but the language has no form for perceptual grounding; the claim stands or falls with the note's word alone." Hmm, that's more a bin note. Keep 2-3 parked lines.
+
+Now, section 5 count: lines said 18, lines filled in 2, lines usual case 0, sentences that lost something to the bin 4.
+
+Let me now also sanity-check the JSON validity: no trailing commas, double quotes, full stops in clauses. The line ids: a_foreman etc. — lower-case words with underscores? "Names that end in an underscore and a number" are forbidden; mine don't. IDs like "a_foreman", "n_gate" — fine.
+
+One more check on the guide: "Every clause of a line has line(<id>) as its first body goal". My clauses: "kind(foreman, person) :- line(a_foreman)." ✓. "holds(driven_through(flock, gate)) :- line(n_always), holds(stood_open(gate))." ✓.
+
+Also: "A thing line: kind(<thing>, <kind>) :- line(id). and body(<thing>, not_stated) :- line(id)." ✓.
+
+Hmm, one question: for the thing lines, should the kind be more specific? e.g., foreman is a person — the response classes include "heavy and standing (a person)". But rule: if the text doesn't say how it answers a press, write "not stated". So body(X, not_stated). ✓. For the gate: kind(gate, gate) — a gate is a gate. Response not stated. ✓. Flock: kind(flock, flock). Shepherd: kind(shepherd, person). Fields: kind(top_field, field), kind(lower_field, field). Rounds: kind(rounds, rounds). Notes: kind(notes, notes). Note: kind(note, note). OK.
+
+Now — the printed ledger table. Let me format it as a markdown table with the five columns. Number | Standing | Content | Source mark | Sentence.
+
+I'll order: actual ledger lines first, then note_world lines.
+
+Also, hmm — should the table's "Content" include the world prefix for TOLD lines? The standing column has "TOLD in world note_world". The content is the line text. I'll put the line text without the standing bracket (the standing column carries it), or with? In the examples, the text field includes "[CLAIMED] ..." prefix. For the table, I'll write content plainly and let standing carry the standing. Hmm, the JSON "text" includes the bracket per examples. For the table, I'll include the bracket too for consistency with the JSON text field. Actually, the table columns separate Standing and Content, so the bracket would duplicate. Let me put in the table: Standing = "TOLD in world note_world", Content = "gate is a gate; response to a press not stated". And in the JSON text: "[TOLD in world note_world] gate is a gate; response to a press not stated". That's consistent with the examples (JSON text has the bracket). Good.
+
+Let me write the final output now.
+
+Section 2 (the bin) as a list: each entry: the words from the text, and the reason. I'll number them.
+
+Section 3: Words I split — "note: ... / ...".
+
+Section 5: The count.
+
+Then PARKED, then the JSON block, then TRANSLATION COMPLETE.
+
+Wait — the task says "Print your output in exactly this form: 1. The ledger ... 2. The bin ... 3. Words I split ... 4. Readings I chose ... 5. The count: ... Close with: TRANSLATION COMPLETE. Then wait." And the parking place says PARKED at the very end. And the user's instruction: "ending with the JSON block and then the words TRANSLATION COMPLETE". So: sections 1-5, PARKED, JSON, TRANSLATION COMPLETE. 
+
+Hmm, one thing — should PARKED come before or after the JSON? The user says "ending with the JSON block and then the words TRANSLATION COMPLETE" — so JSON is after PARKED. OK.
+
+Let me also double check: do I need "names" field? The guide's template doesn't include it. T10D had it but that's an older example. I'll follow the guide's template: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. Good.
+
+Hmm, also the guide says the JSON object begins with ```json and ends with ```. Good.
+
+Let me write everything out now. Let me be careful with the sentences' verbatim text.
+
+Sentence 2 verbatim: "He wrote that the shepherd had concluded the flock must be in the top field, since the gate stood open, and the shepherd always left that gate open only once the flock had been driven through it."
+
+Sentence 3: "The foreman added, from what he saw himself, that the lower field was empty of grass."
+
+Sentence 4: "The note ended with the time the rounds had finished."
+
+Sentence 1: "The farm foreman kept notes on his evening rounds."
+
+Now writing the final answer. Let me make sure the JSON is valid — I'll be careful with commas and quotes. Also avoid apostrophes issues — use plain text.
+
+One more consideration on n_since's text: "line n_concl SINCE line n_open; the shepherd's stated reason, with lines n_always and n_link as the connecting rules". Good — points at other lines by number (id). ✓.
+
+Also, hmm — the definition says SINCE is "a reason to expect or believe E". Here the shepherd's reason to believe the flock is in the top field. The claim is TOLD in note_world. ✓.
+
+Let me also reconsider: is there a BECAUSE claim anywhere? "since the gate stood open" — SINCE (reason to believe). No BECAUSE. ✓. And "the shepherd always left that gate open only once the flock had been driven through it" — is this a causal claim? "only once" — a condition, not a cause. Encoded as a general SHOWS line. ✓.
+
+Alright. Also — hmm, one more: should I include a line for "the gate is the top field's gate" as a fact rather than the general link? The general link n_link captures the inference. A fact "the gate opens onto the top field" would be another way. I chose the general line. Recorded. OK.
+
+Final check on counts: 20 lines total; said 18; filled in 2; usual case 0. Sentences losing to bin: 4 (all).
+
+Hmm, let me recount the table rows to make sure I list 20:
+Actual (7): a_foreman, a_notes, a_rounds, a_note, a_kept, a_onrounds, a_wrote.
+World (13): n_gate, n_flock, n_shepherd, n_top, n_low, n_rounds, n_open, n_concl, n_grass, n_done, n_always, n_link, n_since.
+Total 20. ✓
+
+Let me write it all out now.
+
+For the table, I'll write it compactly. Then the bin list, split, readings, count, PARKED, JSON, TRANSLATION COMPLETE.
+
+One more sanity check on the JSON "lines" entries — each needs: mark, sentence, standing, text, prolog_clauses, and for TOLD: case, case_kind. ✓.
+
+Also "whatifs": [] — empty array. ✓.
+
+Writing now.

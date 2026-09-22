@@ -11,7 +11,7 @@ Providers (keys from the environment, never from a file in the repository):
 Both are OpenAI-shaped; streamed chunks carry `delta.content` and `delta.reasoning_content`; the receipt keeps both.
 
 Usage:
-  ask_model_2.py PROVIDER --system FILE --user FILE --out DIR [--tag NAME] [--max-tokens N] [--temperature T] [--idle S] [--effort low|medium|high]
+  ask_model_2.py PROVIDER --system FILE --user FILE --out DIR [--tag NAME] [--max-tokens N] [--temperature T] [--idle S] [--effort low|medium|high] [--attempts N] [--extra JSON]
 (--effort is sent as `reasoning_effort`, which both providers accept; the request body records it)
 Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.receipt.json (provider, model, request
 SHA-256, response id, token counts when the stream's last chunk carries usage, finish reason, chunk count, the last attempt's
@@ -70,6 +70,7 @@ def main():
     ap.add_argument("--tag", default="call"); ap.add_argument("--max-tokens", type=int, default=16000)
     ap.add_argument("--temperature", type=float, default=0.2); ap.add_argument("--idle", type=float, default=600.0)
     ap.add_argument("--effort", choices=["low", "medium", "high"], help="sent as reasoning_effort; omitted means the provider's default")
+    ap.add_argument("--attempts", type=int, default=6, help="at most this many HTTP attempts (default 6)")
     ap.add_argument("--extra", help="a JSON object merged into the request body (for provider-specific fields such as a reasoning budget); recorded in the request file")
     a = ap.parse_args()
     p = PROVIDERS[a.provider]
@@ -105,7 +106,7 @@ def main():
         history.append({"attempt": attempts, "status": status, "seconds": round(seconds, 1), "finish": finish, "chunks": chunks})
         if status == 200: break
         final = status in (400, 401, 403, 404, 413, 422, -4)
-        if final or attempts >= 6:
+        if final or attempts >= a.attempts:
             open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s after %d attempt(s)%s\nfinish %s, %d chunks, %d reasoning chars, %d content chars\n%s" % (
                 status, attempts, " (not retried)" if final else "", finish, chunks, len(reasoning), len(content), text[:4000]))
             open(os.path.join(a.out, a.tag + ".reasoning.txt"), "w").write(reasoning)

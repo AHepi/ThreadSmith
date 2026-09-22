@@ -14,7 +14,9 @@ Written under decision L11, 22 September 2026.
 
 Second version (translate_via_api_2.py), 22 September 2026, kept beside translate_via_api_2.py (284be80d1703b60f). Give-up
 line: the first version called ask_model.py, whose non-streaming request died at 301 s on every Atria attempt of the first
-Arm B run; this version calls ask_model_2.py (streamed) and is otherwise the same file. Its output names are unchanged.
+Arm B run; this version calls ask_model_2.py (streamed, silence timeout 600 s, six attempts) with a 100,000-token completion cap, because
+the probes of 22 September showed both models reasoning 35,000 to 60,000+ tokens on these prompts and answering only when
+the cap was not reached (log L83); otherwise the same file. Its output names are unchanged.
 """
 import json, os, re, subprocess, sys, tempfile, shutil, hashlib
 
@@ -115,7 +117,7 @@ def main():
     for attempt in range(1, attempts + 1):
         if feedback: open(user_path, "w").write(prompt(text_id, text) + "\n\n===== YOUR PREVIOUS ANSWER DID NOT VALIDATE =====\n" + feedback + "\nPrint the whole output again, corrected.\n")
         tag = "%s.%s.attempt%d" % (text_id, provider, attempt)
-        rc = subprocess.run([sys.executable, os.path.join(HERE, "ask_model_2.py"), provider, "--user", user_path, "--out", out_dir, "--tag", tag, "--max-tokens", "60000", "--temperature", "0.2"]).returncode
+        rc = subprocess.run([sys.executable, os.path.join(HERE, "ask_model_2.py"), provider, "--user", user_path, "--out", out_dir, "--tag", tag, "--max-tokens", "100000", "--temperature", "0.2", "--idle", "600", "--attempts", "6"]).returncode
         if rc != 0: feedback = "the call failed"; continue
         response = open(os.path.join(out_dir, tag + ".response.txt")).read()
         open(os.path.join(out_dir, "%s.%s.translation.md" % (text_id, provider)), "w").write(response)

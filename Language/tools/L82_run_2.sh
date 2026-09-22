@@ -2,12 +2,13 @@
 # L82_run_2.sh: the runner for Arm B, second version, kept beside L82_run.sh (59084b21d61230d1). Give-up line: the first
 # version's translations died at 301 s on every Atria attempt of the first run (16:33, 22 September 2026) because the caller
 # did not stream; this version calls translate_via_api_2.py and ask_model_2.py (streamed, silence timeout 600 s) and its
-# start guard also matches the second-version names. Otherwise the same file. Written under plan L82 (frozen version named
+# start guard also matches the second-version names; translations run in eight lanes per provider (two texts per lane) with a
+# 100,000-token cap set in translate_via_api_2.py. Otherwise the same file. Written under plan L82 (frozen version named
 # in the log); kept with the outputs.
 # Usage: L82_run_2.sh CORPUS_DIR OUT_DIR PAIRS_FILE   (keys in the environment; run from the repository root;
 #        OUT_DIR must not exist or must be empty; paths may be relative, they are made absolute at the top)
 # PAIRS_FILE: one pair per line, "B03 B06" (F-side first), used for the within-pair sameness runs.
-# Steps: 1 translate (four lanes per provider; the tool's per-provider lock, shared through ASK_MODEL_LOCKDIR, keeps
+# Steps: 1 translate (eight lanes per provider; the tool's per-provider lock, shared through ASK_MODEL_LOCKDIR, keeps
 # the request rate under the limit); 2 both drivers on every valid ledger; 3 consequences_2 on every valid ledger;
 # 4 sameness_2 within pairs per translator and across translators per text, then a COUNTS file (said, filled in,
 # usual case, TOLD and SUPPOSED lines, world names) per ledger; 5 the blind reader (Atria) on every report, shuffled
@@ -49,9 +50,9 @@ export ASK_MODEL_LOCKDIR="$OUT"   # one lock per provider for every step of this
 TEXTS=$(ls "$CORPUS" | grep -E '^B[0-9]+\.txt$' | sed 's/\.txt$//')
 echo "run started $(date -u +%Y-%m-%dT%H:%M:%SZ); corpus $CORPUS; out $OUT; texts: $(echo $TEXTS | wc -w)"
 echo "step 1: translations $(date -u +%H:%M:%S)"; T1=$(date +%s)
-# four lanes per provider: lane k takes every fourth text
-for p in atria mimo; do for k in 0 1 2 3; do
-  ( i=0; for t in $TEXTS; do if [ $((i % 4)) -eq $k ]; then python3 "$T/translate_via_api_2.py" $p "$t" "$CORPUS/$t.txt" "$OUT/translations"; fi; i=$((i+1)); done ) > "$OUT/translations/$p.lane$k.log" 2>&1 &
+# eight lanes per provider: lane k takes every eighth text (the second version; the first ran four)
+for p in atria mimo; do for k in 0 1 2 3 4 5 6 7; do
+  ( i=0; for t in $TEXTS; do if [ $((i % 8)) -eq $k ]; then python3 "$T/translate_via_api_2.py" $p "$t" "$CORPUS/$t.txt" "$OUT/translations"; fi; i=$((i+1)); done ) > "$OUT/translations/$p.lane$k.log" 2>&1 &
 done; done
 wait; echo "translations took $(( $(date +%s) - T1 )) s"
 # gather valid ledgers into a scratch rig: the gate is the validation file's second line, VALID alone
