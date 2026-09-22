@@ -1,0 +1,690 @@
+Let me work through this task.
+
+Text B04:
+1. The incoming nurse read the handover notes left by the night sister.
+2. The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor, since a bed near the desk let the night staff watch his chest rise without walking the ward.
+3. The notes also recorded that his temperature had been normal at midnight.
+4. They ended with a reminder to chart his medication at six.
+
+Analysis:
+- Sentence 1: The incoming nurse read the handover notes left by the night sister. This is a plain claim about the actual world. Things: incoming nurse, handover notes, night sister. Happening: nurse read notes. The notes were left by the night sister (GIVEN relative clause).
+- Sentence 2: "The notes said..." — this is a told world! The notes' content is TOLD in a named world (notes_world). Content: sister planned to move the patient nearer the desk so that breathing easier to monitor, since a bed near the desk let night staff watch his chest rise without walking the ward.
+  - Within the told world: sister planned to move patient (a plan, SO THAT), since bed near desk lets staff watch chest rise.
+  - "planned to move" — a plan: claim_plan. Actually the plan is: sister plans to move patient nearer desk SO THAT breathing easier to monitor.
+  - "since a bed near the desk let the night staff watch his chest rise without walking the ward" — SINCE claim: reason to expect/believe.
+  - "let" — causal word LETS. But rule 8: never fill in a tendency from the causal word itself. Here "let" is used; the text gives no separate tendency words. Hmm, "let the night staff watch" — the bed's nearness lets staff watch. Actually the SINCE clause gives the reason. I could write the LETS as a causal word line, but the checker says LETS fits only where the thing was already heading that way, and where the text gives no tendency, the checker says the word rests on something nobody stated. I can still write the line as said. Let me keep it simpler: write the SINCE line and the plan line, and record the "let" as... Actually "let" is the text's own causal word. I could write: "bed near desk LETS night staff watch chest rise" — but that's within the told world. Hmm, but the language says causal words are tested. Let me include it as a causal word line (kind 10) within the told world, marked said. Actually, careful: the SINCE already captures the reasoning. Writing both LETS and SINCE might duplicate. The text says "since a bed near the desk let the night staff watch..." — the "since" scopes over "let". So the SINCE claim is: since bed near desk lets staff watch chest rise, expect that moving patient nearer desk makes breathing easier to monitor. Hmm, actually the structure: "planned to move the patient nearer the desk so that his breathing would be easier to monitor, since a bed near the desk let the night staff watch his chest rise without walking the ward."
+
+So: plan (move patient nearer desk SO THAT breathing easier to monitor) SINCE (bed near desk lets staff watch chest rise without walking the ward). The SINCE gives the reason to expect the plan's aim works.
+
+I'll write within notes_world:
+- patient is a patient; response not stated
+- desk is a desk; response not stated
+- bed is a bed; response not stated
+- sister (night sister) is a nurse; response not stated
+- night staff are staff
+- patient's breathing is a thing? Maybe keep simple.
+- plan: claim_plan(move patient nearer desk, breathing easier to monitor)
+- SINCE: claim_since(breathing easier to monitor when patient near desk, bed near desk lets staff watch chest rise) — hmm, need to be careful about what terms to use.
+
+Actually, let me simplify. The "watch his chest rise without walking the ward" — "without walking the ward" is a manner/absence, goes to bin maybe? "without X" — the language has no form for absence of an action except... NOT. "without walking the ward" could be NOT [staff walk the ward]. Hmm. It's a fact: staff watch chest rise NOT [walking the ward]. I could write it as a fact with NOT. Let me write: "night staff watch his chest rise, NOT [night staff walk the ward]". That's a bit odd but acceptable. Or bin it as manner. I think writing the NOT is fine and keeps content.
+
+Actually "watch his chest rise" — the chest rising is a fact (breathing). Let me keep: holds(watch_chest_rise(night_staff, patient)) and denied(walk_ward(night_staff)). Hmm, "without walking the ward" is a manner adverbial; the guide says manner/how much goes to bin. But NOT is available. I'll write it as NOT within the fact description, since it's a plain negative fact. Let me do: "night staff watch the patient's chest rise; NOT [night staff walk the ward]". I'll include both as lines? That's two lines. Simpler: one fact line with the NOT inside the content text, and in Prolog two clauses? One line one clause set is fine — a line can have multiple clauses? The examples show one clause per line mostly. I'll make it one line with two prolog clauses (holds watch, denied walk). That seems acceptable — "prolog_clauses" is a list, allowing multiple.
+
+Hmm, but rule: one line, one source mark. Fine.
+
+Also "so that his breathing would be easier to monitor" — the aim. claim_plan(id, move(patient, nearer_desk), easy_to_monitor(breathing)). And "changes" if text says what the action changes: moving the patient nearer the desk changes his distance to the desk / the bed's position. The text implies the move changes the patient's location. I could add a filled-in "changes" line: moving the patient changes the patient's position relative to the desk. And "depends": easier monitoring depends on the patient being near the desk. That's filled in. Maybe keep it minimal — the guide says include changes/depends if the text says. The text says "a bed near the desk let the night staff watch" — so watching depends on the bed being near the desk. That's arguably stated by "since". I'll add a filled-in depends line: monitoring depends on the patient being near the desk. Hmm, careful about rule 9: added lines may not restate the claimed line. I'll keep it modest.
+
+- Sentence 3: "The notes also recorded that his temperature had been normal at midnight." — again TOLD in notes_world: temperature normal at midnight (stage: at midnight).
+- Sentence 4: "They ended with a reminder to chart his medication at six." — "a reminder to chart" is a quoted command-ish thing: a reminder = directive. Per rules, quoted commands and questions go to the bin, recorded as mentioned. A "reminder to chart his medication at six" is a directive. So bin it: "reminder to chart his medication at six" — a command, recorded as mentioned, nothing claimed from it. But also the fact that the notes ended with it is TOLD... hmm, actually the whole sentence is about what the notes contained. The notes' content is the reminder. So the reminder content goes to bin (command), and the fact "the notes ended with a reminder" — is that a claim about the actual notes? Sentence 1 established the notes exist in the actual world (nurse read them). Sentence 4 says they ended with a reminder — that's a claim about the notes' content, which is TOLD-ish. Hmm.
+
+Wait — how to handle: sentences 2-4 are all "the notes said/recorded/ended with". The notes are an actual thing (read by the nurse). Their contents constitute a told world. The fact that the notes contained these things is itself a claim in the actual world? In example T10D, "The account says opening the window caused..." — the account's existence is GIVEN, and the contents are TOLD in account_world. The fact "the account says X" is not asserted as an actual fact; it's binned as attribution scoping contents to the world.
+
+Hmm, but in T10D the whole sentence was binned except the TOLD lines. Actually they binned "The account says" and made the contents TOLD. They did NOT write an actual-ledger line "account says opening caused dry". Interesting.
+
+But here sentence 1 says the nurse read the notes — that's an actual happening. So the notes exist in the actual world. Then sentences 2-4 report the notes' contents. Following T10D's approach: the contents are TOLD in notes_world; the "said/recorded/ended with" attributions are binned (scoping). But should there also be an actual claim "the notes contain X"? T10D suggests not — the attribution is retained in the bin and scopes contents to the world.
+
+Hmm, but there's a subtlety: sentence 4's "reminder to chart his medication at six" is a command within the notes. Commands go to bin. So sentence 4: the reminder content is a command → bin. But is there also a TOLD fact "the notes ended with a reminder"? The reminder is the command. I think: bin the command ("chart his medication at six" — quoted command, recorded as mentioned), and note that the notes' ending with it is part of the told world's content — i.e., in notes_world, the notes end with a reminder. Hmm, that's getting recursive.
+
+Simpler approach: In notes_world, state the fact "the notes end with a reminder to chart the medication at six" as TOLD, and bin the command itself ("chart his medication at six" — a directive; nothing claimed from it). Actually the reminder is the notes' content; the notes within the told world... Let me avoid recursion: The told world is "what the notes say". In that world: the sister planned..., the temperature was normal at midnight, and (the notes end with) a reminder to chart medication at six. The reminder is a command → bin it, recorded as mentioned. So in the told world I write: "the notes' final entry is a reminder" — hmm, that's a fact about the notes, which are the medium. 
+
+I think cleanest: 
+- Actual ledger: nurse (thing), notes (thing), night sister (thing), nurse read notes (happening), notes left by night sister (fact, GIVEN from sentence 1's participle).
+- notes_world (TOLD): patient, desk, bed, night sister, night staff, breathing; plan line; since line; temperature normal at midnight fact; and the reminder → bin as command.
+
+For sentence 4, since the command is binned, does the sentence "appear in the ledger"? The bin entry covers it. The task says every sentence appears in ledger, bin, or both. So sentence 4 appears only in the bin. That's acceptable ("sentences that lost something to the bin" count).
+
+But wait — should I also record that the notes ended with the reminder, as a TOLD fact? The "ending with" is about the notes' structure. I could add a TOLD line: "the notes' last entry is a reminder to chart the medication at six" — but that reintroduces the command. I'll put the whole sentence 4 content in the bin as a quoted command, with reason. And maybe also a TOLD fact that the notes contain a reminder — hmm. Let me just bin the command part and note the rest.
+
+Actually, let me reconsider: "They ended with a reminder to chart his medication at six." The fact "the notes ended with a reminder" is a fact about the notes; the reminder's content is a command. I'll write a TOLD line in notes_world: "the notes end with a reminder" (fact), and bin "chart his medication at six" as a quoted command. Hmm, but "at six" is time — goes to bin anyway (when). So the command "chart his medication at six" → bin (command + time). And the TOLD fact "the notes' final entry is a reminder about the medication" — that's fine and keeps sentence 4 partially in the ledger.
+
+Hmm, is that over-engineering? Let me think about what's cleanest for the checker. The reminder is essentially a directive. The language has no form for directives. So bin. The fact that the notes ended with it — that's a fact, could be TOLD. I'll include it as TOLD: "the notes end with a reminder about charting the medication". Actually the reminder's whole point is the command; stating "the notes end with a reminder" without content is nearly empty. But it does record the structural fact. I'll include it — cheap and harmless. Hmm, but rule 9: added lines may not be the claimed line in other words. This is said content though.
+
+Let me decide: include TOLD line "the notes' last entry is a reminder about the medication" (said), and bin "chart his medication at six" (command; also 'at six' is a time). Reason recorded.
+
+Now sentence 2 details:
+"the sister planned to move the patient nearer the desk" — plan. In the told world, the sister plans action: move patient nearer desk. claim_plan(id, move(patient, nearer_to(desk)), easy_to_monitor(breathing)). Wait, the aim is "his breathing would be easier to monitor". So aim fact: easy_to_monitor(breathing). Hmm, "easier" is comparative — degree words go to bin? "easier to monitor" — words of degree. Hmm. "so that his breathing would be easier to monitor" — the comparative "easier". The guide says send words of degree such as "so hard" to the bin. But the whole aim is "easier to monitor". I could write the aim as "his breathing is easy to monitor" and bin "easier" as degree? Or keep "easier" in the fact description as a plain name? The description is a free name; the checker only asks whether two facts are the same. I think writing "breathing is easy to monitor" loses the comparative. Better: aim = "breathing is easier to monitor" and note in readings that I treat the comparative as part of the fact name, with the degree itself not checked. Hmm.
+
+Actually, per instructions: "Keep the push, the movement and the link between them; send words of degree such as 'so hard' to the bin." The degree word here is "easier". But dropping it changes the aim. The comparative is between monitoring near the desk vs. where he was. I'll keep the fact as "breathing is easy to monitor" in the told world and bin "easier" noting the comparative is dropped as a degree. Hmm, but then the plan's aim is distorted.
+
+Alternative: keep "easier to monitor" as the fact description verbatim (free name), and note in readings that the comparative is retained as part of the fact name since dropping it would change the aim; the degree itself is not checked. I think that's more faithful. The bin rule is for adverbial intensifiers like "so hard". I'll keep "easier_to_monitor" and mention in readings. Actually to be safe, I'll also add a bin entry? No — binning the words removes them from the line. I'll keep it in the line and record the reading. The instructions say send words of degree to the bin, but also say figures/uncertainties get readings. I'll keep "easier" in the fact name and note it. Hmm, risk. Let me compromise: write the aim fact as "breathing is easy to monitor" (plain) and put "easier" in the bin with reason "comparative degree; the checker does not measure degrees of ease". But then the plan aims at easy monitoring, which is essentially right (the plan is to make monitoring easy). Actually "easier" implies it's already monitorable but would be easier. Dropping to "easy" slightly strengthens. Hmm.
+
+I'll keep the fact name as "easy_to_monitor" and record in Readings: "easier" read as the aim being easy monitoring; the comparative degree is binned. Wait, if I bin it I must not also use it. Let me bin "easier" and use "easy to monitor" in the line, with the reading note explaining. That follows the letter of the rule. Hmm, but binning a word from a sentence counts that sentence as losing something to the bin — fine, sentence 2 loses plenty anyway ("without walking the ward"? no I keep that as NOT).
+
+Hmm, actually "without walking the ward" — I decided to write NOT. Let me reconsider: "let the night staff watch his chest rise without walking the ward". The "without" clause modifies watch. Writing "night staff watch his chest rise; NOT [night staff walk the ward]" — the NOT applies to a different action, not to the watching. It's a coherent negative fact. I'll keep it as NOT inside the fact line. Good; that preserves content.
+
+"since a bed near the desk let the night staff watch his chest rise" — SINCE claim: reason = bed near desk lets staff watch chest rise; expectation = moving patient nearer the desk makes his breathing easy to monitor. Hmm, actually more precisely: the SINCE grounds the plan's aim. claim_since(id, easy_to_monitor(breathing), lets(bed_near_desk, watch_chest_rise(night_staff))). Hmm, the "let" is a causal word. Should I write a separate LETS line? The SINCE's reason term can be the LETS fact. Let me write:
+
+Line (told): "a bed near the desk LETS the night staff watch his chest rise" — causal word line, kind 10: INFLUENCE LETS THING [content]. Prolog: holds(...) hmm, there's no special predicate for causal words in the guide's vocabulary. The guide lists predicates: kind, body, holds, denied, produced/depends, exception/exempt, claim_because, denied_because, claim_since, claim_plan, changes, depends, claim_like. No LETS predicate. So causal-word lines are written as... hmm. In the guide, there's no explicit prolog form for LETS/HELPS/STOPS. I could write it as a holds fact: holds(lets(bed_near_desk, watch_chest_rise(night_staff))). That seems reasonable — the checker tests causal words against a stated tendency, but with no special predicate, a holds fact is the way to record it.
+
+Actually, maybe simpler: treat the SINCE as the main line and express the reason as a fact: "a bed near the desk lets the night staff watch his chest rise" as a TOLD fact line (holds(lets(...))). Then the SINCE line points at it. And the plan line. That's three lines for sentence 2's inner content plus thing lines.
+
+Let me now enumerate things:
+Actual world:
+- nurse (the incoming nurse) — kind: nurse? Response class: a person → heavy and standing. The text doesn't say how a nurse answers a press. Rule 3: if not stated, write "not stated". But response classes include "heavy and standing (a person)". Do I assign "heavy and standing" because it's a person? The guide says the class list is fixed; for a person, heavy and standing. But rule 3 says if the text doesn't say, write "not stated". Hmm. The list itself says "(a person)" — so persons are heavy and standing by the list. I think for a person we can write "heavy and standing" as the usual reading... but that's a guess → filled in. The guide: "A class you guess is a filled-in line." Example T10D wrote "response to a press not stated" for window, letter, account. Example A wrote kinds without body lines at all (the JSON example_A doesn't even have body/standing fields — it's a simplified example).
+
+I'll write thing lines with kind and body not stated, except where the class is obvious from the list? To be safe and consistent with T10D, write "response to a press not stated" for all things, since the text never describes any physical interaction. That's the safest reading of rule 3. Hmm, but the response-class list explicitly maps persons to "heavy and standing". The checker works strength out from response classes. If I leave not_stated, the checker says "cannot tell" for physical queries — but there are no physical happenings here anyway (reading notes, planning a move). The only happening is "the nurse read the notes" — read is not in the shape book (press/release/hold). So it'll be "not checked". Fine.
+
+I'll use "not stated" for all things, marked said (the text is silent). Good — no guessing.
+
+Things list:
+Actual: nurse (incoming nurse), notes (handover notes), sister (night sister).
+Told world (notes_world): sister (same person, but in the told world — hmm, one name one thing. The night sister is mentioned in sentence 1 actual and in the notes' content sentence 2. Is it the same thing? The notes are about the night sister's plan. I'd say yes, same person, name "sister". But the actual ledger and told world are separate; the thing line for sister can be GIVEN in actual (from sentence 1's "left by the night sister") and the told-world lines refer to her. Hmm, but T10D says a told world doesn't inherit the actual ledger. The thing lines for the told world must be stated inside it. So I need a thing line for sister inside notes_world too. But "one name, one thing" — using the same name "sister" in both actual and told world... The worlds are separate, so it should be OK; but to avoid confusion, maybe name her "sister" in actual and in the told world use the same name since it's the same person. Hmm. The translator's rules say one name per thing. The night sister in the notes is presumably the same person who left the notes. I'll use "sister" in both, with thing lines in each world. Actually wait — is that confusing for the checker? Told worlds are looked at alone; inside notes_world there will be a thing line "sister is a night nurse" etc. In the actual ledger there's also "sister is a night nurse". Same name, fine — they're the same person. I'll do that.
+
+Told world things: sister (night nurse), patient, desk, bed, night_staff, breathing (his breathing), chest? "watch his chest rise" — chest is a thing; maybe fold into the fact. I'll add "chest" as a thing? Keep it simple: the fact "night staff watch his chest rise" — I'll make "chest_rise" part of the fact term: holds(watch(night_staff, chest_rise(patient))). Hmm, cleaner: watch_chest_rise(night_staff, patient). I'll skip a separate chest thing line — but rule 3 says every thing in a happening must have a thing line. Is "watch his chest rise" a happening? It's inside a "let" content, not a full happening with DOER VERB THING. I'll treat it as a fact. To be safe, add thing lines for patient, bed, desk, sister, night_staff, and note breathing as part of facts. Hmm, "his breathing" — a thing. I'll give it a thing line too? That might be over-things. Let me include: sister, patient, desk, bed, night_staff. Breathing — I'll treat "breathing" as the patient's attribute in the fact term (breathing(patient)). Fine.
+
+Wait, also "the ward" — "without walking the ward". ward is a thing. Add thing line for ward? It appears in a denied fact. I'll add it: ward is a ward; response not stated. Cheap.
+
+Actual world lines:
+- nurse thing line (said, s1): nurse is a nurse (an incoming nurse); response not stated.
+- sister thing line (said, s1): sister is a night nurse; response not stated.
+- notes thing line (said, s1): notes are handover notes; response not stated.
+- happening (said, s1): nurse READ notes. Verb "read" — not in shape book → "not checked". Happening shape: DOER VERB THING: nurse reads notes. Prolog: holds(reads(nurse, notes))? There's no happening predicate in the guide's vocabulary... The guide lists predicates; there's no "happening" predicate. Hmm. How to encode a happening? In example_A, line 6 "the cold reached the balcony plants" is holds(reached(the_cold, balcony_plants)) — a fact. Line 1's happening... example_A's sentence 1 "died because of the cold" became facts + claim_because. So happenings are encoded as holds(...) facts when there's no result line needed. The happening/result distinction matters for physical verbs with shapes. Here "read" has no shape; encode as holds(reads(nurse, notes)). Fine.
+- GIVEN fact (s1): notes were left by sister — "left by the night sister" is a passive participle description → GIVEN. holds(left_by(notes, sister)). Mark said (it's what the text says; source mark "said" since the writer wrote it). Standing GIVEN.
+
+notes_world lines (all TOLD in world notes_world, mark said, sentence 2 or 3 or 4):
+- sister thing line (s2)
+- patient thing line (s2)
+- desk thing line (s2)
+- bed thing line (s2)
+- night_staff thing line (s2)
+- ward thing line (s2)
+- plan line (s2): sister plans to move the patient nearer the desk SO THAT his breathing is easy to monitor. claim_plan(plan, move(patient, nearer_to(desk)), easy_to_monitor(breathing(patient))). Hmm, aim fact: easy_to_monitor(breathing(patient)). 
+- since line (s2): claim_since(since1, easy_to_monitor(breathing(patient)), lets(bed_near_desk, watch_chest_rise(night_staff, patient))). Hmm — the reason fact. But the reason itself is a LETS claim. Let me instead write the LETS as its own line (a causal word line) and have the SINCE point at it? The SINCE's reason term must match a holds(...) fact of the line it points at. So write line "lets": holds(lets(bed_near_desk, watch_chest_rise(night_staff, patient))) — hmm, but "bed near the desk" is a condition, not a thing. Let me restructure: 
+
+Line L1 (told, s2): "a bed near the desk LETS the night staff watch his chest rise" — content: bed near desk lets night staff watch chest rise. Prolog: holds(lets(bed_near_desk, watch_chest_rise(night_staff, patient)))? But bed_near_desk isn't a thing. Alternatively: holds(near(bed, desk)) as a separate GIVEN fact within the told world, and the LETS line: holds(lets(near(bed,desk), watch_chest_rise(night_staff, patient))). Hmm, awkward.
+
+Alternative simpler encoding: 
+- Fact line: "the bed is near the desk" — but wait, in the story the patient is in a bed; "a bed near the desk" is hypothetical/generic: "since a bed near the desk let the night staff watch" — it's a general conditional: if the bed is near the desk, staff can watch. Hmm. It's generic ("a bed near the desk" — any bed near the desk). This is like a general SHOWS line: when the bed is near the desk, the staff can watch the chest rise. 
+
+Hmm, this is getting complicated. Let me simplify using general lines:
+- TOLD general line (USUALLY/ALWAYS SHOWS): when the patient's bed is near the desk, the night staff can watch his chest rise. Kind: SHOWS (it's how monitoring is possible, not a cause that produces movement). Actually "let" is a LETS causal word. But encoding as SHOWS general line captures it: ALWAYS SHOWS: when bed near desk, night staff watch chest rise. Hmm, "let" = enables. SHOWS fits "we can tell/read off". Enabling is more MAKES-ish? "A bed near the desk let the night staff watch" — the nearness enables the watching. MAKES: produces. I'd say this is MAKES (enables producing the watching) — but the guide says MAKES fits only where the thing was not already heading that way; for people LETS/HELPS/STOPS fit where already heading. The checker tests causal words against tendencies. Since the text gives no tendency for "watching", a LETS line would be flagged "rests on a tendency nobody stated" — which is fine, it's a checker finding, not my problem.
+
+Decision: write the LETS as a causal-word line in the told world:
+Line: "[TOLD in world notes_world] a bed near the desk LETS the night staff watch his chest rise" — prolog: holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient)))? Hmm, I need the reason term for the SINCE to match. 
+
+Actually, maybe simpler: make the SINCE's reason a plain fact: "the night staff can watch his chest rise from a bed near the desk" — holds(can_watch(night_staff, patient, near(bed, desk))). Hmm.
+
+Let me step back. The SINCE claim: "since a bed near the desk let the night staff watch his chest rise without walking the ward" — the reason to believe the plan will achieve its aim. Encode:
+
+Line A (told, s2, said): "the night staff watch the patient's chest rise from a bed near the desk, NOT [the night staff walk the ward]" 
+Prolog: holds(watch_chest_rise(night_staff, patient)) :- line(A). and denied(walk_ward(night_staff)) :- line(A). Plus the condition near(bed, desk)? The watching is conditional on the bed being near the desk. Include in the fact: holds(watch_from(night_staff, patient, near(bed, desk))). Hmm.
+
+Honestly, I think the cleanest is:
+- Line "nearbed" (told, GIVEN within the told world, s2): the bed is near the desk — wait, but it's conditional "a bed near the desk". 
+
+OK here's another thought: treat "a bed near the desk let the night staff watch his chest rise" as a general line in the told world:
+- Line G (told, s2, said): "ALWAYS SHOWS: when the patient's bed is near the desk, the night staff watch his chest rise; NOT [the night staff walk the ward]" — hmm, the NOT belongs to the watching occasion.
+
+Hmm, I'm overcomplicating. Let me simplify decisively:
+
+Told world lines for sentence 2:
+1. sister thing line
+2. patient thing line
+3. bed thing line
+4. desk thing line
+5. night_staff thing line
+6. ward thing line
+7. plan line: sister plans to move the patient nearer the desk SO THAT the patient's breathing is easy to monitor. claim_plan(plan, move(sister, patient, nearer_to(desk)), easy_to_monitor(breathing(patient))). — hmm, the plan's action: "move the patient nearer the desk". Doer: sister. Action term: move(patient, nearer_to(desk)) or move(sister, patient, desk). I'll use move(patient, near(desk)) — hmm. Let me use: action = move(patient, to_near(desk)); aim = easy_to_monitor(breathing(patient)).
+
+Hmm wait, "his breathing would be easier to monitor" — I decided to bin "easier". So aim: "the patient's breathing is easy to monitor". OK.
+
+8. since line: claim_since(since1, easy_to_monitor(breathing(patient)), near(bed, desk)) — reason: the bed is near the desk?? That loses "let the night staff watch". Hmm.
+
+The reason really is: nearness lets staff watch the chest rise without walking. The watching is the mechanism. Let me include it:
+8. watch line (told, s2, said): "the night staff watch the patient's chest rise when the bed is near the desk, NOT [the night staff walk the ward]" — prolog: holds(watch_chest_rise(night_staff, patient)) :- line(watch), holds(near(bed, desk)). and denied(walk_ward(night_staff)) :- line(watch).
+9. since line: claim_since(since1, easy_to_monitor(breathing(patient)), watch_chest_rise(night_staff, patient)) — the reason to expect easy monitoring is that staff can watch his chest rise. That works! The SINCE points at the watch line's fact.
+
+Hmm, but the SINCE reason should probably include the bed-near-desk condition. But the watch line already ties watching to nearness. Good enough, and it keeps the chain: near bed → staff watch chest rise → expect breathing easy to monitor.
+
+Wait, actually, is the SINCE's expectation really "breathing easy to monitor"? The sentence: "planned to move the patient nearer the desk so that his breathing would be easier to monitor, since a bed near the desk let the night staff watch his chest rise without walking the ward." Yes: the reason to expect the aim (easier monitoring) is that nearness lets staff watch his chest. Good.
+
+Also add a LETS line? The "let" is captured by the watch line being conditional on nearness. I'll note in readings that "let" is read as the conditional watching, not as a separate causal word. Hmm, but the language has a causal-word kind. Should I write it? The guide's prolog vocabulary has no LETS predicate, so I can't encode it directly except as holds(lets(...)). I'll skip a separate LETS line and record the reading. Actually — hmm, maybe write it as a causal word line with holds(lets(...))? Let me not; the watch line already carries it, and rule 9 forbids restating. I'll note it in readings.
+
+Also "planned to move" — is the plan asserted as something the sister will do, or just her plan? It's her plan within the notes. In the told world, the plan is: claim_plan. The plan's action is not asserted as done. Good — plan lines don't assert the action happened.
+
+Do I need a "changes" line? The text says moving the patient nearer the desk → the patient's position changes. And "depends": easy monitoring depends on the patient being near the desk. The text implies it via "since". I'll add one filled-in depends line: easy_to_monitor(breathing(patient)) DEPENDS ON the patient being near the desk. Hmm — is that restating the SINCE? It's a different predicate (depends vs since). The guide says for a plan, include what the aim depends on if the text says. The text says the bed near the desk lets staff watch — so monitoring depends on nearness. I'll add it as filled in. Actually, careful about rule 9: "may not take the place of the reason the writer actually gives". A depends line is supplementary. I'll include it, marked filled in.
+
+Hmm, actually let me reconsider — maybe simpler to skip the depends line. The guide: "what the aim depends on, if the text says". The text does say (via since). I'll include it. It gives the checker something to test the plan against.
+
+Sentence 3 (told): "his temperature had been normal at midnight" — fact with stage: holds(normal_temperature(patient)) at midnight. Stage in the fact: "the patient's temperature was normal at midnight". Prolog: holds(normal_temperature(patient)) :- line(temp). The "at midnight" is a stage — put in the fact text. Time goes to bin per "When, beyond the order of a chain and the stage named in a fact" — but stages are allowed in facts! "When, beyond the order of a chain and the stage named in a fact" — so the stage named in a fact is allowed. "at midnight" is a stage → keep in fact. 
+
+Sentence 4: bin the command; plus told fact "the notes end with a reminder about the medication"? Hmm. Let me think again. "They ended with a reminder to chart his medication at six." Within the told world (the notes' content includes a reminder). I'll write a TOLD fact: "the notes' last entry is a reminder about the patient's medication" and bin "chart his medication at six" as a quoted command (with "at six" as time). 
+
+Hmm, is "the notes' last entry is a reminder" a fact about the notes — which are the told world's medium? This is slightly recursive but harmless: in the told world, the notes end with a reminder. Actually, maybe cleaner: the reminder is part of the notes' content = the told world. The told world's content includes a directive. Directives can't be stated. So sentence 4 → bin entirely, with reason: the sentence reports a reminder (a directive) in the notes; commands go to the bin, nothing claimed from it. And "at six" is a time.
+
+But then sentence 4 appears only in the bin. That's allowed. But is anything lost? The fact that the notes ended with the reminder — that's a fact about the actual notes (which exist in the actual world, since the nurse read them!). Hmm! Interesting: sentence 1 establishes the notes as actual things. Sentence 4 says they "ended with a reminder" — this is an actual claim about the notes' final content. So maybe: actual CLAIMED fact "the notes end with a reminder to chart the medication at six"? But the reminder's content is a command → bin the command. So actual line: "the notes' final entry is a reminder" (CLAIMED, said, s4), and bin "chart his medication at six" (command + time).
+
+Hmm, but sentences 2 and 3 also report the notes' contents ("The notes said...", "The notes also recorded..."). By the same logic, those would be actual claims about what the notes contain. But T10D's approach puts the contents in a told world and bins the attribution. Which is right here?
+
+The difference: T10D's "The account says X caused Y" — the account is a report making a causal claim. Here, the notes are a handover document whose contents are the night sister's plan and records. The notes' content includes a plan (the sister planned...) and records (temperature was normal). These are reported facts, not the note-writer's own commitments... well, actually the note-writer (night sister) wrote them.
+
+I think the T10D approach is defensible and cleaner: the notes' contents form a told world (what the notes say). The actual ledger has: the nurse read the notes; the notes were left by the sister. Everything in sentences 2-4's content is TOLD in notes_world.
+
+But hold on — sentence 3: "The notes also recorded that his temperature had been normal at midnight." Is the patient's temperature at midnight part of a told world, or an actual fact? The notes record it; the writer of B04 asserts "the notes recorded X" — not X itself. So X is TOLD. Yes, TOLD in notes_world. Consistent with T10D.
+
+And sentence 4: "They ended with a reminder to chart his medication at six." The writer asserts the notes ended with a reminder. The reminder is a directive. So: the fact "the notes end with a reminder" is an actual CLAIMED fact about the notes? Or is it part of the told world? Hmm. The reminder is content of the notes. If I follow T10D strictly, "the notes ended with a reminder" is an attribution statement scoping content → the content (a directive) goes to bin. But the structural fact "the notes ended with a reminder" is itself a claim about the actual notes.
+
+I'll do this: actual CLAIMED line (s4): "the notes end with a reminder about the patient's medication" — said. And bin: "chart his medication at six" — a quoted command (directive); nothing claimed from it; "at six" is also a time expression. This keeps sentence 4 in the ledger partially. Hmm, but is "the notes end with a reminder about the medication" faithful? The reminder is to chart the medication. "a reminder about the medication" — fine, vague but faithful.
+
+Hmm, wait. Alternatively put the reminder fact in the told world too. But the notes' ending is a property of the actual notes the nurse read. I'll put it in the actual ledger as CLAIMED. Hmm, but then it's odd that sentences 2-3's "the notes said/recorded" aren't also actual claims ("the notes say that the sister planned..."). 
+
+Ugh. Let me think about what a checker would do. If I write actual line "the notes say the sister planned to move the patient" — that's a fact about the notes. And then the told world lines. Both could exist. T10D binned the attribution and didn't write an actual "account says X" fact. But T10D's sentence was entirely "The account says..." with no separate actual event.
+
+Here, sentence 1 gives an actual event (nurse read the notes). Sentences 2-4: I could write actual facts "the notes say that..." — but that's just re-encoding the attribution. The cleaner approach per the guide: "What a story, a report, a note or a dream says is TOLD, in a named world." The notes are a note! So their contents are TOLD. The fact "the notes said X" is the attribution, which per the translator's rules ("Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world") goes to the bin.
+
+So: bin "The notes said", "The notes also recorded", "They ended with" as attributions scoping content to notes_world. And the reminder: its content is a command → bin. But the "ended with" attribution... if I bin "they ended with a reminder to chart his medication at six" entirely as (a) attribution + (b) command, then sentence 4 is fully in the bin. That's consistent.
+
+Hmm, but then there's no TOLD line for sentence 4 at all. The reminder is a directive — the language has no form for directives, so it can't be a TOLD line. Bin it. Sentence 4 loses everything to the bin. Acceptable? "sentences that lost something to the bin" — yes, sentence 4 lost everything. The final check "Every sentence of the text appears in the ledger, in the bin, or in both" — sentence 4 appears in the bin. ✓.
+
+Hmm, but wait: is there value in a TOLD line "the notes' final entry is a reminder"? The reminder IS the command. Recording "there is a reminder" without its content is nearly empty. I'll skip it and bin the whole sentence 4 content. Actually hold on, let me reconsider once more. 
+
+The bin entry for sentence 4: words "They ended with a reminder to chart his medication at six", reason: "The clause reports the notes' content (attribution, scoping the notes' contents to notes_world), and the content itself is a directive — a quoted command — which the language has no form for; 'at six' is also a time expression. Nothing is claimed from it." Good.
+
+Similarly bin entries for sentences 2 and 3 attributions? Sentence 2: "The notes said" — attribution, binned, scoping content to notes_world. And sentence 3: "The notes also recorded" — attribution, binned. But sentences 2 and 3 also have TOLD lines, so they appear in both. ✓
+
+Also sentence 2 has other bin-worthy items: "nearer" (degree/place? "nearer the desk" — place/distance; the language has no place forms... wait, directions include "toward X" and "away from X". "nearer the desk" is a direction toward the desk. Hmm, "nearer" is comparative distance. The language's directions: toward X, away from X, up, down, across. "Move the patient nearer the desk" — the movement is toward the desk. But this is a plan, not an actual happening. The plan's action term: move(patient, toward(desk))? But "nearer" is comparative — bin "nearer" as degree? Hmm. The plan action: "move the patient nearer the desk". I'll write the plan as moving the patient toward the desk and bin "nearer" noting the comparative distance is not measured. Hmm, or keep "nearer the desk" in the plan description as a plain name. 
+
+Let me think: the plan line content: "sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor". And bin "nearer" — comparative degree of distance. Hmm, but "toward the desk" vs "nearer the desk" — the plan is to move him to a position nearer the desk, i.e., toward. I'll use toward(desk) in the action term and bin "nearer" with reason "comparative distance; the language records direction only (toward the desk), not degree of nearness". Good.
+
+Also "so that his breathing would be easier to monitor" — bin "easier" (comparative degree). Reason: the aim is recorded as the patient's breathing being easy to monitor; the comparative degree is not checked.
+
+Also "without walking the ward" — I keep as NOT. ✓ (not binned)
+
+Also "his chest rise" — the chest rising is the breathing. Fine as fact.
+
+Also sentence 2's "since" — kept as SINCE line. ✓
+
+Also "the night staff" — a group. Thing line: night_staff is staff; response not stated. ✓
+
+Also "at midnight" (s3) — stage in fact. ✓ Keep.
+
+Also "at six" (s4) — binned with the command. ✓
+
+Now, what about the actual-world happening "the incoming nurse read the handover notes"? Verb "read" — not in the shape book → reported "not checked", counted as verb without shape. I should list it in the count section. The guide's JSON doesn't have explicit fields for counts... wait, the encoding guide's JSON has: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. The T10D example has extra fields (names, translation_gauge, author_note, status). The required fields are those in the guide's spec. I'll include the required ones plus maybe a "translation_gauge"-ish section? The task 39 asks for printed sections 1-5 (ledger table, bin, words split, readings, count). The JSON is a separate block. I'll include the required JSON fields and optionally a "counts" field. Let me include a small "counts" object to be safe — extra fields shouldn't hurt. Actually T10D includes "translation_gauge" with counts. I'll include something similar. Hmm, the guide says "Every field below is required unless marked optional" — none are marked optional. Extra fields are probably fine (T10D has extras). I'll add "counts" and "verbs_without_shape".
+
+Wait — also "whose": "<your name, the model you are>, under L82". I'm... the model. I'll write "Claude, under L82" — hmm, I should use my actual identity. I'm Claude by Anthropic. The example says "Astra Ultra, under L72". I'll write "Claude (Anthropic), under L82". Fine.
+
+"paragraph": "B04".
+
+Now let me also double check sentence 1: "The incoming nurse read the handover notes left by the night sister." 
+- "incoming" — description of the nurse; keep in kind: "nurse is an incoming nurse"? Kind should be a kind. I'll write: nurse is a nurse (the incoming nurse). Hmm, kind(nurse, nurse). The description "incoming" — a shift role. I'll put it in the thing line text: "nurse is an incoming nurse; response to a press not stated". kind(nurse, nurse). Fine.
+- "handover notes" — kind(notes, handover_notes)? A kind. Fine: notes is handover notes.
+- "night sister" — sister is a night sister (a nurse). kind(sister, night_sister)? Or kind(sister, nurse). I'll use kind(sister, nurse) with text "sister is the night sister, a nurse". Hmm, "sister" here is a nurse (British usage: "sister" = senior nurse). Words split? "sister" could mean a sibling. In this text "night sister" is the night nurse in charge. Should I split "sister"? The word is used in one sense here (the night nurse). But a naive reader might think sibling. The translator's rule 2: when the text uses one word in two senses, split. Here it's used in one sense. But the sense is non-obvious. I'll record in words_split: "sister: the night nurse in charge / a sibling — the text uses it in the first sense". Hmm, words_split is for words actually used in two senses. I could instead note it in readings. Let me put it in readings_chosen: "Sentence 1: 'sister' (night sister) read as the nurse in charge of the night shift, not a sibling." That's cleaner. Actually, adding to words_split with one sense marked as not-used... The spec: "each with both senses". I'll add it to words_split as "sister: night nurse in charge / sibling — used here in the first sense". Hmm, the format in the JSON is "<word>: <sense 1> / <sense 2>". I can append the note. Let me put it in readings_chosen instead to be safe, since only one sense is used. Yes, readings.
+
+Also "the patient" — male ("his"). Thing line in told world: patient is a patient; response not stated. 
+
+Also "his breathing" — I'll use breathing(patient) in terms.
+
+Also "the desk" — desk is a desk. "the ward" — ward is a ward. "night staff" — night_staff are night staff.
+
+Now, the plan action: "move the patient nearer the desk". Who moves? The sister plans to move the patient. Action term: move(patient, toward(desk)). Doer: sister. claim_plan(plan, move(sister, patient, toward(desk)), easy_to_monitor(breathing(patient))). Hmm, action terms in examples: move(thermometer). So move(patient, toward(desk)) or move(sister, patient, desk). I'll use move(patient, toward(desk)) and note the doer in the text. Actually the plan text: "sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor". Prolog: claim_plan(plan, move(patient, toward(desk)), easy_to_monitor(breathing(patient))) :- line(plan).
+
+Depends line (filled in): easy_to_monitor(breathing(patient)) DEPENDS ON the patient being near the desk. Prolog: depends(easy_to_monitor(breathing(patient)), near(patient, desk)) :- line(dep). Hmm, "near(patient, desk)" — the patient being near the desk. OK.
+
+Watch line (said, told): "the night staff watch the patient's chest rise when the bed is near the desk, NOT [the night staff walk the ward]". Prolog: 
+holds(watch_chest_rise(night_staff, patient)) :- line(watch), holds(near(bed, desk)).
+denied(walk_ward(night_staff)) :- line(watch).
+Hmm, but then the SINCE's reason term is watch_chest_rise(night_staff, patient) — matches the holds of line watch. ✓ claim_since(since1, easy_to_monitor(breathing(patient)), watch_chest_rise(night_staff, patient)) :- line(since1).
+
+Wait, but there's a subtlety: the SINCE claims the reason to expect easy monitoring is that staff watch his chest rise. But the watching is conditional on the bed being near the desk, and the plan is to move the patient (not the bed... hmm, "move the patient nearer the desk" — presumably the patient in his bed). The chain: move patient near desk → bed near desk → staff watch chest rise → breathing easy to monitor. The depends line and the watch line's condition capture the links. Good.
+
+Should I add a line "the patient is in the bed"? The text implies the patient is in a bed ("a bed near the desk", "move the patient nearer the desk"). Hmm, "move the patient nearer the desk" — the patient is in a bed, presumably. Not stated explicitly. I could add a filled-in line: the patient is in the bed. Hmm, is that needed? The watch line's condition is near(bed, desk), and the plan moves the patient toward the desk. For the chain to work, moving the patient = moving the bed. This is a missing step! Per the traps: "When you feel a missing step is obvious: write it as its own line, marked filled in." So: filled-in line: "the patient is in the bed, so moving the patient moves the bed" — hmm. Let me write: "[TOLD in world notes_world] the patient is in the bed" (filled in) and then the near condition applies. Actually, I'll fold it: the watch line condition could be near(patient, desk) instead of near(bed, desk)? But the text says "a bed near the desk". Hmm.
+
+Let me write a filled-in line: "the patient is in the bed" — holds(in_bed(patient, bed)) — hmm, or just note in the watch line. Let me add it as its own filled-in line in the told world: "the patient is in the bed" (missing step linking the plan to the watching condition). Then the chain: plan moves patient → patient in bed → bed near desk → staff watch. 
+
+Hmm, actually simpler: make the watch line's condition "the patient is near the desk" and separately state the bed-near-desk as the text's wording... no. Let me keep:
+- line bednear (said, told, s2): "the bed is near the desk" — wait, this is conditional/generic ("a bed near the desk let..."). Hmm, is it a fact or a condition? In the context "since a bed near the desk let the night staff watch", it's a conditional: when the bed is near the desk. So I'll make the watch line conditional on near(bed, desk) and not state near(bed, desk) as a separate fact. Good — that avoids asserting the bed actually is near the desk (it isn't yet; the plan is to move the patient).
+
+So told-world lines for s2:
+- sister (thing)
+- patient (thing)
+- bed (thing)
+- desk (thing)
+- night_staff (thing)
+- ward (thing)
+- plan (plan line, said)
+- dep (depends line, filled in): easy monitoring depends on the patient being near the desk. Hmm — or on the bed being near the desk? The aim depends on the patient being near the desk. I'll write: depends(easy_to_monitor(breathing(patient)), near(patient, desk)).
+- inbed (filled in): the patient is in the bed — holds(in_bed(patient, bed)). This links near(patient, desk) with near(bed, desk)? Hmm, do I need both? 
+
+Let me simplify the chain: 
+- Plan: move patient toward desk SO THAT breathing easy to monitor.
+- Watch (said): staff watch chest rise when the bed is near the desk, NOT [staff walk the ward].
+- inbed (filled in): the patient is in the bed.
+- SINCE (said): expect easy monitoring BECAUSE... wait, SINCE: claim_since(since1, easy_to_monitor(breathing(patient)), watch_chest_rise(night_staff, patient)).
+
+Hmm, the SINCE's reason is the watching fact. The watching fact is conditional. That's fine — the reason to expect is "staff can watch his chest rise (when the bed is near the desk)". OK.
+
+Actually, hmm, wait. Let me reconsider whether to make "watch" a general SHOWS line instead of a conditional fact. "A bed near the desk let the night staff watch his chest rise" — general: when the bed is near the desk, the night staff watch the patient's chest rise. ALWAYS SHOWS. That reads well. But "let" is LETS... I'll write it as a general line ALWAYS SHOWS with the condition, and keep the NOT inside. Let me do that:
+
+Line watch (said, told, s2): "ALWAYS SHOWS: when the bed is near the desk, the night staff watch the patient's chest rise; NOT [the night staff walk the ward]"
+Prolog: holds(watch_chest_rise(night_staff, patient)) :- line(watch), holds(near(bed, desk)). and denied(walk_ward(night_staff)) :- line(watch).
+
+Hmm, the denied(walk_ward) shouldn't be inside the conditional clause... Actually "without walking the ward" modifies the watching: they watch without walking. So denied(walk_ward(night_staff)) holds when they watch. It's fine to have both clauses in the line. But the denied clause should probably also be conditional... For simplicity: 
+holds(watch_chest_rise(night_staff, patient)) :- line(watch), holds(near(bed, desk)).
+denied(walk_ward(night_staff)) :- line(watch), holds(near(bed, desk)).
+Hmm, that says: when the bed is near the desk, the staff do not walk the ward. That's the text's meaning roughly. OK, but maybe cleaner to keep the NOT as part of the same line without the condition on the denied... I'll include the condition on both for coherence. Actually, let me simplify: put the NOT in the line text and in prolog as a separate unconditional-ish clause with the condition. Fine.
+
+Hmm, hold on. Is "watch his chest rise" better as a happening (DOER VERB THING)? "watch" is not in the shape book. It's inside a "let" complement. I'll keep it as a fact. OK.
+
+Now sentence 3 told lines:
+- patient thing line already exists.
+- temp (said, told, s3): "the patient's temperature was normal at midnight" — holds(normal_temperature(patient)) :- line(temp). Stage "at midnight" in the text.
+
+Wait — should the temperature fact be about "temperature" as a thing? No, it's a fact about the patient. Fine.
+
+Sentence 1 actual lines:
+- nurse (thing, said, s1)
+- notes (thing, said, s1)
+- sister (thing, said, s1)
+- read (happening, said, s1): "nurse READ notes" — holds(reads(nurse, notes)) :- line(readh). Verb "read" has no shape → not checked. 
+- leftby (GIVEN fact, said, s1): "notes were left by the sister" — holds(left_by(notes, sister)) :- line(leftby).
+
+Hmm, is "left by the night sister" GIVEN? Rule 4: "who", "which", "as", "while", "-ing" descriptions are GIVEN. "left by the night sister" is a past participle description of the notes → GIVEN. ✓
+
+Now the bin entries:
+1. Sentence 1: hmm, does sentence 1 lose anything? "incoming", "handover", "night" — descriptions kept in thing lines. Nothing binned. Actually maybe nothing. Skip.
+2. Sentence 2: "The notes said" — attribution, scoping content to notes_world. 
+3. Sentence 2: "nearer" — comparative distance; direction recorded as toward the desk only.
+4. Sentence 2: "easier" — comparative degree; aim recorded as easy to monitor.
+5. Sentence 2: "let" — hmm, do I bin "let"? I'm reading it as the conditional watching. Should I bin it? The causal word "let" — I decided not to write a separate LETS line. Should the word go to the bin? The bin is for things the language has no form for. The language DOES have a form (causal word LETS). Hmm. If I don't write it, I should account for it. Let me reconsider: write the LETS line! 
+
+Line lets (said, told, s2): "a bed near the desk LETS the night staff watch the patient's chest rise" — prolog: holds(lets(near(bed,desk), watch_chest_rise(night_staff, patient)))? There's no LETS predicate in the vocabulary. Hmm. The guide's vocabulary list doesn't include causal-word predicates. So the checker can't test them via prolog. In that case, writing a LETS line with a holds(lets(...)) fact is just a fact. 
+
+I think the cleanest: keep the watch general line (which captures the letting via conditionality) and record in readings that "let" is read as the conditional ability, not encoded as a separate causal word because the watching is already recorded as conditional on the bed's position. And bin nothing for "let". Hmm, but "Every image, quoted command and attributed belief is accounted for in the bin" — "let" isn't an image or command. It's fine.
+
+Hmm, but actually — maybe I should bin "let" with reason "causal word LETS rests on a tendency nobody stated (the staff were not stated to be already heading for watching); the enabling is recorded as the conditional watching line instead". That's honest accounting. Hmm, but binning a word that the language has a form for seems wrong. The language has a form (kind 10). Let me write the LETS line then! With a holds fact. 
+
+Decision: Write line "lets" (said, told, s2): "[TOLD in world notes_world] a bed near the desk LETS the night staff watch the patient's chest rise" — prolog: holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient))) :- line(lets). Hmm, but then I have both the LETS line and the watch general line — restating? Rule 9: an added line may not be the claimed line in other words. The watch line is said; the lets line is said too (both from the text). Two said lines saying nearly the same thing... The text says "a bed near the desk let the night staff watch his chest rise without walking the ward". One line: LETS with the watching as content, and the NOT inside. Let me merge: 
+
+Line lets (said, told, s2): "a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]"
+Prolog: 
+holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient))) :- line(lets).
+denied(walk_ward(night_staff)) :- line(lets).
+
+And drop the separate watch general line. Then the SINCE points at... the reason term should be a holds fact of the line it points at. The lets line's holds fact is lets(near(bed,desk), watch_chest_rise(night_staff, patient)). So claim_since(since1, easy_to_monitor(breathing(patient)), lets(near(bed,desk), watch_chest_rise(night_staff, patient))). Hmm, that works but the reason term is the LETS fact itself. A bit odd but consistent: the reason to expect easy monitoring is that a bed near the desk lets staff watch his chest rise. 
+
+Hmm, but then the conditionality (bed near desk) is inside the lets term. And the depends line: depends(easy_to_monitor(breathing(patient)), near(bed, desk))? The aim depends on the bed being near the desk. And the inbed filled-in line links the plan (move patient) to the bed's position. Hmm, does the plan move the bed? "move the patient nearer the desk" — the patient is in the bed, so moving the patient moves the bed. Filled-in line: "the patient is in the bed" — holds(in_bed(patient, bed)). Then... hmm, do I need a line "moving the patient moves the bed"? That's another missing step. This is getting deep. 
+
+Let me simplify: the depends line: easy_to_monitor(breathing(patient)) DEPENDS ON the patient being near the desk (near(patient, desk)). And a filled-in line: the patient is in the bed, so the patient being near the desk is the bed being near the desk. Hmm.
+
+Honestly, maybe I'm overbuilding. Let me trim the told world to essentials and keep missing-step lines minimal:
+
+Told world (notes_world) lines:
+1. sister — thing (said, s2)
+2. patient — thing (said, s2)
+3. bed — thing (said, s2)
+4. desk — thing (said, s2)
+5. night_staff — thing (said, s2)
+6. ward — thing (said, s2)
+7. plan — "sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor" (said, s2) — claim_plan(plan, move(patient, toward(desk)), easy_to_monitor(breathing(patient)))
+8. dep — "the patient's breathing being easy to monitor DEPENDS ON the patient being near the desk" (filled in, s2) — depends(easy_to_monitor(breathing(patient)), near(patient, desk))
+9. inbed — "the patient is in the bed" (filled in, s2) — holds(in_bed(patient, bed))
+10. lets — "a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]" (said, s2) — holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient))), denied(walk_ward(night_staff))
+11. since1 — "line plan's aim is to be expected SINCE line lets" — hmm, the SINCE claims: reason to expect easy monitoring is the letting. claim_since(since1, easy_to_monitor(breathing(patient)), lets(near(bed, desk), watch_chest_rise(night_staff, patient)))
+
+Hmm wait, there's a mismatch: dep says monitoring depends on the PATIENT being near the desk; lets says the BED near the desk. inbed bridges: patient in bed. OK that works as a chain: move patient → patient near desk (via inbed, bed near desk) → lets → expect easy monitoring. 
+
+Hmm, is dep needed? It's filled in. It gives the plan test something: the action (move patient toward desk) changes near(patient, desk)? I could add a changes line: "moving the patient toward the desk changes the patient's position relative to the desk" — changes(move(patient, toward(desk)), near(patient, desk)). That's a filled-in missing step. Then the plan test: action changes near(patient, desk); aim depends on near(patient, desk). That's a nice complete plan structure. Let me include both dep and changes. Both filled in (the text implies them but doesn't state them).
+
+Hmm, rule: "may not let the opposite follow just as well" — fine.
+
+Actually wait, should dep be "near(patient, desk)" or "near(bed, desk)"? The text: "a bed near the desk let the night staff watch". The plan: "move the patient nearer the desk". The patient is in the bed. So the relevant condition is the bed (with the patient in it) being near the desk. Let me make dep depend on near(bed, desk) and add inbed + a bridging fact? Ugh. Simpler: make dep depend on near(patient, desk) — the patient being near the desk — which is what the plan directly achieves. And inbed explains why the bed's nearness matters. Hmm, but lets uses near(bed, desk). 
+
+You know what? Let me just use one condition throughout: near(bed, desk), and state the plan as moving the patient (who is in the bed) — with inbed as the bridge, and dep depending on near(bed, desk):
+- dep: depends(easy_to_monitor(breathing(patient)), near(bed, desk)) — filled in: the aim depends on the bed being near the desk.
+- changes: changes(move(patient, toward(desk)), near(bed, desk)) — filled in: moving the patient (in his bed) toward the desk changes the bed's position relative to the desk. Hmm, this bundles the inbed assumption. Then I don't need a separate inbed line; I can note it in the changes line text: "moving the patient toward the desk changes the bed's distance from the desk (the patient is in the bed)". 
+
+Hmm, but rule 15: mark the whole line filled in and say which part you added. OK. Let me do:
+- line changes1 (filled in, s2): "moving the patient toward the desk changes the bed's position relative to the desk — the patient is in the bed, which the text does not say" — hmm, the text does imply the patient is in a bed. "so that his breathing would be easier to monitor... a bed near the desk let the night staff watch his chest rise" — the patient is in the bed. It's implied. I'll mark filled in.
+
+Actually, let me simplify to TWO filled-in lines:
+- chg (filled in, s2): "the patient is in the bed, and moving the patient toward the desk moves the bed toward the desk" — hmm, this mixes fact and movement. 
+
+OK final decision, keep it clean:
+- line inbed (filled in, s2): "[TOLD in world notes_world] the patient is in the bed" — holds(in_bed(patient, bed)). Missing step.
+- line chg (filled in, s2): "[TOLD in world notes_world] moving the patient toward the desk changes the bed's position toward the desk" — changes(move(patient, toward(desk)), near(bed, desk)). Hmm, "changes(X, near(bed,desk))" — the changes predicate: changes(<action>, <what>). What = the bed's position relative to the desk. Let me use changes(move(patient, toward(desk)), position(bed, desk)). Hmm, but then dep must match: depends(easy_to_monitor(breathing(patient)), position(bed, desk)). And lets uses near(bed, desk)... inconsistent atom names. Let me unify on "near(bed, desk)":
+  - chg: changes(move(patient, toward(desk)), near(bed, desk)) — "moving the patient toward the desk changes whether the bed is near the desk"
+  - dep: depends(easy_to_monitor(breathing(patient)), near(bed, desk)) — "easy monitoring depends on the bed being near the desk"
+  - lets: holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient)))
+  - inbed: holds(in_bed(patient, bed)) — bridges patient↔bed.
+  
+That's coherent. Though "near" as a fact being "changed" — changes(move(...), near(bed,desk)) means the action changes the nearness. OK.
+
+Hmm, honestly, is all this plan-structure worth it? The text gives a genuine "so that" plan, and the guide says plans are tested. Including changes+depends makes the plan testable. Yes, keep it. But mark them filled in since the text doesn't spell out the dependence.
+
+Wait, actually — is dep really filled in? "since a bed near the desk let the night staff watch his chest rise" — this does state that nearness enables monitoring. The dependence is arguably said. But the dependence of the AIM on nearness is an inference. I'll mark dep as filled in to be safe. And chg as filled in (missing step). And inbed filled in.
+
+Hmm, one concern: rule 9 — "An added line... may not take the place of the reason the writer actually gives." The writer's reason is the SINCE (the letting). My dep/chg lines are structural, not the reason. OK.
+
+Now, sentence 3 told line:
+- temp (said, told, s3): "the patient's temperature was normal at midnight" — holds(normal_temperature(patient)) :- line(temp).
+
+Sentence 4: bin only.
+
+Actual ledger lines:
+- nurse (thing, said, s1, CLAIMED? or GIVEN). Sentence 1's main clause: "The incoming nurse read the handover notes" — CLAIMED. The thing lines support it. Thing lines' standing — in example T10D, thing lines were GIVEN for the actual and TOLD for the world. Hmm, in T10D the account thing line was GIVEN (since "the account says" is the main clause... they marked account GIVEN). Here, sentence 1 asserts the nurse read the notes — the nurse and notes are introduced by the main clause, so CLAIMED? Rule 4: main clause is CLAIMED. The thing lines describe things in the happening. I'll mark them CLAIMED (said). Hmm, T10D marked "account" as GIVEN because the sentence's assertion was about what the account says. Here the assertion is about the nurse reading — so the nurse and notes are part of the claim → CLAIMED. And "left by the night sister" is GIVEN (participle). And sister thing line — GIVEN (from the participle). OK:
+- nurse: CLAIMED, said, s1
+- notes: CLAIMED, said, s1
+- sister: GIVEN, said, s1
+- readh: CLAIMED, said, s1 — "nurse READ the notes"
+- leftby: GIVEN, said, s1 — "the notes were left by the sister"
+
+Hmm, one more: should the actual ledger have a line "the notes say that the sister planned..."? No — binned attribution, contents TOLD. ✓
+
+Wait, but hmm: is it right that the nurse reading the notes is CLAIMED in the actual world while everything else is TOLD? Yes: sentence 1 is a plain assertion about what happened. Sentences 2-4 are reports of the notes' contents → TOLD world + binned attributions.
+
+Now the JSON structure. Lines need ids. Let me assign:
+
+Actual:
+- a1: nurse thing (CLAIMED, said, s1)
+- a2: notes thing (CLAIMED, said, s1)
+- a3: sister thing (GIVEN, said, s1)
+- a4: nurse reads notes (CLAIMED, said, s1) — holds(reads(nurse, notes))
+- a5: notes left by sister (GIVEN, said, s1) — holds(left_by(notes, sister))
+
+Told (notes_world):
+- t1: sister thing (TOLD, said, s2)
+- t2: patient thing (TOLD, said, s2)
+- t3: bed thing (TOLD, said, s2)
+- t4: desk thing (TOLD, said, s2)
+- t5: night_staff thing (TOLD, said, s2)
+- t6: ward thing (TOLD, said, s2)
+- t7: plan (TOLD, said, s2) — claim_plan
+- t8: dep (TOLD, filled in, s2) — depends
+- t9: inbed (TOLD, filled in, s2) — holds(in_bed(patient, bed))
+- t10: chg (TOLD, filled in, s2) — changes
+- t11: lets (TOLD, said, s2) — holds(lets(near(bed,desk), watch_chest_rise(night_staff, patient))) + denied(walk_ward(night_staff))
+- t12: since1 (TOLD, said, s2) — claim_since
+- t13: temp (TOLD, said, s3) — holds(normal_temperature(patient))
+
+Bin entries:
+- s2: "The notes said" — attribution, scopes the notes' contents to notes_world.
+- s2: "nearer" — comparative distance; recorded as direction toward the desk.
+- s2: "easier" — comparative degree; aim recorded as easy to monitor.
+- s3: "The notes also recorded" — attribution, scopes to notes_world.
+- s4: "They ended with a reminder to chart his medication at six" — attribution + a directive (quoted command) the language has no form for; "at six" is a time expression. Nothing claimed from it.
+
+Hmm, also should I bin "so that ... would" (future/conditional)? "would be easier to monitor" — the "would" is part of the plan's aim; plans handle that. Fine.
+
+Also "his" — pronoun, resolved to the patient. Note in readings? The patient is male; "his" = the patient's. I'll note in readings that pronouns resolve to the patient. Maybe not needed. I'll add a brief reading note.
+
+Also "at midnight" — kept as stage. ✓ Not binned.
+
+Also sentence 1: nothing binned. Hmm — "incoming" and "handover" and "night" are descriptions kept in thing lines. OK.
+
+Wait, one thing: "the night sister" vs "the night staff" — both "night". Different things: sister (a nurse) and night_staff (a group). Fine, separate names.
+
+Also: is "sister" in the told world the same as the actual "sister"? Yes — the notes are left by the night sister and the notes say the sister planned... Same person. I use the same name "sister" in both worlds. In the told world, a thing line for sister is needed (worlds don't inherit). ✓ t1.
+
+Now counts:
+- lines said: a1-a5 (5) + t1-t7, t11, t12, t13 (10) = 15 said.
+- lines filled in: t8, t9, t10 = 3.
+- lines usual case: 0.
+- sentences losing something to bin: 2, 3, 4 → 3 (sentence 2 loses "The notes said", "nearer", "easier"; sentence 3 loses "The notes also recorded"; sentence 4 loses everything).
+
+Hmm, wait: does sentence 3 "lose something to the bin"? Yes, the attribution. So 3 sentences. Sentence 1 loses nothing.
+
+Verbs without shape: "read" (line a4), "watch" (line t11, if counted as a happening — it's in a lets content), "move" (plan action, t7 — "move" is in the shape book? The shape book lists throw/toss/hurl (press then release), push/pull/lean on/hit (press), drop/let go of/open a fist on (release), hold/close a fist on (hold). "Move" is NOT in the shape book! So "move" is a verb without shape. Hmm. But "move" in a plan action — the plan's action term. And "walk" (walk_ward) — not in the shape book. And "chart" — binned. And "monitor" — part of the aim fact. And "watch" — not in shape book. And "read" — not in shape book.
+
+The report counts "the verbs with no shape". I'll list: read (a4), move (t7 plan), watch (t11), walk (t11). Hmm, walk is inside a denied fact. Should denied facts' verbs count? Probably list them anyway. I'll list read, move, watch, walk with notes. Actually, let me be careful — the guide says "the verbs with no shape" in the report. I'll include a verbs_without_shape list in the JSON (like T10D's translation_gauge).
+
+Hmm, T10D's verbs_without_shape had "coverage" notes. I'll do similar.
+
+Also "cannot_tells": pending checker.
+
+Now the printed output sections (1-5) per task 39:
+
+**1. The ledger** — table: Number | Standing | Content | Source mark | Sentence.
+
+**2. The bin** — list.
+**3. Words I split** — "sister"? I decided readings. Hmm, let me reconsider: is any word used in two senses? "notes" — handover notes (a document) vs musical notes? No, one sense. "sister" — one sense in text (night nurse). "chart" — verb (to record on a chart) vs noun — used as verb only. I don't think any word is used in two senses. So section 3 is empty. Hmm, but maybe I should include "sister" with both senses for clarity? The rule: "When the text uses one word in two senses, give each sense its own name and record the split." Not applicable. I'll note in readings instead. Section 3: "None." 
+
+Hmm, wait — actually, let me reconsider "monitor": "his breathing would be easier to monitor" — monitor as in observe. One sense. OK.
+
+**4. Readings I chose**:
+- Sentence 1: "sister" (night sister) = the nurse in charge of the night shift, not a sibling. Chosen: night nurse.
+- Sentence 1: "left by the night sister" read as a past-participle description of the notes (GIVEN), not a separate happening.
+- Sentence 2: "The notes said" — attribution; contents placed in notes_world as TOLD, not asserted in the actual ledger.
+- Sentence 2: "nearer the desk" — comparative distance; recorded as direction toward the desk; "nearer" binned.
+- Sentence 2: "easier to monitor" — comparative; aim recorded as easy to monitor; "easier" binned.
+- Sentence 2: "let" — read as enabling: a bed near the desk enables the watching; recorded as a LETS line whose condition is the bed's position; no separate tendency is invented (rule 8).
+- Sentence 2: "without walking the ward" — read as a plain negative: the staff do not walk the ward; kept as NOT.
+- Sentence 2: the patient is in the bed — filled in (the text implies it but does not state it).
+- Sentence 3: "recorded that his temperature had been normal at midnight" — TOLD fact with the stage "at midnight" in the fact.
+- Sentence 4: the reminder is a directive; binned whole, nothing claimed.
+- Pronouns: "his" = the patient's.
+
+**5. The count**: lines said 15, filled in 3, usual case 0; sentences losing something to the bin: 3 (sentences 2, 3, 4).
+
+Then the JSON block, then TRANSLATION COMPLETE.
+
+Wait — the task says "print exactly what the task and the guide ask for, ending with the JSON block and then the words TRANSLATION COMPLETE." So order: sections 1-5, then JSON block, then TRANSLATION COMPLETE. Also the "PARKED" list at the very end? The parking place says judgements go in a PARKED list at the very end. Hmm — "at the very end, one line each. Then return to the line in hand." But the final instruction says ending with the JSON block and then TRANSLATION COMPLETE. Conflict? The encoding guide says after the five sections, print the ledger as JSON, and "Nothing else goes in that block." The task 39 says close with TRANSLATION COMPLETE. The parking place is from task 39 too. Hmm. I'll put PARKED before the JSON block (after section 5), then the JSON, then TRANSLATION COMPLETE. Actually "at the very end" — but the JSON must come after the five sections... I think PARKED can go after section 5 and before the JSON. Or after TRANSLATION COMPLETE? "ending with the JSON block and then the words TRANSLATION COMPLETE" — so TRANSLATION COMPLETE is the very last. PARKED then goes before the JSON. I have one parked item maybe: "The plan's success rests on the patient being in the bed, which the text does not state; the checker's plan test will lean on the filled-in line." Hmm, that's a note, not a judgement about reasoning quality. Maybe: "The notes' causal reasoning (moving the patient improves monitoring) is thin; no judgement made here." I could include a PARKED list with one line: "No judgement on whether moving the patient would in fact make monitoring easier; the text's reason is recorded as given." I'll include a short PARKED section. Actually, do I need it? The parking place is for judgements about reasoning quality and ideas for procedures. I have none really. I'll include a minimal PARKED line noting the plan test leans on filled-in lines. Fine.
+
+Now, let me also double-check the JSON requirements:
+- "paragraph": "B04"
+- "whose": "Claude (Anthropic), under L82"
+- "sentences": 1-4 verbatim.
+- "bin": entries with sentence, words, reason.
+- "leftover": one string per bin entry: "Sentence N: <words> — <reason>"
+- "whatifs": [] (none)
+- "lines": each with mark, sentence, standing, text, case/case_kind for TOLD, prolog_clauses.
+- "words_split": [] — hmm, or include sister? I'll put [] and note in readings. Actually, let me include the sister split anyway? No — words_split is for words actually used in two senses; "sister" is used in one. Keep []. Hmm, but the task's section 3 "Words I split" — if empty, write "None."
+- "readings_chosen": list of strings.
+
+Also add "counts"/"translation_gauge" and "verbs_without_shape"? T10D has them. The guide says every field required unless optional; extras allowed. I'll add a "counts" object and "verbs_without_shape" array. Let me name them like T10D: "translation_gauge" with sentences, sentences_losing_to_bin, lines{said, filled in, usual case}, verbs_without_shape, cannot_tells. I'll mirror that.
+
+Let me write the prolog clauses carefully:
+
+a1: kind(nurse, nurse) :- line(a1). body(nurse, not_stated) :- line(a1).
+a2: kind(notes, handover_notes) :- line(a2). body(notes, not_stated) :- line(a2).
+a3: kind(sister, night_nurse) :- line(a3). body(sister, not_stated) :- line(a3).
+a4: holds(reads(nurse, notes)) :- line(a4).
+a5: holds(left_by(notes, sister)) :- line(a5).
+
+t1: kind(sister, night_nurse) :- line(t1). body(sister, not_stated) :- line(t1).
+t2: kind(patient, patient) :- line(t2). body(patient, not_stated) :- line(t2).
+t3: kind(bed, bed) :- line(t3). body(bed, not_stated) :- line(t3).
+t4: kind(desk, desk) :- line(t4). body(desk, not_stated) :- line(t4).
+t5: kind(night_staff, staff) :- line(t5). body(night_staff, not_stated) :- line(t5).
+t6: kind(ward, ward) :- line(t6). body(ward, not_stated) :- line(t6).
+t7: claim_plan(t7, move(patient, toward(desk)), easy_to_monitor(breathing(patient))) :- line(t7).
+t8: depends(easy_to_monitor(breathing(patient)), near(bed, desk)) :- line(t8).
+t9: holds(in_bed(patient, bed)) :- line(t9).
+t10: changes(move(patient, toward(desk)), near(bed, desk)) :- line(t10).
+t11: holds(lets(near(bed, desk), watch_chest_rise(night_staff, patient))) :- line(t11). denied(walk_ward(night_staff)) :- line(t11).
+t12: claim_since(t12, easy_to_monitor(breathing(patient)), lets(near(bed, desk), watch_chest_rise(night_staff, patient))) :- line(t12).
+t13: holds(normal_temperature(patient)) :- line(t13).
+
+Check: claim_since's reason term matches t11's holds fact: lets(near(bed, desk), watch_chest_rise(night_staff, patient)). ✓ Same spelling. ✓
+
+claim_plan's aim: easy_to_monitor(breathing(patient)) — matches t8's depends and t12's expected. ✓
+
+Note: t8 (depends) and t12 (since) both reference easy_to_monitor(breathing(patient)) — consistent. ✓
+
+Hmm, one issue: t11's lets fact uses near(bed, desk) as an argument — near/2 is used as a term inside lets/2. And t8/t10 use near(bed, desk) as a fact term in depends/changes. That's fine syntactically.
+
+Now the line texts (the "[STANDING] content" form):
+
+a1: "[CLAIMED] nurse is an incoming nurse; response to a press not stated"
+a2: "[CLAIMED] notes are handover notes; response to a press not stated"
+a3: "[GIVEN] sister is the night nurse; response to a press not stated"
+a4: "[CLAIMED] nurse READ notes"
+a5: "[GIVEN] notes were left by sister"
+
+t1: "[TOLD in world notes_world] sister is the night nurse; response to a press not stated"
+t2: "[TOLD in world notes_world] patient is a patient; response to a press not stated"
+t3: "[TOLD in world notes_world] bed is a bed; response to a press not stated"
+t4: "[TOLD in world notes_world] desk is a desk; response to a press not stated"
+t5: "[TOLD in world notes_world] night_staff are the night staff; response to a press not stated"
+t6: "[TOLD in world notes_world] ward is a ward; response to a press not stated"
+t7: "[TOLD in world notes_world] PLAN: sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor"
+t8: "[TOLD in world notes_world] the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk; filled in — the text gives the nearness as the reason but not the dependence itself" — hmm, rule 15: mark whole line filled in and say which part added. The mark field already says "filled in". In text I can note it. Keep it shorter: "... DEPENDS ON the bed being near the desk (filled in: the dependence is read from 'since')". Hmm, the mark field is "filled in" already. I'll keep the text clean and let the mark speak. But rule 15 says say in the line which part you added. For t8, the whole line is added. I'll append "(filled in)"? The mark column already says it. To be safe, I'll add a brief note in the text for filled-in lines.
+t9: "[TOLD in world notes_world] the patient is in the bed (filled in: the text implies this but does not say it)"
+t10: "[TOLD in world notes_world] moving the patient toward the desk changes whether the bed is near the desk (filled in: missing step)"
+t11: "[TOLD in world notes_world] a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]"
+t12: "[TOLD in world notes_world] the patient's breathing is easy to monitor is to be expected SINCE line t11"
+t13: "[TOLD in world notes_world] the patient's temperature was normal at midnight"
+
+Hmm, t12's text: "line t11 SINCE..." — the SINCE line points at t11. Format per kind 13: "line E SINCE line C". So: "line t12 SINCE line t11"? No wait — kind 13: "line E SINCE line C" where E is what is expected and C is the reason. So text: "the patient's breathing being easy to monitor SINCE line t11". Let me write: "[TOLD in world notes_world] the patient's breathing being easy to monitor SINCE line t11 (a bed near the desk lets the night staff watch his chest rise)". Hmm, pointing should be by number; adding a gloss is OK? Rule 10: claims about lines point; they do not restate. A brief gloss might count as restating. I'll keep it pure: "the patient's breathing being easy to monitor SINCE line t11". Hmm, but then the reader must look up t11. That's the point. OK, pure pointer.
+
+Similarly t7's plan: "PLAN: sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor" — the aim is stated as content, fine (plans state their aim).
+
+Now — wait, one more consideration on t7. "planned to move" — in the told world, is the sister's plan a claim that she will move the patient? No, just that she plans to. claim_plan records the plan, not the action. ✓
+
+Also, should the told world include a line "sister plans to move the patient" as a fact (she intends)? The plan line covers it. Also "who wants what" goes to bin — the intention is in the plan line. Fine.
+
+Hmm, also: "since a bed near the desk let the night staff watch his chest rise" — past tense "let". In the told world, this is presented as a general enabling (a bed near the desk lets...). I read it as general. Could also be a specific past occasion. Reading note: read as general conditional. I'll add to readings.
+
+Now section 2 (the bin) entries with sentence numbers:
+1. Sentence 2 — "The notes said" — attribution; it scopes the notes' contents to notes_world and asserts nothing in the actual ledger.
+2. Sentence 2 — "nearer" — comparative distance; the language records direction only (toward the desk), not degree of nearness.
+3. Sentence 2 — "easier" — comparative degree; the aim is recorded as the patient's breathing being easy to monitor.
+4. Sentence 3 — "The notes also recorded" — attribution; scopes the contents to notes_world.
+5. Sentence 4 — "They ended with a reminder to chart his medication at six" — the clause reports the notes' content (attribution), and the content is a directive, which the language has no form for; "at six" is a time expression. Nothing is claimed from it.
+
+Hmm, should sentence 4's bin entry be split into "They ended with" (attribution) and "a reminder to chart his medication at six" (command + time)? Two entries might be cleaner:
+5a. Sentence 4 — "They ended with" — attribution; the notes' contents belong to notes_world.
+5b. Sentence 4 — "a reminder to chart his medication at six" — a directive (quoted command); the language has no form for commands; "at six" is a time expression. Nothing claimed from it.
+
+But then, is there a TOLD line for sentence 4? No. So sentence 4 appears only in the bin. Fine. Hmm, but wait — should I add a TOLD line "the notes end with a reminder"? I decided no. OK.
+
+Hmm, hold on, let me reconsider whether the notes' contents should be a told world at all, vs. the notes being actual and their contents actual facts. The guide: "What a story, a report, a note or a dream says is TOLD, in a named world." The handover notes are a note → their contents are TOLD. ✓ Definitely a told world. Good.
+
+And the actual ledger keeps only: nurse read the notes; notes left by sister. ✓
+
+One more check on sentence 1: "The incoming nurse read the handover notes left by the night sister." — Is there anything else? "incoming" — a shift description; kept in the thing line. ✓
+
+Now, readings_chosen entries (strings):
+1. "Sentence 1: 'sister' (night sister) could be a sibling or the nurse in charge of the night shift; chosen: the night nurse."
+2. "Sentence 1: 'left by the night sister' is a past-participle description of the notes, so it is GIVEN, not a separate happening."
+3. "Sentence 2: 'The notes said' is an attribution; the notes are a note, so their contents are TOLD in notes_world and nothing in them is asserted in the actual ledger."
+4. "Sentence 2: 'nearer the desk' is comparative distance; chosen: the direction toward the desk, with 'nearer' binned."
+5. "Sentence 2: 'easier to monitor' is comparative; chosen: the aim as the patient's breathing being easy to monitor, with 'easier' binned."
+6. "Sentence 2: 'let' is read as enabling, not as proof of a tendency; the watching is recorded as conditional on the bed's position, and no separate tendency line is written (rule 8)."
+7. "Sentence 2: 'without walking the ward' is read as a plain negative fact (the night staff do not walk the ward), kept as NOT."
+8. "Sentence 2: the patient being in the bed is not stated; written as a filled-in missing step so the plan's action can reach the bed's position."
+9. "Sentence 2: 'since' gives a reason to expect the plan's aim, so it is a SINCE line, not a BECAUSE."
+10. "Sentence 3: 'at midnight' is a stage and is kept inside the fact; the attribution 'The notes also recorded' is binned."
+11. "Sentence 4: the reminder is a directive; the whole content is binned and nothing is claimed from it."
+12. "Pronouns 'his' and 'they' resolve to the patient and the notes; chosen accordingly."
+
+Maybe trim to the important ones. I'll include most.
+
+Also words_split: [] — and in section 3, "None."
+
+Hmm, actually — wait. Let me reconsider "chart" in sentence 4: "chart his medication" — "chart" as verb = to record on a chart. One sense. Binned anyway.
+
+And "monitor" — "easier to monitor" — one sense (observe). OK.
+
+Now let me reconsider the count of "lines said": a1,a2,a3,a4,a5 = 5; t1,t2,t3,t4,t5,t6,t7,t11,t12,t13 = 10. Total 15. Filled in: t8,t9,t10 = 3. Usual case: 0. Total lines 18.
+
+Sentences losing something to bin: 2, 3, 4 → 3.
+
+Verbs without shape: read (a4), move (t7), watch (t11), walk (t11). Also "chart" (binned, s4) — binned, so not a line verb. I'll list read, move, watch, walk.
+
+Hmm, is "lets" a verb to list? It's a causal word, not a shape verb. Skip.
+
+Now the PARKED list: one line: "The plan test will lean on the filled-in lines t8–t10; no judgement is made here on whether moving the patient would in fact make his breathing easier to monitor." Good.
+
+Now, output format. The task says print sections 1-5 in exactly that form, then the JSON block, then TRANSLATION COMPLETE.
+
+Wait, re-reading the top-level instruction: "print exactly what the task and the guide ask for, ending with the JSON block and then the words TRANSLATION COMPLETE." So: sections 1–5 (from task 39), then JSON block, then TRANSLATION COMPLETE. Where does PARKED go? Task 39 says PARKED at the very end. But the guide says the JSON block comes after the five sections and nothing else in the block, and the whole thing ends with TRANSLATION COMPLETE. I'll put PARKED right after section 5, before the JSON. That satisfies "at the very end" of the task's prose output reasonably. Hmm, alternatively PARKED after TRANSLATION COMPLETE? No — TRANSLATION COMPLETE must be last. PARKED before the JSON it is.
+
+Let me now write everything out.
+
+For the ledger table, columns: Number | Standing | Content | Source mark | Sentence.
+
+Rows (in order):
+a1 | CLAIMED | nurse is an incoming nurse; response to a press not stated | said | 1
+a2 | CLAIMED | notes are handover notes; response to a press not stated | said | 1
+a3 | GIVEN | sister is the night nurse; response to a press not stated | said | 1
+a4 | CLAIMED | nurse READ notes | said | 1
+a5 | GIVEN | notes were left by sister | said | 1
+t1 | TOLD in world notes_world | sister is the night nurse; response to a press not stated | said | 2
+t2 | TOLD in world notes_world | patient is a patient; response to a press not stated | said | 2
+t3 | TOLD in world notes_world | bed is a bed; response to a press not stated | said | 2
+t4 | TOLD in world notes_world | desk is a desk; response to a press not stated | said | 2
+t5 | TOLD in world notes_world | night_staff are the night staff; response to a press not stated | said | 2
+t6 | TOLD in world notes_world | ward is a ward; response to a press not stated | said | 2
+t7 | TOLD in world notes_world | PLAN: sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor | said | 2
+t8 | TOLD in world notes_world | the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk | filled in | 2
+t9 | TOLD in world notes_world | the patient is in the bed | filled in | 2
+t10 | TOLD in world notes_world | moving the patient toward the desk changes whether the bed is near the desk | filled in | 2
+t11 | TOLD in world notes_world | a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward] | said | 2
+t12 | TOLD in world notes_world | the patient's breathing being easy to monitor SINCE line t11 | said | 2
+t13 | TOLD in world notes_world | the patient's temperature was normal at midnight | said | 3
+
+Hmm — for t12, the SINCE line: "line E SINCE line C". E = "the patient's breathing being easy to monitor" (the expected), C = t11. OK as written.
+
+Hmm, one thing: should t12's expected be a line pointer too? The expected is the plan's aim (t7's aim). I could write "line t7's aim SINCE line t11". Hmm, the aim isn't a line with a holds fact... well t7 is a claim_plan line. The SINCE's expected term easy_to_monitor(breathing(patient)) matches t7's aim. I'll write the content as "the patient's breathing being easy to monitor SINCE line t11". Good enough.
+
+Also — should I add a BECAUSE anywhere? Sentence 2's "since" is SINCE (reason to expect). No BECAUSE claims. Sentence 1: "read the notes left by" — no causation. OK, no BECAUSE lines.
+
+Also what-ifs: none. The text has no what-if. ✓
+
+Double-check rule: "Every thing in a happening must have a thing line." The happening a4 (nurse reads notes): nurse ✓, notes ✓. t11's watching: night_staff ✓, patient ✓ (chest rise is part of the fact). OK.
+
+Also: the notes are a thing in the actual world; in the told world, do the notes appear? Sentence 4's reminder is binned. No told-world notes thing line needed. ✓
+
+Hmm, wait — one more: in the told world, is "sister" needed as a thing? The plan line mentions sister. Yes, t1. ✓
+
+Also "breathing" — used in terms but not a thing line. Is breathing a thing in a happening? It's the plan's aim content, not a happening participant. I'll skip a thing line for breathing. Hmm, rule 3: "Every thing in a happening must have a thing line." Breathing isn't in a happening. OK skip. Actually, to be safe... no, skip. The aim is a fact about the patient.
+
+Now JSON. Let me write it out carefully with proper escaping. The sentences contain no quotes. Good.
+
+sentences:
+"1": "The incoming nurse read the handover notes left by the night sister."
+"2": "The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor, since a bed near the desk let the night staff watch his chest rise without walking the ward."
+"3": "The notes also recorded that his temperature had been normal at midnight."
+"4": "They ended with a reminder to chart his medication at six."
+
+bin entries (6):
+{s2, "The notes said", "Attribution: the notes are a note, so what they say is TOLD in notes_world; nothing in it is asserted in the actual ledger."}
+{s2, "nearer", "Comparative distance; the language records direction only (toward the desk), not degree of nearness."}
+{s2, "easier", "Comparative degree; the aim is recorded as the patient's breathing being easy to monitor."}
+{s3, "The notes also recorded", "Attribution: scopes the temperature fact to notes_world."}
+{s4, "They ended with", "Attribution: the notes' contents belong to notes_world."}
+{s4, "a reminder to chart his medication at six", "A directive (quoted command); the language has no form for commands. 'at six' is a time expression. Nothing is claimed from it."}
+
+leftover strings matching.
+
+lines: as above with prolog_clauses.
+
+Also include "names"? T10D had a names map. Not required. I'll skip or include? The guide doesn't list it. Skip. Include "translation_gauge"-ish? I'll include "counts" and "verbs_without_shape" as extra fields. Let me name them clearly:
+
+"counts": {"lines_said": 15, "lines_filled_in": 3, "lines_usual_case": 0, "sentences_losing_to_bin": 3, "sentences": 4}
+"verbs_without_shape": [{"line": "a4", "verb": "read", ...}, {"line": "t7", "verb": "move", ...}, {"line": "t11", "verb": "watch", ...}, {"line": "t11", "verb": "walk", ...}]
+
+OK. Also "whatifs": [].
+
+Let me write the final answer now. Make sure the JSON is valid: no trailing commas, double quotes.
+
+One more check on prolog syntax: "claim_plan(t7, move(patient, toward(desk)), easy_to_monitor(breathing(patient))) :- line(t7)." ✓ ends with full stop, line(id) as first body goal. ✓
+
+For t11, two clauses, each ending with a full stop and starting with line(t11). ✓
+
+For thing lines, two clauses each. ✓
+
+Alright. Also the standing strings: "TOLD in world notes_world" and case "notes_world", case_kind "told". ✓
+
+Let me write the output.
