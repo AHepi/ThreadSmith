@@ -86,6 +86,6 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 ## Files in this project, by folder
 - `records/`: the project's own story, Decisions, Lessons, Status and read-me (no numbers; appended to in place).
 - `tests/`: 24 (two files), 27, 28, 30, 41, 55, 57 (superseded unsent), S62, S63 (superseded unsent), S64, S65, S70, S71 (superseded unsent), S72 Stage 1 and Stage 2, S76 Stage 1 and Stage 2 (reviewed at S78); the pack read-me, the prompt to paste, and the build script (unnumbered).
-- `results/`: 55, 57, the folders `S62 Stage D and report - return/`, `S64 Near cases - return/`, `S65 Near cases - return/` and `S70 Near cases - return/`, and S65 (the saved page's messages); `S78 Two-stage pattern review - return/` (five readers' returns, unchanged) and `S78 Results - ...` (Claude's determination).
+- `results/`: 55, 57, the folders `S62 Stage D and report - return/`, `S64 Near cases - return/`, `S65 Near cases - return/` and `S70 Near cases - return/`, and S65 (the saved page's messages); `S72 Stage 1 testing - return/` and `S72 Stage 2 audit - return/` (log S74, S75); `S75 Results - ...` (Claude's determination of round S72); `S78 Two-stage pattern review - return/` (five readers' returns, unchanged) and `S78 Results - ...` (Claude's determination).
 - Reconciliation: [S68](<records/Semantics - project story.md#s68-status-reconciliation-21-september-2026>) verifies the S64 import and current pointers without changing the raw evidence.
 - `authority/`: file 10, frozen, and a note on file 20, which is not here.
