@@ -36,7 +36,7 @@ Under the table: the list of CHANGED rows toward, the list CHANGED away, the lis
 Close with: FILE 11 TABLE COMPLETE.
 
 ## Part 2 - Every difference between 10 and 11 (`02 Every difference between 10 and 11.md`)
-Read the two files side by side. One table, one row per place where file 11 says something file 10 did not, or drops or alters something file 10 said: the Part and heading; file 10's sentence, quoted, or NONE; file 11's sentence, quoted, or DROPPED; and a mark: WORDING (the same claim, restated or made explicit), CLAIM (a claim changed, added or dropped), or ORDER (moved only). The revision note claims one CLAIM change and three sentences changed with it; list every row you mark CLAIM and say whether the note's count holds. Then every cross-reference in file 11 (a Part number, a derivation number, a tag) checked against where it points: the count checked and every one that points wrong.
+Read the two files side by side. One table, one row per place where file 11 says something absent from file 10, or drops or alters something file 10 said: the Part and heading; file 10's sentence, quoted, or NONE; file 11's sentence, quoted, or DROPPED; and a mark: WORDING (the same claim, restated or made explicit), CLAIM (a claim changed, added or dropped), or ORDER (moved only). The revision note claims one CLAIM change and three sentences changed with it; list every row you mark CLAIM and say whether the note's count holds. Then every cross-reference in file 11 (a Part number, a derivation number, a tag) checked against where it points: the count checked and every one that points wrong.
 
 Close with: DIFFERENCES LISTED.
 

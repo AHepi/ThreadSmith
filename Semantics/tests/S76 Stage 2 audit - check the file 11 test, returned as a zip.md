@@ -34,7 +34,7 @@ Take Stage 1's file 04. For every quotation, find it in the file it names and ma
 Close with: QUOTATIONS AUDITED.
 
 ## Part 4 - The audited result (`04 The audited result.md`)
-In one page: whether the prediction held (O48 changed toward, nothing else changed), on the audited rows; every confirmed change file 11 makes to a verdict, with its sentence; every CLAIM difference between the files that survives your audit; every cross-reference that points wrong; every sentence of file 11 that gives a wrong verdict on a case, if any; and one next step in one sentence.
+In one page: whether the prediction held (O48 changed toward, every other audited row SAME), on the audited rows; every confirmed change file 11 makes to a verdict, with its sentence; every CLAIM difference between the files that survives your audit; every cross-reference that points wrong; every sentence of file 11 that gives a wrong verdict on a case, if any; and one next step in one sentence.
 
 Close with: RESULT COMPLETE.
 
