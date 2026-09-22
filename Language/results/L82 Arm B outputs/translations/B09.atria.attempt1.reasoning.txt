@@ -1,0 +1,474 @@
+Let me work through this text sentence by sentence.
+
+Text: B09
+"The incoming nurse read the handover notes left by the night sister. The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor. The notes also recorded that his temperature had been normal at midnight. They ended with a reminder to chart his medication at six."
+
+Sentences:
+1. "The incoming nurse read the handover notes left by the night sister."
+2. "The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor."
+3. "The notes also recorded that his temperature had been normal at midnight."
+4. "They ended with a reminder to chart his medication at six."
+
+Analysis:
+
+Sentence 1: The incoming nurse read the handover notes left by the night sister.
+- Things: incoming nurse, handover notes, night sister.
+- Happening: nurse read notes.
+- The notes were left by the night sister (GIVEN description).
+- CLAIMED: the nurse read the notes.
+
+Sentence 2: The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor.
+- "The notes said" — attribution. The content is TOLD in a named world (the notes' world). Per the rules: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world."
+- So: TOLD in world notes_world: the sister planned to move the patient nearer the desk; SO THAT his breathing would be easier to monitor.
+- Things: sister (night sister), patient, desk, breathing.
+- Plan: move patient nearer desk SO THAT breathing easier to monitor.
+- "planned to" — wants; the plan is in the notes' world. The sister's planning is itself content of the notes, so TOLD.
+- Actually careful: "The notes said [the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor]." Everything after "said" is TOLD in notes_world. Within that world, the sister plans a move. The SO THAT goal is the sister's goal (or the plan's aim). Per rules, quoted commands and questions go to bin; goals: "A goal... is only mentioned." Hmm — the SO THAT construction: "Do A SO THAT [goal]". The plan claim: claim_plan(id, move(patient nearer desk), easier_to_monitor(breathing)).
+
+Sentence 3: The notes also recorded that his temperature had been normal at midnight.
+- TOLD in notes_world: patient's temperature was normal at midnight.
+- "at midnight" — when; beyond order of chain... "When, beyond the order of a chain and the stage named in a fact" goes to bin. Hmm, but stage can be put in the fact. The rule 13: "When a thing's state changes in the text, put the stage in the fact." Temperature being normal at midnight — is that a stage? It's a temporal fact. The "When" category goes to bin. But we could put "at midnight" in the fact as a stage. I think it's cleaner to include it in the fact: holds(normal_temperature(patient, at_midnight))? Actually the language says "When, beyond the order of a chain and the stage named in a fact" is outside the language → bin. But rule 13 says put the stage in the fact. Temperature at midnight is a state at a time — I'll put the stage in the fact and note the reading. Alternatively bin "at midnight". Hmm.
+
+Let me think: rule 13 examples: "the door open in the morning, the door open in the evening." So stages are for state changes. Here there's no state change, just a one-time reading. "at midnight" is a time. The "When" category goes to bin. But we could also treat it as a stage in the fact. I'll include it in the fact as the stage and record the reading in "Readings I chose", and also bin "at midnight" as a time? That would double-count. Better: include stage in fact (per rule 13's spirit — a fact can carry a stage), and note in readings that I treated "at midnight" as a stage in the fact rather than binning it. Actually rule 13 is about state changes; here there's no change. The safer choice: bin "at midnight" (time, outside the language) and record the reading. Hmm, but then the fact is just "temperature was normal" which loses the midnight anchor. The checker doesn't check times anyway.
+
+I think I'll put the stage in the fact: "patient's temperature was normal at midnight" — since the language explicitly allows stages in facts, and this preserves the information without a bin entry. And record the reading choice. Actually wait — "at midnight" is not a stage of a changing thing; it's just a timestamp. The definition says stages go in facts when a thing's state changes. There's no change here. But including it doesn't break anything. Let me consider what's most defensible: The definition's "Outside the language" list includes "When, beyond the order of a chain and the stage named in a fact." So time references beyond stage-naming go to bin. A single temperature reading at midnight — "at midnight" names when. Is it "the stage named in a fact"? The fact is about temperature at a time. I'd say including it as a stage in the fact is allowed and keeps the info out of the bin. I'll do that and note the reading.
+
+Hmm, but to be safe and complete, maybe bin it too? No — everything must be accounted for, but not necessarily both. A sentence can appear in ledger only. I'll put the stage in the fact and note the reading.
+
+Sentence 4: They ended with a reminder to chart his medication at six.
+- "They ended with" — the notes' last part was a reminder. The reminder is content of the notes: TOLD in notes_world.
+- "a reminder to chart his medication at six" — this is a quoted-ish command embedded. "Quoted commands and questions. Send them to the bin, recorded as mentioned." The reminder is a directive (command-like). So: the reminder itself goes to the bin as a mentioned command; and the fact that the notes ended with such a reminder is TOLD.
+- Also "at six" — time → bin.
+- Things: medication.
+
+Now, the structure: The notes "said" (sentence 2), "recorded" (sentence 3), "ended with a reminder" (sentence 4). All attributions → bin; contents → TOLD in world "notes_world" (or "handover_notes_world").
+
+Sentence 1 is actual ledger: the nurse read the notes. CLAIMED.
+
+Things and response classes:
+- incoming nurse: a person → heavy and standing. The text doesn't state response to a press. Rule 3: write "not stated" if the text doesn't say. But for people, "heavy and standing (a person)" is in the fixed list. The list gives examples: "heavy and standing (a person)". So a person is heavy and standing. Is that a "usual case" filled-in line or "said"? The list is the language's fixed classes; assigning person → heavy and standing is applying the fixed list, which is arguably a "usual case" (something everyone assumes). In example_A, "the cold is weather" was marked "said" (from "because of the cold" — cold is weather, presumably usual case? It was marked said). Hmm, in example_A line 3: "the cold is weather" mark said. And line 4 thermometer is a measuring device — "filled in". So kinds from the text's own noun are "said"; inferred kinds are "filled in".
+
+For our text:
+- nurse: kind person — from "nurse" (a person). I'd say "said" — a nurse is a person. Response class: heavy and standing — that's the fixed class for a person. In example_T10D, window/letter/account got "not stated". Here, for people, the list says a person is heavy and standing. I'll write body(nurse, heavy_standing) marked "usual case"? Or is it "said" since the fixed list defines persons that way? The response class list is part of the language's fixed assumptions — "heavy and standing (a person)". I think marking it "usual case" is right: it's something everyone assumes, not something the text states. But the language itself defines persons as heavy and standing... The translator's rule 3: "If the text does not say how it answers a press, write 'not stated'. A class you guess is a filled-in line." For a person, heavy-and-standing isn't a guess; it's the fixed list. Hmm. But the text doesn't say how the nurse answers a press.
+
+In example_T10D, window and letter got "not stated" — the translator didn't assign classes from the noun. For the account, also not stated. So the pattern: don't infer response classes from what the thing is; write "not stated" unless stated. But the fixed list explicitly pairs "heavy and standing (a person)". The list is for the checker's strength computation. I think the cleanest: for people, write heavy_and_standing as "usual case" (everyone assumes a person is heavy and standing). Actually — the list says "heavy and standing (a person)" as an exemplar, meaning persons are that class by default. Marking "usual case" fits: "something everyone assumes."
+
+Hmm, but rule 3 says if the text doesn't say, write "not stated". The text never says how the nurse answers a press. But the language's own fixed list defines persons as heavy and standing — so it's not a guess. I'll go with "usual case" for the person class assignment, and "not stated" for the non-person things (notes, desk, medication, breathing, temperature). Actually breathing and temperature aren't bodies. Medication — not a body. Desk — not stated (could be fixed, but not stated).
+
+Wait, but do I need thing lines for everything? Rule 3: "Every thing in a happening must have a thing line of its own." Happenings: nurse read notes (sentence 1); sister planned to move patient (sentence 2, TOLD); chart medication (sentence 4, binned command). Things in happenings: nurse, notes, sister, patient, desk (destination), medication. Breathing and temperature are things in facts (temperature normal; breathing easier to monitor). They appear in facts, not happenings. Do they need thing lines? Rule 3 says things in a happening. But facts also reference things. To be safe, give thing lines to: nurse, notes, sister, patient, desk, medication, breathing, temperature. That's complete.
+
+Hmm, "breathing would be easier to monitor" — the goal fact. Thing: breathing. And the monitor? "to monitor" — passive, no named monitor. The goal: breathing easier to monitor. I'll write the aim fact as holds(easier_to_monitor(breathing)).
+
+Now the plan: claim_plan(id, move(patient, nearer_desk), easier_to_monitor(breathing)). The action: "move the patient nearer the desk". Direction: toward the desk. Happening: sister moves patient toward desk. But it's planned, not actual — it's within the notes' world as a plan. So the plan line is TOLD in notes_world.
+
+Structure per the guide:
+- TOLD lines need "case" and "case_kind" fields.
+- World name: "notes_world" or "handover_world". I'll use "notes_world".
+
+Lines:
+
+Actual ledger (sentence 1):
+- nurse thing line: kind(nurse, person), body(nurse, heavy_standing) — mark usual case? Let me reconsider. In example_A, "the cold is weather" was said. The cold as weather — from the phrase "because of the cold", weather-ness isn't stated but marked said. Hmm, inconsistent. Actually maybe in example_A the kind "weather" came from the text's "the cold" being weather — a usual-case assignment marked said? The example marks it said. And thermometer/measuring_device marked filled in (a reading). And tomato plants — said (from "tomato plants").
+
+So: kinds directly named by the text's nouns are "said". Response classes not stated → "not stated". For the nurse, "nurse is a person" — the text says "nurse"; a nurse is a person — that's so direct I'd mark it said (like "tomato plants are tomato plants"). Response class: the fixed list says persons are heavy and standing. I'll mark body(nurse, heavy_standing) as "usual case" — everyone assumes it; the text doesn't state it. Hmm, but is heavy_standing for a person a "usual case" or just applying the language's fixed list? The list literally reads "heavy and standing (a person)". I think "usual case" is the honest mark: the translator adds it as something everyone assumes.
+
+Alternatively, follow example_T10D strictly and write "not stated" for all bodies. But the fixed list's parenthetical "(a person)" suggests persons default to heavy and standing. I'll go with usual case for the two people (nurse, sister, patient — three people actually: nurse, sister, patient), and not_stated for notes, desk, medication, breathing, temperature.
+
+Wait — is "not stated" itself a line that needs a mark? Yes: body(nurse, not_stated) with mark "said"? In example_T10D: "body(window, not_stated) :- line(window)." with mark "said". So the "not stated" line is marked said (it's the required form when the text is silent). OK.
+
+So thing lines:
+- nurse: kind(nurse, nurse) — hmm, kind should be a KIND. "nurse is a person"? The kind slot: kind(nurse, person). Mark: said? The text says "nurse". A nurse is a person — that's definitional. I'll use kind(nurse, person) marked "said" (the text's noun gives the kind directly; being a person is what a nurse is). Hmm, or kind(nurse, nurse)? The kind is checked "wherever another line speaks about that kind". Use meaningful kinds: person, note, desk, patient(person), medication, breathing, temperature.
+
+Let me draft:
+
+Line "nurse": [CLAIMED] nurse is a person; answers a press as heavy and standing — mark: said for kind, usual case for body? One line, one source mark (rule 15). Split into two lines:
+- nurse_kind: [CLAIMED] nurse is a person | said | sentence 1
+- nurse_body: [CLAIMED] nurse answers a press as heavy and standing | usual case | sentence 1
+
+Hmm, but standing: "incoming nurse" — she's reading, presumably standing? Not stated. "heavy and standing" is the class for persons. I'll keep it.
+
+Actually, let me simplify: one line per thing with kind, and separate body lines. Or combine: "nurse is a person; it answers a press as heavy and standing" — mixed marks → split. I'll split.
+
+Things:
+1. nurse (person) — s1, actual, CLAIMED
+2. notes (handover note) — s1, actual, CLAIMED (the notes exist and were read)
+3. sister (person, night sister) — s1 mentions "night sister" as the one who left the notes; s2's content is TOLD. The sister thing line: in actual ledger, GIVEN (the notes were left by the night sister — GIVEN along the way). In notes_world, sister is a person (TOLD).
+4. patient (person) — TOLD in notes_world (mentioned in the notes' content).
+5. desk — TOLD in notes_world.
+6. breathing — TOLD in notes_world.
+7. temperature — TOLD in notes_world.
+8. medication — TOLD in notes_world (from the reminder).
+
+Happenings:
+- s1: nurse reads notes. Verb "read" — shape? read is not in the shape book (throw, toss, hurl, push, pull, lean on, hit, drop, let go of, open a fist on, hold, close a fist on). "read" has no shape → reported "not checked". Still write the happening: nurse READS notes. Happening line: h1: nurse reads notes. Result? Reading is not a physical press; no result line needed. Actually the laws apply to presses. "read" isn't a press verb. Write the happening as a fact-ish: holds(reads(nurse, notes))? Kind 4 happening: NAME: DOER VERB THING [DIRECTION]. So: h1: nurse reads notes. Prolog: happening(reads(nurse, notes))? There's no "happening" predicate in the guide's vocabulary! The guide lists predicates: kind, body, holds, denied, produced/depends, exception/exempt, claim_because, denied_because, claim_since, claim_plan/changes/depends, claim_like. No happening predicate. Hmm. So how to encode a happening? In example_T10D, "window was opened" was encoded as holds(opened(window)) — a fact. So happenings that aren't presses are encoded as holds(...) facts. The shape book only covers press verbs; "read" has no shape → "not checked", counted as verb without shape.
+
+So for s1: holds(reads(nurse, notes)) — a fact representing the happening. And note "read" as a verb without shape in the gauge/notes. The encoding guide doesn't have a verbs_without_shape field (that's in the T10D example's translation_gauge, which isn't in the required schema). The required JSON fields: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen. I'll add extra fields? The guide says every field required unless optional; extra fields probably OK but risky. The T10D example has extra fields (names, translation_gauge, author_note, status, corpus_question). P14 has only the required ones. I'll keep to required fields plus maybe nothing extra. I could mention verbs without shape in readings or leftover. I'll note it in a reading entry.
+
+- s2 TOLD in notes_world:
+  - plan content: sister planned to move the patient nearer the desk. The planning itself: holds(planned(sister, move(patient, toward_desk)))? And the plan: claim_plan(p1, move(patient, desk), easier_to_monitor(breathing)).
+  - Actually "planned to move X so that Y" — the SO THAT goal is the plan's aim. claim_plan(id, move(patient, toward desk), easier_to_monitor(breathing)).
+  - The move itself is not actual; it's planned. Encode as the plan claim plus a fact that the sister planned it.
+  - "nearer the desk" — degree/comparison ("nearer") → bin? "How much" goes to bin. "nearer the desk" is a direction-ish: toward the desk. The movement direction: toward desk. "nearer" is comparative — the bin gets "nearer" as degree? I'd write the happening as "sister moves patient toward desk" and bin "nearer" as a degree word. Hmm, "nearer the desk" — direction toward the desk. Keep direction "toward desk", bin the comparative "nearer" as degree. Actually simpler: encode the plan action as move(patient, toward_desk) and note in readings that "nearer the desk" was read as movement toward the desk, with the comparative degree binned.
+
+- s3 TOLD: patient's temperature was normal at midnight. holds(normal_temperature(patient, at_midnight)) — or holds(was_normal(temperature_of_patient)) with stage. I'll do holds(normal(temperature(patient)))? Keep it simple: holds(normal_temperature(patient)) and put "at midnight" as stage in the fact text: "patient's temperature was normal at midnight". In Prolog: holds(normal_temperature(patient, at_midnight))? The checker only asks about holds(...) facts; extra args fine. But consistency: fact terms compared for sameness. I'll use holds(normal_temperature(patient)) and bin "at midnight"? Ugh, decided earlier to include stage. Rule 13: stages in facts. I'll include: holds(normal_temperature(patient, at_midnight)) and record the reading. Hmm, but "at midnight" as an atom — fine.
+
+Actually, let me reconsider: is there a state change? No. Rule 13 applies to changes. The "When" category is outside the language → bin. The cleanest compliant move: bin "at midnight" (a time the language has no form for) and write the fact without it. But then info is lost to the bin — that's allowed ("Everything the language has no form for goes here"). Times are explicitly listed as outside the language. I'll bin "at midnight" and "at six". And the fact: holds(normal_temperature(patient)).
+
+Hmm wait, but the stage-in-fact option... The definition: "When, beyond the order of a chain and the stage named in a fact." So a stage named in a fact is NOT binned — it's allowed. "at midnight" could be the stage named in the fact. Since there's no change, calling it a stage is a stretch. Decision: bin both times, record the reading. That's the conservative, definition-literal choice. Actually hold on — let me weigh once more. If I bin "at midnight", sentence 3 still appears in the ledger (the temperature fact) and in the bin (the time) — allowed ("or in both"). Good. Decision: bin times.
+
+- s4: "They ended with a reminder to chart his medication at six."
+  - TOLD in notes_world: the notes ended with a reminder. The reminder is a directive → bin (quoted command recorded as mentioned). "at six" → bin (time).
+  - TOLD fact: the notes' last part was a reminder to chart the medication. holds(ends_with_reminder(notes, chart_medication))? The reminder content is a command → bin. So the TOLD line: "the notes ended with a reminder" — and the reminder's content in the bin.
+  - Also: charting medication — a happening mentioned in the reminder, not asserted. Since it's inside a quoted command, bin it.
+
+Attributions to bin:
+- s2: "The notes said" → bin (attribution; contents scoped to notes_world).
+- s3: "The notes also recorded" → bin.
+- s4: "They ended with a reminder" → this is the attribution framing; the reminder content to bin. The fact "the notes ended with a reminder" — is that a claim about the actual notes? Yes: the actual notes (things in the actual ledger) ended with a reminder. The reminder's content is TOLD/mentioned. Hmm — "They ended with a reminder to chart his medication at six." The sentence asserts about the actual notes: they ended with a reminder. The reminder's content is the command. So: CLAIMED (actual): the notes ended with a reminder; bin: the reminder's content (command) and "at six".
+
+Wait, but should the whole sentence 4 be scoped to notes_world? No — sentence 4 is the narrator telling us about the notes' ending. The narrator asserts the notes ended with a reminder. That's an actual claim about the notes. The reminder content is embedded. So: actual CLAIMED fact + binned command.
+
+Similarly s2 and s3: the narrator asserts "the notes said X" — the attribution is the claim; X is TOLD in notes_world. Per the task rules: "Who believes, wants or concludes what. Send the attribution to the bin, and write the content as TOLD in that person's world." So the attribution goes to bin, content TOLD. But then is there an actual claim that the notes said these things? The bin retains the attribution. OK.
+
+Hmm, for s2, also "the sister planned" — within notes_world, the sister planned. The plan is TOLD. And the SO THAT goal — the sister's goal, part of the plan. claim_plan in notes_world.
+
+Now sentence 1: "The incoming nurse read the handover notes left by the night sister."
+- Main clause: nurse read notes → CLAIMED.
+- "left by the night sister" — GIVEN (relative clause description): the notes were left by the night sister.
+- "incoming" — description of the nurse; bin? "incoming" is a description, fine as a fact: nurse is incoming. Or just part of the thing's name. I'll keep "incoming nurse" as the name? Names should be plain lower-case. I'll name her "nurse" and note "incoming" as a description fact? Simpler: name the thing "incoming_nurse"? Names with underscores fine? "Use plain lower-case words" — "incoming nurse" as a name with a space is bad for Prolog atoms. Use "nurse". The "incoming" can be a GIVEN fact: the nurse was incoming (new on shift). Eh — I'll treat "incoming" as a plain description in the thing's fact line: "nurse is a person, incoming". Or just drop it into the bin as a description the language doesn't need? Descriptions are fine in facts (kind 2: THING plus any plain description). I'll include: holds(incoming(nurse))? That seems overkill. I'll mention "incoming" in the nurse thing line text: "nurse is an incoming person" — hmm. Let me just make the kind line: "nurse is a person" and add a fact "the nurse was incoming (new to the shift)" marked said? That's faithful. Actually simplest and faithful: thing line text "[CLAIMED] nurse is an incoming person" — but "incoming" as part of kind is odd. I'll write two lines:
+  - nurse: [CLAIMED] nurse is a person | said | s1 — with kind(nurse, person).
+  - Actually include "incoming" in a fact: [GIVEN] nurse was incoming | said | s1 — holds(incoming(nurse)). Hmm, "incoming" means just arriving on shift. It's a description; kind 2 allows plain descriptions. I'll include it. Or... is this noise? The checker doesn't care. Completeness: every sentence appears. "incoming" is part of s1; including it as a fact keeps s1 fully in the ledger. I'll include it as GIVEN (it's a modifier, background).
+
+Also "handover notes" and "night sister" — descriptions. notes: kind note. sister: kind person; "night" description — the night sister (the sister who worked the night). I'll name her "sister" with fact "sister worked the night"? Or just name her "night_sister"? Plain lowercase words: "nightsister"? I'll use "sister" and record "night" as a description fact: holds(night_shift(sister))? Simpler: name her "sister" and in her thing line: "sister is a person on the night shift". Hmm, the thing line is kind + body. Descriptions go in facts. Let me not over-engineer:
+
+Lines plan (actual ledger):
+- a1: [CLAIMED] nurse is a person | said | s1 — kind(nurse, person)
+- a2: [CLAIMED] nurse answers a press as heavy and standing | usual case | s1 — body(nurse, heavy_standing)
+- a3: [CLAIMED] notes is a handover note; answers a press not stated | said | s1 — kind(notes, handover_note), body(notes, not_stated)
+- a4: [GIVEN] sister is a person on the night shift | said | s1 — kind(sister, person)... wait, sister appears in s1 as the one who left the notes. GIVEN. And in notes_world as TOLD. Two lines? The thing line for the actual ledger: sister is a person, GIVEN, s1. In notes_world, the sister also needs a thing line (TOLD) since she does things there. Per T10D, the window/letter thing lines were TOLD in the world. Here, the sister is mentioned in the actual ledger (s1) and acts in notes_world. I'll give her an actual thing line (GIVEN, s1) and a TOLD thing line in notes_world. Hmm, or is that duplicative? The world is looked at alone, so it needs its own thing lines. Yes, both.
+- a5: [GIVEN] sister answers a press as heavy and standing | usual case | s1
+- a6: [CLAIMED] nurse reads notes (happening h1) | said | s1 — holds(reads(nurse, notes)). Verb "read" has no shape → note.
+- a7: [GIVEN] notes were left by sister | said | s1 — holds(left_by(notes, sister)).
+
+notes_world (TOLD):
+- w1: [TOLD in world notes_world] sister is a person; answers a press as heavy and standing — mark: said? The body is usual case. Split:
+  - w1: sister is a person | said | s2
+  - w2: sister answers a press as heavy and standing | usual case | s2
+- w3: patient is a person | said | s2
+- w4: patient answers a press as heavy and standing | usual case | s2
+- w5: desk is a desk; answers a press not stated | said | s2
+- w6: breathing is breathing; not a body? "breathing" — the patient's breathing. It's not a body. Response class: not stated (the text doesn't make clear it's not a body... breathing is a process, not a body). Hmm, "not a body (wind, cold, heat, and only when the text makes that clear)" — breathing isn't wind/cold/heat. So: not stated. Thing line: breathing is breathing? Kind: breathing. I'll do kind(breathing, breathing), body(breathing, not_stated).
+- w7: temperature is a temperature reading; not stated — kind(temperature, temperature), body(temperature, not_stated).
+- w8: medication is medication; not stated — kind(medication, medication), body(medication, not_stated).
+- w9: [TOLD] sister planned to move the patient toward the desk | said | s2 — holds(planned(sister, move(patient, toward_desk)))? Hmm, and the plan:
+- w10: [TOLD] PLAN: sister moves the patient toward the desk SO THAT the patient's breathing is easier to monitor | said | s2 — claim_plan(w10, move(sister, patient, desk), easier_to_monitor(breathing)).
+  Wait, "his breathing would be easier to monitor" — the goal fact: holds(easier_to_monitor(breathing)).
+- w11: [TOLD] patient's temperature was normal | said | s3 — holds(normal_temperature(patient)).
+- w12: [TOLD] notes ended with a reminder | said | s4 — hmm, is this in notes_world or actual? The narrator says the notes ended with a reminder — actual claim about the notes. I'll put it in the actual ledger: [CLAIMED] notes ended with a reminder to chart the medication | said | s4 — holds(ends_with_reminder(notes)). And the reminder content → bin.
+
+Hmm wait, but "a reminder to chart his medication at six" — the reminder is in the notes, so its content is notes' content → TOLD in notes_world? The reminder is a command embedded. Rules: "Quoted commands and questions. Send them to the bin, recorded as mentioned." So the command "chart his medication at six" → bin. And the fact that the notes ended with such a reminder: actual CLAIMED about the notes. I'll write: [CLAIMED] notes ended with a reminder | said | s4, and bin the reminder content + "at six".
+
+Should medication have a thing line in the actual ledger? It's only in the reminder (binned). But the fact "notes ended with a reminder to chart his medication" mentions medication. Give it an actual thing line? The medication is part of the binned command. I'll give medication a thing line in the actual ledger (GIVEN, s4) since the narrator mentions it. Hmm — or keep it only in the bin? Rule 3: every thing in a happening needs a line. The charting happening is binned (command). So medication doesn't strictly need a line. But the narrator's sentence mentions medication. To be safe, I'll add a thing line for medication in the actual ledger, mark said, s4. And drop the w8 TOLD medication line? The medication in the reminder is the same medication. Keep one actual thing line; the bin references it. Simpler: medication thing line actual (said, s4), and no separate TOLD one. But wait — the TOLD world is looked at alone; if the reminder were TOLD content it'd need the thing. Since the reminder is binned, the actual line suffices. OK.
+
+Also the notes' existence and kind: actual (a3).
+
+Bin entries:
+1. s1: "incoming" — description of the nurse as just arriving on shift; the language has no form for shift timing. Hmm, or keep as fact? I decided to include "incoming" as a fact... Let me reconsider — "incoming" is a plain description (kind 2 allows "any plain description"). I could write holds(incoming(nurse)) as GIVEN said. That keeps it out of the bin. But is "incoming" meaningful for commitments? Not really. Either way. I'll include it as a GIVEN fact (said) — no, actually, let me bin it: "incoming" tells us the nurse is new to the shift; the language has no form for when or for shift roles. Hmm. But descriptions are allowed in facts... The fact "nurse is incoming" is a plain description — allowed. I'll include it in the nurse thing line text: "[CLAIMED] nurse is an incoming person" with kind(nurse, person) — the "incoming" lives in the text of the line but not the Prolog. That's a bit inconsistent. 
+
+Decision: keep it simple and bin "incoming" with reason: a shift-timing description the language has no form for. Wait, but then the nurse thing line is just "nurse is a person". Fine. Actually — hmm, "incoming" could also just be folded into the name: the thing is "the incoming nurse". Names: "incoming_nurse"? "Use plain lower-case words" — I'll name her "nurse" and bin "incoming" as a description of her shift status. Hmm, but binning a mere adjective that could be a fact... The instructions say everything the language has no form for goes to the bin. "Incoming" = just arriving on shift = timing. Bin it. Also "handover" — the notes are handover notes; "handover" is a description of the notes' purpose. Kind: handover_note. I'll make the kind "handover_note" (said) — that captures it in the ledger. And "night sister" — kind person, plus fact that she's the night sister? I'll name her "sister" and record "night" in... make the kind line: "sister is a night-shift person"? I'll do kind(sister, person) and a GIVEN fact holds(night_shift(sister))? That's inventing a predicate. Simpler: name the thing "night_sister"? Plain lowercase words — "nightsister" isn't a word. Hmm, "sister" alone loses "night". I could use the fact: holds(left_by(notes, sister)) and the thing line text "[GIVEN] sister is the night sister (a person)". The Prolog kind(sister, person). The "night" is in the line text. Is that OK? The line text is the ledger's human-readable content; the Prolog is the checker's input. "night" as description in the line text is fine (kind 2 allows plain descriptions). I'll write: "[GIVEN] sister is a person, the night sister". Good — no bin needed.
+
+Similarly notes: "[CLAIMED] notes are handover notes; response to a press not stated".
+
+And "incoming": "[CLAIMED] nurse is a person, incoming". Good, fold into the line text. No bin entry needed then. Hmm, but the Prolog only has kind(nurse, person). The description is in the line text only. That matches how descriptions work (they're free names; the checker only asks sameness). OK.
+
+Bin entries:
+1. s2: "The notes said" — attribution; the contents are scoped to notes_world, TOLD; nothing in them is claimed about the actual ledger.
+2. s2: "nearer" — comparative degree of nearness; the language has no form for how much/near.
+3. s2: "so that his breathing would be easier to monitor" — wait, this is the goal, which I encode as the plan's aim. Not binned. But "easier" — comparative! "easier to monitor" — degree. Hmm. The goal: breathing easier to monitor. "easier" is comparative degree → bin? The whole goal is the plan's aim; the comparative "easier" is degree. I'll encode the aim as easier_to_monitor(breathing) and bin "easier" as a comparative the language can't measure? Or bin the whole comparative and keep a qualitative aim? The P14 example kept qualitative comparisons ("does worse" as qualitative). I'll keep the aim qualitatively: "breathing is easier to monitor" as the goal fact, and note in readings that "easier" is read qualitatively, not as a measurable degree. And bin "easier" as degree? If I bin it, I should not also use it... P14 binned the descendant-count comparison but kept "does worse" qualitatively. For consistency: keep the qualitative aim, bin the comparative degree word "easier" with reason: comparative degree, kept only qualitatively in the aim. Hmm, that's both ledger and bin for the same word — allowed ("or in both"). I'll bin "easier" noting the qualitative reading is what's encoded.
+
+Actually, let me simplify: bin "easier" (degree word) and encode the aim as holds(easier_to_monitor(breathing)) — wait, if binned, the aim fact shouldn't carry the comparative... The P14 approach: they binned the full comparative sentence 3 but kept "does worse" qualitatively at line c (filled in). So: keep aim as "breathing is easier to monitor" qualitatively, mark the plan line said (the text states the goal), and bin "easier" as a degree term retained only qualitatively. I'll note it in readings.
+
+4. s3: "The notes also recorded" — attribution; contents TOLD in notes_world.
+5. s3: "at midnight" — a time; the language has no form for when.
+6. s4: "a reminder to chart his medication" — a quoted directive; recorded as mentioned, nothing claimed from it.
+7. s4: "at six" — a time; the language has no form for when.
+
+Also s4 "They ended with" — the attribution framing. The claim "the notes ended with a reminder" is actual. Do I bin "ended with"? The ending is structural; I encode as holds(ends_with_reminder(notes)). Fine.
+
+Wait — should s4's reminder fact be actual CLAIMED or TOLD? The narrator asserts it about the actual notes. CLAIMED, actual. Yes.
+
+Now, does sentence 2's plan need a "changes" or "depends"? The text doesn't say what the move changes or what the aim depends on. The plan claim: claim_plan(w10, move(sister, patient, desk), easier_to_monitor(breathing)). Note: moving the patient nearer the desk — the action. The aim: breathing easier to monitor. The checker will say "cannot tell" probably. Fine.
+
+Also, should I write a tendency or causal word? No causal words in the text. The "so that" is a plan, not a cause. Good.
+
+Also the "planned to" — the sister's planning. Encode: holds(planned(sister, move(patient, toward_desk)))? And the plan line. The planning fact is TOLD said. Let me write:
+- w9: [TOLD in world notes_world] sister planned to move the patient toward the desk | said | s2 — holds(plans(sister, move(patient, desk))).
+- w10: [TOLD in world notes_world] PLAN: sister moves the patient toward the desk SO THAT the breathing is easier to monitor | said | s2 — claim_plan(w10, move(sister, patient, desk), easier_to_monitor(breathing)).
+
+Hmm, "move the patient nearer the desk" — the happening shape: sister MOVES patient toward desk. Verb "move" — shape? "move" isn't in the shape book... The shape book lists throw, toss, hurl, push, pull, lean on, hit, drop, let go of, open a fist on, hold, close a fist on. "move" is not there → "not checked". But it's a planned action, not actual. The plan's action term is fine as move(sister, patient, desk).
+
+Also, is the move a happening line? It's planned, not done. Don't write it as a happening; write the plan. Good.
+
+Now the world name: "notes_world". Case name: "notes_world", case_kind "told".
+
+Sentence numbering: 4 sentences.
+
+Counts:
+- Lines said: let me count.
+  Actual: a1 (said), a2 (usual case), a3 (said), a4 (said), a5 (usual case), a6 (said), a7 (said), a8 (medication thing, said), a9 (notes ended with reminder, said).
+  Wait, let me re-list actual lines:
+  - n1: nurse is a person (said) s1
+  - n2: nurse answers a press as heavy and standing (usual case) s1
+  - n3: notes are handover notes; response not stated (said) s1
+  - n4: sister is a person, the night sister (said) s1 — standing GIVEN
+  - n5: sister answers a press as heavy and standing (usual case) s1
+  - n6: nurse reads notes (said) s1 — happening as fact
+  - n7: notes were left by sister (said) s1 — GIVEN
+  - n8: medication is medication; response not stated (said) s4
+  - n9: notes ended with a reminder (said) s4
+  
+  TOLD (notes_world):
+  - w1: sister is a person (said) s2
+  - w2: sister answers a press as heavy and standing (usual case) s2
+  - w3: patient is a person (said) s2
+  - w4: patient answers a press as heavy and standing (usual case) s2
+  - w5: desk is a desk; response not stated (said) s2
+  - w6: breathing is breathing; response not stated (said) s2
+  - w7: temperature is a temperature; response not stated (said) s3
+  - w8: sister planned to move the patient toward the desk (said) s2
+  - w9: PLAN: sister moves the patient toward the desk SO THAT breathing is easier to monitor (said) s2
+  - w10: patient's temperature was normal (said) s3
+
+  Said: n1,n3,n4,n6,n7,n8,n9,w1,w3,w5,w6,w7,w8,w9,w10 = 15
+  Usual case: n2,n5,w2,w4 = 4
+  Filled in: 0
+
+Hmm, should the heavy-and-standing lines be "usual case" or should I instead write "not stated" for people too? The response-class list explicitly gives "heavy and standing (a person)". I'll keep usual case with the note that it applies the language's fixed class for persons.
+
+Hmm, wait. Actually, let me reconsider whether to include body lines at all for people marked usual case. Rule 3: "Every thing in a happening must have a thing line of its own... If the text does not say how it answers a press, write 'not stated'." So the thing line must state a response class; if not stated, write not stated. For persons, the language's own list says persons are heavy and standing — but the text doesn't say. The rule says write "not stated" when the text doesn't say. But then the parenthetical "(a person)" in the list would never apply... The list's parentheticals are exemplars of the classes. A translator applying "person → heavy and standing" is adding something everyone assumes → "usual case". That's exactly what "usual case" is for. I'm confident: usual case.
+
+Sentences losing something to the bin: s2 (nearer, easier, attribution), s3 (at midnight, attribution), s4 (reminder content, at six). s1: nothing binned (folded descriptions into line text). So 3 sentences lost something.
+
+Wait — "incoming": I folded into line text. Is that "losing something to the bin"? No, it's in the ledger line text. OK. Hmm, but is folding descriptions into line text while Prolog omits them acceptable? The line text is the content; the Prolog encodes what's checkable. I think fine. Actually, to be cleaner, maybe I should also bin "incoming" and "night"? No — they're captured in line text. The task says every sentence must appear in ledger, bin, or both. s1 appears in ledger. Good.
+
+Hmm, one more consideration on "left by the night sister" — I have n7: notes were left by sister (GIVEN, said). Good.
+
+Now the "read" happening: the guide's Prolog vocabulary has no happening predicate; T10D used holds(opened(window)) for an opening with no named actor. So n6: holds(reads(nurse, notes)). "read" verb has no shape → I'll note it in readings_chosen (like T10D's verbs_without_shape note). The required schema has no verbs_without_shape field; I'll mention in a reading entry.
+
+What about a result of reading? No physical result. Skip.
+
+Whatifs: none. Empty array.
+
+Now the JSON. Fields: paragraph, whose, sentences, bin, leftover, whatifs, lines, words_split, readings_chosen.
+
+paragraph: "B09"
+whose: "<my name>, under L82" — I'm Claude (Anthropic). "Claude, under L82".
+
+sentences: 4 verbatim.
+
+bin entries: {sentence, words, reason}.
+leftover: strings "Sentence N: <words> — <reason>".
+
+lines with ids, mark, sentence, standing, text, case, case_kind, prolog_clauses.
+
+Let me write the Prolog clauses:
+
+n1: kind(nurse, person) :- line(n1).
+n2: body(nurse, heavy_standing) :- line(n2).
+n3: kind(notes, handover_note) :- line(n3). body(notes, not_stated) :- line(n3).
+n4: kind(sister, person) :- line(n4).
+n5: body(sister, heavy_standing) :- line(n5).
+n6: holds(reads(nurse, notes)) :- line(n6).
+n7: holds(left_by(notes, sister)) :- line(n7).
+n8: kind(medication, medication) :- line(n8). body(medication, not_stated) :- line(n8).
+n9: holds(ends_with_reminder(notes)) :- line(n9).
+
+w1: kind(sister, person) :- line(w1). — wait, same kind fact in the world; the world is separate, fine.
+w2: body(sister, heavy_standing) :- line(w2).
+w3: kind(patient, person) :- line(w3).
+w4: body(patient, heavy_standing) :- line(w4).
+w5: kind(desk, desk) :- line(w5). body(desk, not_stated) :- line(w5).
+w6: kind(breathing, breathing) :- line(w6). body(breathing, not_stated) :- line(w6).
+w7: kind(temperature, temperature) :- line(w7). body(temperature, not_stated) :- line(w7).
+w8: holds(plans(sister, move(patient, desk))) :- line(w8).
+w9: claim_plan(w9, move(sister, patient, desk), easier_to_monitor(breathing)) :- line(w9).
+w10: holds(normal_temperature(patient)) :- line(w10).
+
+Hmm, the aim fact easier_to_monitor(breathing) — should there be a separate line for the goal fact? The plan's aim is mentioned (goals are only mentioned). The claim_plan points at the aim term. P14's example j what-if asked holds(spreads(helping)) where g was the line holding spreads(helping). Here, is there a line holding easier_to_monitor(breathing)? The goal is only mentioned (the plan's aim), not asserted as achieved. Per "Mentioning": a goal is only mentioned; naming it makes no claim it came about. So no holds line for the aim; only the claim_plan. Good.
+
+Also for w8 (plans) — is the sister's planning a fact in the world? Yes: the notes say she planned it. holds(plans(...)).
+
+Should the plan line's mark be "said"? The text (via notes) says she planned to move him so that... The SO THAT is in the text → said. Good.
+
+Now, do I need a "sister moves patient" happening line in the world? It's planned, not actual — no. The plan claim carries it.
+
+One more: sentence 2's "the sister planned to move the patient nearer the desk" — within notes_world. And "his breathing" — the patient's breathing. w6 breathing thing line. The aim refers to breathing. Good.
+
+Also should w-lines for the notes themselves exist in notes_world? The notes are the actual thing; in the world, the notes' content is what's TOLD. The notes as a thing exist in the actual ledger (n3). The world doesn't need the notes thing unless a happening in the world involves them. Not needed.
+
+Standing for thing lines: n1 CLAIMED (main assertion? "The incoming nurse" — the nurse's existence is GIVEN background actually). Hmm. Sentence 1's main clause: "the nurse read the notes". The nurse and notes are introduced; their thing lines are background to the happening. T10D marked the account thing line GIVEN and the window/letter TOLD. For n1/n3: the nurse and notes are things in the happening; their existence is taken for granted along the way → GIVEN? Or CLAIMED? Rule 4: main clause CLAIMED; "who/which/as/while/-ing" descriptions GIVEN. Thing lines for participants... In example_A, lines 1-4 (thing lines) had no standing field (that example lacks standing). T10D: account GIVEN (it's the reporting frame), window/letter TOLD (in-world things). For our actual ledger: the nurse and notes are presupposed by the sentence → I'd mark GIVEN. Hmm, but the sentence asserts the nurse read the notes — the existence of nurse and notes is presupposed (definite descriptions). GIVEN is right for n1, n3, n4 (sister introduced in a relative clause → GIVEN). n6 (the reading) → CLAIMED. n7 (left by sister) → GIVEN (relative clause). n8 (medication, from s4) → GIVEN (mentioned in the reminder noun phrase). n9 (notes ended with reminder) → CLAIMED (main clause of s4).
+
+TOLD lines' standing is TOLD; that's the standing field. Good.
+
+Let me also double check n4: "sister is a person, the night sister" — GIVEN, said, s1. And in the world w1 TOLD.
+
+Now the counts:
+- lines said: n1, n3, n4, n6, n7, n8, n9 (7) + w1, w3, w5, w6, w7, w8, w9, w10 (8) = 15.
+- lines filled in: 0.
+- lines usual case: n2, n5, w2, w4 = 4.
+- sentences losing to bin: 2, 3, 4 → 3.
+
+Readings I chose:
+1. Sentence 1: "read" has no shape in the shape book → the happening is written as a fact holds(reads(nurse, notes)); rig 1 will report it not checked. Chosen: keep the text's own verb, no shape substituted.
+2. Sentence 1: "incoming" and "night" are descriptions; kept in the line text of the thing lines rather than binned, since the language allows plain descriptions in facts.
+3. Sentence 2: "The notes said" is an attribution → binned, contents TOLD in notes_world, which does not inherit the actual ledger.
+4. Sentence 2: "nearer the desk" read as movement toward the desk; the comparative "nearer" binned as degree.
+5. Sentence 2: "easier to monitor" read qualitatively as the plan's aim; "easier" binned as comparative degree.
+6. Sentence 2: "planned to ... so that" is a plan, not a cause → claim_plan, no BECAUSE.
+7. Sentence 3: "recorded" attribution → binned; "at midnight" binned as a time.
+8. Sentence 4: the reminder is an embedded directive → binned as mentioned; "at six" binned as a time; the notes' ending retained as an actual claim.
+9. Persons' response class: heavy and standing applied as the language's fixed class for persons, marked usual case; other things not stated.
+
+Words split: none? "notes" used once. "sister" — the night sister (a nurse role). No double senses. "monitor" — verb (to monitor) only. I'd say no splits. Hmm, "chart" in "chart his medication" — to record on a chart; it's binned anyway. No splits needed. words_split: [].
+
+Wait — one possible split: "sister" could mean a sibling or a nurse title (night sister). Here it's the nurse title. Only one sense in context. No split. But maybe note it? The rule says split when the text uses one word in two senses. Not the case. Leave empty.
+
+PARKED list: the task says judgements about reasoning go in a PARKED list at the very end. Add one line: e.g., "The plan's link between moving the patient and easier monitoring is not argued for; the checker will likely say cannot tell." That's a judgement about the reasoning → parked. One line.
+
+Now the output format: The task says print:
+1. The ledger as a table: Number | Standing | Content | Source mark | Sentence.
+2. The bin as a list.
+3. Words I split.
+4. Readings I chose.
+5. The count.
+Close with TRANSLATION COMPLETE. Then wait.
+
+And the encoding guide says after the five sections, print the ledger once more as ONE JSON object in a fenced ```json block. And the task says "ending with the JSON block and then the words TRANSLATION COMPLETE." Hmm — conflict: task 39 says close with TRANSLATION COMPLETE; the guide says JSON block then... The user's final instruction: "print exactly what the task and the guide ask for, ending with the JSON block and then the words TRANSLATION COMPLETE." So: five sections, then JSON block, then TRANSLATION COMPLETE. And the PARKED list "at the very end" — hmm, PARKED goes at the very end per the task, but the user says end with JSON then TRANSLATION COMPLETE. I'll put PARKED before the JSON block (as part of section 5 area or after it), then JSON, then TRANSLATION COMPLETE. Actually the task says PARKED at the very end, one line each, then return to the line in hand. But the user's explicit instruction overrides: end with JSON block then TRANSLATION COMPLETE. I'll put the PARKED list right after the count section, then the JSON, then TRANSLATION COMPLETE.
+
+Let me now write the table. Content column: the ledger line text.
+
+Table rows (Number | Standing | Content | Source mark | Sentence):
+
+n1 | GIVEN | nurse is a person, incoming | said | 1
+n2 | GIVEN | nurse answers a press as heavy and standing | usual case | 1
+n3 | GIVEN | notes are handover notes; response to a press not stated | said | 1
+n4 | GIVEN | sister is a person, the night sister | said | 1
+n5 | GIVEN | sister answers a press as heavy and standing | usual case | 1
+n6 | CLAIMED | nurse reads notes | said | 1
+n7 | GIVEN | notes were left by sister | said | 1
+n8 | GIVEN | medication is medication; response to a press not stated | said | 4
+n9 | CLAIMED | notes ended with a reminder | said | 4
+w1 | TOLD in world notes_world | sister is a person | said | 2
+w2 | TOLD in world notes_world | sister answers a press as heavy and standing | usual case | 2
+w3 | TOLD in world notes_world | patient is a person | said | 2
+w4 | TOLD in world notes_world | patient answers a press as heavy and standing | usual case | 2
+w5 | TOLD in world notes_world | desk is a desk; response to a press not stated | said | 2
+w6 | TOLD in world notes_world | breathing is the patient's breathing; response to a press not stated | said | 2
+w7 | TOLD in world notes_world | temperature is the patient's temperature; response to a press not stated | said | 3
+w8 | TOLD in world notes_world | sister planned to move the patient toward the desk | said | 2
+w9 | TOLD in world notes_world | PLAN: sister moves the patient toward the desk SO THAT the patient's breathing is easier to monitor | said | 2
+w10 | TOLD in world notes_world | the patient's temperature was normal | said | 3
+
+Hmm, w6: "breathing is the patient's breathing" — the thing is the patient's breathing. Name: breathing. Fine.
+
+Also, should the plan line mention the goal as "easier to monitor"? Yes.
+
+Also — the happening n6: "nurse reads notes" — should it be a Happening kind line: "n6: nurse READS notes"? Yes, content: "nurse reads notes".
+
+Bin list:
+1. Sentence 2: "The notes said" — attribution; the reported plan, its action and its aim are scoped to notes_world as TOLD and are not claimed about the actual ledger.
+2. Sentence 2: "nearer" — comparative degree of nearness; the language has no form for how much or how near; the movement is kept only as toward the desk.
+3. Sentence 2: "easier" — comparative degree; the aim is kept only qualitatively as "easier to monitor".
+4. Sentence 3: "The notes also recorded" — attribution; the temperature reading is scoped to notes_world as TOLD.
+5. Sentence 3: "at midnight" — a time; the language has no form for when.
+6. Sentence 4: "a reminder to chart his medication" — an embedded directive; recorded as mentioned, and nothing is claimed from it.
+7. Sentence 4: "at six" — a time; the language has no form for when.
+
+Count: lines said 15, lines filled in 0, lines usual case 4, sentences that lost something to the bin: 3 (sentences 2, 3, 4).
+
+Now JSON. Ensure valid: double quotes, no trailing commas.
+
+Let me write the JSON carefully.
+
+{
+  "paragraph": "B09",
+  "whose": "Claude, under L82",
+  "sentences": {
+    "1": "The incoming nurse read the handover notes left by the night sister.",
+    "2": "The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor.",
+    "3": "The notes also recorded that his temperature had been normal at midnight.",
+    "4": "They ended with a reminder to chart his medication at six."
+  },
+  "bin": [
+    {"sentence": 2, "words": "The notes said", "reason": "Attribution: the reported plan, its action and its aim are scoped to notes_world as TOLD and are not claimed about the actual ledger."},
+    {"sentence": 2, "words": "nearer", "reason": "Comparative degree of nearness; the language has no form for how much or how near. The movement is kept only as toward the desk."},
+    {"sentence": 2, "words": "easier", "reason": "Comparative degree; the aim is kept only qualitatively as the breathing being easier to monitor."},
+    {"sentence": 3, "words": "The notes also recorded", "reason": "Attribution: the temperature reading is scoped to notes_world as TOLD and is not claimed about the actual ledger."},
+    {"sentence": 3, "words": "at midnight", "reason": "A time; the language has no form for when."},
+    {"sentence": 4, "words": "a reminder to chart his medication", "reason": "An embedded directive; recorded as mentioned, and nothing is claimed from it."},
+    {"sentence": 4, "words": "at six", "reason": "A time; the language has no form for when."}
+  ],
+  "leftover": [
+    "Sentence 2: The notes said — Attribution: the reported plan, its action and its aim are scoped to notes_world as TOLD and are not claimed about the actual ledger.",
+    ...
+  ],
+  "whatifs": [],
+  "lines": { ... },
+  "words_split": [],
+  "readings_chosen": [ ... ]
+}
+
+Each line entry: {"mark":..., "sentence":..., "standing":..., "text": "[<standing>] <content>", "case":..., "case_kind":..., "prolog_clauses": [...]}.
+
+For actual lines, no case/case_kind.
+
+Prolog clauses — each ends with full stop, first body goal line(<id>).
+
+n1: ["kind(nurse, person) :- line(n1)."]
+n2: ["body(nurse, heavy_standing) :- line(n2)."]
+n3: ["kind(notes, handover_note) :- line(n3).", "body(notes, not_stated) :- line(n3)."]
+n4: ["kind(sister, person) :- line(n4)."]
+n5: ["body(sister, heavy_standing) :- line(n5)."]
+n6: ["holds(reads(nurse, notes)) :- line(n6)."]
+n7: ["holds(left_by(notes, sister)) :- line(n7)."]
+n8: ["kind(medication, medication) :- line(n8).", "body(medication, not_stated) :- line(n8)."]
+n9: ["holds(ends_with_reminder(notes)) :- line(n9)."]
+w1: ["kind(sister, person) :- line(w1)."] (case notes_world, told)
+w2: ["body(sister, heavy_standing) :- line(w2)."]
+w3: ["kind(patient, person) :- line(w3)."]
+w4: ["body(patient, heavy_standing) :- line(w4)."]
+w5: ["kind(desk, desk) :- line(w5).", "body(desk, not_stated) :- line(w5)."]
+w6: ["kind(breathing, breathing) :- line(w6).", "body(breathing, not_stated) :- line(w6)."]
+w7: ["kind(temperature, temperature) :- line(w7).", "body(temperature, not_stated) :- line(w7)."]
+w8: ["holds(plans(sister, move(patient, desk))) :- line(w8)."]
+w9: ["claim_plan(w9, move(sister, patient, desk), easier_to_monitor(breathing)) :- line(w9)."]
+w10: ["holds(normal_temperature(patient)) :- line(w10)."]
+
+Check fact-term spelling rule: claim_plan's aim term easier_to_monitor(breathing) — there's no holds line for it (goal only mentioned). That's fine; the guide's rule 3 applies to terms pointing at holds lines; the aim is a goal term. OK.
+
+Readings chosen entries (strings):
+- "Sentence 1: 'read' has no shape in the shape book; chosen: keep the text's own verb and write the happening as holds(reads(nurse, notes)), so rig 1 reports it as not checked rather than substituting a press or release shape."
+- "Sentence 1: 'incoming' and 'night' are plain descriptions; chosen: keep them in the text of the thing lines (nurse, sister) rather than bin them, since the language allows any plain description in a fact."
+- "Sentence 1: the definite descriptions 'the incoming nurse', 'the handover notes' and 'the night sister' are taken as GIVEN along the way; only the reading is CLAIMED."
+- "Sentence 2: 'The notes said' can be read as the narrator's own assertion or as scoping the content to what the notes say; chosen: the latter, so the plan, its action and its aim are TOLD in notes_world and inherit nothing from the actual ledger."
+- "Sentence 2: 'nearer the desk' can be a degree of nearness or a direction; chosen: direction toward the desk, with the comparative 'nearer' binned as degree."
+- "Sentence 2: 'so that' can introduce a cause or an aim; chosen: an aim, so the line is a PLAN (claim_plan), not a BECAUSE, and the goal is only mentioned, never asserted as reached."
+- "Sentence 2: 'easier to monitor' can be a measurable degree or a qualitative comparison; chosen: qualitative only, with 'easier' binned as comparative degree."
+- "Sentence 3: 'at midnight' can name a stage in a changing state or a bare time; chosen: a bare time, binned, since no state changes in the text."
+- "Sentence 4: the reminder can be reported as content or treated as an embedded command; chosen: embedded command, binned as mentioned, while the notes' ending is kept as an actual CLAIMED fact."
+- "All people: the response class of a person is not stated by the text; chosen: apply the language's fixed class for persons, heavy and standing, marked usual case, and write not stated for the notes, the desk, the breathing, the temperature and the medication."
+
+Words split: [] — maybe note "sister": in this text "sister" is the nurse title (night sister), not a sibling; only one sense in play, so no split. Should I add it to words_split? The rule: split when one word is used in two senses. Not needed. I'll leave empty but mention in a reading? Already covered enough. Leave empty.
+
+PARKED:
+- "The notes give no link between moving the patient and his breathing being easier to monitor; the plan rests on a connection nobody stated, so the checker will likely answer 'cannot tell'."
+
+Now write it all out. Also the table format in the printed output: markdown table with columns Number | Standing | Content | Source mark | Sentence.
+
+Double-check every sentence appears: s1 → lines n1-n7; s2 → w1-w6, w8, w9 + bin; s3 → w7, w10 + bin; s4 → n8, n9 + bin. Good.
+
+One more check: "Every thing in a happening must have a thing line" — happening n6: nurse (n1), notes (n3). ✓. Plan w9's action: sister (w1), patient (w3), desk (w5). ✓. Binned charting: medication has n8 anyway. ✓.
+
+Also, should I add a thing line for the "reminder"? It's binned. The fact ends_with_reminder(notes) covers it.
+
+I think we're ready. Write the final answer.
