@@ -1,0 +1,83 @@
+LEDGER A tomato: 13 lines; 9 facts stated directly; 19 facts found; 8 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+  changes(move(thermometer),reading(thermometer))   <- lines 4, k1
+    - line 4 [filled in, sentence 4]: the thermometer is a measuring device
+    - line k1 [usual case, sentence 4]: moving a measuring device changes its reading
+  contradiction(dies(door_plant))   <- lines 2, 5, 7, 9
+    - line 2 [said, sentence 3]: the plant by the door is a tomato plant
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+    - line 7 [said, sentence 3]: the cold reached the plant by the door
+    - line 9 [said, sentence 3]: the plant by the door did not die
+  depends(dies(balcony_plants),reached(the_cold,balcony_plants))   <- lines 1, 5
+    - line 1 [said, sentence 1]: the balcony plants are tomato plants
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+  depends(dies(door_plant),reached(the_cold,door_plant))   <- lines 2, 5
+    - line 2 [said, sentence 3]: the plant by the door is a tomato plant
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+  depends_on(reading(thermometer),reached(the_cold,thermometer))   <- lines 11
+    - line 11 [said, sentence 4]: the thermometer's reading depends on the cold
+  holds(dies(door_plant))   <- lines 2, 5, 7
+    - line 2 [said, sentence 3]: the plant by the door is a tomato plant
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+    - line 7 [said, sentence 3]: the cold reached the plant by the door
+  produced(dies(balcony_plants))   <- lines 1, 5, 6
+    - line 1 [said, sentence 1]: the balcony plants are tomato plants
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+    - line 6 [said, sentence 1]: the cold reached the balcony plants
+  produced(dies(door_plant))   <- lines 2, 5, 7
+    - line 2 [said, sentence 3]: the plant by the door is a tomato plant
+    - line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+    - line 7 [said, sentence 3]: the cold reached the plant by the door
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line 1 [said, sentence 1]: the balcony plants are tomato plants
+      no longer: depends(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends_on(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: kind(balcony_plants,tomato_plant)
+      no longer: produced(dies(balcony_plants))
+  take out line 2 [said, sentence 3]: the plant by the door is a tomato plant
+      no longer: contradiction(dies(door_plant))
+      no longer: depends(dies(door_plant),reached(the_cold,door_plant))
+      no longer: depends_on(dies(door_plant),reached(the_cold,door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: kind(door_plant,tomato_plant)
+      no longer: produced(dies(door_plant))
+  take out line 3 [said, sentence 1]: the cold is weather
+      no longer: kind(the_cold,weather)
+  take out line 4 [filled in, sentence 4]: the thermometer is a measuring device
+      no longer: changes(move(thermometer),reading(thermometer))
+      no longer: kind(thermometer,measuring_device)
+  take out line 5 [said, sentence 2]: cold ALWAYS kills a tomato plant it reaches
+      no longer: contradiction(dies(door_plant))
+      no longer: depends(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends(dies(door_plant),reached(the_cold,door_plant))
+      no longer: depends_on(dies(balcony_plants),reached(the_cold,balcony_plants))
+      no longer: depends_on(dies(door_plant),reached(the_cold,door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: produced(dies(balcony_plants))
+      no longer: produced(dies(door_plant))
+  take out line 6 [said, sentence 1]: the cold reached the balcony plants
+      no longer: holds(reached(the_cold,balcony_plants))
+      no longer: produced(dies(balcony_plants))
+  take out line 7 [said, sentence 3]: the cold reached the plant by the door
+      no longer: contradiction(dies(door_plant))
+      no longer: holds(dies(door_plant))
+      no longer: holds(reached(the_cold,door_plant))
+      no longer: produced(dies(door_plant))
+  take out line 8 [said, sentence 1]: the balcony plants died
+      no change in the reported fact set
+  take out line 9 [said, sentence 3]: the plant by the door did not die
+      no longer: contradiction(dies(door_plant))
+      no longer: denied(dies(door_plant))
+  take out line 10 [said, sentence 1]: the balcony plants died BECAUSE the cold reached them
+      no change in the reported fact set
+  take out line 11 [said, sentence 4]: the thermometer's reading depends on the cold
+      no longer: depends(reading(thermometer),reached(the_cold,thermometer))
+      no longer: depends_on(reading(thermometer),reached(the_cold,thermometer))
+  take out line 12 [said, sentence 4]: PLAN: move the thermometer SO THAT the plants do not die
+      no change in the reported fact set
+  take out line k1 [usual case, sentence 4]: moving a measuring device changes its reading
+      no longer: changes(move(thermometer),reading(thermometer))
+
+TOTAL delta lines over 13 removals: 32. Time: 9 s.
