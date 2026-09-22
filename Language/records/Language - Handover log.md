@@ -4,6 +4,7 @@ Kept for a fresh context after an auto-compaction: what is running, where things
 
 ## 22 September 2026, evening - the API agents and Arm B
 - **Owner's instructions this stretch** (decision L11, verbatim in Decisions): use two API models for the outside-agent roles, Atria (30 requests per minute) and Mimo (100 per minute); think as high as possible, skills as needed; work autonomously until tokens run out; at most 5 Opus subagents at a time, never Fable subagents; keep goals calibrated to file 11 (Semantics revision 1) and to the goal, reasoning with prose; keep asking when a vaguely incorrect translation is acceptable; the owner reviews at the end; push often, "work lost is more costly than a cluttered repo"; keep this handover log.
+- **Agents rule** (owner, later in the same stretch): Opus 5 at extra effort for complex analysis; Sonnet 5 for testing language candidates; at most 5 Opus at a time; never Fable.
 - **Keys**: NOT in the repository. They sit in the scratchpad at `scratchpad/keys/api.env` (variables ATRIA_API_KEY, MIMO_API_KEY). If the scratchpad is gone, the owner has them.
 - **Atria**: works. OpenAI-shaped. `POST https://api.atria-asi.ai/v1/chat/completions`, header `Authorization: Bearer $ATRIA_API_KEY`, model `Atria-Dawn-Preview`; returns `reasoning_content` beside `content`. 30 RPM.
 - **Mimo**: model `mimo-v2.6-pro`; key is a Token Plan key (`tp-`); the China base `https://token-plan-cn.xiaomimimo.com/v1` answers "Invalid API Key" with Bearer; other bases and the `api-key` header being tried. 100 RPM.
