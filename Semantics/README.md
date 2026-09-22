@@ -4,7 +4,7 @@ The audit of the authority document, **"Claude Fable Semantics - standalone theo
 
 ## Current state
 
-Reconciled on 21 September 2026 in [log S68](<records/Semantics - project story.md#s68-status-reconciliation-21-september-2026>). The authority remains frozen [file 10](<authority/10 Claude Fable Semantics - standalone theory.md>); file 20 remains set aside under decision S4. S64 returned its requested earlier-version sort. No new theory version or amendment adoption is recorded.
+Reconciled on 21 September 2026 in [log S68](<records/Semantics - project story.md#s68-status-reconciliation-21-september-2026>). The authority remains frozen [file 10](<authority/10 Claude Fable Semantics - standalone theory.md>); file 20 remains set aside under decision S4. [File 11](<authority/11 Claude Fable Semantics - standalone theory, revision 1.md>) is the candidate under round S76 (log S76); [file 12](<authority/12 Claude Fable Semantics - causality, standalone theory.md>) is the causality version, a draft under no round (log S77). S64 returned its requested earlier-version sort. No new theory version or amendment adoption is recorded.
 
 | Step | Verified state | Evidence and limit |
 | --- | --- | --- |

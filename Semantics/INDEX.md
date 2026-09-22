@@ -5,7 +5,7 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 ## Research state: the theory
 | | |
 | --- | --- |
-| Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Candidate: [11 ... revision 1](<authority/11 Claude Fable Semantics - standalone theory, revision 1.md>) (log S76), under test in round S76. Revised: `20 ...revised standalone theory.md` - set aside by the owner as a regression (decision S4), kept out on purpose; the other model audited it from log 26 to S62. |
+| Authority | [10 Claude Fable Semantics - standalone theory.md](<authority/10 Claude Fable Semantics - standalone theory.md>) - in the repository since log 56, frozen. Candidate: [11 ... revision 1](<authority/11 Claude Fable Semantics - standalone theory, revision 1.md>) (log S76), under test in round S76. Causality version: [12 ... causality](<authority/12 Claude Fable Semantics - causality, standalone theory.md>) (log S77, decision S9), a draft under no round. Revised: `20 ...revised standalone theory.md` - set aside by the owner as a regression (decision S4), kept out on purpose; the other model audited it from log 26 to S62. |
 | Story | Decision 7 (why the document is here); [ORIGIN.md](ORIGIN.md). |
 | Relations | Quoted as authority by every Language test plan and by the skill. See [RELATIONS.md](<RELATIONS.md>) R1, R2. |
 
