@@ -94,7 +94,8 @@ def parse(text):
         if wm:
             canon = normalise_world_heading(line)
             verdict = next((v for v in VERDICTS if v in canon), "")
-            if verdict: findings.append((wm.group(1), "WORLD", "", verdict))  # the old one-liner, or the D6 contradiction heading
+            fm = re.search(r"CONTRADICTION about (.+?)(?:, which |\.$|$)", canon)
+            if verdict: findings.append((wm.group(1), "WORLD", fm.group(1) if fm else "", verdict))  # the old one-liner, or the D6 contradiction heading, with its fact
             world = wm.group(1)  # D2: the indented lines that follow belong to this world
             i += 1; continue
         if line.startswith("OUTCOMES:") or re.match(r"^\s*OUTCOMES", line):
