@@ -1,5 +1,7 @@
 # The bare earlier version against every case, and three more cases
 
+*Superseded unsent by the two-stage split S72 Stage 1 (testing) and S72 Stage 2 (audit), at the owner's word (decision S7). Kept as written.*
+
 The authority under audit is the earlier version of the theory; the revised version stays set aside. Until now every verdict has been given under the earlier version *with* R2 and the proposed clauses read into it, and every clause test has compared that reading with one clause read in and with it left out. What remains untested is R2 itself: whether any amendment changes the earlier version's verdict on any case. The S70 addendum's heading (11) found one place where it does (O24 and O48 against Derivation 3). This round finds every such place, since that list, and only that list, is what a new version of the theory would be built from.
 
 Use the audit skill, the returns in this pack, and this instruction. Keep every situation and every verdict exactly as written.

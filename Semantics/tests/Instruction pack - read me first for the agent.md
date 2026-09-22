@@ -21,7 +21,7 @@ You are a fresh agent. Nothing in this audit has passed through you before; ever
 3. `authority/10 ...` - the theory.
 4. `skill/24 ...`, then the Stage A section of `skill/30 ...`.
 5. `earlier rounds/` - the cases O1 to O7 (27, 28) and O8 to O14 (30), the near-case routine (41), the instructions the returns answer (S62, S64, S65, S70; the later ones hold the cases O15 onward).
-6. `returns/` - the Stage B table (55), the Stage C cards (57), the S62 return (fix cards, clause tests, coverage, quotations, report), the S64 return (cards O15 to O24, the proposed clauses H64 and I64) the S65 return (cards O25 to O37, the proposed clause H65) and the S70 return (cards O38 to O49, and the draft list under its heading (11)). The newest return's coverage file is where the row numbers in the instruction come from.
+6. `returns/` - the Stage B table (55), the Stage C cards (57), the S62 return (fix cards, clause tests, coverage, quotations, report), the S64 return (cards O15 to O24, the proposed clauses H64 and I64) the S65 return (cards O25 to O37, the proposed clause H65) and the S70 return (cards O38 to O49, and the draft list under its heading (11)). The newest return's coverage file is where the row numbers in the instruction come from. Where a round is split into stages, the later stage's pack also holds the earlier stage's return (for example `returns/S72 Stage 1 testing - return/`) and its instruction under `earlier rounds/`; the later stage audits that return before building on it.
 
 ## What to return
 One zip, named and laid out exactly as the instruction file says, with the text of your reply being the manifest and the closing line only.

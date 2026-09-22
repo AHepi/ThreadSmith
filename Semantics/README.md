@@ -33,6 +33,7 @@ results/       55 Stage B return, 57 Stage C return, S62 and S64 return folders 
 ```
 
 ## Rules of this project
+- **Each round runs in two stages, testing then audit, by two agents** (decision S7); Claude reads both returns and determines the results.
 - **Each instruction travels as a pack** (decision S5): one zip built by `tests/Instruction pack - build.py` holding the read-me for the agent, the instruction's paste part, file 10, files 24 and 30, the earlier instructions and every return. A fresh agent reads the read-me first; the owner pastes `tests/Instruction pack - prompt to paste.md` beside the zip. The R2 amendments in full are the owner's to add.
 - **Handing things to the other model:** it reinterprets negative instructions and follows positive ones. Give it file 24 in place of the hard-to-vary skill. Every instruction's paste part is searched by program for negative wording before it goes.
 - **Every return is kept as it came** in `results/`, named by the log entry that received it; the reading goes in the log, never inside the return.
