@@ -13,7 +13,9 @@
 # quotations cut from the GAUGE line (the key records the map and the cut);
 # 6 the prose reader (Mimo) on every new-driver report with its passage, eight lanes, world names left as written
 # (its part 3 needs them); 7 a manifest. Every call leaves a receipt. Failed and skipped calls are listed in
-# FAILED.txt and SKIPPED.txt in the reader and prose_reader directories. Nothing is written outside OUT_DIR.
+# FAILED.txt (a non-zero exit, or an empty answer, exit 99) and SKIPPED.txt (an empty report) in the reader and prose_reader
+# directories. Nothing is written outside OUT_DIR. No other caller of either provider may run while this script runs: the
+# lock is shared within one run only.
 # Timings printed: translations, drivers, consequences, rig (drivers + consequences), reader, prose reader.
 set -u
 [ $# -eq 3 ] || { echo "usage: L82_run.sh CORPUS_DIR OUT_DIR PAIRS_FILE" >&2; exit 2; }
@@ -85,23 +87,29 @@ for code, entry in key.items():
     meta = json.load(open(os.path.join(OUT, "ledgers", name.split(".")[0] + ".json")))
     cases = sorted(set(l["case"] for l in meta["lines"].values() if l.get("case")), key=lambda c: (text.find("'%s'" % c) if "'%s'" % c in text else 10**9, c))
     names = {c: "world_%d" % (i + 1) for i, c in enumerate(cases)}
-    for c, n in names.items():
-        text = text.replace("'%s'" % c, "'%s'" % n)                                   # the driver's quoted headings
-        text = re.sub(r"(\bworld\s+)%s\b" % re.escape(c), r"\g<1>" + n, text)        # "[TOLD in world <name>]" in line texts
-        if "_" in c or any(ch.isdigit() for ch in c): text = re.sub(r"\b%s\b" % re.escape(c), n, text)   # a coined name, wherever it appears
-    entry["worlds"] = names
-    leaks = [c for c in cases if re.search(r"\b%s\b" % re.escape(c), text)]
-    entry["name_still_present"] = leaks                                                # a plain-word name that also occurs in the prose
+    # two passes through placeholders, so a case already named world_k cannot collide with another's neutral name
+    holders = {c: "\x00W%d\x00" % i for i, c in enumerate(cases)}
+    for c, h in holders.items():
+        text = text.replace("'%s'" % c, "'%s'" % h)                                          # the driver's quoted headings
+        text = re.sub(r"(\b(?:world|case)\s+)%s\b" % re.escape(c), lambda m: m.group(1) + h, text)   # "[TOLD in world <name>]", "[SUPPOSED in case <name>]" in line texts
+        if "_" in c or any(ch.isdigit() for ch in c): text = re.sub(r"\b%s\b" % re.escape(c), h, text)   # a coined name, wherever it appears
     # the leftover bin's quotations are cut from the GAUGE line
     text, cut = re.subn(r"\(not checked\): .*?\. Slowest question:", "(not checked). Slowest question:", text, flags=re.S)
     entry["bin_quotations_cut"] = bool(cut)
+    entry["name_still_present"] = [c for c in cases if re.search(r"\b%s\b" % re.escape(c), text)]   # a plain-word name that also occurs in the prose, after the cut and before the neutral names go in
+    for c, h in holders.items(): text = text.replace(h, names[c])
+    entry["worlds"] = names
     up = os.path.join(OUT, "reader", code + ".prompt.txt"); open(up, "w").write(brief + text + "\n")
     jobs.append((code, up))
 json.dump(key, open(os.path.join(OUT, "reader", "KEY_report_names.json"), "w"), indent=1)
 def call(job):
     code, up = job
     r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "atria", "--user", up, "--out", os.path.join(OUT, "reader"), "--tag", code, "--max-tokens", "4000", "--temperature", "0.1"], capture_output=True, text=True)
-    return code, r.returncode, (r.stderr or "").strip()[-300:]
+    rc = r.returncode
+    if rc == 0:
+        resp = os.path.join(OUT, "reader", code + ".response.txt")
+        if not os.path.exists(resp) or not open(resp).read().strip(): rc = 99   # an empty answer is a failure, not an answer
+    return code, rc, (r.stderr or "").strip()[-300:]
 with ThreadPoolExecutor(max_workers=8) as ex: results = list(ex.map(call, jobs))
 failed = ["%s: exit %d %s" % (c, rc, err) for c, rc, err in results if rc != 0]
 open(os.path.join(OUT, "reader", "FAILED.txt"), "w").write("\n".join(failed) + ("\n" if failed else ""))
@@ -128,7 +136,11 @@ for name in sorted(f for f in os.listdir(os.path.join(OUT, "reports")) if f.ends
 def call(job):
     tag, up = job
     r = subprocess.run([sys.executable, os.path.join(T, "ask_model.py"), "mimo", "--user", up, "--out", os.path.join(OUT, "prose_reader"), "--tag", tag, "--max-tokens", "4000", "--temperature", "0.1"], capture_output=True, text=True)
-    return tag, r.returncode, (r.stderr or "").strip()[-300:]
+    rc = r.returncode
+    if rc == 0:
+        resp = os.path.join(OUT, "prose_reader", tag + ".response.txt")
+        if not os.path.exists(resp) or not open(resp).read().strip(): rc = 99   # an empty answer is a failure, not an answer
+    return tag, rc, (r.stderr or "").strip()[-300:]
 with ThreadPoolExecutor(max_workers=8) as ex: results = list(ex.map(call, jobs))
 failed = ["%s: exit %d %s" % (c, rc, err) for c, rc, err in results if rc != 0]
 open(os.path.join(OUT, "prose_reader", "FAILED.txt"), "w").write("\n".join(failed) + ("\n" if failed else ""))

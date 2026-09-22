@@ -11,7 +11,7 @@ Usage:
 Writes DIR/<tag>.response.txt (the content), DIR/<tag>.reasoning.txt, DIR/<tag>.receipt.json
 (provider, model, request SHA-256, response id from the provider, token counts, timings, attempt count),
 and DIR/<tag>.request.json (the exact request body). Exit 0 on success. Retries on 429/5xx/timeouts
-with backoff, at most 6 attempts; a 400/401/403/404/413/422 is not retried. Rate limit kept per provider by a
+with backoff, at most 6 attempts; a 400/401/403/404/413/422 is not retried; an answer with empty content is retried. A failed call leaves DIR/<tag>.error.txt and a receipt with "failed": true. Rate limit kept per provider by a
 lock file in DIR, or in $ASK_MODEL_LOCKDIR when set (so every step of one run shares one lock).
 Written under decision L11, 22 September 2026. A new version is a new file beside this one.
 """
@@ -71,11 +71,14 @@ def main():
         if status == 200:
             try: data = json.loads(text)
             except Exception: status = -1
-        if status == 200 and data.get("choices"): break
-        if status in (400, 401, 403, 404, 413, 422): attempts = 6   # a request the provider rejects outright: no retry
-        if attempts >= 6:
-            open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s\n%s" % (status, text[:4000]))
-            print("failed after %d attempts: status %s" % (attempts, status), file=sys.stderr); return 1
+        if status == 200 and data.get("choices") and ((data["choices"][0].get("message") or {}).get("content") or "").strip(): break
+        if status == 200: status = -2   # a well-formed answer with no content: retried like a failure
+        final = status in (400, 401, 403, 404, 413, 422)   # a request the provider rejects outright: no retry
+        if final or attempts >= 6:
+            open(os.path.join(a.out, a.tag + ".error.txt"), "w").write("status %s after %d attempt(s)%s\n%s" % (status, attempts, " (not retried)" if final else "", text[:4000]))
+            open(os.path.join(a.out, a.tag + ".receipt.json"), "w").write(json.dumps({"provider": a.provider, "url": p["url"], "model": p["model"], "request_sha256": req_hash,
+                "failed": True, "status": status, "attempts": attempts, "seconds": round(time.time() - started, 1), "tag": a.tag, "user_file": a.user, "asked_at_unix": int(started)}, indent=1))
+            print("failed after %d attempt(s): status %s%s" % (attempts, status, " (not retried)" if final else ""), file=sys.stderr); return 1
         time.sleep(min(120, 5 * 2 ** attempts))
     msg = data["choices"][0]["message"]
     content = msg.get("content") or ""
