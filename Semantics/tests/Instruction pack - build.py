@@ -10,7 +10,9 @@ INSTRUCTION = {"S65": T + "S65 Next instruction for the other model - thirteen n
                "S70": T + "S70 Next instruction for the other model - twelve near cases, the protected condition stated first, returned as a zip.md",
                "S71": T + "S71 Next instruction for the other model - the bare earlier version against every case, and three more, returned as a zip.md",
                "S72-1": T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md",
-               "S72-2": T + "S72 Stage 2 audit - check the testing return, then build the draft list from what survives, returned as a zip.md"}[NUM]
+               "S72-2": T + "S72 Stage 2 audit - check the testing return, then build the draft list from what survives, returned as a zip.md",
+               "S76-1": T + "S76 Stage 1 testing - file 11 against every case, returned as a zip.md",
+               "S76-2": T + "S76 Stage 2 audit - check the file 11 test, returned as a zip.md"}[NUM]
 README = T + "Instruction pack - read me first for the agent.md"
 EARLIER = [
  ("27 Next instruction for the other model - round 3, outside cases.md", "27 Round 3 - outside cases O1 to O4.md"),
@@ -27,7 +29,7 @@ RETURNS = [
  ("S62 Stage D and report - return", None), ("S64 Near cases - return", None), ("S65 Near cases - return", None), ("S70 Near cases - return", None),
 ]
 # A later stage of a split round takes the earlier stage's return when it is in results/.
-EXTRA = {"S72-2": ["S72 Stage 1 testing - return"]}
+EXTRA = {"S72-2": ["S72 Stage 1 testing - return"], "S76-1": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return"], "S76-2": ["S72 Stage 1 testing - return", "S72 Stage 2 audit - return", "S76 Stage 1 testing - return"]}
 RETURNS += [(x, None) for x in EXTRA.get(NUM, []) if os.path.isdir(R + x)]
 def paste(src):
     s = open(src, encoding="utf-8").read(); i = s.find("\n---\n(Below this line")
@@ -40,7 +42,14 @@ put(README, "00 READ ME FIRST.md")
 put(INSTRUCTION, f"01 Instruction - {NUM}.md", strip=True)
 if NUM == "S72-2":
     put(T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md", "earlier rounds/S72 Stage 1 instruction - testing.md", strip=True)
+if NUM.startswith("S76"):
+    put(T + "S72 Stage 1 testing - the bare earlier version against every case, and three more, returned as a zip.md", "earlier rounds/S72 Stage 1 instruction - testing.md", strip=True)
+    put(f"{S}/results/S75 Results - the bare version test, audited: what a new version of the theory is built from.md", "returns/S75 Results - the bare version test, audited.md")
+if NUM == "S76-2":
+    put(T + "S76 Stage 1 testing - file 11 against every case, returned as a zip.md", "earlier rounds/S76 Stage 1 instruction - testing.md", strip=True)
 put(f"{S}/authority/10 Claude Fable Semantics - standalone theory.md", "authority/10 Claude Fable Semantics - standalone theory.md")
+if NUM.startswith("S76"):
+    put(f"{S}/authority/11 Claude Fable Semantics - standalone theory, revision 1.md", "authority/11 Claude Fable Semantics - standalone theory, revision 1.md")
 put(T + "24 Workflow - audit the semantics - give this to the other model.md", "skill/24 Workflow - audit the semantics.md")
 put(T + "30 Next instruction for the other model - workflow update and re-audit.md", "skill/30 Workflow update and re-audit.md", strip=True)
 for src, dst in EARLIER: put(T + src, "earlier rounds/" + dst, strip=True)

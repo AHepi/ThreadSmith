@@ -27,7 +27,7 @@ records/       this thread's own log, Decisions, Lessons and Status, from 21 Sep
 RELATIONS.md   this project's claims about its connections to the other two, with status and evidence
 tutorials/     one worked example: tracing a lesson through this project's files
 INDEX.md       the audit as a timeline, with what is and is not in the repository
-authority/     10 Claude Fable Semantics - standalone theory.md (frozen); NOT-IN-BUNDLE.md - file 20 is not here
+authority/     10 (frozen) and 11, revision 1 (candidate, under test); NOT-IN-BUNDLE.md - file 20 is not here
 tests/         the audit workflow pair (24) and the instruction rounds (27, 28, 30, 41, 55, 57 superseded unsent, S62, S63 superseded unsent, S64 returned, S65 prepared)
 results/       55 Stage B return, 57 Stage C return, S62 and S64 return folders (unchanged), S65 saved session messages; verification receipt in log S68
 ```
