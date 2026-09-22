@@ -17,6 +17,7 @@ Held here, from log 55 on:
 - `S64 Near cases - return/` - eight files, unchanged (log S65); zip dropped, hash in the log.
 - `S65 Near cases - return/` - eight files, unchanged (log S70); zip dropped, hash in the log.
 - `S70 Near cases - return/` - eight files, unchanged (log S71); zip dropped, hash in the log.
+- `S72 Stage 1 testing - return/` - seven files, unchanged (log S74); zip dropped, hash in the commit.
 - "S65 Saved page" - the messages of the other model's chat, pulled out of a saved web page by program, as at log 26; the page itself is dropped.
 
 Still not here, and asked for: the first 32 Stage B rows (pasted into the chat of log 41 and never uploaded). File 20 is kept out on purpose (decision S4).
