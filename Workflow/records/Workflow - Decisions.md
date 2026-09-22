@@ -6,5 +6,7 @@ W1. Go on to the research plan. After the report that HV file 33 and Planning fi
 
 W2. The theory's revision 1 (Semantics file 11) handed to this project, to be used first. Uploading "11 Claude Fable Semantics - standalone theory revision 1.md": "Here's the updated first."
 
+W3. File 11 is the authority; phase 1 begins; five Opus 5 agents at extra effort, armed with the hard-to-vary skill, help. "11 is the new authority. Also, if the research is done and corpus compiled, time to describe LLMs within the language of 11. Use 5 Opus 5 agents with extra effort armed with current hard to vary to help."
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
