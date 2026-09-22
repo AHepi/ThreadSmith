@@ -5,3 +5,4 @@ Every completed round is a commit on branch `claude/hv-skill-scope-kl0oyr`, push
 | Round | What | Commit | Faults returned by the review (blocking / wording) |
 |---|---|---|---|
 | 1-3 | fixers A1, A4, A2 then A1, A4 twice; committed together at log W10 | dd7da4e | after round 3: 1 / 2 (29; 30 fixed by the reviewer, 31) |
+| 4 | fixer A1 on 29 and 31, then the reviewer | c1c9970 | 0 / 0 - the loop closed |
