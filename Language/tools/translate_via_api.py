@@ -6,7 +6,8 @@ examples, the text), calls ask_model.py, extracts the ```json block, builds ledg
 ledger_<id>.pl, validates them (JSON fields; every clause guarded by its own line; the old driver runs
 without a Prolog error), and on a validation failure asks once more with the failure appended.
 
-Usage: translate_via_api.py PROVIDER TEXT_ID TEXT_FILE OUT_DIR [--attempts 2]
+Usage: translate_via_api.py PROVIDER TEXT_ID TEXT_FILE OUT_DIR
+       translate_via_api.py --rebuild PROVIDER TEXT_ID OUT_DIR RESPONSE_FILE   (no call; rebuild and validate from a saved response)
 Writes OUT_DIR/<id>.<provider>.translation.md (the whole response), OUT_DIR/ledger_<id>_<provider>.json/.pl,
 OUT_DIR/<id>.<provider>.validation.txt, and the ask_model receipts. Keys from the environment.
 Written under decision L11, 22 September 2026.
@@ -40,7 +41,7 @@ def extract_json(response):
     return json.loads(m.group(1))
 
 def build_pl(led, text_id, provider):
-    out = ["% ledger_%s_%s.pl - built by translate_via_api.py from the model's JSON (%s). Standing and marks are in the JSON." % (text_id, provider, provider)]
+    out = ["%% ledger_%s_%s.pl - built by translate_via_api.py from the model's JSON (%s). Standing and marks are in the JSON." % (text_id, provider, provider)]
     for lid, info in led["lines"].items():
         out.append("line(%s)." % lid)
         for c in info.get("prolog_clauses", []):
@@ -83,7 +84,23 @@ def validate(led, pl_text, json_path, pl_path):
         shutil.rmtree(tmp, ignore_errors=True)
     return problems, report
 
+def rebuild(provider, text_id, out_dir, response_path):
+    """Rebuild the ledger pair from a saved response (no call). Returns 0 when valid."""
+    response = open(response_path).read()
+    open(os.path.join(out_dir, "%s.%s.translation.md" % (text_id, provider)), "w").write(response)
+    led = extract_json(response)
+    json_path = os.path.join(out_dir, "ledger_%s_%s.json" % (text_id, provider)); pl_path = os.path.join(out_dir, "ledger_%s_%s.pl" % (text_id, provider))
+    led.setdefault("paragraph", text_id); led["whose"] = "%s, under L82" % provider
+    json.dump(led, open(json_path, "w"), indent=1, ensure_ascii=False)
+    pl_text = build_pl(led, text_id, provider); open(pl_path, "w").write(pl_text)
+    problems, report = validate(led, pl_text, json_path, pl_path)
+    open(os.path.join(out_dir, "%s.%s.validation.txt" % (text_id, provider)), "w").write("rebuilt from %s\n%s\n\n--- old driver's report on this ledger ---\n%s" % (response_path, "\n".join(problems) or "VALID", report))
+    print("%s %s: %s (%d lines)" % (provider, text_id, "valid" if not problems else "INVALID: " + "; ".join(problems)[:300], len(led["lines"])))
+    return 0 if not problems else 1
+
 def main():
+    if sys.argv[1] == "--rebuild":
+        return rebuild(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
     provider, text_id, text_file, out_dir = sys.argv[1:5]
     attempts = 2
     os.makedirs(out_dir, exist_ok=True)
