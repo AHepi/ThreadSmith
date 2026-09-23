@@ -1,0 +1,78 @@
+LEDGER B01: 20 lines; 10 facts stated directly; 10 facts found; 0 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line foreman [said, sentence 1]: [CLAIMED] foreman is a farm_foreman; it answers a press as not stated; it is a DOER
+      no longer: kind(foreman,farm_foreman)
+  take out line note [said, sentence 1]: [CLAIMED] note is a note; it answers a press as not stated
+      no longer: kind(note,note)
+  take out line rounds [said, sentence 1]: [CLAIMED] rounds is a rounds; it answers a press as not stated
+      no longer: kind(rounds,rounds)
+  take out line kept_notes [said, sentence 1]: [CLAIMED] kept_notes: foreman KEPT note; 'kept' has no shape in the shape book
+      no longer: holds(kept(foreman,note))
+  take out line on_rounds [said, sentence 1]: [GIVEN] the note was kept on the foreman's rounds
+      no longer: holds(kept_on(note,rounds))
+      no longer: holds(rounds_of(foreman,rounds))
+  take out line wrote_note [filled in, sentence 2]: [CLAIMED] wrote_note: foreman WROTE note; filled in: the sentence names no object of writing, the translator takes the note as what he wrote in; 'wrote' has no shape in the shape book
+      no longer: holds(wrote(foreman,note))
+  take out line shepherd [said, sentence 2]: [TOLD in world shepherd_world] shepherd is a shepherd; it answers a press as not stated; it is a DOER
+      no change in the reported fact set
+  take out line flock [said, sentence 2]: [TOLD in world shepherd_world] flock is a flock; it answers a press as not stated
+      no change in the reported fact set
+  take out line gate [said, sentence 2]: [TOLD in world shepherd_world] gate is a gate; it answers a press as not stated
+      no change in the reported fact set
+  take out line top_field [said, sentence 2]: [TOLD in world shepherd_world] top_field is a field; it answers a press as not stated
+      no change in the reported fact set
+  take out line flock_top [said, sentence 2]: [TOLD in world shepherd_world] flock is in the top field
+      no change in the reported fact set
+  take out line gate_stood_open [said, sentence 2]: [TOLD in world shepherd_world] gate stood open [stage: when the shepherd reasoned]
+      no change in the reported fact set
+  take out line gate_rule [said, sentence 2]: [TOLD in world shepherd_world] ALWAYS SHOWS: when [the shepherd leaves the gate open], then [the flock has been driven through the gate]; the words 'only once' make this the single permitted way
+      no change in the reported fact set
+  take out line since1 [said, sentence 2]: [TOLD in world shepherd_world] line flock_top SINCE line gate_stood_open; line gate_rule is the rule the shepherd gives with it
+      no change in the reported fact set
+  take out line added_note [filled in, sentence 3]: [CLAIMED] added_note: foreman ADDED TO note; filled in: the sentence names no object of adding, the translator takes the note as what he added to; 'added' has no shape in the shape book
+      no longer: holds(added_to(foreman,note))
+  take out line lower_field [said, sentence 3]: [TOLD in world note_world] lower_field is a field; it answers a press as not stated
+      no change in the reported fact set
+  take out line grass [said, sentence 3]: [TOLD in world note_world] grass is grass; it answers a press as not stated
+      no change in the reported fact set
+  take out line field_empty [said, sentence 3]: [TOLD in world note_world] the lower field was empty of grass
+      no change in the reported fact set
+  take out line note_end [said, sentence 4]: [CLAIMED] the note ended with the finish time of the rounds
+      no longer: holds(ended_with(note,rounds_finish_time))
+  take out line rounds_done [said, sentence 4]: [GIVEN] rounds finished [stage: before the note's end]
+      no longer: holds(finished(rounds))
+
+TOTAL delta lines over 20 removals: 10. Time: 9 s.
+
+INSIDE 'shepherd_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  8 lines in the world; 6 facts stated directly; 6 facts found; 0 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(gate_open(gate))   <- lines gate_stood_open
+      - line gate_stood_open [said, sentence 2]: [TOLD in world shepherd_world] gate stood open [stage: when the shepherd reasoned]
+    holds(in(flock,top_field))   <- lines flock_top
+      - line flock_top [said, sentence 2]: [TOLD in world shepherd_world] flock is in the top field
+    kind(flock,flock)   <- lines flock
+      - line flock [said, sentence 2]: [TOLD in world shepherd_world] flock is a flock; it answers a press as not stated
+    kind(gate,gate)   <- lines gate
+      - line gate [said, sentence 2]: [TOLD in world shepherd_world] gate is a gate; it answers a press as not stated
+    kind(shepherd,shepherd)   <- lines shepherd
+      - line shepherd [said, sentence 2]: [TOLD in world shepherd_world] shepherd is a shepherd; it answers a press as not stated; it is a DOER
+    kind(top_field,field)   <- lines top_field
+      - line top_field [said, sentence 2]: [TOLD in world shepherd_world] top_field is a field; it answers a press as not stated
+  DERIVED INSIDE 'shepherd_world' (not stated by any line):
+    (none)
+
+INSIDE 'note_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  3 lines in the world; 3 facts stated directly; 3 facts found; 0 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(empty_of_grass(lower_field))   <- lines field_empty
+      - line field_empty [said, sentence 3]: [TOLD in world note_world] the lower field was empty of grass
+    kind(grass,grass)   <- lines grass
+      - line grass [said, sentence 3]: [TOLD in world note_world] grass is grass; it answers a press as not stated
+    kind(lower_field,field)   <- lines lower_field
+      - line lower_field [said, sentence 3]: [TOLD in world note_world] lower_field is a field; it answers a press as not stated
+  DERIVED INSIDE 'note_world' (not stated by any line):
+    (none)

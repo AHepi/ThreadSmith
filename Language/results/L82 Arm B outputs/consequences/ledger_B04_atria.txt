@@ -1,0 +1,77 @@
+LEDGER B04: 18 lines; 5 facts stated directly; 5 facts found; 0 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line a1 [said, sentence 1]: [CLAIMED] nurse is an incoming nurse; response to a press not stated
+      no longer: kind(nurse,nurse)
+  take out line a2 [said, sentence 1]: [CLAIMED] notes are handover notes; response to a press not stated
+      no longer: kind(notes,handover_notes)
+  take out line a3 [said, sentence 1]: [GIVEN] sister is the night nurse; response to a press not stated
+      no longer: kind(sister,night_nurse)
+  take out line a4 [said, sentence 1]: [CLAIMED] nurse READ notes
+      no longer: holds(reads(nurse,notes))
+  take out line a5 [said, sentence 1]: [GIVEN] notes were left by sister
+      no longer: holds(left_by(notes,sister))
+  take out line t1 [said, sentence 2]: [TOLD in world notes_world] sister is the night nurse; response to a press not stated
+      no change in the reported fact set
+  take out line t2 [said, sentence 2]: [TOLD in world notes_world] patient is a patient; response to a press not stated
+      no change in the reported fact set
+  take out line t3 [said, sentence 2]: [TOLD in world notes_world] bed is a bed; response to a press not stated
+      no change in the reported fact set
+  take out line t4 [said, sentence 2]: [TOLD in world notes_world] desk is a desk; response to a press not stated
+      no change in the reported fact set
+  take out line t5 [said, sentence 2]: [TOLD in world notes_world] night_staff are the night staff; response to a press not stated
+      no change in the reported fact set
+  take out line t6 [said, sentence 2]: [TOLD in world notes_world] ward is a ward; response to a press not stated
+      no change in the reported fact set
+  take out line t7 [said, sentence 2]: [TOLD in world notes_world] PLAN: sister plans to move the patient toward the desk SO THAT the patient's breathing is easy to monitor
+      no change in the reported fact set
+  take out line t8 [filled in, sentence 2]: [TOLD in world notes_world] the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk (filled in: the dependence is read out of 'since')
+      no change in the reported fact set
+  take out line t9 [filled in, sentence 2]: [TOLD in world notes_world] the patient is in the bed (filled in: the text implies this but does not say it)
+      no change in the reported fact set
+  take out line t10 [filled in, sentence 2]: [TOLD in world notes_world] moving the patient toward the desk changes whether the bed is near the desk (filled in: missing step, resting on t9)
+      no change in the reported fact set
+  take out line t11 [said, sentence 2]: [TOLD in world notes_world] a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]
+      no change in the reported fact set
+  take out line t12 [said, sentence 2]: [TOLD in world notes_world] the patient's breathing being easy to monitor SINCE line t11
+      no change in the reported fact set
+  take out line t13 [said, sentence 3]: [TOLD in world notes_world] the patient's temperature was normal at midnight
+      no change in the reported fact set
+
+TOTAL delta lines over 18 removals: 5. Time: 8 s.
+
+INSIDE 'notes_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  13 lines in the world; 12 facts stated directly; 14 facts found; 2 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    changes(move(patient,toward(desk)),near(bed,desk))   <- lines t10
+      - line t10 [filled in, sentence 2]: [TOLD in world notes_world] moving the patient toward the desk changes whether the bed is near the desk (filled in: missing step, resting on t9)
+    denied(walk_ward(night_staff))   <- lines t11
+      - line t11 [said, sentence 2]: [TOLD in world notes_world] a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]
+    depends(easy_to_monitor(breathing(patient)),near(bed,desk))   <- lines t8
+      - line t8 [filled in, sentence 2]: [TOLD in world notes_world] the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk (filled in: the dependence is read out of 'since')
+    holds(in_bed(patient,bed))   <- lines t9
+      - line t9 [filled in, sentence 2]: [TOLD in world notes_world] the patient is in the bed (filled in: the text implies this but does not say it)
+    holds(lets(near(bed,desk),watch_chest_rise(night_staff,patient)))   <- lines t11
+      - line t11 [said, sentence 2]: [TOLD in world notes_world] a bed near the desk LETS the night staff watch the patient's chest rise; NOT [the night staff walk the ward]
+    holds(normal_temperature(patient))   <- lines t13
+      - line t13 [said, sentence 3]: [TOLD in world notes_world] the patient's temperature was normal at midnight
+    kind(bed,bed)   <- lines t3
+      - line t3 [said, sentence 2]: [TOLD in world notes_world] bed is a bed; response to a press not stated
+    kind(desk,desk)   <- lines t4
+      - line t4 [said, sentence 2]: [TOLD in world notes_world] desk is a desk; response to a press not stated
+    kind(night_staff,staff)   <- lines t5
+      - line t5 [said, sentence 2]: [TOLD in world notes_world] night_staff are the night staff; response to a press not stated
+    kind(patient,patient)   <- lines t2
+      - line t2 [said, sentence 2]: [TOLD in world notes_world] patient is a patient; response to a press not stated
+    kind(sister,night_nurse)   <- lines t1
+      - line t1 [said, sentence 2]: [TOLD in world notes_world] sister is the night nurse; response to a press not stated
+    kind(ward,ward)   <- lines t6
+      - line t6 [said, sentence 2]: [TOLD in world notes_world] ward is a ward; response to a press not stated
+  DERIVED INSIDE 'notes_world' (not stated by any line):
+    achieves(move(patient,toward(desk)),easy_to_monitor(breathing(patient)))   <- lines t10, t8
+      - line t10 [filled in, sentence 2]: [TOLD in world notes_world] moving the patient toward the desk changes whether the bed is near the desk (filled in: missing step, resting on t9)
+      - line t8 [filled in, sentence 2]: [TOLD in world notes_world] the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk (filled in: the dependence is read out of 'since')
+    depends_on(easy_to_monitor(breathing(patient)),near(bed,desk))   <- lines t8
+      - line t8 [filled in, sentence 2]: [TOLD in world notes_world] the patient's breathing being easy to monitor DEPENDS ON the bed being near the desk (filled in: the dependence is read out of 'since')

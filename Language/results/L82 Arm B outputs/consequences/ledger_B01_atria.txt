@@ -1,0 +1,67 @@
+LEDGER B01: 16 lines; 4 facts stated directly; 4 facts found; 0 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line f1 [said, sentence 1]: [CLAIMED] foreman is a farm_foreman; it answers a press as not stated
+      no longer: kind(foreman,farm_foreman)
+  take out line n1 [said, sentence 1]: [CLAIMED] note is a note; it answers a press as not stated
+      no longer: kind(note,note)
+  take out line k1 [said, sentence 1]: [CLAIMED] k1: foreman kept note
+      no longer: holds(kept(foreman,note))
+  take out line e1 [said, sentence 4]: [CLAIMED] note ended
+      no longer: holds(ended(note))
+  take out line sh1 [said, sentence 2]: [TOLD in world note_world] shepherd is a shepherd; it answers a press as not stated
+      no change in the reported fact set
+  take out line fl1 [said, sentence 2]: [TOLD in world note_world] flock is a flock; it answers a press as not stated
+      no change in the reported fact set
+  take out line g1 [said, sentence 2]: [TOLD in world note_world] gate is a gate; it answers a press as not stated
+      no change in the reported fact set
+  take out line tf1 [said, sentence 2]: [TOLD in world note_world] top_field is a field; it answers a press as not stated
+      no change in the reported fact set
+  take out line go1 [said, sentence 2]: [TOLD in world note_world] gate stood open
+      no change in the reported fact set
+  take out line fi1 [said, sentence 2]: [TOLD in world note_world] flock is in the top_field
+      no change in the reported fact set
+  take out line si1 [said, sentence 2]: [TOLD in world note_world] line fi1 SINCE line go1
+      no change in the reported fact set
+  take out line al1 [said, sentence 2]: [TOLD in world note_world] ALWAYS SHOWS: when the shepherd leaves the gate open, the flock has been driven through the gate
+      no change in the reported fact set
+  take out line lo1 [filled in, sentence 2]: [TOLD in world note_world] shepherd left the gate open
+      no change in the reported fact set
+  take out line al2 [filled in, sentence 2]: [TOLD in world note_world] ALWAYS SHOWS: when the flock has been driven through the gate, the flock is in the top_field
+      no change in the reported fact set
+  take out line lf1 [said, sentence 3]: [TOLD in world note_world] lower_field is a field; it answers a press as not stated
+      no change in the reported fact set
+  take out line eg1 [said, sentence 3]: [TOLD in world note_world] lower_field was empty of grass
+      no change in the reported fact set
+
+TOTAL delta lines over 16 removals: 4. Time: 7 s.
+
+INSIDE 'note_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  12 lines in the world; 9 facts stated directly; 10 facts found; 1 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(empty_of_grass(lower_field))   <- lines eg1
+      - line eg1 [said, sentence 3]: [TOLD in world note_world] lower_field was empty of grass
+    holds(in_field(flock,top_field))   <- lines al1, al2, lo1
+      - line al1 [said, sentence 2]: [TOLD in world note_world] ALWAYS SHOWS: when the shepherd leaves the gate open, the flock has been driven through the gate
+      - line al2 [filled in, sentence 2]: [TOLD in world note_world] ALWAYS SHOWS: when the flock has been driven through the gate, the flock is in the top_field
+      - line lo1 [filled in, sentence 2]: [TOLD in world note_world] shepherd left the gate open
+    holds(left_open(shepherd,gate))   <- lines lo1
+      - line lo1 [filled in, sentence 2]: [TOLD in world note_world] shepherd left the gate open
+    holds(open(gate))   <- lines go1
+      - line go1 [said, sentence 2]: [TOLD in world note_world] gate stood open
+    kind(flock,flock)   <- lines fl1
+      - line fl1 [said, sentence 2]: [TOLD in world note_world] flock is a flock; it answers a press as not stated
+    kind(gate,gate)   <- lines g1
+      - line g1 [said, sentence 2]: [TOLD in world note_world] gate is a gate; it answers a press as not stated
+    kind(lower_field,field)   <- lines lf1
+      - line lf1 [said, sentence 3]: [TOLD in world note_world] lower_field is a field; it answers a press as not stated
+    kind(shepherd,shepherd)   <- lines sh1
+      - line sh1 [said, sentence 2]: [TOLD in world note_world] shepherd is a shepherd; it answers a press as not stated
+    kind(top_field,field)   <- lines tf1
+      - line tf1 [said, sentence 2]: [TOLD in world note_world] top_field is a field; it answers a press as not stated
+  DERIVED INSIDE 'note_world' (not stated by any line):
+    holds(driven_through(flock,gate))   <- lines al1, lo1
+      - line al1 [said, sentence 2]: [TOLD in world note_world] ALWAYS SHOWS: when the shepherd leaves the gate open, the flock has been driven through the gate
+      - line lo1 [filled in, sentence 2]: [TOLD in world note_world] shepherd left the gate open
