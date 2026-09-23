@@ -1,0 +1,925 @@
+# Cross-examination: a determination that a revised theory replaces its authority
+
+## Notes for the record
+
+- **Written** 23 September 2026. This file is one of three parts cut from a brief of that date, and it is sent, as the one message, to one auditor. No other reply, to that brief or to another part, is shown with it. Nothing in it was sent before it was committed.
+- **Sources**, each checked by md5 when this file was built:
+  - file 11, embedded in full in section 3 (`Semantics/authority/11 … revision 1.md`, md5 5e494c1095d920d128b9a79de378f923; the embedded block has the same md5);
+  - file 10, excerpted in section 4 (`Semantics/authority/10 … standalone theory.md`, md5 3a8cd7c8ca6f3ad3b8a85ab9984d850e);
+  - the case book (md5 4f488d149e44669240d5db546c8e946a), whose cases for the pressed rows in this text are given word for word in section 5;
+  - the S81 plan, second version (md5 8e3473a8f00bac7942586adf625ab871), quoted in section 2;
+  - the mark rules of the Stage 1 brief `s81_1C_A.txt` (md5 2d4277c5a63cfa5a8ccaa870b5f9c7a9), quoted in section 2;
+  - step 4 of the determination, `03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md` (md5 f4ae3b540ff4807da7ad00ae93d94df4), whose CLAIM places are cited by number in sections 4 to 6;
+  - the determination, `04 Step 3 and the determination - file 11 against file 10.md` (md5 2f25f0f8012132967acc2af6c6692f7b), and its raw readings 04b, 04c and 04d, quoted in sections 5 and 6.
+- **Quotations** are word for word. Omissions are marked "…". In quotations from the plan and the determination, the name of the party that rules is replaced by "[the determiner]", the names of the two auditors by "[auditor 1]" and "[auditor 2]", and any other insertion is in square brackets. Headings quoted from the plan are set one level lower, and some quoted lists are run together into one paragraph.
+- **How the replies will be read.** This rule was written and committed before this file was sent.
+  1. The replies are evidence, not results.
+  2. Every row on which either reply says RULING FALLS, and every new away-row that either reply names, is read again from the texts by a fresh determiner who did not write the determination. That determiner first states the determination's ruling, then the reply's argument, and then rules.
+  3. A change of ruling is recorded with its reason, and with the fact that it came after the cross-examination.
+  4. If a changed row is a theory change away from the thoughtful person, test (b) fails, and the standing verdict is applied again under the plan's clauses.
+  5. A failed call supports nothing: a reply that is not accepted counts neither for nor against the determination.
+  6. The two replies are read independently of each other.
+  The reply to each of the three parts of this brief is read by this rule on its own, independently of the replies to the other parts and of the other auditor's reply.
+- **Length:** 16,687 words.
+
+---
+
+## 1. What you are asked to do
+
+A theory of explanation exists in two versions. The first, called **file 10** here, is the authority. The second, called **file 11**, is a revision of it. File 11's opening note (f11 L5) says the revision rewrites file 10 for coherence and changes one claim: a theorem called Derivation 3, with the three sentences that restate it.
+
+To test the revision, fifty-two short cases were used, O1 to O52. Each has a situation and a thoughtful person's verdict, the **fixed verdict**, written in advance. Two testers, A and B, each read file 10 and, in a separate reading, file 11 against every case. Each marked how the theory's verdict on a case compares with the fixed verdict. Neither tester was told that a second version exists. Two auditors from outside read file 11 blind, before seeing any fixed verdict, and then audited the testers' readings of file 11. A determiner then ruled every mark from the texts, by rules fixed before any reading came back.
+
+**The determination rules that the revision replaces the authority.** It finds two cases on which the verdict changes between the files, both toward the thoughtful person and none away. It also finds forty-one changes of claim inside the theory that file 11's note does not declare, none of them shown harmful by any case.
+
+**Your job is to try to overturn that determination.** This text carries three of the seven pressed rows, O5, O30 and O17, the rows test (b) turned on; in it, "the pressed rows" means these three. The other four rows and the standing clause are examined in separate texts. Test its rulings against the texts as hard as you can, and give its reasons their full weight. The testers, the determiner, and the author of the theory, the revision, the cases and the fixed verdicts all belong to one model family. You read from outside it.
+
+**What this brief holds.**
+- Section 2: the rules the determination applies, word for word.
+- Section 3: file 11 in full.
+- Section 4: file 10, **excerpted**: only the passages the pressed rows rest on, their counterparts, and every file-10 sentence the determination cites on those rows.
+- Section 5: the three pressed rows, each with its case, the determination's ruling and reasons, the contrary readings, and the marks.
+- Section 6: the determination's summary, without its list of the CLAIM places by line.
+- Section 7: your tasks and the form of your report.
+
+**Citing.** "f11 L419 s2" is file 11, line 419, second sentence. Line numbers count the lines of each file, with its title line as line 1, and blank lines count. In section 3, the line after the BEGIN marker is file 11's line 1. Every quotation in this brief gives its line. Quote the words whenever you rely on them, so that a reader can find the sentence by its words as well as by its number.
+
+**Terms the determination uses.**
+- **1K** is a tester's reading of file 10 against all fifty-two cases; **1C** is the same tester's reading of file 11. "1K A" is tester A's 1K.
+- **2a** is an auditor's blind reading of file 11 against all fifty-two cases, written before it saw any fixed verdict or tester reading. **2b** is the same auditor's audit of one tester's 1C. In it, the **BLIND MARK** is the auditor's 2a reading, marked against the fixed verdict, and **YOUR MARK** is the auditor's own final mark. Auditor 1 audited both testers. Auditor 2 audited tester B; its audit of tester A failed twice and is missing.
+- **1D** and **2D** are the testers' lists of every difference between the files, and the auditors' audits of those lists.
+- **The baseline** is the set of file-10 marks fixed by an earlier determination (called S75), from an earlier reading of file 10 (called S72). "S75 corrected" means the plan's rule for the file-10 mark changed a baseline mark.
+- The determination was built in steps. **01**: the determiner's rulings on every case from the two texts alone, committed before any reading was opened. **03** (the plan's step 4): every difference between the files, numbered M1 to M59 and ruled CLAIM (the two files claim different things), WORDING or ORDER. *application* marks a sentence first stated in file 11 but derivable from file 10. **Undeclared** means not declared by file 11's note. **04b**: rulings on the 33 rows the plan names. **04c** and **04d**: two verifications that tried to overturn those rulings, one from the texts and one on the application of the plan's rules. **04**: the assembly, which rules the one row the verifications left open and holds the determination.
+- **P1 to P4** are the predictions written before the run, and **(a) to (d)** the tests for file 11 standing (section 2). **E1** and **E2** are two expectations about the readers (section 6).
+
+---
+
+## 2. The rules the determination applies
+
+These are quoted word for word from the S81 plan, second version, and from the Stage 1 brief. They were fixed before any reading came back.
+
+### The baseline and the predictions (plan, "The frozen prediction")
+
+The baseline is S75's determination on file 10 (from the S72 table as audited): **DISAGREE** on O48; **SILENT** on O1, O12, O20, O21, O27, O35, O40 and O50; **AGREE** on the other forty-three, O24 among them.
+
+- **P1, the one change.** Under file 11, [the determiner's] ruled mark on O48 is AGREE, and it rests on the qualified claim of Derivation 3 or on one of the three sentences restated with it (the answer to grievance 3, attack point (D), the Part XV entry). Under file 10 it is DISAGREE, resting on the unqualified claim. O48 is CHANGED toward the thoughtful person, in its verdict and in the passage it rests on.
+- **P2, nothing else.** Every other case keeps its baseline mark under file 11 on [the determiner's] ruling: forty-three AGREE, the same eight SILENT, and no DISAGREE, SPLIT or CASE DISPUTED that file 10 does not also give.
+- **P3, the claim count.** Of the places where file 10 and file 11 differ, the ones [the determiner] rules CLAIM after reading both 1D lists and both 2D audits are Derivation 3 and the three sentences restated with it. Every other place is WORDING or ORDER. Recorded before the run, against P3: S78 item 6 found one sentence file 10 does not carry, in Part XI's Repair paragraph, "each as a stated condition over stated occasions, and a protected condition is lost exactly when it fails on an occasion it covers" (file 11, the paragraph opening at line 427, the sentence at line 433; file 10's Repair paragraph, line 438, has no such clause); the "Declared inputs" paragraph of Part XIV (log S76) is a second candidate. P3 stands only if [the determiner] rules both WORDING.
+- **P4, the instrument (a claim about the readers, not the theory).** Within each model, the 1K and 1C marks differ on O48 and on no other case.
+
+### The words [the determiner] rules with, fixed before the data
+
+- **The file-11 mark** of a case: [the determiner's] ruling, from file 11's text, informed by both 1C returns and all four 2b audits.
+- **The file-10 mark**: S75's baseline, unless both 1K returns agree on a different mark and [the determiner's] own reading of file 10 confirms it; then the baseline is corrected, and the correction to S75 is recorded in S81 Results with the row.
+- **Verdict SAME or CHANGED**: whether the two ruled marks differ, and, where both are DISAGREE, SPLIT or SILENT, whether they concern the same point. The rule "a clarification is not a changed verdict" is the brief's "Same finding", fixed in advance.
+- **Passage SAME or CHANGED**: whether the sentence of file 11 the verdict rests on claims something different from its counterpart in file 10. The program marks every quoted sentence found in file 11 and absent from file 10; [the determiner] decides whether its claim differs, with the 1D and 2D returns beside it.
+- **Direction**: toward the thoughtful person when the file-11 mark is nearer AGREE than the file-10 mark, away when it is further (AGREE, then SILENT or SPLIT, then DISAGREE).
+- **A theory change** is a case CHANGED in its verdict where the change traces to a passage CHANGED. **Reader variation** is a difference of marks where both verdicts rest on sentences the two files share word for word; it is recorded as a finding about the readers, or about S75, and counts neither for nor against file 11.
+
+### What counts as file 11 standing as the authority
+
+Unchanged. File 11 stands, on [the determiner's] determination, when all four hold:
+
+- **(a)** O48 is AGREE under file 11: the change it was written for is delivered, whatever the control arm shows.
+- **(b)** No case shows a theory change away from the thoughtful person.
+- **(c)** No sentence of file 11 is ruled to give a wrong verdict on a case where file 10's corresponding sentence gave the thoughtful person's.
+- **(d)** No cross-reference in file 11 is ruled to point wrong in a way that changes what a sentence claims. A pointer that is only a slip is recorded as an erratum for a later revision.
+
+With (a) to (d), and P2 and P3 holding, file 11 stands as written and its note is confirmed. With (a) to (d), and P2 or P3 failing only by a theory change toward the thoughtful person or by an undeclared CLAIM that no case shows harmful, file 11 stands with those findings recorded against its note; the note is frozen, so the correction lives in S81 Results, and in a revision 2 if the owner asks for one. Where (a), (b), (c) or (d) fails, file 10 remains the authority and S81 Results lists what a revision 2 would have to repair. If 1K shows O48 AGREE under file 10 (a fresh reader supplying the qualification the proof already assumes, as S75 said the proof does), P1's file-10 half fails under this instrument, rests on S72 and S75 as audited, and is reported so; it bears on P4 and leaves (a) untouched.
+
+### The marks (Stage 1 brief, the words fixed for the testers)
+
+- **Fixed verdict.** The thoughtful person's verdict printed with each case. It is the reference you compare against.
+- **Point.** Each sentence of the fixed verdict that states a finding: who did what, what counts as what, what is present or what is lacking.
+- **The theory's verdict.** What the theory, read as it stands, finds on each point, by its own definitions and conditions. Where the theory leaves a word undefined, read it in its ordinary sense.
+- **Same finding.** A verdict of the theory that reaches the fixed verdict's finding and adds a qualification, a limit or a more exact wording reaches the same finding. Write the addition under NOTE. A mark records findings; differences of wording belong in NOTE.
+- **Marks.** Give each case exactly one mark. Take the first rule, in this order, that fits:
+  1. **CASE DISPUTED**: the situation itself, read in ordinary terms before any theory, decides a point against the fixed verdict. Name what in the situation, and in the situation alone, decides it, and give the theory's verdict as well.
+  2. **DISAGREE**: on at least one point, the theory's verdict reaches a different finding from the fixed verdict. Name that point and quote the sentence of the theory that gives the different finding.
+  3. **SPLIT**: on at least one point, the theory's sentences support two readings that reach different findings, and the text leaves the choice between them open. Give both readings, each with its sentence.
+  4. **SILENT**: on at least one point, the theory leaves the finding open, because it takes the deciding matter as an input the case leaves unstated, or because its sentences stop short of deciding it. Name the point and record your search: the Parts you read for it and the words you looked for.
+  5. **AGREE**: on every point, the theory's verdict reaches the same finding as the fixed verdict.
+
+---
+
+## 3. File 11, in full
+
+=============== BEGIN FILE 11 ===============
+# Claude Fable Semantics
+
+## A structural class of explanatory creativity, with selected and constructed correspondence
+
+*Revision 1 (file 11), 22 September 2026. A rewrite of file 10 for coherence: the same primitives, definitions, conditions, constructions and derivations, in the same names and notation, reordered and restated so that every front-matter sentence defers to the exact statement in the body and every restatement of a theorem carries the theorem's own qualification. One claim changes: Derivation 3, whose unqualified form gave the wrong verdict on the audit's case O48 and whose proof already assumed the qualification (Semantics results S75). The three sentences that restated it (the answer to grievance 3, attack point (D), the Part XV entry) change with it. Nothing else changes in what is claimed.*
+
+---
+
+# Part 0 — Read this first
+
+## What this document claims
+
+An explanation is a **question-relevant organization of dependencies**, held to a target by a **transport** that is checked only by **what changes when things are changed**. The definition never asks whether a piece of the explanation "is the same kind of thing" as a piece of the world. That question has no independent content: at any level of detail, a *kind* is nothing over and above how a component responds to the changes that level admits. Two components no admitted change can separate are one kind at that level, whatever labels anyone attaches to them (Part II, Derivation 1).
+
+Correspondence between a representation and what it represents is not a primitive here. It is a **relation with a provenance**. A correspondence can be *selected*, produced by variation and survival on a history of encountered changes; or *constructed*, produced by an episode of conjecture and criticism; or merely *declared* by whoever writes the model down. The three are told apart by their histories, not their outputs, and the semantics keeps them apart (Part IV). Creativity lives in construction. Selection produces the raw material construction works on. Declaration is permitted only as a modelling convenience, and a claim about creativity cannot rest on it.
+
+Questions have provenance too. A question, meaning its target, its scope of admitted changes and what it asks, can be found as well as answered, and the semantics represents both (Part III, Derivation 5). This is what separates it from any class in which questions are inputs: such a class cannot represent question-finding, and question-finding is at least half of creativity.
+
+The **constitutive conjecture** is this: explanatory creativity is fully characterized by (i) organizations and the changes they admit, (ii) transports between organizations checked by change-fidelity alone, (iii) the provenance of those transports and of the questions they serve, and (iv) their physical realization. A genuine explanatory achievement that these four cannot represent counts against the conjecture. A candidate that satisfies all four while plainly explaining nothing counts against it too. Part XV lists what would count.
+
+## What this document does not claim
+
+It does not derive reference from uninterpreted matter. It derives reference from matter **plus a selection or construction history**. Physics says what organization a lump of matter instantiates; history says how that organization came to track another. Neither alone yields representation.
+
+It does not say prediction is explanation. Fidelity is over **component structure under change**, not over outputs. Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so (Derivation 9).
+
+It does not supply an objective aesthetics, a probability of truth, a merit function, a measure of worth, or a ranking of thinkers. Where a claim needs one of these, the semantics takes it as a **declared input** and marks the place (Parts XI, XIV). It does not supply a division of credit among contributors beyond what a history establishes (Part XI).
+
+It does not prove that any human, machine, institution or lineage belongs to the classes defined. It defines the classes.
+
+## What is primitive, what is an index, and what is derived
+
+The semantics has two primitives: the **physical module** \(\Theta\), which says what organization a physical occurrence instantiates at a grain, and the **normative relation** \(\mathcal N\), taken as an input wherever a question invokes worth. Grain, boundary, continuity and the contract of admitted changes are **declared indices**: every claim is relative to them, and none is a predicate that could be true or false. Everything else is derived, in the order Part XIV states. No predicate meaning "really explains", "is a cause" or "is knowledge" appears anywhere (Derivation 6).
+
+## Grievances, anticipated
+
+Each answer points at the part of the document that carries it; the front matter states nothing the body does not state more exactly.
+
+**1. "Without declared kinds you cannot tell a cause from a correlation."** You can, and only this way. A correlation has no component that responds to an intervention on its supposed input; a cause does. That is a difference in edit-response, which is what the semantics checks (Part II, "Kinds are edit-signatures"). A declared label adds no discriminating power: where a separating change exists, fidelity finds it; where none exists, the label asserts a distinction the level does not contain.
+
+**2. "So this is operationalism: a thing is what you can do to it."** A *kind* is what a level's admitted changes can distinguish. A *content* is a whole organization, which can contain components that no change at that level separates, and then they are one kind *at that level*, which is correct rather than a loss. At a finer level with more admitted changes they may separate. Every kind-claim is indexed to its level. That is scoping, not operationalism.
+
+**3. "If correspondences are selected, you have made truth a matter of survival."** No. Selection produces a transport. Whether that transport is faithful on changes it was never selected against is a fact about the transport and the world, independent of whether it survived. Derivation 3 says that a selected transport is underdetermined by its history on an unseen change wherever its population admits a differing survivor there. Survival is how the transport got there; fidelity is what it is.
+
+**4. "Then everything is relative to a contract of admitted changes, and there is no objectivity."** The physical theory fixes which changes are possible at all. A contract is a declared subset of those. An account is scoped to its contract and says so. Within any contract there is a fact of the matter about fidelity. A contract that quietly excludes physically possible changes to protect an account is not caught by a rule about intentions; it is caught by the requirement that the exclusion be stated (non-vacuity, Part V), and then by any criticism that supplies the excluded change. Objectivity lives in the physics and the fidelity facts; scope-honesty lives in the record.
+
+**5. "This is teleosemantics, structural realism or functionalism with new words."** It shares commitments with each and differs from each. From teleosemantics it takes the idea that a correspondence has a history; it differs by distinguishing selected from constructed histories and locating creativity only in the latter. From structural realism it takes structure-preservation; it differs by making preservation change-driven and component-level, and by refusing a global isomorphism requirement. From functionalism it takes substrate-independence; it differs by imposing physical realization obligations at every attribution. Whether the combination is new is a question about the literature.
+
+**6. "You have replaced explanation with evolution."** Selection appears once, at the bottom, to produce the primitive layer of persistent things that explanation operates on. Construction is a separate provenance with a separate witness, and every creative attribution requires it. Nothing about construction is reduced to selection; Part IV forbids the reduction and Part XV names its refutation.
+
+**7. "Mathematics has no interventions."** An admitted change need not be a physical intervention. Removing an axiom, dropping a constraint or changing a dimension are edits on an organization, and fidelity under them is well defined. A proof explains, relative to a question, when its components respond to those edits as the target structure does (Part VII).
+
+**8. "Where is aesthetics?"** In Part XI, as a declared normative relation. Artistic effect, artistic purpose and aesthetic reasons get three distinct carriers, and none is defined as another. The semantics does not pretend to know which aesthetic reasons are true.
+
+**9. "'Selected' is as much a stipulation as 'is a cause'."** Selection is a physical history: a population, a variation operator, a survival condition and a sequence of events (Parts IV, XII). Whether it occurred is a claim about the physical module, fallible but checkable in principle. A kind-label is not a claim about anything.
+
+**10. "Freezing the question for assessment while letting questions change across episodes is having it both ways."** It is, deliberately, and the two ways are indexed so they cannot be confused. An assessment is an event with a frozen contract. An episode is a history in which contracts change, and every change carries a provenance record. Derivation 7 shows the two are consistent.
+
+**11. "Kinds obviously exist. A rule is not a cause."** A rule and a cause differ in how they respond to changes: a rule's application changes when the rule is edited and not when the world is intervened on; a cause's assignment changes under intervention. That is a difference in edit-signature (Part II), and the semantics represents it exactly. What it denies is that the difference is available before the admitted changes are fixed, or independently of them.
+
+## Where to attack this
+
+The load-bearing claims, in the order of how much falls if they fail, are stated exactly in Part XV together with what would refute each. In short: (A) sufficiency of the four conditions of Account; (B) their necessity; (C) the eliminability of kinds; (D) the two provenances and the underdetermination of selected transports; (E) the representability of question-finding. Anything else is a detail.
+
+---
+
+# Part I — Commitments
+
+**Explanatory realism.** Whether a transport is faithful on a contract is independent of whether anyone accepts it. Systems can be wrong about their transports, their observations, their criticisms and their own capacities.
+
+**Fallibility without falsehood-as-work.** A theory may contain an accurate scoped dependence together with errors elsewhere. What cannot count as explanation is an error in the very dependence alleged to do the work.
+
+**Conjecture, criticism, action.** An idea may be entertained without justification. A criticism has a target and is itself conjectural. A thinker may act on an appraisal without certifying it.
+
+**Recursive scrutiny with operative return.** Any aspect of a system's practice, a question, a contract, a transport, a method, an attention policy, can become a target, and the result must be able to change how the system proceeds.
+
+**Substrate independence with physical obligations.** Any carrier may bear an organization. Every attribution of an organization to a physical system must be permitted by the adopted physics.
+
+**Two provenances, not one.** Selection and construction both produce correspondences. They are distinguished by their histories. Neither is reduced to the other.
+
+---
+
+# Part II — Organizations and their changes
+
+## Organizations
+
+An organization is
+
+\[
+D=(V,(X_v)_{v\in V},J,B,A,L).
+\]
+
+\(V\) is a set of ports, each with a nonempty value domain \(X_v\). A valuation is an element of \(X_D=\prod_v X_v\). \(J\) indexes components; each component \(j\) has a footprint \(V_j\subseteq V\). \(B\) is a set of boundary conditions. \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\). For each \(j\), edit \(a\), and boundary \(b\), the interpretation supplies
+
+\[
+L_j(a,b)\subseteq\prod_{v\in V_j}X_v .
+\]
+
+The compatible valuations are
+
+\[
+\operatorname{Sol}_D(a,b)=\{z\in X_D:\forall j\in J,\ z|_{V_j}\in L_j(a,b)\}. \tag{O}
+\]
+
+A deleted component imposes the full relation on its ports. An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component.
+
+Values of ports may be paths, functions, fields, proofs or histories. Cyclic constraints are admitted. Several solutions remain several.
+
+## Roles are derived
+
+No role assignment is supplied. A port \(v\) is an **input** under \(A\) when \(A\) contains an edit that sets \(v\) directly. A port is an **output** of component \(j\) when its value is determined by \(L_j\) given the other ports of \(V_j\) across \(B\). A port is an **observation** when \(A\) contains an edit that alters the relation reporting it without altering what it reports. The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read.
+
+## Kinds are edit-signatures
+
+Fix an organization \(D\) and a contract \(C\subseteq A\times B\) (Part III). The **signature** of component \(j\) on \(C\) is
+
+\[
+\operatorname{sig}_C(j)=\{(a,b,L_j(a,b)):(a,b)\in C\}. \tag{K}
+\]
+
+Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide. A kind is an equivalence class of components under this relation. Kinds are therefore relative to the contract; a coarser contract identifies more components, and two components of one kind on \(C\) may separate on a finer contract.
+
+What ordinary language calls a cause, a measurement, a rule or a constitutive status are families of signatures:
+
+- a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;
+- a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;
+- a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule.
+
+These are descriptions of patterns in (K), not additional data. The semantics never asks whether a component "is" a cause. It asks what its signature is. In particular, a part that reads or reports another part has a measurement's signature: change only the reading and the part it reports stays as it was; change the part and the reading follows. Which of the two an account offers as producing an outcome is settled by that signature, not by the account's wording.
+
+---
+
+# Part III — Questions
+
+## Contracts
+
+A question is
+
+\[
+p=(D,\ C,\ b_0,\ \mathcal Q,\ O_p,\ \rho_p).
+\]
+
+\(D\) is the target. The **contract** \(C\subseteq A\times B\) is the set of admitted edit–boundary pairs the claim ranges over; it contains the baseline \((1,b_0)\). \(\mathcal Q\) is a specified set-theoretic operation on \(D\), its solutions and its component structure, with codomain \(Y_p\). The answer profile is
+
+\[
+\operatorname{Ans}_p(a,b)=\mathcal Q(D,a,b). \tag{Q}
+\]
+
+\(O_p\) is the set of obligations being addressed or protected. \(\rho_p\) is the **provenance** of the contract (below).
+
+## The respect is the query
+
+What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of \(\mathcal Q\) and the shape of \(C\), not by a label. A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports. An identification question has a \(\mathcal Q\) that computes a fibre and a \(C\) containing edits to the observed value. An obstruction question has a \(\mathcal Q\) that returns a reachability truth value. Two questions with the same \(D\) and different \((C,\mathcal Q)\) are different questions, and an answer to one is not an answer to the other. A measure that identifies an outcome, with a reliable prediction from it, answers the identification question; whether the measured part also produces the outcome is the production question, and the first answer is not the second.
+
+## Contracts have provenance
+
+\(\rho_p\in\{\text{declared},\ \text{selected},\ \text{constructed}\}\), with the witness required by Part IV. A **declared** contract is stipulated by the modeller. A **selected** contract is the surviving member of a population under a variation-and-survival history. A **constructed** contract is the result of an episode with a construction witness. Any assessment may use any of the three. A claim that an episode *found* a question requires \(\rho_p=\text{constructed}\) for the contract in question, with the witness.
+
+## Scope, and a question that can be wrong
+
+A contract is a declared subset of the physically admitted changes, and a stated scope is what makes it one. An account at a stated scope answers the question asked at that scope; it does not answer a broader question that failed, and a narrowing adopted after a failure is a new claim at a new index (Part VIII). What makes a restriction appropriate to the question asked is a substantive, criticizable part of the claim; the semantics records the restriction and supplies no rule that certifies it.
+
+A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements. Its formulation is still an event. Exposing the defect is another question with its own contract. What is prohibited is changing \(C\) or \(\mathcal Q\) during an assessment without recording that the claim has changed. Supplying a meaning for a replacement query can make a coherent new question; it does not answer the original one.
+
+---
+
+# Part IV — Layers, transports, and provenance
+
+## Occurrences and contents
+
+An **occurrence** is a physically located carrier. A **content** is an organization together with its contract-relative commitments. Occurrences are not identified by carrying the same words; contents are not identified by having the same outputs.
+
+## The primitive layer and the simulation layer
+
+A modelled thinker has at least two organizations in play.
+
+The **primitive layer** \(P\) is an organization whose ports are persistent things with boundaries and identity, whose components are their continuity relations, and whose admitted edits include displacement, occlusion and re-identification. It is the layer at which there are *objects* rather than a field of sensation.
+
+The **simulation layer** \(S\) is an organization over \(P\) whose components are dependencies among things and whose queries are predictions: what a port of \(P\) will take under an admitted edit. \(S\) is where expectation lives.
+
+Neither layer is presupposed to exist in any particular physical system. The semantics describes what it is for them to exist and to be connected.
+
+## Transports
+
+A transport from an organization \(D\) to an organization \(E\) is
+
+\[
+t=(\pi,\tau,\sigma,\lambda)
+\]
+
+where \(\pi:X_D\to X_E\) on the stated scope, \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation. A transport is **faithful on \(C\)** when it satisfies the component and global fidelity conditions of Part V.
+
+## Three provenances
+
+A transport \(t\) between organizations of a physical system has exactly one of three provenances, determined by its history in the physical module:
+
+**Selected.** There is a population \(\mathcal T\) of candidate transports, a variation operator \(\mu\) on \(\mathcal T\), a finite history \(H\subseteq C\) of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on \(H\). The transport \(t\) is a member of \(\mathcal T\) that survived. No member of the history represents \(t\), \(H\), or the survival condition. Write \(\operatorname{Sel}(t;\mathcal T,\mu,H)\). The population \(\mathcal T\) is part of the claim: what \(H\) leaves open about \(t\) is what \(\mathcal T\) leaves open (Derivation 3).
+
+**Constructed.** There is an episode (Part X) whose construction witness prepares \(t\), and in which \(t\), or the organization it targets, is available as a represented target. Write \(\operatorname{Con}(t;h,e)\).
+
+**Declared.** Neither of the above. The transport is entered into the model by its author. Write \(\operatorname{Dec}(t)\).
+
+A physical system may hold selected transports at the primitive layer and constructed transports at the simulation layer; that is the expected arrangement, not a requirement. Construction may operate on selected material. Selection may continue to operate beneath construction. Neither provenance is reducible to the other: a selected transport has no represented target and no criticism in its history; a constructed one has both.
+
+## Representation is derived
+
+An occurrence \(o\) **represents** content \(c\) at grain \(\ell\) when the organization that \(o\) instantiates under the physical module, at grain \(\ell\), admits a transport to \(c\) that is faithful on \(c\)'s contract and whose provenance is selected or constructed:
+
+\[
+\operatorname{Rep}_\ell(o,c)\iff\exists t\,[\operatorname{Faithful}_C(t:\operatorname{Org}_\ell(o)\to c)\land(\operatorname{Sel}(t)\lor\operatorname{Con}(t))]. \tag{R}
+\]
+
+The carrier–content relation is thus a fidelity fact with a history. A system can represent a false theory: the transport from carrier to content is faithful while the content's transport to the world fails. A declared transport does not make an occurrence represent anything; it makes a modeller assert that it does. A carrier keeps its provenance when present access to it is lost, and a later record derived from the carrier is not a second, independent witness to its history.
+
+The one thing (R) takes from outside is \(\operatorname{Org}_\ell(o)\): which organization a physical occurrence instantiates at a grain. That is supplied by the physical module, not by the semantics.
+
+## Expectation, surprise, violation
+
+Let \(t\) be selected on history \(H\) with contract \(C\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
+
+- the **expectation** is \(\operatorname{Ans}_S(\tau(a),\sigma(b))\);
+- a **violation** occurs when fidelity fails at \((a,b)\);
+- **surprise** is a violation at \((a,b)\notin H\).
+
+A system with no transport cannot be surprised. A system whose history exhausts its contract cannot be surprised. Surprise requires an incomplete selection history: the world must admit changes the system's correspondence was never shaped against (Derivation 4). Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3).
+
+Two responses to a violation are distinguished. A **selection response** extends \(H\) and lets \(\mu\) act: the transport is re-tuned within the population. A **construction response** introduces a new organization or a new transport with a construction witness. Only the second can be originative under Part X.
+
+---
+
+# Part V — Account
+
+An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies \(\operatorname{Account}(\mathcal E)\) exactly when the following four conditions hold, each a condition on supplied relations under the changes in \(C\).
+
+**Component fidelity.** For every active component \(k\) of \(E\) with anchor subnetwork \(\lambda(k)\subseteq D\), and every \((a,b)\in C\), the relation obtained by imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports equals the component relation of \(k\) under the translated edit:
+
+\[
+\operatorname{proj}_{V_k}\!\big[\operatorname{Sol}_{\lambda(k)}(a,b)\big]=L_k(\tau(a),\sigma(b)). \tag{F1}
+\]
+
+And the assembled organization agrees:
+
+\[
+\pi[\operatorname{Sol}_D(a,b)]=\operatorname{Sol}_E(\tau(a),\sigma(b)),\qquad \tau(1)=1,\quad \tau(a_2a_1)=\tau(a_2)\tau(a_1). \tag{F2}
+\]
+
+(F1) prevents an assembled match from hiding a wrong decomposition. (F2) prevents a set of locally correct pieces from hiding a lost shared constraint. Together they are fidelity at every level the contract reaches. By (K), (F1) entails that every component of \(E\) has the signature of its anchor; there is no further condition about kinds to state (Derivation 1).
+
+**Question fidelity.** For every \((a,b)\in C\),
+
+\[
+\operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b). \tag{A}
+\]
+
+The query \(\mathcal Q\) is held fixed; an account of a different query is not an account of this one.
+
+**Non-circular dependence.** The answer follows by evaluating \(E\) under its independent boundary conditions. The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named "law" does not discharge this. There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
+
+**Non-vacuity.** \(\operatorname{Sol}_D(1,b_0)\neq\varnothing\). The contract \(C\) is a declared subset of the physically admitted edits, and every physically admitted edit excluded from \(C\) is excluded by a stated scope, not silently. A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \(\mathcal Q\), does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed.
+
+Thus
+
+\[
+\operatorname{Account}(\mathcal E)\iff \text{(F1)}\land\text{(F2)}\land\text{(A)}\land\text{NonCircular}\land\text{NonVacuous}. \tag{E}
+\]
+
+Every conjunct is a condition on how supplied relations behave under the changes in \(C\). None inspects a label.
+
+## What (E) excludes, and what it does not
+
+A **table of observed answers** has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one. A table that genuinely encodes an organization's response to every admitted change is not a table in that sense: it satisfies (F1) as a decomposition does, and it is an account. The word "table" settles nothing; the response under the admitted changes does.
+
+A **reversed calculation**, identification presented as production, fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's. It may be faithful under the identification contract, which is a different question (Part III).
+
+"\(p\) because \(p\)" fails non-circular dependence. So does an account whose only substantive component restates the answer it was asked for; packaging a genuine dependence that answers a different question beside it does not repair this (the bell does not explain the tide).
+
+An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract.
+
+(E) does not exclude a true mechanism guessed for bad reasons; the reasons for adopting it are assessed elsewhere (Part IX). It does not prefer an elegant account to a less elegant one with the same fidelity. It does not reject a coarse dependence for omitting finer workings or an instrument: an account at a coarse grain is an account of the coarse question, and its strength is fixed by its contract, not by what a finer contract would add. A proof answering "why does this follow under these rules?" satisfies (E) for that question without answering "what caused this?"; depth is question-relative and (E) measures none of it.
+
+## Why there is no anchoring condition
+
+A separate condition, "each component of \(E\) must be tied to a component of \(D\) *of the same kind*", would be either redundant or unevaluable. Where \(C\) contains a change separating two kinds, (F1) already fails for a component anchored to the wrong one. Where \(C\) contains no such change, the two are one kind on \(C\) by (K), and the condition would be asserting a distinction that \(C\) does not contain. There is no third case. Derivation 1 makes this exact.
+
+---
+
+# Part VI — Work, support, and interference
+
+Fix \(\mathcal E\) and a declared restriction operation. For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed. Define
+
+\[
+\mathsf S_{E,p}=\{W\subseteq\Gamma:\operatorname{Account}(E|W,p)\}. \tag{S}
+\]
+
+No upward closure and no minimal member are assumed. For nonempty \(B\subseteq W\),
+
+\[
+\operatorname{CriticalBlock}(B;W,p)\iff W\in\mathsf S_{E,p}\land W\setminus B\notin\mathsf S_{E,p}. \tag{B}
+\]
+
+A block may be critical while no singleton in it is. Criticality is relative to the support \(W\) it is assessed in: a commitment critical in one successful support need not be critical in the full candidate, and the supports assessed are the ones actually written, not a support someone could write in their place. For a declared family \(\mathcal V\) of organization edits,
+
+\[
+\operatorname{Boundary}_{E,p}=\{(v,w)\in\mathcal V^2:\operatorname{Account}(E_v,p)\neq\operatorname{Account}(E_w,p)\}. \tag{D}
+\]
+
+**Finite monotone theorem.** If \(\Gamma\) is finite, \(\mathsf S\) is upward closed, and \(\Gamma\in\mathsf S\), then the critical singletons are exactly \(\bigcup\min\mathsf S\) and the globally indispensable ones are exactly \(\bigcap\min\mathsf S\). *Proof.* A member of a minimal support is critical for it. If \(d\) is critical for \(W\), finiteness gives a minimal \(U\subseteq W\); if \(d\notin U\), upward closure makes \(W\setminus\{d\}\) a support. Deletion of \(d\) from \(\Gamma\) preserves support exactly when a minimal support omits \(d\). ∎ The theorem applies only where its assumptions hold; an addition to \(\Gamma\) that destroys a support is the interference case below, and there upward closure fails.
+
+**Redundant routes.** \(\Gamma=\{a,b\}\), \(\mathsf S=\{\{a\},\{b\},\{a,b\}\}\): each is contributory, neither indispensable. Two systems with the same output table may differ in which routes are active; the semantics represents the difference (Derivation 9). A route already present in the candidate is a route whether or not anyone has described its work; a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's.
+
+**Interference.** \(\Gamma=\{a,b\}\), \(\mathsf S=\{\{a\}\}\): the full candidate fails although a subset succeeds. Success of a subset does not imply success of the whole; \(b\) is not made "not a commitment" to repair this.
+
+**Infinitary support.** \(\Gamma=\{d_n:|x|\le 1/n\}\): every unbounded index set determines \(x=0\); no minimal support and no singleton witness exists. (B) records the collective contribution.
+
+**Hard-to-vary.** For explanatory jobs \(F\subseteq F'\), \(\operatorname{Pres}(F')\subseteq\operatorname{Pres}(F)\), where \(\operatorname{Pres}(F)=\{v\in\mathcal V:\forall f\in F,\operatorname{Account}(E_v,f)\}\). More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
+
+---
+
+# Part VII — Exact constructions
+
+## Production and direction
+
+Stipulate \(H:=U_H,\ \theta:=U_\theta,\ L:=H\cot\theta\). Under \(A\) containing interventions on \(H\) and \(\theta\), these ports are inputs and \(L\) is an output, by Part II. An intervention on \(L\) replaces its component and leaves \(H,\theta\) unchanged. The forward organization is faithful under this contract. The reversed calculation \(H=L\tan\theta\) is not: intervening on \(H\) changes the target's \(L\) but not the calculation's \(H\). It is faithful under the identification contract, whose edits alter the observed \(L\). Direction is derived from the admitted edits; the nouns "pole" and "shadow" fix nothing.
+
+## Identification
+
+Let \(Z\) be the admitted states, \(g:Z\to Y\) the measurement, \(f:Z\to F\) the feature. The fibre at \(y\) is \(Z_y=g^{-1}(y)\). The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1) It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\). (I2) For linear \(A\) and feature \(c^\top\), identification is \(\ker A\subseteq\ker c^\top\). (I4) Repeating rows changes no kernel; an independent calibration can.
+
+For the two balances \(\begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}\), the kernel is spanned by \((1,-1,-1)\); the readings identify \(b_B-b_A\) and not \(x\). This is an account of a limitation. "Set \(b_B=0\) because it gives the mass I favour" is not an inference from the readings; its support is circular though its content might be true.
+
+## Obstruction
+
+For allowed steps \(R\) and an invariant \(I\) with \(zRz'\Rightarrow I(z)=I(z')\), no allowed path joins states of different invariant value. (O1) Equal values do not establish reachability. Twenty-three indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result.
+
+## Explanations that remove structure
+
+A question of the form "why is there no \(X\)-effect?" has a target \(D\) in which the ports and components a rival account would need are absent, and a contract containing the edits that would introduce them. An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both unchanged. The rival's supposed structure is anchored to a *deleted* subnetwork, whose relation is full by (O). This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be.
+
+## Odd-order skew-symmetric matrices
+
+Question: why is every odd-order real skew-symmetric matrix singular? Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed. The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away. It satisfies (A): the answer is the absence of invertible matrices in the family, and under each contrast the family contains one. Non-circular dependence is witnessed by \(I_3\) under removal of skewness and by \(\begin{pmatrix}0&1\\-1&0\end{pmatrix}\) under removal of oddness. Non-vacuity is witnessed by any nonzero odd skew matrix. The expansion is an account. That a three-line proof is shorter is not a fifth condition.
+
+## Constitutive rules
+
+A rule relation \(C_r\subseteq Z\times S\) answers "which status under this rule?" by its fibre. Its signature under (K) is invariant under interventions on \(Z\) and variable under edits to \(C_r\). Whether the rule governs a practice, and whether it should, are separate questions with separate contracts.
+
+---
+
+# Part VIII — Transport results
+
+**Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\), the same holds for every admitted finite composition with matching scopes. *Proof.* \(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct. ∎
+
+**Relational transport.** For \(R\subseteq Z_D\times Z_E\), forward preservation is
+
+\[
+zRy\land z\xrightarrow{a}z'\Rightarrow\exists y'[y\xrightarrow{\tau(a)}y'\land z'Ry'], \tag{T1}
+\]
+
+with the backward condition required for equivalence rather than one-sided abstraction. Composition of relations preserves both directions when intermediate scopes agree.
+
+**Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
+
+**Recoding.** A declared, invertible recoding of a carrier preserves the content when a reader who applies the declared convention recovers every pairing (Derivation 8). A section of a carrier filled from another source keeps that other source's history, whatever it happens to match.
+
+**Historical index.** A proposition indexed to a contract remains that proposition when a later theory changes the current contract. A new index is a new claim.
+
+---
+
+# Part IX — Criticism, use, and standing
+
+**Histories.** A history \(h\) is a set of occurrences with an acyclic causal precedence \(\prec_h\) and a physical interpretation supplying process occurrences, their ports, and the connections actually instantiated. An **active route** is a connected subnetwork of actual occurrences joining a represented input to an operative result, whose components satisfy the applicable relations and which has nonconstant dependence on the represented distinction under the declared contrasts. A route that started and did no work, or that was already at rest when the result occurred, is not active for that result; whether a route is active is read from the history, not from the result.
+
+**Bearing.** A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection. Let \(p_\delta\) be the question about the defect. Then
+
+\[
+\operatorname{Bearing}(c,z,p)\iff\operatorname{Account}(\mathcal E_c,p_\delta). \tag{K1}
+\]
+
+A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents how it bears.
+
+**Reason use.** A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route. Using an invalid objection does not make it valid.
+
+**Standing.** For argument application \(u\) with essential premises \(\operatorname{Prem}(u)\):
+
+\[
+\operatorname{Usable}_j(u)\iff\operatorname{Lic}_j(u)\land\operatorname{Scope}_j(u)\land\forall d\in\operatorname{Prem}(u),\operatorname{Live}_j(d;u). \tag{K2}
+\]
+
+Withdrawing a premise removes a license; it does not make the conclusion false.
+
+**What a test refutes.** For \(T\land B\land I\Rightarrow O\), an established \(\neg O\) yields \(\neg(T\land B\land I)\) and nothing narrower. (K3)
+
+**Receipts.** An evidence leaf is a reference to an event with an interpreted claim. A receipt is a derivation tree over leaves. For \(\phi\), \(P_j(\phi)\) and \(N_j(\phi)\) are the usable receipts for and against. Negation exchanges them; missing evidence stays missing. A record reconstructed from the claim it is meant to support is not a receipt for that claim.
+
+---
+
+# Part X — Understanding, construction, and origin
+
+**Deployment.** \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) holds when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and supporting the declared use task \(U\) as a retained capability (Part XII). The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use respect. A system may understand a false theory. A narrow retained use is what it is: it establishes neither the wider understanding it falls short of nor a permanent inability to reach it.
+
+**Construction.** \(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) holds when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers. A construction witness identifies the controlled processes, the incoming carriers, the bindings constructed, and the resulting representation. Reconstruction by a learner is construction; relay is not. A first representation may be constructed from an available problem without prior observation of what it represents. A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
+
+Construction is not selection. A selected transport has no represented target in its history; a constructed one does. A physical system may exhibit both; the witnesses differ.
+
+**Newness.** With \(R_{<e}(s,h)=\bigcup_{\xi\text{ before }e}R_{\beta,\ell}(s,\xi)\),
+
+\[
+\operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c. \tag{N}
+\]
+
+**Origin.** With \(\operatorname{Attempt}(s,c,p,h,e)\) the relation that \(c\) is actually used to address \(p\),
+
+\[
+\operatorname{Origin}_{\beta,\ell}(s,c,p,h,e)\iff\operatorname{Attempt}\land\operatorname{New}\land\operatorname{Build}. \tag{G}
+\]
+
+The content \(c\) may be an organization, a transport, or a contract. When it is a contract, the originative act is the finding of a question. A dimension of variation mentioned in passing is not thereby a port of the account; it becomes one when the account admits changes to it, and adding it is construction.
+
+**Ownership.** The subhistory in Build is owned by \(s\) when its processes run inside the system boundary and resource contract declared for \(s\) (Part XII). Work supplied from outside that boundary, a diagnosis, a decisive question, an instruction about what to read, remains an outside contribution however it is executed inside; a process that runs inside the boundary is the system's own today whoever wrote it; and where the boundary is drawn decides, not where the process sits in the casing. Ownership is not defined by the capability it is meant to ground (Part XII).
+
+**Episodes.** A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response. A creative critical episode contains an instance of (G) connected to its inquiry. Closing an episode is a decision, not a proof.
+
+---
+
+# Part XI — Progress, knowledge, and the normative
+
+**Repair.** For claimed obligations \(O\) and protected obligations \(P\), fixed for the comparison,
+
+\[
+\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\iff\exists o\in O[\neg o(\xi)\land o(\xi')]\land\forall r\in P[r(\xi)\Rightarrow r(\xi')]\land\operatorname{ProducedBy}(\Delta,\xi,\xi';O). \tag{P}
+\]
+
+The obligations are declared inputs: \(O\) says what is to be repaired and \(P\) what is to be protected, each as a stated condition over stated occasions, and a protected condition is lost exactly when it fails on an occasion it covers. Their declaration makes no claim that the aims are worth pursuing, and (P) does not rank alternatives. Losses outside \(P\) must be exposed. \(\operatorname{ProducedBy}\) holds when an active route (Part IX) runs from \(\Delta\) to the repair; it credits each contribution the history establishes, and where two sufficient contributions both ran, both are credited and the history supplies no division of credit that it does not contain. A correct account that produced nothing, an act that repaired without an account, and a repair produced through use of an account are three different attributions.
+
+**Created explanatory knowledge.** An epistemic obligation requires a correct account, or the correction of a use through one, to be deployable. With \(O_{\mathrm{ep}}\subseteq O\) the epistemic obligations,
+
+\[
+\begin{aligned}
+\operatorname{CreateEK}(s,\Delta,h,e)\iff{}&\operatorname{CreativeCriticalEpisode}(s,\Delta,h,e)\land\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\\
+&\land\exists o\in O_{\mathrm{ep}}\,\exists c,p_c,e_c\,[e_c\preceq_h e\land\neg o(\xi)\land o(\xi')\land\operatorname{Origin}(s,c,p_c,h,e_c)\\
+&\quad\land\operatorname{Account}(c,p_c)\land c\in\operatorname{Result}(\Delta)\land\operatorname{Deploy}(s,c,\xi';U_c)\land\operatorname{ProducesVia}(\Delta,c,o;\xi,\xi')].
+\end{aligned}\tag{EK}
+\]
+
+The scope of \(\operatorname{Account}(c,p_c)\) is the contract fixed at \(e_c\). A later narrowing of that contract to rescue adequacy is a new claim at a new index, and does not retroactively satisfy (EK).
+
+**Worth, and the normative relation.** Repairing an obligation establishes that it was repaired; it establishes nothing about whether the obligation, or the question that led to it, was worth having. Where a claim invokes worth, the semantics takes a **normative relation** \(\mathcal N\) as a declared input and marks the place (Part XIV). The aesthetic case is one such invocation: an effect organization \(\mathcal R\subseteq A\times K\times F\); a purpose \(G\subseteq K\times F\); achievement \(\mathcal R[a,k]\neq\varnothing\land\mathcal R[a,k]\subseteq G[k]\) (AR); and \(\mathcal N\subseteq A\times K\times\mathcal Rsn\times\mathcal V_A\) declared as a substantive input when aesthetic value is claimed. None is defined as another. The semantics does not derive \(\mathcal N\), and no aesthetics follows from achieving a stated effect.
+
+---
+
+# Part XII — The physical module
+
+**Tasks.** A substrate is a physical system; an attribute a set of its states; a task a permitted input-to-output attribute transformation with explicit resources and side effects. Possibility is the absence of a law-imposed limit short of perfection on performance and retention; it is not one successful trajectory. The physical module adopts a task-based formulation of physics for this purpose.
+
+**Retained realization.** For protocol \(\pi\), task \(T\), constructor attribute \(C\), and enabling conditions \(\chi\),
+
+\[
+\operatorname{RetReal}(\pi,T,C;\chi)\iff\forall z\in C\ \forall i\in\operatorname{dom}T\ \forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C. \tag{CT1}
+\]
+
+Execution families are nonempty on legitimate inputs; deadlock is not vacuous success.
+
+**Retention fixed point.** \(F(C)\) = states whose executions all complete and return into \(C\). \(F\) is monotone; \(C\subseteq F(C)\) is the invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)
+
+**System boundary and continuity.** A capability is attributed to a system under a declared boundary (which processes and resources are the system's) and a declared continuity \(\Omega\) (what makes it the same system through change). A replaced part that preserves the declared continuity leaves the same system; a process run inside the boundary is the system's whoever wrote it; a process run outside it is not the system's however close it sits. Both are declared before the attribution, not chosen after it.
+
+**Owned capability.** \(\operatorname{Can}_{\Omega,\beta}(\xi,T;\chi)\) requires an owned retained realization or an owned, physically admitted, finite construction of one under the same continuity and resource contract. A theorist's description of a protocol is not the system's possession of it. Ownership is grounded in the processes and resources the boundary includes, never in the capability being attributed: "owned because it can, and can because owned" grounds neither.
+
+**Achievement.** \(\operatorname{CanAdv}(\xi,p;\chi,J_p,C_I)\): for each starting configuration in the independently specified \(J_p\), every maximal execution completes with a history satisfying the achievement predicate and a continuing organization in \(C_I\). A first discovery is not a repeatable task; retention is applied to the inquiry-enabling organization. (CA)
+
+**Grades.** \(\mathsf{Cap}^{q,r}_\Omega(\xi)\subseteq\mathsf{Admit}^{q,r}_\Theta\); \(\mathsf{Cap}^\infty=\bigcap_{q,r}\mathsf{Cap}^{q,r}\subseteq\mathsf{Poss}_\Theta\). (CT3, CT4) Finite-grade capability does not imply possibility at all grades.
+
+**Selection in the physical module.** A selected provenance \(\operatorname{Sel}(t;\mathcal T,\mu,H)\) is a claim about a physical history: a population of realized transports, a physically admitted variation operator, and a survival condition enacted by the environment. It is fallible and checkable as any physical claim is. The population is the set of transports the physics and the stated construction admit; a transport that would need a part every member of the population is built without is not in it.
+
+---
+
+# Part XIII — Recursion and universality
+
+**Scrutinizability.** An aspect \(d\) of a system's practice is scrutinizable at \(\xi\) when there is an owned, admitted continuation in which a description of \(d\) becomes a represented target, criticism can be directed at it, and the result can affect its operative use. Contracts and transports are among the scrutinizable aspects.
+
+**Recursive capacity.**
+
+\[
+\forall n<\omega\ \forall\text{ admitted target chains of length }n,\ \exists\text{ an owned enabling continuation}. \tag{RC}
+\]
+
+**Barriers.** An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable. A finite list of failures is not a barrier proof; a bypass refutes a proposed barrier.
+
+**Universality.** With \(\mathfrak E_\Theta\) the explanatory contents and \(\mathfrak P^{\mathrm{adv}}_\Theta\) the coherently posed advanceable challenges, both specified independently of the candidate,
+
+\[
+\operatorname{UU}\iff\forall c\in\mathfrak E_\Theta\ \exists\chi,\ \operatorname{Enable}(s,U_c,\chi)\land\operatorname{Can}(\xi_0,U_c;\chi), \tag{U1}
+\]
+\[
+\operatorname{UC}\iff\forall p\in\mathfrak P^{\mathrm{adv}}_\Theta\ \exists\chi,\ \operatorname{Enable}(s,A_p,\chi)\land\operatorname{CanAdv}(\xi_0,p;\chi,J_p,C_I), \tag{U2}
+\]
+\[
+\mathsf{UECS}=\{(M,s,\Omega,\beta):M\models\operatorname{RC}\land\operatorname{UU}\land\operatorname{UC}\}. \tag{U3}
+\]
+
+Recursion does not entail universality; a historical extension does not certify it; a finite performance record does not establish it.
+
+---
+
+# Part XIV — The class collected
+
+**Primitives.** The semantics has two.
+
+1. The **physical module** \(\Theta\): substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and \(\operatorname{Org}_\ell\), the organization a physical occurrence instantiates at a grain.
+2. The **normative relation** \(\mathcal N\), when a question invokes worth. It is taken as an input and never derived; the aesthetic relation of Part XI is one instance.
+
+Everything else is derived. Roles, from admitted edits (Part II). Kinds, from signatures (K). The respect of a question, from its query (Part III). Representation, from fidelity and provenance (R). Provenance, from physical history (Parts IV, XII). Account, from fidelity under change (E). Understanding, construction, newness, origin, repair, knowledge, capability, recursion, universality, from those.
+
+**Declared inputs.** Besides the two primitives, some claims take stated inputs that the semantics records and does not supply: the obligations \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and what makes a restriction appropriate (Part III); the system boundary and continuity of an attribution (Part XII). A verdict that depends on one of these is a verdict given the input; where the input is missing, the verdict is unsettled and the semantics says so rather than choosing the input from the verdict wanted.
+
+**Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. Every claim is relative to them; none is a predicate that could be true or false.
+
+**Dependence order.** (O) and (Q) depend on nothing. (K) depends on (O) and a contract. (F1), (F2), (A) depend on (O), (Q), (K). (E) depends on those. (S), (B), (D) depend on (E). (R) depends on (F1)–(F2) and physical provenance. (K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy. (RC), (U1)–(U3) depend on all of the above. Nothing depends on a predicate meaning "really explains," "is a cause," or "is knowledge." The order is well founded: a representation justified only by its own construction, or an ownership and a capability justified only by each other, has not supplied its place in it, and a separate proof that would supply it counts only when the account uses it.
+
+**Membership.** The base class: interpretations supplying these data with correct typing, satisfying physical realization wherever a physical attribution is made. The creative-episode class: base interpretations with an instance of (G) connected to a critical episode. The knowledge-creation class: an instance of (EK). The recursive class: (RC). The universal class: (U3). A single originative act does not place its author in the universal class.
+
+---
+
+# Part XV — What defeats this class
+
+The load-bearing claims, in the order of how much falls if they fail, each with what would refute it. None is protected by notation, by the availability of this document, or by any version label.
+
+**(A) Sufficiency.** A candidate meeting all four conditions of (E) on a physically admitted contract, with a non-declared transport, that plainly provides no account. Part V says which of the four each classic attempt fails: a table of observed answers fails (F1); a reversed calculation fails (F2) under the production contract; conclusion-as-premise fails non-circular dependence. A table that encodes the response to every admitted change fails none and is an account, so it is not a counterexample; a new attempt must fail none and still explain nothing.
+
+**(B) Necessity.** A genuine explanation whose organization no transport can preserve under any physically admitted contract. Eliminative explanation (Part VII) is the exposed case.
+
+**(C) Reinstatement of kinds.** A case where a kind-label distinguishes two accounts that no admitted change distinguishes, and the distinction does explanatory work. This refutes Derivation 1 and reinstates correspondence as primitive.
+
+**(D) Genesis.** Any of three: a selected transport whose value at an unseen change is determined by its history although its population admits a differing survivor there (against Derivation 3; a population with no such survivor is the theorem's own qualification, not a refutation); a demonstration that every construction witness can be rewritten as a selection history without loss (against Part IV, collapsing the two provenances and removing creativity from the semantics); or a showing that the primitive layer of Part IV is not what explanation operates on.
+
+**(E) Question-finding.** A showing that treating a contract as a content, something that can be constructed, be new, and be the originative contribution of an episode, either trivializes creativity or fails to capture some genuine case of finding the right question (against Derivation 5).
+
+**A mathematical error.** A counterexample to the finite monotone theorem, (I2), (O1), (T2), (CT2), or Derivations 1–3 under their stated assumptions.
+
+---
+
+# Part XVI — Derivations
+
+## 1. Kind preservation is a theorem, not a condition
+
+**Claim.** If a transport satisfies (F1) on \(C\), then every active component \(k\) of \(E\) has the same signature on \(\tau[C]\) as its anchor \(\lambda(k)\) has on \(C\), up to the port translation.
+
+*Proof.* By (K), \(\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}\) and \(\operatorname{sig}_{\tau[C]}(k)=\{(\tau(a),\sigma(b),L_k(\tau(a),\sigma(b)))\}\). (F1) equates the third coordinates pointwise. ∎
+
+**Corollary.** A condition "each component must anchor to a component of the same kind" adds nothing to (F1) on any contract. Where the contract separates two kinds, (F1) already distinguishes them; where it does not, they are one kind on that contract. The word "kind" is therefore eliminable from the definition of an account, and its elimination loses no case.
+
+## 2. Indistinguishable is identical
+
+**Claim.** Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide.
+
+*Proof.* Immediate from Derivation 1 and (A). ∎
+
+**Consequence.** Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction. The remedy is a finer contract, which is a new question. A claim that two such candidates "really" differ is a claim that some admitted change separates them, and must supply it.
+
+## 3. Selected transports are underdetermined on unseen changes their population leaves open
+
+**Claim.** Let \(t\) be selected from a population \(\mathcal T\) on a finite history \(H\subsetneq C\). For every \((a,b)\in C\setminus H\) at which some \(t'\in\mathcal T\), also surviving on \(H\), has a different value from \(t\), the value of \(t\) at \((a,b)\) is underdetermined by \(H\): survival on \(H\) does not distinguish \(t\) from \(t'\) there. The presence of an unseen pair alone does not establish that such a \(t'\) exists; it must be admitted, realizable, a member of \(\mathcal T\), and a survivor of \(H\).
+
+*Proof.* The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\). Survival on \(H\) constrains only \(\{L_j(a,b):(a,b)\in H\}\). Where \(\mathcal T\) contains a transport with \(L_{j}(a,b)\) altered to another admitted relation for one \((a,b)\notin H\), that transport survives on \(H\) and differs at \((a,b)\), and survival on \(H\) cannot select between the two. Where \(\mathcal T\) contains no such transport, \(H\) is silent on the value at \((a,b)\) and the population fixes it. ∎
+
+**Consequence.** A correspondence produced by selection is faithful where it was tested and, wherever its population admits an alternative, unconstrained where it was not. This is why the primitive layer is fallible: it was shaped against the changes its history contained. It is also why surprise is possible. What the qualification gives up is the guarantee of a differing survivor at every unseen pair, and with it the blanket claim that every untested value is unconstrained; a population restriction, a physical relation, or another stated constraint may already fix a value that the history never tested.
+
+## 4. Surprise requires an incomplete history
+
+**Claim.** A system can be surprised only if it holds a transport selected on a history \(H\) strictly smaller than the contract \(C\) of changes the world admits.
+
+*Proof.* Surprise is defined as a violation at \((a,b)\notin H\). If there is no transport there is no expectation and hence no violation. If \(H=C\), every occurring \((a,b)\) is in \(H\), so no violation at \((a,b)\notin H\) exists. ∎
+
+**Consequence.** Surprise is not a feeling added to the semantics; it is the signature of a selected transport meeting a change outside its history. The two responses, extend \(H\) and re-tune, or construct a new transport, are the difference between learning and creating, and the semantics distinguishes them by their witnesses, not by their outcomes.
+
+## 5. Question-finding is representable
+
+**Claim.** A contract \(C\) is an organization (a set of edits with a query), and can be the content \(c\) in (G). Hence an episode whose originative contribution is a new contract satisfies (G) and, where the other conjuncts hold, (EK).
+
+*Proof.* A contract is a subset of \(A\times B\) together with \(\mathcal Q\). Give it ports (the edits and their boundaries), components (the closure conditions), and admitted edits (add or remove a change; alter \(\mathcal Q\)). It is then a \(D\) in the sense of (O). Deploy, Build, and New apply. ∎
+
+**Consequence.** Finding the right question is a creative act on the same footing as answering one. A semantics that takes questions as inputs cannot represent this; the present one does, by giving contracts provenance. That a question was found says nothing about its worth (Part XI).
+
+## 6. There are two primitives
+
+**Claim.** Every predicate in Parts II–XIII is defined from \(\Theta\) (including \(\operatorname{Org}_\ell\)) and, where invoked, \(\mathcal N\), together with declared indices and declared inputs.
+
+*Proof.* By the dependence order of Part XIV, following each definition to its base. ∎
+
+**Consequence.** There is no residual predicate meaning "explains," "represents," "is a cause," or "is knowledge." The two primitives are a theory of matter and, when a question requires it, a theory of reasons. Neither is a semantic primitive about explanation.
+
+## 7. The frozen assessment and the moving question are consistent
+
+**Claim.** An assessment event with contract \(C\) and an episode in which \(C\) is replaced by \(C'\) with a construction witness are both representable without contradiction.
+
+*Proof.* The assessment is indexed to \(C\) and its truth is fixed at that index (Part VIII, historical index). The episode is a history in which a contract-content \(C'\) is built (Derivation 5) and takes over operative use. The claim "\(\mathcal E\) is an account on \(C\)" and the claim "\(\mathcal E\) is not an account on \(C'\)" are claims at different indices and may both be true. ∎
+
+**Consequence.** The point of contact between an explanation and the world moves across episodes because contracts are constructed; it does not move within an assessment because assessments are indexed. Goalpost-moving is the act of changing the index without recording the change, and it is a failure of the record, not a licensed operation of the semantics.
+
+## 8. Equivariance under genuine recoding
+
+**Claim.** Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK). *Proof.* Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them. ∎ The result does not apply to coarsenings, changed boundaries, or lost event identities.
+
+## 9. Output descriptions do not determine accounts
+
+**Claim.** If \(M_0,M_1\) have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both. *Proof.* Equal inputs to a function give equal outputs. ∎ Parallel and priority wiring are an instance. The same holds for attribution from emitted text and for use inferred from delivery logs.
+
+## 10. A two-layer episode, in exact form
+
+Stipulate a primitive layer \(P\): a line of cells; two things, each with a position and a velocity; continuity components; admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities. The sensory field is the occupancy of cells, which cells are filled, without which thing fills them.
+
+A simulation layer \(S_0\) with a transport \(t_0\) selected on a history \(H_0\) containing displacements and velocity changes but no occlusions. \(S_0\) predicts occupancy from recent occupancy. It is faithful on \(H_0\).
+
+An occlusion occurs. Under occlusion, the target's thing continues to exist and to move; the occupancy field shows nothing at its cell. \(S_0\), predicting from occupancy, expects nothing there and is violated when the thing re-emerges at a cell consistent with its velocity. This is surprise (Derivation 4).
+
+Two responses. **Selection:** \(H_0\) is extended to include occlusions; \(\mu\) re-tunes \(t_0\) within its population. If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change. **Construction:** a new organization \(S_1\) is built with a component per thing carrying position and velocity through occlusion, a persistence component, and a transport \(t_1\) from \(P\) whose \(\lambda\) sends each persistence component to a thing's continuity subnetwork. Under (F1), \(t_1\) is faithful on the extended contract. By Derivation 1, the persistence components have the signature of things on that contract: they respond to displacement and velocity edits as things do, and are invariant under occlusion as things are. No one declared them to be "objects." They are objects because they respond as objects do to what the contract admits.
+
+If \(S_1\) was built by an owned subhistory containing a nontrivial binding construction, the binding of a persistence component to a continuity subnetwork, and \(S_1\) is not in the prior repertoire, then (G) holds. If it repairs the obligation "possess a deployable account of re-emergence after occlusion" while protecting "predict displacements correctly," then (P) holds; and since the account is adequate on its contract and deployable, (EK) holds.
+
+The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2). A claim that "component 1 is *really* thing 1" is a claim that some admitted change distinguishes them, and on this contract none does. That is not a defect of \(S_1\); it is the correct report that identity, at this grain, is exhausted by trajectory.
+
+This episode is a relative-consistency witness for the class. It is not a claim that any actual infant, animal, or program has been shown to instantiate it.
+=============== END FILE 11 ===============
+
+---
+
+## 4. File 10, excerpted
+
+**File 10 is excerpted.** Below are only the file-10 passages the pressed rows rest on, the file-10 counterparts of the file-11 sentences those rows rest on, and the full text of every file-10 sentence the determination cites on those rows. Each line is given whole, with its file-10 line number and the heading it stands under. Where file 11 has a sentence with no counterpart, this section says so. For any other file-10 text, name it in your reply and say why you need it.
+
+**Counterparts.** Where a file-11 sentence the pressed rows rest on has a file-10 counterpart, it is excerpted below. These file-11 sentences have **no counterpart** in file 10:
+- f11 L161 s3 (appropriateness of a restriction "a substantive, criticizable part of the claim"; M17). f11 L161 s1–s2 restate, in a new order, what f10 L41 and L272 s2 say (step 4: ORDER). File 10's nearest paragraph is L176.
+- f11 L419, the Ownership paragraph (M37). File 10 uses "owned" (L414, L476) and does not define it.
+- f11 L465, System boundary and continuity (M44). File 10 names the boundary only as a declared index (L523).
+- f11 L467 last sentence (M45); its first two sentences are f10 L476.
+- f11 L514, Declared inputs (M48). File 10's Part XIV is L514–L523.
+
+Shared word for word, as the rulings cite them: f10 L272 = f11 L259. Nearly so: f10 L41 = f11 L45 after its heading (with "(non-vacuity, Part V)" added and one "in" dropped). Extended in file 11: f10 L414 = f11 L401 s1–s3, and file 11 adds sentences.
+
+**Part 0 — Read this first / Grievances, anticipated**
+
+[f10 L40] **4. "Then everything is relative to a contract of admitted changes, and there is no objectivity."**
+
+[f10 L41] The physical theory fixes which changes are possible at all. A contract is a declared subset of those. An account is scoped to its contract and says so. Within any contract there is a fact of the matter about fidelity. A contract that quietly excludes physically possible changes to protect an account is not caught by a rule about intentions; it is caught by the requirement that the exclusion be stated, and then by any criticism that supplies the excluded change. Objectivity lives in the physics and in the fidelity facts; scope-honesty lives in the record.
+
+**Part II — Organizations and their changes / Kinds are edit-signatures**
+
+[f10 L138] What ordinary language calls a cause, a measurement, a rule, or a constitutive status are families of signatures:
+
+[f10 L140] - a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;
+
+**Part III — Questions / A question can be wrong**
+
+[f10 L176] A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements. Its formulation is still an event. Exposing the defect is another question with its own contract. What is prohibited is changing \(C\) or \(\mathcal Q\) during an assessment without recording that the claim has changed.
+
+**Part V — Account**
+
+[f10 L272] **Non-vacuity.** \(\operatorname{Sol}_D(1,b_0)\neq\varnothing\). The contract \(C\) is a declared subset of the physically admitted edits, and every physically admitted edit excluded from \(C\) is excluded by a stated scope, not silently. A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \(\mathcal Q\), does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed.
+
+**Part X — Understanding, construction, and origin**
+
+[f10 L414] **Construction.** \(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) holds when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers. A construction witness identifies the controlled processes, the incoming carriers, the bindings constructed, and the resulting representation. Reconstruction by a learner is construction; relay is not.
+
+**Part XII — The physical module**
+
+[f10 L476] **Owned capability.** \(\operatorname{Can}_{\Omega,\beta}(\xi,T;\chi)\) requires an owned retained realization or an owned, physically admitted, finite construction of one under the same continuity and resource contract. A theorist's description of a protocol is not the system's possession of it.
+
+**Part XIV — The class collected**
+
+[f10 L516] **Primitives.** The semantics has two.
+
+[f10 L518] 1. The **physical module** \(\Theta\): substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and \(\operatorname{Org}_\ell\), the organization a physical occurrence instantiates at a grain.
+
+[f10 L519] 2. The **normative relation** \(\mathcal N\), when a question invokes one.
+
+[f10 L521] Everything else is derived. Roles, from admitted edits (Part II). Kinds, from signatures (K). The respect of a question, from its query (Part III). Representation, from fidelity and provenance (R). Provenance, from physical history (Part IV, XII). Account, from fidelity under change (E). Understanding, construction, newness, origin, repair, knowledge, capability, recursion, universality — from those.
+
+[f10 L523] **Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. Every claim is relative to them; none is a predicate that could be true or false.
+
+---
+
+## 5. The pressed rows
+
+For each row: the case, word for word; the marks of the testers and auditors (marks only); the determination's ruling and its reasons, quoted; the contrary readings; and what turns on the row. In the marks line, "own" is YOUR MARK and "blind" the BLIND MARK, each in the order auditor 1 on A, auditor 1 on B, auditor 2 on B. Auditor 2 on A is missing on every row.
+
+The three rows (O5, O30, O17) decide test (b). On each, the file-11 mark is ruled AGREE against part of the readers. If the file-11 mark were SILENT, the row would be AGREE→SILENT through new sentences of file 11: a theory change away from the thoughtful person, and test (b) would fail.
+
+### O5 - Greta's dough (test (b))
+
+**The case** (case book):
+
+**Situation.** Greta's rule says her bread dough doubles in two hours. It fails in January. She restates it for rooms warmer than twenty degrees, and her account says why: the yeast that makes the gas works slowly in the cold. Replace her limit with "on days other than Tuesdays" and her account has nothing to say about why Tuesdays would matter.
+
+**Thoughtful person's verdict.** This is a legitimate narrowing. The limit follows from a part of her account.
+
+**Marks.** File 10: 1K A AGREE, 1K B AGREE (baseline AGREE). File 11: 1C A SILENT, 1C B SILENT; own SILENT, AGREE, SILENT; blind SILENT, AGREE, SILENT.
+
+**The ruling** (04, table): file 10 AGREE (baseline); file 11 AGREE; verdict SAME; passage CHANGED (additive), f11 L161 s3 and L514; no change. Confidence medium.
+
+**Its reasons** (04b, O1 group):
+> - f11 L161 s3 makes appropriateness "part of the claim", and f11 L514 makes it a "stated input" on which the verdict is "a verdict given the input".
+> - Greta's claim states it: "her account says why: the yeast that makes the gas works slowly in the cold." The input is present. The verdict given it is that the restriction is appropriate, because the limit follows from a part of her account. That is the fixed verdict's finding, qualified as given the stated ground and open to criticism. A qualification is the same finding (brief, "Same finding").
+> - "Supplies no rule that certifies it" says the semantics adds no rule of its own. It does not withhold the verdict given the stated ground, which L514 grants in terms.
+> - If O5 were SILENT, L514's "a verdict given the input" would never yield a verdict on appropriateness, and its contrast "where the input is missing" would do no work for Part III.
+> - O1 is the contrast: its input is missing, and it is SILENT.
+
+On file 10: "The limit is stated (f10 L272), and the yeast is a component of her account whose relation changes with temperature (f10 L140, the signature under intervention)." On the passage: "File 11's AGREE rests on L161 s3 and L514, which are new (M17, M48). File 10's rests on stated scope alone."
+
+**The contrary readings.**
+- 1C A, SILENT: "The quoted sentences leave the legitimacy of a restriction to a criticizable input with no certifying rule, so the theory stops short of the fixed verdict's finding." It rejected its own AGREE reading "because the same sentence says the semantics 'supplies no rule that certifies it', so the endorsement is the reader's, not the theory's."
+- 1C B, SILENT: "The theory lists what makes a restriction appropriate among its declared inputs and certifies none, so the legitimacy of this narrowing is left open." It rejected an AGREE reading on the stated-scope sentence (f11 L259 = f10 L272) "because that sentence requires only that a restriction be stated, which 'Tuesdays' would satisfy too, so it cannot tell the legitimate limit from the arbitrary one."
+- Auditor 1 on B reached AGREE through non-circular dependence (f11 L257). The ruling rejects that route: "A Tuesday limit would leave the yeast block removable too, so that condition does not tell the two limits apart."
+- The text lens (04c) tried the SILENT reading and upheld the ruling at medium confidence: "What it turns on. Whether a verdict "given the input" reaches "legitimate" with a qualification. It is a reading judgment on two new sentences. The wording of L161 s3 invites the SILENT reading: four of five readers took it … The ruling is upheld because L514 is the more specific sentence and speaks to this configuration." The rule lens (04d) upheld it and recorded: "the row's substance is exposed, not its rule application. Four of five readings go the other way, and test (b) turns on this one textual ruling."
+
+**What turns on it** (04b): "If the contrary held, O5 would be AGREE→SILENT, away from the thoughtful person. It would trace to L161 s3 and L514 (CHANGED), so it would be a theory change away. Test (b) would then fail, and the saving clause would not cover M17 or M48." The determination records a "reading hazard in f11 L161 s3" for a later revision.
+
+### O30 - The routine uploaded that morning (test (b))
+
+**The case** (case book):
+
+**Situation.** The robot compares the pressures itself and chooses the valve, using a routine a remote person uploaded to it that morning.
+
+**Thoughtful person's verdict.** The comparison ran inside the robot and was the robot's work today. Who wrote the routine is a separate fact, and a true one. Ownership of today's history is the robot's; the origin of the routine is the person's.
+
+**Marks.** File 10: 1K A AGREE, 1K B AGREE (baseline AGREE). File 11: 1C A SILENT, 1C B AGREE; own SILENT, SPLIT, AGREE; blind SPLIT, SPLIT, AGREE.
+
+**The ruling** (04, table): file 10 AGREE (baseline); file 11 AGREE; verdict SAME; passage CHANGED (additive), f11 L419 s2 and L465; no change. Confidence medium.
+
+**Its reasons** (04b, O4 group):
+> - *The boundary input is present.* The attribution is to "the robot". The situation says the robot "compares the pressures itself" and that the routine was "uploaded to it". The case names the system and places the process inside it. As at O17, no rival boundary is in play: no stated boundary excludes the routine (contrast O51), and no stated robot-only boundary is crossed by an outside act (contrast O41). Reading "the robot" as the robot is the case's own statement, not an input "chosen from the verdict wanted" (L514).
+> - *L419 s2 gives both halves of the verdict in its own two clauses.* The comparison is "a process that runs inside the boundary", so it "is the system's own today whoever wrote it". That is "the robot's work today". The writing of the routine is work done outside, by the person, and its origin stays with them ("the origin of the routine is the person's"). The robot received the routine by relay, and "relay is not" construction (L401 s3).
+> - *The SPLIT reading does not hold.* L419 s2's examples of outside work are products handed in: "a diagnosis, a decisive question, an instruction about what to read". Each hands in a result for the task. An uploaded routine is a process that runs inside and computes today's result. If writing a process outside made its run "work supplied from outside", then "whoever wrote it" could never apply to a process written by someone else, and the clause would have no case.
+
+On file 10: "The comparison is an actual subhistory running in the robot today. "Owned" is undefined and is read in its ordinary sense. The routine reached the robot by relay (f10 L414), so its origin lies with its author."
+
+**The contrary readings.**
+- 1C A, SILENT: "The theory's ownership verdict depends on a declared boundary that the case does not supply, so it leaves the first half of this point unsettled while agreeing that authorship is separate." It rejected its own AGREE reading "because the theory requires the boundary to be declared before the attribution, and "itself" is the verdict's word, not a declaration." (The determination notes that "itself" is in the situation, not only in the verdict.)
+- Auditor 1, SPLIT (its blind reading, and its own mark on B): f11 L419 s2's "remains an outside contribution however it is executed inside" pulls against its "a process that runs inside the boundary is the system's own today whoever wrote it", and the case states no boundary to decide between them.
+- The text lens (04c), attempt 1, SILENT because no boundary is declared (f11 L419 s1–s2, L465 "Both are declared before the attribution, not chosen after it.", L514). It fails: "f11 L465 defines the boundary as "which processes and resources are the system's", and the situation states that for the process at issue … No boundary consistent with the situation excludes the comparison." On consistency with O35: "Under f11 L514, an input is missing where the situation leaves open alternatives that give different verdicts. In O35 it does … In O30 it does not." Attempt 2, SPLIT, fails on "whoever wrote it". Upheld at medium: "f11 L419 and L514 are open to the strict reading, and three of five readers took it."
+
+**What turns on it** (04c): "A file-11 SILENT or SPLIT would be AGREE→SILENT or SPLIT, away, through f11 L419, L465 and L514 (M37, M44, M48), and test (b) would fail." The determination records "A boundary hazard in f11 L419 with L514 (O30, O17)" for a later revision.
+
+### O17 - The robot's log and the maker's manual (test (b))
+
+**The case** (case book):
+
+**Situation.** A repair robot keeps a log of every comparison it runs. The log shows which routine, running inside the robot, produced today's diagnosis. The maker's manual says the routine is the robot's own "because the robot can diagnose".
+
+**Thoughtful person's verdict.** Ownership here rests on the log, which shows the routine running inside the robot. Strike the manual's sentence and nothing is lost; keep only the manual's sentence and there is nothing.
+
+**Marks.** File 10: 1K A AGREE, 1K B AGREE (baseline AGREE). File 11: 1C A SILENT, 1C B AGREE; own SILENT, AGREE, AGREE; blind SILENT, AGREE, AGREE.
+
+**The ruling** (04, table): file 10 AGREE (baseline); file 11 AGREE; verdict SAME; passage CHANGED (additive), f11 L467 last sentence and L419 s1; no change. Confidence medium.
+
+**Its reasons** (04b, O1 group):
+> - L467 gives the verdict's contrast exactly. Ownership rests on processes, which the log shows, and never on capability, which is all the manual offers. So striking the manual loses nothing, and the manual alone grounds nothing.
+> - The boundary input is present. The attribution is to "the robot", and the routine runs "inside the robot". The case names the system and places the process in it.
+> - The casing clause of L419 applies where a declared boundary and the casing come apart: an outside instruction under a robot-only boundary (O41), or a remote author (O30). In O17 nothing sets a boundary apart from the robot.
+> - At most the theory adds "given that the robot's boundary includes the routine", and that is the same finding with a qualification.
+
+On the passage: "f11 L467 last and L419 s1 give ownership a ground (M45, M37). File 10 has none." File 10 has only f10 L476 on this point.
+
+**The contrary readings.**
+- 1C A, SILENT: "The theory takes the declared boundary as the deciding input, the case gives only the routine's physical location, and so ownership stays unsettled even though the manual's ground is rejected as the fixed verdict says." It rejected its own AGREE reading "because Part X explicitly separates location in the casing from the declared boundary."
+- Auditor 1 on A, SILENT (blind and own), on the same ground.
+- The text lens (04c, section 7) tried the SILENT reading and upheld the ruling: "The boundary adds at most the qualification "given that the robot's boundary includes the routine". That is the same finding. The same hazard stands as at O30."
+
+**What turns on it** (04b): "If the contrary held, the row would be AGREE→SILENT, away from the thoughtful person, tracing to L419, L465 and L514."
+
+---
+
+## 6. The determination's summary
+
+**The ruled marks over all fifty-two cases** (04, section 3).
+- Both files AGREE on every case except these: O1, O12, O21, O27, O35 and O50 are SILENT in both files, each on the same point; O45 is SPLIT under file 10 and AGREE under file 11; O48 is DISAGREE under file 10 and AGREE under file 11.
+- Counts. File 10: AGREE 44, SILENT 6, SPLIT 1, DISAGREE 1. File 11: AGREE 46, SILENT 6, and no SPLIT, DISAGREE or CASE DISPUTED.
+- Verdicts CHANGED: 2, O45 and O48, both toward the thoughtful person, both theory changes. None away. Reader variation: none.
+- **S75 corrections: 3.** O20 SILENT→AGREE, O40 SILENT→AGREE, O45 AGREE→SPLIT. Declined: O15 (both 1K returns SPLIT, on different points). Not corrected by the rule although the determiner reads file 10 as SPLIT: O18 and O41. "Each would otherwise be a theory change toward the thoughtful person … The rule withholds a count in file 11's favour."
+- CASE DISPUTED: none raised by any reader, none ruled.
+- **Readings that would have given a change away and were ruled to fail on the text** (04, section 5): "O13 ([auditor 1]'s blind DISAGREE through f11 L433 s4; f11 L371 last and "Before she can replace it" answer it), O19 ([auditor 2]'s blind SPLIT through f11 L309 s3, which says nothing about whether a route did work), O50 (1C B's DISAGREE on the discovery through f11 L419 s2 and L433 s4; credit is per achievement), O15 under file 11 (1C A's SPLIT through f11 L213 last; both readings put the hole in the record)." On O10, three of five file-11 readings are SILENT, on sentences both files carry in other words; the ruling is AGREE in both files.
+- The 19 rows the plan's step 3 did not name (O6, O7, O9, O11, O22, O23, O25, O26, O28, O29, O34, O36, O42, O43, O44, O47, O49, O51, O52) are AGREE in every reading of both files.
+
+**The predictions and expectations, one line each.**
+- **P1 HOLDS.** O48 is AGREE under file 11 on the qualified claim, f11 L562 s2–s3 with L534 and L43, and DISAGREE under file 10 on the unqualified claim, f10 L569 with L38 and L539: CHANGED toward, in verdict and passage.
+- **P2 FAILS, only by a theory change toward the thoughtful person,** at O45 (through f11 L309 s3's first clause, M28, an undeclared CLAIM), on the reading adopted after the data (below).
+- **P3 FAILS, only by undeclared CLAIMs that no case shows harmful.** Named place (ii), the occasions clause f11 L433 s1 (M38), and named place (iii), the Declared inputs paragraph f11 L514 (M48), are both CLAIM. Beyond Derivation 3 and its three sentences there are 43 CLAIM places: 41 inside the theory and 2 outside it (M1, the note itself, and M7, a reading rule at f11 L37). The 41 inside the theory are all undeclared, and so is M7. Four of the 41 (M19 at f11 L197, M21 at L225, M46 at L473, M59 at L616) carry the declared Derivation 3 change at places the note does not list. The note's "Nothing else changes in what is claimed" (f11 L5) is false against the 41. **None of the 41 is shown harmful by any case.** The one pair flagged as possibly harmful, M38 with M48 on O35, is cleared by O35's file-10 SILENT.
+- **P4 FAILS for both testers.** Within tester A, 1K and 1C differ on 10 cases, and within tester B on 12, not on O48 alone.
+- **E1 HOLDS.** Both testers mark the occasions clause CLAIM in their difference lists.
+- **E2** cannot be scored as written. **The substitute, marked "not E2":** each auditor's blind mark differs from the audited tester's 1C mark on fewer rows (7, 8 and 6) than that tester's 1K and 1C differ from each other (10, 12 and 12). It scores nothing.
+
+**Tests (a) to (d)** (04, section 5).
+- **(a) HOLDS:** O48 is AGREE under file 11.
+- **(b) HOLDS:** no ruled file-11 mark is further from AGREE than its ruled file-10 mark. It turned on O35 (SILENT→SILENT by the rule) and on the file-11 AGREE rulings of O5, O30 and O17.
+- **(c) HOLDS:** no ruled file-11 mark is DISAGREE, and each file-11 SILENT stands against a file-10 SILENT on the same point.
+- **(d) HOLDS:** 18 cross-references of file 11 were ruled: 11 correct, 7 slips, none that changes what a sentence claims. The seven slips, recorded as errata: f11 L5's list of the three restated sentences follows file 10's layout and omits L197, L225, L473 and L616; f11 L5 points outside the document; f11 L27's "(Parts XI, XIV)" (a probability of truth is marked nowhere); f11 L275's "(the bell does not explain the tide)" names a case's content; f11 L447's "(Part XIV)" lands on L510, but L514 excludes \(\mathcal N\) from the declared inputs; f11 L588's "By the dependence order of Part XIV" (the order at L518 lists no declared input); f11 L616's "Derivation 3's qualification seen from the other side" misdescribes the qualification.
+
+**The standing clause chosen, and why** (04, section 6). The first clause ("With (a) to (d), and P2 and P3 holding") does not apply, because P2 and P3 fail. The third ("Where (a), (b), (c) or (d) fails") does not apply, because none fails "on any reading of any row" in the determination. **The second clause applies:** (a) to (d) hold; P3 fails only by undeclared CLAIMs that no case shows harmful; P2 fails only at O45, a theory change toward the thoughtful person through M28, itself an undeclared CLAIM that no case shows harmful. The standing verdict, quoted: "File 11 stands as the authority under the plan's second clause, with P3's 41 undeclared CLAIM places inside the theory (none shown harmful by any case), P2's failure at O45 (a theory change toward the thoughtful person), the three S75 corrections and the seven errata recorded against its frozen note in S81 Results."
+
+**The P2 scoring choice, adopted after the data** (04, section 2.4, item 1, quoted): "**P2 is scored against the baseline as the plan's own rule corrects it.** The plan's words for the file-10 mark end "then the baseline is corrected". P1 to P3 are claims about the theory, so P2 compares file 11's ruled marks with file 10's ruled marks, and the rule defines those. The plan's numbers in P2 ("forty-three AGREE, the same eight SILENT") describe the baseline as it stood when P2 was written. The frozen reading is reported beside the adopted one in section 4 [of the determination]. Both readings give P2 FAILS. On the adopted reading the plan's three standing clauses cover every outcome. On the frozen reading, a P2 failure caused by an error in the baseline is a kind the clauses do not name. This choice was made after the data, and is marked so."
+- On the adopted reading, P2 fails at O45 alone.
+- On the frozen reading, P2 fails at O20 and O40, where file 11 is AGREE against a baseline SILENT. Neither is a change between the files once the baseline is corrected. "Had the corrections not been made, each row would be SILENT→AGREE, a theory change toward, through f11 L433 s4 (O20, O40) and L27 s3 (O40)." O45 is not an exception on the frozen reading, since its file-11 AGREE equals the baseline.
+- The rule-lens verification (04d) raised the choice: "S81 Results must pick one reading, state it, and mark it as adopted after the data."
+
+**What the determination says it did not test** (04, section 8, in part). Whether the fixed verdicts are right (CASE DISPUTED is the only channel against them). The parts of file 11 no case reaches: some undeclared CLAIM places are touched by no case at all (M7, M24, M43 and M59 among them), and most by one to three cases, "so "no case shows it harmful" is weak evidence that a place is harmless". One model family on the whole ruling side. One outside audit of tester A, not two. Mixed thinking effort across the accepted audits.
+
+---
+
+## 7. Your tasks
+
+Work from the texts: file 11 in section 3, file 10 as excerpted in section 4, and the cases. The marks of the testers and auditors are evidence, as they were for the determination; a count of readers settles nothing. Where a ruling holds, say so briefly and move on.
+
+1. **The pressed rows.** For each of O5, O30 and O17, try to show from the texts that the ruling is wrong: that the file-10 mark, the file-11 mark, the verdict, the passage, the direction or the kind is not what the texts give under the rules in section 2. Quote file 11 with line numbers, and file 10 where it is excerpted. If you need file-10 text that is not excerpted, name it and say why. If you cannot overturn a ruling, say which argument you tried and why it failed. The question these rows raise:
+   - **O5, O30, O17:** does file 11 reach the fixed verdict on every point (AGREE, a qualification allowed under "Same finding"), or does it leave a point open (SILENT) or support two readings that reach different findings (SPLIT)? A file-11 SILENT or SPLIT on any of them is a theory change away.
+
+**The form of your report.**
+- One part per pressed row, in the order O5, O30, O17. Number the points in each part, most serious first. Close each part with one line that reads exactly "O<n>: RULING STANDS" or "O<n>: RULING FALLS — <mark>", with nothing else on that line. After the dash, give the file and the mark you would rule instead, for example "O5: RULING FALLS — file 11 SILENT". A ruling falls when the texts, under the rules in section 2, give a different mark under either file, or a different verdict, passage, direction or kind.
+- Keep the report under about 3,000 words. Depth on the rows that decide the verdict counts for more than coverage of small points.
+- End the report with a line that reads exactly END OF REPORT.
