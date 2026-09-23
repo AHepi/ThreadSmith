@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """s80_probe.py: before the counted run of round S80, one tiny call per provider per thinking setting in the exact
 request shape of the reader calls (stream, stream_options include_usage, thinking enabled/disabled, reasoning_effort
-high when on, temperature pinned, max_tokens at the top rung of the reader ladder), and one marker-shaped call per
-marker provider (thinking on, max_tokens at the top rung of the marker ladder, a JSON answer checked by parsing).
+when on at the shared s80_common.REASONING_EFFORT, temperature pinned, max_tokens at the top rung of the reader
+ladder), and one marker-shaped call per marker provider (thinking on, max_tokens at the top rung of the marker
+ladder, a JSON answer checked by parsing).
 Prints status, finish reason, reasoning and content sizes, usage, bad chunks, and the model the provider names.
 Exit status 1, and the line "STOP: ..." , if any call returns 400 (or any other non-200): the run does not start.
 

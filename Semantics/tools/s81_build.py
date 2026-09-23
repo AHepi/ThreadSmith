@@ -11,7 +11,10 @@ testers' 1C returns (fully crossed); each auditor's 2D audits one tester's 1D li
   python Semantics/tools/s81_build.py build2           2b and 2D texts; needs 1C, 1K, 1D and 2a returns
   python Semantics/tools/s81_build.py widen AUDITOR TESTER O7,O9   a 2W text for the stopping rule
   python Semantics/tools/s81_build.py table            marks per case from every return present, and quote checks
-  python Semantics/tools/s81_build.py run 2a|2|2W      send the built Stage 2 texts with tools/s80_call.py (thinking on)
+  python Semantics/tools/s81_build.py run 2a|2|2W      send the built Stage 2 texts with tools/s80_call.py (thinking on,
+                                                       at the shared effort, s80_common.REASONING_EFFORT)
+  python Semantics/tools/s81_build.py run 2 --dry-run  what `run 2` would send, and the files each pass may write;
+                                                       sends nothing, writes nothing, needs no keys
 
 Texts go to <OUT>/briefs/<tag>.txt, returns to <OUT>/returns/ (the s80_call layout). OUT defaults to
 results/S81 File 11 against every case - outputs; set S81_OUT to build elsewhere (a dry run).
@@ -329,10 +332,10 @@ def table():
     print("\n".join(out))
 
 
-def run(stage):
+def run(stage, dry=False):
     sys.path.insert(0, HERE)
     import s80_common as C
-    from s80_call import call
+    from s80_call import call, pass_plan, PROVIDERS
     from s80_run import run_pool
     if stage == "1":
         raise SystemExit("Stage 1 is run by Sonnet subagents (second version, decision S15): "
@@ -349,8 +352,42 @@ def run(stage):
     # 131,072 (probe of 23 September), is used for it; Atria keeps the reader ladder.
     # Atria refuses more than 65,536 (probe of 23 September); its first 2b call ran out at 48,000, so it starts at its ceiling.
     ladder = lambda m: [131072, 131072] if m == "mimo" else [65536, 65536]
+    # Thinking effort: the shared setting, s80_common.REASONING_EFFORT ("medium" from 23 September 2026, decision S17;
+    # the calls sent before it went at "high", as their request.json records).
+    if dry:
+        dry_run(jobs, ladder, C, pass_plan, PROVIDERS)
+        return
     run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, ladder(j["model"]),
                                   extra={"round": "S81", "stage": stage}))
+
+
+def dry_run(jobs, ladder, C, pass_plan, providers, attempts=6, max_rejects=3):
+    """Print what `run` would send, with s80_call.call's own defaults, and every file each pass may write; list any
+    such file that is already there (none should be). Reads the folder only."""
+    names = set(os.listdir(RET)) if os.path.isdir(RET) else set()
+    send = [j for j in jobs if j["tag"] + ".response.txt" not in names]
+    for j in jobs:
+        t, m = j["tag"], j["model"]
+        if t + ".response.txt" in names:
+            print("%-16s skip: %s.response.txt is there" % (t, t))
+            continue
+        renames, k = pass_plan(RET, t)
+        freed = {old for old, _ in renames}
+        may = [t + e for e in (".request.json", ".response.txt", ".reasoning.txt", ".receipt.json", ".error.txt")]
+        may += ["%s.pass%d.a%d.%s.txt" % (t, k, n, w) for n in range(1, attempts + 1)
+                for w in ("truncated", "reasoning")]
+        clash = sorted(f for f in may if f in names and f not in freed)
+        print("%-16s SEND to %s (%s): pass %d; max_tokens %s; thinking on, reasoning_effort %s; temperature %s; "
+              "text sha256 %s, %d words" % (t, m, providers[m][1], k, ladder(m), C.REASONING_EFFORT, C.TEMPERATURE,
+                                            C.sha256(j["user"])[:12], len(j["user"].split())))
+        print("%16s renamed first: %s" % ("", ", ".join("%s -> %s" % r for r in renames) or "none"))
+        print("%16s may write: %s.pass%d.a<1..%d>.truncated.txt / .reasoning.txt (attempts that come back and fail), "
+              "then %s.request.json, and on success .response.txt, .reasoning.txt, .receipt.json, or on failure "
+              ".error.txt and .receipt.json; already there: %s" % ("", t, k, attempts, t, ", ".join(clash) or "none"))
+    per = {m: sum(j["model"] == m for j in send) for m in AUDITORS}
+    print("to send: %d calls (%s); at most 3 in flight per provider, so all start at once; up to %d attempts per call, "
+          "at most %d that come back and fail" % (len(send), ", ".join("%s %d" % kv for kv in per.items()), attempts,
+                                                  max_rejects))
 
 
 if __name__ == "__main__":
@@ -361,4 +398,4 @@ if __name__ == "__main__":
             raise SystemExit("widen AUDITOR TESTER ROWS, e.g. widen atria A O7,O9")
         widen(sys.argv[2], sys.argv[3], sys.argv[4])
     if cmd == "run":
-        run(sys.argv[2])
+        run(sys.argv[2], dry="--dry-run" in sys.argv[3:])

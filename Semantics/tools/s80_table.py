@@ -37,7 +37,7 @@ MARKS_DIR = os.path.join(C.OUT, "marks")
 ADJ_DIR = os.path.join(MARKS_DIR, "adjudication_inputs")
 TAGPAT = r"(?:(?:atria|mimo|deepseek)_(?:ST|PT|NT|SO|PO|NO)_(?:seeded|clean)_r[1-5]|opus_[SPN]_(?:seeded|clean)_r[1-3])"
 READER_FILE = re.compile(r"^(" + TAGPAT + r")\.(response\.txt|reasoning\.txt|request\.json|request\.md|receipt\.json|"
-                         r"error\.txt|pass\d+\.(?:receipt\.json|error\.txt|truncated\.txt|void\.txt|"
+                         r"error\.txt|pass\d+\.(?:receipt\.json|error\.txt|request\.json|truncated\.txt|void\.txt|"
                          r"a\d+\.truncated\.txt|a\d+\.reasoning\.txt)|pass\d+\.a\d+\.(?:truncated|reasoning)\.txt)$")
 FA_RISE_LIMIT = 0.10
 

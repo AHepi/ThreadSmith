@@ -31,6 +31,11 @@ REPS = 5
 OPUS_CONDS = ["S", "P", "N"]
 OPUS_REPS = 3
 TEMPERATURE = 0.7
+# Thinking effort, the one setting for every call with thinking on, from every tool in this folder (s80_call.build_body
+# reads it; each request.json and receipt records the effort sent). "medium" from the owner's instruction of
+# 23 September 2026 (decision S17): Atria and Mimo run at medium thinking effort for cross-examination. It was "high"
+# before that; the calls already made keep their record of "high" in their own request.json.
+REASONING_EFFORT = "medium"
 READER_LADDER = [48000, 64000, 64000]   # max_tokens per attempt that came back incomplete (finish "length")
 MARKER_LADDER = [32000, 48000]
 JOB_SEED = 8080          # job order, shuffled per model

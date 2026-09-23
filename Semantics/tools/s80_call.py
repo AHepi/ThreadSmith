@@ -9,20 +9,24 @@ Providers (keys from the environment only, never from a file in the repository):
   atria     https://api.atria-asi.ai/v1/chat/completions             Atria-Dawn-Preview  ATRIA_API_KEY
   mimo      https://token-plan-sgp.xiaomimimo.com/v1/chat/completions mimo-v2.6-pro       MIMO_API_KEY
   deepseek  https://api.deepseek.com/chat/completions                 deepseek-v4-pro     DEEPSEEK_API_KEY
-Thinking is switched with `thinking: {"type": "enabled"|"disabled"}`; with it on, `reasoning_effort: "high"`.
+Thinking is switched with `thinking: {"type": "enabled"|"disabled"}`; with it on, `reasoning_effort` is
+s80_common.REASONING_EFFORT (the one shared setting: "medium" from 23 September 2026, decision S17; "high" before), or
+an explicit `effort` argument; the effort sent is recorded in the request and the receipt.
 Temperature is pinned (s80_common.TEMPERATURE) and recorded; top_p is left to the provider and recorded as unset.
 
 call(provider, system, user, out_dir, tag, thinking, ladder, accept, ...) writes, in out_dir:
   <tag>.response.txt, <tag>.reasoning.txt, <tag>.request.json, <tag>.receipt.json   only when `accept` passes;
   <tag>.pass<k>.a<n>.truncated.txt (+ .reasoning.txt) for every attempt that came back but failed `accept`;
   <tag>.error.txt and a receipt with "failed": true when every attempt is spent.
-An earlier receipt or error for the same tag (a failed earlier pass) is renamed <tag>.pass<k>.receipt.json / .error.txt,
-never overwritten. A tag whose .response.txt exists is skipped.
+An earlier pass's receipt, error and request for the same tag are renamed <tag>.pass<k>.receipt.json / .error.txt /
+.request.json, never overwritten, and a new pass is numbered above every earlier pass that left any file (a pass cut
+off before its receipt included), so no earlier attempt file is overwritten. A tag whose .response.txt exists is
+skipped.
 Retries: 429, 5xx, disconnects, silence -> same max_tokens, back-off. finish "length" -> next rung of the ladder.
 Any other failed acceptance (finish "stop" without the sentinel, no finish, invalid marker JSON) -> same max_tokens,
 at most `max_rejects` such answers. 400/401/403/404/413/422 are final and not retried.
 """
-import hashlib, json, os, time
+import hashlib, json, os, re, time
 import requests
 
 import s80_common as C
@@ -35,15 +39,16 @@ PROVIDERS = {
 FINAL = {400, 401, 403, 404, 413, 422}
 
 
-def build_body(provider, system, user, thinking, max_tokens, temperature=C.TEMPERATURE):
-    """The exact request shape of every S80 call (the probe uses this too)."""
+def build_body(provider, system, user, thinking, max_tokens, temperature=C.TEMPERATURE, effort=None):
+    """The exact request shape of every S80 call (the probe uses this too). effort: None reads the shared setting,
+    s80_common.REASONING_EFFORT, at call time; a value given here overrides it for this call."""
     model = PROVIDERS[provider][1]
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
     body = {"model": model, "messages": messages, "max_tokens": max_tokens, "stream": True,
             "stream_options": {"include_usage": True}, "temperature": temperature,
             "thinking": {"type": "enabled" if thinking else "disabled"}}
     if thinking:
-        body["reasoning_effort"] = "high"
+        body["reasoning_effort"] = effort or C.REASONING_EFFORT
     return body
 
 
@@ -87,16 +92,33 @@ def stream(provider, body, idle=900, deadline=None):
                          chunks=chunks, bad_chunks=bad, usage=usage, saw_done=done)
 
 
-def _keep_earlier(p):
-    """Rename an earlier pass's receipt and error so a rerun never overwrites them; return this pass's number."""
-    k = 1
-    while os.path.exists(p(".pass%d.receipt.json" % k)) or os.path.exists(p(".pass%d.error.txt" % k)):
-        k += 1
-    if os.path.exists(p(".receipt.json")) or os.path.exists(p(".error.txt")):
-        for ext in (".receipt.json", ".error.txt"):
-            if os.path.exists(p(ext)):
-                os.replace(p(ext), p(".pass%d%s" % (k, ext)))
-        k += 1
+KEPT = (".receipt.json", ".error.txt", ".request.json")   # an earlier pass's own files, renamed .pass<k><ext>
+
+
+def pass_plan(out_dir, tag):
+    """([(old name, new name)], this pass's number), touching nothing. An earlier pass's loose receipt, error and
+    request belong to the highest pass that left a <tag>.pass<k>.* file, or to the one after it when that pass's own
+    receipt, error or request is already kept under its number. This pass is numbered one above every earlier pass,
+    so no file of an earlier pass is overwritten, the attempt files of a pass cut off before its receipt included
+    (the earlier rule counted only kept receipts and errors, and would have reused such a pass's number)."""
+    names = set(os.listdir(out_dir)) if os.path.isdir(out_dir) else set()
+    pat = re.compile(re.escape(tag) + r"\.pass(\d+)\.")
+    hi = max([int(m.group(1)) for m in map(pat.match, names) if m] or [0])
+    loose = [e for e in KEPT if tag + e in names]
+    if not loose:
+        return [], hi + 1
+    k = hi if hi and not any("%s.pass%d%s" % (tag, hi, e) in names for e in KEPT) else hi + 1
+    return [(tag + e, "%s.pass%d%s" % (tag, k, e)) for e in loose], k + 1
+
+
+def _keep_earlier(out_dir, tag):
+    """Rename an earlier pass's receipt, error and request so a rerun never overwrites them; return this pass's
+    number, or None (and rename nothing) if a new name is already taken, which pass_plan's numbering rules out."""
+    renames, k = pass_plan(out_dir, tag)
+    if any(os.path.exists(os.path.join(out_dir, new)) for _, new in renames):
+        return None
+    for old, new in renames:
+        os.replace(os.path.join(out_dir, old), os.path.join(out_dir, new))
     return k
 
 
@@ -109,18 +131,21 @@ def accept_reader(res):
 
 
 def call(provider, system, user, out_dir, tag, thinking, ladder, accept=accept_reader, extra=None,
-         idle=900, attempts=6, max_rejects=3, deadline=7200):
+         idle=900, attempts=6, max_rejects=3, deadline=7200, effort=None):
     _, model, _ = PROVIDERS[provider]
     os.makedirs(out_dir, exist_ok=True)
     p = lambda ext: os.path.join(out_dir, tag + ext)
     if os.path.exists(p(".response.txt")):
         return "skipped"
-    pas = _keep_earlier(p)
+    pas = _keep_earlier(out_dir, tag)
+    if pas is None:
+        return "refused: an earlier pass's file would be renamed over another; nothing sent"
+    effort = (effort or C.REASONING_EFFORT) if thinking else None   # read once: every attempt of a pass sends the same
     rung = 0
     started, history, rejects, res, why = time.time(), [], 0, None, ""
     for n in range(1, attempts + 1):
         max_tokens = ladder[min(rung, len(ladder) - 1)]
-        body = build_body(provider, system, user, thinking, max_tokens)
+        body = build_body(provider, system, user, thinking, max_tokens, effort=effort)
         raw = json.dumps(body, ensure_ascii=False, sort_keys=True)
         C.write(p(".request.json"), raw)   # the last attempt's request; every attempt's hash is in the history
         t0 = time.time()
@@ -152,7 +177,7 @@ def call(provider, system, user, out_dir, tag, thinking, ladder, accept=accept_r
                     % (status, n, rejects, why if status == 200 else "", text))
             C.write(p(".receipt.json"), json.dumps({
                 "provider": provider, "model": model, "tag": tag, "failed": True, "pass": pas, "thinking": thinking,
-                "temperature": C.TEMPERATURE, "top_p": "provider default (unset)",
+                "reasoning_effort": effort, "temperature": C.TEMPERATURE, "top_p": "provider default (unset)",
                 "system_sha256": C.sha256(system) if system else None, "user_sha256": C.sha256(user),
                 "attempt_history": history, "extra": extra or {}, "asked_at_unix": int(started)}, indent=1))
             return "failed"
@@ -163,7 +188,7 @@ def call(provider, system, user, out_dir, tag, thinking, ladder, accept=accept_r
     last = res["last"] or {}
     C.write(p(".receipt.json"), json.dumps({
         "provider": provider, "model": last.get("model", model), "tag": tag, "pass": pas, "thinking": thinking,
-        "temperature": C.TEMPERATURE, "top_p": "provider default (unset)",
+        "reasoning_effort": effort, "temperature": C.TEMPERATURE, "top_p": "provider default (unset)",
         "max_tokens_used": history[-1]["max_tokens"],
         "response_id": last.get("id"), "finish_reason": res["finish"], "saw_done": res["saw_done"],
         "chunks": res["chunks"], "bad_chunks": res["bad_chunks"],
