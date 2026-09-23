@@ -1,0 +1,73 @@
+# Review of "Claude Fable Semantics"
+
+**Brief.** Full correctness review of a theory document: definitions, derivations, internal consistency, and the match between claims and proofs. I read all sixteen parts and worked the examples and derivations myself. I did not check the document's claims about the philosophical literature (teleosemantics, structural realism, functionalism) against sources, and I did not verify the physical/task-based modelling in Part XII against any external physics — those are internal stipulations.
+
+**Summary.** The document's architecture is largely coherent and its central definitions are checkable. But the core definition of Account contains a disjunct that admits exactly the circular cases it is written to exclude; one derivation (Derivation 2) is false as stated, with a simple counterexample; one theorem (the finite monotone theorem) misstates one of its two characterisations; and several other claims are half-proven or miscounted. Findings follow, most serious first.
+
+---
+
+**1. Part V, "Non-circular dependence" — (major, error + inconsistency).**
+(a) Part V, the bolded condition "Non-circular dependence", and its use in "What (E) excludes".
+(b) "There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, **or is left as it was**."
+(c) The third disjunct makes the condition satisfiable precisely when removing the block makes no difference — i.e. when the block was dispensable, which is the signature of the circularity the condition is meant to exclude. For "\(p\) because \(p\)" (the answer supplied as an unanalysed input plus a component echoing it), removing the echo leaves the answer as it was, so the stated condition *holds*; yet "What (E) excludes" says "'\(p\) because \(p\)' fails non-circular dependence." The two statements contradict each other. The disjunct should be dropped, or the condition rewritten so that the answer must change or lose determination.
+
+**2. Part XVI, Derivation 2 — (major, false claim; proof is a non sequitur).**
+(a) Part XVI, heading "2. Indistinguishable is identical".
+(b) "Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide."
+(c) The answer-profile half follows from (A) (both equal \(\operatorname{Ans}_p\)); the kind half does not, and is false. Counterexample: let \(D\) have two unconstrained ports \(u_1,u_2\), \(C=\{(1,b_0)\}\), and \(\mathcal Q\) read \(u_1\). Candidate \(E\): one component \(k\) on a single port \(y\) with the full relation, anchored to \(\{u_1\}\), \(\pi(u_1,u_2)=(u_1)\). Candidate \(E'\): one component \(k'\) on two ports \(y_1,y_2\) with the full relation, anchored to \(\{u_1,u_2\}\), \(\pi'=(u_1,u_2)\). Both satisfy (F1), (F2) and (A) (all relations are full; both answer profiles are \(\{0,1\}\)). But by (K) components are of one kind only under a bijection of footprints, and \(|\{y\}|\neq|\{y_1,y_2\}|\), so no such bijection exists. Adding interventions to \(C\) does not repair it. (Derivation 10's use of "of one kind" for the two persistence components is fine — it follows directly from (K) via the swap, not from this derivation.)
+
+**3. Part VI, "Finite monotone theorem" — (major, theorem misstated).**
+(a) Part VI, bolded heading "Finite monotone theorem".
+(b) "If \(\Gamma\) is finite, \(\mathsf S\) is upward closed, and \(\Gamma\in\mathsf S\), then the critical singletons are exactly \(\bigcap\min\mathsf S\) and the globally indispensable ones are exactly \(\bigcup\min\mathsf S\)."
+(c) The first half is right. The second is wrong: if "globally indispensable" means belonging to every support, it equals \(\bigcap\mathsf S=\bigcap\min\mathsf S\), not \(\bigcup\min\mathsf S\) (every support contains a minimal one, so the two intersections agree). The document's own "Redundant routes" example confirms this: with \(\mathsf S=\{\{a\},\{b\},\{a,b\}\}\), \(\bigcup\min\mathsf S=\{a,b\}\), yet the text says "each is contributory, neither indispensable." The proof's last sentence ("Deletion of \(d\) from \(\Gamma\) preserves support exactly when a minimal support omits \(d\)") supports only the \(\bigcap\) reading. Under the theorem's hypotheses the two notions in fact coincide, both being \(\bigcap\min\mathsf S\).
+
+**4. Part V, "Baseline coherence" — (major, false claim about the axioms).**
+(a) Part V, bolded condition "Baseline coherence".
+(b) "\(\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing\): the components of \(E\) are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+(c) It is implied. By Part III the contract contains the baseline \((1,b_0)\); setting \((a,b)=(1,b_0)\) in (F2) gives \(\pi[\operatorname{Sol}_D(1,b_0)]=\operatorname{Sol}_E(1,\sigma(b_0))\). Non-vacuity gives \(\operatorname{Sol}_D(1,b_0)\neq\varnothing\), and the image of a nonempty set under a function is nonempty. So \(\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing\) follows. The conjunct is harmless, but the claim of independence is false; the sentence should say the condition is stated for emphasis, or (F2) restricted so that it does not apply at the baseline.
+
+**5. Part XVI, Derivation 4 — (major, biconditional half-proven and overstated).**
+(a) Part XVI, heading "4. Surprise requires an incomplete history".
+(b) "A system can be surprised if and only if it holds a transport selected on a history \(H\) strictly smaller than the contract \(C\) of changes the world admits."
+(c) The proof establishes only the "only if" direction: no transport ⇒ no expectation; \(H=C\) ⇒ no \((a,b)\notin H\) to violate. The "if" direction is not argued and is doubtful — a change outside \(H\) is merely *untested* (that is Derivation 3's point), not necessarily one at which fidelity fails; the transport may be faithful there. Also, \(C\) is a declared contract, "a declared subset of the physically admitted edits" (Part V), not "the changes the world admits"; the two are conflated here. Relatedly, because violation/surprise are defined only for selected transports, the semantics has no notion of surprise for a constructed transport, which the claim silently assumes away.
+
+**6. Part VII, "Obstruction" — (major, arithmetic error).**
+(a) Part VII, paragraph headed "Obstruction".
+(b) "Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result."
+(c) \(24=3\times 8\), so twenty-four indivisible tokens *can* be split equally three ways (8, 8, 8). The intended illustration of an invariant blocking an equal split needs a number that does not divide — an odd count split two ways, or a count not divisible by three (e.g. 23). (O1) itself ("equal values do not establish reachability") is unaffected, but the example states a falsehood and would mislead any reader who checks it.
+
+**7. Part V, "Non-vacuity" — (minor, misattribution; compounds defect 1).**
+(a) Part V, bolded condition "Non-vacuity", final sentence.
+(b) "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \(\mathcal Q\), does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+(c) This paragraph defines non-*vacuity* but attributes the failure to non-*circular* dependence. Worse, given the "or is left as it was" disjunct in defect 1, such a contract *would* satisfy the stated non-circularity condition (removing any block leaves the answer unchanged), so the sentence contradicts the formal condition beside it. If scope-honesty is meant to be part of non-vacuity, the attribution should say so.
+
+**8. Part V, opening sentence — (minor, miscount).**
+(a) Part V, first paragraph; also Part 0, "Where to attack this", item (A).
+(b) "The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies \(\operatorname{Account}(\mathcal E)\) exactly when the following four conditions hold…" and "Produce a candidate that satisfies all four conditions of Account (Part V)…"
+(c) Five conditions follow (Component fidelity, Question fidelity, Non-circular dependence, Non-vacuity, Baseline coherence), and (E) itself lists six conjuncts: (F1)∧(F2)∧(A)∧NonCircular∧NonVacuous∧Coherent. The count "four" is wrong in both places.
+
+**9. Part XVI, Derivation 5 — (minor, conflation).**
+(a) Part XVI, heading "5. Question-finding is representable".
+(b) "A contract is a subset of \(A\times B\) together with \(\mathcal Q\)."
+(c) By Part III, the contract is \(C\subseteq A\times B\); \(\mathcal Q\) is a component of the *question* \(p=(D,C,b_0,\mathcal Q,O_p,\rho_p)\), not of the contract. The construction can still go through (build an organisation whose ports are the edit–boundary pairs plus the query), but as written it misdescribes its own input, and the value domains \(X_v\) of the new ports are left unspecified.
+
+**10. Part VII, "Production and direction" — (minor, wrong port named).**
+(a) Part VII, paragraph "Production and direction", second half.
+(b) "The reversed calculation \(H=L\tan\theta\) is not: intervening on \(H\) changes the target's \(L\) but not the calculation's \(H\)."
+(c) Under the production contract the intervention sets \(H\); in the reversed calculation \(H\) is the output, so it is exactly the port that *does* change. The port that fails to respond is the calculation's \(L\) — an input there, untouched by the \(H\)-intervention — and that is what breaks (F2)/(A). The sentence should read "the calculation's \(L\)."
+
+**11. Notation — (minor, symbol clashes).**
+(a) Part IV vs Part VII; Part IV vs Part XII; Part II vs Parts III/IX/XI.
+(b) "a finite history \(H\subseteq C\)" (Part IV) versus "Stipulate \(H:=U_H,\ \theta:=U_\theta,\ L:=H\cot\theta\)" (Part VII); "\(t=(\pi,\tau,\sigma,\lambda)\)" (Part IV) versus "For protocol \(\pi\), task \(T\), constructor attribute \(C\)" (Part XII); "\(L_j(a,b)\)" (Part II) versus "\(L:=H\cot\theta\)"; and \(O\) as equation label (Part II), obligation set (Parts III, XI) and output proposition (Part IX).
+(c) By the document's own notation rules (one meaning per symbol, introduced near first use) these are clashes. A reader holding "history" in mind will stumble on \(H:=U_H\), and "protocol \(\pi\)" collides with the transport's valuation map in a document where transports are the main object.
+
+**12. Part XVI, Derivation 1 — (minor, (K) applied outside its domain).**
+(a) Part XVI, heading "1. Kind preservation is a theorem, not a condition".
+(b) "By (K), \(\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}\)…"
+(c) (K) defines signatures for *components* \(j\in J\) of an organisation, in terms of \(L_j\); here it is applied to an anchor *subnetwork* \(\lambda(k)\), whose "component relation" is the projected solution relation — a notion Part V introduces only informally ("the relation obtained by imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports"). The step is plausible, but (K) as stated does not license it; a one-line extension of (K) to anchor subnetworks would close the gap.
+
+---
+
+**Coverage.** I read all sixteen parts in order, rebuilt the definitions of (O), (K), (F1), (F2), (A), (E), (S), (B), (D), (R), (N), (G), (P), (EK), (CT1)–(CT4), (RC) and (U1)–(U3), and worked every derivation and every worked example myself (the two-balance kernel, the odd-order skew-symmetric matrices, the pole-and-shadow direction example, the occlusion episode, the fixed-point argument in (CT2)). I checked the finite monotone theorem, (I2), (O1), (T2), (CT2) and Derivations 1–10 against their stated assumptions; findings 2, 3 and 6 are counterexamples, findings 4 and 5 are proof gaps in the sense of the document's own Part XV. I did not open any external sources: the document's claims about teleosemantics, structural realism and functionalism, and its characterisations of competing views in the "Grievances" section, are unverified. I also did not attempt to judge whether the constitutive conjecture is true — only whether the document, as written, establishes what it claims.
+
+END OF REPORT
