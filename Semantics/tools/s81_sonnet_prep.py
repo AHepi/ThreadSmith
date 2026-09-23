@@ -61,9 +61,9 @@ def folder_tag(tag, attempt):
 def prompt_for(folder):
     p = PROMPT.format(F=folder, S=SENTINEL)
     for w in PROMPT_FORBID_IDS:
-        assert not re.search(r"\b%s\b" % re.escape(w), p), "the prompt carries %r" % w
+        B.need(not re.search(r"\b%s\b" % re.escape(w), p), "the prompt carries %r" % w)
     for w in PROMPT_FORBID_WORDS:
-        assert not re.search(r"\b%s\b" % re.escape(w), p, re.I), "the prompt carries %r" % w
+        B.need(not re.search(r"\b%s\b" % re.escape(w), p, re.I), "the prompt carries %r" % w)
     return p
 
 
@@ -76,7 +76,7 @@ def expected_text(s81tag):
         raise SystemExit("%s missing: run `python Semantics/tools/s81_build.py build` first" % path)
     if B.read(path) != whole:
         raise SystemExit("%s differs from the text the build makes from the frozen sources" % path)
-    assert SENTINEL in b, "the brief's closing line is missing"
+    B.need(SENTINEL in b, "the brief's closing line is missing")
     return whole
 
 
@@ -93,7 +93,7 @@ def build(tag, attempt, mp):
     whole = expected_text(s81tag)
     with open(os.path.join(folder, "brief.md"), "w", encoding="utf-8") as f:
         f.write(whole)
-    assert sorted(os.listdir(folder)) == ["brief.md"]
+    B.need(sorted(os.listdir(folder)) == ["brief.md"], "%s holds more than brief.md" % folder)
     prompt = prompt_for(folder)
     ppath = os.path.join(PROMPTS, ft + ".txt")
     B.write(ppath, prompt)

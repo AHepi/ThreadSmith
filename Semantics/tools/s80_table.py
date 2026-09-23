@@ -37,8 +37,10 @@ MARKS_DIR = os.path.join(C.OUT, "marks")
 ADJ_DIR = os.path.join(MARKS_DIR, "adjudication_inputs")
 TAGPAT = r"(?:(?:atria|mimo|deepseek)_(?:ST|PT|NT|SO|PO|NO)_(?:seeded|clean)_r[1-5]|opus_[SPN]_(?:seeded|clean)_r[1-3])"
 READER_FILE = re.compile(r"^(" + TAGPAT + r")\.(response\.txt|reasoning\.txt|request\.json|request\.md|receipt\.json|"
-                         r"error\.txt|pass\d+\.(?:receipt\.json|error\.txt|request\.json|truncated\.txt|void\.txt|"
-                         r"a\d+\.truncated\.txt|a\d+\.reasoning\.txt)|pass\d+\.a\d+\.(?:truncated|reasoning)\.txt)$")
+                         r"error\.txt|pass\d+\.(?:receipt\.json|error\.txt|request\.json|reasoning\.txt|truncated\.txt|"
+                         r"void\.txt|a\d+\.truncated\.txt|a\d+\.reasoning\.txt)|pass\d+\.a\d+\.(?:truncated|reasoning)\.txt)$")
+# pass<k>.reasoning.txt: a pass cut off between its reasoning and its response keeps that file under its number
+# (s80_call.KEPT, since the response is written last).
 FA_RISE_LIMIT = 0.10
 
 

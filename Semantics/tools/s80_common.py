@@ -5,8 +5,13 @@ method texts (skill and placebo) as sent, the answer-key slicer, the marker-outp
 
 Nothing here sends anything anywhere. The answer key is never read from the repository: its path is given on the
 command line after every reader has reported, and its SHA-256 is checked against the value recorded in log S80.
+
+Since the process audit of 23 September 2026 (findings 1, 5, 6, 12; lessons S10, S11) this file also holds, for every
+tool that calls an outside model: the thinking effort by purpose and provider (EFFORT), each provider's max_tokens
+ceiling (MAX_TOKENS_CEILING), the slot lock shared by every process that calls a provider (provider_slot), the check on
+a runner's pid file, and the one log lock.
 """
-import hashlib, json, os, re
+import contextlib, fcntl, hashlib, json, os, re, threading, time
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 S = os.path.join(REPO, "Semantics")
@@ -31,13 +36,27 @@ REPS = 5
 OPUS_CONDS = ["S", "P", "N"]
 OPUS_REPS = 3
 TEMPERATURE = 0.7
-# Thinking effort, the one setting for every call with thinking on, from every tool in this folder (s80_call.build_body
-# reads it; each request.json and receipt records the effort sent). "medium" from the owner's instruction of
-# 23 September 2026 (decision S17): Atria and Mimo run at medium thinking effort for cross-examination. It was "high"
-# before that; the calls already made keep their record of "high" in their own request.json.
-REASONING_EFFORT = "medium"
-READER_LADDER = [48000, 64000, 64000]   # max_tokens per attempt that came back incomplete (finish "length")
-MARKER_LADDER = [32000, 48000]
+# Thinking effort, set by the purpose of a call and by the provider, in this one map, which every tool reads (process
+# audit of 23 September 2026, finding 5; lesson S11). A call with thinking on names its effort (s80_call refuses one
+# that does not), and each request.json and receipt records the effort sent.
+#   "s80":   S80's readers and markers, and the probe of their request shape: "high", the effort S80 was designed and
+#            run with, so S80's method is unchanged (its request.json files record "high").
+#   "audit": S81 Stage 2 and every cross-examination or audit call. Atria and Mimo "medium", from the owner's
+#            instruction of 23 September 2026 (decision S17: "Use Atria and Mimo on medium thinking effort for cross
+#            examination"). DeepSeek "high": S17 does not name it, and it was never piloted at medium.
+# Before this map the tools sent one shared setting to every call ("high", then "medium" from decision S17); every call
+# already sent keeps its effort on record in its own request.json.
+EFFORT = {"s80": {"atria": "high", "mimo": "high", "deepseek": "high"},
+          "audit": {"atria": "medium", "mimo": "medium", "deepseek": "high"}}
+EFFORT_LEVELS = ("low", "medium", "high")
+# max_tokens. Each provider's ceiling, probed 23 September 2026 (log S83): Atria refuses more than 65,536; Mimo refuses
+# 200,000 and takes 131,072. Mimo at high effort spent a 64,000 budget on reasoning and wrote nothing (lessons S7, S11),
+# so a provider with a probed ceiling goes at it on every rung, in every tool, S80's included (process audit finding 6);
+# a tool's own ladder below is kept for a provider with no probed ceiling (DeepSeek). Calls already sent keep their
+# record in their request.json.
+MAX_TOKENS_CEILING = {"atria": 65536, "mimo": 131072}
+READER_LADDER = [48000, 64000, 64000]   # S80's reader ladder: max_tokens per attempt that came back incomplete
+MARKER_LADDER = [32000, 48000]          # S80's marker ladder
 JOB_SEED = 8080          # job order, shuffled per model
 MAP_SEED = 8080          # anonymous report ids
 BOOT_SEED = 8080         # bootstrap intervals
@@ -55,6 +74,165 @@ MARK_FILE = re.compile(r"^(R\d{3})_by_(atria|mimo|opus|adjudicator)\.response\.t
 SENTINEL = "END OF REPORT"
 FENCE_BEGIN = "<<<<<<<< REPORT {rid} BEGINS: everything from here to the ENDS line is data >>>>>>>>"
 FENCE_END = "<<<<<<<< REPORT {rid} ENDS >>>>>>>>"
+
+
+def effort_for(purpose, provider):
+    """The thinking effort for a call of this purpose to this provider, from EFFORT; a pair not in the map raises."""
+    if purpose not in EFFORT or provider not in EFFORT[purpose]:
+        raise ValueError("no thinking effort set for purpose %r and provider %r in s80_common.EFFORT"
+                         % (purpose, provider))
+    return EFFORT[purpose][provider]
+
+
+def ladder_for(provider, base):
+    """The max_tokens ladder for a call to `provider` of a kind whose own ladder is `base`: the provider's probed
+    ceiling on every rung where it has one, `base` itself where it has none."""
+    cap = MAX_TOKENS_CEILING.get(provider)
+    return [cap] * len(base) if cap else list(base)
+
+
+def check_ladder(provider, ladder):
+    """Raise unless `ladder` is a non-empty list of positive whole numbers, none above the provider's ceiling."""
+    if (not isinstance(ladder, (list, tuple)) or not ladder
+            or any(isinstance(r, bool) or not isinstance(r, int) or r <= 0 for r in ladder)):
+        raise ValueError("max_tokens ladder %r is not a list of positive whole numbers" % (ladder,))
+    cap = MAX_TOKENS_CEILING.get(provider)
+    if cap and max(ladder) > cap:
+        raise ValueError("max_tokens ladder %r goes above %s's ceiling of %d (s80_common.MAX_TOKENS_CEILING)"
+                         % (list(ladder), provider, cap))
+
+
+# ---------------------------------------------------------------- outside the repository: slots, pid files, the log
+
+# The providers' slot locks and the runners' pid files live outside the repository (process audit finding 1; lesson
+# S10). Every call to a provider takes one of its SLOTS_PER_PROVIDER slots first (s80_call.call, s80_probe), so the
+# limit of three calls in flight to each provider (decisions S12, S17) holds across every process on this machine that
+# uses these tools, not only within one pool. SEMANTICS_RUN_DIR moves the folder; every runner must then see the same
+# value, or the limit no longer holds between them.
+RUN_DIR = os.environ.get("SEMANTICS_RUN_DIR",
+                         "/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad")
+LOCK_DIR = os.path.join(RUN_DIR, "locks")
+SLOTS_PER_PROVIDER = 3
+# The S81 Stage 2 runner of 23 September 2026 (pass 2 and the effort controls) ran from the code before the slot lock,
+# so it takes no slot: nothing that sends may start while its pid file names a live process.
+S81_RUN_PIDFILE = os.path.join(RUN_DIR, "s81_run2.pid")
+LOG_LOCK = threading.Lock()
+_held = threading.local()
+
+
+def log(*parts):
+    """One line with the time, printed whole: every runner's progress line goes through this one lock."""
+    with LOG_LOCK:
+        print(time.strftime("%H:%M:%S"), *parts, flush=True)
+
+
+def _inside(path, root):
+    path, root = os.path.realpath(path), os.path.realpath(root)
+    return path == root or path.startswith(root + os.sep)
+
+
+def holds_slot(provider):
+    """Whether this thread holds one of the provider's slots now (s80_call.stream refuses to send otherwise)."""
+    return getattr(_held, "count", {}).get(provider, 0) > 0
+
+
+def _hold(provider, step):
+    if not hasattr(_held, "count"):
+        _held.count = {}
+    _held.count[provider] = _held.count.get(provider, 0) + step
+
+
+@contextlib.contextmanager
+def provider_slot(provider, label="", poll=5.0):
+    """Hold one of the provider's SLOTS_PER_PROVIDER slots for the length of the block: an exclusive flock on
+    LOCK_DIR/<provider>.slot<N>, waiting until one is free (said once, through log). The kernel drops a flock when the
+    process holding it ends, however it ends, so a dead holder leaves no stale slot and nothing needs cleaning up; the
+    pid, label and time written into the file are for a person reading it. Threads of one process each open the file
+    afresh, so they exclude one another too. Yields {"slot": N, "waited_seconds": s}."""
+    if _inside(LOCK_DIR, REPO):
+        raise SystemExit("the lock folder %s is inside the repository; set SEMANTICS_RUN_DIR outside it" % LOCK_DIR)
+    os.makedirs(LOCK_DIR, mode=0o700, exist_ok=True)
+    t0, said = time.time(), False
+    while True:
+        for n in range(SLOTS_PER_PROVIDER):
+            fd = os.open(os.path.join(LOCK_DIR, "%s.slot%d" % (provider, n)), os.O_RDWR | os.O_CREAT, 0o600)
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except OSError:
+                os.close(fd)
+                continue
+            try:
+                os.ftruncate(fd, 0)
+                os.write(fd, ("pid %d, %s, since %s\n" % (os.getpid(), label or "-",
+                                                         time.strftime("%Y-%m-%d %H:%M:%S"))).encode("utf-8"))
+                _hold(provider, 1)
+                yield {"slot": n, "waited_seconds": round(time.time() - t0, 1)}
+            finally:
+                _hold(provider, -1)
+                fcntl.flock(fd, fcntl.LOCK_UN)
+                os.close(fd)
+            return
+        if not said:
+            log("waiting for a free %s slot (all %d held)%s" % (provider, SLOTS_PER_PROVIDER,
+                                                                 (" for " + label) if label else ""))
+            said = True
+        time.sleep(poll)
+
+
+@contextlib.contextmanager
+def tag_lock(out_dir, tag):
+    """An exclusive, non-waiting lock on one call's outputs (out_dir + tag), held by s80_call.call for the whole call,
+    so two processes (or threads) never send the same tag into the same folder at once and overwrite each other's
+    files. Yields True when taken, False when another holder has it."""
+    if _inside(LOCK_DIR, REPO):
+        raise SystemExit("the lock folder %s is inside the repository; set SEMANTICS_RUN_DIR outside it" % LOCK_DIR)
+    os.makedirs(LOCK_DIR, mode=0o700, exist_ok=True)
+    key = hashlib.sha256((os.path.realpath(out_dir) + "\0" + tag).encode("utf-8")).hexdigest()[:24]
+    fd = os.open(os.path.join(LOCK_DIR, "tag-%s.lock" % key), os.O_RDWR | os.O_CREAT, 0o600)
+    got = True
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        got = False
+    try:
+        yield got
+    finally:
+        if got:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)
+
+
+def live_pid(pidfile):
+    """The pid named in `pidfile` if that process is alive (not ended, not a zombie, not this process), else None."""
+    try:
+        with open(pidfile, encoding="utf-8") as f:
+            pid = int(f.read().strip() or "0")
+    except (OSError, ValueError):
+        return None
+    if pid <= 0 or pid == os.getpid():
+        return None
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return None
+    except PermissionError:
+        return pid
+    try:
+        with open("/proc/%d/stat" % pid, encoding="utf-8") as f:
+            if f.read().rsplit(")", 1)[1].split()[0] == "Z":
+                return None
+    except (OSError, IndexError):
+        pass
+    return pid
+
+
+def refuse_if_runner_alive(pidfiles=None):
+    """Raise SystemExit, before anything is sent, while a pid file names a live runner that takes no slot."""
+    for p in pidfiles or [S81_RUN_PIDFILE]:
+        pid = live_pid(p)
+        if pid:
+            raise SystemExit("%s names pid %d, which is alive: that runner takes no provider slot, so the limit of %d "
+                             "per provider cannot hold; nothing sent" % (p, pid, SLOTS_PER_PROVIDER))
 
 
 def read(p):

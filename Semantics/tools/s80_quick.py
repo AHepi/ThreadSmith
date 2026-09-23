@@ -7,7 +7,9 @@ mark against the report and the key and settles the verdict.
   python Semantics/tools/s80_quick.py readers
   python Semantics/tools/s80_quick.py mark KEY_FILE
   python Semantics/tools/s80_quick.py table KEY_FILE
-Reuses s80_common (texts, key slicer, mark validator) and s80_call (the caller) of the second version.
+Reuses s80_common (texts, key slicer, mark validator) and s80_call (the caller) of the second version. Thinking effort
+and max_tokens from s80_common's one map: effort_for("s80", provider) ("high", as S80 was run) and
+ladder_for(provider, READER_LADDER or MARKER_LADDER) (Atria 65,536 and Mimo 131,072 on every rung; DeepSeek the ladder).
 """
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -32,7 +34,8 @@ def readers():
     systems = {k: system_text(k) for k in "SPN"}
     user = reader_user_text("seeded")
     jobs = [dict(tag=f"{m}_{c}_seeded_r{r}", model=m, method=CONDS[c], out=RD) for m, c, r in tags()]
-    run_pool(jobs, lambda j: call(j["model"], systems[j["method"]], user, RD, j["tag"], True, C.READER_LADDER))
+    run_pool(jobs, lambda j: call(j["model"], systems[j["method"]], user, RD, j["tag"], True,
+                                  C.ladder_for(j["model"], C.READER_LADDER), effort=C.effort_for("s80", j["model"])))
 
 
 def mark(key_file):
@@ -52,7 +55,9 @@ def mark(key_file):
     C.write_atomic(os.path.join(MD, "MAP.json"), json.dumps({j["rid"]: j["t"] for j in jobs}, indent=1))
     acc = lambda res: ((res["finish"] == "stop" and C.validate_mark(res["content"], C.KEY_IDS_SEEDED)[0] is not None),
                        "not a valid mark")
-    run_pool(jobs, lambda j: call(j["model"], None, j["user"], MD, j["tag"], True, C.MARKER_LADDER, accept=acc))
+    run_pool(jobs, lambda j: call(j["model"], None, j["user"], MD, j["tag"], True,
+                                  C.ladder_for(j["model"], C.MARKER_LADDER), accept=acc,
+                                  effort=C.effort_for("s80", j["model"])))
 
 
 def table(key_file):

@@ -12,6 +12,9 @@ Readers: atria, mimo, deepseek; conditions ST PT NT (skill, placebo, nothing; th
 documents seeded and clean; five repetitions; job order shuffled per model with a fixed seed; at most 3 calls in flight
 per provider (decision S12). The Opus arm (S, P, N; three repetitions) is run by the orchestrator as subagents, prepared
 by s80_opus_prep.py and collected by s80_opus_collect.py into the same readers folder.
+The limit of 3 per provider holds across processes too (s80_common.provider_slot). Thinking effort and max_tokens per
+provider come from s80_common: effort_for("s80", provider) ("high", S80's design) and ladder_for(provider,
+READER_LADDER or MARKER_LADDER) (the probed ceiling on every rung: Atria 65,536, Mimo 131,072; DeepSeek the ladder).
 Markers: no self-marking. atria's reports: mimo + an Opus subagent; mimo's: atria + an Opus subagent; deepseek's and
 opus's: atria + mimo. Thinking on. The map from anonymous id to tag is marks/MAP.json and is in no marker's input.
 
@@ -20,7 +23,7 @@ task texts' SHA-256, temperature, ladders, seeds, job order) is written on the f
 it; readers refuse to run once anything exists in marks/; marking refuses to start unless every expected report is
 present and complete (or, with --accept-missing, has a failed receipt from at least two passes).
 """
-import difflib, json, os, random, shutil, sys, threading, time, traceback
+import difflib, json, os, random, shutil, sys, time, traceback
 from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -74,16 +77,17 @@ def run_pool(jobs, fn):
     by_model = {}
     for j in jobs:
         by_model.setdefault(j["model"], []).append(j)
-    lock = threading.Lock()
 
     def worker(j):
         try:
             res = fn(j)
         except Exception:
             res = "worker-exception"
-            C.write(os.path.join(j["out"], j["tag"] + ".error.txt"), "worker exception\n" + traceback.format_exc())
-        with lock:
-            print(time.strftime("%H:%M:%S"), j["model"], j["tag"], res, flush=True)
+            p = os.path.join(j["out"], j["tag"] + ".error.txt")
+            if os.path.exists(p):      # never over an earlier pass's error file: this one goes beside it
+                p = os.path.join(j["out"], "%s.worker-exception.%d.txt" % (j["tag"], int(time.time())))
+            C.write(p, "worker exception\n" + traceback.format_exc())
+        C.log(j["model"], j["tag"], res)   # under the one log lock, shared with every other progress line
         return res
 
     pools = {m: ThreadPoolExecutor(max_workers=3) for m in by_model}
@@ -115,8 +119,9 @@ def manifest_now():
         "reader_task_sha256": C.sha256(C.read(os.path.join(C.PR, "reader task.md"))),
         "models": {m: PROVIDERS[m][1] for m in C.MODELS},
         "temperature": C.TEMPERATURE, "top_p": "provider default (unset)",
-        "reasoning_effort_when_thinking": C.REASONING_EFFORT,
-        "reader_max_tokens_ladder": C.READER_LADDER, "marker_max_tokens_ladder": C.MARKER_LADDER,
+        "reasoning_effort_when_thinking": {m: C.effort_for("s80", m) for m in C.MODELS},
+        "reader_max_tokens_ladder": {m: C.ladder_for(m, C.READER_LADDER) for m in C.MODELS},
+        "marker_max_tokens_ladder": {m: C.ladder_for(m, C.MARKER_LADDER) for m in C.API_MARKERS},
         "reps": C.REPS, "opus_reps": C.OPUS_REPS, "job_seed": C.JOB_SEED, "map_seed": C.MAP_SEED,
         "boot_seed": C.BOOT_SEED, "drift_salt": C.DRIFT_SALT, "drift_share": C.DRIFT_SHARE,
         "job_order": [j["tag"] for j in reader_jobs()],
@@ -156,7 +161,8 @@ def readers(only):
     if only and len(jobs) != len(set(only)):
         raise SystemExit("unknown tags in --only: %s" % sorted(set(only) - {j["tag"] for j in jobs}))
     run_pool(jobs, lambda j: call(j["model"], systems[j["method"]], users[j["doc"]], READERS_DIR, j["tag"],
-                                  j["thinking"], C.READER_LADDER, accept_reader, extra={"doc": j["doc"]}))
+                                  j["thinking"], C.ladder_for(j["model"], C.READER_LADDER), accept_reader,
+                                  extra={"doc": j["doc"]}, effort=C.effort_for("s80", j["model"])))
 
 
 # ---------------------------------------------------------------- marking
@@ -258,8 +264,9 @@ def mark(key_file, accept_missing=False, dry_run=False, test_key=False):
             return (True, "") if obj else (False, "; ".join(probs)[:500])
         return acc
 
-    run_pool(jobs, lambda j: call(j["model"], None, j["user"], MARKS_DIR, j["tag"], True, C.MARKER_LADDER,
-                                  accept_mark_for(j["extra"]["key_ids"]), extra=j["extra"], max_rejects=2))
+    run_pool(jobs, lambda j: call(j["model"], None, j["user"], MARKS_DIR, j["tag"], True,
+                                  C.ladder_for(j["model"], C.MARKER_LADDER), accept_mark_for(j["extra"]["key_ids"]),
+                                  extra=j["extra"], max_rejects=2, effort=C.effort_for("s80", j["model"])))
 
 
 if __name__ == "__main__":
