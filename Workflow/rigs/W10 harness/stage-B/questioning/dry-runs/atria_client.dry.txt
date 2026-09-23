@@ -1,0 +1,45 @@
+dry run of clients/atria_client.py - sends nothing
+
+  ok    body: max_tokens is the documented maximum - 65536
+  ok    body: the model id is the case-sensitive one - Atria-Dawn-Preview
+  ok    body: nothing undocumented is sent - max_tokens, messages, model, stream, stream_options
+  ok    body: the ceiling is a parameter
+  ok    body: a ceiling above the maximum raises
+  ok    body: a ceiling of zero raises
+  ok    body: extra carries an undocumented field only when asked
+  ok    endpoint is the documented one - https://api.atria-asi.ai/v1/chat/completions
+  ok    ATRIA_BASE_URL overrides the endpoint
+  ok    stream: content assembled
+  ok    stream: any reasoning field is kept
+  ok    stream: finish reason and usage read
+  ok    stream: comment and blank lines skipped, raw kept
+  ok    non-stream: choices[0].message.content read
+  ok    the request text is the bytes sent
+  ok    assert_no_key fires on a key in a record
+  ok    each: one record per job, in the order given
+  ok    each: the good job carries the assembled reply
+  ok    each: the rate-limit headers are kept
+  ok    each: max_tokens sent is the documented maximum
+  ok    each: a 429 is retried, and the retry is an attempt, not a second request
+  ok    each: Retry-After was honoured rather than the backoff - [0.0]
+  ok    the truncation gauge fires on finish reason 'length'
+  ok    each: a 401 stops at once, is returned, and keeps its record
+  ok    each: the service's own words are kept unedited
+  ok    the record keeps the request and the reply whole
+  ok    the key went in the header and in no record
+  ok    only one request was ever in flight - peak=1
+  ok    the non-streamed path assembles the reply and keeps the whole document
+  ok    five callers at once are still served one at a time - peak=1 []
+  ok    the control: with the lock taken out, the same check fails - peak without the lock = 5; if this is 1 the one-at-a-time check above is measuring nothing
+  ok    the pacer holds RPM_CAP = 30: starts asked at 0, 0.5 and 2.6 s wait 0, 1.5 and 1.4 s - waits [0.0, 1.5, 1.4], slept [1.5, 1.4]
+  ok    send() returns the four values a driver unpacks
+  ok    no key needed to build anything; key not in environment now - unset
+  ok    nothing was sent to any address - SENDS=0
+
+endpoint  https://api.atria-asi.ai/v1/chat/completions   (override with ATRIA_BASE_URL)
+model     Atria-Dawn-Preview   (override with ATRIA_MODEL)
+ceiling   max_tokens 65536, the documented maximum; a parameter everywhere
+threads   one at a time, held by a lock in this file; documented limit 60 rpm; the owner's cap 30 rpm held by a pacer in this file (decision W9)
+key       read from ATRIA_API_KEY at call time; not present in this environment
+
+35 checks passed, 0 failed. Nothing sent.

@@ -1,0 +1,923 @@
+You carry the hard-to-vary skill: the eight files of HV file 33 follow, whole and unchanged, SKILL.md first and then its seven reference files, each between a BEGIN line and an END line. Use the skill throughout what you are asked to do.
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/SKILL.md (19899 bytes, sha256 ac7a36814421f8adb1df925ac23343dd530de690cefcfc7877f6a66e183f42fd) =====
+---
+name: hard-to-vary
+description: Tests whether an explanation is "hard to vary" (David Deutsch's mark of a good explanation) - whether every part does real work, so that changing any part would break its power to explain. Use this whenever someone gives or asks for a reason WHY something happened, works, failed or should be done and wants to know if the reasoning holds up - a theory, diagnosis, root cause, post-mortem, bug hunt, business or history explanation, design or plan rationale, argument, proof, rule, or a creative choice such as why a scene or detail is there. Trigger on "does this hold up", "stress-test my thinking", "is this a just-so story", "is this circular", "are we fooling ourselves", "is this detail doing any work", and any mention of "hard to vary" or Deutsch. Also use it to build a theory or a list of requirements from nothing, to test one against cases found in research, and quietly on your own explanations when the stakes are high. Not for looking up facts, matters of pure taste, or judging how accurate a forecast was.
+---
+
+# Hard to vary
+
+A good explanation is hard to vary: you cannot change its parts and still have it explain what it is meant to explain. A bad explanation is easy to vary: its details could be swapped for others and it would "explain" just as well, which shows the details were never held in place by the thing being explained.
+
+The idea is David Deutsch's (*The Beginning of Infinity*). This skill sharpens it using a formal theory supplied by the user, "Claude Fable Semantics". That theory's terms are mapped to plain words in `references/word-list.md`.
+
+This skill is a way of criticising, not a truth-meter. Passing does not prove an explanation true. Failing does not prove it false. It shows which parts are held in place, which are loose, and what would tighten them.
+
+## The idea in one example
+
+Why are there seasons?
+
+*Old story:* a goddess grieves for part of each year, and her grief makes winter. Swap the goddess for another. Change why she grieves. Change the bargain that sets the dates. The story works exactly as well every time. Nothing about winter holds any detail in place. Now add one more job: when it is winter in the north it is summer in the south. The story breaks, because grief would chill the whole world at once.
+
+*Tilt:* the earth's axis leans, so each half of the world gets more direct sun for half the year. Remove the lean: no seasons. Change the angle: stronger or weaker seasons. Flip which half leans towards the sun: the seasons swap. The extra job, opposite seasons in the south, is done with no change at all. Every part is held in place by something you could check.
+
+## Three things that can change. Keep them apart.
+
+Most muddle comes from mixing these up.
+
+1. **The parts of the explanation.** Remove one, swap one, add one, rewire them. This is the "varying" in "hard to vary".
+2. **The world.** The changes to the situation that the explanation claims to cover: poke this, remove that, run it somewhere else. This skill calls it the **change list**. An explanation is tested by whether it keeps matching the world as these changes are made. A story that only fits one fixed outcome has not been tested at all.
+3. **The question.** What is being explained, over what range, and what exactly is asked. This must be **frozen** during a test. It may be changed afterwards, but that makes a new claim, and must be written down as one.
+
+So: an explanation is hard to vary when few changes of kind 1 survive, where "survive" means it still matches the world under every change of kind 2, for every job it has, with kind 3 held still.
+
+## Where to look, and when
+
+This file is the whole method for judging an explanation that already exists. The other files are modules. Open one only when its row applies.
+
+| You are... | Open | To get |
+|---|---|---|
+| judging a small claim | nothing else: use "The quick version" below | three questions |
+| judging something that matters | `references/the-idea-in-depth.md`, once per conversation | the reason behind each step, so you can adapt it |
+| stuck on how to word a test, or getting dodged | `references/question-bank.md` | wording for each test, follow-ups, how to question yourself |
+| unsure what counts as a part, a job or a change in this field | `references/by-domain.md` | diagnoses, designs, arguments, history, stories, proofs, rules, instructions |
+| making an explanation, theory or design that does not exist yet | `references/building.md` | how the same tests guide building |
+| about to check a claim against cases you find, or a test you set up yourself | `references/testing-against-cases.md` | how to keep the check from agreeing with you by construction |
+| writing up the result | `references/reporting.md` | the marks, and how to report without counting |
+| tracing a step back to the source theory | `references/word-list.md` | plain word to source term, with Part numbers |
+
+```mermaid
+flowchart TD
+  S["What is in front of you?"] --> Q{"Does the explanation exist yet?"}
+  Q -->|no| B["building.md"]
+  B --> P
+  Q -->|yes, a small claim| K["The quick version, in this file"]
+  Q -->|yes, and it matters| P["The procedure, in this file"]
+  P -.->|first full run| D["the-idea-in-depth.md"]
+  P -.->|wording and dodges| QB["question-bank.md"]
+  P -.->|what is a part in this field| BD["by-domain.md"]
+  P -.->|source terms| W["word-list.md"]
+  P --> C{"Will it be checked against cases or a test?"}
+  C -->|yes| T["testing-against-cases.md"]
+  C -->|no| R["reporting.md"]
+  T --> R
+```
+
+**Keeping the map true.** When a module is added, split or changed, update the table and the graph in the same edit. A module with no row is unreachable: give it a row or remove it.
+
+**What belongs in this skill.** One test for any addition: does it help find what holds a part in place, or what would? Habits of project hygiene, however useful, stay out. When in doubt, leave it out and say why in the report.
+
+## The stance
+
+- **Loose is not wrong.** A loose part may be true. It is just not held in place by anything yet. The aim is to find what would hold it.
+- **Judge against the question asked.** An explanation can be tight for one question and idle for another.
+- **No scores.** Do not count confirmations, jobs or parts. One job that rules out rivals is worth more than ten that rule out nothing.
+- **Not on the list of tests:** short, simple, elegant, popular, said by an expert. None of these holds a part in place.
+- **Some things are allowed to be loose.** Names, conventions, tastes and free design choices can be otherwise. Say so plainly, and do not dress them as explained.
+- **Plain words, concrete verbs.** Remove, swap, flip, reverse, poke, add. Show the case before the general point.
+
+## The procedure
+
+Read `references/the-idea-in-depth.md` before a first full run in a conversation. It gives the reason behind every step.
+
+**Step 1 - Freeze the question.** First make sure there is something to explain: "sales dropped" compared with what? A thing that did not happen needs no explanation, and explaining it anyway is the easiest way to build a loose story. Then say what is being explained, over what range, and what is asked. Name the kind of question, because the tests differ:
+- *What produces it?* (forward, from causes)
+- *What can we tell from what we see?* (backward, from evidence)
+- *Why can it not happen?* (something blocks every route)
+- *Why is there none of it?* (something is absent)
+- *What counts as what under this rule?*
+- *Does it achieve its purpose?*
+
+**Step 2 - List the jobs.** The particular things the explanation has to account for, each put as a contrast: why this *and not that*. Mark where each job came from: **given** (the owner named it), **fixed** (the owner made it a requirement that is not up for test), or **added** (you put it there). A part held only by a job you added is not held. It is *held if* that job is real, and the report must say so. (The tag *added* on a job and the test *Add a job* in Step 5 are different acts; writing the tag does not run the test.)
+
+**Step 3 - Take it apart.** List the parts that are claimed to do the work. Use the owner's own words. Say it back and ask, "Is this a fair version?" Test the strongest version, not a weak one.
+
+**Step 4 - Write the change list.** Which changes to the world does the claim cover? Which does it leave out, and was that said up front or slipped in later? A list with nothing on it that could have mattered is an empty test.
+
+**Step 5 - Run the tests.** Full wording is in `references/question-bank.md`.
+- **Remove** each part. Does it still do every job? Then try removing parts in pairs and groups.
+- **Swap** each part for a near neighbour. If the swapped version still does every job on the list, the part is loose; a swap that changes what is being explained is not a swap. If not, name what stops it: that is what holds the part in place. When a swap does work, name what the two versions share. That shared thing is often the part that is really held, and it is usually more general than the one first named. Rename the part to it. A swap that works shows the part is loose. It does not show how the part got there; that is a question about its history.
+- **Flip the outcome.** Had the opposite happened, could the same explanation have covered it? If yes, it explains nothing. A conclusion that is *derived* (a theorem; a disjunction that follows from a count) covers every outcome because it is derived, not because it is loose: test it with the proofs tests in `by-domain.md` (remove a condition, show a counter-case), not the flip. A derived conclusion is never *fixed* for being derived. Its mark comes from those tests: *held* by a condition you name whose removal breaks it (where several hold it only together, say so); *idle*, and the result more general than stated, if none does.
+- **Poke.** For each part, name one change to the world that should alter the outcome, and one that should not; the second must sit next to the disputed line, not remove the ability or the grounds wholesale. A pair that could be found for any part at all is not a pair. A part with no such pair is a label, not a working part. Watch the part as well as the outcome. Under each change ask two things: did the outcome move, and did the part move? A part that moves when you change only how it is read or reported is a measurement of the thing, and answers "what can we tell". The thing that produces the outcome stays put under that change. Keep hold of the same part through every change; sliding from "the reading" to "the thing read" swaps the claim under test.
+- **Reverse.** Is it running backwards from the result? Poke the supposed cause and see if the effect moves; poke the effect and see that the cause does not.
+- **Hunt the answer in the starting points.** Is the conclusion already sitting there under another name: "nature", "law", "tendency", "that kind of thing"?
+- **Add a job.** Find something else that must also be so if the explanation is right. Does it survive unchanged? Did the new job rule out any rival version? If not, it added nothing.
+- **Build the best rival.** Find a change that tells the two apart. If no change on the list can, they are the same explanation at this level. Say so, or ask a finer question and record it as new. Do the same to any test you write: run it on the very thing it is meant to catch, and on that thing's nearest innocent neighbour. A test that both pass is measuring something else.
+- **Pull.** Take the parts in pairs. Does making one stronger make another weaker? Name each pair that pulls against each other, say which one gives way and where, and what would show that the line was drawn in the wrong place. Parts that each pass alone can still fail together.
+- **Check the patches.** When it failed before, how was it rescued? A patch that narrows the claim quietly, or adds a part with no other job, makes it easier to vary. A **catch-all** part ("other", "everything else", a bin, a fallback) is a patch made in advance: it can absorb any failure. It is allowed only with a **gauge**: something that can be measured and that would show the catch-all is swallowing a job. A narrowed range is a part like any other: swap the new limit for a neighbour. A limit that is held comes with its reason inside the explanation (the yeast slows in the cold). What is held is often coarser than what is stated (that temperature matters, not that the line is at twenty degrees). A limit that only says what is being asked about is free; say so. A fix is a new part too: try it on the case that forced it and on the cases it must leave alone.
+- **Look inside.** Matching the results is not matching the workings. Two machines can give the same outputs by different routes. To test an explanation of the workings, use changes that reach inside.
+
+**Step 6 - Ask where each part came from.**
+- *Fitted:* tuned on past cases. It is held in place only on the kinds of change it has met. Ask what it has never met.
+- *Built:* worked out with the thing itself in view, and criticised. It says something definite about unmet changes, so it can be caught out.
+- *Asserted:* someone simply said so.
+
+Five word lists, each in its place, never mixed. The eight marks (the list under **Stop** below, and in `references/reporting.md`) say what holds a part in place now. The three provenance words (fitted, built, asserted) say where a part came from; every part gets one mark and one provenance. The three job tags (given, fixed, added) say where a job came from and stay with the jobs. The design words in `by-domain.md` (held, free, inherited) and the how-I-know tags in `testing-against-cases.md` (seen, claimed, recalled, worked out) belong to their own files, and the two mappings across lists (*free* is loose and harmless, *inherited* is fitted; *recalled* is fitted) are mappings, said as such. A word from one list never stands in another's place: *asserted* is not a mark; *borrowed* and *fixed* are not a part's provenance; a job tag is not a mark.
+
+**Step 7 - Report.** See below.
+
+## The quick version
+
+For a small claim, three questions are enough.
+
+1. What exactly is this explaining, and what would we see if it were wrong?
+2. Take its most colourful detail and swap it. Does it still work?
+3. Flip the outcome. Could it have explained the opposite just as well? (Not for a derived conclusion: drop a condition instead.)
+
+## How to ask
+
+The way a question is put decides whether you get a test or a story.
+
+- **Ask for the change, not the justification.** "Why do you believe that?" invites a story. "What happens to your explanation if we take this part out?" invites a test.
+- **One part and one change at a time.**
+- **Hand them the tool.** "Give me a different version of this detail that would work just as well." If they can, the part is loose. If they cannot, ask what stops them.
+- **Always ask for both halves of a poke:** a change that should matter and one that should not.
+- **When the answer is a label** ("it's the culture", "it's the algorithm"), ask: "What would be different, and where would we see it, if that were not so?"
+- **When a patch appears,** ask: "Is that the same claim as before, or a new one? What else does the new part have to account for?"
+- **When facts are missing, do not guess.** Turn the gap into a poke that could be run: "If we showed the old page to half the visitors now, what does your explanation say would happen?"
+- **Keep the tone of a fellow mechanic,** not a prosecutor. You are looking for the loose bolts so they can be tightened.
+- **Stop** when every part carries one of the eight marks: held (and by what; where two parts hold a job only together, say "held, jointly with" and name the other), held if (held only by a job that is itself in doubt, or only by a part marked loose, idle or unknown; name it and what would settle it), two routes (either of two parts does the job; name both), loose (and what could replace it), idle (removable), borrowed (held in place by some other explanation that is not being tested here; name it), fixed (this part is one the owner put outside the test, and said so; a part that merely serves a job tagged fixed takes whatever mark holds it, as does a part the owner merely asserts, whose provenance is *asserted*; a free choice is loose), or unknown (and what test would settle it).
+
+## The report
+
+Keep it in proportion. For a full run:
+
+1. **The question, frozen.** What, over what range, what is asked.
+2. **The explanation in parts, and the jobs:** the owner's words, numbered; then the jobs, each tagged given, fixed or added.
+3. **Part by part:** one of the eight marks: held (by which job or change), held if (which doubtful job, or which part marked loose, idle or unknown), two routes (which two parts), loose (what could replace it), idle (can be removed), borrowed (rests on another explanation; name it), fixed (the part itself put outside the test by the owner, who said so; never a part that merely serves a fixed job, never a part the owner asserts, never a free choice), or unknown (what would settle it). A table is fine. Never add the marks up.
+4. **Whole-explanation checks:** flip, reverse (poke the cause, then poke the effect), answer hidden in the starting points, where the jobs came from, add a job, look inside, pairs that pull, check the patches (what was rescued before, and a gauge for every catch-all), what the change list leaves out, rivals, and where the parts came from (fitted, built or asserted, one for every part, beside its mark). (Remove, swap and poke are run part by part and reported in section 3. A test that cannot bite on a document of this kind is named, with the sentence of the document that leaves it nothing to reach, and the part it would have settled is left *unknown* with that test named; it is never simply left out.)
+5. **What would make it harder to vary:** the one or two jobs, pokes or cuts that would tighten it most.
+6. **What this does not show.** Hard to vary is not the same as true.
+7. **One next step.**
+
+## Reference files
+
+See "Where to look, and when" near the top. Every module has a row there and a node in the graph.
+
+## Traps
+
+- **Using it as a truth-meter.** It finds loose parts. It does not certify anything.
+- **Letting the question drift mid-test.** Freeze it. If it must change, write down that it changed.
+- **Testing only against a fixed outcome.** With nothing on the change list, any story passes.
+- **Counting.** More confirmations of the same kind hold nothing new in place.
+- **Mistaking a label for a part.** If no change to the world could tell the label from a different one, it does no work.
+- **Calling a part idle too soon.** Two parts may each be removable alone but not together. Remove in groups before you cut.
+- **Assuming more detail is harmless.** An added part can break an explanation that worked without it.
+- **Demanding tightness from things that are free.** Conventions and tastes may be loose. Only the claim that they are *explained* needs testing.
+- **Marking your own jobs as the owner's.** When you build, you write the jobs and then the parts that do them. Of course they fit. Say which jobs are yours.
+- **Looking before writing down what would count against you.** Research done with no predictions written first can only ever agree with you.
+- **Passing your own test.** If you built the test, the cases and the thing tested, a pass may come from any of the three. Freeze the test after one case, and count what you had to patch.
+- **Counting ticks.** A table of which candidate has which part is not a score. One missing part can sink a candidate that has all the others.
+- **Prosecuting.** People defend stories when attacked and test them when invited.
+- **Copying the books.** Use Deutsch's idea in your own words. Do not paste passages from his work.
+===== END FILE HV Skill/authority/33/hard-to-vary/SKILL.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/the-idea-in-depth.md (15576 bytes, sha256 eb19f2dbd7563121183726528540214c03df4ef7db22586f61022a90b7f51562) =====
+# The idea in depth
+
+This file says what "hard to vary" means in full, and gives the reason behind each step of the procedure. Each section starts with a concrete case and then gives the general point.
+
+Contents: 1 What "explains" claims. 2 The five checks inside "still explains". 3 Which parts do the work. 4 Jobs and reach. 5 Labels, and "the same at this level". 6 Direction, and what evidence can hold in place. 7 Blocks and absences. 8 Where a part came from. 9 Holding the question still. 10 When a test fails. 11 Near enough. 12 What this is not. 13 Traps.
+
+---
+
+## 1. What "explains" claims
+
+**Case.** A pole stands in the sun. Its shadow is as long as it is because of the pole's height and the sun's angle. Saw the pole shorter and the shadow shortens. Wait for the sun to climb and the shadow shortens. Paint the ground where the shadow falls and nothing happens to the pole or the sun.
+
+**Point.** To explain something is to lay out **parts** that depend on each other, and to claim a **match-up** between those parts and the parts of the real thing. The match-up is checked in only one way: by **what changes when things are changed**. Not by whether the parts have the right names. Not by whether the final number comes out right once.
+
+That is why an explanation always comes with a **change list**, said or unsaid: the changes to the world it claims to keep matching through. No change list, no test.
+
+---
+
+## 2. The five checks inside "still explains"
+
+"Hard to vary" asks whether a changed version of the explanation *still explains*. That phrase hides five separate checks. A version survives only if it passes all five.
+
+**Check 1 - Each part moves as its counterpart moves.**
+*Case.* A table that lists "on Monday the shadow was 2 metres, on Tuesday 1.9" gets every number right. Saw the pole and nothing in the table responds. It has no part that stands for the pole.
+*Point.* For every working part, and every change on the list, the part must respond the way the matching piece of the real thing responds. A list of results has no such parts. (A table that truly recorded how the thing responds to every change on the list would be a different matter. It is the missing response, not the table shape, that fails.)
+
+**Check 2 - The whole moves as the whole moves.**
+*Case.* Every gear in a drawing of a clock is correct, but the drawing leaves out the shaft that joins two of them. Each piece checks out. The assembled clock in the drawing keeps different time from the real one.
+*Point.* Pieces that are right one by one can still lose something they share. The reverse also happens: the whole comes out right while the pieces are carved wrongly, and then Check 1 fails. You need both.
+
+**Check 3 - It answers the question that was asked.**
+*Case.* Asked "what caused the bridge to fall?", someone shows beautifully that, under the building code, the bridge counted as unsafe. True, and an answer to a different question.
+*Point.* Hold the question still. An answer to a neighbouring question is not an answer to this one, however good.
+
+**Check 4 - The answer is not hidden among the starting points.**
+*Case.* "Opium makes you sleepy because it has a sleep-making power." The thing to be explained has been put in at the start under a new name. Moving it into a box marked "law" or "nature" does not help.
+*Point.* There must be some change on the list that removes or replaces a working part, leaves the rest alone, and changes the answer. If nothing you could change would change the answer, the parts are not producing it.
+
+**Check 5 - The change list is not empty, and says what it leaves out.**
+*Case.* "Our method always works - on the cases where it applies." Which cases those are is decided after each failure.
+*Point.* The change list must contain changes that could have mattered. Anything possible that it leaves out must be left out openly, as a stated limit. A narrow claim, honestly marked, is fine. A claim narrowed in silence is not.
+
+---
+
+## 3. Which parts do the work
+
+**Case.** A cake recipe: flour, eggs, sugar, butter, "stir clockwise", baking powder, self-raising flour.
+
+- Remove "stir clockwise": same cake. That part is **idle**.
+- Remove baking powder: the cake still rises. Remove self-raising flour instead (use plain): it still rises. Remove both: flat. Each is removable alone, and together they are not. They are **two routes to one job**.
+- Add a cup of vinegar "for extra lift": ruined. An added part **broke** something that worked.
+
+**Point.** To find which parts do the work, take them away and see if every job still gets done.
+
+- Removing parts one at a time is not enough. Try pairs and groups. A group can be needed when no single member is.
+- Two routes to one job is not a fault. Just report it as it is: each helps, neither is needed alone.
+- More detail is not automatically safe. A version with an extra part can fail where the plain one worked.
+- Sometimes no small set of parts is "the" support: many small limits together squeeze the answer to one value, and no single one does it. Report the group.
+
+A part that can be removed with no loss is the first sign of an explanation that is easy to vary: if it can go, it can also be swapped for anything.
+
+---
+
+## 4. Jobs and reach
+
+**Case.** The goddess story does one job: winter comes each year. Give it a second job, opposite seasons in the south, and no version of it survives. The tilt does both jobs unchanged, and also a third: long summer days near the poles.
+
+**Point.** Every job you add can only shrink, or leave the same, the set of versions that survive. It can never grow it. That is why an explanation that reaches further is harder to vary.
+
+Two cautions.
+
+- **Counting is not a warrant.** Ten jobs that rule out no rival version hold nothing in place. One job that rules out most of them holds a great deal. Always ask of a new job: which versions did this kill?
+- **Repeats add nothing.** Weighing the same thing on the same scale a hundred times tells you nothing the first weighing did not. A different, independent check can. "We've seen it work fifty times" is fifty repeats unless the fifty differ in a way that could have caught it out.
+
+---
+
+## 5. Labels, and "the same at this level"
+
+**Case.** "Sales fell because of *market forces*." Swap in "*customer sentiment*". Nothing anywhere would look different. The label was doing no work.
+
+**Point.** A part is what it *does when things are changed*, and nothing over that. Calling something "the cause", "a law", "an instinct", "the algorithm" adds no holding power. The test for any label: name a change to the world under which this label and a different one would come apart. If there is none, the label is decoration.
+
+This cuts both ways. If two rival explanations respond identically to every change on the list, then **at this level they are one explanation**. That is not a failure to decide. It is the honest report that the question, as put, does not contain the difference. Anyone who says the two "really" differ owes you the change that separates them. Supplying it makes a finer question, which is a new question.
+
+**Watch the part, not only the outcome. Case.** A child shivers and the thermometer reads thirty-nine. Cool the child and the shivering eases; the reading falls too. Warm only the thermometer in your hand: the reading climbs and the child shivers exactly as before. The outcome alone would have let the reading pass as the cause, since cooling the child moves both. What gives it away is that the *reading* moves under a change that touches only the instrument. So under each change ask whether the outcome moved and whether the part moved, and keep hold of the same part throughout.
+
+The same goes for telling a cause from something that merely goes along with it. The cause has a part that responds when you step in and change its input. The tag-along does not. No label settles that; only the poke does.
+
+---
+
+## 6. Direction, and what evidence can hold in place
+
+**Direction. Case.** From the pole's height and the sun's angle you can work out the shadow. Run the same sums backwards and you can work out the pole's height from the shadow. Both get the right numbers. But saw the pole and the shadow changes; paint a longer shadow and the pole does not grow.
+*Point.* Working backwards from a result is a fine answer to "what can we tell from what we see?" It is not an answer to "what produces it?" Direction is not read off the wording. It is found by poking each end.
+
+**What evidence can hold. Case.** Two kitchen scales, each off by an unknown amount. Put the same bag on both. You now know exactly how far apart the two scales are. You still do not know what the bag weighs, and weighing it again, a thousand times, will not tell you. Deciding "scale B is dead accurate" because that gives the weight you hoped for is not something the readings told you.
+*Point.* Some details cannot be settled by the evidence in hand, however much of it there is. For each detail ask: *could* what we have seen have told us this, even in principle? If not, the detail is loose until something else holds it, such as an independent check. Choosing it because it gives the answer you favour is going in a circle, even if the choice happens to be right.
+
+---
+
+## 7. Blocks and absences
+
+**Blocks. Case.** Twenty-three coins cannot be shared equally among three people if coins cannot be cut. Whatever order you hand them out in, it never comes out even.
+*Point.* "Why can't it happen?" is answered by finding something that no allowed step changes. Such answers are very hard to vary: the only way round is to change what steps are allowed (cut a coin), and that is a different question. It does not knock down the first answer. One caution: two things matching on that unchanging quantity does *not* show you can get from one to the other.
+
+**Absences. Case.** "Why does this medicine have no effect on the heart?" A good answer shows that the route by which it could act on the heart is not there, and that if you added the route, there would be an effect.
+*Point.* An explanation of why something is absent is tested by putting the missing piece in. If adding it changes the answer in the explanation as it would in the world, and leaving it out changes nothing in either, the explanation holds. This is the least settled part of the source theory, so treat such cases with extra care.
+
+---
+
+## 8. Where a part came from
+
+**Case.** A baby watches a ball roll behind a screen.
+
+- A guesser tuned only on what it has *seen* expects nothing behind the screen, because nothing is visible there. When the ball rolls out the other side, it is caught out. Tune it on more rolling balls and it is still caught out, because no amount of tuning on what is visible gives it a part that stands for a ball that is out of sight.
+- A different move is to *build* a new part: "a thing keeps existing and keeps moving while hidden." Now the ball's return is expected. Nobody had to declare that part to be "an object". It behaves as objects do under every change on the list, and that is all being an object comes to here.
+
+**Point.** Every part, and every match-up, got there in one of three ways.
+
+- **Fitted.** Tuned by trial and survival on past cases. It is held in place exactly where it was tested. Everywhere else, other versions that would have survived just as well say something different. "It has always worked" tells you about the cases it met and nothing about the ones it did not.
+- **Built.** Worked out with the thing itself in view, put up as a guess, and criticised. It commits to what happens under changes nobody has tried yet, so it can be caught out there. That exposure is what makes it hard to vary.
+- **Asserted.** Someone wrote it down. It holds nothing until it is tested.
+
+The three are told apart by their history, not by their results. Two explanations can give the same outputs today and differ completely in what holds them.
+
+Being caught out by a change you were never tuned on is *surprise*. There are two replies to it. Re-tune (learn). Or build a new part (create). If every re-tuning still fails, the fault is in the parts you have, not in their settings.
+
+---
+
+## 9. Holding the question still
+
+**Case.** "The new layout made sales fall." Sales then also fall in the region that never got the new layout. "Well, I meant it made them fall *more*."
+
+**Point.** While a test is running, three things stay fixed: what is being explained, the change list, and what is asked. After the test they may change. People do find better questions, and finding the right question is as creative as answering one. But the changed version is a **new claim**, made at a new moment, and must be recorded as one. It does not reach back and make the old claim right.
+
+Moving the goalposts is not the act of changing the question. It is changing it *without saying so*.
+
+---
+
+## 10. When a test fails
+
+**Case.** The forecast said rain; it stayed dry. What failed: the theory of weather, the readings fed in, or the assumption that the instrument was working?
+
+**Point.** A failed test knocks down the whole bundle (the explanation, the background taken for granted, and how the test was set up) and nothing narrower. Which piece to change is a fresh choice, and the hard-to-vary test helps make it: changing a part that has other jobs will break those jobs, so the cost shows at once. Changing an idle part costs nothing and teaches nothing.
+
+Three more rules of fair play:
+
+- A sign that something is wrong is not yet a criticism. It becomes one when someone lays out *how* it bears on the explanation.
+- Taking away a supporting reason removes the support. It does not make the conclusion false.
+- Missing evidence stays missing. Not having found a counter-case is not the same as having evidence for.
+
+---
+
+## 11. Near enough
+
+**Case.** A map that is off by one step in every hundred is fine for crossing a field and hopeless for crossing a desert.
+
+**Point.** If the match is only approximate, say so, and find out how the error grows as steps pile up. If you cannot say how it grows, you cannot say anything about the long run. Never let an exact question be quietly replaced by a rough one.
+
+---
+
+## 12. What this is not
+
+- **Not truth.** A false explanation can be hard to vary. Its virtue is that it sticks its neck out and can be caught. A true one can be guessed for bad reasons and still pass every check; the reasons are judged separately.
+- **Not a probability.** No number comes out of this.
+- **Not elegance.** A long, ugly explanation that passes the five checks explains as fully as a short, pretty one. A shorter proof is nicer. That is not a sixth check.
+- **Not depth.** How deep an explanation goes depends on the question. A proof that answers "why does this follow from these rules?" is complete for that question and silent on "what caused this?"
+- **Not for taste.** Whether a thing is beautiful or good rests on reasons of another kind, which this test does not supply. What it *can* test is a claim that a creative choice does certain jobs.
+
+---
+
+## 13. Traps
+
+- Treating "I can't think of a swap" as "no swap exists". Ask someone else to try, or try the opposite.
+- Forgetting the change list and testing only whether the story fits what already happened.
+- Treating two routes to one job as idle parts and cutting both.
+- Accepting a finer question as if it rescued the old claim.
+- Declaring a winner between two explanations that nothing on the list can tell apart.
+- Letting the word "because" stand in for a working part.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/the-idea-in-depth.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/question-bank.md (12627 bytes, sha256 8256d45ba2fe59ded89e4e23a26e9dd9b00d111177ddf1803fbc1d417e82c56a) =====
+# Question bank
+
+This file gives the wording for each test, what a good answer and a warning answer sound like, follow-ups for the common dodges, and how to run the tests on your own explanations.
+
+Contents: 1 Before you ask anything. 2 Opening questions. 3 The eleven tests. 4 Where the parts came from. 5 Dodges and follow-ups. 6 Questioning yourself. 7 When to stop. 8 Traps.
+
+---
+
+## 1. Before you ask anything
+
+- **Say it back first.** "Let me check I have it. You're saying A, which leads to B, and that's why C. Is that a fair version?" Nothing else is worth asking until they say yes. If you can make their case stronger than they did, do so, and test that.
+- **Use their words for the parts.** Renaming a part is a small change to the explanation, and you have not earned that yet.
+- **One part, one change, one question.** Stacked questions get stacked stories.
+- **Ask for changes, not for reasons.** "Why do you think so?" asks for a story. "What happens if we take that out?" asks for a test.
+- **Ask what we would *see*.** Keep every question tied to something that could be looked at.
+- **Be a fellow mechanic.** "Let's find which bolts are loose" gets tests. "Prove it" gets a defence.
+
+---
+
+## 2. Opening questions
+
+These freeze the question and set out the jobs, parts and change list.
+
+| To find out | Ask |
+|---|---|
+| Whether there is anything to explain | "Compared with what? How do we know it happened at all?" |
+| What is being explained | "What exactly are we explaining? If I had to point at it, what would I point at?" |
+| The contrast | "Why this and not what? What was the other thing that could have happened?" |
+| The range | "Where and when is this meant to hold? Where would you *not* expect it to?" |
+| The kind of question | "Are we asking what produced it, what we can tell from what we saw, why it couldn't happen, why there's none of it, what it counts as under a rule, or whether it did what it was for?" |
+| The jobs | "What are all the things this has to account for? Let's list them." |
+| Where each job came from | "Which of these did you ask for, which are fixed and not up for test, and which have I just added?" |
+| The parts | "What are the moving parts of your explanation? Which ones are doing the work?" |
+| The change list | "What could we change about the situation, and your explanation would tell us what happens next?" |
+| What is left out | "What kinds of change are you *not* making any claim about? Did you decide that before or after looking?" |
+
+---
+
+## 3. The eleven tests
+
+### Remove
+- **Ask:** "If we take this part out completely, which of the jobs stops getting done?"
+- **Then:** "And if we take out this one *and* that one together?"
+- **Good answer:** names a job that fails, and you can see why.
+- **Warning answer:** "It'd still work, but it's less complete." Then that part is idle, or is one of two routes. Find out which by removing groups.
+
+### Swap
+- **Ask:** "Give me a different version of this detail that would work just as well."
+- **If they can:** "Then what made you pick yours?" If nothing did, the part is loose.
+- **If they cannot:** "What stops you?" The thing that stops them is what holds the part in place. Write it down.
+- **If the swap works:** "What do your version and the swapped version have in common?" That shared thing may be the part that is really held. Rename the part to it.
+- **Useful swaps to offer:** the opposite; a nearby number; a different agent doing the same deed; the same agent with a different motive; earlier or later; bigger or smaller.
+
+### Flip the outcome
+- **Ask:** "Suppose the opposite had happened. What would you have said then?"
+- **Good answer:** "Then I'd be wrong," or "then this part would have had to be different, and we could check that it wasn't."
+- **Warning answer:** a second story, just as smooth, from the same parts. An explanation that covers every outcome is held in place by none.
+- **Not for a derived conclusion.** A theorem, or a disjunction that follows from a count, covers every outcome because it is derived. Ask instead which condition, dropped, breaks it: the proofs tests in `by-domain.md`.
+
+### Poke
+- **Ask, for each part:** "Name one thing we could change that your explanation says *would* alter the result. Now one it says would *not*."
+- **Good answer:** both halves, and each could in principle be tried.
+- **Warning answer:** only changes nobody could ever make, or no "would not" half at all. A part with no pokes is a label.
+- **Too far apart.** A "would not" change far from the disputed line proves nothing: one can be found for any label. Ask for the pair next to the line.
+- **Watch the part too:** "When we change only how it is read or reported, does the part itself move?" If it does, it is a measurement of the thing. Ask them to keep hold of the same part through both changes.
+
+### Reverse
+- **Ask:** "If we stepped in and changed the cause directly, would the effect move? And if we changed the effect directly, would the cause move?"
+- **Good answer:** yes to the first, no to the second.
+- **Warning answer:** they are working backwards from the result. That is fine for "what can we tell from what we see?" and not for "what produces it?" Say which question is being answered.
+
+### Hunt the answer in the starting points
+- **Ask:** "Which of your starting points could I believe *without* already believing the conclusion?"
+- **And:** "Is there anything here that's just the conclusion under another name?" Listen for "by nature", "tends to", "is the kind of thing that", "has a knack for".
+- **Warning answer:** every starting point leans on the conclusion.
+
+### Add a job
+- **Ask:** "If you're right, what *else* has to be so? Somewhere we haven't looked yet."
+- **Then:** "Does your explanation cover that as it stands, or does it need adjusting?"
+- **And always:** "Which rival versions does that new job rule out?" If none, it held nothing new in place.
+- **Watch for repeats.** "Is that a new kind of check, or the same check again?"
+
+### Build the best rival
+- **Ask:** "What's the strongest different explanation someone could give? Let's build it properly."
+- **Then:** "What could we change that would make the two give different answers?"
+- **If nothing can:** "Then as far as this question goes, they're the same explanation. Do we accept that, or do we need a finer question?" If finer, record it as a new question.
+
+### Pull
+- **Ask, for pairs of parts:** "If we made this one stronger, would that one get weaker?"
+- **Then:** "Which gives way, and where is the line? What would show us the line is in the wrong place?"
+- **Good answer:** names the pair, the line, and a sign that would show the line is wrong.
+- **Warning answer:** "They're all fine." Each part passing alone says nothing about the joints.
+
+### Check the patches
+- **Ask:** "Has this explanation ever been caught out? What was changed afterwards?"
+- **Then:** "Does the part that was added do any other job? Did the claim get narrower? Was that said out loud?"
+- **Warning answer:** a part added only to absorb the failure, or a range that shrank quietly.
+- **For a narrowed range:** "Swap the new limit for a neighbouring one. What breaks?" and "Which part of your explanation says why things differ outside the limit?" If the limit only says what you are asking about, it is free.
+- **For a catch-all** ("other", a bin, a fallback): "What would we measure to see whether this is swallowing a job? What reading would worry you?" No gauge, no catch-all.
+
+### Look inside
+- **Ask:** "Does this explain how it *works*, or only what comes *out*?"
+- **Then:** "Could something built quite differently inside give the same results? What change would show which one we have?"
+- **Warning answer:** every test offered looks only at outputs.
+
+---
+
+## 4. Where the parts came from
+
+- "Was this detail put here because a test forced it, because thinking about the thing itself forced it, or because someone said so?"
+- For anything fitted to past cases: "What kinds of change has it never met? What would a different rule that fits the same past say about those?"
+- After a surprise: "Can re-tuning what we have ever fix this, or is a part missing?"
+
+---
+
+## 5. Dodges and follow-ups
+
+| They say | Ask next |
+|---|---|
+| "It fits everything we've seen." | "Would it have fitted the opposite too?" then "What has it not met yet?" |
+| "It's worked every time." | "Were those different kinds of test, or the same one repeated?" |
+| "The experts agree." | "What holds it in place for them? What would they swap, if they could?" |
+| "It's the simplest." | "What was the extra part in the other version doing? Does that job still get done?" |
+| "That one's an exception." | "Was the exception on the list before it turned up, or added after? Is this now a new claim?" then "What tells the exception apart from the cases where you still use the rule? If nothing does, every other use of the rule has just got looser." |
+| "It's complicated. Lots of factors." | "Take them one at a time. Which, if removed alone, changes the result? Which only in a group?" |
+| "It was just luck." | "What pattern would luck *not* produce? Do we see it?" |
+| "It's the culture / the algorithm / the market." | "What would be different, and where would we see it, if it weren't?" |
+| "You can't test that." | "Then what *can* we change that bears on it? If nothing, that part is a label for now." |
+| "I meant something narrower." | "Fine. Let's write that down as the claim now, and note that it changed." |
+| "But it's obviously true." | "It may be. What holds it in place?" |
+| A new part appears mid-answer | "What else does that part have to account for?" |
+
+---
+
+## 6. Questioning yourself
+
+Before giving an explanation of your own where it matters, run the quick version silently, then be open about the result.
+
+1. **What am I explaining, and what would show me wrong?** If nothing would, say less.
+2. **Swap my most vivid detail.** If the explanation works as well without it, it is colour. Either cut it or mark it as a guess.
+3. **Flip the outcome.** If I would have sounded just as sure explaining the opposite, I have a story, not an explanation.
+4. **Where did each job come from?** If I wrote the jobs and then the parts that do them, the fit proves nothing. Mark my own jobs as added.
+5. **Where did each part come from?** Something I worked out from the thing itself, a pattern I am matching from many past cases, or something I am just asserting? Fluent pattern-matching is the fitted kind: reliable where such cases are common, unheld elsewhere.
+6. **Mark it.** In the answer, separate what is held in place (and by what) from what is loose ("any of several would fit here") and what is unknown ("this would settle it").
+
+Do this quietly. The reader needs the marked-up answer, not a tour of the method.
+
+---
+
+## 7. When to stop
+
+Stop when every part has one of eight marks:
+
+- **Held** - and you can say by which job or change.
+- **Held if** - it is held only by a job that is itself in doubt, often one you added, or only by a part marked loose, idle or unknown. Name it and what would settle it.
+- **Two routes** - either of two parts does the job. Name both.
+- **Loose** - and you can say what could replace it.
+- **Idle** - it can be removed with no loss.
+- **Borrowed** - it rests on some other explanation that is not being tested here. Name that explanation. Every explanation bottoms out in borrowed parts; the point is to know which they are, so that a fault can be traced to the right place.
+- **Fixed** - the owner put this part outside the test, and said so. A part that merely serves a fixed job, or that the owner merely asserts (provenance *asserted*), takes whatever mark holds it; a free choice is loose.
+- **Unknown** - and you can name the test that would settle it.
+
+If a part will not take any of the eight marks, the question is probably not frozen yet. Go back to the opening questions.
+
+---
+
+## 8. Traps
+
+- Asking "why?" five times in a row. It breeds stories. Ask for changes.
+- Offering only silly swaps. A swap must be a near neighbour that a fair person might really have proposed, and it must leave the thing under test the same; a swap that changes what is being explained tests nothing.
+- Accepting "it would be less complete" as a job. Make them name the job.
+- Forgetting the "would not" half of a poke. An explanation that says everything matters is as loose as one that says nothing does.
+- Running the tests on a weak version of the explanation. Say it back, strengthen it, then test.
+- Showing your self-check to the reader instead of its result.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/question-bank.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/by-domain.md (9402 bytes, sha256 c632d4d82c1bb407f362b6697c0f973547e09112687d8a32b0c3892293a9a153) =====
+# By domain
+
+This file shows what the tests look like in different kinds of work. The method is the same everywhere. What changes is what counts as a part, a job, and a change to the world. Each section gives those three, the tests that bite hardest, and a small case.
+
+Contents: 1 Diagnoses and root causes. 2 Designs and plans. 3 Arguments. 4 History and one-off events. 5 Stories and other creative choices. 6 Proofs and mathematics. 7 Rules and definitions. 8 Written instructions. 9 Traps.
+
+---
+
+## 1. Diagnoses and root causes
+
+*Bugs, outages, illnesses, "why did sales drop", post-mortems.*
+
+- **Parts:** the suspected fault and each link from it to the symptom.
+- **Jobs:** every symptom, *and* every place the symptom did not show.
+- **Changes to the world:** put the fault back and take it away; run the same thing where the fault is absent.
+
+**Tests that bite:** flip; reverse; add a job; look inside.
+
+**Case.** "Sales dropped in March because of the website redesign."
+- *Add a job:* did sales drop for people who never visit the site (phone orders, the other region)? If they dropped there too, the redesign cannot be doing that job.
+- *Flip:* had sales risen, would the redesign have got the credit? Then it explains both.
+- *Poke:* show the old site to half the visitors now. The explanation says their sales recover. It also says changing the price should *not* matter. Both halves can be tried.
+- *Reverse:* were sales already sliding, and the redesign launched *because* of that?
+
+The "did not show" jobs are the ones people forget. A diagnosis that accounts for every broken machine and none of the working ones is half tested.
+
+---
+
+## 2. Designs and plans
+
+*Why this architecture, this process, this route.*
+
+- **Parts:** each design decision.
+- **Jobs:** each requirement the design must meet.
+- **Changes to the world:** the loads, failures, growth and misuse it must stand up to.
+
+**Tests that bite:** remove; swap; check the patches.
+
+Every decision gets one of three honest marks: **held** (name the requirement that forces it), **free** (any of several would do; say so, and pick for convenience), or **inherited** (there because it was there before). Trouble comes from free and inherited choices presented as forced. In the eight marks used elsewhere in this skill, *free* is loose and harmless, and *inherited* is fitted; a free choice is never *fixed*. When the design does not exist yet and you are building it, read `building.md`.
+
+**Tests that bite when building:** pull (good parts that fight at the joints); a gauge for every catch-all.
+
+**Case.** "We need a message queue between the two services."
+- *Remove:* call directly. Which requirement fails? If the answer is "when the second service is down, orders are lost", that requirement holds the queue in place. If the answer is "it's best practice", nothing does.
+- *Swap:* a plain database table polled every second. Does every requirement still pass? Then "queue" is loose and "something that holds orders while the other side is down" is the held part.
+
+Swapping often shows that the held part is more general than the one named. That is a finding, not a failure.
+
+---
+
+## 3. Arguments
+
+*A case for a conclusion.*
+
+- **Parts:** the starting points and each step.
+- **Jobs:** to make the conclusion follow, and to not equally support its opposite.
+- **Changes to the world:** different cases to which the same reasoning would apply.
+
+**Tests that bite:** hunt the answer in the starting points; flip; swap the subject.
+
+**Case.** "This policy is good because it's what people want, and we know they want it because they'd choose what's good."
+- *Hunt:* each starting point needs the conclusion to stand. It goes in a circle.
+- *Swap the subject:* run the same steps for a policy everyone agrees is bad. If the steps go through just as well, they are not what is holding the conclusion up.
+
+Remember: taking away a reason removes the support. It does not show the conclusion is false.
+
+---
+
+## 4. History and one-off events
+
+*Why the war started, why the company failed.*
+
+Here nobody can step in and change things, so the change list is made of **comparisons**: other times and places where a part was present or absent.
+
+- **Parts:** each named cause.
+- **Jobs:** why then, why there, why that way, and why *not* in the similar cases where it did not happen.
+- **Changes to the world:** the differences between this case and its nearest neighbours.
+
+**Tests that bite:** add a job; flip; build the best rival.
+
+**Case.** "The company failed because its founder was arrogant."
+- *Flip:* had it succeeded, would the same trait be called boldness? Then the label does no work.
+- *Add a job:* what about the equally arrogant founders of firms that thrived? The explanation must say what was different.
+- *Rival:* "it ran out of cash before the product was ready." What would tell the two apart? Look for a decision where arrogance and cash pull in different directions.
+
+Be plain that parts here are held less tightly than in a laboratory, and say which comparisons are doing the holding.
+
+---
+
+## 5. Stories and other creative choices
+
+*Why this scene, this image, this detail.*
+
+This does not test whether a choice is beautiful. It tests the claim that a choice *does certain jobs*.
+
+- **Parts:** the choices: place, action, object, order, who knows what.
+- **Jobs:** what each choice is said to do: set up a later payoff, show a flaw, contrast with another scene, leave the audience with a particular question.
+- **Changes to the world:** changes elsewhere in the story. Move the scene, cut the payoff, change who is present.
+
+**Tests that bite:** remove; swap; two routes to one job.
+
+**Case.** A rescue story opens with the hero climbing a lift shaft by hand. Later the lift falls down that shaft and she saves herself by catching a ledge.
+- *Remove the climb:* the fall has nothing to contrast with; the catch is luck.
+- *Swap it for climbing stairs:* slow, effortful, upward, so the contrast job is still done. But she never touches the ledge, so the catch is no longer earned. The job "earn the catch" is what holds *this shaft* in place.
+- *Swap "fifty-one rungs" for forty:* nothing changes. The number is free. What is held is that she had *counted* them.
+- *Two routes:* she hides a chipped tooth and she hides a warning tag. Both show that she conceals harm. Either alone would do. Keep both only if each has a second job.
+
+A scene that survives every swap is decoration. A scene that does four jobs at once is very hard to replace, and that is what people mean when they say a story feels inevitable.
+
+---
+
+## 6. Proofs and mathematics
+
+Nothing here can be poked in the physical sense. The changes are changes to the **conditions**: drop one, weaken one, change a dimension.
+
+- **Parts:** each condition of the statement and each step of the proof.
+- **Jobs:** the conclusion, and its failure when a condition is dropped.
+- **Changes:** remove each condition in turn; remove them together.
+
+**Test that bites:** remove, with a counter-case.
+
+**Case.** "Every square table of numbers with an odd number of rows that is its own negative when flipped across the diagonal has no inverse."
+- *Drop "own negative when flipped":* the plain 3-by-3 identity table has an inverse. So that condition does work.
+- *Drop "odd":* a 2-by-2 table of that kind has an inverse. So that one does work too.
+
+For each condition, show a case that gets through when it is dropped. If you cannot, the condition may be idle and the result may be more general than stated. A shorter proof is pleasanter. It is not better held.
+
+---
+
+## 7. Rules and definitions
+
+*What counts as what.*
+
+A rule is told from a cause by what it responds to. Change the world and a rule's verdict on a given case stays the same; rewrite the rule and the verdict changes. A cause is the other way round.
+
+- **Parts:** the clauses.
+- **Jobs:** sorting the clear cases the right way, and giving an answer on the hard ones.
+- **Changes:** edits to each clause.
+
+**Test that bites:** remove each clause and ask which cases change sides.
+
+Keep three questions apart, because an answer to one is not an answer to the others: *What does the rule say about this case? Do people in fact follow it? Should it be the rule?*
+
+---
+
+## 8. Written instructions
+
+*Prompts, checklists, procedures.*
+
+- **Parts:** each instruction.
+- **Jobs:** each behaviour the instructions are meant to produce or prevent.
+- **Changes to the world:** the different inputs and situations the reader will face.
+
+**Tests that bite:** remove; swap; look for parts that fight.
+
+For each line ask: if this were deleted, what would the reader do differently, and in which situation? A line for which the answer is "nothing" is idle. Also look for a line that breaks what another line achieves. Instructions that say *why* are harder to vary than bare orders, because the reason tells the reader what to do in the situations nobody listed.
+
+---
+
+## 9. Traps
+
+- Forgetting the "did not happen" jobs in a diagnosis.
+- Calling a design choice forced when it is only familiar.
+- Treating the loss of an argument as the loss of its conclusion.
+- Pretending that comparisons in history hold parts as tightly as experiments do.
+- Using this test to rule on taste. It can only test the claim that a choice does a job.
+- Cutting both of two routes to one job because each looked removable alone.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/by-domain.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/building.md (3199 bytes, sha256 995c5d631809509234df72500a7d852265a1cbb0ad38bdeef437bddf4a71eb7a) =====
+# Building with the tests
+
+Open this when the explanation, theory or design does not exist yet. The tests in the main file still do all the work. What changes is that you are now the owner as well as the critic, so the fit between your jobs and your parts proves little unless you arrange for it to be able to fail.
+
+Contents: 1 The order. 2 What to watch. 3 Traps.
+
+## 1. The order
+
+**Case.** Asked what a bridge design must have, an engineer who starts from a favourite truss will write requirements the truss happens to meet. One who starts from the river, the loads and the soil will find out whether the truss belongs.
+
+**Point.** Question, then jobs, then parts, then tests.
+
+- **If you are improving something that has already run, start from the record:** what worked and what failed, each tagged by how you know. Every change you propose should be held in place by something on that list.
+- **Get a real case from the owner before writing the jobs,** if you can. Jobs written without one are your guess at what the owner will bring.
+- **List the jobs first, each as a contrast,** and mark each **given** (the owner named it), **fixed** (the owner made it a requirement and it is not up for test) or **added** (yours). A part held only by an added job is *held if* that job is real.
+- **Propose parts freely.** A guess needs no justification to be proposed.
+- **Run remove and swap on every part.** Keep a note of what was cut, merged or renamed. A build in which nothing was cut was probably tested softly.
+- **Walk the parts by hand through every earlier case** before building anything. It costs minutes.
+
+## 2. What to watch
+
+- **Pairs that pull.** Does making one part stronger make another weaker? Name the pair, where the line is drawn, and what would show the line is in the wrong place. Designs fail at the joints more often than inside a part.
+- **Catch-alls.** A bin, a fallback, an "anything else" clause can absorb any failure, so it holds nothing in place. Allow one only with a gauge: something you can look at that would show it is swallowing a job.
+- **The answer hidden in your own job list.** "Does the job" means your jobs. If the list is wrong, the parts can be tidy and useless. Say so in the report.
+- **Where each part came from.** Built (a test here forced it), fitted, or asserted (someone simply said so). For a builder, *fitted* includes "this is how such things are usually made, as far as I recall". Those are the first parts to check. Separately: a part that rests on another explanation is *marked* borrowed; name that explanation and name its best rival.
+- **One version.** If the thing now lives in several documents, merge it into one before testing. Otherwise nobody can say which version a result tested. When a second theory follows the first, say whether it replaces parts, fills them in, or sits beside them.
+- **Pokes that could catch the whole thing out.** At least one must be something a person could actually try.
+
+## 3. Traps
+
+- Writing the jobs after the parts. The jobs then describe the parts.
+- Marking your own jobs as the owner's.
+- A build where nothing was cut.
+- A catch-all with no gauge.
+- Borrowing an idea without naming its rival.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/building.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/testing-against-cases.md (4338 bytes, sha256 ba3462d4dc1e9d3b58bd2194ffb594f7ec77951383d2bd3484af27c27b63f4d9) =====
+# Testing against cases
+
+Open this before you check a claim against cases you go and find (research), or against a test you set up yourself.
+
+The idea that runs through all of it: **your check is itself an explanation**, of why you now believe the result. Apply the same measure to it. If the check would have come out in your favour whatever the world was like, it is easy to vary, and it holds nothing in place.
+
+Contents: 1 Before looking. 2 While looking. 3 A test you built yourself. 4 Afterwards. 5 Traps.
+
+## 1. Before looking
+
+**Case.** A cook who believes salt improves every dish tastes ten salted dishes and likes them all. Nothing was risked. The check that could have caught the belief is a dish tasted both ways, with the guess written down first.
+
+- **Write down what would count against each part.** "If a case does job J well without part P, then P is loose." "If a case has P and still fails J, P is not enough." A part that no finding could count against is a label.
+- **Name the repeats.** A case a part was fitted on cannot confirm that part.
+- **For every borrowed part, name its best rival first.** Search only for the idea and you will meet its friends.
+- **Pick some cases because they might break you.** For any rule drawn from one case, add a near neighbour where it should stay quiet, and one where a different rule should fire.
+
+## 2. While looking
+
+- **Tag how you know each thing:** *seen* (you watched it happen; say whether on your own cases or someone else's), *claimed* (a source says so), *recalled* (memory), *worked out* (follows from tagged things). Recalled claims are fitted; they carry no verdict alone.
+- **What a thing says about itself is a claim.** It becomes *seen* when you look at what it actually does.
+- **"Found nowhere" means unknown.** It shows neither "unneeded" nor "impossible". "I did not find X" describes your search.
+- **Keep findings that fit no part.** They are the likeliest sign of a missing part or a wrong requirement. Report them; bending a part to absorb one hides it.
+
+## 3. A test you built yourself
+
+A home-made test has three layers: **the thing under test**, **the rig** around it, and **the inputs** as you prepared them. A pass, or a fix, can come from any layer.
+
+- **Fix the cases before the rig exists.** Include one where the right answer is "nothing".
+- **Develop on one case, then hold the rig still** and run the others against it first.
+- **Keep the first result as it came.**
+- **Every later change is a patch.** Say which layer it changed, and **what it gives up** as well as what it fixes. A false alarm on a new case is often an old patch's bill arriving. Before each new case, say how your latest patch is likely to fail on it.
+- **After every patch, rerun everything.**
+- **A clean sweep on your own cases is a reason to attack.** Add cases you expect to fail, and label them as added later.
+- **If each new kind of case needs a new piece of rig,** you have a list, one item per kind, and should say so.
+- **Preparing the cases is where fitting creeps in,** even when the cases were fixed beforehand. Where you can, have someone else prepare them.
+- **When an outside case finds nothing, ask what kind of thing it is** before patching. If it differs in kind from what you built on, the miss belongs to the job list.
+
+## 4. Afterwards
+
+- **Go down your written expectations and mark each tested or untested.** One you designed around was never tested.
+- **Part by part: did any finding move the mark?** "Unmoved" is a fair result. List the parts that never met a hard case.
+- **Every change to the claim is a new claim,** recorded with the finding that forced it. The old claim stays as it was.
+- **A failed expectation knocks down the bundle:** the claim, your reading of the case, and how you chose cases. Say which you are changing and why that one.
+- **Say whose cases they were.** Cases you wrote with the answer in mind can show that a thing *runs*. They cannot show that it *works*.
+
+## 5. Traps
+
+- Treating a search as a hunt for support.
+- Confirming a fitted part on the cases it was fitted to.
+- Letting *claimed* or *recalled* pass as *seen*.
+- Tuning a home-made test until it passes, or stopping at a clean sweep.
+- Saying "it works now" without saying which layer moved.
+- Logging what a patch fixes and leaving out what it gives up.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/testing-against-cases.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/reporting.md (2743 bytes, sha256 4d032633d4fd8878f46b599b45028a02818a31cc84e43b43f8889915e1c69e68) =====
+# Reporting
+
+Open this when writing up. The aim is a report from which a reader could rerun your reasoning and reach a different view.
+
+## The marks
+
+| Mark | Means | Also say |
+|---|---|---|
+| Held | Removing it breaks a job that is not in doubt | which job or change |
+| Held if | It is held only by a job that is itself in doubt, or only by a part marked loose, idle or unknown | which job or part, and what would settle it |
+| Two routes | Either of two parts does the job | both parts, and whether each has a second job |
+| Loose | A near neighbour would do as well | what could replace it. Loose says nothing about how it got there |
+| Idle | It can go with no loss | that you tried removing it in groups |
+| Borrowed | It rests on another explanation not tested here | which one |
+| Fixed | The owner put this part outside the test, and said so | that it was not tested. A part that merely serves a fixed job, or that the owner merely asserts (provenance *asserted*), takes whatever mark holds it; a designer's free choice is loose |
+| Unknown | No test run so far bears on it | the test that would settle it |
+
+The marks answer "what holds it now". Where a part came from (fitted, built, asserted) goes in its own column beside the mark, one for every part, and is never written as a mark: *asserted* in the mark column is a mistake, and so is *borrowed* or *fixed* in the provenance column. Where two parts hold a job only together and neither does it alone, each is *held, jointly with* the other, named. A job's tag (given, fixed, added) is a third list and stays with the jobs.
+
+For designs, the older words in `by-domain.md` map like this: *free* is loose and harmless; *inherited* is fitted.
+
+## How to write it up
+
+**Case.** A table of ten candidates against twelve properties invites a total. A candidate with eleven ticks that lacks the one property everything leans on is worse than one with six that has it.
+
+- **No totals, no ranking by count.** Report by job: what gets done, what fails, and because of which missing part.
+- **Keep three things apart:** what was found, what it did to the claim, and what it could not settle.
+- **Show your expectations as written beforehand,** next to what happened.
+- **Carry the how-I-know tags** for every claim a verdict rests on.
+- **List the parts that never met a hard case, and the findings that fit no part.**
+- **If no job on the list can tell two candidates apart,** say they are the same at this level.
+- **Say what was not looked at.** Then one next step.
+
+## Traps
+
+- Adding up marks or ticks.
+- Tidying the expectations after the fact.
+- Reporting what a change fixed and leaving out what it gave up.
+- Presenting a loose part as a wrong one, or a held part as a true one.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/reporting.md =====
+
+===== BEGIN FILE HV Skill/authority/33/hard-to-vary/references/word-list.md (10517 bytes, sha256 1f09fe7444db59d3843026ed4cdb60624cde42cdf5e198b331daf541fd009b3c) =====
+# Word list
+
+This file matches the plain words used in this skill to the terms of the source theory, so that anyone can trace a step of the skill back to where it came from.
+
+## Where the sources are
+
+- **The source theory:** "Claude Fable Semantics - a structural class of explanatory creativity, with selected and constructed correspondence". Supplied by the user as the file `10_Claude_Fable_Semantics_-_standalone_theory.md`. It is a frozen source: this skill reads from it and does not change it. Part numbers below refer to that file.
+- **The original idea:** "hard to vary" as the mark of a good explanation comes from David Deutsch, *The Beginning of Infinity* (2011), and his 2009 talk on explaining explanation. The seasons example is his. It is retold here in fresh words.
+
+## Plain word to source term
+
+| Plain word in this skill | Term in the source theory | Where | Meaning in one line |
+|---|---|---|---|
+| parts, and how they depend on each other | organization; components; ports | Part II | The pieces of an explanation (or of the real thing) and the ties between them. |
+| a change to the world; a poke | admitted edit | Part II | Something you could alter about the situation: set a value, remove a piece, swap a rule. |
+| the change list | contract | Part III | The set of changes the claim says it covers. Anything left off must be left off openly. |
+| what is asked | query | Part III | The exact thing the question wants read off: a result, what can be told from a reading, whether a route exists. |
+| the question | question (target, contract, baseline, query, obligations, provenance) | Part III | What is being explained, over which changes, from what starting state, asking what. |
+| the kind of question | the respect of a question | Part III | Forward (production), backward (identification), blocked (obstruction), rule-status, purpose. Fixed by what is asked and the change list, not by a label. |
+| the match-up | transport | Part IV | The claimed pairing between parts of the explanation and parts of the real thing, including how changes to one translate to the other. |
+| each part moves as its counterpart moves | component fidelity (F1) | Part V | Every working part responds to each listed change as the matching piece of the real thing does. |
+| the whole moves as the whole moves | global fidelity (F2) | Part V | The assembled explanation agrees with the assembled thing, so no shared tie has been lost. |
+| it answers the question that was asked | question fidelity (A) | Part V | The answer it gives equals the real answer under every listed change, for *this* query. |
+| the answer is not hidden in the starting points | non-circular dependence | Part V | The answer is produced by the parts; some change that removes a working part changes the answer. |
+| the change list is not empty and says what it leaves out | non-vacuity | Part V | The baseline is possible, and every possible change left off the list is left off by a stated limit. |
+| still explains; survives | Account (E) | Part V | Passes all five checks above. |
+| working parts | active commitments (Γ) | Part V | The parts claimed to be doing the explaining. |
+| a set of parts that is enough | support set (S) | Part VI | A selection of working parts that still passes all five checks. |
+| a group you cannot remove together | critical block (B) | Part VI | Parts whose joint removal breaks the explanation, even if no single one does. |
+| two routes to one job | redundant routes | Part VI | Each part helps; neither is needed alone. |
+| an added part that breaks it | interference | Part VI | The full version fails though a smaller one passes. |
+| many small limits together | infinitary support | Part VI | No smallest sufficient set exists; the group does the work. |
+| where a variation tips it from passing to failing | boundary (D) | Part VI | Pairs of versions on either side of the line. |
+| jobs | explanatory jobs (F) | Part VI | The things the explanation has to account for. |
+| the versions that survive | Pres(F) | Part VI | The variations of the explanation that still do every job. |
+| hard to vary; reach | Hard-to-vary: for F ⊆ F′, Pres(F′) ⊆ Pres(F) | Part VI | More jobs can only shrink the surviving versions. It need not shrink them, and counting jobs proves nothing. |
+| a label does no work | kinds are edit-signatures (K); Derivation 1 | Part II, Part XVI | A part is what it does under the listed changes and nothing more. |
+| the same explanation at this level | Derivation 2 | Part XVI | Two candidates that no listed change can separate are one account at that grain. |
+| fitted | selected provenance | Part IV | Produced by blind trial and survival on a history of cases. |
+| built | constructed provenance | Part IV, Part X | Produced by guessing with the target in view, and criticism. |
+| asserted | declared provenance | Part IV | Simply written down by the person making the model. |
+| held only where it was tested | Derivation 3 | Part XVI | A fitted match-up is undetermined on changes it never met. |
+| being caught out; surprise | violation; surprise; Derivation 4 | Part IV, Part XVI | A failure on a change outside the history it was fitted on. |
+| re-tune, or build a new part | selection response; construction response | Part IV, Derivation 10 | Learning versus creating. |
+| working backwards from the result | identification presented as production | Part V, Part VII | Right numbers, wrong direction. |
+| what the evidence can hold in place | identification; fibres; kernels | Part VII | A feature is settled by readings only if every state giving those readings agrees on it. |
+| repeats add nothing | "repeating rows changes no kernel" (I4) | Part VII | Only an independent check can settle more. |
+| something no allowed step changes | invariant; obstruction (O1) | Part VII | The ground for "it cannot happen". |
+| explaining an absence | explanations that remove structure | Part VII | Tested by putting the missing piece in. Marked in the source as possibly inadequate. |
+| freeze the question | frozen assessment; historical index; Derivation 7 | Part VIII, Part XVI | A claim is tied to the question it was made about. |
+| a new claim | a new index | Part VIII, Part XI | Changing the change list or what is asked makes a different claim, to be recorded. |
+| moving the goalposts | changing the index without recording it | Derivation 7 | A failure of the record, not an allowed move. |
+| finding the right question | constructed contract; Derivation 5 | Part III, Part XVI | A question can itself be the creative result. |
+| a failed test knocks down the bundle | what a test refutes (K3) | Part IX | From theory and background and test set-up together predicting wrongly, only "not all three" follows. |
+| a sign is not yet a criticism | bearing (K1) | Part IX | It becomes one when it is shown how it bears. |
+| removing a reason removes support, not truth | standing (K2) | Part IX | Withdrawing a premise removes a licence. |
+| missing evidence stays missing | receipts | Part IX | Absence of a counter-case is not evidence for. |
+| near enough, and how error grows | approximate transport (T2) | Part VIII | Without a bound on growth, nothing follows about the long run. |
+| same outputs, different insides | Derivation 9 | Part XVI | What comes out does not settle how it works. |
+| where a job came from: given, fixed, added | provenance of a contract (declared, selected, constructed) | Part III | The skill's three job tags are its own. File 10 gives provenance (declared, selected, constructed) to the contract as a whole, not to each job, and *fixed* is not a provenance: it says a job is not up for test. A job the tester wrote is the tester's addition. |
+| held if | Pres(F) depends on the job set F | Part VI | Which versions survive depends on which jobs are on the list. A part held only by a doubtful job is held relative to that job. |
+| parts that pull against each other | interference | Part VI | The full set fails though smaller sets pass. |
+| a catch-all needs a gauge | non-vacuity: every excluded change is excluded by a stated scope | Part V | What the claim does not cover must be said out loud, and here also measured. |
+| a fitted part cannot be confirmed on the cases it was fitted to | Derivation 3; "repeating rows changes no kernel" (I4) | Part XVI, Part VII | Survival on a history says nothing new about that history. |
+| seen, claimed, recalled, worked out | receipts; evidence leaves | Part IX | Each claim traces to an event. A memory is a different event from a reading. |
+| the three layers of a home-made test: the thing, the rig, the inputs | what a test refutes (K3) | Part IX | A failed test bears on theory, background and set-up together, and nothing narrower; (K3) says nothing about a test that passes. |
+| freeze the rig after one case; count the patches | selected provenance; Derivation 3 | Part IV, Part XVI | A rig tuned on one case is fitted to it and says nothing yet about cases it has not met. |
+| every change after research is a new claim | historical index; Derivation 7 | Part VIII, Part XVI | The old claim stays as it was. |
+| watch the part as well as the outcome; a measurement moves when only its reading is changed | measurement and causal signatures; roles are derived | Part II | A part is a cause or a measurement by how it responds to the listed changes. |
+| a held limit carries its reason inside the explanation | hard-to-vary over scope: Pres(F) under edits to the contract | Part III, Part VI | A limit is a part; swap it and see what breaks. |
+| not truth, not a score, not elegance | "What this document does not claim"; "What (E) does not exclude" | Part 0, Part V | No probability of truth, no ranking, no merit function. |
+| taste is a separate matter | normative relation (N); effect, purpose, aesthetic reason | Part XI | Supplied from outside when claimed; not derived. |
+
+## Traps
+
+- The source theory is formal and this skill is not. If the two seem to disagree, the source is the authority on what was meant; say so and check it.
+- Several source ideas are deliberately left out because they are not needed for this test: the physical module, capability, recursion and universality (Parts XII and XIII), and the definitions of newness and origin (Part X). Do not assume the skill covers them.
+- The source marks its own weak points (Part 0, "Where to attack this", and Part XV). The treatment of absences is one. Pass that caution on when it applies.
+===== END FILE HV Skill/authority/33/hard-to-vary/references/word-list.md =====
+
+One qualification you carry. Where the skill states Derivation 3 without qualification (in its word list: "held only where it was tested", "a fitted part cannot be confirmed on the cases it was fitted to", "freeze the rig after one case"), read it with the qualification of Semantics file 11, Part XVI: "A correspondence produced by selection is faithful where it was tested and, wherever its population admits an alternative, unconstrained where it was not." Never use the unqualified form.

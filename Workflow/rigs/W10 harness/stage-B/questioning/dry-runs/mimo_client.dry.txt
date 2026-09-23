@@ -1,0 +1,84 @@
+dry run of clients/mimo_client.py - sends nothing
+
+  ok    body: the model id is one the documentation lists, in its lower case - mimo-v2.6-pro
+  ok    body: the ceiling is the documented maximum, under the documented name - 131072
+  ok    body: thinking is sent explicitly rather than left to the default
+  ok    body: nothing undocumented is sent by default - max_completion_tokens, messages, model, stream, thinking
+  ok    body: no temperature or top_p, which thinking mode is documented to override
+  ok    body: the skill goes in a system message and the results in a user message
+  ok    body: max_tokens= is accepted and mapped to the documented name
+  ok    body: a ceiling above the documented maximum raises
+  ok    body: a ceiling of zero raises
+  ok    body: more than four stop sequences raises (the page says up to 4)
+  ok    body: a tool_choice other than 'auto' raises, since the backend drops it
+  ok    body: a response_format other than 'text' raises
+  ok    body: stream_options is sent only when include_usage is asked for
+  ok    body: thinking can be turned off, and says so in the body
+  ok    body: the tools shape carries tools and tool_choice auto
+  ok    body: the second turn keeps reasoning_content, as the FAQ asks
+  ok    body: the non-streamed shape has stream false and no stream_options
+  ok    body: the prefill shape ends with an assistant message and carries no made-up flag
+  ok    every stage E shape builds - 10 shapes
+  ok    endpoint: the base in force is a Token Plan one, as a tp- key requires - https://token-plan-sgp.xiaomimimo.com/v1/chat/completions
+  ok    endpoint: MIMO_BASE_URL overrides it
+  ok    endpoint: the three documented regions are all reachable
+  ok    key kinds follow the documented prefixes
+  ok    auth headers: 'both' carries the two documented names
+  ok    auth headers: one style alone carries one name
+  ok    auth headers: an unknown style raises
+  ok    more than five workers raises
+  ok    five workers is allowed
+  ok    stream: content assembled - 'The mark is held by job 3.'
+  ok    stream: reasoning_content assembled
+  ok    stream: tool call assembled across chunks - [{"id": "c1", "type": "function", "function": {"name": "open_module", "arguments": "{\"name\":\"reporting\"}"}}]
+  ok    stream: finish reason, usage, cached and reasoning tokens read
+  ok    stream: keep-alive comment and blank line skipped, raw kept
+  ok    stream: a reply with no usage chunk assembles and leaves usage empty
+  ok    non-stream: the documented reply paths are read
+  ok    cost() uses the published card: 0.0036 hit, 0.435 miss, 0.87 output - $1.1324
+  ok    the request text is the bytes sent
+  ok    _endpoint is stripped from the text, as the other two clients do
+  ok    assert_no_key fires on a key in a record
+  ok    assert_no_key passes a clean record
+  ok    many: one record per job, in the order given
+  ok    many: the good job carries the assembled reply
+  ok    many: the good job is one request with one attempt (PA.1 counts records)
+  ok    many: the ceiling sent is the documented maximum under the documented name
+  ok    many: a 429 is retried, and the retry is an attempt, not a second request - attempts=2
+  ok    many: Retry-After was honoured rather than the backoff - [0.0]
+  ok    many: a 401 stops at once, is returned, and keeps its record
+  ok    many: the service's own words are kept unedited
+  ok    many: a 402 is not retried - a spent plan is not fixed by asking again
+  ok    the usage gauge fires when a streamed reply carries no usage
+  ok    the repetition gauge fires on 'repetition_truncation'
+  ok    the thinking gauge fires on reasoning_content or reasoning_tokens
+  ok    the record keeps the request and the reply whole
+  ok    the response headers are kept as they came
+  ok    auth 'both': the key went in api-key AND Authorization, and in no record
+  ok    the record's own headers are redacted
+  ok    SENDS counted every attempt, not every request - SENDS=7
+  ok    the non-streamed path assembles the reply and keeps the whole document
+  ok    the non-streamed reply carries cached and reasoning token counts
+  ok    five workers run five jobs at once - peak=5
+  ok    the control: one worker runs them one at a time - peak=1
+  ok    send() returns the four values a driver unpacks
+  ok    send() used the module default base, which is a Token Plan one - https://token-plan-sgp.xiaomimimo.com/v1/chat/completions
+  ok    a tp- key on the pay-as-you-go base raises before anything is sent
+  ok    an sk- key on a Token Plan base raises too
+  ok    check_mix=False sends anyway and the record says the pair was mixed - key token-plan -> base pay-as-you-go (mixed, sent anyway)
+  ok    an unknown key prefix is not refused, only noted
+  ok    every attempt records the seconds the pacer held it
+  ok    the pacer holds RPM_CAP = 30: starts asked at 0, 0.5 and 2.6 s wait 0, 1.5 and 1.4 s - waits [0.0, 1.5, 1.4], slept [1.5, 1.4]
+  ok    no key needed to build anything; key not in environment now - unset
+  ok    nothing was sent to any address - SENDS=0
+
+endpoint  https://token-plan-sgp.xiaomimimo.com/v1/chat/completions   (override with MIMO_BASE_URL; MIMO_REGION picks cn/sgp/ams)
+model     mimo-v2.6-pro   (override with MIMO_MODEL)
+ceiling   max_completion_tokens 131072, the documented maximum; a parameter everywhere
+context   1048576 tokens, documented
+threads   at most 5 (W12 section 3); documented RPM 100, TPM 10,000,000; the account concurrency number is not published
+pace      the owner's cap 30 rpm (decision W9), held by a pacer in this file: 2.0 s between the starts of two attempts, retries included
+auth      both  (api-key and Authorization: Bearer; the two sources disagree - see clients/README.md)
+key       read from MIMO_API_KEY at call time; not present in this environment
+
+71 checks passed, 0 failed. Nothing sent.
