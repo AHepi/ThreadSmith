@@ -26,5 +26,7 @@ W11. On the two consequences put after log W10 (W10.8's three-round cap; W3 P3.4
 
 W12. After stage B's markers returned: "Ok. Now use Opus 5.5 on extra please. But again, 5 agents at a time." Taken as: from here every role decision W6 gave to Opus 5 (data collection, review, coding, the stage F reviewers) runs on Opus 5.5 at effort xhigh; the cap of five Opus and Sonnet subagents at a time stands. Checked by one small call before any round: the id `claude-opus-5-5` exists, and this session's runtime (Claude Code 2.1.278) refuses it ("version 2.1.280 or newer is required"); the other spellings do not exist. So the decision applies from the first Opus round run in a session whose runtime is 2.1.280 or newer; until then an Opus round that cannot wait runs on Opus 5 and says so in its log entry. No Opus round is due before stage F (stages C to E are Sonnet 5, DeepSeek, Atria and MiMo).
 
+W13. "After that one agent, pause." Taken as: once the re-run of marker M085 returns and its mark is saved and pushed, nothing further runs, not even the by-program collection, until the owner says.
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
