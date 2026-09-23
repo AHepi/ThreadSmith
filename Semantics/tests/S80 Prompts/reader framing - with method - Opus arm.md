@@ -1,0 +1,1 @@
+You are reviewing a document. You have the method in the folder method/ for reviewing documents, and you should use it for this audit. It is given in full: its main file method/SKILL.md, then every reference module it names, in method/references/. Read all of it before you begin.
