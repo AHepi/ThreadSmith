@@ -12,7 +12,7 @@ From 21 September 2026 the Language project keeps its own record here, in the sa
 2. **Language - Status.md**: the short summary, dated bullets, rebuilt from the log at each entry.
 3. **Language/authority/L64 Scope - the contract the language claims, second version.md**: the contract every test since L65 is run under, and "L77 Table for the owner" in tests/, which says what each check computes.
 4. **Language - project story.md**: the log, L60 onward; "What each patch gave up" is in the shared story beside it, from log 21.
-5. The latest plan and results in `tests/` and `results/` (the numbers in Status), then "L76 Method review" for how the method itself was tested.
+5. The latest plan and results in `tests/` and `results/` (the numbers in Status): as of 23 September, plan L82 (fourteenth version) and results L84 with its two markings, then "L76 Method review" for how the method itself was tested, and `records/Language - Handover log.md` for where things stand between entries.
 6. `/RESEARCH-CONVENTIONS.md` at the repository root: the rules this record keeps.
 
 ## Terms and names a fresh reader needs
