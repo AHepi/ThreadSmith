@@ -1,8 +1,8 @@
 # Revision 2 - change list, draft of 23 September
 
-**DRAFT — not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are held for Mimo's S88 reply.**
+**DRAFT — not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are drafted from the settled S88 positions (3ebb6d8); no outside reader has seen their final wordings.**
 
-*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the change list from which revision 2 (file 13) is to be made by program (decision D6). It assembles the entries drafted in five groups (A, B1, B2, C and M) under decisions D1–D11, with every correction the two adversarial checks made and without the one entry they dropped. The working files it was assembled from (the decisions, the item skeleton, the five entry files and the two checks) are in the session scratchpad and are not in the repository. File 11 was read only; its md5 was the same before and after. No S87 or S88 return was opened. Nothing was written into `authority/`.*
+*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the change list from which revision 2 (file 13) is to be made by program (decision D6). It assembles the entries drafted in five groups (A, B1, B2, C and M) under decisions D1–D11, with every correction the two adversarial checks made and without the one entry they dropped. The working files it was assembled from (the decisions, the item skeleton, the five entry files and the two checks) are in the session scratchpad and are not in the repository. File 11 was read only; its md5 was the same before and after. No S87 or S88 return was opened. Nothing was written into `authority/`. Later on 23 September another Claude subagent replaced the three placeholders with seven entries drafted from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8), and brought the frame of this list up to date with them. It opened no S87, S88 or S90 return and wrote nothing into `authority/`.*
 
 ## What this is
 
@@ -10,24 +10,24 @@ This list gives every change that revision 2 makes to file 11, in the order of f
 
 The list rests on D1. If Mimo's cross-examination of the S81 determination overturns S81, every entry is re-examined under plan 2.2 B or C before anything is built.
 
-The list is not complete. W19, W20 and W31 wait for Mimo's S88 reply (D2). Their entries are placeholders. Each names the current candidate wordings and the file-11 anchors the entry will use, and applies nothing. When they are drafted, the note's counts change.
+W19, W20 and W31 waited for Mimo's S88 reply (D2). They are now drafted from the settled S88 positions as seven entries, and the note's counts include them ("The held items, drafted from the settled S88 positions", below). No outside reader has seen their final wordings, and the cross-examination of revision 2 (X1) must carry them.
 
 The list is withheld from every test brief (D6), as are the note, the sources note and the record it puts into file 13.
 
 ## Counts
 
-- **Entries that change the theory text: 48.** Expected ruling CLAIM 41, WORDING 5, ORDER 2. By group: A 7 of 11, B1 13 of 15, B2 11 of 11, C 10 of 11. The note will read "41 of the 48 changes" until the held items are drafted.
+- **Entries that change the theory text: 55.** Expected ruling CLAIM 48, WORDING 5, ORDER 2. By group: A 14 of 18, B1 13 of 15, B2 11 of 11, C 10 of 11. The note reads "48 of the 55 changes". Before the held items were drafted it read "41 of the 48 changes".
 - **Meta entries applied: 3.** W1.1 (the note, replacing file 11's line 5), W38.1 (the note of sources and departures, before Part 0) and W1.2 (the revision record, after the last line). They are not counted in the note's N or M.
 - **Record-only entries: 5.** W3.1–W3.5 declare five places in layer 2 of the record. They change no text, and the program locates them without applying them.
-- **Held: 3.** The placeholders for W19, W20 and W31.
-- **The checks.** Check 1 (groups A, B1 and B2, 38 entries): SOUND 26, FIX 11 (nine change the new text, two change only the expected ruling), DROP 1. Check 2 (groups C and M, 18 entries): SOUND 10, FIX 8, DROP 0, and one companion entry added (W35.4). In all, 19 entries were fixed, 1 was dropped and 1 was added. Every fix is applied below.
+- **Held: 0.** The placeholders for W19, W20 and W31 are replaced by seven entries (W19.1–W19.3, W20.1–W20.3 and W31.1), each expected CLAIM. All seven are group A.
+- **The checks.** Check 1 (groups A, B1 and B2, 38 entries): SOUND 26, FIX 11 (nine change the new text, two change only the expected ruling), DROP 1. Check 2 (groups C and M, 18 entries): SOUND 10, FIX 8, DROP 0, and one companion entry added (W35.4). In all, 19 entries were fixed, 1 was dropped and 1 was added. Every fix is applied below. The seven entries drafted later from the settled S88 positions were checked by their drafter only; see "The held items, drafted from the settled S88 positions".
 - **Layer 2 of the record: 42 places.** These are the 41 places inside the theory and M7 that 03 rules CLAIM and file 11's note did not declare (S81 determination, file 03, section 2).
 
 ## How an entry is written
 
 Every entry is a `###` section whose heading is its drafting id and title. The id is the worklist item with an entry number (W37.1 is the first entry for W37). The program numbers the applied theory entries R2-01 onward in file-11 order when it writes layer 1 of the record, and no W-number reaches file 13.
 
-- **STATUS.** "applied" (the program applies it), "record-only" (located and not applied) or "held" (a placeholder; nothing applied).
+- **STATUS.** "applied" (the program applies it), "record-only" (located and not applied) or "held" (a placeholder; nothing applied). No entry is now held.
 - **GROUP**, **ITEM** and **WHERE** give the drafting group, the worklist item and the place in file 11 in words.
 - **FILE-11 LINE.** The file-11 line on which OLD begins, or its first and last lines. The program checks it.
 - **REASON WORD.** Why the change is made, in plan 1.1's words: erratum, clarification or change of claim. It becomes the "Reason" of the change's layer-1 entry.
@@ -93,7 +93,7 @@ Claude took these decisions on 23 September 2026, under decisions S13 and S18. T
 ### What the decisions change in the plan draft
 
 - **W27** (1.2, 2.5, 2.6). Nothing is renamed, and only a pointer that is wrong is fixed. The record's label map is dropped, and so is the build's check of that map.
-- **W19, W20 and W31** (1.2, 1.3.2–1.3.4, 1.5). These are held. The skeleton names their current candidate wordings as placeholders.
+- **W19, W20 and W31** (1.2, 1.3.2–1.3.4, 1.5). These are held. The skeleton names their current candidate wordings as placeholders. (Now drafted from the settled S88 positions; see below.)
 - **W4, W14's strong form, W32(c) and W35(c)** stay left out (1.2, 1.4).
 - **W16, W18 and W46–W50** stay left out (1.2, 1.4).
 - **The log number** (2.3). It is the next shared number when the entry is written, not the expected S89.
@@ -143,9 +143,31 @@ Claude took these decisions on 23 September 2026, under decisions S13 and S18. T
 
 **W27, attack-label pointers (narrowed by D9).** Group A read every pointer to a Part XV label in file 11 (L5, L19, L49, L63, L337, L528, L534 and L536) against its target. Each is correct, as 03 §5 rules (XR8, XR11, XR12). L63's "(B) their necessity" is loose, not wrong, and is left. The labels are not renamed, and the record carries no old→new map. New text that refers to a Part XV label writes "attack (X) in Part XV". Check 1 confirmed the record.
 
-## Held for Mimo's S88 reply (D2)
+## The held items, drafted from the settled S88 positions (D2)
 
-W19 (Derivation 2, with the sentence after (K), Derivation 10 and W10(b)), W20 (non-circular dependence and the typing of Γ) and W31 ((T2)) are not drafted. Their placeholders stand in file-11 order among the entries: W19 at line 121, W20 at line 233 and W31 at line 361. Each lists its anchors. The program checks that every anchor occurs once in file 11 and that no applied entry overlaps it. Every held paragraph belongs to group A, except the dependence order at line 518, which belongs to B1; B1 left two of its sentences free for W20.
+W19 (Derivation 2, with the sentence after (K), Derivation 10 and W10(b)), W20 (non-circular dependence and the typing of Γ) and W31 ((T2)) were held under D2 until Mimo's S88 reply had been read. They are now drafted from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8). That file settles F1 as UPHELD, F2 as NARROWED and F3 as NARROWED, and gives each repair's final wording as exact text. The entries carry those wordings byte for byte: OLD is cut from file 11 and NEW from the settled file by script, never retyped. There are seven entries, and each stands in file-11 order among the others:
+
+| entry | file-11 line | what it changes | plan rule applied | expected ruling |
+|---|---|---|---|---|
+| W19.1 | 121 | the sentence after (K): kinds across two candidates | 1.3.3 (taken with either wording) | CLAIM |
+| W20.1 | 233 | Γ typed; the rest of \(E\) is named background | 1.3.4, "take B, with the rider" | CLAIM |
+| W20.2 | 257 | S3: option B with the deletion rider | 1.3.4, "take B, with the rider" | CLAIM |
+| W20.3 | 289 | Part VI: a restricted candidate's commitments are the ones it retains | 1.3.4 (settled change 4) | CLAIM |
+| W31.1 | 361 | (T2): the erratum; the general bound waits | 1.3.2 | CLAIM |
+| W19.2 | 552–558 | Derivation 2: "Same anchors, one account", wording (i) | 1.3.3, "F1 UPHELD: take (i)" | CLAIM |
+| W19.3 + W10(b).1 | 620 | Derivation 10's identity sentence, through the exchange of the two things | 1.3.3; 1.3.1 (NEW-XR1) | CLAIM |
+
+- **The dependence order (L518) is not changed.** Under the rider, (E) uses (O)'s deletion rule, which the order already lists under (F1), (F2) and (A). The two sentences B1 left free stay free.
+- **No outside reader has seen these wordings in their final form.** The cross-examination of revision 2 (X1) must carry all seven; the S90 brief carries only the first 48 changes. Within X1, the deletion rider (W20.2) and the Derivation 10 sentence (W19.3) are the least tested. The rider was never put to either reply, and the Derivation 10 sentence was rewritten in settling.
+- **The fallback for W20** is settled with it and written in W20.2's CHECK. It applies if X1 finds that the rider breaks a worked case. If both options break something, only the \(\tau,\sigma\) erratum is taken (plan 1.3.4).
+- **The entries of other groups** that refer to W19, W20 or W31 as not yet drafted (W30.1, W33.1, W39.1, W9.1, W24.1, W21.1, W7.5, W3.2, W10a.1 and W1.2) were written before this drafting. They are left as their groups and checks wrote them. The rechecks they ask for (skeleton conflicts 1–5, 11 and 12) are done in the seven entries.
+- **The S90 brief's ids no longer match the R2 numbers from C08 on.** The S90 brief was sent before these entries were drafted. It cites the first 48 changes as C01–C48, in file-11 order, which were R2-01–R2-48 in the note of that time (commit 12e73da). The program numbers the applied entries in file-11 order, so every entry from W19.1 (L121) on now has a higher number: C01–C07 are still R2-01–R2-07, C08 (W30.1) is now R2-09, and C48 (W10a.1) is R2-54. The note's map (its section 5) gives each entry's S90 id beside its R2 number. Read S90's replies through the entry ids.
+- **Checked by the drafter, not by check 1 or check 2.** The whole list was applied by `tools/s89_apply_changes.py` into a scratch draft, never into `authority/`, with `--self-test`. It parsed 63 entries: 58 applied (55 theory, 3 meta), 5 record-only, none held. Every OLD, locator and anchor occurs once in file 11, and no applied OLDs overlap; W19.1 and W30.1 share L121, and W39.1 and W20.2 share L257, with disjoint OLD texts. The result is file 11 with exactly the listed replacements, in 54 diff hunks, each inside an entry, and the self-test refused both planted edits. N = 48 of M = 55, K = 42. The draft's md5 is 1d51c77eb591ace473e556568a7c4636, at 25,696 words (theory text alone 11,501).
+  - Each new paragraph was read in place. Three notation points are carried forward below (Part II's forward notation; "active"; the two readings of "including any that assigns an input").
+  - The guard rows were worked through the new text: O2, O4, O5, O7, O10, O24, O33, O36, O45, O46 and O47; N1, N3, N17, N20, N23 and N25; Part VII's production case and the skew-symmetric case. No fixed verdict moves on a reading the text supports.
+  - Watched, with a risk away: O45 under W20.1, where "those the candidate offers as doing the work" meets "never described as doing anything"; N1, as W33.1 records, now on fidelity rather than membership; and N25's second question under W19.2, for a reader who rested it on the old slogan.
+  - Toward: O5 and O7 (W20.2), O46 on firmer text and N17 on its first two questions (W19.2), and the first half of N23 (W20.2).
+  - The settling's scripts were rerun (`f1_check.py`, `f3_check.py` and `d10_exchange.py` in `results/S88 Mimo reading parts/checks/`), and their outputs match the readings and the settled file.
 
 ## Findings carried forward
 
@@ -161,6 +183,11 @@ These were found while drafting and checking. None is an entry.
 - **The withheld-word check** on briefs must use the marker strings, "Revision 2", "revision record", "file 13", "Deutsch" and "Marletto", and not the bare word "record", which the theory itself uses (group M, conflict 3).
 - **The note's form.** Plan 2.5 makes the note one paragraph. W1.1 gives the paragraph and, in the same block, one line per change of claim (group M, conflict 2).
 - **Layer 2 rests on 03 and on D1** (group M, conflict 5). If Mimo's cross-examination changes a ruling of 03, a row is added or removed, and K with it.
+- **The declared inputs (L514) do not list Part VI's declared restriction operation** (settled S88 positions, "Found in settling", point 4). (S) and (B) depend on it (L289: "Fix \(\mathcal E\) and a declared restriction operation"). Derivation 6 is not made false: L586 allows declared indices and declared inputs, and Part VI declares the operation where it uses it. The looseness predates every S88 repair, and under the rider W20.2 adds nothing to it. The candidate clause for L514 is "the restriction operation of Part VI (\(E|W\))". It is not an entry.
+- **Part II uses the notation of Parts IV and V before they introduce it** (W19.1, read in place). The new sentences at L121 use \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports", which L191, L233 and L235 introduce, with no pointer. A pointer such as "(Parts IV and V)" would close it, but it would change the settled wording, so it is left for X1 or the orchestrator.
+- **"Active" is still undefined** (W20.1, read in place). L233 has "active commitments", and (F1) at L235 has "every active component". W20.1 makes Γ a set of components and puts the components that assign inputs in the named background. If "active component" is read as "member of Γ", (F1) no longer checks the named-background components one by one; (F2) still checks the whole. The settled position declined Mimo's "active" because it is undefined, and nothing is changed.
+- **W20.1's "including any that assigns an input" has two readings.** On one, every component that assigns an input is outside Γ. On the other, any such component that the candidate leaves out of Γ is named background. The named verdicts are the same on both (the F3 reading's models 1a and 1b).
+- **O45 against W20.1's "those the candidate offers as doing the work".** The phrase meets the case's "never described as doing anything". The entry holds the AGREE on L309 s3, W28.1 and W58(i).1, and asks X1 to test the row.
 
 ## The entries
 
@@ -461,33 +488,37 @@ Every attribution of an organization to a physical system must be permitted by t
 - **GAIN:** Part I no longer commits the semantics to what only the physics can supply, and the barrier in a world without interoperability can be stated.
 - **LOSS:** Substrate independence is no longer unconditional.
 
-### W19 (held) — Derivation 2, with the sentence after (K), Derivation 10 and W10(b) (held under D2)
+### W19.1 — The sentence after (K): kinds across two candidates
 
-- **STATUS:** held
+- **STATUS:** applied
 - **GROUP:** A
 - **ITEM:** W19
-- **FILE-11 LINE:** 121, 554, 620
-- **KIND:** CLAIM (expected; plan 1.2: change of claim → CLAIM)
-- **CANDIDATE WORDING:** the current candidate wordings, as the item skeleton names them from `results/S88 Reading of Atria's reply - the three defects.md` and plan 1.3.2–1.3.4. Nothing is drafted (D2). The rules in plan 1.3 choose among them once Mimo's S88 reply has been read.
-
-  **W19, Derivation 2** (L552–558), with its supporting edits: the sentence after (K) (L121), Derivation 10 (L620) and W10(b).
-  - Candidate (i), "Same anchors, one account", as amended by the S88 reading. Clause (ii) reads: "If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k; so far as (F1), (F2) and (A) reach, the two are one account on C". The proof composes one translation with the inverse of the other. Unchanged from plan 1.3.3: "Without the premise of (ii) nothing more follows …", and the Consequence.
-  - Candidate (ii), the smaller wording. It is not adopted as it stands. If it is used, it needs "onto the same ports of D".
-  - The sentence after (K), and Derivation 10's "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)", are as in plan 1.3.3.
-
-- **CONFLICTS TO WATCH:** Skeleton conflicts 1 (L121, with W30.1, whose anchor is sentence 3), 5 (Derivation 10's "one account" against amended clause (ii)) and 12 (recheck W21.1 on O11, O18 and N15 once W19 lands). W10(b) goes with this entry at L620.
-- **ANCHOR:** the sentence after (K), L121 s1–s2. This file-11 text is left untouched by every applied entry and occurs once in file 11.
+- **FILE-11 LINE:** 121
+- **WHERE:** Part II, "Kinds are edit-signatures" (L121). Two sentences are inserted after sentence 2, "A kind is an equivalence class of components under this relation.", the anchor W19's placeholder reserved. Sentences 1–2 are kept byte for byte. W30.1 appends its sentences after sentence 3; the two OLD texts do not overlap (skeleton conflict 1).
+- **REASON WORD:** clarification
+- **KIND:** CLAIM
+- **CHECK:** not put to check 1 or check 2, which ran before S88 was settled. The text is the settled wording (`results/S88 Reading of Mimo's reply in three parts, and the settled positions.md`, F1, block 2; committed at 3ebb6d8), copied byte for byte. Checked by its drafter: the whole list applied by the program into a scratch draft with no refusal and no overlap, the new text read in place, and the guard rows worked below. No outside reader has seen this wording; the cross-examination of revision 2 (X1) must carry it.
+- **OLD:**
 ````text
-\(\operatorname{sig}_C(j')\) coincide. A kind is an equivalence class of components under this relation.
+A kind is an equivalence class of components under this relation.
 ````
-- **ANCHOR:** the Derivation 2 claim, L554. This file-11 text is left untouched by every applied entry and occurs once in file 11.
+- **NEW:**
 ````text
-**Claim.** Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\)
+A kind is an equivalence class of components under this relation. A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
 ````
-- **ANCHOR:** Derivation 10, L620. This file-11 text is left untouched by every applied entry and occurs once in file 11.
-````text
-On any contract containing it, the two persistence components are of one kind (Derivation 2).
-````
+- **DECLARATION:** Part II now defines when a component of one candidate's organization and a component of another's are of one kind on C: their signatures, read on C through the two candidates' transports, coincide under a footprint bijection. It says that Derivation 2 uses kinds in this sense, and that Derivation 1 makes the like comparison between a component, read through its transport, and its anchor, read on C directly with its hidden ports projected away.
+- **REASON:**
+  - W19 (S88 finding F1, settled UPHELD; plan 1.3.3, which takes the sentence after (K) with either wording of Derivation 2). (K) at L121 defines a kind for two components of one organization under one contract. No sentence says how a component of \(E\) and a component of \(E'\) are compared, and Derivation 2 compares them (the F1 reading, 3.4; Mimo's F1 point 3, kept). W19.2 needs the comparison stated.
+  - **The second sentence** is the settled change 2. Derivation 1 (L546) compares a component of \(E\), read through \(\tau\), with its anchor subnetwork of \(D\), read on \(C\) directly; it does not compare a component of \(E\) with a component of \(E'\). The post-Atria sentence said "Derivations 1 and 2 use kinds in this sense" (Mimo's F1 point 4; the F1 reading's change B). Settling reworded the reader's proposal so that it names \(k\) and says which side is read through \(\tau\).
+  - **Placed at the reserved anchor.** After this entry and W30.1 the paragraph reads: the definition within one organization; the equivalence class; the two new sentences; sentence 3 ("Kinds are therefore relative to the contract …"); W30.1's sentences on what a signature is built from. "Therefore" still follows from definitions that are both contract-relative.
+  - **Notation, read in place.** \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports" are introduced in Parts IV and V (L191, L233, L235). Here Part II uses them before those Parts, with no pointer. Part II already points forward (to Part III, L121 s1), and "Derivation 2 uses kinds in this sense" names where the sentence is used. The settled wording is kept; the point is carried forward below.
+- **CASES AT RISK:**
+  - O10 holds AGREE, toward if anything under W30.1. Rosa's two thermostats are compared within one organization by (K); the new sentence compares components of two candidates for one question, which O10 does not raise.
+  - O22 and O9 hold: the linkage's lead and the float and dial are compared within one organization.
+  - N25 (O75), second question: watched under W19.2, which uses this sentence.
+  - No other O- or N-case compares the components of two candidates.
+- **GAIN:** Derivation 2's kinds across candidates have a definition, and Derivation 1's comparison is described as what it is.
+- **LOSS:** Part II grows by two sentences, and it uses the notation of Parts IV and V before those Parts introduce it.
 
 ### W30.1 — A difference in port values is not a difference of kind
 
@@ -673,37 +704,56 @@ A **selection response** extends the history \(H\) of a selected transport and l
 - **GAIN:** L227 stays well typed after W35.1.
 - **LOSS:** None.
 
-### W20 (held) — Non-circular dependence and the typing of Γ (held under D2)
+### W20.1 — Γ typed: the components the candidate offers as doing the work; the rest is named background
 
-- **STATUS:** held
-- **GROUP:** A (B1 for the anchors at L518)
+- **STATUS:** applied
+- **GROUP:** A
 - **ITEM:** W20
-- **FILE-11 LINE:** 233, 257, 518, 518
-- **KIND:** CLAIM (expected; plan 1.2: change of claim → CLAIM)
-- **CANDIDATE WORDING:** the current candidate wordings, as the item skeleton names them from `results/S88 Reading of Atria's reply - the three defects.md` and plan 1.3.2–1.3.4. Nothing is drafted (D2). The rules in plan 1.3 choose among them once Mimo's S88 reply has been read.
-
-  **W20, non-circular dependence and Γ** (L233, L257 S3; possibly L518, which belongs to B1).
-  - Option B as amended by the S88 reading: "There exist (a,b) ∈ C and a nonempty block G ⊆ Γ such that the answer profile at (a,b) differs from its value at (1,b₀), or is not determined there in the claimed way, and in E|(Γ∖G), evaluated at (τ(a),σ(b)) and at (1,σ(b₀)) with the named background fixed, that difference is lost or the answer ceases to be determined."
-  - The typing sentence at L233: "The commitments Γ are components of E; the boundary values of E belong to the named background of Part VI."
-  - The deletion rider (plan 1.3.4) has not been examined by S88; X1 must test it. Option A is the fallback. If both options fail, only the τ, σ erratum is taken.
-
-- **CONFLICTS TO WATCH:** Skeleton conflicts 2 (L257: W39.1 inserts after S2, W20 replaces S3 alone; L275's rule, W9.1, holds under every option), 3 (L518: any rider enters at one of the two sentences B1 left free), 4 (the deletion rider against the S88 typing sentence) and 11 (recheck W33.1 and N1 once W20 lands).
-- **ANCHOR:** the typing sentence, L233. This file-11 text is left untouched by every applied entry and occurs once in file 11.
+- **FILE-11 LINE:** 233
+- **WHERE:** Part V, the opening paragraph (L233). One sentence is inserted after sentence 1, which ends "… and an identified set \(\Gamma\) of active commitments in \(E\)."; sentence 1 is kept byte for byte, and "The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies …" follows unchanged.
+- **REASON WORD:** clarification
+- **KIND:** CLAIM
+- **CHECK:** not put to check 1 or check 2, which ran before S88 was settled. The text is the settled wording (F3, block 2), copied byte for byte. Checked by its drafter as W19.1 was. No outside reader has seen this wording; X1 must carry it.
+- **OLD:**
 ````text
 and an identified set \(\Gamma\) of active commitments in \(E\).
 ````
-- **ANCHOR:** non-circular dependence S3, L257. This file-11 text is left untouched by every applied entry and occurs once in file 11.
+- **NEW:**
 ````text
-There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
+and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work; the boundary values of \(E\) and the components of \(E\) outside \(\Gamma\), including any that assigns an input, belong to the named background of Part VI.
 ````
-- **ANCHOR:** the dependence order, L518 (left free by B1). This file-11 text is left untouched by every applied entry and occurs once in file 11.
-````text
-(E) depends on those.
-````
-- **ANCHOR:** the dependence order, L518 (left free by B1). This file-11 text is left untouched by every applied entry and occurs once in file 11.
-````text
-(S), (B), (D) depend on (E).
-````
+- **DECLARATION:** Part V now types a candidate's commitments: they are components of its organization, those the candidate offers as doing the work, and the organization's boundary values and its other components, including any that assigns an input, belong to the named background of Part VI.
+- **REASON:**
+  - **W20** (S88 finding F3, settled NARROWED from the finding as sent). The narrowed finding stands, with the F3 reading's precision: Γ is untyped, and the operative gap is membership, whether a component that assigns an input is a commitment or named background. No sentence of file 11 types Γ. L233, L257 and L289 are the only relevant sentences, and "the named background" occurs only at L289.
+  - **Plan 1.3.4's rule**, fixed before any S88 reply was read: "F3 UPHELD: take B, with the rider unless X1 finds that the rider breaks a worked case". Settling applied its first branch. The narrowing (O33) is against the finding's instances, not against option B, and B holds on O33, O5, O7, Part VII's production case and the skew-symmetric case. The rule has no branch for a narrowing that leaves B intact.
+  - **The wording** is the settled change 3.
+    - The sentence in view after Atria's reading ("the boundary values of \(E\) belong to the named background") put a component that lies outside Γ and is not a boundary value in no class, so its fate under restriction was undefined.
+    - "Including any that assigns an input" is Mimo's point 7. "Those the candidate offers as doing the work" is the rider's sentence in plan 1.3.4.
+    - Not adopted from Mimo: "active", which is undefined; and "every verdict is relative to it", since L233 already makes Γ a coordinate of \(\mathcal E=(E,p,t,\Gamma)\).
+  - **It agrees with the rider** (skeleton conflict 4). Deleting \(G\) from \(E\) leaves \(\Gamma\setminus G\) and everything this sentence puts in the named background, which is \(E|(\Gamma\setminus G)\) whenever Part VI's operation is deletion.
+  - **What it settles.** The candidate's identification decides membership. Option B (W20.2) makes the named verdicts insensitive to that choice: in the F3 reading's models 1a and 1b, production holds whether or not the input-assigning components are listed.
+  - **Read in place.**
+    - The sentence sits between the definition of a candidate and "The pair \(\mathcal E\) … satisfies \(\operatorname{Account}(\mathcal E)\) exactly when", and it points forward to Part VI, where the named background is used (L289).
+    - "Including any that assigns an input" has two readings: every component that assigns an input is outside Γ; or any such component the candidate leaves out of Γ is named background. The named verdicts are the same on both (models 1a and 1b). Carried forward below.
+    - "Active" (L233's "active commitments", L235's "every active component") is still undefined. Carried forward below.
+- **CASES AT RISK:**
+  - **O45: watched, with a risk away.** "Those the candidate offers as doing the work" meets the case's "The second is never described as doing anything".
+    - A reader who takes "offers as doing the work" to need a description of the work puts the second spring in the named background. It is then no route, and "It was already a route" moves AGREE→SPLIT.
+    - The account contains the second spring, connected and sufficient, and that is offering it as part of the mechanism. L309 s3 ("a route whether or not anyone has described its work"), W28.1 and W58(i).1 ("whether or not anyone has set them out") hold the AGREE.
+    - X1 should test this row.
+  - **O7 holds AGREE, on firmer text.** The component that spreads or sweeps the salt assigns an input and is named background, and the salt's action on the ice is the commitment. File 11's S3, on the mechanism-only reading, had no edit in the salt contract that removes a commitment; under W20.2, deleting the salt's action loses the contrast.
+  - **O5** holds AGREE (W20.2).
+  - **Part VII's production case** holds. \(H:=U_H\) and \(\theta:=U_\theta\) assign inputs and are named background, and the law is Γ. It holds under W20.2 on both identifications (models 1a and 1b).
+  - **The skew-symmetric case** holds. "Field arithmetic and determinant–invertibility held fixed" are components outside Γ, so named background, as L341 treats them.
+  - **O2 holds AGREE.** Carla offers both parts, so both are in Γ. The almanac is the answer written as a component, and the verdict rests on S2 and L275's rule (W9.1).
+  - **N1 (O53): watched both ways, as W33.1 records** (skeleton conflict 11, rechecked).
+    - Tomas offers the sun-god sentence as keeping the tilt steady, so under this sentence it is a commitment wherever it is a component. The membership question that W33.1 left to W20 is settled, and the watch moves to fidelity.
+    - Read as a redescription of the spinning-body component, or as constraining nothing, it does no work, and the verdict holds (toward).
+    - Read as a second faithful component, it is a redundant route, and "not part of what explains" is at risk (away).
+    - Read as an unfaithful component, it is interference, and "Tomas explains" is at risk.
+  - **O36, O46 and O47** hold. Part VI's supports are subsets of the written Γ (W58(i).1), and the typing moves none of them.
+- **GAIN:** Γ has a type and a rule of membership, and every component of \(E\) has a class, so restriction is defined on all of \(E\).
+- **LOSS:** Membership is the candidate's identification, not a test. A candidate that leaves out of Γ a component that does the work has it fixed as background, and non-circular dependence then has only the listed commitments to witness it.
 
 ### W39.1 — Identity of the answer is structural at the declared grain
 
@@ -727,6 +777,65 @@ moving an assertion from an input slot into a component named "law" does not dis
 - **REASON:** W39 (source point 12; verify obs 12). 00:210's sentence, restored word for word. Files 10 and 11 kept "at the declared grain" and dropped the sentence that says what identity at the grain is. Its second half protects the Part VII odd-order skew-symmetric construction, whose premises are logically equivalent to its conclusion. 00:210's counterfactual-law sentence is not restored (plan conflict 14).
 - **CASES AT RISK:** O2: holds AGREE, toward (the almanac entry is the answer, structurally, at the grain). O4: weak, either direction (a reader may now deny that the index is structurally the answer); its AGREE rests on L129 and L153. N25 and N3: toward (the same assertion restated one level down, and the yearly return written into the bargain). N2: toward (the southern seasons are the report written into the myth). N8: weak risk away (a reader may call the energy law a restatement of the answer); expected to hold, since the law constrains every design and the answer is one consequence of it.
 - **GAIN / LOSS:** GAIN: Same-form restatement is caught in words, and mathematical accounts are protected in words. LOSS: Nothing; the sentence was in file 00.
+
+### W20.2 — Non-circular dependence, S3: option B with the deletion rider
+
+- **STATUS:** applied
+- **GROUP:** A
+- **ITEM:** W20
+- **FILE-11 LINE:** 257
+- **WHERE:** Part V, "Non-circular dependence" (L257), sentence 3 (S3), the whole sentence. S1 and S2 are unchanged. W39.1's sentence lands after S2 and before this one; the two OLD texts do not overlap (skeleton conflict 2).
+- **REASON WORD:** change of claim
+- **KIND:** CLAIM
+- **CHECK:** not put to check 1 or check 2. The text is the settled wording (F3, block 1), copied byte for byte. Checked by its drafter as W19.1 was.
+  - The deletion rider was never put to either outside reply. With W19.3 it is the least tested wording in this list, and X1 must test it (plan 1.3.4).
+  - The fallback, if X1 finds that the rider breaks a worked case, is settled with it: S3 reads "… and this contrast is lost in \(E|(\Gamma\setminus G)\) with the named background fixed: evaluated at \((\tau(a),\sigma(b))\) and at \((1,\sigma(b_0))\), its two answers are determined and equal, or an answer that \(E\) determines at one of these points is not determined at that point."; L516's declared indices gain "the restriction operation of Part VI"; and W20.3's clause ends "…, and \((E|W)|W'=E|W'\) for \(W'\subseteq W\)". If both options break something, only the \(\tau,\sigma\) erratum is taken.
+- **OLD:**
+````text
+There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
+````
+- **NEW:**
+````text
+There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\) such that the answer profile at \((a,b)\) differs from its value at \((1,b_0)\), or is not determined there in the claimed way, and this contrast is lost when the components of \(G\) are deleted from \(E\) (a deleted component imposes the full relation on its ports, Part II): evaluated at \((\tau(a),\sigma(b))\) and at \((1,\sigma(b_0))\), the answers of \(E\) with \(G\) deleted are determined and equal, or an answer that \(E\) determines at one of these points is not determined there once \(G\) is deleted.
+````
+- **DECLARATION:** Non-circular dependence now requires a pair of the contract and a nonempty block of the commitments such that the answer profile at the pair differs from its value at the baseline, or is not determined there in the claimed way, and this contrast is lost when the block's components are deleted from the organization: at the translated pair and the translated baseline, the answers of the organization with the block deleted are determined and equal, or an answer it determined there is no longer determined. It no longer asks for a pair of the contract that itself removes or replaces a block of the commitments.
+- **REASON:**
+  - **W20** (S88 finding F3; the settled status and the plan's rule are under W20.1).
+  - **The defect.** File 11's S3 asks for a pair of \(C\) "that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions". With Γ untyped, a pair that only sets inputs witnesses it on one identification and not on another.
+    - Part VII's production account fails S3 on its production contract of interventions on \(H\) and \(\theta\) when Γ is the law alone (the F3 reading's model 1a).
+    - O5 flips on a narrowed contract with no edit that removes a mechanism commitment (model 8a).
+  - **What option B does.** It puts the dependence in a restriction, not in the reach of an edit.
+    - The witnessing contrast stays in \(C\), so non-vacuity's last sentence (L259) stays true.
+    - An idle block can never witness, which agrees with L275's rule (W9.1) and with W33.1.
+    - A composite edit lets an idle block witness file 11's S3 and option A (model 4). It cannot witness B.
+  - **Settled change 1: the explicit test for "lost".** The wording in view after Atria's reading, "that difference is lost or the answer ceases to be determined", has no antecedent when the first conjunct holds by non-determination. On the loose reading, an idle Γ passes (model 3, a contract with a law-deleting edit). The explicit test gives no witness there. Mimo's own wording leaks on the same model and is not adopted (prompted by Mimo's point 5(ii)).
+  - **Settled change 2: the deletion rider** (plan 1.3.4, fixed before any S88 reply was read).
+    - The restriction is deletion under (O), which the text already has (L105). So Account takes no new declared input.
+    - This answers Mimo's point 5(i), that Account would depend on Part VI's declared restriction operation. It does so without the F3 reading's change 3, which would have named that operation among the declared indices.
+    - The F3 reading's models implement restriction as deletion (`f3_check.py`, function `restrict`), so their "proposed" column is the rider's test: production on both identifications, O33 on the mechanism-only reading, O5 on both formalizations, and no witness for relabelings or an idle block.
+  - **The dependence order (L518) is not changed.** (E) now uses (O)'s deletion rule, and L518 already has "(F1), (F2), (A) depend on (O), (Q), (K). (E) depends on those." The two sentences B1 left free stay free (skeleton conflict 3).
+  - **Read in place.**
+    - "The answer profile" is the one file 11's S3 names. \((\tau(a),\sigma(b))\) and \((1,\sigma(b_0))\) are Part V's translations, with \(\tau(1)=1\) from (F2). The parenthesis restates L105's first sentence and points to Part II.
+    - L341 still reads true: "Non-circular dependence is witnessed by \(I_3\) under removal of skewness …". The pair "remove skewness" with \(G\) the skewness commitment is a witness, since with skewness deleted the family contains an invertible matrix at both points (the F3 reading's determinant check).
+    - L259's "excluding every change under which the active commitments could matter" still names what a contract must not do: under B the commitments matter through a contrast in \(C\).
+  - **Classification:** a change of claim. The logical form of a defining clause changes.
+- **CASES AT RISK:**
+  - **O5 holds AGREE, on firmer text** (models 8a and 8b).
+  - **O7 holds AGREE, toward.** Deleting the salt's action loses the melting contrast (see W20.1).
+  - **O33 holds AGREE.** "The table is faithful" is a verdict of fidelity, which S3 does not touch; model 6a holds under B.
+  - **O2 holds AGREE**, on S2 and L275. Deleting the bell loses no contrast in the tide question, so the bell cannot carry it.
+  - **O4 holds AGREE.** The index is the answer observed (S2, L129, L153), and B does not reach it.
+  - **O36, O45, O46 and O47** hold. (S) and (B) are unchanged, and each support's S3 now quantifies over its own commitments (W20.3). O45's two springs witness together: deleting both loses the door's return.
+  - **N25 (O75): the first question holds.** No admitted change alters the answer, so the first conjunct fails and no block witnesses.
+  - **N3 (O55) holds, toward on its first question with W39.1.** The yearly return is written into the bargain (S2).
+  - **N23 (O73): toward on its first half.**
+    - The forward account's commitments are the laws of motion. The positions a thousand years ago are set by components that assign inputs, which W20.1 puts in the named background.
+    - Deleting the laws loses the contrast, so the forward account meets S3. File 11's S3, on the mechanism-only reading, had no witness for it.
+    - The backward account still fails. It fails (F2), as L323's reversed calculation does, under a contract of interventions on the earlier positions. It fails S3 under a contract of interventions on tonight's positions, which leave the target's past as it was.
+  - **N1 (O53):** as W20.1. Deleting the sun-god component alone loses no contrast while the spinning-body point remains, so it never witnesses alone.
+  - **Part VII's production case and the skew-symmetric case** hold (above).
+- **GAIN:** The condition is well typed. O5, O7, O33 and Part VII's production case are secured on the text. An idle block cannot witness. Account takes no new declared input.
+- **LOSS:** The logical form of a defining clause changes: dependence is shown by deleting commitments, not by an admitted edit that reaches them. The test has not been put to an outside reader.
 
 ### W11.1 — L271 s2: the encoding table is an account only when it meets the rest of (E)
 
@@ -784,6 +893,39 @@ does not repair this.
 - **REASON:** W9 (XR4; det 02 C40). The parenthesis names content with no referent in the document (the example is a case's content) and reached the file-11 testers inside the theory text. 03 §5 ruled XR4 a SLIP: "The rule in the sentence stands without the parenthesis, so this is not claim-changing." The rule (C40) is kept word for word; it holds under every W20 option (plan 1.3.4; conflict 2).
 - **CASES AT RISK:** O2: may move away (AGREE → SPLIT) if a reader leaned on the parenthesis, which stated the verdict's own point; expected to hold AGREE on the rule itself and on S2 of non-circular dependence. No N-case turns on it (N1's idle sentence is the converse case and is read on other text).
 - **GAIN / LOSS:** GAIN: No case content inside the theory; O2 is read on the rule, not steered. LOSS: A vivid example.
+
+### W20.3 — Part VI: the commitments of \(E|W\) are \(W\)
+
+- **STATUS:** applied
+- **GROUP:** A
+- **ITEM:** W20
+- **FILE-11 LINE:** 289
+- **WHERE:** Part VI, the opening paragraph (L289), sentence 2. A clause is appended after its last word. Sentence 1 ("Fix \(\mathcal E\) and a declared restriction operation.") and "Define" are unchanged. No other entry touches L289.
+- **REASON WORD:** clarification
+- **KIND:** CLAIM
+- **CHECK:** not put to check 1 or check 2. The text is the settled wording (F3, block 3), copied byte for byte. Checked by its drafter as W19.1 was.
+- **OLD:**
+````text
+For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed.
+````
+- **NEW:**
+````text
+For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed; the commitments of \(E|W\) are \(W\).
+````
+- **DECLARATION:** Part VI now says that the commitments of a restricted candidate E|W are W.
+- **REASON:**
+  - **W20, settled change 4.** (S) applies Account to \(E|W\), and non-circular dependence, under either option, quantifies over blocks of that candidate's Γ. L289's "retain the commitments in \(W\)" suggests that the commitments of \(E|W\) are \(W\) but does not state it. The gap predates option B (the F3 reading).
+  - **Only part of the F3 reading's change 3 is kept.** That change also named the restriction operation among the declared indices and stated that restriction composes. Under the rider, (E) does not use Part VI's operation (W20.2), so neither is needed. Both return in the fallback (W20.2's CHECK).
+  - Prompted by Mimo's point 5(i), on composition, kept in narrowed form.
+  - **KIND.** The clause states for the first time what the old words suggest, which is CLAIM under the record's definition. A checker may rule it WORDING; the declaration then leaves the note, and N falls by one.
+- **CASES AT RISK:**
+  - **O36 holds AGREE.** P is critical in each route as written. Each route's \(E|W\) now has \(W\) as its commitments, so its S3 quantifies over \(W\).
+  - **O45 holds AGREE.** \(E|\{\text{second spring}\}\) has the second spring as its commitment, and deleting it loses the door's return. So the singleton is a support, and the spring is a route.
+  - **O46 and O47 hold.** The cable belongs to a new candidate (L309 s3), and the interference case is unchanged.
+  - **N1:** as W20.1.
+  - **W33.1** reads each support with its own commitments ("every support stays a support after \(d\) is added to it and after \(d\) is removed from it"), as this clause says.
+- **GAIN:** Part VI's supports are well typed under non-circular dependence.
+- **LOSS:** None.
 
 ### W58(i).1 — Part VI: the supports assessed are the subsets of the written Γ
 
@@ -980,22 +1122,50 @@ This is the semantics' treatment of eliminative explanation; it is offered as ad
 - **CASES AT RISK:** None: no O- or N-case turns on functional transport. N20 (error piling up) is read on (T2), not here.
 - **GAIN / LOSS:** GAIN: A readable theorem; W31's S and T have a referent. LOSS: Nothing.
 
-### W31 (held) — (T2), the accumulated bound (held under D2)
+### W31.1 — (T2): the hypotheses restored and \(e_n\) defined
 
-- **STATUS:** held
+- **STATUS:** applied
 - **GROUP:** A
 - **ITEM:** W31
 - **FILE-11 LINE:** 361
-- **KIND:** CLAIM (expected; plan 1.2: erratum → CLAIM, narrowed; the general bound, option B, would be a new claim)
-- **CANDIDATE WORDING:** the current candidate wordings, as the item skeleton names them from `results/S88 Reading of Atria's reply - the three defects.md` and plan 1.3.2–1.3.4. Nothing is drafted (D2). The rules in plan 1.3 choose among them once Mimo's S88 reply has been read.
-
-  **W31, (T2)** (L361; W24 lands first). The erratum as amended by the S88 reading: "With one-step discrepancy d(πSz, Tπz) ≤ ε at every state z of the stated scope and an L-Lipschitz represented next-step map T, the discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz) (so e₀ = 0), satisfies e_n ≤ ε Σ_{k<n} L^k whenever z, Sz, …, S^{n−1}z lie in that scope. (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one." Option B, the general bound with e₀, stays optional and is a new claim.
-
-- **CONFLICTS TO WATCH:** W24.1 lands first. Check 1's note: the candidate writes an unsubscripted S, while W24.1 introduces S_a and T_a only; the drafted W31 must say which process S is (for example, "the target next-step map S").
-- **ANCHOR:** (T2), L361. This file-11 text is left untouched by every applied entry and occurs once in file 11.
+- **WHERE:** Part VIII, "Approximate transport" (L361), sentence 1, before the tag. The tag "(T2)" and the two sentences after it are unchanged, so the line reads as the settled wording, which replaces all of L361. W24.1 lands first, at L351.
+- **REASON WORD:** erratum
+- **KIND:** CLAIM
+- **CHECK:** not put to check 1 or check 2. The text is the settled wording (F2), copied byte for byte. Checked by its drafter as W19.1 was. Check 1's note on W24.1 is met: "when W31 is drafted it must say which process S is". The sentence introduces \(S\) and \(T\) and ties them to functional transport.
+- **OLD:**
 ````text
 **Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\).
 ````
+- **NEW:**
+````text
+**Approximate transport.** Let \(S\) be a target next-step process and \(T\) a represented next-step process, as \(S_a\) and \(T_a\) are in functional transport, and let \(d\) be a metric on \(X_E\). With one-step discrepancy \(d(\pi Sz,T\pi z)\le\varepsilon\) at every state \(z\) of a stated scope, and with \(T\) \(L\)-Lipschitz for \(d\), the discrepancy after \(n\) steps from one state \(z\), \(e_n=d(\pi S^nz,T^n\pi z)\) (so \(e_0=0\)), satisfies \(e_n\le\varepsilon\sum_{k<n}L^k\) whenever \(z,Sz,\dots,S^{n-1}z\) lie in that scope.
+````
+- **DECLARATION:** (T2) now states its hypotheses and defines its quantity. S is a target and T a represented next-step process, as in functional transport; d is a metric on the represented states; the one-step discrepancy d(πSz, Tπz) is at most ε at every state z of a stated scope; and T is L-Lipschitz for d. The discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz), with e_0 = 0, satisfies the bound whenever z and its first n−1 successors under S lie in that scope.
+- **REASON:**
+  - **W31** (S88 finding F2, settled NARROWED: (h1) is restated as an undefined \(e_n\), not an omitted hypothesis on starts). The settled finding: "(T2) omits two hypotheses its proof needs, namely whose Lipschitz constant (h2) and where ε holds (h3), and it leaves \(e_n\) undefined (h1), so the start is fixed by no words. On readings that leave these open it has counterexamples (2b for h2, 2c for h3). … This is a drafting omission, fixed by an erratum that restores the predecessor's hypotheses and defines \(e_n\)."
+  - **Plan 1.3.2's rule**, fixed before any S88 reply was read.
+    - The erratum is taken "unless the S88 reading rules one of the three hypotheses false or excessive". Neither reading does. The narrowing turns (h1) into a definition, and the erratum keeps that definition word for word.
+    - The general bound (option B) waits. The F2 reading found it vacuous as worded, since the erratum's definition makes \(e_0=0\) for every system.
+  - **Changes since the position after Atria's reading**, all in the settled wording:
+    - \(S\) and \(T\) are introduced and tied to functional transport, in W24.1's words "target process" and "represented process" (Mimo's F2 point 7; check 1's note on W24.1). The theory's only other bare \(S\) is the simulation layer (L179, L221), a representing organization.
+    - "The stated scope" becomes "a stated scope" (Mimo's point 4(a), partly right). (T2) states no scope of its own, and the predecessor says "on a stated scope".
+    - "Let \(d\) be a metric on \(X_E\)" and "\(T\) \(L\)-Lipschitz for \(d\)" are added. The erratum used a \(d\) that no line of file 11 defines, and "Lipschitz" presupposes a metric (found in settling; the predecessor writes \(d_Z\)).
+    - The unequal-start clause is dropped (Mimo's point 5). Under the definition, \(e_0=0\) for every system.
+  - **Unchanged.** The containment clause stays: Mimo's scope instance defeats the wording as sent at \(n=5\), while this wording claims only \(n\le4\) there, where the bound holds with equality. The Lipschitz hypothesis stays global.
+  - **The proof goes through under these words.** For \(k<n\), \(e_{k+1}\le\varepsilon+L\,e_k\) with \(e_0=0\). The first term is bounded because \(S^kz\) lies in the scope, and the second because \(T\) is Lipschitz globally.
+  - **Read in place.**
+    - OLD is sentence 1 only, so the record shows the one sentence that changes. The tag and the two sentences after it follow NEW unchanged.
+    - \(\pi:X_D\to X_E\) (L191), so a metric on \(X_E\) types every term. The letter \(S\) here is the target's step, as \(S_a\) is in W24.1's sentence ten lines above, and the clause "as \(S_a\) and \(T_a\) are in functional transport" ties it.
+    - The letter \(z\) is bound twice, once by "at every state \(z\) of a stated scope" and again by "from one state \(z\)". That reads as two quantifiers and needs no change.
+    - \(L\) still also names the component relations \(L_j\), which plan 1.3.2 leaves alone.
+  - **Classification:** an erratum that restores the predecessor's hypotheses; CLAIM, narrowed, as plan 1.2 expects.
+- **CASES AT RISK:**
+  - **N20 (O70), weakly: holds, or toward on the first method.**
+    - For a method that only joins, cuts and measures lengths, \(L=1\), and the bound gives \(n\varepsilon\) after \(n\) operations. That grows without limit, as the verdict's "the accumulated error grows larger than a goat" says. The bound is an upper bound; it does not show that the error must grow.
+    - The second method's rounding is not Lipschitz, and error correction (W42) is left out, so (T2) says nothing of it. Its verdict rests on the case's own reasoning.
+  - **No O-case turns on accumulated error.** The S81 case book was searched for "error", "approximat", "accumulat" and "drift".
+- **GAIN:** (T2) is a theorem under its stated hypotheses, and Part XV's test on it (L538) can be run.
+- **LOSS:** None. The general bound for an unequal start is not added, and the theory nowhere uses a second start.
 
 ### W22.1 — Define \(p_\delta\) and \(\mathcal E_c\) in (K1)
 
@@ -1806,6 +1976,71 @@ A table that encodes the response to every admitted change does not fail (F1); l
 - **GAIN:** Part XV no longer shelters a candidate class from its own sufficiency attack.
 - **LOSS:** The lookup-table question is open again in Part XV, now as a live attack and not as a closed one.
 
+### W19.2 — Derivation 2: "Same anchors, one account"
+
+- **STATUS:** applied
+- **GROUP:** A
+- **ITEM:** W19
+- **FILE-11 LINE:** 552–558
+- **WHERE:** Part XVI, Derivation 2 (L552–558), the whole derivation from its heading "## 2. Indistinguishable is identical" through its Consequence. The heading, claim, proof and Consequence are replaced, and one paragraph is added between the proof and the Consequence. The blank L559 and Derivation 3 (L560 on) are untouched.
+- **REASON WORD:** change of claim
+- **KIND:** CLAIM
+- **CHECK:** as W19.1. The text is the settled wording (F1, block 1), copied byte for byte.
+- **OLD:**
+````text
+## 2. Indistinguishable is identical
+
+**Claim.** Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide.
+
+*Proof.* Immediate from Derivation 1 and (A). ∎
+
+**Consequence.** Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction. The remedy is a finer contract, which is a new question. A claim that two such candidates "really" differ is a claim that some admitted change separates them, and must supply it.
+````
+- **NEW:**
+````text
+## 2. Same anchors, one account
+
+**Claim.** Let \(\mathcal E,\mathcal E'\) be candidates for the same \(p\) that both satisfy (F1), (F2) and (A) on \(C\). (i) Their answer profiles coincide on \(C\). (ii) If a bijection \(\varphi\) of their active components gives each \(k\) and \(\varphi(k)\) one anchor, the same subnetwork of \(D\) with port translations onto the same ports of \(D\), then \(k\) and \(\varphi(k)\) are of one kind on \(C\) for every \(k\); so far as (F1), (F2) and (A) reach, the two are one account on \(C\): \(\varphi\) pairs their active components, each pair of one kind on \(C\), and by (i) their answer profiles coincide.
+
+*Proof.* (i) By (A), \(\operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b)=\operatorname{Ans}_{E'}(\tau'(a),\sigma'(b))\) for every \((a,b)\in C\). (ii) By Derivation 1, \(k\) has the signature of its anchor on the ports its translation names, and \(\varphi(k)\) the signature of the same anchor on the same ports; composing the one translation with the inverse of the other gives a footprint bijection under which the two signatures, read on \(C\), coincide. ∎
+
+Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut \(D\) at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8).
+
+**Consequence.** Where two candidates that satisfy (F1), (F2) and (A) differ only in which component carries which anchor, the contract does not contain the distinction; a claim that one assignment is "really" right is a claim that some admitted change separates them, and must supply it. The remedy is a finer contract, which is a new question.
+````
+- **DECLARATION:** Derivation 2 no longer says that two candidates for one question that satisfy (F1), (F2) and (A) on C are one account whose components are pairwise of one kind. It now says that their answer profiles coincide on C; that where a bijection of their active components gives each pair one anchor, the same subnetwork of D with port translations onto the same ports of D, each pair is of one kind on C and, so far as (F1), (F2) and (A) reach, the two are one account; and that without that premise nothing more follows. Its Consequence now covers only candidates that differ in which component carries which anchor.
+- **REASON:**
+  - **W19** (S88 finding F1, settled UPHELD). Both readings rule UPHELD: Atria's reading from the frozen position, and the reading of Mimo's reply from the position after Atria's reading. The component half of the claim is false under its stated assumptions, on two counter-instances checked in exact arithmetic for every real \(c\) (`results/S88 Mimo reading parts/checks/f1_check.py`). The answer-profile half follows from (A). The proof, "Immediate from Derivation 1 and (A)", omits the pairing step: Derivation 1 relates each component only to its own anchor.
+  - **Plan 1.3.3's rule**, fixed before any S88 reply was read: "F1 UPHELD: take (i)". Wording (i), "Same anchors, one account", is taken as settled.
+  - **Changes since the position after Atria's reading**, all in the settled wording:
+    - Clause (ii) says what "one account" is. File 11 gave the phrase content only through the colon at L554, and the repair had dropped it (Mimo's F1 point 4; the F1 reading's change A).
+    - The Consequence says "candidates that satisfy (F1), (F2) and (A)" in place of "faithful candidates", because L191 defines "faithful" by (F1) and (F2) only, and the claim's premise includes (A) (the F1 reader's own note).
+    - The sentence after (K) (W19.1) and Derivation 10's sentence (W19.3) change with it.
+  - **The premise of (ii)** is "port translations onto the same ports of \(D\)". The premise as sent to both outside readers ("\(\lambda'(\varphi(k))=\lambda(k)\) … up to port translation") is false on the F1 reader's \(E_3\), \(E_4\), which are the Atria reading's P and Q: two components anchored to one subnetwork on different ports. Mimo endorsed the premise as sent; that bears only on wording since tightened. Under the current premise the proof holds, with the footprint bijection \(\rho'^{-1}\circ\rho\).
+  - **"The same subnetwork", not "anchors of one kind"** (plan 1.3.3). The weaker premise would make O45's two springs, and O46's spring and cable, one account, against Part VI's redundant routes and L309 s3.
+  - **Not adopted:** the smaller wording (ii). It fails on \(E_3\), \(E_4\).
+  - **Read in place.**
+    - The heading keeps file 11's "## n. Title" form, so the program still names the place "Derivation 2".
+    - The primes (\(E'\), \(\tau'\), \(\sigma'\)) name the second candidate's parts, as \(\mathcal E'\) does, and "active components" is (F1)'s phrase (L235).
+    - The added paragraph cites Derivation 9, Part VI's redundant routes and Derivation 8, and each says what the paragraph uses.
+    - Part XV's "Derivations 1–3 under their stated assumptions" (L538) now lists a result that holds. Part 0 (L13, L41) says that components no admitted change separates are one kind at a level; that stands. No line of file 11 cites the old title or its slogan. The only other citation of Derivation 2 is L620 (W19.3).
+  - **Skeleton conflict 12, rechecked.** W21.1 defines \(\equiv_\ell\) by faithful transports both ways, with no pairing of components across candidates, so it stands as drafted. O11, O18 and N15 keep W21.1's readings.
+- **CASES AT RISK:**
+  - **O46 (the decisive guard) holds AGREE, on firmer text.** The cable is anchored to a different subnetwork from the spring, so the premise of (ii) fails and "nothing more follows": they are different candidates with one answer profile. File 11's slogan let a reader call the spring account and the cable account one account, since both are faithful with one answer profile, and so call the spring account a survivor. That reading is gone. L309 s3's second clause is unchanged.
+  - **O45 holds AGREE.** The two springs anchor different subnetworks, so (ii) makes them neither one kind nor one account. The added paragraph points to Part VI's redundant routes, which carry the verdict with L309 s3 and W28.1.
+  - **O36 holds AGREE.** The unwritten route with another premise cuts \(D\) at a different place, so it is a different candidate, and P stays critical in each route as written.
+  - **O24 holds AGREE, toward if anything.** The two wiring arrangements are different organizations (L25). File 11's Consequence ("Underdetermination of an account by a contract is not a failure of the semantics to decide …") could be read to make two arrangements that agree on every tested pair one account. The new Consequence covers only anchor assignments. The verdict rests on Derivation 3 (L562; W17.3), which is untouched.
+  - **O10 holds** (see W19.1).
+  - **N17 (O67): toward on the first two questions; the plan predicts no mark.** Answers A and B cut \(D\) at different places, the electrons against the stored factors. The added paragraph makes them different candidates with one answer profile, so each can tell the asker something the other does not. File 11's "one account … their components are pairwise of one kind" pulled against that. The third question ("B explains, and A does so only in a thin sense") is not reached.
+  - **N25 (O75).** The first question holds; it rests on non-circular dependence (W20.2). The second question is watched.
+    - "The difference between them is idle" can rest on (ii) and the Consequence, where the dog and the turtle are read as components with one anchor on the same ports.
+    - A reader who rested it on file 11's slogan, which goes, may leave it unsettled (away, AGREE→SILENT).
+    - W30.1's "whatever the difference is called" and the Consequence's "a claim that one assignment is 'really' right … must supply it" hold it.
+  - **O11, O18 and N15** (skeleton conflict 12) are unchanged.
+  - The two case books were searched for rows that compare the components of two candidates. No other row turns on Derivation 2.
+- **GAIN:** Part XVI no longer carries a derivation that is false under its stated assumptions. Part XV's list of results open to a counterexample now lists a true one. "One account" has stated content.
+- **LOSS:** The slogan "indistinguishable is identical" goes. The Consequence reaches only anchor assignments. Whether two differently decomposed candidates are one account is left undefined.
+
 ### W17.3 — L562 s3: Derivation 3's condition in the two defined terms
 
 - **STATUS:** applied
@@ -1885,6 +2120,41 @@ the fidelity failure is structural, not parametric.
 - **REASON:** W10(a) (XR7; det 02 C81; 03 M59, CLAIM, and §8 item 6). The gloss misdescribes the qualification: Derivation 3's is no differing survivor, the gloss says no survivor at all, and Derivation 10 does not state that every \(H_0\)-survivor agrees at the occlusion. Derivation 10's conclusions do not rest on the clause. "The fidelity failure is structural, not parametric" is kept. W10(b) goes with W19 (held) at L620, a different paragraph.
 - **CASES AT RISK:** None: no case touches M59 (03). Checked O48 and O24, which rest on L562 and L534.
 - **GAIN / LOSS:** GAIN: No inexact pointer to Derivation 3. LOSS: A link between Derivations 3 and 10 that was wrong as stated.
+
+### W19.3 + W10(b).1 — Derivation 10: the swap, through an exchange of the two things
+
+- **STATUS:** applied
+- **GROUP:** A
+- **ITEM:** W19, W10(b)
+- **FILE-11 LINE:** 620
+- **WHERE:** Part XVI, Derivation 10 (L620), sentence 2. Sentences 1, 3 and 4 are unchanged. W10a.1 changes L616, a different paragraph, and W1.2 anchors on L622.
+- **REASON WORD:** change of claim
+- **KIND:** CLAIM
+- **CHECK:** as W19.1. The text is the settled wording (F1, block 3), copied byte for byte. The sentence was rewritten in settling and has been put to no outside reader in any form. With the rider in W20.2 it is the least tested wording in this list (settled positions, "What this means for the held entries").
+- **OLD:**
+````text
+On any contract containing it, the two persistence components are of one kind (Derivation 2).
+````
+- **NEW:**
+````text
+On any contract containing it that admits each edit for both things alike, composing \(t_1\) with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork. The two things are built alike in \(P\), and their persistence components alike in \(S_1\), so the exchange carries the fidelity and the answers of \(t_1\) over to the second transport (Derivation 8); so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2).
+````
+- **DECLARATION:** Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit. It now says that on such a contract that admits each edit for both things alike, composing the transport with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork and has the first transport's fidelity and answers (Derivation 8), and that so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2).
+- **REASON:**
+  - **W19, with W10(b).** Plan 1.3.1 hands L620's "(Derivation 2)" (NEW-XR1, which 03 ruled CORRECT, loose) to W19's restatement of this sentence, and plan 1.2 replaces W10(b) with it.
+  - **The old sentence is false as literally read.** The extended contract on which \(t_1\) is faithful contains displacements. "Displace thing 1" replaces persistence component 1's relation and not component 2's, so under (K) no footprint bijection makes their signatures coincide (Mimo's F1 point 4; the F1 reading, 3.5(f)).
+  - **The replacement in view after Atria's reading was false as literally read too.** It said that exchanging the two components' anchors gives a second faithful transport. With \(\lambda\) alone exchanged, (F1) fails at "displace thing 1": the \(S_1\) component that \(\tau\) displaces is anchored to thing 2's continuity subnetwork, which the edit leaves alone. The exchange must run through \(\pi\), \(\tau\), \(\sigma\) and \(\lambda\) together. The settling's script checks this exactly (`results/S88 Mimo reading parts/checks/d10_exchange.py`): \(\lambda\) alone gives (F1) False; the whole exchange gives (F1) and (F2) True.
+  - **Why these words.**
+    - The exchange is faithful because it is a structure-preserving bijection. That needs the two things alike in \(P\) and their components alike in \(S_1\). "Built alike" states the symmetry that L610 ("two things, each with a position and a velocity") and L616 ("a component per thing") imply.
+    - Derivation 8 carries the contract along the exchange. So the second transport is faithful on \(C\) when \(t_1\) is faithful on the exchanged \(C\), and the two are the same exactly when \(C\) admits each edit for both things alike.
+    - Derivation 2 speaks of candidates, and it carries the qualifier "so far as (F1), (F2) and (A) reach". This answers skeleton conflict 5: on a contract other than the one where L618 calls the account adequate, nothing else supplies the rest of (E).
+  - **Read in place.**
+    - Under the second transport, persistence component 2 and thing 1's continuity subnetwork share one anchor on thing 1's ports. So W19.2's premise holds, with \(\varphi\) the exchange of the two components, and its colon gives the pairing: each pair is of one kind on \(C\), read through the two transports (W19.1). That is the content the old sentence aimed at.
+    - In the next sentence, "them" now takes "the two candidates" as its antecedent. "A claim that component 1 is *really* thing 1" is the claim that \(t_1\) is right and the second transport is not, and on a contract that admits each edit for both things alike no admitted change separates them. "This contract" there is such a contract.
+    - "The two candidates" are the candidate with \(S_1\) and \(t_1\) and the candidate with \(S_1\) and the second transport. Derivation 10 does not use the word "candidate" before this sentence; the reader supplies the pairing from Part V (L233).
+- **CASES AT RISK:** None. No O- or N-case turns on Derivation 10's worked episode (N14, the walking robot, is set aside, D8). O43 (a declared recoding, Derivation 8) is not reached: the sentence uses Derivation 8 as L602 states it.
+- **GAIN:** The worked episode's identity sentence is true, and it says what makes it true. L620's loose pointer to Derivation 2 becomes exact.
+- **LOSS:** The sentence now holds only on contracts that treat both things alike, and it says "one account" only so far as (F1), (F2) and (A) reach.
 
 ### W1.2 — The revision record closes the document
 
