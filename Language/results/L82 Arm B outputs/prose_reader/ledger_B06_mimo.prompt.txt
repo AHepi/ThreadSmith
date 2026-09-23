@@ -1,0 +1,77 @@
+# Prose reader brief (Arm B): the passage beside the report
+
+You are given a short passage of prose and, after it, the printed report of a checker that read a translation of that passage into a ledger of claims. You do not see the ledger. Your job is to say whether each finding in the report is about something the passage actually commits its writer, or the person the passage reports, to.
+
+Answer in exactly these numbered parts, plain English, short sentences:
+1. **Each finding, one line**: name the finding as the report prints it (its kind and the line it names), then say one of: "claimed as a fact in the passage" (quote the words), "hedged in the passage" (quote the hedge: may, might, perhaps, possibly, seemed, thought, and the like), "not made in the passage" (the passage's reported person never claims this), or "cannot tell from the report".
+2. **Anything argued in the passage that the report does not mention**: quote the passage's words, or write "nothing".
+3. **Inside a report or story**: does the report put the findings inside a named world (a note, a log, minutes, a handover) that matches where the passage puts the argument? Say yes, no, or that the report shows no world.
+4. **One line**: what one sentence added to the report would have made part 1 easier.
+
+Rules: judge the report against the passage only; do not judge whether the reported person was right; do not guess at the ledger. Begin your answer with the line PROSE READER: and end with the line READING COMPLETE.
+
+===== THE PASSAGE =====
+The dockyard clerk read through the harbourmaster's log for the week. In it, the harbourmaster had written that the trawler crossed the bar early because the tide had turned, and she added that a loaded boat at that harbour always crosses the bar early once the tide turns before dawn. The log went on to record the names of the crew and the weight of the catch. The clerk also noted, from her own count, that six boats had tied up before noon. The rest of the entry concerned repairs due on the north pier.
+
+
+===== THE REPORT =====
+REPORT for the passage above
+
+OUTCOMES:
+  contradictions: asked, nothing found
+  because claims: not asked, no line of that kind
+  since claims: not asked, no line of that kind
+  the chain: not asked, nothing to ask
+  plans: not asked, no line of that kind
+  exceptions: asked, nothing found
+  likeness: not asked, no line of that kind
+  two usually lines: not asked, nothing to ask
+  exemptions: not asked, no line of that kind
+  added lines: not asked, nothing to ask
+  what-ifs: not asked, nothing to ask
+  denied because: not asked, no line of that kind
+
+INSIDE 'log_world' (a told world, looked at alone): no contradiction.
+  BECAUSE-claim on line cause1 [said, sentence 2]: "[TOLD in world log_world] line cross1 BECAUSE line turn1".
+  JUMP. Even granting the stated cause, nothing in the ledger produces crossed_bar_early(trawler).
+    Claim line:
+    - line cause1 [said, sentence 2]: [TOLD in world log_world] line cross1 BECAUSE line turn1
+    Cause's lines:
+    - line turn1 [said, sentence 2]: [TOLD in world log_world] the tide had turned
+    Effect's direct lines:
+    - line cross1 [said, sentence 2]: [TOLD in world log_world] trawler crossed the bar early
+  0 findings inside 'log_world' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: asked, 1 found
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: asked, nothing found
+    denied because: not asked, no line of that kind
+
+INSIDE 'clerk_count' (a told world, looked at alone): no contradiction.
+  0 findings inside 'clerk_count' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: not asked, no line of that kind
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: not asked, nothing to ask
+    denied because: not asked, no line of that kind
+
+GAUGE: 25 lines said, 2 filled in, 0 usual case; 15 bin entries over 5 sentences (not checked): Sentence 1: for the week — A span of time. Under the reading taken it qualifies the log (the log for the week). The language records no dates or durations, so the week is not written as a fact.; Sentence 1: the harbourmaster's log — Possession. The language has no form for ownership; the book is named harbour_log and the harbourmaster's writing in it is recorded at line fwrite.; Sentence 2: In it — A location (inside the log) and a pointer back to the log. Kept only as the plain description wrote_in(harbourmaster, harbour_log) at line fwrite; the language does not check locations.; Sentence 2: the harbourmaster had written that — An attribution of a record to the harbourmaster. It scopes what follows to world log_world, where lines cross1, turn1, cause1 and rule1 are kept TOLD; none of them is asserted in the actual ledger.; Sentence 2: she added that — A second attribution to the harbourmaster (she is the harbourmaster). It scopes the general rule to world log_world.; Sentence 2: early (twice) — A time word with no stated reference point. Kept only as the stage named in the facts crossed_bar_early(trawler) and crossed_bar_early(X); the language does not check when.; Sentence 2: before dawn — A time restriction on the condition of the rule. Kept only as the stage named in the fact turns_before_dawn(tide) inside line rule1; the language does not check when.; Sentence 2: at that harbour — A location. Kept only as the plain description at_harbour(X) inside line rule1; the language does not check locations.; Sentence 3: went on to — The order of the parts of the entry. The language records no order beyond that of a chain.; Sentence 3: the names of the crew — The individual names are not given, and identity is outside the language. Kept only as the plain description names_of(crew) at line frec1; not checked.; Sentence 3: the weight of the catch — A weight is an amount (how much) and no amount is stated. Kept only as the plain description weight_of(the_catch) at line frec2; not checked.; Sentence 4: The clerk also noted, from her own count, that — An attribution of knowledge to the clerk and of her means (her own count), with also as discourse addition. It scopes the content to world clerk_count, where line tied1 is kept TOLD. The means of knowing is not checked.; Sentence 4: six — A number. The language records no numbers; the boats are named counted_boats and the count is not written.; Sentence 4: before noon — A time restriction. Kept only as the stage named in the fact tied_up_before_noon(counted_boats) at line tied1; the language does not check when.; Sentence 5: due — An obligation and a deadline. The language has no form for what is due or by when; only the fact rest_concerns_repairs(entry, repairs, north_pier) is written.. Slowest question: 0.06 seconds.
+  bin sentences: 5
+  sentences with no line: 0
+  sentences with no line and no bin entry: 0
+  filled in against said: 2/25
+

@@ -1,0 +1,79 @@
+# Prose reader brief (Arm B): the passage beside the report
+
+You are given a short passage of prose and, after it, the printed report of a checker that read a translation of that passage into a ledger of claims. You do not see the ledger. Your job is to say whether each finding in the report is about something the passage actually commits its writer, or the person the passage reports, to.
+
+Answer in exactly these numbered parts, plain English, short sentences:
+1. **Each finding, one line**: name the finding as the report prints it (its kind and the line it names), then say one of: "claimed as a fact in the passage" (quote the words), "hedged in the passage" (quote the hedge: may, might, perhaps, possibly, seemed, thought, and the like), "not made in the passage" (the passage's reported person never claims this), or "cannot tell from the report".
+2. **Anything argued in the passage that the report does not mention**: quote the passage's words, or write "nothing".
+3. **Inside a report or story**: does the report put the findings inside a named world (a note, a log, minutes, a handover) that matches where the passage puts the argument? Say yes, no, or that the report shows no world.
+4. **One line**: what one sentence added to the report would have made part 1 easier.
+
+Rules: judge the report against the passage only; do not judge whether the reported person was right; do not guess at the ledger. Begin your answer with the line PROSE READER: and end with the line READING COMPLETE.
+
+===== THE PASSAGE =====
+The governors' minutes recorded the head teacher's explanation for the rise in attendance. She said attendance had risen because the new bus route now reached the estate. The minutes noted that the school had also repainted the entrance hall over the summer. Later in the meeting, she said she did not think the rise was because of the repainted entrance hall. The governors moved on to discuss the canteen budget.
+
+
+===== THE REPORT =====
+REPORT for the passage above
+
+OUTCOMES:
+  contradictions: asked, nothing found
+  because claims: not asked, no line of that kind
+  since claims: not asked, no line of that kind
+  the chain: not asked, nothing to ask
+  plans: not asked, no line of that kind
+  exceptions: asked, nothing found
+  likeness: not asked, no line of that kind
+  two usually lines: not asked, nothing to ask
+  exemptions: not asked, no line of that kind
+  added lines: not asked, nothing to ask
+  what-ifs: not asked, nothing to ask
+  denied because: not asked, no line of that kind
+
+INSIDE 'minutes_world' (a told world, looked at alone): no contradiction.
+  BECAUSE-claim on line m_bec [said, sentence 2]: "[TOLD in world minutes_world] line m_rise BECAUSE line m_reach".
+  JUMP. Even granting the stated cause, nothing in the ledger produces rose(attendance).
+    Claim line:
+    - line m_bec [said, sentence 2]: [TOLD in world minutes_world] line m_rise BECAUSE line m_reach
+    Cause's lines:
+    - line m_reach [said, sentence 2]: [TOLD in world minutes_world] bus_route reaches estate
+    Effect's direct lines:
+    - line m_rise [said, sentence 2]: [TOLD in world minutes_world] attendance rose
+  0 findings inside 'minutes_world' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: asked, 1 found
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: asked, nothing found
+    denied because: not asked, no line of that kind
+
+INSIDE 'headteacher_world' (a told world, looked at alone): no contradiction.
+  DENIED BECAUSE on line h_denied [said, sentence 4]: "[TOLD in world headteacher_world] NOT [line h_rise BECAUSE line h_repaint]".
+  Fine. Nothing in the ledger makes repainted(entrance_hall) produce rose(attendance). The effect itself still stands; only the cause is denied.
+  0 findings inside 'headteacher_world' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: not asked, no line of that kind
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: not asked, nothing to ask
+    denied because: asked, 1 found
+
+GAUGE: 26 lines said, 0 filled in, 0 usual case; 8 bin entries over 5 sentences (not checked): Sentence 1: The governors' minutes recorded — Reporting frame: the recording is kept as happening p1 in the actual ledger, and the explanation's content is TOLD in minutes_world; the narrator is not taken to endorse the explanation.; Sentence 2: She said — Attribution of reported speech; the content is TOLD in minutes_world as the explanation the minutes recorded, and the narrator does not assert the rise or its cause.; Sentence 2: now — Time word; the route's reaching is recorded as a plain fact, and no earlier absence is invented.; Sentence 3: The minutes noted that — Reporting frame: the noting is kept as happening p3 in the actual ledger, and the repainting is TOLD in minutes_world.; Sentence 3: over the summer — When; the language has no form for times beyond the order of a chain.; Sentence 3: also — Connective; its content is the separate repainting fact recorded at line m_repaint.; Sentence 4: Later in the meeting — When; binned.; Sentence 4: she said she did not think — Attribution of a belief; the content is written as NOT [the rise BECAUSE the repainted hall], TOLD in headteacher_world.. Slowest question: 0.07 seconds.
+  bin sentences: 4
+  sentences with no line: 0
+  sentences with no line and no bin entry: 0
+  filled in against said: 0/26
+

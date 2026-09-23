@@ -1,0 +1,80 @@
+# Prose reader brief (Arm B): the passage beside the report
+
+You are given a short passage of prose and, after it, the printed report of a checker that read a translation of that passage into a ledger of claims. You do not see the ledger. Your job is to say whether each finding in the report is about something the passage actually commits its writer, or the person the passage reports, to.
+
+Answer in exactly these numbered parts, plain English, short sentences:
+1. **Each finding, one line**: name the finding as the report prints it (its kind and the line it names), then say one of: "claimed as a fact in the passage" (quote the words), "hedged in the passage" (quote the hedge: may, might, perhaps, possibly, seemed, thought, and the like), "not made in the passage" (the passage's reported person never claims this), or "cannot tell from the report".
+2. **Anything argued in the passage that the report does not mention**: quote the passage's words, or write "nothing".
+3. **Inside a report or story**: does the report put the findings inside a named world (a note, a log, minutes, a handover) that matches where the passage puts the argument? Say yes, no, or that the report shows no world.
+4. **One line**: what one sentence added to the report would have made part 1 easier.
+
+Rules: judge the report against the passage only; do not judge whether the reported person was right; do not guess at the ledger. Begin your answer with the line PROSE READER: and end with the line READING COMPLETE.
+
+===== THE PASSAGE =====
+The governors' minutes recorded the head teacher's explanation for the rise in attendance. She said attendance had risen because the new bus route now reached the estate. The minutes noted that the school had also repainted the entrance hall over the summer. Later in the meeting, she said she did not think the rise was because of the repainted entrance hall. The governors moved on to discuss the canteen budget.
+
+
+===== THE REPORT =====
+REPORT for the passage above
+
+OUTCOMES:
+  contradictions: asked, nothing found
+  because claims: not asked, no line of that kind
+  since claims: not asked, no line of that kind
+  the chain: not asked, nothing to ask
+  plans: not asked, no line of that kind
+  exceptions: asked, nothing found
+  likeness: not asked, no line of that kind
+  two usually lines: not asked, nothing to ask
+  exemptions: not asked, no line of that kind
+  added lines: not asked, nothing to ask
+  what-ifs: not asked, nothing to ask
+  denied because: not asked, no line of that kind
+
+INSIDE 'minutes_note' (a told world, looked at alone): no contradiction.
+  0 findings inside 'minutes_note' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: not asked, no line of that kind
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: not asked, nothing to ask
+    denied because: not asked, no line of that kind
+
+INSIDE 'head_teacher_says' (a told world, looked at alone): no contradiction.
+  BECAUSE-claim on line h_because [said, sentence 2]: "[TOLD in world head_teacher_says] line h_rise BECAUSE line h_reaches".
+  JUMP. Even granting the stated cause, nothing in the ledger produces risen(attendance).
+    Claim line:
+    - line h_because [said, sentence 2]: [TOLD in world head_teacher_says] line h_rise BECAUSE line h_reaches
+    Cause's lines:
+    - line h_reaches [said, sentence 2]: [TOLD in world head_teacher_says] new_bus_route now reaches the estate (stage now named in the fact)
+    Effect's direct lines:
+    - line h_rise [said, sentence 2]: [TOLD in world head_teacher_says] attendance had risen before this statement (stage named in the fact)
+
+  DENIED BECAUSE on line h_denial [filled in, sentence 4]: "[TOLD in world head_teacher_says] NOT [line h_rise BECAUSE line h_repaint]; the reading that she did not think is her denial of the cause is what I added".
+  Fine. Nothing in the ledger makes repainted(school,entrance_hall) produce risen(attendance). The effect itself still stands; only the cause is denied.
+  0 findings inside 'head_teacher_says' would not stand if the actual ledger's general lines were available.
+  OUTCOMES:
+    contradictions: asked, nothing found
+    because claims: asked, 1 found
+    since claims: not asked, no line of that kind
+    the chain: not asked, nothing to ask
+    plans: not asked, no line of that kind
+    exceptions: asked, nothing found
+    likeness: not asked, no line of that kind
+    two usually lines: not asked, nothing to ask
+    exemptions: not asked, no line of that kind
+    added lines: asked, nothing found
+    denied because: asked, 1 found
+
+GAUGE: 21 lines said, 5 filled in, 0 usual case; 7 bin entries over 5 sentences (not checked): Sentence 1: The governors' minutes recorded — Reporting frame; it scopes what follows to world minutes_note, so the frame itself is not counted twice. The minutes' own existence is kept as line governors_minutes (GIVEN).; Sentence 2: She said — Attribution of speech; it scopes the content to world head_teacher_says. She resolves to head_teacher.; Sentence 3: The minutes noted that — Reporting frame; scopes the content to world minutes_note, as with sentence 1.; Sentence 3: also — Additive marker joining the two items the minutes record; it adds no commitment of its own.; Sentence 4: Later in the meeting — A time (later) and a location (in the meeting); both are outside the language. The meeting itself is kept as line meeting.; Sentence 4: she said she did not think — Attribution of speech and of belief. Did not think P strictly states only that she lacked the belief P; I read it as her denying the cause and wrote line h_denial (filled in) from it. The other reading is under readings_chosen.; Sentence 5: moved on to — The image of the meeting as a path one moves along. The plain fact the sentence still states is kept as line discuss_budget.. Slowest question: 0.07 seconds.
+  bin sentences: 5
+  sentences with no line: 0
+  sentences with no line and no bin entry: 0
+  filled in against said: 5/21
+
