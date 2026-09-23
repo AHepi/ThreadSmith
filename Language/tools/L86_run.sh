@@ -1,8 +1,9 @@
 #!/bin/sh
 # L86_run.sh OUT_DIR: runs the driver's third version on the four L86 mocks, the 32 Arm B ledgers and the 76 Arm A ledgers
 # (plan L86), in a scratch copy of the rig, and leaves per set: the reports (<name>.third.txt, .raw.txt, .err.txt), the
-# comparison with the second version's stored report (<name>.compare.txt, from L86_compare.py), and RUN SUMMARY.md with
-# the seconds each set took and the counts E3 and E4 read (JUMP. heads, NO CONNECTION. heads, block headings). Run from
+# comparison with the second version's stored report (<name>.compare.txt, from L86_compare.py; a missing stored report is
+# listed in NO_OLD.txt; a driver exit other than zero in FAILED.txt; a ledger with no .json in SKIPPED.txt), and RUN SUMMARY.md
+# with the seconds each set took, the Arm A total, the entries of those three lists, and the counts E3 and E4 read (JUMP. heads, NO CONNECTION. heads, block headings). Run from
 # the repository root. Written 23 September 2026 for plan L86.
 set -u
 ROOT="$(pwd)"; T="$ROOT/Language/tools"; RIG="$ROOT/Language/rigs/rig 1 - arguments"; OUT="$(mkdir -p "$1" && cd "$1" && pwd)"
@@ -12,7 +13,8 @@ run_set() { # $1 set name, $2 dir of ledgers (json+pl), $3 dir of old reports or
   for pl in "$src"/*.pl; do [ -e "$pl" ] || continue; b=$(basename "$pl" .pl); cp "$pl" "${pl%.pl}.json" "$OUT/scratch/" 2>/dev/null || { echo "$b: no json" >> "$OUT/$set_name/SKIPPED.txt"; continue; }
     ( cd "$OUT/scratch" && python3 patched/run_check_3.py "$b.pl" "$OUT/$set_name/$b.raw.txt" > "$OUT/$set_name/$b.third.txt" 2> "$OUT/$set_name/$b.err.txt" ) || echo "$b: driver exit non-zero" >> "$OUT/$set_name/FAILED.txt"
     n=$((n+1))
-    if [ -n "$old" ]; then o=$(printf "$pat" "$b"); [ -f "$old/$o" ] && python3 "$T/L86_compare.py" "$old/$o" "$OUT/$set_name/$b.third.txt" > "$OUT/$set_name/$b.compare.txt" 2>&1 || echo "$b: no old report $old/$o" >> "$OUT/$set_name/NO_OLD.txt"; fi
+    if [ -n "$old" ]; then o=$(printf "$pat" "$b")
+      if [ -f "$old/$o" ]; then python3 "$T/L86_compare.py" "$old/$o" "$OUT/$set_name/$b.third.txt" > "$OUT/$set_name/$b.compare.txt" 2>&1; else echo "$b: no old report $old/$o" >> "$OUT/$set_name/NO_OLD.txt"; fi; fi
   done
   echo "$set_name: $n ledgers, $(( $(date +%s) - T0 )) s" >> "$OUT/RUN SUMMARY.md"
 }
@@ -20,12 +22,14 @@ run_set() { # $1 set name, $2 dir of ledgers (json+pl), $3 dir of old reports or
 run_set mocks "$ROOT/Language/tests/L86 Mocks" "" ""
 run_set armB "$ROOT/Language/results/L82 Arm B outputs/ledgers" "$ROOT/Language/results/L82 Arm B outputs/reports" "%s.new.txt"
 # Arm A: the 76 ledgers of plan L79's P14, in their four places, against the L79 outputs
-mkdir -p "$OUT/armA_src"; i=0
+TA=$(date +%s); mkdir -p "$OUT/armA_src"; i=0
 for d in "rig1:$RIG" "r45:$ROOT/Language/results/45 Reruns by the orchestrator" "l69:$ROOT/Language/results/L69 Return - L66 run by OpenAI Codex/rigs/rig 1 - arguments" "l72:$ROOT/Language/results/L72 Return - Astra Ultra/rigs/rig 1 - arguments"; do
   tag=${d%%:*}; dir=${d#*:}; mkdir -p "$OUT/armA/$tag" "$OUT/armA_src/$tag"
   for pl in "$dir"/ledger_*.pl; do [ -e "$pl" ] || continue; cp "$pl" "${pl%.pl}.json" "$OUT/armA_src/$tag/" 2>/dev/null; done
   run_set "armA/$tag" "$OUT/armA_src/$tag" "$ROOT/Language/results/L79 Arm A outputs/$tag" "%s.new.txt"
 done
+echo "armA, all four sets together: $(( $(date +%s) - TA )) s" >> "$OUT/RUN SUMMARY.md"
+for f in FAILED.txt SKIPPED.txt NO_OLD.txt; do n=$(cat "$OUT"/mocks/$f "$OUT"/armB/$f "$OUT"/armA/*/$f 2>/dev/null | grep -c .); echo "$f entries across all sets: $n" >> "$OUT/RUN SUMMARY.md"; done
 python3 - "$OUT" <<'PY'
 import os, sys, re
 OUT = sys.argv[1]; rows = []
