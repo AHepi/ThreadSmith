@@ -42,7 +42,7 @@ CLEARABLE = {"prediction"}
 PATH_RE = re.compile(r"(/(?:tmp|home|root|etc|usr|var|opt|proc|mnt|srv|dev|sys|bin|lib|run|workspace|Users)"
                      r"(?:/[^\s\"'`<>|;,)\]}]*)?)")
 QUOTE_RE = re.compile(r'"([^"\n]{8,}?)"|“([^”\n]{8,}?)”')
-PASS_TOOLS = {"TodoWrite", "ToolSearch"}
+PASS_TOOLS = {"TodoWrite", "ToolSearch", "SubagentHandback"}   # SubagentHandback: the harness hands back the final report through it; it opens no file (ruled by Claude, 23 September)
 HEREDOC_RE = re.compile(r"<<-?\s*(['\"]?)(\w+)\1[^\n]*\n.*?\n\s*\2\s*(?=\n|$)", re.S)
 
 
