@@ -20,13 +20,14 @@ S7. S80's probes and pilot used tiny prompts, or one provider with thinking off.
 S8. A probe of the second S80 version hung for eleven minutes: a stream stayed open without going silent long enough for the idle timeout to fire. Fix (the builder's): a total deadline on every stream as well as the idle timeout. Rule: every network call has a deadline on the whole call, not only on silence.
 S9. The S81 contamination check voided all six Sonnet returns. Two causes: the harness's own report hand-back tool was counted as a tool outside the folder, and the word "prediction", listed as a leak word, is an ordinary word in the theory and the case book, which every honest reader paraphrases. The synthetic test had used made-up transcripts and words, so neither showed up. Fix: the hand-back tool exempted, and each hit read and cleared by Claude with the reason in the receipt; the first judgements kept under new names. Rule: test a contamination rule on the real texts and a real transcript before the run, and choose leak words that do not occur in the material the reader is given.
 S10. Two S80 runners shared the providers without a shared limit: the reader run held three Mimo slots while the S81 audit needed them, and the per-provider limit of three (decision S12) holds only within one process. Fix: the S80 run was paused (it resumes where it stopped) before S81's calls began. Rule: one runner per provider at a time, or a lock shared across processes.
+S11. Lesson S7 was written and then repeated within the hour: the S81 blind reading (12,740 words, no system prompt) was sent to Mimo at the same 64,000-token cap, and Mimo again reasoned through the whole budget (219,000 to 286,000 characters of reasoning) and wrote nothing, three attempts running. The cap came from the shared reader ladder, which nobody changed after S7. Fix: a separate cap for Mimo at its ceiling, 131,072 tokens (probed: 200,000 is refused), in `tools/s81_build.py`. Rule: a lesson about a setting changes the setting everywhere it is used, in the same commit.
 
 ## Lessons by category
 An index, added 23 September 2026 at the owner's word ("create new ones for different categories"). The entries above stay where they were written; this list files each one under a heading.
 - **Instruments that pass what they should catch:** 26, 35, 49, 50, S6, S9.
 - **The answer reaching the tested agent:** S2, S9.
 - **Wording handed to the other model:** 27.
-- **Running outside models (size, budgets, limits, deadlines):** S7, S8, S10.
+- **Running outside models (size, budgets, limits, deadlines):** S7, S8, S10, S11.
 - **The repository, commits and scripts:** S1, S4.
 - **Reading the project and the owner's word:** S3, S4.
 - **Numbering and names:** S5.

@@ -345,7 +345,10 @@ def run(stage):
             model = tag.split("_")[2]          # s81_2a_atria, s81_2b_atria_A, s81_2D_mimo, s81_2W_mimo_B
             assert model in AUDITORS, tag
             jobs.append(dict(tag=tag, model=model, out=RET, user=read(os.path.join(BRIEFS, f))))
-    run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, C.READER_LADDER,
+    # Mimo's reasoning at high effort outgrew 64,000 tokens on 2a (three attempts, no content; lesson S7): its ceiling,
+    # 131,072 (probe of 23 September), is used for it; Atria keeps the reader ladder.
+    ladder = lambda m: [131072, 131072] if m == "mimo" else C.READER_LADDER
+    run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, ladder(j["model"]),
                                   extra={"round": "S81", "stage": stage}))
 
 
