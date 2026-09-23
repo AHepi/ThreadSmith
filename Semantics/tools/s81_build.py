@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""s81_build.py: assemble every call of round S81 (file 11 against every case, rebuilt with the S78 repairs, for two
-API models), print word counts, and check each call's text by program before it goes. Written 23 September 2026 for
-the plan `tests/S81 Plan - file 11 against every case, rebuilt with the S78 repairs, for two API models.md`.
+"""s81_build.py: assemble every call of round S81 (file 11 against every case, rebuilt with the S78 repairs), print
+word counts, and check each call's text by program before it goes. Written 23 September 2026 for the plan
+`tests/S81 Plan - file 11 against every case, rebuilt with the S78 repairs, for two API models.md`; re-roled the same
+day for `tests/S81 Plan - second version, Sonnet testers and API auditors.md` (decision S15): Stage 1 (1C, 1K, 1D) is
+run by two Sonnet subagent testers, A and B, from folders made by tools/s81_sonnet_prep.py and collected by
+tools/s81_sonnet_collect.py; Stage 2 (2a, 2b, 2D, 2W) stays with Atria and Mimo, and each auditor's 2b audits both
+testers' 1C returns (fully crossed); each auditor's 2D audits one tester's 1D list with the other's as the second list.
 
-  python Semantics/tools/s81_build.py build            Stage 1 texts (1C, 1K, 1D) and the blind 2a texts
+  python Semantics/tools/s81_build.py build            Stage 1 texts (1C, 1K, 1D per tester) and the blind 2a texts
   python Semantics/tools/s81_build.py build2           2b and 2D texts; needs 1C, 1K, 1D and 2a returns
-  python Semantics/tools/s81_build.py widen AUDITOR O7,O9   a 2W text for the stopping rule
+  python Semantics/tools/s81_build.py widen AUDITOR TESTER O7,O9   a 2W text for the stopping rule
   python Semantics/tools/s81_build.py table            marks per case from every return present, and quote checks
-  python Semantics/tools/s81_build.py run 1|2a|2|2W    send the built texts with tools/s80_call.py (thinking on)
+  python Semantics/tools/s81_build.py run 2a|2|2W      send the built Stage 2 texts with tools/s80_call.py (thinking on)
 
 Texts go to <OUT>/briefs/<tag>.txt, returns to <OUT>/returns/ (the s80_call layout). OUT defaults to
 results/S81 File 11 against every case - outputs; set S81_OUT to build elsewhere (a dry run).
@@ -28,7 +32,9 @@ ST2 = os.path.join(T, "S81 Stage 2 audit - check the Stage 1 return.md")
 MD5 = {F10: "3a8cd7c8ca6f3ad3b8a85ab9984d850e", F11: "5e494c1095d920d128b9a79de378f923",
        BOOK: "4f488d149e44669240d5db546c8e946a"}
 NOTE_START = "*Revision 1 (file 11)"        # file 11's revision note, withheld from every call
-MODELS, OTHER = ["atria", "mimo"], {"atria": "mimo", "mimo": "atria"}
+TESTERS, OTHER = ["A", "B"], {"A": "B", "B": "A"}          # Stage 1: two Sonnet subagent testers (decision S15)
+AUDITORS = ["atria", "mimo"]                                   # Stage 2: the two API models (decision S12)
+D_UNDER_AUDIT = {"atria": "A", "mimo": "B"}                    # 2D: the list under audit; the other tester's is second
 CASES = ["O%d" % i for i in range(1, 53)]
 # The sampling rule of the plan (section "The 2b sample"). Written here and in the plan only.
 BASELINE_NOT_AGREE = ["O1", "O12", "O20", "O21", "O27", "O35", "O40", "O48", "O50"]   # S75: eight SILENT, O48 DISAGREE
@@ -114,7 +120,7 @@ def check(tag, brief_text, whole, stage1):
 
 
 def emit(tag, brief_text, sections, stage1):
-    whole = brief_text + "\n" + "\n".join(section(t, b) for t, b in sections)
+    whole = joined(brief_text, sections)
     negs, pred = check(tag, brief_text, whole, stage1)
     write(os.path.join(BRIEFS, tag + ".txt"), whole)
     parts = " + ".join("%s %d" % (t.split()[-1].lower(), len(b.split())) for t, b in sections)
@@ -124,14 +130,27 @@ def emit(tag, brief_text, sections, stage1):
           % ("", len(negs), (" -> " + " | ".join(negs)) if negs else "", pred))
 
 
-def build():
+def calls1():
+    """{tag: (brief, sections)} for the Stage 1 and 2a calls; s81_sonnet_prep.py rebuilds from this and compares."""
     b1, bt, b2a = brief(ST1, "1-cases"), brief(ST1, "1-texts"), brief(ST2, "2a")
     t10, t11, bk, bk0 = theory10(), theory11(), book(True), book(False)
-    for m in MODELS:
-        emit("s81_1C_" + m, b1, [("THE THEORY", t11), ("THE CASES", bk)], True)
-        emit("s81_1K_" + m, b1, [("THE THEORY", t10), ("THE CASES", bk)], True)
-        emit("s81_1D_" + m, bt, [("TEXT A", t10), ("TEXT B", t11)], True)
-        emit("s81_2a_" + m, b2a, [("THE THEORY", t11), ("THE CASES", bk0)], True)
+    out = {}
+    for x in TESTERS:
+        out["s81_1C_" + x] = (b1, [("THE THEORY", t11), ("THE CASES", bk)])
+        out["s81_1K_" + x] = (b1, [("THE THEORY", t10), ("THE CASES", bk)])
+        out["s81_1D_" + x] = (bt, [("TEXT A", t10), ("TEXT B", t11)])
+    for a in AUDITORS:
+        out["s81_2a_" + a] = (b2a, [("THE THEORY", t11), ("THE CASES", bk0)])
+    return out
+
+
+def joined(brief_text, sections):
+    return brief_text + "\n" + "\n".join(section(t, b) for t, b in sections)
+
+
+def build():
+    for tag, (b, secs) in calls1().items():
+        emit(tag, b, secs, True)
 
 
 # ---------------------------------------------------------------- reading returns
@@ -200,7 +219,8 @@ def quote_flags(rec, t_own, t10):
 
 
 def sample(x):
-    """The plan's rule for the rows the auditor of model x's 1C return audits in full, drawn after the returns."""
+    """The plan's rule for the rows the auditors of tester x's 1C return audit in full, drawn after the returns. The
+    rule reads only the returns, so both auditors of x's return get the same rows (second version: fully crossed)."""
     t10, t11 = theory10(), theory11()
     cx, ca, kx = records(ret("s81_1C_" + x)), records(ret("s81_1C_" + OTHER[x])), records(ret("s81_1K_" + x))
     why = {}
@@ -210,7 +230,7 @@ def sample(x):
         fl = quote_flags(r, t11, t10)
         rs = []
         if mx != "AGREE": rs.append("M1 marked " + mx)
-        if mx != mark((ca.get(c, {}).get("MARK") or [""])[0]): rs.append("M2 the other model's 1C differs")
+        if mx != mark((ca.get(c, {}).get("MARK") or [""])[0]): rs.append("M2 the other tester's 1C differs")
         if mx != mark((kx.get(c, {}).get("MARK") or [""])[0]): rs.append("M2 own 1K differs")
         if any(s != "ABSENT" and not in10 for s, in10 in fl): rs.append("M3 rests on a sentence absent from file 10")
         if any(s == "ABSENT" for s, _ in fl) or not fl: rs.append("M4 a quotation fails or is missing")
@@ -229,57 +249,82 @@ def build2():
     b2b, b2d = brief(ST2, "2b"), brief(ST2, "2D")
     assert "{{ROWS}}" in b2b
     t10, t11, bk = theory10(), theory11(), book(True)
-    for a in MODELS:
-        x = OTHER[a]
+    for x in TESTERS:
         rows, why = sample(x)
-        write(os.path.join(OUT, "sample - %s audits %s.json" % (a, x)), json.dumps(why, indent=1))
-        print("sample, %s audits %s: %d rows: %s" % (a, x, len(rows), ", ".join(rows)))
+        write(os.path.join(OUT, "sample - tester %s.json" % x), json.dumps(why, indent=1))
+        print("sample, tester %s (audited by %s): %d rows: %s" % (x, " and ".join(AUDITORS), len(rows), ", ".join(rows)))
         filled = b2b.replace("{{ROWS}}", ", ".join(rows) + ".")
-        emit("s81_2b_" + a, filled, [("THE THEORY", t11), ("THE CASES", bk), ("THE READING UNDER AUDIT", ret("s81_1C_" + x)),
-                                     ("YOUR BLIND READINGS", ret("s81_2a_" + a))], False)
+        for a in AUDITORS:
+            emit("s81_2b_%s_%s" % (a, x), filled, [("THE THEORY", t11), ("THE CASES", bk),
+                                                   ("THE READING UNDER AUDIT", ret("s81_1C_" + x)),
+                                                   ("YOUR BLIND READINGS", ret("s81_2a_" + a))], False)
+    for a in AUDITORS:
+        x = D_UNDER_AUDIT[a]
         emit("s81_2D_" + a, b2d, [("TEXT A", t10), ("TEXT B", t11), ("THE LIST UNDER AUDIT", ret("s81_1D_" + x)),
-                                  ("THE SECOND LIST", ret("s81_1D_" + a))], False)
+                                  ("THE SECOND LIST", ret("s81_1D_" + OTHER[x]))], False)
 
 
-def widen(a, rows):
-    x = OTHER[a]
+def widen(a, x, rows):
+    assert a in AUDITORS and x in TESTERS, "widen AUDITOR TESTER ROWS, e.g. widen atria A O7,O9"
     rows = [r.strip() for r in rows.split(",") if r.strip()]
     assert rows and all(r in CASES for r in rows)
     filled = brief(ST2, "2b").replace("{{ROWS}}", ", ".join(rows) + ".")
-    emit("s81_2W_" + a, filled, [("THE THEORY", theory11()), ("THE CASES", book(True)),
-                                 ("THE READING UNDER AUDIT", ret("s81_1C_" + x)),
-                                 ("YOUR BLIND READINGS", ret("s81_2a_" + a))], False)
+    emit("s81_2W_%s_%s" % (a, x), filled, [("THE THEORY", theory11()), ("THE CASES", book(True)),
+                                           ("THE READING UNDER AUDIT", ret("s81_1C_" + x)),
+                                           ("YOUR BLIND READINGS", ret("s81_2a_" + a))], False)
+
+
+def blind_marks(text):
+    """{case: BLIND MARK} from a 2b return: Part 1 records ('BLIND MARK:' lines) and Part 2 one-liners."""
+    out = {c: mark((r.get("BLIND MARK") or [""])[0]) for c, r in records(text).items() if r.get("BLIND MARK")}
+    for m in re.finditer(r"^\W*(O\d{1,2})\W*:\s*BLIND MARK\s+([A-Z ]+?)\s*;", text, re.M):
+        out.setdefault(m.group(1), mark(m.group(2)))
+    return out
 
 
 def table():
-    """One row per case: S75's mark, each model's 1K and 1C marks, each auditor's YOUR MARK, and quote standing."""
+    """One row per case: S75's mark, each tester's 1K and 1C marks, each auditor's YOUR MARK on each tester's 1C
+    (a 2W record, where there is one, in place of the 2b record), and quote standing."""
     t10, t11 = theory10(), theory11()
     got = {}
-    for m in MODELS:
-        for k in ("1K", "1C", "2b", "2W"):
-            p = os.path.join(RET, "s81_%s_%s.response.txt" % (k, m))
+    for x in TESTERS:
+        for k in ("1K", "1C"):
+            p = os.path.join(RET, "s81_%s_%s.response.txt" % (k, x))
             if os.path.exists(p):
-                got[(k, m)] = records(read(p))
-    cols = [(k, m) for k in ("1K", "1C") for m in MODELS if (k, m) in got]
-    aud = [m for m in MODELS if ("2b", m) in got]
-    head = ["Case", "S75"] + ["%s %s" % km for km in cols] + ["2b by %s" % m for m in aud] + \
-           ["1C quotes: verbatim/loose/absent; count absent from file 10"]
+                got[(k, x)] = records(read(p))
+        for a in AUDITORS:
+            for k in ("2b", "2W"):
+                p = os.path.join(RET, "s81_%s_%s_%s.response.txt" % (k, a, x))
+                if os.path.exists(p):
+                    got[(k, a, x)] = records(read(p))
+                    if k == "2b":
+                        got[("blind", a, x)] = blind_marks(read(p))
+    cols = [(k, x) for k in ("1K", "1C") for x in TESTERS if (k, x) in got]
+    aud = [(a, x) for x in TESTERS for a in AUDITORS if ("2b", a, x) in got]
+    head = ["Case", "S75"] + ["%s %s" % km for km in cols] + ["2b %s on %s" % ax for ax in aud] + \
+           ["1C quotes: verbatim/loose/absent; count absent from file 10",
+            "both 1C AGREE, a blind mark not (plan v2, step 3)"]
     out = ["| " + " | ".join(head) + " |", "|" + " --- |" * len(head)]
     for c in CASES:
         base = "DISAGREE" if c == "O48" else ("SILENT" if c in BASELINE_NOT_AGREE else "AGREE")
         ms = [mark((got[km].get(c, {}).get("MARK") or [""])[0]) for km in cols]
         au = []
-        for m in aud:
-            r = got[("2W", m)].get(c) if ("2W", m) in got and c in got[("2W", m)] else got[("2b", m)].get(c, {})
+        for a, x in aud:
+            w = got.get(("2W", a, x), {})
+            r = w.get(c) if c in w else got[("2b", a, x)].get(c, {})
             au.append(mark((r.get("YOUR MARK") or [""])[0]) if r else "-")
         qs = []
-        for m in MODELS:
+        for m in TESTERS:
             if ("1C", m) in got:
                 fl = quote_flags(got[("1C", m)].get(c, {}), t11, t10)
                 qs.append("%s %d/%d/%d; %d" % (m, sum(s == "VERBATIM" for s, _ in fl), sum(s == "LOOSE" for s, _ in fl),
                                                sum(s == "ABSENT" for s, _ in fl),
                                                sum(s != "ABSENT" and not i for s, i in fl)))
-        out.append("| " + " | ".join([c, base] + ms + au + ["; ".join(qs)]) + " |")
+        c1 = [mark((got[("1C", x)].get(c, {}).get("MARK") or [""])[0]) for x in TESTERS if ("1C", x) in got]
+        bl = sorted({"%s %s" % (a, got[("blind", a, x)][c]) for a, x in aud
+                     if got[("blind", a, x)].get(c, "AGREE") != "AGREE"})
+        flag = "READ: " + ", ".join(bl) if len(c1) == 2 and set(c1) == {"AGREE"} and bl else ""
+        out.append("| " + " | ".join([c, base] + ms + au + ["; ".join(qs), flag]) + " |")
     write(os.path.join(OUT, "table.md"), "\n".join(out) + "\n")
     print("\n".join(out))
 
@@ -289,12 +334,17 @@ def run(stage):
     import s80_common as C
     from s80_call import call
     from s80_run import run_pool
-    pre = {"1": ("s81_1C_", "s81_1K_", "s81_1D_"), "2a": ("s81_2a_",), "2": ("s81_2b_", "s81_2D_"), "2W": ("s81_2W_",)}[stage]
+    if stage == "1":
+        raise SystemExit("Stage 1 is run by Sonnet subagents (second version, decision S15): "
+                         "tools/s81_sonnet_prep.py, then tools/s81_sonnet_collect.py")
+    pre = {"2a": ("s81_2a_",), "2": ("s81_2b_", "s81_2D_"), "2W": ("s81_2W_",)}[stage]
     jobs = []
     for f in sorted(os.listdir(BRIEFS)):
         tag = f[:-4]
         if f.endswith(".txt") and tag.startswith(pre):
-            jobs.append(dict(tag=tag, model=tag.rsplit("_", 1)[1], out=RET, user=read(os.path.join(BRIEFS, f))))
+            model = tag.split("_")[2]          # s81_2a_atria, s81_2b_atria_A, s81_2D_mimo, s81_2W_mimo_B
+            assert model in AUDITORS, tag
+            jobs.append(dict(tag=tag, model=model, out=RET, user=read(os.path.join(BRIEFS, f))))
     run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, C.READER_LADDER,
                                   extra={"round": "S81", "stage": stage}))
 
@@ -303,6 +353,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "build"
     {"build": build, "build2": build2, "table": table}.get(cmd, lambda: None)()
     if cmd == "widen":
-        widen(sys.argv[2], sys.argv[3])
+        if len(sys.argv) != 5:
+            raise SystemExit("widen AUDITOR TESTER ROWS, e.g. widen atria A O7,O9")
+        widen(sys.argv[2], sys.argv[3], sys.argv[4])
     if cmd == "run":
         run(sys.argv[2])
