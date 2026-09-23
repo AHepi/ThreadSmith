@@ -289,7 +289,8 @@ def validate_mark(text, ids):
             probs.append("item %s judged twice among the others" % n)
         if n in credited:
             probs.append("item %s credited to a key error and judged again among the others" % n)
-        norm["others"][n] = verdict
+        norm["others"][n] = {"verdict": verdict, "reason": str(o.get("reason", "")),
+                             "first_words": str(o.get("first_words", o.get("item_words", "")))}
     judged = credited | set(norm["others"])
     want = set(range(1, total + 1))
     if judged != want:
@@ -310,11 +311,14 @@ def validate_adjudication(text, want_keys, want_items):
         return None, ["'key' and 'items' must be objects"]
     for k in want_keys:
         v = str((key.get(k) or {}).get("verdict", "")).strip().upper()
+        if v in ("NOT_FOUND", "NOT"):
+            v = "NOT FOUND"
         if v not in KEY_VERDICTS:
             probs.append("%s: verdict %r" % (k, v))
         out["key"][k] = v
     for n in want_items:
-        v = str((items.get(str(n)) or {}).get("verdict", "")).strip().upper()
+        cell = items.get(str(n)) if str(n) in items else items.get(n)
+        v = str((cell or {}).get("verdict", "")).strip().upper()
         if v not in ITEM_VERDICTS:
             probs.append("item %s: verdict %r" % (n, v))
         out["items"][n] = v

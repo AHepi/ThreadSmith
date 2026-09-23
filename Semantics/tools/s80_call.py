@@ -47,8 +47,10 @@ def build_body(provider, system, user, thinking, max_tokens, temperature=C.TEMPE
     return body
 
 
-def stream(provider, body, idle=900):
+def stream(provider, body, idle=900, deadline=None):
+    """deadline: seconds of wall clock for the whole stream; past it the call raises (and is retried as a disconnect)."""
     url, _, keyname = PROVIDERS[provider]
+    t_end = time.time() + deadline if deadline else None
     key = os.environ[keyname]
     content, reasoning, finish, last, chunks, bad, usage = [], [], None, None, 0, 0, None
     with requests.post(url, json=body, stream=True, timeout=(30, idle),
@@ -58,6 +60,8 @@ def stream(provider, body, idle=900):
         r.encoding = "utf-8"
         done = False
         for line in r.iter_lines(decode_unicode=True):
+            if t_end and time.time() > t_end:
+                raise TimeoutError("stream passed its deadline of %s s" % deadline)
             if not line or not line.startswith("data:"):
                 continue
             data = line[5:].strip()
@@ -105,7 +109,7 @@ def accept_reader(res):
 
 
 def call(provider, system, user, out_dir, tag, thinking, ladder, accept=accept_reader, extra=None,
-         idle=900, attempts=6, max_rejects=3):
+         idle=900, attempts=6, max_rejects=3, deadline=7200):
     _, model, _ = PROVIDERS[provider]
     os.makedirs(out_dir, exist_ok=True)
     p = lambda ext: os.path.join(out_dir, tag + ext)
@@ -121,7 +125,7 @@ def call(provider, system, user, out_dir, tag, thinking, ladder, accept=accept_r
         C.write(p(".request.json"), raw)   # the last attempt's request; every attempt's hash is in the history
         t0 = time.time()
         try:
-            status, text, res = stream(provider, body, idle)
+            status, text, res = stream(provider, body, idle, deadline)
         except Exception as e:
             status, text, res = 0, repr(e), None
         h = {"attempt": n, "status": status, "max_tokens": max_tokens, "seconds": round(time.time() - t0, 1),

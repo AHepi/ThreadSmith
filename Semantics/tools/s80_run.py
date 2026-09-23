@@ -1,50 +1,72 @@
 #!/usr/bin/env python3
-"""s80_run.py: round S80, does the hard-to-vary skill add anything. Run from the repository root, in the venv, with the
-keys exported:
-  python Semantics/tools/s80_run.py readers [--only TAG ...]   # the 72 API reader runs
-  python Semantics/tools/s80_run.py mark KEY_FILE              # both markers on every report (after the key is opened)
-  python Semantics/tools/s80_run.py list                       # print the job list, send nothing
+"""s80_run.py: round S80, does the hard-to-vary skill add anything (plan S80, second version). Run from anywhere, in the
+venv, with the keys exported (never written to a file):
+  python Semantics/tools/s80_run.py list                        # the job order per model; sends nothing
+  python Semantics/tools/s80_run.py manifest                    # write or check the run MANIFEST; sends nothing
+  python Semantics/tools/s80_run.py readers [--only TAG ...]    # the 180 API reader runs
+  python Semantics/tools/s80_run.py mark KEY_FILE [--accept-missing] [--dry-run]
+        # after every reader (API and Opus) has reported: the anonymous map, the API marker calls, and the input files
+        # for the Opus-marked reports (marks/opus_inputs/<rid>.md)
 
-Readers: models atria, mimo, deepseek; conditions ST (skill, thinking on), NT (no skill, thinking on), SO (skill, thinking
-off), NO (no skill, thinking off); documents seeded (tests/S80 Seeded authority) and clean (file 10); three repetitions.
-Opus 5 readers (skill / no skill, thinking as the agent runs) are run by Claude as subagents and saved in the same folder
-as opus_<cond>_<doc>_r<n>.response.txt. At most 3 calls in flight per provider (owner, 23 September 2026).
-Markers: atria and mimo, thinking on, each marks every report under an anonymous id; the map from id to tag is kept in
-MAP.json beside the marks and is not in any marker's input.
+Readers: atria, mimo, deepseek; conditions ST PT NT (skill, placebo, nothing; thinking on) and SO PO NO (thinking off);
+documents seeded and clean; five repetitions; job order shuffled per model with a fixed seed; at most 3 calls in flight
+per provider (decision S12). The Opus arm (S, P, N; three repetitions) is run by the orchestrator as subagents, prepared
+by s80_opus_prep.py and collected by s80_opus_collect.py into the same readers folder.
+Markers: no self-marking. atria's reports: mimo + an Opus subagent; mimo's: atria + an Opus subagent; deepseek's and
+opus's: atria + mimo. Thinking on. The map from anonymous id to tag is marks/MAP.json and is in no marker's input.
+
+Guards: the two documents' md5s are asserted at start; the MANIFEST (document md5s, method texts' SHA-256, system and
+task texts' SHA-256, temperature, ladders, seeds, job order) is written on the first run and every later run must match
+it; readers refuse to run once anything exists in marks/; marking refuses to start unless every expected report is
+present and complete (or, with --accept-missing, has a failed receipt from at least two passes).
 """
-import glob, json, os, random, sys, threading
+import difflib, json, os, random, shutil, sys, threading, time, traceback
 from concurrent.futures import ThreadPoolExecutor
-sys.path.insert(0, os.path.dirname(__file__))
-from s80_call import call
 
-S = "Semantics"
-OUT = f"{S}/results/S80 Skill test - outputs"
-PR = f"{S}/tests/S80 Prompts"
-DOCS = {"seeded": f"{S}/tests/S80 Seeded authority - file 10 with eight planted errors.md",
-        "clean": f"{S}/authority/10 Claude Fable Semantics - standalone theory.md"}
-SKILL_DIR = "HV Skill/authority/hard-to-vary"
-SKILL_ORDER = ["SKILL.md"] + ["references/" + f for f in ["the-idea-in-depth.md", "question-bank.md", "by-domain.md",
-               "building.md", "testing-against-cases.md", "reporting.md", "word-list.md"]]
-CONDS = {"ST": (True, True), "NT": (False, True), "SO": (True, False), "NO": (False, False)}  # (skill, thinking)
-MODELS = ["atria", "mimo", "deepseek"]
-REPS = 3
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import s80_common as C
+from s80_call import call, PROVIDERS, accept_reader
+
+READERS_DIR = os.path.join(C.OUT, "readers")
+MARKS_DIR = os.path.join(C.OUT, "marks")
+MANIFEST = os.path.join(C.OUT, "MANIFEST.json")
 
 
-def read(p):
-    return open(p, encoding="utf-8").read()
+# ---------------------------------------------------------------- texts
+
+def system_text(method):
+    if method == "N":
+        return C.read(os.path.join(C.PR, "reader system - without skill.md"))
+    return C.read(os.path.join(C.PR, "reader system - with method.md")).rstrip("\n") + C.method_text(method)
 
 
-def skill_text():
-    return "".join("\n\n=== FILE: %s ===\n\n%s" % (f, read(os.path.join(SKILL_DIR, f))) for f in SKILL_ORDER)
+def reader_user_text(doc):
+    return C.read(os.path.join(C.PR, "reader task.md")) + C.read(C.DOCS[doc])
 
+
+def check_methods():
+    sk, pl = C.method_text("S"), C.method_text("P")
+    ratio = C.words(pl) / C.words(sk)
+    lo, hi = C.PLACEBO_WORD_RATIO
+    if not lo <= ratio <= hi:
+        raise SystemExit("placebo is %d words against the skill's %d (ratio %.2f, outside %s); stop"
+                         % (C.words(pl), C.words(sk), ratio, C.PLACEBO_WORD_RATIO))
+    return sk, pl
+
+
+# ---------------------------------------------------------------- jobs
 
 def reader_jobs():
     jobs = []
-    for m in MODELS:
-        for c, (skill, think) in CONDS.items():
-            for d in DOCS:
-                for r in range(1, REPS + 1):
-                    jobs.append(dict(tag=f"{m}_{c}_{d}_r{r}", model=m, skill=skill, thinking=think, doc=d))
+    for i, m in enumerate(C.MODELS):
+        js = []
+        for c, (method, think) in C.CONDS.items():
+            for d in C.DOCNAMES:
+                for r in range(1, C.REPS + 1):
+                    js.append(dict(tag=f"{m}_{c}_{d}_r{r}", model=m, method=method, thinking=think, doc=d,
+                                   out=READERS_DIR))
+        random.Random(C.JOB_SEED + i).shuffle(js)
+        jobs += js
     return jobs
 
 
@@ -53,66 +75,206 @@ def run_pool(jobs, fn):
     for j in jobs:
         by_model.setdefault(j["model"], []).append(j)
     lock = threading.Lock()
-    def worker(j):
-        res = fn(j)
-        with lock:
-            print(j["model"], j["tag"], res, flush=True)
-    pools = [ThreadPoolExecutor(max_workers=3) for _ in by_model]
-    futs = [pool.submit(worker, j) for pool, js in zip(pools, by_model.values()) for j in js]
-    for f in futs:
-        f.result()
 
+    def worker(j):
+        try:
+            res = fn(j)
+        except Exception:
+            res = "worker-exception"
+            C.write(os.path.join(j["out"], j["tag"] + ".error.txt"), "worker exception\n" + traceback.format_exc())
+        with lock:
+            print(time.strftime("%H:%M:%S"), j["model"], j["tag"], res, flush=True)
+        return res
+
+    pools = {m: ThreadPoolExecutor(max_workers=3) for m in by_model}
+    futs = [pools[m].submit(worker, j) for m, js in by_model.items() for j in js]
+    results = [f.result() for f in futs]
+    for p in pools.values():
+        p.shutdown()
+    print("done:", {r: results.count(r) for r in set(results)})
+
+
+# ---------------------------------------------------------------- manifest
+
+def manifest_now():
+    C.check_documents()
+    sk, pl = check_methods()
+    systems = {m: system_text(m) for m in "SPN"}
+    import platform, requests
+    return {
+        "round": "S80, second version of the plan",
+        "documents_md5": {d: C.md5_file(p) for d, p in C.DOCS.items()},
+        "seeded_vs_clean_diff_sha256": C.sha256("".join(difflib.unified_diff(
+            C.read(C.DOCS["clean"]).splitlines(True), C.read(C.DOCS["seeded"]).splitlines(True)))),
+        "skill": {"files": C.method_files("S"), "words_as_sent": C.words(sk), "sha256": C.sha256(sk)},
+        "placebo": {"files": C.method_files("P"), "words_as_sent": C.words(pl), "sha256": C.sha256(pl)},
+        "system_sha256": {m: C.sha256(t) for m, t in systems.items()},
+        "framing_identical_for_skill_and_placebo":
+            systems["S"][:len(systems["S"]) - len(sk)] == systems["P"][:len(systems["P"]) - len(pl)],
+        "reader_user_sha256": {d: C.sha256(reader_user_text(d)) for d in C.DOCNAMES},
+        "reader_task_sha256": C.sha256(C.read(os.path.join(C.PR, "reader task.md"))),
+        "models": {m: PROVIDERS[m][1] for m in C.MODELS},
+        "temperature": C.TEMPERATURE, "top_p": "provider default (unset)", "reasoning_effort_when_thinking": "high",
+        "reader_max_tokens_ladder": C.READER_LADDER, "marker_max_tokens_ladder": C.MARKER_LADDER,
+        "reps": C.REPS, "opus_reps": C.OPUS_REPS, "job_seed": C.JOB_SEED, "map_seed": C.MAP_SEED,
+        "boot_seed": C.BOOT_SEED, "drift_salt": C.DRIFT_SALT, "drift_share": C.DRIFT_SHARE,
+        "job_order": [j["tag"] for j in reader_jobs()],
+        "python": platform.python_version(), "requests": requests.__version__,
+    }
+
+
+def manifest_check(write=True):
+    now = manifest_now()
+    if not now["framing_identical_for_skill_and_placebo"]:
+        raise SystemExit("the system prompt framing differs between skill and placebo; stop")
+    if os.path.exists(MANIFEST):
+        old = json.loads(C.read(MANIFEST))
+        diff = [k for k in now if k not in ("python", "requests") and old.get(k) != now[k]]
+        if diff:
+            raise SystemExit("MANIFEST differs from the material now in these fields: %s; stop" % diff)
+        return old
+    if write:
+        now["written_at_unix"] = int(time.time())
+        C.write_atomic(MANIFEST, json.dumps(now, indent=1, ensure_ascii=False))
+    return now
+
+
+def marks_exist():
+    return os.path.isdir(MARKS_DIR) and any(os.scandir(MARKS_DIR))
+
+
+# ---------------------------------------------------------------- readers
 
 def readers(only):
-    task = read(f"{PR}/reader task.md")
-    sys_skill = read(f"{PR}/reader system - with skill.md") + skill_text()
-    sys_plain = read(f"{PR}/reader system - without skill.md")
+    if marks_exist():
+        raise SystemExit("marks/ is not empty: the answer key may be in the repository; readers refuse to run")
+    manifest_check()
+    systems = {m: system_text(m) for m in "SPN"}
+    users = {d: reader_user_text(d) for d in C.DOCNAMES}
     jobs = [j for j in reader_jobs() if not only or j["tag"] in only]
-    run_pool(jobs, lambda j: call(j["model"], sys_skill if j["skill"] else sys_plain, task + read(DOCS[j["doc"]]),
-                                  f"{OUT}/readers", j["tag"], j["thinking"]))
+    if only and len(jobs) != len(set(only)):
+        raise SystemExit("unknown tags in --only: %s" % sorted(set(only) - {j["tag"] for j in jobs}))
+    run_pool(jobs, lambda j: call(j["model"], systems[j["method"]], users[j["doc"]], READERS_DIR, j["tag"],
+                                  j["thinking"], C.READER_LADDER, accept_reader, extra={"doc": j["doc"]}))
 
 
-def mark(key_file):
-    key = read(key_file)
-    i = key.index("## The error file 10 already carries")
-    j = key.index("## Predictions, sealed")
-    key_seeded = key[:j]
-    key_clean = ("# Answer key\n\nThe document is file 10 as written; the one known error is D3 below. There are no other "
-                 "entries in the key.\n\n" + key[i:j])
-    tags = sorted(os.path.basename(p)[:-len(".response.txt")] for p in glob.glob(f"{OUT}/readers/*.response.txt"))
-    mp_path = f"{OUT}/marks/MAP.json"
-    os.makedirs(f"{OUT}/marks", exist_ok=True)
-    mp = json.load(open(mp_path)) if os.path.exists(mp_path) else {}
-    rng = random.Random(8080)
-    for t in tags:
-        if t not in mp.values():
-            while True:
-                rid = "R%03d" % rng.randrange(1000)
-                if rid not in mp:
-                    break
-            mp[rid] = t
-    json.dump(mp, open(mp_path, "w"), indent=1, sort_keys=True)
-    task = read(f"{PR}/marker task.md")
-    jobs = []
-    for rid, t in sorted(mp.items()):
-        doc = "seeded" if "_seeded_" in t else "clean"
-        for m in ["atria", "mimo"]:
-            jobs.append(dict(tag=f"{rid}_by_{m}", model=m, rid=rid, doc=doc, t=t))
-    def one(j):
-        user = (task + "\n\n(A) ANSWER KEY\n==============\n\n" + (key_seeded if j["doc"] == "seeded" else key_clean)
-                + "\n\n(B) THE DOCUMENT THE REVIEWER READ\n==================================\n\n" + read(DOCS[j["doc"]])
-                + "\n\n(C) THE REPORT, id " + j["rid"] + "\n=====================\n\n"
-                + read(f"{OUT}/readers/{j['t']}.response.txt"))
-        return call(j["model"], None, user, f"{OUT}/marks", j["tag"], True, max_tokens=32000)
-    run_pool(jobs, one)
+# ---------------------------------------------------------------- marking
+
+def marker_user_text(task, key, doc, rid, report):
+    b, e = C.FENCE_BEGIN.format(rid=rid), C.FENCE_END.format(rid=rid)
+    if b in report or e in report:
+        raise SystemExit("report %s contains the fence line" % rid)
+    return (task + "\n\n(A) THE ANSWER KEY\n==================\n\n" + (key["seeded"] if doc == "seeded" else key["clean"])
+            + "\n\n(B) THE DOCUMENT THE REVIEWER READ\n==================================\n\n" + C.read(C.DOCS[doc])
+            + "\n\n(C) THE REPORT, id " + rid + "\n=====================\n\n" + b + "\n" + report.rstrip("\n")
+            + "\n" + e + "\n")
+
+
+def build_map(tags_sha):
+    """tags_sha: {tag: response sha256}. Keeps existing ids; a report whose bytes changed keeps its id, its marks are
+    moved to marks/stale/<time>/ and must be made again."""
+    mp = C.load_map()
+    by_tag = {v["tag"]: k for k, v in mp.items()}
+    rng = random.Random(C.MAP_SEED)
+    stale = []
+    for t in sorted(tags_sha):
+        if t in by_tag:
+            rid = by_tag[t]
+            if mp[rid]["response_sha256"] != tags_sha[t]:
+                stale.append(rid)
+                mp[rid]["response_sha256"] = tags_sha[t]
+            continue
+        while True:
+            rid = "R%03d" % rng.randrange(1000)
+            if rid not in mp:
+                break
+        mp[rid] = {"tag": t, "response_sha256": tags_sha[t]}
+    if stale:
+        dest = os.path.join(MARKS_DIR, "stale", time.strftime("%Y%m%dT%H%M%S"))
+        os.makedirs(dest, exist_ok=True)
+        for rid in stale:
+            for sub in ("", "opus_inputs", "adjudication_inputs"):
+                d = os.path.join(MARKS_DIR, sub)
+                if os.path.isdir(d):
+                    for f in os.listdir(d):
+                        if f.startswith(rid + "_by_") or f.startswith(rid + "."):
+                            shutil.move(os.path.join(d, f), os.path.join(dest, (sub + "__" if sub else "") + f))
+        print("reports changed since they were mapped; their marks moved to", dest, ":", stale)
+    C.write_atomic(os.path.join(MARKS_DIR, "MAP.json"), json.dumps(mp, indent=1, sort_keys=True))
+    return mp
+
+
+def mark(key_file, accept_missing=False, dry_run=False, test_key=False):
+    import s80_table
+    if test_key and os.path.abspath(C.OUT) == os.path.abspath(C.REAL_OUT):
+        raise SystemExit("--test-key is for a synthetic output root only")
+    C.check_documents()
+    key = C.load_key(key_file, check_sha=not test_key)
+    status = s80_table.completeness(READERS_DIR)
+    bad = {t: s for t, s in status["tags"].items() if s != "ok"}
+    if status["unexpected"]:
+        raise SystemExit("unexpected files in readers/: %s" % status["unexpected"][:10])
+    if bad:
+        s80_table.print_failures(status)
+        if not accept_missing:
+            raise SystemExit("%d expected reports are not present and complete; marking does not start" % len(bad))
+        not_ok = [t for t, s in bad.items() if s != "failed-twice"]
+        if not_ok:
+            raise SystemExit("--accept-missing needs a failed receipt from two passes for each; not so for %s" % not_ok)
+    tags_sha = {t: C.sha256(C.read(os.path.join(READERS_DIR, t + ".response.txt")))
+                for t, s in status["tags"].items() if s == "ok"}
+    os.makedirs(MARKS_DIR, exist_ok=True)
+    mp = build_map(tags_sha)
+    C.write_atomic(os.path.join(MARKS_DIR, "MISSING.json"), json.dumps(sorted(bad), indent=1))
+    task = C.read(os.path.join(C.PR, "marker task.md"))
+    jobs, n_opus = [], 0
+    for rid, v in sorted(mp.items()):
+        t = v["tag"]
+        info = C.parse_tag(t)
+        report = C.read(os.path.join(READERS_DIR, t + ".response.txt"))
+        user = marker_user_text(task, key, info["doc"], rid, report)
+        extra = {"rid": rid, "report_sha256": v["response_sha256"], "key_sha256": key["sha256"], "doc": info["doc"],
+                 "key_ids": C.key_ids(info["doc"])}
+        for m in C.MARKERS_FOR[info["reader"]]:
+            if m == "opus":
+                d = os.path.join(MARKS_DIR, "opus_inputs")
+                if not os.path.exists(os.path.join(d, rid + ".md")):
+                    C.write(os.path.join(d, rid + ".md"), user)
+                    C.write(os.path.join(d, rid + ".meta.json"),
+                            json.dumps(dict(extra, input_sha256=C.sha256(user)), indent=1))
+                n_opus += 1
+            else:
+                jobs.append(dict(tag=f"{rid}_by_{m}", model=m, user=user, extra=extra, out=MARKS_DIR))
+    print("API marker calls:", len(jobs), " Opus marker inputs:", n_opus, " missing reports:", len(bad))
+    if dry_run:
+        return
+
+    def accept_mark_for(ids):
+        def acc(res):
+            if res["finish"] != "stop":
+                return False, "finish %s" % res["finish"]
+            obj, probs = C.validate_mark(res["content"], ids)
+            return (True, "") if obj else (False, "; ".join(probs)[:500])
+        return acc
+
+    run_pool(jobs, lambda j: call(j["model"], None, j["user"], MARKS_DIR, j["tag"], True, C.MARKER_LADDER,
+                                  accept_mark_for(j["extra"]["key_ids"]), extra=j["extra"], max_rejects=2))
 
 
 if __name__ == "__main__":
-    cmd = sys.argv[1]
-    if cmd == "list":
-        for j in reader_jobs():
+    a = sys.argv[1:]
+    if not a:
+        raise SystemExit(__doc__)
+    if a[0] == "list":
+        js = reader_jobs()
+        for j in js:
             print(j["tag"])
-    elif cmd == "readers":
-        readers(sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == "--only" else [])
-    elif cmd == "mark":
-        mark(sys.argv[2])
+        print(len(js), "API reader jobs;", len(C.opus_tags()), "Opus reader tags run by the orchestrator")
+    elif a[0] == "manifest":
+        print(json.dumps({k: v for k, v in manifest_check().items() if k != "job_order"}, indent=1))
+    elif a[0] == "readers":
+        readers(a[2:] if len(a) > 1 and a[1] == "--only" else [])
+    elif a[0] == "mark":
+        mark(a[1], accept_missing="--accept-missing" in a, dry_run="--dry-run" in a, test_key="--test-key" in a)
+    else:
+        raise SystemExit(__doc__)
