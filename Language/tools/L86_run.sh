@@ -34,7 +34,8 @@ python3 - "$OUT" <<'PY'
 import os, sys, re
 OUT = sys.argv[1]; rows = []
 for root, _, files in os.walk(OUT):
-    if "/scratch" in root or "armA_src" in root: continue
+    rel = os.path.relpath(root, OUT)
+    if rel in ("scratch", "armA_src") or rel.startswith(("scratch" + os.sep, "armA_src" + os.sep)): continue   # by component, not substring (the pilot's manifest lesson, L84)
     for f in sorted(files):
         if not f.endswith(".third.txt"): continue
         t = open(os.path.join(root, f)).read()
@@ -45,6 +46,7 @@ for root, _, files in os.walk(OUT):
 same = sum(1 for r in rows if r[5] == "SAME"); diff = [r[0] for r in rows if r[5].startswith("DIFFERENT")]; nocmp = sum(1 for r in rows if r[5] == "-")
 bad = [r[0] for r in rows if r[3] != r[1] + r[2] or r[4] != r[2]]
 with open(os.path.join(OUT, "RUN SUMMARY.md"), "a") as s:
+    s.write("reports found: %d of 112 expected%s\n" % (len(rows), "" if len(rows) == 112 else " -- SHORT: the table below is incomplete"))
     s.write("reports: %d; compared SAME: %d; DIFFERENT: %d (%s); not compared: %d\n" % (len(rows), same, len(diff), ", ".join(diff) or "-", nocmp))
     s.write("block counts off (blocks != JUMP + NO CONNECTION heads, or Reached != NO CONNECTION): %d (%s)\n" % (len(bad), ", ".join(bad) or "-"))
     s.write("\n| report | JUMP. | NO CONNECTION. | General lines blocks | Reached blocks | compare |\n| --- | --- | --- | --- | --- | --- |\n")
