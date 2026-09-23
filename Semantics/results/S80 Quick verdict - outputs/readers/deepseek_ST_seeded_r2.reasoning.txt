@@ -1,0 +1,779 @@
+We need answer audit of theory document "Claude Fable Semantics". Need find defects: false statements, proofs not prove, claims wider than support, contradictions, etc. Must read whole doc. Need number defects most serious first. For each: (a) Part and heading/label, (b) exact sentence/formula quoted, (c) what is wrong in 2-5 sentences with counterexample or failing step where possible. Only defects can state this way. End with END OF REPORT.
+
+We need analyze deeply. This is likely from a formal theory with many possible issues. We need find concrete defects. Need be careful: The document is long, formal, maybe has internal inconsistencies. We can use the skill? We are auditing document. We need identify false statements/proofs errors etc. We should read all before report. We have entire document in prompt. Need examine for mathematical errors, logical issues, contradictions, unsupported claims.
+
+Let's parse entire doc and scrutinize.
+
+The document defines organizations, components, contracts, account conditions, etc. Need find defects. Likely many.
+
+We must prioritize serious. We can find mathematical false claims in "finite monotone theorem" Part VI perhaps. Let's inspect.
+
+Part VI: Finite monotone theorem. "If Γ is finite, S is upward closed, and Γ∈S, then the critical singletons are exactly ∩ min S and the globally indispensable ones are exactly ∪ min S. Proof. A member of a minimal support is critical for it. If d is critical for W, finiteness gives a minimal U⊆W; if d∉U, upward closure makes W\{d} a support. Deletion of d from Γ preserves support exactly when a minimal support omits d."
+
+Need formalize. They define S_{E,p} = {W⊆Γ : Account(E|W,p)}. No upward closure minimal assumed. In theorem assume S upward closed. Let's parse "critical singletons" maybe elements d such that {d} is a critical block? Actually critical block definition: For nonempty B⊆W, CriticalBlock(B;W,p) iff W∈S and W\B∉S. So a singleton {d} is critical for W? "the critical singletons" maybe elements d that are critical (for Γ?) Hmm theorem says "the critical singletons are exactly ∩ min S and the globally indispensable ones are exactly ∪ min S." Let's parse.
+
+Let S be a finite support family upward closed, Γ∈S. Minimal supports min S. Define:
+- globally indispensable: elements in every support? Usually ∩ S? But they say ∪ min S? Wait if min S = minimal supports. Elements in every support equal intersection of all supports, which for upward-closed finite equals intersection of minimal supports = ∩ min S. Elements in some? Let's test. They wrote "critical singletons are exactly ∩ min S and the globally indispensable ones are exactly ∪ min S." That seems reversed maybe. Critical singleton maybe element whose removal from any support containing it breaks support? That would be globally indispensable = ∩ min S. Union of min S are elements that appear in at least one minimal support, i.e. not globally dispensable, maybe "contributory"? Let's analyze exact.
+
+They define CriticalBlock(B;W,p) for B⊆W: W support, W\B not support. For a singleton {d}, it says d is critical for W if removing d from W breaks support. "critical singletons" without specifying W might mean d such that {d} is critical for Γ? Or for some support? The theorem says "If Γ finite, S upward closed, and Γ∈S, then the critical singletons are exactly ∩ min S and the globally indispensable ones are exactly ∪ min S." Maybe they intended:
+- Globally indispensable = in every minimal support = intersection ∩min S.
+- Critical singletons? If d is critical for Γ, then Γ∈S and Γ\{d}∉S, means no support without d, so d in all supports = ∩min S. That is globally indispensable. So "critical singletons" should be ∩ min S. Why union min S? Elements in union min S are those that are not redundant? In example redundant routes Γ={a,b}, S={{a},{b},{a,b}}, min S={{a},{b}}. ∩ empty, ∪ {a,b}. Both a,b are "contributory" but neither indispensable. So "critical singletons" maybe could mean elements that contribute in some minimal? Hmm "globally indispensable" should be ∩ min S, not ∪. So exact sentence definitely has a mistake: It says critical singletons exactly ∩ min S and globally indispensable exactly ∪ min S. Maybe if "critical singleton" means singleton critical for some minimal support? Let's see proof: "A member of a minimal support is critical for it." If d is a member of minimal support U, then removing d from U yields U\{d} not support (by minimality). So d critical for U. Thus every element in union of min S is critical for some minimal support. A member of minimal support is critical for it. So "critical singletons" (i.e. singletons that are critical for some support) are union min S. "globally indispensable" are elements present in every support = intersection min S. So the theorem says opposite of its own proof: it says critical singletons are ∩ min S and globally indispensable are ∪ min S. So likely swapped. This is a concrete defect. Need quote exact. Need maybe state proof also has flaw? It seems the conclusion mislabels. Also proof's "If d is critical for W, finiteness gives a minimal U⊆W; if d∉U, upward closure makes W\{d} a support." Let's check: If d critical for W, W\{d} not support. Suppose d not in U. U⊆W\{d} because d∉U and U⊆W. Since U∈S and S upward closed, W\{d}⊇U => W\{d}∈S. Contradiction. Thus d∈U. Good. Then deletion of d from Γ preserves support exactly when a minimal support omits d. If Γ\{d}∈S iff there is minimal U⊆Γ\{d}, i.e. minimal support omits d. But "globally indispensable" if Γ\{d}∉S. Those are elements in every support; if violation? Actually globally indispensable = elements in all supports = ∩S. For a finite upward-closed family, ∩S = ∩min S. In proof, "Deletion of d from Γ preserves support exactly when a minimal support omits d." So deletion does not preserve iff every minimal support contains d iff d∈∩min S. Thus indispensable = ∩min S. Not union. Critical singleton for which W? It is ambiguous. Could be critical for some support = union. The theorem's statement seems swapped. This is clear.
+
+Need maybe find other math errors.
+
+Part VII Identification: "For linear A and feature c^T, identification is ker A ⊆ ker c^T. (I4) Repeating rows changes no kernel; an independent calibration can." Need check. Measurement g: Z→Y linear A, feature c^T x. Fibre of y = {x: Ax=y}. f=c^T x is identified at y iff f[Z_y] singleton. For linear A and all y, fibre nonempty for y in im A; f[Z_y] singleton iff for any x with Ax=y, c^T x constant = depends only on y, iff exists \bar f with c^T x = \bar f(Ax) for all x. For linear \bar f = q^T, condition c^T = q^T A, iff ker A⊆ker c^T. Good. Repeating rows changes no kernel: adding duplicate rows to A does not change ker A (if same row) and indeed no new info. Independent calibration can. Fine.
+
+Obstruction (O1): "For allowed steps R and an invariant I with zRz' ⇒ I(z)=I(z'), no allowed path joins states of different invariant value." Correct. "Equal values do not establish reachability." Correct. "Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes state space and does not refute scoped result." Fine.
+
+Part VII "Odd-order skew-symmetric matrices" maybe check non-circular dependence witnesses. They claim "Non-circular dependence is witnessed by I_3 under removal of skewness and by [[0,1],[-1,0]] under removal of oddness." Need parse. Under removal of oddness, the family? To witness non-circular dependence: There exists (a,b)∈C that removes or replaces nonempty block of Γ while preserving other boundary conditions, under which answer profile changes, ceases, or is left as it was. The contrasts include remove oddness: then 2x2 skew-symmetric invertible exists, so the answer (absence of invertible matrices in family) changes. They cite that matrix. Fine. Remove skewness: identity matrix is invertible odd-order? I_3 not skew, determinant nonzero: answer changes. Fine.
+
+Part VIII "Functional transport. If π∘S_a=T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes. Proof. π S_b S_a = T_b π S_a = T_b T_a π; induct." Need check order. If for generators a,b, π S_a=T_a π and π S_b=T_bπ. Then π S_b S_a = T_b π S_a = T_b T_a π. Yes. For composition S_{a2 a1}? If S_{a2 a1}=S_{a2}∘S_{a1}? Assumed maybe. Fine.
+
+Relational transport T1: "forward preservation is zRy ∧ z→a z' ⇒ ∃y'[y→τ(a)y' ∧ z'Ry']." That's standard simulation. "with backward condition required for equivalence rather than one-sided abstraction. Composition of relations preserves both directions when intermediate scopes agree." Fine.
+
+Approximate transport T2: "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k." Need check if discrepancy is one-step between maps and Lipschitz constant L of next-step map? Suppose x_{n+1}=F(x_n), y_{n+1}=G(y_n), one-step discrepancy ||F(z)-G(z)||≤ε, G is L-Lipschitz. Then e_{n+1}=||x_{n+1}-y_{n+1}|| ≤ ||F(x_n)-G(x_n)|| + ||G(x_n)-G(y_n)|| ≤ ε + L e_n. Then e_n≤εΣ_{k=0}^{n-1} L^k for e_0=0. If e_0 not 0 need plus L^n e_0. Fine.
+
+Part IX "What a test refutes. For T∧B∧I⇒O, an established ¬O yields ¬T, since B and I are background. (K3)" This is false as stated: From T∧B∧I⇒O and ¬O, you can infer ¬(T∧B∧I), i.e. ¬T∨¬B∨¬I. If B and I are "background" means held fixed/assumed true, then yes ¬T follows. But the sentence says "since B and I are background" maybe parenthetical means they are held fixed, so OK. But earlier the skill's word list says "test refutes bundle; from theory and background and test set-up together predicting wrongly, only 'not all three' follows." The doc says "What a test refutes. For T∧B∧I⇒O, an established ¬O yields ¬T, since B and I are background." This is potentially contradictory with Part IX? Let's see. It says "and I are background" maybe assumes not questioned. But in formal logic, not valid without assumptions B,I. However "background" could be a premise, but "established ¬O yields ¬T" requires B,I established too. This could be a defect: overclaims. The better conclusion is ¬T∨¬B∨¬I. They even earlier in Part 0? "what a test refutes" maybe not. In word-list from skill maps "a failed test knocks down the bundle" to K3: "From theory and background and test set-up together predicting wrongly, only 'not all three' follows." But the document here says "an established ¬O yields ¬T, since B and I are background." Is that exact? Let's quote exact K3 sentence. They maybe intend background are held fixed, but not stated. A false statement as logic. Need include maybe. However if background means assumed true, then maybe technically valid under assumption B∧I. But "an established ¬O yields ¬T" is not formalism. It might be acceptable. But the document elsewhere? Need see contradictions. "What a test refutes" is a claim wider than logic. Could mention as defect if needed, but maybe too minor.
+
+Part X Newness: "New(s,c,h,e) iff ¬∃d∈R_{<e}(s,h), d≡_ℓ c." Fine.
+
+Part XI Repair: "For claimed obligations O and protected obligations P, fixed for comparison, Repair_{O,P}(ξ,ξ';Δ) iff ∃o∈O[¬o(ξ)∧o(ξ')]∧∀r∈P[r(ξ)⇒r(ξ')]∧ProducedBy(Δ,ξ,ξ';O)." This says at least one claimed obligation repaired, no protected obligations lost. Fine. "The scope of Account(c,p_c) is the contract fixed at e_c. A later narrowing ... does not retroactively satisfy (EK)." Fine.
+
+Part XII Retained realization: "RetReal(π,T,C;χ) iff ∀z∈C ∀i∈dom T ∀η∈Exec(π,z,i;χ), η completes with o∈T[i] and z'∈C." This requires all executions (nondeterministic) complete etc. Fine.
+
+Retention fixed point: "F(C) = states whose executions all complete and return into C. F is monotone; C⊆F(C) is invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)" Need check monotone? F(C)= {z : all executions from z complete and endpoint z'∈C}. If C⊆D, if z∈F(C), all executions complete and endpoints in C⊆D, so z∈F(D). Thus F monotone upward. Yes. C⊆F(C) means C is post-fixed. Union of post-fixed sets is greatest fixed point: For monotone F on powerset, greatest fixed point = union of all post-fixed sets? Let's check. For monotone F on complete lattice, lfp is intersection of pre-fixed? Wait gfp = union of post-fixed? There is Knaster-Tarski: greatest fixed point = ⋃{C | C⊆F(C)}? Actually for monotone F: If C⊆F(C), then C is post-fixed. The greatest fixed point is ⋃ {C | C⊆F(C)}? Need verify. Let U=⋃ postfixed. Show U⊆F(U). For any z∈U, z∈C for some postfixed C. Then z∈F(C) => all executions from z complete endpoints in C⊆U. So z∈F(U). So U⊆F(U). Then F(U) postfixed? Monotone: U⊆F(U) implies F(U)⊆F(F(U))? Since F monotone, apply F to inclusion U⊆F(U): F(U)⊆F(F(U)), so F(U) is postfixed. Then F(U)⊆U by definition union of postfixed. Thus U=F(U). So greatest fixed point? Need show any fixed point D=F(D) is postfixed, so D⊆U. Yes. So true.
+
+Part XII "Can_Ω,β(ξ,T;χ) requires an owned retained realization or an owned, physically admitted, finite construction of one under same continuity and resource contract. A theorist's description of a protocol is not the system's possession of it." Fine.
+
+Part XIII "Recursion and universality" maybe.
+
+Part XIV "Dependence order. (O) and (Q) depend on nothing. (K) depends on (O) and a contract. (F1), (F2), (A) depend on (O), (Q), (K). (E) depends on those. (S), (B), (D) depend on (E). (R) depends on (F1)–(F2) and physical provenance. (K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy. (RC), (U1)–(U3) depend on all of the above. Nothing depends on a predicate meaning 'really explains,' 'is a cause,' or 'is knowledge.'" Need check if (E) depends on (K)? It says (F1), (F2), (A) depend on (O),(Q),(K). Then (E) depends on those. Good.
+
+Need examine Part II definitions for possible defects:
+- "A deleted component imposes the full relation on its ports. An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component." OK.
+- "Values of ports may be paths, functions, fields, proofs, or histories. Cyclic constraints are admitted. Several solutions remain several." OK.
+- Roles derived: "A port v is an input under A when A contains an edit that sets v directly." Fine. "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." OK. "A port is an observation when A contains an edit that alters the relation reporting it without altering what it reports." OK.
+
+Part II "Kinds are edit-signatures": signature sig_C(j) = {(a,b,L_j(a,b)) : (a,b)∈C}. Wait earlier L_j(a,b) is a relation (subset of product over V_j), not necessarily function. They include (a,b,L_j(a,b)). OK. "Two components j,j' are of one kind on C when there is a bijection of their footprints under which sig_C(j) and sig_C(j') coincide." OK.
+
+Part III Questions:
+- "O_p obligations" etc. Fine.
+- "The respect is the query. What a question asks — production, identification, obstruction, rule-status, purpose-achievement — is fixed by type of Q and shape of C, not by a label." Fine.
+- "A production question has a Q that reads an output port and a C containing interventions on upstream ports." Fine.
+- "A question can be wrong..." Fine.
+
+Part IV:
+- "The primitive layer P is an organization whose ports are persistent things with boundaries and identity, whose components are continuity relations, and whose admitted edits include displacement, occlusion, and re-identification. It is the layer at which there are objects rather than a field of sensation." This is strong philosophical, but maybe not formal.
+- Transports: t=(π,τ,σ,λ) where π:X_D→X_E on stated scope, τ translates edits, σ boundaries, λ assigns each component of E a subnetwork of D with port translation. A transport is faithful on C when it satisfies component and global fidelity conditions of Part V.
+- Selected provenance: "There is a population T of candidate transports, a variation operator μ on T, a finite history H⊆C actually encountered, and a survival condition requiring fidelity on H. The transport t is a member that survived. No member of history represents t, H, or survival condition." OK.
+- Constructed: "There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness. Write Con(t;h,e)." Hmm second disjunct says "or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." This seems to collapse constructed into selected? Actually "t is the survivor..." is exactly selected, but says population contains it, itself? They maybe allow constructed by selection on a population that contains represented target? This is suspicious: "Constructed ... or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." That sounds selected. But maybe they mean t is the "survivor" of variation-and-survival history on a population that contains it, and that history itself is construction witness? But no represented target/criticism? Later "Neither provenance is reducible: a selected transport has no represented target and no criticism in its history; a constructed one has both." But this disjunct might not have represented target/criticism. Contradiction. Let's examine exact Part IV: "Constructed. There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness. Write Con(t;h,e)." The first condition is construction by episode; second is just survivor of variation-and-survival history on population containing it. But Part X says "Construction is not selection. A selected transport has no represented target in its history; a constructed one does." The second disjunct does not mention represented target or criticism. This may be a contradiction: a selected survivor would also qualify as constructed under the second disjunct, so selection and construction not distinct. However maybe "on a population that contains it, which serves as its construction witness" might mean variation-and-survival over a population that contains *the represented target?* The grammar: "population that contains it" where "it" = t? If population of candidate transports contains t trivially as survivor? In selection population may not contain t before? Actually t is member that survived, so population contains t after variation? But if population contains t before, survival condition? Hmm This is a serious defect if interpreted.
+
+Need maybe include as defect: The constructed provenance clause includes a disjunct that is a selection history, contradicting the claimed distinction between provenance types. Could be considered.
+
+But we need be precise. Quote exact sentence and explain. Example: Let t be selected on a finite history H via population T containing t (trivially if t is candidate), then by the second disjunct t also has Con(t;h,e), so selected and constructed not exclusive, contrary to "A transport ... has exactly one of three provenances" and "A selected transport has no represented target... a constructed one has both." This is a clear defect. Let's verify "exactly one of three provenances" Part IV: "A transport t between organizations of a physical system has exactly one of three provenances, determined by its history..." Then selected/constructed. The constructed disjunction allows selected. Yes.
+
+But maybe they intended "or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness" to mean "t is a survivor of a variation-and-survival history on a population that contains [the represented target]" not "contains it"? Let's read sentence: "There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." The "which" refers to "a variation-and-survival history" or "population"? Could refer to history. It says population contains it (t). So yes.
+
+Maybe more contradictions.
+
+Part V "Account" conditions:
+- Component fidelity F1: "For every active component k of E with anchor subnetwork λ(k)⊆D, and every (a,b)∈C, the relation obtained by imposing constraints of λ(k) and projecting away its hidden ports equals the component relation of k under translated edit: proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b))." Need scrutinize. λ(k) is a subnetwork of D with a port translation. They project away its hidden ports. The subnetwork λ(k) has ports maybe not V_k? Need match port translation. F1 maybe equates relation on V_k. OK.
+- Global F2: "π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)), τ(1)=1, τ(a2a1)=τ(a2)τ(a1)." Fine.
+- "By (K), (F1) entails that every component of E has the signature of its anchor; there is no further condition." Need check: (F1) only equates projections of Sol_λ(k) with L_k for all (a,b) in C. But sig_C(λ(k)) in (K) was for components j in D, not subnetwork. Wait (K) defined signature of component j of D on C as (a,b,L_j(a,b)). For anchor subnetwork λ(k), its "signature" should maybe be projection of Sol_λ(k). They earlier in Derivation 1 say sig_C(λ(k))={(a,b,proj_{V_k}Sol_{λ(k)}(a,b))}. But that's not (K) unless λ(k) is a component. They extended notion. Fine.
+
+Potential issue: Component fidelity F1 only for active components k of E with anchor subnetwork λ(k). It does not require each component in D anchor? Reverse? "Active commitments in E" maybe subset. Fine.
+
+Non-circular dependence: "The answer follows by evaluating E under its independent boundary conditions. The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named 'law' does not discharge this. There exists (a,b)∈C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+
+This is odd: "under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." If the answer profile is "left as it was" after removing a nonempty block, then that would indicate the block is not doing work, but they include it as satisfying non-circular dependence? Wait non-circular dependence should require that there exists a change that removes/replaces a block and changes the answer profile (so not circular). But they say "changes, ceases to be determined in the claimed way, or is left as it was" — "or is left as it was" seems to allow a removed block that leaves answer unchanged, which is exactly an idle part. That contradicts purpose. Let's read exact: "There exists (a,b)∈C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." Could mean there exists some edit that removes/replaces block and (changes or ceases); but "or is left as it was" maybe accounts for deterministic? No, "left as it was" means no change. If the block can be removed with no change, that would not witness non-circular dependence; it would show redundancy. The condition seems written with three options, where "or is left as it was" is either absurd or allows circular? Maybe they meant "or is left as it was" for an edit that replaces? Hmm.
+
+Let's quote: Non-circular dependence paragraph:
+"The answer follows by evaluating E under its independent boundary conditions. The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named "law" does not discharge this. There exists (a,b)∈C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+
+The last clause is suspect. If there exists a change that removes a block and answer left as it was, that doesn't show non-circular dependence; it would show block idle. But maybe "removes or replaces" includes replacing with a different component, and if answer left as it was, that would show? No, non-circular dependence wants some change to active commitments matters. The inclusion of "or is left as it was" undercuts. Maybe it's a typo: should be "does not remain as it was" or "changes". This is a defect. Need decide if include. It is exact and false.
+
+Also earlier in "What (E) excludes" says "p because p fails non-circular dependence." For p because p, removing the component might leave answer? Hmm.
+
+Need examine Part V "What (E) excludes" - "A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one. A table that genuinely encodes an organization's response to every admitted change is not a table in that sense and is not excluded." OK.
+
+Part V "Why there is no anchoring condition" maybe.
+
+Part VI "Hard-to-vary. For explanatory jobs F⊆F', Pres(F')⊆Pres(F), where Pres(F)={v∈V: ∀f∈F, Account(E_v,f)}. More reach constrains variation; containment need not be strict; counting jobs is not a warrant." OK but note if Pres defined relative to a fixed E_v? It doesn't specify relation? Fine.
+
+Need inspect Part II "Kinds are edit-signatures" examples:
+- "a causal assignment has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;" Wait "causal assignment has a signature that changes under intervention on its output port" In a causal component, intervention on output should not change its relation? Actually they earlier: forward organization L=H cot θ. Intervening on L replaces its component and leaves H,θ unchanged. The component? "a causal assignment has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits." Maybe confusing. If you intervene on output port, you replace component assigning that port; so relation changes? Let's analyze. In Part VII shadow example: "Under A containing interventions on H and θ, these ports are inputs and L is an output, by Part II. An intervention on L replaces its component and leaves H,θ unchanged." So if component j assigned to L? The relation L=H cotθ. Intervention on L output replaces the component assigning L, so L_j changes to whatever intervention sets. So yes its signature changes under intervention on output port. But does that make "causal assignment"? The output port is caused by inputs. Under intervention on output, the component is replaced, so relation changes. But is that a signature of causal direction? A measurement relation maybe? Measurement signature invariant under interventions on measured port and variable under edits to measuring relation. Good. Rule invariant under world interventions and variable under rule edits. Fine.
+
+Need find contradictions:
+- Part IV definition "selected provenance" says "No member of history represents t, H, or the survival condition." But later construction can have "t, or organization it targets, is available as represented target." OK.
+- Part IV "A physical system may hold selected transports at primitive layer and constructed transports at simulation layer; that is expected arrangement, not a requirement." OK.
+- Part IV "Representation is derived" Rep requires Faithful and provenance selected or constructed. A system can represent a false theory: transport from carrier to content faithful while content's transport to world fails. Need think: Rep(o,c) is org o to content c, not content to world. A false theory is a content c that has unfaithful transport to target D? "A system can represent a false theory: the transport from carrier to content is faithful while the content's transport to the world fails." OK.
+- Part IV "Expectation, surprise": "Let t be selected on history H with contract C. For an edit–boundary pair (a,b)∈C actually occurring: the expectation is Ans_S(τ(a),σ(b)); a violation occurs when fidelity fails at (a,b); surprise is a violation at (a,b)∉H." Good.
+- But "A system whose history exhausts its contract cannot be surprised." If H=C finite, no unseen change. OK.
+
+Derivation 3:
+"Claim. Let t be selected on a finite history H⊊C. For every (a,b)∈C\H there exists a transport t', also surviving on H, with a different value at (a,b).
+Proof. The component relations L_j(a,b) are supplied independently for each (a,b). Survival on H constrains only {L_j(a,b):(a,b)∈H}. Alter L_j(a,b) for one (a,b)∉H to any other admitted relation; the result survives on H and differs at (a,b). ∎"
+
+This is suspicious. Are component relations supplied independently for each (a,b)? Earlier L_j(a,b) is relation of component under edit/boundary. It might have dependencies between different pairs due to physical law? They are "supplied independently" but if transport includes τ and σ etc maybe constraints. The theorem claims for every unseen pair there exists a different transport. But "t" includes not just L_j? If altering L_j(a,b) for one unseen pair might break global F2 or connection between component relations? Survival on H requires fidelity on H only, so as long as H unchanged, yes, there exists a candidate with different behavior on unseen (a,b) but identical on H. But is it in population T and possible under variation operator? The selected provenance only requires survival; Derivation 3 says there exists a transport t' also surviving on H. But if the population T doesn't contain such t', then not necessarily. Selection history is over a population T of candidate transports. The proof absolutely ignores T. It says "there exists a transport t'..." for any arbitrary alteration, but if T doesn't include it, not a survivor. Selected survival is relative to T and variation operator. Need quote exact. The claim says "Let t be selected on finite history H⊊C. For every pair there exists a transport t', also surviving on H, with a different value." To count as selected, t' must be in T? But "also surviving on H" could mean satisfies survival condition, not necessarily in actual population. But then provenance Sel requires population T, variation op. They didn't constrain. The proof's "Alter L_j(a,b)..." gives a transport but not necessarily in T or reachable by μ. This is a serious overclaim. Moreover, even if arbitrary alterations are permitted physically, they may violate F1/F2 constraints because component relations of a transport are not independent: F1 ties L_k(τ(a),σ(b)) to D's subnetwork projections for all (a,b). But survival only on H does not constrain C\H, so can alter L_k on unseen pair. But what about "component relations L_j(a,b) are supplied independently for each (a,b)"? In org definition L_j is supplied independently for each j,a,b; no cross-(a,b) laws. Yes.
+
+But selection population T may not include altered transport. However if we think of possible selected transports, to show underdetermined in principle, from history H alone, any extension on unseen changes is consistent. But the claim says "there exists a transport t', also surviving on H" not "a possible selected transport from the same T." In the context of provenance, T is part of selection history. The proof needs ensure t' ∈ T or could be generated by μ. But maybe all physically admitted transports are candidate; T unspecified. The claim maybe intended "for every pair there is a physically admitted transport with different value surviving on H". The proof's arbitrary alteration to "any other admitted relation" assumes an admitted relation exists. If no other relation exists? For each (a,b), "admitted relation" could be unique? Usually multiple relations allowed. But if only one admitted relation, no difference. However they earlier "nonempty value domain" but not necessarily multiple relations. For a given component and edit, L_j(a,b) is a relation supplied. Is there always another admitted relation? Not stated. Even if the domain has more than one value, L_j could be full? "any other admitted relation" needs existence. Not guaranteed. So Derivation 3 is flawed.
+
+Also Derivation 3 conclusion "selected transports are always underdetermined on unseen changes" is too strong: It assumes no constraints across edit pairs besides H and that at least two relations are admissible. But in many formal systems, a component relation may be fixed by a single rule, so changing it at one pair while same elsewhere might not be admitted? Although L_j(a,b) are independently supplied, the "interpretation supplies L_j(a,b)" for all; no law links pairs. But "admitted relation" may be constrained by "organization Edits and L_j" maybe not. Still population T issue.
+
+We can use this as defect. Need quote exact. The document lists Derivation 3 as a theorem. We can say: The proof ignores the population T and variation operator in the definition of selected provenance; it constructs a transport that need not be in T or reachable by μ, so it does not show a *selected* alternative exists. Also it assumes for any unseen pair another admissible component relation exists, which is not guaranteed. Thus the claim is unsupported. This is a serious defect because underdetermination of selected transports underpins fallibility/surprise.
+
+Derivation 4: "Surprise requires incomplete history. Claim. A system can be surprised if and only if it holds a transport selected on a history H strictly smaller than C. Proof. Surprise defined as violation at (a,b)∉H. If no transport no expectation... If H=C, every occurring pair in H." Wait if no transport, no expectation and hence no violation. But what if system holds constructed transport with an incomplete history? Surprise is defined for selected t only? The claim says iff holds selected transport H⊊C. But a system with constructed transport? Could it be surprised? Maybe it can be violated, but surprise defined as selected meeting unseen. By definition OK. But "if and only if" maybe too strong because a system could hold a selected transport plus also constructed? But okay.
+
+Derivation 5 "Question-finding representable": "A contract is an organization (a set of edits with a query), and can be content c in (G)." They show give it ports (edits and boundaries), components (closure conditions), admitted edits (add/remove a change; alter Q). Then Deploy, Build, New apply. Potential issue: A contract is subset of A×B plus Q. Fresh organization to represent contract may require distinguishing target D? Fine. But "can be the content c in (G)" where Build requires prepared represented organization for explanatory use of c. OK.
+
+Derivation 6 "There are two primitives": "Every predicate in Parts II–XIII is defined from Θ (including Org_ℓ) and, where invoked, N, together with declared indices." But Part X has histories with "actual subhistory owned by s"; physical module maybe includes histories? They said physical module supplies process occurrences etc Part IX. Might be OK.
+
+Derivation 7 "Frozen assessment and moving question": Fine.
+
+Derivation 8 "Equivariance under genuine recoding": "Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E),(G),(P),(EK). Proof. Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them." This ignores non-circular dependence and provenance? Non-circular dependence involves "target's answer does not appear as unanalysed boundary input at declared grain" may not be preserved under arbitrary bijection? Probably structural. But maybe fine.
+
+Derivation 9 "Output descriptions do not determine accounts": "If M0,M1 have same input-output projection and differ on an account claim, no function of projection agrees with claim on both. Proof equal inputs equal outputs." Fine.
+
+Derivation 10 story: OK.
+
+Need find false statements in "Part 0 Grievances". E.g. grievance 3: "There is a theorem below (Derivation 3) that selected transports are always underdetermined on unseen changes." That theorem flawed as above. Could mention as part of Derivation 3 defect.
+
+Part XV "What defeats this class": "A non-fallible selected transport. A selection history H⊊C whose survivor is determined on C\H. This refutes Derivation 3." Given Derivation 3 flawed. Fine.
+
+Maybe find mathematical error in Part VI "Interference. Γ={a,b}, S={{a}}: the full candidate fails although a subset succeeds." If S only {a}, then {a,b} not in S. OK. They say "b is not made 'not a commitment' to repair this." Fine.
+
+Need inspect "Finite monotone theorem" proof and labels. Already found swapped. Need maybe provide counterexample.
+
+Let's construct counterexample: Γ={a,b,c}, min S={{a,b},{a,c}}. Upward closed? Need S includes all supersets of minimal. Then Γ∈S. Critical singletons? If "critical singleton" means singleton critical for some minimal support, then a is critical for both? Actually a in union. The theorem statement says "critical singletons are exactly ∩ min S" = {a}. But b and c are also critical for their minimal supports? Removing b from {a,b} yields {a} not support, so b critical for {a,b}; c critical for {a,c}. So if critical singletons means critical for some support, intersection misses b,c. If "globally indispensable" should be intersection {a}, but theorem says union {a,b,c}. Thus statement is false. We can use as counterexample. Need be precise in report. The exact sentence: "If Γ is finite, S is upward closed, and Γ∈S, then the critical singletons are exactly ⋂ min S and the globally indispensable ones are exactly ⋃ min S." Then proof has "Deletion of d from Γ preserves support exactly when a minimal support omits d." This actually proves globally indispensable = intersection, so the theorem's labels are reversed. Good. We'll report.
+
+Need maybe find defect in Part IX K1: "Bearing(c,z,p) iff Account(E_c,p_δ)." A criticism occurrence can exist when K1 fails. OK.
+
+Potential issue Part IX "Reason use": uses structural map etc, not maybe formal.
+
+Potential issue Part XI "Artistic effect, purpose, aesthetic reason": "An effect organization R⊆A×K×F; a purpose G⊆K×F; achievement R[a,k]≠∅ ∧ R[a,k]⊆G[k] (AR); a normative relation N⊆A×K×Rsn×V_A declared as substantive input when aesthetic value claimed." Does this define effect? Maybe not defect.
+
+Need examine Part XII "Possibility is absence of a law-imposed limit short of perfection on performance and retention; it is not one successful trajectory." "Possibility" maybe vague. Not defect?
+
+Need find contradictions with definitions.
+
+Let's go through part by part carefully.
+
+Part 0 "The constitutive conjecture ... full characterized by (i) organizations and changes they admit, (ii) transports between organizations checked by change-fidelity alone, (iii) provenance of transports and of questions they serve, and (iv) their physical realization." Fine.
+
+"Where to attack this": (A) Sufficiency: "Produce a candidate that satisfies all four conditions of Account (Part V) on a physically admitted contract..." Wait Account has six conditions? (F1),(F2),(A), NonCircular, NonVacuous, Coherent. They call "all four conditions" maybe originally four? In Part V says "following four conditions" but then lists component fidelity, question fidelity, non-circular, non-vacuity, baseline coherence = five? Wait check:
+Part V: "The pair E satisfies Account exactly when the following four conditions hold, each a condition on supplied relations under the changes in C."
+Then headings:
+1. Component fidelity (F1),(F2)
+2. Question fidelity (A)
+3. Non-circular dependence
+4. Non-vacuity
+5. Baseline coherence
+Actually there are five headings but Component fidelity encompasses F1/F2. They say four conditions but list five. Could be defect: "all four conditions" in Part 0 and "following four conditions" in Part V. Then equation (E): Account iff (F1)∧(F2)∧(A)∧NonCircular∧NonVacuous∧Coherent. That's six conjuncts, but F1/F2 under one condition maybe five. The document says four though. Let's quote: Part V "The pair E=(E,p,t,Γ) satisfies Account(E) exactly when the following four conditions hold..." Then enumerates five. This is a clear inconsistency. Also Part 0 "satisfies all four conditions of Account" and Part XV "candidate meeting (E)" not four. Could mention as defect. Is it serious? It indicates a mismatch, but maybe minor. Need decide if include among top. We can include maybe not most serious but valid.
+
+Let's inspect exact Part V: After Q fidelity, Non-circular, Non-vacuity, Baseline coherence. It says "Baseline coherence. Sol_E(1,σ(b_0))≠∅: ... This is an independent requirement; it is not implied by conditions above." So they know five. The initial "following four conditions" is wrong. Then equation lists six. Could report.
+
+Need find more.
+
+Part V Non-circular dependence "or is left as it was" maybe clear false. Let's analyze thoroughly. The condition tries to rule circular explanations. It should be something like: there exists edit in C that removes/replaces nonempty block of Γ, and the answer profile changes (shows part does work? Actually non-circular dependence from skill word-list: answer not hidden in starting points; some change that removes a working part changes answer. The formal condition should require existence of removal causing answer change. It has "changes, ceases to be determined in the claimed way, or is left as it was." Maybe "ceases to be determined" or "left as it was" possible outcomes; but if left as it was, no dependence. It's nonsensical. The exact sentence can be quoted. Explanation: This disjunct permits the condition to be satisfied by an edit that removes a nonempty block and leaves the answer unchanged, which is the mark of a part doing no work, not of non-circularity. Conversely, circular accounts could satisfy it by removing a redundant named "law" while keeping the answer? Hmm.
+
+Let's see, if answer is left as it was after removing a block, that would arguably show answer doesn't depend on block, so the answer could be hidden elsewhere. But the condition as written says there exists some edit under which answer changes OR ceases OR is left. Since it's existential, if any edit leaves answer as it was, the condition holds—even if all other edits change it? Wait "There exists (a,b)∈C that removes or replaces a nonempty block ... under which the answer profile changes, ceases..., or is left as it was." Since every edit either changes or leaves? If change can be "left as it was" then all edits satisfy because one of three truth? Yes, if "changes" is false, "left as it was" true. So the third disjunct makes condition trivially true for any candidate where there is at least one edit removing/replacing a block—regardless of whether the answer changes. But the C contains baseline (1,b0) but baseline not removing block. Need an edit removes/replaces block. If such edit leaves answer unchanged, condition holds. This is too weak. So it's definitely a defect.
+
+But maybe "or is left as it was" refers to "the other boundary conditions are left as it was", not answer? Grammar: "under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." Subject is answer profile. So yes.
+
+However maybe they intended "under which the answer profile changes, ceases to be determined in the claimed way, or [the candidate] is left as it was"? No.
+
+We'll report.
+
+Need inspect "Baseline coherence. Sol_E(1,σ(b_0))≠∅: the components of E are jointly satisfiable at baseline. This is an independent requirement; it is not implied by conditions above." If F2 holds for baseline and Sol_D(1,b0) nonempty and π[Sol_D]=Sol_E, then Sol_E is nonempty because π maps nonempty set to nonempty? Wait π is a function on X_D, nonempty domain -> image nonempty. If Sol_D(1,b0)≠∅ (non-vacuity) and F2 at baseline, then Sol_E(1,σ(b0)) = π[Sol_D(1,b0)] nonempty. So Baseline coherence IS implied by Non-vacuity + F2! They explicitly say "This is an independent requirement; it is not implied by the conditions above." That is false. Let's verify.
+
+Non-vacuity: Sol_D(1,b0)≠∅.
+F2: π[Sol_D(a,b)]=Sol_E(τ(a),σ(b)) for every (a,b)∈C, including baseline. τ(1)=1, σ(b0)=? For baseline (1,b0), Sol_E(1,σ(b0)) = π[Sol_D(1,b0)]. Since π is a function (π:X_D→X_E on stated scope), image of nonempty set is nonempty. So Sol_E nonempty. Unless π not total on Sol_D? Scope? π:X_D→X_E on stated scope; if Sol_D subset scope, yes. Thus Baseline coherence is redundant given F2 and Non-vacuity. The doc says "not implied" false. Great defect. This is serious. Need include. Quote exact sentences. Let's see equation E includes both F2 and NonVacuous and Coherent. Proof of redundancy simple. This is a clear mathematical/logical error. We should report high.
+
+Check if F2 requires global fidelity only for active? It says "And the assembled organization agrees: π[Sol_D(a,b)]=Sol_E(...)" yes for all C. So baseline included. Non-vacuity gives Sol_D nonempty. Thus baseline coherence follows. Therefore "independent requirement; not implied by conditions above" is false.
+
+This is a strong defect.
+
+Part V initial four conditions mismatch also maybe.
+
+Need look for more redundancy/contradictions.
+
+Part V Non-vacuity: "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to Q, does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed." Wait non-vacuity and non-circular are separate; this sentence says a contract consisting only of relabelings does not satisfy non-circular dependence, but non-circular dependence only requires exists edit removing/replacing block. If contract only relabelings, there may be no edit removing active commitment? So it cannot. But "A contract consisting only of relabelings ... does not satisfy non-circular dependence" maybe because no such edit. Fine.
+
+Could be defect: "A contract consisting only of relabelings" if C has more than one relabeling? Relabeling edits? A relabeling might replace component? Hmm not.
+
+Part IV Representation R:
+\[
+Rep_ℓ(o,c) ⇔ ∃t [Faithful_C(t: Org_ℓ(o)→c) ∧ (Sel(t) ∨ Con(t))].
+\]
+Faithful_C uses c's contract? It says transport to c faithful on c's contract. Fine.
+But "A system can represent a false theory: the transport from carrier to content is faithful while the content's transport to the world fails." Here content c is a theory? Representation of content c means carrier organization instantiates c, not truth. OK.
+
+Potential issue: Rep requires provenance selected or constructed. But constructed provenance is defined in Part IV using "episode (Part X) whose construction witness prepares t" and Part X Build defined later in terms of "represented organization" which uses Rep. This could be circular: Rep depends on Con; Con depends on Build; Build depends on R/Rep? Let's check.
+
+Part IV defines Con(t;h,e) as constructed if episode (Part X) whose construction witness prepares t. Part X defines Build(s,c,h,e) holds when actual subhistory prepares a represented organization for explanatory use of c, contains binding construction... But "represented organization" maybe by (R) requiring provenance selected or constructed. There is a potential circularity: Con depends on Build (Part X), Build depends on representation (R), R depends on Sel or Con. Let's inspect exact definitions to see if circular.
+
+Part IV:
+"Constructed. There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; or ... Write Con(t;h,e)."
+This directly references Part X episode and represented target.
+
+Part X:
+"Construction. Build_{β,ℓ}(s,c,h,e) holds when an actual subhistory owned by s and delimited at e prepares a represented organization for explanatory use of c, contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers. A construction witness identifies... Reconstruction by a learner is construction; relay is not."
+"Construction is not selection. A selected transport has no represented target in its history; a constructed one does."
+
+So Build prepares a represented organization. Representation is defined in Part IV by (R) using Sel or Con. Con is constructed using Build? The circularity: To know Build(s,c,...) you need a represented organization of c; to know Con(t) you need an episode whose construction witness prepares t. But perhaps that's okay: definitions can be mutually recursive? The document says "Dependence order: Rep depends on F1-F2 and physical provenance. Build depends on histories and (E)." Wait Part XIV says Build depends on histories and (E), not on Rep? But Build definition says represented organization; maybe uses Rep? Actually Part X says "Build... prepares a represented organization for explanatory use of c" — to know Build need Rep, which depends on Con. Part XIV's dependence order may be false: It lists "(R) depends on (F1)–(F2) and physical provenance." Then "Deploy depends on (R) and (CT1). Build depends on histories and (E)." It omits Build depending on R, but it clearly does. Contradiction.
+
+Let's examine if "represented organization" in Build is intended as "representation" defined by R. Yes, "holds a representation of c — by (R), a faithful transport with selected or constructed provenance" in Deploy. Build "prepares a represented organization" likely uses R. So Build depends on R. Then Deploy depends on R and Build? Part X says Deploy holds when s holds representation of c by (R)... Deploy depends on R. Build depends on R maybe too. Then New/Origin depend on Deploy and Build. But Part XIV dependency order says "Build depends on histories and (E)." This is a false dependence statement (and circular). Is that a defect? It may be significant because the document claims all definitions have clear non-circular dependence order, and Derivation 6 uses that order. If Build relies on Rep, then there is a cycle: Rep -> Con -> Build -> Rep? Let's map.
+
+Representation R uses Sel or Con. Sel is physical history independent. Con uses construction episode/witness (Part X), which is Build. Build uses represented organization, which is R. Thus cycle Con -> Build -> Rep -> Con. Unless Build's "represented organization" is not R but just an organization with some causal role? But in context, "represented organization" implies R.
+
+Could be a serious conceptual defect: the definitions of construction and representation are circular / mutually dependent; the claimed dependence order is false. Need maybe include. But need be careful: They might define Construction for atoms? There is no base case for Con except "declared" or "selected". If constructed provenance requires a construction witness involving represented organizations, and representation requires constructed provenance, then no first constructed representation can exist without already having representation. This is a bootstrapping problem. However Part IV includes second disjunct for Constructed: "or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." That might be intended to break base case? But that is selected and not represented target. But if Con can be selected survivor, then no circularity. But then contradiction selected/constructed. Hmm.
+
+Let's analyze circularity more. The document claims "The primitive layer P" selected transports provide raw material; construction operates on selected material. Maybe construction witness can bind selected transports to produce a representation without already being representation? The definitions may be intended as not foundational.
+
+We can include as defect: The dependency order in Part XIV is false because Build (Part X) is defined in terms of a "represented organization", which is precisely Rep from Part IV, and Rep in turn depends on Con, which is defined via Build. Thus the claim "Every predicate ... defined from Θ and N along a non-circular dependence order" (Derivation 6) is unsupported; the definitions are circular. Need quote exact Part XIV dependence order and Build/Rep. But our format requires exact sentence. Could quote "Build depends on histories and (E)." from Part XIV and "Build ... prepares a represented organization..." from Part X. Need maybe.
+
+Let's see if we can pinpoint exact consequential contradiction:
+Part XIV: "Primitives. The semantics has two... Everything else is derived... Nothing depends on a predicate meaning..." It asserts all definitions derived from primitives. But Rep and Build are mutually recursive, so not all derived from primitives. Derivation 6: "Claim. Every predicate in Parts II–XIII is defined from Θ ... Proof. By the dependence order of Part XIV, following each definition to its base." This proof fails if Build depends on Rep. Could report.
+
+Need maybe not overcomplicate. There are enough clear defects.
+
+Let's search for more mathematical/logical issues.
+
+Part II "Roles are derived" says "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." But "determined" not formal? It could be ambiguous but not a defect maybe.
+
+Part II "Kinds are edit-signatures" defines signature using L_j(a,b). However if L_j(a,b) is a relation, two components can have footprints of different sizes? bijection of footprints, fine. "A kind is equivalence class." Fine.
+
+Part III "A question is p=(D,C,b0,Q,O_p,ρ_p). The answer profile Ans_p(a,b)=Q(D,a,b)." Q specified set-theoretic operation on D, its solutions, and component structure. OK.
+
+Part III "The respect is the query": "A production question has a Q that reads an output port and a C containing interventions on upstream ports. An identification question has a Q that computes a fibre and a C containing edits to the observed value." Good.
+
+Part IV "Occurrences and contents" says "Occurrences are not identified by carrying the same words; contents are not identified by having same outputs." Fine.
+
+Part IV "The primitive layer P ... ports are persistent things with boundaries and identity, whose components are their continuity relations, and whose admitted edits include displacement, occlusion, and re-identification." This "ports are persistent things" seems to reify objects as ports. But they earlier deny kind labels. Maybe okay.
+
+Part IV "No member of the history represents t, H, or survival condition." What does that mean? In selected provenance, no member of history represents t, H, or survival condition. History is set of edit-boundary pairs; "No member of history represents t" perhaps edit-boundary pairs don't represent. Fine.
+
+Part IV "Constructed ... or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." Already noted.
+
+Could find a contradiction: "A transport t ... has exactly one of three provenances" but Constructed second disjunct includes selected. Yes.
+
+Need maybe find "new kind labels" contradiction: Grievance 1 says "Declared kind-labels added no discriminating power; where a separating change exists, edit-fidelity already finds it." But Part II defines kinds as edit-signatures, okay.
+
+Potential issue in Part V "Component fidelity" and Equation (F1). It says "the relation obtained by imposing constraints of λ(k) and projecting away its hidden ports equals component relation of k under translated edit: proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b))." But L_k(τ(a),σ(b)) is a relation on V_k. Yes. But there is no mention of boundary translation? σ for b. OK.
+
+"By (K), (F1) entails that every component of E has the signature of its anchor." (K) was for components with relation L_j(a,b) directly; but anchor λ(k) may be a subnetwork whose relation is projected Sol. They treat as signature. Fine.
+
+Maybe issue: F1 only requires active components in E anchored to subnetwork of D, but not every component of E? Active commitments Γ; inactive components can be unanchored. OK.
+
+Part VI "Define S_{E,p}={W⊆Γ: Account(E|W,p)}." E|W retains commitments W with named background fixed. But if W⊆Γ, Account requires an identified set Γ' of active commitments? Does E|W keep same D,p,t? It might change Γ. Fine.
+
+"Boundary_{E,p}={(v,w)∈V^2: Account(E_v,p)≠Account(E_w,p)}." Account is Boolean so ok. But V is organization edits, not versions? Fine.
+
+"Hard-to-vary. For explanatory jobs F⊆F', Pres(F')⊆Pres(F), where Pres(F)={v∈V:∀f∈F,Account(E_v,f)}. More reach constrains variation; containment need not be strict; counting jobs is not a warrant." However Pres(F) for fixed E_v and f? "v" is variation of E, f is job. If adding jobs can only shrink surviving variations. Yes if a variation accounts for all jobs in F' then it accounts for subset F, so Pres(F')⊆Pres(F). OK.
+
+Part VII "Production and direction." They stipulate H:=U_H, θ:=U_θ, L:=H cot θ. Under A containing interventions on H and θ, these ports are inputs and L output. "An intervention on L replaces its component and leaves H,θ unchanged. The forward organization is faithful under this contract. The reversed calculation H = L tan θ is not: intervening on H changes target's L but not calculation's H." Need examine: If the target D is physical pole+sun+shadow, edit on H (pole height) changes actual L. Reversed calculation with equation H=L tanθ when translated? If H as output? They say intervening on H changes target's L but not calculation's H. To test fidelity under production contract, C contains interventions on H. In reversed calculation, is there a component for L -> H? Under edit setting H? The calculation is H=L tanθ, but if H is set by intervention, the equation H=L tanθ cannot hold unless L changes. But component relation L_j? Maybe the calculation has only a relation between H,L,θ; under edit setting H, H is set by replacing component? F2 fails. Fine.
+
+Part VII "Identification: For linear A and feature c^T, identification is ker A⊆ker c^T. (I4)" Let's check if "feature identified on every attainable y" exactly iff f=\bar f∘g. For linear, yes. "Repeating rows changes no kernel; an independent calibration can." OK.
+
+Part VII "Obstruction: For allowed steps R and invariant I with zRz' ⇒ I(z)=I(z'), no allowed path joins states of different invariant value. (O1) Equal values do not establish reachability. Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes state space and does not refute scoped result." Fine.
+
+Part VII "Explanations that remove structure": "An account is faithful when introducing those components changes answer in E as it does in D, and their absence leaves both unchanged. The rival's supposed structure is anchored to a deleted subnetwork, whose relation is full by (O)." Could be problematic but they admit may be inadequate.
+
+Part VII "Odd-order skew-symmetric matrices": "Question: why is every odd-order real skew-symmetric matrix singular? Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed. The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away. It satisfies (A): the answer is the absence of invertible matrices in the family, and under each contrast the family contains one. Non-circular dependence is witnessed by I_3 under removal of skewness and by [[0,1],[-1,0]] under removal of oddness. Non-vacuity is witnessed by any nonzero odd skew matrix. The expansion is an account. That a three-line proof is shorter is not a fifth condition." Check: Under "remove oddness", they cite 2x2 matrix; but removing oddness from odd-order gives all finite orders? The query maybe "singularity of odd-order skew-symmetric family"? If removal of oddness expands family to even orders, 2x2 invertible skew exists. OK.
+
+But "Non-vacuity is witnessed by any nonzero odd skew matrix." Non-vacuity requires Sol_D(1,b0) nonempty. Sol_D is? Target D is the family of odd-order skew matrices? A nonzero matrix exists. Fine.
+
+Need inspect Part VIII "Historical index": "A proposition indexed to a contract remains that proposition when a later theory changes current contract. A new index is a new claim." Fine.
+
+Part IX "Histories": "A history h is a set of occurrences with an acyclic causal precedence and physical interpretation..." OK.
+
+"Active route" etc.
+
+"Bearing. A criticism has target z, alleged defect δ, grounds g, and a connection. Let p_δ be the question about the defect. Then Bearing(c,z,p) iff Account(E_c,p_δ)." Hmm Account of what? E_c? The criticism occurrence must be an account of the defect under question pδ. But Account is a predicate for pair (E,p,t,Γ). They use E_c maybe. OK.
+
+"Reason use. A response uses a reason when a structural map... Using an invalid objection does not make it valid." Fine.
+
+"Standing. For argument application u with essential premises Prem(u): Usable_j(u) iff Lic_j(u)∧Scope_j(u)∧∀d∈Prem(u),Live_j(d;u). (K2). Withdrawing premise removes license; it does not make conclusion false." Note K2 says all premises live. Fine.
+
+"What a test refutes. For T∧B∧I⇒O, an established ¬O yields ¬T, since B and I are background. (K3)" As above potentially false. Let's assess if include. The "since B and I are background" might be interpreted as "B and I are held true by background". But in logic, an established ¬O yields ¬T only if B and I are also established. The sentence says "since B and I are background" but does not state they are established. It could be a shorthand. This is a defect if strict, but less severe. It also contradicts the earlier skill? Not in document. But the document earlier in Part 0? "Systems can be wrong ...". It might be a false formal statement. Include maybe later.
+
+Part IX "Receipts. An evidence leaf is reference to an event with interpreted claim. A receipt is derivation tree over leaves. For φ, P_j(φ) and N_j(φ) usable receipts for and against. Negation exchanges them; missing evidence stays missing." Fine.
+
+Part X "Deployment. Deploy_{β,ℓ}(s,c,ξ;U) holds when s at ξ holds a representation of c — by (R), a faithful transport with selected or constructed provenance — integrated into problem-directed activity and supporting the declared use task U as retained capability (Part XII). The repertoire R_{β,ℓ}(s,ξ) is the set of contents deployable in some nontrivial use respect. A system may understand a false theory." Fine.
+
+Potential issue: "A system may understand a false theory" but Deploy requires representation of c; if c is false theory? OK representation of content c can be faithful even if c to world false.
+
+Part X "Construction. Build... holds when actual subhistory owned by s and delimited at e prepares a represented organization for explanatory use of c, contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers. A construction witness identifies controlled processes, incoming carriers, bindings constructed, and resulting representation. Reconstruction by a learner is construction; relay is not." It says "prepares a represented organization" - if representation already defined, could be circular as noted.
+
+Potential issue: "Reconstruction by a learner is construction; relay is not." But reconstructing content from examples might be selected? They distinguish construction by binding. Maybe fine.
+
+Part X "Newness. With R_<e(s,h)=∪_{ξ before e} R_{β,ℓ}(s,ξ), New(s,c,h,e) iff ¬∃d∈R_<e(s,h), d≡_ℓ c." Fine. But equivalence ≡_ℓ not defined except labels? Maybe not.
+
+Part X "Origin. With Attempt(s,c,p,h,e) relation that c is actually used to address p, Origin iff Attempt∧New∧Build. The content c may be organization, transport, or contract. When it is contract, originative act is finding question." Fine.
+
+Part X "Episodes. A complete critical episode contains recognized difficulty, target available before criticism, conjectural objection, content-sensitive response. A creative critical episode contains an instance of (G) connected to inquiry. Closing an episode is a decision, not a proof." Fine.
+
+Part XI "Repair" as above. Potential issue: "Repair_{O,P}(ξ,ξ';Δ) iff ∃o∈O[¬o(ξ)∧o(ξ')]∧∀r∈P[r(ξ)⇒r(ξ')]∧ProducedBy(Δ,ξ,ξ';O)." ProducedBy includes O, but O in predicate? OK.
+
+Part XI "Created explanatory knowledge. An epistemic obligation requires a correct account, or correction of a use through one, to be deployable. With O_ep⊆O epistemic obligations, [EK] ... Account(c,p_c)..." They require Origin, Account, Deploy, ProducesVia. Fine. But a later narrowing no retroactive.
+
+Part XII "Tasks. A substrate is a physical system; an attribute a set of states; a task a permitted input-to-output attribute transformation with explicit resources and side effects. Possibility is the absence of a law-imposed limit short of perfection on performance and retention; it is not one successful trajectory." Fine.
+
+Part XII "Retained realization." OK.
+"Execution families are nonempty on legitimate inputs; deadlock is not vacuous success." OK.
+
+"Retention fixed point. F(C)= states whose executions all complete and return into C. F is monotone; C⊆F(C) invariant form; union of post-fixed sets is greatest fixed point. (CT2)" We checked true.
+
+"Owned capability. CanΩ,β(ξ,T;χ) requires an owned retained realization or an owned, physically admitted, finite construction of one..." Could be circular "construction" but not physical construction? They use finite construction maybe.
+
+"Achievement. CanAdv(ξ,p;χ,J_p,C_I): for each starting config in independently specified J_p, every maximal execution completes with history satisfying achievement predicate and continuing org in C_I. A first discovery is not a repeatable task; retention is applied to inquiry-enabling organization." Fine.
+
+"Grades. Cap^{q,r}_Ω⊆Admit; Cap^∞=∩Cap^{q,r}⊆Poss. (CT3,CT4) Finite-grade capability does not imply possibility at all grades." Fine.
+
+Part XIII "Scrutinizability. An aspect d... description becomes represented target..." OK.
+"Recursive capacity. ∀n<ω ... ∃ owned enabling continuation." OK.
+"Barriers. ... finite list failures not barrier proof; bypass refutes proposed barrier." OK.
+"Universality. With E explanatory contents and P advanceable challenges, both specified independently of candidate, UU... UC... UECS=..." OK.
+"Recursion does not entail universality; a historical extension does not certify it; finite performance record does not establish it." Fine.
+
+Part XIV "Primitives. The semantics has two." "Everything else is derived. Roles, from admitted edits. Kinds, from signatures. Respect of a question, from query. Representation, from fidelity and provenance. Provenance, from physical history. Account, from fidelity. Understanding, construction, newness, origin, repair, knowledge, capability, recursion, universality — from those." This claims construction derived, but Build uses represented organization; not purely derived from primitives maybe. We'll consider.
+
+"Indices, not primitives. Grain ℓ, boundary β, continuity Ω, and contract C are declared indices. Every claim relative to them; none is predicate true/false." Wait a contract C is not just index? It has provenance and can be constructed as content? They also say contract can be content and true? Hmm "boundary β" maybe. Grain and contract are declared indices; but earlier contracts have provenance and can be wrong? "A question can be wrong." If contract C is an index, can it be true/false? They say every claim relative to indices; none is a predicate that could be true or false. But Part III "A question can be wrong" and "contracts have provenance" treat C as content that can be constructed. Is a contract a predicate? Maybe it can be wrong as choice, but not truth-valued? The doc says "none is a predicate that could be true or false." Grain, boundary, continuity, contract. But C includes scope; "A question can be wrong" suggests the question/contract is evaluated, truth-like? However "wrong" maybe means fails to pick out target, not a truth predicate. Could be tension.
+
+More concrete: Part XIV "Nothing depends on a predicate meaning 'really explains,' 'is a cause,' or 'is knowledge.'" But definitions include "is knowledge" in EK? They define Created Explanatory Knowledge. The sentence means no primitive predicate. Fine.
+
+Part XV "A candidate under any of these headings counts as a defeat only once an episode satisfying (EK) has accepted it as one; until then the class stands. None protected..." This is a bit self-serving but not formal.
+
+Derivations:
+1 Kind preservation theorem: Check proof. They define sig_C(λ(k)) = {(a,b, proj_{V_k} Sol_{λ(k)}(a,b))} and sig_{τ[C]}(k)={((τ(a),σ(b)), L_k(τ(a),σ(b)))}. (F1) equates third coords pointwise. But (F1) includes (a,b)∈C. Yes.
+
+Potential flaw: "every active component k of E has same signature on τ[C] as its anchor λ(k) has on C, up to port translation." But if two different (a,b),(a',b') map to same (τ(a),σ(b))=(τ(a'),σ(b')), τ may not be injective. Then signature on τ[C] maybe has duplicate keys? It says same signature? If τ not injective, the set over τ[C] may identify pairs; that's okay. The proof "pointwise" equates for each (a,b), but to show signatures as sets are equal, need maybe. If τ(a),σ(b) is not unique? Could okay.
+
+Corollary "Where contract separates two kinds, (F1) already distinguishes; where not, they are one kind on that contract." OK.
+
+Derivation 2 "Indistinguishable is identical. Claim. Two candidates E,E' for same p that both satisfy (F1),(F2),(A) on C are one account at grain C: their components are pairwise of one kind on C and answer profiles coincide. Proof immediate from Derivation1 and (A)." This is suspicious. If both satisfy (F1) but their components anchored to different parts? Derivation 1 says each component of E has signature of its anchor; E' components of their anchors. But "pairwise of one kind on C" requires a bijection between components of E and E'. The anchors may partition D differently. Does (F1) force them to have corresponding components? Not necessarily. Two accounts can decompose target differently but share answer profile. Derivation 2 claims they are one account with components pairwise same kind. That seems false. Need analyze.
+
+Candidate E and E' for same p both satisfy F1,F2,A. F2/A say their global solutions and answer profiles coincide on C. But internal components may be different organizations with different number/components. Derivation 2 claims "their components are pairwise of one kind on C." Does F1 force active components of E to have signatures of their anchors; active components of E' same. Two different decompositions (e.g., one uses a single component R=H cotθ; another uses two components: intermediate A=H, L=A cotθ) might both be F1 faithful? Let's see. F1 for each active component anchored to subnetwork. Could have different component boundaries. No requirement anchors align between E and E'. Derivation 1 only for each candidate relative to D. Two candidates may have different components. The theorem does not provide a bijection. "Pairwise" is unproven. Even if answer profiles coincide, one may have components that implement different factors. It is not immediate. This is a serious false theorem maybe.
+
+Need construct counterexample perhaps. We can propose: Same production question L=H cotθ. Candidate E1 has one active component computing L directly from H,θ. Candidate E2 has two active components: first computes α=H, second computes L=α cotθ (or first H^2? Actually need F1). Each active component's anchor subnetwork maybe? For E1, component anchor {H,θ,L} relation L=H cotθ. For E2, components: component A anchored to {H} relation α=H; component B anchored to {H,θ,L?} relation L=α cotθ with α hidden? If α internal, maybe anchor subnetwork of B includes H,θ,L? It can. Both F1? The components of E2 have different footprints than E1. Not pairwise same kind. So Derivation 2 false as stated. They might say at grain C kinds: component A signature is input H; component B signature is relation; E1 component signature maybe relation H,θ -> L. Not one kind. So yes.
+
+Let's check F1 conditions for both? Should satisfy. The target organization has components? We need D have ports H,θ,L, components maybe relation L=H cotθ. For E2's component B anchor could be whole D's component; same signature? Actually B relation L=α cotθ together with A α=H. But F1 for B with anchor subnetwork λ(B) maybe the subnetwork with ports H,θ,L and relation L=H cotθ; projecting hidden ports (none) gives L=H cotθ, which must equal B's relation L_k(τ(a),σ(b)) under edit? Wait B's component relation L_k includes internal α? If internal port α is part of E2's component? L_k is for component k with footprint V_k. If B's footprint includes α,H,θ,L? But its relation L_k may include α=H and L=α cotθ? If component has hidden ports, F1 projects away hidden ports. If λ(B) anchor is the component in D with relation L=H cotθ, the projection gives L=H cotθ. The component relation of B under edit is a relation on V_k. If B has internal α and exposed H,θ,L, its relation imposes ∃α(α=H and L=α cotθ). Projection onto H,θ,L gives L=H cotθ. So F1 holds. E2 has two active components? A anchored to H identity maybe. So components not pairwise one kind. Thus Derivation 2 false.
+
+Need quote exact: "Two candidates E,E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide." We can state "this is false; (F1),(F2),(A) do not fix internal decomposition. Two candidates can have different component boundaries (one uses a single component; another uses two components with an internal hidden port) while both satisfying all three; no bijection of components can make their signatures coincide. The proof 'immediate from Derivation 1 and (A)' only shows each component matches its own anchor, not that the candidates' components match each other."
+
+This is a strong defect. Need include.
+
+Also Derivation 2 maybe used to claim "same account at level". If false, they overstate.
+
+Derivation 3 already.
+
+Derivation 4 maybe proof "If no transport there is no expectation and hence no violation." But Surprise is violation at unseen pair; if no transport, no violation by definition. OK.
+
+Derivation 5 "A contract is an organization (a set of edits with a query)" There may be formal issue: The organization D=(V,(X_v),J,B,A,L). A contract is C⊆A×B plus Q. They propose give it ports (edits and boundaries), components (closure conditions), admitted edits (add/remove change; alter Q). It is then a D in sense of O. But organization's components are relations L_j(a,b) for its own edits. They don't actually define how Q is a port/component. Maybe "give it ports" is informal. Could be accepted.
+
+Derivation 6 "There are two primitives" proof by dependence order. Fails if circular as noted.
+
+Derivation 7 "Frozen assessment" fine.
+
+Derivation 8 "Equivariance" maybe too broad. Could find counterexample: Transporting along bijections preserves equalities/existence, but non-circular dependence references "target's answer does not appear ... at declared grain" and "moving assertion from input slot into component named 'law'" may depend on grain labels not preserved? Grain index is declared, not subject to bijection? The result does not apply to coarsenings etc. Fine.
+
+Derivation 9 "Output descriptions do not determine accounts" true but trivial.
+
+Derivation 10 "relative-consistency witness" maybe story.
+
+Need decide list of defects most serious first.
+
+Potential defects:
+1. Baseline coherence claimed independent but implied by F2 + non-vacuity. This is a clear logical error.
+2. Part VI finite monotone theorem labels reversed. Clear mathematical error.
+3. Derivation 3 selected transports underdetermined proof ignores population/admissibility. Critical underpinning.
+4. Derivation 2 false: indistinguishable candidates not necessarily same internal components.
+5. Part IV constructed provenance second disjunct collapses selection/construction contradiction.
+6. Part V "following four conditions" but lists five; Part 0 all four conditions? mismatch.
+7. Non-circular dependence includes "or is left as it was" making condition vacuous.
+8. Circularity/dependency order false for Build/Rep.
+9. K3 "established ¬O yields ¬T" false without B/I.
+10. Part XIV "Indices, not primitives" claims contract C not truth-valued, but questions can be wrong? maybe lesser.
+11. "Selected provenance has exactly one of three" same as #5.
+
+Need see if there are other serious defects.
+
+Let's examine Part II "Kinds are edit-signatures" definition of observation: "A port is an observation when A contains an edit that alters the relation reporting it without altering what it reports." This seems circular/not formal. It says "reporting it" and "what it reports" presupposes representation, which is not defined until Part IV. Not necessarily defect but could be noted. But we have enough.
+
+Part III "A question can be wrong: A question may fail to pick out its alleged target, assume incompatible baseline, or combine incompatible requirements." If a question is wrong, what is its answer profile? Could be no solutions. Account? Non-vacuity maybe fails. Not issue.
+
+Part IV "Selected" provenance "No member of history represents t,H, or survival condition." Is "represents" used before representation defined? Yes, representation derived later. "Represents" in selected provenance maybe undefined at that point. It says "No member of the history represents t, H, or the survival condition." This uses concept of representation before defining it. Could be circular; but maybe informal. Could mention but maybe not necessary.
+
+Let's look for "derivation 3" also uses "component relations L_j(a,b) supplied independently for each (a,b)". In organization definition L_j is supplied by interpretation. But no condition ensures "another admitted relation" exists for all unseen pairs. For a component with value domain X_v={0,1}, and only allowed relation could be equality. Then no alteration. So the claim as universal is false. Even if there is another relation, it might not be physically admitted. The selected transport t' maybe not in T. Good.
+
+Derivation 3 consequence: "This is why the primitive layer is fallible..." The theorem intended to show underdetermination. But proof doesn't. Good.
+
+Part IV "Expectation: Let t be selected on history H with contract C. For edit-boundary pair actually occurring: expectation is Ans_S(τ(a),σ(b)); a violation occurs when fidelity fails at (a,b); surprise is violation at (a,b)∉H." This assumes selected transport at simulation layer? "Ans_S" maybe query on S. Fine.
+
+Potential issue: "A system with no transport cannot be surprised." But if no transport, no expectation; yes.
+
+Potential issue in Part V "A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one." Does it always fail? A table could have a component for each row? If intervention sets port, table maybe updates? But if table genuinely encodes organization's response to every admitted change, not excluded. Fine.
+
+Potential issue in Part VI "Interference. Γ={a,b}, S={{a}}: the full candidate fails although a subset succeeds. Success of a subset does not imply success of the whole; b is not made 'not a commitment' to repair this." The "interference" family with Γ={a,b}, S={{a}} means W={a} is support, {a,b} not support. But if S is defined as supports W⊆Γ, can {a} be support while {a,b} not? They said no upward closure assumed, so yes. But later finite monotone theorem assumes upward closure. Fine.
+
+Potential issue in "Infinitary support. Γ={d_n:|x|≤1/n}: every unbounded index set determines x=0; no minimal support and no singleton witness exists." Let's parse. Γ = set of components/constraints d_n: |x|≤1/n. A support set W⊆Γ such that Account(E|W,p) maybe determines x=0. Actually any infinite unbounded index set determines x=0, but no finite? If "unbounded" not "infinite"? Every unbounded index set determines x=0; if indices all n, unbounded set infinite. No minimal support because any infinite subset with unbounded indices determines x=0, and you can remove any finite subset from an unbounded set and still unbounded; no minimal infinite support. No singleton because finite doesn't determine. OK. "every unbounded index set determines x=0" is true.
+
+Potential issue in Part VII "Explanations that remove structure": "The rival's supposed structure is anchored to a deleted subnetwork, whose relation is full by (O)." A deleted component imposes full relation, so a subnetwork of deleted components? yes full. Fine.
+
+Potential issue in Part VIII "Approximate transport. With one-step discrepancy ε and an L-Lipschitz next-step map, e_n≤εΣ_{k<n}L^k. Without modulus, no accumulated bound follows." If L=1, bound is nε; okay. If discrepancy varies, etc. Fine.
+
+Potential issue in Part IX "Bearing. A criticism has target z, alleged defect δ, grounds g, and a connection. Let p_δ be question about the defect. Then Bearing(c,z,p) iff Account(E_c,p_δ). (K1) A criticism occurrence can exist when (K1) fails." If c is a criticism and E_c is organization of c? OK.
+
+Potential issue in Part IX "Reason use" not formal enough, but not.
+
+Potential issue in Part IX "Receipts. An evidence leaf is a reference to an event with an interpreted claim." "Negation exchanges them" i.e. receipts for ¬φ are N, but absent evidence stays. Fine.
+
+Potential issue in Part XI "Repair (P) does not rank alternatives. Losses outside P must be exposed." Fine.
+Potential issue in "Artistic effect" maybe.
+
+Potential issue in Part XII "Retained realization: ∀z∈C ∀i∈domT ∀η∈Exec(π,z,i;χ), η completes..." If there are no legitimate inputs or no executions, vacuous. They say execution families nonempty on legitimate inputs. OK.
+
+Potential issue "Retention fixed point ... union of post-fixed sets is greatest fixed point." We checked true. But "C⊆F(C) is invariant form" maybe if C⊆F(C), we say C is invariant? Usually invariant means F(C)=C. Post-fixed is C⊆F(C) maybe "invariant form" where states remain in C. Fine.
+
+Potential issue Part XIII "Recursion and universality": "∀n<ω ∀ admitted target chains of length n, ∃ owned enabling continuation." This is a claim that can scrutinize finite chains, not infinite. Fine.
+"Universality" UU requires for all contents ∃χ Enable and Can. UC similarly. UECS. Fine.
+
+Potential issue Part XIV "Dependence order. (O) and (Q) depend on nothing. (K) depends on (O) and contract. (F1),(F2),(A) depend on (O),(Q),(K). (E) depends on those. (S),(B),(D) depend on (E). (R) depends on (F1)–(F2) and physical provenance. (K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E). (N),(G) depend on Deploy and Build. (P),(EK) depend on (G),(E),Deploy. (RC),(U1)–(U3) depend on all." Let's check "Deploy depends on (R) and (CT1)" but Deploy also depends on "retained capability" Part XII (CT1, Can). OK. "Build depends on histories and (E)" but Build definition says "prepares a represented organization"; need R. So dependency order false. Also "Origin ... The content c may be organization, transport, or contract. When contract, originative act is finding question." Origin depends on Build and New. Build depends on R. So yes.
+
+But perhaps "Build" does not depend on R because "represented organization" might be defined by a pre-theoretic notion? But they explicitly define representation in Part IV and use "represented" in Part X. So fair.
+
+Could there be an actual infinite regress in construction: To build a first constructed representation, you need a represented organization. But maybe selected representations supply the first represented organizations; selection can produce representation (R) with Sel provenance. Then constructed can build new representations on top of selected. But definitions still circular? Let's see: To have Con(t), need Build(s,c,h,e) which prepares a represented organization. If s already has selected representation, then represented organization exists via Rep with Sel. So the base is selected. The circular definitions may be managed by well-founded provenance: Con requires prior represented organization, which might have selected provenance, no Con needed. That could avoid infinite regress. But the "represented organization" in Build might be the prior material, not the newly constructed c. The text: "Build ... prepares a represented organization for explanatory use of c" — maybe the "represented organization" is the representation of c being built, so circular. But they could mean it prepares c as an organization? It says "represented organization", not "organization". Could be intentionally using prior selected representations to build a new one. Not clear. The dependency order still omits R or maybe "histories and (E)" include "represented organization"? Histories maybe physical interpretation? No.
+
+We need be cautious. If we include this as defect, must show contradiction. The exact Part XIV: "Build depends on histories and (E)." Part X says "Build ... prepares a represented organization" and "by (R)" for Deploy only. However Build's wording not explicitly "(R)". But "represented organization" refers to R. It is fair. Could state: The asserted dependency order is therefore false; if Build's "represented organization" is formal, Build depends on R, making a cycle since R depends on Con and Con is defined via Build. This undercuts Derivation 6. Is this too interpretive? Maybe yes. But document uses "represented organization" term from Part IV. I think valid.
+
+Could include as a defect but not as top? Maybe top has clear ones.
+
+Need find more contradictions in Part XV: "A candidate under any of these headings counts as a defeat only once an episode satisfying (EK) has accepted it as one; until then the class stands." This says a mathematical error (counterexample) only defeats class once a knowledge-creation episode satisfying EK accepts it. But EK includes Account etc and Origin; might require the class? This is self-referential and unsupported. But maybe not a formal theorem.
+
+Potential issue: Part XV "A non-fallible selected transport... This refutes Derivation 3." But Derivation 3 claims no such. OK.
+
+Let's analyze Part II "Kinds are edit-signatures" and Part V "Why there is no anchoring condition" for possible false dichotomy. It says "Where C contains a change separating two kinds, (F1) already fails for a component anchored to wrong one. Where C contains no such change, the two are one kind on C by (K), and the condition would be asserting a distinction C does not contain. There is no third case." This is correct if identity of kinds by signatures. Fine.
+
+Potential issue: Derivation 1 "Kind preservation theorem" maybe "component of E has same signature as its anchor" but F1 compares projection of Sol_λ(k), not the anchor's component relation if λ(k) is a subnetwork with multiple components. The signature of a subnetwork is not defined in K except by extension. The theorem invents it. Not fatal.
+
+Potential issue: Part IV "transports" t=(π,τ,σ,λ) with π:X_D→X_E. They require F2 "π[Sol_D]=Sol_E" but π is function on all valuations, not relation. If Sol_D has multiple solutions and E fewer, image collapsed; that's ok but maybe "global fidelity" as equality of solution sets. Fine.
+
+Potential issue: Component fidelity F1 uses projection of Sol_λ(k), but if the anchor subnetwork has multiple components, its "constraints" maybe. OK.
+
+Potential issue: Part V "Non-circular dependence" says "The answer follows by evaluating E under its independent boundary conditions." But E may have cyclic constraints (Part II allows cyclic constraints), so evaluation might not be directional. They earlier admitted cyclic constraints. Non-circular dependence requiring independent boundary conditions could conflict with cyclic organizations; but an account may have cycles. Not formal.
+
+Potential issue in Part II "Cyclic constraints are admitted. Several solutions remain several." Then Part V "Non-circular dependence: answer follows by evaluating E under its independent boundary conditions." Cyclic constraints may not have direction to evaluate. But not a strict contradiction? It says E under independent boundary conditions; cyclic can be solved. We can leave.
+
+Potential issue in Part VII "Production and direction": They define H:=U_H, θ:=U_θ, L:=H cotθ. But "U_H" maybe unit? Not relevant.
+
+Potential issue in Part XII "Grades. Cap∞=∩_{q,r} Cap^{q,r}⊆Poss_Θ." This is plausible. "Finite-grade capability does not imply possibility at all grades." Fine.
+
+Potential issue in Part XIII "Universality. With E_Θ explanatory contents and P_Θ^{adv} coherently posed advanceable challenges, both specified independently of candidate, UU iff ∀c∈E_Θ ∃χ, Enable(s,U_c,χ)∧Can(ξ0,U_c;χ)." But Can is capability to perform task U_c; Enable? OK.
+
+Potential issue: Part XIV "Membership. The base class: interpretations supplying these data with correct typing, satisfying physical realization wherever a physical attribution is made." This is meta. Fine.
+
+Let's consider if there are false claims in Part 0 "Grievance 3" due to Derivation 3. We can mention with that defect.
+
+Potential defect: Part IV "Representation is derived" formula Rep uses `Faithful_C(t: Org_ℓ(o)→c)` but `Faithful_C` is not defined until Part V; forward reference okay. But in Part IV they import later. Not defect.
+
+Potential defect: Part IV "The one thing R takes from outside is Org_ℓ(o): which organization a physical occurrence instantiates at a grain. That is supplied by physical module." But Rep also requires Sel or Con; Con depends on Build etc; not only physical module. But maybe.
+
+Let's think of "two primitives": Part XIV claims physical module supplies Org_ℓ; normative relation N. But Part X Build requires "nontrivial binding construction"; is that physical module? Maybe it's in histories. Not issue.
+
+Could there be an error in "Derivation 4 Surprise requires incomplete history" if a system holds a selected transport with H strictly smaller than C but also has complete other transport; still can be surprised. The iff as "can be surprised" maybe if system holds selected incomplete; if system no transport cannot. But if system holds constructed transport only, can it be surprised? They define surprise only for selected. So "iff" by definition. Not false.
+
+Potential issue in "Derivation 10": They say the two persistence components are of one kind on any contract containing swap edit because swap invisible and leaves predictions unchanged. Is that correct? They are components (thing 1, thing2). Their signatures on contract include response to swap. If swap interchange identities, component1/component2? Need think: The contract contains swap edit that exchanges identities of the two things. In the target P, swap the two identities. In S1, two persistence components. Does F1 hold after swap? If λ sends persistence component1 to thing1's continuity subnetwork. Under swap edit, thing1 becomes thing2? The component relation for persistence component1 should match thing1? Depending on translation τ of swap edit in S1. If τ(swap) maybe swaps the component anchors? Then component1 now tracks thing2, component2 tracks thing1; their signatures? What is a component's signature under swap? If component identities in E are fixed, component1 under swap maybe if τ swaps its port translation. Derivation 1 says if F1 holds, signatures coincide. If swap is invisible, component1 and component2 might respond identically under swap (both maybe no change in relation?) depending. Could be.
+
+But Derivation 10 "The swap edit is invisible in sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2)." Is this applying Derivation 2 incorrectly? Derivation 2 says two candidates satisfying F1/F2/A are one account. Not about two components within one candidate being one kind. So this is a misapplication. They have two persistence components with swap edit; Derivation2 doesn't say components are same kind. They are of one kind if their signatures under contract coincide because edit doesn't distinguish them. But Derivation2 is about whole candidates. The citation is wrong. Could be a defect in Derivation 10: It invokes Derivation 2 for a claim it does not establish. Exact sentence: "On any contract containing it, the two persistence components are of one kind (Derivation 2)." Derivation 2 is about indistinguishable candidates, not components within one organization. This is a citation error, but perhaps the claim follows from kind definition. Minor.
+
+Could include if needed.
+
+Let's find more formal false statements.
+
+Part VI theorem proof maybe also has "The critical singletons are exactly ∩min S" maybe if "critical singleton" means globally indispensable? No, they define "critical block" not "critical singleton". The theorem first time uses terms undefined. That's a defect: terms "critical singleton" and "globally indispensable" not defined prior. But maybe natural. We can mention the labels reversed.
+
+Part VI "No upward closure and no minimal member are assumed." Then finite monotone theorem assumes upward closure and Γ∈S. OK.
+
+Part VII "For linear A and feature c^T, identification is ker A⊆ker c^T. (I4)" Is it "on every attainable y" or at a particular y? The condition ker A⊆ker c^T ensures global. If only at y, necessary? For a particular y with fibre nonempty, f[Z_y] singleton iff for all x1,x2 with Ax1=Ax2=y, c^T x1=c^T x2 iff ker A⊆ker c^T? Actually if Ax1=Ax2=y, difference ∈ker A. If ker A⊆ker c^T, yes. If y not full, condition implies global. For a fixed y, if ker A not subset ker c^T but their intersection with Ax=y? Let x1,x2 = x0+u. Difference u∈ker A. If c^T u can be nonzero for u∈ker A. To have f[Z_y] singleton for that y, need every u∈ker A that leads to? Actually x0+u with Ax0=y for any u∈ker A yields same fibre. So if ∃u∈ker A with c^T u≠0, then f[Z_y] has at least two values (x0 and x0+u) provided Z_y nonempty. Thus necessary. So same. Fine.
+
+Part VII "Odd-order skew-symmetric matrices" maybe "under removal of oddness" contrast "the family contains one [invertible]" with 2x2 matrix, but removal of oddness from "every odd-order real skew-symmetric matrix is singular" yields "every real skew-symmetric matrix is singular"? The family includes even order; one invertible. Good.
+
+Potential issue Part VIII "Relational transport ... with backward condition required for equivalence rather than one-sided abstraction." They define forward as simulation; backward as "if y→y' then exists z...". "Composition of relations preserves both directions when intermediate scopes agree." Fine.
+
+Potential issue in Part VIII "Historical index. A proposition indexed to a contract remains that proposition when a later theory changes current contract. A new index is a new claim." OK.
+
+Potential issue in Part IX "What a test refutes" maybe as formal false. Let's decide include. It is exact and clear. If "B and I are background" maybe not. In logic, from T∧B∧I⇒O, and ¬O, cannot infer ¬T alone. You can infer ¬T ∨ ¬B ∨ ¬I. The sentence's "since B and I are background" is not a formal escape; background assumptions can be false. The earlier Part 0 "Systems can be wrong about their transports, observations, criticisms, capacities." Even background can be wrong. So K3 is false unless B and I are known true, which is not stated. We can include perhaps as less severe but still. Actually the document's own "What a test refutes" in "A failed test knocks down the bundle" maybe they intended that? The exact sentence "For T∧B∧I⇒O, an established ¬O yields ¬T, since B and I are background." As a theorem in Part IX, it's wrong. We'll include.
+
+Potential issue: Part XI Repair formula has ProducedBy(Δ,ξ,ξ';O) but O are obligations; ProducedBy third argument O rather than Δ? Fine.
+
+Potential issue: Part XI "An epistemic obligation requires a correct account, or the correction of a use through one, to be deployable." EK requires Account(c,p_c) for originative c. If c is a contract, Account(c,p_c) is odd: Account expects organization and transport? But they said content c may be contract; if c is contract, can Account(c,p_c)? Account requires explanatory candidate E for question p, not a contract. In Origin, c can be contract. In EK, Origin(s,c,p_c,h,e_c)∧Account(c,p_c). If c is a contract, what does Account(c,p_c) mean? Account relation is for account content? Maybe Account of contract as answer? Not defined. This is a potential type error: Part X allows c in Origin to be a contract, Part XI requires Account(c,p_c), but Account is a predicate on pairs (E,p,t,Γ), where E is organization, not arbitrary content c. They haven't defined Account for contract content. Could be a defect. Need inspect.
+
+Part V: Account(E) for pair (E,p,t,Γ), E organization. Part X Origin: "The content c may be an organization, a transport, or a contract. When it is a contract, the originative act is the finding of a question." Part XI EK: "∃o∈O_ep ∃c,p_c,e_c [ ... Origin(s,c,p_c,h,e_c) ∧ Account(c,p_c) ...]". It uses `Account(c,p_c)`, but if c is a contract, not organization. Maybe `Account(c,p_c)` could mean c is an account candidate? They use c variable for content, but Account expects an organization candidate. They elsewhere say "The scope of Account(c,p_c) is the contract fixed at e_c." So they treat c as explanatory account, not contract? But Origin c can be contract. The types are inconsistent. Could report as defect: The same variable c is allowed to be a contract by Origin but then passed to Account, whose first argument is an organization E; no definition is given for Account of a contract. This makes EK ill-typed / overclaims that question-finding yields created explanatory knowledge. That's a serious internal consistency issue. Let's verify exact sentences:
+Part XI: "∃o∈O_ep ∃c,p_c,e_c [e_c⪯h e∧¬o(ξ)∧o(ξ')∧Origin(s,c,p_c,h,e_c)∧Account(c,p_c)∧c∈Result(Δ)∧Deploy(s,c,ξ';U_c)∧ProducesVia(...)]."
+Part X: "The content c may be an organization, a transport, or a contract. When it is a contract, the originative act is the finding of a question."
+Part V: Account(E) where E is an organization.
+Thus if c is a contract, `Account(c,p_c)` is not defined. This is a clear type error/contradiction. Could include. Very good defect.
+
+Need see if they might use "c" as an account (organization) in EK despite Part X saying can be contract. The Origin predicate includes c actual content to address p; if c is contract, originative question-finding. But EK wants knowledge creation; maybe question-finding alone with Account(c,p_c) nonsensical. They could restrict c to organizations in EK, but not stated. The same variable c also `Deploy(s,c,ξ';U_c)` with c as content; deployable contract might be OK. `Account(c,p_c)` not.
+
+Another type issue: In Part X "Deploy(s,c,ξ;U)" c is content, can be organization, transport, contract? R_{β,ℓ} set of contents deployable. But Deploy requires "holds a representation of c"; if c is a transport or contract, representation of c? They allow c may be contract and Deploy? Maybe maybe.
+
+Part XI "Created explanatory knowledge" also requires `c∈Result(Δ)` and `ProducesVia(Δ,c,o;ξ,ξ')`, so c as content created causing obligation. If c is contract, possible. Account(c,p_c) still.
+
+This is a strong defect.
+
+Potential issue with `Attempt(s,c,p,h,e)` in Origin: "c is actually used to address p." If c is a contract, using a contract to address p? It says originative act finding question, but a contract is not an answer to a question? Could be. Fine.
+
+Include maybe as defect #4 or #5.
+
+Potential issue in Part X "Newness: New(s,c,h,e) iff ¬∃d∈R_<e(s,h), d≡_ℓ c." R_<e is set of contents deployable before e. If c is a new contract? OK. But equivalence ≡_ℓ not defined for contracts/transports. It says grain ℓ. Not formal. Could be too vague but not a sharp defect.
+
+Potential issue Part XI "Artistic effect, purpose, aesthetic reason" `R⊆A×K×F`, `G⊆K×F`, `N⊆A×K×Rsn×V_A`. Achievement `R[a,k]≠∅ ∧ R[a,k]⊆G[k]`. This doesn't define F etc. Not severe.
+
+Potential issue Part XII "Possibility is absence of a law-imposed limit short of perfection..." vague.
+
+Potential issue Part XIII "Universality" definitions UU/UC require "Enable(s,U_c,χ)" but Enable not defined prior? Maybe from Part XIII? They mention "admitted enabling continuation". Could be okay.
+
+Potential issue Part XIV "Indices, not primitives. Grain ℓ, boundary β, continuity Ω, and contract C are declared indices. Every claim is relative to them; none is a predicate that could be true or false." But `continuity Ω` maybe physical? Not problem.
+
+Now let's compile list with exact quotes and explanations.
+
+We need number defects in order of severity.
+
+Possible final list:
+1. Part V Baseline coherence not independent (implied by F2 + non-vacuity).
+2. Part VI Finite monotone theorem conclusion reversed/undefined.
+3. Part XI EK type error: Account(c,p_c) with c possibly contract.
+4. Part IV Constructed provenance includes selected survivor, contradicting distinct provenances.
+5. Derivation 3 proof fails because ignores population/admissibility.
+6. Derivation 2 false: same answer profile doesn't make component signatures pairwise same.
+7. Part V Non-circular dependence "or is left as it was" makes condition vacuous.
+8. Part V "four conditions" vs five/six.
+9. Part IX K3 false logical inference.
+10. Part XIV dependency order/Build circular or omitted Rep.
+Maybe include more.
+
+Let's consider severity order. The question asks "List defects most serious first." A false statement that undermines foundation maybe #1 Derivation 3, #2 finite monotone? But #1 baseline coherence clear but perhaps local. Derivation 3 is load-bearing. The finite monotone theorem with reversed labels is clear. The type error EK serious. We need order.
+
+Maybe:
+1. Derivation 3: selected transports underdetermined proof invalid; ignores population and admissibility. This undermines key theorem.
+2. Part IV Constructed provenance second disjunct collapses selection/construction, contradicting central two provenances.
+3. Part XI EK type error: Account(c,p_c) undefined for c as contract.
+4. Part V Baseline coherence false independent.
+5. Part VI Finite monotone theorem mislabels/incorrect.
+6. Derivation 2 false.
+7. Non-circular dependence vacuous.
+8. K3 false inference.
+9. Four conditions mismatch.
+10. Dependency order circular/omission.
+
+Need ensure each defect exact quotes.
+
+Let's formulate each.
+
+Defect 1: Derivation 3.
+
+Quote exact:
+"Let \(t\) be selected on a finite history \(H\subsetneq C\). For every \((a,b)\in C\setminus H\) there exists a transport \(t'\), also surviving on \(H\), with a different value at \((a,b)\)." 
+Maybe also quote proof "Survival on H constrains only {L_j(a,b):(a,b)∈H}. Alter L_j(a,b) for one (a,b)∉H to any other admitted relation; the result survives on H and differs at (a,b)." 
+What wrong: Selected provenance defined as survival in a population T under variation operator μ (Part IV). Proof constructs arbitrary transport by changing unseen component relation, but does not show t' lies in T, reachable by μ, or even physically admitted. It also assumes another admitted relation exists. Thus the theorem proves only existence of some formal extension, not a selected survivor. Example: let T be a singleton {t}; no other selected survivor exists; the derivation's conclusion fails though H⊊C. This is a counterexample to claim (unless one adds hidden assumption |T|>1). Good.
+
+Defect 2: Part IV Constructed second disjunct.
+
+Quote:
+"Constructed. There is an episode (Part X) whose construction witness prepares \(t\), and in which \(t\), or the organization it targets, is available as a represented target; or \(t\) is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness. Write \(\operatorname{Con}(t;h,e)\)."
+Also quote "A transport ... has exactly one of three provenances" and "A selected transport has no represented target and no criticism in its history; a constructed one has both."
+What wrong: The second disjunct defines constructed as a selection survivor (a population, variation-and-survival history) with no represented target/criticism. But Part IV also says exactly one provenance and that selected has no represented target/criticism, constructed has both. Thus any ordinary selected survivor that is in its population satisfies Con, making provenances not exclusive. This contradicts central distinction. Need maybe mention "on a population that contains it" is trivially true if t is selected member; if population is candidate transports, yes.
+
+Defect 3: Part XI EK type error.
+
+Quote:
+"The content \(c\) may be an organization, a transport, or a contract." (Part X)
+And "\(\operatorname{Origin}(s,c,p_c,h,e_c)\land \operatorname{Account}(c,p_c)\)" in EK formula.
+Or exact: "∃o∈O_ep ∃c,p_c,e_c [ ... Origin(s,c,p_c,h,e_c)∧Account(c,p_c) ...]" 
+What wrong: Account is defined in Part V only for an explanatory candidate \( \mathcal E=(E,p,t,\Gamma)\) with E an organization. If c is a contract, `Account(c,p_c)` is not defined. The formula does not restrict c to organizations, though Part X explicitly allows c as contract. Thus EK is ill-typed or relies on an undefined predicate for question-finding. Good.
+
+Defect 4: Baseline coherence false independent.
+
+Quote exact:
+"**Baseline coherence.** \(\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing\): the components of \(E\) are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+What wrong: It is implied by Non-vacuity plus F2. Non-vacuity gives Sol_D(1,b0) nonempty. F2 includes \(π[Sol_D(1,b0)]=Sol_E(1,σ(b0))\). Since π is a function, image of nonempty set is nonempty. Therefore baseline coherence follows. So the statement "not implied" is false. Good.
+
+Defect 5: Part VI finite monotone theorem labels reversed.
+
+Quote:
+"If \(\Gamma\) is finite, \(\mathsf S\) is upward closed, and \(\Gamma\in\mathsf S\), then the critical singletons are exactly \(\bigcap\min\mathsf S\) and the globally indispensable ones are exactly \(\bigcup\min\mathsf S\)."
+What wrong: The proof itself establishes deletion of d from Γ preserves support exactly when some minimal support omits d, so globally indispensable elements (those in every support) are intersection of minimal supports. Elements in union of minimal supports are those critical for some minimal support. The theorem statement has these swapped. Counterexample Γ={a,b,c}, min S={{a,b},{a,c}}, upward closure: intersection {a}, union {a,b,c}; indispensable is {a}, while b,c are critical for their minimal supports. Good.
+
+Defect 6: Derivation 2 false.
+
+Quote:
+"Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide."
+What wrong: The conditions do not fix internal decomposition. Two accounts can satisfy F1,F2,A but have different numbers/structures of active components (e.g., one computes L=H cot θ with a single component, another with an internal hidden port and two components). No bijection between components preserving signatures exists, so "components pairwise of one kind" is false. Derivation 1 only says each component matches its own anchor, not that the two candidates' components match each other. Good.
+
+Defect 7: Non-circular dependence vacuous.
+
+Quote:
+"There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+What wrong: The last disjunct "or is left as it was" makes the condition trivially satisfiable: any admissible edit that removes/replaces a block but leaves answer unchanged also counts. Non-circular dependence should require the answer to change when active commitments are removed/replaced. As written, it does not rule out idle parts. We can say if there is at least one edit removing a block and answer "left as it was", condition holds. Good.
+
+Defect 8: Part IX K3 false inference.
+
+Quote:
+"For \(T\land B\land I\Rightarrow O\), an established \(\neg O\) yields \(\neg T\), since \(B\) and \(I\) are background. (K3)"
+What wrong: From ¬O and implication, the valid conclusion is ¬T∨¬B∨¬I. One can infer ¬T only if B and I are also established/held. The sentence calls B and I "background", but that is not a logical premise. Since the document earlier allows systems can be wrong about background, this is false as a theorem. Good.
+
+Defect 9: Part V "four conditions" vs list.
+
+Quote:
+"The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies \(\operatorname{Account}(\mathcal E)\) exactly when the following four conditions hold, each a condition on supplied relations under the changes in \(C\)."
+Then headings: Component fidelity, Question fidelity, Non-circular dependence, Non-vacuity, Baseline coherence. Equation has F1∧F2∧A∧NonCircular∧NonVacuous∧Coherent.
+What wrong: It says four conditions but lists five (or six conjuncts). Part 0 also says "all four conditions of Account." This inconsistency may matter for attack A "all four conditions" missing baseline. We can mention. Is it serious? It's a minor internal inconsistency, but can include. Need list lower.
+
+Defect 10: Dependency order false/circular.
+
+Quote:
+"Build depends on histories and (E)." (Part XIV)
+And "Build ... prepares a represented organization for explanatory use of \(c\)" (Part X).
+What wrong: Build's definition uses "represented organization," which is the Rep relation from Part IV. Rep depends on Con, and Con is defined via Build (Part IV). This makes Rep/Build mutually recursive, contrary to the claimed non-circular dependence order used in Derivation 6. At minimum the dependency order omits Rep. Good maybe.
+
+Could there be other defects more clear than #9 or #10? Let's think of Part V "The following four conditions" is not substantive but still defect.
+
+Potential issue in Part 0 "all four conditions of Account" while equation has six. We can perhaps combine with #9.
+
+Potential issue in Part XIV "Indices, not primitives" says contract C not predicate true/false, but Part III "A question can be wrong" may be a contradiction. Let's examine exact:
+Part XIV: "**Indices, not primitives.** Grain ℓ, boundary β, continuity Ω, and the contract C are declared indices. Every claim is relative to them; none is a predicate that could be true or false."
+Part III: "**A question can be wrong.** A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements. Its formulation is still an event. Exposing the defect is another question with its own contract."
+Is "wrong" a truth value? They say question can be wrong; if a question is wrong, there is a fact about whether it picks out target etc. But not necessarily a predicate? This is a tension. However "none is a predicate that could be true or false" might mean indices are not propositions; but they can be correct or incorrect? "wrong" in Part III says so. Could be a defect, but maybe less formal. We can leave.
+
+Potential issue: Part V "A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one." Is this always true? Suppose table stores the function from edits to answers and component relation is updated by intervention? If F1 requires relation under edit equals target projection; a lookup table with an entry for each edit could satisfy component fidelity? They say "A table that genuinely encodes an organization's response to every admitted change is not a table in that sense and is not excluded." So they handle. Not defect.
+
+Potential issue in Part VI "Hard-to-vary: For explanatory jobs F⊆F', Pres(F')⊆Pres(F)." This is mathematically true if Pres(F) is set of variations that account for all jobs. But if "jobs" include obligation constraints not monotone? Yes subset monotonic.
+
+Potential issue in Part VII "Identification: For linear A and feature c^T, identification is ker A⊆ker c^T. Repeating rows changes no kernel; an independent calibration can." Not false.
+
+Potential issue in Part VIII "Approximate transport e_n≤εΣ_{k<n}L^k" If f_n discrepancy not constant but one-step discrepancy ε, okay. "Without a modulus, no accumulated bound follows." Fine.
+
+Potential issue in Part IX "Bearing: Bearing(c,z,p) iff Account(E_c,p_δ)." If a criticism occurrence can exist when K1 fails, but Bearing defined as Account of criticism? Maybe fine.
+
+Potential issue in Part XI "Repair_{O,P}(ξ,ξ';Δ) iff ∃o∈O[¬o(ξ)∧o(ξ')]∧∀r∈P[r(ξ)⇒r(ξ')]∧ProducedBy(Δ,ξ,ξ';O)." It includes `ProducedBy(Δ,ξ,ξ';O)` with O obligations. Not previously defined. Not a proof issue.
+
+Potential issue Part XII "Can_Ω,β(ξ,T;χ) requires an owned retained realization or an owned, physically admitted, finite construction of one under same continuity and resource contract." But "construction" here may be physical construction, not defined; could be circular with Part X "Build" but they say finite construction. Not top.
+
+Potential issue Part XIII "Universality: UU iff ∀c∈E_Θ ∃χ Enable(s,U_c,χ)∧Can(ξ0,U_c;χ)." This universally quantifies over all explanatory contents c, but Enable uses U_c which is "declared use task" for c. Maybe not always defined. Fine.
+
+Potential issue in Part XV "A candidate under any of these headings counts as a defeat only once an episode satisfying (EK) has accepted it as one; until then the class stands." This is strange: a counterexample to a theorem is a defeat whether accepted or not. It conflicts with mathematical objectivity. The line could be a philosophical claim about class standing, not formal. Maybe not include.
+
+Let's maybe include at least 10 defects. Need ensure not overstate. Let's refine.
+
+We should quote exact sentences exactly from document. The user asked (b) exact sentence or formula quoted. We'll copy.
+
+Need include "END OF REPORT" at end exactly.
+
+Let's draft final answer with numbered defects, sorted.
+
+We need decide most serious first. I propose:
+
+1. Derivation 3 invalid proof/selection underdetermination
+2. Part IV constructed/selected collapse
+3. Baseline coherence redundancy false
+4. Part VI finite monotone theorem reversal
+5. Part XI EK ill-typed Account(c,p_c) with c as contract
+6. Derivation 2 false internal decomposition
+7. Non-circular dependence vacuous
+8. Part XIV dependency order false/circular Build/Rep
+9. K3 invalid inference
+10. Part V four/five condition mismatch
+
+Maybe #5 more serious than #4? The user asked most serious first. The baseline coherence false is very concrete. The construction/selection collapse central. We'll order maybe:
+- Derivation 3 (load-bearing)
+- Constructed/selected collapse (central)
+- Baseline coherence false
+- Finite monotone theorem reversed
+- EK type error
+- Derivation 2 false
+- Non-circular vacuous
+- Dependency order circular
+- K3 false
+- Four conditions mismatch
+
+Need ensure all are "defects" not just unclear. I should phrase carefully.
+
+Let's verify exact wording for Part IV "has exactly one of three provenances":
+"A transport \(t\) between organizations of a physical system has exactly one of three provenances, determined by its history in the physical module:" Yes. Good.
+
+The Constructed quote:
+"Constructed. There is an episode (Part X) whose construction witness prepares \(t\), and in which \(t\), or the organization it targets, is available as a represented target; or \(t\) is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness. Write \(\operatorname{Con}(t;h,e)\)."
+Good. Need explain with "if the second disjunct is intended, any selected survivor qualifies".
+
+But careful: In selected provenance, the population \(\mathcal T\) of candidate transports may not "contain \(t\)" before variation? They say t is a member of T that survived. A population is a set; "contains it" likely yes. So selected t is survivor of variation-and-survival history on a population T containing t. Thus Con by second disjunct. So yes.
+
+For finite monotone theorem, need explain "critical singleton" undefined? We can note terms are used without prior definition but our main point reversed. The exact sentence first "critical singletons" and "globally indispensable". Good.
+
+For baseline coherence, need mention if π is a function. The transport t has \(\pi:X_D\to X_E\) on stated scope. If Sol_D(1,b0) nonempty, image nonempty. Good.
+
+For Derivation 3, exact quote maybe include the proof phrase. The proof says "The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\)." But if t is a transport with π,τ,σ,λ, altering L_j is not enough? But we can say no guarantee t' ∈T.
+
+Could provide counterexample: Let \(\mathcal T=\{t\}\), H⊊C. Then no t' exists in T, so conclusion "there exists a transport t', also surviving" false if "also surviving" means selected survivor in T. However if they mean formal transport satisfying survival condition, there could be outside T. But definition of selected requires in T. Good.
+
+For Derivation 2, perhaps exact quote. Need maybe show a concrete counterexample with fields:
+Target D with ports H,θ,L relation L=H cotθ.
+Candidate E1: one component k with footprint {H,θ,L} and relation L=H cotθ.
+Candidate E2: two components: k1 footprint {H,α} relation α=H; k2 footprint {α,θ,L} relation L=α cotθ. Both F1? Let's see E2's active components anchor to D subnetwork components. If λ(k1) anchor is subnetwork over port H with relation α=H? Need target D component? Let's define D has a component j with equation L=H cotθ. To anchor k1 to H identity and k2 to j? For F1, for each active component of E, anchor subnetwork such that projection equals component relation. For E2 k2 contains hidden α; anchor λ(k2) can be the full D component j; projection of Sol_j over H,θ,L gives L=H cotθ, while L_k2 under edits is ∃α, α=H∧L=α cotθ projected over H,θ,L = L=H cotθ. So F1 holds. k1 maybe anchor to separate subnetwork for H? Need target D may have a component assigning H? Maybe not. But we can just state logically possible without full formal construction. The theorem says any two satisfying F1/F2/A. We can use simpler: one candidate has a single component, the other replaces it by two components one of which has an extra internal hidden port; both global behavior same; F1 can hold for each because each component can anchor to same target subnetwork and projection gives its relational behavior. This demonstrates no pairwise kind bijection. Good.
+
+For non-circular dependence, exact quote. Need phrase: Because of the "or is left as it was" disjunct, the condition is satisfied whenever an edit removing a block leaves answer unchanged. That is the opposite of non-circular dependence. Good.
+
+For dependency order:
+Exact quotes:
+Part X: "\(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) holds when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers."
+Part XIV: "Build depends on histories and (E)."
+Part IV: "\(\operatorname{Rep}_\ell(o,c)\iff\exists t\,[\operatorname{Faithful}_C(t:\operatorname{Org}_\ell(o)\to c)\land(\operatorname{Sel}(t)\lor\operatorname{Con}(t))]\)."
+Part IV Constructed uses episode/Build? We may not need. Explain: "represented organization" is Rep. Since Rep uses Con, and Con uses Build, Build cannot be defined before/without Rep. The dependency order omits this and Derivation 6's proof by following order fails. Good.
+
+For K3:
+Quote exactly. Need maybe if held as background, the inference is valid under an extra assumption B∧I. The formula as a logical theorem is false.
+
+For four conditions mismatch:
+Quote exact Part V. Need maybe not include Part 0 to keep concise. Mention Part 0 also relies on "all four conditions" but equation E has six conjuncts. Good.
+
+Could there be issue in Part V equation E quote "Account iff (F1)∧(F2)∧(A)∧NonCircular∧NonVacuous∧Coherent." The six conjuncts. Good.
+
+Let's ensure no duplicate/overlapping. Some defects overlap: Baseline coherence redundancy tied to account; four conditions mismatch; non-circular. Fine.
+
+Need maybe include only defects we can state per format. We'll write 10. Is that too many? The document is long, likely ok. Need keep each explanation 2-5 sentences. We can maybe combine some to reduce. But user asked one number per defect. We can list 10.
+
+Let's make final answer concise but complete.
+
+Need ensure exact quotes match document. We'll copy exact text.
+
+Let's draft:
+
+1. **Part XVI, Derivation 3** (claim quote). Explain invalid.
+
+2. **Part IV, "Three provenances"** quote Constructed and "A transport... exactly one". Explain contradiction.
+
+3. **Part V, "Baseline coherence"** quote. Explain redundancy.
+
+4. **Part VI, "Finite monotone theorem"** quote. Explain swapped.
+
+5. **Part XI "Created explanatory knowledge" / Part X "Origin"** quote "The content c may be..." and formula. Explain ill-typed.
+
+6. **Part XVI, Derivation 2** quote. Explain false.
+
+7. **Part V, "Non-circular dependence"** quote. Explain vacuous disjunct.
+
+8. **Part XIV, "Dependence order" with Part X Build** quote. Explain circular/omitted.
+
+9. **Part IX "What a test refutes"** quote K3. Explain invalid logical inference.
+
+10. **Part V "Account" opening** quote four conditions. Explain mismatch.
+
+Let's ensure most serious order. Maybe type error #5 should be higher than baseline? But all serious. We'll keep.
+
+Could maybe include "Derivation 3" as first, then "Constructed/selected collapse" second. Good.
+
+Let's write in final with no extra intro except maybe "Defects found:". End with END OF REPORT.
+
+Need be mindful of "exact sentence or formula" maybe we should put in quotes. We'll do.
+
+Let's produce final answer.
