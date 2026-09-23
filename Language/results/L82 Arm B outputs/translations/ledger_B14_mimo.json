@@ -1,0 +1,150 @@
+{
+ "paragraph": "B14",
+ "whose": "mimo, under L82",
+ "sentences": {
+  "1": "The incoming nurse read the handover notes left by the night sister.",
+  "2": "The notes said the sister planned to move the patient nearer the desk so that his breathing would be easier to monitor.",
+  "3": "The notes also recorded that his temperature had been normal at midnight.",
+  "4": "The last line told the day staff to chart his medication at six."
+ },
+ "bin": [
+  {
+   "sentence": 2,
+   "words": "The notes said",
+   "reason": "Attribution to the notes (their saying). The content is TOLD in notes_world."
+  },
+  {
+   "sentence": 2,
+   "words": "the sister planned",
+   "reason": "Want/attribution (the night_sister's intending). The content of the plan is TOLD in notes_world; the sister's identification as doer of the planned move goes with this binning."
+  },
+  {
+   "sentence": 3,
+   "words": "The notes also recorded",
+   "reason": "Attribution to the notes (their recording). The content is TOLD in notes_world."
+  },
+  {
+   "sentence": 4,
+   "words": "told the day staff to chart his medication at six",
+   "reason": "Reported command. Commands go to the bin and nothing is claimed from them. 'at six' is a time, outside the language. 'the day staff' and 'his medication' are mentioned only in the command context and nothing is claimed from them."
+  }
+ ],
+ "leftover": [
+  "Sentence 2: The notes said — Attribution to the notes (their saying). The content is TOLD in notes_world.",
+  "Sentence 2: the sister planned — Want/attribution (the night_sister's intending). The content of the plan is TOLD in notes_world; the sister's identification as doer of the planned move goes with this binning.",
+  "Sentence 3: The notes also recorded — Attribution to the notes (their recording). The content is TOLD in notes_world.",
+  "Sentence 4: told the day staff to chart his medication at six — Reported command. Commands go to the bin and nothing is claimed from them. 'at six' is a time, outside the language. 'the day staff' and 'his medication' are mentioned only in the command context and nothing is claimed from them."
+ ],
+ "whatifs": [],
+ "lines": {
+  "nurse": {
+   "mark": "said",
+   "sentence": 1,
+   "standing": "CLAIMED",
+   "text": "[CLAIMED] nurse is a nurse; response to press: heavy and standing; may be a DOER",
+   "prolog_clauses": [
+    "kind(nurse, nurse) :- line(nurse)."
+   ]
+  },
+  "notes": {
+   "mark": "said",
+   "sentence": 1,
+   "standing": "CLAIMED",
+   "text": "[CLAIMED] handover_notes are notes; response to press: not stated",
+   "prolog_clauses": [
+    "kind(handover_notes, notes) :- line(notes).",
+    "body(handover_notes, not_stated) :- line(notes)."
+   ]
+  },
+  "nsis": {
+   "mark": "said",
+   "sentence": 1,
+   "standing": "GIVEN",
+   "text": "[GIVEN] night_sister is a sister; response to press: heavy and standing; may be a DOER",
+   "prolog_clauses": [
+    "kind(night_sister, sister) :- line(nsis)."
+   ]
+  },
+  "read1": {
+   "mark": "said",
+   "sentence": 1,
+   "standing": "CLAIMED",
+   "text": "[CLAIMED] read1: nurse READS handover_notes",
+   "prolog_clauses": [
+    "holds(reads(nurse, handover_notes)) :- line(read1)."
+   ]
+  },
+  "leave1": {
+   "mark": "said",
+   "sentence": 1,
+   "standing": "GIVEN",
+   "text": "[GIVEN] leave1: night_sister LEFT handover_notes",
+   "prolog_clauses": [
+    "holds(left_behind(night_sister, handover_notes)) :- line(leave1)."
+   ]
+  },
+  "pat": {
+   "mark": "said",
+   "sentence": 2,
+   "standing": "TOLD in notes_world",
+   "text": "[TOLD in notes_world] patient is a patient; response to press: heavy and standing; may be a DOER",
+   "case": "notes_world",
+   "case_kind": "told",
+   "prolog_clauses": [
+    "kind(patient, patient) :- line(pat)."
+   ]
+  },
+  "desk": {
+   "mark": "said",
+   "sentence": 2,
+   "standing": "TOLD in notes_world",
+   "text": "[TOLD in notes_world] desk is a desk; response to press: not stated",
+   "case": "notes_world",
+   "case_kind": "told",
+   "prolog_clauses": [
+    "kind(desk, desk) :- line(desk).",
+    "body(desk, not_stated) :- line(desk)."
+   ]
+  },
+  "plan1": {
+   "mark": "said",
+   "sentence": 2,
+   "standing": "TOLD in notes_world",
+   "text": "[TOLD in notes_world] plan1: DO move patient toward desk SO THAT patient's breathing is easier to monitor",
+   "case": "notes_world",
+   "case_kind": "told",
+   "prolog_clauses": [
+    "claim_plan(plan1, move(patient, toward_desk), easier_to_monitor(breathing(patient))) :- line(plan1).",
+    "changes(move(patient, toward_desk), distance_from(patient, desk)) :- line(plan1)."
+   ]
+  },
+  "temp1": {
+   "mark": "said",
+   "sentence": 3,
+   "standing": "TOLD in notes_world",
+   "text": "[TOLD in notes_world] patient's temperature was normal at midnight",
+   "case": "notes_world",
+   "case_kind": "told",
+   "prolog_clauses": [
+    "holds(temperature_was_normal_at_midnight(patient)) :- line(temp1)."
+   ]
+  },
+  "lastline": {
+   "mark": "said",
+   "sentence": 4,
+   "standing": "GIVEN",
+   "text": "[GIVEN] handover_notes have a last line",
+   "prolog_clauses": [
+    "holds(has_last_line(handover_notes)) :- line(lastline)."
+   ]
+  }
+ },
+ "words_split": [],
+ "readings_chosen": [
+  "Sentence 1: 'left by the night sister' — readings: (a) placed and the sister departed (verb: leave = leave something somewhere), (b) written/created by the sister (verb: leave = leave behind a record). Chosen: (a) placed and departed.",
+  "Sentence 2: 'the sister planned' — readings: (a) intended/wanted (want), (b) made arrangements/preparations (action already begun). Chosen: (a) want -> bin.",
+  "Sentence 2: 'his breathing would be easier to monitor' — readings: (a) the monitoring of his breathing would become easier, (b) his breathing itself would improve and become easier to monitor. Chosen: (a) monitoring becomes easier.",
+  "Sentence 4: 'told the day staff to chart his medication at six' — readings: (a) reported command (told = instructed/ordered someone to do something), (b) reported statement (told = said to). Chosen: (a) reported command -> bin.",
+  "Sentence 4: 'the last line' — readings: (a) the last line of the handover_notes (contextual), (b) the last line of some other document. Chosen: (a) last line of the handover_notes."
+ ]
+}
