@@ -1,0 +1,936 @@
+Let me work through this carefully. I need to examine nine changes (R26, R27, R28, R29, R41, R43, R51, R54, R55) against the revised text, checking declarations, coherence, and verdict moves.
+
+Let me start by carefully reading each change and the surrounding text.
+
+**R26** — Part VIII, Functional transport, line 349. WORDING change. Old: "**Functional transport.** If π∘S_a = T_a∘π for every generator a," New: "**Functional transport.** Let S_a be a target process and T_a a represented process for each admitted generator a. If π∘S_a = T_a∘π for every generator a,"
+
+This introduces S_a and T_a as names. Does it change a claim? It introduces notation that is then used in R27 (Approximate transport references "as S_a and T_a are in functional transport"). It's a WORDING change — it just names the processes. Let me check: does the old text leave S_a, T_a unbound? Yes — old text says "If π∘S_a=T_a∘π for every generator a" without saying what S_a and T_a are. The new text defines them. This seems genuinely a clarification/erratum — the notation was previously unbound. Actually wait — does adding "Let S_a be a target process and T_a a represented process" constrain anything? It says "a target process" and "a represented process" — for each admitted generator a. Hmm, in functional transport, the setup is: S_a is the target's next-step under generator a, T_a is the represented process's. The quantification "for each admitted generator a" — fine.
+
+Check coherence: R27 refers to "as S_a and T_a are in functional transport". Good, that's consistent. Does R26 change any claim? The old text had S_a and T_a appearing without definition; a careful reader would have to infer. The new wording fixes that. No claim change. STANDS likely.
+
+But wait — is there a subtlety? "Let S_a be a target process and T_a a represented process for each admitted generator a." Then "If π∘S_a = T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes." Proof: "π S_b S_a = T_b π S_a = T_b T_a π; induct." Fine.
+
+Hmm, one thing: "a target process and a represented process" — singular "a target process" for each generator. That's fine.
+
+**R27** — Part VIII, Approximate transport, line 359. CLAIM change. Declaration: (T2) now states its hypotheses and defines its quantity. S is a target and T a represented next-step process, as in functional transport; d is a metric on the represented states; one-step discrepancy d(πSz, Tπz) ≤ ε at every state z of a stated scope; T is L-Lipschitz for d. e_n = d(πSⁿz, Tⁿπz), e_0 = 0, satisfies bound whenever z, Sz, ..., S^{n-1}z lie in that scope.
+
+Let me check the new wording against the declaration. New text: "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport, and let d be a metric on X_E. With one-step discrepancy d(πSz, Tπz) ≤ ε at every state z of a stated scope, and with T L-Lipschitz for d, the discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz) (so e_0 = 0), satisfies e_n ≤ ε Σ_{k<n} L^k whenever z, Sz, ..., S^{n-1}z lie in that scope."
+
+Declaration says "d is a metric on the represented states" — the text says "a metric on X_E". X_E is the value domain of organization E, the represented organization. Consistent.
+
+Now the math: e_n = d(π Sⁿ z, Tⁿ π z). e_0 = d(π z, π z) = 0. Good. One-step: e_{n+1} = d(π S^{n+1} z, T^{n+1} π z) = d(π S (Sⁿ z), T (Tⁿ π z)). Hmm, we need π S w and T π w where w = Sⁿ z. The one-step discrepancy condition is d(π S w, T π w) ≤ ε for every state w of a stated scope. So we need Sⁿ z in the scope for n = 0..n-1, i.e., z, Sz, ..., S^{n-1} z in scope. That's exactly the stated condition. Then e_{n+1} ≤ d(π Sⁿ z... wait let me redo:
+
+e_{n+1} = d(πS(Sⁿz), T(π Sⁿ z)) + d(T π Sⁿ z, T Tⁿ π z)? No: e_{n+1} = d(π S^{n+1} z, T^{n+1} π z). Insert Tⁿ π z: = d(π S (Sⁿ z), T (Tⁿ π z)) ≤ d(π S (Sⁿz), T π (Sⁿz)) + d(T π (Sⁿz), T (Tⁿ π z)) ≤ ε + L · d(π Sⁿ z, Tⁿ π z) = ε + L e_n. With e_0 = 0, e_n ≤ ε Σ_{k<n} L^k. Correct. And the scope condition: we applied the one-step bound at w = Sⁿz for n = 0,...,N-1, so z, Sz, ..., S^{N-1}z must be in scope. Yes. Also Lipschitz: T is L-Lipschitz for d. d(π Sⁿ z, Tⁿ π z) — wait, is π Sⁿ z in X_E? π: X_D → X_E. S is a process on the target, so S: X_D → X_D presumably, so π Sⁿ z ∈ X_E. T: X_E → X_E. Good.
+
+Now does the declaration match exactly? The declaration says "the one-step discrepancy d(πSz, Tπz) is at most ε at every state z of a stated scope" — text says that. "T is L-Lipschitz for d" — text says "with T L-Lipschitz for d". "the discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz), with e_0 = 0, satisfies the bound whenever z and its first n−1 successors under S lie in that scope" — text: "satisfies e_n ≤ ε Σ_{k<n} L^k whenever z, Sz, ..., S^{n-1}z lie in that scope". Matches.
+
+Does the new wording claim more or less than the declaration? The declaration doesn't mention "Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one." — those are unchanged sentences (they were in the old text too? Let me check the old wording. The old wording given is only: "**Approximate transport.** With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k." Hmm, but the revised text has more: "Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one." Those sentences appear in the revised text after the (T2) tag. Are they part of the old text? The change's old wording is just the first sentence. So presumably the rest of the paragraph ("Without a modulus...") is unchanged from the current text. Actually the old wording given is the passage replaced; the rest is unchanged. Hmm, but the old wording shows only the sentence replaced. So "Without a modulus, no accumulated bound follows" is unchanged text. Fine.
+
+Wait — check: does the new text actually fix a problem? The old text said "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k". The old text didn't define e_n or the scope. So this is a genuine erratum. The declaration matches. Does it change a claim? The old claim was a bound under unstated hypotheses; the new claim is the bound under stated hypotheses. Strictly, the new wording is more precise. A reader could no longer conclude the bound holds without the scope condition. But that's what the declaration says. So the declaration accounts for it.
+
+Hmm, but is there an issue with "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport"? In functional transport, S_a and T_a are indexed by generator a. Here S and T are single next-step processes. "as S_a and T_a are in functional transport" — meaning S plays the role of S_a and T the role of T_a. Fine.
+
+One possible issue: the declaration says "S is a target and T a represented next-step process, as in functional transport". Text says "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport". Matches.
+
+Also check: does (T2) as a tag clash? (T2) is used in Part XV "A mathematical error. A counterexample to the finite monotone theorem, (I2), (O1), (T2), (CT2)...". Fine, same theorem.
+
+Hmm wait, there's a subtlety: in the revised text the tag (T2) appears after the sentence "...whenever z, Sz, ..., S^{n-1}z lie in that scope. (T2)". And (T1) is the relational transport condition. Both in Part VIII. Fine.
+
+Now, could the change move a verdict? N20 is named. N20 is about string counting — approximate transport. The verdict says only the second method (rounding to nearest inch) works at any size; the first accumulates error. Under the old text, (T2) was stated without scope hypotheses: "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k." Under the new text, the bound requires z, Sz, ..., S^{n-1}z to lie in a stated scope. Does that change the verdict on N20? The second method: errors never accumulate because rounding wipes them — this corresponds to a non-Lipschitz or resetting situation? Hmm. Actually N20's first method is the accumulating-error case; the bound e_n ≤ ε Σ L^k shows error grows. The scope condition is about the states staying in scope. For N20, the verdict is about accumulated error vs. rounding. Does the scope clause change anything? The second method's string stays exact; the first accumulates. The revision adds the scope hypothesis — a careful reader would now note that the bound only applies within a stated scope. Does that move the verdict? The verdict on N20 doesn't turn on the scope condition; it turns on accumulation vs. rounding. I think the verdict is unchanged. Both old and new text support "accumulated error grows; the first method fails". Actually, hold on: does the new text's scope requirement weaken the bound such that the first method can no longer be concluded to fail? No — the first method's failure is that error accumulates without bound; the bound e_n ≤ ε Σ L^k (with L ≥ 1 presumably) grows. The scope condition is satisfied for the string scenario (states are string lengths). So no move.
+
+Hmm, but there might be an issue: for the second method, the errors are wiped out — that's not a Lipschitz accumulation story at all; it's about the rounding map. Actually one could model the second method as T being non-expansive... whatever. The verdict is fixed and the change doesn't move it.
+
+So R27 seems to STAND. But let me double check the declaration's claim "(T2) now states its hypotheses and defines its quantity" — yes.
+
+Wait, one more thing on R27: the declaration says "d is a metric on the represented states". The text says "let d be a metric on X_E". Is X_E "the represented states"? E is the representing organization (the model), D is the target. Hmm! In Part V, "An explanatory candidate for question p is an organization E, a transport t from D to E". So E is the representing organization, D the target. π: X_D → X_E. So X_E is the representing side, not "represented states". The declaration says "a metric on the represented states". Hmm, is that a mismatch? In functional transport: "Let S_a be a target process and T_a a represented process". So T_a is "a represented process" — the process in the representation. So "represented states" = states of the represented process = X_E. OK so terminology: E is the representation; its processes are "represented processes". Consistent with R26's "T_a a represented process". Fine. The declaration's phrasing matches the text's terminology. Good.
+
+**R28** — Part IX, Bearing, line 371. CLAIM. Declaration: (K1) now defines its terms: p_δ is the question whether the target has the alleged defect in respect of p, and E_c is the explanatory candidate the criticism offers for that question.
+
+New text: "Let p_δ be the question whether z has δ in respect of p, and E_c the explanatory candidate (Part V) that the criticism offers for p_δ. Then Bearing(c,z,p) ⟺ Account(E_c, p_δ). (K1)"
+
+Check: z is the target, δ the alleged defect — from the preceding sentence: "A criticism has target z, alleged defect δ, grounds g, and a connection." Yes. So the new wording defines p_δ and E_c. Matches declaration.
+
+Does it claim more/less? "the question whether z has δ in respect of p" — the declaration says "the question whether the target has the alleged defect in respect of p". Matches. "E_c the explanatory candidate (Part V) that the criticism offers for p_δ" — declaration: "the explanatory candidate the criticism offers for that question". Matches.
+
+Old text: "Let p_δ be the question about the defect." — vague. New is precise. Does the change alter the verdict on cases? O27, O40, O50, N11 named.
+
+Consider O27: robot reinterprets the test; the expert framed the choice; the robot's reinterpretation is the decisive step, mostly the robot's. Under (K1), a criticism's bearing requires Account(E_c, p_δ). The robot's criticism targets the test's assumption (sensor reading true). Hmm, does the new definition of p_δ change anything? The old text left p_δ as "the question about the defect" — ambiguous. The new text pins it as "whether z has δ in respect of p". Would that change the verdict on O27? The verdict is about credit, which is Part XI (ProducedBy), not (K1). (K1) is about whether a criticism bears. I think the verdicts are unaffected.
+
+Hmm, wait. Let me think about whether the new wording subtly changes what counts as a criticism having bearing. Old: p_δ = "the question about the defect" — a reader might read it as the question whether the defect is real, or the question of how to fix it. New: "whether z has δ in respect of p". That's a yes/no question. Hmm, but questions in this theory are (D, C, b_0, Q, O_p, ρ_p) with Q a set-theoretic operation with codomain Y_p. A "whether" question would have Y_p = {true, false} or similar. That's fine — Part VII obstruction has "a Q that returns a reachability truth value".
+
+But here's a thought: is "the question whether z has δ" well-posed as a question in the sense of Part III? It needs a target D (the organization of z?), a contract, a query. The text says "Its formulation is still an event" — defective questions are allowed. OK.
+
+Now, does the new wording introduce any incoherence? "in respect of p" ties p_δ to the original question p. Fine.
+
+Potential issue: the declaration says the change is an erratum making terms explicit. Does the new wording claim something the old didn't? Under the old wording, a reader could read p_δ as the question "how does the defect bear on the claim" or "what is the defect". The new wording fixes it as whether z has δ. That's a genuine fixing, declared. OK.
+
+Check coherence with the next sentence (R29's sentence): "A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." Fine.
+
+**R29** — Part IX, Bearing, line 377. CLAIM. Declaration: The condition for an adverse signal to be a criticism is now that an organization represents it as grounds for an alleged defect in a target, not that it represents how it bears.
+
+Old: "An adverse signal is not a criticism until an organization represents how it bears."
+New: "An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target."
+
+Hmm. Is this a real change of claim? The old wording "represents how it bears" is ambiguous — could mean "represents the bearing relation", i.e., represents the signal as grounds for a defect in a target. Actually "how it bears" = the way it bears = as grounds for a defect. Hmm. The new wording spells out "as grounds for an alleged defect in a target". Given (K1) defines Bearing(c,z,p) via Account(E_c, p_δ), the criticism must offer a candidate for p_δ — i.e., represent the signal as grounds for the defect. So the new wording aligns with (K1).
+
+Does the new wording claim more or less than "represents how it bears"? "Represents how it bears" — a reader might take this as requiring the organization to represent the bearing relation (the account of why the signal bears on the defect). The new wording requires representing the signal as grounds for a defect — which is arguably weaker or different: it requires the representation to be *of the signal as grounds*, not *of how/why it is grounds*. Hmm, actually the declaration says: "not that it represents how it bears". So the drafters think there's a difference. Is the declaration accurate? Under the old wording, could a reader conclude that an adverse signal counts as criticism only if the organization represents how the signal bears (i.e., provides the bearing account)? Under the new wording, the organization must represent the signal as grounds for an alleged defect. The difference: old might be read as requiring the representation of the bearing relation itself; new requires representing the signal as grounds.
+
+Hmm, but note (K1): Bearing requires Account(E_c, p_δ) — the criticism must offer an explanatory candidate for p_δ. So the criticism does need an account. The sentence in question is about when an adverse signal *is* a criticism (occurrence), not about whether it *bears*. "A criticism occurrence can exist when (K1) fails." So the existence condition is weaker: representing the signal as grounds for an alleged defect.
+
+I think R29 is fine as a clarification. But let me consider whether the new wording is *weaker* than the old in a way that changes verdicts. Cases: O3, O27, O40, O50, N11.
+
+O3 (Nadia): she builds a representation of unseen cards. Not about criticism. Unaffected.
+
+O27/O40/O50: the robot notices the sensor assumption. Is the robot's noticing a criticism? Under old wording: the robot must represent "how it bears" — the adverse test result bears on the candidates. Under new: the robot represents the result as grounds for an alleged defect in a target. In O27 the robot finds a third fault — the decisive step is its reinterpretation. Hmm, the verdicts are about credit, not about whether criticism occurred. I don't see a move.
+
+N11: Jana and Kasia. Kasia judges her own drafts — self-criticism. Under the new wording, Kasia's identification of faults ("a claim with no support") is representing the draft as having a defect — grounds for an alleged defect in a target. Yes, that's criticism. Under old wording, "represents how it bears" — she represents how the defect bears on the essay? Hmm. Either way, Kasia's activity counts as criticism, and Jana's marks don't (they tell her nothing about what worked). The verdict: both created what is good in their final essays. Hmm wait, the verdict says "Yes, both did" — every sentence was written by the student; the teacher added no content; Jana's marks didn't shape what she wrote. So the verdict is about creation (Build/Origin), not criticism per se. The change doesn't move it.
+
+So R29 stands, probably.
+
+Hmm, but let me reconsider. Is there a subtle issue with "an organization represents it as grounds for an alleged defect in a target"? The term "alleged defect" ties to the criticism tuple (target z, alleged defect δ). Fine. "in a target" — the target z. Fine.
+
+**R41** — Part XII, Grades, line 473. CLAIM. Declaration: Part XII now defines the grades q,r, Admit^{q,r}_Θ, Cap^{q,r}_Ω and Poss_Θ that (CT3) and (CT4) relate, with Poss_Θ the tasks achievable at every grade.
+
+New text: "**Grades.** The accuracy grades of the physical module (Part XIV) form a directed preorder Q_Θ, increasingly demanding and short of perfection; q ∈ Q_Θ is a grade of performance and r ∈ Q_Θ a grade of retention. Admit^{q,r}_Θ is the set of tasks physically achievable at grades (q,r); Cap^{q,r}_Ω(ξ) is the set of tasks with an owned realization, or an owned construction of one, at those grades, as owned capability requires; and Poss_Θ = ∩_{q,r} Admit^{q,r}_Θ is the set of tasks achievable at every grade, which is what possibility means under Tasks. Then Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ; Cap^∞ = ∩_{q,r} Cap^{q,r} ⊆ Poss_Θ. (CT3, CT4) Finite-grade capability does not imply possibility at all grades."
+
+Check the declaration: it says the change defines q, r, Admit, Cap, Poss. The text does. "with Poss_Θ the tasks achievable at every grade" — text: "Poss_Θ = ∩_{q,r} Admit^{q,r}_Θ is the set of tasks achievable at every grade". Matches.
+
+Now check coherence. "The accuracy grades of the physical module (Part XIV) form a directed preorder Q_Θ, increasingly demanding and short of perfection". Part XIV says: "The physical module Θ: substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and Org_ℓ". So accuracy grades are listed as part of Θ in Part XIV. Good, the pointer works.
+
+"q ∈ Q_Θ is a grade of performance and r ∈ Q_Θ a grade of retention." Then "Admit^{q,r}_Θ is the set of tasks physically achievable at grades (q,r)". OK.
+
+"Cap^{q,r}_Ω(ξ) is the set of tasks with an owned realization, or an owned construction of one, at those grades, as owned capability requires" — check against "Owned capability" earlier in Part XII: "Can_{Ω,β}(ξ,T;χ) requires an owned retained realization or an owned, physically admitted, finite construction of one under the same continuity and resource contract." Consistent.
+
+"which is what possibility means under Tasks" — Tasks: "Possibility is the absence of a law-imposed limit short of perfection on performance and retention". And ∩ over all grades = achievable at every grade. Good.
+
+Now: does the new wording claim more than the declaration? The declaration mentions defining the grades and the three sets. The text also adds "Then Cap ⊆ Admit; Cap^∞ ⊆ Poss" (which were the old (CT3), (CT4) statements) and "Finite-grade capability does not imply possibility at all grades." The old text had "Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ;" as the opening of Grades, and presumably the rest followed. So the change inserts definitions before the existing statements. Fine.
+
+Hmm, wait: the old wording is just "**Grades.** Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ;" — so the old Grades paragraph began with the inclusion. The new text prepends definitions. The declaration covers that.
+
+Now, is there a problem? "increasingly demanding and short of perfection" — a directed preorder. ∩_{q,r} over all grades. If the preorder is directed and increasingly demanding, then ∩ over all (q,r) ∈ Q_Θ². Hmm, "∩_{q,r}" — is the intersection over all pairs (q,r)? Presumably yes. And "Cap^∞ = ∩_{q,r} Cap^{q,r}". OK.
+
+Potential issue: does "Poss_Θ = ∩_{q,r} Admit^{q,r}_Θ" match "possibility means under Tasks"? Tasks says possibility is the absence of a law-imposed limit short of perfection on performance and retention. ∩ over all grades of achievable tasks = tasks achievable at every grade = no limit short of perfection. Good.
+
+Coherence check: does anything elsewhere in the text use these notions in a conflicting way? Part XV (D) mentions... no. Part XIII uses Can and CanAdv. Part XIV "Dependence order" doesn't mention grades. OK.
+
+Does R41 move verdicts? O1, O42, O49, O52, N24 named.
+
+O49 ("Owned means capable"): a circular definition is offered — "a routine is the robot's own when the robot can run it, and the robot can run it when it is its own". The verdict: circular, gives nothing; two histories give the distinction. The text's "Owned capability" says: "Ownership is grounded in the processes and resources the boundary includes, never in the capability being attributed: 'owned because it can, and can because owned' grounds neither." Does R41 affect this? R41 defines Cap^{q,r}_Ω as "the set of tasks with an owned realization, or an owned construction of one, at those grades, as owned capability requires". This is consistent — capability requires ownership, not vice versa. No move.
+
+O42 (New board, old memory): continuity declared as memory and routines; the same robot finished. Part XII "System boundary and continuity": "A replaced part that preserves the declared continuity leaves the same system". R41 doesn't touch that. No move.
+
+O52 (route that started and was stopped): active route definition in Part IX. R41 doesn't touch. No move.
+
+O1 (forecaster): retreat, no explanation. Part VIII "Historical index" and Part III scope. R41 doesn't touch. No move.
+
+N24 (two sorts of matter): barriers, universality. Part XIII. R41 defines grades; (U1)-(U3) use Can and CanAdv. Hmm, does N24's verdict depend on grades? Bram is right: no single machine; barriers. The text's Part XIII "Barriers": "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable." R41 doesn't change that. No move.
+
+So R41 stands? Let me look more carefully for a defect. Hmm.
+
+Actually, wait. Let me re-read the declaration: "Part XII now defines the grades q,r, Admit^{q,r}_Θ, Cap^{q,r}_Ω and Poss_Θ that (CT3) and (CT4) relate, with Poss_Θ the tasks achievable at every grade."
+
+The text defines all of those. But does it define anything else that the declaration doesn't mention, which changes a claim? It says "The accuracy grades of the physical module (Part XIV) form a directed preorder Q_Θ, increasingly demanding and short of perfection". That's a structural claim about the grades — a new claim, but it's part of defining the grades. The declaration covers "defines the grades". I think it's within the declaration.
+
+Hmm, one thing to check: "q ∈ Q_Θ is a grade of performance and r ∈ Q_Θ a grade of retention" — so both q and r range over the same preorder Q_Θ. Then Admit^{q,r} for pairs. And ∩_{q,r} means over all pairs. Fine.
+
+Another check: is there a clash with the notation "Cap^∞"? The text writes "\mathsf{Cap}^\infty=\bigcap_{q,r}\mathsf{Cap}^{q,r}". Fine.
+
+Also: does the revised text elsewhere use "Q_Θ"? Part XV? No. Part XIV lists "accuracy grades". OK.
+
+Hmm, actually wait. Let me check whether the claim "Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ" is consistent with the definitions. Cap^{q,r}_Ω = tasks with an owned realization at grades (q,r). Owned realization requires the task be physically achievable at those grades (RetReal requires executions complete with o ∈ T[i]). So Cap ⊆ Admit. Good. And Cap^∞ ⊆ Poss_Θ follows. Good.
+
+So R41 seems sound. But hold on — the situations list includes O1 and N24 which seem unrelated to grades. Maybe the drafters listed them because (CT3)/(CT4) relate to possibility. Let me think again about N24. N24: two sorts of matter; each sort's computer can do any calculation its sort allows; some calculations only in one sort. Bram right: no single machine. Under the text, "Poss_Θ is the set of tasks achievable at every grade" — possibility is a property of the physics. Hmm, in N24, is the pair "one machine"? The text's barrier notion: "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable." Part I: "Where two media cannot exchange what they bear, the contents that only one of them can bear form, for a system built of the other, a barrier in the sense of Part XIII." That's unchanged. R41 doesn't touch it. No move.
+
+OK R41 stands.
+
+**R43** — Part XIII, Barriers, line 489. CLAIM. Declaration: Part XIII now defines Enable in (U1) and (U2): it holds when χ is an admitted, non-question-begging enabling condition for the system and the task.
+
+New text: "A finite list of failures is not a barrier proof; a bypass refutes a proposed barrier. Enable(s,T,χ) holds when χ is an admitted, non-question-begging enabling condition for s and the task T."
+
+Check: (U1) uses "Enable(s,U_c,χ)"; (U2) uses "Enable(s,A_p,χ)". So the definition matches usage: Enable(s, T, χ). Declaration matches.
+
+Coherence: "for s and the task T" — s is the system, T the task. In (U1), T = U_c (a task? U_c is written as a task: "Can(ξ_0, U_c; χ)" — yes, U_c is a task). In (U2), A_p — "CanAdv(ξ_0, p; χ, J_p, C_I)" hmm, (U2) says "Enable(s,A_p,χ) ∧ CanAdv(ξ_0,p;χ,J_p,C_I)". So A_p is the task for challenge p. OK.
+
+Wait — is there an issue? The definition says "an admitted, non-question-begging enabling condition for s and the task T". And the Barriers paragraph already says: "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable." So "admitted, non-question-begging enabling condition" is already a phrase in the text. The new sentence defines Enable(s,T,χ) as holding when χ is such a condition for s and T. Coherent.
+
+Does it change a claim beyond the declaration? The declaration says it defines Enable. The text does exactly that. Does the old text leave Enable undefined? Old text: "A finite list of failures is not a barrier proof; a bypass refutes a proposed barrier." — Enable appears in (U1)/(U2) undefined. So the erratum fixes it. Good.
+
+Hmm, but is there a circularity concern? "Enable(s,T,χ) holds when χ is an admitted, non-question-begging enabling condition for s and the task T." The term "enabling condition" is used to define "Enable". Is that a circular definition? It's like defining "Solvable(x) iff x has a solution". It's a mild definitional extension, not a substantive claim. The barrier definition uses "admitted, non-question-begging enabling condition" as the operative notion; Enable is just the relation form. I think it's acceptable — it's a relabeling, not a reduction. But hmm, could a careful reader object that "enabling condition" is itself undefined? The barrier paragraph uses it as primitive-ish. The change doesn't make it worse; it just names the relation. OK.
+
+Does R43 move verdicts? O49, N24 named. O49: circular definition gives nothing — unrelated to Enable. N24: barrier — "every admitted, non-question-begging enabling condition leaves the relevant capability unavailable". In N24, for a system built of one sort, the capability to do the other sort's calculations is unavailable because no enabling condition can cross the barrier. Under the new definition, Enable(s,T,χ) requires χ to be an enabling condition for s and T. In N24, no χ enables cross-matter tasks. So UC fails for the pair. Bram right. Unchanged.
+
+R43 stands.
+
+**R51** — Part XVI, Derivation 2, lines 554–562. CLAIM, change of claim. This is the big one. Let me read carefully.
+
+Declaration: Derivation 2 no longer says that two candidates for one question that satisfy (F1), (F2) and (A) on C are one account whose components are pairwise of one kind. It now says: (i) their answer profiles coincide on C; (ii) where a bijection of their active components gives each pair one anchor (the same subnetwork of D with port translations onto the same ports of D), each pair is of one kind on C and, so far as (F1),(F2),(A) reach, the two are one account; and without that premise nothing more follows. Its Consequence now covers only candidates that differ in which component carries which anchor.
+
+Old claim: "Two candidates E, E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide."
+
+New claim: as above.
+
+Now, is the new claim correct? Let me check (ii). If φ pairs active components k ↔ φ(k), and each pair has one anchor — "the same subnetwork of D with port translations onto the same ports of D". Hmm, "the same subnetwork of D with port translations onto the same ports of D" — meaning λ(k) = λ(φ(k)) as subnetworks of D, and the port translations from the anchor's ports to D's ports are the same? Let me parse: "gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D". So λ(k) = λ'(φ(k)) = the same subnetwork N ⊆ D, and the port translations map N's ports onto the same ports of D. Then by Derivation 1, k has the signature of its anchor λ(k) on the ports its translation names; φ(k) has the signature of the same anchor on the same ports. So their signatures coincide under the identity footprint bijection (or the composition of translations). So k and φ(k) are of one kind on C. Good.
+
+Wait, but there's a subtlety: Derivation 1 says "every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C, up to the port translation." So sig_{τ[C]}(k) = sig_C(λ(k)) up to port translation. If λ(k) = λ'(φ(k)) = N and the port translations are the same, then sig_{τ[C]}(k) and sig_{τ'[C]}(φ(k)) both equal sig_C(N) up to the same translation, hence to each other. But "of one kind" between components of E and E' is defined in Part II: "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection". Yes. Good.
+
+The proof in the text: "composing the one translation with the inverse of the other gives a footprint bijection under which the two signatures, read on C, coincide." OK.
+
+Now the key question: is the new claim weaker than the old in a way that matters, and does the declaration accurately describe it? The old claim asserted unconditionally that the two candidates are one account with pairwise same-kind components. The new claim requires the shared-anchor premise for the kind conclusion. Is the old claim actually false without the premise? Yes: two candidates could satisfy (F1),(F2),(A) with different decompositions of D — e.g., redundant routes (Part VI: Γ = {a,b}, S = {{a},{b},{a,b}}) — two different supports, different anchors, same answer profile. They're not pairwise of one kind. So the old Derivation 2 was too strong. The revision fixes it. Good.
+
+Hmm, wait. Let me check the old claim's proof: "Immediate from Derivation 1 and (A)." That's invalid: Derivation 1 gives each component the signature of *its own anchor*, not of the other candidate's components. So the old proof was wrong. The new proof is correct. So R51 is a genuine fix.
+
+Now, does the new wording claim more than the declaration? Let me check the "Without the premise of (ii) nothing more follows" paragraph: "candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8)."
+
+Check the pointer "Derivation 9" — Derivation 9 is "Output descriptions do not determine accounts": "If M_0, M_1 have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both." Parallel and priority wiring are an instance. So candidates with the same outputs but different account claims — yes, relevant: two candidates with one answer profile can differ in account claims. Good pointer.
+
+"Part VI, redundant routes" — Γ = {a,b}, S = {{a},{b},{a,b}}: each is contributory. Yes, two different supports. Good.
+
+"A coarsening is not a recoding (Derivation 8)" — Derivation 8: "The result does not apply to coarsenings, changed boundaries, or lost event identities." Good pointer.
+
+Now the Consequence: "Where two candidates that satisfy (F1), (F2) and (A) differ only in which component carries which anchor, the contract does not contain the distinction; a claim that one assignment is 'really' right is a claim that some admitted change separates them, and must supply it. The remedy is a finer contract, which is a new question."
+
+Hmm. "differ only in which component carries which anchor" — that's the case covered by (ii). Good.
+
+Now — does the revised text elsewhere still rely on the old, stronger Derivation 2? This is the key coherence question. Let me search for references to "Derivation 2" in the revised text.
+
+Part II, "Kinds are edit-signatures": "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivation 2 uses kinds in this sense." — In the revised Derivation 2, part (ii) does use kinds in this sense (components of E and E'). Good, consistent.
+
+Part V, "Why there is no anchoring condition": "There is no third case. Derivation 1 makes this exact." — refers to Derivation 1, fine.
+
+Part XV: no Derivation 2 reference? Let me check... Part XV (A) mentions... no. (C) "This refutes Derivation 1". OK.
+
+Part XVI Derivation 10 (R55's context) references Derivation 2 — that's R55 itself.
+
+Any other reference? Let me scan the whole text for "Derivation 2":
+- Part II: "Derivation 2 uses kinds in this sense." ✓ consistent.
+- Part XVI Derivation 10: "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)." — that's R55's new wording, which is consistent with the revised Derivation 2.
+
+Also "Derivation 2" in the dependence order? No.
+
+Now, does the revised Derivation 2's claim "so far as (F1), (F2) and (A) reach, the two are one account on C" clash with anything? Part VI "Redundant routes": "Two systems with the same output table may differ in which routes are active; the semantics represents the difference (Derivation 9)." And "a route is a support of the candidate, a member of S". So two candidates with the same answer profile but different supports are different candidates — consistent with "Without the premise of (ii) nothing more follows".
+
+Hmm, but wait: does "so far as (F1), (F2) and (A) reach, the two are one account" contradict Part VI's redundant routes? In redundant routes, Γ = {a}, {b}, {a,b} — these are different *candidates* (different Γ sets) for the same p, each satisfying Account. Under (ii)'s premise: is there a bijection of active components giving each pair one anchor? {a} vs {b} have different anchors (a and b are different components), so no. So (ii) doesn't apply. Good.
+
+Now, does the change move verdicts? O10, O11, O18, O24, O36, O45, O46, N15, N17, N25 named.
+
+O10 (two thermostats): Rosa right about what the devices are; Emil's difference matters only for the warm-room question. This turns on kinds being contract-relative. Derivation 2's revision doesn't change the kind definition. No move.
+
+O11 (apprentice, three locks): Monday blind fitting, Tuesday making something new, Wednesday reuse. Turns on Build/New/relay. No move.
+
+O18 (one tooth): the tooth is hers, the rest is relay. Build: "A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance." Unchanged. No move.
+
+O24 (unused joint setting): two arrangements agreeing on every tested setting and almost every untested one, differing at one unused setting; verdict: two arrangements, record hasn't chosen; one reachable setting is enough. Hmm! This is the interesting one. Under the OLD Derivation 2, two candidates satisfying (F1),(F2),(A) on C are one account — so if the contract doesn't contain the separating change, they'd be one account. But the verdict says "They are two arrangements, and the record has not chosen between them. One reachable setting is enough." Hmm. Under the old Derivation 2, would the theory say they are one account (contradicting the verdict)? Under the revised Derivation 2, without the shared-anchor premise, nothing follows — they're different candidates with one answer profile. So the revision moves the theory *toward* the verdict. The declaration accounts for this: it says the Consequence now covers only candidates that differ in which component carries which anchor. Hmm, but does the declaration account for the move on O24? The declaration describes the claim change; the move toward the fixed verdict is a consequence of the claim change as described. The task (d) says "A move toward it that the change's declaration does not account for is an undeclared change of claim." The declaration does describe the weakening, which is what produces the move. So it's accounted for.
+
+Wait, but actually, let me think about O24 more carefully. Two wiring arrangements that agree on every tested setting and almost every untested one, differing at one unused (but reachable) setting. The contract C: what changes are admitted? If the contract contains the separating edit, then the two arrangements differ in behavior under an admitted edit — then they can't both satisfy (F1)/(A) on that contract... hmm, actually they could both be accounts of different questions, or one fails fidelity. Hmm. Let me think: the two arrangements are candidates; the separating setting is reachable (physically admitted). If the contract includes it, then the two have different answer profiles under (A)? No wait — (A) requires Ans_E(τ(a),σ(b)) = Ans_p(a,b). If both satisfy (A) on C containing the separating edit, then their answer profiles coincide on C (by Derivation 2(i), which still holds). But if they differ in behavior at that edit, then... hmm, their answer profiles would differ, contradiction. So they can't both satisfy (A) on a contract containing the separating edit — unless the difference doesn't show in the answer profile. Hmm, "They differ at a single joint setting of two switches" — the difference is in the arrangement's internal behavior, but the output might be the same? The verdict says "One reachable setting is enough" — enough to say they are two arrangements and the record hasn't chosen.
+
+Under the old Derivation 2, if both satisfy (F1),(F2),(A) on C, they are "one account at grain C" — which would conflict with the verdict that they are two arrangements. Under the revised Derivation 2, if they anchor different subnetworks (different wiring), then (ii) doesn't apply, and they're different candidates with one answer profile. That matches the verdict. So R51 moves O24 toward the fixed verdict. Good — that's a repair, not a defect. And the declaration accounts for it (the weakening is declared).
+
+Hmm, but hold on. Does the declaration account for it? The declaration says the Consequence now covers only candidates that differ in which component carries which anchor. O24's arrangements differ in wiring — different anchors. So the Consequence doesn't apply to them, and the old "one account" claim no longer applies. The declaration describes exactly this. OK.
+
+O36 (premise both routes use): P critical in each route as written; a route could be rewritten without it but nobody has written that version. Part VI: "the supports assessed are subsets of the written Γ, whether or not anyone has set them out, not a support someone could write with commitments outside Γ". And (B) criticality. Derivation 2's revision: redundant routes. Hmm, O36's verdict turns on (B) and the written-Γ clause, unchanged. No move.
+
+O45 (spring nobody mentioned): second spring in the account from the start, connected and sufficient; already a route. Part VI: "a route already present in the candidate is a route whether or not anyone has described its work". Unchanged. No move.
+
+O46 (cable that used to be a spring): after deletion, author reassigns surviving component to a cable; the spring account didn't survive. Part VI: "a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's." Unchanged. No move.
+
+N15 (miscopied notes): Salma repairs "less"→"more"; has the teacher's explanation; created something small. Build: "Reconstruction by a learner is construction; relay is not." And "A small binding newly prepared inside received content is construction of that binding". Unchanged by R51. No move.
+
+N17 (transistor): B explains, A thinly. Turns on (E) and question-relativity. No move.
+
+N25 (turtles): none explains; dog vs turtle idle difference. Turns on (E) non-vacuity/non-circularity and Derivation 9-ish. Hmm, actually N25's "the difference between them is idle" — under the old Derivation 2, two candidates that satisfy (F1),(F2),(A) on C are one account — the dog and turtle stories, if both satisfy (E) on the same contract, would be one account, so the difference is idle. Under the revised Derivation 2, do the dog and turtle stories share anchors? Hmm. The dog story and turtle story are different organizations (different components: dog vs turtle). Do they have the same anchors in D? The target D is "the universe needs holding up" — hmm, actually the target is the universe, and the dog/turtle are components of E anchored to... nothing in D (nothing inside the universe can reach the holder). Hmm.
+
+Wait, this is interesting. Under the old Derivation 2, the dog and turtle stories would be "one account at grain C" — their components pairwise of one kind and answer profiles coincide. That supports the verdict "the difference between them is idle". Under the revised Derivation 2, we'd need the shared-anchor premise. Do the dog and turtle components share an anchor? The anchor λ(k) for the dog component would be a subnetwork of D. But nothing in D (the universe) corresponds to the dog — the dog is outside the universe. So λ(dog) would be... a deleted subnetwork? Part VII "Explanations that remove structure": "The rival's supposed structure is anchored to a deleted subnetwork, whose relation is full by (O)." Hmm, but here it's not removal; the holder is extra structure not in D.
+
+Hmm, actually for the dog/turtle stories: the account E contains a component "dog holds up the universe". Its anchor λ(dog) ⊆ D. What subnetwork of D could anchor it? If D has no component corresponding to the holder, then λ(dog) must be some subnetwork whose projected relation equals the dog-component's relation. Since the dog is outside the universe and unobservable, the dog component's relation under edits... Hmm, this is getting deep. Let me step back.
+
+The verdict on N25 says the dog and turtle stories "make the same empty claim" and "the difference between them is idle". Under the revised Derivation 2, whether they are "one account so far as (F1),(F2),(A) reach" depends on the shared-anchor premise. If the dog and turtle components anchor to the same subnetwork of D (e.g., both to a deleted/empty subnetwork, or to the universe's boundary conditions), then (ii) applies and they're one account — idle difference. If they anchor to different subnetworks, then (ii) doesn't apply and "nothing more follows" — they'd be different candidates with one answer profile. Would that make the difference non-idle? Hmm. The verdict says the difference is idle *because nothing observable depends on it*. Under the revised theory, the difference being idle would be expressed by: no admitted change separates them (same signature/kind), so the kind-label "dog" vs "turtle" is not a distinction the contract contains — Part II: "a signature is built from a component's relation under each (a,b) ∈ C, not from the values its ports take"; "two components that differ only in those values are of one kind on C, whatever the difference is called".
+
+Hmm, so even under the revised Derivation 2, the dog and turtle components, if they have the same signature on C (which they would, since nothing in C separates them — no observation favors one), would be of one kind by (K) directly. So the idle-difference verdict survives. Actually, Derivation 2 is about pairs of candidates; the kind comparison between the dog component and the turtle component is direct via (K) and the Part II definition "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection". If their signatures coincide (they do, since no admitted change separates dog from turtle), they're of one kind regardless of anchors. So N25's verdict stands under the revision.
+
+Hmm, but wait: would the dog and turtle stories even satisfy (F1)? (F1) requires each component's anchored subnetwork's projected solution to equal the component relation. If the dog anchors to subnetwork N_dog and the turtle to N_turtle, and both satisfy (F1)... The point is the verdict doesn't require Derivation 2 at all; it follows from (K). So no move. Actually — hmm, does it? Let me reconsider: the verdict says the difference is idle. Under the old Derivation 2, the theory would say they are one account (if both satisfy (F1),(F2),(A)). Under the revision, the theory says their answer profiles coincide and, if the shared-anchor premise holds, they're one account; otherwise they're different candidates with one answer profile. Either way, "the difference is idle" is supported by (K) (same signature). But would a careful reader of the revised text still conclude the difference is idle? Yes: Part II says a kind-label adds no discriminating power where no separating change exists; the dog/turtle labels are kind-labels; no admitted change separates them. So idle. No move.
+
+Hmm OK. But let me double-check the shared-anchor premise question for N25, because if the revised Derivation 2 now leaves open that dog and turtle are "different candidates", someone might claim the difference matters. But the text says: "a claim that one assignment is 'really' right is a claim that some admitted change separates them, and must supply it." For dog vs turtle, no admitted change separates them (nothing inside the universe can observe the holder). So the claim "really dog" must supply a separating change and cannot. Idle. Good, no move.
+
+Now let me look for coherence problems in R51 itself.
+
+The new Claim has (i) and (ii). The declaration describes them. "so far as (F1), (F2) and (A) reach, the two are one account on C: φ pairs their active components, each pair of one kind on C, and by (i) their answer profiles coincide." OK.
+
+Hmm, one thing: the old title was "Indistinguishable is identical"; new is "Same anchors, one account". Fine.
+
+Now, is there any place in the revised text that still asserts the old strong claim? Let me search for "one account" and "pairwise":
+- Part XVI Derivation 10: "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)." — R55's new wording, consistent.
+- Part V "Why there is no anchoring condition": "Where C contains a change separating two kinds, (F1) already fails for a component anchored to the wrong one. Where C contains no such change, the two are one kind on C by (K)..." — that's about a component and its anchor, Derivation 1. Fine.
+
+Hmm, what about Part VI "Redundant routes"? "Two systems with the same output table may differ in which routes are active; the semantics represents the difference (Derivation 9)." Consistent.
+
+What about Part II's "Derivation 2 uses kinds in this sense"? In the revised Derivation 2, part (ii) uses kinds between components of E and E'. Consistent.
+
+OK now, is the new claim (ii) actually correct as stated? "If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k". 
+
+Hmm, wait. There's a subtlety: "one anchor, the same subnetwork of D with port translations onto the same ports of D". The port translation: λ(k) is a subnetwork of D "with a port translation" (Part IV: "λ assigns each component of E a subnetwork of D with a port translation"). So λ(k) = (N, ν) where ν translates ports. "port translations onto the same ports of D" — so ν_k = ν_{φ(k)}, both mapping onto the same ports of D. Then sig_C(λ(k)) read through ν_k equals sig_C(λ(φ(k))) read through ν_{φ(k)}. Yes, so k and φ(k) have the same signature. Good.
+
+But hmm — is the premise coherent with the definition of a transport? λ assigns each component of E a subnetwork of D with a port translation. For two different candidates E, E', λ(k) and λ'(φ(k)) could indeed be the same subnetwork with the same translation. Fine.
+
+Also the proof: "composing the one translation with the inverse of the other gives a footprint bijection". OK.
+
+Now (i): "Their answer profiles coincide on C." Proof: By (A), Ans_E(τ(a),σ(b)) = Ans_p(a,b) = Ans_{E'}(τ'(a),σ'(b)). Correct.
+
+So R51 is a correct fix. Does it do what the declaration says? Let me check each part of the declaration:
+1. "Derivation 2 no longer says that two candidates for one question that satisfy (F1), (F2) and (A) on C are one account whose components are pairwise of one kind." ✓ (the new claim doesn't say that unconditionally).
+2. "It now says that their answer profiles coincide on C" ✓ (part i).
+3. "that where a bijection of their active components gives each pair one anchor, the same subnetwork of D with port translations onto the same ports of D, each pair is of one kind on C and, so far as (F1), (F2) and (A) reach, the two are one account" ✓ (part ii).
+4. "and that without that premise nothing more follows" ✓ (the paragraph after the proof).
+5. "Its Consequence now covers only candidates that differ in which component carries which anchor." ✓.
+
+Hmm, one thing: the declaration says "gives each pair one anchor, the same subnetwork of D with port translations onto the same ports of D". The text says "gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D". Matches.
+
+So R51 seems sound. But wait — I should double check whether the old Derivation 2's claim is used anywhere in the revised text in a way that the revision breaks. Search for "Derivation 2" again... Part II (uses kinds in this sense — fine). Anything in Part XV? "(C) Reinstatement of kinds: A case where a kind-label distinguishes two accounts that no admitted change distinguishes, and the distinction does explanatory work. This refutes Derivation 1..." — Derivation 1, fine.
+
+Hmm, what about the phrase in Part V: "By (K), (F1) entails that every component of E has the signature of its anchor; there is no further condition about kinds to state (Derivation 1)." Fine.
+
+OK. Now, is there something the declaration *omits*? The new text adds: "Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8)." The declaration mentions "without that premise nothing more follows" — covered.
+
+So R51 stands, unless I find something. Let me think harder about whether the new (ii) claim is too weak or too strong relative to what's needed, or whether it introduces an incoherence.
+
+Hmm, actually — wait. There's something. The new Claim (ii) says "so far as (F1), (F2) and (A) reach, the two are one account on C". But Part VI's "Redundant routes" and the definition of candidate: a candidate is (E, p, t, Γ). Two candidates with the same E but different Γ are different candidates. In (ii), the bijection is "of their active components" — active components = components in Γ. So (ii) presupposes the active components correspond. If Γ ≠ Γ' in structure but there's a bijection... fine.
+
+Hmm, also: "the two are one account on C" — but they might differ in Γ's identity, in the transport's other parts (π, τ, σ), in provenance... The qualifier "so far as (F1), (F2) and (A) reach" handles that. OK.
+
+Let me now consider: does the revised Derivation 2 contradict the unchanged sentence in Part V's "Why there is no anchoring condition"? No.
+
+**R54** — Part XVI, Derivation 10, line 620. CLAIM, erratum. Declaration: Derivation 10 no longer describes its structural fidelity failure as Derivation 3's qualification seen from the other side.
+
+Old: "the fidelity failure is structural, not parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change."
+New: "the fidelity failure is structural, not parametric."
+
+Context (Derivation 10, selection response): "**Selection:** H_0 is extended to include occlusions; μ re-tunes t_0 within its population. If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric."
+
+Check: the old wording said this is "Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change." Is that accurate? Derivation 3's qualification: "The presence of an unseen pair alone does not establish that such a t' exists; it must be a member of T... and it must survive on H." And the Consequence: "What the qualification gives up is the guarantee of a differing survivor at every unseen pair... a population restriction, a physical relation, or another stated constraint may already fix a value that the history never tested."
+
+So Derivation 3's qualification is about underdetermination: an unseen change doesn't guarantee a differing survivor. In Derivation 10's selection response, the population admits no survivor at the new change (occlusion) — i.e., no transport in the population survives the extended history. Is that "Derivation 3's qualification seen from the other side"? Hmm. Derivation 3's qualification says: at an unseen pair, the value may be fixed by the population (no differing survivor). In Derivation 10, the population admits no survivor at all at the new change — the transport fails and no alternative survives. Hmm, these are related but the old wording's "seen from the other side" is loose. Actually, Derivation 3 is about *underdetermination* (whether survival on H distinguishes t from t'); Derivation 10's case is about *no transport surviving* — the population cannot meet the extended history. These are different phenomena: Derivation 3's qualification is that the population might not admit a differing survivor (so t's value is determined); Derivation 10's case is that the population admits no survivor at all (so selection cannot fix t). So the old wording conflated two things. The removal is a fix.
+
+Does the new wording claim less? Yes — it drops the claim that this is Derivation 3's qualification. The declaration says exactly that. Good.
+
+Does the new wording still make sense in context? "**Selection:** H_0 is extended to include occlusions; μ re-tunes t_0 within its population. If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric." Yes, coherent.
+
+Coherence check: does removing the phrase break any pointer? The old phrase pointed to Derivation 3; the new one doesn't. No dangling reference.
+
+Does it move verdicts? O24, O48 named. O48 (forbidden wire): the only arrangement giving a different response at the unseen setting needs a wire no device in the population has; verdict: no alternative in that population; the different response is not available; the premise is not met. This is exactly Derivation 3's qualification ("a population with no such survivor is the theorem's own qualification"). O48's verdict is about the population not admitting the alternative — that's Derivation 3, unchanged. R54 removes a misleading gloss in Derivation 10, doesn't touch Derivation 3. No move on O48.
+
+O24 (unused joint setting): two arrangements differ at one unused setting; verdict: two arrangements, record hasn't chosen; one reachable setting is enough. Hmm, under R54's change, does anything move? R54 is about the selection response in Derivation 10. O24 is about two arrangements and an untested setting. Hmm, the old Derivation 10 wording ("a population that admits no survivor at the new change") might have been read as covering O24-like cases. But O24 isn't about a population; it's about two candidates. I think no move.
+
+Actually hold on. Let me reconsider whether removing "a population that admits no survivor at the new change" changes what the theory says about O48. O48's verdict: "Then there is no alternative in that population. The different response is imaginable and is not available. The premise is not met." Under the old text, Derivation 10 explicitly described the population-admits-no-survivor case; under the new text, that description is gone from Derivation 10 but remains in Derivation 3's qualification ("a population with no such survivor is the theorem's own qualification, not a refutation" — in Part XV (D), and Derivation 3's Consequence: "a population restriction... may already fix a value that the history never tested"). So the theory still says the same about O48 via Derivation 3. No move.
+
+R54 stands.
+
+**R55** — Part XVI, Derivation 10, line 624. CLAIM, change of claim. Declaration: Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit. It now says that on such a contract that admits each edit for both things alike, composing the transport with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork and has the first transport's fidelity and answers (Derivation 8), and that so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2).
+
+Old: "On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+New: "On any contract containing it that admits each edit for both things alike, composing t_1 with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork. The two things are built alike in P, and their persistence components alike in S_1, so the exchange carries the fidelity and the answers of t_1 over to the second transport (Derivation 8); so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)."
+
+Let me check the reasoning. Setup: P has two things, each with position and velocity; admitted edits include "swap the two identities". The swap edit is invisible in the sensory field and leaves every prediction unchanged. t_1: P → S_1, λ sends each persistence component to a thing's continuity subnetwork.
+
+New claim: on a contract containing the swap edit that admits each edit for both things alike (i.e., the contract treats the two things symmetrically — e.g., "displace thing 1" and "displace thing 2" are both admitted), composing t_1 with the exchange e of the two things gives a second transport t_1' = t_1 ∘ e (roughly). e: P → P swaps the two things. Then t_1' sends each persistence component to the *other* thing's continuity subnetwork (since λ' = λ ∘ e or similar). Since the two things are built alike in P and their persistence components alike in S_1, the exchange carries fidelity and answers over (Derivation 8 — equivariance under genuine recoding: "Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK)"). So t_1' is also faithful, and by Derivation 2 (revised), the two candidates are one account so far as (F1),(F2),(A) reach.
+
+Wait — Derivation 8 is about structure-preserving bijections preserving (E), (G), (P), (EK). Here the exchange e is a bijection on P (swapping the two things). Composing t_1 with e gives a new transport. Hmm, Derivation 8 says transporting along structure-preserving bijections preserves (E) etc. The exchange is a structure-preserving bijection of P (since the two things are built alike). So t_1 ∘ e satisfies (F1),(F2),(A) whenever t_1 does. Good.
+
+Then "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)". Under the revised Derivation 2: we need (i) answer profiles coincide — yes, since the swap leaves every prediction unchanged (the answer profile is unchanged); (ii) a bijection of active components giving each pair one anchor — the exchange sends persistence component 1 to thing 2's continuity subnetwork and persistence component 2 to thing 1's. So the anchors of t_1' are the *other* subnetworks, not the same. Hmm! So the shared-anchor premise of Derivation 2(ii) is NOT satisfied: λ(k) ≠ λ'(φ(k)) — they're different subnetworks (thing 1's vs thing 2's continuity).
+
+Hmm wait. Let me re-read Derivation 2(ii): "If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k". For t_1 and t_1': the bijection φ pairs persistence component 1 (in S_1 under t_1) with persistence component 1 (in S_1 under t_1')? Or with persistence component 2? Hmm. Let me set it up: candidate 1 = (S_1, p, t_1, Γ); candidate 2 = (S_1, p, t_1', Γ) — same organization S_1, same Γ (the two persistence components), different transports. The bijection φ on active components: identity (component 1 ↔ component 1, component 2 ↔ component 2). Then λ(1) = thing 1's continuity subnetwork, λ'(1) = thing 2's continuity subnetwork. Different subnetworks! So the premise "the same subnetwork of D" fails.
+
+Alternatively, φ = the exchange (1↔2, 2↔1): then λ(1) = thing 1's continuity, λ'(φ(1)) = λ'(2) = thing 1's continuity (since t_1' sends component 2 to... wait: "composing t_1 with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork". So under t_1', λ'(1) = thing 2's continuity and λ'(2) = thing 1's continuity. Then with φ = exchange: λ(1) = thing 1's continuity; λ'(φ(1)) = λ'(2) = thing 1's continuity. Same! And λ(2) = thing 2's continuity; λ'(φ(2)) = λ'(1) = thing 2's continuity. Same! So with φ = exchange, each pair has one anchor — the same subnetwork of D.
+
+But wait — is φ = exchange a "bijection of their active components... with port translations onto the same ports of D"? The port translations: λ(1) has a port translation from thing 1's continuity subnetwork's ports onto D's ports (positions/velocities of thing 1). λ'(2) has a port translation from thing 1's continuity subnetwork's ports onto D's ports — but under t_1', the ports of persistence component 2 are translated onto thing 1's ports? Hmm, let me think. In t_1', the exchange e swaps the two things in P. So τ' (edit translation) and the port mapping are affected. Hmm, actually the composition: t_1' = t_1 ∘ e means we first apply e to D (swapping the two things' identities) then t_1. Under e, thing 1's continuity subnetwork maps to thing 2's and vice versa. So λ'(k) = e(λ(k))? That would give λ'(1) = e(thing 1's continuity) = thing 2's continuity. Yes, matches the text: "sends each persistence component to the other thing's continuity subnetwork".
+
+Now for Derivation 2(ii) with φ = exchange: k = persistence component 1 in candidate 1, φ(k) = persistence component 2 in candidate 2. λ(k) = thing 1's continuity subnetwork with port translation ν_1 (onto thing 1's ports). λ'(φ(k)) = λ'(2) = e(thing 2's continuity) = thing 1's continuity subnetwork, with port translation ν'_2 = e ∘ ν_2? Hmm, the port translation for λ'(2): under t_1', component 2's anchor is e(λ(2)) = e(thing 2's continuity) = thing 1's continuity, and the port translation is e ∘ ν_2, which maps thing 2's continuity ports → (via e) thing 1's ports. Hmm, so the port translation for λ(1) maps onto thing 1's ports (via ν_1), and for λ'(2) maps onto thing 1's ports (via e∘ν_2). If ν_1 = ν_2 (the persistence components are built alike), then e∘ν_2 = e∘ν_1 ≠ ν_1 (since e swaps things). Hmm, so the port translations differ!
+
+Hmm, wait. Let me re-read: "the same subnetwork of D with port translations onto the same ports of D". So the premise requires the port translations to map onto the same ports of D. In the exchange case: λ(1) = thing 1's continuity with translation onto thing 1's ports; λ'(2) = thing 1's continuity with translation onto... hmm.
+
+Actually, I need to be careful about what "port translation onto the same ports of D" means. In Part IV, λ assigns each component of E a subnetwork of D with a port translation. The port translation maps the component's ports to ports of D (or of the subnetwork). Hmm, "with port translations onto the same ports of D" — the translations map onto the same ports of D, i.e., ν_k and ν'_{φ(k)} have the same image ports in D.
+
+In the exchange case: persistence component 1 (tracking thing 1) has ports (position, velocity) that translate onto thing 1's position and velocity ports in D. Persistence component 2 translates onto thing 2's ports. Under t_1', component 1 tracks thing 2, so its ports translate onto thing 2's ports. So for φ = exchange: k=1, φ(k)=2; ν_1 maps onto thing 1's ports; ν'_2 maps onto thing 1's ports (since component 2 under t_1' tracks thing 1). Same ports! Good. And the subnetwork is the same (thing 1's continuity). So the premise of (ii) IS satisfied with φ = exchange.
+
+Hmm wait, but is that right? Under t_1', does component 2 track thing 1? "composing t_1 with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork". So under t_1', component 1 → thing 2's continuity, component 2 → thing 1's continuity. And the port translation: component 2's ports (which under t_1 translated onto thing 2's ports) now under t_1' translate onto thing 1's ports. Yes — because the exchange swaps which physical thing the component's ports correspond to.
+
+So: λ(1) = (thing 1's continuity, ν_1: ports → thing 1's ports); λ'(2) = (thing 1's continuity, ν'_2: ports → thing 1's ports). If the two persistence components are built alike (same port structure) and ν_1 = ν_2 as maps from component ports to... hmm, ν_1: ports of component 1 → ports of D; ν_2: ports of component 2 → ports of D. These have different domains (component 1's ports vs component 2's ports) unless we identify them. Ugh, this is getting into the weeds. The text's claim is that "the two things are built alike in P, and their persistence components alike in S_1, so the exchange carries the fidelity and the answers of t_1 over to the second transport (Derivation 8)". That's the equivariance argument, which is sound. Then "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)".
+
+For Derivation 2(ii) to apply, we need the shared-anchor premise. As analyzed, with φ = exchange, each pair (1,2) and (2,1) shares an anchor subnetwork (thing 1's continuity and thing 2's continuity respectively) with port translations onto the same ports of D. So the premise holds, and the conclusion "k and φ(k) are of one kind on C" follows: component 1 (tracking thing 1) and component 2 (tracking thing 1 under t_1') have the signature of thing 1's continuity on the same ports — so they're of one kind. Good. And the answer profiles coincide (the swap leaves every prediction unchanged). So the two are one account so far as (F1),(F2),(A) reach. 
+
+Hmm, but hold on: is the shared-anchor premise really satisfied, or does the revised Derivation 2 require the *identity* bijection? The revised Derivation 2 says "a bijection φ of their active components" — any bijection. So φ = exchange is allowed. Good.
+
+Hmm, but wait: the declaration of R55 says the new wording claims "composing the transport with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork and has the first transport's fidelity and answers (Derivation 8), and that so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)." The new text says exactly that. ✓.
+
+And the declaration says it "no longer says that the two persistence components are of one kind on any contract containing the swap edit". The new text doesn't say that directly. Hmm — but does it say it indirectly? "The two things are built alike in P, and their persistence components alike in S_1" — "alike" here means structurally alike (same construction), not "of one kind on C". Hmm, a careless reader might conflate, but the text is careful: "built alike" is about construction; "of one kind on C" is a defined term requiring signature coincidence. The new text doesn't assert the persistence components are of one kind on C. Hmm, actually — wait. Does the new text still entail that the persistence components are of one kind on C? Under Derivation 2(ii) with φ = exchange, we'd get: component 1 and component 2 (paired by φ) are of one kind on C — wait, no. Let me recompute. Derivation 2(ii) concludes "k and φ(k) are of one kind on C for every k". With φ = exchange: k=1, φ(k)=2 — so components 1 and 2 of S_1 are of one kind on C! Hmm. So the revised Derivation 2 + the exchange argument *does* entail that the two persistence components are of one kind on C (under the symmetric contract). 
+
+Hmm! So does R55's change actually remove the claim? The old text said "On any contract containing it, the two persistence components are of one kind (Derivation 2)." The new text says, in effect: on a symmetric contract containing the swap, the exchange gives a second transport with the same fidelity and answers, and by Derivation 2 the two candidates are one account. And Derivation 2(ii)'s conclusion includes that the paired components are of one kind. So the conclusion "the two persistence components are of one kind on C" still follows — but now restricted to symmetric contracts ("admits each edit for both things alike"), which the old "on any contract containing it" lacked.
+
+So the change is: from "any contract containing the swap" to "any contract containing it that admits each edit for both things alike". That's a genuine restriction — the old claim was too strong (an asymmetric contract containing the swap could separate the two things, e.g., a contract admitting "displace thing 1" but not "displace thing 2"). And the declaration describes this: "It now says that on such a contract that admits each edit for both things alike, ...". ✓.
+
+Hmm, but the declaration says "Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit." Technically true: the new wording doesn't say that. But the new wording, together with the revised Derivation 2, still entails that they're of one kind on symmetric contracts. Is that a problem? The declaration says what the new wording says, and it says the entailment is via Derivation 2. Since R51 revised Derivation 2 to require the shared-anchor premise, and R55's argument supplies it (via the exchange), the combination still yields the kind conclusion on symmetric contracts. The declaration doesn't hide that — it explicitly cites Derivation 2 for the "one account" conclusion. And Derivation 2's statement includes the kind conclusion. So a careful reader would still conclude the persistence components are of one kind on symmetric contracts. That's fine and presumably intended; the verdict on O43 (mirrored marks) is about content preservation under a declared mirror convention — Derivation 8. Let me check O43.
+
+O43 (Mirrored marks): Sam's diagram translated into raised marks by a right-to-left writer; every pairing preserved; convention stated. Verdict: content preserved; mirror is a declared convention. Under the revised text: Part VIII "Recoding. A declared, invertible recoding of a carrier preserves the content when a reader who applies the declared convention recovers every pairing (Derivation 8)." Unchanged by R55. Derivation 10's exchange argument is analogous (Derivation 8). No move.
+
+Hmm, so R55 stands? Let me look for a real defect.
+
+Wait. Let me reconsider the interaction between R55 and R51 more carefully. R55's new wording says "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)". For Derivation 2(ii) to give "the two are one account", we need the shared-anchor premise. As I analyzed, with φ = exchange the anchors pair up: λ(1) = thing 1's continuity = λ'(2), λ(2) = thing 2's continuity = λ'(1). So the bijection φ pairs 1↔2 such that each pair shares one anchor. ✓. And "port translations onto the same ports of D": λ(1)'s translation maps component 1's ports onto thing 1's ports; λ'(2)'s translation maps component 2's ports onto thing 1's ports. Hmm — "the same ports of D" ✓ (both onto thing 1's ports). But the translations have different domains (component 1's ports vs component 2's ports). Is that OK? The premise says "the same subnetwork of D with port translations onto the same ports of D" — the translations map onto the same ports of D; the domains are the components' ports, which are paired by φ. Since the components are built alike, their ports correspond. I think this is fine — the footprint bijection in the kind definition handles the domain difference.
+
+Hmm, actually wait. Let me re-examine. There's a subtlety: in Derivation 2(ii), the bijection φ is a bijection of active components "gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D". For k=1 (in candidate 1) and φ(k)=2 (in candidate 2): λ(1) = (N_1, ν_1) where N_1 = thing 1's continuity, ν_1: ports of component 1 → thing 1's ports in D. λ'(2) = (N_1, ν'_2) where ν'_2: ports of component 2 → thing 1's ports in D. Hmm, is ν'_2 = ν_1? They have different domains. But the footprint bijection for the kind comparison: "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection". The footprint bijection maps component 1's ports to component 2's ports. Since the components are built alike, there's a natural correspondence. Then sig through ν_1 and through ν'_2 coincide. OK, so they're of one kind. ✓.
+
+Alright, so R55's argument is sound given the revised Derivation 2. And R51 and R55 are mutually consistent. Good.
+
+Hmm, but now I should double check: does R55's new wording claim more than its declaration? The declaration mentions: (1) the exchange gives a second transport sending each persistence component to the other thing's continuity subnetwork; (2) it has the first transport's fidelity and answers (Derivation 8); (3) so far as (F1),(F2),(A) reach, the two candidates are one account (Derivation 2). The text says all three. ✓. Does the text add anything? "The two things are built alike in P, and their persistence components alike in S_1, so the exchange carries the fidelity and the answers of t_1 over to the second transport (Derivation 8)" — that's part (2) with its justification. ✓. And "On any contract containing it that admits each edit for both things alike" — the symmetry condition, mentioned in the declaration. ✓.
+
+And the last two sentences of that paragraph (unchanged): "A claim that 'component 1 is *really* thing 1' is a claim that some admitted change distinguishes them, and on this contract none does. That is not a defect of S_1; it is the correct report that identity, at this grain, is exhausted by trajectory." Hmm — "on this contract none does". Under the revision, the contract must be symmetric. The unchanged sentence says "on this contract" — referring to the symmetric contract just described. Coherent. ✓.
+
+Hmm, wait. But there's something: the old text said "On any contract containing it, the two persistence components are of one kind (Derivation 2)." and then "A claim that 'component 1 is really thing 1' is a claim that some admitted change distinguishes them, and on this contract none does." Under the old text, "any contract containing [the swap]" — and "on this contract none does". Under the new text, the contract is restricted to symmetric ones. The unchanged sentence "on this contract none does" now refers to the symmetric contract. Fine, still coherent.
+
+OK so far everything stands. Hmm. But the task says "find what is wrong with the nine changes" and "test that as hard as you can". Maybe there are subtle defects I'm missing. Let me re-examine each very carefully, especially the declarations' fidelity and coherence.
+
+Let me re-read R26 once more. "**Functional transport.** Let S_a be a target process and T_a a represented process for each admitted generator a. If π∘S_a = T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes."
+
+Hmm: "Let S_a be a target process and T_a a represented process for each admitted generator a." Then the condition "π∘S_a = T_a∘π for every generator a". Note: "for every generator a" vs "for each admitted generator a". Minor. Hmm, "the same holds for every admitted finite composition with matching scopes" — the same, i.e., π∘(composition of S's) = (composition of T's)∘π. Proof: "π S_b S_a = T_b π S_a = T_b T_a π; induct." ✓.
+
+Is R26 really WORDING? It introduces names for previously unnamed processes. A reader of the old text would have to guess what S_a and T_a are. The new text says "a target process" and "a represented process". Does that constrain the claim? The old claim "If π∘S_a=T_a∘π for every generator a" — under the old text, S_a and T_a were free variables; the claim was a conditional. Under the new text, they're introduced as "a target process" and "a represented process" — which is what they were intended to be. No claim change. ✓ WORDING is right.
+
+Hmm, but one thing: does the new wording's "Let S_a be a target process and T_a a represented process for each admitted generator a" possibly conflict with R27's usage? R27: "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport". Consistent. ✓.
+
+Now let me reconsider R27 for hidden issues. The declaration: "(T2) now states its hypotheses and defines its quantity." Hypotheses: (i) S target next-step, T represented next-step; (ii) d metric on X_E; (iii) one-step discrepancy ≤ ε at every state z of a stated scope; (iv) T L-Lipschitz for d. Conclusion: e_n ≤ ε Σ_{k<n} L^k whenever z, Sz, ..., S^{n-1}z in scope.
+
+Check the text says all of that. ✓. Hmm, "at every state z of a stated scope" — the text: "With one-step discrepancy d(πSz,Tπz)≤ε at every state z of a stated scope". ✓.
+
+Wait, is there an issue with e_0? "e_n=d(πS^nz,T^nπz) (so e_0=0)". e_0 = d(πz, πz) = 0 since d is a metric. ✓. The declaration says "with e_0 = 0". ✓.
+
+Hmm, one more: the declaration says "the discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz), with e_0 = 0, satisfies the bound whenever z and its first n−1 successors under S lie in that scope." Text: "satisfies e_n≤ε∑_{k<n}L^k whenever z,Sz,…,S^{n−1}z lie in that scope." ✓ Matches.
+
+Now — is the theorem actually correct as now stated? Let me re-derive: e_{n+1} = d(πS^{n+1}z, T^{n+1}πz). We need the one-step bound at state S^n z: d(πS(S^nz), Tπ(S^nz)) ≤ ε requires S^nz in the stated scope. For e_n with n steps, we apply the one-step bound at z, Sz, ..., S^{n-1}z — exactly n applications, each requiring those states in scope. ✓. And the Lipschitz step: d(Tπ(S^nz), T(T^nπz)) ≤ L·d(πS^nz, T^nπz) = L·e_n. ✓. So e_{n+1} ≤ ε + L·e_n, e_0=0 ⟹ e_n ≤ ε(1 + L + ... + L^{n-1}) = ε Σ_{k<n} L^k. ✓. Correct.
+
+Hmm, wait: the one-step discrepancy is d(πSw, Tπw) ≤ ε "at every state w of a stated scope". Is πw in the domain of T? T: X_E → X_E, πw ∈ X_E. ✓. And S: X_D → X_D. ✓. Also "with T L-Lipschitz for d" — L ≥ 0; if L < 1 the bound is ε(1-L^n)/(1-L) ≤ ε/(1-L); fine.
+
+So R27 is mathematically sound and matches its declaration. Does it move N20? N20's first method: accumulated error. Under (T2) with L ≥ 1 (string length errors don't shrink), error grows. The scope condition: string lengths stay in scope. So the bound applies and error grows. The second method: rounding wipes errors — that's not captured by (T2) at all (it's a different mechanism: the rounding map is not Lipschitz-expansive; errors reset). The verdict "only the second method can [keep count at any size]" — hmm, wait. Actually, hmm: under (T2), the first method's error grows like ε·n (L=1), so eventually exceeds a goat's length. The second method: each error is < 1/2 inch and rounding resets — you could model it as the discrepancy not accumulating. Either way, the verdict is about the mechanisms, and (T2) as revised still supports "the first method's error accumulates". No move.
+
+Hmm, actually, hold on. Let me reconsider whether the *old* (T2) could have been read as applying to the second method and giving a bound. Old: "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k." Under the old text, a reader might apply (T2) to the second method: one-step discrepancy ε < 1/2, and... the rounding map. Hmm, the second method's error doesn't accumulate because rounding to the nearest inch is a projection. If T is the rounding map, it's L-Lipschitz with L=1? No — rounding is non-expansive (L=1) but the point is the error is reset to 0 after each step, not accumulated. Actually with the second method, the "state" is the string length, which is always an integer; the error is in the measurement, not the state. So the model is: the state evolves exactly (integer counts), and the measurement error doesn't enter the state. So the one-step discrepancy of the *state* is 0. Under the old text, a careless reader might think (T2) gives a growing bound for the second method too. Under the new text, the hypotheses are explicit: the discrepancy is at every state of a stated scope — for the second method, the state discrepancy is 0 (rounding resets), so ε=0. Hmm, this is all consistent with the verdict either way. No move.
+
+OK. Now let me reconsider R28 and R29 for coherence issues with Part IX and Part X.
+
+R28: "Let p_δ be the question whether z has δ in respect of p, and E_c the explanatory candidate (Part V) that the criticism offers for p_δ."
+
+Hmm — "the explanatory candidate (Part V) that the criticism offers for p_δ". Earlier: "A criticism has target z, alleged defect δ, grounds g, and a connection." So the criticism offers a candidate for p_δ. ✓. And (K1): Bearing(c,z,p) ⟺ Account(E_c, p_δ).
+
+Now — is there a circularity? Bearing is defined via Account(E_c, p_δ), and p_δ is "the question whether z has δ". Hmm, "in respect of p" — the defect is in respect of the question p. Fine.
+
+Now consider O27/O40/O50: the criticism's target is the test's assumption (that the sensor reads true). Hmm, actually in O27 the robot's criticism targets the *test* (that it assumed the sensor reads true). Under (K1), Bearing requires the criticism to offer an explanatory candidate for p_δ = "whether z has δ in respect of p". The verdicts are about credit, which is Part XI. I don't think (K1)'s precisification moves them.
+
+Hmm, let me think about whether the new (K1) wording could *change* the verdict on O50. O50: three achievements — reinterpretation (theirs together), discovery (robot's), inquiry (mostly expert's). Credit via ProducedBy and active routes. (K1) is about bearing, not credit. No move.
+
+N11: Jana vs Kasia. Kasia's self-criticism: she identifies faults. Under (K1), her criticism bears iff Account(E_c, p_δ) — she must offer an explanatory candidate for "whether the draft has the defect". Hmm, does she? She writes down "a claim with no support" and fixes it. Whether Account(E_c, p_δ) holds is a substantive question. But the verdict is about creation, not bearing. No move.
+
+OK, R28/R29 stand.
+
+Hmm, let me reconsider R29 once more. Old: "An adverse signal is not a criticism until an organization represents how it bears." New: "An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target."
+
+Is the new claim *stronger* or *weaker*? Consider: an organization represents the signal as grounds for a defect — this requires the representation to include the defect and the grounding. The old "represents how it bears" requires representing the bearing relation. Hmm, these seem nearly equivalent. But the declaration says the change is that the condition is now "represents it as grounds for an alleged defect in a target, not that it represents how it bears". 
+
+Is there a case where the two come apart? Suppose an organization represents the signal as indicating a defect but doesn't represent *how* (no account of the mechanism). Old wording: not a criticism (since it must represent how it bears). New wording: is a criticism (it represents the signal as grounds for a defect). Hmm. So the new wording is weaker on the existence condition. But then (K1) requires Account(E_c, p_δ) for *bearing* — so a criticism occurrence can exist without bearing. The next sentence: "A criticism occurrence can exist when (K1) fails." So the existence condition is deliberately weak. The new wording aligns: existence requires only representing-as-grounds; bearing requires the account.
+
+Hmm, so does the change alter what counts as a criticism occurrence? Under the old wording, "represents how it bears" might be read as requiring the bearing representation — i.e., closer to requiring (K1)-like content for existence. The new wording separates existence from bearing. That's a declared change ("the condition ... is now that ... not that ..."). ✓.
+
+Hmm, is the new wording coherent with the rest of Part IX? "Bearing(c,z,p) ⟺ Account(E_c, p_δ). A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." Yes: existence ≠ bearing. ✓.
+
+Now — is there a case in the list where this matters? O3 (Nadia): adverse signal = surprise at predictions failing. She builds the tally. Is her surprise a criticism? Under the new wording: she must represent the adverse signal as grounds for an alleged defect in a target. Hmm, Nadia's surprise (violation of a selected transport) is not itself a criticism until she represents it as grounds for a defect. The verdict on O3 is that she built something new (construction). Whether her surprise counts as a criticism doesn't change the verdict. No move.
+
+OK. Now let me reconsider R41 for any coherence problem. Actually, wait — I want to check the phrase "The accuracy grades of the physical module (Part XIV) form a directed preorder Q_Θ, increasingly demanding and short of perfection". Part XIV says Θ includes "accuracy grades". But does Part XIV say they form a directed preorder? Part XIV: "1. The physical module Θ: substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and Org_ℓ". It just lists "accuracy grades". So the new sentence adds that they form a directed preorder, increasingly demanding and short of perfection. Is that a new claim not in Part XIV? Yes, but it's a definition of the structure of the grades — within the declaration's "defines the grades q,r". Hmm, "increasingly demanding and short of perfection" is a substantive characterization: there's no maximal grade (short of perfection). Is that consistent with "Possibility is the absence of a law-imposed limit short of perfection on performance and retention" (Tasks)? Yes: possibility = achievable at every grade; no grade is perfection; so Poss_Θ captures "no limit short of perfection". ✓. Consistent.
+
+Also "Finite-grade capability does not imply possibility at all grades" — follows: Cap^{q,r} ⊆ Admit^{q,r}, but capability at one grade doesn't imply capability at every grade. ✓. And this sentence is presumably unchanged (it followed the old (CT3),(CT4)).
+
+Hmm, wait. Let me check the old wording again: "**Grades.** Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ;" — so the old paragraph was: "Grades. Cap ⊆ Admit; Cap^∞ ⊆ Poss_Θ. (CT3, CT4) Finite-grade capability does not imply possibility at all grades." The new text inserts the definitions before "Then Cap ⊆ Admit". ✓. The declaration covers the insertion.
+
+Now — does the new text define "Cap^∞"? It writes "\mathsf{Cap}^\infty=\bigcap_{q,r}\mathsf{Cap}^{q,r}". ✓.
+
+OK, R41 stands.
+
+Hmm, let me now think about whether any of these changes *conflict* with each other or with the 46 unlisted changes. The instructions say to consider dependencies between listed changes. R51 and R55 interact (R55 cites the revised Derivation 2). I've checked that. R26 and R27 interact (R27 cites S_a, T_a from functional transport). ✓.
+
+Let me look for stale references created by the changes:
+
+R51 changes Derivation 2's title from "Indistinguishable is identical" to "Same anchors, one account". Is the old title referenced anywhere? Search "Indistinguishable": no. ✓.
+
+R54 removes "Derivation 3's qualification seen from the other side". Is that phrase referenced elsewhere? No. ✓.
+
+R55 changes "On any contract containing it, the two persistence components are of one kind (Derivation 2)." Is the old claim referenced? The paragraph continues "A claim that 'component 1 is really thing 1'..." — coherent. ✓.
+
+Hmm, now let me reconsider: does the revised Derivation 2's weakening leave any *unchanged* sentence false or stale? Consider Part V's "Why there is no anchoring condition": "A separate condition, 'each component of E must be tied to a component of D of the same kind', would be either redundant or unevaluable... There is no third case. Derivation 1 makes this exact." — Derivation 1, unchanged, still fine. ✓.
+
+Consider Part VI "Redundant routes": "Two systems with the same output table may differ in which routes are active; the semantics represents the difference (Derivation 9)." — Derivation 9, unchanged. ✓. Hmm, and the new Derivation 2's "Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes)." — consistent with Part VI. ✓.
+
+Hmm OK. Let me now think about whether there's a defect I'm missing in R51. Let me re-read the new Derivation 2 claim very carefully:
+
+"(ii) If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k; so far as (F1), (F2) and (A) reach, the two are one account on C: φ pairs their active components, each pair of one kind on C, and by (i) their answer profiles coincide."
+
+Hmm — "the same subnetwork of D with port translations onto the same ports of D". Wait, there's a potential reading issue: "port translations onto the same ports of D" — for k and φ(k), the port translations map their ports onto the same ports of D. But k and φ(k) are components of E and E' respectively, with (possibly) different port sets. The port translation for λ(k) maps λ(k)'s ports (or k's ports?) onto D's ports. In Part IV: "λ assigns each component of E a subnetwork of D with a port translation". So the port translation is part of the anchor data, mapping the subnetwork's ports onto D's ports (or onto the component's ports?). Hmm, the text is a bit loose. In Derivation 1's proof: "sig_C(λ(k)) = {(a,b,proj_{V_k} Sol_{λ(k)}(a,b))}" — the projection is onto V_k, the ports of k. So the port translation relates λ(k)'s ports to V_k. Hmm, "up to the port translation".
+
+OK whatever — the notion is: the anchor's ports are identified with the component's ports via the port translation. For the kind comparison between k (in E) and φ(k) (in E'), we need a footprint bijection V_k → V_{φ(k)} under which the signatures coincide. If λ(k) = λ'(φ(k)) = N with the port translation identifying N's ports with both V_k and V_{φ(k)}, then composing gives the footprint bijection V_k → V_{φ(k)}, and the signatures both equal sig_C(N). ✓. The proof says exactly this. ✓.
+
+OK so R51 is correct. Hmm.
+
+Now, wait. I should double-check the *old* Derivation 2's claim against the revised text to see whether the revision was needed and whether it's *sufficient*. The old claim: "Two candidates E, E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide." This is false (redundant routes counterexample). The revision fixes it. But does the revised Part XVI still have a Derivation 2 that's *needed*? Part II cites "Derivation 2 uses kinds in this sense" — the revised Derivation 2 does use kinds in the cross-candidate sense. ✓.
+
+Hmm, hold on. Let me reconsider Part II's sentence: "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivation 2 uses kinds in this sense." — In the revised Derivation 2, part (ii)'s conclusion "k and φ(k) are of one kind on C" — k is in E, φ(k) in E', and their signatures are read on C through τ and τ'. ✓. Yes, exactly that sense. Good.
+
+OK, at this point I've checked everything and found no defects?! That seems odd for a task designed to have defects. Let me re-examine more suspiciously. The task says "Your job is to find what is wrong with the nine changes" — maybe some are fine and some have defects. Let me look for the subtle ones again.
+
+Let me re-examine R55's declaration once more: "Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit. It now says that on such a contract that admits each edit for both things alike, composing the transport with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork and has the first transport's fidelity and answers (Derivation 8), and that so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)."
+
+Hmm. "on such a contract that admits each edit for both things alike". The new text: "On any contract containing it that admits each edit for both things alike". ✓.
+
+Now — hmm. Wait. Is the new claim actually right that the second transport "has the first transport's fidelity and answers (Derivation 8)"? Derivation 8: "Transporting all carriers, relations, transports, histories, and contracts along structure-presuring bijections preserves (E), (G), (P), (EK). ... The result does not apply to coarsenings, changed boundaries, or lost event identities."
+
+The exchange e: P → P is a structure-preserving bijection (since the two things are built alike). Composing t_1 with e: the new transport t_1' = e then t_1. Hmm, Derivation 8 is about transporting *along* bijections — i.e., relabeling. The exchange swaps the two things' identities. Is that a "structure-preserving bijection"? The two things are built alike in P, so the exchange is an automorphism of P (given the symmetric contract). So yes, t_1' is the transport of t_1 along the exchange, and by Derivation 8 it preserves (E) — hence (F1),(F2),(A) — and the answers. ✓.
+
+Hmm, but wait: "The result does not apply to coarsenings, changed boundaries, or lost event identities." The exchange isn't any of those. ✓.
+
+OK. And "so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)". By Derivation 2: (i) answer profiles coincide — the swap "leaves every prediction unchanged" (preceding sentence: "The swap edit is invisible in the sensory field and leaves every prediction unchanged"). ✓. (ii) the shared-anchor premise with φ = exchange. ✓. So the two candidates are one account so far as (F1),(F2),(A) reach. ✓.
+
+Hmm, hold on. Wait. Let me re-read the preceding sentences: "The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it that admits each edit for both things alike, composing t_1 with the exchange of the two things gives a second transport..."
+
+Hmm, "composing t_1 with the exchange of the two things" — t_1: P → S_1. The exchange e: P → P. So t_1 ∘ e: P → S_1. ✓. "which sends each persistence component to the other thing's continuity subnetwork" — λ_{t_1∘e}(k) = e^{-1}(λ_{t_1}(k))? or e(λ(k))? Let me think: (t_1 ∘ e) means: for a state z of P, first apply e (swap things), then t_1's π. For the anchor: under t_1, component k anchors to λ(k) = thing k's continuity. Under t_1 ∘ e, the state is e(z), so component k anchors to λ(k) evaluated at e(z) — i.e., to e(λ(k)) = thing (3-k)'s continuity. Hmm, so λ'(k) = e(λ(k)) = the other thing's continuity. ✓. "sends each persistence component to the other thing's continuity subnetwork". ✓.
+
+OK, that's consistent. 
+
+Hmm, let me now question whether the *restriction* "that admits each edit for both things alike" is needed for the *exchange to be a structure-preserving bijection*. If the contract admits "displace thing 1" but not "displace thing 2", then the exchange is not an automorphism of the contracted structure, so Derivation 8 wouldn't apply. ✓. So the restriction is needed and correct.
+
+OK. Now let me look at this from a different angle: maybe the defects are in the declarations' accuracy about the *current* text. Task (a) asks "Does the declaration describe the current text correctly?" Let me check each declaration against the OLD wording.
+
+R27's declaration: "(T2) now states its hypotheses and defines its quantity. S is a target and T a represented next-step process, as in functional transport; d is a metric on the represented states; ..." — describes the new wording. Does it describe the current (old) text correctly? The declaration is about what the new wording does. Hmm, "Does the declaration describe the current text correctly?" — I think this means: does the declaration correctly describe what the old text said (insofar as it characterizes the change)? For R27, the declaration doesn't say much about the old text. Fine.
+
+R51's declaration: "Derivation 2 no longer says that two candidates for one question that satisfy (F1), (F2) and (A) on C are one account whose components are pairwise of one kind." — Old text: "Two candidates E, E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide." ✓. The declaration describes it correctly.
+
+R55's declaration: "Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit." — Old: "On any contract containing it, the two persistence components are of one kind (Derivation 2)." ✓.
+
+R54's declaration: "Derivation 10 no longer describes its structural fidelity failure as Derivation 3's qualification seen from the other side." — Old: "the fidelity failure is structural, not parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change." ✓.
+
+R41's declaration: "Part XII now defines the grades q,r, Admit, Cap and Poss that (CT3) and (CT4) relate, with Poss the tasks achievable at every grade." ✓ — and indeed (CT3), (CT4) are the inclusions that follow.
+
+R43's declaration: "Part XIII now defines Enable in (U1) and (U2): it holds when χ is an admitted, non-question-begging enabling condition for the system and the task." ✓.
+
+R28's declaration ✓. R29's declaration ✓.
+
+Hmm, so all declarations are accurate. Let me now hunt for coherence problems very carefully — especially notation clashes and undefined terms.
+
+R41: introduces Q_Θ. Is Q_Θ used elsewhere? No. Does it clash with anything? "Q" is used for the query Q (mathcal Q) and Y_p. Q_Θ is distinct. ✓. Hmm, "q" — is q used elsewhere as a bound variable? Part XII: "q ∈ Q_Θ is a grade of performance and r ∈ Q_Θ a grade of retention". Elsewhere in Part XII: "for protocol π, task T, constructor attribute C, and enabling conditions χ" — π clashes with π the transport map (X_D → X_E)! Hmm, wait: Part XII "Retained realization. For protocol π, task T, ...". And Part IV/Part VIII use π for the transport's state map. That's a notation clash — but it's in the *unchanged* text (both usages exist in the current text). Not introduced by these changes. And R27 uses "π" as the transport map. Hmm, R27's new wording uses π (transport map) and doesn't introduce a new π. So no new clash. OK.
+
+Hmm, R27: "let d be a metric on X_E". Is "d" used elsewhere as a bound variable? Part VI: "If d is critical for W..." and "Deletion of d from Γ..." — d is a commitment there. And Part IX: "∀ d ∈ Prem(u)". So "d" is used for commitments and premises. In R27, d is a metric. Within Part VIII, is "d" used? No. So locally fine; the reuse across parts is harmless (different scopes). Hmm, but a careful reader might note the clash. It's minor and the binding is local. Not a defect worth flagging strongly. Hmm. Actually, hold on — Part VIII's Approximate transport is a self-contained paragraph; "d" is bound there. Fine.
+
+R26: introduces S_a, T_a. "S" is used for the simulation layer (Part IV: "the simulation layer S") and for the support set S_{E,p} (Part VI) and for a state space Z_D... hmm. In Part VIII, "S_a" — and R27 introduces "S" (a target next-step process) and "T" (a represented next-step process). But Part IV uses S for the simulation layer! And Part X uses S_0, S_1 for simulation layers. And Part VIII's own paragraph: "Let S be a target next-step process and T a represented next-step process". Hmm, and in Derivation 10, S_0, S_1 are simulation layers. In Part VIII, "S" as a process is a new local use. Is that a clash? Within Part VIII, S is bound as the target next-step process. Elsewhere S is the simulation layer. Since Part VIII doesn't refer to the simulation layer, it's locally fine. But a careful reader cross-reading might be mildly confused. This is the kind of thing the task flags as "a letter already bound". Hmm. But it's a minor stylistic issue, not a claim change or incoherence. Hmm.
+
+Actually wait. Let me reconsider. R27's declaration says "S is a target and T a represented next-step process, as in functional transport". And R26 defines S_a and T_a. In functional transport, S_a is "a target process" — for each generator a. Hmm, "a target process" — singular per generator. So S: A → (processes on X_D)? Fine.
+
+Hmm OK. Let me step back and think about whether there's a *verdict move* anywhere that I've missed, especially a move AWAY from the fixed verdict (which would be a defect).
+
+Let me reconsider O24 under R51. O24: "Two wiring arrangements agree on every tested setting and on almost every untested one. They differ at a single joint setting of two switches, one nobody has used. The setting is reachable by hand." Verdict: "They are two arrangements, and the record has not chosen between them. One reachable setting is enough."
+
+Under the OLD Derivation 2: if both satisfy (F1),(F2),(A) on C, they are one account at grain C. If the contract C doesn't contain the separating edit, then... hmm, wait. The two arrangements differ at an untested but reachable setting. If C contains that edit, then their answer profiles differ (they behave differently), so they can't both satisfy (A) — one of them fails (A) (or both, if the target's answer differs from both). Hmm, actually (A) requires Ans_E(τ(a),σ(b)) = Ans_p(a,b) for every (a,b) ∈ C. If the two arrangements give different answers at the separating edit, at most one satisfies (A). So under a contract containing the separating edit, at most one is an account. Under a contract excluding it, both could be accounts, and the old Derivation 2 would say they're one account.
+
+The verdict: "They are two arrangements, and the record has not chosen between them. One reachable setting is enough." Hmm — "one reachable setting is enough" for what? Enough to say they are two arrangements and the record hasn't chosen. Hmm, "the record has not chosen" — the record (log) doesn't say which is right. And "one reachable setting is enough" — enough to establish that they're genuinely different (not just relabelings).
+
+Hmm, under the old Derivation 2, if the contract excludes the separating edit, the theory would say they're one account — contradicting the verdict that they're two arrangements. So the old text moved AWAY from the fixed verdict on O24. The revision fixes that. So R51 moves the verdict toward the fixed verdict. The declaration accounts for it (the weakening is declared). ✓. Not a defect.
+
+Hmm, wait — but is the move "accounted for" by the declaration? The declaration says the Consequence now covers only candidates that differ in which component carries which anchor. For O24, the two arrangements differ in wiring — different anchors. So the Consequence doesn't apply, and the old "one account" claim no longer applies. The declaration describes exactly this. ✓.
+
+Hmm, but actually — hold on. Does the revised Derivation 2 give the right verdict on O24? The two arrangements: do they share anchors? They differ at a joint setting — their internal wiring differs. If they anchor different subnetworks, then (ii) doesn't apply, and "nothing more follows: candidates that anchor different subnetworks... are different candidates with one answer profile". So they're two different candidates. ✓. Matches the verdict. Good.
+
+But hmm — what if the two arrangements share anchors but differ in the components' relations? Then (F1) would fail for one of them... no wait, (F1) is a condition on each candidate separately. Both could satisfy (F1) with the same anchors but different component relations? No — (F1) says the component relation equals the anchored subnetwork's projected relation. If they share anchors and both satisfy (F1), their component relations are equal, so the organizations are the same... hmm, not necessarily: the components could be wired together differently (F2 is about the assembled organization). Hmm. If the components are the same and the anchors are the same but the assembly differs... (F2) requires π[Sol_D] = Sol_E. Hmm. Two different assemblies E, E' with the same components and anchors, both satisfying (F2)? Then they'd have the same Sol_E... Actually if the component relations are the same (from F1 and same anchors), then Sol_E is determined by the component relations and the port structure. If E and E' have the same ports and components, Sol_E = Sol_{E'}. Then they'd be the same organization. So for genuinely different arrangements, the anchors or components must differ. OK so O24's arrangements have different anchors/components → (ii) doesn't apply → different candidates. ✓.
+
+Great, the revision handles O24 correctly.
+
+Now let me reconsider O10, O11, O18, O36, O45, O46 under R51 once more, since they're named as at risk. Actually, I realize I should think about whether the *old* Derivation 2 gave the right verdict on these and the *new* one breaks it.
+
+O10 (two thermostats): Rosa says one kind in two states; Emil says two kinds. Verdict: Rosa right about what the devices are; Emil's difference matters only for the warm-room question. Under the old Derivation 2 — hmm, this is about kinds, not about two candidates. (K) handles it: at the device level, the two thermostats have the same signature (both are thermostats); the set-point difference is a value difference, and "two components that differ only in those values are of one kind on C, whatever the difference is called". So Rosa right. Under the new Derivation 2 — no change, since O10 isn't about two candidates for one question. Hmm, unless... Emil's claim is like a second "account"? No. No move.
+
+O11 (apprentice): Monday blind fitting (selection), Tuesday making (construction), Wednesday reuse (relay). No move.
+
+O18 (one tooth): construction of a small binding; rest is relay. No move.
+
+O36 (premise both routes use): P critical in each route as written. Under old Derivation 2... hmm. Two proof routes both using P. Are they "one account"? Under the old Derivation 2, two candidates satisfying (F1),(F2),(A) on C are one account — that would suggest the two routes are one account, which might suggest P's criticality is the same in both... The verdict: "P is critical in each route as written. That another route could be written without it is a fact about a candidate nobody has written." Under the revised Derivation 2, the two routes anchor different subnetworks (different proofs), so (ii) doesn't apply, and they're different candidates. And Part VI: "the supports assessed are subsets of the written Γ... not a support someone could write with commitments outside Γ". So P is critical in each route as written. ✓. The revision supports the verdict better. Move toward the fixed verdict, accounted for by the declaration. ✓.
+
+O45 (spring nobody mentioned): "The second spring was in the account from the start, connected and sufficient. It was already a route." Part VI: "a route already present in the candidate is a route whether or not anyone has described its work". No move.
+
+O46 (cable that used to be a spring): "a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's." No move.
+
+N15, N17, N25: no move (analyzed above).
+
+OK. So R51 moves O24 and O36 toward the fixed verdict, both accounted for by the declared weakening. Fine.
+
+Hmm. Now let me reconsider whether R55 moves O43. O43 (mirrored marks): content preserved under a declared invertible recoding. Part VIII Recoding + Derivation 8. R55's exchange argument is analogous. Under the old R55 wording, "the two persistence components are of one kind (Derivation 2)" — for O43, the mirrored marks: the mirror is a recoding, and the content is preserved. Under the new wording, the mirrored diagram and the original are "one account so far as (F1),(F2),(A) reach" (via Derivation 8 + Derivation 2). Same verdict: content preserved. No move.
+
+Hmm OK. So everything stands?! Let me re-read the changes once more, super carefully, looking for anything I glossed over.
+
+Let me re-read R28's new wording in the full context of Part IX Bearing:
+
+"**Bearing.** A criticism has target z, alleged defect δ, grounds g, and a connection. Let p_δ be the question whether z has δ in respect of p, and E_c the explanatory candidate (Part V) that the criticism offers for p_δ. Then Bearing(c,z,p) ⟺ Account(E_c, p_δ). (K1)"
+
+Hmm — "A criticism has target z, alleged defect δ, grounds g, and a connection." The criticism is c. So Bearing(c, z, p). ✓. "the question whether z has δ in respect of p" ✓. 
+
+Hmm, wait: "in respect of p" — p is the question the criticism bears on. So p_δ is relative to p. OK.
+
+Now — is there an issue with "the explanatory candidate (Part V) that the criticism offers for p_δ"? What if the criticism offers no candidate? Then E_c doesn't exist and (K1) is false — the criticism doesn't bear. Fine. And "A criticism occurrence can exist when (K1) fails." ✓.
+
+Now R29's sentence follows: "An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." ✓.
+
+Hmm, hold on. There's something here. R29's new wording says "an organization represents it as grounds for an alleged defect in a target". But (K1) requires the criticism to offer an explanatory candidate for p_δ. Is "representing the signal as grounds for a defect" the same as "offering an explanatory candidate for whether z has δ"? Not exactly — the former is the criticism's content; the latter is a candidate for the defect-question. Hmm. The existence condition (R29) is weaker than bearing (K1): existence requires representing-as-grounds; bearing requires Account(E_c, p_δ). That's coherent: a criticism can exist without bearing. ✓.
+
+OK. Let me now look at the possibility that R29's change is actually NOT a change of claim — i.e., that "represents how it bears" and "represents it as grounds for an alleged defect in a target" say the same thing, making the CLAIM declaration wrong (it would be a WORDING change mislabeled as CLAIM). Hmm. Task (a): "is every part of the declaration true of the new wording?" The declaration says the condition "is now that an organization represents it as grounds for an alleged defect in a target, not that it represents how it bears." If "represents how it bears" *means* "represents it as grounds for a defect", then the declaration's "not that..." would be false — there'd be no change. Hmm.
+
+Does "represents how it bears" mean "represents it as grounds for an alleged defect in a target"? "How it bears" = the manner in which the signal bears (on the target/claim). To represent how it bears would be to represent the bearing relation — e.g., to offer an account of why the signal bears on the claim. Hmm, that's closer to (K1) — offering an explanatory candidate. Whereas "represents it as grounds for an alleged defect" is just the criticism's content — the representation of the signal as grounds.
+
+So under the old wording, a reader might conclude that an adverse signal counts as a criticism only when the organization represents the *bearing* (the why) — which would collapse existence into bearing, contradicting "A criticism occurrence can exist when (K1) fails". So the old wording was at least misleading, and the new wording fixes the existence condition to be weaker. That IS a change of claim (the existence condition changes). The CLAIM declaration is apt. ✓.
+
+Hmm, OK. But wait — is the new existence condition *too* weak now? "An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." Consider: any representation of a signal as indicating a problem counts as a criticism occurrence, even with no account. That's intended (fallibilist: conjectural criticism). ✓.
+
+Alright. Let me now consider whether there might be a defect in R41's interaction with Part XV or Part XIII. Part XV (D) Genesis: "...a selected transport whose value at an unseen change is determined by its history although its population admits a differing survivor there (against Derivation 3; a population with no such survivor is the theorem's own qualification, not a refutation)...". R41 doesn't touch that. ✓.
+
+Hmm, let me reconsider R43 once more. "Enable(s,T,χ) holds when χ is an admitted, non-question-begging enabling condition for s and the task T."
+
+Wait — (U1) says "Enable(s,U_c,χ) ∧ Can(ξ_0,U_c;χ)". (U2) says "Enable(s,A_p,χ) ∧ CanAdv(ξ_0,p;χ,J_p,C_I)". So in (U2), the task is A_p. OK. And the definition uses "the task T". ✓.
+
+Hmm, but there's something odd: the Barriers paragraph says "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable." So a barrier means: for every χ (admitted, non-question-begging), the capability is unavailable. And Enable(s,T,χ) means χ is an admitted, non-question-begging enabling condition for s and T. Hmm — "enabling condition for s and the task T" — does "enabling" mean it makes the capability available? The barrier definition says an enabling condition "leaves the relevant capability unavailable" — so an "enabling condition" is a candidate condition that would enable; whether it actually does is separate. Hmm. So "χ is an enabling condition for s and T" means χ is a candidate enabler. And then Can(ξ_0, U_c; χ) is the actual capability. So (U1): there exists a candidate enabler χ such that Enable(s,U_c,χ) and Can(ξ_0,U_c;χ). Hmm, that's redundant-ish: if Can(ξ_0,U_c;χ) holds, then χ enables. But Enable adds "admitted, non-question-begging". OK, so (U1) says: there's an admitted, non-question-begging χ that enables U_c. Fine.
+
+Hmm, is there a circularity: "Enable(s,T,χ) holds when χ is an ... enabling condition for s and the task T". Defining "Enable" via "enabling condition" is indeed circular as a *definition*, but it's a definitional extension naming the relation used in the barrier statement. The barrier statement already uses "enabling condition" as a primitive-ish notion. I flagged this before. Is it a defect? The declaration says "Part XIII now defines Enable in (U1) and (U2)". Hmm — it doesn't really *define* Enable in terms of more basic notions; it just names the condition. A careful reader might say this is not a definition but a restatement. Hmm. Is that worth flagging? It's a minor point. The change is an erratum fixing an undefined symbol. The "definition" is: Enable(s,T,χ) ⟺ χ is an admitted, non-question-begging enabling condition for s and T. Since "enabling condition" is used in the unchanged barrier sentence, the definition is coherent with the text — it doesn't introduce a new primitive, it just makes the relation explicit. I'd say it's acceptable. Maybe flag as a minor observation but not a FALL.
+
+Hmm, OK, let me reconsider the whole set once more. Since the task says "find what is wrong with the nine changes", maybe there IS something wrong with one or two. Let me look at R51's declaration once more, particularly: "Its Consequence now covers only candidates that differ in which component carries which anchor."
+
+New Consequence: "Where two candidates that satisfy (F1), (F2) and (A) differ only in which component carries which anchor, the contract does not contain the distinction; a claim that one assignment is 'really' right is a claim that some admitted change separates them, and must supply it. The remedy is a finer contract, which is a new question."
+
+Hmm — "differ only in which component carries which anchor". Wait: in case (ii), the two candidates have a bijection φ pairing components with the *same* anchors. So they differ in *which component carries which anchor* — component k carries anchor N, and φ(k) carries the same anchor N. Hmm, wait: if λ(k) = λ'(φ(k)), then the anchor N is carried by k in E and by φ(k) in E'. So yes, they differ in which component carries which anchor. ✓. The Consequence applies to exactly case (ii). ✓. Declaration accurate.
+
+Hmm, but hold on: "Where two candidates ... differ only in which component carries which anchor, the contract does not contain the distinction". Is that right? If they differ in which component carries which anchor, and the anchors are the same subnetworks... then the two candidates are related by a relabeling of components. The distinction (which component carries which anchor) — does the contract contain it? By (ii), the paired components are of one kind on C, so no admitted change in C separates them. Hence "the contract does not contain the distinction". ✓.
+
+OK. R51 is sound. 
+
+Hmm, let me look at the "Without the premise of (ii) nothing more follows" paragraph once more: "candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes)."
+
+"cut D at different places" — hmm, is that a notion used elsewhere? Part VII? "cut D"? Not really. It's a metaphor for decomposing D differently. Minor. Fine.
+
+"A coarsening is not a recoding (Derivation 8)." ✓.
+
+Hmm OK. Let me now consider: is there any change that moves a verdict AWAY from the fixed verdict? Let me think about R55 and O43 once more, and also think about whether R55's restriction to symmetric contracts might *break* the intended verdict on some case.
+
+Hmm — O43 is about a mirror recoding, declared. Under Derivation 8, content preserved. R55's change is about the swap edit in Derivation 10. The verdict on O43: "The transfer preserved the content. The mirror is a convention, declared, and anyone reading with it recovers every pairing." Under the revised text: Part VIII Recoding (unchanged) + Derivation 8 (unchanged). No move.
+
+Hmm, what about the interaction of R55 with the "two candidates are one account" claim in Derivation 10 and the verdict... hmm, is there a case about the two things being interchangeable? Not in the list. Let me think of my own case: a case where the contract contains the swap but is asymmetric (admits "displace thing 1" only). Under the old text, the persistence components are of one kind on any contract containing the swap. Under the new text, only on symmetric contracts. Is the new verdict correct? Yes: an asymmetric contract separates the two things (displacing thing 1 changes predictions about thing 1 but the contract doesn't admit displacing thing 2), so their signatures differ — not of one kind. So the old claim was wrong and the new is right. ✓. A move toward correctness, declared.
+
+OK, hmm. Let me reconsider R26 and R27's situation N20 once more. N20's verdict: "Only the second method can [keep count of a flock of any size, through any number of joinings and splittings]." And the limit for the first is accumulated error.
+
+Under the revised (T2): the first method's error accumulates as e_n ≤ ε Σ_{k<n} L^k. Hmm — wait, (T2) gives an *upper bound* on the discrepancy. For the first method, the actual error could be less. The verdict says "With enough goats and operations, the accumulated error grows larger than a goat" — hmm, (T2) only gives an upper bound ε·n (L=1); the actual error could be anywhere in [0, ε·n]. The verdict says the error *grows* — but (T2) only bounds it above. Hmm, does the theory support "the accumulated error grows larger than a goat"? (T2) says e_n ≤ ε·n; it doesn't say the error *reaches* ε·n. So the theory can't conclude the first method fails from (T2) alone... Hmm. But that's true of both the old and new text. And the verdict is about the described situation (the errors do accumulate in the described setup: "every measurement adds an error of up to a tenth of an inch"). The verdict's reasoning is about the actual described process, not about (T2). Hmm. Does R27 change this? Under the old text, (T2) was "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k" — no scope condition. Under the new text, the bound requires the states to stay in a stated scope. For N20's first method, the "states" are string lengths, which grow without bound — so a *stated scope* would eventually be exceeded! Hmm! Interesting. Under the new (T2), the bound only holds "whenever z, Sz, ..., S^{n-1}z lie in that scope". If the string grows beyond the stated scope, the bound doesn't apply. So a careful reader of the revised text would say: (T2) doesn't give an unbounded accumulation result for the first method; it only holds within a stated scope.
+
+Hmm! Does that move the verdict on N20? The verdict: "Only the second method can [keep count at any size]... What limits it is the accumulated error, measured against a goat's length." Under the revised text, does the theory still support that the first method fails at any size? Hmm. The first method's failure is a physical/arithmetic fact about the described process (errors add up). (T2) is a theorem about approximate transport. Under the old text, (T2) was read (loosely) as "error accumulates as ε·n", supporting the failure. Under the new text, (T2) has a scope proviso. Hmm.
+
+But wait — the scope proviso is about the *hypotheses* of the theorem. The theorem says: IF the one-step discrepancy ≤ ε at every state of a stated scope and T is L-Lipschitz, THEN within that scope the discrepancy is bounded by ε Σ L^k. For the first method, within any finite scope (say, string lengths up to N goats), the bound holds: error ≤ 0.1·n. As n grows within the scope, the bound grows. When the error exceeds a goat's length, the count is lost. The scope proviso doesn't prevent this reasoning — it just says the bound is only guaranteed within the stated scope. For any finite number of goats, you can state a scope covering it. So the failure reasoning survives: for enough goats, error > goat length. Hmm, so no move? The verdict says "Can each method keep count of a flock of any size" — "any size" means unboundedly large flocks. For the first method, for any bound B, there's a flock size at which the accumulated error exceeds a goat's length. The scope proviso: you'd state a scope covering that flock size. So the reasoning works. No move.
+
+Hmm, but actually, hold on. Is the first method even an instance of (T2)? The first method's issue is that the *measurement error* accumulates in the string length. Under (T2), the "target process" S is the true flock count, the "represented process" T is the string length process. The one-step discrepancy d(πSz, Tπz) ≤ ε = 0.1 inch. T is... hmm, the string length process: reel out a length equal to the goat's length ± 0.1. Is T L-Lipschitz with L=1? The string length after n goats is Σ (measured lengths), each within 0.1 of the true. So the discrepancy after n steps is |Σ errors| ≤ 0.1n. That's e_n ≤ ε·n with L=1. ✓. And the scope: string lengths up to... the scope would be "states where the measurement is meaningful" — but the point at which the count is lost is when 0.1n > goat length. Within the scope up to that point, the bound holds and predicts the failure. ✓. So the revised (T2) still supports the verdict. No move.
+
+And the second method: the rounding resets the error. Under (T2), T (the rounding map) is not L-Lipschitz in a way that accumulates — actually, the second method's state (integer count) has zero discrepancy: the string is always exactly n inches. So ε = 0 for the state. The measurement error doesn't enter the state. So (T2) gives e_n = 0. ✓. Verdict supported. No move.
+
+OK so N20 is fine either way.
+
+Alright, let me now question whether R27's declaration is *complete*: does the new wording claim anything the declaration doesn't mention? The new wording: "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport, and let d be a metric on X_E." The declaration mentions S, T, d. ✓. "With one-step discrepancy d(πSz,Tπz)≤ε at every state z of a stated scope, and with T L-Lipschitz for d" ✓. "the discrepancy after n steps from one state z, e_n=d(πS^nz,T^nπz) (so e_0=0), satisfies e_n≤ε∑_{k<n}L^k whenever z,Sz,…,S^{n−1}z lie in that scope." ✓. All covered. 
+
+Hmm OK. At this point I'm fairly convinced all nine changes are sound. But the task framing ("find what is wrong") suggests there should be defects. Let me re-read the changes' stated kinds and reasons for internal consistency:
+
+- R26: WORDING, erratum. ✓ (it's an erratum fixing unbound notation, no claim change).
+- R27: CLAIM, erratum. ✓ (states hypotheses — a claim precisification).
+- R28: CLAIM, erratum. ✓.
+- R29: CLAIM, erratum. ✓.
+- R41: CLAIM, erratum. ✓.
+- R43: CLAIM, erratum. ✓.
+- R51: CLAIM, change of claim. ✓.
+- R54: CLAIM, erratum. ✓ (removes a false gloss).
+- R55: CLAIM, change of claim. ✓.
+
+Hmm, wait. R54 is declared "erratum" with the declaration "Derivation 10 no longer describes its structural fidelity failure as Derivation 3's qualification seen from the other side." Is the removed claim actually false? Let me check: old text said the selection response's failure is "Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change."
+
+Derivation 3's qualification (revised): "The presence of an unseen pair alone does not establish that such a t' exists; it must be a member of T... and it must survive on H." Consequence: "What the qualification gives up is the guarantee of a differing survivor at every unseen pair... a population restriction, a physical relation, or another stated constraint may already fix a value that the history never tested."
+
+So Derivation 3's qualification: at an unseen pair, there may be no differing survivor in the population — so the value is *determined* by the population. In Derivation 10's selection response: the population admits no survivor at the new change (occlusion) — i.e., every transport fails the extended history. Is that "the qualification seen from the other side"? Hmm. Derivation 3's case: population admits no *differing survivor* — but t itself survives (t is a member that meets the survival condition on H). In Derivation 10: no member survives the extended history at all. These are genuinely different: in Derivation 3, t survives on H and the question is about t's value at an unseen pair; in Derivation 10, t fails at the new change and no alternative survives. So the old gloss conflated two things. Removing it is a fix. ✓. The erratum is appropriate.
+
+Hmm, but wait: does removing the gloss leave Derivation 10's selection-response paragraph making a weaker claim that affects any verdict? The selection response in Derivation 10 is: "If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric." That's the claim that selection cannot fix t_0 — motivating the construction response. The removed gloss didn't add anything needed. ✓.
+
+Hmm, O24 and O48 are named for R54. O48: "The only arrangement that gives a different response at the unseen setting needs a wire... every device in the stated population is built without that wire. Verdict: Then there is no alternative in that population. The different response is imaginable and is not available. The premise is not met." — This is Derivation 3's qualification, which is unchanged. R54 doesn't touch Derivation 3. So no move. ✓.
+
+Hmm, wait. But actually — could R54's removal *break* the connection to O48? Under the old text, Derivation 10 explicitly mentioned "a population that admits no survivor at the new change", which is exactly O48's situation. Under the new text, that mention is gone from Derivation 10. But Derivation 3 and Part XV (D) still cover it: "a population with no such survivor is the theorem's own qualification, not a refutation". So the theory still says the right thing about O48 via Derivation 3. No move. ✓.
+
+OK. Hmm. Let me try yet another angle: check whether any of the new wordings introduce a *contradiction* with an unchanged sentence.
+
+R41's new sentence: "The accuracy grades of the physical module (Part XIV) form a directed preorder Q_Θ, increasingly demanding and short of perfection". Part XIV: "The physical module Θ: substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and Org_ℓ, the organization a physical occurrence instantiates at a grain." Consistent (grades are part of Θ). ✓. And Part XII Tasks: "Possibility is the absence of a law-imposed limit short of perfection on performance and retention" — consistent with "short of perfection" and Poss_Θ = ∩ Admit. ✓.
+
+R43's new sentence vs. the Barriers sentence: consistent. ✓.
+
+R51's new Derivation 2 vs. Part VI's redundant routes and Derivation 9: consistent. ✓.
+
+R55's new wording vs. Derivation 8's restriction "does not apply to coarsenings, changed boundaries, or lost event identities": the exchange is a bijection, not a coarsening. ✓.
+
+R27 vs. functional transport: consistent. ✓.
+
+R28/R29 vs. Part X "recognized difficulty": "A recognized difficulty is a failure of a claimed obligation, or a conflict..., when the system represents it." Hmm — is a "recognized difficulty" the same as a criticism? Part X: "A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response." So a criticism (objection) targets an alleged defect. R29's existence condition: "an organization represents it as grounds for an alleged defect in a target". Consistent with "conjectural objection". ✓.
+
+Hmm, OK. Let me reconsider whether R28's (K1) change might *break* something in Part X or Part XI. (K1) is used in Part IX only. Part X doesn't reference (K1). Part XI doesn't. ✓.
+
+Hmm, let me reconsider the exact wording of R28's declaration: "(K1) now defines its terms: p_δ is the question whether the target has the alleged defect in respect of p, and E_c is the explanatory candidate the criticism offers for that question." New text: "Let p_δ be the question whether z has δ in respect of p, and E_c the explanatory candidate (Part V) that the criticism offers for p_δ." ✓. Matches (z = target, δ = alleged defect).
+
+OK, I'm now fairly confident all nine stand. But let me do one more pass over the revised text around each change to catch stale cross-references or subtle inconsistencies.
+
+Actually — hold on. Let me reconsider R51's title change and the table of contents / cross-references. The revised text's Part XVI lists derivations 1–10. Derivation 2's title changed from "Indistinguishable is identical" to "Same anchors, one account". Is the old title referenced anywhere? I searched; no. ✓.
+
+Hmm, one more: in the revised Derivation 2's Claim, "(ii) If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k; so far as (F1), (F2) and (A) reach, the two are one account on C: φ pairs their active components, each pair of one kind on C, and by (i) their answer profiles coincide."
+
+Hmm — "the two are one account on C" — but wait, "one account" was defined in the old Derivation 2 as a conclusion; in the revised text, is "one account" a defined notion? It's used in Derivation 10 too ("the two candidates are one account"). It's an informal notion: the candidates are equivalent for all the contract reaches. Fine.
+
+Hmm, also: does the revised Derivation 2 still warrant the name "Same anchors, one account"? Yes.
+
+OK now — let me reconsider one potential real issue with R51: the Claim now says "Let E, E' be candidates for the same p that both satisfy (F1), (F2) and (A) on C." Then (i) and (ii). But the old claim's proof was "Immediate from Derivation 1 and (A)". The new proof is given. ✓.
+
+And "Without the premise of (ii) nothing more follows" — this is a claim about what doesn't follow. Is it accurate? Without the shared-anchor premise, we have (i) only: answer profiles coincide. Could more follow? E.g., by (K), components with the same signature are of one kind regardless of anchors! Hmm — wait. Two components k (in E) and k' (in E') with *different* anchors could still be of one kind on C if their signatures coincide. So "nothing more follows" is about what the *derivation* establishes; the text says "candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile". Hmm — is that right? Two candidates anchoring different subnetworks could still have components of one kind (if the anchored subnetworks have the same signature on C). E.g., redundant routes a and b in Part VI — if a and b have the same signature on C, they'd be of one kind. Hmm. So "candidates that anchor different subnetworks... are different candidates with one answer profile" — they're different candidates (different Γ or different λ), with one answer profile. That's true. And whether their components are of one kind is not settled by the derivation. The text says "nothing more follows" — meaning nothing more about being one account. Hmm, but (K) could still make them of one kind. Is the text claiming they're NOT of one kind? It says "are different candidates with one answer profile" — which is compatible with their components being of one kind or not. So no false claim. ✓.
+
+Hmm, OK. But hold on — there's a subtle tension: the old Derivation 2 concluded "their components are pairwise of one kind on C". The new one says, in effect, "where anchors are shared, the paired components are of one kind; otherwise nothing". But by (K), components with coinciding signatures are of one kind anyway. So the kind conclusion may hold even without shared anchors. The new text doesn't deny that. ✓. Fine.
+
+Alright, let me also double check the line numbers cited in the changes match the revised text (a consistency check the task mentions: "Cite a change by its id... Quote the text whenever you rely on it"). Line numbers: R26 at line 349 (Functional transport), R27 at 359, R28 at 371, R29 at 377, R41 at 473, R43 at 489, R51 at 554–562, R54 at 620, R55 at 624. I can't count lines reliably here, but the order is right: Part VIII (349, 359), Part IX (371, 377), Part XII (473), Part XIII (489), Part XVI (554–562, 620, 624). ✓. Plausible.
+
+Hmm, wait. R28 is at line 371 and R29 at line 377 — both in Part IX Bearing. The Bearing paragraph in the revised text: "**Bearing.** A criticism has target z, alleged defect δ, grounds g, and a connection. Let p_δ be the question whether z has δ in respect of p, and E_c the explanatory candidate (Part V) that the criticism offers for p_δ. Then Bearing(c,z,p) ⟺ Account(E_c, p_δ). (K1) A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." — Both changes are in this paragraph. ✓.
+
+OK. So my conclusion is that all nine changes stand? Hmm, that feels like it might be the intended answer for some of them, but the task explicitly says "Your job is to find what is wrong with the nine changes" and "Test that as hard as you can, against the texts alone." It's possible that the intended answer is that they all stand — the task says "A change you tried to break and could not needs no point of its own." So it's acceptable to conclude they stand, if I genuinely can't break them. But let me try harder on a few.
+
+Let me re-examine R26 once more. Is it really WORDING? The old text: "If π∘S_a=T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes." The new: "Let S_a be a target process and T_a a represented process for each admitted generator a. If π∘S_a=T_a∘π for every generator a, ...".
+
+Hmm — "Let S_a be a target process and T_a a represented process for each admitted generator a." Does this *restrict* the theorem? The old theorem was about any S_a, T_a satisfying the condition. The new one introduces S_a as "a target process" — meaning S_a is the target's process under generator a. Hmm, does "target process" have a technical meaning? Part VIII's approximate transport: "Let S be a target next-step process and T a represented next-step process". So "target" = the target organization D's process; "represented" = the representing organization E's process. So π: X_D → X_E, S_a on X_D, T_a on X_E. The condition π∘S_a = T_a∘π. ✓. So the new wording pins the types. That's a clarification, not a restriction of the claim (the old text implicitly required the same types for the equation to type-check). ✓. WORDING is right.
+
+Hmm, but is it? Could a reader of the old text have concluded something more general? The equation π∘S_a = T_a∘π forces S_a: X_D → X_D and T_a: X_E → X_E given π: X_D → X_E. So no generality lost. ✓.
+
+OK, R26 stands.
+
+Let me try to break R41 once more. "Cap^{q,r}_Ω(ξ) is the set of tasks with an owned realization, or an owned construction of one, at those grades, as owned capability requires". Hmm — "as owned capability requires" — the Owned capability paragraph: "Can_{Ω,β}(ξ,T;χ) requires an owned retained realization or an owned, physically admitted, finite construction of one under the same continuity and resource contract." So Cap^{q,r}_Ω(ξ) = {T : Can_{Ω,β}(ξ,T;χ) for some... hmm, at grades (q,r)}. The definition is informal but consistent. ✓.
+
+And "Poss_Θ = ∩_{q,r} Admit^{q,r}_Θ is the set of tasks achievable at every grade, which is what possibility means under Tasks." Tasks: "Possibility is the absence of a law-imposed limit short of perfection on performance and retention". ∩ over all (q,r) of achievable tasks = tasks achievable at every grade, including the most demanding — i.e., no limit short of perfection. ✓.
+
+Hmm, but there's a subtlety: "short of perfection" — if the preorder has no maximal element (increasingly demanding, short of perfection), then ∩ over all grades is the set of tasks achievable at every finite grade — which is "no limit short of perfection". ✓. Consistent.
+
+OK, R41 stands.
+
+Let me try to break R43 once more. Hmm: "Enable(s,T,χ) holds when χ is an admitted, non-question-begging enabling condition for s and the task T." — Note (U1) uses "Enable(s,U_c,χ)" where s is the system and U_c a task. ✓. But wait — in (U1), "∀c ∈ 𝔈_Θ ∃χ, Enable(s,U_c,χ) ∧ Can(ξ_0,U_c;χ)". Hmm, and "Scrutinizability" in Part XIII uses "an owned, admitted continuation". And Barriers: "Enable(s,T,χ) holds when χ is an admitted, non-question-begging enabling condition for s and the task T." — the term "non-question-begging" appears in the Barriers paragraph already. ✓.
+
+Hmm, is there a circularity problem for the *barrier* definition? "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable." — So a barrier is defined via enabling conditions, and Enable is defined via "enabling condition". This is a definitional circle of the mild kind: Enable(x) ⟺ EnablingCondition(x). It doesn't reduce the notion. But the change's declaration says "Part XIII now defines Enable in (U1) and (U2)". Hmm — if "enabling condition" is not defined elsewhere, then Enable is not really defined, just relabeled. Is that a defect? The erratum's purpose was to give the symbol Enable a reading. The reading given is exactly the phrase used in the barrier definition. So a careful reader now knows: Enable(s,T,χ) means χ is an admitted, non-question-begging enabling condition for s and T. That IS a definition relative to the (primitive-ish) notion of an enabling condition. I think it's acceptable — the alternative would be to leave Enable undefined, which is worse. Hmm. I could flag it as a minor point but I don't think it makes R43 FALL.
+
+Hmm, wait, actually — let me reconsider. Is "enabling condition" defined anywhere in the text? Part XIII Barriers: "for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable". Part XIII Scrutinizability: "there is an owned, admitted continuation in which...". Part XII: "enabling conditions χ" in RetReal and CanAdv signatures. So "enabling condition" is used as a general term for conditions that enable a capability. It's not formally defined, but it's a standard relative notion: χ enables T for s if, given χ, s can do T. Hmm, and Enable(s,T,χ) says χ is such a condition (and admitted, non-question-begging). So there's a slight circularity: "χ enables T" vs "Enable(s,T,χ)". Ugh. It's essentially "Enable(s,T,χ) ⟺ χ is an enabling condition for T". That's definitional identity, not a reduction. But as an erratum making the symbol's reading explicit, it's fine — the substantive content ("admitted, non-question-begging") is what matters for barriers and universality.
+
+Hmm, I'll consider flagging this as a minor observation under (c) but conclude it survives.
+
+OK, let me try to break R51 one final time, focusing on the claim "so far as (F1), (F2) and (A) reach, the two are one account on C". Is this consistent with Part VI's insistence that different Γ's are different candidates? In case (ii), the bijection is of *active* components — so Γ and Γ' have the same cardinality and structure. But they could still be different sets (e.g., Γ = {a,b} and Γ' = {a',b'} with different identity). "So far as (F1),(F2),(A) reach" — those conditions don't mention Γ at all! (F1),(F2) are about the transport and components; (A) about the answer profile. Γ enters via (S),(B) and non-circular dependence (which is part of (E)). Hmm — so "so far as (F1),(F2),(A) reach" excludes non-circular dependence, which does depend on Γ (the block G ⊆ Γ). So two candidates could agree on (F1),(F2),(A) but differ on non-circular dependence. The qualifier correctly hedges. ✓.
+
+Also, the old claim said "are one account at grain C" without the hedge; the new one hedges. ✓. Declaration covers.
+
+OK. And one more check on R51's proof of (ii): "By Derivation 1, k has the signature of its anchor on the ports its translation names, and φ(k) the signature of the same anchor on the same ports; composing the one translation with the inverse of the other gives a footprint bijection under which the two signatures, read on C, coincide." ✓.
+
+Alright. I've now examined all nine thoroughly and find them sound. Hmm. But wait — let me reconsider the possibility that one of the "erratum" CLAIM changes is actually a *change of claim* mislabeled, or that a declaration understates the change.
+
+R27's reason is "erratum" — the old (T2) was missing hypotheses. The declaration says "(T2) now states its hypotheses and defines its quantity." That's accurate, and it IS an erratum (the old statement was incomplete). ✓.
+
+R28's reason "erratum" — p_δ and E_c were undefined-ish. ✓.
+
+R29's reason "erratum" — hmm, is R29 an erratum or a change of claim? The old wording "represents how it bears" was vague; the new wording changes the existence condition (as the declaration says). Is that an erratum (fixing a mistake) or a change of claim? The declaration says "The condition ... is now that ..., not that ...". That's a change in what's claimed for criticism-existence. Hmm. But the reason given is "erratum". Is the reason mislabeled? An erratum is a correction of an error. If the old wording was an error (misstated the condition), then fixing it is an erratum. Was the old wording an error? "An adverse signal is not a criticism until an organization represents how it bears." — if the intended condition was "represents it as grounds for an alleged defect", then the old wording was an error (it required representing the bearing, which is (K1)'s job). So the erratum label is defensible. ✓.
+
+Hmm, but does the change alter the theory's verdict on any case? Let me think of a case: an organization receives an adverse signal and represents it as indicating a defect, but offers no account of how it bears. Old wording: not a criticism (it must represent how it bears). New wording: is a criticism occurrence (but doesn't bear, since (K1) fails). Hmm — this changes the verdict on such a case from "not a criticism" to "a criticism occurrence that doesn't bear". Is that a move away from any fixed verdict? None of the listed cases are like that. Hmm. And it's a declared change. ✓.
+
+Hmm, OK. Let me also double-check R29 against N11 (named). N11: Jana's marks. "Jana's marks told her nothing about what worked, so they did not shape what she wrote." Under (K1)/(R29): the marks are adverse signals; do they become criticisms? Under the new wording, a mark becomes a criticism only if an organization represents it as grounds for an alleged defect in a target. Jana doesn't know what the teacher liked or disliked, so she can't represent the mark as grounds for a specific defect. So the marks aren't criticisms for her. ✓. Verdict: "Yes, both did [create what is good in their final essays]" — Jana created the sentences; the teacher's choice among drafts isn't Jana's creation. Hmm, the verdict says both created what's good in their final essays. Under the theory: Jana wrote all drafts (Build for each draft?); the final essay's goodness is due to the teacher's selection, not Jana's construction. Hmm, the verdict says "Yes, both did" — every sentence was written by the student. So Jana created the essay's content. The teacher's selection is not creation by Jana... but the verdict says Jana created what is good in her final essay because every sentence is hers. Hmm. Does R29 move this? R29 is about criticism existence. Kasia's self-criticism: she represents faults as grounds for defects — criticism exists. Jana's marks: not criticisms for her (she can't interpret them). Either way, the creation verdict is about Build/Origin of the drafts, not criticism. No move. ✓.
+
+OK. Final answer: all nine stand? Hmm. Let me do one last suspicious re-read of R55's new wording for a hidden incoherence.
+
+"On any contract containing it that admits each edit for both things alike, composing t_1 with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork. The two things are built alike in P, and their persistence components alike in S_1, so the exchange carries the fidelity and the answers of t_1 over to the second transport (Derivation 8); so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)."
+
+Hmm — "composing t_1 with the exchange of the two things". The exchange is a map on P (the target). t_1: P → S_1. Composition t_1 ∘ e. But Derivation 8 is about "transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections". The exchange e is a bijection on the target P. Transporting t_1 along e gives t_1 ∘ e^{-1} or t_1 ∘ e. Either way, it's a transport. ✓.
+
+"which sends each persistence component to the other thing's continuity subnetwork" — as computed, λ'(k) = e(λ(k)). ✓.
+
+Hmm, wait — one subtlety: for t_1 ∘ e to be a transport from P to S_1, we need e to be an edit-translation-respecting map... The exchange is a bijection of P's states (swapping the two things). It induces a map on edits (τ_e) and boundaries. Derivation 8 covers "transports ... along structure-preserving bijections". ✓.
+
+"so the exchange carries the fidelity and the answers of t_1 over to the second transport (Derivation 8)" ✓.
+
+"so far as (F1), (F2) and (A) reach, the two candidates are one account (Derivation 2)" — via (i) answer profiles coincide (swap leaves predictions unchanged) and (ii) shared anchors with φ = exchange. ✓.
+
+And the preceding sentence: "The swap edit is invisible in the sensory field and leaves every prediction unchanged." ✓ — that's why the answer profiles coincide.
+
+Hmm, and "A claim that 'component 1 is *really* thing 1' is a claim that some admitted change distinguishes them, and on this contract none does." — under the symmetric contract, no admitted change distinguishes the two things (they're built alike and the contract treats them alike). ✓.
+
+OK. So all nine stand. Hmm, hold on, wait. Let me reconsider one thing about R55: the declaration says "Derivation 10 no longer says that the two persistence components are of one kind on any contract containing the swap edit." But consider: does the *revised* Derivation 10, together with the revised Derivation 2, still *entail* that the two persistence components are of one kind on symmetric contracts? Yes (via (ii) with φ = exchange). Is that a problem for the declaration? The declaration says the new wording says X, Y, Z and no longer says W. It doesn't say the theory no longer *entails* a restricted version of W. Hmm. A picky reader might say the declaration is incomplete: the new wording still entails (with Derivation 2) that the persistence components are of one kind on symmetric contracts. But the declaration's point is that the *unrestricted* claim is gone, replaced by a restricted derivation. I think that's fine and accurately described.
+
+Hmm, but actually — wait. Is there a *tension* between R51 and R55? R51's Derivation 2(ii) requires "the same subnetwork of D with port translations onto the same ports of D". In R55's exchange case, λ(1) = thing 1's continuity and λ'(2) = thing 1's continuity — same subnetwork ✓. Port translations: ν_1 (for component 1 under t_1) maps onto thing 1's ports; ν'_2 (for component 2 under t_1') maps onto thing 1's ports. "onto the same ports of D" ✓. So the premise holds. ✓. No tension.
+
+Hmm, although — hmm, one could worry: under t_1', component 2's ports are the persistence-component ports (position, velocity of the tracked thing). Under t_1, component 2's ports translate onto thing 2's ports. Under t_1', component 2 tracks thing 1, so its ports translate onto thing 1's ports. And component 1 under t_1 translates onto thing 1's ports. So ν_1 and ν'_2 both map onto thing 1's ports — but from different domains (component 1's ports vs component 2's ports). The footprint bijection V_1 → V_2 (from the "built alike" structure) composes to give the signature coincidence. ✓. The proof in Derivation 2 says "composing the one translation with the inverse of the other gives a footprint bijection". ✓.
+
+OK. I'm confident. All nine stand. Hmm, but let me reconsider whether I should flag anything as a "point" that survives scrutiny — the task says points that survive my own scrutiny mean the change STANDS. So I should only report points that show a defect. Let me reconsider whether there are any genuine defects I should report.
+
+Hmm, let me reconsider R54 once more. The declaration: "Derivation 10 no longer describes its structural fidelity failure as Derivation 3's qualification seen from the other side." 
+
+Hmm — is the removed claim actually *false*, or just loosely worded? If it's true, then removing it is a change of claim (weakening) that the "erratum" label misdescribes. Let me think really carefully.
+
+Derivation 3 (revised): selected transport t on finite history H ⊂ C. For (a,b) ∈ C\H where some t' ∈ T surviving on H differs from t, t's value at (a,b) is underdetermined by H. Qualification: the presence of an unseen pair alone doesn't establish such a t' exists; it must be in T and survive on H. Consequence: "What the qualification gives up is the guarantee of a differing survivor at every unseen pair, and with it the blanket claim that every untested value is unconstrained; a population restriction, a physical relation, or another stated constraint may already fix a value that the history never tested."
+
+Derivation 10's selection response: H_0 extended to include occlusions; μ re-tunes t_0 within its population. If the population's transports can only predict from occupancy, no member survives the extended history.
+
+Is "no member survives the extended history" an instance of Derivation 3's qualification? Derivation 3's qualification is about a *differing survivor* not existing at an unseen pair — i.e., the population doesn't admit an alternative that survives on H and differs at (a,b). In Derivation 10, the issue is that *no* member survives the extended history (including t_0 itself). Hmm — so it's not about a differing survivor; it's about t_0 itself failing and no member surviving. So the old gloss "this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change" — hmm, "a population that admits no survivor at the new change" — Derivation 3's qualification involves a population that admits no *differing survivor*. "No survivor at all" is different from "no differing survivor". So the gloss conflated them. It's a genuine error. Removing it is an erratum. ✓.
+
+Hmm, but is the removed sentence's *substantive point* needed anywhere? The point of the selection-response paragraph is: selection can't fix t_0 because the failure is structural. That point stands without the gloss. ✓.
+
+OK. R54 stands.
+
+Hmm, let me reconsider R28's declaration once more: "(K1) now defines its terms: p_δ is the question whether the target has the alleged defect in respect of p, and E_c is the explanatory candidate the criticism offers for that question."
+
+Hmm — does the new wording define p_δ as "the question whether z has δ in respect of p"? Yes. But — hmm — is p_δ well-defined as a question in the sense of Part III? A question is (D, C, b_0, Q, O_p, ρ_p). "The question whether z has δ in respect of p" — its target is z (or z's organization), its query returns a truth value. Part III allows queries with truth-value codomains (obstruction questions). ✓. Fine.
+
+OK, truly final check: is there any change whose new wording *contradicts* the current text elsewhere? 
+
+R29: "An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target." vs. Part X: "A **recognized difficulty** is a failure of a claimed obligation, or a conflict in which what the system holds meets a claimed obligation only by failing a protected one (Part XI), when the system represents it." — A recognized difficulty is represented; a criticism (objection) targets an alleged defect. Consistent: the criticism's content is "signal as grounds for defect". ✓.
+
+R41 vs. Part XIV's "accuracy grades" — consistent. ✓.
+
+R43 vs. Part XIII Barriers — consistent. ✓.
+
+R51 vs. Part II's "Derivation 2 uses kinds in this sense" — consistent. ✓.
+
+R55 vs. Derivation 8's restriction — consistent. ✓.
+
+Alright. I'll report that all nine stand, with the most scrutiny on R51/R55 (which I checked carefully and found mutually consistent) and R27 (mathematically verified). I should present my findings organized by change with the tasks addressed, note the verdict moves I checked (O24, O36 move toward the fixed verdict, accounted for by R51's declaration; O48 unaffected by R54 since Derivation 3 is unchanged; N20 unaffected by R27's scope proviso), and conclude OVERALL: SOUND.
+
+Hmm, wait. Actually, hold on. Let me reconsider O24 and R51 once more, because the task says "A move toward it that the change's declaration does not account for is an undeclared change of claim." Let me make sure R51's declaration accounts for the O24 move.
+
+O24: two wiring arrangements, differ at one unused setting. Verdict: "They are two arrangements, and the record has not chosen between them. One reachable setting is enough."
+
+Under the current (old) text with the old Derivation 2: if both arrangements satisfy (F1),(F2),(A) on C, "they are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide." So the old theory would say they're one account — contradicting the verdict that they're two arrangements. So the old text moved AWAY from the fixed verdict on O24.
+
+Hmm, wait. But is that right? Let me think again. In O24, the two arrangements *differ at a reachable setting*. If the contract C contains that setting's edit, then their answer profiles differ, so they can't both satisfy (A). So at most one is an account on C. Then the old Derivation 2 doesn't apply (its premise requires both to satisfy (F1),(F2),(A)). Hmm! So maybe the old text doesn't say they're one account either — because on a contract containing the separating edit, only one can be an account.
+
+Hmm, so what does the old theory say about O24? "They are two arrangements, and the record has not chosen between them." The record (which settings have been tested) hasn't chosen. The separating setting is untested. So the contract of the *assessment so far* doesn't contain the separating edit. On that contract, both satisfy (F1),(F2),(A) — and the old Derivation 2 says they're one account. But the verdict says they're two arrangements and one reachable setting is enough to show that. So the old theory's verdict ("one account at grain C") conflicts with the fixed verdict ("two arrangements"). The revised Derivation 2 says: without shared anchors, nothing follows — they're different candidates with one answer profile. Since the two arrangements have different wiring (different anchors), the revised theory says they're different candidates. ✓. Matches the verdict. So R51 moves O24 from "disagrees" (old) to "agrees" (new). That's a move toward the fixed verdict.
+
+Does R51's declaration account for it? The declaration says the Consequence now covers only candidates that differ in which component carries which anchor, and that without the shared-anchor premise nothing more follows. For O24, the arrangements differ in wiring — not merely in which component carries which anchor. Hmm — "differ only in which component carries which anchor" vs. "anchor different subnetworks". The Consequence's scope is candidates differing in component-anchor assignment; O24's candidates anchor different subnetworks. The Consequence doesn't apply to them, but the "nothing more follows" paragraph does: "candidates that anchor different subnetworks... are different candidates with one answer profile". So the revised theory says they're different candidates. ✓. The declaration describes this (the "without that premise nothing more follows" part). ✓. Accounted for.
+
+Hmm, OK. But hold on — under the *old* text, was the verdict on O24 really "disagrees"? Let me reconsider. The old Derivation 2's Consequence: "Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction. The remedy is a finer contract, which is a new question. A claim that two such candidates 'really' differ is a claim that some admitted change separates them, and must supply it."
+
+For O24: the separating setting is reachable (physically admitted). So "a claim that they really differ is a claim that some admitted change separates them, and must supply it" — the supplied change is the unused setting. So the old Consequence would say: the contract doesn't contain the distinction; the remedy is a finer contract. And since the separating edit is physically admitted, the finer contract is available. So the old theory might say: on the current contract they're indistinguishable (one account); refine the contract and they separate. Hmm — the fixed verdict says "They are two arrangements, and the record has not chosen between them. One reachable setting is enough." 
+
+Hmm, "one reachable setting is enough" — enough for what? I think: enough to establish that they're genuinely two different arrangements (not relabelings), and the record hasn't chosen which is correct. Under the old theory: on the coarse contract, they're one account — that would say the distinction isn't real at that grain, which conflicts with "they are two arrangements". Under the revised theory: they're different candidates with one answer profile — the distinction is real (different candidates), and the record hasn't chosen. ✓. So the revision moves toward the verdict. 
+
+And is that accounted for by the declaration? The declaration says the old claim ("are one account whose components are pairwise of one kind") is dropped, replaced by the weaker claim. Yes — that's exactly what produces the move. ✓.
+
+OK so R51 is a genuine improvement, properly declared, moving O24 (and O36) toward the fixed verdict. Not a defect.
+
+Alright. Hmm, let me reconsider whether R51 might move some verdict *away*. Consider O45/O46 (spring/cable). O46: "After the spring is deleted, the author reassigns the surviving component to a cable and shows the door still returns, then reports that the original spring account survived the deletion. Verdict: What survived is a new account with a cable in it. The spring account did not survive; it was replaced, and the replacement's success is its own."
+
+Under the old Derivation 2: the spring account and the cable account both satisfy (F1),(F2),(A) on C? If so, the old theory would say they're one account — contradicting the verdict ("What survived is a new account"). Under the revised Derivation 2: they anchor different subnetworks (spring vs cable), so nothing follows — they're different candidates. ✓. Matches the verdict. So R51 moves O46 toward the fixed verdict too. Accounted for by the declaration. ✓.
+
+And O45 (spring nobody mentioned): "The second spring was in the account from the start, connected and sufficient. It was already a route." Under the revised Derivation 2 — hmm, this is about supports (Part VI), not two candidates. The second spring is a route (member of S) whether or not described. Part VI: "a route already present in the candidate is a route whether or not anyone has described its work". ✓. Unchanged. No move.
+
+Hmm, and O10/O11/O18/N15/N17/N25 — no moves (checked).
+
+So R51 moves O24, O36, O46 toward the fixed verdict, all accounted for. Good.
+
+Now, one more consideration for R55: does it move O43? O43's verdict: content preserved under the declared mirror. Under the old R55: "the two persistence components are of one kind (Derivation 2)" — that's about Derivation 10's swap, not O43's mirror. O43's verdict rests on Part VIII Recoding + Derivation 8 (unchanged). So no move. ✓.
+
+Hmm, and does R55 move the verdict on Derivation 10's own case (the swap)? The old text said the persistence components are of one kind on any contract containing the swap. The new text says they're one account (via Derivation 2) on symmetric contracts. The fixed verdicts don't include a Derivation-10-swap case. Hmm, is there a case about interchangeability? Not in the list. So no verdict move on a listed case. And the change is declared. ✓.
+
+OK. Final conclusion: all nine stand; OVERALL: SOUND.
+
+Hmm, hold on. Let me reconsider one more time whether there's something with R26 that constitutes an undeclared claim change. The new wording says "Let S_a be a target process and T_a a represented process for each admitted generator a." — Hmm, "for each admitted generator a". Then: "If π∘S_a=T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes."
+
+Wait — "for every generator a" vs "for each admitted generator a". The "Let" uses "admitted generator"; the condition uses "every generator a". Minor inconsistency but harmless (the generators in play are the admitted ones). Hmm, and "admitted finite composition" — compositions of admitted generators. ✓.
+
+Also: does the new wording's "Let S_a be a target process and T_a a represented process" possibly clash with the fact that in a transport, π maps X_D → X_E where D is the target and E the representation? "S_a be a target process" = process on the target D. "T_a a represented process" = process on the representation E. ✓. π∘S_a = T_a∘π type-checks. ✓.
+
+OK. Truly final: all stand.
+
+Hmm, hmm. But wait. Let me reconsider R27's declaration once more: "S is a target and T a represented next-step process, as in functional transport". The new text: "Let S be a target next-step process and T a represented next-step process, as S_a and T_a are in functional transport". ✓. "d is a metric on the represented states" — text: "a metric on X_E". X_E is the representing organization's value domain. Hmm — "the represented states" vs "X_E". Is X_E the set of represented states? E is the representation; its valuations are the representing states. Hmm! "Represented states" would be states of what's represented, i.e., the target D — X_D! Hmm. Wait, no: in functional transport, T_a is "a represented process" — the process in the representation. So "represented process" = the process that represents. By analogy, "represented states" = states of the represented process = X_E. Hmm, the terminology is: the representation contains "represented processes" (processes that are representations). So "represented states" = X_E. The declaration's usage matches the text's own usage ("T_a a represented process"). ✓. OK, no mismatch. (Though the terminology is a bit odd, it's internally consistent.)
+
+Alright, I'm done. Let me also double check the (T2) tag placement in the revised text: "...whenever z,Sz,…,S^{n−1}z lie in that scope. (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one." — the tag (T2) follows the theorem. ✓. And Part XV references (T2) as a theorem to counterexample. ✓.
+
+Now let me write the report. Requirements:
+- Number points in one list, most serious first, head with change id(s) and task (a)-(d).
+- After the points, one line per contested change: `R26: STANDS` or `R26: FALLS — <reason>`.
+- Then `OVERALL: SOUND` or `OVERALL: NEEDS REPAIR`.
+- Under ~3000 words.
+- End with `END OF REPORT`.
+
+Since I find no defects, I should report my testing as points that survive scrutiny... hmm, but the instructions say "A change you tried to break and could not needs no point of its own." So I shouldn't pad with points that don't show defects. But I should demonstrate the testing. Hmm — the report should show what I checked. I think a compact report: for each change, a brief point stating what was tested and the conclusion, with the key quotes. Since none fall, the points are "tested and stands". Hmm, but "most serious first" — with no defects, I'll order by change id or by significance of the testing.
+
+Actually, let me reconsider once more whether I'm missing a real defect. The task is designed as a cross-examination; typically some changes fall. Let me re-read the nine changes' declarations with fresh eyes, looking for overstatement.
+
+R27's declaration: "(T2) now states its hypotheses and defines its quantity." — ✓.
+
+Hmm, wait. Actually, let me reconsider: does the new (T2) *state* the hypothesis "at every state z of a stated scope"? Yes. And "with T L-Lipschitz for d"? Yes. ✓.
+
+R41's declaration: "Part XII now defines the grades q,r, Admit^{q,r}_Θ, Cap^{q,r}_Ω and Poss_Θ that (CT3) and (CT4) relate, with Poss_Θ the tasks achievable at every grade." — ✓. Hmm, but does the new wording define "Cap^∞"? It appears in the text ("Cap^∞ = ∩_{q,r} Cap^{q,r}") but the declaration doesn't mention it. Minor — the declaration mentions the main definitions; Cap^∞ is defined inline. Not a defect.
+
+R43's declaration: "Part XIII now defines Enable in (U1) and (U2): it holds when χ is an admitted, non-question-begging enabling condition for the system and the task." — ✓.
+
+R51's declaration — ✓ (checked in detail).
+
+R54's declaration — ✓.
+
+R55's declaration — ✓.
+
+R28's declaration — ✓.
+
+R29's declaration — ✓.
+
+R26's — no declaration (WORDING). ✓ no claim change.
+
+Hmm. OK. One thing I want to double-check: R26 is declared WORDING. Task (b): does it change a claim? I argued no. ✓.
+
+Alright, I'll write the report concluding all stand. Let me make the points substantive but concise, showing the textual basis.
+
+Actually, hmm, wait. Let me reconsider the interaction between R27's scope clause and the unchanged sentence "Without a modulus, no accumulated bound follows." Under the old text, "With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k" — then "Without a modulus, no accumulated bound follows." Hmm — "without a modulus" refers to: without a Lipschitz constant L (a modulus of continuity), no accumulated bound. Under the new text, the modulus is L (L-Lipschitz). So "without a modulus" = without L. ✓. Coherent. And "An exact question is not silently replaced by an approximate one." ✓.
+
+Hmm, and the new text's scope clause: does it interact with "Without a modulus, no accumulated bound follows"? No. ✓.
+
+OK. One more paranoid check on R27: the declaration says "the one-step discrepancy d(πSz, Tπz) is at most ε at every state z of a stated scope". The text: "With one-step discrepancy d(πSz,Tπz)≤ε at every state z of a stated scope". ✓. 
+
+And: "the discrepancy after n steps from one state z, e_n=d(πSⁿz,Tⁿπz) (so e_0=0), satisfies the bound whenever z and its first n−1 successors under S lie in that scope." Text: "satisfies e_n≤ε∑_{k<n}L^k whenever z,Sz,…,S^{n−1}z lie in that scope." ✓.
+
+Great. Writing the report now.
+
+For the report structure, since I find no defects, I'll give a small number of points (one per change or grouped), each headed with the id and task(s), quoting the text, and concluding the change stands. Then the STANDS lines for all nine, then OVERALL: SOUND, then END OF REPORT.
+
+Hmm, the instructions: "Number your points in one list, most serious first." With no defects, I'll present the points as the results of the hardest tests. Let me order by significance: R51/R55 interaction first (most complex), then R27 (math), then R54, R41, R43, R28/R29, R26.
+
+Let me be careful to quote the revised text with line numbers where I rely on it. I know: R26 line 349, R27 line 359, R28 line 371, R29 line 377, R41 line 473, R43 line 489, R51 lines 554–562, R54 line 620, R55 line 624. Also other parts: Part II "Kinds are edit-signatures" (Derivation 2 reference), Part V, Part VI, Part VIII Recoding, Part XII, Part XIII, Part XV, Part XVI Derivations 1, 3, 8, 10. I don't have exact line numbers for those, so I'll cite by Part and heading, and quote. The instruction says to cite line numbers for the revised text; I'll use them where the changes are and cite Part/heading elsewhere. That should be acceptable.
+
+Let me draft concisely, under 3000 words.
+
+Point 1 (R51, R55 — tasks a, b, c, d): The mutual consistency check. Quote Derivation 2(ii) premise and Derivation 10's exchange argument. Show the shared-anchor premise holds with φ = exchange. Show the verdict moves on O24/O36/O46 are toward the fixed verdict and declared.
+
+Point 2 (R27 — a, c, d): Verify the theorem and the scope clause; N20 unaffected.
+
+Point 3 (R54 — a, c, d): The removed gloss conflated "no differing survivor" (Derivation 3) with "no survivor at all" (Derivation 10); O48 rests on Derivation 3, which is unchanged.
+
+Point 4 (R41 — a, c): Definitions consistent with Tasks, Owned capability, Part XIV; (CT3)/(CT4) still follow.
+
+Point 5 (R43 — a, c): Enable's reading matches (U1)/(U2) and the Barriers sentence; mild definitional circularity with "enabling condition" but no claim change.
+
+Point 6 (R28, R29 — a, b, c): Existence vs bearing separated; consistent with (K1) and Part X.
+
+Point 7 (R26 — b): Notation was unbound; new wording fixes types without restricting the theorem.
+
+Then the STANDS lines.
+
+Let me make sure I state the verdict-move findings clearly: R51 moves O24, O36, O46 toward the fixed verdict, accounted for by its declaration. No change moves any verdict away.
+
+Hmm, actually, let me double check O46 once more under the old Derivation 2 to be sure the old text disagreed. O46: spring account vs cable account after deletion. Both satisfy (F1),(F2),(A) on C? The door still returns with the cable. So the cable account satisfies Account. The spring account (before deletion) also satisfied Account. Do they both satisfy on the same C? Presumably yes (same contract). Under old Derivation 2: "Two candidates for the same p that both satisfy (F1),(F2),(A) on C are one account at grain C" — so the old theory would say the spring account and the cable account are one account, i.e., the spring account survived. That contradicts the fixed verdict ("What survived is a new account with a cable in it. The spring account did not survive"). So the old text disagreed; the revised text agrees (different anchors → different candidates). Move toward the fixed verdict, declared. ✓.
+
+Hmm, but wait: are the spring account and cable account "candidates for the same p"? Yes, same question (why does the door return?). And do they anchor different subnetworks? The spring component anchors to the spring's subnetwork in D; the cable component anchors to the cable's. Different. So (ii) doesn't apply. ✓.
+
+Hmm, but here's a subtlety: in O46, is the cable account a *different candidate* or the *same candidate with a component reassigned*? Part VI: "a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's." ✓. So the revised theory says exactly the verdict. ✓.
+
+Great. And O36: two proof routes both using P. Under old Derivation 2, if both routes satisfy (F1),(F2),(A) on C, they're one account — suggesting P's status is the same. But the verdict: "P is critical in each route as written. That another route could be written without it is a fact about a candidate nobody has written." Under the revised theory: the two routes anchor different subnetworks → different candidates; and Part VI's "the supports assessed are subsets of the written Γ... not a support someone could write" gives P critical in each as written. ✓. Move toward the fixed verdict, declared. ✓.
+
+OK, writing the report now. I'll aim for ~1200-1500 words.
+
+Actually, one more sanity check on the requirement: "After the points, give one line for each change you contest, in the order of the ids, reading exactly `R26: STANDS` or `R26: FALLS — <the reason in a phrase>`". Since I contest none (all stand), I list all nine as STANDS. Hmm, "A change you do not list is taken as uncontested." I'll list all nine as STANDS to be explicit.
+
+Then "OVERALL: SOUND".
+
+Let me write it.
