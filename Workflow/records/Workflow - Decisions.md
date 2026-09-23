@@ -24,5 +24,7 @@ W10. "Keep a handover in case important information is lost during automatic con
 
 W11. On the two consequences put after log W10 (W10.8's three-round cap; W3 P3.4's rewording count): "As long as each completed round is versioned and saved, keep going until no faults can be found. This why iterative versions are to be saved, so that the only thing lost is time and tokens. The work is saved, and the generated data can be mined afterwards. If I disagree with a version, rewind is simple. And lessons learned." Taken as: the fix loop has no round cap; it runs until a review returns zero faults of any severity; every completed round is committed and tagged as its own version before the next starts; stage B starts after that, with the rewording count recorded as it stands.
 
+W12. After stage B's markers returned: "Ok. Now use Opus 5.5 on extra please. But again, 5 agents at a time." Taken as: from here every role decision W6 gave to Opus 5 (data collection, review, coding, the stage F reviewers) runs on Opus 5.5 at effort xhigh; the cap of five Opus and Sonnet subagents at a time stands. Applied once the model id resolves in this runtime (checked by one small call before any round).
+
 ## Traps
 - Treating a routine choice made by Claude as one of your decisions. Only your own words go here.
