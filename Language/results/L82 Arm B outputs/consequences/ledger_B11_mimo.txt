@@ -1,0 +1,87 @@
+LEDGER B11: 21 lines; 7 facts stated directly; 7 facts found; 0 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line clerk [said, sentence 1]: [GIVEN] dockyard clerk is a person; it answers a press as not stated
+      no longer: kind(dockyard_clerk,person)
+  take out line harbourmaster [said, sentence 1]: [GIVEN] harbourmaster is a person; it answers a press as not stated
+      no longer: kind(harbourmaster,person)
+  take out line log [said, sentence 1]: [GIVEN] log is a log; it answers a press as not stated
+      no longer: kind(log,log)
+  take out line logown [said, sentence 1]: [GIVEN] the log is the harbourmaster's log
+      no longer: holds(kept_by(log,harbourmaster))
+  take out line p1 [said, sentence 1]: [CLAIMED] p1: dockyard clerk READS log
+      no longer: holds(read(dockyard_clerk,log))
+  take out line trawler [said, sentence 2]: [TOLD in world log_world] trawler is a boat; it answers a press as not stated
+      no change in the reported fact set
+  take out line bar [said, sentence 2]: [TOLD in world log_world] bar is a bar; it answers a press as not stated
+      no change in the reported fact set
+  take out line tide [said, sentence 2]: [TOLD in world log_world] tide is a tide; it answers a press as not stated
+      no change in the reported fact set
+  take out line turn [said, sentence 2]: [TOLD in world log_world] the tide had turned
+      no change in the reported fact set
+  take out line p2 [said, sentence 2]: [TOLD in world log_world] p2: trawler CROSSES bar [across]
+      no change in the reported fact set
+  take out line cause1 [said, sentence 2]: [TOLD in world log_world] line p2 BECAUSE line turn
+      no change in the reported fact set
+  take out line catch [said, sentence 3]: [TOLD in world log_world] catch is a catch; it answers a press as not stated
+      no change in the reported fact set
+  take out line crewed [filled in, sentence 3]: [TOLD in world log_world] the trawler had a crew; I take the binned question 'who had crewed the boat' to presuppose this crew and to speak of this trawler
+      no change in the reported fact set
+  take out line weighed [filled in, sentence 3]: [TOLD in world log_world] the catch had a weight; I take the binned words 'how much the catch had weighed' to presuppose this weight
+      no change in the reported fact set
+  take out line boats [said, sentence 4]: [TOLD in world count_world] boats is a boat; it answers a press as not stated
+      no change in the reported fact set
+  take out line p3 [said, sentence 4]: [TOLD in world count_world] p3: boats TIE UP; the thing tied to is not stated
+      no change in the reported fact set
+  take out line entry [said, sentence 5]: [GIVEN] entry is an entry; it answers a press as not stated
+      no longer: kind(entry,entry)
+  take out line entrylink [filled in, sentence 5]: [GIVEN] the entry is the log's entry; I take the entry of sentence 5 as the entry written in the log
+      no longer: holds(entry_of(entry,log))
+  take out line north_pier [said, sentence 5]: [TOLD in world log_world] north pier is a pier; it answers a press as not stated
+      no change in the reported fact set
+  take out line repairs [said, sentence 5]: [TOLD in world log_world] repairs is a repair job; it answers a press as not stated
+      no change in the reported fact set
+  take out line due [said, sentence 5]: [TOLD in world log_world] repairs are due on the north pier
+      no change in the reported fact set
+
+TOTAL delta lines over 21 removals: 7. Time: 10 s.
+
+INSIDE 'log_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  12 lines in the world; 11 facts stated directly; 11 facts found; 0 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(crossed(trawler,bar))   <- lines p2
+      - line p2 [said, sentence 2]: [TOLD in world log_world] p2: trawler CROSSES bar [across]
+    holds(due_on(repairs,north_pier))   <- lines due
+      - line due [said, sentence 5]: [TOLD in world log_world] repairs are due on the north pier
+    holds(had_crew(trawler))   <- lines crewed
+      - line crewed [filled in, sentence 3]: [TOLD in world log_world] the trawler had a crew; I take the binned question 'who had crewed the boat' to presuppose this crew and to speak of this trawler
+    holds(had_weight(catch))   <- lines weighed
+      - line weighed [filled in, sentence 3]: [TOLD in world log_world] the catch had a weight; I take the binned words 'how much the catch had weighed' to presuppose this weight
+    holds(turned(tide))   <- lines turn
+      - line turn [said, sentence 2]: [TOLD in world log_world] the tide had turned
+    kind(bar,bar)   <- lines bar
+      - line bar [said, sentence 2]: [TOLD in world log_world] bar is a bar; it answers a press as not stated
+    kind(catch,catch)   <- lines catch
+      - line catch [said, sentence 3]: [TOLD in world log_world] catch is a catch; it answers a press as not stated
+    kind(north_pier,pier)   <- lines north_pier
+      - line north_pier [said, sentence 5]: [TOLD in world log_world] north pier is a pier; it answers a press as not stated
+    kind(repairs,repair_job)   <- lines repairs
+      - line repairs [said, sentence 5]: [TOLD in world log_world] repairs is a repair job; it answers a press as not stated
+    kind(tide,tide)   <- lines tide
+      - line tide [said, sentence 2]: [TOLD in world log_world] tide is a tide; it answers a press as not stated
+    kind(trawler,boat)   <- lines trawler
+      - line trawler [said, sentence 2]: [TOLD in world log_world] trawler is a boat; it answers a press as not stated
+  DERIVED INSIDE 'log_world' (not stated by any line):
+    (none)
+
+INSIDE 'count_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  2 lines in the world; 2 facts stated directly; 2 facts found; 0 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(tied_up(boats))   <- lines p3
+      - line p3 [said, sentence 4]: [TOLD in world count_world] p3: boats TIE UP; the thing tied to is not stated
+    kind(boats,boat)   <- lines boats
+      - line boats [said, sentence 4]: [TOLD in world count_world] boats is a boat; it answers a press as not stated
+  DERIVED INSIDE 'count_world' (not stated by any line):
+    (none)

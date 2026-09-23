@@ -1,0 +1,99 @@
+LEDGER B06: 27 lines; 16 facts stated directly; 16 facts found; 0 derived (not stated by any line)
+
+DERIVED, ON THE FULL LEDGER:
+
+WHAT CHANGES WHEN ONE LINE IS TAKEN OUT:
+  take out line clerk [said, sentence 1]: [GIVEN] clerk is a dockyard_clerk; response to a press: not stated
+      no longer: kind(clerk,dockyard_clerk)
+  take out line harbourlog [said, sentence 1]: [GIVEN] harbour_log is a log; response to a press: not stated
+      no longer: kind(harbour_log,log)
+  take out line fread [said, sentence 1]: [CLAIMED] clerk read through harbour_log
+      no longer: holds(read_through(clerk,harbour_log))
+  take out line harbourmaster [said, sentence 2]: [GIVEN] harbourmaster is a harbourmaster; response to a press: not stated
+      no longer: kind(harbourmaster,harbourmaster)
+  take out line fwrite [said, sentence 2]: [CLAIMED] harbourmaster wrote in harbour_log
+      no longer: holds(wrote_in(harbourmaster,harbour_log))
+  take out line fadd [said, sentence 2]: [CLAIMED] harbourmaster added to harbour_log
+      no longer: holds(added_to(harbourmaster,harbour_log))
+  take out line trawler [said, sentence 2]: [TOLD in world log_world] trawler is a trawler; response to a press: not stated
+      no change in the reported fact set
+  take out line bar [said, sentence 2]: [TOLD in world log_world] bar is a bar; response to a press: not stated
+      no change in the reported fact set
+  take out line tide [said, sentence 2]: [TOLD in world log_world] tide is a tide; response to a press: not stated
+      no change in the reported fact set
+  take out line cross1 [said, sentence 2]: [TOLD in world log_world] trawler crossed the bar early
+      no change in the reported fact set
+  take out line turn1 [said, sentence 2]: [TOLD in world log_world] the tide had turned
+      no change in the reported fact set
+  take out line cause1 [said, sentence 2]: [TOLD in world log_world] line cross1 BECAUSE line turn1
+      no change in the reported fact set
+  take out line loadedboat [said, sentence 2]: [TOLD in world log_world] loaded_boat is a boat; response to a press: not stated
+      no change in the reported fact set
+  take out line harbourthing [said, sentence 2]: [TOLD in world log_world] harbour is a harbour; response to a press: not stated
+      no change in the reported fact set
+  take out line rule1 [filled in, sentence 2]: [TOLD in world log_world] ALWAYS MAKES: when a boat is loaded and is at that harbour and the tide turns before dawn, then the boat crosses the bar early; the strength always and the words are said, MAKES is the translator's choice
+      no change in the reported fact set
+  take out line crew [said, sentence 3]: [GIVEN] crew is a crew; response to a press: not stated
+      no longer: kind(crew,crew)
+  take out line thecatch [said, sentence 3]: [GIVEN] the_catch is a catch; response to a press: not stated
+      no longer: kind(the_catch,catch)
+  take out line frec1 [said, sentence 3]: [CLAIMED] harbour_log records the names of the crew
+      no longer: holds(records(harbour_log,names_of(crew)))
+  take out line frec2 [said, sentence 3]: [CLAIMED] harbour_log records the weight of the catch
+      no longer: holds(records(harbour_log,weight_of(the_catch)))
+  take out line countedboats [said, sentence 4]: [TOLD in world clerk_count] counted_boats is a boat; response to a press: not stated
+      no change in the reported fact set
+  take out line tied1 [said, sentence 4]: [TOLD in world clerk_count] counted_boats tied up before noon
+      no change in the reported fact set
+  take out line fnote [said, sentence 4]: [CLAIMED] clerk noted from her own count
+      no longer: holds(noted_from_own_count(clerk))
+  take out line entrything [said, sentence 5]: [GIVEN] entry is an entry; response to a press: not stated
+      no longer: kind(entry,entry)
+  take out line repairs [said, sentence 5]: [GIVEN] repairs is a repair; response to a press: not stated
+      no longer: kind(repairs,repair)
+  take out line northpier [said, sentence 5]: [GIVEN] north_pier is a pier; response to a press: not stated
+      no longer: kind(north_pier,pier)
+  take out line fconcern [said, sentence 5]: [CLAIMED] the rest of the entry concerns repairs on the north_pier
+      no longer: holds(rest_concerns_repairs(entry,repairs,north_pier))
+  take out line flink [filled in, sentence 5]: [GIVEN] entry is an entry in harbour_log; the link between the entry and the log is the translator's reading
+      no longer: holds(entry_in(entry,harbour_log))
+
+TOTAL delta lines over 27 removals: 16. Time: 13 s.
+
+INSIDE 'log_world' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  9 lines in the world; 7 facts stated directly; 13 facts found; 3 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(crossed_bar_early(trawler))   <- lines cross1
+      - line cross1 [said, sentence 2]: [TOLD in world log_world] trawler crossed the bar early
+    holds(turned(tide))   <- lines turn1
+      - line turn1 [said, sentence 2]: [TOLD in world log_world] the tide had turned
+    kind(bar,bar)   <- lines bar
+      - line bar [said, sentence 2]: [TOLD in world log_world] bar is a bar; response to a press: not stated
+    kind(harbour,harbour)   <- lines harbourthing
+      - line harbourthing [said, sentence 2]: [TOLD in world log_world] harbour is a harbour; response to a press: not stated
+    kind(loaded_boat,boat)   <- lines loadedboat
+      - line loadedboat [said, sentence 2]: [TOLD in world log_world] loaded_boat is a boat; response to a press: not stated
+    kind(tide,tide)   <- lines tide
+      - line tide [said, sentence 2]: [TOLD in world log_world] tide is a tide; response to a press: not stated
+    kind(trawler,trawler)   <- lines trawler
+      - line trawler [said, sentence 2]: [TOLD in world log_world] trawler is a trawler; response to a press: not stated
+  DERIVED INSIDE 'log_world' (not stated by any line):
+    depends(crossed_bar_early(loaded_boat),at_harbour(loaded_boat))   <- lines loadedboat, rule1
+      - line loadedboat [said, sentence 2]: [TOLD in world log_world] loaded_boat is a boat; response to a press: not stated
+      - line rule1 [filled in, sentence 2]: [TOLD in world log_world] ALWAYS MAKES: when a boat is loaded and is at that harbour and the tide turns before dawn, then the boat crosses the bar early; the strength always and the words are said, MAKES is the translator's choice
+    depends(crossed_bar_early(loaded_boat),loaded(loaded_boat))   <- lines loadedboat, rule1
+      - line loadedboat [said, sentence 2]: [TOLD in world log_world] loaded_boat is a boat; response to a press: not stated
+      - line rule1 [filled in, sentence 2]: [TOLD in world log_world] ALWAYS MAKES: when a boat is loaded and is at that harbour and the tide turns before dawn, then the boat crosses the bar early; the strength always and the words are said, MAKES is the translator's choice
+    depends(crossed_bar_early(loaded_boat),turns_before_dawn(tide))   <- lines loadedboat, rule1
+      - line loadedboat [said, sentence 2]: [TOLD in world log_world] loaded_boat is a boat; response to a press: not stated
+      - line rule1 [filled in, sentence 2]: [TOLD in world log_world] ALWAYS MAKES: when a boat is loaded and is at that harbour and the tide turns before dawn, then the boat crosses the bar early; the strength always and the words are said, MAKES is the translator's choice
+
+INSIDE 'clerk_count' (a told world, looked at alone): WHAT FOLLOWS FROM THE WORLD'S OWN LINES
+  2 lines in the world; 2 facts stated directly; 2 facts found; 0 derived (not stated by any line)
+  THE WORLD'S FACTS, EACH STATED BY ONE LINE:
+    holds(tied_up_before_noon(counted_boats))   <- lines tied1
+      - line tied1 [said, sentence 4]: [TOLD in world clerk_count] counted_boats tied up before noon
+    kind(counted_boats,boat)   <- lines countedboats
+      - line countedboats [said, sentence 4]: [TOLD in world clerk_count] counted_boats is a boat; response to a press: not stated
+  DERIVED INSIDE 'clerk_count' (not stated by any line):
+    (none)
