@@ -347,7 +347,8 @@ def run(stage):
             jobs.append(dict(tag=tag, model=model, out=RET, user=read(os.path.join(BRIEFS, f))))
     # Mimo's reasoning at high effort outgrew 64,000 tokens on 2a (three attempts, no content; lesson S7): its ceiling,
     # 131,072 (probe of 23 September), is used for it; Atria keeps the reader ladder.
-    ladder = lambda m: [131072, 131072] if m == "mimo" else C.READER_LADDER
+    # Atria refuses more than 65,536 (probe of 23 September); its first 2b call ran out at 48,000, so it starts at its ceiling.
+    ladder = lambda m: [131072, 131072] if m == "mimo" else [65536, 65536]
     run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, ladder(j["model"]),
                                   extra={"round": "S81", "stage": stage}))
 
