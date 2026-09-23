@@ -15,6 +15,9 @@ testers' 1C returns (fully crossed); each auditor's 2D audits one tester's 1D li
                                                        at the shared effort, s80_common.REASONING_EFFORT)
   python Semantics/tools/s81_build.py run 2 --dry-run  what `run 2` would send, and the files each pass may write;
                                                        sends nothing, writes nothing, needs no keys
+  python Semantics/tools/s81_build.py run 2 --effort-controls [--dry-run]
+                                                       `run 2` plus the effort controls (EFFORT_CONTROLS below) in
+                                                       the same process and the same pool of 3 per provider
 
 Texts go to <OUT>/briefs/<tag>.txt, returns to <OUT>/returns/ (the s80_call layout). OUT defaults to
 results/S81 File 11 against every case - outputs; set S81_OUT to build elsewhere (a dry run).
@@ -49,6 +52,16 @@ STAGE1_FORBID = ["O48", "O24", "{{ROWS}}"]          # also barred from 1-cases, 
 WHOLE_FORBID = ["O48 change", "S75", "S76", "Revision 1", "file 10", "file 11", "Semantics results", "R2"]
 NEG = re.compile(r"\b(not|never|don't|do not|avoid|nothing|without|neither|nor|cannot|can't|won't|no|none)\b", re.I)
 BAR = "=" * 20
+# The plan (second version, step 1): an empty or failed return is kept and run once more, recorded as a second attempt.
+# `run` refuses to start, and sends nothing, if any call it would send is numbered above this pass.
+MAX_PASS = 2
+# Effort controls: Claude's own process audit, decided after the data under decision S18; outside the plan, and never
+# in the S81 table (table() opens named files directly in RET, never this subfolder). Each sends the exact text of an
+# accepted high-effort call again at a stated effort, to measure what the switch from high to medium (decision S17)
+# changes; the repeat at high separates run-to-run variation from the effect of the effort. One pass each, with the
+# same ladders, acceptance rule and deadlines as the real calls. (source tag, effort); the tag is <source>.control-<effort>.
+CONTROL_DIR = os.path.join(RET, "effort controls")
+EFFORT_CONTROLS = [("s81_2b_atria_A", "medium"), ("s81_2b_atria_A", "high"), ("s81_2a_mimo", "medium")]
 
 
 def read(p):
@@ -332,8 +345,9 @@ def table():
     print("\n".join(out))
 
 
-def run(stage, dry=False):
+def run(stage, dry=False, controls=False):
     sys.path.insert(0, HERE)
+    import time
     import s80_common as C
     from s80_call import call, pass_plan, PROVIDERS
     from s80_run import run_pool
@@ -347,7 +361,23 @@ def run(stage, dry=False):
         if f.endswith(".txt") and tag.startswith(pre):
             model = tag.split("_")[2]          # s81_2a_atria, s81_2b_atria_A, s81_2D_mimo, s81_2W_mimo_B
             assert model in AUDITORS, tag
-            jobs.append(dict(tag=tag, model=model, out=RET, user=read(os.path.join(BRIEFS, f))))
+            jobs.append(dict(tag=tag, model=model, out=RET, user=read(os.path.join(BRIEFS, f)), effort=None,
+                             control_of=None))
+    if controls:
+        assert stage == "2", "--effort-controls goes with `run 2` only"
+        for src, eff in EFFORT_CONTROLS:
+            user = read(os.path.join(BRIEFS, src + ".txt"))
+            rec = json.loads(read(os.path.join(RET, src + ".receipt.json")))
+            assert not rec.get("failed") and os.path.exists(os.path.join(RET, src + ".response.txt")) \
+                and C.sha256(user) == rec["user_sha256"], \
+                "%s: the brief is not the text of an accepted call; nothing sent" % src
+            jobs.append(dict(tag="%s.control-%s" % (src, eff), model=src.split("_")[2], out=CONTROL_DIR, user=user,
+                             effort=eff, control_of=src))
+    # Before anything is sent: a real call goes as pass MAX_PASS at most; a control goes once, into an empty slot.
+    for j in jobs:
+        if not os.path.exists(os.path.join(j["out"], j["tag"] + ".response.txt")):
+            k, limit = pass_plan(j["out"], j["tag"])[1], (1 if j["control_of"] else MAX_PASS)
+            assert k <= limit, "%s would go as pass %d, above %d; nothing sent" % (j["tag"], k, limit)
     # Mimo's reasoning at high effort outgrew 64,000 tokens on 2a (three attempts, no content; lesson S7): its ceiling,
     # 131,072 (probe of 23 September), is used for it; Atria keeps the reader ladder.
     # Atria refuses more than 65,536 (probe of 23 September); its first 2b call ran out at 48,000, so it starts at its ceiling.
@@ -357,37 +387,57 @@ def run(stage, dry=False):
     if dry:
         dry_run(jobs, ladder, C, pass_plan, PROVIDERS)
         return
-    run_pool(jobs, lambda j: call(j["model"], None, j["user"], RET, j["tag"], True, ladder(j["model"]),
-                                  extra={"round": "S81", "stage": stage}))
+
+    def one(j):
+        extra = {"round": "S81", "stage": stage}
+        if j["control_of"]:
+            extra.update(effort_control=True, control_of=j["control_of"],
+                         note="Claude's process audit, decided after the data under decision S18; "
+                              "outside the S81 plan and never in its table")
+        if not os.path.exists(os.path.join(j["out"], j["tag"] + ".response.txt")):
+            print(time.strftime("%H:%M:%S"), "start", j["model"], j["tag"], "effort",
+                  j["effort"] or C.REASONING_EFFORT, flush=True)
+        return call(j["model"], None, j["user"], j["out"], j["tag"], True, ladder(j["model"]), extra=extra,
+                    effort=j["effort"])
+    run_pool(jobs, one)
 
 
 def dry_run(jobs, ladder, C, pass_plan, providers, attempts=6, max_rejects=3):
     """Print what `run` would send, with s80_call.call's own defaults, and every file each pass may write; list any
-    such file that is already there (none should be). Reads the folder only."""
-    names = set(os.listdir(RET)) if os.path.isdir(RET) else set()
-    send = [j for j in jobs if j["tag"] + ".response.txt" not in names]
+    such file that is already there (none should be). Reads the folders only."""
+    send = []
     for j in jobs:
-        t, m = j["tag"], j["model"]
+        t, m, d = j["tag"], j["model"], j["out"]
+        names = set(os.listdir(d)) if os.path.isdir(d) else set()
         if t + ".response.txt" in names:
             print("%-16s skip: %s.response.txt is there" % (t, t))
             continue
-        renames, k = pass_plan(RET, t)
+        send.append(j)
+        renames, k = pass_plan(d, t)
         freed = {old for old, _ in renames}
         may = [t + e for e in (".request.json", ".response.txt", ".reasoning.txt", ".receipt.json", ".error.txt")]
         may += ["%s.pass%d.a%d.%s.txt" % (t, k, n, w) for n in range(1, attempts + 1)
                 for w in ("truncated", "reasoning")]
         clash = sorted(f for f in may if f in names and f not in freed)
-        print("%-16s SEND to %s (%s): pass %d; max_tokens %s; thinking on, reasoning_effort %s; temperature %s; "
-              "text sha256 %s, %d words" % (t, m, providers[m][1], k, ladder(m), C.REASONING_EFFORT, C.TEMPERATURE,
-                                            C.sha256(j["user"])[:12], len(j["user"].split())))
+        kind = ("CONTROL of %s, into returns/%s/" % (j["control_of"], os.path.relpath(d, RET)) if j["control_of"]
+                else "real, into returns/")
+        print("%-16s SEND (%s) to %s (%s): pass %d; max_tokens %s; thinking on, reasoning_effort %s; temperature %s; "
+              "text sha256 %s, %d words" % (t, kind, m, providers[m][1], k, ladder(m), j["effort"] or C.REASONING_EFFORT,
+                                            C.TEMPERATURE, C.sha256(j["user"])[:12], len(j["user"].split())))
         print("%16s renamed first: %s" % ("", ", ".join("%s -> %s" % r for r in renames) or "none"))
         print("%16s may write: %s.pass%d.a<1..%d>.truncated.txt / .reasoning.txt (attempts that come back and fail), "
               "then %s.request.json, and on success .response.txt, .reasoning.txt, .receipt.json, or on failure "
               ".error.txt and .receipt.json; already there: %s" % ("", t, k, attempts, t, ", ".join(clash) or "none"))
     per = {m: sum(j["model"] == m for j in send) for m in AUDITORS}
-    print("to send: %d calls (%s); at most 3 in flight per provider, so all start at once; up to %d attempts per call, "
-          "at most %d that come back and fail" % (len(send), ", ".join("%s %d" % kv for kv in per.items()), attempts,
-                                                  max_rejects))
+    real = [j for j in send if not j["control_of"]]
+    print("to send: %d calls (%s), %d real and %d controls; at most 3 in flight per provider%s; up to %d attempts per "
+          "call, at most %d that come back and fail" % (
+              len(send), ", ".join("%s %d" % kv for kv in per.items()), len(real), len(send) - len(real),
+              ", so all start at once" if max(per.values() or [0]) <= 3 else ", so some wait for a free slot",
+              attempts, max_rejects))
+    for j in send:
+        print("   %-32s %-5s effort %-6s %s" % (j["tag"], j["model"], j["effort"] or C.REASONING_EFFORT,
+                                              "control" if j["control_of"] else "real"))
 
 
 if __name__ == "__main__":
@@ -398,4 +448,5 @@ if __name__ == "__main__":
             raise SystemExit("widen AUDITOR TESTER ROWS, e.g. widen atria A O7,O9")
         widen(sys.argv[2], sys.argv[3], sys.argv[4])
     if cmd == "run":
-        run(sys.argv[2], dry="--dry-run" in sys.argv[3:])
+        assert set(sys.argv[3:]) <= {"--dry-run", "--effort-controls"}, "unknown option in %s" % sys.argv[3:]
+        run(sys.argv[2], dry="--dry-run" in sys.argv[3:], controls="--effort-controls" in sys.argv[3:])
