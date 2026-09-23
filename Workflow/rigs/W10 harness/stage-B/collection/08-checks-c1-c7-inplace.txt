@@ -1,0 +1,88 @@
+08: checks c1 and c7 of the comparison re-run against the in-place outputs
+
+c1_field_by_field.py and c7_tables.py are unedited. Both fix their paths inside (c1 reads
+harness-programs-on-a-scratch-copy/ beside itself and writes c1_field_by_field.json beside itself;
+c7 reads that JSON beside itself). So each was run as a copy in scratch space outside the repository,
+with only its path lines changed, as these diffs show (c1's docstring text is left as it was):
+
+--- "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks/c1_field_by_field.py"	2026-09-23 04:27:16.784158911 +0000
++++ c1_field_by_field_inplace.py	2026-09-23 04:40:33.324596798 +0000
+@@ -16,13 +16,13 @@
+ """
+ import os, sys, json
+ sys.dont_write_bytecode = True
+-HERE = os.path.dirname(os.path.abspath(__file__))
++HERE = "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks"
+ RIG = os.path.normpath(os.path.join(HERE, "..", "..", ".."))
+ sys.path.insert(0, os.path.join(RIG, "code"))
+ import marks as M  # the harness's rule, read only
+ 
+ IND = json.load(open(os.path.join(HERE, "..", "output.json")))
+-H = os.path.join(HERE, "harness-programs-on-a-scratch-copy")
++H = os.path.join(RIG, "marking")
+ HB = json.load(open(os.path.join(H, "stage_b_record96.json")))
+ HA = {r["field"]: r for r in json.load(open(os.path.join(H, "agreement_markers_record96.json")))["rows"]}
+ crit = M.load(os.path.join(RIG, "instrument", "criteria.json"))
+@@ -173,14 +173,14 @@
+        "cause_checks": {"compared": len(cause), "matching": sum(r["match"] for r in cause),
+                         "differing": [r["item"] for r in cause if not r["match"]]},
+        "rows": rows}
+-json.dump(out, open(os.path.join(HERE, "c1_field_by_field.json"), "w"), indent=1, ensure_ascii=False)
++json.dump(out, open(os.path.join(HERE, "c1_field_by_field_inplace.json"), "w"), indent=1, ensure_ascii=False)
+ print(f"primary: compared {len(prim)}, matching {out['primary']['items_matching']}, differing {len(out['primary']['differing'])}")
+ print(f"cause checks: compared {len(cause)}, matching {out['cause_checks']['matching']}")
+ for k in ("number", "verdict", "list"):
+     rr = [r for r in prim if r["kind"] == k]
+     out["primary"][f"{k}s_compared"] = len(rr); out["primary"][f"{k}s_matching"] = sum(r["match"] for r in rr)
+     print(f"  primary {k}s: compared {len(rr)}, matching {sum(r['match'] for r in rr)}")
+-json.dump(out, open(os.path.join(HERE, "c1_field_by_field.json"), "w"), indent=1, ensure_ascii=False)
++json.dump(out, open(os.path.join(HERE, "c1_field_by_field_inplace.json"), "w"), indent=1, ensure_ascii=False)
+ for r in rows:
+     if r["match"] is False:
+         print(f"  DIFFERS [{r['section']}] {r['item']}\n           harness: {json.dumps(r['harness'])[:150]}\n           independent: {json.dumps(r['independent'])[:150]}")
+--- "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks/c7_tables.py"	2026-09-23 04:27:16.784317614 +0000
++++ c7_tables_inplace.py	2026-09-23 04:40:33.327934012 +0000
+@@ -6,8 +6,8 @@
+ files; nothing is typed by hand. Writes nothing.
+ """
+ import os, json
+-HERE = os.path.dirname(os.path.abspath(__file__))
+-d = json.load(open(os.path.join(HERE, "c1_field_by_field.json")))
++HERE = "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks"
++d = json.load(open(os.path.join(HERE, "c1_field_by_field_inplace.json")))
+ R = {r["item"]: r for r in d["rows"]}
+ ok = lambda b: "yes" if b else "**no**"
+ fields = [k[:-len(" certified")] for k in R if k.endswith(" certified") and R[k]["section"] == "primary"]
+
+command (run from <scratch>/inplace/checks/): /home/user/.venvs/threadsmith/bin/python c1_field_by_field_inplace.py > "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks/c1_field_by_field_inplace.txt"
+exit code: 0
+stderr: 
+command (run from <scratch>/inplace/checks/): /home/user/.venvs/threadsmith/bin/python c7_tables_inplace.py > "/home/user/ThreadSmith/Workflow/rigs/W10 harness/stage-B/independent-check/checks/c7_tables_inplace.md"
+exit code: 0
+stderr: 
+
+Outputs, beside the originals in stage-B/independent-check/checks/:
+  c1_field_by_field_inplace.json  byte-identical to c1_field_by_field.json: yes
+  c1_field_by_field_inplace.txt   (c1's stdout) byte-identical to the original run's stdout (kept in scratch as c1.out, not committed): yes
+  c7_tables_inplace.md            (c7's stdout) byte-identical to the original run's stdout (kept in scratch as tables.md, not committed): yes
+  lines of c7_tables_inplace.md not found verbatim in comparison.md: 0
+
+c1's result in place:
+  primary: compared 450, matching 417, differing 33
+  cause checks: compared 26, matching 26
+    primary numbers: compared 317, matching 288
+    primary verdicts: compared 31, matching 29
+    primary lists: compared 102, matching 100
+
+Canary (does the copy read the folder it is pointed at?): a third copy, c1_canary.py, differing from
+c1_field_by_field_inplace.py only in H (a scratch folder) and its output path (scratch), read a copy of
+the in-place stage_b_record96.json with fields.test_remove.per_set.close.agree lowered from 46 to 45:
+  exit code: 0
+  primary: compared 450, matching 416, differing 34
+  DIFFERS [primary] test_remove p52 agree
+           harness: 45
+           independent: 46
+  (34 differing items; as sets, the canary's primary.differing minus the in-place run's is
+   ['test_remove p52 agree'] and the in-place run's minus the canary's is empty)
+  => one more differing item, the changed one; the in-place result above is not the old folder read again.
+  The canary's copy, its input and its output stayed in scratch; nothing of it is in the repository.
