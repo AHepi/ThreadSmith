@@ -1,0 +1,87 @@
+# Cross-examination report
+
+## Points
+
+### 1. R12 — (a) and (c): the declaration says expectation is defined "for every transport," but the definition uses \(\operatorname{Ans}_S\), which is the simulation layer's answer profile and is not typed for a general transport.
+
+The new preamble (lines 217–218) reads: "Let \(t\) be a transport with contract \(C\) and, where \(t\) is selected, history \(H\)." This invokes Part IV's general definition of transport: "A transport from an organization \(D\) to an organization \(E\)" (line 203). The declaration then claims: "Part IV now defines expectation and violation for every transport."
+
+Violation is indeed general — "a **violation** occurs when fidelity fails at \((a,b)\)" (line 220) — since fidelity (F1)–(F2) is defined for any transport \(D \to E\). But the expectation (line 219) is "\(\operatorname{Ans}_S(\tau(a),\sigma(b))\)": the answer profile of the simulation layer \(S\). In a transport \(t = (\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), the edit-translation \(\tau(a)\) is an edit of \(E\). The answer profile \(\operatorname{Ans}_S\) is defined on edits of \(S\) (Part III: "\(\operatorname{Ans}_p(a,b)=\mathcal Q(D,a,b)\)"; \(\operatorname{Ans}_S\) instantiates this for \(S\)'s prediction query). Unless \(E = S\), \(\operatorname{Ans}_S(\tau(a),\sigma(b))\) does not type-check. In Part V, the explanatory transport runs \(D \to E\) where \(E\) is the candidate organization — not the simulation layer. So the expectation is well-defined only for transports whose target is \(S\) (e.g. the primitive-to-simulation transport of the two-layer setup), and the declaration's "for every transport" is false.
+
+The old preamble ("Let \(t\) be selected on history \(H\)") was implicitly confined to the selected \(P\)-to-\(S\) transport, where \(E = S\). The new preamble removes the restriction without adjusting the definition. The declaration is therefore wrong in one of its two halves: violation generalises, expectation does not.
+
+**Repair.** Either restrict the declaration ("Part IV now defines expectation and violation for every transport to the simulation layer") or change the expectation to \(\operatorname{Ans}_E(\tau(a),\sigma(b))\), using the target organization's own answer profile.
+
+This defect also infects R13's restatement "Expectation and violation are defined for every transport" (line 223): see point 4.
+
+---
+
+### 2. R07 — (a): the declaration misses one of the three claims the new wording makes.
+
+The new wording (lines 75–77) adds:
+
+> "Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, **are fixed by the adopted physics**, and substrate independence holds so far as that physics lets contents pass between media. Where two media cannot exchange what they bear, … a barrier in the sense of Part XIII."
+
+Three claims result. The declaration captures the second ("substrate independence now holds only so far as …") and the third (barrier). It omits the first: that *which organizations a carrier can bear* and *whether contents can pass between media* are **fixed** by the adopted physics. This is stronger than the unchanged sentence immediately before — "Every attribution of an organization to a physical system must be permitted by the adopted physics" — which imposes a one-sided constraint (attributions may not outrun the physics), whereas "fixed by" asserts that the physics determines the complete set of bearable organizations and the complete pattern of inter-medium transfer. The declaration is therefore incomplete: a reader who relied on it would not know that the change also asserts physical determinacy of bearability.
+
+**Repair.** Add to the declaration: "and that which organizations a carrier can bear and whether contents pass between media are determined by the adopted physics."
+
+---
+
+### 3. R30 — (a) and (c): the criteria for identifying a binding "by its use" diverge from Part IX's reason use in several clauses while the text and declaration both present them as reason use's own criteria.
+
+The new text (lines 404–405) says a construction witness may identify a binding
+
+> "by responses that preserve its role bindings, send content-preserving recodings to the same transition and content changes to **the changes the binding specifies**, and lie on an active route, **as reason use asks of an objection (Part IX)**."
+
+Part IX (line 364) says reason use requires
+
+> "a **structural map from the represented objection into the response suborganization** … sends content changes to **the changes specified by the operative deliberative rule**, and **lands** on an active route."
+
+At least three clauses diverge:
+
+- **Source of specification.** R30: "the changes the binding specifies." Part IX: "the changes specified by the operative deliberative rule." For a structural binding — the text's own flagship example is "the binding of a persistence component to a continuity subnetwork" (Derivation 10) — "the changes the binding specifies" are structural changes between components, while the "operative deliberative rule" governs how a response to an objection is generated. These are different in kind.
+- **Structural map.** Part IX requires "a structural map from the represented objection into the response suborganization." R30 omits this and attributes preservation directly to "responses."
+- **Lie vs. land.** "lie on an active route" (a state) vs. "lands on an active route" (a transition).
+
+The phrase "as reason use asks of an objection (Part IX)" asserts that these are Part IX's criteria. Part IX does not say what the change says it says. The declaration — "in the manner of reason use" — inherits the inaccuracy: the manner is *modelled on* reason use with at least one substantive substitution, not reason use's own manner.
+
+The criteria themselves are stated in full and are usable without Part IX, so the text is not self-contradictory; but the pointer is misleading and the declaration misdescribes the claim.
+
+**Repair.** Either copy Part IX's clause verbatim ("content changes to the changes specified by the operative deliberative rule"), or replace the pointer with "in a manner modelled on reason use (Part IX)" and change the declaration to "in a manner modelled on reason use."
+
+---
+
+### 4. R13 — (a): the declaration omits the opening clause of the new wording.
+
+R13's new wording (line 223) begins: "**Expectation and violation are defined for every transport, surprise only for a selected one**: a constructed transport that fails at a pair of its contract is violated …". The declaration lists only the three claims after the colon. The opening clause is not mentioned. It largely restates R12's preamble change, so it is not an independent new claim; but it is a claim the new wording makes, the declaration is silent about it, and — because it inherits R12's defect (point 1) — it is also false as written ("expectation … for every transport"). The declaration is incomplete, and the unmentioned part carries R12's error into R13's text.
+
+**Repair.** Add to the declaration: "and restates that expectation and violation hold for every transport (to the simulation layer) and surprise only for a selected one." If R12 is repaired as suggested in point 1, the restatement should track the repair.
+
+---
+
+### 5. R25 — (a): the declaration drops the text's characterisation of "bare denial."
+
+The new text (line 335) reads: "a bare denial, **which offers no component that responds to a change in what produces the appearance**, is not an account of it." The bracketed clause is what makes the denial "bare" — it is a structural criterion (no component with the right edit-signature for the appearance-producing mechanism, cf. Part II's "measurement's signature"). The declaration says only "a bare denial is not an account," leaving "bare denial" uncharacterised. A reader of the declaration alone could not tell which denials are excluded. Minor, but the characterisation is part of the claim.
+
+**Repair.** Change "of which a bare denial is not an account" to "of which a denial that offers no component responsive to changes in what produces the appearance is not an account."
+
+---
+
+## Verdicts
+
+R06: STANDS
+R07: FALLS — declaration misses the claim that physics fixes what carriers can bear
+R12: FALLS — expectation \(\operatorname{Ans}_S\) is not defined for every transport as the declaration claims
+R13: STANDS
+R14: STANDS
+R21: STANDS
+R23: STANDS
+R24: STANDS
+R25: STANDS
+R30: FALLS — identification criteria diverge from Part IX's reason use while the text and declaration present them as its own
+R34: STANDS
+
+OVERALL: NEEDS REPAIR
+
+END OF REPORT
