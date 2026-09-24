@@ -1,8 +1,8 @@
 # Revision 2 - revision note, draft of 23 September
 
-**DRAFT — not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are drafted from the settled S88 positions (3ebb6d8); no outside reader has seen their final wordings.**
+**DRAFT 3 — after the S90 cross-examination by Atria and Mimo; not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are drafted from the settled S88 positions (3ebb6d8). Every S90 ruling is applied in the change list: 10 entries fixed, 14 kept, none dropped.**
 
-*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the draft of the note that revision 2 (file 13) will carry at its head, with the second layer of its revision record. It was generated from `tests/Revision 2 - change list, draft of 23 September.md` by `tools/s89_apply_changes.py`, so its lines are the ones the program writes into the draft of file 13. Section 3 and the maps in section 5 are for this draft and for S81 Results; they are never written into file 13. File 11 was read only. No S87 or S88 return was opened. Nothing was written into `authority/`. Later on 23 September another Claude subagent drafted the seven entries for W19, W20 and W31 in the change list from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8) and regenerated this note with the same program; it opened no S87, S88 or S90 return and wrote nothing into `authority/`.*
+*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the draft of the note that revision 2 (file 13) will carry at its head, with the second layer of its revision record. It was generated from `tests/Revision 2 - change list, draft of 23 September.md` by `tools/s89_apply_changes.py`, so its lines are the ones the program writes into the draft of file 13. Section 3 and the maps in section 5 are for this draft and for S81 Results; they are never written into file 13. File 11 was read only. No S87 or S88 return was opened. Nothing was written into `authority/`. Later on 23 September another Claude subagent drafted the seven entries for W19, W20 and W31 in the change list from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8) and regenerated this note with the same program; it opened no S87, S88 or S90 return and wrote nothing into `authority/`. On 24 September 2026 another Claude subagent applied every S90 ruling to the change list in one pass (draft 3) and regenerated this note from it with the same program: N = 49 of M = 55, K = 42. It opened no S90 reply and wrote nothing into `authority/`.*
 
 ## What this is
 
@@ -10,13 +10,13 @@ Decision D6 makes revision 2 by applying a change list to file 11, with a record
 
 In file 13 the note, the note of sources and departures and the record stand between marker lines, and the build cuts all three from every test brief (D6). The note names no case, place, item, round or model; the program checks that.
 
-W19, W20 and W31 waited for Mimo's S88 reply (D2). They are now drafted from the settled S88 positions as seven entries, W19.1–W19.3, W20.1–W20.3 and W31.1. Each is expected as a change of claim (plan 1.2), so seven lines join the list, and N and M each rise by seven. No outside reader has seen their final wordings; the cross-examination of revision 2 (X1) must carry them.
+W19, W20 and W31 waited for Mimo's S88 reply (D2). They are now drafted from the settled S88 positions as seven entries, W19.1–W19.3, W20.1–W20.3 and W31.1. Each is expected as a change of claim (plan 1.2), so seven lines join the list, and N and M each rise by seven. The cross-examination of revision 2 (S90) carried them, with the other 48 changes, to both outside readers. Its rulings fixed 10 entries and kept 14, and dropped none. One fix changes a kind: W6.3 (file 11, line 447) is now expected as a change of claim, so it gains a line in the list after W6.2's, and N rises from 48 to 49. Six other fixes change a declared line (file 11, lines 219, 225, 233, 337, 373 and 518), and the list below carries them as the program writes them. The other three fixes (lines 15, 121 and 351) change only the record.
 
 ## 1. The note, as the program writes it
 
-The date slot is filled with "draft of 23 September 2026, not frozen". At the freeze it takes the date, written as file 11 wrote its date. N = 48 of M = 55 changes; K = 42 places.
+The date slot is filled with "draft of 24 September 2026, not frozen". At the freeze it takes the date, written as file 11 wrote its date. N = 49 of M = 55 changes; K = 42 places.
 
-*Revision 2 (file 13), draft of 23 September 2026, not frozen. File 11 with the changes listed in the revision record at the end of this document, and no other. The record gives each change with its old and new text, the reason it is made (erratum, clarification or change of claim), and whether a reader can conclude from it something file 11 left unconcluded. Every change from which a reader can conclude something file 11 left unconcluded is declared as a change of claim, one line each, below: 48 of the 55 changes. The record also lists every change in claim that file 11 made against file 10 and that file 11's own note did not declare: 42 places. This note replaces file 11's note. This note, the note of sources and departures after it, and the record are not part of the theory and add nothing to it. Nothing else differs.*
+*Revision 2 (file 13), draft of 24 September 2026, not frozen. File 11 with the changes listed in the revision record at the end of this document, and no other. The record gives each change with its old and new text, the reason it is made (erratum, clarification or change of claim), and whether a reader can conclude from it something file 11 left unconcluded. Every change from which a reader can conclude something file 11 left unconcluded is declared as a change of claim, one line each, below: 49 of the 55 changes. The record also lists every change in claim that file 11 made against file 10 and that file 11's own note did not declare: 42 places. This note replaces file 11's note. This note, the note of sources and departures after it, and the record are not part of the theory and add nothing to it. Nothing else differs.*
 
 **Changes of claim, in the order of the text.**
 
@@ -28,9 +28,9 @@ The date slot is filled with "draft of 23 September 2026, not frozen". At the fr
 - File 11, line 121: Part II now states three things. A signature is built from a component's relations and not from the values its ports take, so components that differ only in port values are of one kind whatever the difference is called. An edit that sets a port replaces only the component that assigns it, not the relations of the components that read it. An edit under which both relations stay equal separates nothing.
 - File 11, line 161: Part III now says two things. Meeting the conditions of an account on a restricted contract does not certify the restriction as appropriate. A verdict on a restriction is given with the ground the claim states for it; where no ground is stated and a verdict turns on one, the verdict lacks a declared input.
 - File 11, line 197: Part IV now defines surviving on H: a transport survives on H when it is a member of the population that meets the survival condition on H, and fidelity on H without membership in the population is not survival.
-- File 11, line 219: Part IV now defines expectation and violation for every transport, and keeps surprise for a violation of a selected transport at a pair outside its history.
-- File 11, line 225: Part IV now says that a constructed transport that fails at a pair of its contract is violated, that the failure is not surprise, and that a violation the system represents can be a recognized difficulty.
-- File 11, line 233: Part V now types a candidate's commitments: they are components of its organization, those the candidate offers as doing the work, and the organization's boundary values and its other components, including any that assigns an input, belong to the named background of Part VI.
+- File 11, line 219: Part IV now defines expectation and violation for every transport to the simulation layer, whatever its provenance, and keeps surprise for a violation of a selected one at a pair outside its history.
+- File 11, line 225: Part IV now says, restating its definitions, that expectation and violation are defined for every transport to the simulation layer and surprise only for a selected one; that a constructed transport to the simulation layer that fails at a pair of its contract is violated, and the failure is not surprise; and that a violation the system represents can be a recognized difficulty.
+- File 11, line 233: Part V now types a candidate's commitments: they are components of its organization, those the candidate offers as doing the work, whether or not anyone has described their work, and the organization's boundary values and its other components, including any that assigns an input, belong to the named background of Part VI.
 - File 11, line 257: Non-circular dependence now states that identity of an assertion with the target's answer is structural at the declared grain, not the identification of all logically equivalent mathematical truths.
 - File 11, line 257: Non-circular dependence now requires a pair of the contract and a nonempty block of the commitments such that the answer profile at the pair differs from its value at the baseline, or is not determined there in the claimed way, and this contrast is lost when the block's components are deleted from the organization: at the translated pair and the translated baseline, the answers of the organization with the block deleted are determined and equal, or an answer it determined there is no longer determined. It no longer asks for a pair of the contract that itself removes or replaces a block of the commitments.
 - File 11, line 271: Part V no longer says outright that a table encoding an organization's response to every admitted change is an account: it satisfies (F1), and it is an account when it meets the other conjuncts of (E).
@@ -39,9 +39,9 @@ The date slot is filled with "draft of 23 September 2026, not frozen". At the fr
 - File 11, line 309: Part VI now says four things. A route is a support of the candidate, a route whether or not any history runs it. It is active in a system when occurrences that realize it form an active route in Part IX's sense. ProducedBy credits a repair to the contributions whose active routes ran to it, not to the routes a candidate contains.
 - File 11, line 315: Part VI now defines the reach of an organization as the set of jobs for which it is an account, fixed by the organization and the world and not by which jobs anyone has checked.
 - File 11, line 315: Part VI now says that (E) has no condition that each commitment do work; that a commitment such that every support stays a support when it is added and when it is removed does no work by itself in the candidate, leaves the candidate's standing under (E) unchanged and is critical in no support; that when the commitments are infinitely many a block of such commitments can still be critical; and that how hard an account is to vary is a separate matter, shown by Pres, which grades nothing.
-- File 11, line 337: Part VII now says that where an absent structure appears to be present, why it appears is a separate question with its own target and contract, which an account of the absence neither answers nor needs to answer, and of which a bare denial is not an account.
+- File 11, line 337: Part VII now says that where an absent structure appears to be present, why it appears is a separate question with its own target and contract, which an account of the absence neither answers nor needs to answer, and of which a bare denial, which offers no component that responds to a change in what produces the appearance, is not an account.
 - File 11, line 361: (T2) now states its hypotheses and defines its quantity. S is a target and T a represented next-step process, as in functional transport; d is a metric on the represented states; the one-step discrepancy d(πSz, Tπz) is at most ε at every state z of a stated scope; and T is L-Lipschitz for d. The discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz), with e_0 = 0, satisfies the bound whenever z and its first n−1 successors under S lie in that scope.
-- File 11, line 373: (K1) now defines its terms: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the explanatory candidate the criticism offers for that question.
+- File 11, line 373: (K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question.
 - File 11, line 379: The condition for an adverse signal to be a criticism is now that an organization represents it as grounds for an alleged defect in a target, not that it represents how the signal bears.
 - File 11, line 401: Part X now says that an inexplicit representation is not an absent one; that (R), Deploy and Build ask for no particular format, only whether the relevant distinctions and transformations are instantiated, with the fidelity and provenance (R) requires, and used where use is asked; that a representation can be partial, distributed or extended in time and need not be explicit all at once; that retaining a critical target can consist in being able to re-present the relevant distinction; that a construction witness may identify a constructed binding by its use, in the manner of reason use; that use does not by itself construct, so received content used as received keeps its inherited provenance; and that a carrier that passes content on without such use has relayed it.
 - File 11, line 405: Part X now defines the equivalence in (N): d ≡_ℓ c when there are transports from d to c and from c to d, both faithful on c's contract at grain ℓ. The equivalence is structural at that grain, not string equality or similarity.
@@ -52,6 +52,7 @@ The date slot is filled with "draft of 23 September 2026, not frozen". At the fr
 - File 11, line 433: Part XI now says that in (P), for a protected condition r, r(ξ′) means that r held on every occasion it covers from ξ to ξ′, not only at ξ′.
 - File 11, line 445: Part XI now defines Result(Δ) as the set of contents at ξ′ that Δ prepared. It defines ProducesVia(Δ,c,o;ξ,ξ′) as holding when an active route that runs from Δ to the repair of o contains the relevant binding of c.
 - File 11, line 447: Part XI now names the normative relation as primitive 2 of Part XIV, taken as an input where a claim invokes worth, and no longer calls it a declared input.
+- File 11, line 447: Part XI no longer calls the aesthetic normative relation a declared input: it is taken as a substantive input when aesthetic value is claimed.
 - File 11, line 465: Part XII now says two things. Where the system's boundary is not declared explicitly, a statement that names the system and says whether a process runs inside or outside it declares the boundary for that process. A statement that the process is the system's own, which does not say where it runs, is the attribution, not its boundary.
 - File 11, line 471: Part XII now defines the grades \(q,r\), \(\mathsf{Admit}^{q,r}_\Theta\), \(\mathsf{Cap}^{q,r}_\Omega\) and \(\mathsf{Poss}_\Theta\) that (CT3) and (CT4) relate, with \(\mathsf{Poss}_\Theta\) the tasks achievable at every grade.
 - File 11, line 473: Part XII now describes the population of a selection history as candidate transports, as Part IV does, not realized ones. The population is the set its own last sentence gives: the transports the physics and the stated construction admit.
@@ -60,7 +61,7 @@ The date slot is filled with "draft of 23 September 2026, not frozen". At the fr
 - File 11, line 514: Part XIV now does three things. It lists among the declared inputs a weighting of credit among several contributions to one achievement, beyond any division its history contains. It applies its rule for a missing input to the normative relation where a claim invokes worth. And it says that a claim needing a probability of truth, a merit function or a ranking of thinkers is unsettled.
 - File 11, line 516: Part XIV now separates an index, which is what a claim is relative to, from a declared input, which is something a claim takes as stated and the semantics records and does not supply. It says that the boundary and continuity of an attribution, and the scope a claim states for its contract, are both.
 - File 11, line 518: Part XIV's dependence order now says that the declared indices and the declared inputs depend on nothing in the semantics, because they are stated, not derived.
-- File 11, line 518: Part XIV's dependence order now places Ownership on histories and a declared boundary, owned capability on Ownership, (CT1) and a declared continuity, Build on Ownership, and (P) on ProducedBy and the declared obligations with their occasions, and ProducedBy on histories and their active routes.
+- File 11, line 518: Part XIV's dependence order now places Ownership on histories and a declared boundary, owned capability on Ownership, (CT1) and a declared continuity, Build on Ownership, (P) on ProducedBy and the declared obligations with their occasions, (EK) on (P), and ProducedBy on histories and their active routes.
 - File 11, line 526: Part XV now says that a case whose verdict turns on an unstated declared input of Part XIV, or on an unstated normative relation, is a case with a missing input, not a refutation.
 - File 11, line 528: Part XV no longer sets the encoding table outside the sufficiency attack: like any candidate, it refutes sufficiency if it meets all four conditions of (E) and still explains nothing.
 - File 11, line 552: Derivation 2 no longer says that two candidates for one question that satisfy (F1), (F2) and (A) on C are one account whose components are pairwise of one kind. It now says that their answer profiles coincide on C; that where a bijection of their active components gives each pair one anchor, the same subnetwork of D with port translations onto the same ports of D, each pair is of one kind on C and, so far as (F1), (F2) and (A) reach, the two are one account; and that without that premise nothing more follows. Its Consequence now covers only candidates that differ in which component carries which anchor.
@@ -127,85 +128,84 @@ In revision 2, 9 of the 42 places are changed again by layer-1 entries (L2-01, L
 **O45 ("The spring nobody mentioned") is declared as a change toward.** Under file 10 its ruled mark is SPLIT (S75's AGREE, corrected in S81). Under file 11 it is AGREE. The verdict changed, and it moved toward the thoughtful person. It is a theory change, made by f11 L309 s3's first clause: "A route already present in the candidate is a route whether or not anyone has described its work" (03 M28, row L2-17 above). File 10 gives a candidate "an identified set Γ of active commitments" and never says how Γ is identified, so whether an undescribed, connected spring was already a route was left open; file 11 closes it. 03 found the place CLAIM and undeclared, and no case shows it harmful. S81's P2 fails at O45 alone, by this change (04, sections 2 and 4; its text and rule lenses upheld the row).
 
 - **Where it is declared.** Here, and in S81 Results. In file 13 the place is declared by row L2-17, written by the record-only entry W3.5, which declares both clauses of the sentence (the reassignment clause is also new, and O46 reads it). The note and the record name no case (plan 2.5: verdict movements are reported in the round's Results, never in the theory).
-- **In revision 2.** The sentence is kept byte for byte. W28.1 inserts its definition of a route before it ("a route is a support of the candidate … whether or not any history runs it"), which check 1 found secures O45's AGREE.
+- **In revision 2.** The sentence is kept byte for byte. After the cross-examination (S90), W20.1's typing of \(\Gamma\) also says that the commitments are the components the candidate offers as doing the work, "whether or not anyone has described their work", so membership does not wait on a description. W28.1 inserts its definition of a route before it ("a route is a support of the candidate … whether or not any history runs it"), which check 1 found secures O45's AGREE.
 - **The only other verdict change between the files** is O48, DISAGREE under file 10 and AGREE under file 11, also toward. It is the change file 11's note declared (Derivation 3).
 
 ## 4. What the note does not yet carry, and the rulings a checker may change
 
 - **Held.** Nothing. W19 (Derivation 2, with the sentence after (K), Derivation 10 and W10(b)), W20 (non-circular dependence and the typing of Γ) and W31 ((T2)) are drafted from the settled S88 positions, and their seven lines are in the list above: file 11, lines 121 (the first of the two), 233, 257 (the second of the two), 289, 361, 552 and 620.
-- **Not yet read by an outside reader.** Those seven wordings. X1 must carry them; the S90 brief carries only the first 48 changes. The deletion rider in W20.2 (line 257) and the Derivation 10 sentence in W19.3 (line 620) are the least tested. If X1 finds that the rider breaks a worked case, the settled fallback in W20.2's CHECK replaces W20.2 and extends W20.3, and line 516 gains a clause; the note's lines then change with them.
+- **Read by both outside readers (S90).** All 55 changes, these seven included, went to Atria and Mimo in five parts, and every call was accepted. The rulings on the contested changes are applied in the change list: 10 fixed, 14 kept, none dropped. No reply found a worked case that the deletion rider in W20.2 (line 257) breaks, so its fallback is not triggered. The texts and declarations the ten fixes wrote have been read by no outside reader: file 11, lines 15, 121, 219–223, 225, 233, 337, 351, 373, 447 and 518.
 - **The date.** Filled at the freeze.
-- **Entries not declared, whose ruling a checker may raise to CLAIM.** Each has its declaration line ready in the change list.
+- **Entries not declared, whose ruling a checker may raise to CLAIM.** Each has its declaration line ready in the change list. W6.3 (file 11, line 447) was here until the S90 rulings raised it to CLAIM; W58(ii).1 was contested on its kind and kept (S90), and W37.1's fallback line was reworded when "blind" was deleted.
   - W37.1 (file 11, line 15): expected ORDER.
   - W58(ii).1 (file 11, line 33): expected WORDING.
   - W8.1 (file 11, line 63): expected ORDER.
   - W35.4 (file 11, line 227): expected WORDING.
   - W9.1 (file 11, line 275): expected WORDING.
   - W24.1 (file 11, line 351): expected WORDING.
-  - W6.3 (file 11, line 447): expected WORDING.
 - **Declared entries a checker may rule down to WORDING.** W13.1 ("today" dropped at L419), W17.3 (Derivation 3's condition in the defined terms) and W20.3 (the commitments of E|W are W, which L289's "retain the commitments in W" suggests). If any is ruled WORDING, its line leaves the note and N falls by one.
 - **The three meta entries** (the note, the sources note and the record) are declared by the note's own sentences and are not counted in N or M.
 
 ## 5. Maps for S81 Results and the round (never written into file 13)
 
-**Layer-1 numbers.** The program numbers the applied theory entries in file-11 order. The seven entries drafted from the settled S88 positions sit among the others, so every entry that follows W19.1 in file-11 order has a higher number than it had before they were drafted. The column "S90 brief" gives the id under which the S90 brief, sent before they were drafted, cites each of the first 48 changes (C01–C48, in the same order); the seven have none.
+**Layer-1 numbers.** The program numbers the applied theory entries in file-11 order. The seven entries drafted from the settled S88 positions sit among the others, so every entry that follows W19.1 in file-11 order has a higher number than it had before they were drafted. The column "S90 brief" gives the id under which the S90 brief, sent before they were drafted, cites each of the first 48 changes (C01–C48, in the same order); the seven have none. The S90 parts cite every entry as R01–R55, which is its R2 number.
 
-| R2 | entry | S90 brief | file-11 line | reason | expected ruling | declared in the note |
-|---|---|---|---|---|---|---|
-| R2-01 | W37.1 | C01 | 15 | erratum | ORDER | no |
-| R2-02 | W6.1 | C02 | 27 | erratum | CLAIM | yes |
-| R2-03 | W7.1 | C03 | 33 | erratum | CLAIM | yes |
-| R2-04 | W58(ii).1 | C04 | 33 | clarification | WORDING | no |
-| R2-05 | W8.1 | C05 | 63 | erratum | ORDER | no |
-| R2-06 | W36.1 | C06 | 71 | clarification | CLAIM | yes |
-| R2-07 | W45.1 | C07 | 77 | change of claim | CLAIM | yes |
-| R2-08 | W19.1 | — | 121 | clarification | CLAIM | yes |
-| R2-09 | W30.1 | C08 | 121 | clarification | CLAIM | yes |
-| R2-10 | W57.1 + W32(b).1 | C09 | 161 | clarification | CLAIM | yes |
-| R2-11 | W17.1 | C10 | 197 | clarification | CLAIM | yes |
-| R2-12 | W35.1 | C11 | 219–223 | clarification | CLAIM | yes |
-| R2-13 | W35.2 | C12 | 225 | clarification | CLAIM | yes |
-| R2-14 | W35.4 | C13 | 227 | clarification | WORDING | no |
-| R2-15 | W20.1 | — | 233 | clarification | CLAIM | yes |
-| R2-16 | W39.1 | C14 | 257 | clarification | CLAIM | yes |
-| R2-17 | W20.2 | — | 257 | change of claim | CLAIM | yes |
-| R2-18 | W11.1 | C15 | 271 | clarification | CLAIM | yes |
-| R2-19 | W9.1 | C16 | 275 | erratum | WORDING | no |
-| R2-20 | W20.3 | — | 289 | clarification | CLAIM | yes |
-| R2-21 | W58(i).1 | C17 | 301 | clarification | CLAIM | yes |
-| R2-22 | W28.1 | C18 | 309 | clarification | CLAIM | yes |
-| R2-23 | W34.1 | C19 | 315 | clarification | CLAIM | yes |
-| R2-24 | W33.1 | C20 | 315 | clarification | CLAIM | yes |
-| R2-25 | W40.1 | C21 | 337 | clarification | CLAIM | yes |
-| R2-26 | W24.1 | C22 | 351 | erratum | WORDING | no |
-| R2-27 | W31.1 | — | 361 | erratum | CLAIM | yes |
-| R2-28 | W22.1 | C23 | 373 | erratum | CLAIM | yes |
-| R2-29 | W22.2 | C24 | 379 | erratum | CLAIM | yes |
-| R2-30 | W41.1 | C25 | 401 | clarification | CLAIM | yes |
-| R2-31 | W21.1 | C26 | 405 | clarification | CLAIM | yes |
-| R2-32 | W13.1 | C27 | 419 | clarification | CLAIM | yes |
-| R2-33 | W13.2 + W12.2 | C28 | 419 | clarification | CLAIM | yes |
-| R2-34 | W35.3 | C29 | 421 | clarification | CLAIM | yes |
-| R2-35 | W23.1 | C30 | 427 | clarification | CLAIM | yes |
-| R2-36 | W5.1 | C31 | 433 | clarification | CLAIM | yes |
-| R2-37 | W23.2 | C32 | 445 | clarification | CLAIM | yes |
-| R2-38 | W6.2 | C33 | 447 | erratum | CLAIM | yes |
-| R2-39 | W6.3 | C34 | 447 | erratum | WORDING | no |
-| R2-40 | W12.1 | C35 | 465 | clarification | CLAIM | yes |
-| R2-41 | W25.1 | C36 | 471 | erratum | CLAIM | yes |
-| R2-42 | W17.2 | C37 | 473 | clarification | CLAIM | yes |
-| R2-43 | W25.2 | C38 | 487 | erratum | CLAIM | yes |
-| R2-44 | W7.2 | C39 | 512 | erratum | CLAIM | yes |
-| R2-45 | W6.4 + W14.1 | C40 | 514 | erratum and clarification | CLAIM | yes |
-| R2-46 | W7.3 | C41 | 516 | erratum | CLAIM | yes |
-| R2-47 | W7.4 | C42 | 518 | erratum | CLAIM | yes |
-| R2-48 | W7.5 | C43 | 518 | erratum | CLAIM | yes |
-| R2-49 | W15.1 | C44 | 526 | clarification | CLAIM | yes |
-| R2-50 | W11.2 | C45 | 528 | clarification | CLAIM | yes |
-| R2-51 | W19.2 | — | 552–558 | change of claim | CLAIM | yes |
-| R2-52 | W17.3 | C46 | 562 | clarification | CLAIM | yes |
-| R2-53 | W7.6 | C47 | 588 | erratum | CLAIM | yes |
-| R2-54 | W10a.1 | C48 | 616 | erratum | CLAIM | yes |
-| R2-55 | W19.3 + W10(b).1 | — | 620 | change of claim | CLAIM | yes |
+| R2 | entry | S90 brief | file-11 line | reason | expected ruling | declared in the note | S90 ruling |
+|---|---|---|---|---|---|---|---|
+| R2-01 | W37.1 | C01 | 15 | clarification | ORDER | no | FIX |
+| R2-02 | W6.1 | C02 | 27 | erratum | CLAIM | yes | not contested |
+| R2-03 | W7.1 | C03 | 33 | erratum | CLAIM | yes | not contested |
+| R2-04 | W58(ii).1 | C04 | 33 | clarification | WORDING | no | KEEP |
+| R2-05 | W8.1 | C05 | 63 | erratum | ORDER | no | not contested |
+| R2-06 | W36.1 | C06 | 71 | clarification | CLAIM | yes | KEEP |
+| R2-07 | W45.1 | C07 | 77 | change of claim | CLAIM | yes | KEEP |
+| R2-08 | W19.1 | — | 121 | clarification | CLAIM | yes | FIX |
+| R2-09 | W30.1 | C08 | 121 | clarification | CLAIM | yes | not contested |
+| R2-10 | W57.1 + W32(b).1 | C09 | 161 | clarification | CLAIM | yes | not contested |
+| R2-11 | W17.1 | C10 | 197 | clarification | CLAIM | yes | not contested |
+| R2-12 | W35.1 | C11 | 219–223 | clarification | CLAIM | yes | FIX |
+| R2-13 | W35.2 | C12 | 225 | clarification | CLAIM | yes | FIX |
+| R2-14 | W35.4 | C13 | 227 | clarification | WORDING | no | not contested |
+| R2-15 | W20.1 | — | 233 | clarification | CLAIM | yes | FIX |
+| R2-16 | W39.1 | C14 | 257 | clarification | CLAIM | yes | not contested |
+| R2-17 | W20.2 | — | 257 | change of claim | CLAIM | yes | KEEP |
+| R2-18 | W11.1 | C15 | 271 | clarification | CLAIM | yes | not contested |
+| R2-19 | W9.1 | C16 | 275 | erratum | WORDING | no | not contested |
+| R2-20 | W20.3 | — | 289 | clarification | CLAIM | yes | not contested |
+| R2-21 | W58(i).1 | C17 | 301 | clarification | CLAIM | yes | KEEP |
+| R2-22 | W28.1 | C18 | 309 | clarification | CLAIM | yes | not contested |
+| R2-23 | W34.1 | C19 | 315 | clarification | CLAIM | yes | not contested |
+| R2-24 | W33.1 | C20 | 315 | clarification | CLAIM | yes | KEEP |
+| R2-25 | W40.1 | C21 | 337 | clarification | CLAIM | yes | FIX |
+| R2-26 | W24.1 | C22 | 351 | erratum | WORDING | no | FIX |
+| R2-27 | W31.1 | — | 361 | erratum | CLAIM | yes | not contested |
+| R2-28 | W22.1 | C23 | 373 | erratum | CLAIM | yes | FIX |
+| R2-29 | W22.2 | C24 | 379 | erratum | CLAIM | yes | not contested |
+| R2-30 | W41.1 | C25 | 401 | clarification | CLAIM | yes | KEEP |
+| R2-31 | W21.1 | C26 | 405 | clarification | CLAIM | yes | KEEP |
+| R2-32 | W13.1 | C27 | 419 | clarification | CLAIM | yes | KEEP |
+| R2-33 | W13.2 + W12.2 | C28 | 419 | clarification | CLAIM | yes | KEEP |
+| R2-34 | W35.3 | C29 | 421 | clarification | CLAIM | yes | KEEP |
+| R2-35 | W23.1 | C30 | 427 | clarification | CLAIM | yes | not contested |
+| R2-36 | W5.1 | C31 | 433 | clarification | CLAIM | yes | not contested |
+| R2-37 | W23.2 | C32 | 445 | clarification | CLAIM | yes | not contested |
+| R2-38 | W6.2 | C33 | 447 | erratum | CLAIM | yes | not contested |
+| R2-39 | W6.3 | C34 | 447 | erratum | CLAIM | yes | FIX |
+| R2-40 | W12.1 | C35 | 465 | clarification | CLAIM | yes | not contested |
+| R2-41 | W25.1 | C36 | 471 | erratum | CLAIM | yes | not contested |
+| R2-42 | W17.2 | C37 | 473 | clarification | CLAIM | yes | KEEP |
+| R2-43 | W25.2 | C38 | 487 | erratum | CLAIM | yes | not contested |
+| R2-44 | W7.2 | C39 | 512 | erratum | CLAIM | yes | not contested |
+| R2-45 | W6.4 + W14.1 | C40 | 514 | erratum and clarification | CLAIM | yes | not contested |
+| R2-46 | W7.3 | C41 | 516 | erratum | CLAIM | yes | not contested |
+| R2-47 | W7.4 | C42 | 518 | erratum | CLAIM | yes | not contested |
+| R2-48 | W7.5 | C43 | 518 | erratum | CLAIM | yes | FIX |
+| R2-49 | W15.1 | C44 | 526 | clarification | CLAIM | yes | not contested |
+| R2-50 | W11.2 | C45 | 528 | clarification | CLAIM | yes | not contested |
+| R2-51 | W19.2 | — | 552–558 | change of claim | CLAIM | yes | KEEP |
+| R2-52 | W17.3 | C46 | 562 | clarification | CLAIM | yes | KEEP |
+| R2-53 | W7.6 | C47 | 588 | erratum | CLAIM | yes | not contested |
+| R2-54 | W10a.1 | C48 | 616 | erratum | CLAIM | yes | not contested |
+| R2-55 | W19.3 + W10(b).1 | — | 620 | change of claim | CLAIM | yes | not contested |
 
-**Counts.** N = 48 of M = 55. By drafting group: A 14 of 18; B1 13 of 15; C 10 of 11; B2 11 of 11. K = 42.
+**Counts.** N = 49 of M = 55. By drafting group: A 14 of 18; B1 14 of 15; C 10 of 11; B2 11 of 11. K = 42. Before the S90 rulings were applied, N was 48 and B1 was 13 of 15: W6.3 was then expected WORDING. The column "S90 ruling" gives the ruling after reconciliation: FIX for the 10 entries fixed, KEEP for the 14 kept, and "not contested" for the 31 that neither reply contested; none was dropped.

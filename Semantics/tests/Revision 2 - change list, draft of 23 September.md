@@ -1,8 +1,8 @@
 # Revision 2 - change list, draft of 23 September
 
-**DRAFT — not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are drafted from the settled S88 positions (3ebb6d8); no outside reader has seen their final wordings.**
+**DRAFT 3 — after the S90 cross-examination by Atria and Mimo; not frozen. Made from file 11, md5 5e494c1095d920d128b9a79de378f923. W19, W20 and W31 are drafted from the settled S88 positions (3ebb6d8). Every S90 ruling is applied: 10 entries fixed, 14 kept, none dropped. No outside reader has seen the texts and declarations the fixes wrote.**
 
-*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the change list from which revision 2 (file 13) is to be made by program (decision D6). It assembles the entries drafted in five groups (A, B1, B2, C and M) under decisions D1–D11, with every correction the two adversarial checks made and without the one entry they dropped. The working files it was assembled from (the decisions, the item skeleton, the five entry files and the two checks) are in the session scratchpad and are not in the repository. File 11 was read only; its md5 was the same before and after. No S87 or S88 return was opened. Nothing was written into `authority/`. Later on 23 September another Claude subagent replaced the three placeholders with seven entries drafted from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8), and brought the frame of this list up to date with them. It opened no S87, S88 or S90 return and wrote nothing into `authority/`.*
+*Written on 23 September 2026 by a Claude subagent for the orchestrator. This is the change list from which revision 2 (file 13) is to be made by program (decision D6). It assembles the entries drafted in five groups (A, B1, B2, C and M) under decisions D1–D11, with every correction the two adversarial checks made and without the one entry they dropped. The working files it was assembled from (the decisions, the item skeleton, the five entry files and the two checks) are in the session scratchpad and are not in the repository. File 11 was read only; its md5 was the same before and after. No S87 or S88 return was opened. Nothing was written into `authority/`. Later on 23 September another Claude subagent replaced the three placeholders with seven entries drafted from `results/S88 Reading of Mimo's reply in three parts, and the settled positions.md` (committed at 3ebb6d8), and brought the frame of this list up to date with them. It opened no S87, S88 or S90 return and wrote nothing into `authority/`. On 24 September 2026 another Claude subagent applied every S90 ruling to this list in one pass, which makes this draft 3. It read the S90 rules, the three S90 readings (`results/S90 Reading of the replies - batch 1 …`, `… batch 2 …` and `… batch 3 …`, whose batch 3 holds the cumulative list of edits) and the ruling files in `results/S90 reading rulings/`, and it took every ruled text from them byte for byte. It opened no S90 reply, receipt, reasoning file or attempt file, wrote no ruling, and wrote nothing into `authority/`.*
 
 ## What this is
 
@@ -10,17 +10,17 @@ This list gives every change that revision 2 makes to file 11, in the order of f
 
 The list rests on D1. If Mimo's cross-examination of the S81 determination overturns S81, every entry is re-examined under plan 2.2 B or C before anything is built.
 
-W19, W20 and W31 waited for Mimo's S88 reply (D2). They are now drafted from the settled S88 positions as seven entries, and the note's counts include them ("The held items, drafted from the settled S88 positions", below). No outside reader has seen their final wordings, and the cross-examination of revision 2 (X1) must carry them.
+W19, W20 and W31 waited for Mimo's S88 reply (D2). They are now drafted from the settled S88 positions as seven entries, and the note's counts include them ("The held items, drafted from the settled S88 positions", below). The cross-examination of revision 2 (S90, the X1 of the plan) carried them, with the other 48 changes, to both outside readers in five parts. Its rulings are applied in this draft 3 ("What the checks changed", "After the cross-examination (S90)"), and what the readings passed on without a ruling is in "Carried forward after S90".
 
 The list is withheld from every test brief (D6), as are the note, the sources note and the record it puts into file 13.
 
 ## Counts
 
-- **Entries that change the theory text: 55.** Expected ruling CLAIM 48, WORDING 5, ORDER 2. By group: A 14 of 18, B1 13 of 15, B2 11 of 11, C 10 of 11. The note reads "48 of the 55 changes". Before the held items were drafted it read "41 of the 48 changes".
+- **Entries that change the theory text: 55.** Expected ruling CLAIM 49, WORDING 4, ORDER 2. By group: A 14 of 18, B1 14 of 15, B2 11 of 11, C 10 of 11. The note reads "49 of the 55 changes". Before the S90 rulings were applied it read "48 of the 55 changes" (W6.3 was then expected WORDING, and B1 was 13 of 15), and before the held items were drafted "41 of the 48 changes".
 - **Meta entries applied: 3.** W1.1 (the note, replacing file 11's line 5), W38.1 (the note of sources and departures, before Part 0) and W1.2 (the revision record, after the last line). They are not counted in the note's N or M.
 - **Record-only entries: 5.** W3.1–W3.5 declare five places in layer 2 of the record. They change no text, and the program locates them without applying them.
 - **Held: 0.** The placeholders for W19, W20 and W31 are replaced by seven entries (W19.1–W19.3, W20.1–W20.3 and W31.1), each expected CLAIM. All seven are group A.
-- **The checks.** Check 1 (groups A, B1 and B2, 38 entries): SOUND 26, FIX 11 (nine change the new text, two change only the expected ruling), DROP 1. Check 2 (groups C and M, 18 entries): SOUND 10, FIX 8, DROP 0, and one companion entry added (W35.4). In all, 19 entries were fixed, 1 was dropped and 1 was added. Every fix is applied below. The seven entries drafted later from the settled S88 positions were checked by their drafter only; see "The held items, drafted from the settled S88 positions".
+- **The checks.** Check 1 (groups A, B1 and B2, 38 entries): SOUND 26, FIX 11 (nine change the new text, two change only the expected ruling), DROP 1. Check 2 (groups C and M, 18 entries): SOUND 10, FIX 8, DROP 0, and one companion entry added (W35.4). In all, 19 entries were fixed, 1 was dropped and 1 was added. Every fix is applied below. The seven entries drafted later from the settled S88 positions were checked by their drafter only; see "The held items, drafted from the settled S88 positions". **After the cross-examination (S90):** ten calls, all accepted (five of them in pass 2 after the container restart); 32 rulings on 24 entries: 10 entries fixed, 14 kept, none dropped; 22 changes contested by at least one reply, 2 more (R32, R33) listed and ruled KEEP although found not contested, and 31 contested by neither reply. Every S90 ruling is applied below; see "What the checks changed".
 - **Layer 2 of the record: 42 places.** These are the 41 places inside the theory and M7 that 03 rules CLAIM and file 11's note did not declare (S81 determination, file 03, section 2).
 
 ## How an entry is written
@@ -139,6 +139,29 @@ Claude took these decisions on 23 September 2026, under decisions S13 and S18. T
 
   The record says instead that the tags follow file 00's numbering, whose (I3) the theory does not carry. Plan 2.6's inventory check "(I4) renamed to (I3)" is dropped.
 
+**After the cross-examination (S90): 10 entries fixed, 14 kept, none dropped.** The five parts of the S90 cross-examination went to Atria and to Mimo, ten calls in all, and every call was accepted (five of them in pass 2, after the container restart). Each change a reply contested went to a fresh Claude checker, who ruled keep, fix or drop. Where two checkers ruled one entry, the readings reconciled their rulings into one. The rulings are in `results/S90 reading rulings/`, and the readings that record and reconcile them are `results/S90 Reading of the replies - batch 1 (Mimo A1, Mimo A2, Atria B1).md`, `… batch 2 (Atria A2, Mimo B1).md` and `… batch 3 (Mimo B2, Mimo C, Atria B2, Atria A1, Atria C).md`. Every edit is made in its entry and marked there as after the cross-examination, and every ruling, keep or fix, has its line in the entry's CHECK field, beginning "S90 cross-examination:". No outside reader has seen the texts and declarations the ten fixes wrote.
+
+| entry | line | R2 | calls and points | ruling | what the fix changed |
+|---|---|---|---|---|---|
+| W37.1 | 15 | R2-01 | Mimo A1 point 3; Atria A1 point 1 (pass 2) | FIX (two rulings, same text) | "blind" deleted, so Part 0 states only the body's "no represented target"; REASON WORD erratum → clarification; the CLAIM fallback line reworded; KIND ORDER and no declaration, unchanged |
+| W19.1 | 121 | R2-08 | Mimo A1 point 1 | FIX | a typing sentence, in Part IV's and Part V's words with pointers, inserted before the two settled sentences, which stay byte for byte; KIND and declaration unchanged |
+| W35.1 | 219–223 | R2-12 | Mimo C point 1 | FIX | the preamble reads "a transport to the simulation layer \(S\)"; the declaration reads "for every transport to the simulation layer, whatever its provenance" |
+| W35.2 | 225 | R2-13 | Mimo C point 4; Atria C point 1 | FIX (two rulings, reconciled to Mimo C's text) | the opening clause reads "for every transport to the simulation layer", and its instance "a constructed one"; the declaration includes the restated clause; REASON takes Atria C's reason |
+| W20.1 | 233 | R2-15 | Mimo A1 point 2 | FIX | "whether or not anyone has described their work" added, from L309 s3; the declaration follows; O45 holds AGREE on firmer text |
+| W40.1 | 337 | R2-25 | Atria C point 3; Mimo C point 5 | FIX, declaration only (KEEP and FIX reconciled to the FIX) | the declaration carries NEW's clause on what makes a denial bare, word for word; OLD, NEW and KIND unchanged |
+| W24.1 | 351 | R2-26 | Mimo A2 point 4 | FIX, wording only | the condition reads "for every admitted generator \(a\)", so the two quantifiers match; KIND WORDING, no declaration |
+| W22.1 | 373 | R2-28 | Mimo A2 point 1 | FIX | \(\mathcal E_c\) is "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)"; the declaration says "says what its terms are" |
+| W6.3 | 447 | R2-39 | Atria B1 point 1; Mimo B1 point 2 | FIX (two rulings, one edit) | KIND WORDING → CLAIM, declaration added; OLD and NEW unchanged; the REASON no longer says the entry can be dropped |
+| W7.5 | 518 | R2-48 | Mimo B1 point 3 | FIX | "(EK) also on (P)" added to NEW and to the declaration; the over-statement for (P) kept |
+
+**Kept after the cross-examination: 14 entries.** Their texts do not change, and each CHECK field records its ruling: W58(ii).1 (R04), W36.1 (R06), W45.1 (R07), W20.2 (R17), W58(i).1 (R21), W33.1 (R24), W41.1 (R30), W21.1 (R31), W13.1 (R32), W13.2 + W12.2 (R33), W35.3 (R34), W17.2 (R42), W19.2 (R51) and W17.3 (R52). W19.2's rulings also ask for two notes in its CASES AT RISK (O36, and N25's second question), and they are made.
+
+**Dropped after the cross-examination: none.** No ruling dropped an entry, so no entry leaves the list and "Dropped" above is unchanged.
+
+**Also changed with the rulings.** W37.1's title, since the old one ("Restore 'blind' …") no longer described the entry, as both R01 rulings offer. W6.3's KIND moves the counts (see "Counts"). The frame of this list no longer calls the seven S88 entries unseen or O45 watched under W20.1, and it closes the finding on Part II's forward notation and the finding on O45 ("Findings carried forward").
+
+**The build.** `tools/s89_apply_changes.py --self-test` applies this list with no refusal: 63 entries parsed, 58 applied (55 theory, 3 meta), 5 record-only, none held; CLAIM 49, WORDING 4, ORDER 2; N = 49 of M = 55, K = 42; 54 diff hunks, each inside an entry; both planted edits refused. The theory text of draft 3 is committed as `tests/Revision 2 - file 13 draft 3, theory text.md` (md5 403c4f2fb3e5d57bb48a5647011c9f91, 11,574 words by the runner's count and 11,546 by `wc -w`). The full draft 3, with its meta blocks and the date text "draft of 24 September 2026, not frozen", has md5 e33624e73da8c31e33a8e8df222931af and 26,026 words by the runner's count (25,984 by `wc -w`). Against draft 2 (md5 9aecf2f30ce0b4523606b2b8409fdf37), the theory text differs in exactly the eight entries whose NEW the fixes changed: W37.1, W19.1, W35.1, W35.2, W20.1, W24.1, W22.1 and W7.5. Nothing was written into `authority/`.
+
 ## Checked, with no change entry
 
 **W27, attack-label pointers (narrowed by D9).** Group A read every pointer to a Part XV label in file 11 (L5, L19, L49, L63, L337, L528, L534 and L536) against its target. Each is correct, as 03 §5 rules (XR8, XR11, XR12). L63's "(B) their necessity" is loose, not wrong, and is left. The labels are not renamed, and the record carries no old→new map. New text that refers to a Part XV label writes "attack (X) in Part XV". Check 1 confirmed the record.
@@ -158,14 +181,14 @@ W19 (Derivation 2, with the sentence after (K), Derivation 10 and W10(b)), W20 (
 | W19.3 + W10(b).1 | 620 | Derivation 10's identity sentence, through the exchange of the two things | 1.3.3; 1.3.1 (NEW-XR1) | CLAIM |
 
 - **The dependence order (L518) is not changed.** Under the rider, (E) uses (O)'s deletion rule, which the order already lists under (F1), (F2) and (A). The two sentences B1 left free stay free.
-- **No outside reader has seen these wordings in their final form.** The cross-examination of revision 2 (X1) must carry all seven; the S90 brief carries only the first 48 changes. Within X1, the deletion rider (W20.2) and the Derivation 10 sentence (W19.3) are the least tested. The rider was never put to either reply, and the Derivation 10 sentence was rewritten in settling.
-- **The fallback for W20** is settled with it and written in W20.2's CHECK. It applies if X1 finds that the rider breaks a worked case. If both options break something, only the \(\tau,\sigma\) erratum is taken (plan 1.3.4).
+- **No outside reader has seen these wordings in their final form.** The cross-examination of revision 2 (X1) must carry all seven; the S90 brief carries only the first 48 changes. Within X1, the deletion rider (W20.2) and the Derivation 10 sentence (W19.3) are the least tested. The rider was never put to either reply, and the Derivation 10 sentence was rewritten in settling. After S90: both outside readers read all seven as drafted, in parts A1 and A2. W19.1 and W20.1 were then fixed after the cross-examination, and no outside reader has seen their fixed wordings. W20.2 and W19.2 were ruled KEEP, and W20.3, W31.1 and W19.3 + W10(b).1 were contested by neither reply.
+- **The fallback for W20** is settled with it and written in W20.2's CHECK. It applies if X1 finds that the rider breaks a worked case. If both options break something, only the \(\tau,\sigma\) erratum is taken (plan 1.3.4). After the cross-examination: no reply found a worked case that the rider breaks (S90, the R17 ruling on Atria A1, point 2; Mimo A1 gave R17 STANDS), so the fallback is not triggered.
 - **The entries of other groups** that refer to W19, W20 or W31 as not yet drafted (W30.1, W33.1, W39.1, W9.1, W24.1, W21.1, W7.5, W3.2, W10a.1 and W1.2) were written before this drafting. They are left as their groups and checks wrote them. The rechecks they ask for (skeleton conflicts 1–5, 11 and 12) are done in the seven entries.
 - **The S90 brief's ids no longer match the R2 numbers from C08 on.** The S90 brief was sent before these entries were drafted. It cites the first 48 changes as C01–C48, in file-11 order, which were R2-01–R2-48 in the note of that time (commit 12e73da). The program numbers the applied entries in file-11 order, so every entry from W19.1 (L121) on now has a higher number: C01–C07 are still R2-01–R2-07, C08 (W30.1) is now R2-09, and C48 (W10a.1) is R2-54. The note's map (its section 5) gives each entry's S90 id beside its R2 number. Read S90's replies through the entry ids.
 - **Checked by the drafter, not by check 1 or check 2.** The whole list was applied by `tools/s89_apply_changes.py` into a scratch draft, never into `authority/`, with `--self-test`. It parsed 63 entries: 58 applied (55 theory, 3 meta), 5 record-only, none held. Every OLD, locator and anchor occurs once in file 11, and no applied OLDs overlap; W19.1 and W30.1 share L121, and W39.1 and W20.2 share L257, with disjoint OLD texts. The result is file 11 with exactly the listed replacements, in 54 diff hunks, each inside an entry, and the self-test refused both planted edits. N = 48 of M = 55, K = 42. The draft's md5 is 1d51c77eb591ace473e556568a7c4636, at 25,696 words (theory text alone 11,501).
   - Each new paragraph was read in place. Three notation points are carried forward below (Part II's forward notation; "active"; the two readings of "including any that assigns an input").
   - The guard rows were worked through the new text: O2, O4, O5, O7, O10, O24, O33, O36, O45, O46 and O47; N1, N3, N17, N20, N23 and N25; Part VII's production case and the skew-symmetric case. No fixed verdict moves on a reading the text supports.
-  - Watched, with a risk away: O45 under W20.1, where "those the candidate offers as doing the work" meets "never described as doing anything"; N1, as W33.1 records, now on fidelity rather than membership; and N25's second question under W19.2, for a reader who rested it on the old slogan.
+  - Watched, with a risk away: O45 under W20.1, where "those the candidate offers as doing the work" meets "never described as doing anything"; N1, as W33.1 records, now on fidelity rather than membership; and N25's second question under W19.2, for a reader who rested it on the old slogan. After the cross-examination, O45 holds AGREE on firmer text: W20.1 now adds "whether or not anyone has described their work" (S90, Mimo A1, point 2).
   - Toward: O5 and O7 (W20.2), O46 on firmer text and N17 on its first two questions (W19.2), and the first half of N23 (W20.2).
   - The settling's scripts were rerun (`f1_check.py`, `f3_check.py` and `d10_exchange.py` in `results/S88 Mimo reading parts/checks/`), and their outputs match the readings and the settled file.
 
@@ -174,7 +197,7 @@ W19 (Derivation 2, with the sentence after (K), Derivation 10 and W10(b)), W20 (
 These were found while drafting and checking. None is an entry.
 
 - **\(U_c\) and \(A_p\)** in (U1)–(U2) are undefined in file 11 (group A, C3). Defining them is one clause at L489 and a CLAIM, outside every item taken.
-- **The dependence order is still a summary** (group B1, finding 9). After W7.4–W7.5 it omits (K2), receipts, (K3), (CA), (CT2)–(CT4), Barriers, Enable, Scrutinizability, Membership, Result, ProducesVia and Cap. "(P), (EK) depend on (G), (E), Deploy" over-states (P)'s dependence and is kept.
+- **The dependence order is still a summary** (group B1, finding 9). After W7.4–W7.5 it omits (K2), receipts, (K3), (CA), (CT2)–(CT4), Barriers, Enable, Scrutinizability, Membership, Result, ProducesVia and Cap. "(P), (EK) depend on (G), (E), Deploy" over-states (P)'s dependence and is kept. After the cross-examination W7.5 also states that (EK) depends on (P), and the over-statement is still kept (S90, Mimo B1, point 3). What an active route depends on is carried forward after S90, below.
 - **04's O40 ruling cites the old L27 s2** (group B1, finding 12). After W6.1 that sentence no longer says it. The ruling's items 1–3 carry O40 without it; S81 Results should note the change.
 - **The plan's prediction P2(d)** names O54, O57, O59, O60, O61, O62, O66, O70 and O73 as rows whose ruled marks stay equal. O57 (W17.2), O61 (W23.2) and O62 (W12.1, W13.2) can move toward the thoughtful person under these entries (group B2, conflict 1), and N4 (O56, Q2) and N1 (O53) are watched under W34.1, W36.1, W41.1 and W33.1 (check 2). Before the freeze the plan should move these rows into P2(b)'s aimed set, or record that a change toward on them traces to these entries.
 - **Records misread where (I4) points** (group A, C2). No verdict rests on it, and nothing is changed.
@@ -184,10 +207,39 @@ These were found while drafting and checking. None is an entry.
 - **The note's form.** Plan 2.5 makes the note one paragraph. W1.1 gives the paragraph and, in the same block, one line per change of claim (group M, conflict 2).
 - **Layer 2 rests on 03 and on D1** (group M, conflict 5). If Mimo's cross-examination changes a ruling of 03, a row is added or removed, and K with it.
 - **The declared inputs (L514) do not list Part VI's declared restriction operation** (settled S88 positions, "Found in settling", point 4). (S) and (B) depend on it (L289: "Fix \(\mathcal E\) and a declared restriction operation"). Derivation 6 is not made false: L586 allows declared indices and declared inputs, and Part VI declares the operation where it uses it. The looseness predates every S88 repair, and under the rider W20.2 adds nothing to it. The candidate clause for L514 is "the restriction operation of Part VI (\(E|W\))". It is not an entry.
-- **Part II uses the notation of Parts IV and V before they introduce it** (W19.1, read in place). The new sentences at L121 use \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports", which L191, L233 and L235 introduce, with no pointer. A pointer such as "(Parts IV and V)" would close it, but it would change the settled wording, so it is left for X1 or the orchestrator.
+- **Part II uses the notation of Parts IV and V before they introduce it** (W19.1, read in place). The new sentences at L121 use \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports", which L191, L233 and L235 introduce, with no pointer. A pointer such as "(Parts IV and V)" would close it, but it would change the settled wording, so it is left for X1 or the orchestrator. **Closed after the cross-examination:** W19.1 now types these terms inline, with pointers to Parts IV and V, before the settled sentences, which stay byte for byte (S90, Mimo A1, point 1).
 - **"Active" is still undefined** (W20.1, read in place). L233 has "active commitments", and (F1) at L235 has "every active component". W20.1 makes Γ a set of components and puts the components that assign inputs in the named background. If "active component" is read as "member of Γ", (F1) no longer checks the named-background components one by one; (F2) still checks the whole. The settled position declined Mimo's "active" because it is undefined, and nothing is changed.
 - **W20.1's "including any that assigns an input" has two readings.** On one, every component that assigns an input is outside Γ. On the other, any such component that the candidate leaves out of Γ is named background. The named verdicts are the same on both (the F3 reading's models 1a and 1b).
-- **O45 against W20.1's "those the candidate offers as doing the work".** The phrase meets the case's "never described as doing anything". The entry holds the AGREE on L309 s3, W28.1 and W58(i).1, and asks X1 to test the row.
+- **O45 against W20.1's "those the candidate offers as doing the work".** The phrase meets the case's "never described as doing anything". The entry holds the AGREE on L309 s3, W28.1 and W58(i).1, and asks X1 to test the row. **Closed after the cross-examination:** Mimo (part A1, point 2) named the move away on one reading, and W20.1 now adds "whether or not anyone has described their work", so O45 holds AGREE on firmer text (S90).
+
+## Carried forward after S90
+
+The S90 readings passed these on without a ruling, or the rulings named them as options. None is an edit in this draft. Each is to be decided by the orchestrator or taken up in a later revision, and any that changes the theory text needs an entry of its own.
+
+**Notation.**
+- **The letter \(G\)** (Mimo A1, point 4; batch 1). W20.2's block \(G\subseteq\Gamma\) shares its letter with the equation tag (G) of Part X and with the variable \(G\subseteq K\times F\) of Part XI. The reply proposes a new symbol. If one is adopted, it must also replace \(G\) in the fallback text in W20.2's CHECK (the R17 ruling).
+- **Revised L339 names no block** (Atria A1, point 3; batch 3). Part VII's unchanged sentence names a pair but no block \(G\). It could name the deleted block, for example "with the skewness commitment as the deleted block". If adopted, it is a new entry.
+- **R55's bijection** (Mimo A2, point 2; batch 1). W19.3 + W10(b).1 cites Derivation 2(ii) at revised L624 without exhibiting the bijection that meets its premise. Atria (A2, point 1; batch 2) exhibits it: \(\varphi\) is the exchange of the two things. Both replies find the premise met, and neither contests R55. An inserted clause is possible.
+
+**Presentation.**
+- **"The ground of its restriction"** at revised L159 (W57.1 + W32(b).1, R10; Mimo B1, point 4; batch 2). It is not defined, it meets Part IX's "grounds \(g\)", and its pointer to Part XIV and Part XIV's pointer back to Part III never say that the two expressions are the same. The reply offers a gloss and says that no verdict moves.
+- **Bolded "declared inputs" at revised L31** (W7.1, R03; Mimo B1, point 5; batch 2). Now that W6.1 has removed the earlier mention at L25, the bolded term comes before any gloss of it. The reply offers a gloss.
+- **Revised L51, "In Part XI, as a declared normative relation"** (file-11 L53, which no entry touches; the R39 rulings, batches 1 and 2). It is the one place left that calls \(\mathcal N\) "declared". It does not say "declared input", so the declarations of W6.1, W6.2, W6.3 and W6.4 + W14.1 stay true.
+
+**Gaps in file-11 text outside the 55 changes.**
+- **What an active route depends on** (the R48 ruling; batch 2). L369 defines an active route "under the declared contrasts", the dependence order does not place active routes, and L514 does not list declared contrasts. It is the same summary looseness as finding 9 above, and no reply raised it.
+- **When a transport into \(c\) is faithful on \(c\)'s contract** (both R31 rulings; batch 3). A sentence at Part IV (L189) or at (R) (L205–208) could say that a transport into \(c\) is faithful on \(c\)'s contract when it is faithful on the pairs it carries into that contract. That would state in words the reading W21.1's \(\equiv_\ell\) and (N) already need.
+
+**Reconciliations the pass relies on.**
+- **R13 (W35.2) and R25 (W40.1).** In each, two checkers of batch 3 ruled one entry differently, and the batch-3 recorder, not a third checker, chose the text: Mimo C item 4's wording for R13, and Atria C item 5's FIX for R25. The pass uses those choices. The orchestrator may send either to a fresh checker, and a different ruling would change the entry again.
+
+**Options the rulings left open, not taken in this pass.**
+- **W19.2's declaration**: "differ in which component" could read "differ in nothing but which component" (batch 1, R51; batch 2 found the declaration accurate as it stands).
+- **W38.1's line on selection**: "Here selection is blind: its history holds no represented target (Parts 0 and IV)" could read "Here selection has no represented target in its history (Parts 0 and IV)", so that the strict sense of "blind" appears in the sources note no more than in Part 0 (both R01 rulings). The pointer still lands as it stands.
+- **W20.2's CASES AT RISK, O33**: the reply's "toward" reading could be recorded beside "holds AGREE", as "toward for accounts of the joint question on the mechanism-only reading, which the case does not claim" (the R17 ruling).
+- **W17.2's heading** still says "the population is of realizable transports", the wording from before check 1's fix; NEW says "candidate transports" (the R42 ruling). It appears in neither the note nor the record.
+- **W33.1's CASES AT RISK** still ends its O2 item with "this derives L275 s2's rule", which check 2 struck, and does not name O19, which check 2 added as watched (the R24 ruling). The theory text is unaffected.
+- **W41.1's CHECK** says "O15 toward"; after the cross-examination it is read as support for the passage only, since file 11 already gives O15 AGREE (the R30 rulings). The S90 line in the same CHECK field says so.
 
 ## The entries
 
@@ -302,28 +354,33 @@ Page numbers are the printed pages of the editions named. A third book, named by
   | Surprise and problems | C W35.1-W35.3 | - *Surprise and problems.* For Deutsch a problem is a situation in which conflicting ideas are experienced, and a problem can arise without any observation (chapter 1, p.17). Here surprise is kept for selected transports (Part IV), and the recognized difficulty of a critical episode (Part X) is not defined. |
   | Elimination | C W40.1 | drop the sentence |
 
-### W37.1 — Restore "blind" in Part 0's account of selection
+### W37.1 — Part 0's account of selection: no represented target in the history
 
 - **STATUS:** applied
 - **GROUP:** A
 - **ITEM:** W37
 - **FILE-11 LINE:** 15
 - **WHERE:** Part 0, "What this document claims", paragraph 2 (L15), sentence 3. The skeleton's "L15 s2" is this sentence: L15 s1 is "Correspondence … is not a primitive here" and s2 is "It is a relation with a provenance".
-- **REASON WORD:** erratum
+- **REASON WORD:** clarification
 - **KIND:** ORDER
 - **CHECK:** check 1, FIX (kind only). The added words copy what L197 and L203 already state, so the change is ORDER, as 03 ruled the same place (M2, upheld). Declaring it would put a false line in the note. KIND is ORDER and the declaration is none; if a checker rules CLAIM, the drafted line below is used.
+  - S90 cross-examination: s90_xexam_mimo_A1, point 3 (R01 STANDS, naming an undeclared change of claim on a strict reading); s90_xexam_atria_A1, pass 2, point 1 (R01 FALLS) — FIX (two rulings, same text), after the cross-examination. S90: FIX (Mimo A1 point 3, batch 1; Atria A1 point 1, reconciled, same text)
 - **OLD:**
 ````text
 A correspondence can be *selected*, produced by variation and survival on a history of encountered changes;
 ````
 - **NEW:**
 ````text
-A correspondence can be *selected*, produced by blind variation and survival on a history of encountered changes, with no represented target in that history;
+A correspondence can be *selected*, produced by variation and survival on a history of encountered changes, with no represented target in that history;
 ````
-- **DECLARATION:** none (ORDER, after check 1; listed in the record). If a checker rules CLAIM: "Part 0 again calls selection blind, and says what that means: the selection history holds no represented target, as Part IV states."
+- **DECLARATION:** none (ORDER, after check 1; listed in the record). If a checker rules CLAIM: "Part 0 now says that a selection history holds no represented target, as Part IV states." (Fallback line reworded after the cross-examination, S90, since the old one began "Part 0 again calls selection blind".)
 - **REASON:** W37 (source point 9; verify obs 9, CONFIRMED: "File 11 made the vocabulary clash worse"). File 10 L13 had "blind variation and survival"; file 11 dropped "blind" while the body keeps the blindness (L197: no member of the history represents t, H or the survival condition; L203: a selected transport has no represented target and no criticism in its history). The added words pin "blind" to the body's sense, so the ordinary wider use of "selection" (which includes choice by a critic) is not read into Part 0. The departure from the books' wider usage goes in the sources note (W38), not in the theory. KIND: 03 ruled the drop (M2) WORDING, but as a named close call, and all four readers ruled it CLAIM; under the strict rule this entry is CLAIM. The plan's expected ruling was WORDING, so the checkers may rule it down; declaring it costs one line in the note.
+  - After the cross-examination (Mimo, part A1, point 3; Atria, part A1, pass 2, point 1), "blind" is deleted.
+  - Its ordinary strict sense, variation not directed in any way (for example by a cue or a gradient that represents nothing), says more than Parts I–XVI state (S81 03 M2, R1's close call). That breaks Part 0's rule that "the front matter states nothing the body does not state more exactly".
+  - The clause alone states the body's sense.
+  - Atria's alternative, adding blindness to Part IV's Selected, is refused as an undeclared CLAIM change to the body.
 - **CASES AT RISK:** O11 (Monday's key-trying is variation and survival with no represented target): holds AGREE, toward if anything. N9 (selection puts the wing colour in what the moths inherit): holds. N11 (the teacher chooses among Jana's drafts): watched; the added words make plain that a chooser who represents what she wants is not a selection history in this sense, which fits the verdict's "the teacher's choice" and moves no mark I can find. No other O- or N-case turns on Part 0's wording of selection.
-- **GAIN / LOSS:** GAIN: Part 0 and Part IV say the same thing in the same word as file 10, and "selection" cannot be read as criticism-by-choice. LOSS: None in the theory; "selection" stays narrower than ordinary use (recorded in the sources note).
+- **GAIN / LOSS:** GAIN: Part 0 and Part IV say the same thing, and "selection" cannot be read as criticism-by-choice. LOSS: None in the theory; "selection" stays narrower than ordinary use (recorded in the sources note). After the cross-examination (S90), Part 0 no longer uses file 10's word "blind".
 
 ### W6.1 — L27 s2: what the semantics does with the measures it does not supply
 
@@ -389,6 +446,7 @@ Everything else is derived from the two primitives, the declared indices and the
 - **REASON WORD:** clarification
 - **KIND:** WORDING
 - **CHECK:** check 1, FIX (kind only). 03 ruled L33 s2–s4 ORDER (M6, upheld) and read "appears anywhere" as L590's "no residual predicate" (03 §8 item 11), so the new words say what the old ones meant. KIND is WORDING and the declaration is none; if a checker rules CLAIM, the drafted line below is used.
+  - S90 cross-examination: s90_xexam_mimo_B1, point 1 (R04 FALLS) — KEEP, after the cross-examination. After the cross-examination (s90_xexam_mimo_B1, point 1, R04 FALLS: 'weaker claim in WORDING guise'): KEEP. The reply reads 'a predicate meaning …' and L590's 'residual' as covering derived predicates. On that reading, both OLD and L518 are false in file 11 itself, which defines explanation (L13), a proof's explaining (L51), the causal assignment (L125–129) and knowledge and representation (L512), and whose (RC) depends on (EK) and (E). On the only reading the text bears, the unanalyzed predicate, OLD and NEW say the same thing. The second half copies L518. Derivation 6's proof reaches L518/L520. Atria (s90_xexam_atria_B1, point 2) found the entry standing.
 - **OLD:**
 ````text
 No predicate meaning "really explains", "is a cause" or "is knowledge" appears anywhere (Derivation 6).
@@ -442,6 +500,7 @@ No predicate meaning "really explains", "is a cause" or "is knowledge" is taken 
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. "A separate measure" meets L27's "a measure of worth" and B1's "no merit function"; NEW reads "a separate matter". Cases: as drafted, plus N1 watched (the Γ question, as C's C7) and N4 Q2 watched (with W34.1).
+  - S90 cross-examination: s90_xexam_atria_C, point 3 (R06 STANDS, naming a move toward on N3) — KEEP, after the cross-examination. Cross-examination of revision 2 (S90 part C): Atria gave STANDS and named, under (d), a move toward the fixed verdict on N3: the candidate/account distinction gives "No, it does not explain" with "Yes, an explanation … only in form", which the old s2 read literally denied. Mimo gave STANDS with no point. Ruled KEEP after the cross-examination: the move is toward, and it follows from the declaration's two clauses ("explanation" means an account; a false theory offered as an answer is a candidate that ordinary usage may call an explanation). The "No" rests on (F1) and non-circular dependence (L255, L273). N1 holds (s1, L231, R24), N2 holds or moves toward, and O8, O15 and N22 hold. The pointers to Part V and to Part VI (L313) are exact.
 - **OLD:**
 ````text
 What cannot count as explanation is an error in the very dependence alleged to do the work.
@@ -471,6 +530,7 @@ What cannot count as explanation is an error in the very dependence alleged to d
 - **REASON WORD:** change of claim
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. "Kind of carrier" used "kind", a defined, contract-relative word of the theory (L13; attack (C) in Part XV). NEW reads "physical medium". The sources note follows.
+  - S90 cross-examination: s90_xexam_mimo_C, point 2 (R07 FALLS) — KEEP, after the cross-examination. Cross-examination of revision 2 (S90 part C): Mimo said FALLS (the declaration omits that bearability and passage between media are "fixed by the adopted physics"); Atria said STANDS. Ruled KEEP after the cross-examination: bearability is the physical module's to fix already in file 11 (L33, L215, L509; Part XII L453), and passage is in the declaration's "so far as the adopted physics lets contents pass", so the clause changes no claim and the declaration is exact.
 - **OLD:**
 ````text
 Every attribution of an organization to a physical system must be permitted by the adopted physics.
@@ -494,31 +554,32 @@ Every attribution of an organization to a physical system must be permitted by t
 - **GROUP:** A
 - **ITEM:** W19
 - **FILE-11 LINE:** 121
-- **WHERE:** Part II, "Kinds are edit-signatures" (L121). Two sentences are inserted after sentence 2, "A kind is an equivalence class of components under this relation.", the anchor W19's placeholder reserved. Sentences 1–2 are kept byte for byte. W30.1 appends its sentences after sentence 3; the two OLD texts do not overlap (skeleton conflict 1).
+- **WHERE:** Part II, "Kinds are edit-signatures" (L121). Three sentences are inserted after sentence 2, "A kind is an equivalence class of components under this relation.", the anchor W19's placeholder reserved: a typing sentence, added after the cross-examination (s90_xexam_mimo_A1, point 1), and the two settled sentences. Sentences 1–2 are kept byte for byte. W30.1 appends its sentences after sentence 3; the two OLD texts do not overlap (skeleton conflict 1).
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** not put to check 1 or check 2, which ran before S88 was settled. The text is the settled wording (`results/S88 Reading of Mimo's reply in three parts, and the settled positions.md`, F1, block 2; committed at 3ebb6d8), copied byte for byte. Checked by its drafter: the whole list applied by the program into a scratch draft with no refusal and no overlap, the new text read in place, and the guard rows worked below. No outside reader has seen this wording; the cross-examination of revision 2 (X1) must carry it.
+  - S90 cross-examination: s90_xexam_mimo_A1, point 1 (R08 FALLS) — FIX, after the cross-examination. The two settled sentences use \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\), "hidden ports" and "the port translation" before Parts IV and V define them, with no pointer; the content is sound. A typing sentence in Part IV's and Part V's own words is inserted before them, and they stay byte for byte (NEW grows from 84 to 131 words). KIND CLAIM and the declaration are unchanged: the added sentence restates definitions and makes no claim. The reply's move to Part V is refused (it would overlap W20.1's place, take the definition across candidates away from (K), and leave "Kinds are edit-signatures" without the sense of "one kind" that Derivation 2 uses). O9, O10 and O22 hold; N25's second question is as before. Atria (s90_xexam_atria_A1, pass 2, point 4) found the declaration accurate and the forward notation a blemish, not incoherence, and gave STANDS; this fix answers that blemish.
 - **OLD:**
 ````text
 A kind is an equivalence class of components under this relation.
 ````
 - **NEW:**
 ````text
-A kind is an equivalence class of components under this relation. A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
+A kind is an equivalence class of components under this relation. For two explanatory candidates (Part V), let \(E\) and \(E'\) be their organizations and \(t=(\pi,\tau,\sigma,\lambda)\) and \(t'=(\pi',\tau',\sigma',\lambda')\) their transports from \(D\), where \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\), its anchor, with a port translation (Part IV). A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
 ````
 - **DECLARATION:** Part II now defines when a component of one candidate's organization and a component of another's are of one kind on C: their signatures, read on C through the two candidates' transports, coincide under a footprint bijection. It says that Derivation 2 uses kinds in this sense, and that Derivation 1 makes the like comparison between a component, read through its transport, and its anchor, read on C directly with its hidden ports projected away.
 - **REASON:**
   - W19 (S88 finding F1, settled UPHELD; plan 1.3.3, which takes the sentence after (K) with either wording of Derivation 2). (K) at L121 defines a kind for two components of one organization under one contract. No sentence says how a component of \(E\) and a component of \(E'\) are compared, and Derivation 2 compares them (the F1 reading, 3.4; Mimo's F1 point 3, kept). W19.2 needs the comparison stated.
   - **The second sentence** is the settled change 2. Derivation 1 (L546) compares a component of \(E\), read through \(\tau\), with its anchor subnetwork of \(D\), read on \(C\) directly; it does not compare a component of \(E\) with a component of \(E'\). The post-Atria sentence said "Derivations 1 and 2 use kinds in this sense" (Mimo's F1 point 4; the F1 reading's change B). Settling reworded the reader's proposal so that it names \(k\) and says which side is read through \(\tau\).
-  - **Placed at the reserved anchor.** After this entry and W30.1 the paragraph reads: the definition within one organization; the equivalence class; the two new sentences; sentence 3 ("Kinds are therefore relative to the contract …"); W30.1's sentences on what a signature is built from. "Therefore" still follows from definitions that are both contract-relative.
-  - **Notation, read in place.** \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports" are introduced in Parts IV and V (L191, L233, L235). Here Part II uses them before those Parts, with no pointer. Part II already points forward (to Part III, L121 s1), and "Derivation 2 uses kinds in this sense" names where the sentence is used. The settled wording is kept; the point is carried forward below.
+  - **Placed at the reserved anchor.** After this entry and W30.1 the paragraph reads: the definition within one organization; the equivalence class; the typing sentence; the two settled sentences; sentence 3 ("Kinds are therefore relative to the contract …"); W30.1's sentences on what a signature is built from. "Therefore" still follows from definitions that are both contract-relative. The typing sentence was added after the cross-examination (s90_xexam_mimo_A1, point 1).
+  - **Notation, read in place.** \(E\), \(E'\), \(\tau\), \(\tau'\), \(\lambda\) and "hidden ports" are introduced in Parts IV and V (L191, L233, L235). As drafted, Part II used them before those Parts, with no pointer. Part II already points forward (to Part III, L121 s1), and "Derivation 2 uses kinds in this sense" names where the sentence is used. After the cross-examination (s90_xexam_mimo_A1, point 1), a typing sentence is inserted before the two settled sentences, in Part IV's and Part V's own words and with pointers to them. It types \(E\) and \(E'\) as the organizations of two explanatory candidates, \(t\) and \(t'\) as their transports from \(D\), \(\tau\) and \(\sigma\) as the translations of edits and boundaries, and \(\lambda\) as the assignment to each component of its anchor with a port translation. It restates definitions of Parts IV and V and makes no claim, so KIND and the declaration are unchanged, and the two settled sentences stay byte for byte. The reply's other repair, moving the sentences to Part V after \(t\) is defined, is refused: W20.1 inserts its sentence there, and the move would take the definition across candidates away from (K) and leave Part II without the sense of "one kind" that Derivation 2 uses. The finding carried forward below is closed.
 - **CASES AT RISK:**
   - O10 holds AGREE, toward if anything under W30.1. Rosa's two thermostats are compared within one organization by (K); the new sentence compares components of two candidates for one question, which O10 does not raise.
   - O22 and O9 hold: the linkage's lead and the float and dial are compared within one organization.
   - N25 (O75), second question: watched under W19.2, which uses this sentence.
   - No other O- or N-case compares the components of two candidates.
 - **GAIN:** Derivation 2's kinds across candidates have a definition, and Derivation 1's comparison is described as what it is.
-- **LOSS:** Part II grows by two sentences, and it uses the notation of Parts IV and V before those Parts introduce it.
+- **LOSS:** Part II grows by three sentences, and it uses the notation of Parts IV and V before those Parts, typed inline with pointers to them. (After the cross-examination, S90; as drafted, Part II grew by two sentences and used that notation with no pointer.)
 
 ### W30.1 — A difference in port values is not a difference of kind
 
@@ -629,6 +690,7 @@ The transport \(t\) is a member of \(\mathcal T\) that survived. A transport **s
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, SOUND. Widening violation leaves L227's selection response speaking of an H that a constructed transport lacks; the companion entry W35.4 fixes that. The diff shows two hunks for this one entry (L219 and L223).
+  - S90 cross-examination: s90_xexam_mimo_C, point 1 (R12 FALLS) — FIX, after the cross-examination. S90, Mimo part C, R12 FALLS (Atria part C makes the same typing point but rules R12 STANDS and R13 FALLS); fresh checker FIX after the cross-examination. The preamble reads 'a transport to the simulation layer \(S\), with contract \(C\)', since \(\operatorname{Ans}_S(\tau(a),\sigma(b))\) is typed only when \(t\)'s target is \(S\). The declaration reads 'for every transport to the simulation layer, whatever its provenance'. The \(\operatorname{Ans}_E\) alternative is not adopted: a general \(E\) supplies no query, and L177 keeps expectation at \(S\).
 - **OLD:**
 ````text
 Let \(t\) be selected on history \(H\) with contract \(C\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
@@ -639,20 +701,20 @@ Let \(t\) be selected on history \(H\) with contract \(C\). For an edit–bounda
 ````
 - **NEW:**
 ````text
-Let \(t\) be a transport with contract \(C\) and, where \(t\) is selected, history \(H\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
+Let \(t\) be a transport to the simulation layer \(S\), with contract \(C\) and, where \(t\) is selected, history \(H\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
 
 - the **expectation** is \(\operatorname{Ans}_S(\tau(a),\sigma(b))\);
 - a **violation** occurs when fidelity fails at \((a,b)\);
 - **surprise** is a violation of a selected transport at \((a,b)\notin H\).
 ````
-- **DECLARATION:** Part IV now defines expectation and violation for every transport, and keeps surprise for a violation of a selected transport at a pair outside its history.
+- **DECLARATION:** Part IV now defines expectation and violation for every transport to the simulation layer, whatever its provenance, and keeps surprise for a violation of a selected one at a pair outside its history.
 - **REASON:** Worklist W35, variant (b′) (D3; plan 1.2; source point 13, verify obs 13, PARTLY CONFIRMED; M2). In file 11 the section opens "Let t be selected on history H". Expectation and violation therefore exist only for selected transports, and a constructed theory that fails has no violation to report. Under (b′), expectation and violation are defined for every transport, surprise is kept for a selected one, and H is introduced only where t is selected. Derivations 4 and 10 are unchanged and stay true word for word. Derivation 4 reads "A system can be surprised only if it holds a transport selected on a history H …" and its proof reads "Surprise is defined as a violation at (a,b)∉H". In Derivation 10, t_0 is selected on H_0. File 12's tested-history surprise (12:215–225, variant (c)) is not adopted (D3). The expectation keeps \(\operatorname{Ans}_S\): S is the organization the transport serves in this section, and constructed transports sit there too (L203). The OLD block runs over five lines so that the widened opening and the narrowed third bullet form one change: applied alone, either half would leave surprise ill-typed.
 - **CASES AT RISK:**
   - O3 holds AGREE. Nadia predicts with a transport selected on the cards played, so her "often surprised" is still surprise in the technical sense. The verdict turns on construction (L401), not on surprise.
   - N18: toward on Q2 ("the swaying went against what both expected"). Rhea's constructed transport now has an expectation and a violation.
   - O-cases that mention expectation or surprise were searched; O3 is the only one. O5, O11, O24 and O48 are untouched: no expectation is at issue in them. Derivation 10's worked episode is unchanged.
 - **GAIN:** A constructed theory that fails is violated in the text's own terms.
-- **LOSS:** "Surprise" stays narrower than ordinary use.
+- **LOSS:** "Surprise" stays narrower than ordinary use. After the cross-examination (S90), the drafted, unscoped "for every transport" goes; it was false for expectation.
 
 ### W35.2 — Part IV: a constructed transport is violated, not surprised
 
@@ -664,21 +726,22 @@ Let \(t\) be a transport with contract \(C\) and, where \(t\) is selected, histo
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. File 11 says a system is surprised and a transport is violated, never surprised; NEW reads "is violated, and the failure is not surprise". N18 Q3's Dov half stays watched (his transport need not be read as selected). Companion entry W35.4 added.
+  - S90 cross-examination: s90_xexam_mimo_C, point 4 (R13 STANDS, naming an undeclared clause); s90_xexam_atria_C, point 1 (R13 FALLS) — FIX (two rulings, reconciled to one text), after the cross-examination. S90, Mimo part C point 4 (closing line R13 STANDS, but it names an undeclared clause) and Atria part C point 1 (R13 FALLS); fresh checker FIX after the cross-examination. The opening clause reads 'for every transport to the simulation layer', since \(\operatorname{Ans}_S(\tau(a),\sigma(b))\) is typed only when \(t\)'s target is \(S\); its instance reads 'a constructed one', parallel to 'a selected one', so that 'violated' stays inside that scope. The declaration now includes the restated clause, which the REASON names as the sentence's purpose. Follows the R12 (W35.1) fix. Atria C (item 1) ruled FIX to the same effect with 'into the simulation layer' and 'a constructed transport'; the batch-3 reading takes this wording, which R12's fix shares.
 - **OLD:**
 ````text
 Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3).
 ````
 - **NEW:**
 ````text
-Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3). Expectation and violation are defined for every transport, surprise only for a selected one: a constructed transport that fails at a pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
+Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3). Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at a pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
 ````
-- **DECLARATION:** Part IV now says that a constructed transport that fails at a pair of its contract is violated, that the failure is not surprise, and that a violation the system represents can be a recognized difficulty.
-- **REASON:** Worklist W35 (b′). Plan 1.2 asks for surprise to be kept for selected transports "and said so". This sentence says it. It also joins a represented violation to Part X's recognized difficulty (W35.3). That is how the refutation of a constructed theory gets a place in the semantics without being called surprise (source point 13: "the refutation of a constructed theory is not surprise"). The sentence says "can be" because a violation is a recognized difficulty only when fidelity at that pair is a claimed obligation and the system represents its failure (W35.3).
+- **DECLARATION:** Part IV now says, restating its definitions, that expectation and violation are defined for every transport to the simulation layer and surprise only for a selected one; that a constructed transport to the simulation layer that fails at a pair of its contract is violated, and the failure is not surprise; and that a violation the system represents can be a recognized difficulty.
+- **REASON:** Worklist W35 (b′). Plan 1.2 asks for surprise to be kept for selected transports "and said so". This sentence says it. It also joins a represented violation to Part X's recognized difficulty (W35.3). That is how the refutation of a constructed theory gets a place in the semantics without being called surprise (source point 13: "the refutation of a constructed theory is not surprise"). The sentence says "can be" because a violation is a recognized difficulty only when fidelity at that pair is a claimed obligation and the system represents its failure (W35.3). After the cross-examination (S90, Atria C point 1; Mimo C point 4): The expectation \(\operatorname{Ans}_S(\tau(a),\sigma(b))\) is well typed only for a transport whose target is the simulation layer, as (A) at L250 shows. Part IV also has transports into the primitive layer (L201) and carrier-to-content transports under (R). So "every transport" said more than the formula defines. The sentence is narrowed to the scope that W35.1's REASON and L177 already give. No case moves: N18 holds as CHECK states it, and O23, O3 and D3-T are not reached.
 - **CASES AT RISK:**
   - N18: toward on Q3. Rhea's bridge fails at a pair her contract covers, so her grounds are contradicted: a constructed transport is violated. Dov's copy, read as selected on the village bridge's record, meets a change outside that record. That is surprise, and nothing Dov had grounds for is contradicted. The Dov half depends on reading his transport as selected, and is watched.
   - O3 holds. No other O-case turns on a constructed transport's failure; O13 and O23 were checked.
 - **GAIN:** The text says what the narrow sense of surprise leaves out, and where that goes.
-- **LOSS:** None beyond W35.1's.
+- **LOSS:** None beyond W35.1's. After the cross-examination (S90), a constructed transport with another target (a Part V candidate's, or (R)'s carrier-to-content transport) is not called violated by this section; it was not in file 11 either, where the section covered only selected transports.
 
 ### W35.4 — Part IV: the selection response extends a selected transport's history
 
@@ -714,15 +777,16 @@ A **selection response** extends the history \(H\) of a selected transport and l
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** not put to check 1 or check 2, which ran before S88 was settled. The text is the settled wording (F3, block 2), copied byte for byte. Checked by its drafter as W19.1 was. No outside reader has seen this wording; X1 must carry it.
+  - S90 cross-examination: s90_xexam_mimo_A1, point 2 (R15 STANDS, naming a move away on O45 on one reading) — FIX, after the cross-examination. Settled wording (F3, block 2) with one clause added after the cross-examination (S90, Mimo A1, point 2): 'whether or not anyone has described their work', from L309 s3; the reply's 'identifies as active' is not taken ('active' is undefined). The declaration follows the new clause. O45 moves from "watched, with a risk away" to "holds AGREE, on firmer text". Atria (s90_xexam_atria_A1, pass 2, point 5) read O45's second spring as a route "whether or not anyone described its work" and gave STANDS, which agrees.
 - **OLD:**
 ````text
 and an identified set \(\Gamma\) of active commitments in \(E\).
 ````
 - **NEW:**
 ````text
-and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work; the boundary values of \(E\) and the components of \(E\) outside \(\Gamma\), including any that assigns an input, belong to the named background of Part VI.
+and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work, whether or not anyone has described their work; the boundary values of \(E\) and the components of \(E\) outside \(\Gamma\), including any that assigns an input, belong to the named background of Part VI.
 ````
-- **DECLARATION:** Part V now types a candidate's commitments: they are components of its organization, those the candidate offers as doing the work, and the organization's boundary values and its other components, including any that assigns an input, belong to the named background of Part VI.
+- **DECLARATION:** Part V now types a candidate's commitments: they are components of its organization, those the candidate offers as doing the work, whether or not anyone has described their work, and the organization's boundary values and its other components, including any that assigns an input, belong to the named background of Part VI.
 - **REASON:**
   - **W20** (S88 finding F3, settled NARROWED from the finding as sent). The narrowed finding stands, with the F3 reading's precision: Γ is untyped, and the operative gap is membership, whether a component that assigns an input is a commitment or named background. No sentence of file 11 types Γ. L233, L257 and L289 are the only relevant sentences, and "the named background" occurs only at L289.
   - **Plan 1.3.4's rule**, fixed before any S88 reply was read: "F3 UPHELD: take B, with the rider unless X1 finds that the rider breaks a worked case". Settling applied its first branch. The narrowing (O33) is against the finding's instances, not against option B, and B holds on O33, O5, O7, Part VII's production case and the skew-symmetric case. The rule has no branch for a narrowing that leaves B intact.
@@ -736,8 +800,9 @@ and an identified set \(\Gamma\) of active commitments in \(E\). The commitments
     - The sentence sits between the definition of a candidate and "The pair \(\mathcal E\) … satisfies \(\operatorname{Account}(\mathcal E)\) exactly when", and it points forward to Part VI, where the named background is used (L289).
     - "Including any that assigns an input" has two readings: every component that assigns an input is outside Γ; or any such component the candidate leaves out of Γ is named background. The named verdicts are the same on both (models 1a and 1b). Carried forward below.
     - "Active" (L233's "active commitments", L235's "every active component") is still undefined. Carried forward below.
+  - **After the cross-examination (S90, Mimo A1, point 2).** The record of the fix: settled wording (F3, block 2) with one clause added after the cross-examination (S90, Mimo A1, point 2): 'whether or not anyone has described their work', from L309 s3; the reply's 'identifies as active' is not taken ('active' is undefined). Read in place, "those the candidate offers as doing the work" admitted a reading on which a component whose work nobody has described is not a commitment, and the rescue lay only in Part VI text whose subject presupposes membership; the definition now carries the answer itself.
 - **CASES AT RISK:**
-  - **O45: watched, with a risk away.** "Those the candidate offers as doing the work" meets the case's "The second is never described as doing anything".
+  - **O45: holds AGREE, on firmer text (W20.1 now states that membership does not wait on a description; L309 s3, W28.1 and W58(i).1 agree).** So after the cross-examination (S90, Mimo A1, point 2). As drafted it was watched, with a risk away: "Those the candidate offers as doing the work" meets the case's "The second is never described as doing anything".
     - A reader who takes "offers as doing the work" to need a description of the work puts the second spring in the named background. It is then no route, and "It was already a route" moves AGREE→SPLIT.
     - The account contains the second spring, connected and sufficient, and that is offering it as part of the mechanism. L309 s3 ("a route whether or not anyone has described its work"), W28.1 and W58(i).1 ("whether or not anyone has set them out") hold the AGREE.
     - X1 should test this row.
@@ -790,6 +855,7 @@ moving an assertion from an input slot into a component named "law" does not dis
 - **CHECK:** not put to check 1 or check 2. The text is the settled wording (F3, block 1), copied byte for byte. Checked by its drafter as W19.1 was.
   - The deletion rider was never put to either outside reply. With W19.3 it is the least tested wording in this list, and X1 must test it (plan 1.3.4).
   - The fallback, if X1 finds that the rider breaks a worked case, is settled with it: S3 reads "… and this contrast is lost in \(E|(\Gamma\setminus G)\) with the named background fixed: evaluated at \((\tau(a),\sigma(b))\) and at \((1,\sigma(b_0))\), its two answers are determined and equal, or an answer that \(E\) determines at one of these points is not determined at that point."; L516's declared indices gain "the restriction operation of Part VI"; and W20.3's clause ends "…, and \((E|W)|W'=E|W'\) for \(W'\subseteq W\)". If both options break something, only the \(\tau,\sigma\) erratum is taken.
+  - S90 cross-examination: s90_xexam_atria_A1, pass 2, point 2 (R17 STANDS, naming a move toward on O33) — KEEP, after the cross-examination. After the cross-examination (S90, part A1): Atria's reply (pass 2, attempt 5) gave STANDS and named a move on O33, toward and declared; kept. O33's ruled mark rests on L151 and L189 ("faithful"), which S3 does not touch, and its table is the question's form, not a candidate (the O33 flip was withdrawn in S88). The move the reply names is the entry's GAIN, that accounts of input-only contracts can now witness. The reply's "'p because p' fails through S2" agrees with S88. Its point 3 (L339 names no block) is a notation point, passed on. Mimo's reply gave STANDS and did not contest the change.
 - **OLD:**
 ````text
 There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
@@ -937,6 +1003,7 @@ For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the n
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, SOUND. O36 is watched, not held on firmer text: a reader who takes the rewritten route's premise to be one Γ already carries would have it assessed.
+  - S90 cross-examination: s90_xexam_atria_C, point 3 (R21 STANDS, naming a move toward on O45) — KEEP, after the cross-examination. Cross-examination of revision 2 (S90 part C): Atria gave STANDS and named, under (d), a declared move toward the fixed verdict on O45: 'whether or not anyone has set them out' has the second spring's support assessed from the start, in line with (S). Mimo gave STANDS with no point. Ruled KEEP after the cross-examination. The move is toward and follows from the declaration's own clause. On the S81 reading file 11 was already AGREE on O45 through L309 s3, so the mark holds on firmer text; only old L301's narrow reading ('only the supports someone has set out') pulled against it, and the reply's 'contradicted (S) and the verdict' overstates that ambiguity. N1 holds. O36 holds AGREE on the case's natural reading (the replacement premise is outside Γ, which NEW's last clause excludes), and stays watched as check 2 says: on the other reading, (S) already assessed the rewritten route in file 11, and P stays critical in each route as written. O46 and O47 hold.
 - **OLD:**
 ````text
 and the supports assessed are the ones actually written, not a support someone could write in their place.
@@ -1054,6 +1121,7 @@ A route already present in the candidate is a route whether or not anyone has de
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. Four defects: under the drafted test every commitment of L313's infinitary support "does no work"; "any support" could be read as "some support"; the declaration's "or" let one half of the test suffice; and "measure", as in W36.1. NEW scopes the label ("does no work by itself in the candidate"), states both halves for every support, says what happens when Γ is infinite, and reads "a separate matter, shown by Pres". Cases: O2's "this derives L275 s2's rule" is struck (circular); O19 is added, watched.
+  - S90 cross-examination: s90_xexam_atria_C, point 3 (R24 STANDS, naming a move toward on N1) — KEEP, after the cross-examination. Cross-examination of revision 2 (S90 part C): Atria gave STANDS and named, under (d), a declared move toward the fixed verdict on N1 ("Strike it out and the account works exactly as before" read as the no-work test, with \(\{d\}\) critical in no support), and claimed that the test is equivalent to "\(\{d\}\) critical in no support". Mimo gave STANDS with no point. Ruled KEEP after the cross-examination. The move on N1 is toward, on the reading where the sentence constrains nothing, and the declaration accounts for it. The claimed equivalence is false (Interference, L309: \(\{b\}\) is critical in no support but fails the addition half), and NEW does not assert it; NEW's "then" consequences follow from the two-halved test. N1's watch on the redundant-route and unfaithful readings stays as recorded. It comes from (B), L307 and (F1), not from this entry. O45, N2 and O8 hold.
 - **OLD:**
 ````text
 More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
@@ -1082,6 +1150,7 @@ More reach constrains variation; the containment need not be strict; counting jo
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. "Why does X appear?" used a bare X where the paragraph defines only "X-effect"; NEW reads "the question why it appears". Inserted before "This is the semantics' treatment …", the new sentence took over the antecedent of "This"; the entry is now anchored on the paragraph's last sentence, which it keeps byte for byte, attack pointer included (D9).
+  - S90 cross-examination: s90_xexam_atria_C, point 3 (R25 STANDS, naming a move toward on N22); s90_xexam_mimo_C, point 5 (R25 STANDS, naming an undeclared description) — FIX, declaration only (KEEP and FIX reconciled to the FIX), after the cross-examination. After the cross-examination (S90: Atria C point 3, R25 STANDS, naming a declared move toward N22; Mimo C point 5, R25 STANDS, saying the declaration leaves "bare denial" uncharacterised): FIX, declaration only. The clause "which offers no component that responds to a change in what produces the appearance" is the only place in file 11 or the draft that says what makes a denial bare, and it is what puts N22's Wren under the exclusion and Yuri outside it; the declaration now carries it in NEW's words. OLD, NEW and KIND unchanged. A second checker (Mimo C, item 5) ruled KEEP on the same replies, finding the drafted declaration exact; the batch-3 reading takes the FIX, whose declaration quotes NEW's clause word for word and so is exact on both rulings' tests.
 - **OLD:**
 ````text
 This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be.
@@ -1090,10 +1159,10 @@ This is the semantics' treatment of eliminative explanation; it is offered as ad
 ````text
 This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be. Where the absent structure appears to be present, the question why it appears is a separate question with its own target and contract (Part III): an account of the absence neither answers that question nor needs to, and a bare denial, which offers no component that responds to a change in what produces the appearance, is not an account of it.
 ````
-- **DECLARATION:** Part VII now says that where an absent structure appears to be present, why it appears is a separate question with its own target and contract, which an account of the absence neither answers nor needs to answer, and of which a bare denial is not an account.
+- **DECLARATION:** Part VII now says that where an absent structure appears to be present, why it appears is a separate question with its own target and contract, which an account of the absence neither answers nor needs to answer, and of which a bare denial, which offers no component that responds to a change in what produces the appearance, is not an account.
 - **REASON:** Worklist W40 (M6; source point 15; the source holds that to deny a thing exists one must also explain why it seems to). Part VII's treatment asks nothing about the appearance. The plan takes a clarification, not a condition (1.2). The appearance question is another question in Part III's sense (L153: "Two questions with the same D and different (C, Q) are different questions, and an answer to one is not an answer to the other"). So an account of the absence is judged on its own contract and needs no answer to the appearance question. A bare denial has no component that answers to changes in what produces the appearance, so it cannot meet (F1) or non-circular dependence on that second question. The pointer "attack (B) in Part XV" is not touched (D9); group A's check W27.0 found it CORRECT. W49 (absence and prevention) is left out.
 - **CASES AT RISK:**
-  - N22: toward. Wren offers no component for the appearance question. Yuri offers one, machinery that reads memories and produces reports; the question does not ask whether that candidate is adequate.
+  - N22: toward. Wren offers no component for the appearance question. Yuri offers one, machinery that reads memories and produces reports; the question does not ask whether that candidate is adequate. After the cross-examination (S90): Atria C (point 3) reads the same move toward; with the clause declared, both halves are accounted for.
   - N8 holds: it is obstruction, and there is no appearance to explain. N25 holds.
   - O34 was checked. The colleague's supplied meaning is a different question (L163), not an eliminative account, and O34 does not move. No other O-case is eliminative.
 - **GAIN:** An account of an absence and an account of an appearance are kept apart, and a bare denial has a stated place. Attack (B) in Part XV has a sharper exposed case.
@@ -1109,16 +1178,18 @@ This is the semantics' treatment of eliminative explanation; it is offered as ad
 - **REASON WORD:** erratum
 - **KIND:** WORDING
 - **CHECK:** check 1, SOUND. For W31 (held): the current W31 candidate writes an unsubscripted S; when W31 is drafted it must say which process S is (for example, the target next-step map S).
+  - S90 cross-examination: s90_xexam_mimo_A2, point 4 (R26 STANDS, naming an undeclared change of claim on one reading) — FIX, wording only, after the cross-examination. The scope-change claim fails: "generator" occurs nowhere else, the only generated structure is Part II's admitted edits \(A\), and 00:518 says "for every admitted generator", so the two terms are coextensive. The quantifier mismatch is real, and the condition now reads "for every admitted generator \(a\)", 00:518's phrase. KIND WORDING, DECLARATION none and the CLAIM fallback line are unchanged. Atria (s90_xexam_atria_A2, point 8) found that the typing sentence binds free notation and restricts nothing, which agrees.
 - **OLD:**
 ````text
 **Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\),
 ````
 - **NEW:**
 ````text
-**Functional transport.** Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\),
+**Functional transport.** Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\),
 ````
 - **DECLARATION:** none (WORDING: the typing follows from \(\pi:X_D\to X_E\) and from Part II's composition of admitted edits; listed in the record). If a checker rules CLAIM: "The functional transport result now says that \(S_a\) and \(T_a\) are target and represented processes for each admitted generator."
 - **REASON:** W24 (trial A3 = Mimo M7, VALID). 00:518: "Suppose a target process \(S_a\) and a represented process \(T_a\) satisfy … for every admitted generator \(a\)." 00's sentence is restored in file 11's "Let … If …" form, with 00's words for the typing. It must land before W31 (held), whose \(S\) and \(T\) refer to these processes; the two entries touch different lines (L351, L361).
+  - After the cross-examination (S90): The condition carries 00:518's 'admitted generator' as well, so the two quantifiers match (S90, Mimo A2, R26).
 - **CASES AT RISK:** None: no O- or N-case turns on functional transport. N20 (error piling up) is read on (T2), not here.
 - **GAIN / LOSS:** GAIN: A readable theorem; W31's S and T have a referent. LOSS: Nothing.
 
@@ -1177,18 +1248,19 @@ This is the semantics' treatment of eliminative explanation; it is offered as ad
 - **REASON WORD:** erratum
 - **KIND:** CLAIM
 - **CHECK:** check 1, FIX. "The criticism's interpreted structural account" is file 00's term. File 11 calls such a pair an explanatory candidate (L233), and a criticism can exist when (K1) fails, so the drafted words would call a failed candidate an account (against C's W36.1). NEW now reads "the explanatory candidate (Part V) that the criticism offers for p_δ".
+  - S90 cross-examination: s90_xexam_mimo_A2, point 1 (R28 FALLS) — FIX, after the cross-examination. S90, Mimo part A2, R28 FALLS; fresh checker FIX after the cross-examination: \(\mathcal E_c\) is 'the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)', not the candidate 'the criticism offers'; the declaration says 'says what its terms are', not 'defines its terms'. The reply's own repair, a fifth part for every criticism, is refused. Atria (s90_xexam_atria_A2, point 7) read the wording as sent and gave STANDS without taking up "offers"; its \(p_\delta\) clause is kept word for word.
 - **OLD:**
 ````text
 Let \(p_\delta\) be the question about the defect. Then
 ````
 - **NEW:**
 ````text
-Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) that the criticism offers for \(p_\delta\). Then
+Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then
 ````
-- **DECLARATION:** (K1) now defines its terms: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the explanatory candidate the criticism offers for that question.
+- **DECLARATION:** (K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question.
 - **REASON:** W22 (trial M2, VALID: \(\mathcal E_c\) occurs once, undefined; neither \(p\) nor \(z\) appears on the right of (K1)). 00:620: "\(\mathcal E_c\) is the criticism's interpreted structural account." The gloss of \(p_\delta\) brings \(z\) and \(p\) into (K1) through \(p_\delta\).
 - **CASES AT RISK:** None found. Checked: N11 (Kasia's written faults are criticisms; Jana's bare marks are not), O27, O40 and O50 (the robot notices the test's assumption); none turns on (K1)'s terms.
-- **GAIN / LOSS:** GAIN: (K1) is well typed and can be evaluated. LOSS: Nothing.
+- **GAIN / LOSS:** GAIN: (K1) is well typed and can be evaluated. LOSS: Nothing. After the cross-examination (S90), \(\mathcal E_c\) interprets a part that every criticism has, and the drafted verb "offers" goes from this clause; nothing else is lost.
 
 ### W22.2 — An adverse signal becomes a criticism by a represented alleged connection
 
@@ -1223,6 +1295,7 @@ An adverse signal is not a criticism until an organization represents it as grou
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, FIX. "The realization" had no antecedent (NEW: "A system's realization"). The paraphrase of what (R) asks dropped fidelity and provenance (NEW states them). The relay sentence put O18's "The rest is relay" at risk; NEW adds "Use does not by itself construct: received content used as it was received keeps its inherited provenance." The declaration is completed. Cases: as drafted, plus O18 guarded, O11 and O15 toward, O23 watched (the shared word "investigator"), N4 Q2 and N12 (Mr Okafor) watched.
+  - S90 cross-examination: s90_xexam_mimo_C, point 3 (R30 FALLS); s90_xexam_atria_C, point 3 (R30 STANDS, naming moves toward) — KEEP (two rulings, one line), after the cross-examination. Cross-examination of revision 2 (S90 part C): Atria said STANDS (declared moves toward on N21, 'she knows it, tacitly' and 'her grasp of it was not handed to her'; O15 kept a hole in the diagrams, not in Sam's construction). Mimo said FALLS (the witness criteria differ from Part IX's reason use: the binding for 'the operative deliberative rule', no structural map, 'lie on' for 'lands on'). Ruled KEEP after the cross-examination. N21 moves toward on both questions, as declared (no format for Deploy; a witness by use for Build). O15 holds at AGREE, which is file 11's mark (S81 01): R30 only supports the passage, and 'toward' above means no more than that. 'As reason use asks of an objection' is a marked parallel. The binding must replace the deliberative rule as specifier, because a verbatim copy would fail N21. (R)'s fidelity and provenance (L401), Build (L399) and the active-route clause keep the map's guard. 'In the manner of' already means 'modelled on'. No case moves away.
 - **OLD:**
 ````text
 A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
@@ -1284,6 +1357,17 @@ A small binding newly prepared inside received content is construction of that b
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 1, SOUND.
+  - S90 cross-examination: s90_xexam_mimo_B2, point 1 (R31 FALLS); s90_xexam_atria_B2, pass 2, point 3 (R31 STANDS, naming moves toward) — KEEP (two rulings, one append), after the cross-examination. After the cross-examination:
+    - s90_xexam_mimo_B2 (point 1, R31 FALLS: 'ill-typed and non-symmetric'): KEEP.
+      - The transport from d to c is judged on c's contract as (R) judges a transport into c (L205–208, file-11 text unchanged, on which Deploy and so (N)'s repertoire rest). The transport from c to d is typed as in Part V. Both are checked on the changes c commits to.
+      - The relation is taken on the contract of the content whose newness is in question. (N) is its only use, and nothing uses symmetry. 'Equivalence' is the file's two-direction sense (L357).
+      - The declaration states the definition word for word.
+      - The proposed 'each faithful on the contract of its source' would make c new whenever an earlier content commits beyond c. That is a change of claim, against plan row W21, and it could reopen N4.
+    - s90_xexam_atria_B2 (point 3, R31 STANDS; names moves 'from unsettled to settled, all toward the fixed verdicts' on O11, O18, O31, N15 and N21): KEEP.
+      - It gives the same typing.
+      - On O11, O18 and O31, file 11's ruled marks are already AGREE, through Build and L401 s5, so no mark moves. NEW makes New checkable, which is the 'more securely' recorded here.
+      - O11's 'Wednesday is neither' rests on the absence of Build. The case says only that the key 'looks like' Tuesday's, which NEW excludes as a criterion.
+      - N15 and N21 have no file-11 baseline yet. A move toward on either, if the test round finds one, traces to this declared definition.
 - **OLD:**
 ````text
 **Newness.** With \(R_{<e}(s,h)=\bigcup_{\xi\text{ before }e}R_{\beta,\ell}(s,\xi)\),
@@ -1355,6 +1439,7 @@ A small binding newly prepared inside received content is construction of that b
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 1, SOUND.
+  - S90 cross-examination: s90_xexam_atria_B2, pass 2, point 5 (R32 STANDS; listed, found not contested) — KEEP, after the cross-examination. After the cross-examination (S90, part B2): Atria's reply (pass 2) gave STANDS and noted only that "today" is gone, matching Part XII; no move named; kept. Mimo's reply gave STANDS with no point.
 - **OLD:**
 ````text
 is the system's own today whoever wrote it
@@ -1383,6 +1468,7 @@ is the system's own whoever wrote it
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 1, SOUND, on the condition that W23.1 is corrected (it is): "contribution" here keeps L419's ordinary sense.
+  - S90 cross-examination: s90_xexam_atria_B2, pass 2, point 5 (R33 STANDS; listed, found not contested) — KEEP, after the cross-examination. After the cross-examination (S90, part B2): Atria's reply (pass 2) gave STANDS; its "lets the theory accept the verdicts' weightings rather than contest them" (O21, O50) names no move. On the texts O21, O27 and O50 stay SILENT on "mostly", since the new sentence supplies no weighting and L516 bars taking it from the verdict. O50's discovery point is secured, as 07 ruled for file 11. O30 stays AGREE. Kept. The weighting clause the reply cites is W6.4 + W14.1's. Mimo's reply gave STANDS with no point.
 - **OLD:**
 ````text
 and where the boundary is drawn decides, not where the process sits in the casing.
@@ -1420,6 +1506,7 @@ and where the boundary is drawn decides, not where the process sits in the casin
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 2, SOUND. N19 is watched, not simply toward (a reader has to take one demand as claimed and the other as protected); N18 Q1 is watched (L514 lists obligations "of a repair").
+  - S90 cross-examination: s90_xexam_atria_C, point 3 (R34 STANDS, naming a move toward on N19) — KEEP, after the cross-examination. Cross-examination of revision 2 (S90 part C): Atria gave STANDS and named, under (d), a declared move toward the fixed verdict on N19 (the foreseen clash is a represented conflict, a recognized difficulty before any reader), and said the change also fits N18 and O27. Mimo gave STANDS with no point. Ruled KEEP after the cross-examination. N19 Q1 moves toward (SILENT to AGREE) by the declaration's second clause, under every declaration that puts one demand in O and the other in P (O = P included), which the situation supplies. It is a reading only in taking the question's "problem" as the recognized difficulty. N19 Q2 holds or moves toward: what it turns on through (P) is (P)'s and W5.1's, not this entry's. N18 Q1 moves toward for both designers by the first clause. L516's "of a repair" names the same O and P. O27 holds SILENT on "mostly": the robot's "fits neither" is a represented failure of its diagnostic obligation, and the expert's diagnoses are candidates, not claimed obligations. O12 holds SILENT: the failure was represented, and the need met was stated afterwards. D3-T is untouched. "(Part XI)" is exact, and L223's "can be a recognized difficulty (Part X)" agrees.
 - **OLD:**
 ````text
 A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response.
@@ -1566,8 +1653,9 @@ Where a claim invokes worth, the semantics takes the **normative relation** \(\m
 - **FILE-11 LINE:** 447
 - **WHERE:** Part XI, "Worth, and the normative relation", L447 s3, last clause.
 - **REASON WORD:** erratum
-- **KIND:** WORDING
+- **KIND:** CLAIM
 - **CHECK:** check 1, SOUND.
+  - S90 cross-examination: s90_xexam_atria_B1, point 1; s90_xexam_mimo_B1, point 2 (both R39 FALLS) — FIX (two rulings, one edit), after the cross-examination. After the cross-examination (s90_xexam_atria_B1, point 1, and s90_xexam_mimo_B1, point 2; both R39 FALLS): FIX. KIND WORDING → CLAIM, declaration added; OLD and NEW unchanged. Both replies' repairs refused: folding into W6.2 (R38) would renumber the record and merge disjoint OLDs; W6.2's declaration, and Mimo's "consistent with its status as primitive 2", give R39 a content its NEW does not carry.
 - **OLD:**
 ````text
 declared as a substantive input when aesthetic value is claimed.
@@ -1576,9 +1664,9 @@ declared as a substantive input when aesthetic value is claimed.
 ````text
 taken as a substantive input when aesthetic value is claimed.
 ````
-- **DECLARATION:** None, because the entry is WORDING. It is listed in the record.
-- **KIND AS DRAFTED:** WORDING, given W6.2 and W6.4. With them in place, both texts send \(\mathcal N\) to the same place: an input the semantics takes and does not derive, under L514's rule for a missing input. If W6.4's clause on the normative relation is dropped, rule this entry CLAIM and declare it as: "Part XI no longer calls the aesthetic normative relation a declared input."
-- **REASON:** Worklist W6 (03 §8 item 4: \(\mathcal N\) is a "declared input" at L27 and at L447). If this clause were left, it would bring back, one sentence after W6.2, the category that W6.2 removes. The skeleton scopes W6 at L447 to s2 only. This entry goes one sentence past that scope, for the same reason, and it can be dropped without harm to any other entry.
+- **DECLARATION:** Part XI no longer calls the aesthetic normative relation a declared input: it is taken as a substantive input when aesthetic value is claimed.
+- **KIND AS DRAFTED:** WORDING, given W6.2 and W6.4. With them in place, both texts send \(\mathcal N\) to the same place: an input the semantics takes and does not derive, under L514's rule for a missing input. If W6.4's clause on the normative relation is dropped, rule this entry CLAIM and declare it as: "Part XI no longer calls the aesthetic normative relation a declared input." (After the cross-examination the entry is ruled CLAIM although W6.4's clause stays, with the fuller declaration above; see CHECK.)
+- **REASON:** Worklist W6 (03 §8 item 4: \(\mathcal N\) is a "declared input" at L27 and at L447). If this clause were left, it would bring back, one sentence after W6.2, the category that W6.2 removes. The skeleton scopes W6 at L447 to s2 only. This entry goes one sentence past that scope, for the same reason. It cannot be dropped: without it, s3 would still call \(\mathcal N\) declared one sentence after W6.2, W6.2's declaration would be false of Part XI, and the paragraph would pull against L510 and L514. After the cross-examination (s90_xexam_atria_B1, point 1; s90_xexam_mimo_B1, point 2) it is ruled CLAIM, with the declaration drafted above as its fallback.
 - **CASES AT RISK:** None. No O-case or N-case claims aesthetic value; the case books were searched for "aesthet" and "beaut".
 - **GAIN:** No sentence calls \(\mathcal N\) a declared input.
 - **LOSS:** None.
@@ -1684,6 +1772,7 @@ Both are declared before the attribution, not chosen after it. Where the system'
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 1, FIX. "Realizable" alone suggests physics alone, the reading under which O48's wired arrangement is a member. NEW uses L197's word, "candidate", and the paragraph's last sentence stays the one wording of membership.
+  - S90 cross-examination: s90_xexam_atria_B2, pass 2, point 1 (R42 STANDS, naming moves toward) — KEEP, after the cross-examination. After the cross-examination (S90, part B2): Atria's reply (pass 2) gave STANDS and named moves on O24 and N5, both toward and both declared; kept. The reply's O24 quotation "reachable by hand" is said of the setting, not the arrangement; on the texts O24 stays AGREE, and the change closes the "realized" reading that 03 watched for harm. Mimo's reply gave STANDS and did not contest it.
 - **OLD:**
 ````text
 a population of realized transports
@@ -1861,15 +1950,16 @@ Everything else is derived from the two primitives, the declared indices and the
 - **REASON WORD:** erratum
 - **KIND:** CLAIM
 - **CHECK:** check 1, SOUND. The order still omits Result, ProducesVia, Cap and Enable (B1 finding 9).
+  - S90 cross-examination: s90_xexam_mimo_B1, point 3 (R48 STANDS, naming an undeclared change of claim on one reading) — FIX, after the cross-examination. After the cross-examination (Mimo B1, point 3): FIX, '(EK) also on (P)' added; the over-statement for (P) kept.
 - **OLD:**
 ````text
 Build depends on histories and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy.
 ````
 - **NEW:**
 ````text
-Ownership depends on histories and a declared boundary, and owned capability on Ownership, (CT1) and a declared continuity (Part XII). Build depends on histories, Ownership and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy; (P) also on ProducedBy and on the declared obligations with their occasions, and ProducedBy on histories and their active routes.
+Ownership depends on histories and a declared boundary, and owned capability on Ownership, (CT1) and a declared continuity (Part XII). Build depends on histories, Ownership and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy; (P) also on ProducedBy and on the declared obligations with their occasions, (EK) also on (P), and ProducedBy on histories and their active routes.
 ````
-- **DECLARATION:** Part XIV's dependence order now places Ownership on histories and a declared boundary, owned capability on Ownership, (CT1) and a declared continuity, Build on Ownership, and (P) on ProducedBy and the declared obligations with their occasions, and ProducedBy on histories and their active routes.
+- **DECLARATION:** Part XIV's dependence order now places Ownership on histories and a declared boundary, owned capability on Ownership, (CT1) and a declared continuity, Build on Ownership, (P) on ProducedBy and the declared obligations with their occasions, (EK) on (P), and ProducedBy on histories and their active routes.
 - **REASON:**
   - Worklist W7 (XR6: the order lists "none of the definitions that rest on one (L419, L433, L465)"; 03 §5; plan 1.3.1).
     - Ownership (L419) rests on the declared boundary.
@@ -1879,14 +1969,15 @@ Ownership depends on histories and a declared boundary, and owned capability on 
     - Build (L401) is defined on an owned subhistory.
   - **Left free for W20.** Two sentences are left untouched: "(E) depends on those." and "(S), (B), (D) depend on (E)." W20's held rider can be entered at either one later, through B1, without overlapping any entry here (skeleton conflict 3).
   - **Kept.** L518's last two sentences are kept word for word: M49, declared against file 10 by W3.
-  - **Not corrected.** "(P), (EK) depend on (G), (E), Deploy" is kept, although (P)'s definition does not use (G), (E) or Deploy. As a dependence it is an over-statement and does not harm well-foundedness. Correcting it lies outside W7.
+  - **Not corrected.** "(P), (EK) depend on (G), (E), Deploy" is kept, although (P)'s definition does not use (G), (E) or Deploy. As a dependence it is an over-statement and does not harm well-foundedness. Correcting it lies outside W7. Kept after the cross-examination: only (G) is plainly idle for (P), and (E) and Deploy carry (P)'s route to (R) through active routes and epistemic obligations.
+  - **After the cross-examination (S90, Mimo B1, point 3).** (EK) uses Repair_{O,P} and the obligations O_ep ⊆ O (L440–443). As drafted, the order gave (P) its bases in ProducedBy and the declared obligations and left (EK), in the same sentence, with no route to them. Derivation 6's proof as W7.6 words it follows each definition to the declared inputs through this order. The clause states a dependence (EK)'s definition already has. It moves no case, touches neither W20's two free sentences nor the last sentence, and creates no circle (Mimo, s90_xexam_mimo_B1, point 3).
 - **CASES AT RISK:**
   - O49 stays AGREE. The order now puts Ownership before owned capability, which the verdict ("The definition goes in a circle") needs. This secures the mark and moves nothing.
   - O37 stays AGREE. Its circle is ruled by L518's last sentence, which is unchanged.
   - O35 and O38: the obligations with their occasions are L514's unchanged input.
   - The boundary rows are as in W7.3: restated, not changed.
   - No N-case cites the dependence order. This was checked.
-- **GAIN:** Derivation 6's proof has an order that reaches the declared inputs and the definitions that rest on them.
+- **GAIN:** Derivation 6's proof has an order that reaches the declared inputs and the definitions that rest on them. (EK) reaches the declared obligations through (P).
 - **LOSS:** None; the order grows by two sentences.
 
 ### W3.2 — Declare L518's last sentence, the well-founded order (layer 2, row L2-38)
@@ -1986,6 +2077,8 @@ A table that encodes the response to every admitted change does not fail (F1); l
 - **REASON WORD:** change of claim
 - **KIND:** CLAIM
 - **CHECK:** as W19.1. The text is the settled wording (F1, block 1), copied byte for byte.
+  - S90 cross-examination: s90_xexam_mimo_A2, point 3 and task (d); s90_xexam_atria_A2, point 2 (all R51 STANDS) — KEEP (three rulings, reconciled), after the cross-examination. After the cross-examination (S90, Mimo A2, point 3, R51 STANDS): the reply's claim that the declaration understates an added claim ('different candidates with one answer profile') and the loss of the old Consequence's general principle was re-examined and ruled KEEP. 'Different candidates' is file 11's own premise, 'one answer profile' is (i), the paragraph's pointers restate unchanged L23, L307 and Derivations 8–9, and the narrowing of the Consequence is stated in the declaration's last sentence and in LOSS.
+    After the cross-examination (S90, task (d): Mimo A2 on O24, O46, N17 and N25, and Atria A2, point 2, on O24, O36 and O46; both R51 STANDS): the moved verdicts both replies name were re-examined and ruled KEEP. Every move named is toward the fixed verdict, and both replies grant that the declaration accounts for it. On the S81 reading file 11 was already AGREE on O24, O36 and O46, so no mark moves; what goes is file 11's "one account … pairwise of one kind", which pulled against them, and the declaration's first sentence and its "without that premise nothing more follows" state that withdrawal. The verdicts rest on text W19.2 leaves unchanged: L23, Derivation 9 and L307's reassigned-component clause (O46), L299 as W58(i).1 words it (O36), and Derivation 3 (W17.3) with L257 s2 (O24), whose old support in file 11's general Consequence is narrowed as the declaration's last sentence says. "Different candidates" in L560 holds by Part V's definition of a candidate, and "one answer profile" is (i). No case moves away: N17 moves toward on its first two questions or not at all, and N25's second question holds on either reading.
 - **OLD:**
 ````text
 ## 2. Indistinguishable is identical
@@ -2028,11 +2121,11 @@ Without the premise of (ii) nothing more follows: candidates that anchor differe
 - **CASES AT RISK:**
   - **O46 (the decisive guard) holds AGREE, on firmer text.** The cable is anchored to a different subnetwork from the spring, so the premise of (ii) fails and "nothing more follows": they are different candidates with one answer profile. File 11's slogan let a reader call the spring account and the cable account one account, since both are faithful with one answer profile, and so call the spring account a survivor. That reading is gone. L309 s3's second clause is unchanged.
   - **O45 holds AGREE.** The two springs anchor different subnetworks, so (ii) makes them neither one kind nor one account. The added paragraph points to Part VI's redundant routes, which carry the verdict with L309 s3 and W28.1.
-  - **O36 holds AGREE.** The unwritten route with another premise cuts \(D\) at a different place, so it is a different candidate, and P stays critical in each route as written.
+  - **O36 holds AGREE.** The unwritten route with another premise cuts \(D\) at a different place, so it is a different candidate, and P stays critical in each route as written. Atria (S90, part A2) reads this as a move toward: file 11's "one account … pairwise of one kind" could have merged the written candidate with the unwritten one. The move is the declared withdrawal, and no mark moves (S81 read file 11 AGREE, on L301).
   - **O24 holds AGREE, toward if anything.** The two wiring arrangements are different organizations (L25). File 11's Consequence ("Underdetermination of an account by a contract is not a failure of the semantics to decide …") could be read to make two arrangements that agree on every tested pair one account. The new Consequence covers only anchor assignments. The verdict rests on Derivation 3 (L562; W17.3), which is untouched.
   - **O10 holds** (see W19.1).
   - **N17 (O67): toward on the first two questions; the plan predicts no mark.** Answers A and B cut \(D\) at different places, the electrons against the stored factors. The added paragraph makes them different candidates with one answer profile, so each can tell the asker something the other does not. File 11's "one account … their components are pairwise of one kind" pulled against that. The third question ("B explains, and A does so only in a thin sense") is not reached.
-  - **N25 (O75).** The first question holds; it rests on non-circular dependence (W20.2). The second question is watched.
+  - **N25 (O75).** The first question holds; it rests on non-circular dependence (W20.2). The second question is watched. Mimo (S90, part A2, task (d)) reads it as a move toward; after the cross-examination it holds on either reading, and "watched" stays.
     - "The difference between them is idle" can rest on (ii) and the Consequence, where the dog and the turtle are read as components with one anchor on the same ports.
     - A reader who rested it on file 11's slogan, which goes, may leave it unsettled (away, AGREE→SILENT).
     - W30.1's "whatever the difference is called" and the Consequence's "a claim that one assignment is 'really' right … must supply it" hold it.
@@ -2051,6 +2144,7 @@ Without the premise of (ii) nothing more follows: candidates that anchor differe
 - **REASON WORD:** clarification
 - **KIND:** CLAIM
 - **CHECK:** check 1, SOUND. CLAIM is defensible; a checker may rule it WORDING, given W17.1 and L473.
+  - S90 cross-examination: s90_xexam_mimo_B2, point 2 (R52 STANDS, saying the change is under-declared) — KEEP, after the cross-examination. After the cross-examination (S90, Mimo B2, point 2, R52 STANDS): the claim that the declaration does not say whether "realizable" is dropped was re-examined and ruled KEEP. "Realizable" is entailed by membership in both texts: file 11's population is of realized transports (L473 s1), and the revised text's population is what the physics and the stated construction admit (L475), which is physical possibility in Part XII's sense (Tasks) together with the construction. No condition of Derivation 3 is lost, and the declaration shows both lists. The reply's suggested addition ("the separate realizability condition is dropped") is not taken, because it would declare a weakening the new text does not make. (CT1) is typed on protocols and tasks, not on population members, and the realized-only reading belongs to W17.2, which declares it.
 - **OLD:**
 ````text
 it must be admitted, realizable, a member of \(\mathcal T\), and a survivor of \(H\).
