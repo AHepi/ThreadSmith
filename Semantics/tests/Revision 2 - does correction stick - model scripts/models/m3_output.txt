@@ -1,0 +1,96 @@
+====================================================================================================
+M3  THE PROPOSED LEMMA (H*) AND ITS LIMITS, CHECKED ON THE MODELS
+====================================================================================================
+E0 right at 12 pairs, wrong at 4: dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS, wet/windy/early/sunS
+
+----------------------------------------------------------------------------------------------------
+(1) (H*): every F that E0 does, every f* that E0 fails (single failed pairs, and random whole contracts
+    holding a failed pair). Strict containment with the embedded E0 as witness?
+----------------------------------------------------------------------------------------------------
+  U1 = sun x var[V] x rain[W] x exc[single]    |V|=  1088  instances checked= 16784  failures of (H*)=0  min strict gap=12
+  U2 = sun x var[V] x rain[W,Wi] x exc[single] |V|=  4352  instances checked= 16784  failures of (H*)=0  min strict gap=12
+  E_good rich = sun x var[V,W,Wi]              |V|=  1024  instances checked= 16784  failures of (H*)=0  min strict gap=8
+  redescribed: sun x rainA[W] x rainB[W]       |V|=    64  instances checked= 16784  failures of (H*)=0  min strict gap=1
+  redescribed x10: sun x rain1..rain5[W]       |V|=  4096  instances checked= 16784  failures of (H*)=0  min strict gap=1
+  grid sun x var[V] x rain[W]                  |V|=    64  instances checked= 16784  failures of (H*)=0  min strict gap=1
+  grid sun x var[V] x rain[W+Wi]               |V|=   256  instances checked= 16784  failures of (H*)=0  min strict gap=1
+  grid sun x var[V] x rain[W+Sun]              |V|=   256  instances checked= 16784  failures of (H*)=0  min strict gap=5
+  grid sun x var[V] x rain[W+Wi+Sun]           |V|=  4096  instances checked= 16784  failures of (H*)=0  min strict gap=17
+  grid sun x var[V+Wi] x rain[W]               |V|=   256  instances checked= 16784  failures of (H*)=0  min strict gap=2
+  grid sun x var[V+Wi] x rain[W+Wi]            |V|=  1024  instances checked= 16784  failures of (H*)=0  min strict gap=2
+  grid sun x var[V+Wi] x rain[W+Sun]           |V|=  1024  instances checked= 16784  failures of (H*)=0  min strict gap=10
+  grid sun x var[V+Wi] x rain[W+Wi+Sun]        |V|= 16384  instances checked=  1400  failures of (H*)=0  min strict gap=34
+  grid sun x var[V+Sun] x rain[W]              |V|=   256  instances checked= 16784  failures of (H*)=0  min strict gap=5
+  grid sun x var[V+Sun] x rain[W+Wi]           |V|=  1024  instances checked= 16784  failures of (H*)=0  min strict gap=5
+  grid sun x var[V+Sun] x rain[W+Sun]          |V|=  1024  instances checked= 16784  failures of (H*)=0  min strict gap=23
+  grid sun x var[V+Sun] x rain[W+Wi+Sun]       |V|= 16384  instances checked=  1400  failures of (H*)=0  min strict gap=84
+  grid sun x var[V+W+Wi] x rain[W]             |V|=  4096  instances checked= 16784  failures of (H*)=0  min strict gap=8
+  grid sun x var[V+W+Wi] x rain[W+Wi]          |V|= 16384  instances checked=  1400  failures of (H*)=0  min strict gap=8
+  grid sun x var[V+W+Wi] x rain[W+Sun]         |V|= 16384  instances checked=  1400  failures of (H*)=0  min strict gap=40
+  TOTAL failures of (H*) across all families: 0
+
+----------------------------------------------------------------------------------------------------
+(1b) Counts on the gardener's own jobs (F = J_before, f* = the failed summer): strict in every family,
+     while the SIZE of the gap depends on the menus
+----------------------------------------------------------------------------------------------------
+  U1 = sun x var[V] x rain[W] x exc[single]    |Pres(J_before)|=   68  |Pres(J_after)|=   52
+  U2 = sun x var[V] x rain[W,Wi] x exc[single] |Pres(J_before)|=  272  |Pres(J_after)|=  208
+  E_good rich = sun x var[V,W,Wi]              |Pres(J_before)|=  128  |Pres(J_after)|=   64
+  redescribed: sun x rainA[W] x rainB[W]       |Pres(J_before)|=    4  |Pres(J_after)|=    3
+  redescribed x10: sun x rain1..rain5[W]       |Pres(J_before)|=   32  |Pres(J_after)|=   31
+
+----------------------------------------------------------------------------------------------------
+(iv) NEGATIVE CONTROLS: drop a hypothesis and strictness is no longer guaranteed
+----------------------------------------------------------------------------------------------------
+  no v0 (var menu without "off"): Pres(J_before)=['(sun=id, var=early)']  Pres(J_after)=['(sun=id, var=early)']  strict? False
+  E0 does not do F (sun x var[V]; F = J_before + dry/calm/early/sunS; f* = dry/windy/early/sunS): E0 in Pres(F)? False  |Pres(F)|=1  |Pres(F+f*)|=1  strict? False
+  a new job no member fails (sun x var[V]; wet springs with the late variety added to J_after): |Pres| 1 -> 1, strict? False  (file 00's non-strict case)
+  added job that E0 does (wet springs, late variety) on F = J_after: |Pres|=52 -> 15, strict? True
+
+----------------------------------------------------------------------------------------------------
+(i) HYBRIDS: members of Pres(F + f*) that fail another job E0 fails
+----------------------------------------------------------------------------------------------------
+  U1 = sun x var[V] x rain[W] x exc[single]    f* = the failed summer:   52 in Pres,   18 hybrids e.g. (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)
+                                               f* = the open question (all 16 pairs):   13 in Pres,    0 hybrids
+  U2 = sun x var[V] x rain[W,Wi] x exc[single] f* = the failed summer:  208 in Pres,   71 hybrids e.g. (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)
+                                               f* = the open question (all 16 pairs):   13 in Pres,    0 hybrids
+  E_good rich = sun x var[V,W,Wi]              f* = the failed summer:   64 in Pres,   56 hybrids e.g. (sun=id, var=early&wet&windy)
+                                               f* = the open question (all 16 pairs):    1 in Pres,    0 hybrids
+
+----------------------------------------------------------------------------------------------------
+(ii) EXTENSION: on the same jobs, the embedded family of E0 never has the larger Pres
+----------------------------------------------------------------------------------------------------
+  U1 = sun x var[V] x rain[W] x exc[single]    all 65536 job sets F: Pres_V0(F) inside Pres_V(F) always? True   strictly larger for 65536, equal for 0
+  U2 = sun x var[V] x rain[W,Wi] x exc[single] all 65536 job sets F: Pres_V0(F) inside Pres_V(F) always? True   strictly larger for 65536, equal for 0
+  E_good rich = sun x var[V,W,Wi]              all 65536 job sets F: Pres_V0(F) inside Pres_V(F) always? True   strictly larger for 65536, equal for 0
+
+----------------------------------------------------------------------------------------------------
+(iii) GOOD AGAINST BAD in one family (U1): same witness, both kept; only a job one fails separates them
+----------------------------------------------------------------------------------------------------
+  Pres(J_after               ) |  52|  E_good in? True   E_bad in? True   E_patch in? True
+  Pres(J_after + seed trial  ) |  35|  E_good in? True   E_bad in? False  E_patch in? False
+  Pres(C_full                ) |  13|  E_good in? True   E_bad in? False  E_patch in? False
+
+----------------------------------------------------------------------------------------------------
+NARROWING instance (identity edit as witness)
+----------------------------------------------------------------------------------------------------
+  E0 narrowed to the summers seen: |Pres(C_narrow)|=1  |Pres(C_narrow + f*)|=0  witness E0? True
+  same set as the claim BEFORE the failure (Pres(J_before))? True  -> the inclusion does not say whether the
+     omitted job was dropped after a failure or never claimed; only the historical index says which
+  Situation 3 (E_bad confined to the recorded summers, open question dropped), U1: |Pres(J_after)|=52 |Pres(J_after + open question)|=13  witness E_bad? True
+     the same inclusion has E_good's honest confinement to J_after inside it: E_good in both? True
+
+----------------------------------------------------------------------------------------------------
+COMPANION: the added block is critical for f* (B), and not critical for the old jobs
+----------------------------------------------------------------------------------------------------
+  E_good   Gamma1 support for f*? True  Gamma0 support for f*? False -> block critical for f*: True  | for J_before: Gamma1 True, Gamma0 True -> critical: False
+  E_bad    Gamma1 support for f*? True  Gamma0 support for f*? False -> block critical for f*: True  | for J_before: Gamma1 True, Gamma0 True -> critical: False
+  E_patch  Gamma1 support for f*? True  Gamma0 support for f*? False -> block critical for f*: True  | for J_before: Gamma1 True, Gamma0 True -> critical: False
+
+----------------------------------------------------------------------------------------------------
+M2  SEASONS: the myth amended and the tilt's own correction
+----------------------------------------------------------------------------------------------------
+  myth, law family (d in none,S,E): instances 60, failures of (H*) 0
+  J_greek -> J_sailor: |Pres| 6 -> 2, witness M0 excluded? True; hybrids keeping M0's error at the equator: 2 of 2
+  tilt, law family, escape version as v0: instances 60, failures 0; J_greek -> J_sailor |Pres| 4 -> 2
+  myth against tilt: no member of either family gives the other organization -> (H*) has no instance
