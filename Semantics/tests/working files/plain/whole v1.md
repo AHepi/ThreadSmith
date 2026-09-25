@@ -1,0 +1,859 @@
+# The theory in plain words
+
+*Draft 4 of the theory, in everyday language. 25 September 2026.*
+
+---
+
+## The theory in one page
+
+The theory is called "Claude Fable Semantics", subtitled "a structural class of explanatory creativity, with selected and constructed correspondence". It tries to say exactly what makes something an explanation, and what makes a thinker creative at making explanations, or questions, that did not exist before, in claims that can be checked against cases and could be shown wrong.
+
+Its first example: "The shadow is ten metres long because the pole is five metres tall and the sun is low." Raise the pole and the shadow lengthens. Fix the shadow's length directly, say with a board laid so the shade ends where you choose, and the pole stays as it was. The changes, not the words "pole" and "shadow", show that the dependence runs from pole to shadow. The theory judges every explanation this way: only by what happens when things are changed.
+
+In outline:
+
+- The world, and every explanation of it, is a **set-up**: pieces that depend on one another, and changes that can be made to them. A **question** says which changes it covers and what it asks (section 2).
+- An explanation offered for a question is a **candidate**. It counts, and is called an **account**, when it meets four requirements, all about behaviour under the question's changes (section 3).
+- "Kind" means only how a piece responds to those changes (section 4). The theory reports which pieces do the work, without demanding that all of them do (section 5).
+- When two offered candidates compete and nothing known decides between them, that is a **problem**. A candidate is **easy to vary** when it has such a competitor differing from it only outside what the question covers. Nobody needs a list of all competitors (section 6). A question narrowed after a failure is a different question, and a wrong answer stays wrong on the question it failed (section 7).
+- The tie between a mind and what it pictures has a **history**: shaped blindly by selection, built through guessing and criticism, or merely written into a model. Creativity lives only in the building (section 8). A system **originates** something when it builds it, it is new to the system, and it uses it on a question; finding a question counts too (section 9).
+- Repair, credit and knowledge are read from what actually happened (section 10); abilities are judged inside a stated boundary, and physics must allow them (section 11).
+
+The theory's **central guess** is that four things are enough to describe creativity at explaining: set-ups and the changes they allow; links between set-ups, judged only by how they behave under change; the history of those links and of the questions they serve; and how all of this is embodied in physical things. An achievement these cannot describe would count against it, and so would something meeting all four that plainly explains nothing.
+
+The theory does not claim that matter alone fixes what a thing stands for (a history is needed too), that predicting is explaining, that it can say what is beautiful or worthwhile, how probable a theory is or which thinker is better, that it can share out credit beyond what the course of events shows, or that anyone belongs to the groups it defines. It rests on two things only, the physics and, where a question is about worth, a standard of worth taken from outside, and it names five places where it could be refuted (section 12).
+
+---
+
+## 1. How to read this
+
+**The documents.** *File 10* is the older text of the theory; *file 11* is the text in force; *draft 4* is the fourth draft of the next text, file 13. Draft 4 is file 11 with 57 changes, 51 of them **changes of claim**, from which a reader can conclude something file 11 left unconcluded. Its revision note, sources note and record of changes do not belong to the theory, and are used here only to say what changed and where the theory departs from its sources.
+
+**Parts and Derivations.** The theory is divided into Parts, numbered 0 to XVI. The last holds ten short proofs, Derivations 1 to 10; a **proof** is an argument showing that something follows. This document takes an order a newcomer can follow, puts each Derivation beside the idea it proves, and ends each section by naming the Parts it covers. The eleven objections Part 0 expects are called **complaints** here, and answered where they belong.
+
+**Cases, verdicts and rounds.** A **case** is a short everyday situation from one of the project's case books, with a **fixed verdict**: what a careful person says, written in advance and never changed. One book holds 52 cases; the other holds **proposed cases** drawn from the source books, which no round has used, and "The discarded lamp controller" is one more. A **round** is one complete trial of a text of the theory on the cases, after which the project gives a **ruling** on each case: its final judgement of what the theory says there. In the round on file 11, two AI systems from outside the project, the **outside readers**, cross-examined the marks. A case is marked **agrees**, **silent** (the theory lacks something it needs), **split** (the text can be taken two ways) or **disagrees**. File 11 agreed with 46 of the 52 fixed verdicts, was silent on 6, and disagreed with none.
+
+**How each example is marked.** Every example is a case, except the theory's worked examples, which are marked as such. After the fixed verdict, *ruled on file 11* means the round on file 11 ruled it and draft 4 does not change the answer; *not yet ruled* means a proposed case or a point draft 4 changes, and what follows is a view of draft 4, the one recorded with the draft or, where marked, this document's.
+
+**The state of draft 4.** Not frozen, and not tried on the cases. The outside readers cross-examined most of its changes in an earlier draft, and every point they raised was ruled on; they have not seen its last paragraphs, on rivals, problems and failed answers.
+
+**The source books.** You named two sources: David Deutsch, *The Beginning of Infinity* (2011), and Chiara Marletto, *The Science of Can and Can't* (2021). The theory claims nothing as derived from them, but departs from them on purpose at named places, marked in each section as **departures**.
+
+**Words.** Each idea has one plain word, explained at first use and gathered in "Words used here". So "test", "kind", "new" and "problem" keep the meanings given them below, and a problem in the everyday sense is called a **challenge**.
+
+---
+
+## 2. The world as a set-up, and questions about it
+
+### The fever and the thermometer
+
+Hana says the child has a fever, since the thermometer reads thirty-nine. Later she says the reading is what makes the child shiver. Warm the thermometer in her hand: the reading climbs and the child shivers as before. Cool the child in a bath: the shivering eases. *Fixed verdict:* her first statement is a good reason to believe there is a fever; her second mistakes the instrument for the illness.
+
+### A set-up
+
+Take the pole in the sun. The pole's height, the sun's height and the shadow's length are **slots**, places that each hold a **value**. The sunlight is a **piece**, a working element tying slots together: it fixes the shadow's length from the other two. The flat ground belongs to the **circumstances**, held fixed while changes are made. Raising the pole is a **change**.
+
+A **set-up**, then, has slots with the values they can take; pieces; circumstances; and **allowed changes**, which can be chained, with "no change" counted as one. Under each change and circumstances, each piece has a **behaviour**: the combinations of values it allows. A **state** gives every slot a value, and the **consistent states** are those that every piece allows at once. A **removed piece** restricts its slots not at all. A change that **sets** a slot, fixing its value directly, replaces the piece that used to fix it, rather than adding a clashing second piece. A changed status rule (section 4) is a changed piece. Values may be paths, proofs or histories; pieces may form loops; several consistent states stay several.
+
+Changes need not be physical. To the seventh complaint, "mathematics has no interventions", the theory answers that removing a starting assumption, dropping a constraint or changing a dimension are changes too (section 3 works one through).
+
+### Roles and direction
+
+Roles are not labelled in advance; they come from the allowed changes. An **input** is a slot some allowed change sets directly, such as the pole's height. An **output** is a slot a piece fixes from its other slots, such as the shadow's length. A **reading** is a slot that reports another, where some allowed change alters the report without altering what is reported, as warming the thermometer does. **Direction** follows too: raise the pole and the shadow lengthens, set the shadow directly and the pole stays put, so dependence runs from pole to shadow, however the equation is written.
+
+### A question
+
+A **question** has a **target**, the set-up in the world it is about; a **range**, the **settings** it covers, a setting being one allowed change in given circumstances, with the **untouched setting** (no change, ordinary circumstances) always included; **what is asked**, the exact thing read off the target at each setting; the demands and safeguards in play (section 10); and the history of its range. The **answer** is what the target gives, for what is asked, at each setting.
+
+A range holds the changes the question states, no more. In **The table with empty columns**, a question about turning two knobs together is rewritten as a table with a column per knob, every row moving both; *fixed verdict:* "A form that could ask more has not asked more"; *ruled on file 11: agrees.*
+
+The sort of question is fixed by what it reads and what its range holds, never by a label:
+
+- a **producing question** asks what produces an outcome, over changes to what comes before it;
+- a **pinning-down question** asks what readings settle about a feature, over changes to the readings;
+- a **blocking question** asks whether one state can be reached from another;
+- a **status question** asks what status something has under a status rule;
+- a **purpose question** asks whether a purpose is achieved.
+
+A different range or a different thing asked makes a **different question**, and an answer to one is not an answer to another. A measure that pins down an outcome, with a reliable forecast, answers the pinning-down question; whether the thing measured also produces the outcome is the producing question.
+
+**Back to Hana.** *Ruled on file 11: agrees; unchanged in draft 4.* The thermometer's number is a reading: change only it and the child is unchanged; change the child and it follows. It answers "has she a fever?", a pinning-down question. "What makes her shiver?" is a producing question, whose range holds changes to her temperature, and there the reading does nothing.
+
+### Pinning down and blocking: the theory's examples
+
+**Two balances.** An object is weighed on two balances, each showing its mass plus that balance's unknown error. The readings settle the difference between the errors, not the mass, since a gram more mass with a gram less error on each leaves both readings unchanged: an account of a limitation. In general, the **look-alike states** of a reading are all the states giving that reading, and a reading **pins down** a feature when some state gives it and all its look-alike states agree on the feature. A feature is pinned down at every reading that can occur exactly when it can be worked out from the reading alone. Where readings and feature are sums of the unknowns with fixed weights, the feature is pinned down exactly when every shift of the unknowns that leaves the readings alone leaves the feature alone. So repeating a weighing adds nothing, while a **calibration**, a reading against something already known, can. "Take balance B's error to be zero because that gives the mass I favour" is not drawn from the readings; its justification goes in a circle, even if the mass is right.
+
+**Twenty-three tokens.** Twenty-three whole tokens cannot be shared equally among three people: handing tokens round never changes the total, and three equal whole shares always make a total that three divides. An **unchanging quantity** is one no allowed step alters, and no chain of allowed steps joins states where it differs. Equal values do not show that a state is **reachable**, that some chain of allowed steps leads there. Allowing tokens to be cut makes different states; it does not refute a claim about whole tokens.
+
+**The machine that runs forever.** Visitors ask why no machine drives a pump forever with no fuel. Pia says hundreds of designs have all stopped, and perhaps one will work. Quentin says the energy anything gives out must be matched by energy put in or used up, for any design, tried or not. *Fixed verdict:* only Quentin's answer explains. *Not yet ruled; this document's view, and the draft's record expects the verdict to hold.* It is a blocking question. Quentin gives an unchanging quantity, so no chain of steps leads to a pump that works with nothing used up, whatever the design. Pia gives a list of failures, which has no piece that responds to any change, and a finite list of failures does not prove that something cannot be done (section 11). The record notes one risk: a reader might call Quentin's law a restatement of the answer. Marletto's book draws the same line between "cannot" and "has not yet".
+
+### Where a range comes from, and faulty questions
+
+A range has one of three histories: **declared**, written in by the **modeller**; **selected**, the survivor of a pool of ranges varied and weeded out (section 8); or **constructed**, made in an episode of inquiry with evidence (section 9). Any judging may use any of the three, but a claim that someone *found* a question needs a constructed range, with the evidence.
+
+**Where the second compartment used to be.** A change removes a freezer's second compartment; Lea had asked for its temperature, and a colleague answers with the temperature of the space where it used to be. *Fixed verdict:* "A meaning has been supplied, and the question now asks something. It is not what Lea asked." *Ruled on file 11: agrees.* A **faulty question** misses its target, assumes an untouched setting that cannot be, or asks for things that clash. Exposing the fault is a different question. What is forbidden is changing the range or what is asked during an **assessment**, one act of judging a candidate with the range held fixed, without recording that the claim has changed. Supplying a meaning for a replacement question makes a different question; it does not answer the first.
+
+**Draft 4 changed nothing here.** The theory gives no way to choose a question's level of detail, or to tell that a question is faulty.
+
+*In the theory: Parts II (first half) and III; the first three examples of Part VII; complaint 7.*
+
+---
+
+## 3. When an explanation counts: the four requirements
+
+### The tide table with a real bell attached
+
+Carla explains why the harbour water is high at noon today with two things: the printed almanac of high and low water, and a real float that, rising past a mark, tips a lever and rings the harbour bell. *Fixed verdict:* "Carla has explained the bell. She has explained nothing about the tide. The almanac is the answer written down."
+
+### A candidate
+
+Anything offered as an explanation for a question, true or false, is a **candidate**. It has a set-up; a **link** from the target to it; and commitments. The link says which state, change and circumstances of the target go with which of the candidate's, and ties each piece of the candidate to an **anchor**: a **cluster** (a connected bunch) of the target's pieces that the candidate's piece must behave like, with a **slot pairing** saying which slot goes with which. The link **carries over** each setting of the target to the candidate. The **commitments** are the pieces the candidate offers as doing the work, whether or not anyone has described their work. Everything else it holds fixed is **background**: its circumstances' values and its other pieces, including any that merely gives an input its value. For the pole, the sunlight is the commitment; the pieces that put in the two heights are background.
+
+### The four requirements
+
+A candidate is an **account** of a question exactly when, at every setting of the range, it meets four requirements. None looks at a label.
+
+1. **Matching.** *Piece by piece:* each commitment allows exactly what its anchor allows, once the anchor's **hidden slots**, those the commitment does not mention, are set aside. *As a whole:* the target's consistent states, carried over, are exactly the candidate's, and chains of changes carry over as chains. Both are needed: a whole that behaves right can hide a wrong split into pieces, and pieces that each behave right can hide a lost tie between them.
+2. **Answering the question asked.** At every setting the candidate gives the target's answer, with what is asked held fixed.
+3. **No assumed answer.** First, the target's answer may not appear, at the stated **level of detail** (how finely things are described), as an unexplained input or piece, even one labelled "law"; sameness with the answer is judged by form at that level, not by treating all mathematically equivalent truths as one. Second, at some setting of the range the answer must differ from the answer at the untouched setting (or not be fixed there in the way claimed), and removing some **group** of commitments must lose that difference: without the group, the two answers come out fixed and equal, or one is no longer fixed.
+4. **No dodging.** The target has a consistent state at the untouched setting, and the range is a stated selection from the **possible** changes, those the laws of physics allow: any possible change it leaves out is left out by a stated **limit**. A range of mere **renaming changes**, or one leaving out every change at which the commitments could matter, fails the third requirement.
+
+**Back to Carla.** *Ruled on file 11: agrees.* Her only piece about the tide is the almanac, the answer written in, so she fails the third requirement, and a real mechanism answering another question beside it does not repair this. In draft 4 no group of her commitments makes an account, so whether the bell is idle (section 5) does not arise.
+
+**The domino that never falls.** A domino network checks whether a number is prime, and one domino falls only if a divisor is found. Fed 641, it never falls. Answer A: nothing ever knocks it over. Answer B: 641 is prime. *Fixed verdict:* B explains; A, though true, does not really. *Not yet ruled; the view recorded with the draft:* A's only working piece is the answer restated at the level of single dominoes; B has a piece that responds to a change (feed in 640 and the domino falls).
+
+### What the requirements exclude, and what they do not
+
+- A **table of observed answers**, with no piece that responds when the world is changed, fails matching on any range holding such a change. A **full response table**, recording the response to every allowed change, passes matching, and is an account if it meets the other three requirements. The word "table" settles nothing.
+- A **calculation run backwards** works an earlier quantity out from a later one and offers that as what produces it. On the producing question it fails whole matching: raise the pole and the world's shadow lengthens, but in the calculation, where the shadow comes first, it stays. It may match on the pinning-down question, a different question.
+- "It is so because it is so" fails the third requirement, as does a candidate whose only real piece restates the answer, whatever mechanism for another question sits beside it.
+- A candidate whose only real contrast no possible change brings about fails the fourth: its range was narrowed without saying so.
+
+**The planets tonight and a thousand years ago.** Priya calculates where the planets were a thousand years ago from where they are tonight, and says they were there *because* they are here tonight. *Fixed verdict:* the earlier arrangement, with the laws of motion, explains tonight's; not the reverse. *Not yet ruled; the view recorded with the draft.* In the forward explanation the laws are the commitments and the old positions are background inputs; removing the laws loses the difference between settings. Priya's is a calculation run backwards: it fails whole matching under changes to the earlier positions, and under changes to tonight's positions, which leave the past as it was, there is no difference to lose. Her "because" answers "where were they?", a pinning-down question.
+
+**Salt on the icy step.** Ines says the ice melted because she spread salt: spread it and the ice melts within the hour, sweep it off and the ice stays. She knows nothing finer. *Fixed verdict:* a genuine explanation, a coarse one. *Ruled on file 11: agrees.* A coarse account answers the coarse question, and its strength is fixed by its range, not by what a finer range would add. Draft 4 states the reason more directly (*not yet ruled*): putting the salt on only gives an input its value, so it is background; the salt's action is the commitment, and removing it loses the difference.
+
+Nor do the requirements exclude a true mechanism guessed for bad reasons, or prefer an elegant account to a clumsier one that matches as well. A proof meets them for "why does this follow from these assumptions?" without answering "what caused this?"; depth is relative to the question, and the requirements measure none of it.
+
+### The theory's odd-sized tables
+
+Square tables of numbers with an odd number of rows, each number minus its mirror image across the diagonal, never have an inverse: no table undoes them. Why? The range drops the mirroring, the oddness, or both, holding ordinary arithmetic fixed, and holding fixed the tie between having an inverse and the table's **determinant** (one number worked out from the table, nought exactly when the table cannot be undone). The full working-out of that number, with the mirroring put in, meets all four requirements. It matches, each step being a smaller working-out whose hidden slots are set aside; it gives the answer; it assumes none: without the mirroring, the three-row table with ones down the diagonal can be undone; without oddness, a two-row mirrored table with a one and a minus one can. It does not dodge: a non-zero odd mirrored table exists. So it is an account. A three-line proof is shorter, but shortness is not a fifth requirement. Here the changes are dropped assumptions, which answers the seventh complaint.
+
+### Explanations of absence
+
+**Denying the inner experience.** Wren says there are no inner experiences and people are mistaken. Yuri says the same, and adds that people looking inwards consult memories of what they have just perceived, through machinery that evolved to report experiences that never took place. *Fixed verdict:* Wren gives no reason why people believe they have inner experiences; Yuri gives one, though incomplete.
+
+A question "why is there no such-and-such?" has a target lacking the pieces a rival would need, and a range holding the changes that would add them. An **explanation of absence** passes when adding those pieces would change its answer as it would the target's, and their absence leaves both unchanged; the rival's imagined pieces are tied to a removed cluster, which restricts nothing. Why the absent thing *seems* present is a different question, which an account of the absence neither answers nor needs to. A **bare denial**, offering no piece that responds to a change in what produces the appearance, is no account of that second question. *Not yet ruled; the view recorded with the draft:* Wren's is a bare denial; Yuri offers such a piece, and whether it is a good one the question does not ask. *Departure:* Deutsch asks an explanation that denies something to explain why it seems to exist; here that is a different question.
+
+### Candidates and accounts
+
+**A myth about winter.** A Greek farmer is told that winter comes while Persephone is with Hades and her mother Demeter grieves. Taken as it stood for the Greeks, the myth agrees with all they knew. *Fixed verdict:* it does not explain why winter comes every year; it is an explanation only in form, an attempt, and a false one. *Not yet ruled; the view recorded with the draft, upheld by the outside readers.* The yearly return is written into Persephone's bargain, so the answer is assumed and the myth is no account; and a false theory offered as an answer is a candidate, which ordinary speech may call an explanation.
+
+Two **principles** stand behind the requirements. Whether a link matches is a fact whether or not anyone accepts it, and a system can be wrong about its links, readings, criticisms and abilities. And a theory may hold a correct dependence alongside errors elsewhere, but an error in the very dependence said to do the work cannot count; "explanation" there means an account. Whether an account is easy to vary is a separate matter (section 6). *Departure:* Deutsch counts a false myth as an explanation; here it is a candidate.
+
+**What draft 4 changed here.** Commitments and background are defined; the third requirement now removes a group of commitments, where file 11's wording left open which pieces those were and, on one view, gave wrong verdicts; a full response table must also meet the other requirements; absence gains the question of appearance; and the principle on errors says which sense of "explanation" it uses.
+
+*In the theory: Parts I, IV and V; two examples of Part VII.*
+
+---
+
+## 4. Kinds are how pieces respond
+
+### The float that does two jobs
+
+A float in a fuel tank turns a dial on the dashboard and, when low enough, opens a valve to the reserve tank. Milan says the falling float opens the valve; Lena says the dial reaching "low" does. Bend the needle to "full": the valve still opens. Hold the float up with a wire: the dial reads "full" and the valve stays shut. *Fixed verdict:* Milan is right; "The float is read by the dial and also does the work."
+
+Two changes, not the names, showed which piece does the work. That is the theory's whole view of kinds.
+
+### Response patterns and kinds
+
+A piece's **response pattern** is its behaviour at every setting of a range, taken together. Two pieces are one **kind** on a range when their slots can be paired one to one so that their response patterns agree. So kinds depend on the range: pieces that no allowed change tells apart are one kind, whatever they are called, and may come apart on a **finer range**, one holding more changes. A response pattern is built from behaviour, not from the values slots happen to hold, so pieces differing only in values are one kind. A change that sets a slot replaces only the piece that fixes it, not the pieces that read it, and a change under which two pieces behave alike tells them nothing apart.
+
+**Two thermostats.** Two thermostats of one make are set to eighteen and twenty-two degrees. Rosa says they are one kind in two states; Emil says two kinds, one keeping a warm room and one a cool one. *Fixed verdict:* Rosa is right about what the devices are; Emil's difference matters only when the question is why this room is warm. *Ruled on file 11: agrees*, though several readers in the round found the theory silent. Eighteen and twenty-two are values of one slot, and both devices behave alike whatever it holds; draft 4 now says so outright.
+
+The same comparison is made between pieces of two candidates, and between a commitment and its anchor.
+
+### Cause, measurement and status rule
+
+What ordinary speech calls a cause, a measurement or a rule is a family of response patterns, not an extra fact. A **cause** changes when its output is set directly or the piece is replaced, and is unaffected when a reading of it is altered. A **measurement** is unaffected when the thing measured is set directly, and changes when the measuring is altered. A **status rule** is unaffected by changes to the world and changes when the rule itself is edited; it answers a status question, while whether it governs a practice, or should, are different questions. (No case in the books is about a status rule.) So the theory never asks whether a piece "is" a cause. A piece that reports another has a measurement's pattern: change only the report and the other stays; change the other and the report follows. Which of the two an explanation offers as producing an outcome is settled by the pattern, not the wording.
+
+**Back to the float.** *Ruled on file 11: agrees; unchanged in draft 4.* The dial has a measurement's pattern, and the float has a cause's pattern for the valve.
+
+Three complaints are answered here. *"Without kinds you cannot tell a cause from a correlation."* You can, and only this way: a correlation has no piece that responds when its supposed input is changed, and a cause has; a label adds nothing, since where a separating change exists matching finds it, and where none exists the label asserts a difference the level of detail lacks. *"So a thing is whatever you can do to it."* No: a kind is what the changes allowed at a level of detail can tell apart, and a **content**, a set-up with what it claims on its range, still holds every piece; every claim about kinds is tied to its level of detail. *"A rule is not a cause."* Agreed, and the difference is one of response pattern; what the theory denies is that the difference exists before, or apart from, the allowed changes.
+
+### No requirement about kinds
+
+Should each piece of an account have to be tied to a piece of the world "of the same kind"? Such an **anchoring requirement** would be redundant or empty. If the range holds a change that tells the two kinds apart, a piece tied to the wrong one already fails piece-by-piece matching; if it holds none, they are one kind on that range. There is no third case. Derivation 1 proves that piece-by-piece matching gives each commitment its anchor's response pattern, setting by setting. So "kind" can be dropped from the definition of an account without losing any case. That is the third main claim (section 12): a label that told apart two accounts no allowed change tells apart, where the difference did real explaining, would defeat it.
+
+### Matching over many steps
+
+Three proofs concern chains of changes. **Matching step by step:** if matching holds for each basic change, it holds for every chain of them, while each step stays where the link applies. **Two-way matching**, where each side can always follow the other's moves, is what treating two set-ups as equivalent needs; **one-way matching**, the candidate following the target, is enough for a simplified copy; chained links keep both directions when each covers what the next needs. And **error build-up**, for candidates that match only approximately.
+
+**Keeping count with string.** Goatherds count flocks with string, each measurement off by up to a tenth of an inch. One group reels out a goat's length of string per goat; the other lets each goat be one inch and rounds to the nearest inch after every goat. *Fixed verdict:* only the rounding method keeps count at any size; the first piles up error until it is larger than a goat.
+
+The proof on error build-up: choose a **distance** between states. Suppose that, within stated bounds, one step of the candidate lands at most a small **step error** from where one step of the target lands, and that one step of the candidate never widens a distance by more than a fixed **widening factor**. Then, from a shared start, while the target stays in bounds, the gap after many steps is at most the step errors added up, each widened once per later step. Without a widening factor no ceiling follows, and an exact question is never quietly swapped for an approximate one. *Not yet ruled; the view recorded with the draft.* For the first group the widening factor is one, so the ceiling grows by a tenth of an inch per operation, without limit; the proof gives only a ceiling, not that the error must grow. The rounding is a correction the proof does not cover; the verdict on it rests on the case's reasoning.
+
+**What draft 4 changed here.** It says how pieces of two candidates are compared, and that patterns are built from behaviour, not values. Error build-up now states the assumptions its proof needs; file 11 left them out, a drafting slip. No case has yet been aimed at dropping kinds; an outside reader tried to break the claim and could not.
+
+*In the theory: Parts II (second half), V, VII (status rules) and VIII; Derivation 1; complaints 1, 2 and 11.*
+
+---
+
+## 5. Which pieces do the work
+
+### The seasons and the sun god
+
+Tomas explains the seasons by the Earth's tilted axis, which keeps pointing one way as the Earth goes round the sun, so each half leans towards the sun for half the year. Each step can be checked. Then he adds: "And the sun god, who approves of this arrangement, keeps the tilt steady." *Fixed verdict:* "Yes, Tomas explains the seasons. No, the sun-god sentence is not part of what explains them."
+
+### Supports and load-bearing groups
+
+Keeping some of a candidate's commitments, with the background fixed, gives a **cut-down candidate**, cut down in a way the judge states. A **support** is a group of commitments that by itself, with the background, makes an account. The theory assumes neither that adding a commitment keeps a support nor that a smallest support exists. A group is **load-bearing** in a support when the support stops being one without it; a group can be load-bearing though none of its members is alone. Load-bearing is relative to the support judged, and the supports judged are groups of the commitments actually written, whether or not anyone has set them out, never ones someone could write instead.
+
+**A premise both routes use.** Two proof routes lead to the answer, both using premise P; route two could be rewritten without P, but nobody has written that. *Fixed verdict:* P is load-bearing in each route as written; the other is "a fact about a candidate nobody has written". *Ruled on file 11: agrees.* Draft 4 adds that a candidate nobody has offered is no one's rival (section 6).
+
+For a stated family of changes to a candidate, its **tipping edge** is the pairs of changed candidates of which one is an account and the other not.
+
+A **smallest support** is one from which nothing can be taken without losing it. The **smallest-supports theorem**: if the commitments are finitely many, adding never breaks a support, and the whole candidate is a support, then a commitment is load-bearing somewhere exactly when it is in some smallest support, and **needed in every support** exactly when it is in all of them. It holds only where its assumptions do.
+
+### Routes
+
+**The spring nobody mentioned.** An explanation of why a door swings back holds two connected springs, each enough alone. The second is never described as doing anything until the first is deleted, when the author says it was always there. *Fixed verdict:* "It was already a route. That nobody said it did work does not make it a later addition." *Ruled on file 11: agrees*, one of the two cases on which file 11 moved toward the fixed verdict. A **route** is a support of the candidate, whether or not anything ever runs it, and the two springs are **redundant routes**: each enough, neither needed. Draft 4 rests this on firmer text, since commitments are the pieces offered as doing the work "whether or not anyone has described their work".
+
+**The cable that used to be a spring.** After the deletion, the author ties the surviving piece to a cable and reports that the spring explanation survived. *Fixed verdict:* what survived is a replacement, and "the replacement's success is its own". *Ruled on file 11: agrees:* a piece tied to a different target makes a different candidate.
+
+A route **runs** in a system when actual events carry it out (section 10), and credit for a repair follows the routes that ran, not the routes a candidate contains. Derivation 9 proves that two systems with the same outputs for every input can differ on a claim about an account, and then no judgement from outputs alone gets both right; the theory's example is parallel and priority wiring. The same holds for judging where a text came from by the text alone, or use from delivery logs. That is why predicting is not explaining.
+
+### Interference, spread-out support and idle commitments
+
+**One more commitment.** Every earlier addition to a finite collection of commitments kept its support, but the newest, that the room was locked, conflicts with a premise every route uses. *Fixed verdict:* the conclusion no longer follows; "additions could not always be made without loss". *Ruled on file 11: agrees.* That is **interference**: adding a commitment breaks a support. The whole fails though a smaller group succeeds, and the addition is not simply renamed "not a commitment" to repair it.
+
+**Spread-out support**, the theory's example: endlessly many commitments put a quantity within one of nought, within a half, a third, and so on. Any endless selection pins it at nought; no finite one does. No single commitment and no smallest group does the work; the group does, together.
+
+The four requirements have no rule that each commitment must work. In a candidate that has a support, an **idle commitment** is one whose adding to, and removal from, any support both leave a support. The candidate is then an account with it exactly when without it, and it is load-bearing in no support. The removal half keeps out a redundant route (the second spring, removed from the support where it is the only spring, leaves none); the adding half keeps out interference (the locked room). In a candidate with no support at all, even a wrong commitment would pass both halves, hence the restriction. With endlessly many commitments, idle ones can together be load-bearing. *Departure:* Deutsch counts superfluous details as a defect; here nothing marks a candidate down for carrying one.
+
+### Back to Tomas
+
+*Not yet ruled; the view recorded with the draft, accepted by the outside readers on an earlier draft.* If the god sentence restricts nothing (the spinning top already explains the steadiness), it is idle, load-bearing in no support, and the fixed verdict follows. But the text leaves another view open. If the god is a second piece keeping the tilt steady, then either it matches its anchor, and is a redundant route that does some explaining, against the verdict; or it does not, and piece-by-piece matching fails, putting "Tomas explains" at risk. Which view applies turns on what Tomas offers the sentence as doing. On no view is his explanation without the sentence, or with another god, a rival (section 6).
+
+**What draft 4 changed here.** File 11 counted how many changed forms of an account still pass as more "explanatory jobs" are demanded, and defined "reach" from those jobs; draft 4 drops both, so nothing counts, grades or ranks candidates. It adds the idle commitment, says the supports judged are groups of the written commitments, and separates routes from routes that ran.
+
+*In the theory: Part VI, first half; Derivation 9; Part 0.*
+
+---
+
+## 6. Rivals, problems and tests: what "easy to vary" means here
+
+### The unused joint setting
+
+Two wiring arrangements agree on every tested setting and almost every untested one. They differ at one setting of two switches together, which nobody has used and anyone could make by hand. *Fixed verdict:* "They are two arrangements, and the record has not chosen between them. One reachable setting is enough."
+
+### Your decision
+
+On 24 and 25 September you said what "hard to vary" should mean: "That assumes that the set even matters or that the creative agent can even list them. As far as I'm aware, that's not possible, even in principle. A variation is a competitor. Whether anyone can list all variations that still fit is beside the point. If two discovered variations fit, that constitutes a problem." And: "A record is redundant. Once the explanation is rescued, the mistake shouldn't be able to creep back in." Draft 4 writes this into three paragraphs: "Rivals" and "Problems", here, and "A failed answer stays failed", in section 7.
+
+### Rivals
+
+Two candidates for one question are **rivals** when one has been **offered** as an answer in place of the other and they **conflict** at some allowed setting both links carry over, inside or outside the range. They conflict at a setting when their answers there differ; or when each could match and answer there under some behaviour of the target that the physics allows, but no such behaviour lets both, as when two of their commitments tied to one anchor behave differently there.
+
+A candidate offered for a question claims all four requirements on the whole range, tried or not; outside the range it claims nothing on that question, though what it gives there can conflict with another candidate.
+
+Not every pair is a pair of rivals. A candidate and a **rewriting** of it, carried over by a one-to-one mapping that keeps every connection and leaves the answers as they are, conflict nowhere. Nor do two candidates, however differently they split the target, that some behaviour the physics allows would let both match at every allowed setting: a fuller and a leaner account, a duplicate, an idle addition, a blurred copy.
+
+**What holds the universe up.** One story says an eternal dog outside the universe holds it up; another says a turtle; a third, turtles all the way down. Nothing inside can touch or see the holder. *Fixed verdict:* none explains; and though dog and turtle differ in words, nothing anyone could see or do depends on which is true: "the difference between them is idle". *Not yet ruled; the view recorded with the draft.* Dog and turtle conflict at no allowed setting, so they are not rivals. And since no allowed change alters the answer, no group of commitments has a difference to lose, so none of the stories meets the third requirement.
+
+A candidate's rivals are among those someone has offered, and a candidate nobody has offered is no one's rival. No list of all rivals is supposed; as you decided, nobody can make one, even in principle. Rivals are not a selection pool either (section 8).
+
+### What is established, and what fits
+
+**The worn key and the diary.** Sam's diagram agrees with a worn trial key in his drawer. To date the key, Sam wrote a diary, working the dates out from the diagram. *Fixed verdict:* "The worn key is evidence on its own. The diary is the diagram talking about itself." *Ruled on file 11: agrees.*
+
+An **evidence item** is a pointer to an event, with what it is taken to show, and a **receipt** is a chain of reasoning over evidence items. A receipt for a claim is a receipt against its denial; missing evidence stays missing; and a record worked out from the claim it is meant to count for, like Sam's diary, is no receipt for it. An argument is **usable** by someone when they are entitled to it, it applies, and every **assumption** it needs is **still held**; withdrawing an assumption removes the entitlement without making the conclusion false. **Blame is shared**: a failed prediction counts against the claim tested, the test's other assumptions and its instruments together, and nothing narrower. A **result**, what a test shows, is **established** for a **judge** who holds a usable receipt for it. A candidate **fits** what is established for a judge when no established result shows it failing a requirement. Both wiring arrangements fit.
+
+### Problems
+
+Two rivals that both fit what a judge has established pose, for that judge, a **problem** for the question: a conflict between ideas that what is established has not settled. There are two sorts.
+
+In a **problem inside the range**, the rivals conflict at a setting the range covers. Whatever the target does there, at most one is an account, whether or not anyone can find out. Finding out what the target does there, by looking or by experiment, is a **test**: its answer, or, where the rivals' answers agree, how its pieces behave. A test solves the problem whatever it shows, and an answer it refutes stays refuted (section 7).
+
+**Back to the joint setting.** *Ruled on file 11: agrees*, on file 11's remark that a claim that two candidates really differ must name a separating change. Draft 4 says it directly (*not yet ruled*): the setting can be reached by hand, so it is possible, so it is in the range unless a stated limit leaves it out; the arrangements are rivals that conflict there, both fit, and setting the switches together is a test that solves the problem either way.
+
+In a **problem outside the range**, the rivals conflict only at allowed settings outside it. Their answers agree throughout the range, so no established answer holds one to account without the other; a test inside can refute one only for a failure peculiar to it; and where both meet the requirements, both are accounts.
+
+A candidate is **easy to vary** when it and a rival pose a problem outside the range. The rival is then easy to vary too, and the words say nothing about which is right. A criticism that a candidate is easy to vary must supply such a rival: the criticism *is* the rival. The theory defines only "easy to vary"; it does not define "hard to vary", and it counts nothing.
+
+**A farmer's rule carried south.** A Mediterranean village rule says: "Sow the wheat after the first autumn rains, in October, and it ripens in early summer, in June." Nobody knows why it works. A family moves far south of the equator, where the cool rains come in April and May. *Fixed verdict:* the rule tells the father little he can rely on; taken by its months it misleads, taken by its seasons it points to April or May, and it cannot say which to trust; he needs to know why it worked, or else trial. *Not yet ruled; the view recorded with the draft.* "Sow in October" and "sow after the first rains" are rivals once either is offered in the other's place. At home they agree at every setting and both fit generations of harvests; they conflict only in the south. So they pose a problem outside the home range, and each is easy to vary relative to the other.
+
+### The cure is a finer range
+
+If two rivals are both accounts on a range, a claim that one is right and the other wrong is a claim that some allowed change outside the range separates them, and must name it. A finer range holding that change makes a different question, on which the two pose a problem inside the range. The farmer's finer question covers sowing anywhere, the south included, and a season's sowing there is a test that solves it: the verdict's "or else trial". Whether a candidate is an account of a question is fixed by the candidate, the question and the world, not by when anyone first asks, nor by whether anyone has checked.
+
+**The tilt and the midnight sun.** An ancient astronomer proposes the tilted axis to explain the height of the summer sun. It follows, though nobody works it out for centuries, that far north the summer sun never sets. *Fixed verdict:* the idea already accounted for the midnight sun; no one, she included, had explained it before the connection was worked out. *Not yet ruled; the view recorded with the draft.* The first half is the sentence just given: the idea's standing was fixed by the idea and the world. The second half needs the idea used on the question (section 9).
+
+A range narrowed to leave out where two rivals conflict makes a different question and solves nothing on the first, where the problem stands until what is established leaves at most one fitting. Nothing here counts, grades or ranks. A problem the system pictures can be a noticed difficulty (section 10), as when choosing one rival meets a demand only by dropping the other, and keeping every rival that fits is a stated safeguard.
+
+### Same anchors, one account
+
+Derivation 2, narrowed in draft 4: two candidates that both match and answer on a range give the same answers there, and if their commitments also pair off, each pair tied to the same anchor through the same slots, each pair is one kind and, so far as matching and answering go, the two are one account. Without the same anchors nothing more follows: candidates splitting the target differently are different candidates with the same answers, and a claim that one way of tying pieces to anchors is "really" right must name a separating change, which makes a finer range. Files 10 and 11 said more, that any two such candidates are one account, piece paired with piece. A review in September found that false as written, the outside readers agreed, and so one entry of the theory's list of defeats stands triggered (section 12).
+
+**What draft 4 changed here.** "Rivals" and "Problems" replace file 11's paragraph on hard to vary; Derivation 2 is narrowed. *Departures:* Deutsch judges ease of variation before any rival is offered, and would reject a bad explanation without experiment; here it shows only when a rival is offered. He holds that an explanation which could easily explain anything explains nothing; here such a candidate is still an account if it meets the requirements, and a finer question lets a test decide. Here "easy to vary" is relative to the question and applies to both rivals: on the seasons the Greeks knew, the axis tilt, which he calls hard to vary, is easy to vary relative to the myth. Myths differing only in their gods, Persephone and the Norse Freyr, conflict at no allowed change, so here they are not rivals. His "reach" is not defined.
+
+*In the theory: Part VI, last two paragraphs; Part IX, second half; Derivation 2.*
+
+---
+
+## 7. Narrowed questions, and why a failed answer stays failed
+
+### Greta's dough
+
+Greta's rule says her dough doubles in two hours. It fails in January, and she restates it for rooms above twenty degrees, saying why: the yeast works slowly in the cold. "On days other than Tuesdays" would come with no such why. *Fixed verdict:* a legitimate narrowing; the limit follows from a piece of her explanation.
+
+### Limits
+
+A range is a stated selection from the possible changes, and a stated limit is what makes it one. An account at a stated limit answers the question at that limit, not a broader one that failed. A **narrowing**, a limit added after a failure, makes a different claim in a different **frame**, a frame being what a claim is relative to: its level of detail, boundary, sameness rule (section 11) and range, none of which is true or false. What makes a limit right belongs to the claim and is open to criticism; the theory records the limit and certifies nothing, and meeting the requirements on the narrowed range does not certify it either. Where the claim states its reason for the limit, a verdict on the limit is given with that reason. Where it states none and a verdict turns on one, the reason is a **missing input** and the verdict is **unsettled**: the theory never picks a reason to suit the verdict wanted.
+
+**Back to Greta.** *Ruled on file 11: agrees*, though contested: four of the five marks in the round found the theory silent, one outside reader called the ruling wrong, and a fresh look at the texts upheld it at medium confidence. Greta states her reason, tied to a piece of her explanation; "not on Tuesdays" states none. Draft 4 now says outright that a verdict on a limit comes with the stated reason. Her narrowed claim is still a different question, and the January failure stands on the first.
+
+A limit stated from the start is no narrowing. In **Two bakers**, Maya and Bea both explain why dough rises; Maya adds limits of 18 to 35 degrees found by experience, while Bea also says why. *Fixed verdict:* both explain; Bea also explains the limits. *Not yet ruled; the view recorded with the draft:* Maya's limits are an honest stated scope; Bea's is also an account of the further question why the rising stops outside them; the two conflict nowhere, so they are not rivals.
+
+The fourth complaint says that if everything is relative to a range, nothing is objective. But physics fixes what is possible, and within a stated range there is a fact about matching. A range that quietly leaves out changes to protect an account is caught by the fourth requirement, that every exclusion be stated, and then by any criticism that supplies the change left out. Objectivity lives in physics and matching; honesty about limits lives in the record.
+
+### A failed answer stays failed
+
+**The forecaster who keeps finding honest limits.** Bruno's flood rule fails in March, and he limits it to months outside the thaw; it fails after a dam release, and he limits it to days without one; it fails again, and he limits it to west winds. Each limit is honest and checkable, each restated rule has been right so far, and he records every failure. *Fixed verdict:* "Bruno has no explanation of the floods. Each limit is honest taken alone, and the series as a whole is a retreat."
+
+Draft 4 adds a paragraph. At a setting of a question's range, any candidate that gives an answer other than the target's is no account of that question, nor of any question with the same target and thing asked whose range holds that setting: whether it is the one that failed, the same one offered again, a rival, or a changed candidate keeping that answer. Once a judge has established the target's answer there, this is established of every such candidate alike, from the answer it gives there, with no record of who failed before or how anything was changed. Because blame is shared, if an assumption about the test's background or instruments stops being held, the exclusion lapses for all alike, and none is thereby shown to be an account; what lapses is the establishing, not the fact. A range that leaves the setting out, or a change in what is asked, makes a different question, and the failure on the first stands. **A claim keeps its frame**: it stays the claim it was when a later theory changes the range in use.
+
+**The test that fitted neither.** A robot runs the one test an expert says will separate two diagnoses; the result fits neither. It notices the test assumed a sensor was reading true, swaps sensors, reruns, and finds a third fault. *Fixed verdict:* the achievement is mostly the robot's. *Ruled on file 11: silent*, on "mostly" (section 10). On the test, the view recorded with draft 4: once the sensor is in question, the exclusion of both diagnoses reopens for both alike, and the rerun establishes a further result.
+
+**Back to Bruno.** *Ruled on file 11: silent. Not yet ruled on draft 4; the view recorded with the draft.* The first half now follows: each restated rule narrows the range, so it is a different question that does not answer when the stream floods, and the failures there stand. The second half does not: nothing in the theory judges a series of narrowings, and his limits state no reason, so a verdict on them lacks a stated input.
+
+So a correction sticks on a fixed question with no record of rescues, only a receipt for what the target did, which is how draft 4 renders your "the mistake shouldn't be able to creep back in". It does not cover other settings (the same mistake next door goes unnoticed until tested there), runs of rescues, changes of level of detail, or a coarser thing asked. And the analysis of 24 September found that a record still does one job, telling a retreat like Bruno's from a limit honest from the start; draft 4 does not settle whether that job is needed.
+
+### Fixed judging, moving questions
+
+The tenth complaint says that freezing the question while judging, yet letting questions change, is having it both ways. It is, on purpose, and the two are kept apart. An assessment holds its range fixed; an **episode**, a stretch of inquiry, can replace a range with a constructed one, with every change recorded. Derivation 7 shows these are consistent: "an account on the old range" and "not an account on the new" are claims in different frames and can both be true. **Moving the goalposts**, changing a claim's frame without saying so, is a failure of the record, not something the theory permits. A case whose verdict turns on an input it does not state is a case with a missing input, not a refutation (section 12).
+
+**What draft 4 changed here.** The sentences on certifying limits and stated reasons, the failed-answer paragraph, and the rule that a missing input is no refutation. *Departure:* both source books hold that a limit of scope needs a further explanation; here it is recorded, not certified.
+
+*In the theory: Parts III, V and VIII; Derivation 7; complaints 4 and 10; the opening of Part XV.*
+
+---
+
+## 8. Where links come from: selection, pictures and surprise
+
+### The discarded lamp controller
+
+Each lamp controller has switches A and B. A machine keeps a controller if, with B off, its lamp is dark with A off and lit with A on, and discards the rest. Only two designs exist, both buildable, and they behave differently with both switches on, a setting the machine never tries. One design failed (dark with A on) and was discarded. Ivo points to it as proof that passing leaves open what a controller does with both switches on. *Fixed verdict (high confidence):* no. The discarded design failed at a setting the machine does try, so it says nothing about controllers that pass; passing tells you which design you have, and that design does one definite thing. Ivo would need two designs that both pass and still differ.
+
+### Carriers, contents and two layers
+
+A **carrier** is a physical thing or event, at a place and time, that bears content. Carriers are not the same because they carry the same words, and contents are not the same because they give the same outputs. A **recoding**, writing a carrier's content in another code with the key stated, keeps the content when a reader using the key recovers every pairing. In **Mirrored marks**, Sam's diagram is turned into raised marks by a reader who writes right to left, with the convention stated on the sheet; *fixed verdict:* the content was kept, and anyone using the convention recovers every pairing; *ruled on file 11: agrees.*
+
+The theory models a thinker as having at least two set-ups. In the **thing layer** the slots are lasting things with edges and identity, the pieces are the **threads** that keep each thing the same thing over time, and the allowed changes include **moving** a thing, **hiding** it and **telling which is which again**; it is where there are objects rather than a blur of sensation. The **expectation layer** sits over it: its pieces are dependences among things, and it makes predictions. Neither layer is assumed to exist in any real system.
+
+### Three histories of a link
+
+A link between set-ups of a physical system has exactly one of three histories, fixed by what physically happened:
+
+- **Selected.** There is a **pool** of candidate links, **variation** that makes fresh members, and **trials**, the settings the link actually met while being shaped. A link **survives** when it is in the pool and matches on every trial. Nothing in the trials pictures the link, the trials or what counts as survival. The pool belongs to the claim: it is the links the physics and the **stated design** (how the members are built) allow.
+- **Constructed.** An episode whose construction evidence prepares the link, in which the link, or what it leads to, is pictured by the system (section 9).
+- **Declared.** Written into the model by its author. No claim of creativity may rest on it.
+
+Selected links are to be expected at the thing layer and constructed ones above it, though this is not required; construction can work on selected material, and selection can go on beneath it. Neither history reduces to the other: a selected link has no pictured target and no criticism in its history; a constructed one has both. Creativity lives in construction; selection supplies its raw material.
+
+**Dark moths.** Where smoke has blackened the bark, moths become mostly dark-winged over generations, as birds eat more pale ones. *Fixed verdict:* the wing colour, inherited and put there by selection, tells the bark's colour, though no moth has any idea of it. *Not yet ruled; the view recorded with the draft:* this holds under draft 4's wording of selection.
+
+Two complaints are answered. To "'selected' is simply laid down, like 'is a cause'": selection is a physical history, checkable in principle, while a kind-label claims nothing. To "you have replaced explanation with evolution": selection appears once, at the bottom, producing the thing layer that explanation works on, and every claim of creativity needs construction.
+
+### Pictures
+
+A carrier **pictures** a content, at a level of detail, when the set-up it **embodies** at that level has a link to the content that matches on the content's range, with a history of selection or construction. So what a carrier stands for is a fact about matching with a history, not a given. A system can picture a false theory: the link from carrier to content matches, while the content's link to the world fails. A declared link makes no picture. A carrier keeps its history when access to it is lost, and a later record worked out from it is no second, independent witness (Sam's diary, section 6). Which set-up a physical carrier embodies is the one thing taken from outside here; the physics supplies it.
+
+**The card nobody can read.** A forecast card's ink has faded, and the one person who could read its raised marks by touch has died; a copy made earlier gives its content. *Fixed verdict:* the marks still say what they said; the card's history is intact, and access to it is not. *Ruled on file 11: agrees.* In **Half from the source, half from the shelf**, a copier fills one damaged patch of a diagram from an old stored diagram that happens to agree with the source; *fixed verdict:* that patch's agreement is luck, and the record says which lines came from where; *ruled on file 11: agrees.* Whatever is filled into a carrier from another source keeps that source's history.
+
+### Expectation, miss and surprise
+
+For a link to the expectation layer, at a setting that actually happens, the **expectation** is what that layer gives; a **miss** is the link failing to match there; and a **surprise** is a miss by a selected link at an **untried setting**, one not among its trials. With no link, or with trials covering the whole range, there can be no surprise. A constructed link that fails has a miss, not a surprise, and a miss the system pictures can be a noticed difficulty (section 10).
+
+**Two footbridges on opening day.** Rhea designed her footbridge from a worked-out theory of sway, calculated for crowds of the size that came. Dov copied an eighty-year-old village footbridge, not knowing it had never carried more than a few dozen people at once. Under large opening-day crowds both sway badly. *Fixed verdict:* the swaying went against what both expected, but contradicted only what Rhea had reason to expect. *Not yet ruled; the view recorded with the draft.* Rhea's constructed link, whose range covered that crowd, has a miss that contradicts her grounds. Dov's copy, taken as shaped by the village bridge's record, meets a change outside it: a surprise, contradicting nothing he had grounds for. That half is watched, since it takes Dov's link as selected.
+
+A miss can be met by **re-tuning**, adding the setting to the trials and letting variation adjust the link within its pool, or by a **response by construction**, building a fresh set-up or link. Only the second can originate anything (section 9).
+
+### What survival leaves open
+
+Derivation 3: where some other member of the pool, which also survived the trials, behaves differently at an untried setting, the trials leave a selected link's value there **left open**. An untried setting alone does not show that such a survivor exists: it must be in the pool and must survive. Where there is none, the pool itself fixes the value. So a selected link matches where it was tried and, wherever its pool allows an alternative, is unconstrained elsewhere; that is why the thing layer can be wrong and why surprise can happen. The older blanket claim that every untried value is open is given up (section 12, "The forbidden wire").
+
+**Back to the lamp controller.** *Not yet ruled; the view recorded with the draft.* The pool is the two designs, the trials are the settings tried, and the discarded design failed a trial, so it did not survive. "Both on" is not left open: passing tells you which design you have. In the terms of section 6, the discarded design does not fit what is established, so no problem arises, and whether one could is a fact about the pool, not about which designs anyone points to.
+
+This answers the third complaint, that selection makes truth a matter of survival. Survival is how a link got there; whether it matches at changes it never met is a fact about the link and the world. Derivation 4 adds that a system can be surprised only if it holds a selected link whose trials fall short of the settings the world allows. Surprise is not a feeling added to the theory, and re-tuning and construction are the difference between learning and creating, told apart by their evidence, not their outcomes.
+
+### The hidden thing: the theory's worked episode
+
+Derivation 10 in words. A row of cells holds two things, each with a position and a speed. The allowed changes: move a thing, set its speed, hide a cell behind a screen, swap the two things. The senses show only which cells are filled.
+
+An expectation layer, selected on trials of moves and speed changes but never hiding, predicts filled cells from recently filled ones. A thing passes behind a screen and keeps moving; the layer expects nothing there, and misses when the thing comes out where its speed puts it: a surprise. Re-tuning fails if every member of the pool predicts from filled cells alone: the fault is in how the pool is built.
+
+Construction builds a fresh layer with a **tracker** for each thing, a piece carrying its position and speed through hiding, linked to that thing's thread. It matches on the wider range, and by Derivation 1 the trackers have the response pattern of things. Nobody declared them "objects"; they are objects because they respond as objects do. If the system built the layer in a stretch of events it owns, with a real join of tracker to thread, and the layer was new to it, it originated the layer (section 9); if that met the demand "account for reappearance after hiding" while keeping the safeguard "predict moves correctly", it made a repair and created knowledge (section 10).
+
+Swapping the two things changes nothing the senses show. On a range that allows each change for both things alike, tying each tracker to the other thing's thread gives a second link with the same matching and answers, so the two are one account (Derivation 2). "Tracker one is really thing one" needs a change that tells them apart, and there is none: at this level of detail, which thing is which is nothing more than its path. The episode shows the definitions can all hold at once; it is not a claim about any infant, animal or program.
+
+**Nadia and the cards she has never seen.** Nadia learns a card game only by watching cards played. For weeks she predicts the next card from those just played, and is often surprised. Then she keeps a tally of cards "waiting somewhere", and her predictions improve sharply. *Fixed verdict:* "Nadia built something new: a part that stands for cards she has never observed. That is construction, and it is her own." *Ruled on file 11: agrees.* The tally is a response by construction, and a first picture can be constructed from a challenge without ever observing what it pictures. Whether her early misses were surprises in the theory's sense does not affect the verdict; "her own" is taken up in section 11.
+
+Derivation 8: **rewriting** everything (carriers, behaviours, links, histories, ranges) by one-to-one mappings that keep every connection keeps accounts, originations, repairs and created knowledge. It does not cover **blurring** (less detail), changed boundaries or lost event identities.
+
+**What draft 4 changed here.** Survival is defined; expectation and miss now cover every link to the expectation layer, where file 11 gave a failed constructed theory no miss; the pool is what the physics and stated design allow; and the swap runs through exchanging the two things, not through the old Derivation 2. *Departures:* Deutsch calls criticism and experiment a sort of selection; here selection has no pictured target. His "problem", a conflict between ideas that can arise with no observation, is wider than surprise; here it is a noticed difficulty (section 10).
+
+*In the theory: Parts 0, I, IV, VIII and XII (on selection); Derivations 3, 4, 8 and 10; complaints 3, 6 and 9.*
+
+---
+
+## 9. Building something new: understanding, construction and finding questions
+
+### The apprentice and the third lock
+
+On Monday an apprentice tries keys from a ring until one opens the lock. On Tuesday, at another lock, she feels where a blank catches and files it until it turns. On Wednesday, at a third lock, she picks a key from the ring at once, saying it looks like Tuesday's. *Fixed verdict:* "Monday is blind fitting. Tuesday is making something new. Wednesday is neither: she is reusing what Tuesday gave her."
+
+### Understanding
+
+A system **understands** a content when it holds a picture of it, uses it in its work on challenges, and keeps that use as a **lasting** ability for a stated **use task**, the task by which the claim is judged. Its **stock**, at a moment, is the contents it understands for some real use. A system may understand a false theory. A narrow lasting use is what it is: it shows neither a wider understanding nor that one can never come.
+
+**The phrasebook.** After a month Kofi can order the same dishes abroad with his phrasebook shut, but asked for a sentence not in the book he has nothing. *Fixed verdict:* "Kofi has kept a narrow skill by his own effort. He has yet to understand the language." *Ruled on file 11: agrees.*
+
+### Construction
+
+**Construction** is an actual **stretch** of events, owned by the system (section 11) and ending at a stated point, that prepares a pictured set-up for explaining with the content, contains a real **join** (a connection the builder makes) relevant to that use, and is not merely a chain of passings-on that keep the content as it was. **Construction evidence** names the processes, the carriers that came in, the joins made and the picture that came out. **Reconstruction**, working received content out afresh, is construction; **relay**, passing content on without making any join, is not. A small join made inside received content is construction of that join, and the rest keeps its **inherited history**.
+
+**The parrot in the lecture hall.** A parrot repeats a professor's sentences word for word, answers questions about them with another sentence or a squawk, and would have repeated recipes as readily; a student learns the ideas by working out what the parrot's sentences mean. *Fixed verdict:* the parrot has only the sounds; in the student's learning it was a carrier. *Not yet ruled; the view recorded with the draft:* the parrot relays, since its responses follow wording, not content; the student reconstructs.
+
+**The one tooth.** A learner receives a full key diagram from Sam, finds a catch it never covered, files one tooth for it, and keeps the rest as given. *Fixed verdict:* the tooth is hers; the rest is relay. *Ruled on file 11: agrees*, on the sentence about small joins, which file 11 added.
+
+### Unspoken pictures
+
+The theory's illustrations: a pianist imagines a passage without playing it; a geometer handles a spatial relation without naming every piece; an investigator notices an inconsistency before she can say what it rests on. An **unspoken picture** is not an absent one. Picture, understanding and construction ask for no written form, only whether the distinctions and moves are there, with matching and history, and used where use is asked. A picture can be partial, spread out or drawn out over time, kept in memory, imagery, rehearsed action or a notebook, and keeping a criticized item in mind can mean being able to bring back the distinction that matters. So construction evidence may pick out a join by its use: by responses that keep what the join ties together, treat the same content in another code alike, answer a change in content with the change the join calls for, and lie on a route that ran, as using an objection does (section 10). But use alone does not construct: received content used as received keeps its inherited history, and passing it on without such use is relay.
+
+**The order of adjectives.** Ngozi always says "a lovely little old green French knife", never another order, even in phrases she has never heard; she cannot state any rule, and nobody taught her one. *Fixed verdict:* she knows the rule tacitly, and formed her grasp of it herself. *Not yet ruled; the view recorded with the draft, upheld by the outside readers:* she was given examples, never the rule, and her use of it on phrases she has never heard picks out the join.
+
+### New, origination and finding questions
+
+Two contents are **equivalent** at a level of detail when links run both ways between them, each matching on the content's range: sameness of structure, not of wording or looks. A content is **new** to a system when nothing already in its stock is equivalent to it. A system **originates** a content for a question when it **used** it **on the question**, the content was new to it, and it constructed it. The content may be a set-up, a link or a range.
+
+**Back to the apprentice.** *Ruled on file 11: agrees.* Monday is selection: a pool (the ring), trials, and a surviving key, with nothing picturing the lock. Tuesday is construction, a real join made to her picture of what the lock needs, and the key is new to her: she originates it. On Wednesday the key is equivalent to one in her stock, so she originates nothing.
+
+**"The seal was tight."** An investigator's notes mention in passing that the seal was tight; later she measures its compression as something that varies, and finds it matters. *Fixed verdict:* she added a dimension, by measuring it, not by mentioning it. *Ruled on file 11: agrees.* A matter mentioned in passing becomes a slot of the account only when the account allows changes to it, and adding it is construction.
+
+**The rota.** A team argues for weeks about who is lazy, until Noor asks which tasks have no owner; the arguing stops and the work gets done. *Fixed verdict:* Noor found a better question, and its merit is real. Originating a range, with what is asked, is **finding a question**. Derivation 5 shows that a range can be treated as a set-up (its slots are changes and circumstances, its pieces settle which changes belong, its allowed changes add or remove a change or alter what is asked), so construction and newness apply to questions, and finding one can, where the rest holds, create knowledge. Finding the right question is creative on the same footing as answering one, at least half of creativity by the theory's count, and a theory that takes questions as given cannot say so. *Ruled on file 11: silent*, on the merit only. If Noor constructed the range, it was new to her and she used it, she originated a question; whether it was better is a claim of worth, which needs a standard of worth from outside, and the case supplies none.
+
+This gives the second half of "The tilt and the midnight sun" (section 6): explaining, as something a system does, needs the idea used on the question, and nobody had used it.
+
+That questions can be found is the fifth main claim. It would be defeated by a showing that treating a range as constructed, new and originated either cheapens creativity or misses a real case of finding the right question.
+
+**What draft 4 changed here.** Unspoken pictures and joins picked out by use are added, with the guard that use alone does not construct; "equivalent" is defined. *Departure:* Deutsch holds that grasping any idea takes a guess; here reconstruction is construction and relay is not. The likenesses to Deutsch on relay and unspoken knowledge are named as likenesses, not claimed as borrowed.
+
+*In the theory: Parts 0, III and X; Derivation 5.*
+
+---
+
+## 10. Criticism, repair, credit and created knowledge
+
+### Two plumbers
+
+Ana inspects a leak, says the washer has cracked, and explains why that lets water past. Before she can replace it, Ben tightens a nearby joint at random, and the leak stops because the tightening shifted the washer back into place. *Fixed verdict:* "Ben's act stopped the leak. Ana's explanation is correct and produced nothing. Nobody here made a repair that came from an explanation."
+
+### Routes that ran
+
+The **course of events** is everything that actually happened, as events in an order that never loops back, with the physics saying which processes took place and which connections were really made. A **route that ran** is a connected cluster of actual events joining a pictured input to an outcome, whose pieces behaved as they should, and along which the outcome really depended on the pictured difference, against the stated alternatives. A route that started and did no work, or had already stopped when the outcome came, did not run for that outcome, and this is read from the course of events, not from the outcome.
+
+**The route that started and was stopped.** Ana's bypass and Ben's valve begin to move in the same moment; the bypass jams a quarter open, the valve closes and the flow stops, and the log records it all before any meter is read. *Fixed verdict:* Ben stopped it; Ana's route started and did no stopping; the log says so without the meter. *Ruled on file 11: agrees.* In **The diagram in his hand**, Sam holds his old diagram while cutting a blank, but takes every measurement from the lock itself. *Fixed verdict:* the diagram did no work; had it said something different, he would have followed the lock. *Ruled on file 11: agrees:* a change in the diagram would have changed nothing Sam did, so no route ran from it.
+
+### Criticism
+
+Three principles come first: an idea may be entertained before anything justifies it; a criticism is aimed at something and is itself a **guess**, an idea put forward without proof; and a thinker may act on a judgement without first proving it.
+
+**Two students, ten drafts each.** Jana hands each draft to her teacher, gets back a bare mark, and in the end hands in the best-marked draft. Kasia shows nobody; after each draft she writes down its faults, such as a claim with nothing to back it, and fixes them in the next. The final essays are about equally good. *Fixed verdict:* both created what is good in their essays; for Jana, the teacher chose which draft was handed in.
+
+A **criticism** has a **criticized item** (a candidate, question, range, link or method), an **alleged fault**, **grounds**, and a **connection**, the argument from grounds to fault. It **bears on** its item when its connection, taken as a candidate for the **fault question** ("does the item have that fault, in respect of the original question?"), is an account. A criticism can exist without bearing. A **warning sign**, something that tells against an item, is not a criticism until something pictures it as grounds for an alleged fault. *Not yet ruled; the view recorded with the draft:* Kasia's written faults are criticisms; Jana's bare marks allege no fault, so they are at most warning signs; and the teacher, who pictures what she wants as she chooses, is not a selection history in the theory's sense.
+
+A response **uses an objection** (a guess that something is wrong) when the objection shapes it in the right way and it lies on a route that ran. The right way: each role in the objection keeps its role in the response; the objection put in other words brings the same response; and a change in what the objection says brings the change the responder's way of deciding calls for. Using an invalid objection does not make it valid.
+
+### Episodes and noticed difficulties
+
+**The novelist's two demands.** Odile wants rich, lyrical prose and a story that keeps readers turning pages. Planning a chapter, before writing it, she sees that a long description of a valley at dawn would stall the story at its tensest point. Her first draft cuts the description to one plain sentence; her second has the heroine flee across the valley at dawn, described through what she sees as she runs, rich and fast at once. *Fixed verdict:* she had a problem (the case's word) as soon as she saw the clash; only the second draft solves it.
+
+An **episode** is a stretch of inquiry, from a difficulty to a response. An **episode of criticism** holds a noticed difficulty, an item that was there before it was criticized, an objection, and a response that depends on what the objection says. A **noticed difficulty** is a failed demand, or a clash in which what the system holds meets one demand only by breaking a safeguard, when the system pictures it. A **creative episode** is an episode of criticism holding an origination connected to its inquiry. Closing an episode is a decision, not a proof.
+
+*Not yet ruled; this document's view.* Odile's foreseen clash is a noticed difficulty, which needs no reader and no observation. Whether a draft "solves" it is a question of repair (next): if her demand is "rich and fast together", or rich prose is a stated safeguard, the first draft is no repair and the second is; the theory takes that statement as an input, not as something it reads off the case.
+
+### Repair
+
+A **contribution** is a stretch of events with the changes of content it makes. **Demands**, what is to be repaired, and **safeguards**, what must go on holding, are **stated inputs**: the theory records them without supplying them, and stating them claims nothing about their worth. Each is stated with the **occasions** it covers, and a safeguard is lost exactly when it fails on one of them. A contribution makes a **repair** when some demand that failed before holds after; every safeguard that held before held on every occasion it covers in between, not only at the end; and the repair was **produced by** the contribution, meaning a route that ran joins the two. The theory ranks no repair above another, and losses outside the safeguards must be put on the record.
+
+**Written on the job sheet.** The job sheet states in advance that the kitchen tap runs at all times during the work; it stops for four seconds while the mains is switched, with nobody drawing from it. *Fixed verdict:* the safeguard was broken, for four seconds, and calling it incidental changes nothing. *Ruled on file 11: agrees:* its occasions were stated. In **Four seconds**, the same stop happens but the case names only "the protected tap". *Fixed verdict:* the safeguard held in every way that mattered. *Ruled on file 11: silent:* whether it covers every moment, or only moments when someone draws water, is not stated, so the verdict turns on a missing input.
+
+### Credit
+
+**Two valves in one second.** Ana and Ben each close a different valve in the same second, and either alone would have stopped the leak. *Fixed verdict:* both did something that would have stopped it; neither can claim it alone; there is no way to say whose water stopped. *Ruled on file 11: agrees.*
+
+**Credit** is which contribution an achievement is attributed to. The theory credits each contribution the course of events shows; where two sufficient contributions both ran, both are credited, and it gives no **sharing of credit** that the course of events does not contain. Three attributions stay apart: a correct account that produced nothing (Ana among the plumbers), an act that repaired without an account (Ben), and a repair produced through the use of an account (nobody there). *Ruled on file 11: agrees.*
+
+Three cases, **The expert's question**, **The test that fitted neither** and **The same afternoon, three achievements**, have fixed verdicts calling an achievement "mostly" the expert's or the robot's. *Ruled on file 11: silent on all three:* "mostly" needs a **weighting of credit** beyond what the course of events contains, a stated input none of them states. In **Two hands on the test**, where the robot saw the faulty assumption and the expert the fix, the fixed verdict "Neither can say 'mostly'" is *ruled on file 11: agrees*: with no weighting, neither has grounds for it.
+
+### Created knowledge
+
+A **demand for knowledge** is a demand that a correct account, or the correction of a use through one, be understood. **Created knowledge** is a creative episode that makes a repair in which such a demand, failed before, holds after, through a content that the system originated by the end of the episode; that is an account of its question on the range fixed when it was originated; that is among **what the contribution prepared**; that the system understands afterwards; and whose join lies on the route that did the repair, so that the repair was **produced through the account**. A later narrowing of the range to rescue the account is a different claim and does not count. **Back to the plumbers:** *ruled on file 11: agrees.* Ana holds a correct account that produced nothing and Ben repaired without one, so there is no created knowledge.
+
+### Worth
+
+Repairing a demand shows it was repaired, not that it, or the question behind it, was worth having. Where a claim invokes **worth**, the theory takes the **standard of worth**, one of its two foundations, from outside, and marks the place. To the eighth complaint, which asks where beauty and art come in, the theory keeps four things apart in the artistic case: a work's **effect**, what it does in a context; its **purpose**, what it aims at; **achieved purpose**, when it has some effect and every effect falls within the aim; and **artistic value**, taken from the standard of worth, with its **reasons of taste**, whenever it is claimed. None is defined as another. The theory does not pretend to know which reasons of taste are true, and no view of beauty follows from achieving a stated effect.
+
+**What draft 4 changed here.** It spells out the fault question, the connection, and when a warning sign becomes a criticism; defines noticed difficulty, contribution and the two terms of created knowledge; makes a safeguard hold on every occasion it covers; and makes the standard of worth a foundation, not a stated input. *Departure:* Deutsch holds that there are objective truths about beauty; the theory abstains.
+
+*In the theory: Parts I, IX (first half), X (episodes) and XI; complaint 8.*
+
+---
+
+## 11. Owning an ability: boundaries, tasks, barriers and the universal class
+
+### The technician's whisper
+
+An assessment is stated at the start as robot-only. Midway, a technician tells the robot which gauge to read, and the robot completes the diagnosis; the log records the instruction. *Fixed verdict:* the boundary was robot-only and the instruction crossed it; "The diagnosis is a team result." *Ruled on file 11: agrees*, as on file 10.
+
+### Owning
+
+A stretch of events is the system's **own** when its processes run inside the **boundary** stated for the system (which processes and resources are its) and its stated **resource terms**. Work supplied from outside the boundary, such as a diagnosis, a decisive question or an instruction about what to read, stays an **outside contribution** however it is carried out inside. A process run inside the boundary is the system's own, whoever wrote it; where the boundary is drawn decides, not where the process sits in the casing. Credit for content and owning a process are different: a routine written outside and run inside is the system's process, and its content is still its writer's contribution.
+
+Three more cases are *ruled on file 11: agrees*. In **The routine uploaded that morning**, a robot's comparison run with a remotely uploaded routine is the robot's work, and who wrote the routine is a separate fact. In **The module in the casing**, a bought module inside a controller's shell but outside its stated boundary is not the controller's. In **The robot's log and the maker's manual**, owning rests on the log showing the routine run inside, not on the manual's "because the robot can diagnose": owning rests on what the boundary includes, never on the ability attributed.
+
+An ability is attributed under a stated boundary and a stated **sameness rule**, what makes the system the same system through change, both stated before the attribution, not chosen after it. In **New board, old memory**, a robot's board is replaced mid-task and its memory and routines, stated as its sameness rule, are copied across; the same robot finished (*ruled on file 11: agrees*). Where the boundary is not stated outright, a statement naming the system and saying whether a process runs inside or outside it states the boundary for that process ("the robot compares the pressures itself"); a statement that a process is the system's own, without saying where it runs, is the attribution, not the boundary. Nadia's case (section 8) states no boundary; the ruling read "her own" in the ordinary sense, a doubt the readers noted.
+
+### Tasks, and what is possible
+
+The theory states its physics in terms of tasks, in the wording of a 2013 paper by Deutsch. A **physical thing** has **properties**, each a set of its states. A **task** changes a physical thing from a stated input property to a stated output property, with resources and side effects stated. It is **possible** when no law of physics limits, short of perfection, how well it can be done and how well the doer can be kept ready; one success is not possibility. A **doer** performs a task by a stated **procedure** and is left able to again; a **carrying-out** is one run. In a **lasting performance** every carrying-out, from any start where the doer is ready, with any allowed input and the given aids, finishes with a right output and leaves the doer ready; **getting stuck** is not success. **Staying able** is the widest readiness to which every carrying-out returns the doer; the theory shows a widest one exists.
+
+An **ability** is an owned lasting performance, or an owned, possible, finite way of **making** one, under the same sameness rule and resource terms. A theorist's description of a procedure is not the system's having it. A system is **able to advance** a challenge when, from each starting point in a set stated in advance, every carrying-out ends with the challenge advanced and the system still in shape; a first discovery cannot be repeated, so what must last is the set-up that enables inquiry. The physics also supplies **degrees of accuracy**, ever more demanding and short of perfect, for how exactly a task is done and how reliably the doer is kept. At each degree, what a system can do never exceeds what the physics allows. Possible means allowed at every degree, so what a system can do at every degree is possible, but an ability at some degree does not make a task possible.
+
+### Criticism at any depth
+
+A principle of the theory: any aspect of a system's practice, a question, range, link, method or what it attends to, can be criticized, with an outcome able to change how the system goes on. An aspect is **reviewable** when an owned, allowed way forward makes it pictured, criticized and able to change its use. A system has **criticism at any depth** when, for every finite chain of such items (a criticism of a criticism of a method, and so on), it has an owned way to go on.
+
+### Barriers and the universal class
+
+An **aid** is help a system is allowed; a **fair aid** is one that does not assume what is to be shown. A **barrier** is a domain, described independently, for which every fair aid leaves the ability unavailable. A finite list of failures proves no barrier (Pia's machines, section 2; Kofi's phrasebook, section 9), and a **way round** refutes a proposed barrier.
+
+**Two sealed sorts of matter.** A universe has two sorts of matter that pass through each other without effect. Each sort's people have built a computer for any calculation their sort allows, and some calculations are possible only in one sort. Asha says the two computers together make a machine for any calculation the laws allow; Bram says none can exist, since a question written in one sort can never be read by the other's computer. *Fixed verdict:* Bram is right, and his reason largely explains why, together with the stated fact that each sort allows calculations the other cannot.
+
+A principle of the theory is that any carrier may bear a set-up, with every attribution allowed by the physics. Draft 4 adds that this holds only so far as the physics lets contents pass between sorts of matter, and that where two sorts cannot exchange what they bear, what only one can bear is a barrier for a system built of the other. *Not yet ruled; the view recorded with the draft:* for a system of either sort, the calculations only the other allows are a barrier, so no system is in the universal class; Bram's reason explains this with the stated fact; and Asha's weaker claim, that every calculation can be done somewhere, answers a different question, so she and Bram are not rivals.
+
+The **universal class** is the systems, each with its boundary and sameness rule, that have criticism at any depth and that, from their starting state and with some fair aid, can understand every explanatory content (by doing its use task) and advance every **well-posed challenge** (one stated clearly enough for progress to be judged), both lists fixed without looking at the system. Criticism at any depth does not bring membership, a growing history does not certify it, and a finite record does not establish it; the theory shows no person, machine, institution or line of descent to belong.
+
+**What draft 4 changed here.** It drops "today" from owning, separates credit for content from owning a process, says how a boundary is stated when not stated outright, defines degrees of accuracy and fair aid, and limits the principle about carriers to what can pass between sorts of matter. *Likenesses and departures:* that limit is like Marletto's principle of exchange between sorts of matter, a likeness named, not claimed as borrowed. Deutsch holds that people are universal explainers; the theory abstains. Marletto defines knowledge as information that can keep itself embodied; the theory leaves that to the physics, outside its classes.
+
+*In the theory: Parts I, X (ownership), XII and XIII; Part 0.*
+
+---
+
+## 12. What the theory rests on, and how it could be refuted
+
+### The uncited textbook
+
+An explanation traces every picture it uses back to its starting basis except one, which it justifies by a later theorem whose proof, in the explanation, uses that same picture. A separate proof exists in a textbook the explanation does not cite. *Fixed verdict:* as written the order has a circle in it; the textbook proof would break it, and has not been used; the order is not settled until it is. *Ruled on file 11: agrees.*
+
+### Foundations, frames and stated inputs
+
+The theory has two **foundations**: **the physics** (the states and properties of physical things, the processes it allows, what counts as deliberate action, resources, degrees of accuracy, and which set-up a physical carrier embodies at a level of detail); and the **standard of worth**, used only where a question invokes worth, taken as given and never derived. Every claim is relative to a frame (section 7), which is neither true nor false. A **stated input** is something a claim must state, which the theory records and does not supply: a repair's demands and safeguards with their occasions; a range's limit and what makes it right; an attribution's boundary and sameness rule; and a weighting of credit beyond what the course of events contains. Boundary, sameness rule and limit belong at once to a claim's frame and to its stated inputs. A verdict that depends on a stated input, or on the standard of worth, is given with it; where it is missing, the verdict is unsettled, and the theory says so rather than choosing the input to suit the verdict wanted. No probability of truth, merit score or ranking of thinkers is supplied, and a claim that needs one is unsettled.
+
+### Everything else is built from these
+
+Roles come from allowed changes, kinds from response patterns, pictures from matching and history, histories from what physically happened, accounts from matching under change, and from these everything else, up to criticism at any depth and universality. Nothing rests on a basic term meaning "really explains", "is a cause" or "is knowledge"; Derivation 6 checks this by following each definition down. The foundations are a theory of matter and, where needed, a theory of reasons; neither is about explanation.
+
+The **building order** says which definitions rest on which: frames and stated inputs on nothing in the theory; kinds on set-ups and ranges; accounts on matching; pictures on matching and physical history; understanding on pictures; owning on the course of events and a boundary; construction on owning and accounts; origination on understanding and construction; repair and created knowledge on those and on the stated demands; universality on all of them. The order has **no circles**: a picture justified only by the construction that made it, or an owning and an ability justified only by each other, has no place in it, and a separate proof counts only once the explanation uses it, as with the uncited textbook. In **Owned means capable**, a routine is defined as the robot's own when it can run it, and runnable when it is its own; *fixed verdict:* the definition goes in a circle, and only the histories of what happened give the distinction meaning; *ruled on file 11: agrees.*
+
+A **filled-in model** is the theory's blanks filled in for a real or imagined system. Its **classes**, widest first: the **base class** (blanks of the right type, every physical claim allowed by the physics); the **creative-episode class** (with an origination connected to an episode of criticism); the **knowledge-creation class** (with created knowledge); the **criticism-at-any-depth class**; and the universal class. A single origination does not put its author in the universal class.
+
+### How the theory could be refuted
+
+The five **main claims**, in order of how much would fall, with what would **defeat** each; none is protected by notation or by the label of any draft.
+
+1. **The four requirements are enough.** Defeated by a candidate that meets all four on a range of possible changes, with a link not merely declared, and plainly explains nothing. The known tricks each fail one requirement (section 3), a full response table included; an outside reader tried to build such a candidate and offered none.
+2. **They are needed.** Defeated by a real explanation whose set-up no link can match on any range of possible changes. Explanations of absence are the most exposed place.
+3. **Kinds can be dropped.** Defeated by a label that tells apart two accounts no allowed change tells apart, where the difference does real explaining.
+4. **The two histories.** Defeated by a selected link fixed at an untried setting by its trials although its pool holds a survivor that differs there (a pool with no such survivor is a limit the claim itself states, not a refutation); by a showing that every construction can be rewritten as a selection without loss; or by a showing that explanation does not work on the thing layer.
+5. **Questions can be found.** Defeated by a showing that treating a range as constructed, new and originated cheapens creativity or misses a real case of finding the right question.
+
+A mathematical error also counts: a counterexample, under their stated assumptions, to the smallest-supports theorem, the proof on pinning down, the proof on blocking, the proof on error build-up, the proof on staying able, or Derivations 1 to 3. A case whose verdict turns on an input it does not state, or on the standard of worth, has a missing input and is not a refutation.
+
+### The record so far
+
+**The forbidden wire.** The only arrangement that would respond differently at the untried setting needs a wire between two terminals, and every device in the stated pool is built without it. *Fixed verdict:* "Then there is no alternative in that population. The different response is imaginable and is not available." *Ruled: file 10 disagrees; file 11 agrees.* File 10's Derivation 3 said trials always leave every untried setting open; this case refuted it, and the list of defeats counted it. File 11 repaired it by requiring a differing survivor in the pool, and draft 4 keeps that, adding that rivals are not a pool, so a merely imagined arrangement reopens nothing. The cost: the repaired claim is close to true by its wording alone, and hard to defeat.
+
+Three more defects, found in September, are repaired in draft 4: the old Derivation 2 was false as written, so the entry for a mathematical error stands triggered for files 10 and 11 (section 6); the proof on error build-up lacked assumptions (section 4); and "no assumed answer" left open which pieces are commitments (section 3). On the cases, file 11 agreed with 46 of 52 fixed verdicts, was silent on 6, and went against none.
+
+### Three older views
+
+The fifth complaint says the theory is three older views renamed: that what a sign stands for comes from a history of selection; that science captures structure; and that a mind is what it does, not what it is made of. The theory takes from each and differs from each: correspondence has a history, but selected and constructed histories are kept apart, with creativity only in construction; structure is kept, but piece by piece and under change, with no overall copy; any sort of matter may carry a set-up, but only as the physics allows. Whether the mix is new is for scholars.
+
+**What draft 4 changed here.** Frames and stated inputs are told apart and named with the foundations as what everything rests on; a weighting of credit joins the stated inputs; a missing standard of worth leaves a verdict unsettled; the building order places owning, ability and repair; and a case with a missing input is no refutation.
+
+*In the theory: Parts 0, XIV and XV; Derivation 6; complaint 5.*
+
+---
+
+## 13. What is still open
+
+**The state of draft 4.** Not frozen. The outside readers have not seen its paragraphs on rivals, problems and failed answers, which were tried only on small made-up worlds. No round has used draft 4, the 23 proposed cases or the lamp controller.
+
+**Your decision on hard to vary.** Draft 4 carries it (sections 6 and 7). Still open:
+
+- "Easy to vary" applies to both rivals alike; making it point at one would need a further requirement, which risks becoming a ranking (section 6).
+- A candidate nobody has challenged with a rival is never called easy to vary, however loose it is (section 6).
+- The analysis of 24 September found that a record still does one job, telling a retreat like Bruno's from a limit honest from the start; draft 4 does not settle whether that job is needed. The failed-answer paragraph does not cover other settings, runs of rescues, changes of level of detail, or a coarser thing asked (section 7).
+- Your example, "Demeter grieves" against "Persephone is underground", gives rivals only where some allowed change, such as a veil of dust dimming the sun, sets the warmth received by itself; otherwise they conflict nowhere (section 6).
+- Two partial claims, each exact about a different link, can be rivals outside the range, and the finer question's test can refute both (section 6).
+- Idle commitments are no defect; making them one would be a change of claim (section 5).
+
+**Verdicts the theory does not give**, each for want of something the case does not state: Bruno's "retreat" (section 7); the merit of Noor's question (section 9); "mostly" in three robot-and-expert cases (section 10); and the safeguard in "Four seconds" (section 10).
+
+**Views that fork.** The sun-god sentence may be idle, a redundant route, or a failed piece (section 5). Whether a failure worked out from a candidate alone counts as established is not said, and whether a myth tied to nothing and the axis tilt pose a problem turns on it (section 6). If a programmer designed a pool, success at untried settings is the programmer's knowledge, which the theory cannot yet say (section 8). "Any piece that merely gives an input its value" can be taken two ways, with the same known verdicts (section 3).
+
+**Words not defined, or not placed.** Never defined: "active", said of commitments (section 3); "the stated reason for a limit", or whether it is a criticism's "grounds" (section 7); the use task and advancing task of the universal class, and how its two lists are fixed (section 11); when a link into a content matches on its range, which "equivalent" needs (section 9); whether a slot pairing may convert values (section 3). Not listed among the stated inputs: the way of cutting a candidate down and the family of changes behind the tipping edge (section 5), and what the physics allows at a setting (section 6). Not placed in the building order: rivals, problems and their words, and what a route that ran depends on (section 12).
+
+**Main claims no case yet aims at.** That kinds can be dropped (section 4); that absence is handled rightly (section 3); that construction cannot be rewritten as selection, and that explanation works on the thing layer (section 8); that questions can be found (section 9), where an outside reader called the proof of Derivation 5 "a sketch, not a proof" and the project agreed a step is missing, counting no defeat, and where counting every constructed, new and used question as creative may cheapen creativity.
+
+---
+
+## 14. Words used here
+
+Each entry gives the plain word, the theory's term in brackets, and its meaning.
+
+**account** (Account): a candidate meeting all four requirements on its question.
+
+**allowed change** (admitted edit): a change the set-up or question counts as makeable.
+
+**anchor** (anchor): the target cluster a candidate's piece must behave like.
+
+**answer** (answer profile): what the target gives for what is asked, setting by setting.
+
+**background** (named background): what a candidate holds fixed besides its commitments.
+
+**bare denial** (bare denial): a denial with no piece responding to what produces the appearance.
+
+**barrier** (barrier): a domain for which no fair aid makes the ability available.
+
+**bears on** (Bearing): said of a criticism whose connection is an account of the fault question.
+
+**behaviour** (component relation): the value combinations a piece allows under a change.
+
+**blame is shared** (what a test refutes): a failed prediction counts against claim, assumptions and instruments together.
+
+**building order** (dependence order): which definitions rest on which.
+
+**candidate** (explanatory candidate): anything offered as an explanation for a question.
+
+**carrier** (occurrence): a physical thing or event bearing content.
+
+**central guess** (constitutive conjecture): that four things suffice to describe creativity at explaining.
+
+**challenge** (problem, everyday sense): anything a system is trying to solve or advance.
+
+**circumstances** (boundary conditions): surroundings held fixed while changes are made.
+
+**commitment** (active commitment): a piece offered as doing the work.
+
+**conflict** (conflict): answers differ at a setting, or no behaviour the physics allows lets both match.
+
+**consistent states** (compatible valuations): states every piece allows at once.
+
+**construction** (constructed provenance; Build): making a link or content in an owned stretch, with real joins, its target pictured.
+
+**construction evidence** (construction witness): the record of processes, inputs, joins and resulting picture.
+
+**content** (content): a set-up with what it claims on its range.
+
+**contribution** (contribution): a stretch of events with the changes of content it makes.
+
+**credit** (credit): which contribution an achievement is attributed to.
+
+**criticism** (criticism): a claim of fault, with grounds and a connection.
+
+**criticism at any depth** (recursive capacity): an owned way on for every finite chain of criticized items.
+
+**declared** (declared provenance): written into a model by its author, and nothing more.
+
+**degree of accuracy** (grade): how exactly a task is done, short of perfect.
+
+**demand, safeguard** (claimed, protected obligation): what a repair must achieve; what must keep holding.
+
+**different question** (new claim at a new index): another range, or another thing asked.
+
+**easy to vary** (easy to vary): having a rival that fits as well and conflicts only outside the range.
+
+**equivalent** (the equivalence of Part X): with links both ways, each matching.
+
+**established** (established): held by a judge with a usable receipt.
+
+**expectation layer** (simulation layer): the set-up of dependences among things, which predicts.
+
+**fair aid** (Enable): allowed help that does not assume what is to be shown.
+
+**fits** (fits what is established): shown failing no requirement by anything established.
+
+**foundation** (primitive): the physics, or the standard of worth.
+
+**frame** (index): level of detail, boundary, sameness rule and range of a claim.
+
+**idle commitment** (commitment that does no work): adding or removing it leaves every support a support.
+
+**kind** (kind): pieces whose response patterns agree on a range.
+
+**level of detail** (grain): how finely something is described.
+
+**limit** (scope): which possible changes a range leaves out.
+
+**link** (transport): the tie from target to candidate, with anchors.
+
+**load-bearing** (critical): a group a support stops being one without.
+
+**matching** (fidelity): behaving alike at every setting, piece by piece and whole.
+
+**miss** (violation): a link failing to match at an actual setting.
+
+**missing input** (missing declared input): a stated input a verdict needs but lacks.
+
+**new** (New): with nothing equivalent already in the system's stock.
+
+**no assumed answer, no dodging** (non-circular dependence, non-vacuity): the third and fourth requirements.
+
+**noticed difficulty** (recognized difficulty): a pictured failed demand, or a clash breaking a safeguard.
+
+**originate** (Origin): to construct a content new to oneself and use it on a question.
+
+**own** (ownership): run inside the stated boundary.
+
+**picture** (representation): a carrier's matching link to a content, selected or constructed.
+
+**piece, slot, value** (component, port, value): a working element; a place holding a value; what it holds.
+
+**pool** (population): the candidate links selection works on.
+
+**possible** (physically admitted): allowed by the laws of physics.
+
+**problem** (problem for a question): two rivals that both fit what a judge has established.
+
+**range** (contract): the settings a question covers.
+
+**reading** (observation): a slot reporting another, alterable without altering it.
+
+**receipt, evidence item** (receipt, evidence leaf): a chain of reasoning over pointers to events.
+
+**relay** (relay): passing content on without making any join.
+
+**repair** (Repair): a failed demand now holds, safeguards kept throughout, produced by the contribution.
+
+**response pattern** (signature): a piece's behaviour at every setting of a range.
+
+**rival** (rival): a candidate offered in place of another, conflicting with it somewhere allowed.
+
+**route, route that ran** (route, active route): a support; the actual events the difference passed along.
+
+**sameness rule** (continuity): what makes a system the same through change.
+
+**selected** (selected provenance): shaped by variation and survival, nothing pictured.
+
+**set-up** (organization): slots, pieces, circumstances and allowed changes.
+
+**setting** (edit–boundary pair): one change in given circumstances.
+
+**standard of worth** (normative relation): what says what is worth having, taken from outside.
+
+**stated input** (declared input): what a claim must state; recorded, not supplied.
+
+**support** (support): a group of commitments that alone makes an account.
+
+**surprise** (surprise): a miss by a selected link at an untried setting.
+
+**test** (test): finding out what the target does at a setting.
+
+**thing layer** (primitive layer): the set-up of lasting things with identity.
+
+**trials** (history of a selected transport): settings a selected link met while shaped.
+
+**understand** (Deploy): hold a picture, use it on challenges, and keep that use.
+
+**untouched, untried setting** (baseline, unseen pair): no change made; a setting not among the trials.
+
+**warning sign** (adverse signal): something against an item, not yet a criticism.
+
+**widening factor** (Lipschitz constant): the most one step can widen a distance.
+
+Other plain words are explained where they appear, and the project's words in section 1.
+
+---
+
+## 15. Examples used
+
+**The book of 52 cases**
+
+- The forecaster who keeps finding honest limits: narrowings after failures. Sections 7, 12, 13.
+- The tide table with a real bell attached: the answer written in. Section 3.
+- Nadia and the cards she has never seen: construction; "her own". Sections 8, 11.
+- Greta's dough: a limit with a stated reason. Section 7.
+- The fever and the thermometer: reading versus cause. Section 2.
+- Salt on the icy step: a coarse account. Section 3.
+- The float that does two jobs: response patterns. Section 4.
+- Two thermostats: values are not kinds. Section 4.
+- The apprentice and the third lock: selection, construction, reuse. Section 9.
+- The rota: a found question; merit unsettled. Sections 9, 12.
+- Two plumbers: three attributions. Section 10.
+- The phrasebook: a narrow lasting use. Sections 9, 11.
+- The worn key and the diary: no receipt from the claim itself. Sections 6, 8.
+- The robot's log and the maker's manual: owning rests on the log. Section 11.
+- The one tooth: a small join. Section 9.
+- The diagram in his hand: no route ran. Section 10.
+- Two valves in one second: both credited. Section 10.
+- The expert's question: "mostly", unsettled. Section 10.
+- "The seal was tight": a slot added. Section 9.
+- The unused joint setting: a problem inside the range. Section 6.
+- The test that fitted neither: blame shared; "mostly". Sections 7, 10.
+- The card nobody can read: history kept, access lost. Section 8.
+- The routine uploaded that morning: owning versus credit. Section 11.
+- The table with empty columns: a range is what is stated. Section 2.
+- Where the second compartment used to be: a supplied meaning. Section 2.
+- Four seconds: occasions not stated. Sections 10, 12, 13.
+- A premise both routes use: load-bearing as written. Section 5.
+- The uncited textbook: no circles. Section 12.
+- Written on the job sheet: occasions stated. Section 10.
+- Two hands on the test: neither can say "mostly". Section 10.
+- The technician's whisper: an outside contribution. Section 11.
+- New board, old memory: the sameness rule. Section 11.
+- Mirrored marks: a recoding. Section 8.
+- Half from the source, half from the shelf: a patch's history. Section 8.
+- The spring nobody mentioned: a redundant route. Section 5.
+- The cable that used to be a spring: a different candidate. Section 5.
+- One more commitment: interference. Section 5.
+- The forbidden wire: the defeat of file 10's Derivation 3. Sections 8, 12.
+- Owned means capable: a circular definition. Section 12.
+- The same afternoon, three achievements: "mostly", unsettled. Section 10.
+- The module in the casing: the boundary decides. Section 11.
+
+**Proposed cases (no round yet)**
+
+- The seasons and the sun god: idle, or not. Sections 5, 13.
+- A myth about winter: a candidate, not an account. Section 3.
+- The tilt and the midnight sun: standing fixed by idea and world. Sections 6, 9.
+- A farmer's rule carried south: a problem outside the range. Section 6.
+- Two bakers: honest limits, compatible accounts. Section 7.
+- The machine that runs forever: a blocking question. Sections 2, 11.
+- Dark moths: selection. Section 8.
+- Two students, ten drafts each: criticisms and warning signs. Section 10.
+- The parrot in the lecture hall: relay. Section 9.
+- The domino that never falls: an assumed answer. Section 3.
+- Two footbridges on opening day: miss and surprise. Sections 8, 13.
+- The novelist's two demands: a noticed difficulty. Section 10.
+- Keeping count with string: error build-up. Section 4.
+- The order of adjectives: an unspoken picture. Section 9.
+- Denying the inner experience: a bare denial. Section 3.
+- The planets tonight and a thousand years ago: a calculation run backwards. Section 3.
+- Two sealed sorts of matter: a barrier. Section 11.
+- What holds the universe up: no rivals. Section 6.
+- The discarded lamp controller: what survival leaves open. Section 8.
+
+**The theory's worked examples**: the pole and its shadow (one page; sections 2, 3); two balances and twenty-three tokens (section 2); odd-sized tables (section 3); spread-out support, parallel and priority wiring (section 5); the hidden thing (section 8).
