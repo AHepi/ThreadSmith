@@ -2,6 +2,8 @@
 
 *A note first. This is a plain rendering of draft 4 of the theory, not the theory itself. Draft 4 is not frozen: it may still change. Its exact text is "Semantics/tests/Revision 2 - file 13 draft 4, theory text.md", and wherever this document and that text differ, that text is right. Written on 25 September 2026, and revised, by Claude subagents, after one review by an expert reader and two "cold reads", readings by newcomers who had never seen the theory. No outside reader, such as Atria or Mimo, has yet checked two parts of the draft: the wording on rivals and problems (section 7) and the result that a failed answer stays failed (section 8). Section 2.6 lists the other late wording they have not seen.*
 
+*Added on 25 September 2026: the outside readers have now cross-examined the wording on rivals and problems, the result that a failed answer stays failed, and the other late wording, which the note above says they had not checked. After their cross-examination, draft 5 of the theory, dated 25 September, made seven small changes to draft 4, and one to the sources note; file 93, "What the cross-examination of draft 4 found, in plain words", lists them. None of them changes the theory's verdict on any case. The slip noted in section 14, where one sentence of the pole example says "the calculation's height" where it should say "the calculation's shadow", is corrected in draft 5. Otherwise this document still describes draft 4.*
+
 ---
 
 ## 1. The theory in one page
