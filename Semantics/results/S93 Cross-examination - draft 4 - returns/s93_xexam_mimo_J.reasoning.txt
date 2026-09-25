@@ -1,0 +1,1582 @@
+Let me carefully analyze the two items X13 and X15.
+
+## X13 - Part VIII, Functional transport, line 353
+
+**Kind:** WORDING. **Reason given:** erratum.
+
+**Declaration:** none.
+
+**Old:**
+```
+**Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\),
+```
+
+**New:**
+```
+**Functional transport.** Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\),
+```
+
+The full new text at line 353 is:
+```
+**Functional transport.** Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\), the same holds for every admitted finite composition with matching scopes. *Proof.* \(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct. ∎
+```
+
+So the change is:
+1. Adding "Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\)." - this introduces the symbols S_a and T_a with their types.
+2. Changing "for every generator \(a\)" to "for every admitted generator \(a\)" - this narrows the quantifier to admitted generators.
+
+The old wording assumed S_a and T_a were already defined, but they weren't. So adding the "Let" sentence is a clarification - it defines what was previously undefined. That's an erratum fix.
+
+The change from "every generator" to "every admitted generator" - this is more specific. The old text said "every generator \(a\)" which is ambiguous - every generator of what? The new text says "every admitted generator" - admitted by what? The organization's admitted edits A? This seems to match the rest of the text. Looking at line 353 in context, the transport is from D to E, and the edits are in A. The term "admitted generator" makes sense - generators of the edit monoid A that are admitted.
+
+Wait, but is "admitted generator" defined anywhere? Let me check. In Part II, A is "a set of admitted edits, closed under a partial associative composition with identity 1." So "admitted" refers to edits in A. A "generator" of A would be a set of edits that generate A under composition. But "admitted generator" isn't formally defined in the text. However, it's a natural reading: a generator that is an admitted edit.
+
+Actually, looking more carefully, the question is whether this is WORDING (says the same thing in different words) or whether it changes a claim.
+
+The old: "for every generator \(a\)" - this could mean every generator of the edit structure, without restriction.
+The new: "for every admitted generator \(a\)" - this restricts to admitted generators.
+
+If "admitted" adds a restriction, then this is a CLAIM change, not WORDING. But if "generator" already implicitly meant "admitted generator" (since the whole theory works with admitted edits), then it's WORDING.
+
+Hmm, but actually there's a subtlety. The word "admitted" here might be doing important work. In the theory, A is the set of admitted edits. Generators of A would generate A under composition. Saying "admitted generator" is redundant if all generators under consideration are already admitted (since they're generators of A). But if someone reads "generator" as a generator of some broader monoid of possible edits, then "admitted" narrows it.
+
+Actually, looking at the context of Part VIII, these are transport results. "Functional transport" is about preserving the commutation relation through composition. The proof works by induction over compositions of generators. For the proof to give the result "for every admitted finite composition," the hypothesis must hold for the generators of those compositions, i.e., the admitted generators.
+
+The old text said "for every generator \(a\)" and concluded "the same holds for every admitted finite composition." If "generator" meant any generator (including non-admitted ones), the hypothesis would be stronger than needed. If it meant only admitted generators, it's exactly what's needed. The new text makes this precise.
+
+Is this a claim change? The old text's "every generator" is arguably ambiguous. The new text's "every admitted generator" is precise. If the old text meant "every generator" in the broadest sense, then the new text weakens the hypothesis (which makes the theorem easier to apply), which could be a claim change. But the old text was underspecified - S_a and T_a weren't even defined.
+
+Given that the kind is WORDING and the reason is erratum, the claim is that this just fixes an error (undefined symbols) without changing what's claimed. Let me test whether it changes anything.
+
+Old claim: If π∘S_a = T_a∘π for every generator a (where S_a, T_a are... something), then the same holds for every admitted finite composition with matching scopes.
+
+New claim: Let S_a be a target process and T_a a represented process for each admitted generator a. If π∘S_a = T_a∘π for every admitted generator a, then the same holds for every admitted finite composition with matching scopes.
+
+The change from "every generator" to "every admitted generator" - does this change what can be concluded? 
+
+If "generator" without qualification meant all generators of the edit monoid (which might include non-admitted ones), then the old hypothesis was stronger (covering more generators), making the theorem have a stronger hypothesis but the same conclusion. The new text has a weaker hypothesis (only admitted generators), making the theorem applicable in more cases. But this doesn't change what the theorem claims - it changes its hypotheses, which makes it more broadly applicable.
+
+Actually wait - WORDING means "the new wording says what the old wording said, in other words." If the hypothesis changes from "every generator" to "every admitted generator," that's not the same statement. Unless "generator" already meant "admitted generator" in context.
+
+Looking at the rest of the theory, Part II defines A as "a set of admitted edits." The generators would naturally be generators of A. So "every generator" would mean "every generator of A" - which is the same as "every admitted generator." In that reading, adding "admitted" is just clarifying.
+
+But there's a question: is a "generator" necessarily a generator of A? Or could it be a generator of some other monoid? The old text is ambiguous. The new text resolves the ambiguity.
+
+Given that the old text didn't define S_a and T_a at all, it was already broken. The new text fixes this. The change from "generator" to "admitted generator" is, I think, a clarification that doesn't change the claim, because in context "generator" already refers to generators of the admitted edits.
+
+Actually, wait. Let me reconsider. Could there be a case where the distinction matters? Suppose someone has a set of generators G that includes some edits not in A (the admitted edits). Under the old text, the hypothesis would need to hold for all of G. Under the new text, only for G ∩ A. The conclusion is about "admitted finite composition" - compositions of admitted edits. So the proof only needs the hypothesis for admitted generators. The old text was requiring more than necessary (if "generator" was broader), or the same (if "generator" already meant "admitted generator").
+
+I think this is genuinely WORDING - it makes explicit what was implicit, and fixes the undefined symbols. The "admitted" qualifier is a clarification.
+
+But wait - there's a tension with the "Earlier new wording" which had "for every generator \(a\)" without "admitted." That earlier version was revised to add "admitted." This suggests someone thought the "admitted" qualifier was needed. Does adding it change anything?
+
+If "generator" meant "generator of A" (the admitted edits), then "admitted generator" is redundant and WORDING is correct. If "generator" was ambiguous and could include non-admitted generators, then adding "admitted" changes the hypothesis, which is a claim change.
+
+I think the most natural reading is that "generator" in context means a generator of the edit structure A, which is by definition admitted. So "admitted generator" is just a clarification. WORDING seems right.
+
+Let me also check: does this create any issues with the rest of the text? The proof says "π S_b S_a = T_b π S_a = T_b T_a π" which uses the hypothesis for a and b. Then "induct" gives it for finite compositions. This is correct as long as a and b are admitted generators (and their compositions are admitted, which they are since A is closed under composition).
+
+One potential issue: the proof mentions "S_b S_a" and "T_b T_a" which are compositions of processes. Are these well-defined? S_a is a "target process" and T_a is a "represented process." Compositions of processes... this seems fine in the context of the theory where edits compose.
+
+I think X13 is UPHELD as WORDING. The change fixes undefined symbols and adds a clarifying qualifier that doesn't change the claim.
+
+Actually, let me reconsider one more time. The change from "for every generator \(a\)" to "for every admitted generator \(a\)" - could "admitted" here refer to something other than the edits in A? In the theory, "admitted" is used in various contexts: "admitted edits" (A in Part II), "admitted change" (contracts are "a declared subset of the physically admitted changes"), "admitted generator" (Part VIII). So "admitted" consistently refers to what the theory/physics admits. "Admitted generator" would be a generator that is an admitted edit. This is consistent.
+
+OK, I'm fairly confident X13 is UPHELD. Let me think about what attacks to show.
+
+Attack 1: The word "admitted" narrows the hypothesis, making the theorem weaker (easier to satisfy) - this would be a claim change, not wording.
+Response: In context, "generator" already referred to generators of the admitted edits A (Part II), so "admitted" is a clarification, not a restriction.
+
+Attack 2: "admitted generator" is not a defined term in the theory.
+Response: It's a natural composition of "admitted" (defined in Part II as referring to edits in A) and "generator" (a standard mathematical term). The text uses it consistently.
+
+Attack 3: The change makes the theorem apply to fewer cases (only admitted generators), which might miss some transport results.
+Response: The conclusion is about "admitted finite composition," which only uses admitted generators. The proof works on admitted generators. So restricting to admitted generators is exactly right.
+
+Now let me think about N20 (the situation associated with X13).
+
+N20 is about keeping count with string. The first method accumulates errors; the second doesn't. The question is whether each method can keep count of any size flock.
+
+How does Functional transport relate to N20? The first method's counting process doesn't preserve the correspondence (the transport π from goats to string length) under compositions of operations (goats leaving/returning, joins, cuts), because errors accumulate. The second method does preserve it because rounding resets errors.
+
+Functional transport says: if π∘S_a = T_a∘π for every admitted generator a, then it holds for every admitted finite composition. For the first method, the one-step relation π∘S_a ≈ T_a∘π holds approximately but not exactly (because of measurement errors). For the second method, it holds exactly because rounding ensures the correspondence is exact after each step.
+
+But wait - Functional transport is about exact commutation. The first method doesn't satisfy the exact condition even for one step (measurement errors mean π∘S_a ≠ T_a∘π exactly). The second method does satisfy it exactly after rounding.
+
+Actually, the verdict on N20 is "Only the second method can [keep count]." This is about accumulated error vs. error-correcting rounding. Does the change from "every generator" to "every admitted generator" move this verdict? I don't think so - the distinction between the two methods is about whether the one-step correspondence is exact (and thus composable), not about whether the generators are "admitted."
+
+Actually, hmm. In the string-counting context, what are the "admitted generators"? They would be the basic operations: goat leaves, goat returns, join, cut. The first method's operations introduce errors, so the correspondence fails at the generator level. The second method's operations are exact (after rounding), so the correspondence holds at the generator level and thus for compositions.
+
+The change doesn't affect this analysis. N20's verdict is unchanged.
+
+## X15 - Part IX, Bearing, line 377
+
+**Kind:** CLAIM. **Reason given:** erratum.
+
+**Declaration:** (K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question.
+
+**Old:**
+```
+Let \(p_\delta\) be the question about the defect. Then
+```
+
+**New:**
+```
+Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then
+```
+
+Let me look at the full context. Lines 377-383:
+
+L377| **Bearing.** A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection. Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then
+
+L379| \[
+L380| \operatorname{Bearing}(c,z,p)\iff\operatorname{Account}(\mathcal E_c,p_\delta). \tag{K1}
+L381| \]
+
+L383| A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target.
+
+Wait, actually looking at this more carefully. The old text at line 377 was:
+"Let \(p_\delta\) be the question about the defect. Then"
+
+But the new text adds:
+1. More specific definition of p_δ: "the question whether \(z\) has \(\delta\) in respect of \(p\)" instead of "the question about the defect"
+2. Definition of \(\mathcal E_c\): "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)"
+3. Reference to Part V
+
+The old text didn't define \(\mathcal E_c\) at all in the quoted passage. But wait - was \(\mathcal E_c\) defined before? Let me look at the old text context. The old line 377 was "Let \(p_\delta\) be the question about the defect. Then" followed by the equation (K1). But (K1) uses \(\mathcal E_c\), so it must have been defined somewhere. In the old text, was \(\mathcal E_c\) defined?
+
+Looking at the old text, the passage before (K1) is:
+"**Bearing.** A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection. Let \(p_\delta\) be the question about the defect. Then"
+
+So the old text introduces "a connection" as one of the four elements of a criticism, but doesn't name it \(\mathcal E_c\). Then (K1) uses \(\mathcal E_c\). So either \(\mathcal E_c\) was defined elsewhere in the old text, or the old text was internally inconsistent (using \(\mathcal E_c\) without defining it).
+
+The new text fixes this by explicitly defining \(\mathcal E_c\) as "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)."
+
+So the changes are:
+1. p_δ is now specifically "the question whether \(z\) has \(\delta\) in respect of \(p\)" instead of the vague "the question about the defect"
+2. \(\mathcal E_c\) is now defined as the criticism's connection interpreted as an explanatory candidate
+3. Added reference to Part V
+
+The declaration says: "(K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Let me check if the declaration matches the new wording exactly.
+
+New wording: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)."
+
+Declaration: "\(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+The declaration uses "the target" for z, "the alleged defect" for δ, "its grounds" for g, and "that question" for p_δ. These are paraphrases. Let me check:
+- "the question whether the target has the alleged defect in respect of p" = "the question whether z has δ in respect of p" ✓
+- "the criticism's connection from its grounds to the alleged defect" = "the criticism's connection from g to δ" ✓
+- "interpreted as an explanatory candidate for that question" = "interpreted as an explanatory candidate (Part V) for p_δ" ✓
+
+The declaration matches. But does the new wording claim more than the declaration says?
+
+The new wording adds "(Part V)" - a reference to Part V where explanatory candidates are defined. The declaration mentions "an explanatory candidate" but doesn't explicitly say "for Part V." But this is just a cross-reference, not a claim.
+
+Now, is this a CLAIM change? The declaration says the change is that (K1) "now says what its terms are." This means the old text left the terms underspecified, and the new text specifies them. This would change what a reader can conclude - the old text's vague "the question about the defect" could be interpreted many ways, while the new text's "the question whether z has δ in respect of p" is specific.
+
+Can a reader now conclude something the current text left unconcluded? Yes:
+- The old text's "the question about the defect" doesn't specify what kind of question it is (production? identification? etc.) or what it's about (the defect in the target, in respect of p). The new text says it's specifically "whether z has δ in respect of p" - a question about whether the target z has the alleged defect δ, in the context of the original question p.
+- The old text didn't define \(\mathcal E_c\) (or defined it vaguely as "a connection"). The new text says it's "the criticism's connection from g to δ, interpreted as an explanatory candidate for p_δ."
+
+So the CLAIM is that (K1) now specifies its terms more precisely. This seems right.
+
+But wait - does the new wording change what (K1) actually claims? (K1) says Bearing(c,z,p) ↔Account(𝓔_c, p_δ). If p_δ changes from "the question about the defect" to "the question whether z has δ in respect of p," does this change when Bearing holds?
+
+If the old p_δ was some vague question about the defect, and the new p_δ is specifically about whether z has δ in respect of p, then yes - (K1) now requires Account for a more specific question. This changes when Bearing holds.
+
+But is this a clarification (making explicit what was meant) or a change of claim (changing what is meant)? The reason given is "erratum," which suggests the old text was wrong (undefined terms) and the new text fixes it. If the old text was internally broken (using undefined terms), then any fix is an erratum.
+
+Let me think about whether the declaration is exact. The declaration says "(K1) now says what its terms are." This is correct - the new text defines p_δ and 𝓔_c explicitly. But does it claim anything else changes? Let me check if the new wording claims more or less.
+
+New wording claims:
+1. p_δ = "the question whether z has δ in respect of p" 
+2. 𝓔_c = "the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ"
+
+The declaration says exactly these two things. So the declaration seems complete and accurate.
+
+But wait - there's a subtlety. The new text says "in respect of p." What does "in respect of" mean? In the theory, Part III says "The respect is the query" - a question's "respect" is fixed by its query. So "in respect of p" means "in the context of question p" or "with respect to what p asks." This is a specific technical use.
+
+Also, "the criticism's connection from g to δ" - the old text said "a connection" as one of four elements of a criticism. The new text names this connection as the one from g to δ. But is this the same connection? A criticism has "a connection" which connects the grounds to the defect. Yes, "from g to δ" is exactly this.
+
+Now let me check T3 - coherence.
+
+The term "explanatory candidate" is defined in Part V. The reference "(Part V)" is correct.
+
+The term "connection" is used in the Bearing paragraph: "A criticism has target z, alleged defect δ, grounds g, and a connection." The new text identifies the connection as "from g to δ." This is consistent.
+
+The variable z is used - it's defined in the same paragraph as "target." Good.
+
+The variable δ is used - defined as "alleged defect." Good.
+
+The variable g is used - defined as "grounds." Good.
+
+The variable p is used - this is the question from the original Bearing(c,z,p). It's introduced in the formula (K1). Good.
+
+Wait, but in the Bearing paragraph, p is used before it's formally introduced. Let me look:
+
+"**Bearing.** A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection. Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then"
+
+Then (K1): Bearing(c,z,p) ↔ Account(𝓔_c, p_δ).
+
+So p appears in the definition of p_δ before it's formally bound by (K1). But p is clearly the question parameter of Bearing(c,z,p), which is the function being defined. This is standard mathematical notation - the parameters of the function being defined are used in its definition. So this is fine.
+
+Let me also check: does "interpreted as an explanatory candidate (Part V)" make sense? An explanatory candidate is defined in Part V as "an organization E, a transport t=(π,τ,σ,λ) from D to E, and an identified set Γ of active commitments in E." The criticism's "connection" is not obviously of this form. But the text says "interpreted as" - meaning the connection is to be read as, or mapped onto, an explanatory candidate. This is a reasonable formalization step.
+
+But here's a potential issue: does every criticism's connection actually constitute an explanatory candidate? The connection might not have the structure of (E, p, t, Γ). The text says "interpreted as" which suggests a reinterpretation or modeling choice. If the connection can't be interpreted as an explanatory candidate, then (K1) can't be evaluated. But the text seems to assume it can, or at least that when it can, Bearing is defined.
+
+Actually, looking at it more carefully, the text says the connection is "interpreted as an explanatory candidate (Part V) for p_δ." This is a stipulation - the connection is to be modeled as an explanatory candidate. If the connection genuinely can't be modeled this way, then the criticism doesn't bear (K1) is false or undefined). But the text doesn't address this case explicitly.
+
+Is this a problem? I think the text is making a modeling choice: to evaluate whether a criticism bears on its target, we interpret the criticism's connection as an explanatory candidate and check if it accounts for the question of whether the target has the defect. This is a reasonable approach and doesn't seem to create incoherence.
+
+Now let me look at the faithfulness question (a).
+
+The owner's position: "hard to vary is not a count over a listed or listable set of versions; no one can list all rivals, even in principle; a rival is a discovered competitor, and two discovered rivals that both fit constitute a problem; error correction is carried by the explanation itself, so a corrected mistake cannot creep back in and a record of rescues is redundant."
+
+The drafters' rule: "state hard to vary through discovered rivals and the problems they make, never through a listed set, an enumeration or a count of versions, and never as a grade; do not propose a record or log where the explanation's own content does the work; check any new framing of a source idea against the owner's decisions before building on it."
+
+Question (a) asks about X15 specifically. The context is that Part VI's "Problems" paragraph (line 317) says "A criticism that a candidate is easy to vary must supply such a rival (Part IX), and X15 defines the terms of (K1)."
+
+So the question is: does X15's wording bring back any of the forbidden things (listed sets, enumerations, counts, grades, rankings, records/logs)?
+
+Looking at X15's new wording:
+"Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)."
+
+This defines the terms of (K1): Bearing(c,z,p) ↔ Account(𝓔_c, p_δ).
+
+Does this involve any listed set of rivals? No - it defines a single criticism's terms.
+Does it enumerate versions? No.
+Does it count versions? No.
+Does it grade or rank candidates? No.
+Does it propose a record or log? No.
+
+The wording is about what a criticism is and what it means for a criticism to bear on a target. It defines the question p_δ and the explanatory candidate 𝓔_c. This is consistent with the owner's position - a criticism is a discovered competitor (rival), and (K1) says when it bears on a target. The "Problems" paragraph in Part VI says a criticism of easy-to-vary must supply such a rival - and (K1) formalizes what it means for a criticism to bear.
+
+So X15 appears faithful to the owner's position.
+
+But wait - let me think more carefully. The connection from g to δ "interpreted as an explanatory candidate" - does this bring back anything? An explanatory candidate is a specific formal object (E, p, t, Γ). Interpreting a connection as one means modeling the criticism's argument as an account. This doesn't involve listing rivals or counting versions.
+
+One concern: does defining p_δ as "the question whether z has δ in respect of p" implicitly assume that there's a determinate answer to this question (yes or no)? The theory allows for questions that can be wrong (Part III) and for cases where the semantics is silent. But (K1) just says Bearing ↔ Account(𝓔_c, p_δ), which checks whether the criticism's connection accounts for the question. This is a structural check, not a claim about the answer.
+
+I think X15 is faithful. Let me check the situations.
+
+**O27 - The test that fitted neither.** The robot finds a third fault neither candidate named. The verdict is that the achievement is mostly the robot's. Does X15 move this verdict?
+
+X15 defines the terms of (K1) - Bearing. In O27, the robot's reinterpretation of the test is a criticism of the test (it noticed the sensor assumption). The criticism has target = the test, alleged defect = assumed sensor was reading true, grounds = evidence from the test result. The connection from grounds to defect would be interpreted as an explanatory candidate for the question "did the test assume the sensor was reading true?"
+
+(K1) says the criticism bears on the test iff this explanatory candidate accounts for that question. This seems to formalize what the robot did - it noticed a defect in the test and had grounds for it. The change from vague to precise terms of (K1) doesn't change whether the robot's criticism bears - it just makes the terms explicit.
+
+The verdict on O27 is about credit allocation, which depends on Part XI (Progress, knowledge, and the normative) and Part X (Ownership). X15 defines (K1) which is about whether a criticism bears, not about credit. So X15 doesn't move O27's verdict.
+
+**N11 - Two students, ten drafts each.** Both students create what's good in their final essays. Jana's teacher selected among drafts; Kasia criticized her own work. 
+
+Does X15 relate to N11? Kasia's self-criticism is a criticism with target = her draft, alleged defect = the fault she identified, grounds = her analysis. The connection from grounds to defect is interpreted as an explanatory candidate. (K1) formalizes whether her criticism bears on the draft.
+
+The change in X15's terms makes (K1) more precise but doesn't change the verdict. Both students created their essays; the difference is in how the final draft was selected (teacher's marks vs. self-criticism). X15 doesn't affect this.
+
+**O40 - Two hands on the test.** The reinterpretation was theirs together. Credit is shared. X15 defines (K1) for the robot's criticism of the test. The expert's proposal to swap sensors is also a contribution. But X15 doesn't address credit allocation - it only defines when a criticism bears. The verdict on O40 is unchanged.
+
+**O50 - The same afternoon, three achievements.** Different achievements get different credit. X15 is about Bearing, not credit. Verdict unchanged.
+
+So X15 doesn't move any of the listed verdicts. Good.
+
+Now let me think about whether the declaration is exactly right.
+
+Declaration: "(K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Let me parse this:
+1. "p_δ is the question whether the target has the alleged defect in respect of p" - matches "the question whether z has δ in respect of p" ✓
+2. "𝓔_c is the criticism's connection from its grounds to the alleged defect" - matches "the criticism's connection from g to δ" ✓
+3. "interpreted as an explanatory candidate for that question" - matches "interpreted as an explanatory candidate (Part V) for p_δ" ✓
+
+The declaration says "(K1) now says what its terms are." Is this accurate? Yes - the new text defines p_δ and 𝓔_c, which are the two terms used in (K1) beyond c, z, p. The old text defined p_δ vaguely ("the question about the defect") and didn't define 𝓔_c.
+
+But wait - does the new wording claim MORE than the declaration says? Let me check:
+
+The declaration says (K1) "now says what its terms are." But the new wording also adds "(Part V)" - a cross-reference. Is this a claim? I don't think so - it's a pointer to where explanatory candidates are defined.
+
+Also, the new wording says p_δ is "whether z has δ in respect of p." The "in respect of p" part is new - the old text just said "about the defect." Does "in respect of p" add a claim? It specifies the context of the question, making it more precise. But the declaration captures this ("in respect of p").
+
+Actually, hmm, let me reconsider. The old text said "the question about the defect." This is vague - it could be about the defect in general, or about the defect in the target, or about the defect in respect of p. The new text says specifically "whether z has δ in respect of p." This is a specific question type (whether z has δ), in a specific context (in respect of p).
+
+Could a reader conclude something from the new wording that the old didn't allow? Yes - the new wording specifies exactly what question p_δ is. The old wording left it ambiguous. But the declaration says this is what changes: "(K1) now says what its terms are." This seems to capture it.
+
+Could a reader no longer conclude something the old allowed? The old "the question about the defect" might have been read as a broader question (e.g., "what is the defect?" or "is there a defect?"). The new text narrows it to "whether z has δ in respect of p." But this narrowing is exactly what the declaration describes.
+
+I think the declaration is accurate and complete.
+
+Now, one more thing to check: is the reason "erratum" correct? An erratum is a correction of an error. The old text used p_δ without defining it precisely, and used 𝓔_c without defining it. These are errors (undefined or vaguely defined terms). The new text fixes them. So "erratum" is appropriate.
+
+But wait - if the old text had undefined terms, then it was broken. Any fix would be necessary. The question is whether the fix changes what the theory claims. If the old text was broken, then it didn't claim anything clearly about (K1)'s terms, and the new text does claim something specific. This is a CLAIM change (the new text claims what the old left unclear). The declaration says this. So kind = CLAIM is correct.
+
+Actually, let me reconsider whether this should be CLAIM or WORDING. 
+
+CLAIM means: "a reader can conclude from the new wording something the current text left unconcluded, or can no longer conclude something the current text allowed."
+
+Old: "Let \(p_\delta\) be the question about the defect." - a reader could interpret this many ways.
+New: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)." - a reader now knows exactly what these terms mean.
+
+Can a reader now conclude something new? Yes - they can now conclude that p_δ is specifically "whether z has δ in respect of p" and that 𝓔_c is "the criticism's connection from g to δ, interpreted as an explanatory candidate." The old text left these unconcluded.
+
+Can a reader no longer conclude something? Possibly - the old "question about the defect" might have been read more broadly. But the narrowing is part of the specification.
+
+So CLAIM is the right kind. ✓
+
+Let me now think about whether there are any deeper issues.
+
+One concern: the new text says 𝓔_c is "the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ." But an explanatory candidate is (E, p, t, Γ) - it includes a question p. Here the question is p_δ. But the explanatory candidate also needs an organization E, a transport t, and commitments Γ. How are these derived from "the criticism's connection"?
+
+The text says "interpreted as" - suggesting a modeling step. But the connection is described as a single thing ("a connection"), while an explanatory candidate is a quadruple. The interpretation must map the connection to a quadruple. This mapping is not specified.
+
+Is this a problem? In the theory, "interpreted as" is used elsewhere. For instance, in Part IX, "Reason use" mentions "a structural map from the represented objection into the response suborganization." These are modeling steps that the theory assumes can be done.
+
+But (K1) is a biconditional: Bearing ↔ Account(𝓔_c, p_δ). For this to be well-defined, 𝓔_c must be well-defined. If the interpretation from connection to explanatory candidate is ambiguous, then (K1) is ambiguous.
+
+However, I think this is a reasonable modeling choice. A criticism's connection is an argument from grounds to defect. This argument can be modeled as an organization (the logical structure of the argument), a transport (how it maps to the target), and commitments (the premises doing the work). The text assumes this interpretation is possible.
+
+Is this new? The old text also used 𝓔_c in (K1) without explaining how it's derived from the connection. The new text at least names the source ("the criticism's connection from g to δ") and the target type ("an explanatory candidate (Part V)"). So the new text is actually MORE informative than the old.
+
+I think X15 is UPHELD. Let me finalize my analysis.
+
+Actually, wait. Let me re-read the declaration more carefully:
+
+"Declaration: (K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Does the declaration say exactly what changes? It says (K1) "now says what its terms are." The old text said p_δ is "the question about the defect" (vague) and didn't define 𝓔_c. The new text defines both precisely. The declaration describes these two definitions.
+
+But does the new wording do anything else? Let me compare word by word:
+
+Old: "Let \(p_\delta\) be the question about the defect. Then"
+New: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then"
+
+Changes:
+1. p_δ definition: "the question about the defect" → "the question whether z has δ in respect of p"
+2. Added: ", and 𝓔_c the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ"
+
+The declaration captures both. But wait - does the new wording also add "(Part V)"? The declaration says "an explanatory candidate" without "(Part V)." But the declaration is describing what the terms are, not quoting the text verbatim. The "(Part V)" is a cross-reference, not a claim. So the declaration is fine.
+
+Actually, I want to double-check one thing. The declaration says "interpreted as an explanatory candidate for that question." The new text says "interpreted as an explanatory candidate (Part V) for \(p_\delta\)." The declaration uses "that question" to refer to p_δ, which is defined in the same sentence. This is accurate.
+
+OK, I'm fairly confident X15 is UPHELD.
+
+But wait - let me think harder about T4 (verdict movement).
+
+For X15, the situations are O27, N11, O40, O50. Let me think about whether the change in (K1)'s terms could move any verdict.
+
+Actually, the key question is: does making (K1)'s terms more specific change when Bearing holds?Old (K1): Bearing(c,z,p) ↔ Account(𝓔_c, p_δ) where p_δ is "the question about the defect" and 𝓔_c is undefined (or vaguely "a connection").
+
+If𝓔_c was undefined in the old text, then (K1) was broken. Any fix makes it well-defined. The new text makes it well-defined. This doesn't "move" a verdict because the old text didn't have a clear verdict to move from.
+
+But wait - could the old text be read as having a verdict? If a reader assumed 𝓔_c was the criticism's connection (without the "interpreted as" step), then (K1) would be: Bearing ↔ Account(connection, question-about-defect). But "connection" is not an explanatory candidate, so Account would be undefined. So the old text was indeed broken.
+
+Alternatively, if a reader read the old text charitably and assumed the connection was already an explanatory candidate, then (K1) would be: Bearing ↔ Account(connection-as-candidate, question-about-defect). The new text makes this explicit and specifies the question. The question specification could change when Bearing holds.
+
+For example, if "the question about the defect" was read as "what is the defect?" (an identification question) and the new text says "whether z has δ in respect of p" (a yes/no question about the target), these are different questions. An explanatory candidate might account for one but not the other.
+
+But I think the old text's "the question about the defect" most naturally means "the question of whether the defect is present" or "the question concerning the defect." The new text "whether z has δ in respect of p" is a specific instance of this. So the narrowing is a clarification, not a change of claim.
+
+Hmm, but the change is declared as CLAIM, meaning something does change. What changes is that the old text left the terms unspecified, and the new text specifies them. A reader can now conclude that p_δ is specifically "whether z has δ in respect of p" (they couldn't before) and that 𝓔_c is the criticism's connection interpreted as an explanatory candidate (they couldn't before). The old text allowed various readings; the new text disallows some.
+
+I think the verdict movement is: the old text was silent on the specific form of (K1)'s terms (because they were undefined), and the new text specifies them. This doesn't move any verdict on the described situations because those situations were already being assessed with the assumption that (K1) has well-defined terms.
+
+Actually, for the described situations (O27, N11, O40, O50), the verdicts are about credit allocation and achievement. (K1) is about whether a criticism bears. The verdicts don't depend on (K1) directly. So X15 doesn't move these verdicts.
+
+Let me also think about whether the change could affect Part VI's "Problems" paragraph. That paragraph says: "A criticism that a candidate is easy to vary must supply such a rival (Part IX)." The "such a rival" refers to a rival that poses a problem of the second kind. For the criticism to bear (by (K1)), its connection must account for p_δ. If the terms of (K1) are now more precise, the criticism must account for a more specific question. This could make it harder for a criticism to bear. But this is just the consequence of making the terms precise.
+
+In any case, the described situations don't turn on whether a criticism of easy-to-vary bears. They turn on credit allocation. So no verdict movement.
+
+OK, let me also think about one more attack on X15.
+
+**Attack: "in respect of p" is ambiguous.**
+
+The new text says p_δ is "the question whether z has δ in respect of p." What does "in respect of p" mean? In Part III, "The respect is the query" - the "respect" of a question is what it asks (fixed by Q and C). So "in respect of p" might mean "in the respect that p asks about" or "relative to the question p."
+
+But p is a question (D, C, b_0, Q, O_p, ρ_p). "In respect of p" could mean:
+1. In the context of question p (i.e., p_δ is asked within the scope of p)
+2. With respect to what p asks (i.e., p_δ concerns the same subject matter as p)
+3. In the respect (query) of p (i.e., p_δ uses the same Q as p)
+
+These are different readings. But I think the most natural reading in context is (1) or (2) - p_δ is asked about z and δ in the context of the original question p. This seems reasonable.
+
+Actually, looking at the theory's use of "respect," Part III says: "What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of Q and the shape of C, not by a label." So "in respect of p" might mean "in the respect (kind of question) that p is." But p_δ is "whether z has δ" which is a yes/no question about the target, not necessarily the same kind as p.
+
+Hmm, this could be a coherence issue. But I think "in respect of p" is used more loosely here - it means "concerning the subject matter of p" or "in the context of p." This is a common English usage of "in respect of."
+
+Actually, I think there might be a subtle issue. The text uses "respect" as a technical term (Part III: "The respect is the query"). Using "in respect of p" in a non-technical way could be confusing. But I think the context makes it clear.
+
+Let me look at other uses of "respect" in the text:
+- L151: "What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of Q..." - here "respect" is about what kind of question it is.
+- L403: "The repertoire R_{β,ℓ}(s,ξ) is the set of contents deployable in some nontrivial use respect." - "use respect" seems different.
+- L377 (X15): "in respect of p" - this is about the context of p.
+
+The use in X15 seems different from the technical use in Part III. But I think it's clear from context - p_δ is about z and δ, in the context of the original question p.
+
+Actually, you know what, I realize I should think about whether this is actually a real problem or just me being overly cautious. Let me re-read the declaration: "p_δ is the question whether the target has the alleged defect in respect of p." This means: the question is "does z have δ?" asked in the context of (or concerning) p. This is clear enough.
+
+OK, I think X15 is UPHELD. Let me now write my report.
+
+Wait, one more thing. Let me check whether the new wording of X15 is coherent with the rest of Part IX. 
+
+Part IX, Bearing (lines 377-383):
+"**Bearing.** A criticism has target z, alleged defect δ, grounds g, and a connection. Let p_δ be the question whether z has δ in respect of p, and 𝓔_c the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ. Then
+Bearing(c,z,p) ↔ Account(𝓔_c, p_δ). (K1)
+A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target."
+
+The last sentence says "an organization represents it as grounds for an alleged defect in a target." This describes how a criticism comes to exist - an organization represents a signal as grounds for a defect. But (K1) says when a criticism BEOARS (not when it exists). The text is clear: a criticism can exist when (K1) fails; (K1) is about bearing, not existence.
+
+Now, with the new terms of (K1), does the last sentence become stale or idle? No - it's about when a criticism exists, not about when it bears. The new terms of (K1) don't affect this.
+
+What about the connection? The text says "a criticism has... a connection." The new text says the connection is "from g to δ." But earlier it says "A criticism has target z, alleged defect δ, grounds g, and a connection." The connection is introduced as "a connection" (indefinite article), and then identified as "the criticism's connection from g to δ." This is consistent - the connection connects the grounds to the defect.
+
+Actually, looking at this more carefully: the first sentence says a criticism has four things: target z, alleged defect δ, grounds g, and a connection. The second sentence (new) says𝓔_c is "the criticism's connection from g to δ." So the connection is from g to δ. But the first sentence says "a connection" without specifying from what to what. The new text specifies: from g to δ. This is a clarification.
+
+Is there any issue with this? I don't think so. The connection naturally goes from grounds to defect (the criticism argues from its grounds to its alleged defect). The new text makes this explicit.
+
+OK, I'm now confident. Let me write the report.
+
+Let me also make sure I handle the format correctly:
+- Number points in one list, most serious first
+- Head each point with item id and test/question
+- For challenged items, give exact wording
+- Answer question (a) for X15
+- One line per item: X13: UPHELD or X13: CHALLENGED — reason
+- OVERALL: SOUND or OVERALL: NEEDS REPAIR
+- END OF REPORT
+
+Since I think both items are UPHELD, I need to show attacks and why they fail. Let me organize my attacks.
+
+For X13:
+1. T1: "admitted" narrows the hypothesis - is this a real change? (fails because "generator" already meant generators of admitted edits)
+2. T2: Is WORDING the right kind? (yes, because the changes clarify without changing claims)
+3. T3: Is "admitted generator" defined? (yes, as a natural composition of defined terms)
+
+For X15:
+1. T1: Is the interpretation of connection as explanatory candidate well-defined? (the text says "interpreted as" which is a modeling step, consistent with the theory)
+2. T2: Does the declaration match? (yes, it captures both definitions)
+3. T3: Does "in respect of p" clash with Part III's technical use of "respect"? (minor ambiguity, but clear in context)
+4. T4: Does it move verdicts? (no, the situations are about credit allocation, not about Bearing)
+5. (a): Is it faithful to the owner's position? (yes, no listed sets, counts, grades, or records)
+
+Let me write it up now.
+
+Actually, I want to think one more time about a potential issue with X15.
+
+The new text says "𝓔_c the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ."
+
+An explanatory candidate for p_δ is (E, p_δ, t, Γ) - it includes the question p_δ as a parameter. But the connection is "from g to δ" - it connects grounds to defect. How does this connection become an explanatory candidate that has p_δ as its question?
+
+The connection argues from grounds to defect. Interpreted as an explanatory candidate, the connection becomes an account of p_δ ("does z have δ in respect of p?"). The grounds g become the background/evidence, the defect δ becomes the answer, and the connection structure becomes the organization E and transport t.
+
+But this interpretation is not formally specified. The text says "interpreted as" which is a modeling instruction. This is consistent with other parts of the theory where modeling choices are made ("A declared, invertible recoding of a carrier preserves the content when a reader who applies the declared convention recovers every pairing" - Part VIII, Recoding).
+
+I think this is acceptable. The theory is a formal semantics that models various phenomena. "Interpreted as" is the modeling step. The formal conditions (E) then check whether the interpreted candidate accounts for the question.
+
+But there's a subtle issue: different interpretations of the same connection could give different explanatory candidates, leading to different verdicts on Bearing. The text doesn't specify a unique interpretation. Is this a problem?
+
+I think the text assumes that the interpretation is determined by the criticism's content - what the criticism actually argues. The connection has a specific logical structure (from g to δ), and this structure maps to a specific explanatory candidate. But this mapping is not formalized.
+
+However, this is the same situation as before the change. The old text also used 𝓔_c without formalizing the interpretation. The new text at least names the source ("the criticism's connection from g to δ") and the target type ("explanatory candidate (Part V)"). So the new text is more informative, not less.
+
+Is this a T1 issue? The new text says the connection is "interpreted as an explanatory candidate." If the interpretation is ambiguous, then (K1) is ambiguous. But the old text had the same issue (and worse - 𝓔_c wasn't even defined). So the new text doesn't introduce a new problem; it reduces an existing one.
+
+I'll note this as an attack that fails because it's not made worse by the change (and in fact is improved).
+
+OK, now let me also think about the "Earlier new wording" for X15. The earlier version said:
+
+"Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) that the criticism offers for \(p_\delta\). Then"
+
+The current (revised) version says:
+
+"Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then"
+
+The difference is:
+- Earlier: "the explanatory candidate that the criticism offers for p_δ"
+- Current: "the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ"
+
+The earlier version assumed the criticism offers an explanatory candidate directly. The current version says the connection is interpreted as one. This is more precise about what 𝓔_c actually is (the connection, interpreted) rather than saying the criticism offers an explanatory candidate.
+
+Also, the earlier declaration said "(K1) now defines its terms" while the current says "(K1) now says what its terms are." The difference is "defines" vs. "says what its terms are." The current version is slightly less strong - "says what its terms are" could mean the terms are described, while "defines" means they are formally defined. But I think both are accurate.
+
+The current version also adds "from its grounds to the alleged defect" in the declaration, which is more specific than the earlier "the explanatory candidate the criticism offers." This matches the current new wording which says "from g to δ."
+
+I think the revision from earlier to current is an improvement - it's more precise about what 𝓔_c is. The current version should be assessed on its own merits.
+
+Let me think about whether "interpreted as" creates a problem. In the earlier version, the criticism "offers" an explanatory candidate. In the current version, the connection is "interpreted as" one. "Offers" implies the criticism itself presents an explanatory candidate. "Interpreted as" implies an external step where the connection is read as one. This is a meaningful difference.
+
+"Interpreted as" is more flexible - it allows connections that aren't explicitly explanatory candidates to be read as such. But it also introduces an interpretation step that could be ambiguous.
+
+However, the theory uses "interpreted as" elsewhere. For instance, in Part IX, Reason use: "a structural map from the represented objection into the response suborganization preserves role bindings." This is an interpretation/mapping step.
+
+And in Part V, an explanatory candidate is defined structurally. "Interpreted as" means the connection's structure is mapped onto the candidate's structure. This is a reasonable formal step.
+
+I think the current version is fine. The "interpreted as" step is a modeling choice that the theory acknowledges (similar to how declaration is "permitted only as a modelling convenience" in Part 0). The formal conditions then check the interpreted candidate.
+
+OK, I'm really going to write the report now.
+
+Let me also think about one edge case. What if a criticism's connection can't be interpreted as an explanatory candidate? For example, if the connection is just "I feel that z has δ" with no structural argument. Can this be "interpreted as an explanatory candidate"?
+
+An explanatory candidate needs (E, p, t, Γ) - an organization, a transport, a question, and commitments. A bare assertion might not have enough structure to form an organization. But the theory allows coarse organizations - "an account at a coarse grain is an account of the coarse question" (Part V). So even a simple assertion could be interpreted as a coarse organization.
+
+But if the assertion has no actual dependency structure (just a claim with no support), can it satisfy (E)? Probably not - it would fail non-circular dependence or non-vacuity. But (K1) says Bearing ↔ Account(𝓔_c, p_δ). If the interpretation can't satisfy (E), then Bearing is false. This is correct - a criticism with no real argument doesn't bear.
+
+So the "interpreted as" step is fine even for weak criticisms. It either produces a candidate that satisfies (E) (the criticism bears) or doesn't (it doesn't bear). Either way, (K1) is well-defined.
+
+But what about the ambiguity of interpretation? Could two different interpretations of the same connection give different Bearing verdicts? In principle, yes. But the text seems to assume the interpretation is canonical (determined by the connection's content). This is a reasonable assumption.
+
+Actually, this could be a real issue. Let me think about it more.
+
+A connection from g to δ has a specific logical structure. When interpreted as an explanatory candidate, this structure becomes an organization E. But different ways of carving up the logical structure could give different organizations. For instance, one interpretation might have two components (premise and conclusion) while another has three (premise, intermediate step, conclusion). These could satisfy (E) differently.
+
+But this is a general issue with modeling, not specific to X15. The theory acknowledges that "Kinds are therefore relative to the contract" and "a coarser contract identifies more components." The interpretation of a connection as an explanatory candidate is similar - it's relative to the grain and contract.
+
+The text doesn't resolve this ambiguity, but it's not made worse by the change. The old text had the same issue (and worse). So I'll note this as an attack that fails.
+
+OK, truly writing now.
+
+Hmm, actually I want to think about one more thing regarding the declaration accuracy.
+
+The declaration says: "(K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Does the new wording say exactly this? Let me compare carefully.
+
+New wording: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)."
+
+Declaration part 1: "p_δ is the question whether the target has the alleged defect in respect of p"
+New wording part 1: "p_δ is the question whether z has δ in respect of p"
+
+"The target" = z ✓, "the alleged defect" = δ ✓. Match.
+
+Declaration part 2: "𝓔_c is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question"
+New wording part 2: "𝓔_c is the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ"
+
+"Its grounds" = g ✓, "the alleged defect" = δ ✓, "an explanatory candidate" = "an explanatory candidate (Part V)" ✓ (Part V is just a reference), "for that question" = "for p_δ" ✓. Match.
+
+The declaration accurately describes what the new wording says. ✓
+
+Does the new wording claim more than the declaration? The only thing not in the declaration is "(Part V)" - a cross-reference. This is not a claim. ✓
+
+Does the new wording claim less? No - the declaration captures everything substantive. ✓
+
+Great, the declaration is exact.
+
+Now for the question of whether this is really a CLAIM and not WORDING:
+
+The old wording: "Let \(p_\delta\) be the question about the defect. Then"
+The new wording: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then"
+
+Changes:
+1. p_δ: "the question about the defect" → "the question whether z has δ in respect of p"
+2. Added definition of 𝓔_c
+
+For (1): "the question about the defect" is vague; "the question whether z has δ in respect of p" is specific. A reader can now conclude what p_δ is (they couldn't before). ✓ CLAIM.
+
+For (2): The old text didn't define 𝓔_c (at least not in this passage). A reader couldn't conclude what 𝓔_c is from this passage. Now they can. ✓ CLAIM.
+
+Both changes are CLAIM changes. The kind is correct.
+
+But wait - was 𝓔_c defined elsewhere in the old text? The old text's Part IX, Bearing section probably had the same structure: "A criticism has target z, alleged defect δ, grounds g, and a connection." Then (K1) uses 𝓔_c. If 𝓔_c was defined elsewhere (e.g., in the "connection" description), then the new text is just re-stating it. But the old wording quoted here doesn't include a definition of 𝓔_c. And the fact that this is declared as a CLAIM suggests the old text left it undefined.
+
+Actually, looking at the old wording: it starts with "Let \(p_\delta\) be the question about the defect. Then" - this is the full passage being changed. The text before it (not shown in the change) is "A criticism has target z, alleged defect δ, grounds g, and a connection." So the old text had these four elements but didn't name the connection as 𝓔_c or explain how it becomes an explanatory candidate. The new text does both.
+
+So yes, CLAIM is correct. The new text defines terms that the old text left undefined.
+
+Let me now think about one final attack on X15: does defining 𝓔_c as "interpreted as an explanatory candidate" change what (K1) claims? 
+
+Old (K1): Bearing(c,z,p) ↔ Account(𝓔_c, p_δ)
+- If 𝓔_c is undefined, (K1) is broken.
+- If 𝓔_c is loosely "the connection," then Account(connection, p_δ) might not be well-typed (Account takes an explanatory candidate, not a connection).
+
+New (K1): Bearing(c,z,p) ↔ Account(𝓔_c, p_δ) where 𝓔_c is the connection interpreted as an explanatory candidate.
+- Now Account(𝓔_c, p_δ) is well-typed because 𝓔_c is an explanatory candidate.
+
+So the change fixes a type error. This is an erratum. But it also changes what (K1) claims - it now says Bearing is equivalent to Account of the interpreted candidate, not Account of the raw connection. This is a claim change (the new text claims something specific that the old left unclear).
+
+The declaration captures this: "(K1) now says what its terms are." ✓
+
+OK, I'm truly done analyzing. Let me write the report.
+
+Wait, actually, I realize I should think about whether there's a subtle issue with X13 that I'm missing.
+
+X13 changes "for every generator \(a\)" to "for every admitted generator \(a\)." In the context of the theory, what is a "generator"?
+
+Part II says A is "a set of admitted edits, closed under a partial associative composition with identity 1." Generators of A would be a subset G ⊆ A such that every element of A is a composition of elements of G. But A is just "a set" - it might not be finitely generated. The term "generator" isn't formally defined.
+
+In Part VIII, Functional transport, the proof uses generators a and b, composing them as S_b S_a and T_b T_a. So "generators" are elements of A that generate it under composition. "Admitted generators" would be generators that are in A (which they are by definition, since they generate A).
+
+But wait - could "generator" refer to generators of a larger monoid (like all possible edits, including non-admitted ones)? If so, "admitted generator" would restrict to those in A. This would narrow the hypothesis.
+
+However, the conclusion is about "admitted finite composition" - compositions of admitted edits. The proof needs the hypothesis only for generators of these compositions, which are admitted generators. So the hypothesis should be about admitted generators.
+
+If the old text's "every generator" included non-admitted generators, the hypothesis was stronger than needed. The new text weakens it to what's needed. This doesn't change the claim (the theorem still says the same thing about admitted compositions) but changes the hypothesis.
+
+Is this a WORDING change? WORDING means "the new wording says what the old wording said, in other words." If the hypothesis changes, the statement changes. But if "generator" already meant "admitted generator" (generators of A), then it's WORDING.
+
+I think the most natural reading is that "generator" in context means "generator of A" (the admitted edits), since that's the only edit structure in the theory. So "admitted generator" is a clarification. WORDING is correct.
+
+But there's an edge case: if someone reads "generator" as a generator of some broader structure (like all physically possible edits), then "admitted" changes the hypothesis. In that reading, the old theorem was stronger (requiring the commutation for more generators), and the new one is weaker (requiring it only for admitted generators). But this reading is unlikely given the context.
+
+I'll present this as an attack and explain why it fails.
+
+Let me also consider: could "admitted" refer to something other than "in A"? In the theory, "admitted" is used for edits (A), changes (contracts are subsets of physically admitted changes), and now generators. So "admitted generator" means a generator that is an admitted edit. This is consistent.
+
+Actually, one more thing: "admitted generator" might mean "a generator that is admitted" (i.e., in A) or "a generator of the admitted edits" (i.e., generating A). These are the same if generators of A are in A (which they are, since A is closed under composition). But if "generator" means something like "a primitive edit" (not necessarily in A), then "admitted" restricts to those in A. Either way, the meaning is clear from context.
+
+OK, truly final analysis. Both items are UPHELD. Let me write the report.
+
+Let me draft:
+
+## Report
+
+### 1. X13 · T1 — The word "admitted" may narrow the hypothesis
+
+The old text said "for every generator \(a\)" and the new says "for every admitted generator \(a\)." If "generator" was read as any generator of a broader edit structure (including non-admitted edits), the new wording weakens the hypothesis, which would be a claim change rather than a wording fix.
+
+**Why the attack fails.** Part II defines \(A\) as "a set of admitted edits, closed under a partial associative composition with identity 1." The only edit structure in the theory is \(A\). A "generator" is naturally read as a generator of \(A\), which is by definition an admitted edit. The conclusion of the theorem is about "every admitted finite composition" — compositions of elements of \(A\). The proof (L353: "\(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct") uses only generators that compose into admitted edits. The word "admitted" therefore makes explicit what was already implicit; it does not change the hypothesis.
+
+Also, the previous undefined symbols \(S_a\) and \(T_a\) were genuine errors. The new "Let" sentence types them correctly (target process and represented process), which is a true erratum fix.
+
+### 2. X15 · T2 — The declaration may overstate or understate
+
+The declaration says "(K1) now says what its terms are." Let me verify: the new wording defines both \(p_\delta\) and \(\mathcal E_c\), which are (K1)'s terms beyond \(c, z, p\). The old wording defined \(p_\delta\) vaguely ("the question about the defect") and did not define \(\mathcal E_c\). The declaration captures both definitions accurately, using "the target" for \(z\), "the alleged defect" for \(\delta\), "its grounds" for \(g\), and "that question" for \(p_\delta\).
+
+**Why the attack fails.** The declaration maps one-to-one onto the new wording. It adds nothing ("(Part V)" is a cross-reference, not a claim) and omits nothing substantive. The kind CLAIM is right: the old text left the terms unconcluded; the new text concludes what they are.
+
+### 3. X15 · T3 — "in respect of p" may clash with Part III's technical term "respect"
+
+Part III (L151) uses "respect" as a technical term: "What a question asks... is fixed by the type of \(\mathcal Q\) and the shape of \(C\)." X15 uses "in respect of \(p\)" which could be read as "in the respect (query type) of \(p\)" or more loosely "concerning \(p\)." If the technical reading is forced, then \(p_\delta\) would need the same query type as \(p\), which is not stated.
+
+**Why the attack fails.** The phrase "in respect of \(p\)" is standard English meaning "concerning \(p\)" or "with regard to \(p\)." The context (defining a question about whether \(z\) has \(\delta\)) makes clear it is about the subject matter of \(p\), not about \(p\)'s query type. Part III's technical use of "respect" is confined to the sentence "The respect is the query" and its elaboration; "in respect of" is a different grammatical construction. No reader is forced into the technical reading.
+
+Hmm wait, actually I'm not 100% sure about this. Let me re-read Part III more carefully.
+
+L151: "What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of \(\mathcal Q\) and the shape of \(C\), not by a label."
+
+This says what a question "asks" is fixed by Q and C. It doesn't use "respect" in a formally defined way beyond the heading "The respect is the query."
+
+L152: "A production question has a \(\mathcal Q\) that reads an output port..."
+
+So "respect" = what the question asks = the query. Using "in respect of p" means "with regard to p" or "in the context of p." This is a different usage.
+
+Actually, the heading is "## The respect is the query" (L149). So "respect" is defined as "the query." But "in respect of p" is not "the respect of p" - it's "in respect of p," which is a prepositional phrase meaning "concerning p."
+
+I think there's a minor stylistic issue but not a coherence problem. Let me present it as an attack and explain why it fails.
+
+### 4. X15 · T1 — The interpretation of connection as explanatory candidate may be ambiguous
+
+The new wording says \(\mathcal E_c\) is "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V)." But an explanatory candidate is a quadruple \((E, p, t, \Gamma)\), and a "connection" is not obviously of this form. Different interpretations could give different candidates and different Bearing verdicts.
+
+**Why the attack fails.** The text says "interpreted as," which is a modeling step acknowledged elsewhere in the theory (cf. Part 0: "Declaration is permitted only as a modelling convenience"). The connection from grounds to defect has a logical structure that maps onto an organization, transport, and commitments. If the interpretation cannot satisfy (E), Bearing is false, which is correct for a criticism with no real argument. The ambiguity is a general feature of modeling, not introduced by this change; the old text had the same issue (and worse — \(\mathcal E_c\) was undefined).
+
+### 5. X15 · (a) — Faithfulness to the owner's position
+
+Does any of X15's wording bring back a listed set of rivals, an enumeration, a count of versions, a grade, a ranking, or a record/log? No. X15 defines the terms of (K1): what question \(p_\delta\) asks and what \(\mathcal E_c\) is. Neither involves listing rivals, counting versions, grading candidates, or maintaining records. The owner's position says "a rival is a discovered competitor, and two discovered rivals that both fit constitute a problem." (K1) formalizes when a criticism (which is how a rival is offered) bears on its target — a structural check via (E), not a count. Part VI's "Problems" paragraph (L317) says "A criticism that a candidate is easy to vary must supply such a rival (Part IX)"; (K1) is the test that rival's criticism must pass. The wording keeps faith with the owner's rule by working through the explanation's own content (Account, via (E)) rather than through any list or log.
+
+OK, I think that's comprehensive enough. Let me also think about T4 for both items.
+
+### T4 for X13:
+
+The situation is N20 (keeping count with string). The verdict is "Only the second method can [keep count]." Does X13's change move this?
+
+The first method's one-step correspondence fails (measurement errors), so the hypothesis of Functional transport fails at the generator level. The second method's one-step correspondence holds (after rounding), so the hypothesis is satisfied and compositions work. The change from "every generator" to "every admitted generator" doesn't affect this - both methods' operations are admitted generators (they're the basic counting operations). No verdict movement.
+
+### T4 for X15:
+
+The situations are O27, N11, O40, O50. These are about credit allocation. (K1) is about whether a criticism bears. The verdicts don't turn on (K1) directly. No verdict movement.
+
+But wait - could making (K1)'s terms more precise affect the analysis of these situations? For instance, in O27, the robot's reinterpretation of the test is a criticism. Does the more precise (K1) change whether this criticism bears?
+
+In O27, the robot notices the test assumed a sensor was reading true. The criticism: target = the test, alleged defect = assumes sensor is reading true, grounds = evidence from test result fitting neither candidate. The connection from grounds to defect is interpreted as an explanatory candidate for "does the test assume the sensor is reading true?" This is a specific question that the robot's analysis answers. (K1) would say the criticism bears iff the connection accounts for this question.
+
+The old (K1) with vague terms might have asked "does the test have the defect?" (broader) or "what is the defect?" (different). The new (K1) asks specifically "does z have δ in respect of p?" This is more precise and probably makes the analysis cleaner, but doesn't change the verdict on O27 (which is about credit, not about bearing).
+
+So no verdict movement. Good.
+
+Let me now write the actual report. I'll aim for clarity and depth on the key points.
+
+Actually, one more thing. Let me re-examine whether there's any issue with the change in X13 that affects the "Earlier new wording" comparison. The earlier version had "for every generator \(a\)" without "admitted." The current version adds "admitted." Someone thought this was needed. Why?
+
+Perhaps because without "admitted," the hypothesis might be read as requiring the commutation for ALL generators (including non-admitted ones), which would be too strong. Adding "admitted" restricts to the relevant generators. This is a clarification.
+
+But could adding "admitted" weaken the theorem? If the old theorem required commutation for all generators and concluded commutation for admitted compositions, then the old theorem was stronger (harder to apply). The new theorem is weaker (easier to apply). But the conclusion is the same. This doesn't change what the theorem claims; it changes its hypotheses.
+
+For WORDING: "the new wording says what the old wording said, in other words." If the hypothesis changes (even to be weaker), the statement changes. But if "generator" already meant "admitted generator" in context, then the statement is the same.
+
+I think the context makes "generator" mean "generator of A" (admitted edits), so WORDING is correct. But I should present the attack and explain.
+
+OK, final report now.
+
+Let me also think about whether X13's change could be ORDER. ORDER means "the new wording states, in its place, only what the text already states elsewhere." Does the new "Let" sentence state something already stated elsewhere?
+
+"Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\)." Is this stated elsewhere? Let me check. Part VIII is about transport results. The other results (Relational transport, Approximate transport) also use S and T. But they don't define them as "target process" and "represented process" in the same way.
+
+Looking at Approximate transport (L363): "Let \(S\) be a target next-step process and \(T\) a represented next-step process, as \(S_a\) and \(T_a\) are in functional transport." This references functional transport's definition! So the definition of S_a and T_a in functional transport is used by approximate transport.
+
+But is the definition stated elsewhere BEFORE functional transport? No - functional transport is the first transport result in Part VIII. So the "Let" sentence is the first statement of what S_a and T_a are. It's not ORDER (stating what's already elsewhere).
+
+So X13 is correctly classified as WORDING (the new wording says what the old said, in other words, with the erratum of adding the missing definitions).
+
+Actually wait - adding new definitions is not "saying the same thing in other words." WORDING means the new says what the old said. But the old didn't say what S_a and T_a are (they were undefined). The new adds their definitions. This is adding content, not rephrasing.
+
+Hmm, but the old text used S_a and T_a in the formula π∘S_a = T_a∘π. These symbols must have been intended to mean something. The new text says what they mean. Is this "saying the same thing in other words"?
+
+I think WORDING is correct because the old text's formula implicitly assumed S_a and T_a were target and represented processes (that's the only reading that makes the formula meaningful in the theory's context). The new text makes this explicit. It's not adding a new claim; it's specifying what the old symbols meant.
+
+But a strict reading of WORDING says "the new wording says what the old wording said, in other words." If the old wording didn't say what S_a and T_a are (because they were undefined), then the new wording says something the old didn't say. This would be CLAIM.
+
+Hmm, this is a tricky call. Let me think about it differently.
+
+The old text: "If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+This sentence claims: IF the commutation holds for generators, THEN it holds for compositions. The symbols S_a and T_a are used but not defined. The claim is about the implication, not about what S_a and T_a are.
+
+The new text: "Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+This sentence first defines S_a and T_a, then makes the same claim. The definition is a clarification, not a new claim.
+
+But can a reader now conclude something the old left unconcluded? Yes - they can now conclude that S_a is a target process and T_a is a represented process. The old text left this unconcluded.
+
+Can a reader no longer conclude something? The old text's undefined symbols could have been read as anything. The new text restricts them to target and represented processes. But this restriction is the natural reading.
+
+I think this is borderline between WORDING and CLAIM. The declaration says WORDING (no declaration). If it's actually CLAIM, the kind is wrong.
+
+But the reason given is "erratum" - the old text had an error (undefined symbols). Fixing an error is not changing a claim (the claim was always intended to be about target and represented processes). So WORDING seems right for an erratum fix.
+
+Let me think about it this way: if a sentence has a typo ("teh" instead of "the"), fixing it is WORDING. If a sentence uses an undefined symbol, defining it is also WORDING (assuming the definition matches the intended meaning). The old text intended S_a and T_a to be target and represented processes (that's the only reading that makes sense); the new text says so.
+
+I'll go with WORDING but present the attack.
+
+Actually, let me reconsider. The task says: "For a WORDING or ORDER item: can a reader now conclude something the current text left unconcluded, or no longer conclude something it allowed?"
+
+Can a reader now conclude that S_a is a target process? Yes. The current text left this unconcluded (S_a was undefined). So by the test's criterion, this should be CLAIM, not WORDING.
+
+But wait - the criterion says "can a reader now conclude something the current text left unconcluded." If the current text's S_a was undefined, a reader couldn't conclude anything about it. Now they can conclude it's a target process. So yes, they can now conclude something new.
+
+However, this is also true of any erratum fix. If a text has a typo that makes a sentence ungrammatical, fixing it lets the reader conclude what the sentence says. But that's still WORDING, not CLAIM.
+
+I think the distinction is: WORDING changes the surface form without changing the claim; CLAIM changes what's claimed. If the old text's claim was "the commutation for generators implies commutation for compositions" (with S_a and T_a implicitly being target and represented processes), then the new text makes the same claim with explicit definitions. The claim doesn't change; only the presentation does.
+
+But the test asks about what a reader can CONCLUDE, not about what's CLAIMED. A reader of the old text couldn't conclude that S_a is a target process (because it wasn't stated). A reader of the new text can. So by the letter of the test, this is CLAIM.
+
+Hmm, but that would make every erratum fix a CLAIM, which seems wrong. The point of WORDING is that the new text says the same thing in different words. If the old text was broken (undefined symbols), the "thing it said" was the intended meaning, which the new text expresses.
+
+I think the intent of the classification is:
+- WORDING: the meaning is preserved, only the expression changes
+- CLAIM: the meaning changes (something is now claimed that wasn't, or vice versa)
+
+For X13, the meaning is preserved (the theorem is about target and represented processes, and always was). The expression changes (undefined symbols are defined, "generator" is clarified). So WORDING is correct.
+
+But the test criterion ("can a reader now conclude something...") is about reader conclusions, not about meaning. A reader of the old text couldn't conclude the definitions; a reader of the new text can. This is a new conclusion.
+
+I think there's a tension between the classification criteria and the intent. Let me present this as an attack on T2 and explain the tension.
+
+OK, I think the right approach is:
+1. Note that the change adds definitions (S_a and T_a) and a qualifier ("admitted") that weren't in the old text
+2. Ask whether this is really WORDING or should be CLAIM
+3. Argue that it's WORDING because the intended meaning is preserved (erratum fix)
+4. But note the tension with the test criterion
+
+Let me present this fairly.
+
+Actually, you know what, I think I should challenge X13's kind. Here's my reasoning:
+
+The test for WORDING says: "can a reader now conclude something the current text left unconcluded, or no longer conclude something it allowed?"
+
+A reader of the old text could not conclude that \(S_a\) is a target process and \(T_a\) is a represented process (they were undefined). A reader of the new text can. Therefore, by the test criterion, the item is CLAIM, not WORDING.
+
+Similarly, the change from "every generator" to "every admitted generator" could allow a reader to conclude that the hypothesis is restricted to admitted generators (if the old "generator" was broader). But this is less clear.
+
+So I think X13 should be CHALLENGED on T2: the kind should be CLAIM, not WORDING. The new text lets readers conclude definitions they couldn't before.
+
+But wait - is this really a "conclusion"? A definition isn't a conclusion; it's a stipulation. "Let S_a be a target process" doesn't let you conclude S_a is a target process; it stipulates it. Stipulations change the framework, not the claims within it.
+
+Hmm, but the test says "can a reader now conclude something the current text left unconcluded." A reader can now conclude "in this theory, S_a refers to a target process." In the old text, they couldn't conclude this. So yes, by the test criterion.
+
+But this would also mean that adding any definition to a text is a CLAIM change, which seems wrong. Definitions set up the framework; claims are about what follows.
+
+I think the test criterion is about claims, not definitions. "Can a reader conclude X" means "can a reader deduce X from the text's claims." A definition isn't deduced; it's stipulated. So adding a definition doesn't let the reader "conclude" anything new; it lets them understand what the existing claims are about.
+
+By this reading, X13 is WORDING. The old text's claims (about the implication from generator commutation to composition commutation) are the same as the new text's claims. The new text just makes the symbols meaningful.
+
+But then what about "every generator" → "every admitted generator"? If this changes the hypothesis, the claim changes. But if "generator" already meant "admitted generator" (generators of A), the claim is the same.
+
+I think WORDING is correct, and I'll present the attack and explain why it fails.
+
+OK here is my actual plan for the report:
+
+Points (most serious first):
+
+1. **X13 · T2** — The added "Let" sentence and the word "admitted" might constitute a CLAIM change, not WORDING.
+   - Attack: defining S_a and T_a lets readers conclude something the old text left unconcluded.
+   - Rebuttal: definitions are stipulations, not conclusions; the theorem's claim is unchanged. Also "admitted" clarifies "generator" = generator of A.
+
+2. **X15 · T2** — The declaration may not capture everything or may capture too much.
+   - Attack: verify the declaration against the new wording.
+   - Rebuttal: the declaration maps one-to-one; "(Part V)" is a reference, not a claim.
+
+3. **X15 · T3** — "in respect of p" may clash with Part III's technical "respect."
+   - Attack: technical vs. non-technical use of "respect."
+   - Rebuttal: different grammatical construction; context makes meaning clear.
+
+4. **X15 · T1** — The "interpreted as" step may be ambiguous.
+   - Attack: different interpretations give different Bearing verdicts.
+   - Rebuttal: modeling step acknowledged by the theory; not made worse by the change.
+
+5. **X15 · (a)** — Faithfulness check.
+   - No listed sets, counts, grades, or records. FAITHFUL.
+
+Hmm wait, I should also verify T1 for X13. Is the new wording true?
+
+"Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+Is this true? The proof is: "\(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct."
+
+Given π∘S_a = T_a∘π for all admitted generators a, and similarly for b:
+π(S_b S_a) = (π S_b) S_a = (T_b π) S_a = T_b (π S_a) = T_b (T_a π) = (T_b T_a) π
+
+So π∘(S_b S_a) = (T_b T_a)∘π. By induction, this extends to any finite composition. ✓
+
+But wait - the proof uses S_b S_a and T_b T_a, which are compositions of processes. Are these well-defined? If S_a and S_b are functions (processes), then their composition S_b ∘ S_a is well-defined. Similarly for T_b ∘ T_a. ✓
+
+And the "matching scopes" condition ensures that the compositions are on the right domains. ✓
+
+So the theorem is true. ✓
+
+Let me also verify T1 for X15. Is the new wording true?
+
+"Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)."
+
+Is this true? It's a definition - it defines p_δ and 𝓔_c. Definitions are not true or false; they're stipulations. But are they well-formed?
+
+- p_δ is "the question whether z has δ in respect of p" — this is a question (it asks whether something is the case). In the theory's formalism, a question is (D, C, b_0, Q, O_p, ρ_p). Is "whether z has δ in respect of p" expressible as such? It would have Q computing whether z has δ (a yes/no operation) and C related to p's contract. This seems well-formed. ✓- 𝓔_c is "the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ" — an explanatory candidate is (E, p_δ, t, Γ). The connection is interpreted as such. This is a modeling step. ✓
+
+So the definitions are well-formed. ✓
+
+OK, I think I have a solid analysis. Let me write the report now.
+
+Let me also think about one more thing: is there a subtle issue with the definition of p_δ that could create a circularity?
+
+p_δ is "the question whether z has δ in respect of p." And (K1) is Bearing(c,z,p) ↔ Account(𝓔_c, p_δ). The Bearing relation is defined using p_δ, which is defined using p. And Bearing takes p as a parameter. So Bearing(c,z,p) uses p twice: once directly and once through p_δ. Is this circular?
+
+No - p_δ is a function of z, δ, and p. Bearing is a function of c, z, and p. There's no circularity because p_δ is defined independently of Bearing. ✓
+
+One more thing: the new text says p_δ is "the question whether z has δ in respect of p." But δ is an "alleged defect." The question asks whether z has this defect. But δ might not be well-defined as a property of z. What if δ is vague or contradictory?
+
+The theory allows questions that can be wrong (Part III). A question "may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements. Its formulation is still an event." So even if δ is vague, p_δ is still a question (possibly a bad one). (K1) would then check whether𝓔_c accounts for this possibly-bad question. If the question is incoherent, Account might be undefined or false. But this is handled by the theory's general treatment of bad questions.
+
+OK, no issue there.
+
+Let me write the report. I'll aim for about 2000-2500 words.
+
+Hmm, actually I realize I should think about whether there is a real issue with X15 regarding the definition of p_delta as a question of the form "whether z has delta in respect of p". In Part III, a question is formally (D, C, b_0, Q, O_p, rho_p). The phrase "the question whether z has delta in respect of p" needs to correspond to some formal question. But what organization D does it target? What contract C? What query Q?
+
+The question p_delta seems to target z (or z's organization) and ask whether it has defect delta. The contract would involve edits that could reveal or change the defect. The query Q would compute whether the defect is present.
+
+But this is not spelled out. The text says "the question whether z has delta in respect of p" which is informal. For (K1) to be evaluable, p_delta needs to be a formal question. Is this a problem?
+
+I think the text assumes that "the question whether z has delta in respect of p" can be formalized as a question in the theory's sense. This is similar to how other parts of the text use informal descriptions of questions. The formalization would need to specify D, C, Q, etc., but this is left to the modeler.
+
+Is this an issue? It's a gap between the informal description and the formal framework. But the old text had the same gap (and worse). The new text at least specifies what the question is about (z, delta, in respect of p) even if it doesn't give the full formal tuple.
+
+I think this is acceptable but worth noting as a potential issue. Let me include it in my analysis.
+
+Actually wait, I want to be more precise. Part III says "A question is p = (D, C, b_0, Q, O_p, rho_p)." For p_delta to be a question, it needs these components. The text's informal description "the question whether z has delta in respect of p" gives some of these (the target is z's organization, the query asks about delta) but not all (the contract, baseline, obligations, provenance are not specified).
+
+But (K1) says Bearing(c,z,p) ↔ Account(𝓔_c, p_delta). Account takes (E, p_delta, t, Gamma) and checks (F1), (F2), (A), NonCircular, NonVacuous. These conditions are on the contract C of p_delta. If C is not specified, Account cannot be evaluated.
+
+So p_delta needs a full formal specification. The text gives an informal description. This is a gap.
+
+But is this gap introduced by the change? No - the old text also said "the question about the defect" without specifying the formal components. The new text is more specific (it identifies the target, the defect, and the context) but still doesn't give the full tuple.
+
+So the gap is reduced but not eliminated. This is an improvement, not a regression. I'll note it but not challenge the item for it.
+
+OK, NOW I write the report.
+
+Hmm, I realize I should also think about whether the text might have a specific convention for defining questions informally. Let me check.
+
+In Part III: "A question is p = (D, C, b_0, Q, O_p, rho_p)." But then "The respect is the query" and "What a question asks... is fixed by the type of Q and the shape of C, not by a label." So the text defines questions formally but also uses informal descriptions.
+
+In Part V: "An explanatory candidate for question p..." - here p is already formal.
+
+In Part VI: "Two explanatory candidates for one question p..." - p is formal.
+
+In Part IX (Bearing): "Let p_delta be the question whether z has delta in respect of p" - informal description.
+
+So the text uses informal descriptions of questions in some places. This seems to be a convention - the formal components are implied by the context. For p_delta, the target is z's organization, the contract is related to p's contract, and the query asks about delta.
+
+I think this is acceptable. The formalization is left to the modeler, as with other informal descriptions.
+
+OK, truly writing now. Let me organize the report.
+
+I think I should present about 4-5 substantive points, with the most serious first. Let me rank them:
+
+1. X13 · T2 — Kind might be wrong (WORDING vs CLAIM) — this is the most serious if it succeeds
+2. X15 · T3 — "in respect of p" ambiguity with Part III's "respect"
+3. X15 · T1 — Interpretation of connection as explanatory candidate
+4. X15 · T2 — Declaration accuracy
+5. X15 · (a) — Faithfulness
+
+Actually, I think the "in respect of p" issue is fairly minor and the declaration accuracy issue is also minor. Let me think about what's really most serious.
+
+Actually, I think the most serious issue might be the interpretation of connection as explanatory candidate. Let me think about this more.
+
+The new text says: "𝓔_c the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ."
+
+An explanatory candidate for p_δ is (E, p_δ, t, Γ). The connection is "from g to δ." How does a connection from g to δ become a tuple (E, p_δ, t, Γ)?
+
+The connection presumably has some logical structure: it argues from premises g to conclusion δ. This structure can be modeled as an organization E where the components encode the logical steps. The transport t maps E to the target (z's organization). The commitments Γ are the premises doing the work.
+
+But this mapping is not unique. One person might model the connection as a two-component organization (g → δ) while another models it as a three-component organization (g → intermediate → δ). These could satisfy (E) differently.
+
+However, (K1) says Bearing ↔ Account(𝓔_c, p_δ). If different interpretations give different verdicts, Bearing is ambiguous. This is a real issue.
+
+But is it introduced by the change? No - the old text also had this issue (worse, because 𝓔_c was undefined). The new text at least names the source and type.
+
+Still, the new text's claim is that Bearing is equivalent to Account of the interpreted candidate. If the interpretation is not unique, the claim is ambiguous. This is a T1 issue.
+
+Let me think about whether the theory provides any way to resolve the ambiguity. The text says "interpreted as an explanatory candidate (Part V)." Part V defines explanatory candidates structurally. The interpretation should map the connection's structure to the candidate's structure. If the connection has a unique logical structure, the interpretation is unique.
+
+But logical arguments can often be decomposed in multiple ways. The theory acknowledges this: "Kinds are therefore relative to the contract; a coarser contract identifies more components" (Part II). So different decompositions are possible.
+
+However, (E) checks conditions that are decomposition-sensitive. (F1) checks component fidelity. Different decompositions have different components. So (E) could give different results for different decompositions.
+
+But (F1) says: "For every active component k of E with anchor subnetwork λ(k) ⊆ D... the relation obtained by imposing the constraints of λ(k) and projecting away its hidden ports equals the component relation of k." If the decomposition is coarser (fewer components), the anchors are larger subnetworks. The fidelity condition still needs to hold for each component.
+
+In practice, a criticism's connection has a definite logical structure (the argument actually made). This structure determines the decomposition. The "interpretation" is not arbitrary; it's reading off the structure from the connection.
+
+I think the text's assumption is that the connection has a definite structure, and the interpretation is canonical. This is reasonable but not proven. The issue is a potential gap, not a clear error.
+
+For the report, I'll present this as an attack and explain why it's a gap that the theory should acknowledge but that doesn't invalidate the change.
+
+Actually, hmm. I think I'm overthinking this. Let me step back and think about what's really important.
+
+The two items are:
+- X13: Adding definitions and a qualifier to a theorem statement (WORDING, erratum)
+- X15: Defining the terms of (K1) (CLAIM, erratum)
+
+Both are erratum fixes. The questions are:
+1. Are the fixes correct (T1)?
+2. Are the kinds and declarations right (T2)?
+3. Are they coherent (T3)?
+4. Do they move verdicts (T4)?
+5. For X15, is it faithful to the owner's position (a)?
+
+I think both are largely correct. The main points of attack are:
+- For X13: whether "admitted" and the "Let" sentence change the claim
+- For X15: whether the declaration is exact and the interpretation is well-defined
+
+Let me write concise but thorough points.
+
+Here's my plan for the report structure:
+
+**Point 1: X13 · T2** — Is the kind right? (WORDING vs CLAIM)
+- Show that defining S_a and T_a lets readers conclude something new
+- Argue it's still WORDING because the intended meaning is preserved
+- Note the tension with the test criterion
+
+**Point 2: X15 · T1** — Is the interpretation step well-defined?
+- Show that "interpreted as" may be ambiguous
+- Argue it's a modeling step consistent with the theory
+- Note the gap but explain why it doesn't invalidate the change
+
+**Point 3: X15 · T3** — "in respect of p" and Part III's "respect"
+- Show the potential clash
+- Argue it's a different grammatical construction
+
+**Point 4: X15 · T2** — Declaration accuracy
+- Verify the declaration against the new wording
+- Show it matches
+
+**Point 5: X15 · (a)** — Faithfulness
+- Show no forbidden items
+- Quote what keeps it faithful
+
+**T4 checks** — Brief mention for both items
+
+Let me write this now.
+
+Wait, I realize I should think about whether the kind of X13 might actually need to be ORDER. ORDER means "the new wording states, in its place, only what the text already states elsewhere." Does the "Let" sentence state something already stated elsewhere?
+
+Looking at Approximate transport (L363): "Let \(S\) be a target next-step process and \(T\) a represented next-step process, as \(S_a\) and \(T_a\) are in functional transport." This references functional transport's definition of S_a and T_a. So the definition in functional transport is used by approximate transport, not the other way around.
+
+Is the definition stated before functional transport? Let me check earlier parts. Part IV defines transports and processes, but not S_a and T_a specifically. Part V defines Account. None of these define S_a and T_a.
+
+So the "Let" sentence in functional transport is the first (and primary) definition of S_a and T_a. It's not ORDER (stating what's elsewhere). It's adding new definitional content.
+
+Could this make it CLAIM? If the definition lets readers conclude something new, yes. But if it's just a stipulation (not a conclusion), then it's WORDING (fixing an error in the presentation).
+
+I think WORDING is correct for an erratum fix that adds missing definitions. The alternative (CLAIM) would require a declaration explaining what new claims are made, but the only "new" thing is the definitions themselves, which are stipulations not claims.
+
+OK, I'll argue for WORDING and present the counterargument.
+
+Let me now finalize. I want the report to be thorough but not too long. Let me aim for about 2000 words.
+
+Let me draft the key sections:
+
+### X13 · T2
+
+The item is classified WORDING. The test asks: "can a reader now conclude something the current text left unconcluded, or no longer conclude something it allowed?"
+
+The new wording adds "Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\)." The old text used \(S_a\) and \(T_a\) in the formula \(\pi \circ S_a = T_a \circ \pi\) without defining them. A reader of the old text could not conclude what \(S_a\) and \(T_a\) denote. A reader of the new text can: \(S_a\) is a target process, \(T_a\) a represented process. This seems to meet the test criterion for CLAIM.
+
+**Why the attack fails.** The test criterion targets conclusions a reader draws from a text's claims. A "Let" sentence is a stipulation, not a claim: it fixes what symbols denote, not what is true of them. The old text's claim — the implication from generator commutation to composition commutation — is the same as the new text's claim; only the symbols' denotations are now stated. The old text had an erratum (undefined symbols); the new text fixes it. WORDING is the right kind for an erratum fix that restores the intended meaning without adding claims.
+
+The change from "every generator" to "every admitted generator" is likewise a clarification: in Part II, \(A\) is "a set of admitted edits"; the only edit structure in the theory is \(A\), so "generator" already meant "generator of \(A\)," i.e., an admitted edit. The proof at L353 ("induct") works on compositions of admitted generators, matching the conclusion about "admitted finite composition."
+
+### X15 · T1
+
+The new wording defines \(\mathcal E_c\) as "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)." An explanatory candidate is a quadruple \((E, p, t, \Gamma)\) (Part V). A "connection" is not obviously of this form. If different interpretations of the same connection yield different candidates and hence different Bearing verdicts, (K1) is ambiguous.
+
+**Why the attack fails.** The text says "interpreted as," which is a modelling step. The criticism's connection has a definite logical structure — the argument actually made from grounds to defect. This structure maps onto an organization (the argument's dependencies), a transport (how those dependencies anchor to the target), and commitments (the premises doing the work). If the interpretation cannot satisfy (E), Bearing is false, which is correct for a criticism that offers no real account. The ambiguity is not introduced by this change: the old text used \(\mathcal E_c\) in (K1) without any definition, which is strictly worse. The change reduces the gap.
+
+### X15 · T3
+
+Part III's heading "The respect is the query" (L149) introduces "respect" as a technical term: what a question asks is its respect. X15's phrase "in respect of \(p\)" could be read as "in the respect (query) of \(p\)," which would require \(p_\delta\) to share \(p\)'s query type.
+
+**Why the attack fails.** "In respect of \(p\)" is a standard English prepositional phrase meaning "concerning \(p\)" or "with regard to \(p\)." It is a different grammatical construction from the noun "respect." The context (defining a question about whether \(z\) has \(\delta\)) makes clear the meaning is "in the context of \(p\)," not "in the query-type of \(p\)." No reader is forced into the technical reading.
+
+### X15 · T2
+
+The declaration says "(K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Checking against the new wording:
+- "the question whether the target has the alleged defect in respect of \(p\)" = "the question whether \(z\) has \(\delta\) in respect of \(p\)" ✓
+- "the criticism's connection from its grounds to the alleged defect" = "the criticism's connection from \(g\) to \(\delta\)" ✓
+- "interpreted as an explanatory candidate for that question" = "interpreted as an explanatory candidate (Part V) for \(p_\delta\)" ✓
+
+The declaration adds nothing ("(Part V)" is a cross-reference) and omits nothing substantive. The kind CLAIM is right: the old text left \(p_\delta\) vague ("the question about the defect") and did not define \(\mathcal E_c\); the new text specifies both. A reader can now conclude what these terms are; the old text left them unconcluded.
+
+**Why the attack fails.** The declaration is an accurate and complete description of what changes. The kind matches the test criterion for CLAIM.
+
+### X15 · (a)
+
+Does X15's wording bring back a listed set of rivals, an enumeration, a count, a grade, a ranking, or a record/log? No. X15 defines the terms of (K1): what question \(p_\delta\) asks and what \(\mathcal E_c\) is. Neither involves listing rivals or counting versions. Part VI's "Problems" paragraph (L317) says "A criticism that a candidate is easy to vary must supply such a rival (Part IX)"; (K1) is the test that rival's criticism must pass. The test is structural: Bearing ↔ Account(\(\mathcal E_c, p_\delta\)), where Account (Part V) checks fidelity under change — the explanation's own content — not any count or log. This keeps the wording faithful to the owner's position.
+
+Now let me think about T4 for both items.
+
+### T4 for X13
+
+Situation N20: keeping count with string. The first method's errors accumulate; the second's rounding prevents accumulation. Does X13 move the verdict?
+
+The first method's one-step correspondence \(\pi \circ S_a = T_a \circ \pi\) fails (measurement errors), so Functional transport's hypothesis is not met. The second method's one-step correspondence holds (after rounding), so the hypothesis is met and the conclusion extends to compositions. The change from "every generator" to "every admitted generator" doesn't affect this — both methods' operations are basic counting operations (admitted generators in the relevant sense). No verdict movement.
+
+### T4 for X15
+
+Situations O27, N11, O40, O50: all about credit allocation and achievement attribution. (K1) is about whether a criticism bears. The verdicts on these situations depend on Part X (Ownership, Origin) and Part XI (credit), not directly on (K1). Making (K1)'s terms more precise does not change credit allocation. No verdict movement.
+
+OK, I think this is comprehensive. Let me write the final report.
+
+Actually, let me reconsider the seriousness ranking. I think the most serious issue is actually the potential kind mismatch for X13 (WORDING vs CLAIM). If the kind is wrong, the item is CHALLENGED. Let me think about this one more time.
+
+The test says: "For a WORDING or ORDER item: can a reader now conclude something the current text left unconcluded, or no longer conclude something it allowed?"
+
+Can a reader now conclude "S_a is a target process and T_a is a represented process"? In the old text, these symbols were undefined. A reader could NOT conclude this. In the new text, the "Let" sentence states it. A reader CAN now know this.
+
+But "conclude" implies deduction from claims. The "Let" sentence is a stipulation, not a claim. A reader doesn't "conclude" that S_a is a target process; they're TOLD it is. 
+
+Similarly, can a reader conclude "the hypothesis is restricted to admitted generators"? The old text said "every generator" (ambiguous); the new says "every admitted generator." A reader of the new text knows the hypothesis is restricted; a reader of the old text might not have known. But again, this is a clarification of the hypothesis, not a new conclusion.
+
+I think the key question is: does the theorem's claim change? If "generator" already meant "admitted generator" (in context), the claim is the same. If it didn't, the hypothesis weakens and the claim changes.
+
+In the theory, A is the set of admitted edits. Generators of A are elements of A. So "generator" means "generator of A" = "admitted edit" = "admitted generator." The addition of "admitted" is redundant. WORDING is correct.
+
+But what if someone reads "generator" more broadly? The test asks what a reader CAN conclude, not what they MUST conclude. A reader of the old text might conclude "the hypothesis covers all generators, including non-admitted ones." A reader of the new text can only conclude "the hypothesis covers admitted generators." This is a narrowing of what can be concluded.
+
+Hmm, this is genuinely ambiguous. Let me think about it from the perspective of the test.
+
+"can a reader now conclude something the current text left unconcluded" — Can a reader of the new text conclude "the hypothesis is restricted to admitted generators"? Yes. Could a reader of the old text conclude this? Maybe not (if they read "generator" broadly).
+
+"or no longer conclude something it allowed" — Can a reader of the new text still conclude "the hypothesis covers all generators"? No (the text now says "admitted"). Could a reader of the old text conclude this? Maybe (if they read "generator" broadly).
+
+So by the test criterion, the item does change what can be concluded. This would make it CLAIM.
+
+But the ITEM is declared WORDING. If it should be CLAIM, the kind is wrong.
+
+However, I think the intended meaning of "generator" in context is "generator of A," and adding "admitted" is a clarification. The test criterion is about what the text LITERALLY allows, not about what it intends. Literally, the old text's "every generator" is ambiguous; the new text's "every admitted generator" is precise.
+
+I think I should CHALLENGE X13 on T2: the kind should be CLAIM, not WORDING. The change from "every generator" to "every admitted generator" narrows what can be concluded.
+
+Wait, but if I challenge the kind, I need to propose a declaration (since CLAIM items carry declarations). Let me draft one:
+
+"Functional transport now restricts its hypothesis to admitted generators and types \(S_a\) and \(T_a\) as target and represented processes; the old text left these terms untyped and the quantifier ambiguous."
+
+Hmm, but the declaration should say "exactly what changes in what is claimed." If the claim doesn't change (the theorem is the same), then the declaration should say something like "Functional transport now types its symbols and restricts its quantifier to admitted generators; the theorem's claim is unchanged."
+
+But if the claim is unchanged, it should be WORDING, not CLAIM.
+
+I think the issue is:
+- If "generator" meant "admitted generator" (in context), the claim is unchanged → WORDING
+- If "generator" could mean something broader, the claim changes → CLAIM
+
+The text is ambiguous on this. The test asks what a reader CAN conclude. A reader CAN conclude different things from old vs. new.
+
+I think I should challenge the kind and propose CLAIM with an appropriate declaration. Let me draft:
+
+**Declaration:** Functional transport now types \(S_a\) as a target process and \(T_a\) as a represented process, and restricts its hypothesis from "every generator" to "every admitted generator." A reader can now conclude that the commutation condition is required only for admitted generators; the old text's "every generator" left the scope of the hypothesis ambiguous.
+
+Actually wait, this might be over-reading. Let me look at the full theorem statement again:
+
+Old: "**Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+New: "**Functional transport.** Let \(S_a\) be a target process and \(T_a\) a represented process for each admitted generator \(a\). If \(\pi\circ S_a=T_a\circ\pi\) for every admitted generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+The conclusion is "the same holds for every admitted finite composition." This is about admitted compositions. The proof works on generators that compose into admitted compositions. So the natural reading of "generator" in the old text is "generator of admitted edits," i.e., "admitted generator."
+
+I think the old text's "generator" in context means "admitted generator." The addition of "admitted" is a clarification. WORDING is correct.
+
+But I should still present the attack and explain why it fails. Let me do this.
+
+OK, I think the fairest assessment is:
+
+X13 is UPHELD as WORDING. The attacks are:
+1. The "Let" sentence adds definitions (stipulations, not claims)
+2. "admitted" might narrow the hypothesis (but in context, it's redundant)
+
+Both attacks fail because the intended meaning is preserved and the changes are clarifications.
+
+X15 is UPHELD as CLAIM. The attacks are:
+1. "interpreted as" may be ambiguous (but it's a modeling step, and the old text was worse)
+2. "in respect of p" may clash with Part III's "respect" (but it's a different construction)
+3. The declaration may not be exact (but it matches)
+
+Both items are UPHELD. OVERALL: SOUND.
+
+But wait - I want to make sure I'm being a hard-nosed attacker. Let me think about whether there's ANY reason to challenge either item.
+
+For X13, the strongest attack is: the change from "every generator" to "every admitted generator" narrows the hypothesis, making the theorem applicable in more cases (weaker hypothesis, same conclusion). This is a claim change because the theorem now applies where the old one didn't (cases where the commutation holds for admitted generators but not for all generators).
+
+Example: suppose the edit structure has generators {a, b, c} where a and b are admitted but c is not. The old theorem requires π∘S_a = T_a∘π, π∘S_b = T_b∘π, AND π∘S_c = T_c∘π. The new theorem requires only the first two. So the new theorem applies to cases the old one didn't.
+
+But wait - in the theory, A is the set of admitted edits. Generators of A are in A. There are no "non-admitted generators" of A. So c cannot be a generator of A if it's not in A. The only generators are admitted generators.
+
+Unless "generator" refers to generators of some other structure. But the theory only defines one edit structure (A). So "generator" must mean "generator of A."
+
+Therefore, "every generator" = "every admitted generator." The addition of "admitted" is redundant. WORDING is correct.
+
+OK, I'm convinced. Both items are UPHELD.
+
+But let me think of one more attack on X15. What if the declaration claims too little?
+
+The declaration says "(K1) now says what its terms are." But does the new wording do anything ELSE beyond saying what the terms are? Let me check.
+
+Old: "Let \(p_\delta\) be the question about the defect. Then"
+New: "Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then"
+
+Changes:
+1. p_δ: "the question about the defect" → "the question whether z has δ in respect of p"
+2. Added: ", and 𝓔_c the criticism's connection from g to δ, interpreted as an explanatory candidate (Part V) for p_δ"
+
+For (1): this is specifying what p_δ is. The declaration says "p_δ is the question whether the target has the alleged defect in respect of p." ✓
+
+For (2): this defines 𝓔_c. The declaration says "𝓔_c is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question." ✓
+
+Does the new wording do anything beyond these two definitions? No. The rest ("Then") is unchanged. ✓
+
+So the declaration captures everything. ✓
+
+What about the fact that the old text's p_δ was "the question about the defect" and the new is "the question whether z has δ in respect of p"? The old was vague; the new is specific. The declaration says "the question whether the target has the alleged defect in respect of p." This is the specific form. But does the declaration say that the old form was vague and the new is specific? Not explicitly. But the declaration says "(K1) now says what its terms are" which implies the old didn't. This is enough.
+
+Actually, the declaration says "(K1) now says what its terms are." Does the old text also say what its terms are (just vaguely)? The old says "the question about the defect" which IS a specification (albeit vague). So "(K1) now says what its terms are" is slightly misleading - the old text also said what p_δ is, just vaguely.
+
+But the declaration also says 𝓔_c is "the criticism's connection..." which the old text didn't say. So the declaration is about BOTH terms being specified, not just one.
+
+And "now says what its terms are" can be read as "now says PRECISELY what its terms are" or "now says what its terms are (as opposed to leaving them vague)." The declaration's phrasing is slightly imprecise but not wrong.
+
+Hmm, is this enough to challenge? I don't think so. The declaration is a summary; it doesn't need to enumerate every nuance. The key point is that (K1)'s terms are now specified, which the declaration captures.
+
+OK, I'm truly done. Let me write the report.
+
+Wait, one more edge case. The old text says "the question about the defect." This could mean:
+(a) the question of whether the defect is present (a yes/no question)
+(b) the question of what the defect is (an identification question)
+(c) the question of why the defect occurs (a production question)
+(d) any question concerning the defect
+
+The new text says "the question whether z has δ in respect of p" which is (a) - a yes/no question about whether the target has the defect. This is a specific instance of (d) and different from (b) and (c).
+
+Does narrowing from (d) to (a) change what (K1) claims? Yes - (K1) now checks Account for a yes/no question, not for any question about the defect. If someone had a criticism whose connection accounts for (b) but not (a), the old (K1) might have said Bearing holds (if p_δ was (b)) but the new (K1) says it doesn't (because p_δ is (a)).
+
+But the old text's "the question about the defect" most naturally means (a) or (d). And the declaration says "(K1) now says what its terms are" - implying the old text's specification was imprecise and the new one is precise. This is captured by the CLAIM declaration.
+
+So the narrowing is part of the CLAIM. The declaration says (K1) "now says what its terms are" which includes the narrowing. ✓
+
+But does the declaration EXACTLY say what changes? It says the terms are now specified. But the narrowing from "about the defect" to "whether z has δ in respect of p" is a substantive change in what p_δ is. The declaration captures this ("p_δ is the question whether the target has the alleged defect in respect of p"). ✓
+
+OK, I'm truly satisfied now. Let me write the report.
+
+Hmm, actually I want to reconsider whether X15 might have a T4 issue I'm missing.
+
+The situations are O27, N11, O40, O50. These are about credit allocation. But (K1) is about Bearing - whether a criticism bears on its target. Could making (K1) more precise change the analysis of these situations?
+
+In O27, the robot's reinterpretation is a criticism of the test. For this criticism to have "bearing" (by (K1)), its connection must account for p_δ ("does the test assume the sensor is reading true?"). With the new, more precise p_δ, the question is specifically about the test's assumption. The robot's analysis does address this. So Bearing holds. With the old, vague p_δ ("the question about the defect"), the question might have been broader. But the robot's analysis still addresses it. So Bearing holds either way.
+
+In N11, Kasia's self-criticism identifies specific faults. For each fault, the criticism has a target (the draft), an alleged defect (the fault), and grounds (her analysis). (K1) checks whether the connection accounts for "does the draft have this fault?" Kasia's analysis does. So Bearing holds. No change from the old text.
+
+In O40 and O50, the analyses involve multiple agents. (K1) is about a single criticism's bearing. The change in (K1)'s terms doesn't affect how multiple criticisms interact. No verdict movement.
+
+So no T4 issues. Good.
+
+Now, truly the final report. Let me write it up.
+
+One thing I want to be careful about: I need to give exact wording for any challenge. Since I'm upholding both items, I don't need to give replacement wording. But I should still show the attacks and explain why they fail.
+
+Also, I need to answer question (a) in a short paragraph and end with a verdict line.
+
+Let me write the report now.
+
+Actually, I want to make one more observation. Looking at the "What an earlier reading saw" sections, both items were revised after an earlier outside reading. For X13, the earlier version had "for every generator \(a\)" (without "admitted"); the current adds "admitted." For X15, the earlier version said "the explanatory candidate that the criticism offers" while the current says "the criticism's connection... interpreted as an explanatory candidate."
+
+For X15, the shift from "offers" to "interpreted as" is significant. "Offers" implies the criticism itself presents a candidate; "interpreted as" implies an external step. This is a more precise description of what 𝓔_c is. The earlier declaration said "(K1) now defines its terms"; the current says "(K1) now says what its terms are." The shift from "defines" to "says what its terms are" is subtle but might matter.
+
+"Defines" is stronger - it says the terms are formally defined. "Says what its terms are" is weaker - it says the terms are described. The current wording describes the terms (p_δ and 𝓔_c) without necessarily giving full formal definitions (e.g., p_δ is described informally as "the question whether z has δ in respect of p" without giving the full tuple (D, C, b_0, Q, O_p, ρ_p)).
+
+So "says what its terms are" is more accurate than "defines." The revision improved the declaration. ✓
+
+For X13, the shift from "for every generator" to "for every admitted generator" in the current version adds the qualifier. This was presumably in response to the earlier reading noting that "generator" was ambiguous. Adding "admitted" resolves the ambiguity. ✓
+
+These revisions are improvements. The current forms are better than the earlier ones.
+
+OK, NOW the report.
+
+Let me think about what the most concise and clear way to present this is. I'll have about 5 points, then the (a) answer, then the item verdicts and overall verdict.
+
+Here is my draft:
+
+---
+
+# Report
+
+**1. X13 · T2 — WORDING may understate the change**
+
+The change from "every generator \(a\)" to "every admitted generator \(a\)" could be read as narrowing the hypothesis. If a reader of the current text understood "generator" to include non-admitted generators (generators of a broader edit structure than \(A\)), the new wording removes those from the hypothesis, which would let the theorem apply in cases the old statement did not cover. The added "Let" sentence also types \(S_a\) and \(T_a\), which the old text left undefined. Both changes let a reader conclude something the current text left unconcluded.
+
+*Why the attack fails.* Part II defines \(A\) as "a set of admitted edits, closed under a partial associative composition with identity 1." The only edit structure in the theory is \(A\), so "generator" in the old text already meant a generator of \(A\), which is by definition an admitted edit. Adding "admitted" is redundant. The "Let" sentence is a stipulation fixing what symbols denote, not a claim; the theorem's claim — the implication from generator commutation to composition commutation — is identical before and after. The old text had an erratum (undefined \(S_a, T_a\)); the new text fixes it. WORDING is correct.
+
+**2. X15 · T1 — The "interpreted as" step may be ambiguous**
+
+The new wording says \(\mathcal E_c\) is "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V)." An explanatory candidate is a quadruple \((E, p, t, \Gamma)\). A "connection" is not of this form. If two interpretations of the same connection yield different candidates and hence different verdicts on (K1), then Bearing is ambiguous.
+
+*Why the attack fails.* The phrase "interpreted as" marks a modelling step, consistent with the theory's practice elsewhere (Part 0: "Declaration is permitted only as a modelling convenience"). The criticism's connection has a definite logical structure — the argument actually made from grounds to defect — which maps onto an organization, transport, and commitments. If no interpretation satisfies (E), Bearing is false, which is correct for a criticism offering no account. The gap between informal connection and formal candidate is not introduced by this change; the old text used \(\mathcal E_c\) in (K1) without defining it at all. The change reduces the gap.
+
+**3. X15 · T3 — "in respect of \(p\)" vs. Part III's technical "respect"**
+
+Part III (L149) introduces "respect" as a technical term ("The respect is the query"). X15's "in respect of \(p\)" could be read as "in the query-type of \(p\)," requiring \(p_\delta\) to share \(p\)'s query.
+
+*Why the attack fails.* "In respect of \(p\)" is a standard English phrase meaning "concerning \(p\)." It is a prepositional construction, not the noun "respect" that Part III defines. The context — defining a question about whether \(z\) has \(\delta\) — makes clear the meaning is "in the context of \(p\)." No reader is forced into the technical reading.
+
+**4. X15 · T2 — The declaration matches the new wording**
+
+The declaration states: "\(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question." Checking against the new wording: "the target" = \(z\), "the alleged defect" = \(\delta\), "its grounds" = \(g\), "that question" = \(p_\delta\). The declaration adds nothing beyond a cross-reference ("(Part V)") and omits nothing substantive. The kind CLAIM is correct: the old text's \(p_\delta\) was "the question about the defect" (vague) and \(\mathcal E_c\) was undefined; the new text specifies both. A reader can now conclude what these terms are.
+
+*Why the attack fails.* The declaration is an exact and complete account of what changes. The kind matches the test criterion for CLAIM.
+
+**5. X13 · T1 and T4 — The theorem is true and no verdict moves**
+
+The proof at L353 ("\(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct") is correct: given \(\pi \circ S_a = T_a \circ \pi\) for admitted generators, the commutation extends to finite compositions by induction. For situation N20 (keeping count with string), the first method's one-step correspondence fails (measurement errors prevent exact commutation), so Functional transport's hypothesis is not met; the second method's rounding ensures exact one-step commutation, so the conclusion extends to compositions. The change from "every generator" to "every admitted generator" does not affect this: both methods' operations are basic counting operations. No verdict movement.
+
+---
+
+**(a) X15 and the owner's position.** X15's wording defines the terms of (K1): the question \(p_\delta\) and the candidate \(\mathcal E_c\). Neither involves a listed set of rivals, an enumeration, a count of versions, a grade, a ranking, or a record or log. Part VI's "Problems" paragraph (L317) says "A criticism that a candidate is easy to vary must supply such a rival (Part IX)"; (K1) is the formal test that rival's criticism must pass. The test is Bearing \(\leftrightarrow\) Account(\(\mathcal E_c, p_\delta\)), where Account (Part V) checks fidelity under change — the explanation's own content — not any count or record. The words that keep it faithful are "interpreted as an explanatory candidate (Part V) for \(p_\delta\)": the criticism is assessed by whether its own connection meets (E), which is error correction carried by the explanation itself. Nothing in the wording enumerates rivals, counts versions, grades candidates, or maintains a log of rescues.
+
+(a) X15: FAITHFUL
+
+X13: UPHELD
+X15: UPHELD
+
+OVERALL: SOUND
+
+END OF REPORT
+
+---
+
+Hmm, let me review this. The report needs to:
+1. Number points in one list, most serious first ✓
+2. Head each point with item id and test ✓
+3. For challenged items, give exact wording - N/A (both upheld)
+4. Answer question (a) ✓
+5. One line per item ✓
+6. OVERALL verdict ✓
+7. END OF REPORT ✓
+
+Wait, the instructions say "Then answer each question this part asks, in one short paragraph each, headed by the question and the item." So I need to format the (a) answer properly.
+
+Also: "An UPHELD with no attack behind it tells us nothing; show the attacks you made." I need to make sure I show attacks for both items.
+
+Let me also double-check: the instructions say "For every item you challenge, give the exact wording you propose in its place." Since I'm upholding both, I don't need to give wording. Good.
+
+Let me also make sure my report is under 3000 words. Let me estimate... my draft is probably around 1200-1500 words. That's fine.
+
+One more thing: I should make sure the T4 discussion is included. Let me add a point about T4 for both items.
+
+Actually, I already have point 5 covering T1 and T4 for X13. Let me add a brief T4 note for X15 as well.
+
+Let me revise and finalize.
+
+I think I should combine some points to keep the report focused. Let me restructure:
+
+1. X13 · T2 — Kind question (WORDING vs CLAIM)
+2. X15 · T1 — "interpreted as" ambiguity
+3. X15 · T3 — "in respect of p" clash
+4. X15 · T2 — Declaration accuracy
+5. X13 · T1/T4 — Theorem is true, no verdict movement (N20)
+6. X15 · T4 — No verdict movement (O27, N11, O40, O50)
+
+Then (a), then item verdicts, then overall.
+
+Actually, I think I should also address X13 · T3 (coherence) briefly. Is "admitted generator" defined? Is there any coherence issue?
+
+"Admitted generator" is not a formally defined term. But "admitted" is used consistently in the theory (admitted edits, admitted changes, admitted generators). "Generator" is a standard mathematical term. The combination is natural and consistent. No coherence issue.
+
+Let me fold this into point 1.
+
+OK, final version:
+
+---
+
+# Report
+
+**1. X13 · T2 — The change may cross from WORDING into CLAIM**
+
+The added sentence types \(S_a\) as a target process and \(T_a\) as a represented process; the old text left both undefined. The quantifier changes from "every generator \(a\)" to "every admitted generator \(a\)." A reader of the old text could not conclude what \(S_a, T_a\) denote or whether the hypothesis covers non-admitted generators; a reader of the new text can. By the test criterion ("can a reader now conclude something the current text left unconcluded"), this may warrant CLAIM, not WORDING.
+
+*Why the attack fails.* Part II defines \(A\) as "a set of admitted edits, closed under a partial associative composition with identity 1." The only edit structure in the theory is \(A\); a "generator" is therefore a generator of \(A\), which is by definition an admitted edit. Adding "admitted" is redundant, not restrictive. The "Let" sentence is a stipulation that fixes what symbols denote; it is not a claim from which conclusions follow. The theorem's claim — the implication from generator commutation to composition commutation — is identical. The old text had an erratum (undefined symbols); the new text fixes it without changing the claim. WORDING is correct. "Admitted generator" is a natural composition of terms used consistently in the theory and introduces no incoherence.
+
+**2. X15 · T1 — "Interpreted as an explanatory candidate" may be ambiguous**
+
+An explanatory candidate is a quadruple \((E, p, t, \Gamma)\) (Part V). A "connection from \(g\) to \(\delta\)" is not of this form. If different interpretations of the same connection yield different candidates and different verdicts on (K1), Bearing is ambiguous.
+
+*Why the attack fails.* The text says "interpreted as," marking a modelling step. The connection has a definite logical structure — the argument actually made — which maps onto an organization (its dependencies), a transport (anchors to the target), and commitments (premises doing the work). If no interpretation satisfies (E), Bearing is false, which is right for a criticism offering no account. The gap is not introduced by the change: the old text used \(\mathcal E_c\) in (K1) with no definition whatsoever. The change reduces the gap.
+
+**3. X15 · T3 — "In respect of \(p\)" may clash with Part III's "respect"**
+
+Part III (L149) introduces "respect" as a technical term: "The respect is the query." X15's "in respect of \(p\)" could be forced into the technical reading, requiring \(p_\delta\) to share \(p\)'s query type.
+
+*Why the attack fails.* "In respect of \(p\)" is a standard prepositional phrase meaning "concerning \(p\)" — a different grammatical construction from the noun "respect." The context (defining a question about whether \(z\) has \(\delta\)) makes the meaning clear. No reader is forced into the technical reading.
+
+**4. X15 · T2 — The declaration is exact**
+
+The declaration states: "\(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question." Against the new wording: "the target" = \(z\), "the alleged defect" = \(\delta\), "its grounds" = \(g\), "that question" = \(p_\delta\). The "(Part V)" reference is a pointer, not a claim. The declaration adds nothing and omits nothing. The kind CLAIM is right: the old text's \(p_\delta\) was vague ("the question about the defect") and \(\mathcal E_c\) was undefined; the new text specifies both, so a reader can now conclude what they are.
+
+*Why the attack fails.* The declaration is accurate and complete.
+
+**5. X13 · T1, T3, T4 — The theorem is true, coherent, and no verdict moves**
+
+The proof (L353: "\(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct") is correct. For situation N20 (keeping count with string), the first method's one-step commutation fails (measurement errors), so the hypothesis is not met and the conclusion does not extend; the second method's rounding ensures exact one-step commutation, so compositions work. The change does not affect this. No verdict movement.
+
+**6. X15 · T4 — No verdict moves on O27, N11, O40, or O50**
+
+These situations turn on credit allocation (Parts X and XI). (K1) is about whether a criticism bears. In O27, the robot's reinterpretation is a criticism whose connection addresses "does the test assume the sensor is reading true?" — (K1) holds under both the old and new terms. In N11, Kasia's self-criticism identifies faults with grounds — same. O40 and O50 involve multiple agents; (K1) addresses one criticism at a time. No verdict movement.
+
+---
+
+**Question (a) — X15 and the owner's position.** X15's wording defines the terms of (K1): \(p_\delta\) (the question) and \(\mathcal E_c\) (the connection interpreted as a candidate). Neither involves a listed set of rivals, an enumeration, a count of versions, a grade, a ranking, or a record or log. Part VI (L317) says "A criticism that a candidate is easy to vary must supply such a rival (Part IX)"; (K1) is the test that rival's criticism must pass. The test is Bearing \(\leftrightarrow\) Account(\(\mathcal E_c, p_\delta\)), where Account (Part V) checks fidelity under change — the explanation's own content, not any count or record. The words that keep it faithful are "interpreted as an explanatory candidate (Part V) for \(p_\delta\)": the criticism is assessed by whether its own connection meets (E), which is error correction carried by the explanation itself. Nothing enumerates rivals, counts versions, grades candidates, or maintains a log.
+
+(a) X15: FAITHFUL
+
+X13: UPHELD
+X15: UPHELD
+
+OVERALL: SOUND
+
+END OF REPORT
+
+---
+
+Let me count words... this is probably around 1000 words. That's well under 3000. Good.
+
+Actually, let me make sure I've been thorough enough. The instructions say "Depth on the points that matter counts for more than coverage of small ones." Let me see if I can add more depth to the key points.
+
+For point 1 (X13 · T2), I could add more about why the "Let" sentence doesn't change the claim. Let me think about whether there's a counterexample.
+
+Suppose someone reads the old text and interprets "generator" as a generator of the full monoid of physically possible edits (not just admitted ones). Then the old hypothesis is: commutation holds for ALL physically possible generators. The new hypothesis is: commutation holds for ADMITTED generators only. These are different.
+
+But in the theory, the transport is between organizations D and E, with edits in A (admitted edits). The commutation π∘S_a = T_a∘π is about how the transport handles edits. Only admitted edits are relevant (since they're the only ones the theory considers). So "generator" must mean "generator of A."
+
+Actually, I realize there could be a subtlety with "matching scopes." The theorem says "the same holds for every admitted finite composition with matching scopes." The "matching scopes" condition suggests that not all compositions are admitted — only those with matching scopes. But A is "closed under a partial associative composition" — partial, meaning some compositions may not be defined. So "admitted finite composition with matching scopes" means a composition that is defined in A.
+
+Generators of A are elements of A that generate it under composition. But since composition is partial, not all sequences of generators compose. The "matching scopes" condition ensures the composition is defined.
+
+This is all consistent. The proof works on any sequence of generators whose composition is defined. ✓
+
+Let me also think about whether the theorem has any edge cases. What if there are no admitted generators? Then the hypothesis is vacuously true and the conclusion is about "every admitted finite composition with matching scopes." If there are no generators, there are no compositions either (except the identity). So the conclusion is vacuously true. ✓
+
+What if there's only one admitted generator? Then the hypothesis is about that one generator, and the conclusion is about its powers (a, a², a³, ...). The proof's induction works. ✓
+
+OK, the theorem is solid.
+
+For point 2 (X15 · T1), I could add a concrete example. Consider a criticism: "The test assumed the sensor was reading true (δ), because the test result fits neither candidate (g)." The connection from g to δ argues: if the sensor were reading true, the test would separate the candidates; the result fits neither; therefore the sensor was not reading true (or the test's assumption about it is wrong). This connection can be interpreted as an explanatory candidate: E is an organization with components encoding the test's logic and the sensor's behavior; t maps these to the target (the test setup); Γ includes the premises.
+
+But one could also interpret it differently: E might include or exclude certain intermediate steps. If one interpretation satisfies (E) and another doesn't, Bearing is ambiguous.
+
+However, the criticism's actual argument determines the structure. The "interpretation" is not arbitrary; it's reading off the argument's logic. So the interpretation is canonical (up to recodings, which Derivation 8 says preserve everything).
+
+I think this is sufficient depth. Let me finalize.
+
+Hmm, one more thing. I want to make sure I'm addressing all the standard tests for both items.
+
+**X13:**
+- T1 (truth): The theorem is true. ✓ (point 5)
+- T2 (kind/declaration): WORDING is correct. ✓ (point 1)
+- T3 (coherence): "Admitted generator" is natural; no incoherence. ✓ (point 1)
+- T4 (verdict): No movement on N20. ✓ (point 5)
+
+**X15:**
+- T1 (truth): The definitions are well-formed. ✓ (point 2)
+- T2 (kind/declaration): CLAIM is correct; declaration matches. ✓ (point 4)
+- T3 (coherence): "In respect of p" is clear. ✓ (point 3)
+- T4 (verdict): No movement on O27, N11, O40, O50. ✓ (point 6)
+- (a): Faithful. ✓ (question answer)
+
+All tests covered. Good.
+
+Let me finalize the report. I want to make sure the format is exactly right.
+
+"Number your points in one list, most serious first." — OK, points 1-6.
+
+"Head each point with the item id and the test or question it falls under, for example `X13 · T1` or `X15 · (a)`." — OK.
+
+"For every item you challenge, give the exact wording..." — N/A.
+
+"Then answer each question this part asks, in one short paragraph each, headed by the question and the item..." — OK, just (a) for X15.
+
+"Then one line for every listed item..." — OK.
+
+"Then one line reading exactly `OVERALL: SOUND` or `OVERALL: NEEDS REPAIR`." — OK.
+
+"End the report with a line that reads exactly END OF REPORT." — OK.
+
+I think the report is ready. Let me write it up cleanly.
+
+Actually, I want to reconsider whether I should challenge anything. Let me think about whether there's a genuine defect I'm glossing over.
+
+For X15, the change is declared as CLAIM with declaration: "(K1) now says what its terms are: \(p_\delta\) is the question whether the target has the alleged defect in respect of \(p\), and \(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect, interpreted as an explanatory candidate for that question."
+
+Is the declaration exactly right? Let me think about one thing: the declaration says "the question whether the target has the alleged defect in respect of \(p\)." But the new wording says "the question whether \(z\) has \(\delta\) in respect of \(p\)." The declaration uses "the target" and "the alleged defect" instead of \(z\) and \(\delta\). These are the same things (z is the target, δ is the alleged defect). ✓
+
+But the declaration also says "\(\mathcal E_c\) is the criticism's connection from its grounds to the alleged defect." The "its" refers to the criticism. The criticism's grounds are g. ✓
+
+"interpreted as an explanatory candidate for that question" — "that question" is p_δ. ✓
+
+Everything checks out.
+
+Wait, one more thing. The declaration says "(K1) now says what its terms are." But does (K1) itself change? (K1) is: Bearing(c,z,p) ↔ Account(𝓔_c, p_δ). This formula is unchanged. What changes is the definitions of p_δ and 𝓔_c that precede it. So (K1) itself doesn't change; its terms' definitions change. The declaration says "(K1) now says what its terms are" which is about the terms, not the formula. This is accurate. ✓
+
+OK, I'm truly satisfied. Let me write the final clean report.
+
+One last thought: should I mention that the earlier versions of both items were revised, and that the current versions are improvements? I think this is relevant context but not necessary for the report. The report should assess the current forms.
+
+Actually, the instructions say "Where a change was revised after an earlier outside reading, the item also gives what that reading saw." This suggests I should note the revision if relevant. For X13, the earlier version lacked "admitted"; the current adds it. For X15, the earlier version said "offers" instead of "interpreted as."
+
+For X13, the addition of "admitted" resolves the ambiguity I discussed in point 1. The earlier version (without "admitted") would have been more clearly a WORDING issue (since "generator" was ambiguous). The current version (with "admitted") makes the clarification explicit. So the revision is an improvement.
+
+For X15, the shift from "offers" to "interpreted as" makes the modelling step explicit. "Offers" implies the criticism directly presents a candidate; "interpreted as" implies an external reading. The current version is more precise.
+
+I could mention these in my points but I don't think they change my assessment. Let me briefly note them.
+
+OK, here's the truly final report:
+
+Actually, I realize I should think about one more subtle point. The old text of X15 said "Let \(p_\delta\) be the question about the defect. Then" — this was the full passage being changed. But the original passage before the change is "A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection." followed by "Let \(p_\delta\) be the question about the defect. Then" followed by (K1).
+
+In the old text, 𝓔_c was used in (K1) but never defined. The "connection" was mentioned but never named as 𝓔_c. So the old text was internally inconsistent: (K1) used an undefined symbol.
+
+The new text fixes this by defining 𝓔_c as "the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\)." This both names the connection as 𝓔_c and explains how it becomes an explanatory candidate.
+
+Is this fix CLAIM or WORDING? If the old text was broken (undefined 𝓔_c), then the new text fixes the break. This could be:
+- WORDING: the fix restores the intended meaning without changing claims
+- CLAIM: the fix adds new content (the definition of 𝓔_c)
+
+I think CLAIM is correct because the new text specifies what the old left undefined. A reader can now conclude what 𝓔_c is (they couldn't before). The declaration says "(K1) now says what its terms are" which captures this.
+
+But could it be WORDING? If the intended meaning was always clear (𝓔_c = the connection interpreted as a candidate), then the new text just makes it explicit. The claim (Bearing ↔ Account) doesn't change; only the terms' definitions become explicit.
+
+Hmm, the problem is that the old text's (K1) was literally uninterpretable (𝓔_c undefined). So the "claim" of (K1) was unclear. The new text makes it clear. This is a CLAIM change because the claim goes from unclear to clear.
+
+I think CLAIM is correct. The declaration is right. The item is UPHELD.
+
+OK, truly final report now. Let me write it.
+
+Let me re-examine: am I being tough enough? The instructions say "attack that, as hard as you can." Let me think of the strongest possible attacks.
+
+**Strongest attack on X13:** The change from "every generator" to "every admitted generator" is a substantive narrowing of the hypothesis. In the theory, A is the set of admitted edits, but the concept of "generator" is not restricted to A. A generator of some other monoid of edits (e.g., all physically possible edits) would not be "admitted" if it's not in A. By adding "admitted," the hypothesis becomes weaker, and the theorem applies more broadly. This is a change of claim, not a wording fix.
+
+Counter: The theory defines only one edit structure (A). The proof uses generators that compose into "admitted finite compositions" — compositions of elements of A. So "generator" must mean "generator of A." Adding "admitted" is redundant. But is this really the ONLY reading? What if the theory allows for a broader edit structure from which A is selected?
+
+Looking at Part II: "A is a set of admitted edits, closed under a partial associative composition with identity 1." And "The contract C ⊆ A × B" (Part III). And "A contract is a declared subset of the physically admitted changes" (Part V). So "admitted" refers to what the theory/physics admits. A "generator" of A is an element of A that generates A under composition. "Admitted generator" is indeed redundant.
+
+But the theory also says (Part V, Non-vacuity): "The contract C is a declared subset of the physically admitted edits." This suggests there are "physically admitted edits" (a broader set) from which C selects. So "admitted" might refer to the broader "physically admitted" set, not just A.
+
+Hmm, but A IS the set of admitted edits. "Physically admitted" is the same as "admitted." The contract C is a subset of A × B, where A is the admitted edits.
+
+Wait, re-reading: "A is a set of admitted edits." And "The contract C is a declared subset of the physically admitted edits." Are "admitted edits" (A) and "physically admitted edits" the same?
+
+Part V says: "The contract C is a declared subset of the physically admitted edits, and every physically admitted edit excluded from C is excluded by a stated scope, not silently." This seems to say C⊆ (physically admitted edits), not C ⊆ A × B. But Part III says "C ⊆ A × B."
+
+I think "physically admitted edits" = A (the set of admitted edits). The phrase "physically admitted" emphasizes that the admission is physical (permitted by the adopted physics), not arbitrary. So A = physically admitted edits.
+
+OK, so "admitted" consistently means "in A" (or "permitted by the physics"). "Generator" means "generator of A." "Admitted generator" = "generator of A" = "element of A that generates A." Redundant. WORDING.
+
+But what about generators of a larger set? The theory doesn't define such a set. The only edit structure is A. So there are no non-admitted generators in the theory's framework. Adding "admitted" is redundant.
+
+Unless someone constructs a broader edit structure outside the theory. But the theory's claims are about the theory's structures. Within the theory, "generator" = "admitted generator." WORDING.
+
+I think this is a solid defense. The attack fails.
+
+**Strongest attack on X15:** The "interpreted as an explanatory candidate" step is not well-defined. A connection from g to δ is not a quadruple (E, p, t, Γ). The mapping from connection to candidate is unspecified, and different mappings give different Bearing verdicts. (K1) is therefore ambiguous.
+
+Counter: The text says "interpreted as," which is a modelling step. The connection's logical structure determines the candidate's structure. If the structure is clear (the argument actually made), the interpretation is clear. If the structure is unclear, the criticism is weak, and Bearing is likely false. The ambiguity is not introduced by the change (the old text had undefined 𝓔_c).
+
+But can I make this attack stronger? What if the connection has a clear logical structure but two reasonable decompositions into components? E.g., the argument "g, therefore h, therefore δ" could be decomposed as two components (g→h, h→δ) or one component (g→δ). These give different organizations and might satisfy (E) differently.
+
+However, (F1) checks component fidelity: each component must match its anchor. If the decomposition is coarser, the anchors are larger. If the finer decomposition satisfies (F1), the coarser one might too (since the coarser component's relation is the composition of the finer ones). But (F1) is about the component relation matching the anchor's projected relation, which depends on the decomposition.
+
+Actually, I think for the same underlying argument, different decompositions would either all satisfy (E) or all fail. Because (E) checks the assembled organization (F2), the question fidelity (A), and non-circular dependence. These are properties of the whole, not of individual components (except F1, which checks components against anchors).
+
+But (F1) is decomposition-sensitive. A finer decomposition has more components, each with a smaller anchor. Each must match. If one fine component fails, (F1) fails. A coarser decomposition might mask this failure (since the coarse component's relation is the union of the fine ones' relations).
+
+Hmm, so different decompositions could give different (F1) verdicts. This means Bearing could be ambiguous.
+
+But the connection's actual logical structure determines the decomposition. The argument "g, therefore h, therefore δ" has two inferential steps, giving two components. A one-component reading would be a coarsening that misses the intermediate step. The text says "interpreted as an explanatory candidate" which should read off the argument's structure.
+
+I think the assumption is that the interpretation is canonical (reading off the argument's structure). This is reasonable but not guaranteed by the text. It's a gap, but not a fatal one.
+
+For the report, I'll present this as the strongest attack and explain why it fails (the text assumes canonical interpretation, and the gap is not made worse by the change).
+
+OK, I think my analysis is thorough enough. Let me write the report now. I'll present both attacks clearly and explain why each fails.
+
+Let me also note: the instructions say "Show every point from the texts. Quote the revised text with line numbers, and quote the old wording where the comparison matters." I should include quotes.
+
+Let me revise my report to include more quotes.
+
+Final structure:
+
+1. X13 · T2 — Kind question
+ - Quote old and new wording
+   - Quote Part II on A
+   - Explain why WORDING is correct
+
+2. X15 · T1 — Interpretation ambiguity
+   - Quote new wording
+   - Quote Part V on explanatory candidates
+   - Explain why the attack fails
+
+3. X15 · T3 — "in respect of p"
+   - Quote Part III heading
+   - Quote X15's phrase
+   - Explain why no clash
+
+4. X15 · T2 — Declaration
+   - Quote declaration and new wording
+   - Show match
+
+5. X13 · T1, T4 — Truth and N20
+   - Quote the theorem
+   - Analyze N20
+
+6. X15 · T4 — O27, N11, O40, O50
+   - Brief analysis
+
+(a) — Faithfulness
+
+Item verdicts.
+
+OK let me write it now. For real this time.
