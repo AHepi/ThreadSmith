@@ -164,10 +164,12 @@ Three situations. The first two change a part; the third changes the question as
 
 ### 3. The sources' reason
 
+*25 September: chained quotes shortened to keep within the 25-word rule (decision S19); meanings and page references kept.*
+
 - **[CHANGED: marked as a reading.]** [INFERENCE] **Deutsch gives both kinds of reason and never ranks them** (02, section 5a).
-  - *For correction:* the "fundamental flaw" is that "one could just as easily vary it to make different predictions" (D p.21). **[CHANGED: capitals removed to match the book.]** "experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). "it is only when a theory is a good explanation – hard to vary – that it even matters whether it is testable" (D p.25). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
+  - *For correction:* the "fundamental flaw" is that an explanation easy to vary without changing its predictions is just as easy to vary into different predictions (D p.21, paraphrased). **[CHANGED: capitals removed to match the book.]** "experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). Whether a theory is testable matters only once it is a good explanation, one that is hard to vary (D p.25, paraphrased). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
   - *For its own sake:* the glossary defines good and bad by variation alone (D p.31). Superfluous assumptions make a theory "bad by definition" (D p.26). Preferring one of many equal variants "is irrational" (D p.21).
-  - **[CHANGED: D p.209 moved to the correction side.]** D p.209 says we should choose "not on the basis of their origin, but according to how good they are as explanations: how hard to vary". On its page, "origin" is what a conjecture is derived from: policies "cannot be derived … from anything" (D pp.208–209). The passage then takes Popper's question, "How can we hope to detect and eliminate error?", and answers "a tradition of criticism, in which good explanations are sought" (D p.209). It is a correction-reading line.
+  - **[CHANGED: D p.209 moved to the correction side.]** D p.209 says we should choose "not on the basis of their origin, but according to how good they are as explanations: how hard to vary". On its page, "origin" is what a conjecture is derived from, and policies have no such source (D pp.208–209, paraphrased). The passage then takes Popper's question, "How can we hope to detect and eliminate error?", and answers "a tradition of criticism, in which good explanations are sought" (D p.209). It is a correction-reading line.
   - *Marletto* runs the arrow the other way. A finished work "is hard to change further … because it has been obtained by tentatively removing flaws" (M p.15). Correction produces the trait. Her example is a masterpiece, not an explanation.
 - **[CHANGED: limiting cases added.]** [TEXT] Neither book makes hard-to-vary a condition of *being* an explanation. The myth "does constitute an explanation" (D p.19), and the glossary's bad explanation is still an explanation. There are two limiting cases. What "could easily explain anything … explains nothing" (D p.22). And the narrowing escape clause leaves a theory "no longer an explanation of seasons, just a (purported) rule of thumb" (D p.28). The second is Deutsch's own treatment of a save through the question (Leon's kind, N6). His verdict there is yes or no, not a grade. The theory already reaches Leon through interference (01, Part C).
 - [INFERENCE] **What follows on the correction reading.** What matters is what happens when an account fails: whether a cheap change can absorb the failure. Section 2 shows that the theory already stops a cheap change of a *part* on an open question, through fidelity, though only as a fact. The theory needs no grade. It needs only to see a save that predicts nothing beyond the failure it removes, which is option (b). **[CHANGED: "idle parts are beside the point" qualified.]** Idle parts of an *account* are beside the point, since they cannot make or unmake it. Swappable working parts are the danger, and fidelity reaches them.
@@ -570,6 +572,8 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 
 ## Appendix B — The source reading (working file 02, copied unchanged except as noted)
 
+*25 September: chained quotes shortened to keep within the 25-word rule (decision S19); meanings and page references kept.*
+
 *Note from the check (24 September).* A script matched all 172 book quotations to the book text; all are at most 25 words. Two errors were found, and they are left as written here: (1) section 1k cites the escape-clause words ("everywhere else on Earth, they also happen at those times") to p.28, but they are on p.27, so the citation should be pp.27–28; (2) section 7 describes the lemma of S89 audit observation 14 as a rule about free working parts, but that lemma is computational (unbounded composition at a fixed accuracy grade needs a correction step), and the free-working-part rule is this note's own suggestion. The body also reads D p.209 differently from section 2 here: on its page it answers Popper's question about detecting and eliminating error. One edit was made in this copy: the location of the book text was removed. Headings are moved down two levels.
 
 ### 02 Sources: how the books connect hard-to-vary with error correction
@@ -592,39 +596,39 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 **1b. The details have no function: they are swappable (pp.20–21).**
 - Q: "the role of all the details could be played equally well by countless other things" (D p.21).
 - Q: "none of those differing attributes has any function in the myths’ respective accounts of why seasons happen." (D p.21).
-- Q: "The reason those myths are so easily variable is that their details are barely connected to the details of the phenomena." (D p.21).
+- Q: The myths are so easy to vary because their details have almost nothing to do with the details of what they are meant to explain (D p.21, paraphrased).
 - I: In Deutsch, a detail that lacks "any function" is one whose *specifics* do no work. Demeter's sadness does carry the prediction (it causes winter), but any other god's mood would carry it as well. This is a wider notion than draft 3's "does no work" (W33.1: adding or removing *d* leaves every support a support). The myth's details are swappable, not idle in W33.1's sense.
 
 **1c. Rationality, with no mention of correction (p.21).**
-- Q: "Whenever a wide range of variant theories can account equally well … there is no reason to prefer one of them over the others" (D p.21). He goes on: "advocating a particular one in preference to the others is irrational." (D p.21).
+- Q: When many variant theories account equally well for what is seen, nothing favours any one of them (D p.21, paraphrased). He goes on: "advocating a particular one in preference to the others is irrational." (D p.21).
 - I: This is a reason against easy variation that does not depend on error correction. It concerns choosing among equally fitting variants.
 
 **1d. The fundamental flaw, stated as a point about correction: the tweak (pp.21–22).** This is the passage the task asks for, where a testable but easy-to-vary theory is saved by a tweak.
 - Q: "That freedom to make drastic changes in those mythical explanations of seasons is the fundamental flaw in them." (D p.21).
 - Q: The reason he gives follows: "whenever it is easy to vary an explanation without changing its predictions, one could just as easily vary it to make different predictions" (D p.21).
 - Q: The tweak itself: "when Demeter is sad she banishes warmth from her vicinity, and it has to go elsewhere – into the southern hemisphere." (D p.21).
-- Q: The prophet and the gambler: "they can easily accommodate the new experience without changing the substance of the explanation." (D p.22). "they can simply reinterpret the omens, pick a new date, and make essentially the same prediction." (D p.22).
-- Q: The consequence: "testing one’s theory and abandoning it when it is refuted constitutes no progress towards understanding the world." (D p.22).
-- Q: "If an explanation could easily explain anything in the given field, then it actually explains nothing." (D p.22).
+- Q: The prophet and the gambler: "they can easily accommodate the new experience without changing the substance of the explanation." (D p.22). They read the omens afresh or choose another date, and predict much the same thing again (D p.22, paraphrased).
+- Q: The consequence: for them, putting a theory to the test and dropping it once refuted brings no progress in understanding the world (D p.22, paraphrased).
+- Q: An account that can be bent to fit anything in its domain explains nothing at all (D p.22, paraphrased).
 
 **1e. "Bad explanation" is named at the point where correction fails (p.22).**
 - Q: "when theories are easily variable … experimental testing is almost useless for correcting their errors. I call such theories bad explanations." (D p.22).
-- Q: "Being proved wrong by experiment, and changing the theories to other bad explanations, does not get their holders one jot closer to the truth." (D p.22).
+- Q: Being refuted by experiment and switching to other bad explanations brings those who hold them no nearer the truth (D p.22, paraphrased).
 - Q: "Nor is a person capable of making progress merely by virtue of being willing to drop a theory when it is refuted" (D p.22).
 - Q: "By adopting easily variable explanations, the gambler and prophet are ensuring that they will be able to continue fooling themselves no matter what happens." (D p.22).
 - I: These are the lines that most directly ground badness in error correction. For Deutsch a refuted theory that is easy to vary still *changes*. It is swapped for a variant, so something that looks like correction happens, but it makes no progress. What is lost is not the change but the progress.
 
 **1f. In the other direction, the quest comes first and correction follows from it (pp.22–23, 26).**
-- Q: "The quest for good explanations is, I believe, the basic regulating principle not only of science, but of the Enlightenment generally." (D p.22). "it implies all those other conditions for scientific progress I have discussed" (D p.22). "And hence it also implies the need for a tradition of criticism." (D p.23).
+- Q: "The quest for good explanations is, I believe, the basic regulating principle not only of science, but of the Enlightenment generally." (D p.22). He adds that the other requirements he has set out for progress in science follow from this quest (D p.22, paraphrased), and so does the need for a tradition of criticism (D p.23, paraphrased).
 - Q: "the standard scientific methodology of dropping theories when refuted by experiment is implied by the requirement for good explanations." (D p.26).
 
 **1g. The good explanation: refutation has nowhere to go (pp.24–25).**
 - Q: "That is a good explanation – hard to vary, because all its details play a functional role." (D p.24).
-- Q: "if the axis-tilt theory had been refuted, its defenders would have had nowhere to go." (D p.25). "No easily implemented change could make tilted axes cause the same seasons all over the planet." (D p.25).
-- Q: "it is only when a theory is a good explanation – hard to vary – that it even matters whether it is testable." (D p.25). "Bad explanations are equally useless whether they are testable or not." (D p.25).
+- Q: Had the axis-tilt theory been refuted, those defending it would have had no way out (D p.25, paraphrased). No simple change could make a tilted axis give every part of the planet the same seasons at the same time (D p.25, paraphrased).
+- Q: "it is only when a theory is a good explanation – hard to vary – that it even matters whether it is testable." (D p.25). A bad explanation is of no use, testable or not (D p.25, paraphrased).
 
 **1h. The idle add-on: the sun god (p.24).**
-- Q: "Nor could one easily incorporate any stories about how the sun god feels about all this" (D p.24). The reasons he gives: "how anyone feels about it is irrelevant" (D p.24), and "if there were some flaw in that explanation, then no story about how anyone felt would put it right." (D p.24).
+- Q: Stories about how the sun god feels about all this could not easily be worked into the axis-tilt explanation (D p.24, paraphrased). The reasons he gives: anyone's feelings about it are irrelevant (D p.24, paraphrased), and "if there were some flaw in that explanation, then no story about how anyone felt would put it right." (D p.24).
 - I: This is Deutsch's only worked example of a purely idle part, and it is the source of case N1. He does not say the idle story makes the account dangerous to correct. He says the reverse: an idle story could not repair a flaw, so it cannot serve as a patch. He treats it as not incorporated into the explanation ("irrelevant"), which matches N1's agreed verdict (it is "not part of what explains them").
 
 **1i. Superfluous features: bad by definition, and the repair is to delete them (pp.25–26).**
@@ -635,7 +639,7 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 **1j. Hard-to-vary is itself a form of criticism: most errors are corrected without tests (pp.25–26).**
 - Q: "the overwhelming majority of false theories can be rejected out of hand without any experiment, simply for being bad explanations." (D p.25).
 - Q: "the rule of testability is an insufficient check on such mistakes. But the quest for good explanations does the job" (D p.26).
-- Q: "inventing falsehoods is easy, and therefore they are easy to vary once found" (D p.26).
+- Q: Falsehoods are easy to make up, and so, once found, easy to vary (D p.26, paraphrased).
 - Q: "The best explanations are the ones that are most constrained by existing knowledge" (D p.26).
 
 **1k. A good explanation resists your own tweaks (pp.27–28).**
@@ -648,8 +652,8 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 - Q: "Old ways of thought, which did not seek good explanations, permitted no process such as science for correcting errors and misconceptions." (D p.29).
 - Q: The glossary defines the grade by variation alone: "An explanation that is hard/easy to vary while still accounting for what it purports to account for." (D p.31).
 - Q: The glossary entry "Rational": "Attempting to solve problems by seeking good explanations; actively pursuing error-correction by creating criticisms of both existing ideas and new proposals." (D p.31).
-- Q: The summary: "acknowledging that we may always be mistaken, and trying to correct errors. We do so by seeking good explanations" (D p.32). "This, not experimental testing, was the decisive factor in the scientific revolution" (D p.32).
-- Q: Fallibilism and justificationism: "Fallibilists expect even their best and most fundamental explanations to contain misconceptions in addition to truth" (D p.9). "the logic of justificationism is to seek (and typically, to believe that one has found) ways of securing ideas against change." (D p.9).
+- Q: The summary: "acknowledging that we may always be mistaken, and trying to correct errors. We do so by seeking good explanations" (D p.32). This, rather than experimental testing, is what made the difference in the scientific revolution (D p.32, paraphrased).
+- Q: Fallibilism and justificationism: fallibilists expect even their best and deepest explanations to be partly mistaken as well as partly true (D p.9, paraphrased). "the logic of justificationism is to seek (and typically, to believe that one has found) ways of securing ideas against change." (D p.9).
 
 #### 2. Deutsch elsewhere
 
@@ -662,16 +666,16 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 - Q: Soluble: "By ‘soluble’ I mean that the right knowledge would solve them." (D p.65).
 
 **Ch.4. Hard-to-vary as the mark left by error correction, and as what makes transmission errors correctable.**
-- Q: "good adaptations, like good explanations, are distinguished by being hard to vary while still fulfilling their functions." (D p.78). On the same page, a qualification: "Some changes might make no practical difference to that ability, but most of those that did would make it worse." (D p.78).
+- Q: "good adaptations, like good explanations, are distinguished by being hard to vary while still fulfilling their functions." (D p.78). On the same page, a qualification: some changes would not affect that ability in practice, though most of those that did would harm it (D p.78, paraphrased).
 - Q: Knowledge is information that tends to keep itself embodied, and it is "very unlikely to come into existence other than through the error-correcting processes of evolution or thought." (D p.78).
 - Q: "Merely being useful for a purpose, without being hard to vary while still serving that purpose, is not a sign of adaptation or design." (D p.86).
-- Q: "good explanations are hard to vary even without being tested, and hence random errors … are easier for the receiver to detect and correct." (D p.94). The elided words are "in the transmission of a good explanation".
-- Q: Easily variable rivals of Darwinism are "‘too easy’ as explanations: they could equally well explain anything." (D p.103). "neo-Darwinism was not easy to come by, and it is not easy to tweak." (D p.103).
+- Q: "good explanations are hard to vary even without being tested, and hence random errors … are easier for the receiver to detect and correct." (D p.94). The elided words say that the errors meant are those made when a good explanation is passed on.
+- Q: Deutsch calls easily variable rivals of Darwinism "‘too easy’ as explanations: they could equally well explain anything." (D p.103). "neo-Darwinism was not easy to come by, and it is not easy to tweak." (D p.103).
 
 **Ch.5.**
 - Q: "regarding the explanatory function of theories as paramount is not just an idle preference. The predictive function of science is entirely dependent on it." (D p.113). This is the book's only use of "idle".
 - Q: Restricted theories are "so full of arbitrary qualifiers, workarounds and unanswered questions that they would be very bad explanations" (D pp.118–119).
-- Q: "almost all rejected theories are rejected for being bad explanations, without ever being tested." (D pp.119–120). "Experimental testing is only one of many methods of criticism used in science" (D p.120).
+- Q: "almost all rejected theories are rejected for being bad explanations, without ever being tested." (D pp.119–120). Science criticises theories in many ways, and experiment is only one of them (D p.120, paraphrased).
 
 **Ch.6. Digital error correction.**
 - Q: "Without error-correction all information processing, and hence all knowledge-creation, is necessarily bounded. Error-correction is the beginning of infinity." (D p.140).
@@ -690,28 +694,28 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 - Q: Policies are conjectures, so "we should choose between them not on the basis of their origin, but according to how good they are as explanations: how hard to vary." (D p.209).
 - Q: Popper's question is "‘How can we hope to detect and eliminate error?’" (D p.209). Deutsch's answer: "it requires a tradition of criticism, in which good explanations are sought" (D p.209).
 - Q: The shared mistake of induction, instrumentalism and Lamarckism is to expect knowledge "not by a process of variation and selection that is making a continual stream of errors and correcting them." (D p.210).
-- Q: Governments are to be "judged not for their prophetic ability to choose and install good leaders and policies, but for their ability to remove bad ones" (D p.211). In this passage the parallel he draws is with testability: "Just as science seeks explanations that are experimentally testable" (D p.211).
+- Q: Governments are to be "judged not for their prophetic ability to choose and install good leaders and policies, but for their ability to remove bad ones" (D p.211). In this passage the parallel he draws is with testability: it is like science's search for explanations that experiment can test (D p.211, paraphrased).
 - Q: "All evils are caused by insufficient knowledge." (D p.212). "the most important knowledge that they embody is knowledge of how to detect and eliminate errors." (D p.222).
 
 **Ch.10 (A Dream of Socrates). These lines are spoken by characters in a dialogue.**
-- Q: Socrates on banning debate: "This is a rare and deadly sort of error: it prevents itself from being undone." (D p.235). Socrates also asks whether "the moral imperative not to destroy the means of correcting mistakes" is the only one (D p.235). Hermes stays silent, so this is a question, not a claim.
-- Q: On why hard-to-vary lets a theory be passed on faithfully, a good theory "is exceedingly hard to vary while still remaining a viable explanation" (D p.257), so learners "through criticism of their initial guesses" arrive at "the same theory as the originator." (D p.257).
+- Q: Socrates on banning debate: "This is a rare and deadly sort of error: it prevents itself from being undone." (D p.235). Socrates also asks whether the duty not to destroy the ways in which mistakes get corrected is the only moral imperative (D p.235, paraphrased). Hermes stays silent, so this is a question, not a claim.
+- Q: On why hard-to-vary lets a theory be passed on faithfully, a good theory "is exceedingly hard to vary while still remaining a viable explanation" (D p.257), so learners "through criticism of their initial guesses" reach "the same theory as the originator." (D p.257).
 
 **Ch.12 (Bad philosophy).**
 - Q: "without powerful techniques of error-detection and -correction – which depend on explanatory theories – this gives rise to an instability" (D p.323).
 - Q: Errors in the hard sciences: "they are corrected when their explanations are criticized and tested. That cannot happen in explanationless science." (D p.323).
-- Q: "Bad philosophy cannot easily be countered by good philosophy – argument and explanation – because it holds itself immune." (D p.324). The move of saving a view by an ad hoc step: "It would also be open to him to say, ‘Very well, atoms do exist, but electrons do not.’" (D p.324).
+- Q: "Bad philosophy cannot easily be countered by good philosophy – argument and explanation – because it holds itself immune." (D p.324). The move of saving a view by an ad hoc step: he could just as well grant that atoms exist and deny that electrons do (D p.324, paraphrased).
 - Q: The Copenhagen variants used positivism "to justify systematic equivocation and to immunize themselves from criticism." (D p.325).
 - Q: Hard-to-vary as a comparison: "The explanation of those experiments in isolation isn’t as hard to vary as the full theory." (D p.306).
 
 **Ch.13 (Choices).**
-- Q: "It is in the nature of good explanations – being hard to vary – that there is only one of them." (D p.341). Rivals "have been not outweighed, but out-argued, refuted and abandoned." (D p.341).
+- Q: "It is in the nature of good explanations – being hard to vary – that there is only one of them." (D p.341). Its rivals were not outweighed but argued down, refuted and given up (D p.341, paraphrased).
 - Q: "good explanations are discrete – separated from each other by bad explanations" (D p.342).
 - Q: A tolerated stage: one "ties down details of the explanation that are not yet hard to vary but can be made so by non-creative means." (D p.342).
 
 **Chs 14, 15 and 17.**
 - Q: "Scientific theories are hard to vary because they correspond closely with an objective truth" (D p.353).
-- Q: An anti-rational meme's story works because it "is then unconstrained by the mundane attributes of any genuine menace" (D p.389). A meme that "disables the recipient’s critical faculties in regard to itself, then the recipient will be less able to correct errors in that knowledge" (D p.389).
+- Q: An anti-rational meme's story works because nothing about a real, ordinary threat has to constrain it (D p.389, paraphrased). A meme that "disables the recipient’s critical faculties in regard to itself, then the recipient will be less able to correct errors in that knowledge" (D p.389).
 - Q: "We are fallible, but through conjecture, criticism and seeking good explanations we may correct some of our errors." (D p.395).
 - Q: The only rational policy is to "judge institutions, plans and ways of life according to how good they are at correcting mistakes" (D p.436).
 
@@ -729,29 +733,29 @@ A grading would enter as a merit function, which draft 3 calls "unsettled" (D3:L
 **Knowledge is information that keeps itself in existence, and error correction keeps it there.**
 - Q: "Unless something intervenes to prevent and correct those errors, the structure will eventually fade away or collapse." (M p.3). She names the property of keeping oneself in existence "resilience" (M p.3).
 - Q: Bacterial DNA is "potentially preserved for a much longer time than the bacterium’s life span thanks to error-correction enacted by the cell." (M p.11).
-- Q: Knowledge is "information that is capable of keeping itself instantiated in physical systems. It is resilient information." (M p.13). "‘Knowledge’ merely denotes a particular kind of information, which has the capacity to perpetuate itself and stay embodied in physical systems" (M p.13).
+- Q: Knowledge is "information that is capable of keeping itself instantiated in physical systems. It is resilient information." (M p.13). The word names nothing more than a kind of information that can keep itself going and stay physically embodied (M p.13, paraphrased).
 
 **Criticism is error correction, and what it produces is hard to change.**
 - Q: "Criticism is the act of seeking and correcting errors in an attempt to improve on the solutions" (M p.15).
 - Q: The finished work "is hard to change further, while still meeting the criteria, because it has been obtained by tentatively removing flaws in previous versions" (M p.15).
-- Q: "any good solution to a problem may also contain some errors." (M p.16). "Fallibilism makes progress feasible because it allows for further criticism to occur in the future" (M p.16).
+- Q: Even a good solution can be partly mistaken (M p.16, paraphrased). "Fallibilism makes progress feasible because it allows for further criticism to occur in the future" (M p.16).
 - Q: "Particularly detrimental to knowledge creation are the immutable limitations imposed by dogmas, as they restrain the ability to conjecture and criticise." (M p.18).
 - I: Marletto runs the arrow from correction to the trait: correction produces the hard-to-change product. Deutsch's Ch.1 mainly runs it the other way, from hard-to-vary to effective correction. His Ch.4 (p.78, p.86) agrees with Marletto: error-correcting processes are what produce hard-to-vary knowledge.
 
 **Ch.5. Catalysts, repair and the appearance of design (pp.148–155).**
-- Q: The factory: "If it is a well-run factory, there is a way to fix the problem and thus restore the production process." (M p.152). By contrast, losing "the instructions for repairing the factory, the factory might have to shut down." (M p.152).
+- Q: The factory: "If it is a well-run factory, there is a way to fix the problem and thus restore the production process." (M p.152). By contrast, a factory that has lost its repair instructions may have to close (M p.152, paraphrased).
 - Q: The recipe works because "the final product is checked against the procedure until it meets the criteria set by the quality control of the company." (M p.153).
 - Q: A part dedicated to a function is one where "if you change it slightly, it no longer meets the criterion of being able to perform that function." (M p.155).
-- Q: Of "something with the appearance of design that can last a long time", she says "you can rightly assume that some abstract catalyst is contained in it." (M p.155).
+- Q: Of anything that looks designed and lasts a long time, she says one may rightly take it to contain some abstract catalyst (M p.155, paraphrased).
 - Q: "those who know the philosopher Karl Popper will recognise the chief features of his epistemology" (M pp.155–156).
 - I: Here hard-to-vary (every part dedicated to its function) is a sign that knowledge is present, and it is paired with lasting, which comes through repair and copying. The parts in question belong to constructors and recipes, not to explanations.
 
 **Explanations and testing.**
-- Q: The traits of a viable theory: "physical theories about the universe that count as viable explanations must at least have certain traits that guarantee they are free of basic flaws." (M p.23). The first trait is exactness. An approximate recipe invites the question "why approximately 100 grams of sugar, and not exactly 99?" (M p.23).
+- Q: The traits of a viable theory: "physical theories about the universe that count as viable explanations must at least have certain traits that guarantee they are free of basic flaws." (M p.23). The first trait is exactness. An approximate recipe invites the question why it should be about 100 grams of sugar rather than exactly 99 (M p.23, paraphrased).
 - Q: Such theories "must also be testable so that they can be checked against reality to find potential errors." (M p.24).
 - Q: "The quality of a prediction depends, ultimately, on the underlying explanation." (M p.45).
 - Q: The dog myth: "you could substitute any other entity for ‘dog’" (M p.48), and "the choice of the universe-supporting animal is arbitrary." (M p.48). She treats this as a separate problem from the myth's untestability.
-- Q: Why testability matters: "it provides a particularly efficient way to find mistakes in the explanations and correct them." (M p.48). And "the testability of predictions in physics, and in science in general, is central for the possibility of error correction" (M p.51). "Explanations whose predictions are found wrong in an experiment automatically become problematic" (M pp.51–52).
+- Q: Why testability matters: it is an especially efficient way of finding mistakes in explanations and correcting them (M p.48, paraphrased). And "the testability of predictions in physics, and in science in general, is central for the possibility of error correction" (M p.51). An explanation whose predictions fail in an experiment becomes problematic as a matter of course (M pp.51–52, paraphrased).
 - Q: From the interlude "Alexandros", a fictional dialogue: "try to be prepared to create knowledge and improve on things tentatively, by making mistakes and trying to correct them as fast as you can." (M p.233).
 - I: Marletto links error correction to *testability*, not to hard-to-vary. She never says that an easy-to-vary theory defeats testing. Her complaint that the dog is arbitrary, a swappable part, is not tied to correction. She states exactness and universality as requirements a viable explanation "must" meet. That is threshold language, not a grade, but it concerns exactness, not variation.
 
@@ -792,7 +796,7 @@ Lines that make it prior, or valuable on other grounds:
 1. Neither book says that an *idle* part (one that does no work) threatens correction by absorbing refutations. Deutsch's absorption argument concerns swappable parts that carry predictions. His idle example (p.24) says an idle story cannot repair a flaw. D uses "idle" once, as "not just an idle preference" (p.113), and M never uses it. The word "superfluous" occurs once in D (p.25) and never in M.
 2. Deutsch never says whether hard-to-vary is valued "in itself" or "as a means". He gives both kinds of reason and never ranks them (section 5a).
 3. Neither book makes hard-to-vary a condition for *being* an explanation. D p.19 calls the easy-to-vary myth an explanation. Only the limiting cases lose the name: an account that "could easily explain anything … explains nothing" (p.22), and the escape clause leaves "a (purported) rule of thumb" (p.28).
-4. Deutsch uses hard-to-vary as a matter of degree. Examples: "most constrained" (p.26), "The better an explanation is, the more rigidly its reach is determined" (p.29), "isn’t as hard to vary as the full theory" (p.306), "not yet hard to vary" (p.342), and neutral changes in adaptations (p.78). Only the glossary is two-valued (p.31). Neither book gives a scale or a measure.
+4. Deutsch uses hard-to-vary as a matter of degree. Examples: how constrained an explanation is by existing knowledge (p.26, paraphrased), the better the explanation, the more tightly its reach is fixed (p.29, paraphrased), "isn’t as hard to vary as the full theory" (p.306), details not yet made hard to vary (p.342, paraphrased), and neutral changes in adaptations (p.78). Only the glossary is two-valued (p.31). Neither book gives a scale or a measure.
 5. Deutsch never connects the digital error correction of Chapter 6 to hard-to-vary. The analogy in section 2 is this note's. The book's own bridges are p.94 and p.257 (transmission) and p.342 ("discrete").
 6. Marletto never uses "hard to vary" ("hard to change" occurs once, p.15), "good explanation" as a defined term, or any form of the argument that easy variation makes testing useless. She links error correction to testability (pp.24, 48, 51) and to repair and copying (pp.3, 11, 152–153).
 7. Neither book says that every part of a good explanation must be hard to vary. D p.342 allows details "not yet hard to vary", and p.78 allows changes that make "no practical difference".

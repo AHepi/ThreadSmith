@@ -2,7 +2,7 @@
 
 These are working files made in the session scratchpad and cited by committed records. They were copied here on 25 September 2026 so that they are not lost when the temporary machine is cleared (lesson S23). Every file is unchanged, byte for byte. A file the records call `scratchpad/rivals/01 entries.md` is `rivals/01 entries.md` here. A file already in the repository with the same content was not copied again; each section below says where it is. All of them were made by Claude subagents or by the orchestrator.
 
-Left out everywhere: Python's compiled caches (`__pycache__/`), and three files that hold longer runs of text from the source books than the project allows (more than 25 words in a row). They are named below.
+Left out everywhere: Python's compiled caches (`__pycache__/`), and files that hold longer runs of text from the source books than the project allows (more than 25 words in a row, counting quotations joined only by page numbers or connecting words). They are named below.
 
 ## rivals/ - the making of revision 2 draft 4 (25 September, 01:30 to 03:48 UTC)
 
@@ -23,13 +23,21 @@ The section drafts 00 to 13 (`section 00.md` to `section 13.md`, and `.s00_befor
 The models (`02 models.md`), the proposal (`03 proposal.md`), the text attack and the model attack (`04a text attack.md`, `04b model attack.md`), the checked result (`05 checked result.md`), the answer sent back (`final_plain.txt`), and `check/quote_len.py`, which flags long book quotations.
 
 - Cited by: `tests/Revision 2 - does correction stick, the hard-to-vary lemma and its limit, analysis of 24 September.md`, which is built from these files, and the scripts beside it.
-- Already in the repository, so not here: `note.md`, which is that analysis; every script and output under `attack/`, `check/` and `models/`, and the `rerun_*` and `repo_*` outputs, which are the same as the outputs in `tests/Revision 2 - does correction stick - model scripts/`.
-- Left out: `01 text.md` and `check/assemble_note.py`, which quote the book in one run of 31 words. `01 text.md` is in the analysis as its Appendix A, with that quotation shortened.
+- Already in the repository, so not here: `note.md`, which was that analysis byte for byte until 25 September, when the quotations chained in its Appendix A were paraphrased (`note.md` still holds that chain, so it is not copied); every script and output under `attack/`, `check/` and `models/`, and the `rerun_*` and `repo_*` outputs, which are the same as the outputs in `tests/Revision 2 - does correction stick - model scripts/`.
+- Left out: `01 text.md` and `check/assemble_note.py`, which quote the book in one run of 31 words. `01 text.md` is in the analysis as its Appendix A, with that quotation shortened and, on 25 September, the quotations chained with it paraphrased.
 
 ## errcorr/ - the error-correction analysis (24 September, 11:32 to 12:25 UTC)
 
 The theory map (`01 theory map.md`), the synthesis before its check (`03 synthesis.md`) and the checked answer (`04 checked answer.md`). The scripts that searched the book text by word or page (`kw.py`, `pages.py`) and checked each quotation against its page and its length (`checkquotes.py`, `check2.py`); they print book text when run but hold none. The draft commit message (`commitmsg.txt`).
 
 - Cited by: `tests/Revision 2 - error correction and grading, analysis of 24 September.md`: its body is 04, its Appendix A is 01, and it names 03 as not included.
-- Already in the repository, so not here: `note.md`, which is that analysis.
-- Left out: `02 sources.md`. Each quotation in it is 25 words or fewer, but in twelve places two to four quotations stand side by side, with only a page number between them, and give back up to about 50 words of the book in a row. Its text is in the analysis as Appendix B.
+- Already in the repository, so not here: `note.md`, which was that analysis byte for byte until 25 September, when the chained book quotations in its section 3 and Appendix B were shortened (`note.md` still holds the chains, so it is not copied).
+- Left out: `02 sources.md`. Each quotation in it is 25 words or fewer, but in twelve places two to four quotations stand side by side, with only a page number between them, and give back up to about 50 words of the book in a row. Its text is in the analysis as Appendix B, where those runs were shortened on 25 September.
+
+## revision2/ - the revision 2 worklist, the plan and three checks (23 September, 12:40 to 15:54 UTC)
+
+The worklist of every known candidate change for a revision 2 of the theory, W1 to W56 (`01 worklist draft.md`), and the plan for revision 2 and the round that would test it, with the decisions D1 to D11 (`02 plan for revision 2 and its test.md`). The three checks the worklist called for, in `checks/`: whether (T2), Part VIII's accumulated-error bound, fails when two runs start from unequal states (`W31 T2 bound.md`, item W31); Mimo's holes M6 and M3, on Derivation 2's components and the non-circular dependence condition (`W19 W20 Mimo holes.md`, items W19 and W20); and the theory's defence against both (`defence of T2 and Derivation 2.md`). The times are when each file was last written.
+
+- Cited by: `results/S88 Reading of Atria's reply - the three defects.md`, which read the three checks under their scratchpad names; and the opening paragraphs of the five edited copies named next, which say where each was made.
+- In the repository only as edited copies, so these originals are kept here as well: `01` is `tests/Revision 2 - worklist, draft of 23 September.md` and `02` is `tests/Revision 2 - plan and test round, draft of 23 September.md`; the three checks are 01, 02 and 03 in `results/S88 Claude's checks of the three defects/`. Each copy's opening paragraph lists the edits made on moving in.
+- Left out: nothing. No file here quotes the source books in a run of more than 25 words.
