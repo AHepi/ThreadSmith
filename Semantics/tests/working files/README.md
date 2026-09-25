@@ -41,3 +41,11 @@ The worklist of every known candidate change for a revision 2 of the theory, W1 
 - Cited by: `results/S88 Reading of Atria's reply - the three defects.md`, which read the three checks under their scratchpad names; and the opening paragraphs of the five edited copies named next, which say where each was made.
 - In the repository only as edited copies, so these originals are kept here as well: `01` is `tests/Revision 2 - worklist, draft of 23 September.md` and `02` is `tests/Revision 2 - plan and test round, draft of 23 September.md`; the three checks are 01, 02 and 03 in `results/S88 Claude's checks of the three defects/`. Each copy's opening paragraph lists the edits made on moving in.
 - Left out: nothing. No file here quotes the source books in a run of more than 25 words.
+
+## S94 owner statement on choosing/ - the four readers' files behind the S94 analysis (25 September, finished between 19:10 and 20:13 UTC)
+
+The four readings of the owner's statement on choosing (decision S21) against revision 2 draft 5: reader A, the draft-5 text claim by claim (`reader A-text.md`); reader B, scope, arguments and "established" (`reader B-scope.md`); reader C, file 93's three choices, the chooser and the leftover definition (D) (`reader C-choices.md`); reader D, the two source books (`reader D-sources.md`). Unlike the folders above, these were written here directly, not copied from the scratchpad, and were committed with the analysis (9303314); their headers call them working files "not committed", which was true when they were written.
+
+- Cited by: `tests/Revision 2 - the owner's statement on choosing, against draft 5, 25 September.md` (its opening note and section 10); the project story, log S94.
+- Edited before the first commit: `reader D-sources.md`, shortened to keep book quotations within the run limit (lesson S29), with a dated line under its opening; the analysis records that the shortened file was measured by blocks, not quotation by quotation.
+- Not here: the sceptics' verdicts on these findings, which were not written to files; the analysis's section 10 records them.
