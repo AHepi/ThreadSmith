@@ -299,6 +299,7 @@ In the same paragraph:
 | a9_regression.py | fbbc424c9a903547565745a80db6b20a | 833a42032d3e1ce6b1d3f314e6ded269 |
 | a10_space.py | 4aa9181050cd5ca0f5f19e24b56888af | dfd124bd88eb47362aef893efcc9e31d |
 | a11_patch.py | db2354cc43c4cae37c77d9c91476a315 | 6a149d05056db1b4a48317797200662b |
+| a11_patch.py, 25 September: the book quotation in its docstring was shortened for the 25-word rule (decision S19); nothing that runs changed | e7fd3fc9a25199cdee78f5e8482d3872 | 6a149d05056db1b4a48317797200662b (the same) |
 | a12_option_b.py | 8eeff9d336d81827d1d04a2fbc3d7a57 | 6694f43f83c7a745f852949a95d62e51 |
 | rerun/m1…m6_output.txt (02's scripts re-run) | — | identical to 02's stored outputs (ef1b69f8…, 9f8d79ac…, 50f64071…, fdc6330e…, 2f6f4b3d…, 42f51536…) |
 

@@ -156,8 +156,10 @@ Three situations. The first two change a part; the third changes the question as
 
 ## 3. The sources' reason
 
+*25 September: chained quotes shortened to keep within the 25-word rule (decision S19).*
+
 - **[CHANGED: marked as a reading.]** [INFERENCE] **Deutsch gives both kinds of reason and never ranks them** (02, section 5a).
-  - *For correction:* the "fundamental flaw" is that "one could just as easily vary it to make different predictions" (D p.21). **[CHANGED: capitals removed to match the book.]** "experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). "it is only when a theory is a good explanation – hard to vary – that it even matters whether it is testable" (D p.25). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
+  - *For correction:* the "fundamental flaw" is that an explanation easy to vary without changing its predictions is just as easy to vary into different predictions (D p.21, paraphrased). **[CHANGED: capitals removed to match the book.]** "experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). Whether a theory is testable matters only once it is a good explanation, one that is hard to vary (D p.25, paraphrased). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
   - *For its own sake:* the glossary defines good and bad by variation alone (D p.31). Superfluous assumptions make a theory "bad by definition" (D p.26). Preferring one of many equal variants "is irrational" (D p.21).
   - **[CHANGED: D p.209 moved to the correction side.]** D p.209 says we should choose "not on the basis of their origin, but according to how good they are as explanations: how hard to vary". On its page, "origin" is what a conjecture is derived from: policies "cannot be derived … from anything" (D pp.208–209). The passage then takes Popper's question, "How can we hope to detect and eliminate error?", and answers "a tradition of criticism, in which good explanations are sought" (D p.209). It is a correction-reading line.
   - *Marletto* runs the arrow the other way. A finished work "is hard to change further … because it has been obtained by tentatively removing flaws" (M p.15). Correction produces the trait. Her example is a masterpiece, not an explanation.

@@ -92,8 +92,10 @@ Three situations. The first two change a part; the third changes the question as
 
 ## 3. The sources' reason
 
+*25 September: chained quotes shortened to keep within the 25-word rule (decision S19).*
+
 - [TEXT] **Deutsch gives both kinds of reason and never ranks them** (02, section 5a).
-  - *For correction:* the "fundamental flaw" is that "one could just as easily vary it to make different predictions" (D p.21). "Experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). "It is only when a theory is a good explanation – hard to vary – that it even matters whether it is testable" (D p.25). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
+  - *For correction:* the "fundamental flaw" is that an explanation easy to vary without changing its predictions is just as easy to vary into different predictions (D p.21, paraphrased). "Experimental testing is almost useless for correcting their errors. I call such theories bad explanations" (D p.22). Whether a theory is testable matters only once it is a good explanation, one that is hard to vary (D p.25, paraphrased). A refuted good explanation leaves its defenders "nowhere to go" (D p.25).
   - *For its own sake:* the glossary defines good and bad by variation alone (D p.31). Superfluous assumptions make a theory "bad by definition" (D p.26). Preferring one of many equal variants "is irrational" (D p.21). And we should choose "not on the basis of their origin, but according to how good they are as explanations: how hard to vary" (D p.209, checked in the text).
   - *Marletto* runs the arrow the other way: the finished work "is hard to change further … because it has been obtained by tentatively removing flaws" (M p.15). Correction produces the trait.
 - [TEXT] Neither book makes hard-to-vary a condition of *being* an explanation: the myth "does constitute an explanation" (D p.19).

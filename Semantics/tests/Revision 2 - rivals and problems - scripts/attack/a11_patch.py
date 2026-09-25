@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A11 - "easy to vary" against any candidate on a question narrower than the admitted changes.
 
-Deutsch p.27: Aristarchus could modify the tilt theory: "In the known world, the seasons happen at the times
-of year predicted by the axis-tilt theory; everywhere else on Earth, they also happen at those times of year."
+Deutsch p.27: Aristarchus could modify the tilt theory to say that in the known world the seasons fall when
+the tilt theory says they will (paraphrased), and add: "everywhere else on Earth, they also happen at those times of year."
 Here: the tilt, and the tilt with its geometry component patched at the far south (same cut, same anchors,
 different relation only at pairs outside the Greek question). Question p_greek (the two Greek pairs);
 admitted: the six (place, half) pairs. Established: the Greek-era answers.
