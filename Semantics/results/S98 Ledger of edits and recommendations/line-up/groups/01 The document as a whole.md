@@ -1,16 +1,16 @@
 # 01 The document as a whole
 
-*No home Part. Units shown: 46; units touched: 29; changes placed here: 86; records shown here in full under their home sentence: 62; pointer lines: 2; vocabulary lines: 37; records in blocks: 52. Statuses of the records shown here in full: applied 55, not applied 1, declined 2, superseded 4, open for the owner 0, unknown 0.*
+*No home Part. Units shown: 46; units touched: 28; changes placed here: 86; records shown here in full under their home sentence: 62; pointer lines: 2; vocabulary lines: 38; records in blocks: 54. Statuses of the records shown here in full: applied 54, not applied 1, declined 2, superseded 5, open for the owner 0, unknown 0.*
 
 - [Front matter · Opening of the Part · lines 1–2 · 6 records](#sec-L1-2)
 - [Front matter · A structural class of explanatory creativity, with selected and constructed correspondence · line 3 · 0 records](#sec-L3-3)
 - [Part 0 · Opening of the Part · line 7 · 0 records](#sec-L7-7)
 - [Part 0 · What this document claims · lines 9–17 · 41 records](#sec-L9-17)
-- [Part 0 · What this document does not claim · lines 19–27 · 37 records](#sec-L19-27)
+- [Part 0 · What this document does not claim · lines 19–27 · 38 records](#sec-L19-27)
 - [Part 0 · Grievances, anticipated / introduction · lines 33–35 · 17 records](#sec-L33-35)
 - [Part I · Opening of the Part · line 65 · 0 records](#sec-L65-65)
 - [Part XVI · Opening of the Part · line 550 · 3 records](#sec-L550-550)
-- [Not in the latest text, with no section: Part 0 · 9 changes, 20 records](#rest-0)
+- [Not in the latest text, with no section: Part 0 · 9 changes, 22 records](#rest-0)
 - [Not in the latest text, with no section: Part XVI · 3 changes, 5 records](#rest-XVI)
 - [Not in the latest text, with no section: Notes outside the Parts · 10 changes, 10 records](#rest-OUT)
 
@@ -37,7 +37,7 @@
       > (logs S96 and S97, on decisions S23 to S28)
 
 <a id="L2-s2"></a>
-#### L2.s2 · line 2 · 3 changes, 3 records
+#### L2.s2 · line 2 · 4 changes, 4 records
 > This is the scrubbed copy of draft 5 (log S95, md5 2517ef4ec1f274e8de2bfb7e6661ef94) with the S96 repairs applied in two stages, the second after two readings of the first (`results/S96 Check of the repaired copy - whole text.md` and `- cases.md`), made by program (`tests/S96 Repair - scripts/repair_apply.py`, from `replacements.json` and `replacements_stage2.json` beside it), and a third stage after the outside cross-examination and the owner's words of 26 September (decision S28), from `replacements_stage3.json` (rulings in `results/S96 Reading of the replies.md`), one line of the scrubbed copy to one line here, so the two compare line by line.
 
 - **CH-0880** · 1 record · applied
@@ -45,6 +45,12 @@
     - Before: *(nothing: an addition)*
     - After:
       > *Experiment, 25 September 2026 (log S95, on decision S23). This is draft 5 of revision 2 with the words the owner forbade that day replaced, made by program (`tests/S95 Scrub - scripts/scrub_apply.py`, from `replacements.json` beside it) out of draft 5, md5 7f1d8ad02adf96e27622593bd263252e, one line of draft 5 to one line here, so the two compare line by line. It does not take the place of draft 5, which stays the current draft; it is the step the owner asked for next, to see what of the semantics is left in these words. The words, and why each was chosen, are in `tests/S95 Scrub - vocabulary, as used.md`. One name here is provisional and says so (Part XI).*
+- **CH-0955** · 1 record · superseded
+  - **D-378** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 2 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — replace_lines["2"]; line 2 (the dated note)
+    - Before:
+      > *Experiment, 25 September 2026 (log S95, on decision S23). This is draft 5 of revision 2 with the words the owner forbade that day replaced, made by program (`tests/S95 Scrub - scripts/scrub_apply.py`, from `replacements.json` beside it) out of draft 5, md5 7f1d8ad02adf96e27622593bd263252e, one line of draft 5 to one line here, so the two compare line by line. It does not take the place of draft 5, which stays the current draft; it is the step the owner asked for next, to see what of the semantics is left in these words. The words, and why each was chosen, are in `tests/S95 Scrub - vocabulary, as used.md`. One name here is provisional and says so (Part XI).*
+    - After:
+      > *Experiment, 26 September 2026 (log S96, on decisions S23 to S27). This is the scrubbed copy of draft 5 (log S95, md5 2517ef4ec1f274e8de2bfb7e6661ef94) with the S96 repairs applied, made by program (`tests/S96 Repair - scripts/repair_apply.py`, from `replacements.json` beside it), one line of the scrubbed copy to one line here, so the two compare line by line. The repairs take physical possibility out of what defines a question, its range of changes, an account and a conflict, and keep it where a content is instantiated or transformed and as the content of claims a candidate can conflict with (decisions S25 to S27); they add conflict with a claim, found by argument with no test, and premises taken as given; and they apply the S95 repairs. Every change, with its reason, is in `tests/S96 Repair of the scrubbed copy - plan.md`. It is an experiment, not yet a draft of file 13: draft 5 stays the current draft. The words, and why each was chosen, are in `tests/S95 Scrub - vocabulary, as used.md`. Some names here are provisional and say so (Part XI).*
 - **CH-0956** · 1 record · applied
   - **D-379** · S96 · edit · applied · wording stands · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 2 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements_stage2.json — entries[0]; line 2; group N; ref: the dated note; how: Claude's
     - Before:
@@ -67,15 +73,8 @@
       > made by program (`tests/S96 Repair - scripts/repair_apply.py`, from `replacements.json` and `replacements_stage2.json` beside it), and a third stage after the outside cross-examination and the owner's words of 26 September (decision S28), from `replacements_stage3.json` (rulings in `results/S96 Reading of the replies.md`),
 
 <a id="L2-s3"></a>
-#### L2.s3 · line 2 · 1 change, 1 record
+#### L2.s3 · line 2 · no change recorded
 > The repairs take physical possibility out of what defines a question, its range of changes, an account and a conflict, and keep it where a content is instantiated or transformed and as the content of claims a candidate can conflict with (decisions S25 to S27); they add conflict with a claim, found by argument with no test, and premises taken as given; and they apply the S95 repairs.
-
-- **CH-0955** · 1 record · applied
-  - **D-378** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 2 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — replace_lines["2"]; line 2 (the dated note)
-    - Before:
-      > *Experiment, 25 September 2026 (log S95, on decision S23). This is draft 5 of revision 2 with the words the owner forbade that day replaced, made by program (`tests/S95 Scrub - scripts/scrub_apply.py`, from `replacements.json` beside it) out of draft 5, md5 7f1d8ad02adf96e27622593bd263252e, one line of draft 5 to one line here, so the two compare line by line. It does not take the place of draft 5, which stays the current draft; it is the step the owner asked for next, to see what of the semantics is left in these words. The words, and why each was chosen, are in `tests/S95 Scrub - vocabulary, as used.md`. One name here is provisional and says so (Part XI).*
-    - After:
-      > *Experiment, 26 September 2026 (log S96, on decisions S23 to S27). This is the scrubbed copy of draft 5 (log S95, md5 2517ef4ec1f274e8de2bfb7e6661ef94) with the S96 repairs applied, made by program (`tests/S96 Repair - scripts/repair_apply.py`, from `replacements.json` beside it), one line of the scrubbed copy to one line here, so the two compare line by line. The repairs take physical possibility out of what defines a question, its range of changes, an account and a conflict, and keep it where a content is instantiated or transformed and as the content of claims a candidate can conflict with (decisions S25 to S27); they add conflict with a claim, found by argument with no test, and premises taken as given; and they apply the S95 repairs. Every change, with its reason, is in `tests/S96 Repair of the scrubbed copy - plan.md`. It is an experiment, not yet a draft of file 13: draft 5 stays the current draft. The words, and why each was chosen, are in `tests/S95 Scrub - vocabulary, as used.md`. Some names here are provisional and say so (Part XI).*
 
 <a id="L2-s4"></a>
 #### L2.s4 · line 2 · 1 change, 1 record
@@ -242,7 +241,7 @@
     - After:
       > A correspondence can be *selected*, produced by variation and survival on a history of encountered changes; or *constructed*, produced by an episode of conjecture and criticism; or merely *declared* by whoever writes the model down.
 - **CH-0434** · 5 records · applied
-  - **B-301** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 15 · carried by: revision 2 as change-list entry W37.1, whose NEW text is verbatim in: draft 3 to latest text · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §9 'Handling' (line 160); summary table row 9 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W37.1, tests/Revision 2 - worklist, draft of 23 September.md#W37
+  - **B-301** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 15 · carried by: revision 2 as change-list entry W37.1, whose NEW text is verbatim in: draft 3 to latest text · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §9 'Handling' (line 160); summary table row 9 · joined through the change-list entry: W37.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W37
     - Before:
       > A correspondence can be *selected*, produced by variation and survival on a history of encountered changes; or *constructed*, produced by an episode of conjecture and criticism; or merely *declared* by whoever writes the model down.
     - After:
@@ -553,9 +552,9 @@
     - After:
       > - *Selection.* Deutsch calls criticism and experiment a selection (chapter 4, p.78). Here selection has no represented target in its history (Parts 0 and IV).
     - Old wording:
-      > Here selection is blind: its history holds no represented target (Parts 0 and IV).
+      > Here selection is blind: its history holds no represented target (Parts 0 and IV)
     - New wording:
-      > Here selection has no represented target in its history (Parts 0 and IV).
+      > Here selection has no represented target in its history (Parts 0 and IV)
 
 <a id="sec-L19-27"></a>
 ## Part 0 — Read this first · What this document does not claim · lines 19–27
@@ -671,7 +670,7 @@
     - New wording:
       > , a measure of worth, or
 - **CH-0346** · 1 record · applied · also at: [L25.s2](#L25-s2)
-  - **B-199** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 27 · carried by: revision 2 as change-list entry W6.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 4 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L27 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W6.1
+  - **B-199** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 27 · carried by: revision 2 as change-list entry W6.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 4 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L27 · joined through the change-list entry: W6.1
     - Before:
       > Where a claim needs one of these, the semantics takes it as a **declared input** and marks the place (Parts XI, XIV).
     - After:
@@ -716,7 +715,7 @@
       > "no probability on claims, and no function that orders explanations or thinkers"
 
 <a id="L25-s2"></a>
-#### L25.s2 · line 25 · 7 changes, 9 records
+#### L25.s2 · line 25 · 7 changes, 10 records
 > Where a claim needs one of these, the semantics does not supply it and marks the place: a claim that invokes an appraisal or aesthetic value takes the appraisal relation as an input (Parts XI, XIV), and a claim that needs any of the others is left open (Part XIV).
 
 - **CH-0188** · 1 record · applied
@@ -725,7 +724,7 @@
     - After:
       > Where a claim needs one of these, the semantics takes it as a **declared input** and marks the place (Parts XI, XIV).
 - **CH-0346** · 2 records · applied · also at: [L25.s1](#L25-s1)
-  - **B-186** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 27 · carried by: revision 2 as change-list entry W6.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR3 (S81 Results line 218; the same row in determination 03 §5) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W6.1, tests/Revision 2 - worklist, draft of 23 September.md#W6
+  - **B-186** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 27 · carried by: revision 2 as change-list entry W6.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR3 (S81 Results line 218; the same row in determination 03 §5) · joined through the change-list entry: W6.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W6
     - Before:
       > Where a claim needs one of these, the semantics takes it as a **declared input** and marks the place (Parts XI, XIV).
     - After:
@@ -747,12 +746,17 @@
       > a claim of worth or of aesthetic value takes the normative relation as an input (Parts XI, XIV), and a claim that needs any of the others is unsettled (Part XIV).
     - New wording:
       > a claim that invokes an appraisal or aesthetic value takes the appraisal relation as an input (Parts XI, XIV), and a claim that needs any of the others is left open (Part XIV).
-- **CH-1059** · 1 record · applied · vocabulary · also at: [L522.s2](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s2), [L522.s3](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s3)
+- **CH-1059** · 2 records · applied · vocabulary · also at: [L522.s2](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s2), [L522.s3](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s3)
   - **D-517** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 36 (section: Status, arguments and acceptance)
     - Before:
       > unsettled
     - After:
       > left open
+  - **F-39** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 110; the cells' bracketed grounds are left out
+    - Before:
+      > "unsettled"
+    - After:
+      > "left open"
 - **CH-1095** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1095)
   - **D-553** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 92 (section: Belief, merit and appraisal)
     - Before:
@@ -1033,43 +1037,43 @@
     - Before: *(nothing: an addition)*
     - After:
       > Finding a question can be represented without an earlier inscription of its need, while that representability does not supply a theory of its worth.
-- <a id="CH-0345"></a>**CH-0345** · 7 records · not locatable · placed by: Part its source names (not locatable)
-  - **B-183** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR1 (S81 Results line 216; the same row in determination 03 §5) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1, tests/Revision 2 - worklist, draft of 23 September.md#W1
+- <a id="CH-0345"></a>**CH-0345** · 8 records · not locatable · placed by: Part its source names (not locatable)
+  - **B-183** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR1 (S81 Results line 216; the same row in determination 03 §5) · joined through the change-list entry: W1.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W1
     - Before:
       > The three sentences that restated it (the answer to grievance 3, attack point (D), the Part XV entry) change with it.
     - After:
       > [no wording given] cross-reference slip, recorded as an erratum for a later revision
     - Old wording:
       > (the answer to grievance 3, attack point (D), the Part XV entry)
-  - **B-184** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR2 (S81 Results line 217; the same row in determination 03 §5); the row also names the pointer "(Semantics results S75)" · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1, tests/Revision 2 - worklist, draft of 23 September.md#W1
+  - **B-184** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR2 (S81 Results line 217; the same row in determination 03 §5); the row also names the pointer "(Semantics results S75)" · joined through the change-list entry: W1.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W1
     - Before:
       > One claim changes: Derivation 3, whose unqualified form gave the wrong verdict on the audit's case O48 and whose proof already assumed the qualification (Semantics results S75).
     - After:
       > [no wording given] cross-reference slip, recorded as an erratum for a later revision
     - Old wording:
       > the audit's case O48
-  - **B-185** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR2, second pointer (S81 Results line 217) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1, tests/Revision 2 - worklist, draft of 23 September.md#W1
+  - **B-185** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR2, second pointer (S81 Results line 217) · joined through the change-list entry: W1.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W1
     - Before:
       > One claim changes: Derivation 3, whose unqualified form gave the wrong verdict on the audit's case O48 and whose proof already assumed the qualification (Semantics results S75).
     - After:
       > [no wording given] cross-reference slip, recorded as an erratum for a later revision
     - Old wording:
       > (Semantics results S75)
-  - **B-212** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 12 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L5 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1
+  - **B-212** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 12 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L5 · joined through the change-list entry: W1.1
     - Before:
       > A rewrite of file 10 for coherence: the same primitives, definitions, conditions, constructions and derivations, in the same names and notation, reordered and restated so that every front-matter sentence defers to the exact statement in the body and every restatement of a theorem carries the theorem's own qualification.
     - After:
       > [no wording given] unclear wording or tension, recorded for a later revision
     - Old wording:
       > the same primitives, definitions, conditions, constructions and derivations
-  - **B-213** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 12 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L5 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1
+  - **B-213** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), as change-list entry W1.1, which replaces file 11's note; the theory-text drafts (draft 1 to latest text) carry no note, and file 11's note text is absent from all of them · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 12 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L5 · joined through the change-list entry: W1.1
     - Before:
       > Nothing else changes in what is claimed.*
     - After:
       > [no wording given] unclear wording or tension, recorded for a later revision
     - Old wording:
       > Nothing else changes in what is claimed.
-  - **B-262** · S88 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: none (file 11's note is replaced whole by change-list entry W1.1) · source: results/S88 Claude's checks of the three defects/01 (T2) bound.md — §5, 'File 11's header' (line 138): an erratum line for file 11's note · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W1.1
+  - **B-262** · S88 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 5 · carried by: none (file 11's note is replaced whole by change-list entry W1.1) · source: results/S88 Claude's checks of the three defects/01 (T2) bound.md — §5, 'File 11's header' (line 138): an erratum line for file 11's note · joined through the change-list entry: W1.1
     - Before:
       > Nothing else changes in what is claimed.*
     - After:
@@ -1087,19 +1091,27 @@
       >
       > @@DECLARATIONS@@
       > <!-- META:NOTE END -->
-- <a id="CH-0427"></a>**CH-0427** · 6 records · not locatable · placed by: Part its source names (not locatable)
-  - **B-291** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1 (the note of sources and departures, before Part 0); not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 1 (line 19), best handling; §1 'Handling' (line 49) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W38.1, tests/Revision 2 - worklist, draft of 23 September.md#W38
+  - **F-16** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W1.1 first proposed to change it, before the two checks, line 5 · carried by: full file 13 drafts 1 to 5, meta block (cut from every theory text) · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W1.1 (file line 132), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W1.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] the note names its test in place of "every change of that last kind"
+- <a id="CH-0427"></a>**CH-0427** · 7 records · not locatable · placed by: Part its source names (not locatable)
+  - **B-291** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1 (the note of sources and departures, before Part 0); not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 1 (line 19), best handling; §1 'Handling' (line 49) · joined through the change-list entry: W38.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W38
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] (a) attribution, in a new file or note beside 10 (10 is frozen); suggested content: the S19 statement, the lineage through papers and the missing O1/O2 files, and the known departures (observations 4, 6, 9 and 13)
-  - **B-292** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1; not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 3 (line 21), best handling; §3 'Handling: (a)' · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W38.1, tests/Revision 2 - worklist, draft of 23 September.md#W38
+  - **B-292** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1; not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 3 (line 21), best handling; §3 'Handling: (a)' · joined through the change-list entry: W38.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W38
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] (a) attribution (Part XII, constructor-theory lineage)
-  - **B-293** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1; not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 10 (line 28), best handling; §10 'Handling: (a) attribution' · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W38.1, tests/Revision 2 - worklist, draft of 23 September.md#W38
+  - **B-293** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: revision 2 sources note draft, as change-list entry W38.1; not in the theory-text drafts · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 10 (line 28), best handling; §10 'Handling: (a) attribution' · joined through the change-list entry: W38.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W38
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] (a) attribution (Derivation 9, declared provenance, relay, reason use)
+  - **F-17** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W38.1 first proposed to change it, before the two checks, line 7 · carried by: full file 13 drafts 1 to 5, meta block (cut from every theory text) · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W38.1 (file line 133), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W38.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] seven lines of the sources note corrected: file 00's references; interoperability, now "physical media" and pp.87–88; Deutsch's "problem"; the knowledge line; stated limits; "a separate matter"; "does no work by itself". One fallback page corrected
   - **C-2** · S93 · edit · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 7 · carried by: full file 13 drafts 1 to 5, meta block (cut from every theory text) · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W38.1 ("The note of sources and departures"), STATUS applied, KIND META, FILE-11 LINE 7–9; wording first in change list draft 5 (8816fcf)
     - Before:
       > ---

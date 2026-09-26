@@ -25,19 +25,30 @@ GROUPDIR = build.GROUPDIR
 # spec section 3: units per group
 UNITS_EXPECTED = {"G01": 46, "G02": 66, "G03": 56, "G04": 98, "G05": 68, "G06": 67, "G07": 48, "G08": 27,
                   "G09": 51, "G10": 80, "G11": 27, "G12": 35, "G13": 14, "G14": 55, "G15": 18}
-# spec section 4.1: changes per group
-CHANGES_EXPECTED = {"G01": 86, "G02": 52, "G03": 74, "G04": 118, "G05": 153, "G06": 143, "G07": 42, "G08": 37,
-                    "G09": 65, "G10": 105, "G11": 77, "G12": 50, "G13": 22, "G14": 116, "G15": 89, "G16": 46}
+# spec section 4.1: changes per group. After the S98 finishing fixes (44 records added as collector F,
+# six pairs joined, 133 records corrected; build/fixes after the checks.md) the figures are those below.
+# The specification's figures, for the 1850 records first built, were:
+#   CHANGES {"G01": 86, "G02": 52, "G03": 74, "G04": 118, "G05": 153, "G06": 143, "G07": 42, "G08": 37,
+#            "G09": 65, "G10": 105, "G11": 77, "G12": 50, "G13": 22, "G14": 116, "G15": 89, "G16": 46}
+#   TABLE_42 G01 (29, 62, 2, 37, 52) G02 (27, 51, 28, 24, 7) G03 (39, 80, 1, 50, 25) G04 (68, 139, 17, 85, 34)
+#            G05 (52, 130, 15, 81, 42) G06 (61, 157, 107, 157, 23) G07 (32, 55, 4, 25, 2) G08 (21, 44, 9, 37, 4)
+#            G09 (40, 70, 9, 48, 1) G10 (49, 119, 9, 59, 34) G11 (26, 81, 6, 46, 29) G12 (23, 49, 6, 16, 12)
+#            G13 (7, 16, 0, 11, 22) G14 (50, 141, 24, 144, 19) G15 (16, 115, 12, 43, 3)
+#   G16 {"full": 88, "pointer": 1, "full_vocab_with_sentences": 80, "full_no_sentence": 8}
+#   TOTALS {"full": 1309, "pointer": 249, "term_lines": 863, "term_records": 224, "blocks": 309,
+#           "section_blocks": 96, "rest_blocks": 213}
+CHANGES_EXPECTED = {"G01": 86, "G02": 52, "G03": 75, "G04": 120, "G05": 157, "G06": 143, "G07": 43, "G08": 38,
+                    "G09": 69, "G10": 105, "G11": 77, "G12": 51, "G13": 22, "G14": 118, "G15": 89, "G16": 48}
 # spec section 4.2: units touched, full, pointer lines, vocabulary lines, records in blocks
 TABLE_42 = {
-    "G01": (29, 62, 2, 37, 52), "G02": (27, 51, 28, 24, 7), "G03": (39, 80, 1, 50, 25),
-    "G04": (68, 139, 17, 85, 34), "G05": (52, 130, 15, 81, 42), "G06": (61, 157, 107, 157, 23),
-    "G07": (32, 55, 4, 25, 2), "G08": (21, 44, 9, 37, 4), "G09": (40, 70, 9, 48, 1),
-    "G10": (49, 119, 9, 59, 34), "G11": (26, 81, 6, 46, 29), "G12": (23, 49, 6, 16, 12),
-    "G13": (7, 16, 0, 11, 22), "G14": (50, 141, 24, 144, 19), "G15": (16, 115, 12, 43, 3),
+    "G01": (28, 62, 2, 38, 54), "G02": (27, 52, 35, 24, 7), "G03": (42, 83, 1, 61, 24),
+    "G04": (68, 142, 17, 87, 34), "G05": (51, 137, 15, 82, 42), "G06": (62, 160, 109, 159, 23),
+    "G07": (34, 57, 8, 25, 2), "G08": (21, 45, 9, 37, 4), "G09": (41, 76, 11, 48, 1),
+    "G10": (49, 122, 17, 60, 34), "G11": (26, 82, 7, 48, 29), "G12": (23, 52, 9, 20, 12),
+    "G13": (7, 16, 0, 11, 22), "G14": (50, 144, 30, 151, 19), "G15": (16, 116, 14, 45, 2),
 }
-G16_EXPECTED = {"full": 88, "pointer": 1, "full_vocab_with_sentences": 80, "full_no_sentence": 8}
-TOTALS = {"full": 1309, "pointer": 249, "term_lines": 863, "term_records": 224, "blocks": 309,
+G16_EXPECTED = {"full": 92, "pointer": 1, "full_vocab_with_sentences": 82, "full_no_sentence": 10}
+TOTALS = {"full": 1346, "pointer": 284, "term_lines": 896, "term_records": 229, "blocks": 309,
           "section_blocks": 96, "rest_blocks": 213}
 
 # spec section 10: the word list (quoted data, for this check only)
@@ -113,11 +124,11 @@ def main():
     if r_lines[-1] != "":
         fail("records.jsonl does not end with a newline")
     r_lines = r_lines[:-1]
-    if len(r_lines) != 1850:
+    if len(r_lines) != len(a_lines):
         fail("records.jsonl has {} lines".format(len(r_lines)))
     recs = [json.loads(l) for l in r_lines]
     anch = [json.loads(l) for l in a_lines]
-    if len({r["rid"] for r in recs}) != 1850:
+    if len({r["rid"] for r in recs}) != len(a_lines):
         fail("records.jsonl rids not distinct")
     for al, rl, a, r in zip(a_lines, r_lines, anch, recs):
         if list(r.items())[:len(a)] != list(a.items()):
@@ -285,8 +296,8 @@ def main():
     want = tuple(TOTALS[k] for k in ("full", "pointer", "term_lines", "term_records", "blocks", "section_blocks", "rest_blocks"))
     if tot != want:
         fail("totals {} differ from {}".format(tot, want))
-    if counts["full"] + counts["term_records"] + sec_blocks + rest_blocks + counts["g16_full_ns"] != 1850:
-        fail("records do not add up to 1850")
+    if counts["full"] + counts["term_records"] + sec_blocks + rest_blocks + counts["g16_full_ns"] != len(recs):
+        fail("records do not add up to {}".format(len(recs)))
     # the same showings, counted in the markdown group files
     exp_md = {}
     for g in tree["groups"]:
@@ -310,7 +321,7 @@ def main():
                 for x in e["records"]:
                     exp_md[(f, x, False)] = exp_md.get((f, x, False), 0) + 1
     got_md = {}
-    pat = re.compile(r"^\s*- \*\*([A-E]-\d+)\*\* · ")
+    pat = re.compile(r"^\s*- \*\*([A-F]-\d+)\*\* · ")
     for g in build.GROUP_IDS:
         f = build.GROUP_FILE[g]
         for line in read(f).split("\n"):

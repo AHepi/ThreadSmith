@@ -91,8 +91,8 @@
       > "A finite list of failures is not an argument that no bypass exists; one bypass rules out a proposed barrier."
 - **CH-0939** · 3 records · applied
   - Records D-754, D-809 (same wording):
-    - **D-754** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 495 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 495
-    - **D-809** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 495 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 1 (l. 495)
+    - **D-754** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 495 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 495
+    - **D-809** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 495 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 1 (l. 495)
     - Before:
       > A finite list of failures is not an argument that no bypass exists; one bypass rules out a proposed barrier.
     - After:
@@ -217,7 +217,7 @@
 > \]
 
 - **CH-1021** · 2 records · applied · also at: [L495.s3](#L495-s3), [L497.s1](#L497-s1)
-  - **D-943** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 506 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F5 ((U3)), wording given inline; ruling 'mimo 4 F5' in results/S96 Reading of the replies.md, section 3
+  - **D-943** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 506 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F5 ((U3)), wording given inline; ruling 'mimo 4 F5' in results/S96 Reading of the replies.md, section 3
     - Before:
       > \mathsf{UECS}=\{(M,s,\Omega,\beta):M\models\operatorname{RC}\land\operatorname{UU}\land\operatorname{UC}\}.
     - After:

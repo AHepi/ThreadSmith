@@ -122,6 +122,8 @@ def lines_to_units(lines):
 
 def target_version(r):
     t = r['target_text']
+    if t.startswith('file 00'):  # S98 finishing fixes: file 00 as a whole
+        return 'f00'
     if t.startswith('file 10') or t.startswith('file 20'):
         return 'f10'
     if t.startswith('file 11'):
@@ -732,7 +734,7 @@ def anchor(r):
 
 # ---------- run ----------
 recs = []
-for c in 'ABCDE':
+for c in 'ABCDEF':  # F: the finishing agent's records (S98 finishing fixes)
     with open(COLLECT + '/collector %s.jsonl' % c, encoding='utf-8') as f:
         for l in f:
             recs.append(json.loads(l))
@@ -841,10 +843,25 @@ comp = defaultdict(list)
 for i in range(len(recs)):
     comp[find(i)].append(i)
 roots = sorted(comp, key=lambda x: min(comp[x]))
+# S98 finishing fixes: the change ids of the anchor step as first made (1850 records) are kept.
+# A change that joins earlier changes takes the lowest of their ids; a change of new records only
+# takes the next number after the highest id first made. No id first made is split over two changes.
+FIRST = json.load(open(GROUP + '/anchor - scripts/change ids as first made.json', encoding='utf-8'))
 CID = {}
-for n, root in enumerate(roots, 1):
+nxt = max(int(v[3:]) for v in FIRST.values())
+seen = {}
+for root in roots:
+    olds = sorted({FIRST[recs[i]['rid']] for i in comp[root] if recs[i]['rid'] in FIRST})
+    for o in olds:
+        assert o not in seen, 'change %s first made is split' % o
+        seen[o] = root
+    if olds:
+        cid = olds[0]
+    else:
+        nxt += 1
+        cid = 'CH-%04d' % nxt
     for i in comp[root]:
-        CID[i] = 'CH-%04d' % n
+        CID[i] = cid
 
 # a record with no place takes the place of the most similar record of the same change
 for root in roots:

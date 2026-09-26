@@ -1,16 +1,16 @@
 # 03 Questions
 
-*Home Part: Part III. Units shown: 56; units touched: 39; changes placed here: 74; records shown here in full under their home sentence: 80; pointer lines: 1; vocabulary lines: 50; records in blocks: 25. Statuses of the records shown here in full: applied 63, not applied 4, declined 6, superseded 7, open for the owner 0, unknown 0.*
+*Home Part: Part III. Units shown: 56; units touched: 42; changes placed here: 75; records shown here in full under their home sentence: 83; pointer lines: 1; vocabulary lines: 61; records in blocks: 24. Statuses of the records shown here in full: applied 63, not applied 4, declined 7, superseded 9, open for the owner 0, unknown 0.*
 
 - [Part III · Opening of the Part · line 131 · 0 records](#sec-L131-131)
 - [Part III · Contracts · lines 133–147 · 5 records](#sec-L133-147)
-- [Part III · The respect is the query · lines 149–151 · 35 records](#sec-L149-151)
-- [Part III · Contracts have provenance · lines 153–155 · 7 records](#sec-L153-155)
-- [Part III · Scope, and a question that can be in error · lines 157–161 · 41 records](#sec-L157-161)
-- [Part 0 · Grievances, anticipated / 4. "Then everything is relative to a contract of admitted changes, and nothing is independent of the modeller." · line 43 · 19 records](#sec-L43-43)
-- [Part 0 · Grievances, anticipated / 10. "Freezing the question for assessment while letting questions change across episodes is having it both ways." · line 55 · 7 records](#sec-L55-55)
-- [Part XVI · 7. The frozen assessment and the moving question are consistent · lines 602–608 · 18 records](#sec-L602-608)
-- [Not in the latest text, with no section: Part III · 2 changes, 2 records](#rest-III)
+- [Part III · The respect is the query · lines 149–151 · 36 records](#sec-L149-151)
+- [Part III · Contracts have provenance · lines 153–155 · 8 records](#sec-L153-155)
+- [Part III · Scope, and a question that can be in error · lines 157–161 · 44 records](#sec-L157-161)
+- [Part 0 · Grievances, anticipated / 4. "Then everything is relative to a contract of admitted changes, and nothing is independent of the modeller." · line 43 · 20 records](#sec-L43-43)
+- [Part 0 · Grievances, anticipated / 10. "Freezing the question for assessment while letting questions change across episodes is having it both ways." · line 55 · 8 records](#sec-L55-55)
+- [Part XVI · 7. The frozen assessment and the moving question are consistent · lines 602–608 · 19 records](#sec-L602-608)
+- [Not in the latest text, with no section: Part III · 1 change, 1 record](#rest-III)
 
 <a id="sec-L131-131"></a>
 ## Part III — Questions · Opening of the Part · line 131
@@ -142,10 +142,14 @@
       > What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of \(\mathcal Q\) and the shape of \(C\), not by a label. A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports. An identification question has a \(\mathcal Q\) that computes a fibre and a \(C\) containing edits to the observed value. An obstruction question has a \(\mathcal Q\) that returns reachable or unreachable. A rule-status question has a \(\mathcal Q\) that reads the signature its components have on \(C\) (Part II) and a \(C\) containing edits to the rule. A purpose-achievement question has a \(\mathcal Q\) that reads whether the aims in \(O_p\) are met, with the appraisal relation \(\mathcal N\) as an input (Parts XI, XIV).
 
 <a id="L151-s2"></a>
-#### L151.s2 · line 151 · 2 changes, 2 records
+#### L151.s2 · line 151 · 2 changes, 3 records
 > A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports.
 
-- **CH-0579** · 1 record · not applied
+- **CH-0435** · 2 records · declined, not applied
+  - **B-302** · S89 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: none (W44 left out of revision 2) · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §11 'Handling' (line 187); summary table row 11 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W44, tests/Revision 2 - plan and test round, draft of 23 September.md#W44
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] "(b); optional (c) derived notion of a quasi-autonomous level"
   - **C-207** · S90 · recommendation · not applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 153 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W44 (L894), handling, an optional new notion; no entry
     - Before: *(nothing: an addition)*
     - After:
@@ -264,8 +268,8 @@
       > "a prediction faithful on the contract"
 - **CH-0915** · 3 records · applied
   - Records D-737, D-793 (same wording):
-    - **D-737** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 151 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B9, R8 (l. 151)
-    - **D-793** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 151 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R8 (l. 151)
+    - **D-737** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 151 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B9, R8 (l. 151)
+    - **D-793** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 151 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R8 (l. 151)
     - Before:
       > A measure that identifies an outcome, with a prediction from it that is faithful on the contract, answers the identification question; whether the measured part also produces the outcome is the production question, and the first answer is not the second.
     - After:
@@ -444,8 +448,15 @@
       > **construction trace**
 
 <a id="L155-s5"></a>
-#### L155.s5 · line 155 · no change recorded
+#### L155.s5 · line 155 · 1 change, 1 record
 > Any assessment may use any of the three.
+
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
 <a id="L155-s6"></a>
 #### L155.s6 · line 155 · 3 changes, 3 records
@@ -511,7 +522,7 @@
       > "in error" (l. 67, 157); "a decomposition that fails (F1)" (l. 245); "a counterpart of the other kind" (l. 281)
 
 <a id="L159-s1"></a>
-#### L159.s1 · line 159 · 3 changes, 4 records
+#### L159.s1 · line 159 · 4 changes, 5 records
 > A contract is a stated subset of the changes its target admits (Part II), and a stated scope is what makes it one.
 
 - **CH-0258** · 1 record · applied
@@ -525,8 +536,14 @@
       > correct; genuine; objective; legitimate; guarantee; certify; reliable; accurate; appropriate
     - After:
       > l. 159 "does not rule out that the restriction drops changes the question asked contains" → "leaves open whether the restriction drops changes the question asked contains". l. 509 "a historical extension does not rule out its absence" → "a historical extension leaves universality open". The rest as proposed.
+- **CH-0890** · 1 record · superseded
+  - **D-309** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 159 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[8]; line 159; group P; ref: S25; B-scope finding B2 (L159)
+    - Before:
+      > A contract is a declared subset of the physically admitted changes, and a stated scope is what makes it one.
+    - After:
+      > A contract is a declared subset of the changes its target admits (Part II), and a stated scope is what makes it one. Those are the changes the question asks about, in whatever the target is: a garden, a mathematical structure, a melody or a philosophical claim. For a physical target they are changes in what the target itself is and does; whether anyone could carry a change out, or whether it could come about, is a matter of instantiation and transformation (Part XII), which bears on testing and building and does not by itself put a change in a contract or keep it out.
 - **CH-0999** · 2 records · applied · also at: [L43.s1](#L43-s1), [L155.s2](#L155-s2), [L257.s1](05%20Account%20%28Part%20V%29.md#L257-s1), [L257.s2](05%20Account%20%28Part%20V%29.md#L257-s2), [L257.s3](05%20Account%20%28Part%20V%29.md#L257-s3)
-  - **D-892** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 159 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_1.response.txt — finding 3, proposed wording (code block 6); ruling 'mimo 1 3' in results/S96 Reading of the replies.md, section 3
+  - **D-892** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 159 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_1.response.txt — finding 3, proposed wording (code block 6); ruling 'mimo 1 3' in results/S96 Reading of the replies.md, section 3
     - Before:
       > A contract is a declared subset of the changes its target admits (Part II), and a stated scope is what makes it one.
     - After:
@@ -549,7 +566,7 @@
       > l. 159 "does not rule out that the restriction drops changes the question asked contains" → "leaves open whether the restriction drops changes the question asked contains". l. 509 "a historical extension does not rule out its absence" → "a historical extension leaves universality open". The rest as proposed.
 
 <a id="L159-s3"></a>
-#### L159.s3 · line 159 · 3 changes, 4 records
+#### L159.s3 · line 159 · 2 changes, 3 records
 > For a physical target they are changes in what the target itself is and does, as its attributed organization admits them (Part II), and admitting a change is not a claim that it can be carried out or come about; whether anyone could carry a change out, or whether it could come about, is a matter of instantiation and transformation (Part XII), which bears on testing and building and does not by itself put a change in a contract or keep it out.
 
 - **CH-1131** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1131)
@@ -558,12 +575,6 @@
       > correct; genuine; objective; legitimate; guarantee; certify; reliable; accurate; appropriate
     - After:
       > l. 159 "does not rule out that the restriction drops changes the question asked contains" → "leaves open whether the restriction drops changes the question asked contains". l. 509 "a historical extension does not rule out its absence" → "a historical extension leaves universality open". The rest as proposed.
-- **CH-0890** · 1 record · applied
-  - **D-309** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 159 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[8]; line 159; group P; ref: S25; B-scope finding B2 (L159)
-    - Before:
-      > A contract is a declared subset of the physically admitted changes, and a stated scope is what makes it one.
-    - After:
-      > A contract is a declared subset of the changes its target admits (Part II), and a stated scope is what makes it one. Those are the changes the question asks about, in whatever the target is: a garden, a mathematical structure, a melody or a philosophical claim. For a physical target they are changes in what the target itself is and does; whether anyone could carry a change out, or whether it could come about, is a matter of instantiation and transformation (Part XII), which bears on testing and building and does not by itself put a change in a contract or keep it out.
 - **CH-0962** · 2 records · applied
   - **D-385** · S96 · edit · applied · wording stands · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 159 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements_stage2.json — entries[6]; line 159; group W; ref: P-2; how: adapted
     - Before:
@@ -574,7 +585,7 @@
       > For a physical target they are changes in what the target itself is and does;
     - New wording:
       > For a physical target they are changes in what the target itself is and does, as its attributed organization admits them (Part II), and admitting a change is not a claim that it can be carried out or come about;
-  - **D-852** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 159 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-2, proposal 2
+  - **D-852** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 159 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-2, proposal 2
     - Before:
       > For a physical target they are changes in what the target itself is and does; whether anyone could carry a change out, or whether it could come about, is a matter of instantiation and transformation (Part XII), which bears on testing and building and does not by itself put a change in a contract or keep it out.
     - After:
@@ -616,15 +627,15 @@
     - Before: *(nothing: an addition)*
     - After:
       > What makes a restriction appropriate to the question asked is a substantive, criticizable part of the claim; the semantics records the restriction and supplies no rule that certifies it.
-- **CH-0364** · 3 records · applied
-  - **B-214** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 161 · carried by: revision 2 as change-list entry W57.1 + W32(b).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', first bullet, line 389; carried to S81 Results ('three reading hazards', O5 at f11 L161 s3) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W57.1 + W32(b).1
+- **CH-0364** · 3 records · applied · also at: [L159.s7](#L159-s7)
+  - **B-214** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 161 · carried by: revision 2 as change-list entry W57.1 + W32(b).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', first bullet, line 389; carried to S81 Results ('three reading hazards', O5 at f11 L161 s3) · joined through the change-list entry: W57.1 + W32(b).1
     - Before:
       > What makes a restriction appropriate to the question asked is a substantive, criticizable part of the claim; the semantics records the restriction and supplies no rule that certifies it.
     - After:
       > [no wording given] L161 could say that where a claim states the ground of its restriction, the verdict is given with that ground.
     - Old wording:
       > supplies no rule that certifies it
-  - **B-297** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 161 · carried by: revision 2 as change-list entry W57.1 + W32(b).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §6 'Best handling' (line 120), the (b) part; summary table row 6; 'The observations most worth acting on', item 1 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W57.1 + W32(b).1, tests/Revision 2 - worklist, draft of 23 September.md#W32
+  - **B-297** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 161 · carried by: revision 2 as change-list entry W57.1 + W32(b).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §6 'Best handling' (line 120), the (b) part; summary table row 6; 'The observations most worth acting on', item 1 · joined through the change-list entry: W57.1 + W32(b).1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W32
     - Before:
       > What makes a restriction appropriate to the question asked is a substantive, criticizable part of the claim; the semantics records the restriction and supplies no rule that certifies it.
     - After:
@@ -709,9 +720,19 @@
       > Meeting the conditions of an account (Part V) on the restricted contract leaves open why the claim is made on this restriction and not on a wider one.
 
 <a id="L159-s7"></a>
-#### L159.s7 · line 159 · 5 changes, 5 records
+#### L159.s7 · line 159 · 7 changes, 8 records
 > Where the claim states why it restricts the contract as it does, an assessment of the restriction is given with that statement; where it states none and an assessment turns on one, that statement is a missing declared input (Part XIV).
 
+- **CH-0364** · 1 record · applied · also at: [L159.s5](#L159-s5)
+  - **F-6** · S90 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W57.1 + W32(b).1 first proposed to change it, before the two checks, line 161 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W57.1 + W32(b).1 (file line 122), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W57.1 + W32(b).1
+    - Before: *(nothing: an addition)*
+    - After:
+      > does not certify the restriction as appropriate
+- **CH-1289** · 1 record · superseded
+  - **F-31** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 161 · carried by: none (the change list's entries W57.1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W57 (file line 143), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > where the claim states the ground of its restriction, the verdict is given with that ground; where it states none, the ground is a missing declared input (Part XIV)
 - **CH-0500** · 1 record · not applied
   - **C-127** · S90 · recommendation · not applied · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 159 · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_B1.response.txt — s90_xexam_mimo_B1 point 4 (R10, W57.1 + W32(b).1), a gloss; not contested and not ruled: passed to the orchestrator (batch 2); carried forward after S90 ("The ground of its restriction")
     - Before:
@@ -728,12 +749,17 @@
       > Where the claim states the ground of its restriction, a verdict on the restriction is given with that ground; where it states none and a verdict turns on one, the ground is a missing declared input
     - New wording:
       > Where the claim states why it restricts the contract as it does, an assessment of the restriction is given with that statement; where it states none and an assessment turns on one, that statement is a missing declared input
-- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+- **CH-1058** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
   - **D-516** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 35 (section: Status, arguments and acceptance)
     - Before:
       > verdict
     - After:
       > assessment
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 - **CH-1131** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1131)
   - **D-590** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 2, row 40 (CHANGE), file line 64
     - Before:
@@ -760,11 +786,17 @@
 > Exposing the defect is another question with its own contract.
 
 <a id="L161-s4"></a>
-#### L161.s4 · line 161 · 1 change, 3 records
+#### L161.s4 · line 161 · 2 changes, 4 records
 > An assessment is an event with a frozen contract (Part 0, grievance 10): a change to \(C\) or \(\mathcal Q\) during it, left unrecorded, makes the record name a claim other than the one assessed.
 
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 - **CH-0917** · 3 records · applied
-  - **D-755** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 161 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, authority words, l. 161 (R4)
+  - **D-755** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 161 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, authority words, l. 161 (R4)
     - Before:
       > What is prohibited is changing \(C\) or \(\mathcal Q\) during an assessment without recording that the claim has changed.
     - After:
@@ -816,7 +848,7 @@
 ## Part 0 — Read this first · Grievances, anticipated / 4. "Then everything is relative to a contract of admitted changes, and nothing is independent of the modeller." · line 43 · filed here from Part 0
 
 <a id="L43-s1"></a>
-#### L43.s1 · line 43 · 4 changes, 5 records
+#### L43.s1 · line 43 · 5 changes, 6 records
 > **4. "Then everything is relative to a contract of admitted changes, and nothing is independent of the modeller."** A contract is a stated subset of the changes its target admits (Part II), which are changes in whatever the target is, a garden, a mathematical structure or a melody, and not only those anyone could carry out.
 
 - **CH-0608** · 1 record · applied
@@ -835,6 +867,12 @@
       > objectivity; scope-honesty (l. 43)
     - After:
       > independent of the modeller; what the modeller chose to leave out lies in the stated scope
+- **CH-1297** · 1 record · not applied · vocabulary · also at: [L43.s5](#L43-s5)
+  - **F-40** · S95 · recommendation · not applied · written against: draft 5, line 43 · carried by: none · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 111; the cells' bracketed grounds are left out
+    - Before:
+      > "there is no objectivity"; "Objectivity lives in the physics and the fidelity facts; scope-honesty lives in the record"
+    - After:
+      > Objection: "and nothing is independent of anyone's say-so"; reply: "What is independent of any assessor lies in the physics and in whether transports are faithful; scope-honesty lies in the record"
 - **CH-0884** · 1 record · applied
   - **D-303** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 43 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[2]; line 43; group P; ref: S25; supersedes S95 R7
     - Before:
@@ -941,7 +979,7 @@
       > A contract that quietly excludes changes its target admits to protect an account
 
 <a id="L43-s5"></a>
-#### L43.s5 · line 43 · 4 changes, 5 records
+#### L43.s5 · line 43 · 5 changes, 6 records
 > What is independent of the modeller lies in the target and in fidelity; what the modeller chose to leave out lies in the stated scope, and so in the record.
 
 - **CH-0610** · 1 record · applied
@@ -956,6 +994,12 @@
       > objectivity; scope-honesty (l. 43)
     - After:
       > independent of the modeller; what the modeller chose to leave out lies in the stated scope
+- **CH-1297** · 1 record · not applied · vocabulary · also at: [L43.s1](#L43-s1)
+  - **F-40** · S95 · recommendation · not applied · written against: draft 5, line 43 · carried by: none · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 111; the cells' bracketed grounds are left out
+    - Before:
+      > "there is no objectivity"; "Objectivity lives in the physics and the fidelity facts; scope-honesty lives in the record"
+    - After:
+      > Objection: "and nothing is independent of anyone's say-so"; reply: "What is independent of any assessor lies in the physics and in whether transports are faithful; scope-honesty lies in the record"
 - **CH-1204** · 2 records · superseded
   - Records D-770, D-792 (same wording):
     - **D-770** · S95 · recommendation · superseded · wording not in the latest text · written against: scrubbed copy, line 43 · carried by: none · source: results/S95 Does the semantics hold without verificationist words.md — section 8, borderline, l. 43 (R7), last sentence
@@ -978,7 +1022,7 @@
 ## Part 0 — Read this first · Grievances, anticipated / 10. "Freezing the question for assessment while letting questions change across episodes is having it both ways." · line 55 · filed here from Part 0
 
 <a id="L55-s1"></a>
-#### L55.s1 · line 55 · 2 changes, 2 records
+#### L55.s1 · line 55 · 3 changes, 3 records
 > **10. "Freezing the question for assessment while letting questions change across episodes is having it both ways."** It is, deliberately, and the two ways are indexed so they cannot be confused.
 
 - **CH-0228** · 1 record · applied
@@ -997,10 +1041,23 @@
       > **primitive**, the two **primitives**, "primitive 2" (Θ and N)
     - After:
       > **import**, the two **imports**, "import 2"
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
 <a id="L55-s2"></a>
-#### L55.s2 · line 55 · no change recorded
+#### L55.s2 · line 55 · 1 change, 1 record
 > An assessment is an event with a frozen contract.
+
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
 <a id="L55-s3"></a>
 #### L55.s3 · line 55 · 1 change, 1 record
@@ -1052,11 +1109,18 @@
 ## Part XVI — Arguments · 7. The frozen assessment and the moving question are consistent · lines 602–608 · filed here from Part XVI
 
 <a id="L602-s1"></a>
-#### L602.s1 · heading · line 602 · no change recorded
+#### L602.s1 · heading · line 602 · 1 change, 1 record
 > ## 7. The frozen assessment and the moving question are consistent
 
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
+
 <a id="L604-s1"></a>
-#### L604.s1 · line 604 · 3 changes, 3 records
+#### L604.s1 · line 604 · 4 changes, 4 records
 > **Claim.** An assessment event with contract \(C\) and an episode in which \(C\) is replaced by \(C'\) with a construction trace are both representable without contradiction.
 
 - **CH-0857** · 1 record · applied
@@ -1081,6 +1145,12 @@
       > **construction witness** (Parts IV, X; l. 47, 155, 197, 225, 405, 409, 411, 542, 584, 604)
     - After:
       > **construction trace**
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
 <a id="L606-s1"></a>
 #### L606.s1 · line 606 · 3 changes, 3 records
@@ -1106,7 +1176,7 @@
       > "whether it is met is fixed at that index … both may be met"
 
 <a id="L606-s2"></a>
-#### L606.s2 · line 606 · 4 changes, 4 records
+#### L606.s2 · line 606 · 5 changes, 5 records
 > The assessment is indexed to \(C\), and whether \(\mathcal E\) meets (E) on \(C\) is a claim at that index (Part VIII, historical index).
 
 - **CH-0858** · 1 record · applied
@@ -1131,6 +1201,12 @@
       > "its truth is fixed at that index … may both be true" (l. 606)
     - After:
       > "whether it is met is fixed at that index … both may be met"
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 - **CH-0995** · 1 record · applied
   - **D-418** · S97 · edit · applied · wording stands · written against: repaired copy, line 606 · carried by: latest text · source: tests/S96 Repair - scripts/replacements_stage3.json — entries[11]; line 606; group O; ruling: S28 (i)
     - Before:
@@ -1191,11 +1267,17 @@
       > "whether it is met is fixed at that index … both may be met"
 
 <a id="L608-s1"></a>
-#### L608.s1 · line 608 · 1 change, 1 record
+#### L608.s1 · line 608 · 2 changes, 2 records
 > **Consequence.** The point of contact between an explanation and the world moves across episodes because contracts are constructed; it does not move within an assessment because assessments are indexed.
 
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 - **CH-1030** · 1 record · applied · also at: [L608.s2](#L608-s2)
-  - **D-952** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 608 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F12, proposed wording (code block 12); ruling 'mimo 4 F12' in results/S96 Reading of the replies.md, section 3
+  - **D-952** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 608 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F12, proposed wording (code block 12); ruling 'mimo 4 F12' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Consequence.** The point of contact between an explanation and the world moves across episodes because contracts are constructed; it does not move within an assessment because assessments are indexed. Goalpost-moving is the act of changing the index without recording the change, and it is a failure of the record, not an operation the semantics admits.
     - After:
@@ -1254,8 +1336,3 @@
     - Before: *(nothing: an addition)*
     - After:
       > A presentation that can express extra changes does not thereby admit them, and preserving an intermediate stage of one joint change does not make it a separately assessed question.
-- <a id="CH-0435"></a>**CH-0435** · 1 record · never applied · placed by: Part its source names (never applied)
-  - **B-302** · S89 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: none (W44 left out of revision 2) · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §11 'Handling' (line 187); summary table row 11 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W44, tests/Revision 2 - plan and test round, draft of 23 September.md#W44
-    - Before: *(nothing: an addition)*
-    - After:
-      > [no wording given] "(b); optional (c) derived notion of a quasi-autonomous level"

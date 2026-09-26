@@ -1,11 +1,11 @@
 # 02 Organizations and their changes
 
-*Home Part: Part II. Units shown: 66; units touched: 27; changes placed here: 52; records shown here in full under their home sentence: 51; pointer lines: 28; vocabulary lines: 24; records in blocks: 7. Statuses of the records shown here in full: applied 35, not applied 2, declined 5, superseded 8, open for the owner 0, unknown 1.*
+*Home Part: Part II. Units shown: 66; units touched: 27; changes placed here: 52; records shown here in full under their home sentence: 52; pointer lines: 35; vocabulary lines: 24; records in blocks: 7. Statuses of the records shown here in full: applied 36, not applied 2, declined 5, superseded 8, open for the owner 0, unknown 1.*
 
 - [Part II · Opening of the Part · line 81 · 0 records](#sec-L81-81)
 - [Part II · Organizations · lines 83–105 · 5 records](#sec-L83-105)
 - [Part II · Roles are defined, not supplied · lines 107–109 · 4 records](#sec-L107-109)
-- [Part II · Kinds are edit-signatures · lines 111–127 · 34 records](#sec-L111-127)
+- [Part II · Kinds are edit-signatures · lines 111–127 · 35 records](#sec-L111-127)
 - [Part 0 · Grievances, anticipated / 1. "Without declared kinds you cannot tell a cause from a correlation." · line 37 · 4 records](#sec-L37-37)
 - [Part 0 · Grievances, anticipated / 2. "So this is operationalism: a thing is what you can do to it." · line 39 · 4 records](#sec-L39-39)
 - [Part 0 · Grievances, anticipated / 11. "Kinds exist. A rule is not a cause." · line 57 · 5 records](#sec-L57-57)
@@ -216,7 +216,7 @@
 > \]
 
 <a id="L119-s1"></a>
-#### L119.s1 · line 119 · 3 changes, 3 records
+#### L119.s1 · line 119 · 4 changes, 4 records
 > Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide.
 
 - **CH-0480** · 1 record · superseded · also at: [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
@@ -224,6 +224,11 @@
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] held under D2: nothing drafted; the placeholder names the S88 candidate wordings then in view for file-11 lines 121, 554, 620
+- **CH-0366** · 1 record · applied · also at: [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **F-3** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W30.1 first proposed to change it, before the two checks, line 121 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W30.1 (file line 118), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W30.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] the second sentence states L105's port-setting link in place of "fixed by the organization D"
 - **CH-0486** · 1 record · declined · also at: [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-112** · S90 · recommendation · declined · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 119 · carried by: none · source: results/S90 reading rulings/ruling s90_xexam_mimo_A1 R08.md — S90 ruling R08 (W19.1): the reply's first repair (s90_xexam_mimo_A1 point 1), refused (batch 1)
     - Before: *(nothing: an addition)*
@@ -236,7 +241,7 @@
       > [no wording given] if a later revision wants classes of components across candidates, state the relation's domain (components of candidates with transports from one \(D\), read on one \(C\)) and its transitivity, as a CLAIM
 
 <a id="L119-s2"></a>
-#### L119.s2 · line 119 · 5 changes, 8 records
+#### L119.s2 · line 119 · 6 changes, 9 records
 > A kind is an equivalence class of components under this relation.
 
 - **CH-0411** · 4 records · superseded, applied · also at: [L119.s5](#L119-s5)
@@ -245,15 +250,11 @@
       > A kind is an equivalence class of components under this relation.
     - After:
       > A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense.
-    - New wording:
-      > A kind is an equivalence class of components under this relation. A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense.
-  - **B-280** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 121 · carried by: verbatim in: draft 2 to draft 4; carried as change-list entry W19.1, whose NEW text (as fixed later) is verbatim in: draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, final repair wording, change 2, the sentence after (K), inserted in F11 L121 after sentence 2 (lines 134-138) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W19.1
+  - **B-280** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 121 · carried by: verbatim in: draft 2 to draft 4; carried as change-list entry W19.1, whose NEW text (as fixed later) is verbatim in: draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, final repair wording, change 2, the sentence after (K), inserted in F11 L121 after sentence 2 (lines 134-138) · joined through the change-list entry: W19.1
     - Before:
       > A kind is an equivalence class of components under this relation.
     - After:
       > A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
-    - New wording:
-      > A kind is an equivalence class of components under this relation. A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
   - **C-72** · S90 · edit · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 121 · carried by: file 13 draft 2 (as sent) · source: tests/Revision 2 - change list, draft of 23 September.md — change list entry W19.1, OLD/NEW as in change list draft 2 (git 587eebf); replaced in change list draft 3; the draft-5 wording is C-10; carried as S90 part A1 R08
     - Before:
       > A kind is an equivalence class of components under this relation.
@@ -272,13 +273,15 @@
       > A kind is an equivalence class of components under this relation. For two explanatory candidates (Part V), let \(E\) and \(E'\) be their organizations and \(t=(\pi,\tau,\sigma,\lambda)\) and \(t'=(\pi',\tau',\sigma',\lambda')\) their transports from \(D\), where \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\), its anchor, with a port translation (Part IV). A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivation 2 uses kinds in this sense. Derivation 1 makes the like comparison between a component \(k\) of \(E\), read on \(C\) through \(\tau\), and its anchor \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
+- **CH-0366** · 1 record · applied · also at: [L119.s1](#L119-s1), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-112** · S90 · recommendation · declined · shown in full under [L119.s1](#L119-s1)
 - **CH-1254** · 1 record · not applied · also at: [L119.s1](#L119-s1), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **E-36** · S93 · recommendation · not applied · shown in full under [L119.s1](#L119-s1)
 
 <a id="L119-s3"></a>
-#### L119.s3 · line 119 · 11 changes, 12 records
+#### L119.s3 · line 119 · 12 changes, 13 records
 > For two explanatory candidates (Part V), let \(E\) and \(E'\) be their organizations and \(t=(\pi,\tau,\sigma,\lambda)\) and \(t'=(\pi',\tau',\sigma',\lambda')\) their transports from \(D\), where \(\pi\) translates valuations, \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\), its counterpart, with a port translation (Part IV).
 
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
@@ -288,6 +291,8 @@
     - Before: *(nothing: an addition)*
     - After:
       > (Parts IV and V)
+- **CH-0366** · 1 record · applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0467** · 1 record · applied · also at: [L119.s2](#L119-s2)
   - **C-93** · S90 · recommendation · applied · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 119 · carried by: file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: results/S90 reading rulings/ruling s90_xexam_mimo_A1 R08.md — S90 ruling R08 (W19.1) on s90_xexam_mimo_A1 point 1: FIX (batch 1); the wording as applied in file 13 draft 3 (entry W19.1, C-73); read off the line diff file 13 draft 2 (as sent) -> file 13 draft 3 at line 119
     - Before:
@@ -348,11 +353,13 @@
       > where \(\pi\) translates valuations, \(\tau\) translates edits,
 
 <a id="L119-s4"></a>
-#### L119.s4 · line 119 · 7 changes, 7 records
+#### L119.s4 · line 119 · 8 changes, 8 records
 > A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Argument 2 uses kinds in this sense.
 
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
+- **CH-0366** · 1 record · applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-112** · S90 · recommendation · declined · shown in full under [L119.s1](#L119-s1)
 - **CH-1254** · 1 record · not applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
@@ -395,11 +402,13 @@
       > sense. Argument 1
 
 <a id="L119-s5"></a>
-#### L119.s5 · line 119 · 9 changes, 9 records
+#### L119.s5 · line 119 · 10 changes, 10 records
 > Argument 1 makes the like comparison between an active component \(k\) of \(E\), read on \(C\) through \(\tau\), and its counterpart \(\lambda(k)\), read on \(C\) directly with its hidden ports projected away, up to the port translation.
 
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
+- **CH-0366** · 1 record · applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s6](#L119-s6), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-112** · S90 · recommendation · declined · shown in full under [L119.s1](#L119-s1)
 - **CH-0411** · 1 record · applied · also at: [L119.s2](#L119-s2)
@@ -434,7 +443,7 @@
       > Where possible use "counterpart" alone ("k's counterpart λ(k)") rather than also "tied to".
 
 <a id="L119-s6"></a>
-#### L119.s6 · line 119 · 5 changes, 6 records
+#### L119.s6 · line 119 · 5 changes, 7 records
 > Kinds are therefore relative to the contract; a coarser contract identifies more components, and two components of one kind on \(C\) may separate on a finer contract.
 
 - **CH-0251** · 1 record · applied
@@ -447,8 +456,8 @@
       > components.
     - New wording:
       > components, and two components of one kind on \(C\) may separate on a finer contract.
-- **CH-0366** · 2 records · unknown, applied · also at: [L119.s7](#L119-s7), [L119.s8](#L119-s8)
-  - **B-216** · S81 · recommendation · unknown · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: none named; the worklist item for O10 is W30 (change-list entry W30.1, at L121) · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', third bullet, line 391; carried to S81 Results (shared text read against the fixed verdict on O10) · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W30, tests/Revision 2 - change list, draft of 23 September.md#W30.1
+- **CH-0366** · 3 records · unknown, applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
+  - **B-216** · S81 · recommendation · unknown · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: none named; the worklist item for O10 is W30 (change-list entry W30.1, at L121) · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', third bullet, line 391; carried to S81 Results (shared text read against the fixed verdict on O10) · joined through the change-list entry: W30.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W30
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] reading hazard in text both files carry (case O10); no place or wording named
@@ -461,6 +470,7 @@
       > and two components of one kind on \(C\) may separate on a finer contract.
     - New wording:
       > and two components of one kind on \(C\) may separate on a finer contract. A signature is built from a component's relation under each \((a,b)\in C\), not from the values its ports take in a solution; two components that differ only in those values are of one kind on \(C\), whatever the difference is called. An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it, and an edit under which the two relations stay equal does not separate the components.
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s7](#L119-s7), [L119.s8](#L119-s8)
@@ -469,12 +479,13 @@
   - **E-36** · S93 · recommendation · not applied · shown in full under [L119.s1](#L119-s1)
 
 <a id="L119-s7"></a>
-#### L119.s7 · line 119 · 4 changes, 5 records
+#### L119.s7 · line 119 · 4 changes, 6 records
 > A signature is built from a component's relation under each \((a,b)\in C\), not from the values its ports take in a solution; two components that differ only in those values are of one kind on \(C\), whatever the difference is called.
 
-- **CH-0366** · 2 records · unknown, applied · also at: [L119.s6](#L119-s6), [L119.s8](#L119-s8)
+- **CH-0366** · 3 records · unknown, applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s8](#L119-s8)
   - **B-216** · S81 · recommendation · unknown · shown in full under [L119.s6](#L119-s6)
   - **C-11** · S90 · edit · applied · shown in full under [L119.s6](#L119-s6)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s8](#L119-s8)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s8](#L119-s8)
@@ -483,12 +494,13 @@
   - **E-36** · S93 · recommendation · not applied · shown in full under [L119.s1](#L119-s1)
 
 <a id="L119-s8"></a>
-#### L119.s8 · line 119 · 5 changes, 6 records
+#### L119.s8 · line 119 · 5 changes, 7 records
 > An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it, and an edit under which the two relations stay equal does not separate the components.
 
-- **CH-0366** · 2 records · unknown, applied · also at: [L119.s6](#L119-s6), [L119.s7](#L119-s7)
+- **CH-0366** · 3 records · unknown, applied · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7)
   - **B-216** · S81 · recommendation · unknown · shown in full under [L119.s6](#L119-s6)
   - **C-11** · S90 · edit · applied · shown in full under [L119.s6](#L119-s6)
+  - **F-3** · S90 · recommendation · applied · shown in full under [L119.s1](#L119-s1)
 - **CH-0480** · 1 record · superseded · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7)
   - **C-86** · S90 · recommendation · superseded · shown in full under [L119.s1](#L119-s1)
 - **CH-0486** · 1 record · declined · also at: [L119.s1](#L119-s1), [L119.s2](#L119-s2), [L119.s3](#L119-s3), [L119.s4](#L119-s4), [L119.s5](#L119-s5), [L119.s6](#L119-s6), [L119.s7](#L119-s7)
@@ -864,9 +876,9 @@
     - After:
       > **Corollary.** A condition "each active component must anchor to a component of the same kind" adds nothing to (F1) on any contract.
     - Old wording:
-      > each component must anchor
+      > each component
     - New wording:
-      > each active component must anchor
+      > each active component
 - **CH-0829** · 1 record · applied
   - **D-248** · S95 · edit · applied · wording stands · written against: draft 5, line 558 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[247]; line 558; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -923,12 +935,12 @@
     - Before: *(nothing: an addition)*
     - After:
       > Deleting only the identity entry from a change list does not remove state information: an unrelated change may leave different baseline states intact.
-  - **A-164** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 33 (file line 15), Amendment D, phrase cell; part of the cell is in R2 reason text (S64-R2-D04)
+  - **A-164** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 33 (file line 15), Amendment D, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-D04)
     - Before: *(nothing: an addition)*
     - After:
       > Deleting only the identity entry from a change list does not remove state information: an unrelated change may leave different baseline states intact.
     - New wording:
-      > <u>an unrelated change</u>; <u>share a working kind</u>; <u>an irrelevant alteration elsewhere</u>
+      > <u>an unrelated change</u>
 - <a id="CH-0069"></a>**CH-0069** · 1 record · never applied · placed by: Part its source names (never applied)
   - **A-69** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S64 Near cases - return/05 Quotations.md — S64 Near cases - return/05 Quotations.md row S64-R2-D01 (table line 122), sentence 3 of 6; also S72 Stage 1 testing - return/05 Quotations.md line 224; S72 Stage 2 audit - return/03 Audit of the quotations.md line 506
     - Before: *(nothing: an addition)*

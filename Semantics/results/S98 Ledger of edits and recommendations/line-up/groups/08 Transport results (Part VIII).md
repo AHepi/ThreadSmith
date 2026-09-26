@@ -1,11 +1,11 @@
 # 08 Transport results
 
-*Home Part: Part VIII. Units shown: 27; units touched: 21; changes placed here: 37; records shown here in full under their home sentence: 44; pointer lines: 9; vocabulary lines: 37; records in blocks: 4. Statuses of the records shown here in full: applied 28, not applied 2, declined 4, superseded 10, open for the owner 0, unknown 0.*
+*Home Part: Part VIII. Units shown: 27; units touched: 21; changes placed here: 38; records shown here in full under their home sentence: 45; pointer lines: 9; vocabulary lines: 37; records in blocks: 4. Statuses of the records shown here in full: applied 28, not applied 2, declined 4, superseded 11, open for the owner 0, unknown 0.*
 
 - [Part VIII · Opening of the Part · line 351 · 0 records](#sec-L351-351)
 - [Part VIII · Functional transport · line 353 · 7 records](#sec-L353-353)
 - [Part VIII · Relational transport · lines 355–361 · 0 records](#sec-L355-361)
-- [Part VIII · Approximate transport · line 363 · 11 records](#sec-L363-363)
+- [Part VIII · Approximate transport · line 363 · 12 records](#sec-L363-363)
 - [Part VIII · Recoding · line 365 · 7 records](#sec-L365-365)
 - [Part VIII · Historical index · line 367 · 5 records](#sec-L367-367)
 - [Part VIII · A failed answer stays failed · line 369 · 27 records](#sec-L369-369)
@@ -156,7 +156,7 @@
       > **Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
     - After:
       > **Approximate transport.** With one-step discrepancy \(d(\pi Sz,T\pi z)\le\varepsilon\) at every state \(z\) of the stated scope and an \(L\)-Lipschitz represented next-step map \(T\), the discrepancy after \(n\) steps from one state, \(e_n=d(\pi S^nz,T^n\pi z)\) (so \(e_0=0\)), satisfies \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
-  - **B-282** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 361 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W31.1, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F2, 'The final repair wording, exact text for revision 2', the erratum, replaces all of F11 L361 (lines 253-259) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W31.1
+  - **B-282** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 361 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W31.1, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F2, 'The final repair wording, exact text for revision 2', the erratum, replaces all of F11 L361 (lines 253-259) · joined through the change-list entry: W31.1
     - Before:
       > **Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
     - After:
@@ -197,7 +197,7 @@
   - **C-88** · S90 · recommendation · superseded · shown in full under [L363.s1](#L363-s1)
 
 <a id="L363-s4"></a>
-#### L363.s4 · line 363 · 2 changes, 3 records
+#### L363.s4 · line 363 · 3 changes, 4 records
 > An exact question is not silently replaced by an approximate one.
 
 - **CH-0409** · 2 records · superseded · also at: [L363.s2](#L363-s2)
@@ -211,6 +211,12 @@
       > **Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
     - After:
       > **Approximate transport.** With one-step discrepancy d(πSz, Tπz) ≤ ε at every state z of the stated scope and an L-Lipschitz represented next-step map T, the discrepancy after n steps from one state z, e_n = d(πSⁿz, Tⁿπz) (so e₀ = 0), satisfies e_n ≤ ε Σ_{k<n} L^k whenever z, Sz, …, S^{n−1}z lie in that scope. (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
+- **CH-1278** · 1 record · superseded
+  - **F-20** · S88 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 361 · carried by: none · source: results/S88 Cross-examination - three defects - returns/Mimo in three parts/s88_xexam_mimo_F2.response.txt — point 4, the wording offered for Approximate transport (file line 13); settled positions, F2, 'The final repair wording' takes parts of it in other words
+    - Before:
+      > **Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
+    - After:
+      > **Approximate transport.** Take the one-step maps of functional transport (line 366), \(S\) on \(X_D\) and \(T\) on \(X_E\) (writing \(S,T\) for \(S_a,T_a\) of one repeatedly applied generator). If \(d(\pi Sz,T\pi z)\le\varepsilon\) at every iterate of a start \(z\) — i.e. on a stated scope containing \(z,Sz,S^2z,\dots\) and the pairs on which \(T\) is compared — and \(T\) is \(L\)-Lipschitz there, then the \(n\)-step discrepancy of the transport square, \(e_n:=d(\pi S^nz,T^n\pi z)\) (so \(e_0=0\)), satisfies \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
 - **CH-0482** · 1 record · superseded · also at: [L363.s1](#L363-s1), [L363.s2](#L363-s2), [L363.s3](#L363-s3)
   - **C-88** · S90 · recommendation · superseded · shown in full under [L363.s1](#L363-s1)
 
@@ -520,7 +526,7 @@
     - After:
       > "it uses"
 - **CH-0932** · 3 records · applied
-  - **D-722** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 369 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B2, R18 (l. 369)
+  - **D-722** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 369 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B2, R18 (l. 369)
     - Before:
       > Here "ruled out" is meant as in Part VI: the assessor holds an argument usable by that assessor (Part IX) that rules out \(y\) as the target's answer at \((a,b)\), and by (K3) an argument from the test that records it rules out a candidate only together with the background and instruments the test uses.
     - After:
@@ -544,9 +550,9 @@
     - After:
       > If a premise about them ceases to be live, the receipt is not usable and the result ceases to be established, for every such candidate alike; no candidate is thereby shown to be an account (K2).
     - Old wording:
-      > the exclusion ceases to be established
+      > the exclusion
     - New wording:
-      > the result ceases to be established
+      > the result
 - **CH-1034** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1034)
   - **D-492** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 11 (section: Status, arguments and acceptance)
     - Before:
@@ -703,7 +709,7 @@
 > Each is a conjunction of equalities and existence claims over the transported data, the declared aims and occasions of (P) and (EX) among them; bijections preserve them. ∎ The result does not apply to coarsenings, changed boundaries, or lost event identities.
 
 - **CH-1031** · 2 records · applied · also at: [L612.s1](#L612-s1), [L612.s2](#L612-s2)
-  - **D-947** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 612 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F8, proposed wording (code block 9); ruling 'mimo 4 F8' in results/S96 Reading of the replies.md, section 3
+  - **D-947** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 612 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F8, proposed wording (code block 9); ruling 'mimo 4 F8' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Claim.** Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EX). *Why this and not its denial.* Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them. ∎ The result does not apply to coarsenings, changed boundaries, or lost event identities.
     - After:

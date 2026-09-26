@@ -1,12 +1,12 @@
 # 07 Exact constructions
 
-*Home Part: Part VII. Units shown: 48; units touched: 32; changes placed here: 42; records shown here in full under their home sentence: 55; pointer lines: 4; vocabulary lines: 25; records in blocks: 2. Statuses of the records shown here in full: applied 46, not applied 1, declined 4, superseded 4, open for the owner 0, unknown 0.*
+*Home Part: Part VII. Units shown: 48; units touched: 34; changes placed here: 43; records shown here in full under their home sentence: 57; pointer lines: 8; vocabulary lines: 25; records in blocks: 2. Statuses of the records shown here in full: applied 46, not applied 1, declined 5, superseded 5, open for the owner 0, unknown 0.*
 
 - [Part VII · Opening of the Part · line 321 · 3 records](#sec-L321-321)
 - [Part VII · Production and direction · lines 323–325 · 9 records](#sec-L323-325)
 - [Part VII · Identification · lines 327–331 · 14 records](#sec-L327-331)
 - [Part VII · Obstruction · lines 333–335 · 8 records](#sec-L333-335)
-- [Part VII · Explanations that remove structure · lines 337–339 · 16 records](#sec-L337-339)
+- [Part VII · Explanations that remove structure · lines 337–339 · 18 records](#sec-L337-339)
 - [Part VII · Odd-order skew-symmetric matrices · lines 341–343 · 11 records](#sec-L341-343)
 - [Part VII · Constitutive rules · lines 345–347 · 1 record](#sec-L345-347)
 - [Part 0 · Grievances, anticipated / 7. "Mathematics has no interventions." · line 49 · 14 records](#sec-L49-49)
@@ -193,7 +193,7 @@
 > (I1) It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
 
 - **CH-1015** · 1 record · applied · also at: [L329.s5](#L329-s5), [L329.s6](#L329-s6), [L331.s1](#L331-s1)
-  - **D-885** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_glm_A.response.txt — finding 2, proposed wording (code block 3); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
+  - **D-885** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_glm_A.response.txt — finding 2, proposed wording (code block 3); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
     - Before:
       > Let \(Z\) be the admitted states, \(g:Z\to Y\) the measurement, \(f:Z\to F\) the feature. The fibre at \(y\) is \(Z_y=g^{-1}(y)\). The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1) It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\). (I2) For linear \(A\) and feature \(c^\top\), identification is \(\ker A\subseteq\ker c^\top\). (I4) Repeating rows changes no kernel; an independent calibration can.
     - After:
@@ -204,7 +204,7 @@
 > (I2) For linear \(g\) and linear feature \(c^\top\), identification is \(\ker g\subseteq\ker c^\top\).
 
 - **CH-1015** · 2 records · applied · also at: [L329.s4](#L329-s4), [L329.s6](#L329-s6), [L331.s1](#L331-s1)
-  - **D-931** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 5, proposed wording (code block 10); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
+  - **D-931** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 5, proposed wording (code block 10); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
     - Before:
       > (I2) For linear \(A\) and feature \(c^\top\), identification is \(\ker A\subseteq\ker c^\top\).
     - After:
@@ -243,7 +243,7 @@
     - After:
       > "its content might be faithful on the contract"
 - **CH-1015** · 2 records · applied · also at: [L329.s4](#L329-s4), [L329.s5](#L329-s5), [L329.s6](#L329-s6)
-  - **D-876** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_atria_A.response.txt — finding 1, proposed wording (code block 1); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
+  - **D-876** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 329 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_atria_A.response.txt — finding 1, proposed wording (code block 1); ruling 'atria A 1, glm A 2, mimo 3 5' in results/S96 Reading of the replies.md, section 3
     - Before:
       > Let \(Z\) be the admitted states, \(g:Z\to Y\) the measurement, \(f:Z\to F\) the feature. The fibre at \(y\) is \(Z_y=g^{-1}(y)\). The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1) It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\). (I2) For linear \(A\) and feature \(c^\top\), identification is \(\ker A\subseteq\ker c^\top\). (I4) Repeating rows changes no kernel; an independent calibration can.
       >
@@ -307,8 +307,8 @@
       > "its content might be faithful on the contract"
 - **CH-0930** · 3 records · applied
   - Records D-738, D-803 (same wording):
-    - **D-738** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 331 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B9, R16 (l. 331)
-    - **D-803** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 331 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R16 (l. 331)
+    - **D-738** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 331 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B9, R16 (l. 331)
+    - **D-803** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 331 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R16 (l. 331)
     - Before:
       > "Set \(b_B=0\) because it gives the mass I favour" is not an inference from the readings; it is circular, though its content might be faithful on the contract.
     - After:
@@ -398,8 +398,8 @@
       > rule out, rules out, what would rule it out
 - **CH-0931** · 3 records · applied
   - Records D-753, D-804 (same wording):
-    - **D-753** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 335 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 335 (R17)
-    - **D-804** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 335 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R17 (l. 335)
+    - **D-753** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 335 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 335 (R17)
+    - **D-804** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 335 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R17 (l. 335)
     - Before:
       > Twenty-three indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not rule out the scoped result.
     - After:
@@ -420,17 +420,31 @@
 ## Part VII — Exact constructions · Explanations that remove structure · lines 337–339
 
 <a id="L337-s1"></a>
-#### L337.s1 · heading · line 337 · no change recorded
+#### L337.s1 · heading · line 337 · 1 change, 1 record
 > ## Explanations that remove structure
 
+- **CH-1294** · 1 record · declined
+  - **F-36** · S90 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 335 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W49 (L985); the plan leaves it out (plan, line 137)
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] new constructions for Part VII from file 12: causation by absence (12:341–343), prevention and double prevention (12:345–347), and absence and prevention added to attack B (12:548)
+
 <a id="L339-s1"></a>
-#### L339.s1 · line 339 · no change recorded
+#### L339.s1 · line 339 · 1 change, 1 record
 > A question of the form "why is there no \(X\)-effect?" has a target \(D\) in which the ports and components a rival account would need are absent, and a contract containing the edits that would introduce them.
 
+- **CH-0440** · 1 record · applied · also at: [L339.s2](#L339-s2), [L339.s3](#L339-s3), [L339.s4](#L339-s4), [L339.s5](#L339-s5)
+  - **F-14** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W40.1 first proposed to change it, before the two checks, line 337 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W40.1 (file line 130), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W40.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] anchored after the paragraph's last sentence; "the question why it appears"
+
 <a id="L339-s2"></a>
-#### L339.s2 · line 339 · 1 change, 1 record
+#### L339.s2 · line 339 · 2 changes, 2 records
 > An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both unchanged.
 
+- **CH-0440** · 1 record · applied · also at: [L339.s1](#L339-s1), [L339.s3](#L339-s3), [L339.s4](#L339-s4), [L339.s5](#L339-s5)
+  - **F-14** · S90 · recommendation · applied · shown in full under [L339.s1](#L339-s1)
 - **CH-1134** · 1 record · superseded · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1134)
   - **D-707** · S95 · recommendation · superseded · written against: draft 5 · carried by: none · source: tests/S95 Scrub - vocabulary, proposed.md — section 2.7, table row at file line 144; sceptic's row 47
     - Before:
@@ -439,9 +453,11 @@
       > "an account"; l. 453 "to rescue its meeting (E)"
 
 <a id="L339-s3"></a>
-#### L339.s3 · line 339 · 4 changes, 5 records
+#### L339.s3 · line 339 · 5 changes, 6 records
 > The rival's supposed structure has as its counterpart a *deleted* subnetwork, whose relation is full (Part II).
 
+- **CH-0440** · 1 record · applied · also at: [L339.s1](#L339-s1), [L339.s2](#L339-s2), [L339.s4](#L339-s4), [L339.s5](#L339-s5)
+  - **F-14** · S90 · recommendation · applied · shown in full under [L339.s1](#L339-s1)
 - **CH-0722** · 1 record · applied
   - **D-141** · S95 · edit · applied · wording stands · written against: draft 5, line 339 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[140]; line 339; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -481,7 +497,7 @@
       > whose relation is full (Part II).
 
 <a id="L339-s4"></a>
-#### L339.s4 · line 339 · 6 changes, 7 records
+#### L339.s4 · line 339 · 6 changes, 8 records
 > This is the semantics' treatment of eliminative explanation; it is offered as an account, and is listed under attack (Nec) in Part XV as a place where it may not be one.
 
 - **CH-0287** · 1 record · applied · form only
@@ -494,12 +510,13 @@
       > ) as
     - New wording:
       > ) in Part XV as
-- **CH-0440** · 1 record · applied · also at: [L339.s5](#L339-s5)
-  - **B-307** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 337 · carried by: revision 2 as change-list entry W40.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M6 (line 283); observation 15 and summary table row 15 ('add D p.154') · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W40.1, tests/Revision 2 - worklist, draft of 23 September.md#W40
+- **CH-0440** · 2 records · applied · also at: [L339.s1](#L339-s1), [L339.s2](#L339-s2), [L339.s3](#L339-s3), [L339.s5](#L339-s5)
+  - **B-307** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 337 · carried by: revision 2 as change-list entry W40.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M6 (line 283); observation 15 and summary table row 15 ('add D p.154') · joined through the change-list entry: W40.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W40
     - Before:
       > This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be.
     - After:
       > [no wording given] an eliminative explanation must also explain the appearance (for Attack B and Part XV's exposed case)
+  - **F-14** · S90 · recommendation · applied · shown in full under [L339.s1](#L339-s1)
 - **CH-0723** · 1 record · applied
   - **D-142** · S95 · edit · applied · wording not in the latest text · written against: draft 5, line 339 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[141]; line 339; swap; RANKING
     - Before:
@@ -538,15 +555,16 @@
       > "full by (O) (Part II)" and "under (K) (Part II)"
 
 <a id="L339-s5"></a>
-#### L339.s5 · line 339 · 4 changes, 5 records
+#### L339.s5 · line 339 · 4 changes, 6 records
 > Where the absent structure appears to be present, the question why it appears is a separate question with its own target and contract (Part III): an account of the absence neither answers that question nor needs to, and a bare denial, which offers no component that responds to a change in what produces the appearance, is not an account of it.
 
-- **CH-0440** · 1 record · applied · also at: [L339.s4](#L339-s4)
+- **CH-0440** · 2 records · applied · also at: [L339.s1](#L339-s1), [L339.s2](#L339-s2), [L339.s3](#L339-s3), [L339.s4](#L339-s4)
   - **C-31** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 337 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W40.1 ("Part VII: why the absent structure appears is a separate question"), STATUS applied, KIND CLAIM, FILE-11 LINE 337; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C21, S90 part C R25, S93 part I X12
     - Before:
       > This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be.
     - After:
       > This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) in Part XV as a place where it may not be. Where the absent structure appears to be present, the question why it appears is a separate question with its own target and contract (Part III): an account of the absence neither answers that question nor needs to, and a bare denial, which offers no component that responds to a change in what produces the appearance, is not an account of it.
+  - **F-14** · S90 · recommendation · applied · shown in full under [L339.s1](#L339-s1)
 - **CH-0483** · 2 records · applied
   - **C-89** · S90 · edit · applied · written against: the note of file 13, its list of changes of claim (full file 13 draft 2) · carried by: full file 13 drafts 3 to 5, the note (its list of changes of claim) · source: tests/Revision 2 - change list, draft of 23 September.md — change list entry W40.1, DECLARATION as in change list draft 2 (587eebf) and draft 3 (99e9cd0); S90 ruling R25 (Atria C item 5, Mimo C point 5; batch 3): FIX, declaration only; the entry's theory wording is C-31
     - Before:
@@ -818,7 +836,7 @@
       > "Removing a starting assumption"
 
 <a id="L49-s3"></a>
-#### L49.s3 · line 49 · 4 changes, 4 records
+#### L49.s3 · line 49 · 5 changes, 5 records
 > A piece of mathematics explains, relative to a question, when its components respond to those edits as the target structure does (Part VII).
 
 - **CH-0219** · 1 record · applied · form only
@@ -847,6 +865,12 @@
       > *Proof.*
     - After:
       > *Why this and not its denial.*
+- **CH-0888** · 1 record · superseded
+  - **D-307** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 49 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[6]; line 49; group P; ref: S25, point 1
+    - Before:
+      > A mathematical argument explains, relative to a question, when its components respond to those edits as the target structure does (Part VII).
+    - After:
+      > A mathematical argument explains, relative to a question, when its components respond to those edits as the target structure does (Part VII). The same goes for a melody, where changing a note or a chord is an edit, and for a philosophical claim, where dropping a premise or a distinction is one. Whether anyone could carry an edit out in a physical system bears on testing and building (Part XII), not on whether a candidate meets (E) at it.
 - **CH-1001** · 1 record · applied · also at: [L49.s4](#L49-s4), [L105.s1](02%20Organizations%20and%20their%20changes%20%28Part%20II%29.md#L105-s1), [L343.s9](#L343-s9)
   - **D-424** · S97 · edit · applied · wording stands · written against: repaired copy, line 49 · carried by: latest text · source: tests/S96 Repair - scripts/replacements_stage3.json — entries[17]; line 49; group X; ruling: mimo 1 7
     - Before:
@@ -859,15 +883,9 @@
       > A piece of mathematics explains, relative to a question,
 
 <a id="L49-s4"></a>
-#### L49.s4 · line 49 · 2 changes, 2 records
+#### L49.s4 · line 49 · 1 change, 1 record
 > The same goes for a melody, where changing a note or a chord is an edit, and for a philosophical claim, where dropping a premise or a distinction is one.
 
-- **CH-0888** · 1 record · applied
-  - **D-307** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 49 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[6]; line 49; group P; ref: S25, point 1
-    - Before:
-      > A mathematical argument explains, relative to a question, when its components respond to those edits as the target structure does (Part VII).
-    - After:
-      > A mathematical argument explains, relative to a question, when its components respond to those edits as the target structure does (Part VII). The same goes for a melody, where changing a note or a chord is an edit, and for a philosophical claim, where dropping a premise or a distinction is one. Whether anyone could carry an edit out in a physical system bears on testing and building (Part XII), not on whether a candidate meets (E) at it.
 - **CH-1001** · 1 record · superseded · also at: [L49.s3](#L49-s3), [L105.s1](02%20Organizations%20and%20their%20changes%20%28Part%20II%29.md#L105-s1), [L343.s9](#L343-s9)
   - **D-900** · S96 · recommendation · superseded · wording not in the latest text · written against: repaired copy, line 49 · carried by: none · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_1.response.txt — finding 7, proposed wording (code block 12); ruling 'mimo 1 7' in results/S96 Reading of the replies.md, section 3
     - Before:

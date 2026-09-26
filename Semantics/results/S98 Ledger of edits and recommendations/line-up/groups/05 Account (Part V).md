@@ -1,19 +1,19 @@
 # 05 Account
 
-*Home Part: Part V. Units shown: 68; units touched: 52; changes placed here: 153; records shown here in full under their home sentence: 130; pointer lines: 15; vocabulary lines: 81; records in blocks: 42. Statuses of the records shown here in full: applied 95, not applied 9, declined 10, superseded 16, open for the owner 0, unknown 0.*
+*Home Part: Part V. Units shown: 68; units touched: 51; changes placed here: 157; records shown here in full under their home sentence: 137; pointer lines: 15; vocabulary lines: 82; records in blocks: 42. Statuses of the records shown here in full: applied 95, not applied 9, declined 12, superseded 21, open for the owner 0, unknown 0.*
 
-- [Part V · Opening of the Part · lines 229–231 · 20 records](#sec-L229-231)
+- [Part V · Opening of the Part · lines 229–231 · 22 records](#sec-L229-231)
 - [Part V · Component fidelity · lines 233–245 · 21 records](#sec-L233-245)
 - [Part V · Question fidelity · lines 247–253 · 0 records](#sec-L247-253)
-- [Part V · Non-circular dependence · line 255 · 19 records](#sec-L255-255)
+- [Part V · Non-circular dependence · line 255 · 22 records](#sec-L255-255)
 - [Part V · Non-vacuity · line 257 · 7 records](#sec-L257-257)
 - [Part V · The conjunction (E) · lines 259–265 · 0 records](#sec-L259-265)
-- [Part V · What (E) excludes, and what it does not · lines 267–277 · 50 records](#sec-L267-277)
+- [Part V · What (E) excludes, and what it does not · lines 267–277 · 51 records](#sec-L267-277)
 - [Part V · Why there is no counterpart-kind condition · lines 279–281 · 10 records](#sec-L279-281)
 - [Part I · Faithfulness without assessors · line 67 · 11 records](#sec-L67-67)
-- [Part I · Fallibility without error-as-work · line 69 · 10 records](#sec-L69-69)
+- [Part I · Fallibility without error-as-work · line 69 · 11 records](#sec-L69-69)
 - [Part XVI · 2. Same counterparts, one account · lines 560–568 · 29 records](#sec-L560-568)
-- [Part XVI · 9. Output descriptions do not determine accounts · lines 614–616 · 5 records](#sec-L614-616)
+- [Part XVI · 9. Output descriptions do not determine accounts · lines 614–616 · 6 records](#sec-L614-616)
 - [Not in the latest text, with no section: Part V · 36 changes, 36 records](#rest-V)
 
 <a id="sec-L229-231"></a>
@@ -24,7 +24,7 @@
 > # Part V — Account
 
 <a id="L231-s1"></a>
-#### L231.s1 · line 231 · 5 changes, 7 records
+#### L231.s1 · line 231 · 7 changes, 9 records
 > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
 
 - **CH-0414** · 1 record · not applied
@@ -33,23 +33,17 @@
       > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
     - After:
       > The commitments \(\Gamma\) are components and boundary values of \(E\), including the components that assign the inputs the candidate commits to; since an edit that sets a port replaces the component assigning it (Part II), an intervention in \(C\) on such an input removes or replaces a block of \(\Gamma\).
-    - New wording:
-      > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components and boundary values of \(E\), including the components that assign the inputs the candidate commits to; since an edit that sets a port replaces the component assigning it (Part II), an intervention in \(C\) on such an input removes or replaces a block of \(\Gamma\).
 - **CH-0419** · 3 records · superseded, applied · also at: [L231.s2](#L231-s2)
   - **B-276** · S88 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 233 · carried by: none (superseded by the settled typing sentence, S88 F3 change 2) · source: results/S88 Reading of Atria's reply - the three defects.md — F3, 'The repairs, changed after the cross-examination (R6)', item 2, 'L246 gains a typing sentence' (line 354; F10 L246 = F11 L233); plain notation
     - Before:
       > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
     - After:
       > The commitments Γ are components of E; the boundary values of E belong to the named background of Part VI.
-    - New wording:
-      > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The commitments Γ are components of E; the boundary values of E belong to the named background of Part VI.
-  - **B-285** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 233 · carried by: verbatim in: draft 2; carried as change-list entry W20.1, whose NEW text (as fixed later) is verbatim in: draft 5 to latest text · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, final repair wording, change 2, typing \(\Gamma\), inserted in F11 L233 after sentence 1 (lines 362-366) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W20.1
+  - **B-285** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 233 · carried by: verbatim in: draft 2; carried as change-list entry W20.1, whose NEW text (as fixed later) is verbatim in: draft 5 to latest text · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, final repair wording, change 2, typing \(\Gamma\), inserted in F11 L233 after sentence 1 (lines 362-366) · joined through the change-list entry: W20.1
     - Before:
       > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
     - After:
       > The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work; the boundary values of \(E\) and the components of \(E\) outside \(\Gamma\), including any that assigns an input, belong to the named background of Part VI.
-    - New wording:
-      > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work; the boundary values of \(E\) and the components of \(E\) outside \(\Gamma\), including any that assigns an input, belong to the named background of Part VI.
   - **C-18** · S93 · edit · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 233 · carried by: file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W20.1 ("Γ typed: the components the candidate offers as doing the work; the rest is named background"), STATUS applied, KIND CLAIM, FILE-11 LINE 233; wording first in change list draft 5 (8816fcf)
     - Before:
       > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
@@ -59,6 +53,12 @@
       > and an identified set \(\Gamma\) of active commitments in \(E\).
     - New wording:
       > and an identified set \(\Gamma\) of active commitments in \(E\). The commitments \(\Gamma\) are components of \(E\), those the candidate offers as doing the work, whether or not anyone has described their work; the boundary conditions of \(E\) and the components of \(E\) outside \(\Gamma\), including any of them that assigns an input, belong to the named background of Part VI.
+- **CH-1277** · 1 record · declined
+  - **F-19** · S88 · recommendation · declined · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 233 · carried by: none · source: results/S88 Cross-examination - three defects - returns/Mimo in three parts/s88_xexam_mimo_F3.response.txt — point 7, 'My wording, if repairing', the sentences for line 246 (file 10 numbering; file 11 line 233) (file line 15); settled positions, F3 (line 310 and the typing sentence of change 3)
+    - Before:
+      > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
+    - After:
+      > The commitments \(\Gamma\) are active components of \(E\); the remainder of \(E\), including any input-assigning component the candidate does not list, is the named background of Part VI, fixed under restriction. The identification is part of the candidate and every verdict is relative to it.
 - **CH-0471** · 1 record · superseded
   - **C-77** · S90 · edit · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 233 · carried by: file 13 draft 2 (as sent) · source: tests/Revision 2 - change list, draft of 23 September.md — change list entry W20.1, OLD/NEW as in change list draft 2 (git 587eebf); replaced in change list draft 3; the draft-5 wording is C-18; carried as S90 part A1 R15
     - Before:
@@ -84,6 +84,12 @@
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] held under D2: nothing drafted; the placeholder names the S88 candidate wordings then in view for file-11 lines 233, 257, 518, 518
+- **CH-1293** · 1 record · superseded
+  - **F-35** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 233 · carried by: none (the settled F3 wording of S88 carries it in other words) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — F3, 'Rider proposed here, not yet examined by S88' (file line 205); the rider applies to option B's S3
+    - Before:
+      > An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\).
+    - After:
+      > \(\Gamma\) is a set of components of \(E\): those the candidate offers as doing the work
 
 <a id="L231-s2"></a>
 #### L231.s2 · line 231 · 7 changes, 8 records
@@ -240,7 +246,7 @@
     - After:
       > Where possible use "counterpart" alone ("k's counterpart λ(k)") rather than also "tied to".
 - **CH-1009** · 2 records · applied · also at: [L235.s1](#L235-s1), [L556.s2](02%20Organizations%20and%20their%20changes%20%28Part%20II%29.md#L556-s2)
-  - **D-883** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 233 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_glm_A.response.txt — finding 1, proposed wording (code block 1); ruling 'glm A 1' in results/S96 Reading of the replies.md, section 3
+  - **D-883** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 233 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_glm_A.response.txt — finding 1, proposed wording (code block 1); ruling 'glm A 1' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Component fidelity.** For every active component \(k\) of \(E\) with counterpart subnetwork \(\lambda(k)\subseteq D\), and every \((a,b)\in C\), the relation obtained by imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports equals the component relation of \(k\) under the translated edit:
     - After:
@@ -520,8 +526,8 @@
       > The change may concern a counterfactual law or rule rather than a physically executable intervention; its formal meaning is stated in \(C\).
 - **CH-0417** · 1 record · not applied · also at: [L255.s1](#L255-s1), [L255.s3](#L255-s3), [L255.s4](#L255-s4)
   - **B-270** · S88 · recommendation · not applied · shown in full under [L255.s1](#L255-s1)
-- **CH-0436** · 2 records · applied
-  - **B-303** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 257 · carried by: revision 2 as change-list entry W39.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §12 'Gain and loss' and 'Handling: (b)' (line 212); summary table row 12 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W39.1, tests/Revision 2 - worklist, draft of 23 September.md#W39
+- **CH-0436** · 2 records · applied · also at: [L255.s3](#L255-s3)
+  - **B-303** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 257 · carried by: revision 2 as change-list entry W39.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §12 'Gain and loss' and 'Handling: (b)' (line 212); summary table row 12 · joined through the change-list entry: W39.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W39
     - Before:
       > The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named "law" does not discharge this.
     - After:
@@ -537,7 +543,7 @@
       > moving an assertion from an input slot into a component named "law" does not discharge this. Identity of that assertion with the target's answer is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical truths.
 
 <a id="L255-s3"></a>
-#### L255.s3 · line 255 · 6 changes, 6 records
+#### L255.s3 · line 255 · 7 changes, 8 records
 > Identity of that assertion with the target's answer is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical statements.
 
 - **CH-0417** · 1 record · not applied · also at: [L255.s1](#L255-s1), [L255.s2](#L255-s2), [L255.s4](#L255-s4)
@@ -547,11 +553,21 @@
     - Before: *(nothing: an addition)*
     - After:
       > a component whose value is defined as the outcome in question, observed through another carrier, is the target's answer at the declared grain; its measurement signature (Part II) shows it
-- **CH-0577** · 1 record · superseded
+- **CH-0436** · 2 records · superseded · also at: [L255.s2](#L255-s2)
   - **C-205** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 257 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W39 (L828), "What is missing": file 00's 00:210 sentence; entry W39.1 restores it as "Identity of that assertion with the target's answer ..." (after check 1)
     - Before: *(nothing: an addition)*
     - After:
       > Identity of that assertion is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical truths
+  - **F-4** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W39.1 first proposed to change it, before the two checks, line 257 · carried by: none (later drafts of entry W39.1 changed it) · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W39.1 (file line 119), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W39.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > identity of that assertion with the target's answer
+- **CH-1292** · 1 record · superseded
+  - **F-34** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), as option B's S3 would read, line 257 · carried by: none (the settled F3 wording of S88 carries it in other words) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — F3, 'Rider proposed here, not yet examined by S88' (file line 204); the rider applies to option B's S3
+    - Before:
+      > in \(E|(\Gamma\setminus G)\), with the named background fixed
+    - After:
+      > in \(E\) with the components of \(G\) deleted (Part II: a deleted component imposes the full relation on its ports)
 - **CH-0672** · 1 record · applied
   - **D-91** · S95 · edit · applied · wording stands · written against: draft 5, line 255 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[90]; line 255; swap; LISTED
     - Before:
@@ -576,7 +592,7 @@
       > "logically equivalent mathematical statements"
 
 <a id="L255-s4"></a>
-#### L255.s4 · line 255 · 6 changes, 10 records
+#### L255.s4 · line 255 · 7 changes, 11 records
 > There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\) such that the answer of \(E\) at \((\tau(a),\sigma(b))\) differs from its answer at \((1,\sigma(b_0))\), or is not determined at \((\tau(a),\sigma(b))\) in the claimed way, and this contrast is lost when the components of \(G\) are deleted from \(E\) (a deleted component imposes the full relation on its ports, Part II): evaluated at \((\tau(a),\sigma(b))\) and at \((1,\sigma(b_0))\), the answers of \(E\) with \(G\) deleted are determined and equal, or an answer that \(E\) determines at one of these points is not determined there once \(G\) is deleted.
 
 - **CH-0413** · 1 record · not applied
@@ -596,7 +612,7 @@
       > There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
     - After:
       > There exist (a,b) ∈ C and a nonempty block G ⊆ Γ such that the answer profile at (a,b) differs from its value at (1,b₀), or is not determined there in the claimed way, and in E|(Γ∖G), evaluated at (τ(a),σ(b)) and at (1,σ(b₀)) with the named background fixed, that difference is lost or the answer ceases to be determined.
-  - **B-284** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 257 · carried by: verbatim in: draft 2 to repaired copy; carried as change-list entry W20.2, whose NEW text (as fixed later) is verbatim in: draft 2 to repaired copy · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, 'The final repair wording, exact text for revision 2', change 1, S3 (option B with the deletion rider), replaces the third sentence of F11 L257 (lines 356-360) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W20.2
+  - **B-284** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 257 · carried by: verbatim in: draft 2 to repaired copy; carried as change-list entry W20.2, whose NEW text (as fixed later) is verbatim in: draft 2 to repaired copy · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, 'The final repair wording, exact text for revision 2', change 1, S3 (option B with the deletion rider), replaces the third sentence of F11 L257 (lines 356-360) · joined through the change-list entry: W20.2
     - Before:
       > There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
     - After:
@@ -614,6 +630,12 @@
       > There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
     - After:
       > There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\) such that the answer profile at \((a,b)\) differs from its value at \((1,b_0)\), or is not determined there in the claimed way, and this contrast is lost in \(E|(\Gamma\setminus G)\) with the named background fixed: evaluated at \((\tau(a),\sigma(b))\) and at \((1,\sigma(b_0))\), its two answers are determined and equal, or an answer that \(E\) determines at one of these points is not determined at that point.
+- **CH-1276** · 1 record · declined
+  - **F-18** · S88 · recommendation · declined · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 257 · carried by: none · source: results/S88 Cross-examination - three defects - returns/Mimo in three parts/s88_xexam_mimo_F3.response.txt — point 7, 'My wording, if repairing', S3 (file line 15); settled positions, F3: "Mimo's own S3 wording is not adopted" (results/S88 Reading of Mimo's reply in three parts, and the settled positions.md, line 402)
+    - Before:
+      > There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
+    - After:
+      > There are \((a,b)\in C\) and a nonempty \(G\subseteq\Gamma\) such that \(\operatorname{Ans}_E(\tau(a),\sigma(b))\) differs from \(\operatorname{Ans}_E(1,\sigma(b_0))\), or is not determined at \((\tau(a),\sigma(b))\) in the claimed way; and \(\operatorname{Ans}_{E|(\Gamma\setminus G)}(\tau(a),\sigma(b))=\operatorname{Ans}_{E|(\Gamma\setminus G)}(1,\sigma(b_0))\), or one of these values is not determined in the claimed way.
 - **CH-0490** · 1 record · not applied · vocabulary
   - **C-117** · S90 · recommendation · not applied · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 255 · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_A1.response.txt — s90_xexam_mimo_A1 point 4 (task (c)), not ruled (Parts rule 2): passed to the orchestrator as a notation point (batch 1); carried forward after S90 in the change list ("The letter G"). The reply: "Rename R17's block to a fresh symbol (e.g. \(\mathcal G\) or \(g_0\))."
     - Before:
@@ -788,7 +810,7 @@
       > dropped, or: l. 610 "Argument 8. Equivariance under structure-preserving recoding"; l. 538 (Part XV (B)) "an explanation, argued to be one and not a non-explanation by an argument that does not use (E), whose organization …"
 
 <a id="L269-s2"></a>
-#### L269.s2 · line 269 · 8 changes, 8 records
+#### L269.s2 · line 269 · 9 changes, 9 records
 > A table that encodes an organization's response to every admitted change is not a table in that sense: it meets (F1) as a decomposition does, and it is an account when it meets the other conjuncts of (E).
 
 - **CH-0006** · 1 record · declined
@@ -828,6 +850,11 @@
     - Before: *(nothing: an addition)*
     - After:
       > is not excluded by the table clause, and is an account when the other conditions hold
+- **CH-1280** · 1 record · superseded
+  - **F-22** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 271 · carried by: none (the change list's entries W11.1, W11.2 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W11 (file line 101), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > is not excluded by (F1), and is an account when it meets the other conditions of (E)
 - **CH-0674** · 1 record · applied
   - **D-93** · S95 · edit · applied · wording stands · written against: draft 5, line 269 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[92]; line 269; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -938,7 +965,7 @@
     - After:
       > So does an account whose only substantive component restates the answer it was asked for; packaging a genuine dependence that answers a different question beside it does not repair this (the bell does not explain the tide).
 - **CH-0347** · 2 records · applied
-  - **B-187** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 275 · carried by: revision 2 as change-list entry W9.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR4 (S81 Results line 219; the same row in determination 03 §5) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W9.1, tests/Revision 2 - worklist, draft of 23 September.md#W9
+  - **B-187** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 275 · carried by: revision 2 as change-list entry W9.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR4 (S81 Results line 219; the same row in determination 03 §5) · joined through the change-list entry: W9.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W9
     - Before:
       > So does an account whose only substantive component restates the answer it was asked for; packaging a genuine dependence that answers a different question beside it does not repair this (the bell does not explain the tide).
     - After:
@@ -978,9 +1005,15 @@
       > dropped, or: l. 610 "Argument 8. Equivariance under structure-preserving recoding"; l. 538 (Part XV (B)) "an explanation, argued to be one and not a non-explanation by an argument that does not use (E), whose organization …"
 
 <a id="L275-s1"></a>
-#### L275.s1 · line 275 · 1 change, 2 records
+#### L275.s1 · line 275 · 2 changes, 3 records
 > A candidate whose only substantive contrast is one that no edit the target admits realizes has no pair of \(C\) at which the contrast appears, and fails non-circular dependence.
 
+- **CH-0893** · 1 record · superseded
+  - **D-312** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 275 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[11]; line 275; group P; ref: S25; B-scope finding B2 (L275); whole line
+    - Before:
+      > An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract.
+    - After:
+      > An account whose only substantive contrast is one that no edit the target admits realizes has no pair of \(C\) at which the contrast appears, and fails non-circular dependence. A contrast that no one could produce, or that could not come about, is still a contrast of its question when the target admits the edit that realizes it; whether it can be produced bears on testing (Part XII), not on (E).
 - **CH-0963** · 2 records · applied
   - Records D-386, D-863 (same wording):
     - **D-386** · S96 · edit · applied · wording stands · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 275 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements_stage2.json — entries[7]; line 275; group W; ref: B-6; how: as worded
@@ -995,15 +1028,8 @@
       > A candidate whose only substantive contrast
 
 <a id="L275-s2"></a>
-#### L275.s2 · line 275 · 1 change, 1 record
+#### L275.s2 · line 275 · no change recorded
 > A contrast that no one could produce, or that could not come about, is still a contrast of its question when the target admits the edit that realizes it; whether it can be produced bears on testing (Part XII), not on (E).
-
-- **CH-0893** · 1 record · applied
-  - **D-312** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 275 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[11]; line 275; group P; ref: S25; B-scope finding B2 (L275); whole line
-    - Before:
-      > An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract.
-    - After:
-      > An account whose only substantive contrast is one that no edit the target admits realizes has no pair of \(C\) at which the contrast appears, and fails non-circular dependence. A contrast that no one could produce, or that could not come about, is still a contrast of its question when the target admits the edit that realizes it; whether it can be produced bears on testing (Part XII), not on (E).
 
 <a id="L277-s1"></a>
 #### L277.s1 · line 277 · 5 changes, 9 records
@@ -1485,8 +1511,8 @@
 #### L69.s2 · line 69 · 2 changes, 3 records
 > What cannot count as explanation is an error in the very dependence alleged to do the work.
 
-- **CH-0429** · 2 records · applied
-  - **B-295** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 71 · carried by: revision 2 as change-list entry W36.1, whose NEW text is verbatim in: draft 4 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 4 (line 22), best handling; §4 'Handling: (b). One sentence in Part I would do it.' · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W36.1, tests/Revision 2 - worklist, draft of 23 September.md#W36
+- **CH-0429** · 2 records · applied · also at: [L69.s3](#L69-s3)
+  - **B-295** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 71 · carried by: revision 2 as change-list entry W36.1, whose NEW text is verbatim in: draft 4 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 4 (line 22), best handling; §4 'Handling: (b). One sentence in Part I would do it.' · joined through the change-list entry: W36.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W36
     - Before:
       > What cannot count as explanation is an error in the very dependence alleged to do the work.
     - After:
@@ -1504,9 +1530,15 @@
       > What cannot count as explanation is an error in the very dependence alleged to do the work. "Explanation" in this commitment means an account, an explanatory candidate satisfying \(\operatorname{Account}\) on its contract (Part V); a false theory offered as an answer is an explanatory candidate, which ordinary usage may still call an explanation, and how hard an account is to vary is a separate matter (Part VI).
 
 <a id="L69-s3"></a>
-#### L69.s3 · line 69 · 4 changes, 4 records
+#### L69.s3 · line 69 · 5 changes, 5 records
 > "Explanation" in this commitment means an account, an explanatory candidate meeting \(\operatorname{Account}\) on its contract (Part V); a theory in error offered as an answer is an explanatory candidate, which ordinary usage may still call an explanation, and whether an account is easy to vary is a separate matter (Part VI).
 
+- **CH-0429** · 1 record · applied · also at: [L69.s2](#L69-s2)
+  - **F-10** · S90 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W36.1 first proposed to change it, before the two checks, line 71 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W36.1 (file line 126), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W36.1
+    - Before:
+      > a separate measure
+    - After:
+      > a separate matter
 - **CH-0628** · 1 record · applied
   - **D-47** · S95 · edit · applied · wording stands · written against: draft 5, line 69 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[46]; line 69; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -1580,7 +1612,7 @@
       > **Claim.** Let ℰ, ℰ′ be candidates for the same p that both satisfy (F1), (F2) and (A) on C. (i) Their answer profiles coincide on C. (ii) If a bijection φ of their active components gives each k and φ(k) one anchor, the same subnetwork of D with port translations onto the same ports of D, then k and φ(k) are of one kind on C for every k; so far as (F1), (F2) and (A) reach, the two are one account on C.
       >
       > *Proof.* (i) By (A), Ans_E(τ(a),σ(b)) = Ans_p(a,b) = Ans_E′(τ′(a),σ′(b)) for every (a,b) ∈ C. (ii) By Derivation 1, k has the signature of its anchor on the ports its translation names, and φ(k) the signature of the same anchor on the same ports; composing the one translation with the inverse of the other gives a footprint bijection under which the two signatures, read on C, coincide. ∎
-  - **B-279** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 552 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W19.2, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, 'The final repair wording, exact text for revision 2', change 1, Derivation 2 (lines 120-132) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W19.2
+  - **B-279** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 552 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W19.2, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, 'The final repair wording, exact text for revision 2', change 1, Derivation 2 (lines 120-132) · joined through the change-list entry: W19.2
     - Before:
       > ## 2. Indistinguishable is identical
       >
@@ -1702,7 +1734,7 @@
     - After:
       > **import**, the two **imports**, "import 2"
 - **CH-1025** · 2 records · applied
-  - **D-949** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 562 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F9 (ii), wording given inline; ruling 'mimo 4 F9' in results/S96 Reading of the replies.md, section 3
+  - **D-949** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 562 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F9 (ii), wording given inline; ruling 'mimo 4 F9' in results/S96 Reading of the replies.md, section 3
     - Before:
       > (ii) If a bijection \(\varphi\) of their active components gives each \(k\) and \(\varphi(k)\) one counterpart, the same subnetwork of \(D\) with port translations onto the same ports of \(D\), then \(k\) and \(\varphi(k)\) are of one kind on \(C\) for every \(k\); so far as (F1), (F2) and (A) reach, the two are one account on \(C\): \(\varphi\) pairs their active components, each pair of one kind on \(C\), and by (i) their answer profiles coincide.
     - After:
@@ -1952,7 +1984,7 @@
 > Equal inputs to a function give equal outputs. ∎ Parallel and priority wiring are an instance.
 
 <a id="L616-s4"></a>
-#### L616.s4 · line 616 · 3 changes, 3 records
+#### L616.s4 · line 616 · 4 changes, 4 records
 > The same goes for attribution from emitted text and for use inferred from delivery logs.
 
 - **CH-0866** · 1 record · applied
@@ -1977,6 +2009,12 @@
       > holds, hold (satisfaction)
     - After:
       > is met, meets
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="rest-V"></a>
 ## Not in the latest text, with no section: Part V

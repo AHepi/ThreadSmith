@@ -1,17 +1,17 @@
 # 12 The physical module
 
-*Home Part: Part XII. Units shown: 35; units touched: 23; changes placed here: 50; records shown here in full under their home sentence: 49; pointer lines: 6; vocabulary lines: 16; records in blocks: 12. Statuses of the records shown here in full: applied 46, not applied 0, declined 2, superseded 1, open for the owner 0, unknown 0.*
+*Home Part: Part XII. Units shown: 35; units touched: 23; changes placed here: 51; records shown here in full under their home sentence: 52; pointer lines: 9; vocabulary lines: 20; records in blocks: 12. Statuses of the records shown here in full: applied 46, not applied 0, declined 2, superseded 4, open for the owner 0, unknown 0.*
 
 - [Part XII · Opening of the Part · line 459 · 0 records](#sec-L459-459)
 - [Part XII · Tasks · line 461 · 8 records](#sec-L461-461)
 - [Part XII · Retained realization · lines 463–469 · 4 records](#sec-L463-469)
 - [Part XII · Retention fixed point · line 471 · 0 records](#sec-L471-471)
-- [Part XII · System boundary and continuity · line 473 · 8 records](#sec-L473-473)
+- [Part XII · System boundary and continuity · line 473 · 10 records](#sec-L473-473)
 - [Part XII · Owned capability · line 475 · 8 records](#sec-L475-475)
 - [Part XII · Achievement · line 477 · 1 record](#sec-L477-477)
 - [Part XII · Tolerances · line 479 · 11 records](#sec-L479-479)
-- [Part XII · Selection in the physical module · line 481 · 7 records](#sec-L481-481)
-- [Part I · Substrate independence with physical conditions · line 75 · 20 records](#sec-L75-75)
+- [Part XII · Selection in the physical module · line 481 · 8 records](#sec-L481-481)
+- [Part I · Substrate independence with physical conditions · line 75 · 22 records](#sec-L75-75)
 - [Not in the latest text, with no section: Part XII · 6 changes, 10 records](#rest-XII)
 
 <a id="sec-L459-459"></a>
@@ -30,8 +30,8 @@
 
 - **CH-0937** · 3 records · applied
   - Records D-756, D-816 (same wording):
-    - **D-756** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, authority words, l. 461
-    - **D-816** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 7 (l. 461)
+    - **D-756** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, authority words, l. 461
+    - **D-816** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 7 (l. 461)
     - Before:
       > A substrate is a physical system; an attribute a set of its states; a task a permitted input-to-output attribute transformation with explicit resources and side effects.
     - After:
@@ -69,8 +69,8 @@
 #### L461.s3 · line 461 · 1 change, 1 record
 > The physical module adopts a task-based formulation of physics for this purpose.
 
-- **CH-0897** · 1 record · applied
-  - **D-316** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[15]; line 461; group P; ref: S25-S27, Part XII's role
+- **CH-0897** · 1 record · superseded
+  - **D-316** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 461 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[15]; line 461; group P; ref: S25-S27, Part XII's role
     - Before:
       > The physical module adopts a task-based formulation of physics for this purpose.
     - After:
@@ -158,7 +158,7 @@
 ## Part XII — The physical module · System boundary and continuity · line 473
 
 <a id="L473-s1"></a>
-#### L473.s1 · line 473 · 3 changes, 4 records
+#### L473.s1 · line 473 · 4 changes, 5 records
 > **System boundary and continuity.** A capability is attributed to a system under a declared boundary (which processes and resources are the system's) and a declared continuity \(\Omega\) (what makes it the same system through change).
 
 - **CH-0312** · 1 record · applied
@@ -172,7 +172,7 @@
     - After:
       > A capability is attributed to a system under a declared boundary (which processes and resources are the system's) and a declared continuity \(\Omega\) (what makes it the same system through change).
 - **CH-0399** · 2 records · applied · also at: [L473.s2](#L473-s2), [L473.s3](#L473-s3)
-  - **B-249** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 465 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-33; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M44 (determination 03 §1, row M44; file-11 locator 'L465', file-10 'none; compare L523'); the file-11 sentences are edit records B-138, B-139, B-140, B-141 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-33, tests/Revision 2 - change list, draft of 23 September.md#W3.4
+  - **B-249** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 465 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-33; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M44 (determination 03 §1, row M44; file-11 locator 'L465', file-10 'none; compare L523'); the file-11 sentences are edit records B-138, B-139, B-140, B-141 · joined through the change-list entry: W3.4 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-33
     - Before:
       > **System boundary and continuity.** A capability is attributed to a system under a declared boundary (which processes and resources are the system's) and a declared continuity \(\Omega\) (what makes it the same system through change). A replaced part that preserves the declared continuity leaves the same system; a process run inside the boundary is the system's whoever wrote it; a process run outside it is not the system's however close it sits. Both are declared before the attribution, not chosen after it.
     - After:
@@ -182,9 +182,14 @@
       > **System boundary and continuity.** A capability is attributed to a system under a declared boundary (which processes and resources are the system's) and a declared continuity \(\Omega\) (what makes it the same system through change). A replaced part that preserves the declared continuity leaves the same system; a process run inside the boundary is the system's whoever wrote it; a process run outside it is not the system's however close it sits. Both are declared before the attribution, not chosen after it.
     - After:
       > [no wording given] record-only entry: this file-11 text is declared in layer 2 of the revision record (row L2-33) as a change of claim file 11 made against file 10; the theory text is unchanged
+- **CH-0365** · 1 record · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s2](#L473-s2), [L473.s3](#L473-s3), [L473.s4](#L473-s4)
+  - **F-8** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W12.1 first proposed to change it, before the two checks, line 465 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W12.1 (file line 124), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W12.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] "Where the system's boundary is not declared explicitly"; the guard covers only a statement of ownership "which does not say where it runs"
 
 <a id="L473-s2"></a>
-#### L473.s2 · line 473 · 3 changes, 4 records
+#### L473.s2 · line 473 · 4 changes, 5 records
 > A replaced part that preserves the declared continuity leaves the same system; a process run inside the boundary is the system's whoever wrote it; a process run outside it is not the system's however close it sits.
 
 - **CH-0314** · 1 record · applied
@@ -200,9 +205,11 @@
     - Before: *(nothing: an addition)*
     - After:
       > a boundary may be stated by the situation: where one agent acts and no outside work enters the history, the agent's own processes are the declared boundary
+- **CH-0365** · 1 record · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s1](#L473-s1), [L473.s3](#L473-s3), [L473.s4](#L473-s4)
+  - **F-8** · S90 · recommendation · applied · shown in full under [L473.s1](#L473-s1)
 
 <a id="L473-s3"></a>
-#### L473.s3 · line 473 · 3 changes, 4 records
+#### L473.s3 · line 473 · 4 changes, 6 records
 > Both are declared before the attribution, not chosen after it.
 
 - **CH-0315** · 1 record · applied
@@ -213,19 +220,33 @@
 - **CH-0399** · 2 records · applied · also at: [L473.s1](#L473-s1), [L473.s2](#L473-s2)
   - **B-249** · S81 · recommendation · applied · shown in full under [L473.s1](#L473-s1)
   - **C-49** · S90 · edit · applied · shown in full under [L473.s1](#L473-s1)
-- **CH-0365** · 1 record · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s4](#L473-s4)
+- **CH-0365** · 2 records · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s1](#L473-s1), [L473.s2](#L473-s2), [L473.s4](#L473-s4)
   - **C-50** · S90 · edit · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 465 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W12.1 ("L465: what declares a boundary, in form (a′)"), STATUS applied, KIND CLAIM, FILE-11 LINE 465; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C35, S90 part B2 R40
     - Before:
       > Both are declared before the attribution, not chosen after it.
     - After:
       > Both are declared before the attribution, not chosen after it. Where the system's boundary is not declared explicitly, a statement that names the system and says whether a process runs inside it or outside it declares the boundary for that process; a statement that the process is the system's own, which does not say where it runs, is the attribution, not its boundary.
+  - **F-8** · S90 · recommendation · applied · shown in full under [L473.s1](#L473-s1)
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L473-s4"></a>
-#### L473.s4 · line 473 · 1 change, 1 record
+#### L473.s4 · line 473 · 2 changes, 3 records
 > Where the system's boundary is not declared explicitly, a statement that names the system and says whether a process runs inside it or outside it declares the boundary for that process; a statement that the process is the system's own, which does not say where it runs, is the attribution, not its boundary.
 
-- **CH-0365** · 1 record · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s3](#L473-s3)
+- **CH-0365** · 2 records · applied · also at: [L427.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s2), [L473.s1](#L473-s1), [L473.s2](#L473-s2), [L473.s3](#L473-s3)
   - **C-50** · S90 · edit · applied · shown in full under [L473.s3](#L473-s3)
+  - **F-8** · S90 · recommendation · applied · shown in full under [L473.s1](#L473-s1)
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="sec-L475-475"></a>
 ## Part XII — The physical module · Owned capability · line 475
@@ -334,14 +355,14 @@
     - After:
       > **tolerances** Q_Θ: "Tolerances."; "each admitting no performance the one before it excludes, and short of exact"; "capability within a finite tolerance"
 - **CH-0938** · 3 records · applied
-  - **D-745** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 479 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B14 (l. 479)
+  - **D-745** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 479 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B14 (l. 479)
     - Before:
       > The tolerances of the physical module (Part XIV) form a directed preorder \(Q_\Theta\), each admitting no performance the one before it excludes, and short of exact; \(q\in Q_\Theta\) is a tolerance of performance and \(r\in Q_\Theta\) a tolerance of retention.
     - After:
       > The tolerances of the physical module (Part XIV) form a directed preorder Q_Θ, in which q precedes q′ when q′ admits no performance q excludes; none of them is exact.
     - Old wording:
       > each admitting no performance the one before it excludes, and short of exact;
-  - **D-830** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 479 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 15 (l. 479)
+  - **D-830** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 479 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 15 (l. 479)
     - Before:
       > The tolerances of the physical module (Part XIV) form a directed preorder \(Q_\Theta\), each admitting no performance the one before it excludes, and short of exact; \(q\in Q_\Theta\) is a tolerance of performance and \(r\in Q_\Theta\) a tolerance of retention.
     - After:
@@ -432,11 +453,11 @@
 ## Part XII — The physical module · Selection in the physical module · line 481
 
 <a id="L481-s1"></a>
-#### L481.s1 · line 481 · 1 change, 2 records
+#### L481.s1 · line 481 · 1 change, 3 records
 > **Selection in the physical module.** A selected provenance \(\operatorname{Sel}(t;\mathcal T,\mu,H)\) is a claim about a physical history: a population of candidate transports, a physically admitted variation operator, and a survival condition enacted by the environment.
 
-- **CH-0351** · 2 records · applied · also at: [L481.s3](#L481-s3)
-  - **B-191** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 473 · carried by: revision 2 as change-list entry W17.2, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L473 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W17.2
+- **CH-0351** · 3 records · applied · also at: [L481.s3](#L481-s3)
+  - **B-191** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 473 · carried by: revision 2 as change-list entry W17.2, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L473 · joined through the change-list entry: W17.2
     - Before:
       > A selected provenance \(\operatorname{Sel}(t;\mathcal T,\mu,H)\) is a claim about a physical history: a population of realized transports, a physically admitted variation operator, and a survival condition enacted by the environment.
     - After:
@@ -452,6 +473,11 @@
       > a population of realized transports
     - New wording:
       > a population of candidate transports
+  - **F-7** · S90 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W17.2 first proposed to change it, before the two checks, line 473 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W17.2 (file line 123), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W17.2
+    - Before:
+      > realizable transports
+    - After:
+      > candidate transports
 
 <a id="L481-s2"></a>
 #### L481.s2 · line 481 · 1 change, 1 record
@@ -474,7 +500,7 @@
     - After:
       > The population is the set of transports the physics and the stated construction admit; a transport that would need a part every member of the population is built without is not in it.
 - **CH-0351** · 1 record · applied · also at: [L481.s1](#L481-s1)
-  - **B-192** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 473 · carried by: revision 2 as change-list entry W17.2, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L473 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W17.2
+  - **B-192** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 473 · carried by: revision 2 as change-list entry W17.2, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L473 · joined through the change-list entry: W17.2
     - Before:
       > The population is the set of transports the physics and the stated construction admit; a transport that would need a part every member of the population is built without is not in it.
     - After:
@@ -501,7 +527,7 @@
 > **Substrate independence with physical conditions.** Any carrier may bear an organization.
 
 - **CH-0442** · 1 record · applied · also at: [L75.s4](#L75-s4)
-  - **B-310** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 77 · carried by: revision 2 as change-list entry W45.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M4 (line 281) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W45.1, tests/Revision 2 - worklist, draft of 23 September.md#W45
+  - **B-310** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 77 · carried by: revision 2 as change-list entry W45.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M4 (line 281) · joined through the change-list entry: W45.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W45
     - Before:
       > Any carrier may bear an organization.
     - After:
@@ -557,12 +583,12 @@
       > adopted, adopts, adopting ("the adopted physics", Part I; l. 75, 159, 277, 315, 461, 526)
     - After:
       > kept; Part I says once that to adopt is to take something tentatively, as an import or a claim, open to replacement
-- **CH-0882** · 1 record · applied
-  - **D-301** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 75 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[0]; line 75; group P; ref: S25-S27; supersedes nothing
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
     - Before:
-      > Every attribution of an organization to a physical system must be possible under the adopted physics; here and throughout, to adopt something is to take it tentatively, open to replacement. Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are fixed by the adopted physics, and substrate independence reaches as far as that physics lets contents pass between media.
+      > "credit", "credits", "credited"
     - After:
-      > Every attribution of an organization to a physical system is a claim that the system instantiates it, and whether a system can is a matter of physics; here and throughout, to adopt something is to take it tentatively, open to replacement, and an attribution that the adopted physics excludes conflicts with it, as a candidate can conflict with a claim (Part VI). Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are matters of physics as well, and substrate independence reaches as far as contents can pass between media.
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 - **CH-0960** · 2 records · applied · also at: [L75.s3](#L75-s3)
   - **D-383** · S96 · edit · applied · wording stands · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 75 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements_stage2.json — entries[4]; line 75; group W; ref: P-2; how: adapted
     - Before:
@@ -573,7 +599,7 @@
       > as a candidate can conflict with a claim (Part VI).
     - New wording:
       > as a candidate can conflict with a claim (Part VI). That an organization admits an edit is not a claim that the edit can be carried out or can come about, so an attribution does not conflict with a physics that excludes carrying out an edit the attributed organization admits (Parts II and III).
-  - **D-851** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 75 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-2, proposal 1; to be inserted after: as a candidate can conflict with a claim (Part VI).
+  - **D-851** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 75 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-2, proposal 1; to be inserted after: as a candidate can conflict with a claim (Part VI).
     - Before:
       > Every attribution of an organization to a physical system is a claim that the system instantiates it, and whether a system can is a matter of physics; here and throughout, to adopt something is to take it tentatively, open to replacement, and an attribution that the adopted physics excludes conflicts with it, as a candidate can conflict with a claim (Part VI).
     - After:
@@ -582,22 +608,33 @@
       > That an organization admits an edit is not a claim that the edit can be carried out or can come about, so an attribution does not conflict with a physics that excludes carrying out an edit the attributed organization admits (Part III).
 
 <a id="L75-s3"></a>
-#### L75.s3 · line 75 · 1 change, 1 record
+#### L75.s3 · line 75 · 2 changes, 2 records
 > That an organization admits an edit is not a claim that the edit can be carried out or can come about, so an attribution does not conflict with a physics that excludes carrying out an edit the attributed organization admits (Parts II and III).
 
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 - **CH-0960** · 1 record · applied · also at: [L75.s2](#L75-s2)
   - **D-383** · S96 · edit · applied · shown in full under [L75.s2](#L75-s2)
 
 <a id="L75-s4"></a>
-#### L75.s4 · line 75 · 5 changes, 5 records
+#### L75.s4 · line 75 · 6 changes, 7 records
 > Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are matters of physics as well, and substrate independence reaches as far as contents can pass between media.
 
-- **CH-0442** · 1 record · applied · also at: [L75.s1](#L75-s1)
+- **CH-0442** · 2 records · applied · also at: [L75.s1](#L75-s1)
   - **C-9** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 77 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W45.1 ("Part I: substrate independence holds relative to the physics' interoperability"), STATUS applied, KIND CLAIM, FILE-11 LINE 77; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C07, S90 part C R07
     - Before:
       > Every attribution of an organization to a physical system must be permitted by the adopted physics.
     - After:
       > Every attribution of an organization to a physical system must be permitted by the adopted physics. Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are fixed by the adopted physics, and substrate independence holds so far as that physics lets contents pass between media. Where two media cannot exchange what they bear, the contents that only one of them can bear form, for a system built of the other, a barrier in the sense of Part XIII.
+  - **F-11** · S90 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W45.1 first proposed to change it, before the two checks, line 77 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W45.1 (file line 127), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W45.1
+    - Before:
+      > kind of carrier
+    - After:
+      > physical medium
 - **CH-0510** · 1 record · declined
   - **C-137** · S90 · recommendation · declined · written against: the note of file 13, its list of changes of claim (full file 13 draft 2; the DECLARATION fields of change list draft 2) · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_C.response.txt — s90_xexam_mimo_C point 2 (R07, W45.1), repair to the declaration; refused by ruling R07: KEEP (batch 3)
     - Before: *(nothing: an addition)*
@@ -625,13 +662,19 @@
       > holds, hold (satisfaction)
     - After:
       > is met, meets
+- **CH-0882** · 1 record · superseded
+  - **D-301** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 75 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[0]; line 75; group P; ref: S25-S27; supersedes nothing
+    - Before:
+      > Every attribution of an organization to a physical system must be possible under the adopted physics; here and throughout, to adopt something is to take it tentatively, open to replacement. Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are fixed by the adopted physics, and substrate independence reaches as far as that physics lets contents pass between media.
+    - After:
+      > Every attribution of an organization to a physical system is a claim that the system instantiates it, and whether a system can is a matter of physics; here and throughout, to adopt something is to take it tentatively, open to replacement, and an attribution that the adopted physics excludes conflicts with it, as a candidate can conflict with a claim (Part VI). Which organizations a carrier can bear, and whether what carriers of one physical medium bear can pass to carriers of another, are matters of physics as well, and substrate independence reaches as far as contents can pass between media.
 
 <a id="L75-s5"></a>
 #### L75.s5 · line 75 · 1 change, 1 record
 > Where two media cannot exchange what they bear, the contents that only one of them can bear form, for a system built of the other, a barrier in the sense of Part XIII.
 
-- **CH-0883** · 1 record · applied
-  - **D-302** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 75 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[1]; line 75; group P; ref: S25-S27 (the one statement of where physics enters)
+- **CH-0883** · 1 record · superseded
+  - **D-302** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 75 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[1]; line 75; group P; ref: S25-S27 (the one statement of where physics enters)
     - Before:
       > Where two media cannot exchange what they bear, the contents that only one of them can bear form, for a system built of the other, a barrier in the sense of Part XIII.
     - After:

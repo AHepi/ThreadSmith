@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib_anchor import *
 
 orig = []
-for c in 'ABCDE':
+for c in 'ABCDEF':  # F: the finishing agent's records (S98 finishing fixes)
     orig += [json.loads(l) for l in open(COLLECT + '/collector %s.jsonl' % c, encoding='utf-8')]
 anch = [json.loads(l) for l in open(GROUP + '/anchored.jsonl', encoding='utf-8')]
 idx = {json.loads(l)['id']: json.loads(l) for l in open(GROUP + '/sentence index of the latest text.jsonl', encoding='utf-8')}

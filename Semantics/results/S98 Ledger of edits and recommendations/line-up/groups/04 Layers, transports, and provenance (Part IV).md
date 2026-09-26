@@ -1,6 +1,6 @@
 # 04 Layers, transports, and provenance
 
-*Home Part: Part IV. Units shown: 98; units touched: 68; changes placed here: 118; records shown here in full under their home sentence: 139; pointer lines: 17; vocabulary lines: 85; records in blocks: 34. Statuses of the records shown here in full: applied 111, not applied 1, declined 10, superseded 11, open for the owner 6, unknown 0.*
+*Home Part: Part IV. Units shown: 98; units touched: 68; changes placed here: 120; records shown here in full under their home sentence: 142; pointer lines: 17; vocabulary lines: 87; records in blocks: 34. Statuses of the records shown here in full: applied 112, not applied 1, declined 11, superseded 12, open for the owner 6, unknown 0.*
 
 - [Part IV · Opening of the Part · line 165 · 0 records](#sec-L165-165)
 - [Part IV · Occurrences and contents · lines 167–169 · 0 records](#sec-L167-169)
@@ -8,13 +8,13 @@
 - [Part IV · Transports · lines 181–189 · 2 records](#sec-L181-189)
 - [Part IV · Three provenances · lines 191–201 · 29 records](#sec-L191-201)
 - [Part IV · Representation is defined, not supplied · lines 203–213 · 27 records](#sec-L203-213)
-- [Part IV · Prediction, surprise, violation · lines 215–225 · 48 records](#sec-L215-225)
+- [Part IV · Prediction, surprise, violation · lines 215–225 · 50 records](#sec-L215-225)
 - [Part 0 · Grievances, anticipated / 3. "If correspondences are selected, you have made fidelity a matter of survival." · line 41 · 12 records](#sec-L41-41)
-- [Part 0 · Grievances, anticipated / 5. "This is teleosemantics, structural realism or functionalism with new words." · line 45 · 5 records](#sec-L45-45)
-- [Part 0 · Grievances, anticipated / 6. "You have replaced explanation with evolution." · line 47 · 17 records](#sec-L47-47)
+- [Part 0 · Grievances, anticipated / 5. "This is teleosemantics, structural realism or functionalism with new words." · line 45 · 6 records](#sec-L45-45)
+- [Part 0 · Grievances, anticipated / 6. "You have replaced explanation with evolution." · line 47 · 18 records](#sec-L47-47)
 - [Part 0 · Grievances, anticipated / 9. "'Selected' is as much a stipulation as 'is a cause'." · line 53 · 6 records](#sec-L53-53)
 - [Part I · Two provenances, not one · line 77 · 0 records](#sec-L77-77)
-- [Part XVI · 3. Selected transports are underdetermined on unseen changes their population leaves open · lines 570–576 · 35 records](#sec-L570-576)
+- [Part XVI · 3. Selected transports are underdetermined on unseen changes their population leaves open · lines 570–576 · 36 records](#sec-L570-576)
 - [Part XVI · 4. Surprise requires an incomplete history · lines 578–584 · 17 records](#sec-L578-584)
 - [Not in the latest text, with no section: Part IV · 10 changes, 23 records](#rest-IV)
 
@@ -486,8 +486,8 @@
       > "the usual arrangement"
 - **CH-0918** · 3 records · applied
   - Records D-771, D-795 (same wording):
-    - **D-771** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 201 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, borderline, l. 201 (R10)
-    - **D-795** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 201 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R10 (l. 201)
+    - **D-771** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 201 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, borderline, l. 201 (R10)
+    - **D-795** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 201 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R10 (l. 201)
     - Before:
       > A physical system may hold selected transports at the object layer and constructed transports at the simulation layer; that is the usual arrangement, not a requirement.
     - After:
@@ -589,7 +589,7 @@
     - After:
       > a transport into c is faithful on c's contract when it is faithful on the pairs it carries into that contract
 - **CH-1006** · 2 records · applied · also at: [L193.s1](#L193-s1)
-  - **D-916** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 205 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 5, proposed wording (code block 7); ruling 'mimo 2 5' in results/S96 Reading of the replies.md, section 3
+  - **D-916** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 205 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 5, proposed wording (code block 7); ruling 'mimo 2 5' in results/S96 Reading of the replies.md, section 3
     - Before:
       > An occurrence \(o\) **represents** content \(c\) at grain \(\ell\) when the organization that \(o\) instantiates under the physical module, at grain \(\ell\), admits a transport to \(c\) that is faithful on \(c\)'s contract and whose provenance is selected or constructed:
     - After:
@@ -827,9 +827,14 @@
 ## Part IV — Layers, transports, and provenance · Prediction, surprise, violation · lines 215–225
 
 <a id="L215-s1"></a>
-#### L215.s1 · heading · line 215 · 4 changes, 5 records
+#### L215.s1 · heading · line 215 · 5 changes, 6 records
 > ## Prediction, surprise, violation
 
+- **CH-1286** · 1 record · superseded
+  - **F-28** · S90 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 217 · carried by: none (the change list's entries W35.1, W35.2, W35.3, W35.4, W35.5 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W35 (file line 125), 'Take (b′)'
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] expectation and violation defined for any transport; surprise kept for selected transports and said so; "recognized difficulty" defined as a represented failure of a claimed obligation, or a represented conflict between a claimed and a protected obligation (Part XI)
 - **CH-0662** · 1 record · applied
   - **D-81** · S95 · edit · applied · wording stands · written against: draft 5, line 215 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[80]; line 215; swap; BELIEF
     - Before:
@@ -991,7 +996,7 @@
 > A system with no transport cannot be surprised.
 
 - **CH-0437** · 1 record · applied · also at: [L217.s1](#L217-s1), [L223.s5](#L223-s5), [L225.s2](#L225-s2), [L429.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s1), [L429.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s2), [L429.s3](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s3), [L429.s4](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s4), [L582.s2](#L582-s2)
-  - **B-304** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 225 · carried by: revision 2 as change-list entry W35.1, whose NEW text is verbatim in: draft 3 to draft 5; change-list entry W35.2, whose NEW text is verbatim in: draft 5; change-list entry W35.3, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W35.4, whose NEW text is verbatim in: draft 1 to latest text; change-list entry W35.5, whose NEW text is verbatim in: draft 5 to repaired copy · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §13 'Handling' (line 226); summary table row 13; 'The observations most worth acting on', item 3 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W35.1, tests/Revision 2 - change list, draft of 23 September.md#W35.2, tests/Revision 2 - change list, draft of 23 September.md#W35.3, tests/Revision 2 - change list, draft of 23 September.md#W35.4, tests/Revision 2 - change list, draft of 23 September.md#W35.5, tests/Revision 2 - worklist, draft of 23 September.md#W35
+  - **B-304** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 225 · carried by: revision 2 as change-list entry W35.1, whose NEW text is verbatim in: draft 3 to draft 5; change-list entry W35.2, whose NEW text is verbatim in: draft 5; change-list entry W35.3, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W35.4, whose NEW text is verbatim in: draft 1 to latest text; change-list entry W35.5, whose NEW text is verbatim in: draft 5 to repaired copy · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §13 'Handling' (line 226); summary table row 13; 'The observations most worth acting on', item 3 · joined through the change-list entry: W35.1, W35.2, W35.3, W35.4, W35.5 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W35
     - Before:
       > A system with no transport cannot be surprised.
     - After:
@@ -1097,9 +1102,28 @@
       > "turns on the transport and the world alone"; "whether a transport is faithful at a pair turns on the transport and the target, and no assessor appears in (E)"; "a fidelity relation"; "turns on its population"
 
 <a id="L223-s5"></a>
-#### L223.s5 · line 223 · 13 changes, 16 records
+#### L223.s5 · line 223 · 13 changes, 17 records
 > Prediction and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X; the name is provisional, as in Part XI).
 
+- **CH-0437** · 3 records · applied · also at: [L217.s1](#L217-s1), [L223.s1](#L223-s1), [L225.s2](#L225-s2), [L429.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s1), [L429.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s2), [L429.s3](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s3), [L429.s4](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s4), [L582.s2](#L582-s2)
+  - **F-12** · S90 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W35.2 first proposed to change it, before the two checks, line 225 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W35.2 (file line 128), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W35.2
+    - Before: *(nothing: an addition)*
+    - After:
+      > is violated, and the failure is not surprise
+  - **C-15** · S93 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 225 · carried by: file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W35.2 ("Part IV: a constructed transport is violated, not surprised"), STATUS applied, KIND CLAIM, FILE-11 LINE 225; wording first in change list draft 5 (8816fcf)
+    - Before:
+      > Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3).
+    - After:
+      > Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3). Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
+  - **C-101** · S93 · recommendation · applied · wording stands · written against: file 13 draft 4, theory text (md5 fc55b470c63cd4b3c27d6aa64d8d8c17), line 223 · carried by: file 13 draft 5 · source: results/S93 reading rulings/ruling S93 X05 W35.2.md — S93 ruling X05 (W35.2) on Mimo G point 1: FIX; the wording as applied in file 13 draft 5 (entry W35.2, C-15); read off the line diff file 13 draft 4 -> file 13 draft 5 at line 223
+    - Before:
+      > Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at a pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
+    - After:
+      > Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
+    - Old wording:
+      > at a pair
+    - New wording:
+      > at an actually occurring pair
 - **CH-0470** · 1 record · superseded · also at: [L223.s4](#L223-s4)
   - **C-95** · S90 · recommendation · superseded · wording stands · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 223 · carried by: file 13 draft 3; file 13 draft 4 · source: results/S90 reading rulings/ruling s90_xexam_mimo_C item 4 R13.md — S90 ruling R13 (W35.2) on s90_xexam_mimo_C point 4: FIX; the batch-3 reading takes this text over Atria C item 1's (Reconciliation, item 3); the wording as applied in file 13 draft 3 (entry W35.2, C-76); read off the line diff file 13 draft 2 (as sent) -> file 13 draft 3 at line 223
     - Before:
@@ -1135,21 +1159,6 @@
     - Before: *(nothing: an addition)*
     - After:
       > and restates that expectation and violation hold for every transport (to the simulation layer) and surprise only for a selected one.
-- **CH-0437** · 2 records · applied · also at: [L217.s1](#L217-s1), [L223.s1](#L223-s1), [L225.s2](#L225-s2), [L429.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s1), [L429.s2](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s2), [L429.s3](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s3), [L429.s4](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L429-s4), [L582.s2](#L582-s2)
-  - **C-15** · S93 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 225 · carried by: file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W35.2 ("Part IV: a constructed transport is violated, not surprised"), STATUS applied, KIND CLAIM, FILE-11 LINE 225; wording first in change list draft 5 (8816fcf)
-    - Before:
-      > Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3).
-    - After:
-      > Whether the correspondence could have been otherwise at such a change is a fact about its population (Derivation 3). Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
-  - **C-101** · S93 · recommendation · applied · wording stands · written against: file 13 draft 4, theory text (md5 fc55b470c63cd4b3c27d6aa64d8d8c17), line 223 · carried by: file 13 draft 5 · source: results/S93 reading rulings/ruling S93 X05 W35.2.md — S93 ruling X05 (W35.2) on Mimo G point 1: FIX; the wording as applied in file 13 draft 5 (entry W35.2, C-15); read off the line diff file 13 draft 4 -> file 13 draft 5 at line 223
-    - Before:
-      > Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at a pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
-    - After:
-      > Expectation and violation are defined for every transport to the simulation layer, surprise only for a selected one: a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise; a violation the system represents can be a recognized difficulty (Part X).
-    - Old wording:
-      > at a pair
-    - New wording:
-      > at an actually occurring pair
 - **CH-0521** · 1 record · declined
   - **C-148** · S93 · recommendation · declined · wording not in the latest text · written against: file 13 draft 4, theory text (md5 fc55b470c63cd4b3c27d6aa64d8d8c17), line 223 · carried by: none · source: results/S93 Tabulation of the replies, before any ruling.md — X05.6 (s93_xexam_mimo_G point 1), proposed wording; ruling S93 X05 (W35.2) takes the occurrence condition as "at an actually occurring pair", and does not adopt "whose fidelity fails"; wording taken instead, or the related change: C-101
     - Before:
@@ -1425,7 +1434,7 @@
 > From structural realism it takes structure-preservation; it differs by making preservation change-driven and component-level, and by refusing a global isomorphism requirement.
 
 <a id="L45-s4"></a>
-#### L45.s4 · line 45 · 3 changes, 3 records
+#### L45.s4 · line 45 · 4 changes, 4 records
 > From functionalism it takes substrate-independence; it differs by imposing physical realization conditions at every attribution.
 
 - **CH-0611** · 1 record · applied
@@ -1450,6 +1459,12 @@
       > **obligation**: claimed obligations O, protected obligations P, epistemic obligations
     - After:
       > **aim**: claimed aims O, protected aims P, explanatory aims O_ex
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L45-s5"></a>
 #### L45.s5 · line 45 · 1 change, 1 record
@@ -1540,7 +1555,7 @@
       > Selection appears at the bottom: in the arrangement Part IV describes, as one possibility and not a requirement, it produces the object layer of persistent things that explanation operates on.
 
 <a id="L47-s2"></a>
-#### L47.s2 · line 47 · 2 changes, 2 records
+#### L47.s2 · line 47 · 3 changes, 3 records
 > Construction is a separate provenance with a separate trace, and every creative attribution requires it.
 
 - **CH-0612** · 1 record · applied
@@ -1559,6 +1574,12 @@
       > witness (construction); witness (mathematics)
     - After:
       > trace; instance
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L47-s3"></a>
 #### L47.s3 · line 47 · 4 changes, 6 records
@@ -1684,7 +1705,7 @@
 ## Part XVI — Arguments · 3. Selected transports are underdetermined on unseen changes their population leaves open · lines 570–576 · filed here from Part XVI
 
 <a id="L570-s1"></a>
-#### L570.s1 · heading · line 570 · 1 change, 1 record
+#### L570.s1 · heading · line 570 · 2 changes, 2 records
 > ## 3. Selected transports are underdetermined on unseen changes their population leaves open
 
 - **CH-0244** · 1 record · applied · also at: [L538.s2](15%20What%20would%20rule%20this%20class%20out%20%28Part%20XV%29.md#L538-s2), [L540.s1](15%20What%20would%20rule%20this%20class%20out%20%28Part%20XV%29.md#L540-s1), [L540.s2](15%20What%20would%20rule%20this%20class%20out%20%28Part%20XV%29.md#L540-s2), [L542.s1](15%20What%20would%20rule%20this%20class%20out%20%28Part%20XV%29.md#L542-s1), [L572.s1](#L572-s1), [L572.s2](#L572-s2), [L572.s3](#L572-s3), [L574.s4](#L574-s4), [L574.s5](#L574-s5), [L576.s1](#L576-s1), [L576.s4](#L576-s4)
@@ -1697,6 +1718,11 @@
       > changes
     - New wording:
       > changes their population leaves open
+- **CH-1296** · 1 record · declined
+  - **F-38** · S90 · recommendation · declined · written against: file 10 (authority/10 Claude Fable Semantics - standalone theory.md), line 567 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W2 (L150); the plan leaves it out (plan, line 146)
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] carry Derivation 3's qualification (O48) into file 10: L38 (grievance 3), L74 (attack D), L539 (Part XV), L567–573 (Derivation 3)
 
 <a id="L572-s1"></a>
 #### L572.s1 · line 572 · 1 change, 1 record
@@ -1773,7 +1799,7 @@
     - After:
       > The presence of an unseen pair alone does not establish that such a \(t'\) exists; it must be admitted, realizable, a member of \(\mathcal T\), and a survivor of \(H\).
 - **CH-0352** · 2 records · applied
-  - **B-193** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 562 · carried by: revision 2 as change-list entry W17.3, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L562 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W17.3
+  - **B-193** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 562 · carried by: revision 2 as change-list entry W17.3, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 1 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L562 · joined through the change-list entry: W17.3
     - Before:
       > The presence of an unseen pair alone does not establish that such a \(t'\) exists; it must be admitted, realizable, a member of \(\mathcal T\), and a survivor of \(H\).
     - After:
@@ -2275,12 +2301,12 @@
       > A correction episode additionally identifies how the defect matters; constructing a first conjecture need not await a prior erroneous answer.
     - New wording:
       > <u>identifies how the defect matters</u>
-  - **A-180** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 49 (file line 31), Amendment E, phrase cell; part of the cell is in R2 reason text (S64-R2-E04)
+  - **A-180** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 49 (file line 31), Amendment E, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-E04)
     - Before: *(nothing: an addition)*
     - After:
       > A correction episode additionally identifies how the defect matters; constructing a first conjecture need not await a prior erroneous answer.
     - New wording:
-      > <u>deliberate first construction</u>; <u>need not await a prior erroneous answer</u>
+      > <u>need not await a prior erroneous answer</u>
 - <a id="CH-0088"></a>**CH-0088** · 3 records · never applied · placed by: Part its source names (never applied)
   - **A-91** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S64 Near cases - return/05 Quotations.md — S64 Near cases - return/05 Quotations.md row S64-R2-E02 (table line 127), sentence 5 of 6; also S72 Stage 1 testing - return/05 Quotations.md line 104; S72 Stage 2 audit - return/03 Audit of the quotations.md line 314
     - Before: *(nothing: an addition)*

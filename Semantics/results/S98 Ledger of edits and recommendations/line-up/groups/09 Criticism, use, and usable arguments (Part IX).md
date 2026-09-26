@@ -1,13 +1,13 @@
 # 09 Criticism, use, and usable arguments
 
-*Home Part: Part IX. Units shown: 51; units touched: 40; changes placed here: 65; records shown here in full under their home sentence: 70; pointer lines: 9; vocabulary lines: 48; records in blocks: 1. Statuses of the records shown here in full: applied 60, not applied 2, declined 1, superseded 6, open for the owner 1, unknown 0.*
+*Home Part: Part IX. Units shown: 51; units touched: 41; changes placed here: 69; records shown here in full under their home sentence: 76; pointer lines: 11; vocabulary lines: 48; records in blocks: 1. Statuses of the records shown here in full: applied 59, not applied 2, declined 2, superseded 12, open for the owner 1, unknown 0.*
 
 - [Part IX · Opening of the Part · line 373 · 3 records](#sec-L373-373)
 - [Part IX · Histories · line 375 · 5 records](#sec-L375-375)
-- [Part IX · Bearing · lines 377–383 · 15 records](#sec-L377-383)
+- [Part IX · Bearing · lines 377–383 · 20 records](#sec-L377-383)
 - [Part IX · Reason use · line 385 · 7 records](#sec-L385-385)
 - [Part IX · Usability · lines 387–393 · 19 records](#sec-L387-393)
-- [Part IX · What a test rules out · line 395 · 8 records](#sec-L395-395)
+- [Part IX · What a test rules out · line 395 · 9 records](#sec-L395-395)
 - [Part IX · Arguments · line 397 · 38 records](#sec-L397-397)
 - [Part 0 · Two words, as used here · line 8 · 9 records](#sec-L8-8)
 - [Part I · Conjecture, criticism, action · line 71 · 4 records](#sec-L71-71)
@@ -47,7 +47,7 @@
 > **Histories.** A history \(h\) is a set of occurrences with an acyclic causal precedence \(\prec_h\) (write \(\preceq_h\) for its reflexive closure) and a physical interpretation supplying process occurrences, their ports, and the connections actually instantiated.
 
 - **CH-1018** · 2 records · applied · also at: [L377.s1](#L377-s1), [L377.s2](#L377-s2), [L377.s3](#L377-s3), [L379.s1](#L379-s1), [L387.s1](#L387-s1), [L421.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L421-s1), [L445.s1](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L445-s1), [L453.s2](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s2), [L453.s3](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s3), [L453.s4](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s4)
-  - **D-922** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 375 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 1, proposed wording (code block 1); ruling 'mimo 3 1' in results/S96 Reading of the replies.md, section 3
+  - **D-922** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 375 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 1, proposed wording (code block 1); ruling 'mimo 3 1' in results/S96 Reading of the replies.md, section 3
     - Before:
       > A history \(h\) is a set of occurrences with an acyclic causal precedence \(\prec_h\) and a physical interpretation supplying process occurrences, their ports, and the connections actually instantiated.
     - After:
@@ -97,9 +97,20 @@
 ## Part IX — Criticism, use, and usable arguments · Bearing · lines 377–383
 
 <a id="L377-s1"></a>
-#### L377.s1 · line 377 · 3 changes, 3 records
+#### L377.s1 · line 377 · 5 changes, 5 records
 > **Bearing.** A criticism has target \(z\), alleged defect \(\delta\), premise \(g\), and a connection.
 
+- **CH-1282** · 1 record · superseded · also at: [L377.s2](#L377-s2), [L377.s3](#L377-s3)
+  - **F-24** · S90 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 373 · carried by: none (the change list's entries W22.1, W22.2 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W22 (file line 112), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] restore 00:620
+- **CH-1284** · 1 record · superseded
+  - **F-26** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 373 · carried by: none (the change list's entries W22.1, W22.2 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W22 (file line 112), 'Take'
+    - Before:
+      > represents how it bears
+    - After:
+      > represents its alleged connection
 - **CH-0737** · 1 record · applied
   - **D-156** · S95 · edit · applied · wording stands · written against: draft 5, line 377 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[155]; line 377; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -132,15 +143,20 @@
       > \]
 
 <a id="L377-s2"></a>
-#### L377.s2 · line 377 · 4 changes, 6 records
+#### L377.s2 · line 377 · 6 changes, 9 records
 > Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments.
 
-- **CH-0451** · 2 records · applied
+- **CH-0451** · 3 records · applied
   - **C-35** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 373 · carried by: file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W22.1 ("Define \(p_\delta\) and \(\mathcal E_c\) in (K1)"), STATUS applied, KIND CLAIM, FILE-11 LINE 373; wording first in change list draft 3 (99e9cd0); carried as S93 part J X15
     - Before:
       > Let \(p_\delta\) be the question about the defect. Then
     - After:
       > Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the criticism's connection from \(g\) to \(\delta\), interpreted as an explanatory candidate (Part V) for \(p_\delta\). Then
+  - **F-1** · S90 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W22.1 first proposed to change it, before the two checks, line 373 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent) · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W22.1 (file line 116), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W22.1
+    - Before:
+      > account
+    - After:
+      > the explanatory candidate (Part V) that the criticism offers for \(p_\delta\)
   - **C-98** · S90 · recommendation · applied · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 371 · carried by: file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy · source: results/S90 reading rulings/ruling s90_xexam_mimo_A2 R28.md — S90 ruling R28 (W22.1) on s90_xexam_mimo_A2 point 1: FIX (batch 1); the wording as applied in file 13 draft 3 (entry W22.1, C-35); read off the line diff file 13 draft 2 (as sent) -> file 13 draft 3 at line 371
     - Before:
       > Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) that the criticism offers for \(p_\delta\).
@@ -156,6 +172,13 @@
       > Let \(p_\delta\) be the question about the defect. Then
     - After:
       > Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) that the criticism offers for \(p_\delta\). Then
+- **CH-1282** · 1 record · superseded · also at: [L377.s1](#L377-s1), [L377.s3](#L377-s3)
+  - **F-24** · S90 · recommendation · superseded · shown in full under [L377.s1](#L377-s1)
+- **CH-1283** · 1 record · superseded
+  - **F-25** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 373 · carried by: none (the change list's entries W22.1, W22.2 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W22 (file line 112), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > the question whether z has \(\delta\) in respect of p
 - **CH-0492** · 1 record · declined
   - **C-119** · S90 · recommendation · declined · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 371 · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_A2.response.txt — s90_xexam_mimo_A2 point 1, repair; refused by ruling R28 (W22.1) (batch 1); wording taken instead, or the related change: C-98
     - Before:
@@ -179,9 +202,11 @@
       > and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments.
 
 <a id="L377-s3"></a>
-#### L377.s3 · line 377 · 1 change, 1 record
+#### L377.s3 · line 377 · 2 changes, 2 records
 > Then
 
+- **CH-1282** · 1 record · superseded · also at: [L377.s1](#L377-s1), [L377.s2](#L377-s2)
+  - **F-24** · S90 · recommendation · superseded · shown in full under [L377.s1](#L377-s1)
 - **CH-1018** · 1 record · applied · also at: [L375.s1](#L375-s1), [L377.s1](#L377-s1), [L377.s2](#L377-s2), [L379.s1](#L379-s1), [L387.s1](#L387-s1), [L421.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L421-s1), [L445.s1](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L445-s1), [L453.s2](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s2), [L453.s3](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s3), [L453.s4](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s4)
   - **D-923** · S96 · recommendation · applied · shown in full under [L377.s1](#L377-s1)
 
@@ -213,15 +238,19 @@
 > A criticism occurrence can exist when (K1) fails.
 
 <a id="L383-s2"></a>
-#### L383.s2 · line 383 · 5 changes, 6 records
+#### L383.s2 · line 383 · 5 changes, 7 records
 > An adverse signal is not a criticism until an organization represents it as the premise of a criticism alleging a defect in a target.
 
-- **CH-0452** · 1 record · applied
+- **CH-0452** · 2 records · applied
   - **C-36** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 379 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W22.2 ("An adverse signal becomes a criticism by a represented alleged connection"), STATUS applied, KIND CLAIM, FILE-11 LINE 379; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C24, S90 part A2 R29
     - Before:
       > An adverse signal is not a criticism until an organization represents how it bears.
     - After:
       > An adverse signal is not a criticism until an organization represents it as grounds for an alleged defect in a target.
+  - **F-2** · S90 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W22.2 first proposed to change it, before the two checks, line 379 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W22.2 (file line 117), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W22.2
+    - Before: *(nothing: an addition)*
+    - After:
+      > as grounds for an alleged defect in a target
 - **CH-0570** · 1 record · superseded
   - **C-198** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 379 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W22 (L536), handling: change "represents how it bears"; entry W22.2 (after check 1) reads "represents it as grounds for an alleged defect in a target"
     - Before:
@@ -330,7 +359,7 @@
     - After:
       > **argument step** u
 - **CH-1018** · 2 records · applied · also at: [L375.s1](#L375-s1), [L377.s1](#L377-s1), [L377.s2](#L377-s2), [L377.s3](#L377-s3), [L379.s1](#L379-s1), [L421.s1](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L421-s1), [L445.s1](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L445-s1), [L453.s2](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s2), [L453.s3](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s3), [L453.s4](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L453-s4)
-  - **D-924** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 387 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 1, proposed wording (code block 3); ruling 'mimo 3 1' in results/S96 Reading of the replies.md, section 3
+  - **D-924** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 387 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_3.response.txt — finding 1, proposed wording (code block 3); ruling 'mimo 3 1' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Usability.** For argument step \(u\) with essential premises \(\operatorname{Prem}(u)\):
     - After:
@@ -355,7 +384,7 @@
   - **C-181** · S93 · recommendation · not applied · written against: file 13 draft 4, theory text (md5 fc55b470c63cd4b3c27d6aa64d8d8c17), line 390 · carried by: none · source: results/S93 reading rulings/ruling S93 X17 W7.5.md — S93 ruling X17 (W7.5), finding 1; carried forward after S93
     - Before: *(nothing: an addition)*
     - After:
-      > [no wording given] define (K2)'s Lic_j, Scope_j and Live_j (L390 only), so that Derivation 6 can be followed through receipts to the primitives
+      > [no wording given] define (K2)'s Lic_j, Scope_j and Live_j (L390 only)
 - **CH-0741** · 1 record · applied
   - **D-160** · S95 · edit · applied · wording stands · written against: draft 5, line 390 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[159]; line 390; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -377,22 +406,22 @@
       > Withdrawing a premise removes a license; it does not make the conclusion false.
     - After:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it]. Withdrawing a premise makes the step unusable; it does not rule the conclusion out.
-- **CH-0908** · 3 records · applied
-  - **D-734** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, optional (l. 391); to be inserted after: does not define it].
+- **CH-0908** · 3 records · applied, superseded
+  - **D-734** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, optional (l. 391); to be inserted after: does not define it].
     - Before:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it].
     - After:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it]. Scope_j(u): u is applied within the contract, grain and boundary j has declared for it; Live_j(d;u): j has not withdrawn d [Claude's readings].
     - New wording:
       > Scope_j(u): u is applied within the contract, grain and boundary j has declared for it; Live_j(d;u): j has not withdrawn d [Claude's readings].
-  - **D-813** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 4, optional (Scope_j, Live_j); to be inserted after: does not define it].
+  - **D-813** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 4, optional (Scope_j, Live_j); to be inserted after: does not define it].
     - Before:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it].
     - After:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it]. \(\operatorname{Scope}_j(u)\): \(u\) is applied within the contract, grain and boundary \(j\) has declared for it; \(\operatorname{Live}_j(d;u)\): \(j\) has not withdrawn \(d\) [Claude's readings].
     - New wording:
       > \(\operatorname{Scope}_j(u)\): \(u\) is applied within the contract, grain and boundary \(j\) has declared for it; \(\operatorname{Live}_j(d;u)\): \(j\) has not withdrawn \(d\) [Claude's readings].
-  - **D-327** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[26]; line 393; group G; ref: S95 B7 (optional readings) and B1 (tentative admitting); G pointer
+  - **D-327** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 393 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[26]; line 393; group G; ref: S95 B7 (optional readings) and B1 (tentative admitting); G pointer
     - Before:
       > \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits [Claude's reading; draft 5 names this predicate and does not define it].
     - After:
@@ -422,7 +451,7 @@
       > \(\operatorname{Live}_j(d;u)\): \(j\) has not withdrawn \(d\), whether or not \(j\) holds an explanation of \(d\) [Claude's readings].
     - New wording:
       > \(\operatorname{Live}_j(d;u)\): \(d\) is the conclusion of a step of the same argument as \(u\) that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\) [Claude's readings].
-  - **D-854** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 393 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-1, proposal 1
+  - **D-854** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 393 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-1, proposal 1
     - Before:
       > \(\operatorname{Scope}_j(u)\): \(u\) is applied within the contract, grain and boundary \(j\) has declared for it; \(\operatorname{Live}_j(d;u)\): \(j\) has not withdrawn \(d\), whether or not \(j\) holds an explanation of \(d\) [Claude's readings].
     - After:
@@ -473,9 +502,14 @@
 ## Part IX — Criticism, use, and usable arguments · What a test rules out · line 395
 
 <a id="L395-s1"></a>
-#### L395.s1 · line 395 · 6 changes, 8 records
+#### L395.s1 · line 395 · 7 changes, 9 records
 > **What a test rules out.** For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\) rules out \(T\land B\land I\) together for \(j\), and nothing narrower. (K3)
 
+- **CH-1295** · 1 record · declined
+  - **F-37** · S90 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 391 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W50 (L997); the plan leaves it out (plan, line 137)
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] a clarification from file 12 (12:411): An intervention whose prediction fails refutes the conjunction that includes "the intervention realized the intended edit".
 - **CH-0743** · 1 record · applied
   - **D-162** · S95 · edit · applied · wording stands · written against: draft 5, line 395 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[161]; line 395; rewording; LISTED
     - Before:
@@ -593,7 +627,7 @@
     - After:
       > "A record reconstructed from a claim does not rule out that claim's denial."
 - **CH-0907** · 1 record · applied · vocabulary · also at: [L397.s2](#L397-s2), [L397.s3](#L397-s3), [L397.s5](#L397-s5)
-  - **D-824** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 12 (l. 397 add); to be inserted after: A record leaf is a reference to an event with an interpreted claim.
+  - **D-824** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 12 (l. 397 add); to be inserted after: A record leaf is a reference to an event with an interpreted claim.
     - Before:
       > A record leaf is a reference to an event with an interpreted claim.
     - After:
@@ -611,8 +645,8 @@
       > A receipt is a derivation tree over leaves.
     - After:
       > An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions.
-- **CH-0907** · 1 record · applied · vocabulary · also at: [L397.s1](#L397-s1), [L397.s3](#L397-s3), [L397.s5](#L397-s5)
-  - **D-326** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[25]; line 397; group G; ref: S27 second footnote (point 4); S95 B1 (range 2 repair 12), B12 (range 2 B4, repair 13) reconsidered; F; rename R_j to X_j; whole line
+- **CH-0907** · 1 record · superseded · vocabulary · also at: [L397.s1](#L397-s1), [L397.s3](#L397-s3), [L397.s5](#L397-s5)
+  - **D-326** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[25]; line 397; group G; ref: S27 second footnote (point 4); S95 B1 (range 2 repair 12), B12 (range 2 B4, repair 13) reconsidered; F; rename R_j to X_j; whole line
     - Before:
       > **Arguments.** A record leaf is a reference to an event with an interpreted claim. An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions. For \(\psi\), \(R_j(\psi)\) is the set of arguments usable by \(j\) that rule out \(\psi\). Where no argument usable by \(j\) rules out \(\phi\), that absence rules out nothing, neither \(\phi\) nor \(\neg\phi\). A record reconstructed from a claim does not rule out that claim's denial.
     - After:
@@ -623,7 +657,7 @@
 > Each step of an argument rules out the case in which the step's premises are met and its conclusion fails, for someone who admits its inference form (\(\operatorname{Form}_j\)), while that form stays admitted.
 
 - **CH-0907** · 1 record · applied · vocabulary · also at: [L397.s1](#L397-s1), [L397.s2](#L397-s2), [L397.s5](#L397-s5)
-  - **D-718** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B1, first repair (l. 397 add)
+  - **D-718** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 397 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B1, first repair (l. 397 add)
     - Before: *(nothing: an addition)*
     - After:
       > Each step of an argument rules out the case in which the step's premises are met and its conclusion fails, for someone who admits its inference form (Form_j), while that form stays admitted. An argument is usable by j when each of its steps is (K2), and it rules out a claim when the claim is inconsistent with its conclusion.
@@ -850,7 +884,7 @@
       > it finds that the candidate gives what the premise excludes.
     - New wording:
       > it finds that the candidate gives what the premise excludes. The block catches only a premise that is the claim's denial, read structurally; a premise from which a step leads to the denial, as one does from \(r\) and "if \(r\), this candidate fails (E)", is a premise taken as given, and using it is the gamble above, not a circular argument. Where the premises \(j\) tentatively accepts are inconsistent, arguments from them can rule out, for \(j\), a claim and its denial alike; the semantics then says only that \(j\)'s premises conflict, and which of them \(j\) drops, if any, is \(j\)'s choice (Part 0).
-  - **D-860** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 397 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-3, proposal 2; to be inserted after: it finds that the candidate gives what the premise excludes.
+  - **D-860** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 397 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-3, proposal 2; to be inserted after: it finds that the candidate gives what the premise excludes.
     - Before:
       > A premise taken as given differs from such a premise in that the argument has steps from it to what it rules out: it finds that the candidate gives what the premise excludes.
     - After:
@@ -884,20 +918,15 @@
 > **Two words, as used here.** An **argument** is, in the owner's words, "reasons why this and not that": "something that can be strung together into a coherent structure to decide why this and not another."
 
 <a id="L8-s2"></a>
-#### L8.s2 · line 8 · 1 change, 2 records
+#### L8.s2 · line 8 · 1 change, 1 record
 > Each of its steps is of an inference form that the person using it admits (\(\operatorname{Form}_j\), Part IX), and admitting a form, like accepting a claim, is tentative; for that person, while the form stays admitted, the step rules out the case in which its premises are met and its conclusion fails.
 
-- **CH-0909** · 2 records · applied · also at: [L8.s5](#L8-s5)
-  - **D-779** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R1 (l. 8)
+- **CH-0909** · 1 record · applied · also at: [L8.s4](#L8-s4), [L8.s5](#L8-s5)
+  - **D-779** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R1 (l. 8)
     - Before:
       > Each of its steps rules out the case in which the step's premises are met and its conclusion fails (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2); a claim that no argument rules out is only not ruled out, and gets nothing from that.
     - After:
       > Each of its steps is of an inference form that the person using it admits (\(\operatorname{Form}_j\), Part IX), and admitting a form, like accepting a claim, is tentative; for that person, while the form stays admitted, the step rules out the case in which its premises are met and its conclusion fails. An argument rules out a claim when the claim is inconsistent with its conclusion. An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2). A claim that no argument rules out is only not ruled out, and gets nothing from that; a claim whose denial an argument rules out gets nothing more than that ruling out.
-  - **D-328** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[27]; line 8; group R; ref: B1 (R1)
-    - Before:
-      > Each of its steps rules out the case in which the step's premises are met and its conclusion fails (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2); a claim that no argument rules out is only not ruled out, and gets nothing from that.
-    - After:
-      > Each of its steps is of an inference form that the person using it admits (\(\operatorname{Form}_j\), Part IX), and admitting a form, like accepting a claim, is tentative; for that person, while the form stays admitted, the step rules out the case in which its premises are met and its conclusion fails. An argument rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not one of its premises (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2). A claim that no argument rules out is only not ruled out, and gets nothing from that; a claim whose denial an argument rules out gets nothing more than that ruling out.
 
 <a id="L8-s3"></a>
 #### L8.s3 · line 8 · 1 change, 2 records
@@ -913,7 +942,7 @@
       > and the claim's denial is not one of its premises (Part IX).
     - New wording:
       > and the claim's denial is not among its premises, in the structural sense of Part IX.
-  - **D-848** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 8 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, R-6, proposal 1
+  - **D-848** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 8 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, R-6, proposal 1
     - Before:
       > An argument rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not one of its premises (Part IX).
     - After:
@@ -924,15 +953,22 @@
       > and the claim's denial is not among its premises, as Part IX reads that (Part IX)
 
 <a id="L8-s4"></a>
-#### L8.s4 · line 8 · no change recorded
+#### L8.s4 · line 8 · 1 change, 1 record
 > An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2).
+
+- **CH-0909** · 1 record · superseded · also at: [L8.s2](#L8-s2), [L8.s5](#L8-s5)
+  - **D-328** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[27]; line 8; group R; ref: B1 (R1)
+    - Before:
+      > Each of its steps rules out the case in which the step's premises are met and its conclusion fails (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2); a claim that no argument rules out is only not ruled out, and gets nothing from that.
+    - After:
+      > Each of its steps is of an inference form that the person using it admits (\(\operatorname{Form}_j\), Part IX), and admitting a form, like accepting a claim, is tentative; for that person, while the form stays admitted, the step rules out the case in which its premises are met and its conclusion fails. An argument rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not one of its premises (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2). A claim that no argument rules out is only not ruled out, and gets nothing from that; a claim whose denial an argument rules out gets nothing more than that ruling out.
 
 <a id="L8-s5"></a>
 #### L8.s5 · line 8 · 1 change, 1 record
 > A claim that no argument rules out is only not ruled out, and gets nothing from that; a claim whose denial an argument rules out gets nothing more than that ruling out.
 
-- **CH-0909** · 1 record · applied · also at: [L8.s2](#L8-s2)
-  - **D-719** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B1, second repair (l. 8, R1)
+- **CH-0909** · 1 record · applied · also at: [L8.s2](#L8-s2), [L8.s4](#L8-s4)
+  - **D-719** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 8 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B1, second repair (l. 8, R1)
     - Before:
       > Each of its steps rules out the case in which the step's premises are met and its conclusion fails (Part IX). An argument is never a reason *for* a claim: what it does is rule out a claim's denial, or a rival, for someone who can use it, and only while it stays usable (K2); a claim that no argument rules out is only not ruled out, and gets nothing from that.
     - After:

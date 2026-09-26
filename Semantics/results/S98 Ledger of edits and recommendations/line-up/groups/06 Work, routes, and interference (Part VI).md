@@ -1,13 +1,13 @@
 # 06 Work, routes, and interference
 
-*Home Part: Part VI. Units shown: 67; units touched: 61; changes placed here: 143; records shown here in full under their home sentence: 157; pointer lines: 107; vocabulary lines: 157; records in blocks: 23. Statuses of the records shown here in full: applied 102, not applied 16, declined 14, superseded 14, open for the owner 11, unknown 0.*
+*Home Part: Part VI. Units shown: 67; units touched: 62; changes placed here: 143; records shown here in full under their home sentence: 160; pointer lines: 109; vocabulary lines: 159; records in blocks: 23. Statuses of the records shown here in full: applied 102, not applied 16, declined 14, superseded 17, open for the owner 11, unknown 0.*
 
-- [Part VI · Opening of the Part · lines 285–303 · 30 records](#sec-L285-303)
+- [Part VI · Opening of the Part · lines 285–303 · 31 records](#sec-L285-303)
 - [Part VI · Finite monotone claim · line 305 · 15 records](#sec-L305-305)
-- [Part VI · Redundant routes · line 307 · 19 records](#sec-L307-307)
+- [Part VI · Redundant routes · line 307 · 21 records](#sec-L307-307)
 - [Part VI · Interference · line 309 · 2 records](#sec-L309-309)
 - [Part VI · Infinitary routes · line 311 · 9 records](#sec-L311-311)
-- [Part VI · Commitments that do no work · line 313 · 21 records](#sec-L313-313)
+- [Part VI · Commitments that do no work · line 313 · 23 records](#sec-L313-313)
 - [Part VI · Rivals · line 315 · 61 records](#sec-L315-315)
 - [Part VI · Problems · line 317 · 73 records](#sec-L317-317)
 - [Not in the latest text, with no section: Part VI · 8 changes, 15 records](#rest-VI)
@@ -38,15 +38,26 @@
       > **route**; "Infinitary routes"; "Work, routes, and interference"
 
 <a id="L287-s1"></a>
-#### L287.s1 · line 287 · no change recorded
+#### L287.s1 · line 287 · 1 change, 1 record
 > Fix \(\mathcal E\) and a declared restriction operation.
 
+- **CH-0425** · 1 record · not applied
+  - **B-289** · S88 · recommendation · not applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 289 · carried by: none (a fallback) · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, fallback (c), second clause (line 391): F11 L289 sentence 2's new ending
+    - Before:
+      > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed.
+    - After:
+      > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed; the commitments of \(E|W\) are \(W\), and \((E|W)|W'=E|W'\) for \(W'\subseteq W\).
+    - Old wording:
+      > .
+    - New wording:
+      > ; the commitments of \(E|W\) are \(W\), and \((E|W)|W'=E|W'\) for \(W'\subseteq W\).
+
 <a id="L287-s2"></a>
-#### L287.s2 · line 287 · 3 changes, 4 records
+#### L287.s2 · line 287 · 2 changes, 3 records
 > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed; the commitments of \(E|W\) are \(W\).
 
 - **CH-0422** · 2 records · applied
-  - **B-286** · S88 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 289 · carried by: verbatim in: draft 2 to latest text; carried as change-list entry W20.3, whose NEW text (as fixed later) is verbatim in: draft 2 to latest text · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, final repair wording, change 3, Part VI, F11 L289 sentence 2 (lines 368-372) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W20.3
+  - **B-286** · S88 · recommendation · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 289 · carried by: verbatim in: draft 2 to latest text; carried as change-list entry W20.3, whose NEW text (as fixed later) is verbatim in: draft 2 to latest text · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, final repair wording, change 3, Part VI, F11 L289 sentence 2 (lines 368-372) · joined through the change-list entry: W20.3
     - Before:
       > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed.
     - After:
@@ -56,16 +67,6 @@
       > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed.
     - After:
       > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed; the commitments of \(E|W\) are \(W\).
-- **CH-0425** · 1 record · not applied
-  - **B-289** · S88 · recommendation · not applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 289 · carried by: none (a fallback) · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, fallback (c), second clause (line 391): F11 L289 sentence 2's new ending
-    - Before:
-      > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed.
-    - After:
-      > For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed; the commitments of \(E|W\) are \(W\), and \((E|W)|W'=E|W'\) for \(W'\subseteq W\).
-    - Old wording:
-      > with the named background fixed.
-    - New wording:
-      > with the named background fixed; the commitments of \(E|W\) are \(W\), and \((E|W)|W'=E|W'\) for \(W'\subseteq W\).
 - **CH-1008** · 1 record · superseded · also at: [L231.s3](05%20Account%20%28Part%20V%29.md#L231-s3), [L231.s4](05%20Account%20%28Part%20V%29.md#L231-s4), [L257.s3](05%20Account%20%28Part%20V%29.md#L257-s3), [L299.s3](#L299-s3)
   - **D-917** · S96 · recommendation · superseded · wording not in the latest text · written against: repaired copy, line 287 · carried by: none · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 6, proposed wording (code block 8); ruling 'mimo 2 6 and atria A 6' in results/S96 Reading of the replies.md, section 3; to be inserted after: the commitments of \(E|W\) are \(W\).
     - Before:
@@ -121,7 +122,7 @@
       > [no wording given] list the family \(\mathcal V\) of (D) (L299, L302) among Part XIV's declared inputs
 
 <a id="L299-s2"></a>
-#### L299.s2 · line 299 · 9 changes, 15 records
+#### L299.s2 · line 299 · 10 changes, 16 records
 > Criticality is relative to the route \(W\) it is assessed in, a **route** of the candidate being a member of \(\mathsf S_{E,p}\) (not an active route of a history, Part IX): a commitment critical in one route need not be critical in the full candidate, and the routes assessed are subsets of the written \(\Gamma\), whether or not anyone has set them out, not a route someone could write with commitments outside \(\Gamma\).
 
 - **CH-0141** · 3 records · applied
@@ -147,7 +148,7 @@
     - After:
       > Criticality is relative to the support \(W\) it is assessed in: a commitment critical in one successful support need not be critical in the full candidate, and the supports assessed are the ones actually written, not a support someone could write in their place.
 - **CH-0362** · 2 records · applied
-  - **B-210** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 301 · carried by: revision 2 as change-list entry W58(i).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 10 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L301 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W58(i).1
+  - **B-210** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 301 · carried by: revision 2 as change-list entry W58(i).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 10 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L301 · joined through the change-list entry: W58(i).1
     - Before:
       > Criticality is relative to the support \(W\) it is assessed in: a commitment critical in one successful support need not be critical in the full candidate, and the supports assessed are the ones actually written, not a support someone could write in their place.
     - After:
@@ -169,6 +170,11 @@
       > Criticality is relative to the support \(W\) it is assessed in: a commitment critical in one successful support need not be critical in the full candidate, and the supports assessed are the ones actually written, not a support someone could write in their place.
     - After:
       > [no wording given] declare this place in the revision's record as a change of claim not declared by file 11's note
+- **CH-1290** · 1 record · superseded
+  - **F-32** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 301 · carried by: none (the change list's entries W58(i).1, W58(ii).1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W58 (file line 144), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > the supports assessed are subsets of the written Γ, not a support someone could write in its place
 - **CH-0526** · 1 record · declined
   - **C-153** · S93 · recommendation · declined · wording not in the latest text · written against: file 13 draft 4, theory text (md5 fc55b470c63cd4b3c27d6aa64d8d8c17), line 299 · carried by: none · source: results/S93 Tabulation of the replies, before any ruling.md — X06.7 (b) (s93_xexam_mimo_H point 2), L299; ruling S93 X06: "L299 is not taken"
     - Before:
@@ -203,14 +209,14 @@
     - After:
       > **route**; "Infinitary routes"; "Work, routes, and interference"
 - **CH-0922** · 3 records · applied
-  - **D-735** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 299 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B8, R12 (l. 299)
+  - **D-735** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 299 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B8, R12 (l. 299)
     - Before:
       > Criticality is relative to the route \(W\) it is assessed in: a commitment critical in one route need not be critical in the full candidate, and the routes assessed are subsets of the written \(\Gamma\), whether or not anyone has set them out, not a route someone could write with commitments outside \(\Gamma\).
     - After:
       > Criticality is relative to the route W it is assessed in, a **route** of the candidate being a member of S_{E,p} (not an active route of a history, Part IX): …
     - Old wording:
       > Criticality is relative to the route \(W\) it is assessed in:
-  - **D-797** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 299 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R12 (l. 299)
+  - **D-797** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 299 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R12 (l. 299)
     - Before:
       > Criticality is relative to the route \(W\) it is assessed in: a commitment critical in one route need not be critical in the full candidate, and the routes assessed are subsets of the written \(\Gamma\), whether or not anyone has set them out, not a route someone could write with commitments outside \(\Gamma\).
     - After:
@@ -326,7 +332,7 @@
     - After:
       > claim: "Finite monotone claim"; "the claim's own qualification"
 - **CH-1012** · 2 records · applied
-  - **D-920** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 305 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 7, proposed wording (code block 10); ruling 'mimo 2 7' in results/S96 Reading of the replies.md, section 3
+  - **D-920** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 305 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 7, proposed wording (code block 10); ruling 'mimo 2 7' in results/S96 Reading of the replies.md, section 3
     - Before:
       > If \(\Gamma\) is finite, \(\mathsf S\) is upward closed, and \(\Gamma\in\mathsf S\), then the critical singletons are exactly \(\bigcup\min\mathsf S\) and the globally indispensable ones are exactly \(\bigcap\min\mathsf S\).
     - After:
@@ -534,7 +540,7 @@
 - **CH-0924** · 3 records · applied
   - **D-736** · S95 · recommendation · applied · wording stands · written against: scrubbed copy, line 307 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B8, R12 (l. 307)
     - Before:
-      > Here a route of the candidate is a member of S
+      > Here a route of the candidate is a member of \(\mathsf S\)
     - After:
       > A route of the candidate
   - **D-798** · S95 · recommendation · applied · wording stands · written against: scrubbed copy, line 307 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R12 (l. 307)
@@ -557,7 +563,7 @@
       > A route of the candidate is a route whether or not any history runs it;
 
 <a id="L307-s4"></a>
-#### L307.s4 · line 307 · 4 changes, 4 records
+#### L307.s4 · line 307 · 4 changes, 5 records
 > The two meet in \(\operatorname{ProducedBy}\) (Part XI), which attributes a repair to the contributions whose active routes ran to it, not to the routes a candidate contains.
 
 - **CH-0694** · 1 record · applied
@@ -570,12 +576,17 @@
       > which credits a repair to the contributions
     - New wording:
       > which attributes a repair to the contributions
-- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+- **CH-1106** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
   - **D-564** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 103 (section: Belief, merit and appraisal)
     - Before:
       > credit, credits, credited
     - After:
       > attribution, attributes; "contribution of content"
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 - **CH-1110** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1110)
   - **D-568** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 2, row 1 (CHANGE), file line 25
     - Before:
@@ -590,7 +601,7 @@
       > **import**, the two **imports**, "import 2"
 
 <a id="L307-s5"></a>
-#### L307.s5 · line 307 · 5 changes, 6 records
+#### L307.s5 · line 307 · 6 changes, 7 records
 > A route already present in the candidate is a route whether or not anyone has described its work; a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and whether the new candidate meets (E) is not whether the old one does.
 
 - **CH-0285** · 1 record · applied
@@ -599,7 +610,7 @@
     - After:
       > A route already present in the candidate is a route whether or not anyone has described its work; a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's.
 - **CH-0383** · 2 records · applied
-  - **B-233** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 309 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-17; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M28 (determination 03 §1, row M28; file-11 locator 'L309, sentence 3', file-10 'L324'); the file-11 sentences are edit records B-111, B-112 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-17, tests/Revision 2 - change list, draft of 23 September.md#W3.5
+  - **B-233** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 309 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-17; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M28 (determination 03 §1, row M28; file-11 locator 'L309, sentence 3', file-10 'L324'); the file-11 sentences are edit records B-111, B-112 · joined through the change-list entry: W3.5 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-17
     - Before:
       > A route already present in the candidate is a route whether or not anyone has described its work; a component reassigned to a new target after a deletion belongs to a new candidate with its own assessment, and the new candidate's success is not the old one's.
     - After:
@@ -631,20 +642,26 @@
       > success, successful, succeeds (l. 299, 307, 309, 461, 469)
     - After:
       > meets (E): "a subset can meet (E) while the whole fails it"; l. 461 "one trajectory that performed the task"; l. 469 "deadlock does not meet the task vacuously"
+- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
 ##### Not in the latest text, placed with this section
 
-- <a id="CH-0098"></a>**CH-0098** · 2 records · never applied · placed by: section lead 0.73, not an anchor (never applied)
+- <a id="CH-0098"></a>**CH-0098** · 2 records · never applied · placed by: section lead 0.61, not an anchor (never applied)
   - **A-104** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S64 Near cases - return/05 Quotations.md — S64 Near cases - return/05 Quotations.md row S64-R2-F01 (table line 130), sentence 2 of 5; also S72 Stage 1 testing - return/05 Quotations.md line 808; S72 Stage 2 audit - return/03 Audit of the quotations.md line 1390 · nearest latest-text sentence (a lead, not a place): [L307.s5](#L307-s5)
     - Before: *(nothing: an addition)*
     - After:
       > Deleting a commitment may expose another already present route.
-  - **A-191** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 60 (file line 42), Amendment F, phrase cell; part of the cell is in R2 reason text (S64-R2-F03) · nearest latest-text sentence (a lead, not a place): [L307.s5](#L307-s5)
+  - **A-191** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 60 (file line 42), Amendment F, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-F03) · nearest latest-text sentence (a lead, not a place): [L307.s5](#L307-s5)
     - Before: *(nothing: an addition)*
     - After:
       > Deleting a commitment may expose another already present route.
     - New wording:
-      > <u>another already present route</u>; <u>genuinely redundant routes</u>
+      > <u>another already present route</u>
 
 <a id="sec-L309-309"></a>
 ## Part VI — Work, routes, and interference · Interference · line 309
@@ -741,7 +758,7 @@
     - New wording:
       > no minimal route, and no route of one commitment, exists
 - **CH-1013** · 2 records · applied
-  - **D-921** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 311 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 8, proposed wording (code block 11); ruling 'mimo 2 8' in results/S96 Reading of the replies.md, section 3
+  - **D-921** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 311 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_2.response.txt — finding 8, proposed wording (code block 11); ruling 'mimo 2 8' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Infinitary routes.** \(\Gamma=\{d_n:|x|\le 1/n\}\): every unbounded index set determines \(x=0\); no minimal route, and no route of one commitment, exists. (B) records the collective contribution.
     - After:
@@ -764,10 +781,15 @@
 ## Part VI — Work, routes, and interference · Commitments that do no work · line 313
 
 <a id="L313-s1"></a>
-#### L313.s1 · line 313 · 4 changes, 4 records
+#### L313.s1 · line 313 · 5 changes, 5 records
 > **Commitments that do no work.** (E) has no condition that each commitment do work.
 
-- **CH-0430** · 1 record · applied · also at: [L313.s3](#L313-s3)
+- **CH-0428** · 1 record · applied · also at: [L313.s2](#L313-s2), [L313.s3](#L313-s3)
+  - **F-13** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W33.1 first proposed to change it, before the two checks, line 315 · carried by: file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W33.1 (file line 129), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W33.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] "does no work by itself in the candidate"; both halves of the test, for every support; the infinite case; "a separate matter, shown by Pres"
+- **CH-0430** · 1 record · applied · also at: [L313.s3](#L313-s3), [L315.s11](#L315-s11)
   - **C-27** · S91 · edit · applied · wording stands · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 315 · carried by: file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy; latest text · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W34.1 ("Part VI: the job-counting lemma and Pres are dropped, and reach with them"), STATUS applied, KIND CLAIM, FILE-11 LINE 315; wording first in change list draft 4 (3f7c3ab); carried as S93 part D X07
     - Before:
       > **Hard-to-vary.** For explanatory jobs \(F\subseteq F'\), \(\operatorname{Pres}(F')\subseteq\operatorname{Pres}(F)\), where \(\operatorname{Pres}(F)=\{v\in\mathcal V:\forall f\in F,\operatorname{Account}(E_v,f)\}\).
@@ -820,7 +842,7 @@
       > (H\(^*\)) relates two subsets of one family of one organization under one interpretation, which is the premise of (H). It orders no candidates. It uses no fact about who wrote \(E_1\) or when. It holds for every declared \(\mathcal V\) that has the member \(v_0\).
 
 <a id="L313-s2"></a>
-#### L313.s2 · line 313 · 12 changes, 13 records
+#### L313.s2 · line 313 · 12 changes, 14 records
 > A commitment \(d\) of a candidate that has a route does no work by itself in it when every route stays a route after \(d\) is added to it and after \(d\) is removed from it: a candidate carrying \(d\) then meets (E) exactly when it meets (E) without \(d\), and \(\{d\}\) is critical in no route (B).
 
 - **CH-0473** · 1 record · superseded
@@ -839,7 +861,8 @@
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
     - After:
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant. (E) has no condition that each commitment do work. A commitment \(d\) does no work by itself in the candidate when every support stays a support after \(d\) is added to it and after \(d\) is removed from it: a candidate carrying \(d\) then meets (E) exactly when it meets (E) without \(d\), and \(\{d\}\) is critical in no support (B). When \(\Gamma\) is infinite, a block of such commitments can still be critical (Infinitary support). How hard an account is to vary is a separate matter, shown by \(\operatorname{Pres}\), and it grades nothing.
-- **CH-0428** · 1 record · applied · also at: [L313.s3](#L313-s3)
+- **CH-0428** · 2 records · applied · also at: [L313.s1](#L313-s1), [L313.s3](#L313-s3)
+  - **F-13** · S90 · recommendation · applied · shown in full under [L313.s1](#L313-s1)
   - **C-28** · S91 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 315 · carried by: file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W33.1 ("Part VI: (E) tolerates a commitment that does no work; (B) marks it"), STATUS applied, KIND CLAIM, FILE-11 LINE 315; wording first in change list draft 4 (3f7c3ab); carried as S93 part D X08
     - Before:
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
@@ -900,17 +923,22 @@
       > **route**; "Infinitary routes"; "Work, routes, and interference"
 
 <a id="L313-s3"></a>
-#### L313.s3 · line 313 · 11 changes, 12 records
+#### L313.s3 · line 313 · 11 changes, 14 records
 > When \(\Gamma\) is infinite, a block of such commitments can still be critical (Infinitary routes).
 
-- **CH-0428** · 1 record · applied · also at: [L313.s2](#L313-s2)
-  - **B-294** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 315 · carried by: revision 2 as change-list entry W33.1, whose NEW text is verbatim in: draft 4 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 2 (line 20), best handling; 'The observations most worth acting on', item 2, and missed relation M7 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W33.1, tests/Revision 2 - worklist, draft of 23 September.md#W33
+- **CH-0428** · 3 records · applied, superseded · also at: [L313.s1](#L313-s1), [L313.s2](#L313-s2)
+  - **B-294** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 315 · carried by: revision 2 as change-list entry W33.1, whose NEW text is verbatim in: draft 4 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 2 (line 20), best handling; 'The observations most worth acting on', item 2, and missed relation M7 · joined through the change-list entry: W33.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W33
     - Before:
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
     - After:
       > [no wording given] (b) clarification; not a fifth condition; say plainly that (E) accepts accounts with idle parts, and use "reach" in Deutsch's sense
-- **CH-0430** · 1 record · declined · also at: [L313.s1](#L313-s1)
-  - **B-296** · S89 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 315 · carried by: none (reach is dropped instead, with the job-counting lemma, by change-list entry W34.1) · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 5 (line 23), best handling; 'The observations most worth acting on', item 4 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W34, tests/Revision 2 - change list, draft of 23 September.md#W34.1
+  - **C-203** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 315 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W33 (L727), handling, clarification; entry W33.1 words it otherwise, and draft 4 drops the hard-to-vary measure
+    - Before: *(nothing: an addition)*
+    - After:
+      > (E) is fidelity; an idle commitment passes (E) and (B) reports it as non-critical; hard-to-vary (Part VI) is a separate, non-grading measure
+  - **F-13** · S90 · recommendation · applied · shown in full under [L313.s1](#L313-s1)
+- **CH-0430** · 1 record · declined · also at: [L313.s1](#L313-s1), [L315.s11](#L315-s11)
+  - **B-296** · S89 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 315 · carried by: none (reach is dropped instead, with the job-counting lemma, by change-list entry W34.1) · source: results/S89 The theory against its sources - Deutsch and Marletto.md — Summary table row 5 (line 23), best handling; 'The observations most worth acting on', item 4 · joined through the change-list entry: W34.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W34
     - Before:
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
     - After:
@@ -921,11 +949,11 @@
       > More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
     - After:
       > [no wording given] Part VI-style remark that variants of the contract's limits form a variation family, so a limit held by nothing is loose.
-- **CH-0575** · 1 record · superseded
-  - **C-203** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 315 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W33 (L727), handling, clarification; entry W33.1 words it otherwise, and draft 4 drops the hard-to-vary measure
+- **CH-1285** · 1 record · superseded
+  - **F-27** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 315 · carried by: none (the change list's entries W33.1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W33 (file line 123), 'Take'
     - Before: *(nothing: an addition)*
     - After:
-      > (E) is fidelity; an idle commitment passes (E) and (B) reports it as non-critical; hard-to-vary (Part VI) is a separate, non-grading measure
+      > (E) is fidelity: a commitment that does no work passes (E), and (B) reports it as critical in no support; how hard an account is to vary is a separate measure and grades nothing
 - **CH-1260** · 1 record · declined · also at: [L313.s1](#L313-s1), [L313.s2](#L313-s2)
   - **E-42** · S91 · recommendation · declined · shown in full under [L313.s1](#L313-s1)
 - **CH-1263** · 1 record · declined
@@ -1221,7 +1249,7 @@
     - After:
       > is met, meets
 - **CH-0926** · 3 records · applied
-  - **D-721** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 315 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B2, R13 (l. 315)
+  - **D-721** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 315 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B2, R13 (l. 315)
     - Before:
       > A candidate is **ruled out** for an assessor \(j\) when an argument usable by \(j\) (Part IX) rules out that the candidate meets (E); by (K3), an argument from a test's record rules out a candidate only together with the background and instruments of that test.
     - After:
@@ -1359,8 +1387,8 @@
       > "a result that tells against a candidate tells against it only together with the background and instruments" (l. 315, 369)
     - After:
       > "a result rules out a candidate only together with the background and instruments of the test that yields it"
-- **CH-0903** · 1 record · applied
-  - **D-322** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 315 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[21]; line 315; group C; ref: S27 first footnote; points 2(ii) and 3
+- **CH-0903** · 1 record · superseded
+  - **D-322** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 315 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[21]; line 315; group C; ref: S27 first footnote; points 2(ii) and 3
     - Before:
       > Nor are rivals a selection population: whether a selected transport is underdetermined at an unseen pair is fixed by its population (Argument 3), whatever rivals anyone offers.
     - After:
@@ -1389,7 +1417,7 @@
 #### L315.s11 · line 315 · 6 changes, 7 records
 > A candidate **conflicts with** a claim \(\chi\) at an admitted pair of the target that its transport translates, in \(C\) or outside it, when \(\chi\) excludes what the candidate's organization and transport give there: its answer, or every relation of the target's components under which it could meet (F1), (F2) and (A) there.
 
-- **CH-0576** · 1 record · not applied
+- **CH-0430** · 1 record · not applied · also at: [L313.s1](#L313-s1), [L313.s3](#L313-s3)
   - **C-204** · S90 · recommendation · not applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 315 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W34 (L746), handling, first option: restore 00:383; entry W34.1 took the second option (reach by jobs) in drafts 1-3, and draft 4 drops the definition of reach
     - Before: *(nothing: an addition)*
     - After:
@@ -1442,7 +1470,7 @@
     - After:
       > "a result rules out a candidate only together with the background and instruments of the test that yields it"
 - **CH-0966** · 1 record · applied · also at: [L315.s14](#L315-s14), [L315.s15](#L315-s15), [L315.s16](#L315-s16)
-  - **D-850** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-1, proposal 2; to be inserted after: is enough for a conflict with a candidate whose organization gives perpetual motion.
+  - **D-850** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, P-1, proposal 2; to be inserted after: is enough for a conflict with a candidate whose organization gives perpetual motion.
     - Before:
       > \(\chi\) need not be an explanation or come with one, and it may be a claim about what is possible or impossible: the bare claim that perpetual motion is impossible is enough for a conflict with a candidate whose organization gives perpetual motion.
     - After:
@@ -1650,7 +1678,7 @@
       > "a result rules out a candidate only together with the background and instruments of the test that yields it"
 - **CH-0967** · 2 records · applied · also at: [L315.s18](#L315-s18)
   - **D-390** · S96 · edit · applied · shown in full under [L315.s18](#L315-s18)
-  - **D-872** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-6 (optional), proposal 1; to be inserted after the sentence beginning: Nor is the conflict enough to do anything about it
+  - **D-872** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-6 (optional), proposal 1; to be inserted after the sentence beginning: Nor is the conflict enough to do anything about it
     - Before:
       > Nor is the conflict enough to do anything about it: a response that changes the candidate, the claim or the question is construction and repair (Parts X, XI), and \(\chi\) alone does not say where the candidate is in error.
     - After:
@@ -1721,7 +1749,7 @@
       > "a result rules out a candidate only together with the background and instruments of the test that yields it"
 - **CH-0968** · 2 records · applied · also at: [L315.s20](#L315-s20)
   - **D-391** · S96 · edit · applied · shown in full under [L315.s20](#L315-s20)
-  - **D-857** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-2, proposal 1; to be inserted after: uses \(\chi\) as a premise and lapses with it
+  - **D-857** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 315 · carried by: repaired copy, in part and in other wording; not applied: "of the first kind where the pair is in \(C\) and of the second where it is not" · source: results/S96 Check of the repaired copy - whole text.md — section 5, B-2, proposal 1; to be inserted after: uses \(\chi\) as a premise and lapses with it
     - Before:
       > Two candidates that some relations of the target's components would let both meet (F1), (F2) and (A) at a pair, when \(\chi\) excludes every such relation, conflict there given \(\chi\): the argument that they conflict uses \(\chi\) as a premise and lapses with it.
     - After:
@@ -2012,14 +2040,14 @@
     - After:
       > "whether or not anyone records what it does; recording it … is a **test**"
 - **CH-0927** · 3 records · applied
-  - **D-723** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B3, R14 (i)
+  - **D-723** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B3, R14 (i)
     - Before:
       > Whatever the target does there, at most one of them is an account of \(p\), whether or not anyone records what it does; recording it, the target's relations as well as its answer where their answers there agree, is a **test** that solves the problem whatever it records, since an argument from what it records rules out at least one of them for as long as that argument stays usable; an answer it rules out stays ruled out on \(p\) for as long as the argument that rules it out stays usable (Part VIII).
     - After:
       > …is a **test** that solves the problem for that assessor whatever it records, so long as the premises about the test's background and instruments are live for that assessor (K2, K3): an argument from what it records then rules out at least one of them for that assessor, while it stays usable; an answer that such an argument rules out stays ruled out on p for as long as the argument stays usable (Part VIII).
     - Old wording:
       > is a **test** that solves the problem whatever it records, since an argument from what it records rules out at least one of them for as long as that argument stays usable; an answer it rules out stays ruled out on \(p\) for as long as the argument that rules it out stays usable (Part VIII).
-  - **D-800** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R14 (l. 317), (i)
+  - **D-800** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R14 (l. 317), (i)
     - Before:
       > Whatever the target does there, at most one of them is an account of \(p\), whether or not anyone records what it does; recording it, the target's relations as well as its answer where their answers there agree, is a **test** that solves the problem whatever it records, since an argument from what it records rules out at least one of them for as long as that argument stays usable; an answer it rules out stays ruled out on \(p\) for as long as the argument that rules it out stays usable (Part VIII).
     - After:
@@ -2141,14 +2169,14 @@
     - After:
       > is met, meets
 - **CH-0928** · 3 records · applied · also at: [L317.s8](#L317-s8)
-  - **D-724** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B3, R14 (ii)
+  - **D-724** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B3, R14 (ii)
     - Before:
       > Their answers then agree at every pair of \(C\), so no argument from an answer recorded in \(C\) rules out one of them without the other; a test inside \(C\) can rule out one of them without the other only for a failure of its own; and where both meet (E) on \(C\) both are accounts of \(p\).
     - After:
       > …an argument from a test inside C can rule out one of them without the other only for a failure of its own…
     - Old wording:
       > a test inside \(C\) can rule out one of them without the other only for a failure of its own;
-  - **D-801** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R14 (l. 317), (ii)
+  - **D-801** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R14 (l. 317), (ii)
     - Before:
       > Their answers then agree at every pair of \(C\), so no argument from an answer recorded in \(C\) rules out one of them without the other; a test inside \(C\) can rule out one of them without the other only for a failure of its own; and where both meet (E) on \(C\) both are accounts of \(p\).
     - After:
@@ -2217,7 +2245,7 @@
       > (conflict with a claim, above; Part IX).
     - New wording:
       > (conflict with a claim, above; Part IX). Solving a problem so rules one rival out for that assessor while the claim stays live for that assessor; it is not a response to the conflict with the claim, which does not say where the rival is in error, and what the person goes on with stays the person's choice (conflict with a claim, above).
-  - **D-870** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 317 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-4, proposal 1; to be inserted after: (conflict with a claim, above; Part IX).
+  - **D-870** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 317 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-4, proposal 1; to be inserted after: (conflict with a claim, above; Part IX).
     - Before:
       > Either kind of problem can also be solved with no test, by an argument usable by that assessor that rules out that one of the rivals meets (E) on \(C\): one that finds, by examining it, that it assumes its own answer, or that at a pair of \(C\) it gives what a claim the assessor tentatively accepts excludes (conflict with a claim, above; Part IX).
     - After:
@@ -2518,7 +2546,7 @@
       > or by whether anyone has tested the candidate on it (Parts I and V).
     - New wording:
       > or by whether anyone has tested the candidate on it (Parts I and V) [whether this relation, which names no assessor, stays in the theory is the owner's open question (S95, hard case 1)].
-  - **D-847** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 317 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, R-5, proposal 1; to be inserted after: (Parts I and V)
+  - **D-847** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 317 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, R-5, proposal 1; to be inserted after: (Parts I and V)
     - Before:
       > A finer contract that contains a change at which two rivals conflict makes a new question (Part III), on which, offered for it, they pose a problem of the first kind while neither is ruled out; whether a candidate is an account of a question is fixed by the candidate, the question and its target, not by when anyone first asks the question or by whether anyone has tested the candidate on it (Parts I and V).
     - After:
@@ -2643,8 +2671,8 @@
       > **differs from the sceptic**: "no argument from an answer recorded in C rules out one of them without the other"
 - **CH-0904** · 3 records · applied
   - Records D-725, D-802 (same wording):
-    - **D-725** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B4, R15 (l. 317)
-    - **D-802** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R15 (l. 317)
+    - **D-725** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B4, R15 (l. 317)
+    - **D-802** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 317 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R15 (l. 317)
     - Before:
       > Nothing here counts rivals or orders candidates: of one candidate, the only thing said is whether it is ruled out for an assessor; of two, whether they conflict.
     - After:

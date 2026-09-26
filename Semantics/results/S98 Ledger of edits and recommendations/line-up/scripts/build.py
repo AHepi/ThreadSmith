@@ -14,6 +14,7 @@ import io
 import json
 import os
 import posixpath
+import re
 import sys
 import urllib.parse
 
@@ -23,11 +24,11 @@ LEDGER = os.path.dirname(LINEUP)
 GROUPDIR = os.path.join(LEDGER, "group")
 
 INPUTS = [
-    ("anchored.jsonl", "41752268722000a376a15e7de2bde76e"),
+    ("anchored.jsonl", "9e14f5feb3f5e167af5f5c3f98631689"),
     ("sentence index of the latest text.jsonl", "fdaf069a0c1d71be4e17b38d2f6bce82"),
-    ("proposal by place - scripts/sections.json", "c4f53beacd7f699a930191e2cb95f9fe"),
-    ("proposal by place - scripts/assignment.jsonl", "2b57aec91e82dec64aaa9686ca3ca377"),
-    ("proposal by idea - assignment.jsonl", "921b4ceb5a918f5fb30425c1068c6ff5"),
+    ("proposal by place - scripts/sections.json", "432425d1a7449f78f268aa360e27a394"),
+    ("proposal by place - scripts/assignment.jsonl", "a7277976d506cb5407f5a998ad29b693"),
+    ("proposal by idea - assignment.jsonl", "d0d233264bf2cc2d3793233b8e167258"),
 ]
 
 # ---------------------------------------------------------------- groups (spec section 3)
@@ -77,11 +78,11 @@ FILING = {
 
 # ---------------------------------------------------------------- order (spec section 5)
 ROUND_ORDER = [
-    "file 20 (before log 25)", "R2 (log 25)", "round 4 (log 28)", "round 5 and Stage C (logs 29, 30)",
+    "file 10 (before log 25)", "file 20 (before log 25)", "R2 (log 25)", "round 4 (log 28)", "round 5 and Stage C (logs 29, 30)",
     "Stage B (logs 41, 55)", "S62 (log S63)", "S64 (log S65)", "S65 (log S70)", "S70 (log S71)",
-    "S72 (log S75)", "S75", "S76", "S81", "S88", "S89", "S90", "S91", "S93", "S94", "S95", "S96", "S97",
+    "S72 (log S75)", "S75", "S76", "S77", "S81", "S88", "S89", "S90", "S91", "S93", "S94", "S95", "S96", "S97",
 ]
-TV_ORDER = ["f10", "f11", "f12", "d2", "d3", "d4", "d5", "note", "scrubbed", "stage1", "repaired"]
+TV_ORDER = ["f00", "f10", "f11", "f12", "d2", "d3", "d4", "d5", "note", "scrubbed", "stage1", "repaired"]
 
 IDEA_ORDER = ["frame", "organization", "question", "layers", "provenance", "surprise", "account", "work",
               "rivals", "ruling", "constructions", "argument", "criticism", "creativity", "appraisal",
@@ -89,6 +90,8 @@ IDEA_ORDER = ["frame", "organization", "question", "layers", "provenance", "surp
 
 STATUS_ORDER = ["applied", "not applied", "declined", "superseded", "open for the owner", "unknown"]
 VOCAB_SCOPES = ("term", "whole text")
+CL_POINTER = "tests/Revision 2 - change list, draft of 23 September.md#"
+CL_ENTRY_RE = re.compile(r"change list draft 5, entry (W[^ ]+) ")
 
 CSV_COLUMNS = [
     "group", "group_name", "section_id", "part", "section_name", "unit_id", "unit_line", "unit_kind",
@@ -118,6 +121,7 @@ TEXT = {
     "source": "source: {f} — {r}",
     "nearest": "nearest latest-text sentence (a lead, not a place): [{u}]({link})",
     "linked": "linked (not joined): {ids}",
+    "joined_entry": "joined through the change-list entry: {ids}",
     "shown_under": "shown in full under [{u}]({link})",
     "same_wording": "Records {ids} (same wording):",
     "before": "Before:",
@@ -157,7 +161,7 @@ TEXT = {
     "index_title": "# S98 — The line-up of edits and recommendations, by part of the semantics",
     "index_note": ("*Log S98, 26 September 2026, under decision S30 and the specification "
                    "`../group/grouping and structure, chosen.md`. Inputs, all in `../group/`: {inputs}. "
-                   "Made by program (`scripts/build.py`, checked by `scripts/check.py`), nothing committed.*"),
+                   "Made by program (`scripts/build.py`, checked by `scripts/check.py`).*"),
     "index_how_title": "## How it is lined up",
     "index_how": [
         "- The thing lined up is the unit of the latest text (`tests/Revision 2 - scrubbed copy, repaired (S96), after cross-examination, theory text.md`): {units} units, each a sentence, a heading, a displayed formula or a list item.",
@@ -187,6 +191,13 @@ TEXT = {
     "index_order_title": "## The text in order",
     "index_order_note": "Every section of the latest text, in text order, with the group file that shows it.",
     "index_order_head": ["Part", "section", "lines", "group", "units (touched / all)", "records shown"],
+    "index_missing_title": "## What is not here",
+    "index_missing": [
+        "- **Whole texts made outside the chain of revisions.** File 10 was made as a new text from its predecessor, file 00; file 12 rewrote file 11 in terms of causality, as a separate text. Each has one record for the whole text, shown in G16; their sentences are not lined up one by one.",
+        "- **Sources the repository never held, or holds only in part.** The file of R2's amendments (every sentence the returns quote from it is held); rows 1 to 32 of the Stage B table; file 20, the text R2 was written against (only its quoted passages); the S76 patch (a description only); and the change list's working files of 23 September, among them its entries as first drafted, before the two checks (only the table of what the checks changed survives, and its rows are held).",
+        "- **Left out on purpose.** Two of the change list's fixes before draft 1, W37.1 and W58(ii).1, change only the expected ruling and no wording, so they have no record.",
+        "- **Corrections after the two checks.** `../build/fixes after the checks.md` lists what was corrected and added after the two checks of the ledger (both in `../build/`), and what was left as it was.",
+    ],
     "index_open_title": "## Records open for the owner",
     "index_open_note": "The {n} records whose status is `open for the owner`.",
     "index_open_head": ["record", "change", "round", "group", "shown in full at"],
@@ -206,7 +217,7 @@ TEXT = {
     "idea_title": "# S98 — The line-up by idea: a cross-index",
     "idea_note": ("*Log S98. The idea proposal's twenty ideas (`../group/proposal by idea - assignment.jsonl`), "
                   "each with the changes it names and links to where they are shown in the group files. "
-                  "Made by program, nothing committed.*"),
+                  "Made by program.*"),
     "idea_heading": "## {n}. {name} (`{key}`)",
     "idea_count": "{changes}, {records}.",
     "idea_head": ["change", "shown in", "first place", "records", "statuses", "also"],
@@ -410,6 +421,11 @@ def compute(records, units, sections, place, idea):
     for i, r in enumerate(sorted(records, key=okey)):
         r["_order"] = i + 1
     rec = {r["rid"]: r for r in records}
+    M["cl_entry"] = {}
+    for r in records:
+        mo = CL_ENTRY_RE.match(r["source_ref"]) if r["rid"].startswith("C-") else None
+        if mo:
+            M["cl_entry"].setdefault(mo.group(1), []).append(r["rid"])
     changes = {}
     for r in records:
         changes.setdefault(r["change_id"], []).append(r["rid"])
@@ -561,8 +577,19 @@ def record_line(M, r, from_file):
         u = ln["sentence"]
         parts.append(TEXT["nearest"].format(u=u, link=unit_link(M, from_file, u)))
     extra = [x for x in r["same_as"] if x not in r["change_members"]]
-    if extra:
-        parts.append(TEXT["linked"].format(ids=", ".join(extra)))
+    # a pointer to a change-list entry whose record is already in this change is joined, not merely linked
+    joined, rest = [], []
+    for x in extra:
+        if x.startswith(CL_POINTER):
+            keys = [k.strip() for k in x[len(CL_POINTER):].split("+")]
+            if any(c in r["change_members"] for k in keys for c in M["cl_entry"].get(k, [])):
+                joined.append(x[len(CL_POINTER):])
+                continue
+        rest.append(x)
+    if joined:
+        parts.append(TEXT["joined_entry"].format(ids=", ".join(joined)))
+    if rest:
+        parts.append(TEXT["linked"].format(ids=", ".join(rest)))
     return " · ".join(parts)
 
 
@@ -892,6 +919,9 @@ def build_index(M, stats, md5s):
     doc.add("")
     doc.add(TEXT["index_read_title"], "")
     doc.add(*TEXT["index_read"])
+    doc.add("")
+    doc.add(TEXT["index_missing_title"], "")
+    doc.add(*TEXT["index_missing"])
     doc.add("")
     doc.add(TEXT["index_groups_title"], "")
     rows = []

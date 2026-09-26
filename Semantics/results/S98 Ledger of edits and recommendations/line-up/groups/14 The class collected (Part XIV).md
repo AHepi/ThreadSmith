@@ -1,15 +1,15 @@
 # 14 The class collected
 
-*Home Part: Part XIV. Units shown: 55; units touched: 50; changes placed here: 116; records shown here in full under their home sentence: 141; pointer lines: 24; vocabulary lines: 144; records in blocks: 19. Statuses of the records shown here in full: applied 114, not applied 11, declined 9, superseded 6, open for the owner 1, unknown 0.*
+*Home Part: Part XIV. Units shown: 55; units touched: 50; changes placed here: 118; records shown here in full under their home sentence: 144; pointer lines: 30; vocabulary lines: 151; records in blocks: 19. Statuses of the records shown here in full: applied 113, not applied 11, declined 9, superseded 10, open for the owner 1, unknown 0.*
 
 - [Part XIV · Opening of the Part · line 513 · 0 records](#sec-L513-513)
-- [Part XIV · Imports · lines 515–518 · 16 records](#sec-L515-518)
+- [Part XIV · Imports · lines 515–518 · 17 records](#sec-L515-518)
 - [Part XIV · What everything else is defined from · line 520 · 13 records](#sec-L520-520)
-- [Part XIV · Declared inputs · line 522 · 33 records](#sec-L522-522)
-- [Part XIV · Indices, not imports · line 524 · 9 records](#sec-L524-524)
+- [Part XIV · Declared inputs · line 522 · 36 records](#sec-L522-522)
+- [Part XIV · Indices, not imports · line 524 · 11 records](#sec-L524-524)
 - [Part XIV · Dependence order · line 526 · 62 records](#sec-L526-526)
-- [Part XIV · Membership · line 528 · 5 records](#sec-L528-528)
-- [Part 0 · What is imported, what is an index, and what is defined · lines 29–31 · 38 records](#sec-L29-31)
+- [Part XIV · Membership · line 528 · 6 records](#sec-L528-528)
+- [Part 0 · What is imported, what is an index, and what is defined · lines 29–31 · 40 records](#sec-L29-31)
 - [Part XVI · 6. There are two imports · lines 594–600 · 33 records](#sec-L594-600)
 - [Not in the latest text, with no section: Part XIV · 8 changes, 18 records](#rest-XIV)
 
@@ -47,7 +47,7 @@
       > **import**, the two **imports**, "import 2"
 
 <a id="L517-s1"></a>
-#### L517.s1 · list item · line 517 · 2 changes, 2 records
+#### L517.s1 · list item · line 517 · 3 changes, 3 records
 > 1. The **physical module** \(\Theta\): substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, tolerances, and \(\operatorname{Org}_\ell\), the organization a physical occurrence instantiates at a grain.
 
 - **CH-1249** · 1 record · declined
@@ -65,6 +65,12 @@
       > resources, accuracy grades, and
     - New wording:
       > resources, tolerances, and
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L518-s1"></a>
 #### L518.s1 · list item · line 518 · 9 changes, 11 records
@@ -219,7 +225,7 @@
 > Roles, from admitted edits (Part II).
 
 - **CH-0354** · 1 record · applied · also at: [L520.s1](#L520-s1)
-  - **B-195** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 512 · carried by: revision 2 as change-list entry W7.2, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 2 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L512 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.2
+  - **B-195** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 512 · carried by: revision 2 as change-list entry W7.2, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 2 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L512 · joined through the change-list entry: W7.2
     - Before:
       > Everything else is derived.
     - After:
@@ -327,7 +333,7 @@
 ## Part XIV — The class collected · Declared inputs · line 522
 
 <a id="L522-s1"></a>
-#### L522.s1 · line 522 · 18 changes, 23 records
+#### L522.s1 · line 522 · 18 changes, 24 records
 > **Declared inputs.** Besides the two imports, some claims take stated inputs that the semantics records and does not supply: the aims \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and why the question asked is answered on that restriction and not on a wider one (Part III); the system boundary and continuity of an attribution (Part XII); for an assessor \(j\), the inference forms \(j\) admits, the scope \(j\) declares and the premises \(j\) tentatively accepts and has not withdrawn (K2, Part IX); a weighting of attribution among several contributions to one achievement, beyond any division its history contains (Part XI).
 
 - **CH-0321** · 1 record · applied
@@ -340,13 +346,13 @@
     - Before: *(nothing: an addition)*
     - After:
       > Besides the two primitives, some claims take stated inputs that the semantics records and does not supply: the obligations \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and what makes a restriction appropriate (Part III); the system boundary and continuity of an attribution (Part XII).
-- **CH-0353** · 3 records · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L524.s1](#L524-s1)
-  - **B-198** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 514 · carried by: revision 2 as change-list entry W6.4 + W14.1, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L514 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W6.4 + W14.1, tests/Revision 2 - change list, draft of 23 September.md#W7.3
+- **CH-0353** · 3 records · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L524.s1](#L524-s1), [L524.s2](#L524-s2), [L524.s3](#L524-s3), [L524.s4](#L524-s4)
+  - **B-198** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 514 · carried by: revision 2 as change-list entry W6.4 + W14.1, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L514 · joined through the change-list entry: W6.4 + W14.1, W7.3
     - Before:
       > Besides the two primitives, some claims take stated inputs that the semantics records and does not supply: the obligations \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and what makes a restriction appropriate (Part III); the system boundary and continuity of an attribution (Part XII).
     - After:
       > [no wording given] unclear wording or tension, recorded for a later revision
-  - **B-201** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 514 · carried by: revision 2 as change-list entry W6.4 + W14.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 4 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L514 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W6.4 + W14.1
+  - **B-201** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 514 · carried by: revision 2 as change-list entry W6.4 + W14.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 4 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L514 · joined through the change-list entry: W6.4 + W14.1
     - Before:
       > Besides the two primitives, some claims take stated inputs that the semantics records and does not supply: the obligations \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and what makes a restriction appropriate (Part III); the system boundary and continuity of an attribution (Part XII).
     - After:
@@ -426,12 +432,17 @@
       > primitive(s), primitive 2
     - After:
       > import(s), import 2
-- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+- **CH-1106** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
   - **D-564** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 103 (section: Belief, merit and appraisal)
     - Before:
       > credit, credits, credited
     - After:
       > attribution, attributes; "contribution of content"
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 - **CH-1126** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1126)
   - **D-661** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, proposed.md — section 2.4, table row at file line 83; sceptic's row 31
     - Before:
@@ -451,7 +462,7 @@
     - After:
       > **aim**: claimed aims O, protected aims P, explanatory aims O_ex
 - **CH-0941** · 3 records · applied, superseded
-  - **D-731** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 522 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 522; to be inserted after: (Part XII);
+  - **D-731** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 522 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 522; to be inserted after: (Part XII);
     - Before:
       > Besides the two imports, some claims take stated inputs that the semantics records and does not supply: the aims \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and why the question asked is answered on that restriction and not on a wider one (Part III); the system boundary and continuity of an attribution (Part XII); a weighting of attribution among several contributions to one achievement, beyond any division its history contains (Part XI).
     - After:
@@ -465,7 +476,7 @@
       > Besides the two imports, some claims take stated inputs that the semantics records and does not supply: the aims \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and why the question asked is answered on that restriction and not on a wider one (Part III); the system boundary and continuity of an attribution (Part XII); for an assessor \(j\), the inference forms \(j\) tentatively accepts, the scope \(j\) declares and the premises \(j\) has not withdrawn (K2, Part IX); a weighting of attribution among several contributions to one achievement, beyond any division its history contains (Part XI).
     - New wording:
       > for an assessor \(j\), the inference forms \(j\) tentatively accepts, the scope \(j\) declares and the premises \(j\) has not withdrawn (K2, Part IX);
-  - **D-362** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 522 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[61]; line 522; group R; ref: B7 (with 'admits', per B1)
+  - **D-362** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 522 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[61]; line 522; group R; ref: B7 (with 'admits', per B1)
     - Before:
       > Besides the two imports, some claims take stated inputs that the semantics records and does not supply: the aims \(O\) and \(P\) of a repair, with the occasions each covers (Part XI); the scope of a contract and why the question asked is answered on that restriction and not on a wider one (Part III); the system boundary and continuity of an attribution (Part XII); a weighting of attribution among several contributions to one achievement, beyond any division its history contains (Part XI).
     - After:
@@ -488,7 +499,7 @@
       > the premises \(j\) tentatively accepts and has not withdrawn
 
 <a id="L522-s2"></a>
-#### L522.s2 · line 522 · 9 changes, 10 records
+#### L522.s2 · line 522 · 9 changes, 12 records
 > An assessment that depends on one of these, or on the appraisal relation where a claim invokes an appraisal, is an assessment given the input; where the input is missing, the assessment is left open and the semantics says so rather than choosing the input from the assessment wanted.
 
 - **CH-0323** · 1 record · applied
@@ -514,18 +525,28 @@
       > A verdict that depends on one of these, or on the normative relation where a claim invokes worth, is a verdict given the input; where the input is missing, the verdict is unsettled and the semantics says so rather than choosing the input from the verdict wanted. The semantics supplies no probability of truth, no merit function and no ranking of thinkers, and a claim that needs one is unsettled.
     - After:
       > An assessment that depends on one of these, or on the appraisal relation where a claim invokes an appraisal, is an assessment given the input; where the input is missing, the assessment is left open and the semantics says so rather than choosing the input from the assessment wanted. The semantics supplies no probability on claims and no function that orders explanations or thinkers, and a claim that needs one is left open.
-- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+- **CH-1058** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
   - **D-516** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 35 (section: Status, arguments and acceptance)
     - Before:
       > verdict
     - After:
       > assessment
-- **CH-1059** · 1 record · applied · vocabulary · also at: [L25.s2](01%20The%20document%20as%20a%20whole.md#L25-s2), [L522.s3](#L522-s3)
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
+- **CH-1059** · 2 records · applied · vocabulary · also at: [L25.s2](01%20The%20document%20as%20a%20whole.md#L25-s2), [L522.s3](#L522-s3)
   - **D-517** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 36 (section: Status, arguments and acceptance)
     - Before:
       > unsettled
     - After:
       > left open
+  - **F-39** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 110; the cells' bracketed grounds are left out
+    - Before:
+      > "unsettled"
+    - After:
+      > "left open"
 - **CH-1095** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1095)
   - **D-553** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 92 (section: Belief, merit and appraisal)
     - Before:
@@ -545,7 +566,7 @@
       > "no probability on claims, and no function that orders explanations or thinkers"
 
 <a id="L522-s3"></a>
-#### L522.s3 · line 522 · 6 changes, 6 records
+#### L522.s3 · line 522 · 6 changes, 7 records
 > The semantics supplies no probability on claims and no function that orders explanations or thinkers, and a claim that needs one is left open.
 
 - **CH-0564** · 1 record · superseded
@@ -557,12 +578,17 @@
   - **C-184** · S93 · recommendation · not applied · shown in full under [L522.s1](#L522-s1)
 - **CH-0799** · 1 record · applied · also at: [L522.s2](#L522-s2)
   - **D-218** · S95 · edit · applied · shown in full under [L522.s2](#L522-s2)
-- **CH-1059** · 1 record · applied · vocabulary · also at: [L25.s2](01%20The%20document%20as%20a%20whole.md#L25-s2), [L522.s2](#L522-s2)
+- **CH-1059** · 2 records · applied · vocabulary · also at: [L25.s2](01%20The%20document%20as%20a%20whole.md#L25-s2), [L522.s2](#L522-s2)
   - **D-517** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 36 (section: Status, arguments and acceptance)
     - Before:
       > unsettled
     - After:
       > left open
+  - **F-39** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 110; the cells' bracketed grounds are left out
+    - Before:
+      > "unsettled"
+    - After:
+      > "left open"
 - **CH-1098** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1098)
   - **D-556** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 95 (section: Belief, merit and appraisal)
     - Before:
@@ -580,11 +606,11 @@
 ## Part XIV — The class collected · Indices, not imports · line 524
 
 <a id="L524-s1"></a>
-#### L524.s1 · line 524 · 6 changes, 7 records
+#### L524.s1 · line 524 · 6 changes, 8 records
 > **Indices, not imports.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices.
 
-- **CH-0353** · 2 records · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L522.s1](#L522-s1)
-  - **B-197** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 516 · carried by: revision 2 as change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L516 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.3
+- **CH-0353** · 3 records · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s2](#L524-s2), [L524.s3](#L524-s3), [L524.s4](#L524-s4)
+  - **B-197** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 516 · carried by: revision 2 as change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L516 · joined through the change-list entry: W7.3
     - Before:
       > Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices.
     - After:
@@ -594,6 +620,10 @@
       > **Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. Every claim is relative to them; none is a predicate that could be true or false.
     - After:
       > **Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. Every claim is relative to them; none is a predicate that could be true or false. An index is what a claim is relative to; a declared input is something a claim takes as stated, which the semantics records and does not supply. The boundary and continuity of an attribution, and the scope a claim states for its contract, are values of indices and are declared inputs (above).
+  - **F-5** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W7.3 first proposed to change it, before the two checks, line 516 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W7.3 (file line 120), check 1; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W7.3
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] a declared input is "something a claim takes as stated"; "the boundary and continuity of an attribution"
 - **CH-0424** · 1 record · not applied
   - **B-288** · S88 · recommendation · not applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 516 · carried by: none (a fallback) · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F3, fallback (c), first clause (line 391): line 516's list of declared indices gains a phrase
     - Before:
@@ -626,9 +656,11 @@
       > "a predicate: a case meets it or fails it"
 
 <a id="L524-s2"></a>
-#### L524.s2 · line 524 · 3 changes, 3 records
+#### L524.s2 · line 524 · 4 changes, 4 records
 > Every claim is relative to them; none is a predicate that a case meets or fails.
 
+- **CH-0353** · 1 record · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s1](#L524-s1), [L524.s3](#L524-s3), [L524.s4](#L524-s4)
+  - **F-5** · S90 · recommendation · applied · shown in full under [L524.s1](#L524-s1)
 - **CH-0802** · 1 record · applied
   - **D-221** · S95 · edit · applied · wording stands · written against: draft 5, line 524 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[220]; line 524; swap; LISTED
     - Before:
@@ -653,9 +685,11 @@
       > "a predicate: a case meets it or fails it"
 
 <a id="L524-s3"></a>
-#### L524.s3 · line 524 · 1 change, 1 record
+#### L524.s3 · line 524 · 2 changes, 2 records
 > An index is what a claim is relative to; a declared input is something a claim takes as stated, which the semantics records and does not supply.
 
+- **CH-0353** · 1 record · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s1](#L524-s1), [L524.s2](#L524-s2), [L524.s4](#L524-s4)
+  - **F-5** · S90 · recommendation · applied · shown in full under [L524.s1](#L524-s1)
 - **CH-1129** · 1 record · superseded · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1129)
   - **D-677** · S95 · recommendation · superseded · written against: draft 5 · carried by: none · source: tests/S95 Scrub - vocabulary, proposed.md — section 2.5, table row at file line 104; sceptic's row 37
     - Before:
@@ -664,15 +698,23 @@
       > "a predicate: a case meets it or fails it"
 
 <a id="L524-s4"></a>
-#### L524.s4 · line 524 · 1 change, 1 record
+#### L524.s4 · line 524 · 3 changes, 3 records
 > The boundary and continuity of an attribution, and the scope a claim states for its contract, are values of indices and are declared inputs (above).
 
+- **CH-0353** · 1 record · applied · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s1](#L524-s1), [L524.s2](#L524-s2), [L524.s3](#L524-s3)
+  - **F-5** · S90 · recommendation · applied · shown in full under [L524.s1](#L524-s1)
 - **CH-1129** · 1 record · superseded · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1129)
   - **D-677** · S95 · recommendation · superseded · written against: draft 5 · carried by: none · source: tests/S95 Scrub - vocabulary, proposed.md — section 2.5, table row at file line 104; sceptic's row 37
     - Before:
       > "a predicate that could be true or false" (l. 31, 524)
     - After:
       > "a predicate: a case meets it or fails it"
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="sec-L526-526"></a>
 ## Part XIV — The class collected · Dependence order · line 526
@@ -764,7 +806,7 @@
 > (E) depends on those.
 
 - **CH-0356** · 1 record · applied · also at: [L526.s1](#L526-s1)
-  - **B-203** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 518 · carried by: revision 2 as change-list entry W7.4, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 5 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L518 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.4
+  - **B-203** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 518 · carried by: revision 2 as change-list entry W7.4, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 5 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L518 · joined through the change-list entry: W7.4
     - Before:
       > (O) and (Q) depend on nothing.
     - After:
@@ -856,8 +898,8 @@
       > "No predicate that says 'explains' without a question and a contract, or 'is a cause', or 'is a created explanation', is taken as an import"
 - **CH-0942** · 3 records · applied · also at: [L526.s8](#L526-s8)
   - Records D-732, D-828 (same wording):
-    - **D-732** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 526; to be inserted after: (K1) depends on (E).
-    - **D-828** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 14 (l. 526); to be inserted after: (K1) depends on (E).
+    - **D-732** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 526; to be inserted after: (K1) depends on (E).
+    - **D-828** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 14 (l. 526); to be inserted after: (K1) depends on (E).
     - Before:
       > (K1) depends on (E).
     - After:
@@ -1258,7 +1300,7 @@
     - After:
       > "No predicate that says 'explains' without a question and a contract, or 'is a cause', or 'is a created explanation', is taken as an import"
 - **CH-0912** · 3 records · applied · also at: [L31.s4](#L31-s4)
-  - **D-740** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B11, l. 526 with l. 31
+  - **D-740** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B11, l. 526 with l. 31
     - Before:
       > Nothing depends on a predicate that says "explains" without a question and a contract, or "is a cause," or "is a created explanation."
     - After:
@@ -1318,7 +1360,7 @@
     - After:
       > The order is well founded: a representation justified only by its own construction, or an ownership and a capability justified only by each other, has not supplied its place in it, and a separate proof that would supply it counts only when the account uses it.
 - **CH-0404** · 2 records · applied
-  - **B-254** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 518 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-38; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M49 (determination 03 §1, row M49; file-11 locator 'L518, last sentence', file-10 'L525'); the file-11 sentences are edit records B-151 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-38, tests/Revision 2 - change list, draft of 23 September.md#W3.2
+  - **B-254** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 518 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-38; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M49 (determination 03 §1, row M49; file-11 locator 'L518, last sentence', file-10 'L525'); the file-11 sentences are edit records B-151 · joined through the change-list entry: W3.2 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-38
     - Before:
       > The order is well founded: a representation justified only by its own construction, or an ownership and a capability justified only by each other, has not supplied its place in it, and a separate proof that would supply it counts only when the account uses it.
     - After:
@@ -1378,22 +1420,22 @@
       > "No predicate meaning 'really explains', 'is a cause' or 'is knowledge' is taken as primitive" (l. 31, 526, 600)
     - After:
       > "No predicate that says 'explains' without a question and a contract, or 'is a cause', or 'is a created explanation', is taken as an import"
-- **CH-0943** · 3 records · applied
-  - **D-760** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, reasons-FOR form, l. 526
+- **CH-0943** · 3 records · applied, superseded
+  - **D-760** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, reasons-FOR form, l. 526
     - Before:
       > The order has no cycle and no endless descent: a representation defined only by its own construction, or an ownership and a capability each defined only by the other, has not supplied its place in it, and a separate argument that would supply it is part of the account only when the account uses it.
     - After:
       > …a separate definition that would supply it is part of the account only when the account uses it.
     - Old wording:
       > and a separate argument that would supply it is part of the account only when the account uses it.
-  - **D-820** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 9 (l. 526)
+  - **D-820** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 9 (l. 526)
     - Before:
       > The order has no cycle and no endless descent: a representation defined only by its own construction, or an ownership and a capability each defined only by the other, has not supplied its place in it, and a separate argument that would supply it is part of the account only when the account uses it.
     - After:
       > …has not supplied its place in it, and a separate definition that would supply it is part of the account only when the account uses it.
     - Old wording:
       > and a separate argument that would supply it is part of the account only when the account uses it.
-  - **D-365** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[64]; line 526; group R; ref: residue (range 2 repair 9)
+  - **D-365** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 526 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[64]; line 526; group R; ref: residue (range 2 repair 9)
     - Before:
       > The order has no cycle and no endless descent: a representation defined only by its own construction, or an ownership and a capability each defined only by the other, has not supplied its place in it, and a separate argument that would supply it is part of the account only when the account uses it.
     - After:
@@ -1415,7 +1457,7 @@
     - New wording:
       > and a separate definition that would supply it, or a separate argument that rules out the denial of the result it is defined through without using it, is part of the account only when the account uses it
 - **CH-1022** · 2 records · applied · also at: [L526.s17](#L526-s17)
-  - **D-950** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 526 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F10, proposed wording (code block 10); ruling 'mimo 4 F10' in results/S96 Reading of the replies.md, section 3
+  - **D-950** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 526 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F10, proposed wording (code block 10); ruling 'mimo 4 F10' in results/S96 Reading of the replies.md, section 3
     - Before:
       > The order has no cycle and no endless descent: a representation defined only by its own construction, or an ownership and a capability each defined only by the other, has not supplied its place in it, and a separate definition that would supply it, or a separate argument that rules out the denial of the result it is defined through without using it, is part of the account only when the account uses it.
     - After:
@@ -1426,7 +1468,7 @@
 ## Part XIV — The class collected · Membership · line 528
 
 <a id="L528-s1"></a>
-#### L528.s1 · line 528 · 2 changes, 2 records
+#### L528.s1 · line 528 · 3 changes, 3 records
 > **Membership.** The base class: interpretations supplying these data with typing as declared, meeting physical realization wherever a physical attribution is made.
 
 - **CH-0810** · 1 record · applied
@@ -1445,6 +1487,12 @@
       > correct, correctly
     - After:
       > dropped; "what that level contains"; "faithful locally"; "typing as declared"; "predict the displacements that occur"
+- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L528-s2"></a>
 #### L528.s2 · line 528 · no change recorded
@@ -1532,7 +1580,7 @@
       > define, defines, defined
 
 <a id="L31-s1"></a>
-#### L31.s1 · line 31 · 13 changes, 13 records
+#### L31.s1 · line 31 · 15 changes, 15 records
 > The semantics has two imports: the **physical module** \(\Theta\), which says what organization a physical occurrence instantiates at a grain, and the **appraisal relation** \(\mathcal N\), taken as an input wherever a question invokes an appraisal.
 
 - **CH-0196** · 1 record · applied
@@ -1541,7 +1589,7 @@
     - After:
       > The semantics has two primitives: the **physical module** \(\Theta\), which says what organization a physical occurrence instantiates at a grain, and the **normative relation** \(\mathcal N\), taken as an input wherever a question invokes worth.
 - **CH-0363** · 1 record · applied · also at: [L31.s4](#L31-s4)
-  - **B-211** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W58(ii).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 11 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W58(ii).1
+  - **B-211** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W58(ii).1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 11 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · joined through the change-list entry: W58(ii).1
     - Before:
       > No predicate meaning "really explains", "is a cause" or "is knowledge" appears anywhere (Derivation 6).
     - After:
@@ -1554,6 +1602,17 @@
       > The semantics has two primitives: the **physical module** \(\Theta\), which says what organization a physical occurrence instantiates at a grain, and the **normative relation** \(\mathcal N\), taken as an input wherever a question invokes worth.
     - After:
       > [no wording given] declare this place in the revision's record as a change of claim not declared by file 11's note
+- **CH-1279** · 1 record · superseded · also at: [L31.s2](#L31-s2), [L31.s3](#L31-s3), [L31.s4](#L31-s4)
+  - **F-21** · S90 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: none (the change list's entries W7.1, W7.2, W7.3, W7.4, W7.5, W7.6 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W7 (file line 97), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] one sentence separates indices from declared inputs; L33 and L512 read "derived from these, the declared indices and the declared inputs"; the dependence order lists the declared inputs, Ownership, ProducedBy, and boundary and continuity; Derivation 6's proof cites the fuller order
+- **CH-1291** · 1 record · superseded
+  - **F-33** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: none (the change list's entries W58(i).1, W58(ii).1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W58 (file line 144), 'Take'
+    - Before:
+      > appears anywhere
+    - After:
+      > is defined or presupposed (Derivation 6)
 - **CH-0596** · 1 record · applied
   - **D-15** · S95 · edit · applied · wording stands · written against: draft 5, line 31 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[14]; line 31; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -1628,7 +1687,7 @@
       > **appraisal relation** N (import 2)
 
 <a id="L31-s2"></a>
-#### L31.s2 · line 31 · 8 changes, 8 records
+#### L31.s2 · line 31 · 9 changes, 9 records
 > Grain, boundary, continuity and the contract of admitted changes are **declared indices**: every claim is relative to them, and none is a predicate that a case meets or fails.
 
 - **CH-0197** · 1 record · applied
@@ -1636,12 +1695,14 @@
     - Before: *(nothing: an addition)*
     - After:
       > Grain, boundary, continuity and the contract of admitted changes are **declared indices**: every claim is relative to them, and none is a predicate that could be true or false.
-- **CH-0353** · 1 record · applied · also at: [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s1](#L524-s1)
-  - **B-196** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W7.1, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.1, tests/Revision 2 - change list, draft of 23 September.md#W7.3
+- **CH-0353** · 1 record · applied · also at: [L31.s3](#L31-s3), [L522.s1](#L522-s1), [L524.s1](#L524-s1), [L524.s2](#L524-s2), [L524.s3](#L524-s3), [L524.s4](#L524-s4)
+  - **B-196** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W7.1, whose NEW text is verbatim in: draft 1 to draft 5; change-list entry W7.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 3 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · joined through the change-list entry: W7.1, W7.3
     - Before:
       > Grain, boundary, continuity and the contract of admitted changes are **declared indices**: every claim is relative to them, and none is a predicate that could be true or false.
     - After:
       > [no wording given] unclear wording or tension, recorded for a later revision
+- **CH-1279** · 1 record · superseded · also at: [L31.s1](#L31-s1), [L31.s3](#L31-s3), [L31.s4](#L31-s4)
+  - **F-21** · S90 · recommendation · superseded · shown in full under [L31.s1](#L31-s1)
 - **CH-0598** · 1 record · applied
   - **D-17** · S95 · edit · applied · wording stands · written against: draft 5, line 31 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[16]; line 31; swap; LISTED
     - Before:
@@ -1684,7 +1745,7 @@
       > Grain, boundary and continuity are **declared indices**, and the contract of admitted changes is an **index** with a provenance of its own (\(\rho_p\), Part III): every claim is relative to them, and none is a predicate that a case meets or fails.
 
 <a id="L31-s3"></a>
-#### L31.s3 · line 31 · 10 changes, 12 records
+#### L31.s3 · line 31 · 11 changes, 13 records
 > Everything else is defined in terms of the two imports, the structural vocabulary of (O) and (Q), the declared indices and the **declared inputs**, in the order Part XIV states.
 
 - **CH-0198** · 1 record · applied
@@ -1692,8 +1753,8 @@
     - Before: *(nothing: an addition)*
     - After:
       > Everything else is derived, in the order Part XIV states.
-- **CH-0353** · 2 records · applied · also at: [L31.s2](#L31-s2), [L522.s1](#L522-s1), [L524.s1](#L524-s1)
-  - **B-194** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W7.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 2 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.1
+- **CH-0353** · 2 records · applied · also at: [L31.s2](#L31-s2), [L522.s1](#L522-s1), [L524.s1](#L524-s1), [L524.s2](#L524-s2), [L524.s3](#L524-s3), [L524.s4](#L524-s4)
+  - **B-194** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 33 · carried by: revision 2 as change-list entry W7.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 2 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L33 · joined through the change-list entry: W7.1
     - Before:
       > Everything else is derived, in the order Part XIV states.
     - After:
@@ -1703,6 +1764,8 @@
       > Everything else is derived, in the order Part XIV states.
     - After:
       > Everything else is derived from the two primitives, the declared indices and the **declared inputs**, in the order Part XIV states.
+- **CH-1279** · 1 record · superseded · also at: [L31.s1](#L31-s1), [L31.s2](#L31-s2), [L31.s4](#L31-s4)
+  - **F-21** · S90 · recommendation · superseded · shown in full under [L31.s1](#L31-s1)
 - **CH-0501** · 1 record · not applied
   - **C-128** · S90 · recommendation · not applied · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 31 · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_B1.response.txt — s90_xexam_mimo_B1 point 5 (R03, W7.1), a minimal gloss; not contested and not ruled: passed to the orchestrator (batch 2); carried forward after S90 ("Bolded declared inputs at revised L31")
     - Before:
@@ -1768,7 +1831,7 @@
       > Everything else is defined in terms of the two imports, the structural vocabulary of (O) and (Q), the declared indices and the **declared inputs**,
 
 <a id="L31-s4"></a>
-#### L31.s4 · line 31 · 14 changes, 15 records
+#### L31.s4 · line 31 · 15 changes, 16 records
 > No undefined predicate that says "explains" without a question and a contract, or "is a cause", is taken as an import, and no definition depends on one (Argument 6); (EX) is a defined relation of an episode, not such a predicate.
 
 - **CH-0199** · 1 record · applied
@@ -1782,6 +1845,8 @@
       > No predicate meaning "really explains", "is a cause" or "is knowledge" appears anywhere (Derivation 6).
     - After:
       > No predicate meaning "really explains", "is a cause" or "is knowledge" is taken as primitive, and no definition depends on one (Derivation 6).
+- **CH-1279** · 1 record · superseded · also at: [L31.s1](#L31-s1), [L31.s2](#L31-s2), [L31.s3](#L31-s3)
+  - **F-21** · S90 · recommendation · superseded · shown in full under [L31.s1](#L31-s1)
 - **CH-0498** · 1 record · declined
   - **C-125** · S90 · recommendation · declined · wording not in the latest text · written against: file 13 draft 2 (as sent), theory text (md5 9aecf2f30ce0b4523606b2b8409fdf37), line 31 · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_B1.response.txt — s90_xexam_mimo_B1 point 1, second repair (keep WORDING and strengthen the wording); refused by ruling R04 (W58(ii).1): KEEP (batch 2)
     - Before:
@@ -1934,7 +1999,7 @@
     - New wording:
       > is defined in terms of \(\Theta\)
 - **CH-0998** · 2 records · applied · also at: [L31.s3](#L31-s3), [L520.s1](#L520-s1)
-  - **D-935** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 596 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F1, proposed wording (code block 1); ruling 'mimo 4 F1' in results/S96 Reading of the replies.md, section 3
+  - **D-935** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 596 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F1, proposed wording (code block 1); ruling 'mimo 4 F1' in results/S96 Reading of the replies.md, section 3
     - Before:
       > **Claim.** Every predicate in Parts II–XIII is defined in terms of \(\Theta\) (including \(\operatorname{Org}_\ell\)) and, where invoked, \(\mathcal N\), together with declared indices and declared inputs.
     - After:
@@ -1982,7 +2047,7 @@
 > By the dependence order of Part XIV, which lists the declared indices and the declared inputs with the definitions that use them, following each definition back until it reaches the imports, the indices, the declared inputs, or (O) and (Q), which depend on nothing. ∎
 
 - **CH-0349** · 2 records · applied
-  - **B-189** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 588 · carried by: revision 2 as change-list entry W7.6, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR6 (S81 Results line 221; the same row in determination 03 §5) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W7.6, tests/Revision 2 - worklist, draft of 23 September.md#W7
+  - **B-189** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 588 · carried by: revision 2 as change-list entry W7.6, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR6 (S81 Results line 221; the same row in determination 03 §5) · joined through the change-list entry: W7.6 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W7
     - Before:
       > By the dependence order of Part XIV, following each definition to its base. ∎
     - After:
@@ -2038,8 +2103,8 @@
       > "following each definition back until it reaches the imports, the indices or the declared inputs"
 - **CH-0950** · 3 records · applied
   - Records D-733, D-829 (same wording):
-    - **D-733** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 598 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 598
-    - **D-829** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 598 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 14 (l. 598)
+    - **D-733** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 598 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B7, l. 598
+    - **D-829** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 598 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 14 (l. 598)
     - Before:
       > By the dependence order of Part XIV, which lists the declared indices and the declared inputs with the definitions that use them, following each definition back until it reaches the imports, the indices or the declared inputs. ∎
     - After:
@@ -2073,12 +2138,12 @@
     - After:
       > "No predicate that says 'explains' without a question and a contract, or 'is a cause', or 'is a created explanation', is taken as an import"
 - **CH-0951** · 3 records · applied
-  - **D-741** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 600 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B11, l. 600
+  - **D-741** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 600 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B11, l. 600
     - Before:
       > There is no residual predicate meaning "explains," "represents," "is a cause," or "is a created explanation."
     - After:
       > …no residual, undefined predicate meaning 'explains,' 'represents,' or 'is a cause'; (EX) is defined (Part XI).
-  - **D-822** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 600 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 10, l. 600
+  - **D-822** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 600 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 10, l. 600
     - Before:
       > There is no residual predicate meaning "explains," "represents," "is a cause," or "is a created explanation."
     - After:
@@ -2219,12 +2284,12 @@
     - Before: *(nothing: an addition)*
     - After:
       > Whether selected histories alone provide every required starting representation is left open.
-  - **A-188** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 57 (file line 39), Amendment E, phrase cell; part of the cell is in R2 reason text (S64-R2-E04) · nearest latest-text sentence (a lead, not a place): [L522.s3](#L522-s3)
+  - **A-188** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 57 (file line 39), Amendment E, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-E04) · nearest latest-text sentence (a lead, not a place): [L522.s3](#L522-s3)
     - Before: *(nothing: an addition)*
     - After:
       > Whether selected histories alone provide every required starting representation is left open.
     - New wording:
-      > <u>every required starting representation</u>; <u>complete grounding of representation</u>
+      > <u>every required starting representation</u>
 - <a id="CH-0093"></a>**CH-0093** · 4 records · never applied · placed by: Part its source names (never applied)
   - **A-98** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S64 Near cases - return/05 Quotations.md — S64 Near cases - return/05 Quotations.md row S64-R2-E03 (table line 128), sentence 6 of 10; also S72 Stage 1 testing - return/05 Quotations.md line 400; S72 Stage 2 audit - return/03 Audit of the quotations.md line 778
     - Before: *(nothing: an addition)*

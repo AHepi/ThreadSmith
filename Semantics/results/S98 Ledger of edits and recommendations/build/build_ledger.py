@@ -29,11 +29,11 @@ import check  # noqa: E402
 
 TEXT00 = {
     "title": "# S98 — Ledger of edits and recommendations",
-    "note": "*Log S98, 26 September 2026, under decision S30. Made by program (`build/build_ledger.py`), nothing committed.*",
+    "note": "*Log S98, 26 September 2026, under decision S30. Made by program (`build/build_ledger.py`).*",
     "what": [
-        ("This ledger holds every edit made to the theory texts and every recommendation for one, from file 20 "
-         "to the S97 cross-examination ({records} records of {changes} changes), each lined up under the sentence "
-         "of the latest text it touches, and the sentences grouped by the part of the semantics they belong to."),
+        ("This ledger holds every edit made to the theory texts and every recommendation for one, from the making "
+         "of file 10 to the S97 cross-examination ({records} records of {changes} changes), each lined up under the "
+         "sentence of the latest text it touches, and the sentences grouped by the part of the semantics they belong to."),
         ("It leaves out the reasons given for each change: only the sentences and wordings are copied, byte for byte, "
          "and each record's source file and source reference are the only pointer to why it was made or proposed."),
     ],
@@ -48,7 +48,8 @@ TEXT00 = {
         "- [`line-up/index.md`]({index}): how the line-up is made, how to read an entry, every section of the text in order with its group, and the {open} records open for the owner.",
         "- `line-up/groups/`: the sixteen group files; `line-up/by idea.md`: the idea proposal's twenty ideas as a cross-index.",
         "- `line-up/data/`: `records.jsonl` (every record once), `tree.json` (the structure), `by sentence.csv` (one row per showing).",
-        "- `collect/`: the five collectors' records and coverage notes; `group/`: the anchoring to the latest text, the two proposals, and the chosen structure (`grouping and structure, chosen.md`).",
+        "- What the ledger does not hold, and why: the section \"What is not here\" of `line-up/index.md`. What was corrected and added after the ledger's two checks: `build/fixes after the checks.md`.",
+        "- `collect/`: the five collectors' records and coverage notes, and `collector F.jsonl`, the records added after the two checks; `group/`: the anchoring to the latest text, the two proposals, and the chosen structure (`grouping and structure, chosen.md`).",
         "- Rerun: `PYTHONDONTWRITEBYTECODE=1 python3 build/build_ledger.py` (runs `line-up/scripts/build.py`, then `line-up/scripts/check.py`, then writes this page).",
     ],
 }

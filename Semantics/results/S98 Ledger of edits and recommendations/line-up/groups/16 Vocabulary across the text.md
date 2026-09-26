@@ -1,6 +1,30 @@
 # 16 Vocabulary across the text
 
-*No home Part. Changes placed here: 46; records shown here in full: 88; pointer lines: 1; units of the latest text where its records stand: 264. Statuses of the records shown here in full: applied 50, not applied 0, declined 1, superseded 32, open for the owner 5, unknown 0.*
+*No home Part. Changes placed here: 48; records shown here in full: 92; pointer lines: 1; units of the latest text where its records stand: 274. Statuses of the records shown here in full: applied 54, not applied 0, declined 1, superseded 32, open for the owner 5, unknown 0.*
+
+<a id="CH-1298"></a>
+## CH-1298 · 1 record · applied
+
+- **F-43** · file 10 (before log 25) · edit · applied · written against: file 00 (authority/00 FW5 JUMP from FW2+FW3+FW4 - Explanatory construction (predecessor, 8 September 2026).md) · carried by: file 10 · source: authority/10 Claude Fable Semantics - standalone theory.md — file 00 and file 10 as whole texts; log 56 (file 10 added to the repository as uploaded)
+  - Before: *(nothing: an addition)*
+  - After:
+    > [no wording given] file 10, the first standalone theory, made as a new text from its predecessor, file 00 (FW5)
+
+Places in the latest text (0):
+
+- none
+
+<a id="CH-1299"></a>
+## CH-1299 · 1 record · applied
+
+- **F-44** · S77 · edit · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md) · carried by: file 12 · source: authority/12 Claude Fable Semantics - causality, standalone theory.md — log S77 (records/Semantics - project story.md); decision S9
+  - Before: *(nothing: an addition)*
+  - After:
+    > [no wording given] file 12, the whole theory rewritten from file 11 in terms of causality, with no mention of provenance, as a separate standalone text
+
+Places in the latest text (0):
+
+- none
 
 <a id="CH-1034"></a>
 ## CH-1034 · 1 record · applied
@@ -118,17 +142,23 @@ Places in the latest text (5):
 - 11 Repair, created explanation, and appraisal (Part XI).md: [L441.s1](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L441-s1), [L441.s2](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L441-s2), [L455.s1](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L455-s1)
 
 <a id="CH-1058"></a>
-## CH-1058 · 1 record · applied
+## CH-1058 · 2 records · applied
 
 - **D-516** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 35 (section: Status, arguments and acceptance)
   - Before:
     > verdict
   - After:
     > assessment
+- **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+  - Before:
+    > "verdict"
+  - After:
+    > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 
-Places in the latest text (3):
+Places in the latest text (12):
 
-- 03 Questions (Part III).md: [L159.s7](03%20Questions%20%28Part%20III%29.md#L159-s7)
+- 03 Questions (Part III).md: [L55.s1](03%20Questions%20%28Part%20III%29.md#L55-s1), [L55.s2](03%20Questions%20%28Part%20III%29.md#L55-s2), [L155.s5](03%20Questions%20%28Part%20III%29.md#L155-s5), [L159.s7](03%20Questions%20%28Part%20III%29.md#L159-s7), [L161.s4](03%20Questions%20%28Part%20III%29.md#L161-s4), [L602.s1](03%20Questions%20%28Part%20III%29.md#L602-s1), [L604.s1](03%20Questions%20%28Part%20III%29.md#L604-s1), [L606.s2](03%20Questions%20%28Part%20III%29.md#L606-s2), [L608.s1](03%20Questions%20%28Part%20III%29.md#L608-s1)
+- 06 Work, routes, and interference (Part VI).md: [L307.s5](06%20Work%2C%20routes%2C%20and%20interference%20%28Part%20VI%29.md#L307-s5)
 - 14 The class collected (Part XIV).md: [L522.s2](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s2)
 - 15 What would rule this class out (Part XV).md: [L534.s3](15%20What%20would%20rule%20this%20class%20out%20%28Part%20XV%29.md#L534-s3)
 
@@ -357,21 +387,29 @@ Places in the latest text (0):
 - none
 
 <a id="CH-1106"></a>
-## CH-1106 · 1 record · applied
+## CH-1106 · 2 records · applied
 
 - **D-564** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 103 (section: Belief, merit and appraisal)
   - Before:
     > credit, credits, credited
   - After:
     > attribution, attributes; "contribution of content"
+- **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+  - Before:
+    > "credit", "credits", "credited"
+  - After:
+    > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
-Places in the latest text (5):
+Places in the latest text (16):
 
 - 01 The document as a whole.md: [L25.s3](01%20The%20document%20as%20a%20whole.md#L25-s3)
+- 04 Layers, transports, and provenance (Part IV).md: [L45.s4](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L45-s4), [L47.s2](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L47-s2)
+- 05 Account (Part V).md: [L616.s4](05%20Account%20%28Part%20V%29.md#L616-s4)
 - 06 Work, routes, and interference (Part VI).md: [L307.s4](06%20Work%2C%20routes%2C%20and%20interference%20%28Part%20VI%29.md#L307-s4)
 - 10 Understanding, construction, and origin (Part X).md: [L427.s3](10%20Understanding%2C%20construction%2C%20and%20origin%20%28Part%20X%29.md#L427-s3)
-- 11 Repair, created explanation, and appraisal (Part XI).md: [L441.s5](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L441-s5)
-- 14 The class collected (Part XIV).md: [L522.s1](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s1)
+- 11 Repair, created explanation, and appraisal (Part XI).md: [L441.s5](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L441-s5), [L441.s6](11%20Repair%2C%20created%20explanation%2C%20and%20appraisal%20%28Part%20XI%29.md#L441-s6)
+- 12 The physical module (Part XII).md: [L75.s2](12%20The%20physical%20module%20%28Part%20XII%29.md#L75-s2), [L75.s3](12%20The%20physical%20module%20%28Part%20XII%29.md#L75-s3), [L473.s3](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s3), [L473.s4](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s4)
+- 14 The class collected (Part XIV).md: [L517.s1](14%20The%20class%20collected%20%28Part%20XIV%29.md#L517-s1), [L522.s1](14%20The%20class%20collected%20%28Part%20XIV%29.md#L522-s1), [L524.s4](14%20The%20class%20collected%20%28Part%20XIV%29.md#L524-s4), [L528.s1](14%20The%20class%20collected%20%28Part%20XIV%29.md#L528-s1)
 
 <a id="CH-1110"></a>
 ## CH-1110 · 2 records · applied, superseded

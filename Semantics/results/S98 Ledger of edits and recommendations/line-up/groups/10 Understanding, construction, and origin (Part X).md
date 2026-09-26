@@ -1,15 +1,15 @@
 # 10 Understanding, construction, and origin
 
-*Home Part: Part X. Units shown: 80; units touched: 49; changes placed here: 105; records shown here in full under their home sentence: 119; pointer lines: 9; vocabulary lines: 59; records in blocks: 34. Statuses of the records shown here in full: applied 92, not applied 14, declined 6, superseded 7, open for the owner 0, unknown 0.*
+*Home Part: Part X. Units shown: 80; units touched: 49; changes placed here: 105; records shown here in full under their home sentence: 122; pointer lines: 17; vocabulary lines: 60; records in blocks: 34. Statuses of the records shown here in full: applied 92, not applied 14, declined 6, superseded 10, open for the owner 0, unknown 0.*
 
 - [Part X · Opening of the Part · line 401 · 0 records](#sec-L401-401)
 - [Part X · Deployment · line 403 · 15 records](#sec-L403-403)
-- [Part X · Construction · line 405 · 23 records](#sec-L405-405)
+- [Part X · Construction · line 405 · 26 records](#sec-L405-405)
 - [Part X · Representation in use; construction is not selection · lines 407–411 · 6 records](#sec-L407-411)
 - [Part X · Newness · lines 413–417 · 5 records](#sec-L413-417)
 - [Part X · Origin · lines 419–423 · 2 records](#sec-L419-423)
 - [Part X · What a new content may be · line 425 · 3 records](#sec-L425-425)
-- [Part X · Ownership · line 427 · 17 records](#sec-L427-427)
+- [Part X · Ownership · line 427 · 18 records](#sec-L427-427)
 - [Part X · Episodes · line 429 · 20 records](#sec-L429-429)
 - [Part XVI · 5. Question-finding is representable · lines 586–592 · 34 records](#sec-L586-592)
 - [Part XVI · 10. A two-layer episode, in exact form · lines 618–632 · 53 records](#sec-L618-632)
@@ -151,7 +151,7 @@
 ## Part X — Understanding, construction, and origin · Construction · line 405
 
 <a id="L405-s1"></a>
-#### L405.s1 · line 405 · 4 changes, 10 records
+#### L405.s1 · line 405 · 5 changes, 12 records
 > **Construction.** \(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) is met when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers.
 
 - **CH-0085** · 7 records · not applied
@@ -181,23 +181,32 @@
       > Construction requires an owned episode that prepares a nontrivial new binding for explanatory use and a content-sensitive route from an available target or problem through the preparation of that binding.
     - New wording:
       > <u>for explanatory use</u>
-  - **A-177** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 46 (file line 28), Amendment E, phrase cell; part of the cell is in R2 reason text (S64-R2-E04)
+  - **A-177** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 46 (file line 28), Amendment E, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-E04)
     - Before: *(nothing: an addition)*
     - After:
       > Construction requires an owned episode that prepares a nontrivial new binding for explanatory use and a content-sensitive route from an available target or problem through the preparation of that binding.
     - New wording:
-      > <u>a content-sensitive route</u>; <u>a substantive account of content use</u>
+      > <u>a content-sensitive route</u>
   - **A-178** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 47 (file line 29), Amendment E, phrase cell
     - Before: *(nothing: an addition)*
     - After:
       > Construction requires an owned episode that prepares a nontrivial new binding for explanatory use and a content-sensitive route from an available target or problem through the preparation of that binding.
     - New wording:
       > <u>an available target or problem</u>
-- **CH-0439** · 1 record · applied · also at: [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
-  - **B-306** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: revision 2 as change-list entry W41.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §14 'Handling' (line 248), inexplicit knowledge · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W41.1, tests/Revision 2 - worklist, draft of 23 September.md#W41
+- **CH-0439** · 2 records · applied · also at: [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+  - **B-306** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: revision 2 as change-list entry W41.1, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — §14 'Handling' (line 248), inexplicit knowledge · joined through the change-list entry: W41.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W41
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] restore file 00's paragraph on inexplicit knowledge (00:855–861) (handling (b))
+  - **F-15** · S90 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), as change list entry W41.1 first proposed to change it, before the two checks, line 401 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — section 'What the checks changed', table 'Fixed: 19 entries', row W41.1 (file line 131), check 2; the entry as first drafted, before the checks, is not held · joined through the change-list entry: W41.1
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] "A system's realization"; fidelity and provenance named; "Use does not by itself construct …"; the declaration completed
+- **CH-1287** · 1 record · superseded · also at: [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+  - **F-29** · S90 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: none (the change list's entries W41.1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W41 (file line 131), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] restore the first two paragraphs of 00:855–861 after Build
 - **CH-0752** · 1 record · applied
   - **D-171** · S95 · edit · applied · wording stands · written against: draft 5, line 405 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[170]; line 405; swap; TRUTH-OR-FOUNDATION
     - Before:
@@ -216,11 +225,14 @@
       > is met, meets
 
 <a id="L405-s2"></a>
-#### L405.s2 · line 405 · 4 changes, 4 records
+#### L405.s2 · line 405 · 5 changes, 6 records
 > A construction trace identifies the controlled processes, the incoming carriers, the bindings constructed, and the resulting representation.
 
-- **CH-0439** · 1 record · applied · also at: [L405.s1](#L405-s1), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+- **CH-0439** · 2 records · applied · also at: [L405.s1](#L405-s1), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
   - **B-306** · S89 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+  - **F-15** · S90 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+- **CH-1287** · 1 record · superseded · also at: [L405.s1](#L405-s1), [L405.s3](#L405-s3), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+  - **F-29** · S90 · recommendation · superseded · shown in full under [L405.s1](#L405-s1)
 - **CH-0753** · 1 record · applied
   - **D-172** · S95 · edit · applied · wording stands · written against: draft 5, line 405 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[171]; line 405; swap; TRUTH-OR-FOUNDATION; generated by an AUTO rule of replacements_source.py
     - Before:
@@ -245,14 +257,17 @@
       > **construction trace**
 
 <a id="L405-s3"></a>
-#### L405.s3 · line 405 · 1 change, 1 record
+#### L405.s3 · line 405 · 2 changes, 3 records
 > Reconstruction by a learner is construction; relay is not.
 
-- **CH-0439** · 1 record · applied · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+- **CH-0439** · 2 records · applied · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
   - **B-306** · S89 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+  - **F-15** · S90 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+- **CH-1287** · 1 record · superseded · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s4](#L405-s4), [L405.s5](#L405-s5)
+  - **F-29** · S90 · recommendation · superseded · shown in full under [L405.s1](#L405-s1)
 
 <a id="L405-s4"></a>
-#### L405.s4 · line 405 · 4 changes, 4 records
+#### L405.s4 · line 405 · 4 changes, 6 records
 > A first representation may be constructed from an available problem without prior observation of what it represents.
 
 - **CH-0295** · 1 record · applied
@@ -266,16 +281,18 @@
       > A first representation may be constructed from an available problem without prior observation of what it represents.
     - After:
       > [no wording given] declare this place in the revision's record as a change of claim not declared by file 11's note
-- **CH-0439** · 1 record · applied · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s5](#L405-s5)
+- **CH-0439** · 3 records · applied, superseded · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s5](#L405-s5)
   - **B-306** · S89 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
-- **CH-0578** · 1 record · superseded
   - **C-206** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 401 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W41 (L856), "What is missing": file 00's paragraph; entry W41.1 restores it with edits (after check 2, "A system's realization ...")
     - Before: *(nothing: an addition)*
     - After:
       > Inexplicit representation is not absent representation
+  - **F-15** · S90 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+- **CH-1287** · 1 record · superseded · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s5](#L405-s5)
+  - **F-29** · S90 · recommendation · superseded · shown in full under [L405.s1](#L405-s1)
 
 <a id="L405-s5"></a>
-#### L405.s5 · line 405 · 5 changes, 8 records
+#### L405.s5 · line 405 · 7 changes, 11 records
 > A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
 
 - **CH-0161** · 2 records · superseded, applied
@@ -293,7 +310,7 @@
     - After:
       > A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
 - **CH-0390** · 2 records · applied
-  - **B-240** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-24; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M35 (determination 03 §1, row M35; file-11 locator 'L401, sentence 5', file-10 'L414'); the file-11 sentences are edit records B-121, B-122 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-24, tests/Revision 2 - change list, draft of 23 September.md#W3.1
+  - **B-240** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-24; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M35 (determination 03 §1, row M35; file-11 locator 'L401, sentence 5', file-10 'L414'); the file-11 sentences are edit records B-121, B-122 · joined through the change-list entry: W3.1 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-24
     - Before:
       > A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
     - After:
@@ -303,7 +320,7 @@
       > A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance.
     - After:
       > [no wording given] record-only entry: this file-11 text is declared in layer 2 of the revision record (row L2-24) as a change of claim file 11 made against file 10; the theory text is unchanged
-- **CH-0439** · 2 records · applied · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4)
+- **CH-0439** · 3 records · applied · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4)
   - **B-306** · S89 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
   - **C-37** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 401 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5 · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W41.1 ("Part X: inexplicit representation, and a witness identified by use, with the relay guard"), STATUS applied, KIND CLAIM, FILE-11 LINE 401; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C25, S90 part C R30
     - Before:
@@ -314,6 +331,14 @@
       > An inexplicit representation is not an absent one. A pianist can imagine a passage without playing it. A geometer can manipulate a spatial relation without naming every component. An investigator can notice an inconsistency before articulating its premises. None of (R), Deploy and Build asks whether the relevant distinctions and transformations are written in a particular format: what they ask is whether those distinctions and transformations are instantiated, with the fidelity and provenance (R) requires, and used where use is asked.
       >
       > A system's realization can use a partial, distributed, or temporally extended representation. The relevant bindings can be available through memory, imagery, action rehearsal, or interaction with an artifact. Not every representation must be simultaneously explicit. Retaining a critical target can consist in being able to re-present the relevant distinction, not in storing a complete verbal transcript. A construction witness may therefore identify a binding constructed in the subhistory by its use rather than by a statement of it: by responses that preserve its role bindings, send content-preserving recodings to the same transition and content changes to the changes the binding specifies, and lie on an active route, as reason use asks of an objection (Part IX). Use does not by itself construct: received content used as it was received keeps its inherited provenance. A carrier that passes content on without such use has relayed it, and relay is not construction.
+  - **F-15** · S90 · recommendation · applied · shown in full under [L405.s1](#L405-s1)
+- **CH-1287** · 1 record · superseded · also at: [L405.s1](#L405-s1), [L405.s2](#L405-s2), [L405.s3](#L405-s3), [L405.s4](#L405-s4)
+  - **F-29** · S90 · recommendation · superseded · shown in full under [L405.s1](#L405-s1)
+- **CH-1288** · 1 record · superseded
+  - **F-30** · S90 · recommendation · superseded · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 401 · carried by: none (the change list's entries W41.1 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W41 (file line 131), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > a witness may identify a binding by its use (reason use, Part IX); a carrier that delivers content it does not use that way has relayed it, and relay is not construction
 - **CH-0513** · 1 record · declined
   - **C-140** · S90 · recommendation · declined · written against: the note of file 13, its list of changes of claim (full file 13 draft 2; the DECLARATION fields of change list draft 2) · carried by: none · source: results/S90 Cross-examination - revision 2 draft - returns/parts/s90_xexam_mimo_C.response.txt — s90_xexam_mimo_C point 3 (R30, W41.1), second repair (the declaration); refused with it by ruling R30 (batch 3)
     - Before:
@@ -602,7 +627,7 @@
     - After:
       > Work supplied from outside that boundary, a diagnosis, a decisive question, an instruction about what to read, remains an outside contribution however it is executed inside; a process that runs inside the boundary is the system's own today whoever wrote it; and where the boundary is drawn decides, not where the process sits in the casing.
 - **CH-0361** · 2 records · applied
-  - **B-209** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 as change-list entry W13.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 9 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L419 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W13.1
+  - **B-209** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 as change-list entry W13.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 9 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L419 · joined through the change-list entry: W13.1
     - Before:
       > Work supplied from outside that boundary, a diagnosis, a decisive question, an instruction about what to read, remains an outside contribution however it is executed inside; a process that runs inside the boundary is the system's own today whoever wrote it; and where the boundary is drawn decides, not where the process sits in the casing.
     - After:
@@ -618,8 +643,8 @@
       > is the system's own today whoever wrote it
     - New wording:
       > is the system's own whoever wrote it
-- **CH-0365** · 2 records · applied · also at: [L473.s3](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s3), [L473.s4](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s4)
-  - **B-215** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 as change-list entry W12.1, whose NEW text is verbatim in: draft 1 to latest text; change-list entry W13.2 + W12.2, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', second bullet, line 390; carried to S81 Results (O30 and O17 at L419 with L514) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W12.1, tests/Revision 2 - change list, draft of 23 September.md#W13.2 + W12.2
+- **CH-0365** · 2 records · applied · also at: [L473.s1](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s1), [L473.s2](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s2), [L473.s3](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s3), [L473.s4](12%20The%20physical%20module%20%28Part%20XII%29.md#L473-s4)
+  - **B-215** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 as change-list entry W12.1, whose NEW text is verbatim in: draft 1 to latest text; change-list entry W13.2 + W12.2, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S81 File 11 against every case - outputs/determination/04 Step 3 and the determination - file 11 against file 10.md — §7.10 'Findings about the readers', second bullet, line 390; carried to S81 Results (O30 and O17 at L419 with L514) · joined through the change-list entry: W12.1, W13.2 + W12.2
     - Before:
       > Work supplied from outside that boundary, a diagnosis, a decisive question, an instruction about what to read, remains an outside contribution however it is executed inside; a process that runs inside the boundary is the system's own today whoever wrote it; and where the boundary is drawn decides, not where the process sits in the casing.
     - After:
@@ -634,7 +659,7 @@
     - New wording:
       > and where the boundary is drawn decides, not where the process sits in the casing. Credit for content and ownership of a process are different attributions: a routine written outside the boundary and run inside it is the system's own process, and its content remains its writer's contribution.
 - **CH-0392** · 2 records · applied
-  - **B-242** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-26; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M37 (determination 03 §1, row M37; file-11 locator 'L419', file-10 'none'); the file-11 sentences are edit records B-124, B-125, B-126, B-127 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-26, tests/Revision 2 - change list, draft of 23 September.md#W3.3
+  - **B-242** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 419 · carried by: revision 2 note draft (tests/Revision 2 - revision note, draft of 23 September.md), layer 2 of the record, row L2-26; record only, not in any theory text · source: results/S81 Results - file 11 against file 10, determined.md — S81 Results, Next step: 'a declaration of the 41 undeclared CLAIM places (and M7) in the second layer of the revision's record'; place M37 (determination 03 §1, row M37; file-11 locator 'L419', file-10 'none'); the file-11 sentences are edit records B-124, B-125, B-126, B-127 · joined through the change-list entry: W3.3 · linked (not joined): tests/Revision 2 - revision note, draft of 23 September.md#L2-26
     - Before:
       > **Ownership.** The subhistory in Build is owned by \(s\) when its processes run inside the system boundary and resource contract declared for \(s\) (Part XII). Work supplied from outside that boundary, a diagnosis, a decisive question, an instruction about what to read, remains an outside contribution however it is executed inside; a process that runs inside the boundary is the system's own today whoever wrote it; and where the boundary is drawn decides, not where the process sits in the casing. Ownership is not defined by the capability it is meant to ground (Part XII).
     - After:
@@ -646,7 +671,7 @@
       > [no wording given] record-only entry: this file-11 text is declared in layer 2 of the revision record (row L2-26) as a change of claim file 11 made against file 10; the theory text is unchanged
 
 <a id="L427-s3"></a>
-#### L427.s3 · line 427 · 2 changes, 2 records
+#### L427.s3 · line 427 · 2 changes, 3 records
 > Contribution of content and ownership of a process are different attributions: a routine written outside the boundary and run inside it is the system's own process, and its content remains its writer's contribution.
 
 - **CH-0756** · 1 record · applied
@@ -659,12 +684,17 @@
       > Credit for content and ownership of a process are different attributions:
     - New wording:
       > Contribution of content and ownership of a process are different attributions:
-- **CH-1106** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
+- **CH-1106** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1106)
   - **D-564** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 103 (section: Belief, merit and appraisal)
     - Before:
       > credit, credits, credited
     - After:
       > attribution, attributes; "contribution of content"
+  - **F-42** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 113; the cells' bracketed grounds are left out
+    - Before:
+      > "credit", "credits", "credited"
+    - After:
+      > "attribution" / "attributes": "ProducedBy attributes a repair to the contributions …"; "the history supplies no division of the attribution that it does not contain"
 
 <a id="L427-s4"></a>
 #### L427.s4 · line 427 · 4 changes, 4 records
@@ -714,7 +744,7 @@
 > **Episodes.** A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response.
 
 - **CH-0437** · 2 records · applied · also at: [L217.s1](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L217-s1), [L223.s1](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L223-s1), [L223.s5](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L223-s5), [L225.s2](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L225-s2), [L429.s2](#L429-s2), [L429.s3](#L429-s3), [L429.s4](#L429-s4), [L582.s2](04%20Layers%2C%20transports%2C%20and%20provenance%20%28Part%20IV%29.md#L582-s2)
-  - **B-308** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 421 · carried by: revision 2 as change-list entry W35.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M2 (line 279) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W35.3, tests/Revision 2 - worklist, draft of 23 September.md#W35
+  - **B-308** · S89 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 421 · carried by: revision 2 as change-list entry W35.3, whose NEW text is verbatim in: draft 1 to draft 5 · source: results/S89 The theory against its sources - Deutsch and Marletto.md — 'Relations the first reader missed', M2 (line 279) · joined through the change-list entry: W35.3 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W35
     - Before: *(nothing: an addition)*
     - After:
       > [no wording given] a definition of "recognized difficulty", with Repair as the counterpart of a problem
@@ -893,11 +923,11 @@
       > "Closing an episode is a decision, not a proof." (l. 429)
     - After:
       > "Closing an episode is a choice, not an argument."
-- **CH-0934** · 3 records · applied
+- **CH-0934** · 3 records · applied, superseded
   - Records D-774, D-838, D-354 (same wording):
-    - **D-774** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 9, MORE, l. 429
-    - **D-838** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 20 (l. 429)
-    - **D-354** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[53]; line 429; group R; ref: range 2 repair 20
+    - **D-774** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 9, MORE, l. 429
+    - **D-838** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 20 (l. 429)
+    - **D-354** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 429 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[53]; line 429; group R; ref: range 2 repair 20
     - Before:
       > Closing an episode is a choice, not an argument.
     - After:
@@ -908,7 +938,7 @@
       > Closing an episode is a choice: an argument can rule out some ways of closing it, but no argument makes the choice.
     - After:
       > Closing an episode is a choice: an argument can rule out some ways of closing it for the person choosing, and where it leaves one way not ruled out, the person, in the owner's words, "sees no option" but that one, which is not to say the person "has no option" [the owner said this of non-scientific theories (S21); using it for every episode is Claude's reading]; no argument makes the choice.
-  - **D-871** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 429 · carried by: repaired copy · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-5, proposal 1
+  - **D-871** · S96 · recommendation · applied · wording not in the latest text · written against: stage-1 text (S96; scrubbed copy with stage 1 applied, rebuilt in memory), line 429 · carried by: repaired copy, in other wording · source: results/S96 Check of the repaired copy - whole text.md — section 5, O-5, proposal 1
     - Before:
       > Closing an episode is a choice: an argument can rule out some ways of closing it, but no argument makes the choice.
     - After:
@@ -1364,14 +1394,14 @@
     - New wording:
       > parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change.
 - **CH-0350** · 3 records · applied
-  - **B-190** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 616 · carried by: revision 2 as change-list entry W10a.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR7 (S81 Results line 222; the same row in determination 03 §5) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W10a.1, tests/Revision 2 - worklist, draft of 23 September.md#W10
+  - **B-190** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 616 · carried by: revision 2 as change-list entry W10a.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 Results - file 11 against file 10, determined.md — Errata: seven cross-reference slips in file 11, row XR7 (S81 Results line 222; the same row in determination 03 §5) · joined through the change-list entry: W10a.1 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W10
     - Before:
       > If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change.
     - After:
       > [no wording given] cross-reference slip, recorded as an erratum for a later revision
     - Old wording:
       > Derivation 3's qualification seen from the other side
-  - **B-204** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 616 · carried by: revision 2 as change-list entry W10a.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 6 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L616 · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W10a.1
+  - **B-204** · S81 · recommendation · applied · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 616 · carried by: revision 2 as change-list entry W10a.1, whose NEW text is verbatim in: draft 1 to latest text · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 6 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L616 · joined through the change-list entry: W10a.1
     - Before:
       > If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric, and this is Derivation 3's qualification seen from the other side, a population that admits no survivor at the new change.
     - After:
@@ -1439,7 +1469,7 @@
 > On this contract the word adds nothing to the signatures they already have (Argument 1).
 
 - **CH-1032** · 2 records · applied
-  - **D-944** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 626 · carried by: latest text · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F6 (i), proposed wording (code block 6); ruling 'mimo 4 F6' in results/S96 Reading of the replies.md, section 3
+  - **D-944** · S96 · recommendation · applied · wording not in the latest text · written against: repaired copy, line 626 · carried by: latest text, in other wording · source: results/S96 Cross-examination - repaired copy - returns/s96_xexam_mimo_4.response.txt — F6 (i), proposed wording (code block 6); ruling 'mimo 4 F6' in results/S96 Reading of the replies.md, section 3
     - Before:
       > No one declared them to be "objects." They are objects because they respond as objects do to what the contract admits.
     - After:
@@ -1557,7 +1587,7 @@
       > exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)
     - Old wording:
       > the two persistence components are of one kind (Derivation 2)
-  - **B-281** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 620 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W19.3 + W10(b).1, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, final repair wording, change 3, Derivation 10, replaces the F11 L620 sentence (lines 140-144) · linked (not joined): tests/Revision 2 - change list, draft of 23 September.md#W19.3 + W10(b).1
+  - **B-281** · S88 · recommendation · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 620 · carried by: verbatim in: draft 2 to draft 5; carried as change-list entry W19.3 + W10(b).1, whose NEW text (as fixed later) is verbatim in: draft 2 to draft 5 · source: results/S88 Reading of Mimo's reply in three parts, and the settled positions.md — F1, final repair wording, change 3, Derivation 10, replaces the F11 L620 sentence (lines 140-144) · joined through the change-list entry: W19.3 + W10(b).1
     - Before:
       > On any contract containing it, the two persistence components are of one kind (Derivation 2).
     - After:
@@ -1651,7 +1681,7 @@
     - New wording:
       > it is what the contract contains: identity, at this grain, is exhausted by trajectory.
 - **CH-0954** · 3 records · applied
-  - **D-747** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 630 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B15, l. 630
+  - **D-747** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 630 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B15, l. 630
     - Before:
       > That is not a defect of \(S_1\); it is what the contract contains: identity, at this grain, is exhausted by trajectory.
     - After:
@@ -1798,12 +1828,12 @@
       > It applies where the relevant obligation already belonged to the inquiry and already failed before the particular contribution that constructs the new question, and a deployable answer to that question would repair it.
     - New wording:
       > <u>the relevant obligation already belonged to the inquiry</u>; <u>already failed before the particular contribution</u>
-  - **A-205** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 75 (file line 57), Amendment G, phrase cell; part of the cell is in R2 reason text (S64-R2-G01)
+  - **A-205** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 75 (file line 57), Amendment G, phrase cell; the cell's phrases from R2 reason text are left out (S64-R2-G01)
     - Before: *(nothing: an addition)*
     - After:
       > It applies where the relevant obligation already belonged to the inquiry and already failed before the particular contribution that constructs the new question, and a deployable answer to that question would repair it.
     - New wording:
-      > <u>a deployable answer to that question would repair it</u>; <u>a useful question</u>
+      > <u>a deployable answer to that question would repair it</u>
 - <a id="CH-0113"></a>**CH-0113** · 3 records · never applied · placed by: Part its source names (never applied)
   - **A-122** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S62 Stage D and report - return/07 Quotations.md — S62 Stage D and report - return/07 Quotations.md row R2-G-24 (table line 80); also S62 Stage D and report - return/01 Fix cards.md line 184; S62 Stage D and report - return/08 Report.md line 229; S72 Stage 1 testing - return/05 Quotations.md line 1088; S72 Stage 2 audit - return/03 Audit of the quotations.md line 1748,2404 · nearest latest-text sentence (a lead, not a place): [L429.s1](#L429-s1)
     - Before: *(nothing: an addition)*
@@ -1850,12 +1880,12 @@
       > Where the value of finding a question consists in creating a new aim with no previously failing obligation, this criterion makes no adequacy claim.
     - New wording:
       > <u>creating a new aim with no previously failing obligation</u>; <u>this criterion makes no adequacy claim</u>
-  - **A-210** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 80 (file line 62), Amendment G, phrase cell; marked BORROWED: JUDGEMENT; part of the cell is in R2 reason text (S64-R2-G01)
+  - **A-210** · Stage B (logs 41, 55) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/55 Stage B return - the other model's finished table, near cases and tighter pairs.md — Stage B table row 80 (file line 62), Amendment G, phrase cell; marked BORROWED: JUDGEMENT; the cell's phrases from R2 reason text are left out (S64-R2-G01)
     - Before: *(nothing: an addition)*
     - After:
       > Where the value of finding a question consists in creating a new aim with no previously failing obligation, this criterion makes no adequacy claim.
     - New wording:
-      > <u>the value of finding a question</u>; <u>the normative problem</u>
+      > <u>the value of finding a question</u>
 - <a id="CH-0117"></a>**CH-0117** · 2 records · never applied · placed by: Part its source names (never applied)
   - **A-128** · R2 (log 25) · recommendation · not applied · written against: file 20 with R2 applied (file 20 not held); from log S69 read as amendments to file 10 · carried by: none · source: results/S62 Stage D and report - return/07 Quotations.md — S62 Stage D and report - return/07 Quotations.md row R2-G-30 (table line 86); also S62 Stage D and report - return/01 Fix cards.md line 196; S62 Stage D and report - return/08 Report.md line 241; S72 Stage 1 testing - return/05 Quotations.md line 548; S72 Stage 2 audit - return/03 Audit of the quotations.md line 1004,2416 · nearest latest-text sentence (a lead, not a place): [L425.s3](#L425-s3)
     - Before: *(nothing: an addition)*

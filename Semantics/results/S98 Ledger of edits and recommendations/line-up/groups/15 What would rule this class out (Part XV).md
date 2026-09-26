@@ -1,16 +1,15 @@
 # 15 What would rule this class out
 
-*Home Part: Part XV. Units shown: 18; units touched: 16; changes placed here: 89; records shown here in full under their home sentence: 115; pointer lines: 12; vocabulary lines: 43; records in blocks: 3. Statuses of the records shown here in full: applied 90, not applied 1, declined 21, superseded 3, open for the owner 0, unknown 0.*
+*Home Part: Part XV. Units shown: 18; units touched: 16; changes placed here: 89; records shown here in full under their home sentence: 116; pointer lines: 14; vocabulary lines: 45; records in blocks: 2. Statuses of the records shown here in full: applied 89, not applied 1, declined 21, superseded 5, open for the owner 0, unknown 0.*
 
-- [Part XV · Opening of the Part · lines 532–534 · 17 records](#sec-L532-534)
-- [Part XV · (Suff) Sufficiency · line 536 · 29 records](#sec-L536-536)
+- [Part XV · Opening of the Part · lines 532–534 · 18 records](#sec-L532-534)
+- [Part XV · (Suff) Sufficiency · line 536 · 30 records](#sec-L536-536)
 - [Part XV · (Nec) Necessity · line 538 · 18 records](#sec-L538-538)
 - [Part XV · (Elim) Reinstatement of kinds · line 540 · 20 records](#sec-L540-540)
 - [Part XV · (Prov) Genesis · line 542 · 27 records](#sec-L542-542)
 - [Part XV · (QF) Question-finding · line 544 · 19 records](#sec-L544-544)
 - [Part XV · A mathematical error · line 546 · 7 records](#sec-L546-546)
-- [Part 0 · Where to attack this · lines 59–61 · 20 records](#sec-L59-61)
-- [Not in the latest text, with no section: Part XV · 1 change, 1 record](#rest-XV)
+- [Part 0 · Where to attack this · lines 59–61 · 21 records](#sec-L59-61)
 
 <a id="sec-L532-534"></a>
 ## Part XV — What would rule this class out · Opening of the Part · lines 532–534
@@ -105,7 +104,7 @@
       > None is protected by notation, by the availability of this document, or by any version label. A case whose verdict turns on an input the case does not state, where the input is one of the declared inputs Part XIV lists or the normative relation, is a case with a missing input, not a refutation.
 
 <a id="L534-s3"></a>
-#### L534.s3 · line 534 · 5 changes, 5 records
+#### L534.s3 · line 534 · 5 changes, 6 records
 > A case whose assessment turns on an input the case does not state, where the input is one of the declared inputs Part XIV lists or the appraisal relation, is a case with a missing input, not an argument that rules a claim out.
 
 - **CH-0813** · 1 record · applied
@@ -120,12 +119,17 @@
       > refute, refutes, refutation
     - After:
       > rule out, rules out, what would rule it out
-- **CH-1058** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
+- **CH-1058** · 2 records · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1058)
   - **D-516** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 35 (section: Status, arguments and acceptance)
     - Before:
       > verdict
     - After:
       > assessment
+  - **F-41** · S95 · recommendation · applied · written against: draft 5 · carried by: scrubbed copy, in other wording · source: tests/S95 Scrub - vocabulary, sceptic's rulings.md — section 3 (3. Occurrences the proposal does not cover), second table, row at file line 112; the cells' bracketed grounds are left out
+    - Before:
+      > "verdict"
+    - After:
+      > "assessment": "an assessment of the restriction is made with that statement"; "an assessment that depends on one of these … is made given the input; where the input is missing, it is left open"
 - **CH-1095** · 1 record · applied · vocabulary · also at: [its entry in 16 Vocabulary across the text](16%20Vocabulary%20across%20the%20text.md#CH-1095)
   - **D-553** · S95 · edit · applied · written against: draft 5 · carried by: scrubbed copy · source: tests/S95 Scrub - vocabulary, as used.md — table row at file line 92 (section: Belief, merit and appraisal)
     - Before:
@@ -143,7 +147,7 @@
 ## Part XV — What would rule this class out · (Suff) Sufficiency · line 536
 
 <a id="L536-s1"></a>
-#### L536.s1 · line 536 · 15 changes, 18 records
+#### L536.s1 · line 536 · 16 changes, 19 records
 > **(Suff) Sufficiency.** A candidate meeting all four conditions of (E) on a contract of its question, with a transport whose provenance is not declared (Part IV), such that an argument not using (E) rules out the claim that it is an explanation of what its question asks.
 
 - **CH-0008** · 1 record · declined
@@ -198,6 +202,11 @@
     - Before:
       > This refutes sufficiency.
     - After: *(nothing: removed)*
+- **CH-1281** · 1 record · superseded · also at: [L536.s2](#L536-s2), [L536.s3](#L536-s3)
+  - **F-23** · S90 · recommendation · superseded · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 528 · carried by: none (the change list's entries W11.1, W11.2 carry the item) · source: tests/Revision 2 - plan and test round, draft of 23 September.md — table of the worklist items, row W11 (file line 101), 'Take'
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] L528 s3 changed in step
 - **CH-0814** · 1 record · applied
   - **D-233** · S95 · edit · applied · wording not in the latest text · written against: draft 5, line 536 · carried by: scrubbed copy · source: tests/S95 Scrub - scripts/replacements.json — entries[232]; line 536; swap; MISSED
     - Before:
@@ -222,8 +231,8 @@
       > "explaining nothing"; "provides no account"
 - **CH-0899** · 3 records · applied
   - Records D-728, D-817 (same wording):
-    - **D-728** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, l. 536 (A)
-    - **D-817** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, (A) (l. 536)
+    - **D-728** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, l. 536 (A)
+    - **D-817** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, (A) (l. 536)
     - Before:
       > **(A) Sufficiency.** A candidate meeting all four conditions of (E) on a physically admitted contract, with a non-declared transport, that nonetheless explains nothing.
     - After:
@@ -262,7 +271,7 @@
       > **(Suff) Sufficiency.**
 
 <a id="L536-s2"></a>
-#### L536.s2 · line 536 · 8 changes, 8 records
+#### L536.s2 · line 536 · 9 changes, 9 records
 > Part V says which of the four each classic attempt fails: a table of observed answers fails (F1); a reversed calculation fails (F2) under the production contract; conclusion-as-premise fails non-circular dependence.
 
 - **CH-0005** · 1 record · declined
@@ -297,11 +306,13 @@
   - **B-155** · S76 · edit · applied · shown in full under [L536.s1](#L536-s1)
 - **CH-0331** · 1 record · applied · also at: [L536.s1](#L536-s1), [L536.s3](#L536-s3)
   - **B-157** · S76 · edit · applied · shown in full under [L536.s1](#L536-s1)
+- **CH-1281** · 1 record · superseded · also at: [L536.s1](#L536-s1), [L536.s3](#L536-s3)
+  - **F-23** · S90 · recommendation · superseded · shown in full under [L536.s1](#L536-s1)
 - **CH-1217** · 1 record · declined · also at: [L536.s1](#L536-s1), [L536.s3](#L536-s3)
   - **D-895** · S96 · recommendation · declined · shown in full under [L536.s1](#L536-s1)
 
 <a id="L536-s3"></a>
-#### L536.s3 · line 536 · 9 changes, 11 records
+#### L536.s3 · line 536 · 10 changes, 12 records
 > A table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and such an argument rules out the claim that it is an explanation.
 
 - **CH-0234** · 1 record · applied · form only · also at: [L536.s1](#L536-s1), [L536.s2](#L536-s2)
@@ -327,10 +338,12 @@
       > A table that encodes the response to every admitted change fails none and is an account, so it is not a counterexample; a new attempt must fail none and still explain nothing.
     - After:
       > A table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and still explains nothing.
+- **CH-1281** · 1 record · superseded · also at: [L536.s1](#L536-s1), [L536.s2](#L536-s2)
+  - **F-23** · S90 · recommendation · superseded · shown in full under [L536.s1](#L536-s1)
 - **CH-0945** · 3 records · applied
   - Records D-729, D-818 (same wording):
-    - **D-729** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, end of (A)
-    - **D-818** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, end of (A)
+    - **D-729** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, end of (A)
+    - **D-818** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 536 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, end of (A)
     - Before:
       > A table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and still explains nothing.
     - After:
@@ -421,8 +434,8 @@
       > dropped, or: l. 610 "Argument 8. Equivariance under structure-preserving recoding"; l. 538 (Part XV (B)) "an explanation, argued to be one and not a non-explanation by an argument that does not use (E), whose organization …"
 - **CH-0900** · 3 records · applied
   - Records D-730, D-819 (same wording):
-    - **D-730** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 538 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, l. 538 (B)
-    - **D-819** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 538 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, (B) (l. 538)
+    - **D-730** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 538 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B6, l. 538 (B)
+    - **D-819** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 538 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 8, (B) (l. 538)
     - Before:
       > **(B) Necessity.** An explanation, argued to be one and not a non-explanation by an argument that does not use (E), whose organization no transport can preserve under any physically admitted contract.
     - After:
@@ -584,11 +597,11 @@
       > **primitive**, the two **primitives**, "primitive 2" (Θ and N)
     - After:
       > **import**, the two **imports**, "import 2"
-- **CH-0946** · 3 records · applied
+- **CH-0946** · 3 records · applied, superseded
   - Records D-748, D-833, D-368 (same wording):
-    - **D-748** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B15, l. 540
-    - **D-833** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: repaired copy · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 17 (l. 540)
-    - **D-368** · S96 · edit · applied · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[67]; line 540; group R; ref: B15 (range 2 repair 17)
+    - **D-748** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 7, B15, l. 540
+    - **D-833** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of Parts IX to XV and every derivation, proof or argument after them.md — section 6, repair 17 (l. 540)
+    - **D-368** · S96 · edit · superseded · wording not in the latest text · written against: scrubbed copy, line 540 · carried by: stage-1 text of S96 (rebuilt in memory, not kept); stage 2 rewrote it before the repaired copy · source: tests/S96 Repair - scripts/replacements.json — entries[67]; line 540; group R; ref: B15 (range 2 repair 17)
     - Before:
       > Such a case would rule out Argument 1 and make correspondence an import again.
     - After:
@@ -784,7 +797,7 @@
     - After:
       > **construction trace**
 - **CH-0947** · 3 records · applied
-  - **D-758** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 542 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, reasons-FOR form, l. 542
+  - **D-758** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 542 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, reasons-FOR form, l. 542
     - Before:
       > Any of three: a selected transport whose value at an unseen change is determined by its history although its population admits a differing survivor there (against Argument 3; a population with no such survivor is the claim's own qualification, not an argument that rules it out); an argument that every construction trace can be rewritten as a selection history without loss (against Part IV, collapsing the two provenances and removing creativity from the semantics); or an argument that the object layer of Part IV is not what explanation operates on.
     - After:
@@ -1046,8 +1059,8 @@
       > "The claims the rest depends on"
 - **CH-0914** · 3 records · applied
   - Records D-752, D-782 (same wording):
-    - **D-752** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 61 · carried by: repaired copy · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 61 (R3)
-    - **D-782** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 61 · carried by: repaired copy · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R3 (l. 61)
+    - **D-752** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 61 · carried by: repaired copy, in other wording · source: results/S95 Does the semantics hold without verificationist words.md — section 8, residue, l. 61 (R3)
+    - **D-782** · S95 · recommendation · applied · wording not in the latest text · written against: scrubbed copy, line 61 · carried by: repaired copy, in other wording · source: results/S95 Scrub - check of the opening note, the note of sources and departures, and Parts 0 to VIII.md — Repairs, R3 (l. 61)
     - Before:
       > The claims the rest depends on, in the order of how much falls if they fail, are stated exactly in Part XV together with what would rule out each.
     - After:
@@ -1065,7 +1078,7 @@
       > are stated exactly in Part XV together with what an argument would have to exhibit to rule out each.
 
 <a id="L61-s2"></a>
-#### L61.s2 · line 61 · 7 changes, 9 records
+#### L61.s2 · line 61 · 7 changes, 10 records
 > In short: (Suff) sufficiency of the four conditions of Account; (Nec) their necessity; (Elim) the eliminability of kinds; (Prov) the two provenances and the underdetermination of selected transports at unseen changes where their population admits a differing survivor; (QF) the representability of question-finding.
 
 - **CH-0232** · 1 record · applied
@@ -1073,7 +1086,7 @@
     - Before: *(nothing: an addition)*
     - After:
       > In short: (A) sufficiency of the four conditions of Account; (B) their necessity; (C) the eliminability of kinds; (D) the two provenances and the underdetermination of selected transports; (E) the representability of question-finding.
-- **CH-0360** · 1 record · declined
+- **CH-0360** · 2 records · declined · vocabulary
   - **B-208** · S81 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md), line 63 · carried by: none (change list "What the decisions change", W27 narrowed by D9: nothing is renamed) · source: results/S81 File 11 against every case - outputs/determination/03 Step 4 - every difference between file 10 and file 11 ruled, after reading both 1D lists and both 2D audits.md — §8 'Also recorded for a later revision', item 8 (S81 Results: 'twelve unclear wordings and tensions inside file 11 (03, section 8)'); this place L63 · linked (not joined): tests/Revision 2 - worklist, draft of 23 September.md#W27
     - Before:
       > In short: (A) sufficiency of the four conditions of Account; (B) their necessity; (C) the eliminability of kinds; (D) the two provenances and the underdetermination of selected transports; (E) the representability of question-finding.
@@ -1081,6 +1094,10 @@
       > [no wording given] unclear wording or tension, recorded for a later revision
     - Old wording:
       > (B) their necessity
+  - **C-200** · S90 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 524 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W27 (L618), handling, erratum: relabel the attacks and update every pointer; decision D9 of the change list ("The decisions D1-D11"): the attack labels are kept and only wrong pointers fixed ("Checked, with no change entry")
+    - Before: *(nothing: an addition)*
+    - After:
+      > [no wording given] relabel the Part XV attacks, for example "Attack 1" to "Attack 5", and update every pointer (F11 L337, L63)
 - **CH-0443** · 1 record · applied
   - **C-7** · S90 · edit · applied · wording not in the latest text · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 63 · carried by: file 13 draft 1 (as sent); file 13 draft 2 (as sent); file 13 draft 3; file 13 draft 4; file 13 draft 5; scrubbed copy; repaired copy · source: tests/Revision 2 - change list, draft of 23 September.md — change list draft 5, entry W8.1 ("Qualify Part 0's short form of attack (D)"), STATUS applied, KIND ORDER, FILE-11 LINE 63; wording first in change list draft 1 (12e73da); carried as S90 brief (first 48 changes) C05, S90 part A1 R05
     - Before:
@@ -1150,12 +1167,3 @@
     - Before:
       > Show either that a selected transport can be non-underdetermined on unseen changes (against Derivation 3), or that construction reduces to selection (against Part IV), or that the primitive layer described in Part IV is not in fact what explanation operates on.
     - After: *(nothing: removed)*
-
-<a id="rest-XV"></a>
-## Not in the latest text, with no section: Part XV
-
-- <a id="CH-0572"></a>**CH-0572** · 1 record · never applied · placed by: Part its source names (never applied)
-  - **C-200** · S90 · recommendation · declined · written against: file 11 (authority/11 Claude Fable Semantics - standalone theory, revision 1.md, md5 5e494c1095d920d128b9a79de378f923), line 524 · carried by: none · source: tests/Revision 2 - worklist, draft of 23 September.md — worklist item W27 (L618), handling, erratum: relabel the attacks and update every pointer; decision D9 of the change list ("The decisions D1-D11"): the attack labels are kept and only wrong pointers fixed ("Checked, with no change entry")
-    - Before: *(nothing: an addition)*
-    - After:
-      > [no wording given] relabel the Part XV attacks, for example "Attack 1" to "Attack 5", and update every pointer (F11 L337, L63)
