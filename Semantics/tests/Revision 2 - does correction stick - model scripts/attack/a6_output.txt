@@ -1,0 +1,79 @@
+====================================================================================================
+A6  CHECKS OF ratchet/models
+====================================================================================================
+----------------------------------------------------------------------------------------------------
+(a) m3 control "a new job no member fails" (sun x var[V]; wet springs with the usual planting)
+----------------------------------------------------------------------------------------------------
+  m3 as run: F = J_after     E0 does F? False E0 does the added job? True  |Pres| 1 -> 1  strict? False
+  clean: F = J_before        E0 does F? True  E0 does the added job? True  |Pres| 2 -> 2  strict? False
+  -> as run, two hypotheses are dropped at once (E0 already fails f* in F); the clean control
+     drops one and still gives the non-strict case.
+
+----------------------------------------------------------------------------------------------------
+(b) 02 CX2 and CX3: are the "good" and "bad" families different families?
+----------------------------------------------------------------------------------------------------
+  good reads V+W      bad reads W+V      same set of override predicates? True
+  good reads V+W+Wi   bad reads W+V+Wi   same set of override predicates? True
+  good reads V        bad reads W        same set of override predicates? False
+  good reads V+Wi     bad reads W+Wi     same set of override predicates? False
+  "good" family var[V+W+Wi] contains the rain rescue (fires iff wet)? True ; the variety rescue? True
+  "good" family var[V+W] contains the rain rescue (fires iff wet)? True ; the variety rescue? True
+  -> CX2's 4:4 (V+W vs W+V) and 64:64 rows compare a family with itself; CX3's "good:V+W+Wi" row
+     is a family holding BOTH rescues, set against one holding only the bad one.
+
+----------------------------------------------------------------------------------------------------
+(c) m3 check (1): is a failure possible under its encoding?
+----------------------------------------------------------------------------------------------------
+  okmask of v0 (sun=id, all added parts off) == pairs E0 gets right: True
+  so for every F inside R0 and every f* in M(E0): v0 in Pres(F) and not in Pres(F+f*), by construction.
+  The ~274,000 instances test the encoding, not the lemma; the lemma's content is the equality above,
+  which a1 shows fails under full (E) with one interpretation.
+
+----------------------------------------------------------------------------------------------------
+(d) m1 (i) NonCircular with Part II deletion (override deleted -> its port free) instead of "off"
+----------------------------------------------------------------------------------------------------
+  E0             |C|= 2  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E0             |C|= 3  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_good         |C|=16  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_good         |C|= 3  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_bad          |C|=16  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_bad          |C|= 3  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_patch        |C|= 3  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_narrow       |C|= 2  NonCirc (m1, off)=True   NonCirc (Part II)=True 
+  E_narrow_bare  |C|= 1  NonCirc (m1, off)=False  NonCirc (Part II)=False
+  verdicts changed: 0
+
+----------------------------------------------------------------------------------------------------
+(e) which added jobs separate the good rescue from the wet-spring rescue on the record (U1)?
+----------------------------------------------------------------------------------------------------
+  J_after + dry/calm/early/sunS      good in? True  bad in? False
+  J_after + dry/windy/early/sunS     good in? True  bad in? False
+  J_after + wet/calm/late/sunS       good in? True  bad in? False
+  J_after + wet/windy/late/sunS      good in? True  bad in? False
+  -> four single summers separate them: the early variety in a dry spring (the seed trial and its windy
+     twin) and a wet spring with the usual planting (calm or windy); "only the seed trial or the open
+     question" is too narrow.
+
+----------------------------------------------------------------------------------------------------
+(f) 02 CX4 / 03 s2 third control, with a job read as a QUESTION (03 edit (a)): baseline + pairs
+----------------------------------------------------------------------------------------------------
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + none                                                    (A) only  |Pres|=1
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + none                                                    full (E)  |Pres|=1
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + {B0, wet spring}  (no pair contrasts with the baseline) (A) only  |Pres|=1
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + {B0, wet spring}  (no pair contrasts with the baseline) full (E)  |Pres|=0
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + {B0, shade, wet spring}                                 (A) only  |Pres|=1
+  E1 family sun' x var[V], jobs {j_seen, j_fail} + {B0, shade, wet spring}                                 full (E)  |Pres|=1
+  -> read as a question, "another wet spring" alone is a job NO member can do (NonCircular needs a
+     contrast with the baseline), so adding it is strict (1 -> 0), not file 00's non-strict case.
+
+----------------------------------------------------------------------------------------------------
+(g) 02 s2/s7 option (b) marks, with "deleted" read as Part II deletion (port freed) instead of "off"
+----------------------------------------------------------------------------------------------------
+  E_good   on C_full   consequences (off): 3  -> not marked         consequences (Part II): 7  -> not marked
+  E_good   on J_after  consequences (off): 0  -> MARKED             consequences (Part II): 1  -> not marked
+  E_bad    on C_full   consequences (off): 3  -> not marked         consequences (Part II): 7  -> not marked
+  E_bad    on J_after  consequences (off): 0  -> MARKED             consequences (Part II): 1  -> not marked
+  E_patch  on C_full   consequences (off): 0  -> MARKED             consequences (Part II): 7  -> not marked
+  E_patch  on J_after  consequences (off): 0  -> MARKED             consequences (Part II): 1  -> not marked
+  -> with Part II deletion every added override has a "consequence" at every sunny-south pair of its
+     contract (its deletion leaves the answer undetermined there), so (b) marks none of the three.

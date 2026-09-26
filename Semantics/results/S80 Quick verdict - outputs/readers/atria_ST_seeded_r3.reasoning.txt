@@ -1,0 +1,499 @@
+The user wants me to audit the theory document "Claude Fable Semantics" using the review method provided (the SKILL.md and its references). Wait, actually, the prompt says: "Below is a theory document, 'Claude Fable Semantics'. Audit it. Your job is to find its defects: false statements, proofs that do not prove what they claim, claims wider than their support, parts that contradict other parts, and any other defects."
+
+I need to read the whole document and report defects numbered 1, 2, 3..., with (a) location, (b) exact quote, (c) what's wrong with a counterexample or failing step.
+
+Let's carefully analyze the document for mathematical/logical errors, contradictions, or overreaching claims.
+
+Let's go through the parts.
+
+Part 0:
+- "Two components no admitted change can separate are one kind at that level, whatever labels anyone attaches to them." This is a definition, fine.
+- Grievance 4: "The physical theory fixes which changes are possible at all. A contract is a declared subset of those."
+- Grievance 9: "Selection is a physical history... A kind-label is not a claim about anything; it is a label."
+
+Part II:
+- Organizations: $D=(V,(X_v)_{v\in V},J,B,A,L)$.
+- $Sol_D(a,b) = \{z \in X_D: \forall j \in J, z|_{V_j} \in L_j(a,b)\}$. (O)
+- "A deleted component imposes the full relation on its ports."
+- "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one."
+- Roles: input, output, observation.
+- Kinds: $\operatorname{sig}_C(j)=\{(a,b,L_j(a,b)):(a,b)\in C\}$. Two components are of one kind on $C$ when there is a bijection of their footprints under which signatures coincide.
+
+Wait, in Part VII, "Odd-order skew-symmetric matrices":
+"Non-circular dependence is witnessed by $I_3$ under removal of skewness and by $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ under removal of oddness."
+Wait, $I_3$ is the 3x3 identity matrix. If you remove skewness, the family becomes all 3x3 matrices (or all matrices of odd order?), and $I_3$ is an invertible odd-order matrix, so it witnesses that the answer changes (invertible matrices exist). If you remove oddness, the family includes even-order skew-symmetric matrices, and $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ is invertible. This seems correct.
+
+Wait, let's look at Derivation 3 in Part XVI:
+"Claim. Let $t$ be selected on a finite history $H\subsetneq C$. For every $(a,b)\in C\setminus H$ there exists a transport $t'$, also surviving on $H$, with a different value at $(a,b)$.
+Proof. The component relations $L_j(a,b)$ are supplied independently for each $(a,b)$. Survival on $H$ constrains only $\{L_j(a,b):(a,b)\in H\}$. Alter $L_{j}(a,b)$ for one $(a,b)\notin H$ to any other admitted relation; the result survives on $H$ and differs at $(a,b)$."
+
+Is there a defect here? The claim says "there exists a transport $t'$... with a different value at $(a,b)$". But what if the transport's value at $(a,b)$ is *forced* by the values on $H$? For example, if the edits in $H$ generate the edit $(a,b)$, or if the constraints of the organization $E$ force the relation $L_j(a,b)$ to be a specific thing. The proof assumes component relations are independent for each $(a,b)$, but they are part of a transport $t=(\pi,\tau,\sigma,\lambda)$, and $\tau$ translates edits. If $\tau$ is a homomorphism (as required by F2: $\tau(a_2 a_1) = \tau(a_2)\tau(a_1)$), then $\tau$ is determined by its values on generators. If $H$ contains generators of the whole monoid $A$, then $\tau$ is determined on all of $A$. Also, the components of $E$ are fixed relations; $L_k$ is part of the organization $E$. A transport is not free to choose $L_k(\tau(a),\sigma(b))$ arbitrarily—they are determined by the fixed organization $E$ and the translation $\tau, \sigma$. The proof says "Alter $L_j(a,b)$ for one $(a,b)\notin H$", but $L_j$ is not part of the transport $t$; the transport maps $D$ to $E$. The transport consists of $(\pi, \tau, \sigma, \lambda)$. The relations $L_j$ belong to the target organization $E$ (or $D$). Wait, the notation $L_j(a,b)$ in Derivation 3 refers to the component relations of...? "The component relations $L_j(a,b)$ are supplied independently for each $(a,b)$." Actually, in Part II, $L_j(a,b)$ is supplied by the interpretation of organization $D$. In Part IV, a transport $t$ is selected. The candidate transports are $\mathcal T$. If $\mathcal T$ consists of transports between *fixed* organizations $D$ and $E$, then $L_j$ are fixed, and the only freedom is in $\pi, \tau, \sigma, \lambda$. If $\tau$ is a monoid homomorphism and $H$ generates $A$, $\tau$ is fixed. Even if $H$ doesn't generate $A$, there might be no freedom to alter the value at $(a,b)$ if the transport must satisfy (F1) and (F2) globally, or if the population $\mathcal T$ is restricted. The proof assumes we can just "alter $L_j(a,b)$", which treats the target organization's relations as variable, contradicting the definition of a transport between fixed organizations, or assuming the population contains all possible target organizations. This looks like a genuine gap in the proof. The claim might still be true under some assumptions, but the proof as written is too fast: it assumes unconstrained independence of $L_j(a,b)$ from the rest of the transport, ignoring that $\tau, \sigma$ must be homomorphisms/translations and the transport must satisfy (F1)/(F2) or at least be a valid transport in $\mathcal T$. Also, if $A$ is generated by edits in $H$, then $\tau$ is determined on all of $A$, so the transport's action on $(a,b)$ might be fully determined by its action on $H$. This is a solid defect.
+
+Let's check Derivation 1:
+"Claim. If a transport satisfies (F1) on $C$, then every active component $k$ of $E$ has the same signature on $\tau[C]$ as its anchor $\lambda(k)$ has on $C$, up to the port translation.
+Proof. By (K), $\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}$ and $\operatorname{sig}_{\tau[C]}(k)=\{(\tau(a),\sigma(b),L_k(\tau(a),\sigma(b)))\}$. (F1) equates the third coordinates pointwise. ∎"
+
+Wait, (K) defines signature as $\{(a,b,L_j(a,b))\}$. But for the anchor $\lambda(k)$, which is a subnetwork of $D$, its "component relation" is not directly $L_j$; the proof uses $\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b)$ as the third coordinate. That's consistent with (F1). However, the signature $\operatorname{sig}_C(\lambda(k))$ is defined for a *component* $j$ of $D$. A subnetwork $\lambda(k)$ is not a component of $D$, so $\operatorname{sig}_C(\lambda(k))$ is an extension of (K) to subnetworks. That's a minor notational extension, probably acceptable. But is there a real error? (F1) says $\operatorname{proj}_{V_k}[\operatorname{Sol}_{\lambda(k)}(a,b)] = L_k(\tau(a),\sigma(b))$. The signature in (K) is $\{(a,b,L_j(a,b))\}$. So the third coordinate matches. The bijection of footprints is given by the port translation from $\lambda$. This seems fine.
+
+Wait, look at Part V, Non-circular dependence:
+"There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+Wait, "or is left as it was" — if the answer profile is *left as it was*, then removing the block did NOT change the answer. But the condition is supposed to ensure the answer is *not* hidden in the starting points. If removing a block leaves the answer exactly as it was, that means the block was idle, not that the answer depends on it! The text says "changes, ceases to be determined in the claimed way, or is left as it was." If it's left as it was, then this $(a,b)$ does not show non-circularity. Actually, wait. The sentence might mean: the edit removes a block, and then the answer changes, OR the answer ceases to be determined, OR [something else] is left as it was? Let's re-read: "under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." This is bizarre. If the answer profile is left as it was, it fails to witness non-circularity. This looks like a genuine typo or logical error in the definition. It should probably say something like "the answer profile changes or ceases to be determined". The phrase "or is left as it was" contradicts the purpose. Let me double check. "There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ ... under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." Yes, this is a defect: an edit that leaves the answer as it was does not witness non-circular dependence; it witnesses idleness.
+
+Let's check Part VI, Finite monotone theorem:
+"If $\Gamma$ is finite, $\mathsf S$ is upward closed, and $\Gamma\in\mathsf S$, then the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+Wait. "the critical singletons are exactly $\bigcap\min\mathsf S$". A singleton $\{d\}$ is critical if...? The theorem says "the critical singletons are exactly $\bigcap\min\mathsf S$". But $\bigcap\min\mathsf S$ is a *set of elements*, not a set of singletons. That's a minor type mismatch. More importantly, is an element in $\bigcap\min\mathsf S$ a critical singleton? A singleton $\{d\}$ is critical for $W$ if $W \in S$ and $W \setminus \{d\} \notin S$. The proof says: "A member of a minimal support is critical for it. If $d$ is critical for $W$, finiteness gives a minimal $U\subseteq W$; if $d\notin U$, upward closure makes $W\setminus\{d\}$ a support." Wait. If $d$ is critical for $W$, then $W \setminus \{d\} \notin S$. If $U \subseteq W$ is a minimal support and $d \notin U$, then $U \subseteq W \setminus \{d\}$, so by upward closure $W \setminus \{d\} \in S$, contradiction. Thus $d \in U$ for every minimal support $U \subseteq W$. So $d \in \bigcap \min S$. This shows critical elements are in $\bigcap \min S$. Conversely, if $d \in \bigcap \min S$, is $d$ critical? The theorem says "critical singletons are exactly $\bigcap\min\mathsf S$". But wait, criticality is relative to some $W$. The definition (B): $\operatorname{CriticalBlock}(B;W,p) \iff W\in S \land W\setminus B \notin S$. The theorem says "the critical singletons are exactly $\bigcap\min\mathsf S$". If $d \in \bigcap \min S$, then for $W = \Gamma$, is $\Gamma \setminus \{d\} \notin S$? Since $d$ is in *every* minimal support, $\Gamma \setminus \{d\}$ contains no minimal support. Since $S$ is upward closed and $\Gamma$ is finite, every support contains a minimal support. So $\Gamma \setminus \{d\}$ is not a support. Thus $d$ is critical for $\Gamma$. So the elements of $\bigcap \min S$ are exactly the elements critical for $\Gamma$. But the theorem calls them "the critical singletons" without specifying $W$. That's a slight imprecision, but the math seems basically right. What about "the globally indispensable ones are exactly $\bigcup\min\mathsf S$"? Globally indispensable should mean critical for every support? Or present in every support? $\bigcup \min S$ is the set of elements that appear in *some* minimal support. But an element in some minimal support is NOT globally indispensable—if it were, it would be in every support. Wait. If $d \in \bigcup \min S$, it's in some minimal support $U$. Is it indispensable? No, because there might be another minimal support $U'$ not containing $d$. Then $U' \setminus \{d\} = U' \in S$, so $d$ is not critical for $U'$. So $\bigcup \min S$ is NOT the set of globally indispensable elements; it's the set of *contributory* elements (elements that belong to at least one minimal support). The set of globally indispensable elements would be $\bigcap \min S$. Wait, the theorem says "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$." This is backwards or misnamed! $\bigcap \min S$ are the elements in *every* minimal support—these are the globally indispensable ones! $\bigcup \min S$ are the elements in *some* minimal support—these are the contributory ones, not globally indispensable. Let's re-read carefully: "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$." Actually, if $d \in \bigcap \min S$, it's critical for $\Gamma$ (as shown). But is it "globally indispensable"? Yes, it's in every support. So $\bigcap \min S$ = globally indispensable. And what is $\bigcup \min S$? Elements in some minimal support. Are these "critical singletons"? No, an element in some but not all minimal supports is not critical for $\Gamma$. So the theorem's naming is swapped: $\bigcap \min S$ are the globally indispensable, while $\bigcup \min S$ are the contributory (or "critical for some support"). Let's verify the proof: "A member of a minimal support is critical for it." — Yes, if $U$ is minimal and $d \in U$, then $U \setminus \{d\} \notin S$, so $d$ is critical for $U$. "If $d$ is critical for $W$, finiteness gives a minimal $U\subseteq W$; if $d\notin U$, upward closure makes $W\setminus\{d\}$ a support." — Yes, so $d \in U$. This shows critical-for-$W$ elements are in $\bigcap$ of minimal supports *contained in $W$*. So the set of elements critical for *some* support is exactly $\bigcup \min S$! And the elements critical for *all* supports (globally indispensable) is $\bigcap \min S$. So the theorem text says "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$." This is definitely swapped relative to the proof. The proof shows: critical for some $W$ $\iff$ in some minimal support ($\bigcup \min S$). And globally indispensable (in every support) $\iff$ in every minimal support ($\bigcap \min S$). So the theorem statement has the two characterizations swapped. Good catch. This is a definite defect.
+
+Let's check Part VII, Identification:
+"(I4) Repeating rows changes no kernel; an independent calibration can."
+Wait, (I4) is referenced in the word-list as "repeating rows changes no kernel (I4)". In Part VII: "For linear $A$ and feature $c^\top$, identification is $\ker A \subseteq \ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+This is mathematically correct: repeating a row of $A$ doesn't change its kernel. Adding an independent row (calibration) can shrink the kernel.
+
+Let's check Part VII, Obstruction:
+"Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result."
+Wait, 24 tokens *can* be split equally three ways: 8 each. 24 is divisible by 3! The text says "Twenty-four indivisible tokens cannot be split equally three ways". That's false! 24 / 3 = 8. Earlier in the skill document (by-domain.md), it said "Twenty-three coins cannot be shared equally among three people". Here it says twenty-four. That's an arithmetic error! Let me double-check. "Twenty-four indivisible tokens cannot be split equally three ways". Yes, 24 is divisible by 3. This is a clear false statement.
+
+Let's check Part VIII, Approximate transport:
+"With one-step discrepancy $\varepsilon$ and an $L$-Lipschitz next-step map, $e_n\le\varepsilon\sum_{k<n}L^k$. (T2)"
+This is standard. If $L \ge 1$, the sum is $(L^n-1)/(L-1)$. Fine.
+
+Let's check Part IX, What a test refutes:
+"For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)"
+Wait. If $T \land B \land I \Rightarrow O$ and $\neg O$, then $\neg(T \land B \land I)$, i.e., $\neg T \lor \neg B \lor \neg I$. It does NOT yield $\neg T$ alone! The text itself says in Part XV / elsewhere: "A failed test knocks down the whole bundle... and nothing narrower." But here (K3) says "yields $\neg T$, since $B$ and $I$ are background." This directly contradicts the skill's own principle (and Part XV's statement). Actually, in the SKILL document, word-list says: "a failed test knocks down the bundle (K3) - From theory and background and test set-up together predicting wrongly, only 'not all three' follows." But here the document says "yields $\neg T$". That's a contradiction with the word-list's own summary of K3! Let me re-read the document's K3: "For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)". This is logically false: $\neg O$ yields $\neg T \lor \neg B \lor \neg I$. This is a clear defect.
+
+Let's check Part XII, Retention fixed point:
+"$F(C)$ = states whose executions all complete and return into $C$. $F$ is monotone; $C\subseteq F(C)$ is the invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)"
+Standard Knaster-Tarski. Fine.
+
+Let's check Part XIII, Universality:
+(U1), (U2), (U3). Fine.
+
+Let's check Part XVI, Derivation 4:
+"Claim. A system can be surprised if and only if it holds a transport selected on a history $H$ strictly smaller than the contract $C$ of changes the world admits.
+Proof. Surprise is defined as a violation at $(a,b)\notin H$. If there is no transport there is no expectation and hence no violation. If $H=C$, every occurring $(a,b)$ is in $H$, so no violation at $(a,b)\notin H$ exists. ∎"
+Wait, the "if and only if" requires the converse: if $H \subsetneq C$, then the system *can* be surprised. But $H \subsetneq C$ only means there is some $(a,b) \in C \setminus H$. Does the world actually *occur* at $(a,b)$? The proof only shows that if $H=C$, no surprise is possible. It doesn't show that if $H \subsetneq C$, surprise actually occurs (or even can occur). For surprise, a violation must occur at some $(a,b) \notin H$. But maybe the transport is faithful on all of $C$ despite being selected only on $H$. Then no violation occurs, so no surprise. The claim says "A system can be surprised if and only if it holds a transport selected on a history $H$ strictly smaller than the contract $C$". If "can be surprised" means "surprise is possible given the definitions", then $H \subsetneq C$ allows the *possibility* of a violation at $(a,b)\notin H$, but doesn't guarantee it. However, the proof doesn't establish even that: what if the transport is faithful everywhere on $C$? Then no violation occurs, so no surprise. The claim is an overstatement: $H \subsetneq C$ is necessary for surprise, but not sufficient (even for possibility, if the transport happens to be faithful on $C\setminus H$, no surprise occurs). Actually, the claim says "can be surprised iff...". If it means logical possibility, $H\subsetneq C$ makes it *possible* that a violation occurs at $(a,b)\notin H$. But the transport might be faithful. So "can be surprised" in the sense of "nothing rules it out" would be true, but the phrasing "A system can be surprised if and only if..." suggests $H \subsetneq C$ is sufficient for the possibility. Wait, if the transport is faithful on $C$, then no violation occurs, so the system cannot be surprised. So $H \subsetneq C$ does not imply the system can be surprised. This is a defect in the claim/proof. Also, Derivation 3 claims selected transports are *always* underdetermined on $C\setminus H$, which if true would mean there is *some* change where fidelity fails... wait, Derivation 3 says "there exists a transport $t'$... with a different value". It doesn't say $t$ itself fails. So $t$ might be faithful on $C$. Thus surprise is not guaranteed. Derivation 4's iff is too strong.
+
+Let's check Derivation 3 again.
+"Claim. Let $t$ be selected on a finite history $H\subsetneq C$. For every $(a,b)\in C\setminus H$ there exists a transport $t'$, also surviving on $H$, with a different value at $(a,b)$."
+As analyzed, the proof assumes $L_j(a,b)$ can be altered independently. But a transport $t = (\pi, \tau, \sigma, \lambda)$ between fixed organizations $D$ and $E$ doesn't have the freedom to alter $L_j(a,b)$—those are fixed by $D$ and $E$. Even if we allow varying the transport, $\tau$ must be a monoid homomorphism. If $A$ is generated by the edits in $H$, $\tau$ is fully determined on $A$, so no $t'$ can differ at $(a,b)$ while matching $t$ on $H$. The proof ignores the homomorphism condition (F2) and the fixed nature of the organizations. This is a serious defect in a load-bearing derivation (it supports the attack point D and the fallibility claim).
+
+Let's check Part V, Non-circular dependence again:
+"There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+Yes, "or is left as it was" defeats the purpose. If the answer is left as it was, the block did nothing, which is the opposite of non-circular dependence. This is a defect.
+
+Let's check Part VI, Infinitary support:
+"$\Gamma=\{d_n:|x|\le 1/n\}$: every unbounded index set determines $x=0$; no minimal support and no singleton witness exists."
+Wait, "every unbounded index set determines $x=0$". An unbounded subset of $\mathbb{N}$... if we take the set of all $d_n$ for $n$ in an unbounded index set, the intersection of the constraints $|x| \le 1/n$ for $n$ in an unbounded set is $x=0$. But what if the index set is bounded? Then it doesn't determine $x=0$. The claim says "every unbounded index set determines $x=0$". That's true. But is it a defect? The set $\Gamma$ itself is the whole set. A support $W$ must satisfy Account. If $W$ is a subset of $\Gamma$ whose intersection is $\{0\}$, then $W$ must be unbounded. So the supports are exactly the unbounded subsets. No minimal support exists (since you can always remove one element from an unbounded set and it remains unbounded). This seems correct.
+
+Wait, look at Part VII, "Explanations that remove structure":
+"A question of the form 'why is there no $X$-effect?' has a target $D$ in which the ports and components a rival account would need are absent, and a contract containing the edits that would introduce them. An account is faithful when introducing those components changes the answer in $E$ as it does in $D$, and their absence leaves both unchanged. The rival's supposed structure is anchored to a *deleted* subnetwork, whose relation is full by (O)."
+This seems consistent with the skill.
+
+Let's check Part II, "Roles are derived":
+"A port $v$ is an **input** under $A$ when $A$ contains an edit that sets $v$ directly. A port is an **output** of component $j$ when its value is determined by $L_j$ given the other ports of $V_j$ across $B$."
+Fine.
+
+Let's check Part V, (F1):
+"$\operatorname{proj}_{V_k}\!\big[\operatorname{Sol}_{\lambda(k)}(a,b)\big]=L_k(\tau(a),\sigma(b))$"
+Wait, $\operatorname{Sol}_{\lambda(k)}(a,b)$ is the solution set of the subnetwork $\lambda(k)$ under edit $(a,b)$. But $\lambda(k)$ is a subnetwork of $D$. The edit applied to $D$ is $(a,b)$. So $\operatorname{Sol}_{\lambda(k)}(a,b)$ makes sense. Projecting away hidden ports gives the relation on $V_k$. This matches $L_k(\tau(a),\sigma(b))$. Fine.
+
+Let's check Part V, Non-vacuity:
+"$\operatorname{Sol}_D(1,b_0)\neq\varnothing$. The contract $C$ is a declared subset of the physically admitted edits, and every physically admitted edit excluded from $C$ is excluded by a stated scope, not silently. A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to $\mathcal Q$, does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+Wait, if a contract consists only of relabelings, does it fail non-circular dependence? Non-circular dependence requires an edit that removes a block of $\Gamma$ and changes the answer. If $C$ only has relabelings, maybe you can't remove blocks? Actually, the text says such a contract "does not satisfy non-circular dependence". That's a claim. It's plausible.
+
+Let's check Part IX, Bearing:
+"$\operatorname{Bearing}(c,z,p)\iff\operatorname{Account}(\mathcal E_c,p_\delta)$. (K1)"
+Fine.
+
+Let's check Part XI, (P):
+"$\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\iff\exists o\in O[\neg o(\xi)\land o(\xi')]\land\forall r\in P[r(\xi)\Rightarrow r(\xi')]\land\operatorname{ProducedBy}(\Delta,\xi,\xi';O)$."
+Fine.
+
+Let's check Part XII, (CT1):
+"$\operatorname{RetReal}(\pi,T,C;\chi)\iff\forall z\in C\ \forall i\in\operatorname{dom}T\ \forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C$."
+Wait, the quantifier says "$\eta$ completes with $o\in T[i]$ and $z'\in C$". But $z'$ is not bound by a quantifier! It should be "$\exists z' \in C$" or similar. The formula says "completes with $o \in T[i]$ and $z' \in C$" but $z'$ is free. This is a syntactic defect (unbound variable). Actually, it probably means "completes with output $o \in T[i]$ and ending state $z' \in C$". The lack of an existential quantifier for $z'$ (or a projection from $\eta$) makes it formally ill-formed. I'll note this.
+
+Let's check Part XIII, (U1):
+"$\operatorname{UU}\iff\forall c\in\mathfrak E_\Theta\ \exists\chi,\ \operatorname{Enable}(s,U_c,\chi)\land\operatorname{Can}(\xi_0,U_c;\chi)$"
+Fine.
+
+Let's check Part XVI, Derivation 5:
+"Claim. A contract $C$ is an organization (a set of edits with a query), and can be the content $c$ in (G). ...
+Proof. A contract is a subset of $A\times B$ together with $\mathcal Q$. Give it ports (the edits and their boundaries), components (the closure conditions), and admitted edits (add or remove a change; alter $\mathcal Q$). It is then a $D$ in the sense of (O). Deploy, Build, and New apply. ∎"
+Wait, a contract is $C \subseteq A \times B$. But in Part III, a question is $p = (D, C, b_0, \mathcal Q, O_p, \rho_p)$. The contract is just $C$. Derivation 5 says "A contract is a subset of $A\times B$ together with $\mathcal Q$." That's the pair $(C, \mathcal Q)$. But $\mathcal Q$ is a query on $D$. If we make the contract into an organization $D'$, the query $\mathcal Q$ refers to the *original* $D$. So "alter $\mathcal Q$" as an edit on $D'$ is fine, but $\mathcal Q$'s codomain $Y_p$ depends on the original question. This is a bit loose but maybe acceptable as a modelling move. I'll look for something sharper.
+
+Let's re-examine Derivation 3 and the definition of Selected in Part IV.
+"**Selected.** There is a population $\mathcal T$ of candidate transports, a variation operator $\mu$ on $\mathcal T$, a finite history $H\subseteq C$ of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on $H$. The transport $t$ is a member of $\mathcal T$ that survived."
+Then Derivation 3 claims: "For every $(a,b)\in C\setminus H$ there exists a transport $t'$, also surviving on $H$, with a different value at $(a,b)$."
+Proof: "The component relations $L_j(a,b)$ are supplied independently for each $(a,b)$. Survival on $H$ constrains only $\{L_j(a,b):(a,b)\in H\}$. Alter $L_{j}(a,b)$ for one $(a,b)\notin H$ to any other admitted relation; the result survives on $H$ and differs at $(a,b)$. ∎"
+Defects:
+1. A transport $t=(\pi,\tau,\sigma,\lambda)$ does not supply the component relations $L_j$; those belong to the organizations $D$ and $E$. The transport translates edits ($\tau$) and boundaries ($\sigma$). You cannot "alter $L_j(a,b)$" to get a new transport $t'$; you'd have to change the target organization $E$ or the source $D$. If the population $\mathcal T$ consists of transports between *fixed* $D$ and $E$, then $L_j$ are fixed and there is no freedom at all.
+2. Even if the population allows varying $\tau, \sigma, \pi, \lambda$, the condition (F2) requires $\tau$ to be a monoid homomorphism: $\tau(a_2 a_1) = \tau(a_2)\tau(a_1)$. If the edits in $H$ generate the edit $(a,b)$ (e.g., $(a,b) = (a_2 a_1, b)$), then $\tau(a,b)$ is determined by $\tau$ on $H$. The proof assumes complete independence of each $(a,b)$, which contradicts the homomorphism requirement.
+3. The claim in Derivation 4 that surprise is possible iff $H \subsetneq C$ relies on Derivation 3, but even Derivation 3's conclusion (existence of some $t'$ differing) doesn't imply that $t$ itself is unfaithful at $(a,b)$. So surprise (a violation of $t$) is not guaranteed.
+
+This is definitely the most serious defect, as Derivation 3 is listed as load-bearing (Attack D in Part XV, Grievance 3 in Part 0).
+
+Let's look at Part VI again:
+"**Finite monotone theorem.** If $\Gamma$ is finite, $\mathsf S$ is upward closed, and $\Gamma\in\mathsf S$, then the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+As established, this is swapped. Let's double check.
+- $\bigcap \min S$ = elements in every minimal support. These are critical for $\Gamma$ (since removing them from $\Gamma$ destroys all minimal supports, hence all supports). Are they "critical singletons"? A singleton $\{d\}$ is a critical block for $W$ if $W \in S$ and $W \setminus \{d\} \notin S$. If $d \in \bigcap \min S$, then $\Gamma \setminus \{d\} \notin S$, so $\{d\}$ is critical for $\Gamma$. But if $d \in \bigcup \min S$ but not in $\bigcap \min S$, then there is some minimal support $U$ with $d \in U$, so $U \setminus \{d\} \notin S$, meaning $d$ is critical for $U$. So the elements critical for *some* support are exactly $\bigcup \min S$. The elements critical for *every* support (or for $\Gamma$) are $\bigcap \min S$.
+The theorem says "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+If "critical singletons" means singletons critical for some support, it should be $\bigcup \min S$. If it means critical for $\Gamma$, it's $\bigcap \min S$. And "globally indispensable" must mean in every support, which is $\bigcap \min S$. So the two characterizations are definitely swapped relative to the names. The proof confirms: "A member of a minimal support is critical for it." (This establishes $\bigcup \min S \subseteq$ critical-for-some). "If $d$ is critical for $W$... $d \in U$" (critical-for-some $\subseteq \bigcup \min S$). So the proof shows critical-for-some = $\bigcup \min S$. The theorem statement assigns $\bigcap \min S$ to "critical singletons" and $\bigcup \min S$ to "globally indispensable", which is backwards. This is a solid, provable defect.
+
+Let's check Part VII, "Odd-order skew-symmetric matrices":
+"Question: why is every odd-order real skew-symmetric matrix singular? Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed. The full Leibniz expansion with skewness substituted satisfies (F1) and (F2)... Non-circular dependence is witnessed by $I_3$ under removal of skewness and by $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ under removal of oddness."
+Wait. If you remove skewness, the family becomes all odd-order matrices (or 3x3 matrices?). $I_3$ is invertible, so the answer changes from "all singular" to "some invertible". If you remove oddness, the family includes even-order skew-symmetric matrices, and $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ is invertible. This works.
+But wait: "The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away."
+Is there a problem here? The Leibniz expansion for a skew-symmetric matrix of odd order: $\det(A) = \sum_{\sigma} \operatorname{sgn}(\sigma) \prod a_{i\sigma(i)}$. For skew-symmetric $A$, $\det(A) = \det(A^T) = \det(-A) = (-1)^n \det(A) = -\det(A)$, so $\det(A)=0$. The "full Leibniz expansion with skewness substituted"—what does this mean as an organization? It's a bit handwavy but not obviously false.
+
+Let's check Part II, Kinds:
+"Two components $j,j'$ are **of one kind on $C$** when there is a bijection of their footprints under which $\operatorname{sig}_C(j)$ and $\operatorname{sig}_C(j')$ coincide."
+Wait, the signature $\operatorname{sig}_C(j) = \{(a,b,L_j(a,b)) : (a,b) \in C\}$. If there is a bijection $\phi: V_j \to V_{j'}$ such that applying $\phi$ to the relations $L_j(a,b)$ yields $L_{j'}(a,b)$ for all $(a,b) \in C$. This is fine.
+
+Let's check Part IV, "Expectation, surprise, violation":
+"Let $t$ be selected on history $H$ with contract $C$. For an edit–boundary pair $(a,b)\in C$ actually occurring:
+- the **expectation** is $\operatorname{Ans}_S(\tau(a),\sigma(b))$;
+- a **violation** occurs when fidelity fails at $(a,b)$;
+- **surprise** is a violation at $(a,b)\notin H$."
+Wait. If $t$ is selected on $H \subseteq C$, then $t$ is a transport from $P$ to $S$. The expectation is $\operatorname{Ans}_S(\tau(a),\sigma(b))$. But $\operatorname{Ans}_S$ is the answer profile of the *simulation layer* $S$ as a question. This is fine.
+
+Let's check Part VIII, "Relational transport":
+"For $R\subseteq Z_D\times Z_E$, forward preservation is
+$zRy\land z\xrightarrow{a}z'\Rightarrow\exists y'[y\xrightarrow{\tau(a)}y'\land z'Ry']$, (T1)
+with the backward condition required for equivalence rather than one-sided abstraction."
+This is standard bisimulation-like preservation. Fine.
+
+Let's check Part IX, "What a test refutes":
+"For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)"
+This is definitely wrong as written. $\neg O$ yields $\neg T \lor \neg B \lor \neg I$. The document explicitly contradicts itself: Part XV says "A mathematical error. A counterexample to ... Derivations 1–3". And the SKILL document's word-list says: "a failed test knocks down the bundle (K3) - From theory and background and test set-up together predicting wrongly, only 'not all three' follows." So (K3) as stated here ("yields $\neg T$") contradicts the intended meaning and is logically invalid. This is a clear defect.
+
+Let's check Part XII, (CT1) again:
+"$\operatorname{RetReal}(\pi,T,C;\chi)\iff\forall z\in C\ \forall i\in\operatorname{dom}T\ \forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C$."
+The variable $z'$ is unbound. Also $o$ is unbound. It should probably be "$\eta$ completes with output $o\in T[i]$ and end state $z'\in C$", which requires existential quantification or a projection from $\eta$. As written, it's an ill-formed formula. I will report this.
+
+Let's check Part XIV, "Dependence order":
+"(K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E). (N), (G) depend on Deploy and Build."
+Wait, in Part X, Build is defined: "$\operatorname{Build}_{\beta,\ell}(s,c,h,e)$ holds when an actual subhistory owned by $s$... prepares a represented organization for explanatory use of $c$...". It mentions (R) implicitly ("represented organization"). The dependence order says "Build depends on histories and (E)". But Build involves a "represented organization", so it should depend on (R) as well. Minor.
+
+Let's check Part XVI, Derivation 8:
+"Claim. Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK). Proof. Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them. ∎"
+Wait, (E) includes Non-vacuity: "every physically admitted edit excluded from $C$ is excluded by a stated scope". If you transport along a bijection, the physical module $\Theta$ and the set of physically admitted edits must be preserved. A structure-preserving bijection of the physical system might not preserve which edits are *physically admitted* unless the bijection is an automorphism of the physics. The proof ignores the physical realization and physical admission constraints, which are not purely structural equalities/existence claims invariant under arbitrary structure-preserving bijections. This is a gap but maybe minor.
+
+Let's check Part 0, Grievance 4:
+"The physical theory fixes which changes are possible at all. A contract is a declared subset of those."
+Consistent.
+
+Let's check Part III, Contracts:
+"$O_p$ is the set of obligations being addressed or protected."
+Fine.
+
+Let's check Part V, Baseline coherence:
+"$\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing$: the components of $E$ are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+Wait, (F2) says $\pi[\operatorname{Sol}_D(1,b_0)] = \operatorname{Sol}_E(1,\sigma(b_0))$. Non-vacuity says $\operatorname{Sol}_D(1,b_0) \neq \varnothing$. If $\pi$ is a function, then $\operatorname{Sol}_D(1,b_0) \neq \varnothing$ implies $\pi[\operatorname{Sol}_D(1,b_0)] \neq \varnothing$, so $\operatorname{Sol}_E(1,\sigma(b_0)) \neq \varnothing$. So Baseline coherence IS implied by (F2) + Non-vacuity! The text says "This is an independent requirement; it is not implied by the conditions above." But (F2) with $\pi$ a function (or even a relation, if $X_D \neq \emptyset$) gives it directly. Let's verify: $\pi: X_D \to X_E$. Non-vacuity: $\operatorname{Sol}_D(1,b_0) \neq \varnothing$, so there is $z \in \operatorname{Sol}_D(1,b_0)$. Then $\pi(z) \in \pi[\operatorname{Sol}_D(1,b_0)] = \operatorname{Sol}_E(1,\sigma(b_0))$. Thus $\operatorname{Sol}_E(1,\sigma(b_0)) \neq \varnothing$. So Baseline coherence is trivially implied by (F2) and Non-vacuity. The claim that it is an independent requirement not implied by the conditions above is FALSE. This is a solid defect!
+
+Let me double-check this.
+(F2): $\pi[\operatorname{Sol}_D(a,b)] = \operatorname{Sol}_E(\tau(a),\sigma(b))$.
+At baseline $(1, b_0)$: $\pi[\operatorname{Sol}_D(1,b_0)] = \operatorname{Sol}_E(1, \sigma(b_0))$.
+Non-vacuity: $\operatorname{Sol}_D(1,b_0) \neq \varnothing$.
+Since $\pi$ is a function from $X_D$ to $X_E$ (stated in Part IV: "$\pi:X_D\to X_E$ on the stated scope"), the image of a nonempty set under $\pi$ is nonempty.
+Therefore $\operatorname{Sol}_E(1,\sigma(b_0)) \neq \varnothing$.
+So Baseline coherence is logically implied by (F2) and Non-vacuity.
+The document says: "**Baseline coherence.** $\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing$: the components of $E$ are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+This is a clear mathematical error. Excellent.
+
+Are there other such errors?
+Let's check Part V, Non-circular dependence:
+"There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+As noted, "or is left as it was" makes the condition vacuous/useless. If the answer profile is left as it was, then removing the block didn't change the answer, which means the block is idle, not that the answer is non-circularly produced. The intent is clearly that the answer must CHANGE or cease to be determined. The phrase "or is left as it was" is a defect.
+
+Let's check Part VI, Hard-to-vary:
+"For explanatory jobs $F\subseteq F'$, $\operatorname{Pres}(F')\subseteq\operatorname{Pres}(F)$, where $\operatorname{Pres}(F)=\{v\in\mathcal V:\forall f\in F,\operatorname{Account}(E_v,f)\}$."
+This is correct: if a version accounts for all jobs in $F'$, it accounts for all in $F$. Fine.
+
+Let's check Part VII, Identification:
+"(I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$."
+Wait, earlier: "Let $Z$ be the admitted states, $g:Z\to Y$ the measurement, $f:Z\to F$ the feature. The fibre at $y$ is $Z_y=g^{-1}(y)$. The feature is identified at $y$ exactly when $Z_y\neq\varnothing\land|f[Z_y]|=1$. (I1) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2)"
+If $f = \bar f \circ g$, then $g(z_1) = g(z_2) \Rightarrow f(z_1) = f(z_2)$, so $f$ is constant on fibres of $g$. This is correct.
+Then: "For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4)"
+Here $g(z) = Az$, $f(z) = c^\top z$. $f$ constant on fibres of $g$ means $\ker A \subseteq \ker c^\top$. Correct. The label (I4) is a bit odd (skips I3) but the word-list confirms (I4) is "repeating rows changes no kernel". Wait, in the text: "(I2) For linear $A$... identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel". Actually the text says:
+"(I1) ... (I2) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+Wait, the text labels the linear case as (I2) again? Let's re-read the document:
+"The fibre at $y$ is $Z_y=g^{-1}(y)$. The feature is identified at $y$ exactly when $Z_y\neq\varnothing\land|f[Z_y]|=1$. (I1) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+Ah, the document writes "(I2)" twice? No, it says "(I1) ... (I2) It is identified...". Then "For linear $A$ ... identification is $\ker A\subseteq\ker c^\top$. (I4)". Wait, the label (I3) is missing, and (I4) is attached to the sentence about repeating rows. This is just a numbering skip, not a major defect, though it might be worth a minor note. Actually, looking closely: "(I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$." No, the text is:
+"(I1) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+Wait, let me look at the exact text from the prompt:
+"The fibre at $y$ is $Z_y=g^{-1}(y)$. The feature is identified at $y$ exactly when $Z_y\neq\varnothing\land|f[Z_y]|=1$. (I1) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+Ah, I see: "(I1)" is attached to the first sentence? No, "(I1)" comes after "$|f[Z_y]|=1$.". Then "(I2)" comes after "for some $\bar f$.". Then the linear case has no label? Then "(I4)" is attached to "Repeating rows...". Wait, the prompt says:
+"The feature is identified at $y$ exactly when $Z_y\neq\varnothing\land|f[Z_y]|=1$. (I1) It is identified on every attainable $y$ exactly when $f=\bar f\circ g$ for some $\bar f$. (I2) For linear $A$ and feature $c^\top$, identification is $\ker A\subseteq\ker c^\top$. (I4) Repeating rows changes no kernel; an independent calibration can."
+Actually, it's:
+- (I1): identified at $y$ ...
+- (I2): identified on every attainable $y$ ...
+- Then "For linear $A$ ... identification is $\ker A \subseteq \ker c^\top$." (no label, or maybe it's meant to be I3)
+- (I4): Repeating rows...
+This is a minor numbering glitch. I'll skip it or mention it briefly.
+
+Let's check Part VII, "Explanations that remove structure":
+"The rival's supposed structure is anchored to a *deleted* subnetwork, whose relation is full by (O)."
+Wait, (O) says "A deleted component imposes the full relation on its ports." A subnetwork isn't a component, but this is an extension. Fine.
+
+Let's check Part X, Newness:
+"$\operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c$."
+Fine.
+
+Let's check Part XI, (EK):
+"$\operatorname{CreateEK}(s,\Delta,h,e)\iff\operatorname{CreativeCriticalEpisode}(s,\Delta,h,e)\land\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\land\dots$"
+Fine.
+
+Let's check Part XII, (CT2):
+"$F(C)$ = states whose executions all complete and return into $C$. $F$ is monotone; $C\subseteq F(C)$ is the invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)"
+Standard.
+
+Let's check Part XIII, (RC):
+"$\forall n<\omega\ \forall\text{ admitted target chains of length }n,\ \exists\text{ an owned enabling continuation}$. (RC)"
+Fine.
+
+Let's review Part XVI Derivation 2:
+"Claim. Two candidates $\mathcal E,\mathcal E'$ for the same $p$ that both satisfy (F1), (F2), and (A) on $C$ are one account at grain $C$: their components are pairwise of one kind on $C$ and their answer profiles coincide.
+Proof. Immediate from Derivation 1 and (A). ∎"
+Wait. Derivation 1 says each component of $E$ has the same signature as its anchor in $D$. It does NOT say that components of $E$ and components of $E'$ have the same signature as each other! For $\mathcal E$ and $\mathcal E'$ to have components that are "pairwise of one kind", we'd need $\operatorname{sig}_{\tau[C]}(k) \sim \operatorname{sig}_{\tau'[C]}(k')$. But Derivation 1 only relates $k$ to $\lambda(k) \subseteq D$ and $k'$ to $\lambda'(k') \subseteq D$. If $\lambda(k)$ and $\lambda'(k')$ are different subnetworks of $D$, their signatures might differ! So "Immediate from Derivation 1 and (A)" is a non-sequitur. Derivation 1 gives no relation between the anchors of two different candidates. This is a genuine gap in the proof. The claim might still be true under some conditions, but the proof is invalid. Actually, the claim says "their components are pairwise of one kind on $C$". This would require the anchors to be of one kind, which is not established. Good catch.
+
+Let's review Part XVI Derivation 4 again:
+"Claim. A system can be surprised if and only if it holds a transport selected on a history $H$ strictly smaller than the contract $C$ of changes the world admits.
+Proof. Surprise is defined as a violation at $(a,b)\notin H$. If there is no transport there is no expectation and hence no violation. If $H=C$, every occurring $(a,b)$ is in $H$, so no violation at $(a,b)\notin H$ exists. ∎"
+The proof only establishes necessity (if surprise then $H \subsetneq C$ and a transport exists). It does not establish sufficiency: if $H \subsetneq C$, the system *can* be surprised. For sufficiency, we'd need that some $(a,b) \in C\setminus H$ actually occurs AND causes a violation. But the transport might be faithful on all of $C$ (Derivation 3 only claims there is *some* other transport $t'$ that differs, not that $t$ itself is unfaithful). So $t$ might never be violated, meaning the system is never surprised. The "if and only if" is unproven and the claim is false as stated (or at least unsupported). This is a defect.
+
+Let's review Part XVI Derivation 10:
+"The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+Wait, Derivation 2 is about two *candidates* for the same $p$. Here we have two components within the same organization $S_1$. Derivation 2 doesn't apply! To show two components in the same organization are of one kind, one uses (K) directly: their signatures coincide under a bijection of footprints. The text cites Derivation 2, which is about indistinguishable candidates, not components within one organization. This is a citation error. It should cite (K). Minor but valid.
+
+Also in Derivation 10:
+"$S_0$ predicts occupancy from recent occupancy. It is faithful on $H_0$."
+"An occlusion occurs. ... $S_0$ ... expects nothing there and is violated when the thing re-emerges at a cell consistent with its velocity."
+Wait, if $S_0$ predicts occupancy from recent occupancy, and the thing is occluded, recent occupancy shows nothing. So $S_0$ predicts nothing. When the thing re-emerges, the actual occupancy shows the thing. So $S_0$ is violated. This makes sense.
+
+Let's check Part IV, "Representation is derived":
+"$\operatorname{Rep}_\ell(o,c)\iff\exists t\,[\operatorname{Faithful}_C(t:\operatorname{Org}_\ell(o)\to c)\land(\operatorname{Sel}(t)\lor\operatorname{Con}(t))]$. (R)"
+Fine.
+
+Let's check Part V, Non-vacuity again:
+"A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to $\mathcal Q$, does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+Wait, non-circular dependence is a separate conjunct in (E). If a contract fails non-circular dependence, then (E) fails, so no account can be claimed. This is consistent.
+
+Let's check Part II, "Kinds are edit-signatures":
+"- a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;"
+Wait, if you intervene on the output port, the causal assignment (the component relation) changes? In (O), an edit that sets a port replaces the component assigning that port. So yes, the component is replaced.
+"- a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;"
+Fine.
+
+Let's check Part VIII, Functional transport:
+"If $\pi\circ S_a=T_a\circ\pi$ for every generator $a$, the same holds for every admitted finite composition with matching scopes. Proof. $\pi S_bS_a=T_b\pi S_a=T_bT_a\pi$; induct. ∎"
+Fine.
+
+Let's check Part IX, Standing:
+"$\operatorname{Usable}_j(u)\iff\operatorname{Lic}_j(u)\land\operatorname{Scope}_j(u)\land\forall d\in\operatorname{Prem}(u),\operatorname{Live}_j(d;u)$. (K2)"
+Fine.
+
+Let's check Part XV:
+"A non-fallible selected transport. A selection history $H\subsetneq C$ whose survivor is determined on $C\setminus H$. This refutes Derivation 3."
+This confirms Derivation 3's claim is that the survivor is NOT determined on $C\setminus H$. But as I showed, Derivation 3's proof is flawed because it assumes $L_j(a,b)$ can be varied independently, ignoring that transports must satisfy the homomorphism condition (F2) and that component relations belong to fixed organizations. I'll make this Defect 1 or 2.
+
+Let's organize the defects by severity:
+
+1. **Derivation 3 (Part XVI) proof fails.** The proof assumes component relations $L_j(a,b)$ can be altered independently for each $(a,b)$ to produce a new transport $t'$. But a transport $t=(\pi,\tau,\sigma,\lambda)$ between fixed organizations does not have the freedom to alter $L_j$; those are fixed by the organizations. Even allowing $\tau$ to vary, (F2) requires $\tau$ to be a monoid homomorphism ($\tau(a_2a_1)=\tau(a_2)\tau(a_1)$), so if the edits in $H$ generate $(a,b)$, $\tau$ is fully determined and no differing $t'$ exists. The claim is central (Grievance 3, Attack D) and its proof is invalid.
+
+2. **Finite monotone theorem (Part VI) has swapped characterizations.** The theorem states "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$." But the proof shows that elements critical for *some* support are exactly those in *some* minimal support ($\bigcup\min\mathsf S$), while elements in *every* minimal support ($\bigcap\min\mathsf S$) are the globally indispensable ones. The names are attached to the wrong sets.
+
+3. **Baseline coherence (Part V) is not independent.** The text says "$\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing$ ... This is an independent requirement; it is not implied by the conditions above." But (F2) gives $\pi[\operatorname{Sol}_D(1,b_0)] = \operatorname{Sol}_E(1,\sigma(b_0))$, and Non-vacuity gives $\operatorname{Sol}_D(1,b_0)\neq\varnothing$. Since $\pi$ is a function, the image of a nonempty set is nonempty, so $\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing$ follows immediately. The claim of independence is false.
+
+4. **(K3) in Part IX is logically invalid.** "For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background." From $T\land B\land I\Rightarrow O$ and $\neg O$, one gets $\neg T\lor\neg B\lor\neg I$, not $\neg T$. This contradicts the document's own later statement (and the skill's principle) that a failed test refutes the whole bundle and nothing narrower.
+
+5. **Arithmetic error in Part VII (Obstruction).** "Twenty-four indivisible tokens cannot be split equally three ways". 24 is divisible by 3 (24 = 3 × 8). The claim is false. (The skill document correctly used twenty-three.)
+
+6. **Non-circular dependence (Part V) is weakened to vacuity.** "There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ ... under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." If the answer profile "is left as it was," the removal did nothing, which witnesses idleness, not non-circularity. The disjunct defeats the condition's purpose.
+
+7. **Derivation 4 (Part XVI) "if and only if" is unproven/false.** The claim is that a system can be surprised iff it holds a transport selected on $H\subsetneq C$. The proof only shows necessity. For sufficiency, an actual violation at some $(a,b)\in C\setminus H$ is required, but the transport might be faithful on all of $C$ (Derivation 3 only asserts some *other* transport $t'$ differs, not that $t$ fails). So $H\subsetneq C$ does not imply surprise is possible for $t$.
+
+8. **Derivation 2 (Part XVI) proof is a non-sequitur.** "Two candidates ... their components are pairwise of one kind on $C$ ... Proof. Immediate from Derivation 1 and (A)." Derivation 1 relates a component of $E$ to its anchor $\lambda(k)$ in $D$. It says nothing about the relationship between anchors of two *different* candidates $\mathcal E$ and $\mathcal E'$. Thus pairwise kind-identity between the components of $E$ and $E'$ does not follow.
+
+9. **(CT1) in Part XII has unbound variables.** "$\forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C$." The variables $o$ and $z'$ are not bound by any quantifier, making the formula ill-formed. It needs existential quantifiers (e.g., "$\eta$ completes with some output $o\in T[i]$ and end state $z'\in C$").
+
+10. **Derivation 10 (Part XVI) cites the wrong result.** "On any contract containing it, the two persistence components are of one kind (Derivation 2)." Derivation 2 concerns two *candidates* for the same question being one account. To show two *components within the same organization* are of one kind, one uses the definition (K) directly, not Derivation 2.
+
+Let me double check the Finite Monotone Theorem swap.
+Theorem: "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+Proof: "A member of a minimal support is critical for it." -> If $d \in U \in \min S$, then $U \setminus \{d\} \notin S$, so $\{d\}$ is a critical block for $U$. This shows $\bigcup \min S \subseteq$ "critical for some support".
+"If $d$ is critical for $W$, finiteness gives a minimal $U\subseteq W$; if $d\notin U$, upward closure makes $W\setminus\{d\}$ a support." -> So $d \in U$, hence $d \in \bigcup \min S$. This shows "critical for some support" $\subseteq \bigcup \min S$.
+So the set of elements critical for some support is exactly $\bigcup \min S$.
+The theorem calls $\bigcup \min S$ the "globally indispensable ones". But an element in some minimal support is not globally indispensable (it can be absent from other minimal supports). The globally indispensable ones are those in *every* support, i.e. $\bigcap \min S$.
+And the theorem calls $\bigcap \min S$ the "critical singletons". But elements in every minimal support are critical for $\Gamma$, yes, but the natural class of "critical singletons" (critical for some support) is $\bigcup \min S$.
+So yes, the characterizations are swapped relative to the names. This is a definite defect.
+
+Let me double check Baseline Coherence.
+(F2): $\pi[\operatorname{Sol}_D(a,b)] = \operatorname{Sol}_E(\tau(a),\sigma(b))$.
+Non-vacuity: $\operatorname{Sol}_D(1,b_0) \neq \varnothing$.
+$\pi$ is a function $X_D \to X_E$.
+Thus $\pi[\operatorname{Sol}_D(1,b_0)] \neq \varnothing$.
+By (F2) at $(1,b_0)$, $\operatorname{Sol}_E(1,\sigma(b_0)) = \pi[\operatorname{Sol}_D(1,b_0)] \neq \varnothing$.
+So Baseline coherence follows from (F2) + Non-vacuity.
+The text says: "This is an independent requirement; it is not implied by the conditions above."
+This is false. Good.
+
+Let me double check (K3).
+"For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)"
+Logically, $(T \land B \land I \Rightarrow O) \land \neg O \vdash \neg(T \land B \land I) \equiv \neg T \lor \neg B \lor \neg I$.
+It does not yield $\neg T$. This is affirming the consequent's dual / denying the antecedent error. The document explicitly states elsewhere (Part XV, and the skill's word-list) that a failed test refutes the *bundle* and nothing narrower. So (K3) as written contradicts the document's own position. Good.
+
+Let me double check Derivation 3.
+"Claim. Let $t$ be selected on a finite history $H\subsetneq C$. For every $(a,b)\in C\setminus H$ there exists a transport $t'$, also surviving on $H$, with a different value at $(a,b)$.
+Proof. The component relations $L_j(a,b)$ are supplied independently for each $(a,b)$. Survival on $H$ constrains only $\{L_j(a,b):(a,b)\in H\}$. Alter $L_{j}(a,b)$ for one $(a,b)\notin H$ to any other admitted relation; the result survives on $H$ and differs at $(a,b)$. ∎"
+Defects:
+- A transport $t=(\pi,\tau,\sigma,\lambda)$ does not supply the component relations $L_j$. Those are part of the fixed organizations $D$ and $E$. You cannot "alter $L_j(a,b)$" to get a new transport.
+- Even if the population $\mathcal T$ varies $\tau$, (F2) requires $\tau(a_2a_1)=\tau(a_2)\tau(a_1)$. If $(a,b)$ is generated by edits in $H$, $\tau(a,b)$ is fixed by $\tau$ on $H$.
+- The proof treats transports as unconstrained functions on $C$, ignoring the algebraic structure required by (F2) and the fixed target organization.
+This is the most serious defect because Derivation 3 is load-bearing (Grievance 3, Attack D).
+
+Let me double check Derivation 2.
+"Claim. Two candidates $\mathcal E,\mathcal E'$ for the same $p$ that both satisfy (F1), (F2), and (A) on $C$ are one account at grain $C$: their components are pairwise of one kind on $C$ and their answer profiles coincide.
+Proof. Immediate from Derivation 1 and (A). ∎"
+Derivation 1: every component $k$ of $E$ has the same signature as its anchor $\lambda(k)$ in $D$.
+This does not relate $k$ to $k'$ (a component of $E'$) unless $\lambda(k)$ and $\lambda'(k')$ are the same or of one kind, which is not given. So "pairwise of one kind" does not follow. Good.
+
+Let me double check Derivation 4.
+"Claim. A system can be surprised if and only if it holds a transport selected on a history $H$ strictly smaller than the contract $C$ of changes the world admits.
+Proof. Surprise is defined as a violation at $(a,b)\notin H$. If there is no transport there is no expectation and hence no violation. If $H=C$, every occurring $(a,b)$ is in $H$, so no violation at $(a,b)\notin H$ exists. ∎"
+The proof shows: surprise $\Rightarrow$ transport exists and $H \subsetneq C$.
+It does not show: transport exists and $H \subsetneq C \Rightarrow$ surprise (or even "can be surprised"). If $t$ is faithful on all of $C$, no violation occurs, so the system is never surprised. Derivation 3 only says some *other* transport $t'$ differs, not that $t$ is unfaithful. So the biconditional is unproven. Good.
+
+Let me double check the 24 tokens.
+"Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result."
+24 / 3 = 8. They CAN be split equally. The skill document correctly used 23. This is a clear arithmetic error. Good.
+
+Let me double check Non-circular dependence.
+"There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+If the answer profile "is left as it was", then removing the block changed nothing. This witnesses that the block is idle, which is the opposite of showing the answer is produced by the parts. The condition should require the answer to change or become undetermined. The disjunct "or is left as it was" makes the condition unable to do its job. Good.
+
+Let me double check (CT1).
+"$\operatorname{RetReal}(\pi,T,C;\chi)\iff\forall z\in C\ \forall i\in\operatorname{dom}T\ \forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C$. (CT1)"
+$o$ and $z'$ are free variables. The formula is ill-formed. It should read something like "$\eta$ completes with some output $o \in T[i]$ and some end state $z' \in C$." Good.
+
+Let me double check Derivation 10 citation.
+"On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+Derivation 2 is "Indistinguishable is identical" about two candidates for the same question. Here we have two components within the *same* organization $S_1$. To show they are of one kind, one uses (K) directly (their signatures coincide under the swap bijection). Citing Derivation 2 is an error. Good.
+
+Are there any others?
+Part VII, Identification: "For the two balances $\begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}$, the kernel is spanned by $(1,-1,-1)$; the readings identify $b_B-b_A$ and not $x$."
+Let's check: $A = \begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}$. $A \begin{pmatrix}x\\y\\z\end{pmatrix} = \begin{pmatrix}x+y\\x+z\end{pmatrix}$.
+Kernel: $x+y=0, x+z=0 \Rightarrow y=-x, z=-x$. So kernel is spanned by $(1,-1,-1)$. Correct.
+The readings are $r_1 = x+y$, $r_2 = x+z$. If the vector is $(x, b_A, b_B)$? Wait, the skill says "Two kitchen scales, each off by an unknown amount. Put the same bag on both. You now know exactly how far apart the two scales are." So the readings are $x + b_A$ and $x + b_B$. The difference is $b_B - b_A$. The kernel of $A$ being spanned by $(1,-1,-1)$ means the readings determine $b_B - b_A$ up to... wait.
+If states are $(x, b_A, b_B)$, and readings are $g(x, b_A, b_B) = (x+b_A, x+b_B)$. Then $g$ is linear with matrix $\begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}$. The kernel is $\{(x,b_A,b_B): x+b_A=0, x+b_B=0\}$, so $b_A = b_B = -x$. Spanned by $(1,-1,-1)$. Correct. The readings identify $b_B - b_A$ because on each fibre, $b_B - b_A$ is constant (it's 0 on the kernel, so it's identified). And $x$ is not identified. Correct.
+
+Part VII, "Odd-order skew-symmetric matrices":
+"Non-circular dependence is witnessed by $I_3$ under removal of skewness and by $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ under removal of oddness."
+Wait, if you remove skewness, the family becomes all 3x3 matrices (or all odd-order matrices). $I_3$ is invertible. So the answer changes from "all singular" to "not all singular". This witnesses non-circularity. Correct.
+If you remove oddness, the family includes even-order skew-symmetric matrices. $\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ has determinant 1, so it's invertible. Correct.
+
+Part VIII, Approximate transport:
+"With one-step discrepancy $\varepsilon$ and an $L$-Lipschitz next-step map, $e_n\le\varepsilon\sum_{k<n}L^k$. (T2)"
+Correct.
+
+Part XI, (P):
+"$\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\iff\exists o\in O[\neg o(\xi)\land o(\xi')]\land\forall r\in P[r(\xi)\Rightarrow r(\xi')]\land\operatorname{ProducedBy}(\Delta,\xi,\xi';O)$."
+Correct.
+
+Part XII, (CT2):
+"$F(C)$ = states whose executions all complete and return into $C$. $F$ is monotone; $C\subseteq F(C)$ is the invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)"
+Correct (Knaster-Tarski).
+
+Part XIII, (U3):
+"$\mathsf{UECS}=\{(M,s,\Omega,\beta):M\models\operatorname{RC}\land\operatorname{UU}\land\operatorname{UC}\}$. (U3)"
+Correct.
+
+Part XIV, Dependence order:
+"(K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E)."
+Wait, Build involves "prepares a represented organization", so it depends on (R). The dependence order says "Build depends on histories and (E)". It omits (R). This is a minor omission. I might mention it, but I have enough solid defects. Let me stick to the 10 I have.
+
+Let me review the Derivation 3 issue once more to be absolutely sure.
+The claim is: "For every $(a,b)\in C\setminus H$ there exists a transport $t'$, also surviving on $H$, with a different value at $(a,b)$."
+Proof: "The component relations $L_j(a,b)$ are supplied independently for each $(a,b)$. Survival on $H$ constrains only $\{L_j(a,b):(a,b)\in H\}$. Alter $L_{j}(a,b)$ for one $(a,b)\notin H$ to any other admitted relation; the result survives on $H$ and differs at $(a,b)$. ∎"
+Is there any interpretation where this is valid? If the population $\mathcal T$ consists of transports where the target organization $E$ itself varies, and the transport is essentially the identity... But a transport is $t=(\pi,\tau,\sigma,\lambda)$. The "value at $(a,b)$" would be $\operatorname{Ans}_E(\tau(a),\sigma(b))$ or the fidelity. The proof talks about altering $L_j(a,b)$. $L_j$ is part of the organization $D$ (or $E$). If you alter $L_j$, you change the organization, not just the transport. Even if we accept that the population contains transports to varying organizations, the requirement that $\tau$ is a monoid homomorphism (from F2) means that if $A$ is generated by the first-coordinate projections of $H$, $\tau$ is fixed on all of $A$. If $E$ is fixed, then $L_k(\tau(a),\sigma(b))$ is fixed. So no $t'$ can differ. The proof completely ignores the algebraic constraints on transports. This is a solid, serious defect.
+
+One more check on Derivation 4:
+"Claim. A system can be surprised if and only if it holds a transport selected on a history $H$ strictly smaller than the contract $C$ of changes the world admits."
+If the system holds a transport selected on $H \subsetneq C$, can it be surprised? Only if a violation actually occurs. The transport might be faithful on $C$. The claim says "can be surprised", which might mean "it is possible for it to be surprised". But even as a possibility claim, if $t$ is faithful on $C$, then no violation occurs, so it is NOT possible for the system to be surprised given its actual transport. The only way "can be surprised" is true is if we mean "the definitions do not rule out surprise". But the claim says "if and only if it holds a transport selected on a history $H$ strictly smaller than $C$". This makes $H \subsetneq C$ sufficient for the possibility of surprise, which doesn't follow from the definitions. The proof certainly doesn't establish it. Solid defect.
+
+One more check on Finite Monotone Theorem:
+"the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+Let $S = \{\{a,b\}, \{b,c\}\}$ over $\Gamma = \{a,b,c\}$.
+$\min S = \{\{a,b\}, \{b,c\}\}$.
+$\bigcap \min S = \{b\}$.
+$\bigcup \min S = \{a,b,c\}$.
+Critical singletons: $\{a\}$ is critical for $\{a,b\}$. $\{c\}$ is critical for $\{b,c\}$. $\{b\}$ is critical for both. So critical singletons (for some support) are $\{a\}, \{b\}, \{c\}$, i.e., elements $\{a,b,c\} = \bigcup \min S$.
+Globally indispensable: which elements are in EVERY support? Only $b$. So globally indispensable = $\{b\} = \bigcap \min S$.
+The theorem says: "critical singletons are exactly $\bigcap\min\mathsf S$" (i.e., $\{b\}$) — but $a$ and $c$ are also critical singletons (for some supports). And "globally indispensable ones are exactly $\bigcup\min\mathsf S$" (i.e., $\{a,b,c\}$) — but only $b$ is globally indispensable.
+So the theorem is exactly backwards. The proof confirms this. Excellent, this is a very clean defect.
+
+One more check on Baseline coherence:
+(F2) states $\pi[\operatorname{Sol}_D(a,b)] = \operatorname{Sol}_E(\tau(a),\sigma(b))$.
+Non-vacuity states $\operatorname{Sol}_D(1,b_0) \neq \varnothing$.
+$\pi$ is a function $X_D \to X_E$.
+Therefore $\pi[\operatorname{Sol}_D(1,b_0)] \neq \varnothing$.
+By (F2) at $(1,b_0)$, $\operatorname{Sol}_E(1,\sigma(b_0)) \neq \varnothing$.
+This is exactly Baseline coherence. So it is implied by (F2) + Non-vacuity.
+The text says "This is an independent requirement; it is not implied by the conditions above."
+This is definitively false. Very clean.
+
+One more check on (K3):
+"For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)"
+This is just a basic logical error. The word-list in the skill document even states the correct version: "From theory and background and test set-up together predicting wrongly, only 'not all three' follows." So the theory document's own (K3) contradicts the correct logic. Very clean.
+
+One more check on the 24 tokens:
+"Twenty-four indivisible tokens cannot be split equally three ways"
+24 = 8 * 3. They can. The skill document says "Twenty-three coins cannot be shared equally among three people". 23 is not divisible by 3. So the theory document has an arithmetic error. Very clean.
+
+One more check on Non-circular dependence:
+"There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+If the answer profile is "left as it was", then removing the block did not change the answer. This means the block is not doing any work in producing the answer, which is the definition of idle, not non-circular. The condition is supposed to ensure the answer is *produced by* the parts, so removing a part must *change* the answer. The disjunct "or is left as it was" makes the condition unable to do its job. Very clean.
+
+One more check on Derivation 2:
+"Claim. Two candidates $\mathcal E,\mathcal E'$ for the same $p$ that both satisfy (F1), (F2), and (A) on $C$ are one account at grain $C$: their components are pairwise of one kind on $C$ and their answer profiles coincide.
+Proof. Immediate from Derivation 1 and (A). ∎"
+Derivation 1 says each component of $E$ has the same signature as its anchor in $D$. It does not say components of $E$ and $E'$ have the same signature as each other. For that, we'd need the anchors to coincide or be of one kind, which is not assumed. So "Immediate from Derivation 1 and (A)" is a non-sequitur. Very clean.
+
+One more check on (CT1):
+"$\forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C$."
+$o$ and $z'$ are unbound. Ill-formed. Clean.
+
+One more check on Derivation 10 citation:
+"On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+Derivation 2 is about two candidates for the same question. Here we have two components in the same organization. Should cite (K). Clean.
+
+I have 10 solid defects. Let me order them by severity.
+1. Derivation 3 proof fails (load-bearing).
+2. Finite monotone theorem characterizations swapped.
+3. Baseline coherence claimed independent but implied.
+4. (K3) logically invalid.
+5. Non-circular dependence vacuous disjunct.
+6. Derivation 4 iff unproven.
+7. 24 tokens arithmetic error.
+8. Derivation 2 non-sequitur.
+9. (CT1) unbound variables.
+10. Derivation 10 wrong citation.
+
+This looks like a strong, well-supported report. I will write it out now according to the requested format.
+
+Wait, let me double check the exact wording of the finite monotone theorem in the document.
+"**Finite monotone theorem.** If $\Gamma$ is finite, $\mathsf S$ is upward closed, and $\Gamma\in\mathsf S$, then the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$."
+Yes.
+
+And the proof:
+"*Proof.* A member of a minimal support is critical for it. If $d$ is critical for $W$, finiteness gives a minimal $U\subseteq W$; if $d\notin U$, upward closure makes $W\setminus\{d\}$ a support. Deletion of $d$ from $\Gamma$ preserves support exactly when a minimal support omits $d$. ∎"
+The last sentence: "Deletion of $d$ from $\Gamma$ preserves support exactly when a minimal support omits $d$." This means $d$ is NOT globally indispensable iff some minimal support omits $d$. So globally indispensable iff in every minimal support ($\bigcap \min S$). The proof itself establishes globally indispensable = $\bigcap \min S$. Yet the theorem says globally indispensable = $\bigcup \min S$. So the theorem statement contradicts its own proof. Perfect.
+
+Let me double check the exact wording of Baseline coherence.
+"**Baseline coherence.** $\operatorname{Sol}_E(1,\sigma(b_0))\neq\varnothing$: the components of $E$ are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+Yes.
+
+Let me double check the exact wording of (K3).
+"**What a test refutes.** For $T\land B\land I\Rightarrow O$, an established $\neg O$ yields $\neg T$, since $B$ and $I$ are background. (K3)"
+Yes.
+
+Everything is confirmed. I will write the report.

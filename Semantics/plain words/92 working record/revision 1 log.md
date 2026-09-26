@@ -1,0 +1,278 @@
+# Revision 1 log: whole v1 to whole v2
+
+*25 September 2026. Every expert finding was checked against draft 4's theory text (and, for case views, against the change list's CASES AT RISK notes, the case books and the S81 results). Every cold-read place was clarified without changing what the theory says. One line per finding. "E" = expert review item; "C" = expert coverage item; "R" = cold read entry; "W" = cold read word problem.*
+
+**Totals.** Expert findings: 59 (58 fixed, 1 declined), plus item 48 noted. Cold read: 200 (200 clarified, 0 declined).
+
+**Structural changes made for the cold read (they carry many of the lines below).** The "In the theory: Parts…" lines are gathered into section 18. The "What draft 4 changed here" paragraphs are gathered, rewritten for a newcomer, into section 13. Derivations are called by plain names in the body ("the proof on same anchors"), with numbers only in section 18. Mathematics moved to section 17, with a plain sentence left in the text. The theory's terms left the glossary for a concordance in section 18. Status tags are cut to two ("Ruled on file 11: …" / "Not yet ruled"), explained once in section 1. File numbers are kept (the owner's records use them), with file 12 explained.
+
+## Expert review
+
+- E1 — fixed — one page: two foundations, plus frames and stated inputs as what everything else is built from.
+- E2 — fixed — section 12, claim 1: a full response table passes matching and defeats the claim only if it meets all four and explains nothing.
+- E3 — fixed — section 3: "each about how it behaves at the settings of the range", not "at every setting".
+- E4 — fixed — one page: "blindly" removed; "with nothing in that history picturing what the link is about".
+- E5 — fixed — sections 7 and 12: missing-input rule limited to the stated inputs of section 12 and the standard of worth.
+- E6 — fixed — section 7: no way of certifying a limit "as right"; meeting the requirements does not certify it as right; non-vacuity's own check noted.
+- E7 — fixed — section 6: heading "A finer question"; "if both are offered for that question, and both still fit"; "On the original question nothing changes".
+- E8 — fixed — section 6: "a system has stated, as a safeguard, that it keeps every rival that fits … which fits as well".
+- E9 — fixed — sections 1 and 14: most points ruled, a few passed on; readers have not seen the new paragraphs, the ten fixes' wording, or the edits made with the new paragraphs.
+- E10 — fixed — section 2: Pia's list fails matching (a table of observed answers); section 11 drops Pia and uses draft 4's "no lasting inability" wording for Kofi; unsupported Marletto remark removed.
+- E11 — fixed — glossary "conflict": "each could match there under some possible behaviour of the target but no such behaviour lets both".
+- E12 — fixed — section 5 and glossary: "every support", scoped to a candidate that has a support.
+- E13 — fixed — section 8 departures: a problem for a question is narrower; Deutsch's wider problem "can be" a noticed difficulty.
+- E14 — fixed — section 13: file 11 compared forms over undefined "explanatory jobs" and used "reach" undefined; draft 4 drops both.
+- E15 — fixed — section 13: file 11 asked the range to hold a change removing commitments; draft 4 asks that deleting a group lose a difference between two settings.
+- E16 — fixed — section 10: novelist now carries the recorded view (her two stated demands clash; first draft no repair, second is).
+- E17 — fixed — section 11: "she starts keeping a tally" places the process in her and states the boundary under draft 4; the doubt was the project's readers', on file 11.
+- E18 — fixed — glossary "allowed change" (a range holds some of them); physics now said with "possible" throughout the body.
+- E19 — fixed — section 8: re-tuning for a selected link's miss; response by construction for any miss.
+- E20 — fixed — section 2: draft 4's one change on questions is on limits (section 7); no way of choosing level of detail; showing a question faulty is a different question.
+- E21 — fixed — order of adjectives, myth about winter and Tomas: "one outside reader (of two) named this … the project kept the text" (the adjectives line also says the other reader called the passage faulty).
+- E22 — fixed — section 12: classes not ordered "widest first"; containments stated as the expert gives them.
+- E23 — fixed — section 6: joint-setting ruling's file-11 ground named; draft 4 narrows it; verdict now rests on survival and on the problem view, which assumes one arrangement offered in place of the other (the case does not say so).
+- E24 — fixed — section 10: three things apart (effect, purpose, artistic value with reasons of taste); achieved purpose defined from the first two.
+- E25 — fixed — section 6 departures: tilt easy to vary "when the two are offered in place of each other and the myth fits what is established", with the open point; "still an account if it meets the requirements".
+- E26 — fixed — one page, section 12 and glossary: a stated input is "something a claim takes as given and states".
+- E27 — fixed — section 6: "offering the rival is the criticism".
+- E28 — fixed — section 6: "match, and give the answer" and "both links carry over" restored; "stays refuted on that question" and "since afterwards at most one rival fits" added; "so far as matching and answering go" kept in sections 6 and 8.
+- E29 — fixed — section 5: supports are never groups that need commitments the candidate does not carry.
+- E30 — fixed — sections 3 and 14: "merely" dropped.
+- E31 — fixed — section 8 and section 13: the pool is all links the physics and stated design allow, whether or not built.
+- E32 — fixed — section 10: only "complete episode of criticism" is bolded and defined; "episode" is described loosely (sections 2 and 10).
+- E33 — fixed — section 6: both quotes dated 24 September, the logging request 25 September; "as you said, as far as you know nobody can make one".
+- E34 — fixed — one page: "The theory describes the world, and every explanation of it, as a set-up".
+- E35 — fixed — section 1: nine short proofs and one worked example.
+- E36 — fixed — section 1: 25 proposed cases, most from the source books and five made for the set; 23 to be used, two set aside.
+- E37 — fixed — section 14: no case yet aims at whether treating a range as constructed, new and originated cheapens creativity.
+- E38 — fixed — section 1: the "not yet ruled" views come from the list of changes behind the draft.
+- E39 — fixed — section 11: the 2013 paper is attributed to the sources note and said not to be a source book.
+- E40 — fixed — section 12: understanding rests on pictures and lasting performance.
+- E41 — fixed — sections 3 and 17: "each number is the negative of its mirror image (so the diagonal is all noughts)".
+- E42 — fixed — section 3: planets' last sentence marked "this document's view".
+- E43 — fixed — section 7: two bakers' recorded watch added.
+- E44 — fixed — section 9: the rota's full verdict, with the recorded reading of its last clause.
+- E45 — fixed — section 4: joining and cutting strings added to the situation.
+- E46 — fixed — section 2: the machine case now sits under its own heading, "A case about blocking".
+- E47 — fixed — section 16 rebuilt from the text; the owner's Demeter example and the partial claims now appear in section 6, so section 14's pointers land.
+- E48 — noted (not counted) — section 14 records the slip in draft 4's pole sentence for the owner; the document follows the earlier statement.
+- E49 — fixed — section 6 and glossary: "establishing what the target does there … is a test"; blame is shared now worded without "test".
+- E50 — fixed — about 60 entries added to the glossary (judge, task, ability, episode, created knowledge, boundary, stock, join, fault question, route that ran, tipping edge, look-alike states, and the rest named); section 1 says "the main words".
+- E51 — fixed — "replacement range"; "link" not "tie" on the one page; "in a stated way"; "range holds changes" replaced by settings wording.
+- E52 — fixed — "two computer programs that write and reason in language, from outside the project".
+- E53 — fixed — every paragraph now at or under 150 words; example first added to matching over many steps (goatherds), tasks (kettle), criticism at any depth (Kasia), created knowledge (the hidden thing), worth (Noor) and foundations ("Four seconds").
+- E54 — declined for the document — kept "widening factor" (used consistently), because "stretch" already names a run of events; the word sheet's "stretch factor" should be changed instead.
+- C1 — fixed — section 14: the outside reader's copy-of-the-target boundary case, not offered as a failure, not ruled on.
+- C2 — fixed — section 8: declaration allowed only as a convenience for building models.
+- C3 — fixed — section 3: "The answer must follow by working out the candidate's set-up in its circumstances."
+- C4 — fixed — section 8: variation is physically possible; the surroundings decide what survives.
+- C5 — fixed — section 2: a faulty question's asking is still an event.
+- C6 — fixed — section 6: a blurred copy is not a rewriting.
+
+## Cold read: section by section
+
+- R1 — clarified — subtitle explained in plain words.
+- R2 — clarified — "cases" glossed at first use on the one page.
+- R3 — clarified — slots, pieces and changes named on the one page with the pole.
+- R4 — clarified — the one page names the view it corrects (pieces "of the same kind").
+- R5 — clarified — the farmer's rule given on the one page; the list point tied to "rivals someone has offered".
+- R6 — clarified — "tie" and "mind" replaced by "link" and "system"; system defined.
+- R7 — clarified — repair, credit and boundary each glossed, with "Two plumbers".
+- R8 — clarified — "not the four requirements above" said outright.
+- R9 — clarified — "classes of systems, such as the universal class".
+- R10 — clarified — five main claims, plus any mathematical error as a further way.
+- R11 — clarified — file 12 explained (a separate text on causality); names kept because the owner's records use them.
+- R12 — clarified — the other six changes: four rewordings, two reorderings.
+- R13 — clarified — Part numbers moved to section 18; proofs given plain names; "derivation" not used as a second word.
+- R14 — clarified — source books pointed to; the lamp controller is "one more proposed case, kept in a file of its own".
+- R15 — clarified — who marks (readers in a round), what a ruling is, and what the outside readers cross-examine.
+- R16 — clarified — one short note on whose view follows "Not yet ruled".
+- R17 — clarified — "still being changed".
+- R18 — clarified — "you" is the owner, said in section 1.
+- R19 — clarified — each rule given an example or plain gloss.
+- R20 — clarified — the board is named as the example.
+- R21 — clarified — "interventions" explained; "dimension" given an example.
+- R22 — clarified — "the calculation linking them", shown both ways round.
+- R23 — clarified — the five parts of a question walked through with "what makes her shiver?".
+- R24 — clarified — answer is the target's; a candidate "also gives an answer"; never a candidate itself.
+- R25 — clarified — "Nobody makes a mistake here", and the point stated.
+- R26 — clarified — the pinning-down range runs over the readings that could come up.
+- R27 — clarified — "or whether something blocks the way".
+- R28 — clarified — status rule glossed with chess; no case uses one.
+- R29 — clarified — "measure" replaced by "reading".
+- R30 — clarified — "account" avoided there ("explains a limit on what the readings can settle").
+- R31 — clarified — the weights rule moved to section 17; the plain proof on pinning down kept.
+- R32 — clarified — "two states with the same total".
+- R33 — clarified — the risk now points to the third requirement.
+- R34 — clarified — each history given an example or said to have no case; modeller glossed.
+- R35 — clarified — "Judging … works the same way whichever history its range has."
+- R36 — clarified — Lea's fault named (this document's view) and the other two sorts illustrated.
+- R37 — clarified — the theory's position on faulty questions and on level of detail restated without contradiction.
+- R38 — clarified — the pole walked through link, anchor, slot pairing, commitment and background.
+- R39 — clarified — points to the spring nobody mentioned.
+- R40 — clarified — heights are input slots; what gives them values is background.
+- R41 — clarified — hinge and meshed-gear illustrations.
+- R42 — clarified — why every proof would otherwise "assume its answer", with the tables.
+- R43 — clarified — the two halves named, each with an example; why one name covers both.
+- R44 — clarified — renaming changes defined; the consequence stated as linking requirement 4 to 3.
+- R45 — clarified — idle reference removed from Carla.
+- R46 — clarified — why A restates the answer.
+- R47 — clarified — full response table judged like any candidate; Carla's almanac fails the third.
+- R48 — clarified — "the shadow stays as it was".
+- R49 — clarified — "real difference" with a pendulum illustration.
+- R50 — clarified — spreading sets an input slot; the salt's action is the commitment.
+- R51 — clarified — depth glossed.
+- R52 — clarified — "negative of its mirror image"; working moved to section 17.
+- R53 — clarified — section 17 says what no dodging checks here.
+- R54 — clarified — absence walked through in four steps; "the opposing view" before rivals are defined.
+- R55 — clarified — system defined on the one page.
+- R56 — clarified — "explanation" is an everyday word; candidate and account are terms.
+- R57 — clarified — change note moved to section 13 and reworded; "on one way of taking it".
+- R58 — clarified — the sentence moved to the thermostats, where it settles the case.
+- R59 — clarified — rulings weigh reasons (section 1).
+- R60 — clarified — a cause is a piece; the sunlight example.
+- R61 — clarified — behaviour stays, value follows; both shown.
+- R62 — clarified — the wire on the float as the separating change.
+- R63 — clarified — reply rewritten without introducing "content".
+- R64 — clarified — main claims named on the one page.
+- R65 — clarified — the three proofs each given a plain sentence, after the goatherds.
+- R66 — clarified — both methods described from the case.
+- R67 — clarified — error build-up told in the goatherds' terms; the exact-question clause explained.
+- R68 — clarified — the proof says nothing about the rounding half, plainly.
+- R69 — clarified — "in a stated way".
+- R70 — clarified — both assumptions tied to their examples.
+- R71 — clarified — the two springs as the example.
+- R72 — clarified — "groups drawn from the commitments the candidate actually has, whether or not anyone has pointed to a group".
+- R73 — clarified — "two lines of proof, which the case calls routes"; "the other" made explicit.
+- R74 — clarified — tipping edge moved to section 17, marked as used nowhere else.
+- R75 — clarified — the rule stated plainly with what it tells a reader; "theorem" dropped.
+- R76 — clarified — "came closer to the fixed verdict than file 10"; the other case named.
+- R77 — clarified — support is the word; "route" is the case's word for it.
+- R78 — clarified — what the author does; "anchor", not "target".
+- R79 — clarified — credit sentence moved to section 10.
+- R80 — clarified — the wiring example described in plain terms, noting the theory gives no details.
+- R81 — clarified — "judging from delivery records alone whether something delivered was actually used".
+- R82 — clarified — the step from wiring to "predicting is not explaining" spelled out.
+- R83 — clarified — an illustration of the room case, marked as such.
+- R84 — clarified — "to get round the failure".
+- R85 — clarified — no case outside mathematics; example in section 17.
+- R86 — clarified — the removal half walked through with the second spring.
+- R87 — clarified — kept in one line, pointed to spread-out support.
+- R88 — clarified — spinning top now in Tomas's case.
+- R89 — clarified — the open answer is announced at the start of section 5.
+- R90 — clarified — moved to section 13 and explained.
+- R91 — clarified — "the record here is what has been observed so far".
+- R92 — clarified — what each quote answered is said.
+- R93 — clarified — "both links carry over" explained.
+- R94 — clarified — lamp-wire illustration for the second way of conflicting.
+- R95 — clarified — "renamed piece for piece, with every connection kept".
+- R96 — clarified — each item in the list glossed.
+- R97 — clarified — why dog and turtle are not rivals, in everyday terms.
+- R98 — clarified — the mistake it prevents (an imagined alternative reopening what the pool settled).
+- R99 — clarified — the worn-key story told in full.
+- R100 — clarified — split into steps, each with the worn key.
+- R101 — clarified — "nothing fills the gap".
+- R102 — clarified — blame is shared worded without "test".
+- R103 — clarified — judge defined.
+- R104 — clarified — "the target's answer … how the target's pieces behave".
+- R105 — clarified — "tells against one without telling against the other".
+- R106 — clarified — why "hard to vary" is not defined as "not easy to vary" (this document's view).
+- R107 — clarified — the father offers one reading in place of the other when he chooses.
+- R108 — clarified — the account/explaining distinction given in place.
+- R109 — clarified — its purpose stated (it links problems to section 10).
+- R110 — clarified — triggered for files 10 and 11, not draft 4.
+- R111 — clarified — the condition and the open point are stated in the departure.
+- R112 — clarified — Freyr introduced; Deutsch's "reach" glossed.
+- R113 — clarified — frame given a short plain definition.
+- R114 — clarified — "gives no way of certifying it as right".
+- R115 — clarified — "the theory's verdict on the limit".
+- R116 — clarified — "not with full confidence"; pointer to how rulings are made.
+- R117 — clarified — honesty lies in stating limits; the owner's record is a different thing.
+- R118 — clarified — the one page now names the lapse.
+- R119 — clarified — "later thinking".
+- R120 — clarified — why Bruno's limits give no reason.
+- R121 — clarified — "past narrowings"; "the project's analysis".
+- R122 — clarified — episode explained loosely at first use.
+- R123 — clarified — the designs differ at the untried setting, and one also fails a tried one.
+- R124 — clarified — Ivo's reasoning stated.
+- R125 — clarified — an example of each.
+- R126 — clarified — "which tooth goes with which catch".
+- R127 — clarified — thread example; what the two-layer description is for.
+- R128 — clarified — "picture" glossed before the three histories.
+- R129 — clarified — reworded as suggested.
+- R130 — clarified — episodes hold criticism, so construction does.
+- R131 — clarified — dark moths walked through the definition (marked as this document's illustration).
+- R132 — clarified — why Dov's link counts as selected; what "watched" means.
+- R133 — clarified — the swap goes through rewriting, then the narrowed proof on same anchors.
+- R134 — clarified — the created-knowledge part moved to section 10; glosses and pointers left in section 8.
+- R135 — clarified — "descriptions that no longer tell which event is which".
+- R136 — clarified — Deutsch's problem is wider; it can be a noticed difficulty.
+- R137 — clarified — Kofi's use tasks given.
+- R138 — clarified — the apprentice's Tuesday walked through.
+- R139 — clarified — four signs shown with Ngozi (illustration).
+- R140 — clarified — what is originated can be a set-up, link or range, each treated as a content.
+- R141 — clarified — "dimension" glossed as a slot.
+- R142 — clarified — Part 0's "at least half" is emphasis, not a count.
+- R143 — clarified — Noor's range walked through as a set-up.
+- R144 — clarified — the disagreement located.
+- R145 — clarified — route that ran (events) set against support (commitments).
+- R146 — clarified — the same names noted (case text is fixed).
+- R147 — clarified — Kasia's note walked through bearing.
+- R148 — clarified — the mistake it rules out.
+- R149 — clarified — objection defined; its three tests shown with Kasia.
+- R150 — clarified — the case's everyday "problem" glossed (the fixed verdict itself is not changed).
+- R151 — clarified — both cases told.
+- R152 — clarified — "a way of using something corrected through such an account".
+- R153 — clarified — numbered list, with an example that meets it and one that fails.
+- R154 — clarified — resource terms defined.
+- R155 — clarified — the case told.
+- R156 — clarified — an example of each sort of statement.
+- R157 — clarified — the paper is not a source book.
+- R158 — clarified — "possible" keeps one meaning; the physics decides it for tasks.
+- R159 — clarified — kettle illustration.
+- R160 — clarified — Nadia's first idea as the example.
+- R161 — clarified — cutting-machine illustration.
+- R162 — clarified — kept, with its use (ranges and links are reviewable).
+- R163 — clarified — "domain" replaced; Kofi's reason given.
+- R164 — clarified — the principle in everyday words.
+- R165 — clarified — the two lists named.
+- R166 — clarified — "today" explained in section 13.
+- R167 — clarified — the circle told in everyday words.
+- R168 — clarified — deliberate action tied to construction evidence.
+- R169 — clarified — "a standard of worth", same words as the foundations.
+- R170 — clarified — "blanks" replaced by "places to be filled".
+- R171 — clarified — heading names the two histories kept apart; declaration noted.
+- R172 — clarified — each proof is now named as a proof in its section.
+- R173 — clarified — the theory does not say how much it matters.
+- R174 — clarified — "copy the world's whole structure at once".
+- R175 — clarified — the owner's example added to section 6.
+- R176 — clarified — the partial claims added to section 6, noting no worked story exists.
+- R177 — clarified — the programmer point added to section 8.
+- R178 — clarified — the undefined-words list moved to section 18.
+- R179 — clarified — "small made-up examples worked through by computer programs".
+- R180 — clarified — theory terms moved to a concordance in section 18.
+- R181 — clarified — system, judge and theory added; construction evidence says "carriers that came in"; index headings give true counts.
+
+## Cold read: words
+
+- W1 — clarified — "answer" is the target's; a candidate gives its own answer; never used for a candidate itself.
+- W2 — clarified — "input slot"; "starting/end property" for tasks; "something the system pictures" for routes; "stated input" and "missing input" kept.
+- W3 — clarified — verdict, mark and ruling defined in section 1.
+- W4 — clarified — each "record" glossed where its sense could slip; "honesty lies in stating limits".
+- W5 — clarified — "support" for commitments; "route that ran" for events; "route" only in case words.
+- W6 — clarified — "rival" throughout; "competitor" only in the owner's quote, glossed.
+- W7 — clarified — problem (defined), challenge (everyday), noticed difficulty; the case's and Deutsch's senses glossed.
+- W8 — clarified — complaint, objection, criticism and warning sign each defined and set apart.
+- W9 — clarified — "system" defined; judge and doer defined; builder and mind removed (mind kept only for the older view).
+- W10 — clarified — "link" throughout; "correspondence" only in the subtitle, explained.
+- W11 — clarified — "explanation" as everyday word; "false explanation"; "later thinking".
+- W12 — clarified — episode described loosely once; stretch defined.
+- W13 — clarified — "narrowing" throughout; "rescue" only in the owner's quote; "narrowed rule".
+- W14 — clarified — "change" throughout; tokens use allowed changes; "operation" removed.
+- W15 — clarified — everyday "measurement" and "measure" removed.
+- W16 — clarified — everyday "repair" replaced by "correct" or "get round".
+- W17 — clarified — "proof" only; "theorem" only in the textbook case's words.
+- W18 — clarified — "dimension" glossed as a slot in the seal case; an example in complaint 7.
+- W19 — clarified — "group" only for commitments; classes are "sets" of filled-in models.
+
+The cold read's lists of contradictions, hardest parts and ten worst point back to entries above; each is covered there.

@@ -1,0 +1,47 @@
+**1. R31, tasks (a) and (c) — the definition of ≡_ℓ misapplies "faithful on" and produces a non-symmetric relation written as an equivalence.**
+
+R31 inserts at line 407:
+
+> "Write \(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) and from \(c\) to \(d\), both faithful on \(c\)'s contract at grain \(\ell\). The equivalence is structural at the stated grain, not string equality or similarity."
+
+The phrase "both faithful on \(c\)'s contract" is ill-typed for the transport from \(d\) to \(c\). Part IV defines fidelity by pointer: "A transport is **faithful on \(C\)** when it satisfies the component and global fidelity conditions of Part V." Part V's (F1) reads
+
+> \(\operatorname{proj}_{V_k}\!\big[\operatorname{Sol}_{\lambda(k)}(a,b)\big]=L_k(\tau(a),\sigma(b))\).
+
+Here \(\lambda(k)\subseteq D\) is a subnetwork of the *source*, so \(\operatorname{Sol}_{\lambda(k)}(a,b)\) requires \((a,b)\) to be an edit–boundary pair of the source; and \(\tau\) maps source edits to target edits. Thus the contract \(C\) must be a subset of the source's \(A\times B\). For the transport from \(d\) to \(c\), the source is \(d\), so \(C\) must range over \(d\)'s edits and boundaries. But "\(c\)'s contract" (Part III: \(C\subseteq A\times B\) for a question with target \(c\)) ranges over \(c\)'s edits. The types do not match: \(c\)'s edits are fed where (F1) demands \(d\)'s.
+
+Three consequences follow.
+
+*(i) The relation is not symmetric.* \(d\equiv_\ell c\) checks both transports against \(c\)'s contract; \(c\equiv_\ell d\) would check both against \(d\)'s contract. Since \(c\)'s contract and \(d\)'s contract are in general different sets, \(d\equiv_\ell c\) and \(c\equiv_\ell d\) impose different conditions. Yet the text calls the result "The equivalence" and writes \(\equiv\), both of which standardly signal a symmetric relation.
+
+*(ii) The declaration is misleading.* It says "The equivalence is structural at that grain." If "the equivalence" denotes \(\equiv_\ell\) as a relation, the claim is false: the relation fails symmetry. If it denotes merely an equivalence *notion*—a way of assessing sameness—the word sits uneasily with the \(\equiv\) sign and with (N)'s reliance on the relation.
+
+*(iii) "Faithful on" is being used in two ways.* Part V uses "faithful on \(C\)" with \(C\) the source's contract. The same phrase "\(c\)'s contract" appears in (R) at line 166–67 ("admits a transport to \(c\) that is faithful on \(c\)'s contract") for a transport from \(\operatorname{Org}_\ell(o)\) to \(c\)—again the target's contract on a source-to-target transport. R31 extends that second usage into the definition of \(\equiv_\ell\) and applies it to *both* directions at once, so the single phrase "faithful on \(c\)'s contract" carries the source-role meaning for one transport and the target-role meaning for the other inside one definition.
+
+**Proposed repair.** Replace "both faithful on \(c\)'s contract at grain \(\ell\)" with "each faithful on the contract of its source at grain \(\ell\)." This makes the definition type-correct—each transport checked against its own source's edits, as (F1) requires—and symmetric, since the condition is invariant under swapping \(d\) and \(c\). The declaration would then read: "\(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) faithful on \(d\)'s contract and from \(c\) to \(d\) faithful on \(c\)'s contract, at grain \(\ell\)."
+
+**2. R52, task (a) — the declaration does not name the dropped condition "realizable."**
+
+R52 replaces "it must be admitted, realizable, a member of \(\mathcal T\), and a survivor of \(H\)" with "it must be a member of \(\mathcal T\), a transport the physics and the stated construction admit (Part XII), and it must survive on \(H\) (Part IV)." The old list has four conditions; the new wording has three phrases, but Part XII already defines the population as "the set of transports the physics and the stated construction admit," so "a member of \(\mathcal T\)" and "a transport the physics and the stated construction admit" state one condition. The net replacement is four conditions down to two. The item "realizable" has no counterpart.
+
+The declaration says the new claim requires three things and "replaces the list 'admitted, realizable, a member of the population, and a survivor of \(H\)'." By displaying both lists, the declaration lets a careful reader see the drop. But it does not say that "realizable" is removed as a separate requirement or absorbed into "admitted." If "realizable" denoted a genuine physical condition—having a retained realization in the sense of (CT1), say—dropping it weakens Derivation 3's hypothesis and broadens its underdetermination conclusion. A one-line fix exists: append to the declaration "—the separate realizability condition is dropped."
+
+This point does not survive as a fatal defect, because the declaration does display both lists and the change is visible from them.
+
+R31: FALLS — definition of ≡_ℓ applies \(c\)'s contract to a transport from \(d\) to \(c\), where Part V's (F1) requires the source's edits; the relation is non-symmetric despite ≡ notation.
+
+R11: STANDS
+R22: STANDS
+R31: FALLS — definition of ≡_ℓ ill-typed and non-symmetric.
+R32: STANDS
+R33: STANDS
+R35: STANDS
+R36: STANDS
+R37: STANDS
+R40: STANDS
+R42: STANDS
+R52: STANDS
+
+OVERALL: NEEDS REPAIR
+
+END OF REPORT

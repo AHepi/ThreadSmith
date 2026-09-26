@@ -1,0 +1,637 @@
+Let me work through this carefully.
+
+The item X14 is an inserted passage in Part VIII, titled "A failed answer stays failed," at line 369 of the revised text. Let me read it carefully and run the four tests plus the three questions.
+
+First, let me understand the passage:
+
+> **A failed answer stays failed.** Fix a question p, a pair (a,b)∈C and a value y≠Ans_p(a,b). By (A), a candidate for p whose answer at (a,b) is y, Ans_E(τ(a),σ(b))=y, is not an account of p, whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there; and the same holds on every question with the same target and query whose contract contains (a,b). Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed. Here "established" is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b) (Part IX), and by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on. If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike; no candidate is thereby shown to be an account (K2). A contract that omits (a,b), or a changed query, makes a different question (Part III): an account on it does not answer p, and the failure on p stands (Historical index).
+
+Now let me check the tests.
+
+**T1. Is it true?**
+
+The claim: fix p, (a,b)∈C, y≠Ans_p(a,b). By (A), a candidate whose answer at (a,b) is y is not an account of p.
+
+(A) is Question fidelity: Ans_E(τ(a),σ(b))=Ans_p(a,b) for every (a,b)∈C. So yes, if a candidate's answer at (a,b) is y≠Ans_p(a,b), then (A) fails, so Account fails (since Account is a conjunction including (A)). That's straightforwardly true.
+
+"and the same holds on every question with the same target and query whose contract contains (a,b)" — yes, because (A) for that question also requires the answer at (a,b) to equal Ans_p(a,b) (same target and query means same Ans_p(a,b)... wait, careful. If the question has the same target D and same query Q, then Ans_p(a,b) = Q(D,a,b) is the same. So yes, a candidate whose answer at (a,b) is y≠Ans_p(a,b) fails (A) on that question too. Good.
+
+"Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed."
+
+Hmm. This is where it gets interesting. Established for an assessor = the assessor holds a usable receipt for it (Part IX, line 397). A receipt is a derivation tree over evidence leaves. So "the target's answer at (a,b) is not y" being established means the assessor has a usable receipt that Ans_p(a,b) ≠ y.
+
+Then, the claim is, this is established "of every such candidate alike, from the candidate's own answer there." That is: given the receipt that Ans_p(a,b)≠y, and given a candidate whose answer at (a,b) is y, we can conclude the candidate is not an account. This is a modus tollens-style inference, and it requires no record of earlier failures. That seems right — the exclusion is derived from the candidate's own answer plus the established target answer.
+
+Wait — but there's a subtlety. "this is established for that assessor of every such candidate alike." What is "this"? The exclusion — that the candidate is not an account. Hmm, but is that "established" in the technical sense? The technical sense of "established" (Part VI, line 315: "A result is established for an assessor who holds a usable receipt for it (Part IX)"). The result here would be "candidate E is not an account of p." Does the assessor hold a usable receipt for that? They hold a receipt for Ans_p(a,b)≠y, and they can compute Ans_E(τ(a),σ(b))=y by evaluating the candidate (the candidate's own answer there). Then by (A), the candidate fails. Is that combination "a usable receipt"? 
+
+Actually, computing the candidate's answer at (a,b) is evaluating the candidate's own relations — that's a mathematical/structural fact about the supplied relations, not an empirical observation requiring a test with background and instruments. Hmm, but it might require a test if the candidate's answer at (a,b) is not computable from the candidate alone... Actually Ans_E(τ(a),σ(b)) is defined by the query Q applied to E — it's a computation on the organization. So it's derivable from the candidate's own content.
+
+Hmm, wait. Let me re-read: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there."
+
+So the exclusion of each such candidate follows from the candidate's own answer at (a,b) plus the established fact about the target. This is fine as a logical point. Whether it counts as "established" in the technical receipt sense is a question — but the passage is careful: "Here 'established' is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b)." So the "established" applies to the target's answer, and the exclusion follows. OK.
+
+Then: "by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on. If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike; no candidate is thereby shown to be an account (K2)."
+
+(K3): For T∧B∧I⇒O, an established ¬O yields ¬(T∧B∧I) and nothing narrower. (line 395). So the test that yields "the target's answer at (a,b) is not y" relies on premises T (the candidate/theory?), B (background), I (instruments). If a premise about B or I ceases to be live (K2: Usable_j(u) iff Lic ∧ Scope ∧ ∀d∈Prem(u), Live_j(d;u)), then the receipt is not usable, so the exclusion ceases to be established. And "no candidate is thereby shown to be an account (K2)" — withdrawing a premise removes a license; it does not make the conclusion false (line 393). Right: the failure of the exclusion doesn't establish any candidate as an account. Good.
+
+Hmm, one issue: "no candidate is thereby shown to be an account (K2)". K2 is about usability of an argument application. Withdrawing a premise removes a license. So the exclusion ceases. But does the text anywhere say that a candidate whose exclusion is not established thereby fits? Let me check "fits" — line 315: "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." So if the exclusion is not established, then it doesn't show the candidate failing (E)... but that alone doesn't make the candidate fit, because there might be other established results. And "no candidate is thereby shown to be an account" — right, because Account is defined by (E), not by the absence of established exclusions. So the parenthetical (K2) is apt in the sense that withdrawing a premise doesn't make the conclusion (that the candidate is an account) true. OK.
+
+Hmm, actually wait. There's a subtlety about whether the exclusion "ceases to be established" is right. Let's think: the exclusion of candidate E follows from (i) receipt that Ans_p(a,b)≠y, and (ii) the candidate's own answer at (a,b) being y. If the receipt in (i) becomes unusable, then the exclusion is no longer established. Yes. But note: the exclusion might also be established by a different route — e.g., a direct test of candidate E showing it fails (A) at (a,b) because the target's answer is z≠y and the candidate gives y... that's the same thing. Or the candidate might fail some other condition of (E). The text says "the exclusion ceases to be established" — meaning this particular exclusion (based on this particular receipt). Hmm, if there's another usable receipt showing the target's answer at (a,b) is not y, the exclusion stands. The text says "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established" — singular "the receipt," referring to the one yielded by the test in question. If there are other receipts, the exclusion might remain established. Is this a defect? It's a slight imprecision: strictly, the exclusion ceases to be established *by that receipt*. But the passage is talking about the case where the exclusion rested on that receipt. I think it's a minor point, arguably not a real defect since the context makes clear it's about the receipt the test yielded. Actually let me consider whether to press this. The sentence: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike". Hmm — "the exclusion ceases to be established" is too strong if another receipt establishes the same target answer. But maybe "the receipt" is doing the work: the receipt is not usable → the exclusion [via that receipt] ceases. I'd call this a small imprecision but not a successful attack, since a charitable reading is natural and the point is about the dependence structure. Actually, I could press it as a wording challenge. Let me hold it.
+
+Now the bigger questions: T1 truth — is there a counterexample?
+
+Consider: "By (A), a candidate for p whose answer at (a,b) is y ... is not an account of p ... and the same holds on every question with the same target and query whose contract contains (a,b)."
+
+Wait, careful with "the same holds on every question with the same target and query whose contract contains (a,b)". Suppose p' has the same target D and same query Q, and contract C' ⊇ {(a,b)}... but C' might not contain (a,b) as a pair with the same b? It says "whose contract contains (a,b)". Then Ans_{p'}(a,b) = Q(D,a,b) = Ans_p(a,b) ≠ y. And a candidate for p' whose answer at (a,b) is y fails (A) for p'. Fine. But note: the candidate for p' is a candidate for p', i.e., its transport is from D, and (A) is evaluated on C'. Since (a,b)∈C', the answer at (a,b) must equal Ans_{p'}(a,b). OK, true.
+
+Hmm, but here's a subtlety: the candidate's transport τ, σ for p' may differ from those for p. The text says "a candidate for p whose answer at (a,b) is y, Ans_E(τ(a),σ(b))=y" — that's for p. For p', the same physical candidate E with a possibly different transport would have its own answer. The text's claim is that the same holds (i.e., any candidate on p' answering y at (a,b) is not an account of p'). That's fine.
+
+Now: is there any issue with "whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there"? These are all cases of candidates whose answer at (a,b) is y. The enumeration is rhetorical — it emphasizes that no record of history is needed. It's fine.
+
+Potential issue: the passage says the exclusion holds "from the candidate's own answer there." But to know the candidate's own answer at (a,b), the assessor must compute Ans_E(τ(a),σ(b)). That's evaluation of the candidate, which is a computation, not a test of the world. So no background/instruments needed for that part. But then the (K3) caveat applies to the target's answer, not to the candidate's answer. The text handles this: "by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on." Wait — "the test that yields it" — "it" = "the target's answer at (a,b) is not y". So the test yields the target's answer. And (K3) says the test tells against a candidate only together with B and I. Hmm, (K3) is about what a test refutes: T∧B∧I⇒O, established ¬O yields ¬(T∧B∧I) and nothing narrower. So the test's result (the target's answer is not y) is only as good as B and I. Right.
+
+Hmm, hold on. There's a question about what "T" is in (K3) here. In the test of the target's answer at (a,b), T would be... the target's behavior? Actually (K3) as stated at line 395 is generic: "For T∧B∧I⇒O, an established ¬O yields ¬(T∧B∧I) and nothing narrower." The application here: the test predicts O (the observation, e.g., the target's answer at (a,b) is z), and the established ¬O (the observed answer is not what the test setup predicted) yields that the conjunction of the tested candidate, background and instruments fails. Hmm, actually here it's being used the other way: the test establishes the target's answer at (a,b) is not y. So the test's result is ¬O where O = "the answer is y". Then ¬(T∧B∧I): either the target isn't as assumed, or the background/instruments fail. Wait, no.
+
+Let me re-read. Actually the application in X14: "by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on." So the test yields "target's answer at (a,b) is not y". By (K3), this tells against the candidate only together with B and I. Hmm, that's the (K3) direction: an established ¬O yields ¬(T∧B∧I) — i.e., you can only conclude the failure of the conjunction, so if B or I is at fault, T (the candidate) may be fine. So the exclusion of the candidate (which is part of what ¬(T∧B∧I) says... hmm, actually the exclusion of the candidate is a separate inference).
+
+Let me think about the logic more carefully. The candidate E answers y at (a,b). The test says the target's answer at (a,b) is not y (i.e., it's z). If the test is right, then E fails (A), so E is not an account. The test's result ¬O (where O = "the answer is y") is established. (K3) says: from T∧B∧I⇒O and established ¬O, we get ¬(T∧B∧I). Here T would be "the candidate answers y at (a,b)"? Hmm, no. Let me think of it as: the test setup says "if the target's relations are R and the background B holds and the instruments I work, then the observed answer will be z." The established result is ¬(the observed answer is z)... no wait, the established result IS that the observed answer is z (≠y). Hmm.
+
+Actually I think the (K3) application is: the test yields "the target's answer at (a,b) is not y" — call this result R. R tells against the candidate E (which answers y) only together with the background and instruments the test relies on. So if a premise about B or I ceases to be live, R no longer tells against E. That is exactly (K3)'s "nothing narrower" point: from the test you can't narrow the failure to T alone; equally, the result against T is only as strong as B∧I. Yes, that's the intended use, and it's consistent.
+
+OK so T1: the passage looks true in the theory's terms. Let me look for a counterexample more aggressively.
+
+Counterexample attempt 1: What if the candidate's answer at (a,b) is y but the candidate is not a candidate for p at all (e.g., its transport doesn't translate (a,b))? The text says "a candidate for p whose answer at (a,b) is y, Ans_E(τ(a),σ(b))=y". For a candidate for p, τ and σ translate edits/boundaries, and (a,b)∈C, so (τ(a),σ(b)) is defined. Fine.
+
+Counterexample attempt 2: What about a candidate that is an account on a different question p' with the same target and query but a contract not containing (a,b)? The text doesn't claim anything about that — it says the same holds on every question with the same target and query whose contract contains (a,b). Fine.
+
+Counterexample attempt 3: The "changed candidate that keeps y there" — a candidate that was changed elsewhere but keeps the answer y at (a,b). It still fails (A). Fine.
+
+Counterexample attempt 4: What if y = Ans_p(a,b) on some other question... irrelevant.
+
+So T1 seems fine. Now, is there a problem with the claim "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike"? 
+
+Consider: the target's answer at (a,b) is established to be not y. Now take a candidate E whose answer at (a,b) is y. Is "E is not an account of p" established for the assessor? The assessor holds a receipt for "Ans_p(a,b)≠y". Does the assessor hold a receipt for "E is not an account of p"? To have that, they'd need to know E's answer at (a,b) is y, which is a fact about E's own relations. Is that "established"? Hmm. The text says the exclusion is established "from the candidate's own answer there" — i.e., the exclusion follows from the candidate's own answer. But whether the assessor has established what the candidate's own answer is, is a separate matter. The text seems to assume the assessor can read the candidate's answer at (a,b). 
+
+Actually, hold on: is that always possible? Ans_E(τ(a),σ(b)) = Q(E, τ(a), σ(b)). This is a computation on the candidate's relations. If the candidate is fully specified (its relations L_j are supplied), then yes, the answer is computable. But the text says "from the candidate's own answer there" — this presupposes the assessor can determine the candidate's answer at (a,b). In the case of a "candidate offered again" or "a changed candidate," the assessor can evaluate it. I think this is fine as the theory treats candidates as supplied relations.
+
+Hmm, but here's a subtle issue: the whole point of the owner's correction is about error correction sticking. The owner said: "Once the explanation is rescued, the mistake shouldn't be able to creep back in." The drafters' reading: "error correction is carried by the explanation itself, so a corrected mistake cannot creep back in and a record of rescues is redundant."
+
+Now, X14's contribution: the exclusion of a candidate that keeps the failed answer y at (a,b) follows from the candidate's own answer, with no record of earlier failures. So if a "corrected" candidate creeps back to the failed answer y at (a,b), it is excluded by its own content, not by a record. That's exactly the owner's position: the explanation's own content does the work; no record needed. Good — this supports faithfulness.
+
+But wait: does the passage bring back a record or log? It says "with no record of which candidates failed before or of how any was changed" — explicitly denying that a record is needed. Good.
+
+Does it bring back a listed set of rivals, enumeration, count, or grade? It mentions "a rival" as one of the cases, but doesn't enumerate or count rivals. It says "every such candidate alike" — that's a universal quantification over candidates answering y at (a,b), not a count or list. Hmm, "every such candidate" — is that a covert enumeration? No: it's a universal conditional, "for every candidate, if its answer at (a,b) is y then it is not an account." That's not listing or counting. The owner's prohibition is on stating hard-to-vary through a listed set / enumeration / count of versions. X14 doesn't do that. It also doesn't grade candidates. Good.
+
+Actually, wait. Let me double check one thing: "whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there" — this is an enumeration of *kinds of candidate*, not of rivals. It's a rhetorical list of four cases, all unified by "answer at (a,b) is y". Not a listing of rivals. Fine.
+
+**T2. Are the kind and declaration right?**
+
+Kind: CLAIM, reason: clarification. The declaration says: Part VIII now states that on a question, a candidate whose answer at a pair of the contract differs from the target's is not an account of it, nor of any question with the same target and query whose contract contains that pair, whatever candidate it is. Once the target's answer there is established for an assessor, by a usable receipt, this is established for that assessor of every such candidate alike, from its own answer there, with no record of earlier failures or changes. By (K3) the exclusion is established only together with the background and instruments of the test; if a premise about them ceases to be live, it ceases to be established for every such candidate alike, without any candidate being shown to be an account. A contract omitting the pair, or a changed query, makes a different question, an account on which does not answer the original, whose failure stands.
+
+Does the new wording claim more than the declaration? Let me compare. The new wording also says: "A contract that omits (a,b), or a changed query, makes a different question (Part III): an account on it does not answer p, and the failure on p stands (Historical index)." The declaration covers this. The new wording says "Here 'established' is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b) (Part IX)". The declaration says "by a usable receipt". Covered.
+
+Does the new wording claim less? Hmm. The declaration says "the exclusion is established only together with the background and instruments of the test". The wording says "by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on." Match.
+
+One thing: the declaration's first sentence says "a candidate whose answer at a pair of the contract differs from the target's is not an account of it." The wording fixes y≠Ans_p(a,b) and says the candidate answering y is not an account. Since y ranges over all values ≠ Ans_p(a,b), this covers "differs from the target's". Match.
+
+I think the declaration is accurate. So T2 passes for the CLAIM declaration.
+
+But hold on — is it a "clarification" or is it a change of claim? The reason given is "clarification." The current text (old wording) has only "A new index is a new claim." The new passage adds a substantive claim: that a failed answer excludes a candidate on every question with the same target and query whose contract contains the pair, and that the exclusion is established for an assessor holding a receipt, and ceases when the receipt ceases to be usable. Is any of this already stated elsewhere in the current text? 
+
+Part VI (line 317, Problems) says: "an answer it refutes stays refuted on p (Part VIII)." Wait — that's in the revised text at line 317: "establishing it, the target's relations as well as its answer where their answers there agree, is a test that solves the problem whatever it shows, since afterwards at most one of them fits; an answer it refutes stays refuted on p (Part VIII)." So Part VI already points to Part VIII for "an answer it refutes stays refuted on p." And the old Part VIII had no such statement — so the pointer was dangling, and X14 supplies the target. That makes X14 genuinely a clarification/repair: it states what Part VI already refers to. Hmm, but is Part VI's line 317 part of the current text or one of the other 56 changes? I don't know. But regardless, in the revised text, line 317 points to Part VIII for "stays refuted," and X14 is what fulfils it. So X14 is at least partly ORDER (stating what's stated elsewhere) — but the "established for an assessor... ceases to be established" machinery is new detail. Given the declaration covers it, CLAIM with reason "clarification" is defensible. Hmm, should it be ORDER? ORDER requires "the new wording states, in its place, only what the text already states elsewhere." Since the established/receipt/K3/K2 machinery is spelled out here for the first time (Part IX defines receipts and K2/K3, but the *application* to the failed-answer exclusion is new), it's not merely ORDER. CLAIM is right.
+
+Actually wait, I should double-check: does the current text already say somewhere that a candidate failing (A) at a pair is not an account? Yes — (A) itself and (E): Account iff (F1)∧(F2)∧(A)∧... So "a candidate whose answer differs from the target's is not an account" is already a consequence of (E). And "the same holds on every question with the same target and query whose contract contains that pair" follows from (A) for that question. So the *core* claim is already derivable. What's new is: (i) the persistence across re-offerings and changes (no record needed) — which follows from the candidate's own content; (ii) the established/receipt structure and its fragility via K2/K3. So it's a mix: mostly making explicit what (E), (A), Part IX already imply, plus the receipt-fragility claim. The declaration describes all of it. I'd say CLAIM/clarification is fine. Hmm, but one could argue the receipt-fragility part is a genuine new claim (change of claim), not a clarification. The reason given is "clarification," which the drafters use for "a reader can conclude from the new wording something the current text left unconcluded." Actually the kinds: "erratum, clarification or change of claim" are the *reasons*; the declared kind is CLAIM/WORDING/ORDER/META. So reason "clarification" + kind CLAIM is consistent: it's a claim that clarifies (makes explicit) what was implicit. I think that's right.
+
+**T3. Coherence with the rest of the revised text.**
+
+- Pointer check: "(A)" — defined at line 250 (Question fidelity). ✓. "(K3)" — line 395. ✓. "(K2)" — line 390. ✓. "Part VI" — established/usable receipt: line 315 "A result is established for an assessor who holds a usable receipt for it (Part IX)". ✓. "Part IX" — receipts, line 397. ✓. "Part III" — different question, line 151-161. ✓. "(Historical index)" — line 367, same Part. ✓.
+- Notation: Ans_E(τ(a),σ(b)) — consistent with (A) at line 250. ✓. Ans_p(a,b) — consistent with (Q) line 144. ✓.
+- "the same holds on every question with the same target and query whose contract contains (a,b)" — "target and query" is the language of Part III (line 151: "What a question asks... is fixed by the type of Q and the shape of C"). ✓.
+
+Now, does the new sentence contradict an unchanged one? Let me look for tensions.
+
+Line 317 (Part VI, Problems): "an answer it refutes stays refuted on p (Part VIII)." X14 says: "the failure on p stands (Historical index)" and the exclusion persists for every such candidate. Consistent. ✓.
+
+But here's a possible tension: X14 says "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike." Whereas line 317 says "an answer it refutes stays refuted on p." Is there a contradiction? Line 317's "stays refuted" is about the *fact* (given the target's answer is established, at most one fits), while X14's caveat is about the *established-for-the-assessor* status being dependent on the receipt's usability. Hmm. These could be read as in tension: if the refutation "stays refuted" but the exclusion "ceases to be established," what's the difference? 
+
+Actually, I think the distinction is: "stays refuted on p" means the failure on p stands as a fact about p (indexed to p) — the candidate that answered y failed (A) on p, and that fact doesn't change when the candidate is changed or re-offered; it's indexed to the contract (Historical index, line 367). Whereas "established for an assessor" is the assessor's epistemic hold on that fact, which depends on usable receipts. So "stays refuted" (the indexed fact) vs "ceases to be established" (the assessor's warrant). These are different relations, so no contradiction. But is the text clear enough about that? The passage itself makes the distinction: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike" — then the caveat about the receipt. And the final sentence: "the failure on p stands (Historical index)." So the failure stands as an indexed fact; the established-status is assessor-relative. Hmm, but then "the exclusion ceases to be established" vs "the failure stands" — the exclusion and the failure are the same thing? If the exclusion ceases to be established but the failure stands, that's the distinction I drew. I think it's coherent but subtle. Let me consider pressing it as a coherence challenge... Actually, I think it's defensible and the text handles it. Let me look for something sharper.
+
+Sharper coherence issue: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there."
+
+Consider a candidate E that is *not* a candidate for p but for some other question, and whose answer at (a,b) is y. The text restricts to "every such candidate" = candidates for p (or for questions with the same target and query containing (a,b)) whose answer at (a,b) is y. Fine.
+
+Now consider: is "the target's answer at (a,b) is not y" the kind of thing that can be *established*? Part IX: a receipt is a derivation tree over evidence leaves; an evidence leaf is "a reference to an event with an interpreted claim." So a receipt for "Ans_p(a,b) ≠ y" would be a derivation from observed events. E.g., the test at (a,b) produced answer z≠y. That's an event with an interpreted claim. OK, so yes, it can be established. ✓.
+
+Hmm, what about question (c2)? — Does a failure found by examining a candidate itself (not looking at the world) count as established, so that the candidate no longer fits? Examples: failure of non-circular dependence, a component anchored to nothing, or a contradiction inside the candidate.
+
+This is the interesting question. Let me think about what the text says.
+
+"Established" (Part VI line 315, Part IX line 397): "A result is established for an assessor who holds a usable receipt for it (Part IX)." A receipt is "a derivation tree over leaves," where "An evidence leaf is a reference to an event with an interpreted claim."
+
+So a receipt's leaves are *events* — references to things that happened. A failure of non-circular dependence is not an event; it's a structural fact about the candidate. Can there be a receipt for it? Hmm. The derivation tree would need leaves that are events. A mathematical/structural fact about a supplied candidate doesn't derive from events — it derives from the candidate's definition.
+
+But wait — X14's own structure gives a hint. X14 says the exclusion is established "from the candidate's own answer there." The candidate's own answer at (a,b) is a computation on the candidate, not an event. And the target's answer at (a,b) is established by a receipt (an event: running the test). So in X14's case, the *target's* answer is receipt-established, and the *candidate's* answer is computed. The exclusion combines both.
+
+Now for (c2)'s examples: non-circular dependence failure, component anchored to nothing, internal contradiction. These are all facts about the candidate's own structure, computable from the candidate alone. Does the text settle whether such a failure counts as "established"?
+
+Hmm. Let's look at "fits" (line 315): "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." So "fits" is defined relative to what is *established*. If a structural failure (e.g., non-circular dependence) is not "established" in the receipt sense, then a candidate with that failure might still "fit" for an assessor — which would be wrong, since the candidate plainly fails (E).
+
+Wait, but hold on. Let's re-read: "A candidate **fits** what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." Hmm, this is used in the definition of "easy to vary" (line 317): "A candidate is easy to vary... when it and a rival pose a problem of the second kind," and problems involve "Two rivals that both fit what is established for an assessor."
+
+So the notion of "fits" is assessor-relative and receipt-relative. Now: if a candidate fails non-circular dependence, does an assessor who has merely *examined* the candidate (not run any test) hold a receipt showing it failing (E)?
+
+Part IX, line 397: "A record reconstructed from the claim it is meant to support is not a receipt for that claim." Interesting — that's about records reconstructed from the claim.
+
+Hmm, and line 397: "An evidence leaf is a reference to an event with an interpreted claim." So receipts are rooted in events. Examining a candidate and finding it circular — is that an event? Well, the *examination* is an event (an occurrence in a history). But the leaf's interpreted claim would be about... hmm.
+
+Actually, let's think about it differently. There's a distinction in the theory between:
+1. Facts about the world (the target's answer at (a,b)) — established by tests, receipts over events, subject to (K3) background/instruments.
+2. Facts about a candidate's own structure (whether it satisfies (F1), (F2), (A), non-circularity, non-vacuity) — these are determined by the supplied relations, computable.
+
+For (2), the text at line 265 says: "Every conjunct is a condition on how supplied relations behave under the changes in C." And line 534 (Part XV): "A case whose verdict turns on an input the case does not state... is a case with a missing input, not a refutation."
+
+Now, does the text anywhere say that a structural failure of (E) is established without a receipt? Let me search the excerpts... 
+
+Line 315: "A result is established for an assessor who holds a usable receipt for it (Part IX); by (K3), a result that tells against a candidate tells against it only together with the background and instruments of the test that yields it."
+
+"the test that yields it" — so results that tell against a candidate come from *tests*. (K3) is about tests. Structural failures aren't from tests.
+
+Line 317: "establishing it, the target's relations as well as its answer where their answers there agree, is a **test** that solves the problem whatever it shows, since afterwards at most one of them fits."
+
+Hmm, so the problem of the first kind is solved by a test that establishes the target's relations/answer at the pair.
+
+So here's the tension for (c2): if a rival pair conflict at a pair (a,b)∈C, the problem is solved by testing the target there. But what if one of the rivals fails (E) structurally (e.g., it's circular)? Then it's not an account at all, and there's no problem (a problem requires two rivals that both fit). Does the text let an assessor conclude that? 
+
+The assessor would need to know the rival fails (E). That's a computation on the rival's supplied relations. Is it "established"? Hmm.
+
+I think the text is genuinely unsettled on this. Let me check whether X14 makes it worse or settles it.
+
+X14 says: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there."
+
+Key: "from the candidate's own answer there." So the exclusion of a candidate rests on (i) a receipt about the *target* and (ii) the *candidate's own answer*. The candidate's own answer is not receipt-based; it's read off the candidate. So the text implicitly treats facts about the candidate's own content as available without a receipt. That suggests: yes, a failure found by examining the candidate itself does count — the candidate's own answer/structure excludes it, and no receipt is needed for that part.
+
+But X14 only says this for the *answer at (a,b)* — i.e., for (A)-type failures. It doesn't say it for non-circular dependence, anchoring, or contradiction. Hmm. But by parity, the same reasoning would apply: those are also facts about the candidate's own content.
+
+But strictly, does the text settle it? Let me look at the definition of "fits" again: "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." 
+
+If "established" strictly requires receipts over events, then a circular candidate whose circularity nobody has tested would "fit" — which is absurd (it fails (E) by definition). But maybe "result established" is meant loosely. Hmm.
+
+Actually, hold on. Let me reconsider. Maybe the notion is: "Account(E)" is a well-defined predicate; whether it holds is a fact. "Established" is the epistemic access to a fact via receipts. "Fits" is defined via what's established. So if a candidate fails (E) structurally but nobody has established it, then for that assessor the candidate "fits" — meaning, the assessor has no established result against it. That's an epistemic notion, and it's fine: the assessor doesn't know the candidate fails. But then "easy to vary" and "problem" would be assessor-relative in a way that includes candidates that are provably not accounts. Is that a defect? 
+
+Hmm, the text at line 317 says: "Two rivals that both fit what is established for an assessor pose, for that assessor, a problem for p: a conflict between ideas that what the assessor has established has not settled." So a problem is assessor-relative: it's about what the assessor has not settled. If the assessor hasn't established that one of the rivals is circular, then yes, they pose a problem for that assessor. That's coherent — it's about the assessor's state.
+
+But now (K3) and (K2) complicate: (K2) says an argument application is usable only if its premises are live. A derivation showing a candidate is circular would be an argument application; its premises would include the candidate's supplied relations. Are those "live"? Live_j(d;u) — the text doesn't define "live" in the excerpts. Hmm.
+
+OK. So for (c2), I think the honest answer is: the text does not settle it explicitly. X14's phrase "from the candidate's own answer there" gestures at the distinction (facts read off the candidate vs facts established by receipts about the target), but it doesn't generalize to non-circular dependence, anchoring, or contradiction. And the definition of "fits" in terms of "what is established" leaves open whether a structural failure counts as established.
+
+What turns on it for the problems two rivals pose? If a structural failure doesn't count as established, then a rival that is provably not an account (circular, anchored to nothing, self-contradictory) can still "fit" for an assessor, and thus still pose a problem, still make a candidate "easy to vary," and still require a test of the world to settle — when in fact the candidate's own content already settles it. That's a real issue: it would mean the theory sends you to test the world to resolve a problem that the candidate's own content already resolves. Conversely, if structural failures do count as established, then examining a rival can dissolve a problem without any test, and the "problem" notion is sharper.
+
+Also relevant: X14's own claim. X14 says the exclusion is established "from the candidate's own answer there." If "established" required receipts over events for everything, X14's claim would fail (the candidate's own answer isn't an event). So X14 *needs* the reading that facts about the candidate's own content can establish exclusions without receipts. But the text doesn't state that generally. So X14 relies on an unstated principle. That's a coherence/precision gap.
+
+Hmm, is that enough to CHALLENGE X14? Let me think about whether X14's specific claim survives. X14's exclusion: candidate answers y at (a,b); target's answer established ≠y. The exclusion follows. X14 says "this is established for that assessor of every such candidate alike, from the candidate's own answer there." For this to be right, the assessor must be able to determine the candidate's own answer at (a,b). Since candidates are supplied relations and Ans is a set-theoretic operation, the answer is determined by the candidate. Whether the *assessor* can compute it is a different matter, but the theory generally treats these as decidable/evaluable (Part V's conditions are all "conditions on supplied relations"). So I think X14's claim is fine *given* that the candidate's answer at (a,b) is determinable. And X14 doesn't claim the assessor has a receipt for the candidate's answer; it claims the exclusion is established (the receipt is for the target's answer) and the exclusion holds "from the candidate's own answer there." 
+
+Hmm, actually, re-reading once more: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed."
+
+I now read "this is established... of every such candidate" as: the exclusion-of-the-candidate is established for every such candidate. And the ground is: the receipt about the target + the candidate's own answer. So the candidate's own answer is doing part of the work. This is consistent and, I think, intended.
+
+So for (c2): X14 itself draws the distinction implicitly (candidate's own content vs receipt about the target), but only for the answer-at-a-pair case. The text does not settle whether other structural failures (non-circularity, anchoring, contradiction) count as established. I'd say: UNSETTLED BY THE TEXT, and it should be settled — because the "problem" notion (two rivals that both fit) depends on it, and because X14's own claim requires the candidate's-own-content principle for the (A) case, which the text doesn't state generally.
+
+Now, does that make X14 CHALLENGED? The question (c2) is about the text, and X14 is the item that most bears on it. If X14's claim depends on an unstated principle, is X14 itself defective? Hmm. Let me think about whether X14's claim is *false* under the strict reading.
+
+Strict reading: "established for an assessor" = assessor holds a usable receipt. Then "this is established for that assessor of every such candidate alike" would require a receipt for each candidate's exclusion. But the text says "from the candidate's own answer there, with no record" — which indicates the exclusion is *derived*, not receipted. So under the strict reading, X14 would be using "established" loosely/derivatively. But X14 explicitly says "Here 'established' is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b)." So "established" applies to the *target's answer*, and the exclusion of candidates follows from it. So "this is established... of every such candidate" means the exclusion *follows* for every such candidate, given the established target answer. That's a derivative sense. I think it's coherent, though it stretches "established of a candidate."
+
+Hmm, OK. Let me now think about (b): does a correction stick?
+
+The owner: "Once the explanation is rescued, the mistake shouldn't be able to creep back in."
+
+X14: a candidate that keeps y at (a,b) is excluded, whatever candidate it is — including "a changed candidate that keeps y there." So if a corrected candidate reverts to the failed answer y at (a,b), it's excluded by its own answer. ✓ on the same question.
+
+On a narrowed contract or changed query: X14's last sentence — "A contract that omits (a,b), or a changed query, makes a different question (Part III): an account on it does not answer p, and the failure on p stands." So on the *new* question, the candidate may be an account; but it doesn't answer p, and the failure on p stands. So the "mistake" doesn't creep back in *on p*. But on the new question, the candidate can be an account. Is that the mistake creeping back in? No — because the new question is a different question; the failure on p stands. The owner's concern is about the *same* question. So: sticks on p; doesn't extend to the new question (which is fine, since it's a different claim). 
+
+Hmm, but wait: consider the case where the narrowed contract still contains (a,b) but the candidate now answers correctly at (a,b) and wrongly elsewhere. Then the old failure at (a,b) is fixed; the candidate is no longer excluded by that failure (its answer there is now z, not y). It might fail elsewhere. X14 doesn't say a corrected candidate stays excluded — it says a candidate that *keeps y there* stays excluded. So a genuinely corrected candidate (different answer at (a,b)) is not excluded by the old failure. Good — that's "rescued." And if it reverts, it's excluded again. ✓.
+
+Through (K3)/background/instruments: X14 explicitly handles this — if a premise about B or I ceases to be live, the receipt is not usable and the exclusion ceases to be established. So the correction can *become unestablished* if the test's background/instruments are later withdrawn. Is that the mistake creeping back in? Not exactly — the candidate is not thereby shown to be an account (K2). But the exclusion is no longer established, so for that assessor the candidate "fits" again (no established result against it). Hmm — that's a real channel through which a corrected mistake can come back: not in fact, but in the assessor's established state. The text lets it happen and it should — because (K3)/(K2) are about not overclaiming. The owner's "shouldn't be able to creep back in" is about the *content* doing the work; the (K3) caveat is about the warrant's fragility, which the theory already accepts (fallibilism). I'd say: the text lets the *warrant* lapse but not the *fact*; the failure on p stands (Historical index). So the correction sticks as a fact; the warrant is fallible. That's the right answer, and X14 says it.
+
+Through a candidate that changes its answer at the failed pair only slightly, or makes the same mistake at a neighbouring pair not yet tested: 
+- "Changes its answer at the failed pair only slightly" — if its answer at (a,b) is now y' ≠ y and y' ≠ Ans_p(a,b), then it's still excluded (by the same reasoning, once the target's answer at (a,b) is established as not y'). If y' = Ans_p(a,b), then it's corrected at that pair. X14 covers "a value y≠Ans_p(a,b)" generally, so any wrong value is covered. ✓.
+- "The same mistake at a neighbouring pair not yet tested": suppose (a',b') ∈ C is not yet tested, and the candidate answers y' ≠ Ans_p(a',b') there. Is it excluded? By (A), yes — it fails (A) at (a',b'), so it's not an account, whether or not anyone has tested it. (A) is a condition on the contract, "tested or not" (line 315: "it claims (F1), (F2) and (A) at every pair of C, tested or not"). So the candidate is not an account. But is the exclusion *established* for the assessor? Only if the assessor can determine the candidate's answer at (a',b') and the target's answer at (a',b'). If the target's answer at (a',b') is not established (not yet tested), then the assessor may not know the candidate is wrong there. So: the candidate *is* not an account (fact), but the assessor may not have established it. X14 doesn't claim the untested case is established — it's about the pair where the target's answer is established. So the text lets the assessor be unaware; the candidate still fails (A) in fact. Is that the mistake creeping back in? In fact, no (it's not an account). In the assessor's state, the problem is unsettled. That's the fallibilist position. Should the text let it happen? Yes — it's the difference between fact and warrant. But should the text *say* it? X14 is silent on the untested-pair case. Hmm, that's arguably a gap but not a false claim.
+
+Through a change of grain or of target: 
+- Change of grain: grain is a declared index (line 31, 524). A change of grain changes the organization the occurrence instantiates; a claim at a different grain is a different claim (line 524: "Every claim is relative to them"). Hmm, does a change of grain make a different question? The question p = (D, C, b0, Q, O_p, ρ_p) — D is the target at a grain. Changing the grain changes D (or the view of it), so it's a different question. X14 says "the same holds on every question with the same target and query whose contract contains (a,b)" — a different grain is a different target, so X14 doesn't claim the failure transfers. So a candidate could be an account at a finer grain... but that's a different question, and the failure on p stands. So the mistake doesn't creep back in on p. ✓ consistent with Part V line 277 ("an account at a coarse grain is an account of the coarse question").
+- Change of target: different question; X14 doesn't claim transfer. ✓.
+
+Other ways: 
+- What if the candidate's transport changes so that τ(a),σ(b) map to a different pair in E, and the candidate's answer at the *new* translated pair is correct? Hmm. The candidate is a different candidate (different transport). The old candidate (with the old transport) is still excluded. The new candidate is a new candidate with its own assessment. X14's "a changed candidate that keeps y there" — if the change keeps the answer y at (a,b), it's excluded. If the change fixes the answer, it's a new candidate and may be an account. That's fine — the old failure stands (Historical index), and the new candidate is assessed anew. Is that the mistake creeping back in? The *old* candidate stays failed; a *new* candidate that answers correctly is not the old one. The owner's concern: "Once the explanation is rescued, the mistake shouldn't be able to creep back in." A rescued explanation is a new candidate; if it later reverts to y at (a,b), X14 excludes it. ✓.
+
+So (b): HOLDS AS STATED, with the condition that the stickiness is on the indexed question p (fact) while the assessor's warrant is fallible via (K2)/(K3). Let me make sure about the "HOLDS WITH CONDITIONS" option. The question asks: "Does 'A failed answer stays failed' hold exactly as stated? Under what conditions could a corrected mistake come back in... For each, say whether the text lets it happen, and whether it should."
+
+I think the answer is: it holds as stated — the failure stands on p as an indexed fact for every channel; the only channel through which anything "comes back" is the assessor's warrant lapsing (K2/K3), which the text explicitly allows and should, since it's fallibilism about the receipt, not the re-admission of the candidate as an account. So: HOLDS AS STATED. Hmm, but the (K3) channel is a genuine condition: the exclusion "ceases to be established." So a corrected mistake *can* come back in in the sense of the assessor's established state. The text lets it happen, and it should (fallibilism). But is that "the mistake creeping back in"? The owner said "the mistake shouldn't be able to creep back in" — in the context of "a record is redundant... the explanation's own content does the work." The (K3) caveat is about the *test's* reliability, not about the explanation's content. So the owner's point stands: the content does the work; the warrant is separate. I'll say HOLDS AS STATED, but note the (K3) channel precisely.
+
+Hmm, wait. Let me reconsider whether there's a real defect here. Let me re-read the (K3) sentence in X14: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike; no candidate is thereby shown to be an account (K2)."
+
+"the exclusion ceases to be established, for every such candidate alike" — this says the exclusion ceases for *every* such candidate. Right: because the exclusion of all of them rested on the one receipt. ✓ consistent.
+
+"no candidate is thereby shown to be an account (K2)" — right.
+
+OK. Now let me reconsider T4: does X14 move a verdict on the listed situations?
+
+Situations named: O1, D3-T, O27, O8, N7, N2, O24.
+
+**O1 (Bruno the forecaster).** Bruno's rule fails at March (a pair (a,b) in his original contract), and he restates it as a rule for months outside the thaw — a narrowed contract. Under X14: the failure on the original question p stands (the original rule answered y at the March pair, and the target's answer there is not y, so that rule is not an account of p). The restated rule is on a different question (narrowed contract), where it may be an account. The verdict: "Bruno has no explanation of the floods. Each limit is honest taken alone, and the series as a whole is a retreat." Does X14 move this? X14 says the failure on p stands and an account on the narrowed contract doesn't answer p. That supports "no explanation of the floods" (the original question). And the series being a retreat: each restatement is a new question, and the failures stand. X14 reinforces this. Does the current text already give this? Part III line 159: "An account at a stated scope answers the question asked at that scope; it does not answer a broader question that failed, and a narrowing adopted after a failure is a new claim at a new index." And line 367 (Historical index). So the current text already covers it. X14 adds the "failed answer stays failed" for the *candidate* — but Bruno's case is about scope-narrowing, which is already handled. So X14 doesn't move the verdict; it's consistent. No move. ✓.
+
+Hmm, but wait — does X14 *change* anything for O1? The current text (Part III, line 159) already says the narrowing is a new claim. X14's last sentence repeats this ("A contract that omits (a,b), or a changed query, makes a different question (Part III)"). So no move. ✓.
+
+**D3-T (discarded lamp controller).** Ivo points to the discarded design as proof that passing the test leaves open the untried setting. Verdict: No — the discarded design failed at a tried setting; only one design passes; passing tells you which design you have. 
+
+Under the theory: this maps to Derivation 3 (selected transports underdetermined on unseen changes their population leaves open) and Part VI's "fits" and rivals. The discarded design is a candidate that failed at a tested pair — under X14, it's excluded (its answer at the tried pair was wrong). It's not a rival (line 315: rivals are among candidates someone has offered; and a candidate that fails is not one that fits). So the discarded design can't be used to show the passing design is underdetermined at the untried pair. Under Derivation 3, underdetermination at an unseen pair requires *another member of the population that survives on H and differs there* — the discarded design isn't a survivor. So the verdict "No" is supported. Does X14 move it? X14 says the discarded design (answering y at the tried pair) is not an account, and this is established for every such candidate — so the discarded design can't be re-offered as fitting. That supports the verdict. But was the verdict already supported without X14? Yes — by (A), (E), Derivation 3, and the definition of rivals/fit. X14 makes it explicit but doesn't move it. ✓ no move.
+
+Hmm, actually, wait. Let me reconsider. D3-T's verdict says: "Passing therefore tells you which design you have, and that design does one definite thing with A and B both on." Under the theory, is that right? The passing design's behavior at the untried pair is fixed by its own relations (its component relations L_j(a,b) are supplied independently for each (a,b) — Derivation 3's proof). So the design *does* one definite thing there; the question is whether *passing the test* tells you which design you have. Since only one design passes (only one is in the surviving population), and the design's relations at the untried pair are what they are, yes. Derivation 3's claim is about underdetermination *of the selected transport's value at an unseen pair by the history* — the history doesn't determine it, but the population does (if the population has only one survivor, the population fixes it). Line 572: "The presence of an unseen pair alone does not establish that such a t' exists; it must be a member of T... and it must survive on H." And line 576: "a population restriction, a physical relation, or another stated constraint may already fix a value that the history never tested." So the verdict is supported by Derivation 3 as revised. X14 doesn't move it. ✓.
+
+**O27 (the test that fitted neither).** The robot reinterprets the test (swaps sensors) and finds a third fault. Verdict: the robot found the answer; the achievement is mostly the robot's.
+
+Under X14: the two candidates both failed the test result (the result fitted neither). X14 says a candidate whose answer at a pair differs from the target's is not an account. The test result fitted neither — so at the tested pair, both candidates' answers differed from the target's. So both are excluded (once the target's answer there is established). Then the robot's reinterpretation (swapping sensors) changes the *background/instruments* of the test — (K3)! The test assumed the pressure sensor was reading true; that premise ceased to be live; the robot supplied a new one. Under X14: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established." Hmm! 
+
+Wait. Let's think. The robot runs the test, gets a result fitting neither candidate. Under X14, if the target's answer at the pair is established (by the test), then both candidates are excluded (their answers differ from it). But the robot then finds the test's premise (sensor reading true) was false, swaps sensors, runs again, finds a third fault. 
+
+Under (K3): the first test's result tells against the candidates only together with B and I. When the sensor premise ceases to be live, the receipt from the first test is not usable, and the exclusion ceases to be established. So the candidates are no longer excluded by the first test. Then the second test (with the second sensor) establishes a new result — the third fault. 
+
+Does X14 move the verdict on O27? The verdict is about credit: the robot's reinterpretation is the decisive step, so the achievement is mostly the robot's. X14 doesn't speak to credit (that's Part XI, ProducedBy, active routes). X14's (K3) caveat does explain *why* the first test didn't settle the matter: the exclusion it established lapsed when the sensor premise lapsed. And that's part of why the robot's step was decisive. But does X14 *move* the verdict? The current text already has (K3) at line 395 and Part XI for credit. X14 adds the (K3) application to the failed-answer exclusion. Hmm — does that application change what the theory says about O27? 
+
+Let me think about whether the current text (without X14) would say something different. Without X14, Part VI line 315 says "A result is established for an assessor who holds a usable receipt for it (Part IX); by (K3), a result that tells against a candidate tells against it only together with the background and instruments of the test that yields it." So the (K3) caveat on established results is already in the current text. X14 applies it to the failed-answer exclusion specifically. So no move. ✓.
+
+Hmm, but here's a thought: without X14, would a reader have concluded that the first test's result *permanently* excluded both candidates (since "an answer it refutes stays refuted on p" — line 317)? Line 317 says "an answer it refutes stays refuted on p (Part VIII)" — and X14 is what Part VIII now says. So X14 *adds* the (K3) fragility to the "stays refuted" claim. Without X14, "stays refuted on p" might be read as unconditional. With X14, it's conditional on the receipt's usability. Is that a move? For O27: the verdict says the robot found the answer (the reinterpretation was decisive). If the first test's exclusions were unconditional, then both candidates would stay excluded regardless of the sensor issue, and the robot's sensor-swap wouldn't matter for the *exclusions* — but the verdict's point is that the robot found a *third fault* neither candidate named, i.e., a new answer. Hmm.
+
+Actually, O27's verdict is about credit, and the decisive step being the robot's reinterpretation. X14's (K3) caveat supports the idea that the first test's result was not the last word — the exclusions it established lapsed with the sensor premise, and the robot's reinterpretation was needed. That supports the verdict. But does X14 *move* the verdict relative to the current text? The current text's (K3) already applies to established results generally (line 315). So the current text already says the first test's result tells against the candidates only together with B and I. So no move. ✓.
+
+Hmm, unless... X14's addition makes the *lapse* explicit for the failed-answer case in a way that changes the reading. I'd say it's a clarification, not a move. Let me note it as "no move, X14 reinforces."
+
+**O8 (Petra's ovens).** Honest scope. X14: her account covers her bakery; the contract is her scope. Nothing about failed answers. No move. ✓.
+
+**N7 (two bakers).** Maya's limits unexplained; Bea explains why. Verdict: both explain the rising; Bea explains more. X14 doesn't bear on this (no failed answers). No move. ✓.
+
+**N2 (the myth amended).** The changed myth agrees with the sailor's report only because it was altered to fit. Verdict: no, it doesn't explain the seasons in the south.
+
+Under X14: hmm. The myth was changed to fit the report. Is there a "failed answer" here? The original myth answered the seasons-in-the-north question; the sailor's report is a new established result about the south. The storyteller changes the myth. Under X14, the *original* myth's failure on the south question... hmm, was the south in the original contract? The original myth was about the Greek seasons; the south is outside its contract. So the original myth is not excluded by the sailor's report (the report is about a pair outside C). The changed myth is a new candidate on a new question (the north-and-south question). X14's last sentence: "A contract that omits (a,b), or a changed query, makes a different question." So the changed myth is on a different question. The verdict (no, it doesn't explain) rests on the myth's content giving no reason — that's Part V's non-circular dependence / Part VI's easy-to-vary, or the "no anchoring condition" point. X14 doesn't move it. ✓.
+
+Hmm, wait. Could X14 be misread as saying the changed myth *is* an account (since it agrees with everything established)? X14 is about *exclusions*, not about *admissions*. It says a candidate answering y at a pair is excluded; it doesn't say a candidate answering correctly at all established pairs is an account. So no. ✓. But this is worth noting: X14 is one-directional (exclusions), and N2 shows that agreement with established results doesn't make an account. The text handles that elsewhere (Part V non-circularity; Part VI easy-to-vary). No move.
+
+**O24 (unused joint setting).** Two wiring arrangements agree on every tested setting and almost every untested one, differ at one unused joint setting. Verdict: two arrangements, record hasn't chosen between them; one reachable setting is enough.
+
+Under X14: no failed answer (they agree on every tested setting). So X14's exclusion doesn't apply. The case is about rivals and problems: two candidates that both fit, conflicting at an untested pair. Under Part VI line 317: if the pair is outside C, and both meet (E) on C, both are accounts of p, and the claim that one is right needs the separating change supplied. If the pair is in C, they conflict at a pair of C... hmm, "one nobody has used" — is it in C? The contract is the set of admitted edit-boundary pairs the claim ranges over. If the joint setting is admitted (reachable by hand) and in C, then the two candidates conflict at a pair of C, and by Part VI, "Whatever the target does there, at most one of them is an account of p" — a test there solves the problem. X14 doesn't move this. ✓.
+
+Hmm, so no verdict moves. Let me double check whether X14 could *move* any verdict away. 
+
+Consider a case where a candidate fails at (a,b), is corrected, and then re-offered with the same answer y at (a,b) but on a *narrowed* contract that excludes (a,b). Under X14: the narrowed contract is a different question; the candidate may be an account on it; but the failure on p stands. So on the narrowed question, the candidate can be an account. Does that conflict with any fixed verdict? O1 (Bruno) — the verdict says Bruno has no explanation of the floods. X14 says the restated rules may be accounts of their narrowed questions but don't answer p. So the theory says: Bruno has accounts of narrowed questions (maybe), but no explanation of the floods. The verdict agrees. ✓.
+
+Now let me hunt harder for a real defect in X14. Let me re-read it once more, very carefully.
+
+"**A failed answer stays failed.** Fix a question p, a pair (a,b)∈C and a value y≠Ans_p(a,b). By (A), a candidate for p whose answer at (a,b) is y, Ans_E(τ(a),σ(b))=y, is not an account of p, whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there; and the same holds on every question with the same target and query whose contract contains (a,b)."
+
+Hmm — "the same holds on every question with the same target and query whose contract contains (a,b)". Wait: for a question p' with the same target and query, Ans_{p'}(a,b) = Q(D,a,b) = Ans_p(a,b) ≠ y. And a candidate for p' whose answer at (a,b) is y fails (A) for p'. ✓. But note: "the same holds" — the same, i.e., the candidate is not an account of p'. ✓.
+
+"Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed."
+
+Hmm, "this is established for that assessor of every such candidate alike" — I keep coming back to whether "established of a candidate" is the right locution. The text's technical "established" applies to *results*. Is "candidate E is not an account of p" a result? Part VI line 315: "A result is established for an assessor who holds a usable receipt for it." And "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." So results *show* candidates failing conditions. So a result can be "E fails (A) at (a,b)". And such a result, once established, shows the candidate failing (E). So "the exclusion is established" = a result showing the candidate failing (A) at (a,b) is established. 
+
+Now: what result shows E failing (A) at (a,b)? The conjunction of (i) "Ans_p(a,b) ≠ y" and (ii) "Ans_E(τ(a),σ(b)) = y". (i) is established by receipt. (ii) is... computed from E. Is (ii) established? Hmm. If (ii) is not the kind of thing that needs a receipt (it's a fact about supplied relations), then the result "E fails (A) at (a,b)" is established once (i) is. X14 says the exclusion is established "from the candidate's own answer there" — which I read as: (ii) is available from the candidate itself, no receipt needed. 
+
+But strictly, the text doesn't say that facts about a candidate's own content are available without receipts. It's implied by the whole structure of Part V (conditions on supplied relations — you check them by inspecting the relations). And line 397: "A record reconstructed from the claim it is meant to support is not a receipt for that claim" — that's about the *world* side.
+
+OK here's a thought: is there a *contradiction* risk? If "established" strictly requires receipts over events, then X14's claim is false (the exclusion isn't established, only derivable). If "established" includes derivation from the candidate's own content, then X14's claim is true but the text should say so, and the (c2) question is thereby answered (yes, structural failures count). X14 doesn't say it. So there's an under-specification. Is that a defect in X14, or just a gap the text leaves? 
+
+I think the fair finding: X14 is *consistent* with both readings, and it *needs* the broad reading to be true. The text doesn't settle the broad reading. This is a precision gap, and it's exactly what (c2) asks about. So my (c2) answer: UNSETTLED BY THE TEXT — and it should be settled, because X14's own claim ("this is established... from the candidate's own answer there") presupposes that a candidate's own answer can ground an established exclusion without a receipt, and the problems notion depends on it.
+
+Should I CHALLENGE X14 on this basis? The challenge would be: X14's claim that the exclusion "is established for that assessor of every such candidate" is not supported unless the text says that a candidate's own answer at a pair counts as available to the assessor without a receipt. Hmm. But actually — hold on. Let me reconsider. Even under the strict reading, the assessor *does* have the receipt for (i). And (ii) is a fact about the candidate that the assessor can verify by computation. Is computation an "event" that can be an evidence leaf? "An evidence leaf is a reference to an event with an interpreted claim." A computation is an event (an occurrence). Hmm, but its "interpreted claim" would be about the candidate's relations, not about the world. 
+
+Actually, you know what — I think there's a cleaner way to see this. Let me look at line 397 again: "Receipts. An evidence leaf is a reference to an event with an interpreted claim. A receipt is a derivation tree over leaves. For φ, P_j(φ) and N_j(φ) are the usable receipts for and against. Negation exchanges them; missing evidence stays missing. A record reconstructed from the claim it is meant to support is not a receipt for that claim."
+
+So receipts are for claims φ. A claim like "Ans_E(τ(a),σ(b)) = y" is a claim about a candidate's computed answer. Could there be a receipt for it? Its leaves would be events — e.g., the event of evaluating E at (a,b). Hmm, that's weird but not impossible. Or the leaves could be the *specification* of E itself (the supplied relations are part of the claim's data, not events). 
+
+I think the text intends receipts primarily for *empirical* claims (tests, observations), and structural claims about candidates are settled by inspection/computation. But the text doesn't say this. And "fits" is defined via "what is established," which if read strictly as receipt-based would make structural failures not count.
+
+OK, let me now decide: is X14 CHALLENGED or UPHELD?
+
+Let me look for the strongest attack. Candidate attacks:
+
+**Attack 1 (T1):** The claim "the exclusion ceases to be established" is too strong when another receipt also establishes the target's answer. — This is a minor imprecision; a charitable reading fixes it ("the exclusion ceases to be established *by that receipt*"). Probably not a successful challenge.
+
+**Attack 2 (T3/c2):** X14's claim that the exclusion is established "from the candidate's own answer there" presupposes that facts about a candidate's own content ground established exclusions without receipts; the text nowhere says this, and "fits" (line 315) is defined via "what is established," so under a strict receipt-reading, structural failures wouldn't count and X14's own claim would fail. — This is a real gap. But does it make X14 *false*? X14 is about the case where the target's answer IS receipt-established; the candidate's own answer is read off. I think X14 survives because it explicitly grounds the "established" in the receipt for the target's answer and says the exclusion follows "from the candidate's own answer there." The unstated principle is a gap in the theory, not a falsehood in X14. Hmm. But the question (c2) is precisely about whether the text settles it — and the answer is no. So (c2) X14: UNSETTLED BY THE TEXT.
+
+Hmm, but does an UNSETTLED verdict on (c2) make X14 CHALLENGED? The report instructions say: "An item is CHALLENGED when your points show it should not stand as it is: it states something false, its kind or declaration is wrong, it makes the text incoherent, it moves a verdict away from the fixed verdict, or one of your verdict lines on it above reads NOT FAITHFUL, FAILS, DEFECT or WRONG." The verdict lines available for (c2) are ESTABLISHED / NOT ESTABLISHED / UNSETTLED BY THE TEXT. UNSETTLED is not in the CHALLENGE list. So (c2) UNSETTLED doesn't by itself trigger CHALLENGED. I need a genuine defect.
+
+**Attack 3 (T1):** Let me look for an actual counterexample. 
+
+Consider: "the same holds on every question with the same target and query whose contract contains (a,b)". 
+
+Now: a candidate for p might be *recoded* (Part VIII, Recoding; Derivation 8). A recoded candidate E' has the same answers (a structure-preserving bijection "leaves its answers as they are"). So if E answers y at (a,b), so does E'. And E' is also excluded. Fine — consistent, and line 315 says recoded candidates conflict at no pair and are not rivals; but they're both non-accounts if they answer y. ✓.
+
+Consider: a candidate whose answer at (a,b) is y but which is *not* offered for p — e.g., it's a candidate for a different question p'' that happens to have the same contract. X14 restricts to "a candidate for p." ✓.
+
+Consider: what if the target's answer at (a,b) is *not determined*? Ans_p(a,b) = Q(D,a,b). If Q is a partial operation or the target's relations don't determine an answer... Hmm. (Q) defines Ans_p(a,b) = Q(D,a,b) as a set-theoretic operation with codomain Y_p. Presumably total on C. Non-vacuity requires Sol_D(1,b_0) ≠ ∅ but doesn't guarantee answers at all pairs. Hmm. If Ans_p(a,b) is undefined or indeterminate, then "y ≠ Ans_p(a,b)" is ill-formed. But the theory treats Q as a specified operation with codomain Y_p, so Ans_p(a,b) ∈ Y_p. I won't press this.
+
+Consider: the phrase "whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there." Note "a rival" — a rival is defined (line 315) as a candidate *offered as an answer to p in place of the other* that conflicts with it. If a rival answers y at (a,b) and the target's answer is not y, the rival fails (A). Fine. But note: for the rival to be a rival, it must conflict with the other candidate; and if it answers y at (a,b) while the other answers z, they conflict there. Consistent. ✓.
+
+**Attack 4 (T2):** Does the new wording claim more than the declaration? The declaration doesn't mention the phrase "whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there" — but that's just an enumeration of cases covered by "whatever candidate it is" in the declaration. Covered. ✓.
+
+Does the declaration claim something the wording doesn't support? "the exclusion is established only together with the background and instruments of the test" — the wording says "the test that yields it tells against a candidate only together with the background and instruments it relies on." ✓.
+
+**Attack 5 (T3):** Does X14 contradict line 317's "an answer it refutes stays refuted on p (Part VIII)"? As discussed, "stays refuted" = the indexed fact stands; X14's caveat = the assessor's warrant is fallible. Is the text clear? X14's final sentence: "the failure on p stands (Historical index)." And the caveat sentence: "the exclusion ceases to be established." So X14 distinguishes "the failure stands" (fact, indexed) from "the exclusion ceases to be established" (warrant). Hmm — but "the exclusion" and "the failure" are nearly the same thing. If the failure stands but the exclusion ceases to be established, the text is distinguishing the fact from the warrant. I think that's the right reading and it's coherent, though it demands careful reading. Not a contradiction.
+
+Hmm, hold on. Actually, let me reconsider. There might be a subtle tension: line 317 says "an answer it refutes stays refuted on p (Part VIII)" — in the context of "establishing it... is a test that solves the problem whatever it shows, since afterwards at most one of them fits." So "stays refuted" is in the context of what a test establishes. If the test's receipt later becomes unusable (K3), does the refutation stay? Under X14, the exclusion ceases to be established. So "stays refuted on p" would be false in the warrant sense. But in the *fact* sense (the candidate answered y, the target's answer is not y, so the candidate is not an account — that's a timeless indexed fact), it stays. Line 317's "stays refuted" is about the *problem being solved* — "afterwards at most one of them fits." If the receipt lapses, does the problem unsolve? Under X14, the exclusion ceases to be established, so the candidate "fits" again for that assessor (no established result against it), so the problem (two rivals that both fit) could reopen. Hmm! 
+
+So there IS a tension between line 317's "a test that solves the problem whatever it shows, since afterwards at most one of them fits" and X14's "the exclusion ceases to be established... for every such candidate alike." If the exclusion ceases, then both may fit again, and the problem reopens. So the test didn't *permanently* solve the problem. Line 317 says "solves the problem whatever it shows" — and X14 says the solution can lapse. 
+
+Is this a contradiction? Line 317 doesn't say "permanently solves." It says "solves the problem whatever it shows, since afterwards at most one of them fits." "Afterwards" — immediately after the test. X14 adds that the warrant can lapse later. So "afterwards at most one fits" is true at the time; the lapse is a later development. Not a contradiction, but X14 *qualifies* line 317's permanence. Is that a change of claim? Line 317 is part of the revised text (I don't know if it's one of the 57 changes). X14's qualification is consistent with (K3) which line 315 already applies to established results. So line 317 read with line 315 already has the (K3) caveat. No contradiction. ✓.
+
+OK, let me now think about whether there's a *real* defect I'm missing. Let me reconsider the (K3) application once more.
+
+X14: "Here 'established' is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b) (Part IX), and by (K3) the test that yields it tells against a candidate only together with the background and instruments it relies on."
+
+Wait. (K3): "For T∧B∧I⇒O, an established ¬O yields ¬(T∧B∧I) and nothing narrower." 
+
+In X14's application, what is T, what is O? The test yields "the target's answer at (a,b) is not y." Hmm — for (K3) to apply, we need a conditional T∧B∧I⇒O and an established ¬O. Here: the test setup says "if the candidate's answer is y (T), the background B holds, and the instruments I work, then the observed result O will be [the target's answer is y / the observation will match y]." The established ¬O is "the observed result is not [y]" — i.e., "the target's answer at (a,b) is not y." Then ¬(T∧B∧I): the candidate's answer isn't y, or B fails, or I fails. So the result tells against the candidate (T) only together with B and I. ✓. That's exactly the (K3) point: you can't narrow the failure to T alone; the result against T is only as strong as B∧I. So if B or I lapses, the result no longer tells against T. ✓. The application is correct.
+
+Hmm OK. And one more: "no candidate is thereby shown to be an account (K2)." (K2): Usable_j(u) iff Lic ∧ Scope ∧ ∀d∈Prem, Live. Withdrawing a premise removes a license; it does not make the conclusion false (line 393). So the lapse of the receipt doesn't establish any candidate as an account. ✓. Right — because "being an account" is defined by (E), not by the absence of established exclusions.
+
+Now — hmm, wait. Actually, there IS something. Let me re-read: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike; no candidate is thereby shown to be an account (K2)."
+
+Consider: the exclusion ceases to be established. Then does the candidate *fit*? Line 315: "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)." If the exclusion was the only established result against it, then after the lapse, no established result shows it failing (E), so it *fits* again. And then, if it has a rival that also fits, they pose a problem again. So the lapse can reopen a problem. X14 says "no candidate is thereby shown to be an account" — right, fitting ≠ being an account (fitting is assessor-relative). ✓. Coherent.
+
+So: is X14 UPHELD? Let me consider the strongest remaining attack and whether it succeeds.
+
+Strongest attack candidate: **The (c2) gap** — X14's "from the candidate's own answer there" presupposes that a candidate's own content can ground an established exclusion without a receipt, which the text doesn't state; and this matters because "fits" is defined via "what is established," so the theory's treatment of structural failures (non-circularity, anchoring, contradiction) is unsettled, and that affects which pairs of rivals pose problems.
+
+Does this attack *succeed* in showing X14 should not stand as it is? I think the honest answer: X14's own claim is *true* under the natural reading, and the gap is in the surrounding text, not in X14. X14 doesn't state anything false. Its declaration is accurate. It doesn't move verdicts. It's coherent. So the finding should be UPHELD, with the (c2) gap noted as an observation about the text (and possibly a suggested clarification, but not a challenge to X14 as it stands).
+
+Hmm, but wait. Let me reconsider whether the (c2) gap makes X14's claim *unsupported*. X14 says "this is established for that assessor of every such candidate alike, from the candidate's own answer there." If the text's "established" is strictly receipt-based, then this claim is false: the assessor holds a receipt for the *target's answer*, not for each candidate's exclusion. The exclusion is *derivable*, not receipted. So X14 would be conflating "derivable" with "established."
+
+Hmm. Is "established" strictly receipt-based? Line 315: "A result is established for an assessor who holds a usable receipt for it (Part IX)." That's a biconditional-ish definition: established ⟺ holds a usable receipt. So strictly, for the exclusion of E to be "established," the assessor must hold a usable receipt for it. Does the assessor? They hold a receipt for "Ans_p(a,b)≠y." Do they hold a receipt for "E is not an account of p"? 
+
+A receipt is "a derivation tree over leaves" — a *derivation*. So a receipt can be a derivation! If the assessor can *derive* "E fails (A) at (a,b)" from (i) their receipt for "Ans_p(a,b)≠y" and (ii) the computation of E's answer at (a,b), then the combined derivation tree is a receipt for the exclusion — provided the leaves are events with interpreted claims. Hmm, the leaf for (ii) would be... the evaluation of E. Is that an event? The *act of evaluating* is an event. But its interpreted claim is about E's structure, not the world.
+
+Hmm, I think the text is just not precise here, and X14's phrase "from the candidate's own answer there" is doing the work of saying: the exclusion follows from the candidate's own content plus the receipt; no record of failures is needed. That's the owner's point (content does the work). 
+
+I'll treat this as a gap that (c2) asks about, and report X14 as UPHELD on T1/T2/T3/T4, with the (c2) answer UNSETTLED BY THE TEXT, and note that X14 itself is consistent with the needed reading but the text should state it.
+
+Hmm, hold on, hold on. Let me reconsider once more. Let me re-read the exact sentence: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed."
+
+Alternative reading: "this is established for that assessor of every such candidate alike" = "the target's answer at (a,b) is not y" is established *of* every such candidate — no wait, that doesn't parse.
+
+Better reading: "this [the exclusion / the fact that the candidate is not an account] is established for that assessor of every such candidate alike, [and it is established] from the candidate's own answer there."
+
+So: the exclusion of each such candidate is established, and its ground is the candidate's own answer. For this to hold, the candidate's own answer must be available to the assessor. The text presupposes it. I think that's a reasonable presupposition given the theory treats candidates as supplied relations and (E)'s conjuncts as "conditions on how supplied relations behave."
+
+OK. Decision: X14 UPHELD. But let me make sure I've mounted real attacks and shown why they fail.
+
+Actually, wait. Let me reconsider one more time whether there's a verdict move I'm missing, especially on D3-T or O27, since those are the "at risk" cases most tied to X14.
+
+**D3-T again.** The discarded design failed the test at (A on, B off). Under X14, once the target's answer at that pair is established (lamp lit with A on), the discarded design's exclusion is established for every such candidate — including "that candidate offered again." So if Ivo re-offers the discarded design (or a changed design that keeps the dark answer at A-on), it's excluded. The verdict says the discarded design "is not a controller that passes." ✓. X14 supports this. Does X14 *move* it? Without X14, (A) and (E) already exclude it, and line 315's "fits" already excludes non-fitting candidates. So no move. But X14 makes the "offered again" case explicit. Hmm — is the "offered again" case already covered? Without X14: a re-offered candidate still answers y at (a,b), so it still fails (A). So yes, already covered. No move. ✓.
+
+**O27 again.** Already covered. No move. ✓.
+
+Let me also double-check: does X14 move any verdict *away* from the fixed verdict? I don't see how. All the listed verdicts are either reinforced or untouched.
+
+Now, one more angle for T1: is there any *false* statement? Let me scrutinize: "and the same holds on every question with the same target and query whose contract contains (a,b)."
+
+Edge case: what if the *other* question p' has the same target and query but a different baseline b_0' or different obligations O_p'? The answer profile Ans_{p'}(a,b) = Q(D,a,b) = Ans_p(a,b) — same, since same target and query. So a candidate answering y at (a,b) fails (A) for p'. ✓. The obligations don't matter for (A). ✓.
+
+Edge case: what if p' has the same target and query but its contract C' contains (a,b) with a *different* boundary or edit? No — (a,b) is a specific pair; if it's in C', it's the same pair. ✓.
+
+Another: "A contract that omits (a,b), or a changed query, makes a different question (Part III)." ✓ (line 151: "Two questions with the same D and different (C,Q) are different questions"). And line 159. ✓.
+
+"an account on it does not answer p" — ✓ (line 151: "an answer to one is not an answer to the other"; line 159).
+
+"and the failure on p stands (Historical index)" — ✓ (line 367: "A proposition indexed to a contract remains that proposition when a later theory changes the current contract.").
+
+OK, so T1: no falsehood found. The attacks I made: (i) the "ceases to be established" overstatement when another receipt exists; (ii) the unstated presupposition about the candidate's own answer grounding establishment; (iii) a possible tension with line 317's "stays refuted." All fail as challenges because (i) is contextually bounded by "the receipt," (ii) is a gap in the surrounding text rather than a falsehood in X14 and X14's own words ("from the candidate's own answer there") signal the intended ground, and (iii) distinguishes indexed fact from assessor-relative warrant, which X14 itself marks.
+
+Hmm, although... for (ii), let me reconsider whether to propose a small repair. The question (c2) asks "Should it [the text settle whether structural failures count as established], and how?" I should answer: yes, the text should settle it, and the repair is a sentence stating that a result about a candidate's own content — its answer at a pair of C, or its failure of any conjunct of (E) — is established for an assessor who has the candidate's relations, by inspection, without a receipt; receipts are for claims about the target. But careful: that would be a *new* claim, and it would need to be consistent with "fits" and (K2)/(K3). Hmm, and (K2)'s liveness: if the candidate's relations are withdrawn/revised, the result changes. 
+
+But is that repair part of X14, or a separate item? X14 is the item under examination. I could propose a repair to X14 that adds a clause making the (c2) point explicit. But if X14 is UPHELD, I don't propose a replacement. Hmm. Let me think about whether the (c2) gap is serious enough to warrant a challenge.
+
+Actually — hmm, let me reconsider. There's a real risk here. Let me re-read X14's sentence once more: "Once it is established for an assessor that the target's answer at (a,b) is not y, this is established for that assessor of every such candidate alike, from the candidate's own answer there, with no record of which candidates failed before or of how any was changed."
+
+The declaration's version: "Once the target's answer there is established for an assessor, by a usable receipt, this is established for that assessor of every such candidate alike, from its own answer there, with no record of earlier failures or changes."
+
+So the declaration and the wording agree. The claim is: the exclusion of every such candidate is established for the assessor. The ground: the candidate's own answer. 
+
+Now, strictly: "established for an assessor" = "the assessor holds a usable receipt for it." Does the assessor hold a receipt for the exclusion of *every* such candidate? Only if they've examined each one. The text says "from the candidate's own answer there" — which requires knowing the candidate's answer. For a candidate the assessor hasn't examined, the assessor doesn't hold anything. So the claim, read strictly, overclaims: it's not established *of every* such candidate regardless of whether the assessor has examined them.
+
+Hmm! That's a real point. Let me think about whether the text's intent saves it. The point of the passage is: the exclusion doesn't depend on a *record* of which candidates failed; it depends on the candidate's own answer. So *if* the assessor examines a candidate and finds it answers y at (a,b), the exclusion follows (given the receipt about the target). The phrase "of every such candidate alike" is meant to say: the exclusion applies uniformly, not selectively based on history. But strictly, "is established for that assessor of every such candidate" suggests the assessor's established state covers all of them, which would require examining each.
+
+Is this a successful T1 attack? It shows the claim is imprecise: the exclusion is *derivable* for every such candidate, but "established for an assessor" should be reserved for what the assessor has receipts for. Hmm. But then again — the passage's whole point (per the owner) is that the *content* does the work, so once the target's answer is established, no further record is needed to exclude any candidate that answers y there. The examination of the candidate is not a "record of failures"; it's just reading the candidate. 
+
+I think the fair verdict: the claim is defensible under its intended reading, and the intended reading is signaled by "from the candidate's own answer there, with no record of which candidates failed before." The imprecision is that "established for that assessor of every such candidate" could be read as requiring no examination of the candidate. A stricter wording would say: "for every such candidate, the exclusion follows for that assessor from the candidate's own answer there, once examined, together with the established answer of the target, and no record of earlier failures or changes is needed." 
+
+Hmm, is this worth a CHALLENGE? Let me weigh. The instructions say CHALLENGED when the item "states something false, its kind or declaration is wrong, it makes the text incoherent, it moves a verdict away from the fixed verdict." A wording imprecision that has a natural repair and doesn't affect any verdict... I lean toward UPHELD, with the attack shown and the reason it fails (the sentence's own qualifier "from the candidate's own answer there" fixes the ground of the exclusion in the candidate's content, not in the assessor's prior record; and the theory's established/fits distinction is assessor-relative by design, so "established for that assessor" is exactly the right relativity).
+
+Hmm, hmm. Let me reconsider (c2) once more, because I want to get the verdict line right.
+
+(c2) asks: "Does a failure found by examining a candidate itself, and not by looking at the world, count as established, so that the candidate no longer fits? Examples: a failure of non-circular dependence, a component anchored to nothing, or a contradiction inside the candidate. Does the text settle this?"
+
+What does the text say? 
+- Line 315: "A result is established for an assessor who holds a usable receipt for it (Part IX)." 
+- Line 397: receipts are derivation trees over evidence leaves; "An evidence leaf is a reference to an event with an interpreted claim."
+- Line 315: "A candidate fits what is established for an assessor when no result established for that assessor shows it failing a condition of (E)."
+
+So: does a structural failure "count as established"? The text doesn't say. Receipts are over events. A structural failure isn't an event. But X14 says the exclusion is established "from the candidate's own answer there" — which suggests content-derived exclusions count. But X14 is about the answer at a pair, combined with a receipt about the target. For pure structural failures (non-circularity, anchoring, contradiction), there's no receipt about the target needed — the candidate's own content suffices. X14 doesn't cover these.
+
+So: the text does not settle it. UNSETTLED BY THE TEXT. 
+
+Should it? Yes — because "fits" gates the "problem" notion (two rivals that both fit pose a problem), and if structural failures don't count as established, then a provably-non-account rival can still "fit" and still make a candidate easy to vary, sending assessors to test the world for a problem the candidates' own content already settles. And X14's own claim needs the content-derived-exclusion principle for the (A) case. So the text should state: a result that a candidate fails a conjunct of (E) from its own supplied relations is established for an assessor who has those relations, without a receipt; receipts are required only for claims about the target and the world. And (K2) applies: if the candidate's relations are revised, the result changes.
+
+What turns on it for the problems two rivals pose? If rival B is provably circular, it's not an account; it cannot "fit" in the sense that matters; so the pair (A, B) is not a problem of either kind, and A is not easy to vary by B. Under the unsettled text, B might still "fit" for an assessor who hasn't established its circularity, making A easy to vary and sending the assessor to test the world. So settling it sharpens the problem notion and avoids spurious problems. Also for X14: a candidate that keeps a failed answer is excluded by its own content — the (c2) principle is what makes "no record" work.
+
+OK. Now — does my (c2) answer (UNSETTLED) plus the observation that X14 presupposes the principle amount to a challenge? Let me make a final decision.
+
+I'll go with **UPHELD** for X14, because:
+- T1: no falsehood; the presupposition about the candidate's own answer is signaled in the text itself and is the natural reading; the "ceases to be established" reading is bounded by "the receipt."
+- T2: kind CLAIM, reason clarification, and the declaration are accurate.
+- T3: no incoherence; pointers check out; the apparent tension with line 317 resolves into the fact/warrant distinction that X14 itself marks.
+- T4: no verdict moves on O1, D3-T, O27, O8, N7, N2, O24.
+- (a) FAITHFUL: no list, enumeration, count, grade, or record/log doing the work; the exclusion is carried by the candidate's own content.
+- (b) HOLDS AS STATED: the failure stands on p across all channels; only the assessor's warrant can lapse, via (K2)/(K3), which the text explicitly allows and should.
+- (c2) UNSETTLED BY THE TEXT: X14 gestures at the principle but doesn't state it, and "fits" is defined via "established."
+
+Wait — but hold on. If (c2) is UNSETTLED and I say the text *should* settle it, is X14 "should not stand as it is"? Hmm. X14 stands fine; the gap is elsewhere (the definition of "established"/"fits" in Part VI/IX). X14 doesn't become false because of a gap it didn't create. And X14's own claim survives under either reading? Let me verify: under the strict reading (established = receipt only), is X14's claim false? X14 says the exclusion is established "from the candidate's own answer there." Under the strict reading, the exclusion of a candidate is established only if the assessor holds a receipt for it. The assessor holds a receipt for the target's answer. Is a receipt for the target's answer + the candidate's own answer a receipt for the exclusion? A receipt is a derivation tree over leaves. If the candidate's own answer is available as a leaf (an event of evaluating the candidate, or the candidate's supplied relations as premises), then the derivation tree exists. Hmm — "an evidence leaf is a reference to an event with an interpreted claim." The candidate's supplied relations aren't events. But the *act of supplying* them is. Ugh, this is genuinely indeterminate.
+
+Given the indeterminacy, the safest and most honest finding: X14's claim is *not shown false*; it's consistent with the natural reading; the text should be tightened. That's UPHELD with a noted gap. And my (c2) verdict is UNSETTLED BY THE TEXT, with a recommendation.
+
+Hmm, but let me reconsider whether the report wants me to propose repair wording for X14 if I uphold it. "For every item you challenge, give the exact wording you propose in its place." So only if CHALLENGED. If UPHELD, I show the attacks and why they failed. OK.
+
+But wait — should I propose the (c2) repair as an addition somewhere? The instructions say to propose repair wording only for challenged items. For (c2), I can describe how the text should settle it without proposing a full replacement for X14. I'll give a brief suggested sentence as part of the (c2) answer, since the question asks "Should it, and how?" — that's a request for the how. I'll give a short proposed sentence but keep X14 itself upheld.
+
+Hmm, actually, let me reconsider one more time. Let me re-examine whether X14 overclaims in a way that matters for (b). 
+
+(b) asks: "Does 'A failed answer stays failed' hold exactly as stated? ... through the background and instruments of the test (K3), or a premise that ceases to be live (K2)..."
+
+X14 says: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike."
+
+So: the *exclusion ceases to be established*. Under (b)'s framing — "could a corrected mistake come back in" — yes, through (K3)/(K2): the exclusion ceases to be established, so the candidate no longer fails to fit (for that assessor). But "no candidate is thereby shown to be an account." So the mistake comes back in *as an open question*, not as an account. Is that the mistake creeping back in? In the owner's sense (the content doing the work), no: the candidate's own content still answers y at (a,b), so it's still not an account in fact. What lapses is the assessor's warrant for the target's answer. So the correction sticks *as a fact*; the warrant is fallible. 
+
+The text lets this happen and it should — because it's the theory's own fallibilism (Part I: "Systems can be wrong about their transports, their observations..."; (K2): withdrawing a premise removes a license). To make the exclusion immune to (K3) would be to claim infallibility for tests. So: HOLDS AS STATED. 
+
+Hmm, but should I say "HOLDS WITH CONDITIONS — the exclusion holds as an indexed fact on p, while the assessor's warrant for it is fallible through (K2)/(K3)"? The question's options: HOLDS AS STATED / HOLDS WITH CONDITIONS — <condition> / FAILS — <case>. 
+
+The question asks whether it holds *exactly as stated*, and to go through each channel. Since the text explicitly handles the (K3)/(K2) channel and the narrowed-contract channel, and I find no channel where the *fact* fails to stick, I'd say HOLDS AS STATED — with the observation that the only lapse is the warrant, which the text itself describes and which fallibilism requires. Hmm, but "HOLDS WITH CONDITIONS" might be more accurate if I think the (K3) channel is a genuine condition. Let me re-read the question: "Does 'A failed answer stays failed' hold exactly as stated? Under what conditions could a corrected mistake come back in: on the same question; on a narrowed contract or a changed query; through (K3)...; through a candidate that changes its answer at the failed pair only slightly, or makes the same mistake at a neighbouring pair not yet tested; through a change of grain or of target; or in some other way? For each, say whether the text lets it happen, and whether it should."
+
+So the question wants me to enumerate channels. The verdict line summarizes. Since for every channel the *fact* sticks (the failure on p stands) and only the *warrant* can lapse (which the text explicitly allows and should), I'll say HOLDS AS STATED — and note that the only "come back" is the warrant's lapse, which the text itself names and which is required by fallibilism, not a failure of the claim. Hmm, actually, "HOLDS AS STATED" vs "HOLDS WITH CONDITIONS." The (K3) channel IS a condition under which the exclusion "ceases to be established." If the question is "does a corrected mistake come back in," the answer through (K3) is "yes, in the assessor's established state; no, as an indexed fact." Since the text says exactly this, the claim holds as stated. I'll go with HOLDS AS STATED and spell out the channels.
+
+Hmm, wait. One more: "through a candidate that changes its answer at the failed pair only slightly." If the candidate's answer changes from y to y' where y' ≠ Ans_p(a,b) and y' ≠ y, then X14 applies with y' in place of y — but only "once it is established for an assessor that the target's answer at (a,b) is not y'." Is that established? If the target's answer at (a,b) is established to be z (≠ y, ≠ y'), then yes: it's established that the target's answer is not y' (since it's z). So the candidate answering y' is excluded. ✓. So "slightly different but still wrong" is covered, *provided* the target's answer at the pair is established (as z). ✓. Good — and this is worth spelling out: the exclusion is keyed to the *target's established answer*, not to the particular wrong value y, so any wrong value is excluded once the target's answer is established. Actually, X14's phrasing fixes y and says "a candidate whose answer at (a,b) is y." Since y is arbitrary (any value ≠ Ans_p(a,b)), the claim covers all wrong values. But the "established" part: "Once it is established for an assessor that the target's answer at (a,b) is not y" — if the target's answer is established to be z, then it's established that it's not y for every y≠z. So all wrong values are covered. ✓. Good.
+
+"or makes the same mistake at a neighbouring pair not yet tested": at (a',b') ∈ C not tested. The candidate answers y' ≠ Ans_p(a',b') there. In fact, it fails (A) at (a',b'), so it's not an account (line 315: it claims (A) "at every pair of C, tested or not"). But is the exclusion *established* for the assessor? Only if the target's answer at (a',b') is established and the candidate's answer there is known. If not tested, maybe not. So: the candidate is not an account in fact; the assessor may not have established it. The text lets the assessor be unaware — and it should (missing evidence stays missing, line 397). So the mistake doesn't "come back in" in fact; the problem is just unsettled for that assessor. ✓.
+
+"through a change of grain or of target": different question; X14 doesn't transfer the failure; the failure on p stands. So on the new question, the candidate may be an account — but that's not the same question, so it's not the mistake creeping back in. ✓. (Part V line 277: coarse-grain account is an account of the coarse question.)
+
+OK. Now let me also handle (a) fully.
+
+(a) Faithfulness: 
+- No listed set of rivals/versions: X14 quantifies over "every such candidate" (a universal conditional), not a list. ✓.
+- No enumeration/count: "no record of which candidates failed before or of how any was changed" — explicitly rejects records. The four-case list ("the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there") is a list of *descriptions of a single candidate's history*, not an enumeration of rivals; and it's immediately unified under "whose answer at (a,b) is y." ✓.
+- No grade/ranking: X14 says "not an account," a binary (E)-based exclusion, not a grade. ✓.
+- No record/log doing work: the exclusion is "from the candidate's own answer there, with no record." The content does the work. ✓. This is exactly the owner's "error correction is carried by the explanation itself" and "a record of rescues is redundant."
+- "the mistake shouldn't be able to creep back in": X14's "a changed candidate that keeps y there" is excluded — the mistake can't creep back in on p. ✓.
+- Rule: "state hard to vary through discovered rivals and the problems they make, never through a listed set, an enumeration or a count of versions, and never as a grade." X14 doesn't state hard-to-vary at all — it's about failure persistence, not about hard-to-vary. It mentions "a rival" only as one of four descriptions of a candidate whose answer is y. Hmm — could that be read as invoking rivals? It's a *candidate* description, not a rival definition. And the exclusion doesn't depend on rivalry (line 315's definition); it depends on the answer at the pair. ✓.
+- "do not propose a record or log where the explanation's own content does the work": X14 explicitly says "with no record." ✓.
+- "check any new framing of a source idea against the owner's decisions before building on it": X14's framing (failure persistence via content) matches the owner's "Once the explanation is rescued, the mistake shouldn't be able to creep back in" and "A record is redundant." ✓.
+
+So (a) FAITHFUL.
+
+Now let me also double check the declaration against the wording once more for T2 completeness:
+
+Declaration parts:
+1. "on a question, a candidate whose answer at a pair of the contract differs from the target's is not an account of it" — ✓ wording (By (A)... is not an account of p).
+2. "nor of any question with the same target and query whose contract contains that pair" — ✓ ("the same holds on every question with the same target and query whose contract contains (a,b)").
+3. "whatever candidate it is" — ✓ ("whether it is the candidate that gave y there and failed, that candidate offered again, a rival, or a changed candidate that keeps y there").
+4. "Once the target's answer there is established for an assessor, by a usable receipt, this is established for that assessor of every such candidate alike, from its own answer there, with no record of earlier failures or changes." — ✓.
+5. "By (K3) the exclusion is established only together with the background and instruments of the test; if a premise about them ceases to be live, it ceases to be established for every such candidate alike, without any candidate being shown to be an account." — ✓.
+6. "A contract omitting the pair, or a changed query, makes a different question, an account on which does not answer the original, whose failure stands." — ✓.
+
+No over/under-claim. Kind CLAIM (it makes explicit what (E)+(A)+Part IX imply, and adds the receipt-fragility claim), reason "clarification" — appropriate since the core is derivable and Part VI line 317 already points to Part VIII for "stays refuted." ✓.
+
+T3 coherence details to report:
+- Symbols: Ans_p, Ans_E, τ, σ, C, (a,b) — all consistent.
+- (A) line 250, (K2) line 390, (K3) line 395, Part VI line 315, Part IX line 397, Part III lines 151/159, Historical index line 367 — all resolve.
+- No undefined terms. "Usable receipt" — line 397 defines receipts; "usable" via (K2) line 390. ✓.
+- No contradiction with unchanged sentences. The apparent tension with line 317 ("stays refuted") resolves: line 317 is about the indexed fact and the problem's solution "afterwards"; X14 is about the assessor's warrant and its fallibility, which line 315 already attaches to established results via (K3).
+- One stale/idle check: does X14 make anything idle? Line 367 (Historical index) is referenced and reinforced. Line 159 (Part III) is reinforced. Nothing made idle.
+
+T4: no moves on the seven cases; describe each briefly.
+
+Now let me also consider: should I describe a case of my own where X14 might move a verdict? Let me think of one: a candidate that fails at (a,b), is rescued (answers correctly at (a,b)), then later reverts to y at (a,b) on the *same* question. Under the current text: it fails (A) again — already excluded. Under X14: same, explicitly. No move. 
+
+Another: an assessor holds a receipt for the target's answer at (a,b); a rival candidate answers y there; the rival is excluded without any record of the earlier failure. Under the current text: the rival fails (A) — already excluded. No move. X14 makes it explicit.
+
+So X14 is genuinely a clarification: it makes explicit what (A), (E), (K2), (K3) and Part IX already imply, and it fulfils the pointer at line 317. No verdict moves. Good — that's consistent with kind CLAIM / reason clarification.
+
+Hmm, one more consideration: is there anything in X14 that *undermines* the owner's position? The (K3) caveat says the exclusion can cease to be established. The owner said "Once the explanation is rescued, the mistake shouldn't be able to creep back in." Does the (K3) caveat let the mistake creep back in? As discussed, it lets the *warrant* lapse, not the fact. And the owner's own framing is about the explanation's content doing the work, which X14 honours. Also the owner said "Well that depends entirely on how error correction is handled" and "A record is redundant. Once the explanation is rescued, the mistake shouldn't be able to creep back in." The owner's concern is that a *record* shouldn't be needed and the mistake shouldn't return. X14: no record needed (content does it), and a candidate keeping the failed answer stays excluded. The (K3) lapse is about the test's reliability, a separate matter the owner didn't address and the theory handles by fallibilism. So faithful. ✓.
+
+Alright, let me also reconsider: is the (c2) issue enough to make me CHALLENGE? Let me re-read the challenge criteria: "it states something false, its kind or declaration is wrong, it makes the text incoherent, it moves a verdict away from the fixed verdict, or one of your verdict lines on it above reads NOT FAITHFUL, FAILS, DEFECT or WRONG." My verdict lines: (a) FAITHFUL, (b) HOLDS AS STATED, (c2) UNSETTLED BY THE TEXT. None of these is NOT FAITHFUL, FAILS, DEFECT or WRONG. And I found no falsehood, no kind/declaration error, no incoherence, no verdict move. So: UPHELD.
+
+But I should be honest that the (c2) gap is adjacent and that X14's claim leans on an unstated principle. I'll present that as an attack that fails because X14's own words supply the ground ("from the candidate's own answer there") and because the theory's assessment conditions (Part V) are, by their own statement, "conditions on how supplied relations behave" — inspection of the candidate is how they're checked — so reading the candidate's own answer is the theory's standard mode, not a new one. Good, that's a solid reason the attack fails.
+
+Wait, actually, let me double-check that quote: line 265: "Every conjunct is a condition on how supplied relations behave under the changes in C. None inspects a label." Yes. And line 231: "each a condition on supplied relations under the changes in C." So the theory's conditions are checked against supplied relations — i.e., by inspection of the candidate. That supports the reading that a candidate's own answer/structure is available to the assessor without a receipt. So X14's presupposition is the theory's standard mode. The attack fails. 
+
+But then... does that mean (c2) is actually ESTABLISHED? Hmm. If inspection of supplied relations is the theory's standard mode, then a structural failure (non-circularity, anchoring, contradiction) found by examining the candidate *does* count — it's how (E)'s conjuncts are checked. And "fits" (line 315) says "no result established for that assessor shows it failing a condition of (E)." If examining the candidate yields a result showing it failing (E), then it doesn't fit. So maybe the text does settle it: yes, structural failures count, because (E)'s conditions are conditions on supplied relations, checked by inspection.
+
+Hmm, but "established" is defined via receipts (line 315: "A result is established for an assessor who holds a usable receipt for it"). And receipts are derivation trees over *events*. So there's still a gap between "checked by inspection of supplied relations" and "established = holds a usable receipt." 
+
+Ugh. OK, the honest answer: the text pulls both ways. Part V says (E)'s conjuncts are conditions on supplied relations (inspection). Part VI/IX say "established" = usable receipt over events. Whether an inspection-derived structural failure counts as "established" (so the candidate no longer "fits") is not explicitly settled. X14's "from the candidate's own answer there" leans toward the inspection reading but doesn't state it. So: UNSETTLED BY THE TEXT. That's my answer, and I'll defend it with the two pulls.
+
+And I'll say the text should settle it in favour of the inspection reading for candidate-side facts, with receipts reserved for target-side/world-side facts, because (i) X14's "no record" claim needs it, (ii) otherwise provably-non-account rivals could still "fit" and spawn spurious problems requiring world-tests, and (iii) (K3)/(K2)'s fallibilism is about the world side (background, instruments), not about a candidate's own relations.
+
+Good. Now let me write the report. Structure:
+
+1. Numbered points, most serious first, headed `X14 · <test>`.
+2. Since I'm upholding, the points are attacks made and why they failed. But I should still present the attacks with substance.
+3. Then (a), (b), (c2) answers with verdict lines.
+4. Then `X14: UPHELD`.
+5. `OVERALL: SOUND`.
+6. END OF REPORT.
+
+Wait — "OVERALL: NEEDS REPAIR means at least one item is CHALLENGED." Since only X14 is listed and I uphold it, OVERALL: SOUND.
+
+Hmm, let me reconsider once more whether I should challenge. Let me steelman the strongest challenge once more:
+
+The strongest challenge: X14 says "this is established for that assessor of every such candidate alike, from the candidate's own answer there." Under the text's own definition (line 315), "established for an assessor" = "holds a usable receipt for it," and receipts are derivation trees over evidence leaves = references to *events* (line 397). A candidate's own answer at (a,b) is not an event; it's a value of a set-theoretic operation on the candidate's supplied relations. So the exclusion of a candidate is *derivable* from the receipt plus the candidate's content, but it is not itself "established" in the text's technical sense unless the text says candidate-side facts can be established by inspection. It doesn't. So X14 either (i) uses "established" outside its technical sense (a coherence defect), or (ii) relies on an unstated principle.
+
+Counter (why the attack fails): X14 explicitly anchors "established" to the receipt for the *target's answer* ("Here 'established' is meant as in Part VI: the assessor holds a usable receipt for the target's answer at (a,b)"). The exclusion of the candidates is then said to follow "from the candidate's own answer there" — i.e., the passage claims the exclusion *follows*, not that a separate receipt exists for each candidate. And Part V states that (E)'s conjuncts, including (A), are "conditions on how supplied relations behave under the changes in C" — so determining a candidate's answer at a pair is the theory's standard assessment operation, not a receipt-requiring empirical test. Reading the candidate's own answer is how (A) is checked. So the passage is coherent: one receipt (target-side) plus standard inspection (candidate-side) yields the exclusion of every candidate answering y. The remaining indeterminacy is about *pure* structural failures (non-circularity, anchoring, contradiction) where there is no target-side receipt at all — and that's the (c2) gap, which X14 does not create and does not depend on.
+
+Yes. That's why the attack fails. Good. UPHELD.
+
+Let me now also double check the "ceases to be established" overstatement attack and why it fails: "If a premise about them ceases to be live, the receipt is not usable and the exclusion ceases to be established, for every such candidate alike." The attack: if another usable receipt also establishes the target's answer at (a,b), the exclusion doesn't cease. Why the attack fails: "the receipt" refers to the one "the test that yields it" produced, introduced in the preceding clause; the sentence is about the exclusion's dependence on *that* receipt. Under a second receipt, the exclusion remains established by it — which the sentence's singular "the receipt" leaves room for. Minor imprecision at most, not a falsehood. OK.
+
+And the line-317 tension attack and why it fails: as above.
+
+Let me write it up now, under ~3000 words. I'll aim for maybe 1600-2200 words. Let me be efficient but show the work.
+
+Let me draft the points:
+
+**Point 1 — X14 · T1 (and T3): the "established of every such candidate" attack.** [The steelman above.] Fails.
+
+**Point 2 — X14 · T1: the "ceases to be established" overstatement.** Fails.
+
+**Point 3 — X14 · T3: tension with Part VI line 317 "an answer it refutes stays refuted on p."** Fails.
+
+**Point 4 — X14 · T2: kind/declaration check.** No discrepancy; CLAIM/clarification is right; note line 317's dangling pointer is now fulfilled.
+
+**Point 5 — X14 · T4: verdict moves on O1, D3-T, O27, O8, N7, N2, O24.** No moves; brief per case.
+
+Then the three question answers.
+
+Then the lines.
+
+Let me write it.
+
+Actually, for T4 I should be specific and quote. Let me make sure I quote line numbers accurately.
+
+Line 315: "A result is **established** for an assessor who holds a usable receipt for it (Part IX); by (K3), a result that tells against a candidate tells against it only together with the background and instruments of the test that yields it. A candidate **fits** what is established for an assessor when no result established for that assessor shows it failing a condition of (E). No list of all rivals is supposed..."
+
+Line 317: "...establishing it, the target's relations as well as its answer where their answers there agree, is a **test** that solves the problem whatever it shows, since afterwards at most one of them fits; an answer it refutes stays refuted on p (Part VIII)."
+
+Line 395: "**What a test refutes.** For T∧B∧I⇒O, an established ¬O yields ¬(T∧B∧I) and nothing narrower. (K3)"
+
+Line 397: "**Receipts.** An evidence leaf is a reference to an event with an interpreted claim. A receipt is a derivation tree over leaves. For φ, P_j(φ) and N_j(φ) are the usable receipts for and against. Negation exchanges them; missing evidence stays missing. A record reconstructed from the claim it is meant to support is not a receipt for that claim."
+
+Line 390: (K2) Usable_j(u) iff Lic_j(u) ∧ Scope_j(u) ∧ ∀d∈Prem(u), Live_j(d;u).
+
+Line 393: "Withdrawing a premise removes a license; it does not make the conclusion false."
+
+Line 250: (A) Ans_E(τ(a),σ(b))=Ans_p(a,b).
+
+Line 265: "Every conjunct is a condition on how supplied relations behave under the changes in C. None inspects a label."
+
+Line 231: "...each a condition on supplied relations under the changes in C."
+
+Line 159: "An account at a stated scope answers the question asked at that scope; it does not answer a broader question that failed, and a narrowing adopted after a failure is a new claim at a new index (Part VIII)."
+
+Line 367: "**Historical index.** A proposition indexed to a contract remains that proposition when a later theory changes the current contract. A new index is a new claim."
+
+Line 151: "Two questions with the same D and different (C,Q) are different questions, and an answer to one is not an answer to the other."
+
+Line 572/576: Derivation 3.
+
+OK. Writing now.
+
+For the (b) answer, I need to enumerate the channels:
+1. Same question: sticks (candidate keeping y is excluded; line 369).
+2. Narrowed contract / changed query: different question; account on it doesn't answer p; failure on p stands (line 369, citing Part III and Historical index). So the mistake doesn't return *on p*; the candidate may be an account *of the new question*, which is not the mistake returning.
+3. (K3)/(K2): the warrant lapses; the exclusion "ceases to be established"; no candidate shown to be an account. The fact stands; the assessor's established state reopens. Text lets it happen and should (fallibilism, line 393).
+4. Slightly different wrong answer at the same pair: covered, since y is arbitrary and the exclusion is keyed to the target's established answer (z), so any y≠z is excluded.
+5. Same mistake at a neighbouring untested pair: the candidate is not an account in fact ((A) holds at every pair of C, tested or not — line 315); but if the target's answer there isn't established, the exclusion isn't established for the assessor. Fact sticks; warrant may be missing. Text lets it happen and should ("missing evidence stays missing," line 397).
+6. Change of grain or target: different question (indices, line 524); X14 doesn't transfer; failure on p stands.
+7. Other: a genuinely corrected candidate (answer at (a,b) now z) is not excluded by the old failure — that's the rescue, not the mistake returning; and if it later reverts to y, X14 excludes it again from its own answer.
+
+Verdict: HOLDS AS STATED.
+
+Hmm, for (b), is "HOLDS AS STATED" right, given channels 3 and 5 where the *exclusion ceases to be established / isn't established*? The claim "A failed answer stays failed" — the *failed answer* stays failed (the indexed fact). The *established exclusion* is assessor-relative and fallible. The title of the passage and its core claim are about the fact. And the passage itself states the (K3) caveat. So it holds as stated. Yes.
+
+Now (c2). Verdict: UNSETTLED BY THE TEXT.
+
+Let me write the final report. I'll keep it tight.
+
+One more check on the form: "Then answer each question this part asks, in one short paragraph each, headed by the question and the item, and end the paragraph with one verdict line, exactly as follows: (a) X14: FAITHFUL or (a) X14: NOT FAITHFUL — <the words at fault>."
+
+So each of (a), (b), (c2) gets one short paragraph ending with the verdict line. Then the item line, then OVERALL, then END OF REPORT.
+
+Let me write.

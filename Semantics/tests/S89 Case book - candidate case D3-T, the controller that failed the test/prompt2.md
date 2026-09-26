@@ -1,0 +1,5 @@
+*D3-T, reworded: the case as the second pair of authors saw it, a situation and a question with no verdict, with the first pair's clarity edits applied. Written by a Claude subagent on 23 September 2026 (`prompt2 - changes.md` lists each change). Moved into the repository on 23 September 2026 from the session scratchpad, where it was `d3t/prompt2.md`, with only this paragraph added.*
+
+**Situation.** Each lamp controller has two switches, A and B. An automatic tester keeps a controller if its lamp is dark with A off and lit with A on, with B left off, and discards the rest. Only two controller designs exist; there are no others. Both can be built. The tester never uses the setting with A and B both on (the untried setting), and the two designs behave differently there. One design failed the test (its lamp stayed dark with A on) and was discarded; only the other passed and was kept. Ivo points to the discarded design as proof that passing the test leaves open how a controller behaves at the untried setting.
+
+**Question.** Does the discarded design show that passing the test leaves open how a controller behaves at the untried setting?
