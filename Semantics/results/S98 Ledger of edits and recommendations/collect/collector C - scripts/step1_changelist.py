@@ -201,7 +201,7 @@ for e in final:
         old, new = key
         line, sent, nsent, scope = base_record(e, old, new, None)
         drafts = [v[2] for v in vs]
-        # verify carried by those drafts
+        # check that those drafts carry it
         if e['fields'].get('KIND') != 'META':
             for d in drafts:
                 if T[d].count(new) < 1:

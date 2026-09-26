@@ -30,6 +30,25 @@ SCEP_STATUS_OVERRIDE = {8: "declined"}            # as used differs from the sce
 SCEP3_STATUS_OVERRIDE = {101: "applied", 116: "applied", 118: "applied"}
 
 
+# parentheticals in table cells that give a reason, not wording: cut (listed in the coverage file)
+REASON_MARKS = ["differs from the proposal", "differs from the sceptic", "an axiom of a formal system",
+                "matches the proposal", "contrastive, as row", "the objection's words", "a verification word",
+                "the owner's own", "already gives the meaning", "as \"rests on\"", "an idiom of judgement",
+                "idiom of judgement", "a foundation image", "evidential \"support\"", "ordinary \"support\"",
+                "the objector's voice", "a verification"]
+CUTS = []
+
+
+def cut_reasons(rid, fld, s):
+    out = s
+    for m in list(re.finditer(r" ?\(((?:[^()]|\([^()]*\))*)\)", s)):
+        t = m.group(1)
+        if any(k in t for k in REASON_MARKS):
+            out = out.replace(m.group(0), "", 1)
+            CUTS.append((rid, fld, m.group(0).strip()))
+    return out
+
+
 def table_rows(path):
     out = []
     sec = ""
@@ -103,11 +122,7 @@ def build(next_rid, prior, texts):
         nums = line_refs(c[0] + " " + c[1])
         tl, tp = place(H, nums)
         st = "not applied" if re.match(r"^kept(, BORDERLINE| BORDERLINE)", c[1]) else "applied"
-        os_ = ns_ = ""
-        if tl:
-            os_, ns_ = d5[tl - 1].strip(), sc[tl - 1].strip()
-            if len(os_) > 600:         # a long line: leave the sentence to the per-occurrence edits
-                os_ = ns_ = ""
+        os_ = ns_ = ""                 # the sentences are in the per-occurrence edits (replacements.json)
         r = base(next_rid(), USED, "table row at file line %d (section: %s)" % (i, sec), "edit", st,
                  "scrubbed copy" if st == "applied" else "none (word kept)", tl, tp, c[0], c[1], os_, ns_)
         r["_key"] = ("used", i)
@@ -146,8 +161,6 @@ def build(next_rid, prior, texts):
                 st = "applied"
             st = SCEP3_STATUS_OVERRIDE.get(i, st)
             os_ = ns_ = ""
-            if tl and len(d5[tl - 1]) <= 600:
-                os_, ns_ = d5[tl - 1].strip(), sc[tl - 1].strip()
             r = base(next_rid(), SCEP, "section 3 (%s), row at file line %d" % (sec, i), "recommendation", st,
                      "scrubbed copy" if st == "applied" else "none", tl, tp, c[1], c[2], os_, ns_)
             r["_key"] = ("scep3", i)
@@ -182,4 +195,7 @@ def build(next_rid, prior, texts):
             r["same_as"].append(scep_rid[s])
         r["_key"] = ("prop", i)
         recs.append(r)
+    for r in recs:
+        for fld in ("old", "new"):
+            r[fld] = cut_reasons(r["rid"], fld, r[fld])
     return recs

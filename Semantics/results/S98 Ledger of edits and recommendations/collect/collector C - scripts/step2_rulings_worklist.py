@@ -191,16 +191,64 @@ FIX93 = {
 }
 
 
-def word_span(a, b):
-    ta = re.findall(r'\S+|\s+', a)
-    tb = re.findall(r'\S+|\s+', b)
+TOK = re.compile(r'[A-Za-z0-9]+|\s+|[^A-Za-z0-9\s]')
+WHOLE = re.compile(r'^[A-Z(*\\].*[.:;]$', re.S)
+LAST_UNWIDENED = {}
+
+
+def word_span(a, b, widen=3):
+    """Common prefix and suffix at the level of words and single marks; the changed middles are then
+    snapped to whole (space-delimited) words and widened so that each side carries at least `widen`
+    words where the line allows. A whole inserted or deleted sentence is left as it is."""
+    ta, tb = TOK.findall(a), TOK.findall(b)
     p = 0
     while p < len(ta) and p < len(tb) and ta[p] == tb[p]:
         p += 1
     q = 0
     while q < len(ta) - p and q < len(tb) - p and ta[-1 - q] == tb[-1 - q]:
         q += 1
-    return ''.join(ta[:p]), ''.join(ta[p:len(ta) - q]), ''.join(tb[p:len(tb) - q]), ''.join(ta[len(ta) - q:])
+    s0 = len(''.join(ta[:p]))            # start, same in a and b
+    ea = len(a) - len(''.join(ta[len(ta) - q:]))
+    eb = len(b) - len(''.join(tb[len(tb) - q:]))
+    LAST_UNWIDENED['b'] = (s0, eb)
+    mo, mn = a[s0:ea].strip(), b[s0:eb].strip()
+    if (mo == '' and WHOLE.match(mn)) or (mn == '' and WHOLE.match(mo)):
+        return a[:s0], a[s0:ea], b[s0:eb], a[ea:]
+    # snap to whole words
+    while s0 > 0 and not a[s0 - 1].isspace():
+        s0 -= 1
+    while ea < len(a) and not a[ea].isspace():
+        ea += 1
+        eb += 1
+
+    def nw(t):
+        return len(t.split())
+    side = 0
+
+    def can_back():
+        return s0 > 0 and not re.search(r'[.!?]\**$', a[:s0].rstrip())
+
+    def can_fwd():
+        return ea < len(a) and not re.search(r'[.!?]\**$', a[s0:ea].rstrip())
+    while (nw(a[s0:ea]) < widen or nw(b[s0:eb]) < widen) and (can_back() or can_fwd()):
+        if not can_back():
+            side = 1
+        elif not can_fwd():
+            side = 0
+        if side == 0 and s0 > 0:
+            while s0 > 0 and a[s0 - 1].isspace():
+                s0 -= 1
+            while s0 > 0 and not a[s0 - 1].isspace():
+                s0 -= 1
+        elif ea < len(a):
+            while ea < len(a) and a[ea].isspace():
+                ea += 1
+                eb += 1
+            while ea < len(a) and not a[ea].isspace():
+                ea += 1
+                eb += 1
+        side = 1 - side
+    return a[:s0], a[s0:ea], b[s0:eb], a[ea:]
 
 
 def sent_cover(line, s0, s1):
@@ -228,11 +276,17 @@ def line_fix_records(dA, dB, fixmap, round_, entry_commit, tkey):
         for k in range(i2 - i1):
             la, lb = A[i1 + k], B[j1 + k]
             pre, so, sn, suf = word_span(la, lb)
-            # which entry: the entry whose NEW (after) contains the changed new span with its context
-            probe = lb[max(0, len(pre) - 40): len(pre) + len(sn) + 40]
-            ents = [eid for eid in fixmap if vers[entry_commit].get(eid) and probe.strip() and probe.strip()[:60] in vers[entry_commit][eid]['NEW']]
-            if len(ents) != 1:
-                ents = [eid for eid in fixmap if vers[entry_commit].get(eid) and sn.strip() and sn.strip() in vers[entry_commit][eid]['NEW'] and (so.strip() == '' or so.strip() in (vers[entry_commit][eid]['NEW'] + vers[entry_commit][eid].get('OLD', '')) or True)]
+            # which entry: the one whose NEW (after) contains a window of the new line around the change
+            c0, c1 = LAST_UNWIDENED['b']
+            ents = []
+            wins = []
+            for w in (40, 25, 12, 6, 0):
+                wins += [lb[max(0, c0 - w): c1 + w], lb[max(0, c0 - w): c1], lb[c0: c1 + w]]
+            for win in wins:
+                win = win.strip()
+                ents = [eid for eid in fixmap if vers[entry_commit].get(eid) and win and win in vers[entry_commit][eid]['NEW']]
+                if len(ents) == 1:
+                    break
             if len(ents) != 1:
                 problems.append('line diff %s->%s L%d: entry not identified (%s)' % (dA, dB, i1 + k + 1, ents))
                 continue
@@ -293,8 +347,17 @@ for path, ref in ((RS + 'ruling s90_xexam_atria_B1 R39.md', 'S90 ruling R39 (W6.
 atria_r13 = fence(RS + 'ruling s90_xexam_atria_C item 1 R13.md', 106)
 old13 = vers['587eebf']['W35.2']['NEW']
 pre, so, sn, suf = word_span(old13, atria_r13 or '')
-add('S90', RS + 'ruling s90_xexam_atria_C item 1 R13.md', 'S90 ruling R13 (W35.2) on s90_xexam_atria_C point 1: FIX with this text ("NEW (corrected)"); the batch-3 reading takes Mimo C item 4\'s text instead (Reconciliation, item 3: "to the simulation layer" and "a constructed one")',
+rr = add('S90', RS + 'ruling s90_xexam_atria_C item 1 R13.md', 'S90 ruling R13 (W35.2) on s90_xexam_atria_C point 1: FIX with this text ("NEW (corrected)"); the batch-3 reading takes Mimo C item 4\'s text instead (Reconciliation, item 3: "to the simulation layer" and "a constructed one")',
     'recommendation', 'declined', 'none', 'd2', so.strip(), sn.strip(), 'span')
+# locate inside the as-sent NEW, not at the first occurrence of the span in the draft
+d2t = TX['d2'][1]
+off = d2t.raw.index(old13) + len(pre)
+ln = d2t.line_of(off)
+lt = d2t.lines[ln - 1]
+lo = off - d2t.starts[ln - 1]
+recs[-1].update({'target_line': ln, 'target_part': d2t.part[ln],
+                 'old_sentence': sent_cover(lt, lo, lo + len(so)),
+                 'new_sentence': sent_cover(lt[:lo] + sn + lt[lo + len(so):], lo, lo + len(sn))})
 
 # ---------- 3b. wordings the readers proposed (S90) ----------
 P = 'results/S90 Cross-examination - revision 2 draft - returns/parts/'
@@ -310,13 +373,13 @@ for r in recs:
     if m:
         fix_rid.setdefault((m.group(1), r['round']), []).append(r['rid'])
 
-add('S90', RS + 'ruling s90_xexam_mimo_A1 R08.md', 'S90 ruling R08 (W19.1): the reply\'s first repair (s90_xexam_mimo_A1 point 1), refused: the two OLDs would overlap and the kind definition would leave (K) (batch 1)',
+add('S90', RS + 'ruling s90_xexam_mimo_A1 R08.md', 'S90 ruling R08 (W19.1): the reply\'s first repair (s90_xexam_mimo_A1 point 1), refused (batch 1)',
     'recommendation', 'declined', 'none', 'd2', '', '[no wording given] move the two new sentences after (K) to Part V, immediately after the transport t=(π,τ,σ,λ) is defined', 'paragraph',
     anchor='are of one kind on \\(C\\) when their signatures, read on \\(C\\) through \\(\\tau\\) and \\(\\tau\'\\), coincide')
 g = cut(ma1, 'or gloss inline: "', '".', line=23)
 add('S90', ma1, 's90_xexam_mimo_A1 point 1, second repair (a gloss inline); ruling R08 (W19.1) inserted a typing sentence in Part IV\'s and Part V\'s own words instead (batch 1); the checker\'s wording is ' + ','.join(fix_rid.get(('W19.1', 'S90'), [])),
     'recommendation', 'declined', 'none', 'd2', '', g, 'span', anchor='through \\(\\tau\\) and \\(\\tau\'\\), coincide')
-add('S90', ma1, 's90_xexam_mimo_A1 point 2, proposed repair; ruling R15 (W20.1) takes only its second half, in the words of file-11 L309 s3, and refuses "identifies as active" ("active" is undefined, and Γ would be circular) (batch 1)',
+add('S90', ma1, 's90_xexam_mimo_A1 point 2, proposed repair; ruling R15 (W20.1) takes only its second half, in the words of file-11 L309 s3, and refuses "identifies as active" (batch 1)',
     'recommendation', 'declined', 'none', 'd2', lit(ma1, 'those the candidate offers as doing the work'), cut(ma1, 'with "', '."', line=33), 'span',
     same_as=fix_rid.get(('W20.1', 'S90'), []))
 add('S90', ma1, 's90_xexam_mimo_A1 point 3, proposed repair (delete "blind"); taken by ruling R01 (W37.1) (batch 1), and by the R01 ruling on Atria A1 (batch 3)',
@@ -324,14 +387,14 @@ add('S90', ma1, 's90_xexam_mimo_A1 point 3, proposed repair (delete "blind"); ta
     'd2', 'produced by blind variation and survival on a history of encountered changes, with no represented target in that history', cut(ma1, 'leaving: "', '." This', line=43), 'span',
     same_as=fix_rid.get(('W37.1', 'S90'), []))
 recs[-1]['status'] = 'applied'
-add('S90', RS + 'ruling s90_xexam_atria_A1 item 1 R01.md', 'S90 ruling R01 (W37.1): s90_xexam_atria_A1 point 1, second repair (write blindness into Part IV\'s Selected), refused as an undeclared change of claim to the body (batch 3)',
+add('S90', RS + 'ruling s90_xexam_atria_A1 item 1 R01.md', 'S90 ruling R01 (W37.1): s90_xexam_atria_A1 point 1, second repair (write blindness into Part IV\'s Selected), refused (batch 3)',
     'recommendation', 'declined', 'none', 'd2', '', '[no wording given] add blindness (of the variation) to Part IV\'s definition of a selected transport', 'sentence',
     anchor='No member of the history represents \\(t\\), \\(H\\), or the survival condition')
 add('S90', ma1, 's90_xexam_mimo_A1 point 4 (task (c)), not ruled (Parts rule 2): passed to the orchestrator as a notation point (batch 1); carried forward after S90 in the change list ("The letter G"). The reply: "' + lit(ma1, "Rename R17's block to a fresh symbol (e.g. \\(\\mathcal G\\) or \\(g_0\\)).") + '"',
     'recommendation', 'not applied', 'none', 'd2', 'a nonempty block \\(G\\subseteq\\Gamma\\)', '[no wording given] a fresh symbol for the block G of non-circular dependence, for example \\(\\mathcal G\\) or \\(g_0\\)', 'term')
 add('S90', RS + 'ruling s90_xexam_atria_A1 item 2 R17.md', 'S90 ruling R17 (W20.2), on s90_xexam_atria_A1 point 3: passed to the orchestrator as an optional notation point, "a possible wording"; if adopted, a new entry (batch 3); carried forward after S90 ("Revised L339 names no block")',
     'recommendation', 'not applied', 'none', 'd2', 'witnessed by \\(I_3\\) under removal of skewness', lit(RS + 'ruling s90_xexam_atria_A1 item 2 R17.md', 'witnessed by \\(I_3\\) under removal of skewness, with the skewness commitment as the deleted block, …'), 'span')
-add('S90', ma2, 's90_xexam_mimo_A2 point 1, repair; refused by ruling R28 (W22.1): a fifth part for every criticism, p used before it is bound, and a conflict with W22.2 (batch 1)',
+add('S90', ma2, 's90_xexam_mimo_A2 point 1, repair; refused by ruling R28 (W22.1) (batch 1)',
     'recommendation', 'declined', 'none', 'd2',
     'A criticism has target \\(z\\), alleged defect \\(\\delta\\), grounds \\(g\\), and a connection. ' + vers['587eebf']['W22.1']['NEW'],
     cut(ma2, 'relatum: "', '"', line=7), 'sentence',
@@ -342,17 +405,17 @@ add('S90', ma2, 's90_xexam_mimo_A2 point 2 (R55 with R51), not ruled (Parts rule
 add('S90', RS + 'ruling s90_xexam_mimo_A2 R51.md', 'S90 ruling R51 (W19.2), "Not ruled, and outside the argument": the orchestrator\'s option, a one-word change to the declaration (batch 1); batch 2 kept it as an option; carried forward after S90 ("W19.2\'s declaration")',
     'recommendation', 'not applied', 'none', 'note2', 'Its Consequence now covers only candidates that differ in which component carries which anchor.',
     lit(RS + 'ruling s90_xexam_mimo_A2 R51.md', 'Its Consequence now covers only candidates that differ in nothing but which component carries which anchor.'), 'span', part_note='W19.2 (file-11 L552-558, Part XVI / 2. Same anchors, one account)')
-add('S90', ab1, 's90_xexam_atria_B1 point 1, repair; ruling R39 (W6.3) upholds the kind and refuses both repairs: folding would renumber and merge two disjoint OLDs, and R38\'s declaration says "primitive 2", which R39\'s NEW does not (batch 1)',
+add('S90', ab1, 's90_xexam_atria_B1 point 1, repair; ruling R39 (W6.3) upholds the kind and refuses both repairs (batch 1)',
     'recommendation', 'declined', 'none', 'note2', '', '[no wording given] ' + lit(ab1, 're-declare R39 as CLAIM with R38\'s declaration, or fold R39 into R38'), 'sentence',
     part_note='W6.3 (file-11 L447 s3, Part XI)')
 add('S90', mb1, 's90_xexam_mimo_B1 point 2, repair (a declaration); refused by ruling R39 (W6.3) in favour of batch 1\'s declaration (batch 2)',
     'recommendation', 'declined', 'none', 'note2', '', cut(mb1, 'declaration: *"', '"*', line=25), 'sentence', same_as=[C90], part_note='W6.3 (file-11 L447 s3, Part XI)')
 add('S90', mb1, 's90_xexam_mimo_B1 point 1, first repair (retype R04 as CLAIM, with this declaration); refused by ruling R04 (W58(ii).1): KEEP (batch 2)',
     'recommendation', 'declined', 'none', 'note2', '', cut(mb1, 'declaration: *"', '"*', line=15), 'sentence', part_note='W58(ii).1 (file-11 L33 s4, Part 0 / What is primitive, what is an index, and what is derived)')
-add('S90', mb1, 's90_xexam_mimo_B1 point 1, second repair (keep WORDING and strengthen the wording); refused by ruling R04 (W58(ii).1): "exists in the theory" is false against the text\'s own definitions (batch 2)',
+add('S90', mb1, 's90_xexam_mimo_B1 point 1, second repair (keep WORDING and strengthen the wording); refused by ruling R04 (W58(ii).1): KEEP (batch 2)',
     'recommendation', 'declined', 'none', 'd2', 'No predicate meaning "really explains", "is a cause" or "is knowledge" is taken as primitive, and no definition depends on one (Derivation 6).',
     cut(mb1, 'Derivation 6: *"', '"*', line=15), 'sentence')
-add('S90', mb1, 's90_xexam_mimo_B1 point 3, suggested repair for the shared clause; ruling R48 (W7.5) refuses the rewording for (P) (it would drop (G), (E) and Deploy from (P)) and takes only "(EK) also on (P)" in its own words (batch 2)',
+add('S90', mb1, 's90_xexam_mimo_B1 point 3, suggested repair for the shared clause; ruling R48 (W7.5) refuses the rewording for (P) and takes only "(EK) also on (P)" in its own words (batch 2)',
     'recommendation', 'declined', 'none', 'd2', '(P), (EK) depend on (G), (E), Deploy; (P) also on ProducedBy and on the declared obligations with their occasions, and ProducedBy on histories and their active routes.',
     cut(mb1, 'shared clause: *"', '"*', line=37), 'sentence', same_as=fix_rid.get(('W7.5', 'S90'), []))
 add('S90', mb1, 's90_xexam_mimo_B1 point 4 (R10, W57.1 + W32(b).1), a gloss; not contested and not ruled: passed to the orchestrator (batch 2); carried forward after S90 ("The ground of its restriction")',
@@ -360,7 +423,7 @@ add('S90', mb1, 's90_xexam_mimo_B1 point 4 (R10, W57.1 + W32(b).1), a gloss; not
     cut(mb1, '**Repair:** *"', '"*', line=43), 'sentence')
 add('S90', mb1, 's90_xexam_mimo_B1 point 5 (R03, W7.1), a minimal gloss; not contested and not ruled: passed to the orchestrator (batch 2); carried forward after S90 ("Bolded declared inputs at revised L31")',
     'recommendation', 'not applied', 'none', 'd2', 'and the **declared inputs**, in the order Part XIV states.', cut(mb1, 'indices sentence: *"', '"*', line=47), 'span', new_sentence='')
-add('S90', mb2, 's90_xexam_mimo_B2 point 1, proposed repair; refused by ruling R31 (W21.1): KEEP, the repair would make c new whenever an earlier content commits beyond c (batch 3)',
+add('S90', mb2, 's90_xexam_mimo_B2 point 1, proposed repair; refused by ruling R31 (W21.1): KEEP (batch 3)',
     'recommendation', 'declined', 'none', 'd2', 'both faithful on \\(c\\)\'s contract at grain \\(\\ell\\)', cut(mb2, 'with "', '." This', line=21), 'span')
 add('S90', mb2, 's90_xexam_mimo_B2 point 1, the declaration as the reply would reword it; refused with the repair by ruling R31 (W21.1) (batch 3)',
     'recommendation', 'declined', 'none', 'note2', '', src(mb2).split('\n')[20].split('would then read: "', 1)[1].rstrip().rstrip('"'), 'sentence', part_note='W21.1 (file-11 L405, Part X / Newness)')
@@ -368,28 +431,28 @@ add('S90', RS + 'ruling s90_xexam_mimo_B2 item 1 R31.md', 'S90 ruling R31 (W21.1
     'recommendation', 'open for the owner', 'none', 'd2', '',
     lit(RS + 'ruling s90_xexam_mimo_B2 item 1 R31.md', 'a transport into c is faithful on c\'s contract when it is faithful on the pairs it carries into that contract'), 'sentence',
     anchor='**Representation.**' if TX['d2'][1].count('**Representation.**') == 1 else 'Representation')
-add('S90', mb2, 's90_xexam_mimo_B2 point 2 (R52, W17.3), a one-line addition to the declaration; not taken by ruling R52: KEEP, it would declare a weakening the text does not make (batch 3)',
+add('S90', mb2, 's90_xexam_mimo_B2 point 2 (R52, W17.3), a one-line addition to the declaration; not taken by ruling R52: KEEP (batch 3)',
     'recommendation', 'declined', 'none', 'note2', '', lit(mb2, '—the separate realizability condition is dropped.'), 'span', part_note='W17.3 (file-11 L562 s3, Part XVI / 3.)')
 add('S90', mc, 's90_xexam_mimo_C point 1, first repair (restrict the declaration); ruling R12 (W35.1) adopts the scoping, and its declaration reads "for every transport to the simulation layer, whatever its provenance" (batch 3)',
     'recommendation', 'superseded', 'full file 13 drafts 3 to 5, the note', 'note2', '', cut(mc, 'declaration ("', '")', line=13), 'sentence', part_note='W35.1 (file-11 L219-223, Part IV / Expectation, surprise, violation)')
-add('S90', mc, 's90_xexam_mimo_C point 1, second repair; refused by ruling R12 (W35.1): a general E supplies no query, and L177 says S is where expectation lives (batch 3)',
+add('S90', mc, 's90_xexam_mimo_C point 1, second repair; refused by ruling R12 (W35.1) (batch 3)',
     'recommendation', 'declined', 'none', 'd2', '\\(\\operatorname{Ans}_S(\\tau(a),\\sigma(b))\\)', lit(mc, '\\(\\operatorname{Ans}_E(\\tau(a),\\sigma(b))\\)'), 'term')
 add('S90', ac, 's90_xexam_atria_C point 1, second repair (on R13); refused by both R13 rulings and by the R12 ruling (batch 3)',
     'recommendation', 'declined', 'none', 'd2', '\\operatorname{Ans}_S', lit(ac, '\\operatorname{Ans}_E'), 'term')
 add('S90', ac, 's90_xexam_atria_C point 1, first repair (on R13); taken in substance, in Mimo C item 4\'s words "to the simulation layer" (batch 3, Reconciliation item 3)',
     'recommendation', 'superseded', 'none', 'd2', 'Expectation and violation are defined for every transport, surprise only for a selected one', cut(ac, '*Repair:* “', '”', line=3), 'span',
     same_as=fix_rid.get(('W35.2', 'S90'), []))
-add('S90', mc, 's90_xexam_mimo_C point 2 (R07, W45.1), repair to the declaration; refused by ruling R07: KEEP, it would present as new what file 11 already holds (batch 3)',
+add('S90', mc, 's90_xexam_mimo_C point 2 (R07, W45.1), repair to the declaration; refused by ruling R07: KEEP (batch 3)',
     'recommendation', 'declined', 'none', 'note2', '', cut(mc, 'declaration: "', '"', line=27), 'span', part_note='W45.1 (file-11 L77, Part I)')
-add('S90', mc, 's90_xexam_mimo_C point 3 (R30, W41.1), first repair (copy Part IX\'s clause verbatim); refused by ruling R30: KEEP, it would lose N21 and Derivation 10\'s binding (batch 3)',
+add('S90', mc, 's90_xexam_mimo_C point 3 (R30, W41.1), first repair (copy Part IX\'s clause verbatim); refused by ruling R30: KEEP (batch 3)',
     'recommendation', 'declined', 'none', 'd2', 'content changes to the changes the binding specifies', cut(mc, 'verbatim ("', '")', line=51), 'span')
-add('S90', mc, 's90_xexam_mimo_C point 3 (R30, W41.1), second repair (the pointer); refused by ruling R30: "in the manner of" already says "modelled on" (batch 3)',
+add('S90', mc, 's90_xexam_mimo_C point 3 (R30, W41.1), second repair (the pointer); refused by ruling R30: KEEP (batch 3)',
     'recommendation', 'declined', 'none', 'd2', 'as reason use asks of an objection (Part IX)', lit(mc, 'in a manner modelled on reason use (Part IX)'), 'span')
 add('S90', mc, 's90_xexam_mimo_C point 3 (R30, W41.1), second repair (the declaration); refused with it by ruling R30 (batch 3)',
     'recommendation', 'declined', 'none', 'note2', 'in the manner of reason use', lit(mc, 'in a manner modelled on reason use'), 'span', part_note='W41.1 (file-11 L401, Part X)')
 add('S90', mc, 's90_xexam_mimo_C point 4 (R13, W35.2), repair to the declaration; taken in the checker\'s words, whose declaration states the scoped clause (batch 3)',
     'recommendation', 'superseded', 'none', 'note2', '', cut(mc, 'declaration: "', '" If', line=59), 'span', part_note='W35.2 (file-11 L225, Part IV / Expectation, surprise, violation)')
-add('S90', mc, 's90_xexam_mimo_C point 5 (R25, W40.1), repair to the declaration; refused by both R25 rulings (restrictive, a paraphrase, and it drops "bare"); the pass takes Atria C item 5\'s declaration, which quotes NEW\'s clause (batch 3)',
+add('S90', mc, 's90_xexam_mimo_C point 5 (R25, W40.1), repair to the declaration; refused by both R25 rulings; the pass takes Atria C item 5\'s declaration (batch 3)',
     'recommendation', 'declined', 'none', 'note2', 'of which a bare denial is not an account', cut(mc, 'to "', '."', line=67), 'span', same_as=[C89], part_note='W40.1 (file-11 L337, Part VII / Explanations that remove structure)')
 add('S90', B1, 'S90 batch 1, Atria B1 R39 ruling, "Loose end, not ruled": revised L51 is the one place left that calls N "declared"; passed to the orchestrator; carried forward after S90 ("Revised L51")',
     'recommendation', 'not applied', 'none', 'd2', 'as a declared normative relation', '[no wording given] L51 still calls the normative relation "declared"; no entry changes it', 'span')
@@ -410,9 +473,9 @@ add('S93', TB, 'X03.6 (s93_xexam_mimo_F point 1), proposed declaration; ruling S
     'recommendation', 'declined', 'none', 'note4', v4['W19.1']['fields']['DECLARATION'], fence(TB, 274), 'paragraph', part_note='W19.1 (file-11 L121, Part II / Kinds are edit-signatures)')
 add('S93', TB, 'X05.6 (s93_xexam_mimo_G point 1), proposed wording; ruling S93 X05 (W35.2) takes the occurrence condition as "at an actually occurring pair", and does not adopt "whose fidelity fails"',
     'recommendation', 'declined', 'none', 'd4', v4['W35.2']['NEW'], fence(TB, 346), 'sentence', same_as=fix_rid.get(('W35.2', 'S93'), []))
-add('S93', TB, 'X05.6 (s93_xexam_mimo_G point 1), proposed declaration; ruling S93 X05: its rephrasing of the third clause is not adopted (not the smallest change)',
+add('S93', TB, 'X05.6 (s93_xexam_mimo_G point 1), proposed declaration; ruling S93 X05: its rephrasing of the third clause is not adopted',
     'recommendation', 'declined', 'none', 'note4', v4['W35.2']['fields']['DECLARATION'], fence(TB, 350), 'paragraph', part_note='W35.2 (file-11 L225, Part IV / Expectation, surprise, violation)')
-add('S93', TB, 'X06.6 (s93_xexam_mimo_H point 1), proposed replacement, whole; ruling S93 X06 (W20.1): Mimo\'s exception ("never one of them") is ruled out as a change of claim; the FIX keeps the candidate\'s offer as deciding membership',
+add('S93', TB, 'X06.6 (s93_xexam_mimo_H point 1), proposed replacement, whole; ruling S93 X06 (W20.1): Mimo\'s exception ("never one of them") is not taken; the FIX keeps the candidate\'s offer as deciding membership',
     'recommendation', 'declined', 'none', 'd4', v4['W20.1']['NEW'], fence(TB, 382), 'paragraph', same_as=fix_rid.get(('W20.1', 'S93'), []))
 add('S93', TB, 'X06.9 (s93_xexam_mimo_H point 4), proposed declaration; ruling S93 X06: not taken, the declaration follows ruling 1',
     'recommendation', 'declined', 'none', 'note4', v4['W20.1']['fields']['DECLARATION'], fence(TB, 402), 'paragraph', part_note='W20.1 (file-11 L233, Part V)')
@@ -424,7 +487,7 @@ add('S93', TB, 'X06.7 (b) (s93_xexam_mimo_H point 2), L299; ruling S93 X06: "L29
 add('S93', TB, 'X06.7 (b) (s93_xexam_mimo_H point 2), Derivation 1\'s Corollary at L558; ruling S93 X06: not taken in X06; carried forward after S93 as a candidate ("each active component" at L558)',
     'recommendation', 'not applied', 'none', 'd4', 'each component must anchor', 'each active component must anchor', 'span')
 recs[-1]['source_ref'] += '; the reply\'s words: "should read `' + lit(TB, '`each active component`').strip('`') + '`"'
-add('S93', TB, 'X06.3 (s93_xexam_atria_H point 3), optional phrase; ruling S93 X06: KEEP, the present wording stands without it (Mimo\'s "that Part VI holds fixed in E|W" is not taken either)',
+add('S93', TB, 'X06.3 (s93_xexam_atria_H point 3), optional phrase; ruling S93 X06: KEEP (Mimo\'s "that Part VI holds fixed in E|W" is not taken either)',
     'recommendation', 'declined', 'none', 'd4', 'the named background of Part VI', lit(TB, '`what Part VI calls the named background`').strip('`'), 'span')
 add('S93', TB, 'X09.1 (s93_xexam_atria_A point 1, (c2)), proposed insertion after the "fits" sentence of L315; ruling S93 X09, ruling 5: the owner\'s choice (rule 6); none of the six (c2) proposals applied (the S93 reading, section 9)',
     'recommendation', 'open for the owner', 'none', 'd4', '', fence(TB, 420), 'sentence', anchor='shows it failing a condition of (E). No list of all rivals is supposed')
@@ -444,7 +507,7 @@ add('S93', TB, 'X09.20 (s93_xexam_mimo_C point 1 and (c2)), words for Part IX (R
 add('S93', TB, 'X09.11 (s93_xexam_mimo_A point 3), exact additions to the declaration; ruling S93 X09: ruling 4 puts the bijection condition into the declaration\'s third sentence in the checker\'s words; ruling 3 keeps the declaration silent on "offered for the whole of p"; ruling 5 leaves the inspection sentence to the owner',
     'recommendation', 'declined', 'none', 'note4', '', fence(TB, 455), 'paragraph', part_note='W59.1 (file-11 L317-319, Part VI / Rivals)')
 rv4 = [l for l in v4['W59.1']['NEW'].split('\n') if l.startswith('**Rivals.**')][0]
-add('S93', TB, 'X09.13 (s93_xexam_mimo_A), replacement wording for the whole paragraph "Rivals"; ruling S93 X09, ruling 7: not adopted (the "nor" rewording not needed, ruling 1; the separate anchor-clash disjunct declined for the fix of ruling 2; the inspection clause the owner\'s, ruling 5)',
+add('S93', TB, 'X09.13 (s93_xexam_mimo_A), replacement wording for the whole paragraph "Rivals"; ruling S93 X09, ruling 7: not adopted (its parts are ruled in rulings 1, 2 and 5; the inspection clause is the owner\'s choice)',
     'recommendation', 'declined', 'none', 'd4', rv4, fence(TB, 466), 'paragraph', same_as=fix_rid.get(('W59.1', 'S93'), []))
 add('S93', TB, 'X09.22 = X17.7 (s93_xexam_mimo_K point 2), words offered for the dependence order; ruling S93 X17: "Mimo\'s offered words are not taken"; the FIX places the terms in the checker\'s sentence',
     'recommendation', 'declined', 'none', 'd4', '', cut(TB, 'Words offered for the order: `', '`'), 'sentence',
@@ -453,13 +516,13 @@ add('S93', TB, 'X17.6 (s93_xexam_mimo_K point 1), proposed wording; ruling S93 X
     'recommendation', 'declined', 'none', 'd4', v4['W7.5']['NEW'], fence(TB, 692), 'sentence')
 add('S93', TB, 'X17.6 (s93_xexam_mimo_K point 1), proposed declaration; not taken with the wording (ruling S93 X17)',
     'recommendation', 'declined', 'none', 'note4', v4['W7.5']['fields']['DECLARATION'], fence(TB, 696), 'paragraph', part_note='W7.5 (file-11 L518, Part XIV / Dependence order)')
-add('S93', TB, 'X10.14 (s93_xexam_mimo_B point 5), optional phrase; ruling S93 X10: KEEP, "For that assessor" is not needed (the index is inherited through "fits")',
+add('S93', TB, 'X10.14 (s93_xexam_mimo_B point 5), optional phrase; ruling S93 X10: KEEP',
     'recommendation', 'declined', 'none', 'd4', '', lit(TB, '`For that assessor`').strip('`'), 'span', anchor='A candidate is **easy to vary**, in the sense used here,', new_sentence='')
 add('S93', TB, 'X11.4 (s93_xexam_mimo_I point 1), proposed kind and declaration; ruling S93 X11 upholds the kind (CLAIM) and writes its own declaration',
     'recommendation', 'declined', 'none', 'note4', '', fence(TB, 604), 'paragraph', same_as=[rid_for('W61.1', '8816fcf')], part_note='the proposed X11 (file-11 L323, Part VII / Production and direction)')
-add('S93', TB, 'X14.10 (s93_xexam_mimo_C point 2), optional exact wording; ruling S93 X14: KEEP, "Mimo\'s offer, which is not taken"; the clause is not false, incoherent or misleading',
+add('S93', TB, 'X14.10 (s93_xexam_mimo_C point 2), optional exact wording; ruling S93 X14: KEEP ("Mimo\'s offer, which is not taken")',
     'recommendation', 'declined', 'none', 'd4', 'an account on it does not answer \\(p\\)', lit(TB, '`being an account of it is not thereby an account of \\(p\\)`').strip('`'), 'span')
-add('S93', TB, 'X14.12 (s93_xexam_mimo_C point 4 (i)), the exact word offered; ruling S93 X14: KEEP, "the exclusion" is fixed by its antecedent',
+add('S93', TB, 'X14.12 (s93_xexam_mimo_C point 4 (i)), the exact word offered; ruling S93 X14: KEEP',
     'recommendation', 'declined', 'none', 'd4', 'the exclusion ceases to be established', 'the result ceases to be established', 'span')
 recs[-1]['source_ref'] += '; the reply\'s words: `' + lit(TB, 'Exact word offered for (i): `the result`').split('`')[1] + '` for "the exclusion"'
 add('S93', R93 + 'ruling S93 X04 W35.1.md', 'S93 ruling X04 (W35.1): the words Mimo proposed for L582 (s93_xexam_mimo_G point 2); the first clause is entered as the companion entry W35.5; the second clause is not adopted',
@@ -473,7 +536,7 @@ add('S93', TB, 'X18.1 (s93_xexam_atria_E point 1), proposed wording in place of 
 add('S93', TB, 'X18.7 (s93_xexam_mimo_E point 3), proposed replacement for the parenthetical; ruling S93 X18, ruling 1: KEEP',
     'recommendation', 'declined', 'none', 'src4', 'the candidate against it (Parts I and VI)', 'the candidate against it (Parts I and V)', 'span', part_note=' / *Reach*')
 recs[-1]['source_ref'] += '; the reply\'s words: ' + lit(TB, 'Proposed replacement for the parenthetical: `(Parts I and V)`').split(': ')[1]
-add('S93', R93 + 'ruling S93 X18 W38.1.md', 'S93 ruling X18, ruling 1: "(Parts I, V and VI)" would also be true; "It is not required and is not ruled here"; carried forward after S93 ("The sources note")',
+add('S93', R93 + 'ruling S93 X18 W38.1.md', 'S93 ruling X18, ruling 1: the ruling offers this pointer for the orchestrator and does not require it ("It is not required and is not ruled here"); carried forward after S93 ("The sources note")',
     'recommendation', 'not applied', 'none', 'src4', '(Parts I and VI)', lit(R93 + 'ruling S93 X18 W38.1.md', '(Parts I, V and VI)'), 'span', part_note=' / *Reach*')
 hv4 = [l for l in v4['W38.1']['NEW'].split('\n') if l.startswith('- *Hard to vary.*')][0]
 x182 = fence(TB, 733)
@@ -490,14 +553,14 @@ if x185 and x185 not in vers['8816fcf']['W38.1']['NEW']:
 x524 = cut(TB, 'gives words to close it: `', '`')
 add('S93', TB, 'section 4 of the tabulation, flagged, not an item: s93_xexam_mimo_K point 7, "Residual, outside this item"; carried forward after S93 ("L524 and N")',
     'recommendation', 'not applied', 'none', 'd4', '', x524, 'span', anchor='a declared input is something a claim takes as stated, which the semantics records and does not supply.', new_sentence='')
-add('S93', R93 + 'ruling S93 X11 proposed.md', 'S93 ruling X11, point 6: file 12 carries the same slip at its L325; file 12 is under no round and nothing was written into authority/; carried forward after S93 ("File 12 carries the same pole-sentence slip")',
+add('S93', R93 + 'ruling S93 X11 proposed.md', 'S93 ruling X11, point 6: file 12 carries the same slip at its L325; file 12 is under no round, and the ruling wrote nothing into it; carried forward after S93 ("File 12 carries the same pole-sentence slip")',
     'recommendation', 'not applied', 'none', 'f12', "but not the calculation's \\(H\\)", "but not the calculation's \\(L\\)", 'span', same_as=[rid_for('W61.1', '8816fcf')])
 # findings for later entries (S93), no wording
 for ref, desc, anchor in (
     ('S93 ruling X03 (W19.1), finding 1, and X06, finding 1; carried forward after S93 ("L245 and L558 against (F1)")', 'define "active component", or narrow L245 and L558 to active components; whether an anchoring condition on named-background components would then add to (F1) and (F2) needs its own check', '(F1) entails that every component of \\(E\\) has the signature of its anchor'),
     ('S93 ruling X03 (W19.1), finding 2; carried forward after S93 ("Port translations and values")', 'Part IV should say once whether a port translation may carry a map of values, which governs "footprint bijection" at L119 (twice) and L564', 'and \\(\\lambda\\) assigns each component of \\(E\\) a subnetwork of \\(D\\) with a port translation.'),
     ('S93 ruling X17 (W7.5), finding 1; carried forward after S93', 'define (K2)\'s Lic_j, Scope_j and Live_j (L390 only), so that Derivation 6 can be followed through receipts to the primitives', '\\operatorname{Lic}_j'),
-    ('S93 ruling X17 (W7.5), findings 2 and 3, and X10, ruling 4; carried forward after S93 ("Receipts, (K2) and (K3)"; "L598 over-states the order")', 'place receipts, (K2) and (K3) in the dependence order ((K3) after "what is established"), or let W7.6\'s wording say that Derivation 6\'s proof follows unplaced definitions through their own text to placed ones', 'By the dependence order of Part XIV'),
+    ('S93 ruling X17 (W7.5), findings 2 and 3, and X10, ruling 4; carried forward after S93 ("Receipts, (K2) and (K3)"; "L598 over-states the order")', 'place receipts, (K2) and (K3) in the dependence order ((K3) after "what is established"), or let W7.6\'s wording say that Derivation 6 follows unplaced definitions through their own text to placed ones', 'By the dependence order of Part XIV'),
     ('S93 ruling X17 (W7.5), finding 6; carried forward after S93 ("Conflict is used in two senses")', 'mark the difference between "conflict" in the defined sense of L315 and the ordinary sense of L429 and of L317\'s gloss "a conflict between ideas"', 'Two candidates **conflict**'),
     ('S93 ruling X17 (W7.5), finding 7; carried forward after S93 ("O_ep and resource contract")', 'a clause for L522 giving "resource contract" a place among the declared inputs', '**Declared inputs.**'),
     ('the S93 tabulation, section 4, flagged; "Found in draft 4" and carried forward after S93 ("V")', 'list the family \\(\\mathcal V\\) of (D) (L299, L302) among Part XIV\'s declared inputs', 'For a declared family \\(\\mathcal V\\) of organization edits'),
@@ -509,7 +572,7 @@ for ref, desc, anchor in (
 add('S90', CL, 'change list draft 5, "Findings carried forward", the item on the declared inputs (L514) and Part VI\'s restriction operation (from the settled S88 positions, "Found in settling", point 4): "The candidate clause for L514 ... It is not an entry."',
     'recommendation', 'not applied', 'none', 'f11', '', lit(CL, 'the restriction operation of Part VI (\\(E|W\\))'), 'span', anchor='**Declared inputs.**')
 add('S90', CL, 'change list draft 5, "Findings carried forward": U_c and A_p in (U1)-(U2) undefined (group A, C3); "Defining them is one clause at L489 and a CLAIM, outside every item taken"',
-    'recommendation', 'not applied', 'none', 'f11', '', '[no wording given] one clause at L489 defining \\(U_c\\) and \\(A_p\\) of (U1)-(U2)', 'sentence', anchor='U_c')
+    'recommendation', 'not applied', 'none', 'f11', '', '[no wording given] one clause at L489 defining \\(U_c\\) and \\(A_p\\) of (U1)-(U2)', 'sentence', anchor='**Universality.** With')
 add('S90', CL, 'change list draft 5, "Findings carried forward", Part II uses the notation of Parts IV and V before they introduce it (W19.1, read in place): a pointer "would close it", left for X1; closed after the S90 cross-examination by W19.1\'s typing sentence',
     'recommendation', 'superseded', 'none', 'f11', '', lit(CL, '"(Parts IV and V)"').strip('"'), 'span', anchor='A kind is an equivalence class of components under this relation.',
     same_as=[rid_for('W19.1', '99e9cd0')])
@@ -524,7 +587,7 @@ D = 'decision %s of the change list ("The decisions D1-D11")'
 W = [
     ('W4 (L204), handling (b), a general default stated in advance; recommended (a), with (b) as the owner\'s call; ' + (D % 'D3') + ': no default inputs', 'declined',
      '', lit(WL, 'A protected condition stated without occasions covers the occasions of the use it protects.'), 'sentence', 'each as a stated condition over stated occasions'),
-    ('W6 (L252), evidence and handling: an addition to L514; the entries W6.1-W6.4 + W14.1 word the normative relation otherwise', 'superseded',
+    ('W6 (L252), the item text and handling: an addition to L514; the entries W6.1-W6.4 + W14.1 word the normative relation otherwise', 'superseded',
      '', lit(WL, '… and, for a claim of worth, the normative relation (primitive 2), under the same rule'), 'span', '**Declared inputs.**'),
     ('W6 (L252): L27\'s second sentence narrows to worth, or the other items are named in L514 as this; the entries W6.1 and W6.4 + W14.1 word it otherwise', 'superseded',
      '', lit(WL, 'not supplied; a claim that needs one is unsettled'), 'span', '**Declared inputs.**'),
@@ -556,10 +619,10 @@ W = [
      '', lit(WL, 'Identity of that assertion is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical truths'), 'sentence', 'moving an assertion from an input slot into a component named'),
     ('W41 (L856), "What is missing": file 00\'s paragraph; entry W41.1 restores it with edits (after check 2, "A system\'s realization ...")', 'superseded',
      '', lit(WL, 'Inexplicit representation is not absent representation'), 'sentence', 'Build'),
-    ('W44 (L894), handling, optional derived notion; no entry', 'not applied',
-     '', lit(WL, 'a quasi-autonomous level exists when an Account whose anchors all lie at grain \\(\\ell\\) exists'), 'sentence', None),
-    ('W47 (L944), 12:273, a new derived claim carried from file 12; deferred; ' + (D % 'D5') + ': from file 12, only the missing-input sentence pattern', 'declined',
-     '', lit(WL, 'A collateral effect offered as a cause fails (F1)'), 'sentence', None),
+    ('W44 (L894), handling, an optional new notion; no entry', 'not applied',
+     '', lit(WL, 'a quasi-autonomous level exists when an Account whose anchors all lie at grain \\(\\ell\\) exists'), 'sentence', 'What a question asks, production, identification, obstruction'),
+    ('W47 (L944), 12:273, a new claim carried from file 12; deferred; ' + (D % 'D5') + ': from file 12, only the missing-input sentence pattern', 'declined',
+     '', lit(WL, 'A collateral effect offered as a cause fails (F1)'), 'sentence', 'What ordinary language calls a cause, a measurement, a rule'),
     ('W48 (L962), new claim: adopt (AC) and define ProducedBy by it (12:451); ' + (D % 'D5'), 'declined',
      '', '[no wording given] adopt (AC) and define ProducedBy by it, as "' + lit(WL, '(AC) applied to the repair as result') + '" (12:451); defer the pre-emption episode', 'sentence', 'ProducedBy'),
 ]

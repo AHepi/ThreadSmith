@@ -39,7 +39,7 @@ WMAP = {
 REPLIES = [
  ("atria_A", "finding 1", 1, "atria A 1, glm A 2, mimo 3 5", 329, A, ["atria A 1"], None),
  ("atria_A", "finding 2", 2, "atria A 2", 325, S, ["atria A 2"], None),
- ("atria_A", "finding 3", 3, "atria A 3", 47, A, ["atria A 3"], None),
+ ("atria_A", "finding 3", 3, "atria A 3", 47, S, ["atria A 3"], None),
  ("atria_A", "finding 4", 4, "atria A 4 (joined with mimo 1 4)", 61, A, ["atria A 4"], None),
  ("atria_A", "finding 4", 5, "atria A 4 at L339", 339, A, ["atria A 4"], None),
  ("atria_A", "finding 5", 6, "atria A 5", 299, D, [], None),
@@ -49,7 +49,7 @@ REPLIES = [
  ("glm_A", "finding 2", 3, "atria A 1, glm A 2, mimo 3 5", 329, A, ["glm A 2"], None),
  ("glm_A", "finding 3", 4, "glm A 3", 53, S, ["glm A 3"], None),
  ("mimo_1", "finding 1", 1, "mimo 1 1 (joined with mimo 4 F3 (ii))", 17, S, ["mimo 1 1"], None),
- ("mimo_1", "finding 2", 2, "mimo 1 2", 141, D, [], None),
+ ("mimo_1", "finding 2", 2, "mimo 1 2", 147, D, [], None),
  ("mimo_1", "finding 2", 3, "mimo 1 2", 155, D, [], None),
  ("mimo_1", "finding 3", 4, "mimo 1 3", 31, D, [], None),
  ("mimo_1", "finding 3", 5, "mimo 1 3", 43, A, ["mimo 1 3"], None),
@@ -72,17 +72,17 @@ REPLIES = [
  ("mimo_1", "finding 9 (a), L315", None, "mimo 1 9 (a)", 315, D, [],
   dict(old="", new_between=('likewise "', '" at L315'))),
  ("mimo_1", "finding 9 (b), L119-L120", None, "mimo 1 9 (b)", 119, S, ["mimo 1 9 (b)"],
-  dict(old="", new_between=('glosses only three: write "', '" (c)'))),
+  dict(old="", locate="\\(t=(\\pi,\\tau,\\sigma,\\lambda)\\)", new_between=('glosses only three: write "', '" (c)'))),
  ("mimo_1", "finding 9 (c), L31, first option", None, "mimo 1 9 (c)", 31, D, [],
   dict(old="(EX) is a defined relation of an episode, not such a predicate", new_between=('either "', '" at L31'))),
- ("mimo_1", "finding 9 (c), second option", None, "mimo 1 9 (c)", 31, D, [],
-  dict(old="(E)", new="(EX)")),
+ ("mimo_1", "finding 9 (c), second option (at L43, L49, L69)", None, "mimo 1 9 (c)", 43, D, [],
+  dict(old="(E)", new="(EX)", noplace=True)),
  ("mimo_1", "finding 9 (d), L257", None, "mimo 1 9 (d)", 257, D, [],
   dict(old="the active commitments", new="the active components")),
  ("mimo_2", "finding 1", 1, "mimo 2 1", 255, S, ["mimo 2 1"], None),
  ("mimo_2", "finding 2", 2, "mimo 2 2", 317, S, ["mimo 2 2"], None),
  ("mimo_2", "finding 2, note on '(Part VIII)'", None, "mimo 2 remarks under Q5", 317, D, [],
-  dict(old="", new_between=('(Keep "(Part VIII)"', '\n'), prefix='[no wording given] (Keep "(Part VIII)"')),
+  dict(old="", new_between=('(Keep "(Part VIII)"', '; it is stated'), prefix='[no wording given] Keep "(Part VIII)"')),
  ("mimo_2", "finding 3", 3, "mimo 2 3", 245, S, ["mimo 2 3"], None),
  ("mimo_2", "finding 4", 4, "mimo 2 4", 197, A, ["mimo 2 4"], None),
  ("mimo_2", "finding 4", 5, "mimo 2 4", 211, A, ["mimo 2 4"], None),
@@ -116,21 +116,21 @@ REPLIES = [
  ("mimo_4", "F2", 2, "mimo 4 F2", 568, S, ["mimo 4 F2"], None),
  ("mimo_4", "F3 (i)", None, "mimo 4 F3", 536, S, ["mimo 4 F3"],
   dict(old="with a non-declared transport,", new="")),
- ("mimo_4", "F3 (ii)", 3, "mimo 4 F3 (with mimo 1 1)", 538, S, ["mimo 4 F3"], None),
+ ("mimo_4", "F3 (ii)", 3, "mimo 4 F3 (with mimo 1 1)", 538, S, ["mimo 4 F3 (ii)"], None),
  ("mimo_4", "F4", 4, "mimo 4 F4", 580, D, [], None),
  ("mimo_4", "F4 (L622)", None, "mimo 4 F4", 622, A, ["mimo 4 F4"],
   dict(old="", new_between=('and at L622: "', '"\n'))),
  ("mimo_4", "F5", 5, "mimo 4 F5", 497, S, ["mimo 4 F5"], None),
  ("mimo_4", "F5 ((U3))", None, "mimo 4 F5", 506, A, ["mimo 4 F5"],
   dict(old="", new_between=('with (U3) as "', '"\n'))),
- ("mimo_4", "F6 (i)", 6, "mimo 4 F6", 626, A, ["mimo 4 F6"], None),
- ("mimo_4", "F6 (ii)", 7, "mimo 4 F6", 630, S, ["mimo 4 F6"], None),
+ ("mimo_4", "F6 (i)", 6, "mimo 4 F6", 626, A, ["mimo 4 F6 (i)"], None),
+ ("mimo_4", "F6 (ii)", 7, "mimo 4 F6", 630, S, ["mimo 4 F6 (ii)"], None),
  ("mimo_4", "F7", 8, "mimo 4 F7", 588, S, ["mimo 4 F7"], None),
  ("mimo_4", "F8", 9, "mimo 4 F8", 612, A, ["mimo 4 F8"], None),
- ("mimo_4", "F9 (i)", None, "mimo 4 F9", 540, A, ["mimo 4 F9"],
+ ("mimo_4", "F9 (i)", None, "mimo 4 F9", 540, A, ["mimo 4 F9 (i)"],
   dict(old="the Claim of Argument 1", new="the Consequence of Argument 1")),
- ("mimo_4", "F9 (ii)", None, "mimo 4 F9", 564, A, ["mimo 4 F9"],
-  dict(old="", new_between=('Replace the premise in (ii) with "', '"\n'))),
+ ("mimo_4", "F9 (ii)", None, "mimo 4 F9", 562, A, ["mimo 4 F9 (ii)"],
+  dict(old="one counterpart, the same subnetwork of \\(D\\) with port translations onto the same ports of \\(D\\)", new_between=('Replace the premise in (ii) with "', '".\n'))),
  ("mimo_4", "F10", 10, "mimo 4 F10", 526, A, ["mimo 4 F10"], None),
  ("mimo_4", "F11", 11, "mimo 4 F11", 600, A, ["mimo 4 F11"], None),
  ("mimo_4", "F12", 12, "mimo 4 F12", 608, A, ["mimo 4 F12"], None),
@@ -158,9 +158,10 @@ def best_match(lines, hint, block, span=4):
             for w in range(1, k + 3):
                 if n + w - 1 > len(lines):
                     break
-                cand = "\n".join(lines[n - 1:n - 1 + w])
-                if not cand.strip():
+                win = lines[n - 1:n - 1 + w]
+                if not win[0].strip() or not win[-1].strip():
                     continue
+                cand = "\n".join(win)
                 sm = difflib.SequenceMatcher(None, norm(cand), b, autojunk=False)
                 if sm.quick_ratio() < best[0]:
                     continue
@@ -281,7 +282,11 @@ def build(next_rid, prior, texts):
                 old = src.between(*inline["old_between"])
             else:
                 old = inline.get("old", "")
-            if old and rp[line - 1].count(old) == 1:
+            if inline.get("noplace"):
+                pass
+            elif inline.get("locate"):
+                os_ = locate_sentence(rp[line - 1], inline["locate"])
+            elif old and rp[line - 1].count(old) == 1:
                 os_, ns_, _ = place(texts, "repaired copy", line, old, new)
             elif old:
                 # the quoted words are not on the hinted line: search nearby
@@ -314,9 +319,10 @@ def build(next_rid, prior, texts):
                     os_ = cand
                     ns_ = new
         stage3 = [r["rid"] for r in s3 if any(
-            (x in [y.strip() for y in re.split(r"[;,]", r["_ruling"])]) or
-            any(y.strip().startswith(x + " (") for y in re.split(r";", r["_ruling"]))
-            for x in links)]
+            x in [y.strip() for y in re.split(r"[;,]", r["_ruling"])] for x in links)]
+        if not stage3:
+            stage3 = [r["rid"] for r in s3 if any(
+                any(y.strip().startswith(x + " (") for y in re.split(r";", r["_ruling"])) for x in links)]
         ref = "%s%s; ruling '%s' in %s, section 3" % (
             flabel, (", proposed wording (code block %d)" % bno) if bno else ", wording given inline",
             ruling, READING)
