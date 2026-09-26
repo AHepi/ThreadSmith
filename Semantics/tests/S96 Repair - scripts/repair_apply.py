@@ -23,6 +23,14 @@ replacements_stage2.json, made by replacements_stage2_source.py, is then applied
 by the same rules (spans exact, once on their line, not overlapping, no line added or
 removed), and the result is written to OUT. --stage1-only writes the stage-1 text
 instead, to reproduce the text the two readers read.
+
+Stage 3 (log S97, after the outside cross-examination was read, results/S96 Reading of
+the replies.md, and the owner's words of decision S28): --stage3 rebuilds stages 1 and
+2 in memory, refuses unless the stage-2 text has md5 8bb4d19d5aad53de2492b2193fd23ff1
+(the S96 final), applies replacements_stage3.json (made by
+replacements_stage3_source.py) by the same span rules, and writes the result to OUT3,
+a new file. With --stage3 nothing is written to OUT or to any other existing file.
+--scan and --physical then run on the stage-3 text, with the notes of all three stages.
 """
 import collections, hashlib, importlib.util, json, re, sys
 
@@ -35,6 +43,10 @@ STAGE1_MD5 = "c1eecbd1587e5aec91fd0ba7d46e1469"
 OUT = ("/home/user/ThreadSmith/Semantics/tests/"
        "Revision 2 - scrubbed copy, repaired (S96), theory text.md")
 S95_DIR = "/home/user/ThreadSmith/Semantics/tests/S95 Scrub - scripts/"
+REP3 = "/home/user/ThreadSmith/Semantics/tests/S96 Repair - scripts/replacements_stage3.json"
+STAGE2_MD5 = "8bb4d19d5aad53de2492b2193fd23ff1"
+OUT3 = ("/home/user/ThreadSmith/Semantics/tests/"
+        "Revision 2 - scrubbed copy, repaired (S96), after cross-examination, theory text.md")
 PHYS = re.compile(r"\b(physic\w*|admit\w*|adopt\w*|carrier\w*|instantiat\w*|possib\w*|impossib\w*|tasks?)\b", re.I)
 
 
@@ -83,6 +95,15 @@ def stage2(text1):
     R2 = json.load(open(REP2, encoding="utf-8"))
     out = apply_spans(text1.split("\n"), R2["entries"], "stage 2")
     return R2, "\n".join(out)
+
+
+def stage3(text2):
+    h = hashlib.md5(text2.encode("utf-8")).hexdigest()
+    if h != STAGE2_MD5:
+        die("stage-2 text md5 is %s, not %s" % (h, STAGE2_MD5))
+    R3 = json.load(open(REP3, encoding="utf-8"))
+    out = apply_spans(text2.split("\n"), R3["entries"], "stage 3")
+    return R3, "\n".join(out)
 
 
 def build(write=False):
@@ -145,12 +166,14 @@ def s95_module():
     return m
 
 
-def run_scan(R, text, R2=None):
+def run_scan(R, text, R2=None, R3=None):
     m = s95_module()
     s95 = json.load(open(S95_DIR + "replacements.json", encoding="utf-8"))
     notes = list(s95.get("borderline", [])) + list(R.get("borderline", []))
     if R2:
         notes += list(R2.get("borderline", []))
+    if R3:
+        notes += list(R3.get("borderline", []))
     hits, bl, res = m.scan({"borderline": notes}, text)
     print("residue scan (S95 families) hits:", len(hits), " BORDERLINE (noted):", len(bl),
           " unexplained:", len(res))
@@ -167,10 +190,12 @@ def run_scan(R, text, R2=None):
     return hits, bl, res
 
 
-def run_physical(R, text, R2=None):
+def run_physical(R, text, R2=None, R3=None):
     reasons = {int(k): v for k, v in R.get("physical_mentions", {}).items()}
     if R2:
         reasons.update({int(k): v for k, v in R2.get("physical_mentions", {}).items()})
+    if R3:
+        reasons.update({int(k): v for k, v in R3.get("physical_mentions", {}).items()})
     tot = 0
     missing = []
     fam = collections.Counter()
@@ -192,6 +217,31 @@ def run_physical(R, text, R2=None):
             print("  STALE reason for l.%d (no mention left)" % k)
     return tot, missing
 
+
+def main_stage3():
+    R, lines, text1 = build(write=False)
+    R2, text2 = stage2(text1)                    # in memory only; OUT is not written
+    R3, text3 = stage3(text2)
+    open(OUT3, "w", encoding="utf-8").write(text3)
+    print("stage 1 md5:", hashlib.md5(text1.encode("utf-8")).hexdigest())
+    print("stage 2 md5:", hashlib.md5(text2.encode("utf-8")).hexdigest(), "(S96 final, checked; not written)")
+    print("stage 3 entries applied:", len(R3["entries"]), " not applied:", len(R3.get("not_applied", [])))
+    print("stage 3 by group:", dict(collections.Counter(e["group"] for e in R3["entries"])))
+    print("stage 3 claim changed:", sum(1 for e in R3["entries"] if e.get("claim_changed")))
+    print("stage 3 lines changed from stage 2:",
+          sum(1 for a, b in zip(text2.split("\n"), text3.split("\n")) if a != b))
+    print("lines (wc -l) stage 2:", text2.count("\n"), " stage 3:", text3.count("\n"))
+    print("words stage 2:", len(text2.split()), " stage 3:", len(text3.split()))
+    print("md5 stage 3 (written to OUT3):", hashlib.md5(text3.encode("utf-8")).hexdigest())
+    if "--scan" in sys.argv:
+        run_scan(R, text3, R2, R3)
+    if "--physical" in sys.argv:
+        run_physical(R, text3, R2, R3)
+
+
+if __name__ == "__main__" and "--stage3" in sys.argv:
+    main_stage3()
+    sys.exit(0)
 
 if __name__ == "__main__":
     R, lines, text1 = build(write="--stage1-only" in sys.argv)
