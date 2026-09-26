@@ -208,6 +208,7 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *What broke:* the copy never says what a whole argument rules out, only what one step does; in six places a case or a test still "rules out" by itself, with no one who can use an argument; two words of command ("forbids", "prohibited") and a few sentences shaped "an argument that such-and-such" are left. Each has a proposed new wording, and none needs the old words back.
 - *Not tested:* neither outside model has seen any of it; only 20 of the 76 cases were read; no repair has been made or read; each half was read once, by one Claude subagent; the plain files 91 to 94 and the records still use the old words.
 - *Failures:* the program's first list missed words that the sceptic then found, among them "checked", "verdict", "credit" and "satisfies"; the first proposal used "rule out" in three different senses; the copy says that one of its definitions is spelled out in a later part that does not contain it; and none of the three readers noticed that the new definition of argument answers your open question from file 94: that was found only when their readings were brought together.
+- *Added later, 25 September:* while this work was still going on, you set a limit of 15 Claude agents for this task (decision S24). The outside models do not count. 8 have been used so far: 7 for the work above, and 1 to record your decision.
 
 ## The next step
 
