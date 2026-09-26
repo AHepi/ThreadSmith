@@ -1,6 +1,6 @@
 # S98 — Verification of the ledger: fidelity
 
-*Log S98, 26 September 2026. Work in progress: the sections below are filled as the checks run.*
+*Log S98, 26 September 2026. Work in progress: saved early and filled as the checks run. The earlier partial file had found nothing yet.*
 
 ## 1. Counts: every collected record appears once
 
