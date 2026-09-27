@@ -1,0 +1,1196 @@
+Let me analyze this carefully. I need to produce a report covering:
+
+(a) Whether each formal statement says what the sentence says
+(b) Each counterexample
+(c) Each invention given in full in section 5, and unrecorded choices in section 6
+(d) Attack the claims that held
+(e) Round-1 matters and changes in section 8
+
+Let me work through each item.
+
+**Section3 definitions:**
+- D6.3 NC1
+- D6.4 NC2
+- E2 Identification
+- E3 The two balances
+- E4 Obstruction
+- E5 Eliminative explanation
+- E6 Odd-order skew-symmetric
+
+**Section 4 claims:**
+- FC57: identified at every attainable value exactly when the feature factors through measurement
+- FC58: kernel criterion
+- FC59: two balances
+- FC60: circularity- FC61: invariant blocks paths
+- FC62: eliminative explanation
+- FC63: odd-order skew-symmetric — COUNTEREXAMPLE FOUND
+
+**Section 5 inventions given in full:**
+- I63 (tag names the sentence before it)
+- I64 (identification: attainable, linear case)
+- I66 (odd-order skew-symmetric encoding)
+- I87 (claims as propositional formulas)
+- I89 (inference forms)
+- I99 (odd-order skew-symmetric in GF(3), Leibniz candidate)
+
+Named by title only: I03, I27, I81, I82, I14, I21, I22, I24, I28, I39, I77, I78, I79
+
+**Section 6:** None bears on this part's claims.
+
+**Section 7:** None beyond those named under claims.
+
+**Section 8:** None falls in this part.
+
+So I need to focus on:
+- (a) each formal statement vs. sentence
+- (b) FC63's counterexample
+- (c) I63, I64, I66, I87, I89, I99
+- (d) attack FC57, FC58, FC59, FC60, FC61, FC62
+- (e) nothing
+
+Word budget: ~3,000 words. Let me be efficient.
+
+Let me think through each item carefully.
+
+**(a) Do formal statements match sentences?**
+
+FC57: L329 "It is identified on every attainable y exactly when f = f̄∘g for some f̄."
+Formal: (∀y ∈ g[Z]: |f[Z_y]| = 1) ⟺ ∃f̄: Y → F with f = f̄∘g on Z.
+
+Note: the formalization is stated as an equivalence. The sentence says "exactly when". This matches. But there is a subtlety: the direction⟸ requires f̄ to be defined on Y and Z_y as the fibre over y. If y is attainable (i.e., y ∈ g[Z]), then Z_y = {z: g(z) = y} is nonempty. The equation f = f̄∘g on Z says f(z) = f̄(g(z)) for all z ∈ Z, so f is constant on Z_y. Conversely if f constant on each Z_y, define f̄(y) = the common value (only on g[Z], extend arbitrarily to Y). This works.
+
+But wait: the definition of "identified at y" is from L329 "(I1)" — which I63 interprets as the tag naming the sentence before it, so (I1) is "The feature is identified at y exactly when Z_y ≠ ∅ ∧ |f[Z_y]| = 1."
+
+So identification at y requires Z_y ≠ ∅. But the factorization claim uses "every attainable y", and attainable = y ∈ g[Z], so Z_y ≠ ∅ holds for all attainable y. So (I1)'s nonemptiness condition is trivially satisfied for attainable y. The formal FC57 is fine.
+
+But there's a subtle problem: (I1) defines "identified at y" as "Z_y ≠ ∅ ∧ |f[Z_y]| = 1" — this includes existence of a fibre. If we said "identified at every y" (not just attainable), the identification would fail for y not in the image (empty fibre has |f[Z_y]| = |f[∅]| = |∅| = 0 ≠ 1). So the attainable qualifier is doing real work.
+
+Another issue: the domain of f̄. The text says f = f̄∘g for some f̄. What's the domain of f̄? The formalization says Y → F. Y is presumably the range of g (or an ambient space). The invention I64 says "y is attainable when y ∈ g[Z]". The formalization writes g[Z] (the image of Z under g). Fine.
+
+Also: does f factor through g on Z only, or everywhere? Formal says "on Z". Text says nothing explicit. Probably on Z.
+
+So the formal matches, though the extent of "on Z" vs everywhere is an invention (recorded under I64 implicitly). Actually I64 says "Z is the whole space ℝ^n" in the linear case. But FC57 is general.
+
+Hmm, the claim uses I63 and I64. The formal is general. It says "(∀y ∈ g[Z]: |f[Z_y]| = 1)". This matches the sentence modulo the fibre definition Z_y = {z ∈ Z : g(z) = y}.
+
+One issue: the fibre Z_y is defined implicitly. If Z is not the whole space, then "g[Z]" is the attainable set. The formal is fine.
+
+I think FC57's formal statement is a correct reading. But there is one small gap: the sentence says "the feature is identified" — what is "the feature"? It's f (a function Z → F). The formal says "f = f̄∘g". But in FC58, the "feature" is c^⊤ (a linear functional). So "feature" is used loosely. The formal is fine.
+
+FC58: L329 "For linear g and linear feature c^⊤, identification is ker g ⊆ ker c^⊤."
+
+Formal: Z = ℝ^n, g = G ∈ ℝ^{m×n}, feature c ∈ ℝ^n: (∀y ∈ G[ℝ^n]: |cᵀ[G⁻¹(y)]| = 1) ⟺ ker G ⊆ ker cᵀ.
+
+This is the standard statement. For a linear map G and linear functionalc^⊤, the feature factors through G iff c ∈ (ker G)^⊥ = row space of G, iff ker G ⊆ ker c^⊤. Correct.
+
+But the "Look" noted: "With Z a proper subset (I64's alternative), the criterion can fail." The look came out "as expected" — i.e., with Z a proper subset, the criterion fails. Specifically: Z = {0,1}², g = x+y, f = x: ker g ⊄ ker f, but f is identified at every attainable y on Z.
+
+Wait: Z = {0,1}², g(x,y) = x+y, f(x,y) = x. Attainable y: 0, 1, 2. y=0: fibre {(0,0)}, f = 0. y=1: fibre {(0,1),(1,0)}, f takes 0 and 1. y=2: fibre {(1,1)}, f = 1. So at y=1, f is NOT identified. But the Look says "Taking y ∈ {0, 2} alone, f is identified though ker g ⊄ ker f".
+
+So the Look says the kernel criterion can fail with Z proper, and gives a concrete example: at a given y, or when restrict attainable set.
+
+But wait: the Look's example is "Taking y ∈ {0, 2} alone, f is identified though ker g ⊄ ker f". That's not "at every attainable y" — it's at specific y. But I64's choice is "identification at every attainable y", and with Z = {0,1}², attainable y are 0, 1, 2. So at y=1 f is not identified. But the Look is using Z as a proper subset AND restricting to specific y. This is the "or" combination of (a) and (b) of I64's other choices. Under choice (a) alone (Z proper), with "every attainable y", the kernel criterion's failure direction is: ker g ⊆ ker c^⊤ is sufficient for identification on any Z. Is it necessary?
+
+For Z proper: if f is identified at every attainable y on Z, does ker g ⊆ ker f? Not necessarily. Take Z = {(0,0), (1,1)} ⊆ ℝ², g = x - y, f = x. ker g = span{(1,1)}. ker f = {0} × ℝ. ker g ⊄ ker f (since (1,1) has f = 1 ≠ 0). But on Z, g(0,0) = 0, g(1,1) = 0. Fibre over y = 0: {(0,0), (1,1)}. f(0,0) = 0, f(1,1) = 1. So f is NOT identified at y = 0 on Z.
+
+Hmm. Let me try again. Take Z = {(0,0), (1,0), (2,0)}, g = x + y, f = x - y. ker g = span{(1,-1)}. ker f = span{(1,1)}. ker g ⊄ ker f. g(0,0) = 0, g(1,0) = 1, g(2,0) = 2. Fibres are singletons. So f IS identified at every attainable y. So on a proper Z, the kernel criterion is sufficient but not necessary. That's what the Look is pointing at.
+
+So the Look result is "as expected" — meaning it confirms the direction noted in the invention's "other choice (a)". The result in section 4 says "look: as expected". The task rule (b) mentions "a look that came out not as expected" — this one came out as expected, so it's not a counterexample.
+
+Actually, wait: the Look's specific example is "Z = {0,1}², g = x+y, f = x: kernel criterion no; identified at every attainable y on Z: no (y = 1 has the fibre {(0,1),(1,0)}). Taking y ∈ {0, 2} alone, f is identified though ker g ⊄ ker f: on a box the criterion is sufficient, not necessary, at a given y."
+
+Hmm. So on Z = {0,1}² with "every attainable y", the kernel criterion is NO and identification is NO. So they agree on that Z. The mismatch is at a single y ("taking y ∈ {0, 2} alone"). So it uses I64's choice (b) — identification at one given y.
+
+But then the sentence "on a box the criterion is sufficient, not necessary, at a given y" — that's an observation, and matches the observation from my own Z = {(0,0), (1,0), (2,0)} example above.
+
+OK so FC58's formal statement matches the sentence as stated under I64's choice "linear case Z is ℝ^n".
+
+But there is a real issue with the second row claim: "Repeating rows changes no kernel; an independent calibration can."
+
+"A row in the row space of G leaves ker G unchanged; a row outside it lowers dim ker G by one."
+
+Hmm. Repeating rows is a special case of adding a row in the row space. So "repeating rows changes no kernel" is fine. "An independent calibration can [change the kernel]" — adding a row outside the row space lowers dim ker G by one. But the claim "can" is weaker than "does" — it CAN change. If the added row is outside the row space, it DOES lower dim ker G. So "can" is fine. But the formal statement makes "can" into "does lower by one". Slight tension but defensible.
+
+Also "independent calibration" — the text uses this word in the balance context (setting a bias by calibration). The formal just says "a row outside the row space". The correspondence between "independent calibration" and "a row outside the row space" is an invention (not explicitly recorded). Hmm, this might be a place where the maths has made an interpretive move. Let me note that.
+
+Actually the L329 line says: "Repeating rows changes no kernel; an independent calibration can." So the formal is: row in row space (i.e., repeating rows) leaves ker unchanged; a row outside row space (i.e., independent calibration) lowers dim ker by 1. The interpretation of "an independent calibration" as "a row outside the row space" is a reading. But given the two-balance example, a "calibration" is presumably an extra measurement. If the measurement is on a different combination of parameters (row outside row space), it adds information. So the reading is defensible but should be noted as interpretive.
+
+FC59: L331 "the kernel is spanned by (1,-1,-1); the readings identify b_B - b_A and not x."
+Formal: G = [[1,1,0],[1,0,1]] on (x, b_A, b_B): ker G = span{(1,-1,-1)}; c = (0,-1,1) gives c·(1,-1,-1) = 0 (identified); c = (1,0,0) gives 1 (not identified).
+
+Let me check: G[1,1,0][1,0,1] applied to (x, b_A, b_B) gives (x + b_A, x + b_B). ker: x + b_A = 0, x + b_B = 0 → b_A = b_B = -x. So (x, b_A, b_B) = (x, -x, -x) = x(1, -1, -1). So ker G = span{(1, -1, -1)}. ✓
+
+Feature c = (0, -1, 1) (i.e., b_B - b_A? No wait: c·(x, b_A, b_B) = -b_A + b_B = b_B - b_A). c·(1, -1, -1) = 0·1 + (-1)·(-1) + 1·(-1) = 1 - 1 = 0. So b_B - b_A is identified. ✓
+
+c = (1, 0, 0) → x. c·(1, -1, -1) = 1 ≠ 0. So x is not identified. ✓
+
+The sentence says "the readings identify b_B - b_A and not x". Formal is correct.
+
+But wait: the text uses G with rows (1,1,0) and (1,0,1) meaning "the readings are x+b_A and x+b_B". This is the two-balance setup: two balances each measuring some mass plus biases. Actually the setup: x is a mass, b_A and b_B are biases. Balance A reads x + b_A, balance B reads x + b_B. Difference b_B - b_A is identified, x is not. Yes.
+
+But what does "the readings" refer to? Two balances. If each reading is a separate output, then the vector output is (x + b_A, x + b_B), and the kernel is as computed. OK.
+
+Hmm, actually the text at L331 gives G = [[1,1,0],[1,0,1]] on (x, b_A, b_B). The math is as above.
+
+FC60: L331 "Set b_B = 0 because it gives the mass I favour" is not an inference from the readings; it is circular, though the value it sets might be the target's.
+
+Formal (a): Two candidates with b_B = 0, one set 'because it gives the mass I favour' and one set by an independent calibration, have the same (D, C, E, t, Γ, Σ), so the same Acc value (FC30): (E) does not register the circularity, and NC1 does not either, since the value 0 is not the answer (I24).
+
+So the claim is that the formal framework (E) — which compares answers, not how inputs were chosen — cannot tell the two apart. NC1 doesn't catch it either because b_B = 0 is not the target's answer.
+
+Hmm. This is a plausible reading. But the sentence says "is not an inference from the readings; it is circular". The formal statement is: the framework cannot tell. But the text says more than "the framework cannot tell"; it says it IS circular (a property of the choice). The formal says nothing about the choice's structure.
+
+Then (b): Where it can be registered is Part IX's block: an argument concluding x = m* whose premise b_B = 0 is a record MadeFrom the claim x = m* (I39) does not rule out x ≠ m* (D9.7).
+
+So Part IX's argument framework can register it via "MadeFrom".
+
+(c): Its value can equal the target's b_B, so (F1), (F2), (A) can hold at the baseline.
+
+OK.
+
+So FC60 is fine as a formal rendering of "the framework in (E) and NC1 can't tell", but the sentence is a claim about the structure of a choice, not just about the framework's blindness. The formal does capture the "is not an inference from the readings" part in (a) (the two candidates are identical at the level the framework sees), but the "circular" claim is only registered in Part IX (b). So there is a gap: the text says "is circular" as if it's a property that can be read off immediately; the formal says it can only be registered via Part IX's MadeFrom structure.
+
+Actually maybe this is fine. The text might be saying: the circularity is a fact about the choice, not something (E) registers. But the text is terse.
+
+I'll note this.
+
+FC61: L335 "For allowed steps R and an invariant I with zRz' ⇒ I(z) = I(z'), no allowed path joins states of different invariant value. (O1) Equal values do not suffice for reachability. Twenty-three indivisible tokens cannot be split equally three ways;"
+
+Formal (a): If zRz' ⇒ I(z) = I(z'), then R* ⊆ {(z,z') : I(z) = I(z')}. ✓ Standard.
+
+(b): There are R, I, z, z' with I(z) = I(z') and not zR*z'. ✓ Trivial (e.g., I constant, R empty).
+
+(c): Distributions of 23 whole tokens: equal split needs 3n = 23, no whole solution. ✓
+
+The sentence says "no allowed path joins states of different invariant value" — formal (a) is right.
+
+"Equal values do not suffice for reachability" — formal (b) is right.
+
+"Twenty-three indivisible tokens cannot be split equally three ways" — formal (c) is right. But what's the connection? The text presumably means: the invariant "mod 3" (or "divisibility by 3") is invariant under "move a token from one pile to another" — wait, moving a token changes the distribution. Let me think.
+
+Hmm, the standard argument: "23 tokens cannot be split equally into 3 piles" is not really an invariant argument; it's a parity/divisibility argument. The invariant could be "sum mod 3": 23 mod 3 = 2 ≠ 0. Any operation that preserves total (like moving tokens) preserves sum. An equal split would give sum = 3n = 23, so n = 23/3 not integer. So the invariant is "total is23" (or "total mod 3 is 2"), and equal split would require total to be 0 mod 3.
+
+Actually I realize the text is using this as an example of an invariant-based obstruction. The formal (c) captures the arithmetic.
+
+But the linkage between (a), (b), (c) isn't tight: (c) is an arithmetic fact, not really an application of (a) or (b). Hmm.
+
+Actually, (b) "Equal values do not suffice for reachability" and (c) are paired in the sentence. Perhaps (c) is an illustration where the invariant (sum = 23) rules out the target state (3 equal piles), so no path joins. But then (b)'s claim is that the invariant can hold for two states without a path joining them. So (c) is an application of (a).
+
+OK, let me not belabor.
+
+FC62: L339 "An account is faithful when introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged. The rival's supposed structure has as its counterpart a deleted subnetwork, whose relation is full (Part II)."
+
+Formal: D with component x whose baseline relation is full (I03) and an edit a_x giving it a relation; E with k, λ(k) = {x}, baseline relation full, τ(a_x) giving k the projected relation. F1 at (1,b0): full = full; at (a_x,b0): holds when τ(a_x) gives k that relation. On C = {(1,b0), (a_x,b0)}, E can meet (E) (NC2 with G = {k}) when the answer depends on x.
+
+So FC62 checks: can a candidate E mimic D's eliminative structure, where the rival's supposed structure is represented as a deleted subnetwork (full relation = absent under I03)?
+
+The claim says "computed: as claimed" — so it works under the given encoding.
+
+But there's a subtle question: the sentence says "introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged". This is (F1) — the faithfulness of translation. The formal says: F1 at (1,b0) holds trivially (full = full), and at (a_x,b0) holds when τ(a_x) gives k the projected relation. So the "changes the answer" is via edit a_x, which adds a relation to x (and to k via translation).
+
+But the sentence says "their absence leaves both unchanged" — that means at baseline, when the components are absent (full relation), both E and D give the same answer. The formal says F1 at (1,b0) is "full = full" which is trivially true but doesn't speak to answers. Hmm.
+
+Actually I think the formal is saying: at (1,b0), D's x has full relation and E's k has full relation (via translation), so the answers match (since the answers are equal by construction). At (a_x,b0), x has a relation r, k has projected relation π(r), so the answers match. So F1 is: answer_E(pair) = answer_D(pair).
+
+Then "absence leaves both unchanged" = "at baseline (absence), answers are unchanged (both give the same answer, say the target's)". The formal is loose here.
+
+Then NC2 with G = {k}: there's a contrast lost under deletion of {k}. ✓ when the answer depends on x.
+
+OK.
+
+The faithfulness claim as a formal statement is somewhat muddled. The sentence is about a faithfulness condition; the formal is about whether the elimination setup can meet (E).
+
+Actually, wait. Reading again: "An account is faithful when introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged." So the formal is checking F1 (answer_E = answer_D at every pair) and the "absence" condition (at baseline both unchanged).
+
+"their absence leaves both unchanged" — both meaning both E and D. So at baseline, both give the same answer (unchanged from whatever they were without x and k). The formal says F1 at (1,b0) holds trivially.
+
+Hmm, "unchanged" could mean "unchanged from the state before introduction". So at baseline (absence), the answer is whatever it was. At (a_x,b0), the answer has changed (to reflect the new relation). So the "changes" is relative to baseline.
+
+I think the formal is right but the wording of "unchanged" is loose.
+
+FC63: counterexample found.
+
+(a) odd skew-symmetric matrices are singular: computed as claimed. ✓
+
+(b) det I3 = 1; det [[0,1],[-1,0]] = 1: computed as claimed. ✓
+
+Wait: det [[0,1],[-1,0]] = 0·0 - 1·(-1) = 1. ✓ (Order 2 skew-symmetric, invertible.)
+
+det I3 = 1. ✓ (Identity is skew-symmetric only if I = -I, i.e., 2I = 0. Hmm.)
+
+Wait: is I3 skew-symmetric? I3^T = I3. -I3. So I3 is skew-symmetric iff I3 = -I3 iff 2I3 = 0 iff characteristic 2. Over GF(3), 2 ≠ 0, so I3 is not skew-symmetric over GF(3). Over GF(2), 2 = 0, so I3 IS skew-symmetric.
+
+Hmm, but the claim says:"I₃ is an instance under removal of skewness, and [[0,1],[-1,0]] under removal of oddness."
+
+So I3 is not a skew-symmetric matrix; it's a matrix that becomes admissible when skewness is removed. So "I3" here is used as an example of an invertible matrix that would be admissible if skewness were removed (it's odd-order). And [[0,1],[-1,0]] is a skew-symmetric matrix of even order (invertible), so it would be admissible if oddness were removed. So both illustrate "removing the hypothesis reveals invertible matrices".
+
+The claim "det I3 = 1" is correct: the determinant of the 3×3 identity is 1.
+
+But: if I3 is the identity matrix, then det = 1, and I3 is invertible. Under "remove skewness" (rs), the answer is "yes, the family contains an invertible matrix" — witness I3. ✓
+
+Under "remove oddness" (ro), the family contains even-order skew-symmetric matrices. The 2×2 example [[0,1],[-1,0]] has det = 1, invertible. ✓
+
+Under "remove both" (rb), the family contains I3 (and others). Answer "yes". ✓
+
+Under "1" (i.e., the original constraint: odd-order real skew-symmetric), the answer is "no" (all are singular). ✓
+
+Now the encoding: n ∈ {1,2,3}, entries in GF(3). Wait, but I3's entries are 0 and 1, which are in GF(3). So I3 is in the encoding. ✓
+
+But hold on: the entries in GF(3) and odd skew-symmetric matrices are singular over GF(3) too? Let me check: for M skew-symmetric (M^T = -M) over a field of characteristic ≠ 2, and n odd, det M = det M^T = det(-M) = (-1)^n det M = -det M. So det M = -det M, 2 det M = 0, so det M = 0 (in char ≠ 2). ✓ Over GF(3), char = 3 ≠ 2, so yes, singular. ✓
+
+The counterexample is in (c-i): the Leibniz candidate with sum over every tuple of term values does not meet (F1). The all-ones tuple is not realizable. So the sum component's relation is too big — it includes tuples no matrix gives. But the counterpart (D's projected relation) only includes realizable tuples. So F1 fails.
+
+Variant (c-ii): sum restricted to realizable term tuples. Meets (E). ✓
+
+So which is "the" Leibniz candidate? That's I99's choice. The text says "The full Leibniz expansion with skewness substituted meets (F1) and (F2)". So the text asserts one claim about "the full Leibniz expansion".
+
+The counterexample shows: under one reading of the sum component's relation (all tuples), F1 fails. Under another reading (realizable tuples), F1 holds. So the text's claim is ambiguous, and the counterexample is against the reading, not the text.
+
+But also: both readings need I81's computed ports (term ports not in D), which I14 excludes. So under I14 as written (each E port translates to one D port), the candidate cannot be written at all. So the text's claim cannot be tested under the formal core as written.
+
+This is a real issue. The text claims "The full Leibniz expansion with skewness substituted meets (F1) and (F2)" — but the formal core's I14 says each E port translates to one D port, and D has no term ports. So the candidate cannot be a valid E under I14.
+
+This is a substantive gap. The text should say what D contains (or admit computed ports).
+
+Now (b) for the counterexample: "Is it a counterexample to the text, or only to an invention or to the claim's own wording?"
+
+The counterexample is:
+1. The sum-over-every-tuple reading fails F1.
+2. The candidate cannot be written under I14's one-port-per-port translation.
+
+Both are against inventions (I99's choice of sum relation, I81's computed ports vs. I14's one-port translation). The text's own claim is that "the full Leibniz expansion with skewness substituted meets (F1) and (F2)". This is compatible with the realizable-tuples reading (which works).
+
+But the claim "with skewness substituted" — what does this mean? Substituting skewness into the Leibniz expansion: so each term involves matrix entries that satisfy skewness. Under skewness, M_ij = -M_ji, so some entries are determined by others. The "Leibniz expansion with skewness substituted" would express det as a function of the independent entries.
+
+Hmm. Let me think: the Leibniz expansion is det M = Σ_σ sign(σ) ∏_i M_{i,σ(i)}. For 3×3, that's 6 terms. With skewness substituted, terms come in pairs: e.g., t_0 = M_00 M_11 M_22 = 0 (since skew forces diagonal0), t_1 = M_01 M_12 M_20 = -M_01 M_12 M_02 (using skew), etc.
+
+Actually in GF(3), skew means M_ii = -M_ii, so 2M_ii = 0, so M_ii = 0 (since 2 is invertible in GF(3)). So all diagonal entries are 0. So det M for 3×3 skew: M = [[0,a,b],[-a,0,c],[-b,-c,0]]. det = 0(0·0 - c·(-c)) - a(-a·0 - c·(-b)) + b(-a·(-c) - 0·(-b)) = 0 - a(0 + cb) + b(ac - 0) = -abc + abc = 0. ✓ Singular.
+
+The Leibniz expansion for 3×3 with diagonal 0: 6 permutations:
+- (0)(1)(2): t₀ = M₀₀M₁₁M₂₂ = 0 (skew)
+- (0)(12): t₁ = M₀₀M₁₂M₂₁ = 0 (skew)
+- (1)(02): t₂ = M₁₁M₀₂M₂₀ = 0 (skew)
+- (2)(01): t₃ = M₂₂M₀₁M₁₀ = 0 (skew)
+- (012): t₄ = M₀₁M₁₂M₂₀
+- (021): t₅ = M₀₂M₂₁M₁₀
+
+With skew: M₁₀ = -M₀₁, M₂₀ = -M₀₂, M₂₁ = -M₁₂. So:
+t₄ = M₀₁M₁₂(-M₀₂) = -M₀₁M₁₂M₀₂
+t₅ = M₀₂(-M₁₂)(-M₀₁) = M₀₁M₁₂M₀₂
+
+So t₄ = -t₅. Sum = 0 + 0 + 0 + 0 + t₄ + t₅ = 0. ✓
+
+The observation "for a 3×3 M each entry lies in exactly one even and one odd term, so t₀t₃t₄ = −t₁t₂t₅, and all ones would need 1 = −1 in GF(3)" is a parity argument. Let me verify: the product of all terms... Hmm, the text is saying: some term tuples are not realizable. If t₀ = t₁ = ... = t₅ = 1, then...Actually the observation is about the term values being constrained by the matrix entries. Since the sum component's relation, if it relates ALL tuples of term values to their sum (i.e., its relation is the full product), then it includes tuples that no matrix gives. But the counterpart in D (with term ports read as functions of M) only gives realizable tuples. So F1 fails.
+
+The "all ones" tuple: if all terms = 1, then in particular t₀t₃t₄ = 1 and t₁t₂t₅ = 1, but t₀t₃t₄ = -t₁t₂t₅ (from the entry-parity argument), so 1 = -1, i.e., 2 = 0 in GF(3), which is false (3 ≠ 0 mod 2? wait, 1 = -1 in GF(3) means 2 = 0 mod 3, false since 2 ≠ 0 mod 3). So all-ones is not realizable. ✓
+
+But wait, t₀ = M₀₀M₁₁M₂₂ = 0 for skew-symmetric. So all-ones would require t₀ = 1 ≠ 0. So actually it's easier: t₀ = 0 always for skew. So (1,1,1,1,1,1) is not realizable.
+
+The observation in the report says "the all-ones tuple is not realizable: for a 3×3 M each entry lies in exactly one even and one odd term, so t₀t₃t₄ = −t₁t₂t₅, and all ones would need 1 = −1 in GF(3)". That's a parity argument (probably working with nonzero terms only).
+
+Anyway, the counterexample stands.
+
+Now (c): the inventions given in full.
+
+I63: Tag names the sentence before it. Text at L329, L335, L471 uses parenthesized tags (I1), (I2), (I3), (O1), (CT2). The invention says: each tag names the sentence it follows. Is this settled by the text? Not explicitly. The text doesn't say what the tags mean. So it's an invention.
+
+Other choice (a): tag names the sentence after it. Then (I2) is the kernel criterion and (O1) is 'Equal values do not suffice for reachability'.But at L471 "the greatest fixed point is the union of the sets D with D ⊆ F(D). (CT2)" — the tag is at the end of a line. So (CT2) names the preceding sentence. But at L395 (not quoted here), the tag is alone on a line, and could be either.
+
+The invention is defensible. But the text should say what the tags do.
+
+Proposed wording: add a preamble line explaining that a parenthesized tag names the statement it follows.
+
+Actually since we can only propose wordings that replace existing lines (or add), and we should give the exact wording... Let me think.
+
+The task says: "Give the exact wording for every proposal: the whole sentence as it would stand, between fence lines, with the line it replaces."
+
+So a proposal replaces a line. If no line exists to replace (e.g., a preamble), we could propose to add. But we need to specify.
+
+Let me see: for I63, we could propose modifying L329 to make the tag semantics explicit.
+
+Actually, let me read L329 again:
+
+> L329 | The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1)
+> L329 | It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
+> L329 | For linear \(g\) and linear feature \(c^\top\), identification is \(\ker g\subseteq\ker c^\top\).
+> L329 | Repeating rows changes no kernel; an independent calibration can.
+
+Hmm, so (I1) is at the end of the first statement. (I2) and (I3) are mentioned in FC57 and FC58's headers but not shown in section 3. So the tags (I2) and (I3) presumably follow "It is identified on every attainable y..." and "For linear g and linear feature c^⊤...". 
+
+OK. So the tag (I1) is at the end of the definition of identification. The invention's reading is: (I1) names that definition.
+
+Now, for the proposal: the text could add a sentence explaining the tags. But where? We don't have the text's preamble. Let me suggest: modify L329's first statement to include the tag's meaning.
+
+Actually, a simpler proposal: since the tag (I1) is at the end of "The feature is identified at y exactly when Z_y ≠ ∅ ∧ |f[Z_y]| = 1", and this is the definition, the tag is naming the definition. But if someone reads (I1) as naming the sentence AFTER, then (I1) would name "It is identified on every attainable y...". That would be wrong.
+
+Given the ambiguity, I'd propose: rewrite the tag to be explicit. E.g.:
+
+> L329 (replacing): "The feature is identified at y exactly when Z_y ≠ ∅ ∧ |f[Z_y]| = 1. We write (I1) for this definition of identification at y."
+
+Hmm, but I need to give the exact wording as it would stand. Let me draft.
+
+Proposal for I63:
+
+```
+> L329 | The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1)
+```
+becomes
+```
+The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). We write (I1) for this statement; each parenthesized tag below names the statement it follows.
+```
+
+But this adds words to L329. The task says "the whole sentence as it would stand, between fence lines, with the line it replaces". So I should quote the line being replaced and give the new line.
+
+Let me do this:
+
+```
+> L329 | The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1)
+```
+replaced by
+```
+The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). Each parenthesized tag names the statement it follows; (I1) names this one.
+```
+
+OK.
+
+I64: Identification: 'attainable', and the admitted states in the linear case.
+
+Text: "It is identified on every attainable y exactly when f = f̄ ∘ g for some f̄."
+The invention: y attainable when y ∈ g[Z]; linear case Z = ℝ^n.
+
+Is this settled? The text uses "attainable" without defining. The invention defines it. The linear case is stated as "For linear g and linear feature c^⊤" — which suggests Z is ℝ^n (or the domain of g). But the text doesn't say.
+
+Proposal: define "attainable" explicitly.
+
+```
+> L329 | It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
+```
+replaced by
+```
+Write \(Z_y=\{z\in Z: g(z)=y\}\); \(y\) is attainable when \(Z_y\neq\varnothing\). It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) on \(Z\) for some \(\bar f\).
+```
+
+I66: odd-order skew-symmetric encoded.
+
+Text: L343 "Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed."
+
+The invention: ports (n, M entries, det, inv), components (skew, odd, det, inv), edits (rs, ro, rb), query.
+
+Is this settled by the text? The text names the edits but not the ports or the encoding. The choice of GF(3) or ℝ is open. The invention chooses GF(3) for the search.
+
+But the text at L343 says "why is every odd-order real skew-symmetric matrix singular" — "real". So the field is ℝ. The invention says GF(3) or GF(p) or small integers. The choice of GF(3) is an invention because ℝ is infinite.
+
+Proposal: the text should say which fields are admitted. Or: state that the claim holds over any field of characteristic ≠ 2.
+
+Actually the claim is: "for every odd n and every n×n M over ℝ with M^T = -M: det M = 0". This is true over any field of characteristic ≠ 2.
+
+Proposal:
+
+```
+> L343 | Question: why is every odd-order real skew-symmetric matrix singular?
+```
+replaced by
+```
+Question: why is every odd-order skew-symmetric matrix over a field of characteristic not two singular?
+```
+
+Hmm, but the question as posed says "real". Changing the question would change the theory's content. But the theory's claim is general.
+
+Actually maybe I shouldn't propose to change the question. The question is the theory's user's question. The formal claim is about ℝ. The invention's use of GF(3) is just for testing.
+
+Hmm. Let me think again. The claim is "every odd-order real skew-symmetric matrix is singular". Testing on GF(3) is legitimate if the underlying theorem is field-independent. But the search's "computed: as claimed" for (a) is about GF(3), not ℝ. So the search didn't directly test the real case.
+
+But the report notes: "the statement also holds there, since 2 is invertible" — meaning in GF(p) for odd p, 2 is invertible. And "for tests: n in {1,2,3}, entries in GF(p) for an odd prime p ... or small integer ranges with exact determinants". So integer ranges could approximate ℝ.
+
+OK. The invention I66's choice of GF(3) is a search-bound choice. The text doesn't fix the field. This should be recorded.
+
+I87: Claims as propositional formulas, read structurally.
+
+The text at L397 "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)" and "read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone".
+
+The invention restricts to propositional. The text says "read structurally ... not by logical equivalence alone". That's a hint at structural reading but doesn't specify the language.
+
+The invention is used in FC60 (b). But FC60's result is "holds by construction" for (a) and "computed: as claimed" for (b). So the invention is a search encoding choice.
+
+Is this settled by the text? Partially. "Read structurally" is a hint, but the language (propositional vs first-order) is open.
+
+Proposal: the text should state the language. Or leave open.
+
+I89: Inference forms.
+
+The text at L387 and L393 says "the inference form of u is one j admits" and "the premises its inference form uses". But doesn't enumerate forms. The invention chooses five (MP, MT, ∧-intro, ∧-elim, free).
+
+Is this settled? No. The text should say.
+
+Proposal: either leave open (each assessor declares its forms) or fix the list.
+
+I99: the odd-order skew-symmetric case in GF(3), and the Leibniz candidate's sum component.
+
+The text says "The full Leibniz expansion with skewness substituted meets (F1) and (F2)". The invention: ports, components, edits, and two readings of the sum component.
+
+Is this settled? No. The text doesn't say what "the full Leibniz expansion" is as a component. The two readings diverge.
+
+Proposal: the text should say which. But the invention's choice isn't the text's. The text could be made precise:
+
+```
+> L343 | The full Leibniz expansion with skewness substituted meets (F1) and (F2)
+```
+replaced by
+```
+The full Leibniz expansion with skewness substituted, as a sum whose relation is the tuples of term values some matrix gives, meets (F1) and (F2)
+```
+
+Or, alternatively, state that the sum component's relation must be exactly the realizable tuples.
+
+Actually, the deeper issue is: the candidate needs term ports that D lacks. I14 says each E port translates to one D port. So the candidate cannot be written. The text should say what D's ports are, or admit computed ports.
+
+Proposal: change the text to admit computed ports (or say the candidate's term ports read as functions of M):
+
+```
+> L343 | The full Leibniz expansion with skewness substituted meets (F1) and (F2)
+```
+replaced by
+```
+The Leibniz expansion with skewness substituted, its term ports read as functions of the matrix entries and its sum restricted to the tuples of term values some matrix gives, meets (F1) and (F2)
+```
+
+Now (d): attack claims that held.
+
+FC57: holds on all models tried. Let me try to attack.
+
+Attack: what if Z is empty? Then g[Z] = ∅, and "∀y ∈ g[Z]" is vacuously true. But∃f̄: Y → F with f = f̄∘g on Z is also vacuously true (anyf̄ works). So the equivalence holds vacuously. OK.
+
+Attack: what if F is a singleton? Then f is trivially constant on each Z_y. So |f[Z_y]| = 1 for every nonempty Z_y. So identification is automatic. And f = f̄∘g trivially (f̄ = const). So equivalence holds. OK.
+
+Attack: what if g is not surjective onto Y? Then f̄ on Y \ g[Z] can be arbitrary. But the equation f = f̄∘g on Z only constrains f̄ on g[Z]. So fine.
+
+Attack: what if the "feature" is not a function but a relation? Then the formal breaks. But the text says "the feature" — is a function. OK.
+
+Attack: what if the fibre Z_y is infinite? Then |f[Z_y]| = 1 still makes sense. OK.
+
+Attack: what if Z is not a set but a proper class? Formal uses P(X),∏, so sets. OK.
+
+Attack: what if the identification is at all y (not just attainable)? Then at y with empty fibre, |f[Z_y]| = |f[∅]| = |∅| = 0 ≠ 1. So identification fails. But factorization also holds (f = f̄∘g for any f̄ on Z since Z is the only constraint). Wait, f = f̄∘g on Z holds regardless of the empty-fibre y. So the ⟸ direction would fail: f = f̄∘g on Z implies identification at all y including empty-fibre y. But at empty-fibre y, identification fails. So the equivalence breaks if "attainable" is dropped. The text's use of "attainable" is doing real work. ✓ Good.
+
+Attack: what if two elements of Z have g(z) = y and f(z) values differing but there's a choice in f̄? No, f̄ is determined on g[Z] by f. OK.
+
+Attack: FC57 holds in general (over any sets Z, Y, F). The search on 11,132 models confirms. I don't see a counterexample.
+
+But: the formal writes "f = f̄∘g on Z". The sentence says "f = f̄∘g for some f̄" without "on Z". If the equation is meant everywhere on Y (the domain of f, which might be larger than Z), then the⟸ direction can fail: f might not factor through g off Z but be identified on Z. Hmm.
+
+Example: Z = {0}, Y = {0, 1}, g: Z → Y, g(0) = 0. F = {0, 1}. f: Z → F, f(0) = 0. Identification: for y = 0, Z_y = {0}, f[Z_y] = {0}, identified. So identified at every attainable y. But f = f̄∘g on Z is f(0) = f̄(g(0)) = f̄(0). So f̄(0) = 0, and f̄(1) arbitrary. So f = f̄∘g on Z holds. But if f were extended to Z' = {0, 1} with f(1) = 1 and g(1) = 1, then f = f̄∘g on Z' would require f̄(0) = 0, f̄(1) = 1. That's a different setting.
+
+Hmm, this isn't a real attack.
+
+Attack: I64's "identification at every attainable y" vs. the text's wording. The text says "It is identified on every attainable y exactly when f = f̄ ∘ g". Under I64's reading of "attainable" as y ∈ g[Z], this is correct. But if "attainable" means something else (e.g., y in the range of some other function), the equivalence can fail. So I64's reading is essential.
+
+But the task is to attack FC57 given the inventions. FC57 is true over all sets. So no counterexample in the standard reading.
+
+Attack under another reading: if "identified" means identified at all y (including unattainable), then as shown, the equivalence breaks. But the text explicitly says "on every attainable y". So the reading is fixed.
+
+Attack without an invention: what if I64's reading is dropped? Then "attainable" is undefined, and the sentence is untestable. So no counterexample.
+
+Conclusion: FC57 seems robust.
+
+FC58: Attack. The kernel criterion. The formal says: Z = ℝ^n. The claim: identification at every attainable y iff ker G ⊆ ker c^⊤.
+
+Standard linear algebra. The⟸ direction: if ker G ⊆ ker c^⊤, then c ∈ (ker G)^⊥ = row space of G, so c = G^T w for some w. Then c^T z = w^T G z = w^T y where y = G z. So f(z) = c^T z = w^T y = f̄(y) with f̄ = w^T. So f factors through G. ✓
+
+The ⟹ direction: if f factors through G (on ℝ^n), then for z ∈ ker G, G z = 0, so f(z) = f̄(0). So f is constant on ker G. Since f is linear, f(ker G) = {0} (since ker G is a subspace and f linear). So f(ker G) = {0}, i.e., ker G ⊆ ker f. ✓
+
+So the equivalence holds on ℝ^n.
+
+Attack on the row claim: "Repeating rows changes no kernel; an independent calibration can."
+
+Repeating a row: G' = [G; g_i] where g_i is an existing row. Then ker G' = ker G. ✓
+
+Adding a row outside row space: G' = [G; r] with r ∉ row space. Then ker G' = ker G ∩ ker r^T. dim ker G' = dim ker G - 1 (if r ∉ row space). ✓
+
+Adding a row in row space (not just repeating): also leaves ker unchanged. So "repeating rows changes no kernel" is true, but the formal's "a row in the row space of G leaves ker G unchanged" is more general. Fine.
+
+"an independent calibration can" change the kernel. But adding a row could also NOT change the kernel if the row is in the row space. "Can" = "might or might not; in some cases, does". The formal's "a row outside it lowers dim ker G by one" is a statement about when it does. So the formal is more precise than the text but consistent with it.
+
+Attack: what if adding a row outside the row space is "independent" but the dimension drops by more than 1? No, adding one row can only drop dim ker by at most 1. If it's outside row space, it drops by exactly 1. ✓
+
+Attack: what if G is not full rank? Then dim ker G = n - rank G. Adding a row outside row space: rank G' = rank G + 1, so dim ker G' = n - rank G - 1 = dim ker G - 1. ✓
+
+OK.
+
+FC59: Attack. Computed. Linear algebra is straightforward. No counterexample.
+
+Attack: what if G has more rows? Then ker is smaller. But the text's G is fixed at 2×3.
+
+Attack: what if the "readings" are not x+b_A and x+b_B? Then the kernel changes. But the text's setup is what it is.
+
+Hmm, the text says "the readings identify b_B - b_A and not x". What if the readings were x + b_A and x + b_A (repeating)? Then ker is larger: x + b_A = 0, so ker = span{(1,-1,0)}? Wait, x + b_A = 0 and x + b_A = 0 (same equation). So ker = {(x, b_A, b_B) : x + b_A = 0} = span{(1,-1,0), (0,0,1)}? Let me see: x + b_A = 0, so b_A = -x, b_B free. So (x, -x, b_B) = x(1,-1,0) + b_B(0,0,1). So ker = span{(1,-1,0),(0,0,1)}. Then c = (0,-1,1) (b_B - b_A): c·(1,-1,0) = 1, c·(0,0,1) = 1. So not identified. And c = (1,0,0) (x): c·(1,-1,0) = 1, c·(0,0,1) = 0. So not identified. So with repeated readings, neither is identified.
+
+Hmm, but the text's setup is two distinct readings (different biases), so the kernel is span{(1,-1,-1)}. OK.
+
+Attack: what if biases are constrained to be equal? Then ker changes. But the text says nothing.
+
+FC60: Attack.
+
+(a) "holds by construction" — so the framework can't distinguish. This is by construction of (E) which only sees (D, C, E, t, Γ, Σ). Two candidates with the same structure but different motivations have the same structure. So (E) sees them identically.
+
+But wait: if (E) is the faithfulness condition, it compares answers at pairs. If the two candidates set b_B = 0 the same way, then yes, they're the same (D, C, E, t, Γ, Σ). The circularity is in the justification, not the structure.
+
+Attack: what if (E) included a record of how values were set? Then the two candidates could be distinguished. But the text says "(E)" is the faithfulness condition, which is about answers, not justifications. So (E) by construction can't.
+
+So the claim is true by construction, and no counterexample.
+
+(b) "computed: as claimed" — the record made from x = m* does not rule out x ≠ m*. This is the Part IX block. The formal uses I39 (structural "among its premises") and I87 (propositional formulas) and I89 (inference forms). The claim: an argument whose premise is "b_B = 0" that is made from the claim "x = m*" does not rule out "x ≠ m*".
+
+Under the structural reading, "made from" is a structural property (the premise is derived from the claim). If the argument's premises include "b_B = 0" and the argument is made from "x = m*", then... hmm, the claim is that this argument cannot rule out x ≠ m*. Why? Because the argument is circular.
+
+The formal: "an argument concluding x = m* whose premise b_B = 0 is a record MadeFrom the claim x = m* (I39) does not rule out x ≠ m* (D9.7)". D9.7 presumably says: an argument rules out ψ when ψ is inconsistent with its conclusion and ψ's denial is not among its premises. If the argument's conclusion is x = m*, then x ≠ m* is inconsistent with the conclusion. Does x = m* (the denial of x ≠ m*) appear among the premises? The premise is b_B = 0 (which is made from x = m*). So the premise is not "x = m*" itself but "b_B = 0". So x = m* is not among the premises literally.
+
+But under I39's "read structurally", "b_B = 0" being "made from" x = m* means... what? The record is a structural relation. If "b_B = 0" is derived from "x = m*", then x = m* is a premise (in a structural sense) of b_B = 0. So x = m* IS among the premises (read structurally). Then by D9.7, the argument does NOT rule out x ≠ m*. ✓
+
+OK so this is the claim. It's about the structural reading.
+
+Attack: what if I39's structural reading is dropped? Then "b_B = 0" is not "made from" x = m* structurally; it's just a premise. Then x = m* is not among the premises (literally), and the argument DOES rule out x ≠ m*. So under a different reading, the claim fails. But I39 is recorded as an invention. The counterexample is against I39's reading, not the text.
+
+Hmm wait, the text does say "read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone" at L397. So the text DOES prescribe structural reading. So the text is on the side of I39.
+
+But the text's "among its premises" — what is a "premise" of a step? If a step's premise is b_B = 0 and this is derived from x = m*, is x = m* a premise of the step? I39 says yes (through the MadeFrom record).
+
+Actually the text is ambiguous here. Let me note.
+
+FC61: Attack.
+
+(a) Standard. If I is invariant under R, then R* preserves I. The proof is by induction on path length. ✓
+
+(b) "Equal values do not suffice for reachability": true. Take R empty, I constant. Then I(z) = I(z') for all z, z', but z R* z' only if z = z' (since R* is reflexive). So for z ≠ z', I(z) = I(z') but not z R* z'. ✓
+
+But wait: R* is reflexive-transitive closure, so z R* z always. And z R* z' requires a path. So for z ≠ z' with no path, reachability fails. ✓
+
+But what if the state space has only one state? Then z R* z' trivially for z = z'. But for z ≠ z' there's no pair. So the claim "there are R, I, z, z' with I(z) = I(z') and not z R* z'" requires at least two states.
+
+Hmm. The formal's (b) says "There are R, I, z, z' with I(z) = I(z') and not zR*z'". This is an existence claim. In the state space {a, b} with R = ∅ and I constant, I(a) = I(b) but not a R* b. ✓
+
+(c) 23 tokens: standard. ✓
+
+Attack: what if R is not invariant-preserving in a subtle way? E.g., R relates states with same I only in one direction. But the invariant claim is symmetric: zRz' ⇒ I(z) = I(z'). If R is asymmetric but invariant-preserving, then R* is also invariant-preserving. ✓
+
+Attack: what if I is not a function? Then I(z) = I(z') is ill-defined. But I is a function (invariant).
+
+Attack on (c): what if tokens can be split? Then 23/3 is possible (7.67 per pile). But the text says "indivisible tokens". ✓
+
+Attack: what if the equal split allows unequal totals (e.g., some tokens unused)? Then 22 tokens = 3 piles of 7.33, no. But 21 = 3 × 7 works. Hmm, the text says "cannot be split equally three ways", meaning all 23 distributed equally. So no.
+
+FC62: Attack.
+
+The formal: D with x deleted at baseline (full relation) and edit a_x giving x a relation. E with k = π(x), λ(k) = {x}, baseline full relation, τ(a_x) giving k the projected relation. F1 at (1,b0): trivial. At (a_x,b0): matches. NC2 with G = {k}: contrast lost under deletion.
+
+Attack: what if x's relation at baseline is not "full"? Then the setup changes. But I03 says a deleted/absent component has the full relation. So this is forced.
+
+Attack: what if the answer doesn't depend on x? Then NC2 with G = {k} fails (no contrast lost). The formal says "E can meet (E) (NC2 with G = {k}) when the answer depends on x". So conditional. ✓
+
+Attack: what if E has other components that also affect the answer? Then NC2 with G = {k} might not witness. The formal uses G = {k} only. If E has other components that affect the answer, then deleting {k} alone might not lose the contrast.
+
+But the formal's setup is simple: E has k = π(x), λ(k) = {x}, and presumably only k is the counterpart. If E has other components (say background), they don't affect the answer.
+
+Attack: what if the projected relation π(r) is the same as the full relation? Then introducing x doesn't change anything. But the setup says a_x gives x "a relation", presumably proper. So π(r) ≠ full.
+
+Attack: what if D has multiple components and E has one counterpart per component? Then more complicated. The formal is simple.
+
+Attack: what if D's answer at (1,b0) is different from D's answer at (a_x,b0)? Then the contrast exists. But what if D's answer is undefined at (a_x,b0)? Then ⊥, and the contrast formal (Contrast) requires both answers determined (or Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥). The formal's Contrast definition: [Ans_E(x) ≠ ⊥ ∧ Ans_E(x0) ≠ ⊥ ∧ Ans_E(x) ≠ Ans_E(x0)] ∨ [Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥]. So the contrast can also be "x undetermined, x0 determined".
+
+Hmm. OK.
+
+Attack on FC62's claim: "computed: as claimed" on the encoding. This is a specific encoding. Let me see if the encoding is meaningful.
+
+The encoding (from I78, mentioned): "surgical edits with override" and "free edits". The specific encoding of E5 is: D with a component x deleted at baseline and edit a_x giving it a relation. So the edit introduces a relation for x.
+
+OK.
+
+Attack: what if E's translation τ is not the identity? Then τ(a_x) might not correspond to a_x's effect on x. The formal says τ(a_x) gives k the projected relation. So τ is chosen to match.
+
+But in general, τ is a map from edits. The formal's setup is specific. ✓
+
+Attack: what if D has more edits (e.g., multiple a's that affect x)? Then the formal's C = {(1,b0), (a_x,b0)} is only a subset. But the formal restricts to C. ✓
+
+Attack: what if I14's one-port-per-port is violated? Then the encoding breaks. But E5 uses one port (x in D, k in E), so OK.
+
+OK I think I've got a good sense. Let me now write the report.
+
+Wait, one more: FC63 (c) — the candidate cannot be written under I14. This is a big issue. Let me note.
+
+Also, for FC63's counterexample, the question is whether it's against the text or the invention.
+
+The text says: "The full Leibniz expansion with skewness substituted meets (F1) and (F2)".
+
+Under one reading (sum over all tuples), F1 fails. Under another (sum over realizable tuples), F1 holds. The text doesn't say which.
+
+So the counterexample is against the reading (I99's choice), not the text per se. The text should disambiguate.
+
+But also: the candidate cannot be written under I14. This is against I14 (or against the text's failure to specify D's ports).
+
+Now let me write the report. Word budget: 3,000 words. Let me be efficient.
+
+Structure:
+- (a) FC57, FC58, FC59, FC60, FC61, FC62, FC63 formal vs. text. Plus the definitions in section 3 (D6.3, D6.4).
+- (b) FC63's counterexample.
+- (c) I63, I64, I66, I87, I89, I99. (Section 6: none.)
+- (d) Attacks on FC57, FC58, FC59, FC60, FC61, FC62.
+- (e) None.
+
+Let me draft.
+
+---
+
+# (a) Formal statements vs. text
+
+**D6.3 NC1 · L255.** The maths: Slot_C(ℰ,k) and NC1(ℰ). The text at L255 says "the declared grain", "unanalysed boundary input or as a component", "moving an assertion from an input slot into a component named 'law' does not discharge this". The maths's formal says "no k ∈ J_E and no boundary coordinate is a slot". This matches. But the sentence "Identity of that assertion with the target's answer is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical statements" — this is a reading instruction, not a formal clause. The maths doesn't formalize "structural at the declared grain" beyond I24 and I28's inventions. I'll note.
+
+**D6.4 NC2 · L255.** The text's two sentences describe a contrast that is lost under deletion. The maths's Contrast and Lost definitions. Let me check.
+
+Text: "There exist (a,b) ∈ C and a nonempty block G ⊆ Γ such that the answer of E at (τ(a),σ(b)) differs from its answer at (1,σ(b0)), or is not determined at (τ(a),σ(b)) in the claimed way, and this contrast is lost when the components of G are deleted from E"
+
+Maths: Contrast(E; x) :⟺ [Ans_E(x) ≠ ⊥ ∧ Ans_E(x0) ≠ ⊥ ∧ Ans_E(x) ≠ Ans_E(x0)] ∨ [Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥]
+
+So "differs" = first disjunct; "is not determined at x" = second disjunct. But the text says "is not determined at (τ(a),σ(b)) in the claimed way", which is I22's wording. The maths's second disjunct is just Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥.
+
+Hmm, the text says "is not determined at x in the claimed way" — not just "is not determined at x". The "in the claimed way" qualifier (I22) suggests some specific mode of non-determination. The maths's ⊥ is a single value; so "not determined at x" = Ans_E(x) = ⊥. But "in the claimed way" might mean more.
+
+So the formal drops the "in the claimed way" qualifier. That's a reading. I22 is recorded. The formal's⊥ is one value; the text's "in the claimed way" is looser. Note.
+
+Also: the text says the contrast "is lost when the components of G are deleted". The maths's Lost says: [Ans_{E-G}(x) ≠ ⊥ ∧ Ans_{E-G}(x0) ≠ ⊥ ∧ Ans_{E-G}(x) = Ans_{E-G}(x0)] ∨ [for some y ∈ {x,x0}: Ans_E(y) ≠ ⊥ ∧ Ans_{E-G}(y) = ⊥].
+
+First disjunct: the answers equalize. Second disjunct: some answer becomes undetermined.
+
+But the text's second sentence: "evaluated at (τ(a),σ(b)) and at (1,σ(b0)), the answers of E with G deleted are determined and equal, or an answer that E determines at one of these points is not determined there once G is deleted."
+
+So the text's "or" matches. ✓
+
+The text says the answers "are determined and equal" — the formal matches (both non-⊥ and equal). Or "an answer that E determines ... is not determined there once G is deleted" — the formal's second disjunct. ✓
+
+OK so D6.4 matches.
+
+But there's a subtle issue: in the text, the second sentence is a gloss on "this contrast is lost". The formal reads it as a definition. ✓
+
+**FC57 · L329.** The sentence: "It is identified on every attainable y exactly when f = f̄ ∘ g for some f̄."
+
+The formal: (∀y ∈ g[Z]: |f[Z_y]| = 1) ⟺ ∃f̄: Y → F with f = f̄∘g on Z.
+
+Note the formal adds "on Z" — the text doesn't say. Note.
+
+Also, "attainable" is I64's choice. If attainable means y ∈ g[Z], the formal is correct.
+
+But: what does "It" refer to? The feature f. ✓
+
+Where they part: the formal adds "on Z" — should the equation hold only on Z or everywhere? The text is silent. The formal's "on Z" is the weaker claim; if the equation is everywhere, then f factors through g on the domain of f (which might be larger than Z). This matters if f is defined outside Z.
+
+Stand by: the words, if the intended reading is the weaker (on Z). But I'd add "on Z" to the text to fix.
+
+Actually, since the sentence is about identification on Z (the admitted states), the natural reading is f = f̄∘g on Z. The formal is right; the text should say so.
+
+Proposal:
+```
+> L329 | It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
+```
+replaced by
+```
+Write \(Z_y=\{z\in Z:g(z)=y\}\); \(y\) is attainable when \(Z_y\neq\varnothing\). It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) on \(Z\) for some \(\bar f\).
+```
+
+This fixes I64 (attainable) and the extent of the equation.
+
+**FC58 · L329.** The sentence: "For linear g and linear feature c^⊤, identification is ker g ⊆ ker c^⊤."
+
+The formal is over ℝ^n. The text doesn't say the field. Note.
+
+Also the row claim: "Repeating rows changes no kernel; an independent calibration can." The formal says "a row in the row space of G leaves ker G unchanged; a row outside it lowers dim ker G by one". The "repeating rows" ⊂ "row in row space". The formal generalizes. Fine.
+
+But "an independent calibration" is read as "a row outside the row space". This is an interpretation not fixed by the text. Note.
+
+Stand by: the formal. The text is loose; the formal is precise. But "an independent calibration" should be recognized as not necessarily a row outside the row space (a calibration could be a row inside the row space).
+
+Proposal:
+```
+> L329 | Repeating rows changes no kernel; an independent calibration can.
+```
+replaced by
+```
+Repeating rows, or adding any row in the row space, changes no kernel; a calibration whose row lies outside the row space lowers the dimension of the kernel by one.
+```
+
+**FC59 · L331.** The sentence: "the kernel is spanned by (1,-1,-1); the readings identify b_B - b_A and not x."
+
+The formal matches. No parting.
+
+But: the formal's "c = (0,-1,1) gives b_B - b_A" — wait, c·(x,b_A,b_B) = -b_A + b_B = b_B - b_A. ✓ And c·(1,-1,-1) = 0. ✓ So b_B - b_A is identified.
+
+"c = (1,0,0) gives x" — c·(1,-1,-1) = 1 ≠ 0. So x is not identified. ✓
+
+Match.
+
+But the formal is written as a computation on a specific G. The sentence is more general (about the two-balance setup). Fine.
+
+No proposal.
+
+**FC60 · L331.** The sentence: "'Set b_B = 0 because it gives the mass I favour' is not an inference from the readings; it is circular, though the value it sets might be the target's."
+
+The formal: (a) two candidates with b_B = 0 have the same (D,C,E,t,Γ,Σ) so same Acc; (E) and NC1 don't register circularity; (b) Part IX's MadeFrom block can register; (c) the value can equal the target's.
+
+Where they part: the text says "is not an inference from the readings" — a claim about the derivation. The formal says "(E) does not register how an input was chosen" — a claim about the framework's blindness. These are different claims.
+
+The text's claim is substantive: the choice is not from the readings. The formal is: the framework can't tell.
+
+Stand by: the words, for the substantive claim. The formal captures a weaker (framework-blindness) claim.
+
+But Part IX's block is the right place to formalize the circularity. So the formal's (b) is the appropriate home.
+
+Proposal: none to the sentence at L331; but the formal should say that (E) does not claim the choice is not an inference, only that the framework sees it the same as an inference. Actually the formal says "(E) does not register the circularity" — that's the framework-blindness. The text says "it is circular" as a fact. The formal's (b) is where the circularity is registered.
+
+I'll note this but not propose a change.
+
+**FC61 · L335.** The sentence: "For allowed steps R and an invariant I with zRz' ⇒ I(z) = I(z'), no allowed path joins states of different invariant value. (O1) Equal values do not suffice for reachability. Twenty-three indivisible tokens cannot be split equally three ways;"
+
+The formal: (a) invariant blocks paths; (b) equal values don't suffice; (c) 23 tokens can't split into 3 equal parts.
+
+Match. The tag (O1) is I63's interpretation. Note.
+
+The formal (c) is arithmetic, separate from (a) and (b). Note.
+
+No proposal.
+
+**FC62 · L339.** The sentence: "An account is faithful when introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged. The rival's supposed structure has as its counterpart a deleted subnetwork, whose relation is full (Part II)."
+
+The formal: the setup, then F1 at (1,b0) and (a_x,b0), NC2 with G = {k}.
+
+Where they part: the text's "their absence leaves both unchanged" — what does "unchanged" mean? Unchanged from what? The formal's F1 at (1,b0) is trivially true. The text seems to say: at baseline (absence), the answer is what it was before introduction. The formal doesn't explicitly check this.
+
+Also "changes the answer in E as it does in D" is (F1). ✓
+
+Stand by: the formal, but with a gloss on "unchanged".
+
+Proposal:
+```
+> L339 | An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both unchanged.
+```
+replaced by
+```
+An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both at the answer they gave before introduction.
+```
+
+**FC63 · L343.** The sentence: "Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed."
+
+And: "Non-circular dependence is met: I_3 is an instance under removal of skewness, and [[0,1],[-1,0]] under removal of oddness."
+
+And: "The expansion is an account."
+
+And: "The full Leibniz expansion with skewness substituted meets (F1) and (F2)".
+
+The formal: (a) det = 0 for odd skew; (b) det I3 = 1, det [[0,1],[-1,0]] = 1; (c) the Leibniz candidate meets (F1),(F2),(A), NC2 and non-vacuity.
+
+Where they part: the formal's (c) needs the Leibniz candidate's sum component to have a relation, and the choice of which relation is I99's. The text doesn't say.
+
+Also: the candidate needs term ports that D lacks. I14 says each E port translates to one D port. Under I14, the candidate cannot be written.
+
+Stand by: the words for the claim; the formal is ambiguous. The text should specify.
+
+Proposal:
+```
+> L343 | The full Leibniz expansion with skewness substituted meets (F1) and (F2)
+```
+replaced by
+```
+The full Leibniz expansion with skewness substituted, its term ports read as functions of the matrix entries and its sum restricted to the tuples of term values some matrix gives, meets (F1) and (F2)
+```
+
+This picks the working variant (c-ii) and admits computed ports.
+
+# (b) Counterexample
+
+**FC63 · L343.** The counterexample is (c-i): the sum over every tuple of term values does not meet (F1). Rests on I99 (which relation the sum component carries) and I81 (computed ports).
+
+Is it against the text? The text says "The full Leibniz expansion with skewness substituted meets (F1) and (F2)" without specifying the sum's relation. The counterexample shows one plausible reading fails. So it's against I99's choice (a), not the text.
+
+The change to the text: disambiguate the sum's relation (proposal above).
+
+Also: the candidate cannot be written under I14. This is against I14 (or against the text's silence on D's ports). The change: admit computed ports (proposal above covers this).
+
+# (c) Inventions
+
+**I63 · Tag names the sentence before it.** Not settled by the text. The tags (I1), (I2), (I3), (O1), (CT2) are used but not explained.
+
+Proposal:
+```
+> L329 | The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1)
+```
+replaced by
+```
+The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). Each parenthesized tag names the statement it follows; (I1) names this one.
+```
+
+**I64 · Attainable, and the linear case.** Not settled by the text. "Attainable" is undefined.
+
+Proposal (combined with FC57's proposal above):
+```
+> L329 | It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
+```
+replaced by
+```
+Write \(Z_y=\{z\in Z:g(z)=y\}\); \(y\) is attainable when \(Z_y\neq\varnothing\). It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) on \(Z\) for some \(\bar f\). In the linear case \(Z=\mathbb R^n\).
+```
+
+**I66 · Odd-order skew-symmetric encoded.** Not settled. The text says "field arithmetic and determinant–invertibility held fixed" but doesn't say which field.
+
+Proposal:
+```
+> L343 | Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed.
+```
+replaced by
+```
+Contract: remove skewness; remove oddness; remove both; the field and the determinant–invertibility link held fixed.
+```
+
+Hmm, but the text already says "field arithmetic and determinant–invertibility held fixed". The issue is WHICH field. The question at L343 says "real". So ℝ is the field. The invention's GF(3) is a test-domain choice.
+
+Maybe no proposal. The text fixes the field as ℝ via the question. The search's GF(3) is a search encoding, recorded as invention.
+
+Actually, the report notes "the statement also holds there, since 2 is invertible". So the choice of GF(3) is to test a general statement. But the question is about ℝ. If the search tests GF(3), it's not directly testing the claim. But the theorem is field-independent (in char ≠ 2).
+
+Proposal: the text could say the theorem is over any field of char ≠ 2. But the question is the user's question. So leave it.
+
+Actually, the invention's "for tests: n in {1,2,3}, entries in GF(p) for an odd prime p (the statement also holds there, since 2 is invertible) or small integer ranges with exact determinants" — this is recorded. No need to change the text.
+
+But the encoding (ports, components, edits) is also an invention. The text names the edits (remove skewness; remove oddness; remove both) but not the components. The text says "field arithmetic and determinant–invertibility held fixed" — implying determinant and invertibility are in scope but held fixed. So the components include det and inv. ✓
+
+I'll note: the text's "field arithmetic and determinant–invertibility held fixed" reads as: these are held fixed (not edits). The formal treats them as components that are not edited. ✓ Match.
+
+Proposal for I66: maybe add a sentence making the encoding explicit. But it might be over-specification.
+
+I'll suggest: no change needed for I66's field choice (it's a search choice), but the component decomposition could be stated.
+
+Proposal:
+```
+> L343 | Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed.
+```
+replaced by
+```
+Contract: order, matrix entries, determinant, invertibility as the components; skewness and oddness as the constraints; remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed.
+```
+
+Hmm, but this writes I66 into the text. The task says: "A proposal that writes an invention into the text says so, naming it."
+
+OK so I should say "This writes I66's ports and components into the text."
+
+**I87 · Claims as propositional formulas.** Not settled. The text at L397 says "read structurally ... not by logical equivalence alone" but doesn't say the language.
+
+Proposal: leave open, or state. The text could say "claims are propositional formulas" — but that might be too restrictive. The text at L397 says "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)". The "below" presumably defines "premise" and "denial".
+
+The text uses "inconsistent" and "denial" — these are language-independent. So the text leaves the language open. I87's choice (propositional) is a search encoding.
+
+Proposal: no change; the text should stay open. But add a note that "read structurally" constrains the reading.
+
+Actually, the text at L397 does say "read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone". So structural reading is prescribed. I87's "structural" is a particular formalization. The text doesn't fix the language.
+
+Proposal: none. But note.
+
+**I89 · Inference forms.** Not settled. The text at L387 and L393 use "inference form" and "admits" but don't enumerate.
+
+Proposal: leave open (the text says "is one j admits" — so j declares). But the choice of five forms is a search encoding.
+
+Actually the text says "the inference form of u is one j admits" — so j declares. So the text leaves it open. I89's choice of five is a search encoding. No change.
+
+**I99 · GF(3), Leibniz candidate's sum component.** Not settled. The text says "the full Leibniz expansion with skewness substituted meets (F1) and (F2)" without specifying the sum's relation.
+
+Proposal (covered above):
+```
+> L343 | The full Leibniz expansion with skewness substituted meets (F1) and (F2)
+```
+replaced by
+```
+The full Leibniz expansion with skewness substituted, its term ports read as functions of the matrix entries and its sum restricted to the tuples of term values some matrix gives, meets (F1) and (F2)
+```
+
+This writes I99's variant (c-ii) into the text and admits computed ports (I81's case). I should say so.
+
+Section 6: "None bears on this part's claims." So nothing to add.
+
+# (d) Attacks on claims that held
+
+**FC57.** Attack: drop "attainable" (I64's choice). Then at y with empty fibre, |f[Z_y]| = |∅| = 0 ≠ 1, so identification fails; but f = f̄∘g on Z holds regardless. So the equivalence breaks. Rests on I64.
+
+Attack: extend f to Y (not just Z). If f is defined on Y' ⊋ Z and the equation f = f̄∘g is required on Y', then the equivalence can fail: take Z = {0}, Y' = {0,1}, g(0) = 0, g(1) = 1, f(0) = 0, f(1) = 1. Identification on Z at y = 0 is trivially true (single fibre). f = f̄∘g on Z requires f̄(0) = 0. f = f̄∘g on Y' requires f̄(1) = 1 too. So the equation on Y' is stronger. But identification on Z doesn't constrain f̄ off Z. So if we interpret "f = f̄∘g" as on Y' (the domain of f), then the ⟸ direction is too strong: f factors through g on Z but not on Y', yet is identified on Z.
+
+Hmm, but the text is about identification on Z (the admitted states). The formal's "on Z" is correct. If the text means "on Z", fine. The proposal adds "on Z" to fix.
+
+So the attack is: drop "on Z" (the formal's addition), and the equivalence can fail. Rests on the formal's scope choice.
+
+**FC58.** Attack: Z proper subset. As the Look noted, the kernel criterion is sufficient but not necessary on a proper Z. Rests on I64's choice (a).
+
+Concrete: Z = {(0,0), (1,0), (2,0)} ⊆ ℝ², g = x + y (matrix G = [1,1]), f = x - y (c = (1,-1)). ker G = span{(1,-1)}. ker f = span{(1,1)}. ker G ⊄ ker f. But on Z, g values are 0, 1, 2 (singletons), so f is identified at every attainable y. So the kernel criterion says "no" but identification says "yes".
+
+So FC58's kernel criterion fails on proper Z. Rests on I64's choice (a) being different.
+
+But FC58's formal says Z = ℝ^n (I64's choice for the linear case). So on ℝ^n, the criterion holds. The attack is against the alternative reading.
+
+**FC59.** Attack: if G has repeated rows, the kernel changes. But the text's G is fixed. No counterexample.
+
+Attack: if the biases are constrained. But nothing constrains them. No counterexample.
+
+Attack: what if x is fixed (e.g., x = 0)? Then ker changes. But no constraint on x. No counterexample.
+
+**FC60.** Attack: if (E) included a record of how inputs were chosen, the two candidates could be distinguished. But (E) as defined sees only (D,C,E,t,Γ,Σ). So no counterexample within the formal.
+
+Attack: the "structural" reading of "among its premises" in (b). If the reading is dropped (I39's choice), then the argument rules out x ≠ m*. But I39 is recorded. So the attack is against I39.
+
+Concrete: argument with conclusion "x = m*", premise "b_B = 0", and "b_B = 0" is derived from "x = m*". Under literal reading, "x = m*" is not among the premises (the premise is "b_B = 0"). So D9.7 says the argument rules out x ≠ m*. Under I39's structural reading, "x = m*" is among the premises (through the derivation). So D9.7 says the argument does not rule out x ≠ m*. The claim rests on I39.
+
+**FC61.** Attack: (b) requires at least 2 states. If the state space has 1 state, then I(z) = I(z') only for z = z', and z R* z always. So no pair (z,z') with I(z) = I(z') and not z R* z'. So (b) requires |states| ≥ 2.
+
+The formal's (b) is existential. If the state space is a singleton, the claim fails (no such z,z'). But the search presumably used state spaces of size ≥ 2. Rests on I77's bounds.
+
+Concrete: state space = {*}, R = ∅, I(*) = 0. Then I(*) = I(*) but * R* * (reflexive). So no counterexample pair. But the claim is existential ("there are R, I, z, z'"), which is satisfied in any larger state space. So the claim as stated is true in general (there exist some R, I, z, z' in some state space). The search's "holds on all models tried" is for all R, I in the search space.
+
+Hmm, the claim (b) is "There are R, I, z, z' with I(z) = I(z') and not zR*z'". This is an existential — trivially true in any state space with2+ states. The search confirms this.
+
+Attack: nothing meaningful.
+
+Attack on (c): what if tokens can be split? Text says "indivisible". ✓
+
+Attack on (a): what if R is not a relation but a function? Then zRz' means z' = R(z). The invariant claim holds. ✓
+
+**FC62.** Attack: what if D has multiple components that E doesn't translate? Then NC2 with G = {k} might not witness. But the formal's setup is simple.
+
+Attack: what if the answer doesn't depend on x? Then no contrast. But the formal says "when the answer depends on x". ✓
+
+Attack: what if the projected relation π(r) is the full relation? Then no change. But the formal's setup has a_x give x a relation (presumably proper). ✓
+
+Attack: what if the baseline answer is ⊥? Then Contrast's first disjunct fails, but the second (Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥) might apply. But the formal's setup has x0 determined. ✓
+
+Attack: what if I03's "full relation" is dropped? Then "absent" is not well-defined. But I03 is recorded. Rests on I03.
+
+Concrete: if "absent" is read as "not in J" (rather than "full relation"), then the setup changes. The text at L255 says "the rival's supposed structure has as its counterpart a deleted subnetwork, whose relation is full (Part II)". So the text does say "whose relation is full". So I03 is in the text here.
+
+Hmm but I03 is recorded as an invention. Let me check: I03 is "Ports and components are fixed; deletion and absence are the full relation". Given in full in another part. But L339 says "whose relation is full (Part II)". So the text does say "relation is full" for the deleted subnetwork. So part of I03 is in the text.
+
+The full I03 says: "An edit never adds or removes a member of V or J. A deleted or absent component is one whose relation under that edit and boundary is the full product of its ports' domains." So the "never adds or removes" part is an invention; the "full relation" part is in the text at L339.
+
+OK.
+
+Now (e): "None falls in this part." So nothing to say.
+
+Let me now write the report efficiently.
+
+Word budget: ~3,000. Let me allocate:
+- (a): 800 words
+- (b): 300 words
+- (c): 800 words
+- (d): 800 words
+- (e): 50 words
+
+Let me write.
+
+Actually, I realize I should be more concise. Let me aim for 2,800 words total.
+
+Let me draft the report now.
+
+---
+
+# REPORT
+
+## (a)
+
+**D6.3 NC1 · L255.** The maths: `Slot_C(ℰ,k)` and `NC1(ℰ)` say no answer port lies in V_k and no boundary coordinate is a slot. The sentence at L255 also says "moving an assertion from an input slot into a component named 'law' does not discharge this" and "Identity of that assertion with the target's answer is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical statements". These are reading instructions that the formal leaves to I24 and I28; the formal cannot state "structural at the declared grain" without those. Which should stand: the words — they add a condition the formal drops. But the formal is correct for the part it states.
+
+Proposal: none; the two sentences at L255 are the right home for the structural clause.
+
+**D6.4 NC2 · L255.** The maths's `Contrast` matches "differs" and "is not determined at x in the claimed way"; the second disjunct is `Ans_E(x) = ⊥ ∧ Ans_E(x0) ≠ ⊥`. The text's "in the claimed way" (I22) is a qualifier the formal collapses to a single ⊥. Match up to I22. `Lost` matches the second sentence of L255 exactly. No parting.
+
+**FC57 · L329.** "It is identified on every attainable y exactly when f = f̄∘g for some f̄." The formal adds "on Z" — the text is silent. Stand by the maths; the text should say so.
+
+```
+> L329 | It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\).
+```
+```
+Write \(Z_y=\{z\in Z:g(z)=y\}\); \(y\) is attainable when \(Z_y\neq\varnothing\). It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) on \(Z\) for some \(\bar f\).
+```
+This writes I64's definition of attainable and the scope "on Z" into the text.
+
+**FC58 · L329.** The kernel criterion matches over ℝ^n. "Repeating rows changes no kernel; an independent calibration can" — the formal reads "an independent calibration" as "a row outside the row space", which is a reading the text does not fix; a calibration can also land in the row space and leave the kernel alone. Stand by the maths for the row statement, but the words should be precise.
+
+```
+> L329 | Repeating rows changes no kernel; an independent calibration can.
+```
+```
+Repeating rows, or adding any row in the row space, changes no kernel; a calibration whose row lies outside the row space lowers the dimension of the kernel by one.
+```
+
+**FC59 · L331.** Computed as claimed. The maths matches the words; no parting.
+
+**FC60 · L331.** The text says the choice "is not an inference from the readings; it is circular". The formal (a) says only that (E) and NC1 cannot tell the two candidates apart; it does not claim the choice is not from the readings. The circularity is registered only in Part IX (b). The words stand as a claim about the choice; the maths is a claim about the framework. No proposal at L331; (b) is the right home.
+
+**FC61 · L335.** All three match. The tag (O1) is I63's reading. (c) is arithmetic, separate from (a) and (b). No parting.
+
+**FC62 · L339.** "their absence leaves both unchanged" — unchanged from what? The formal reads this as F1 at the baseline pair, which is trivially true. The words should say what "unchanged" is relative to.
+
+```
+> L339 | An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both unchanged.
+```
+```
+An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both at the answer they gave before those components were introduced.
+```
+
+**FC63 · L343.** (a) and (b) match. (c) does not: the text says "The full Leibniz expansion with skewness substituted meets (F1) and (F2)" without saying what the sum component's relation is, and the candidate needs term ports D lacks, which I14's one-port-per-port translation excludes. Stand by the words for the claim; the maths shows the claim is ambiguous.
+
+```
+> L343 | The full Leibniz expansion with skewness substituted meets (F1) and (F2)
+```
+```
+The full Leibniz expansion with skewness substituted, its term ports read as functions of the matrix entries and its sum restricted to the tuples of term values some matrix gives, meets (F1) and (F2)
+```
+This writes I99's variant (c-ii) into the text and admits I81's computed ports.
+
+## (b)
+
+**FC63 · L343.** The counterexample (c-i) is against I99's choice of the sum component's relation (all tuples), not against the text: the text does not fix the relation. The change above removes it by picking the realizable-tuples variant. The second failure — that the candidate cannot be written under I14's one-port-per-port translation — is against I14 and against the text's silence on D's ports; the change above also removes this by admitting computed ports.
+
+## (c)
+
+**I63 · L329, L335, L471.** The text does not say what a parenthesized tag names. The tags are used but never explained. The invention's reading (tag names the statement it follows) is the only one that works at L471, where the tag is last on the line; at L329 and L335 the tags sit at the end of a statement too. I would keep the invention but write it into the text.
+
+```
+> L329 | The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1)
+```
+```
+The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). Each parenthesized tag names the statement it follows; (I1) names this one.
+```
+
+**I64 · L329.** The text does not define "attainable" and does not say the linear case has Z = ℝ^n. Covered by the FC57 proposal above.
+
+**I66 · L343.** The text names the edits and says field arithmetic and determinant–invertibility are held fixed, but does not say which components carry the order, the entries, the determinant and the invertibility. The choice of GF(3) for testing is a search bound, not the text's; the text's question is about ℝ. Proposal: leave the field as the question states; but write the component decomposition in.
+
+```
+> L343 | Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed.
+```
+```
+Contract: order, matrix entries, determinant, invertibility as the components; skewness and oddness as the constraints; remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed.
+```
+This writes I66's ports and components into the text.
+
+**I87 · L397.** The text says "read structurally ... not by logical equivalence alone", which is a constraint on the reading but does not fix the language. I87's propositional reading is a search encoding. Leave open: the text should stay silent on the language, since "read structurally" already forbids the logical-equivalence reading.
+
+**I89 · L387, L393.** The text says "the inference form of u is one j admits", so the forms are declared per assessor. The choice of five is a search encoding. Leave open.
+
+**I99 · L343.** Covered by the FC63 proposal above.
+
+## (d)
+
+**FC57 · L329.** Attack: drop I64's "attainable". At y with empty fibre, |f[Z_y]| = |∅| = 0 ≠ 1, so identification fails, but f = f̄∘g on Z holds regardless of f̄'s value at y. Rests on I64. The text uses "attainable", so this is not a counterexample to the text; it shows the word is load-bearing and should be defined.
+
+Attack: if "f = f̄∘g" is read as holding on the domain of f (larger than Z), the ⟸ direction can fail. Take Z = {0}, domain Y' = {0,1}, g(0)=0, g(1)=1, f(0)=0, f(1)=1. Identification on Z at y = 0 is trivial; but f = f̄∘g on Y' forces f̄(1) = 1 too, which is stronger than needed. The formal's "on Z" avoids this; the proposal above writes it in.
+
+**FC58 · L329.** Attack: I64's alternative (Z a proper subset) breaks the kernel criterion's necessity. Let Z = {(0,0),(1,0),(2,0)} ⊆ ℝ², G = [1 1] (so g = x+y), c = (1,-1) (so f = x-y). ker G = span{(1,-1)}; ker f = span{(1,1)}; ker G ⊄ ker f. But on Z, g takes values 0, 1, 2 in singletons, so f is identified at every attainable y. Rests on I64's choice (a). The text says "For linear g and linear feature c^⊤", which does not restrict Z; the proposal above says Z = ℝ^n.
+
+**FC59 · L331.** Attack: the kernel is spanned by (1,-1,-1) only because the two readings are x + b_A and x + b_B. If the two readings repeat (both x + b_A), the kernel becomes span{(1,-1,0),(0,0,1)} and neither b_B - b_A nor x is identified. This is not a counterexample; the text's setup is fixed. Nothing rests on an invention beyond I64.
+
+**FC60 · L331.** Attack on (b): drop I39's structural reading. Then the premise "b_B = 0" does not have "x = m*" among its premises literally, and D9.7 says the argument rules out x ≠ m*. The claim (b) rests on I39. The text at L397 says "read structurally as non-circular dependence reads identity (Part V)", so the text is on I39's side; no change needed.
+
+**FC61 · L335.** Attack: (b) needs at least two states; on a singleton state space, z R* z always, so no pair (z,z') with I(z) = I(z') and not z R* z'. The existential claim "there are R, I, z, z'" is true in general; the search's "holds on all models tried" is over state spaces of size ≥ 2 (I77's bounds). Beyond the bounds, on a singleton, the claim as literally stated is still true (there exist R, I, z, z' in some state space). No counterexample.
+
+**FC62 · L339.** Attack: if D has a second component y that also affects the answer and E has no counterpart, NC2 with G = {k} alone cannot witness (the contrast might persist after deleting k). The formal's setup is one component; beyond it, the claim can fail. Rests on I78's encoding (single-component surgical edit). Concrete: D with x and y both entering the answer; E with k = π(x) only. Delete {k}: y still drives the answer at both pairs, so the contrast is not lost. The text's sentence at L339 is about "those components" (plural) and their counterparts; the formal's one-component setup is a reading. No change to the text; the formal should say G ranges over the counterparts of the introduced components.
+
+## (e)
+
+Nothing falls in this part.
+
+---
+
+OK let me count words. This is getting long. Let me trim.
+
+Actually let me also note the tag I63 proposal is duplicated. Let me consolidate.
+
+Let me revise and finalize. I want to hit under 3,000 words.
+
+Let me be more concise. I'll trim explanations.
+
+Let me write the final version.
+
+Final word count target: ~2,800.
+
+Let me also make sure to follow the rules:
+- Exact wording for every proposal between fence lines with the line it replaces.
+- Don't list/count/grade rivals.
+- Say nothing about what must happen to a candidate.
+- Argument = reasons why this and not that.
+- Physical possibility only where info/knowledge is instantiated.
+- Nothing is settled.
+- Don't propose about hard to vary.
+- Keep apart what text forces and what reader might take it to mean.
+
+OK. Let me write.
+
+Also note: "Say nothing about what must happen to a candidate (decision S21)." So I shouldn't say "the candidate should be rejected" etc. Just describe.
+
+"Nothing is settled, and a ruling out by a claim taken as given is a choice the person made (decision S28); nothing you find settles anything." OK so I should be careful not to say "this settles X".
+
+Let me finalize.
+
+Actually I should double-check one thing about FC62's attack. Let me re-read.
+
+FC62: "Formal. D with a component x whose baseline relation is full (I03) and an edit a_x giving it a relation; E with k, λ(k) = {x}, baseline relation full, τ(a_x) giving k the projected relation. F1 at (1,b0): full = full; at (a_x,b0): holds when τ(a_x) gives k that relation. On C = {(1,b0), (a_x,b0)}, E can meet (E) (NC2 with G = {k}) when the answer depends on x."
+
+Result: "eliminative explanation (computation): computed: as claimed."
+
+So the formal's setup is: E is D's image under transport, and the answer depends on x. NC2 with G = {k} witnesses.
+
+My attack: if D has another component y that also affects the answer and E has no counterpart, then NC2 with G = {k} might not work.
+
+But: if E is supposed to be a full translation of D (via λ), then y should also have a counterpart. The formal's setup has only x. If y is also in D and E has no counterpart, then F1 might fail.
+
+Hmm. The formal's setup is minimal: D has one interesting component x. So the attack is beyond the setup.
+
+The text at L339 says "introducing those components" (plural) and "the rival's supposed structure has as its counterpart a deleted subnetwork". So the plural suggests multiple components. The formal is single-component. That's a reading.
+
+OK let me note that as the attack.
+
+Let me also reconsider FC57's "attainable" attack. The text says "on every attainable y". If "attainable" is undefined, the reader might take it to mean "y in the range of g" (which is g[Z] if Z is the domain), or "y such that some z ∈ Z has g(z) = y" (same thing), or "y such that some state in the state space has g(z) = y" (which could be different if Z is a proper subset of the state space). The invention's "y ∈ g[Z]" is the natural reading.
+
+OK.
+
+One more thing: FC63 (b) — "det I3 = 1; det [[0,1],[-1,0]] = 1". The text at L343 says "I₃ is an instance under removal of skewness, and [[0,1],[-1,0]] under removal of oddness". So I3 is used to show that removing skewness reveals invertible matrices (I3 is invertible). And [[0,1],[-1,0]] is used to show that removing oddness reveals invertible matrices (this2×2 skew-symmetric matrix is invertible). The formal's (b) checks the determinants. ✓
+
+But wait: is I3 skew-symmetric? No (as I noted). So I3 is NOT in the original family (odd-order skew-symmetric). It IS in the family after "remove skewness" (odd-order, no skew constraint). And it's invertible. So the answer to "does the family contain an invertible matrix" after "remove skewness" is YES, witnessed by I3. ✓
+
+And [[0,1],[-1,0]] is skew-symmetric of even order. So it's NOT in the original family (which requires odd order). It IS in the family after "remove oddness" (skew-symmetric, any order). And it's invertible. So the answer after "remove oddness" is YES. ✓
+
+Under "remove both", the family is all matrices of order n (odd or even) without skew constraint. I3 is in it, invertible. YES. ✓
+
+Under "1" (original: odd-order skew-symmetric), all are singular. NO. ✓
+
+The formal's setup matches. ✓
+
+But: the search used n ∈ {1,2,3}. So the "family" is matrices of order 1, 2, or 3 with entries in GF(3). The claim "every odd-order real skew-symmetric matrix is singular" is general. The search on n ∈ {1,2,3} over GF(3) is a small check. Beyond the bounds (n = 5, entries in GF(5) or ℝ), the theorem still holds (char ≠ 2). So no counterexample beyond bounds.
+
+But: over GF(2), the theorem FAILS (as the invention notes). E.g., n = 1: M = [1] is skew-symmetric (1 = -1 in GF(2)) and invertible. So over GF(2), odd-order skew-symmetric matrices can be invertible. But the contract says "field arithmetic held fixed", so GF(2) is excluded. Rests on I66's choice.
+
+Concrete: GF(2), n = 1, M = [1]. M^T = [1] = -[1] = [1] (since 1 = -1 in GF(2)). So M is skew-symmetric. det M = 1 ≠ 0. So invertible. So the theorem fails over GF(2).
+
+But the question is about ℝ. So this is not a counterexample to the text. Rests on I66's choice (b) being excluded.
+
+OK let me write.
+
+Let me also note: the sentence "the expansion is an account" — is this formalized? It's part of FC63's claim but not a separate statement. The formal's (c) checks (F1),(F2),(A), NC2 and non-vacuity. The "account" condition is (F1),(F2),(A). So "the expansion is an account" is formalized as meeting those conditions. OK.
+
+Alright. Writing now.
+
+Word count check: I'll aim for about 2,800 words.
+
+Let me write it tight.
+
+Final structure:
+- (a) — ~700 words
+- (b) — ~250 words
+- (c) — ~700 words
+- (d) — ~900 words
+- (e) — ~20 words
+
+Plus headers and proposals. Let me go.
+
+Actually I realize the proposals take space too. Let me be strategic: put the proposals in (a) and reference them in (c) where they cover the same invention.
+
+Let me write.
