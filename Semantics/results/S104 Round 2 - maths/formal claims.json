@@ -1,0 +1,6214 @@
+{
+ "about": {
+  "log": "S104",
+  "round": "review round 2 (maths)",
+  "date": "27 September 2026",
+  "decision": "S36",
+  "text_under_review": "tests/103 The semantics, standing alone, after round 1.md",
+  "md5": "f31ebb1f050783f1a84f6136cec20fcd",
+  "types": [
+   "definition-consequence",
+   "stated result",
+   "strong candidate"
+  ],
+  "note": "Each claim was searched for counterexamples on finite models by model/ (S104 round 2); its result is under 'results' and in search results.md. 'look' is a first reading of where a counterexample might lie, written before the search. Every claim that uses an invention lists it; a result on that claim depends on it."
+ },
+ "claims": [
+  {
+   "id": "FC01",
+   "title": "Solutions shrink as relations shrink; deletion never removes a solution",
+   "source": [
+    {
+     "line": 100,
+     "quote": "\\operatorname{Sol}_D(a,b)=\\{z\\in X_D:\\forall j\\in J,\\ z|_{V_j}\\in L_j(a,b)\\}. \\tag{O}"
+    },
+    {
+     "line": 103,
+     "quote": "A deleted component imposes the full relation on its ports."
+    }
+   ],
+   "formal": "If L_j(a,b) ⊆ L'_j(a,b) for every j, then Sol_D(a,b) ⊆ Sol_D'(a,b). In particular Sol_{D−G}(a,b) ⊇ Sol_D(a,b), where D−G deletes the components of G (full relations).",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I03"
+   ],
+   "formal_core_sections": [
+    "§1"
+   ],
+   "look": "Used by NC2's loss clause: for a query that is not monotone in Sol, a deletion can make an undetermined answer determined, a case NC2's wording does not name.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) monotone; deletion keeps solutions",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(look) deletion can make an undetermined answer determined",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I03",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC01 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC02",
+   "title": "Direction is read from the admitted edits; output status is not",
+   "source": [
+    {
+     "line": 109,
+     "quote": "The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read."
+    },
+    {
+     "line": 325,
+     "quote": "Under \\(A\\) containing interventions on \\(H\\) and \\(\\theta\\), these ports are inputs and \\(L\\) is an output, by Part II."
+    }
+   ],
+   "formal": "(a) Input(v) and asg(v) are functions of the setting edits in A (I04); two organizations with the same L and different A can differ in both. (b) Output(v,j) (I05) is a function of L_j(1,·) alone and does not depend on A. (c) In the pole encoding, c_L's relation L = H cot θ (θ in (0°,90°)) determines each of H, θ, L given the other two, so H and θ are outputs of c_L as well as L; the direction H,θ → L is carried by asg, not by output status.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I04",
+    "I05",
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§17"
+   ],
+   "look": "Whether L325's 'L is an output, by Part II' needs A at all, and whether 'direction' is meant to include output status.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) Input and asg depend on A",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "(b) Output does not depend on A",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(c) pole: c_L determines each of its ports",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I05",
+      "I65",
+      "I77",
+      "I78",
+      "I80",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC02 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC03",
+   "title": "'Of one kind on C' is an equivalence relation",
+   "source": [
+    {
+     "line": 119,
+     "quote": "A kind is an equivalence class of components under this relation."
+    }
+   ],
+   "formal": "j ~_C j' (I10) is reflexive, symmetric and transitive on J.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L115.s1",
+    "L113.s2"
+   ],
+   "round1": [],
+   "inventions": [
+    "I10"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "Holds under I10 and under its value-bijection alternative.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "equivalence",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC03 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC04",
+   "title": "A coarser contract identifies more components; a finer one can separate them",
+   "source": [
+    {
+     "line": 119,
+     "quote": "a coarser contract identifies more components, and two components of one kind on \\(C\\) may separate on a finer contract."
+    }
+   ],
+   "formal": "C' ⊆ C ⇒ (j ~_C j' ⇒ j ~_C' j'), since one footprint bijection serving every pair of C serves every pair of C'. And there are D, C' ⊊ C, j, j' with j ~_C' j' and not j ~_C j'.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L115.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I10",
+    "I11"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "Under I11's alternative (coarser = a quotient of edits), the first half needs the quotient to respect the relations.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) coarser identifies more",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) a finer contract can separate",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I11",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC04 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC05",
+   "title": "Kinds are fixed by relations, not by solution values",
+   "source": [
+    {
+     "line": 119,
+     "quote": "two components that differ only in those values are of one kind on \\(C\\), whatever the difference is called."
+    },
+    {
+     "line": 119,
+     "quote": "and an edit under which the two relations stay equal does not separate the components."
+    }
+   ],
+   "formal": "sig_C(j) is a function of (L_j(a,b))_{(a,b)∈C} alone. If β_*L_j(a,b) = L_j'(a,b) for every (a,b) in C, then j ~_C j', whatever the projections of Sol_D(a,b) on V_j and V_j' are; adding to C a pair at which β_*L_j = L_j' leaves the relation between j and j' as it was.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L115.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I10"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(ii) reading (i): β a witness of ~_C",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(ii) reading (ii): any bijection",
+       "kind": "for all",
+       "status": "counterexample found"
+      },
+      {
+       "label": "(i) signatures use relations only",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I77",
+      "I78",
+      "I93"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC05 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC06",
+   "title": "A setting edit leaves every reader's relation as it was",
+   "source": [
+    {
+     "line": 119,
+     "quote": "An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it"
+    },
+    {
+     "line": 124,
+     "quote": "- a **measurement** has a signature invariant under interventions on the measured port"
+    }
+   ],
+   "formal": "Under I04, for every port m, every setting edit a of m and every component j ≠ asg(m): L_j(a,b) = L_j(1,b). Hence every component that reads m and does not assign it is invariant under interventions on m on every contract (I09): the first clause of the measurement bullet holds of every reader of m.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L124.s1"
+   ],
+   "round1": [
+    "what the L123 change may have disturbed: the asymmetry the critical review gives between C07 and C08/C09"
+   ],
+   "inventions": [
+    "I04",
+    "I07",
+    "I09"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§4"
+   ],
+   "look": "If so, the measurement family is picked out by its second clause alone.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "setting edits leave readers as they were",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I07",
+      "I09",
+      "I77",
+      "I78",
+      "I80",
+      "I102"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC06 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC07",
+   "title": "The three families on the pole's contracts, under both readings of 'observation edit'",
+   "source": [
+    {
+     "line": 123,
+     "quote": "- a **causal assignment** has a signature that changes under intervention on its output port and is invariant under observation edits;"
+    },
+    {
+     "line": 109,
+     "quote": "A port is an **observation** when \\(A\\) contains an edit that alters the relation reporting it without altering what it reports"
+    },
+    {
+     "line": 127,
+     "quote": "a part that reads or reports another part has a measurement's signature"
+    },
+    {
+     "line": 325,
+     "quote": "An intervention on \\(L\\) replaces its component and leaves \\(H,\\theta\\) unchanged."
+    }
+   ],
+   "formal": "Causal_C(j): C holds a setting edit of j's output port that changes L_j, and j is invariant under Obs on C. (a) Under R-i, if j reads a port m other than its output o and C sets o, that setting edit alters asg(o) = j and leaves asg(m): it is in Obs, and j changes under it, so ¬Causal_C(j); and j is a measurement of m (FC06 and that edit). On a contract that sets every port, Causal_C is the set of components that read no port besides their own output. (b) Under R-ii, Obs holds only non-setting edits of a reporting component. Pole (I65), contract C1 = settings of H and θ: under both readings c_H, c_θ ∈ Causal and c_L is in no family (C1 sets no output of c_L and holds no edit of it). Contract C2 = settings of H, θ and L: under R-i c_H, c_θ ∈ Causal, c_L ∈ Meas(·,H) ∩ Meas(·,θ), c_L ∉ Causal; under R-ii c_H, c_θ, c_L ∈ Causal and no component is a measurement.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L123.s1",
+    "L124.s1"
+   ],
+   "round1": [
+    "round-1 change L123",
+    "what the L123 change may have disturbed: L123–L125 against L57, L109, L127"
+   ],
+   "inventions": [
+    "I04",
+    "I06",
+    "I07",
+    "I09",
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§4",
+    "§17"
+   ],
+   "look": "The round-1 critical review keeps a measurement out of the causal family by R-i ('an intervention on the reading is, by L109, an observation edit') and, in the same paragraph, counts the pole's forward component in the causal family on the contracts the text uses; under R-i both hold only if that contract does not set L. Test whether one reading gives both.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "pole C1 under R-i",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "pole C1 under R-ii",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "pole C2 under R-i",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "pole C2 under R-ii",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "pole C2 with composites (outside FC07's statement)",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I06",
+      "I07",
+      "I09",
+      "I65",
+      "I80",
+      "I92",
+      "I102"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC07 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC08",
+   "title": "L127's gloss of a measurement's signature has a clause about solutions",
+   "source": [
+    {
+     "line": 127,
+     "quote": "change only the reading and the part it reports stays as it was; change the part and the reading follows."
+    },
+    {
+     "line": 119,
+     "quote": "A signature is built from a component's relation under each \\((a,b)\\in C\\), not from the values its ports take in a solution"
+    }
+   ],
+   "formal": "'Change only the reading and the part it reports stays as it was' is a condition on relations (FC06). 'Change the part and the reading follows' is a condition on solutions: under a setting edit of m, the projection of Sol_D on the reading o changes. There are D and j reading m whose relation is constant in m (the projection on o does not follow m) and j still meets both clauses of L124.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L127.s1"
+   ],
+   "round1": [
+    "what the L123 change may have disturbed: L127"
+   ],
+   "inventions": [
+    "I04",
+    "I06",
+    "I07"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "If the example stands, L127's gloss says more than L124's signature, or L124 would need a solution-level clause (which L119 excludes from signatures).",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "a measurement whose reading does not follow",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I06",
+      "I07",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC08 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC09",
+   "title": "Four names, three families: a constitutive status is a rule application",
+   "source": [
+    {
+     "line": 121,
+     "quote": "What ordinary language calls a cause, a measurement, a rule or a constitutive status are families of signatures:"
+    },
+    {
+     "line": 347,
+     "quote": "Its signature under (K) is invariant under interventions on \\(Z\\) and variable under edits to \\(C_r\\)."
+    }
+   ],
+   "formal": "The bullets define three predicates Causal_C, Meas_C, Rule_C. L347 gives a constitutive rule the signature of Rule_C (Z read as the world's ports, C_r as the rule, I08). So 'a rule' and 'a constitutive status' both map to Rule_C.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L125.s1"
+   ],
+   "round1": [
+    "matter 4: L121 names four things with three bullets"
+   ],
+   "inventions": [
+    "I08"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "L347's rule relation has Rule_C's signature",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I08",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC09 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC10",
+   "title": "L57 against the new L123",
+   "source": [
+    {
+     "line": 57,
+     "quote": "a rule's application changes when the rule is edited and not when the world is intervened on; a cause's assignment changes under intervention."
+    },
+    {
+     "line": 123,
+     "quote": "has a signature that changes under intervention on its output port and is invariant under observation edits;"
+    }
+   ],
+   "formal": "Rule_C(j) ⇒ (variable under rule edits ∧ invariant under world interventions), which is L57's rule sentence; Causal_C(j) ⇒ changes under intervention on its output, which is L57's cause sentence. L57 names no condition on observation edits; the bullet's second clause adds to L57 and does not conflict with it. The clause round 1 removed ('and under replacement of the component') has no counterpart in L57.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L123.s1",
+    "L125.s1"
+   ],
+   "round1": [
+    "what the L123 change may have disturbed: L57"
+   ],
+   "inventions": [
+    "I08",
+    "I09"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "families imply L57's clauses",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "L57 names no condition on observation edits; the removed clause",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I08",
+      "I09",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC10 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC11",
+   "title": "Roles are relative to A; families are relative to C",
+   "source": [
+    {
+     "line": 109,
+     "quote": "A port \\(v\\) is an **input** under \\(A\\) when \\(A\\) contains an edit that sets \\(v\\) directly."
+    },
+    {
+     "line": 113,
+     "quote": "Fix an organization \\(D\\) and a contract \\(C\\subseteq A\\times B\\) (Part III)."
+    }
+   ],
+   "formal": "Input(v) quantifies over A; Causal_C(asg(v)) over C ⊆ A × B. There are D, C, v with Input(v) and ¬Causal_C(asg(v)) (C holds no setting edit of v). Conversely every family predicate uses edits of A only, so no family membership needs an edit A lacks.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L113.s1"
+   ],
+   "round1": [
+    "matter 5: L109 gives roles under A while (K) builds a signature on a contract C",
+    "what the L123 change may have disturbed: L109"
+   ],
+   "inventions": [
+    "I04",
+    "I09"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§4"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "Input(v) without Causal_C(asg(v))",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "families use edits of A only",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I09",
+      "I80",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC11 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC12",
+   "title": "Invariance clauses can be vacuous; change clauses cannot",
+   "source": [
+    {
+     "line": 124,
+     "quote": "variable under edits to the measuring relation;"
+    },
+    {
+     "line": 125,
+     "quote": "- a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule."
+    }
+   ],
+   "formal": "On C = {(1,b0)} no component is in any family (each family needs a 'changes' or 'variable' clause witnessed by a pair of C, I09). On a C with no Obs edit, Causal's second clause holds vacuously; with no world intervention, Rule's first clause does; with no intervention on m, Meas's first clause does.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L123.s1",
+    "L124.s1",
+    "L125.s1"
+   ],
+   "round1": [
+    "what the L123 change may have disturbed: the C07 / C08–C09 asymmetry"
+   ],
+   "inventions": [
+    "I09"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the baseline contract puts no component in any family",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I09",
+      "I77",
+      "I78",
+      "I80"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC12 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC13",
+   "title": "The families are patterns in (K), not additional data",
+   "source": [
+    {
+     "line": 127,
+     "quote": "These are descriptions of patterns in (K), not additional data."
+    }
+   ],
+   "formal": "Causal_C(j), Meas_C(j,m) and Rule_C(j) are functions of D and C alone: of sig_C(j) and of how each edit of C is classed (a setting edit of a port, an observation edit, a rule edit, or none), a classification I04, I06 and I08 read off (A, L). Under I04's alternative (a), a declared asg, the classification needs data beyond D and C.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L127.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I04",
+    "I06",
+    "I08",
+    "I09"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "look": "Whether any reading of 'observation edit' needs a declared measured port (then it is additional data).",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "families are carried by renamings",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "no further data",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I06",
+      "I08",
+      "I09",
+      "I70",
+      "I77",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC13 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC14",
+   "title": "No definition asks whether a component 'is' a cause",
+   "source": [
+    {
+     "line": 127,
+     "quote": "The semantics never asks whether a component \"is\" a cause. It asks what its signature is."
+    }
+   ],
+   "formal": "Syntactic: no definition of the formal core takes a predicate 'is a cause' as an argument; the component-level predicates are sig_C, ~_C and the family predicates, each a function of D and C (FC13).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L127.s2",
+    "L127.s3"
+   ],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§4",
+    "§18"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "syntactic scan",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC14 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC15",
+   "title": "τ[C] is a contract of the candidate's organization",
+   "source": [
+    {
+     "line": 141,
+     "quote": "it contains the baseline \\((1,b_0)\\)."
+    },
+    {
+     "line": 242,
+     "quote": "\\tau(1)=1"
+    },
+    {
+     "line": 554,
+     "quote": "has a signature on \\(\\tau[C]\\)"
+    }
+   ],
+   "formal": "If τ(1) = 1 and τ, σ map into A_E, B_E, then τ[C] ⊆ A_E × B_E and (1, σ(b0)) ∈ τ[C]: τ[C] is a contract of E with baseline σ(b0), as far as a contract is a set of pairs holding the baseline.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L113.s1"
+   ],
+   "round1": [
+    "matter 1: (K) applied beyond components (L119, L554–L556)"
+   ],
+   "inventions": [
+    "I12",
+    "I18"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "look": "If τ is partial (I17), τ[C] is defined only when t translates every pair of C.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "τ[C] holds (1, σ(b0))",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I12",
+      "I18",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC15 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC16",
+   "title": "Reading a candidate's components through the transport agrees with (K) on τ[C]",
+   "source": [
+    {
+     "line": 119,
+     "quote": "their signatures, read on \\(C\\) through \\(\\tau\\) and \\(\\tau'\\), coincide under a footprint bijection"
+    }
+   ],
+   "formal": "For k, k' in one candidate E and a footprint bijection β: the signatures of k and k' read on C through t coincide under β ⟺ k ~_{τ[C]} k' under β by (K), since (a,b) ↦ (τ(a),σ(b)) maps C onto τ[C].",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L115.s1"
+   ],
+   "round1": [
+    "matter 1: (K) applied beyond components (L119, L554–L556)"
+   ],
+   "inventions": [
+    "I10",
+    "I12"
+   ],
+   "formal_core_sections": [
+    "§4",
+    "§5"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "reading through t agrees with (K) on τ[C]",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I12",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC16 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC17",
+   "title": "Argument 1: (F1) makes each commitment's signature its counterpart's",
+   "source": [
+    {
+     "line": 554,
+     "quote": "**Claim.** If a transport meets (F1) on \\(C\\), no active component \\(k\\) of \\(E\\) has a signature on \\(\\tau[C]\\) that differs from the one its counterpart \\(\\lambda(k)\\) has on \\(C\\), up to the port translation."
+    },
+    {
+     "line": 556,
+     "quote": "(F1) equates the third coordinates pointwise."
+    },
+    {
+     "line": 245,
+     "quote": "By (K), no component of \\(E\\) whose signature on \\(C\\) differs from its counterpart's meets (F1)"
+    }
+   ],
+   "formal": "F1_C(ℰ) ⇒ ∀k∈Γ ∀(a,b)∈C: L_k(τ(a),σ(b)) = proj^λ_{V_k} Sol_{λ(k)}(a,b); that is, the signature of k read on C through t equals sig_C(λ(k),θ_k) (I13) as functions on C.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [
+    "matter 1: (K) applied beyond components (L119, L554–L556)"
+   ],
+   "inventions": [
+    "I12",
+    "I13",
+    "I14",
+    "I15"
+   ],
+   "formal_core_sections": [
+    "§4",
+    "§5"
+   ],
+   "look": "With the triples of L556 compared as sets (I12's third alternative), the two signatures are indexed by different pairs and meet only through τ×σ.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(F1) makes each commitment's signature its counterpart's",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I12",
+      "I13",
+      "I14",
+      "I15",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC17 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC18",
+   "title": "Argument 1's Consequence: a same-kind condition adds nothing; no third case",
+   "source": [
+    {
+     "line": 558,
+     "quote": "A condition \"each component's counterpart must be a component of the same kind\" adds nothing to (F1) on any contract."
+    },
+    {
+     "line": 558,
+     "quote": "The word \"kind\" is therefore eliminable from the definition of an account, and its elimination loses no case."
+    },
+    {
+     "line": 281,
+     "quote": "There is no third case."
+    }
+   ],
+   "formal": "SameKind_C(ℰ) := for every k in Γ, the signature of k read through t and sig_C(λ(k),θ_k) coincide under a footprint bijection (I10). Claim: F1_C(ℰ) ⇒ SameKind_C(ℰ), so Acc(ℰ) ⟺ Acc(ℰ) ∧ SameKind_C(ℰ) for every ℰ and C.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I10",
+    "I13",
+    "I14"
+   ],
+   "formal_core_sections": [
+    "§4",
+    "§5"
+   ],
+   "look": "With value maps that are not identities (I14) and kinds compared between equal domains (I10), (F1) can hold while SameKind fails: E's port domains differ from D's. Then the Consequence needs I10's value-bijection alternative.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "D4.4's reading (counterpart carried to V_k)",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "untranslated reading (I94)",
+       "kind": "for all",
+       "status": "counterexample found"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I13",
+      "I14",
+      "I77",
+      "I78",
+      "I81",
+      "I94"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC18 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC19",
+   "title": "(F1) and (F2) do different work",
+   "source": [
+    {
+     "line": 245,
+     "quote": "(F1) prevents an assembled match from hiding a decomposition in error. (F2) prevents a set of pieces each faithful locally from hiding a lost shared constraint."
+    }
+   ],
+   "formal": "(a) There is ℰ with F2_C ∧ A_C ∧ ¬F1_C. (b) There is ℰ with F1_C ∧ ¬F2_C: two commitments each matching its counterpart, whose counterparts share a port of D that E's two components do not share.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I14",
+    "I15"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) F2 ∧ A ∧ ¬F1",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "(b) F1 ∧ ¬F2",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I14",
+      "I15",
+      "I77",
+      "I78",
+      "I81",
+      "I101"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC19 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC20",
+   "title": "When (F2) at a pair gives (A) at that pair (violation in either extent)",
+   "source": [
+    {
+     "line": 219,
+     "quote": "- the **prediction** is \\(\\operatorname{Ans}_S(\\tau(a),\\sigma(b))\\);"
+    },
+    {
+     "line": 220,
+     "quote": "- a **violation** occurs when fidelity fails at \\((a,b)\\);"
+    },
+    {
+     "line": 250,
+     "quote": "\\operatorname{Ans}_E(\\tau(a),\\sigma(b))=\\operatorname{Ans}_p(a,b). \\tag{A}"
+    }
+   ],
+   "formal": "If Q reads a port w of the target, δ_E designates a port w' of E, and π(z)_{w'} = κ(z_w) for every z (π acts on the designated port as a value map κ), then the valuation equation of (F2) at (a,b) gives Ans_E(τ(a),σ(b)) = κ(Ans_p(a,b)); with κ the identity this is (A) at (a,b). Without that condition on π, (F2) at a pair does not give (A) there. Violation and Violation⁺ (I50) coincide exactly where it does.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L219.s1",
+    "L220.s1"
+   ],
+   "round1": [
+    "matter 12: the narrow and wide senses of 'fidelity' (the C18 ruling's argument)"
+   ],
+   "inventions": [
+    "I16",
+    "I20",
+    "I21",
+    "I49",
+    "I50"
+   ],
+   "formal_core_sections": [
+    "§5",
+    "§12"
+   ],
+   "look": "Whether the simulation layer's queries (L177: 'what a port of P will take') always meet the condition on π.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "any value map κ",
+       "kind": "for all",
+       "status": "counterexample found"
+      },
+      {
+       "label": "κ the identity",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "Violation and Violation⁺ coincide where κ = id",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I14",
+      "I16",
+      "I20",
+      "I21",
+      "I49",
+      "I50",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC20 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC21",
+   "title": "A contract of relabelings admits no candidate meeting (A) and non-circular dependence",
+   "source": [
+    {
+     "line": 257,
+     "quote": "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \\(\\mathcal Q\\), admits no candidate that meets non-circular dependence"
+    }
+   ],
+   "formal": "(a) If every edit of C is a relabeling for p (I26), then for every ℰ with A_C(ℰ) and τ(1) = 1: ¬NC2(ℰ). (b) Without (A) the implication can fail: a candidate whose own answers vary over τ[C] can meet NC2 on a contract of relabelings. (c) 'Excluding every change under which the active commitments could matter to Q' is ¬NC2 for every candidate, by NC2's definition.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I21",
+    "I22",
+    "I26"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "The sentence says 'admits no candidate'; on this formalization it holds of candidates that meet (A), which suffices for 'not a contract on which an account can be claimed'.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) relabelings and (A) exclude NC2",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) without (A)",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "(c) 'excluding every change under which the commitments could matter'",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I21",
+      "I22",
+      "I26",
+      "I77",
+      "I78",
+      "I81",
+      "I85",
+      "I101"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC21 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC22",
+   "title": "The baseline alone gives no contrast",
+   "source": [
+    {
+     "line": 141,
+     "quote": "it contains the baseline \\((1,b_0)\\)."
+    },
+    {
+     "line": 255,
+     "quote": "There exist \\((a,b)\\in C\\) and a nonempty block \\(G\\subseteq\\Gamma\\) such that"
+    }
+   ],
+   "formal": "If C = {(1,b0)} and τ(1) = 1 then ¬NC2(ℰ) for every ℰ: the only pair compares the baseline with itself, and neither disjunct of the contrast holds.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I21",
+    "I22"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the baseline alone gives no contrast",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I21",
+      "I22",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC22 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC23",
+   "title": "'p because p' fails non-circular dependence through NC1 only",
+   "source": [
+    {
+     "line": 273,
+     "quote": "\"\\(p\\) because \\(p\\)\" fails non-circular dependence."
+    }
+   ],
+   "formal": "Let E_lk have Γ = {k}, L_k(τ(a),σ(b)) the answer slot for Ans_p(a,b) (I24), and no other component constraining the answer ports. (a) NC1 fails for E_lk. (b) If Ans_p is not constant on C, NC2 holds for E_lk with G = {k}: after deleting k the answer is ⊥ at both points, so an answer E_lk determined is no longer determined. So E_lk fails non-circular dependence through NC1 only; under I24's alternative (a), NC2 alone, E_lk meets non-circular dependence.",
+   "type": [
+    "strong candidate",
+    "stated result"
+   ],
+   "s100_units": [
+    "L273.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I21",
+    "I22",
+    "I24",
+    "I25"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "If this stands, the one formal clause of non-circular dependence (NC2) does not exclude the lookup; the exclusion rests on NC1, the least formal clause.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(a) NC1 fails for the lookup",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) as stated",
+       "kind": "for all",
+       "status": "counterexample found"
+      },
+      {
+       "label": "(b) with satisfiable background",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I21",
+      "I22",
+      "I24",
+      "I25",
+      "I77",
+      "I78",
+      "I79",
+      "I81",
+      "I82",
+      "I83"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC23 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC24",
+   "title": "L273's second sentence uses 'account' for a candidate",
+   "source": [
+    {
+     "line": 273,
+     "quote": "So does an account whose only substantive component restates the answer it was asked for; packaging a dependence that answers a different question beside it does not repair this."
+    }
+   ],
+   "formal": "No ℰ has Acc(ℰ) ∧ ¬NonCircular(ℰ), by (E); so 'an account' in this sentence is a candidate offered as an account (L69's 'a theory in error offered as an answer is an explanatory candidate'). Adding to Γ a component answering another question leaves the answer slot in place, so NC1 still fails (I24); FC23's remark on NC2 applies unchanged.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [
+    "matter 7: L273's second sentence"
+   ],
+   "inventions": [
+    "I24"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "packaging another dependence leaves the slot",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "L273's 'an account' names a candidate",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I24",
+      "I77",
+      "I78",
+      "I79",
+      "I81",
+      "I83"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC24 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC25",
+   "title": "Tables: a fixed table fails (F1) where the projection moves; an encoding table meets it",
+   "source": [
+    {
+     "line": 269,
+     "quote": "A **table of observed answers** has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one."
+    },
+    {
+     "line": 269,
+     "quote": "A table that encodes an organization's response to every admitted change is not a table in that sense: it meets (F1) as a decomposition does, and it is an account when it meets the other conjuncts of (E)."
+    }
+   ],
+   "formal": "(a) E_tab (I32): F1 at (a,b) ⟺ the projection of Sol_D(a,b) on the table's ports equals that of Sol_D(1,b0). So E_tab fails (F1) under C exactly when C holds a pair at which that projection moves; a setting edit that leaves it unchanged (a port set to its baseline value, or a port the table's ports do not depend on) does not make it fail. (b) E_enc, with L_k(τ(a),σ(b)) := that projection at (a,b), meets (F1) on every C.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I03",
+    "I04",
+    "I14",
+    "I32"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§17"
+   ],
+   "look": "Whether 'fails (F1) under any contract containing one' needs 'one that moves what the table records'.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(a) E_tab's F1",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(a) a setting edit that leaves the table faithful",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "(b) E_enc meets F1",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) with a port of D in no footprint",
+       "kind": "for all",
+       "status": "counterexample found"
+      }
+     ],
+     "rests_on": [
+      "I03",
+      "I04",
+      "I14",
+      "I32",
+      "I77",
+      "I78",
+      "I80",
+      "I101"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC25 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC26",
+   "title": "The pole: the forward organization meets (E) on the production contract",
+   "source": [
+    {
+     "line": 325,
+     "quote": "The forward organization is faithful under this contract."
+    }
+   ],
+   "formal": "With I65: E_fwd = D_pole with the identity transport and Γ = {c_H, c_θ, c_L} meets (F1), (F2), (A), NC1, NC2 and non-vacuity (with a scope statement) on C1 = settings of H and θ, and on C2 = C1 plus settings of L; Q reads L.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I04",
+    "I20",
+    "I21",
+    "I24",
+    "I27",
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§17"
+   ],
+   "look": "On a contract whose only non-baseline edits set L, c_L is an answer slot at every such pair (its relation becomes 'L = l', the target's answer), so NC1 would fail for the forward organization there.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "forward organization on C1",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "forward organization on C2",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "a contract whose only non-baseline edits set L",
+       "kind": "look",
+       "status": "look: not as expected"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I20",
+      "I21",
+      "I24",
+      "I27",
+      "I65",
+      "I79",
+      "I85",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC26 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC27",
+   "title": "The pole: the reversed calculation fails (F2) on the production contract",
+   "source": [
+    {
+     "line": 271,
+     "quote": "A **reversed calculation**, identification presented as production, fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's."
+    },
+    {
+     "line": 325,
+     "quote": "The reversed calculation \\(H=L\\tan\\theta\\) is not: intervening on \\(H\\) changes the target's \\(L\\) but not the calculation's \\(L\\)."
+    }
+   ],
+   "formal": "E_rev: components c'_L (L = the observed value, from the boundary), c'_θ, c'_H (H = L tan θ); τ(set H := h) = set H := h. At (set H := h, b) with h ≠ u_H: π[Sol_D] has L = h cot θ, Sol_E_rev has L = u_H cot θ. (F2) fails there.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I04",
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "Which edit τ gives E_rev for 'set H' is a choice; with τ(set H) = 1 (F2) fails at the same pair for another reason.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the reversed calculation fails (F2) at setH := h ≠ u_H",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I04",
+      "I65",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC27 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC28",
+   "title": "The pole: the reversed calculation meets (F1), (F2), (A) on the identification contract",
+   "source": [
+    {
+     "line": 325,
+     "quote": "It is faithful under the identification contract, whose edits alter the observed \\(L\\)."
+    }
+   ],
+   "formal": "On I65's identification contract (boundaries varying u_H; Q the fibre {H : H cot θ = observed L}), E_rev with τ the identity and σ(b) the observed L meets (F1), (F2) and (A).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I20",
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "Rests wholly on I65's reading of 'edits that alter the observed L'. With edits that set L (replacing c_L), D's fibre over the set value is every H, and (A) fails for E_rev.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "identification contract: boundaries varying u_H",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "with edits that set L (replacing c_L)",
+       "kind": "look",
+       "status": "look: not as expected"
+      }
+     ],
+     "rests_on": [
+      "I20",
+      "I65",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC28 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC29",
+   "title": "A contrast no admitted edit realizes witnesses nothing",
+   "source": [
+    {
+     "line": 275,
+     "quote": "A candidate whose only substantive contrast is one that no edit the target admits realizes has no pair of \\(C\\) at which the contrast appears, and fails non-circular dependence."
+    }
+   ],
+   "formal": "NC2 quantifies over pairs of C ⊆ A_D × B_D; a contrast of E at a pair of E that is the image of no pair of C witnesses nothing. If every contrast of E lies off τ[C], then ¬NC2.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I12"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "NC2's contrast lies on τ[C]",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I12",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC29 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC30",
+   "title": "(E) takes no assessor, history, provenance or wording",
+   "source": [
+    {
+     "line": 43,
+     "quote": "Within any contract, whether a transport is faithful at a pair turns on the transport and the target, and no assessor appears in (E)."
+    },
+    {
+     "line": 67,
+     "quote": "Whether a transport is faithful on a contract is independent of whether anyone tentatively accepts it."
+    },
+    {
+     "line": 277,
+     "quote": "(E) has no condition on how a mechanism came to be guessed: a mechanism meets (E) or fails it whatever led anyone to guess it"
+    }
+   ],
+   "formal": "Acc(ℰ) is a function of (D, C, b0, Q, δ, E, t, Γ, Σ, ℓ) only (Σ the stated scope, I27; ℓ the grain, I28); it takes no assessor, no Accepted_j, no history and no provenance. Faithful_C(t) is a function of (D, E, t, C). Candidates alike in these arguments have the same Acc value, whatever else differs.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I20",
+    "I27",
+    "I28"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "The stated scope Σ is a declared input; whether a declared input counts as 'the modeller' in L43's sense is left to L43 itself ('what the modeller chose to leave out lies in the stated scope').",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "Acc takes no assessor, history or provenance",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I20",
+      "I27",
+      "I28"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC30 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC31",
+   "title": "'The four conditions', five conjuncts, and L520's three sources",
+   "source": [
+    {
+     "line": 61,
+     "quote": "(Suff) sufficiency of the four conditions of Account"
+    },
+    {
+     "line": 231,
+     "quote": "meets \\(\\operatorname{Account}(\\mathcal E)\\) exactly when the following four conditions are met"
+    },
+    {
+     "line": 262,
+     "quote": "\\operatorname{Account}(\\mathcal E)\\iff \\text{(F1)}\\land\\text{(F2)}\\land\\text{(A)}\\land\\text{NonCircular}\\land\\text{NonVacuous}. \\tag{E}"
+    },
+    {
+     "line": 536,
+     "quote": "A candidate meeting all four conditions of (E)"
+    },
+    {
+     "line": 520,
+     "quote": "Account, from fidelity under change, non-circular dependence and non-vacuity (E)."
+    }
+   ],
+   "formal": "(E) has five conjuncts; Part V has four headed conditions: Component fidelity = (F1) ∧ (F2), Question fidelity = (A), Non-circular dependence, Non-vacuity. 'The four conditions' at L61, L231 and L536 are the four headings. L520's three sources cover the four headings exactly when 'fidelity under change' has the wide extent Fid⁺ (I49); with the narrow extent L189 defines, L520 names no source for (A).",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L520.s7"
+   ],
+   "round1": [
+    "round-1 change L520",
+    "what the L520 change may have disturbed: 'the four conditions' at L61, L231, L536"
+   ],
+   "inventions": [
+    "I49"
+   ],
+   "formal_core_sections": [
+    "§5",
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "five conjuncts, four headings, L520's sources",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I49"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC31 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC32",
+   "title": "L520 (after round 1) against L526's dependence order",
+   "source": [
+    {
+     "line": 526,
+     "quote": "(F1), (F2), (A) depend on (O), (Q), (K). (E) depends on those."
+    },
+    {
+     "line": 526,
+     "quote": "(O) and (Q) depend on nothing; nor do the declared indices and the declared inputs, which are stated, not defined."
+    },
+    {
+     "line": 520,
+     "quote": "Account, from fidelity under change, non-circular dependence and non-vacuity (E)."
+    }
+   ],
+   "formal": "In the formal core Acc uses (O), (Q), (K) (through F1), t, Γ, the stated scope Σ (a declared input), the grain ℓ (an index, in NC1) and the designation δ (I20). L526 gives (E) the ancestors (F1), (F2), (A) and 'those'; it names neither non-circular dependence nor non-vacuity, nor any index or declared input, among them. Test: is every argument of Acc an ancestor of (E) in L526's order?",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L520.s7"
+   ],
+   "round1": [
+    "what the L520 change may have disturbed: L526's order"
+   ],
+   "inventions": [
+    "I20",
+    "I27",
+    "I28"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§18"
+   ],
+   "look": "Expected gaps: Σ, ℓ, δ, and the two conditions L520 now names.",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "Acc's arguments against L526's order",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I20",
+      "I27",
+      "I28"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC32 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC33",
+   "title": "'Every conjunct is a condition on supplied relations; none inspects a label'",
+   "source": [
+    {
+     "line": 265,
+     "quote": "Every conjunct is a condition on how supplied relations behave under the changes in \\(C\\). None inspects a label."
+    }
+   ],
+   "formal": "(a) If E' is E with its components and ports renamed by bijections, with t, δ and Γ carried along, then Acc(ℰ') = Acc(ℰ). (b) Non-vacuity's scope clause (I27) is a condition on a declared statement, and Sol_D(1,b0) ≠ ∅ on the baseline only; NC1 is read at a grain (I28). So the first sentence holds, as written, of (F1), (F2), (A) and NC2.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I24",
+    "I27",
+    "I28",
+    "I70"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) Acc is kept by renaming E's components and ports",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) which conjuncts inspect a declared statement or a grain",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I24",
+      "I27",
+      "I28",
+      "I70",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC33 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC34",
+   "title": "Two questions, one target: what 'an answer to one is not an answer to the other' allows",
+   "source": [
+    {
+     "line": 151,
+     "quote": "Two questions with the same \\(D\\) and different \\((C,\\mathcal Q)\\) are different questions, and an answer to one is not an answer to the other."
+    }
+   ],
+   "formal": "Narrow reading (I73): there are p, p' with the same D, (C,Q) ≠ (C',Q'), and ℰ with Acc on p and not on p'. Wide reading: no ℰ has Acc on both. Test the wide reading with C' ⊊ C and the same Q: if NC2's witness pair lies in C', NC1 holds on C' and Σ' states the scope of C', a candidate meeting (E) on C meets it on C'. (NC1 can fail on C' while holding on C: a component can coincide with the answer slot on the fewer pairs of C'.) Also: Acc is neither monotone nor antitone in C.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I24",
+    "I27",
+    "I73"
+   ],
+   "formal_core_sections": [
+    "§3",
+    "§6"
+   ],
+   "look": "Expected: instances against the wide reading.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "narrow reading: Acc on one question and not the other",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "wide reading: a candidate meeting (E) on both",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "Acc not antitone in C",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "Acc not monotone in C",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "NC1 can fail on C' while holding on C",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I24",
+      "I27",
+      "I73",
+      "I77",
+      "I78",
+      "I79",
+      "I81",
+      "I85",
+      "I101"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC34 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC35",
+   "title": "'Prediction' at L151 is outside L219's definition",
+   "source": [
+    {
+     "line": 151,
+     "quote": "A measure that identifies an outcome, together with a prediction of the outcome from it through a transport faithful on the contract, answers the identification question"
+    },
+    {
+     "line": 217,
+     "quote": "Let \\(t\\) be a transport to the simulation layer \\(S\\)"
+    }
+   ],
+   "formal": "L219 defines Pred for transports whose codomain is S (L217). L151 applies 'prediction' to a transport faithful on the contract with no codomain named. Under I51, Pred_t(a,b) := Ans_E(τ(a),σ(b)) for every t, and L151's use is covered; without it, L151's use lies outside the definition.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L219.s1"
+   ],
+   "round1": [
+    "matter 6: 'prediction' at L151"
+   ],
+   "inventions": [
+    "I51"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "L151's 'prediction'",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I51"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC35 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC36",
+   "title": "What a question asks is fixed by the query and the contract, not by a label",
+   "source": [
+    {
+     "line": 151,
+     "quote": "What a question asks, production, identification, obstruction, rule-status or purpose-achievement, is fixed by the type of \\(\\mathcal Q\\) and the shape of \\(C\\), not by a label."
+    }
+   ],
+   "formal": "Under I72, Prod(p), Ident(p), Obst(p) are functions of (D, Q, δ, C) and are unchanged by renaming ports and components (δ carried along). They need not exclude one another (a query can read an output port and also compute a fibre) and do not cover rule-status and purpose-achievement.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I72"
+   ],
+   "formal_core_sections": [
+    "§3"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "production and obstruction at once",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "respects are carried by renamings",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I72"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC36 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC37",
+   "title": "The finite monotone claim",
+   "source": [
+    {
+     "line": 305,
+     "quote": "**Finite monotone claim.** If \\(\\Gamma\\) is finite, \\(\\mathsf S\\) is upward closed, and \\(\\Gamma\\in\\mathsf S\\), then \\(d\\in\\Gamma\\) is critical for some route (**contributory**) exactly when \\(d\\in\\bigcup\\min\\mathsf S\\), and \\(d\\) is **globally indispensable**, \\(\\Gamma\\setminus\\{d\\}\\notin\\mathsf S_{E,p}\\), exactly when \\(d\\in\\bigcap\\min\\mathsf S\\)."
+    }
+   ],
+   "formal": "For every finite Γ and every upward-closed S ⊆ P(Γ) with Γ ∈ S: (∃W∈S: CB({d};W)) ⟺ d ∈ ∪min S, and Γ∖{d} ∉ S ⟺ d ∈ ∩min S. Testable on every upward-closed family over |Γ| ≤ 5.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "every upward-closed family, |Γ| ≤ 5",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "S_{E,p} of random candidates",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC37 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC38",
+   "title": "Redundant routes",
+   "source": [
+    {
+     "line": 307,
+     "quote": "**Redundant routes.** \\(\\Gamma=\\{a,b\\}\\), \\(\\mathsf S=\\{\\{a\\},\\{b\\},\\{a,b\\}\\}\\): each is contributory, neither indispensable."
+    }
+   ],
+   "formal": "S = {{a},{b},{a,b}} is upward closed with min S = {{a},{b}}: a and b are contributory, neither is globally indispensable.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I30"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "redundant routes",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I30"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC38 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC39",
+   "title": "Interference",
+   "source": [
+    {
+     "line": 309,
+     "quote": "**Interference.** \\(\\Gamma=\\{a,b\\}\\), \\(\\mathsf S=\\{\\{a\\}\\}\\): the full candidate fails (E) although a subset meets it."
+    },
+    {
+     "line": 305,
+     "quote": "an addition to \\(\\Gamma\\) that stops a route being one is the interference case below, and there upward closure fails."
+    }
+   ],
+   "formal": "S = {{a}}: Γ ∉ S, {a} ∈ S, S is not upward closed, so the finite monotone claim's hypotheses fail; {a} is critical in {a}.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I30"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "interference",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I30"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC39 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC40",
+   "title": "Infinitary routes: collective criticality, and the step the first sentence leaves unsaid",
+   "source": [
+    {
+     "line": 311,
+     "quote": "every set of indices unbounded in \\(\\mathbb N\\) determines \\(x=0\\); no minimal route, and no route of one commitment, exists."
+    },
+    {
+     "line": 311,
+     "quote": "(B) records the collective contribution."
+    },
+    {
+     "line": 313,
+     "quote": "When \\(\\Gamma\\) is infinite, a block of such commitments can still be critical (Infinitary routes)."
+    }
+   ],
+   "formal": "With I31: (a) S is upward closed, Γ ∈ S, min S = ∅, no member of S has one element. (b) For W ∈ S and nonempty B ⊆ W: CB(B;W) ⟺ the index set of W∖B is bounded; every critical block is infinite, and critical blocks exist (B = W). (c) Each d_n does no work by itself (L313): for W ∈ S, W ∪ {d_n} ∈ S and W ∖ {d_n} ∈ S. (d) So L313's last sentence has an instance here. Step (c) is the one L311's first sentence does not say in words.",
+   "type": [
+    "strong candidate",
+    "stated result"
+   ],
+   "s100_units": [
+    "L311.s2"
+   ],
+   "round1": [
+    "matter 8: L311's first sentence; the second sentences of L311 and L273"
+   ],
+   "inventions": [
+    "I30",
+    "I31"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a)-(c) on eventually periodic sets",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I30",
+      "I31",
+      "I91"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC40 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC41",
+   "title": "Commitments that do no work, and why 'when Γ is infinite'",
+   "source": [
+    {
+     "line": 313,
+     "quote": "A commitment \\(d\\) of a candidate that has a route does no work by itself in it when every route stays a route after \\(d\\) is added to it and after \\(d\\) is removed from it: a candidate carrying \\(d\\) then meets (E) exactly when it meets (E) without \\(d\\), and \\(\\{d\\}\\) is critical in no route (B)."
+    }
+   ],
+   "formal": "NoWork(d) := S ≠ ∅ ∧ ∀W∈S (W∪{d} ∈ S ∧ W∖{d} ∈ S). Then (a) for every W ⊆ Γ: W∪{d} ∈ S ⟺ W∖{d} ∈ S; (b) {d} is critical in no route; (c) a finite block every member of which does no work by itself is critical in no route, so the 'when Γ is infinite' of L313's last sentence cannot be dropped.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I29"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "every family on |Γ| ≤ 4",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I29",
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC41 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC42",
+   "title": "Criticality is relative to the route",
+   "source": [
+    {
+     "line": 299,
+     "quote": "A block may be critical while no singleton in it is. Criticality is relative to the route \\(W\\) it is assessed in"
+    },
+    {
+     "line": 299,
+     "quote": "a commitment critical in one route need not be critical in the full candidate"
+    }
+   ],
+   "formal": "(a) In Redundant routes, B = W = {a,b} is critical (W∖B = ∅ ∉ S) and neither singleton is. (b) There, a is critical in {a} and not in {a,b}.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I30"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "look": "(a) needs ∅ ∉ S.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "criticality relative to the route",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I30"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC42 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC43",
+   "title": "Conflict, rivals, problems and 'easy to vary' are symmetric",
+   "source": [
+    {
+     "line": 317,
+     "quote": "the rival is then easy to vary too"
+    }
+   ],
+   "formal": "Conf(ℰ,ℰ';a,b) ⟺ Conf(ℰ',ℰ;a,b); Riv is symmetric (either offered in place of the other, I33); so Prob_j and its kind are symmetric, and ETV_j(ℰ) through ℰ' gives ETV_j(ℰ').",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I33",
+    "I37"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "symmetry",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I33",
+      "I37",
+      "I77",
+      "I78",
+      "I81",
+      "I86"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC43 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC44",
+   "title": "Two commitments with one counterpart and different relations cannot both meet (F1)",
+   "source": [
+    {
+     "line": 315,
+     "quote": "as none do when two of their active components with one counterpart have different relations there."
+    }
+   ],
+   "formal": "Under I36: if k ∈ Γ and k' ∈ Γ' have one counterpart and different relations at (a,b), then no R gives F1_ab(ℰ,R) ∧ F1_ab(ℰ',R). Under the reading 'one counterpart = the same subnetwork', there are ℰ, ℰ', R meeting both with different relations.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I14",
+    "I19",
+    "I36"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "under I36",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "the reading 'one counterpart = the same subnetwork'",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I14",
+      "I19",
+      "I36",
+      "I77",
+      "I78",
+      "I81",
+      "I101"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC44 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC45",
+   "title": "Recoded candidates, and candidates some relations let both meet, conflict nowhere",
+   "source": [
+    {
+     "line": 315,
+     "quote": "Two candidates that differ only in how they are written, one carried onto the other by a structure-preserving bijection that takes its transport with it and leaves its answers as they are, conflict at no pair"
+    }
+   ],
+   "formal": "(a) If φ: E ≅ E' with t' = φ∘t, Γ' = φ[Γ] and Ans_E'(φa',φb') = Ans_E(a',b'), then ¬Conf(ℰ,ℰ';a,b) at every pair both translate. (b) If at every such pair some R lets both meet, they conflict nowhere.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I17",
+    "I19",
+    "I20",
+    "I70"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) recoded candidates",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) some R lets both meet at every pair ⇒ no conflict",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I17",
+      "I19",
+      "I20",
+      "I70",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC45 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC46",
+   "title": "A conflict inside the contract: at most one account",
+   "source": [
+    {
+     "line": 317,
+     "quote": "(i) The rivals conflict at some \\((a,b)\\in C\\). Whatever the target does there, at most one of them is an account of \\(p\\), whether or not anyone records what it does;"
+    },
+    {
+     "line": 317,
+     "quote": "Two rivals that are both accounts on \\(C\\) conflict only outside it"
+    }
+   ],
+   "formal": "∀ℰ,ℰ' ∀(a,b)∈C: Conf(ℰ,ℰ';a,b) ⇒ ¬(Acc(ℰ) ∧ Acc(ℰ')). (If both met (E), both would meet (F1), the (F2) equation and (A) at (a,b) under the target's own relations R*: equal answers, and R* lets both.) So two accounts on C conflict at no pair of C.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I19",
+    "I21"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "two accounts do not conflict in C",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I19",
+      "I21",
+      "I77",
+      "I78",
+      "I81",
+      "I85"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC46 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC47",
+   "title": "A test at a conflict pair rules out at least one, for an assessor who can use it",
+   "source": [
+    {
+     "line": 317,
+     "quote": "recording it, the target's relations as well as its answer where their answers there agree, is a **test**. Whatever it records, an argument from what it records rules out at least one of them for an assessor who can use it"
+    }
+   ],
+   "formal": "(a) Conf(ℰ,ℰ';a,b) ⇒ ∀R ¬(Meets_ab(ℰ,R) ∧ Meets_ab(ℰ',R)); so for the recorded R*, Meets_ab fails for at least one. (b) For j who admits the forms used, whose scope holds (a,b), and for whom the record's premises about background and instruments are live, the argument 'R* at (a,b); Meets_ab(·,R*) fails; Acc requires it' puts a member in X_j(Acc(ℰ)) or in X_j(Acc(ℰ')).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I19",
+    "I38",
+    "I40",
+    "I42",
+    "I43"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§9",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) conflict excludes joint meeting",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) the argument from a test's record",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I19",
+      "I38",
+      "I40",
+      "I42",
+      "I43",
+      "I77",
+      "I78",
+      "I81",
+      "I87",
+      "I88",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC47 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC48",
+   "title": "No conflict inside the contract: answers agree there",
+   "source": [
+    {
+     "line": 317,
+     "quote": "(ii) They conflict at no pair of \\(C\\), only at admitted pairs outside it: the contract does not contain their conflict. Their answers then agree at every pair of \\(C\\), so no argument from an answer recorded in \\(C\\) rules out one of them without the other;"
+    }
+   ],
+   "formal": "If ¬Conf(ℰ,ℰ';a,b) at every (a,b) ∈ C, then Ans_E(τa,σb) = Ans_E'(τ'a,σ'b) at every (a,b) ∈ C (⊥ = ⊥, I21); so for any recorded answer at (a,b), (A) there holds for both or for neither.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I21"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "no conflict in C ⇒ answers agree",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I21",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC48 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC49",
+   "title": "The two kinds of problem exclude each other and cover every pair of rivals",
+   "source": [
+    {
+     "line": 317,
+     "quote": "(ii) They conflict at no pair of \\(C\\), only at admitted pairs outside it"
+    }
+   ],
+   "formal": "Riv(ℰ,ℰ';p) ⇒ exactly one of: some pair of C is a conflict pair; no pair of C is, and some translated pair outside C is.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I16",
+    "I17",
+    "I33"
+   ],
+   "formal_core_sections": [
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "exactly one kind",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I16",
+      "I17",
+      "I33",
+      "I77",
+      "I78",
+      "I81",
+      "I86"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC49 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC50",
+   "title": "A finer contract makes a problem of the first kind; a narrowed one leaves the problem on p",
+   "source": [
+    {
+     "line": 317,
+     "quote": "A finer contract that contains a change at which two rivals conflict makes a new question (Part III), on which, offered for it, they pose a problem of the first kind while neither is ruled out;"
+    },
+    {
+     "line": 317,
+     "quote": "A contract narrowed to leave out the pairs at which two rivals conflict also makes a different question; it solves nothing on \\(p\\), and the problem for \\(p\\) remains until at least one of them is ruled out for that assessor."
+    }
+   ],
+   "formal": "(a) If Conf(ℰ,ℰ';a,b) with (a,b) ∉ C, p' is p with C' ⊇ C ∪ {(a,b)}, and ℰ, ℰ' are offered for p' with neither ruled out for j, then Prob_j(ℰ,ℰ';p') is of the first kind. (b) For C'' ⊆ C leaving out every conflict pair, p'' ≠ p, and Prob_j(ℰ,ℰ';p) is a function of p's data and j alone, unchanged by anything about p''.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I11",
+    "I33"
+   ],
+   "formal_core_sections": [
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) a finer contract makes kind (i)",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) a narrowed contract leaves the problem on p",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I11",
+      "I33",
+      "I77",
+      "I78",
+      "I81",
+      "I86"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC50 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC51",
+   "title": "A change that separates two accounts lies outside their shared contract",
+   "source": [
+    {
+     "line": 317,
+     "quote": "a claim that one of them and not the other meets (E) on a contract with some admitted change outside \\(C\\) is a claim that such a change separates them, and must supply it"
+    },
+    {
+     "line": 568,
+     "quote": "Where two candidates that meet (F1), (F2) and (A) differ only in which component has which counterpart, the contract does not contain the distinction"
+    }
+   ],
+   "formal": "(a) If Acc(ℰ) and Acc(ℰ') on C, C' ⊋ C, Acc(ℰ) on C' and ¬Acc(ℰ') on C', then some (a,b) ∈ C'∖C has ¬(F1 ∧ (F2) equation ∧ A)_ab(ℰ'), or τ' fails the homomorphism clause on edits new in C', or the scope statements differ (NC1 and NC2 carry over from C to C'; Sol_D(1,b0) is unchanged). (b) If ℰ' is ℰ with λ' = λ∘ψ for a permutation ψ of Γ and both meet (F1) on C, then for every k and (a,b) ∈ C the projected relations of λ(k) and λ(ψk) agree under the port translations: no pair of C separates the two pairings.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I18",
+    "I24",
+    "I27"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§8"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) separation lies in C'∖C",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) two pairings",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I18",
+      "I24",
+      "I27",
+      "I77",
+      "I78",
+      "I81",
+      "I85"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC51 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC52",
+   "title": "Conflict with a claim: the first disjunct implies the second",
+   "source": [
+    {
+     "line": 315,
+     "quote": "when \\(\\chi\\) excludes what the candidate's organization and transport give there: its answer, or every relation of the target's components under which it could meet (F1), (F2) and (A) there."
+    }
+   ],
+   "formal": "Under I34: if χ excludes ℰ's answer at (a,b), then χ excludes every R with Meets_ab(ℰ,R) (Meets includes (A) at the pair, so the answer under such R is ℰ's answer). The definition reduces to its second disjunct.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I19",
+    "I34"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "look": "Under I34's alternative (χ constrains answers only), the second disjunct cannot be written and the first is the whole definition.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "first disjunct implies the second",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I19",
+      "I34",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC52 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC53",
+   "title": "Conflict with a claim rules a candidate out only with the premise that the claim speaks of the target",
+   "source": [
+    {
+     "line": 315,
+     "quote": "Where the pair is in \\(C\\), that argument rules out that the candidate meets (E) for any assessor \\(j\\) who can use it, and so who tentatively accepts \\(\\chi\\) (K2)"
+    },
+    {
+     "line": 315,
+     "quote": "Either way the argument needs the premise that \\(\\chi\\) speaks of the target under that pair's edit."
+    },
+    {
+     "line": 315,
+     "quote": "without that premise the argument rules out no candidate there; the candidate still conflicts with \\(\\chi\\)."
+    }
+   ],
+   "formal": "(a) If ConfCl(ℰ,χ;a,b), (a,b) ∈ C, Applies(χ,a,b), χ and Applies live for j, forms admitted: X_j(Acc(ℰ)) ≠ ∅. (b) There is a model (the text's pendulum, its friction component deleted by the edit) with ConfCl(ℰ,χ;a,b), ¬Applies(χ,a,b), and no argument from χ in X_j(Acc(ℰ)).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I34",
+    "I38",
+    "I40"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) with Applies",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(b) the pendulum without Applies",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I34",
+      "I38",
+      "I40",
+      "I87",
+      "I88",
+      "I89",
+      "I90"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC53 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC54",
+   "title": "Rivals given χ conflict nowhere without χ at that pair",
+   "source": [
+    {
+     "line": 315,
+     "quote": "Two candidates offered one in place of the other that conflict at a pair given \\(\\chi\\) are **rivals given \\(\\chi\\)**: for an assessor who tentatively accepts \\(\\chi\\) they pose a problem for \\(p\\) as rivals do (Problems, below), and for one who does not, they pose none on that account."
+    }
+   ],
+   "formal": "Riv_χ(ℰ,ℰ';p) := Offered ∧ ∃(a,b) ConfG_χ(ℰ,ℰ';a,b); Prob_{χ,j} := Riv_χ ∧ χ ∈ Accepted_j ∧ neither ruled out for j. Claim: ConfG_χ(a,b) ⇒ ¬Conf(a,b) (some R lets both meet, so their answers agree and the second disjunct of Conf fails). So a pair of rivals given χ that conflicts at no other pair is not a pair of rivals.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I19",
+    "I33",
+    "I34",
+    "I35"
+   ],
+   "formal_core_sections": [
+    "§8",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "conflict given χ excludes conflict",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I19",
+      "I33",
+      "I34",
+      "I35",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC54 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC55",
+   "title": "Nothing in Part VI counts rivals or orders candidates",
+   "source": [
+    {
+     "line": 317,
+     "quote": "Nothing here counts rivals or orders candidates: of one candidate, what is said is whether it meets (E) on a contract and whether it is ruled out for an assessor; of two, whether they conflict; of a candidate and a claim, whether they conflict."
+    }
+   ],
+   "formal": "Syntactic: every predicate of §§8–10 takes at most two candidates, or one candidate and one claim; none takes a set of candidates, a cardinality or an order on candidates.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§8",
+    "§10"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "syntactic: no predicate of Part VI takes more than two candidates",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC55 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC56",
+   "title": "Ruling out grows with what is accepted; withdrawal rules nothing out; absence rules out nothing",
+   "source": [
+    {
+     "line": 393,
+     "quote": "Withdrawing a premise makes the step unusable; it does not rule the conclusion out."
+    },
+    {
+     "line": 397,
+     "quote": "Where no argument usable by \\(j\\) rules out \\(\\phi\\), that absence rules out nothing, neither \\(\\phi\\) nor \\(\\neg\\phi\\)."
+    }
+   ],
+   "formal": "(a) Usable_j and X_j(φ) are monotone in Accepted_j, in Forms_j and in the contracts j declares (grain and boundary held fixed): enlarging any of them never makes an argument unusable; RO does not depend on j. So withdrawing a premise adds no member to any X_j(φ): it rules out nothing not already ruled out. (b) There are j and φ with X_j(φ) = ∅ = X_j(¬φ).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L393.s4",
+    "L389.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I38",
+    "I40",
+    "I41"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) monotone in what is accepted and admitted",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) absence rules out nothing",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I38",
+      "I40",
+      "I41",
+      "I87",
+      "I88",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC56 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC57",
+   "title": "(I2): identified at every attainable value exactly when the feature factors through the measurement",
+   "source": [
+    {
+     "line": 329,
+     "quote": "It is identified on every attainable \\(y\\) exactly when \\(f=\\bar f\\circ g\\) for some \\(\\bar f\\)."
+    }
+   ],
+   "formal": "(∀y ∈ g[Z]: |f[Z_y]| = 1) ⟺ ∃f̄: Y → F with f = f̄∘g on Z.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I63",
+    "I64"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(I2) on finite sets",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I63",
+      "I64",
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC57 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC58",
+   "title": "(I3): the kernel criterion; repeated rows; an independent calibration",
+   "source": [
+    {
+     "line": 329,
+     "quote": "For linear \\(g\\) and linear feature \\(c^\\top\\), identification is \\(\\ker g\\subseteq\\ker c^\\top\\)."
+    },
+    {
+     "line": 329,
+     "quote": "Repeating rows changes no kernel; an independent calibration can."
+    }
+   ],
+   "formal": "Z = ℝ^n, g = G ∈ ℝ^{m×n}, feature c ∈ ℝ^n: (∀y ∈ G[ℝ^n]: |cᵀ[G⁻¹(y)]| = 1) ⟺ ker G ⊆ ker cᵀ. A row in the row space of G leaves ker G unchanged; a row outside it lowers dim ker G by one.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I63",
+    "I64"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "With Z a proper subset (I64's alternative), the criterion can fail.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the kernel criterion",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "rows",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "Z a proper subset",
+       "kind": "look",
+       "status": "look: as expected"
+      }
+     ],
+     "rests_on": [
+      "I63",
+      "I64",
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC58 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC59",
+   "title": "The two balances",
+   "source": [
+    {
+     "line": 331,
+     "quote": "the kernel is spanned by \\((1,-1,-1)\\); the readings identify \\(b_B-b_A\\) and not \\(x\\)."
+    }
+   ],
+   "formal": "G = [[1,1,0],[1,0,1]] on (x, b_A, b_B): ker G = span{(1,−1,−1)}; c = (0,−1,1) gives c·(1,−1,−1) = 0 (identified); c = (1,0,0) gives 1 (not identified).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I64"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the two balances",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I64"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC59 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC60",
+   "title": "Setting a bias from the favoured mass: where the circularity can be registered",
+   "source": [
+    {
+     "line": 331,
+     "quote": "\"Set \\(b_B=0\\) because it gives the mass I favour\" is not an inference from the readings; it is circular, though the value it sets might be the target's."
+    }
+   ],
+   "formal": "(a) Two candidates with the boundary value b_B = 0, one set 'because it gives the mass I favour' and one set by an independent calibration, have the same (D, C, E, t, Γ, Σ), so the same Acc value (FC30): (E) does not register the circularity, and NC1 does not either, since the value 0 is not the answer (I24). (b) Where it can be registered is Part IX's block: an argument concluding x = m* whose premise b_B = 0 is a record MadeFrom the claim x = m* (I39) does not rule out x ≠ m* (D9.7). (c) Its value can equal the target's b_B, so (F1), (F2), (A) can hold at the baseline.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I24",
+    "I39"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§9",
+    "§17"
+   ],
+   "look": "If (a) and (b) stand, L331's 'circular' is a matter of how an input was chosen (L277: '(E) has no condition on how a mechanism came to be guessed'), not of non-circular dependence.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) (E) does not register how an input was chosen",
+       "kind": "by construction",
+       "status": "holds by construction"
+      },
+      {
+       "label": "(b) the record made from x = m* does not rule out x ≠ m*",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I24",
+      "I39",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC60 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC61",
+   "title": "(O1): an invariant blocks paths; equal values do not give paths; twenty-three tokens",
+   "source": [
+    {
+     "line": 335,
+     "quote": "For allowed steps \\(R\\) and an invariant \\(I\\) with \\(zRz'\\Rightarrow I(z)=I(z')\\), no allowed path joins states of different invariant value. (O1) Equal values do not suffice for reachability. Twenty-three indivisible tokens cannot be split equally three ways;"
+    }
+   ],
+   "formal": "(a) If zRz' ⇒ I(z) = I(z'), then R* ⊆ {(z,z') : I(z) = I(z')}. (b) There are R, I, z, z' with I(z) = I(z') and not zR*z'. (c) Distributions (n1,n2,n3) of 23 whole tokens: an equal split needs 3n = 23, which has no whole solution.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I63"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) an invariant blocks paths",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) equal values do not give paths; (c) twenty-three tokens",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I63",
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC61 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC62",
+   "title": "Eliminative explanation: the rival's structure as a deleted counterpart",
+   "source": [
+    {
+     "line": 339,
+     "quote": "An account is faithful when introducing those components changes the answer in \\(E\\) as it does in \\(D\\), and their absence leaves both unchanged. The rival's supposed structure has as its counterpart a *deleted* subnetwork, whose relation is full (Part II)."
+    }
+   ],
+   "formal": "D with a component x whose baseline relation is full (I03) and an edit a_x giving it a relation; E with k, λ(k) = {x}, baseline relation full, τ(a_x) giving k the projected relation. F1 at (1,b0): full = full; at (a_x,b0): holds when τ(a_x) gives k that relation. On C = {(1,b0), (a_x,b0)}, E can meet (E) (NC2 with G = {k}) when the answer depends on x.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I03",
+    "I14"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§17"
+   ],
+   "look": "Part XV lists this under (Nec) as a place where it may not be an account; the test can only say whether the formal conditions are met.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "eliminative explanation",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I03",
+      "I14",
+      "I78",
+      "I79"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC62 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC63",
+   "title": "Odd-order skew-symmetric matrices",
+   "source": [
+    {
+     "line": 343,
+     "quote": "Question: why is every odd-order real skew-symmetric matrix singular?"
+    },
+    {
+     "line": 343,
+     "quote": "Non-circular dependence is met: \\(I_3\\) is an instance under removal of skewness, and \\(\\begin{pmatrix}0&1\\\\-1&0\\end{pmatrix}\\) under removal of oddness."
+    },
+    {
+     "line": 343,
+     "quote": "The expansion is an account."
+    }
+   ],
+   "formal": "(a) For every odd n and every n×n M over ℝ (or GF(p), p odd) with Mᵀ = −M: det M = 0. (b) det I3 = 1; det [[0,1],[−1,0]] = 1. (c) With I66, the Leibniz candidate meets (F1), (F2), (A), NC2 and non-vacuity (the scope statement naming the edits to field arithmetic and to the determinant–invertibility link).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I03",
+    "I27",
+    "I66"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(a) odd skew-symmetric matrices are singular over GF(p), p odd",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(b)",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(c-i) the Leibniz candidate, sum over every tuple of term values",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      },
+      {
+       "label": "(c-ii) the Leibniz candidate, sum restricted to realizable term tuples",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I03",
+      "I27",
+      "I66",
+      "I81",
+      "I82",
+      "I99"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC63 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC64",
+   "title": "Functional transport",
+   "source": [
+    {
+     "line": 353,
+     "quote": "If \\(\\pi\\circ S_a=T_a\\circ\\pi\\) for every admitted generator \\(a\\), the same equation is met by every admitted finite composition with matching scopes."
+    }
+   ],
+   "formal": "If π∘S_a = T_a∘π for each generator a, then π∘S_{an}⋯S_{a1} = T_{an}⋯T_{a1}∘π for every finite word whose intermediate scopes match.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "functional transport",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC64 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC65",
+   "title": "Relational transport: simulations compose",
+   "source": [
+    {
+     "line": 361,
+     "quote": "Composition of relations preserves both directions when intermediate scopes agree."
+    }
+   ],
+   "formal": "If R ⊆ Z_D × Z_E is a forward simulation for τ and R' ⊆ Z_E × Z_F one for τ', then R;R' is a forward simulation for τ'∘τ; likewise backward; where the codomain of R lies in the domain of R'.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "simulations compose",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC65 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC66",
+   "title": "(T2): the accumulated bound, and none without a modulus",
+   "source": [
+    {
+     "line": 363,
+     "quote": "meets the bound \\(e_n\\le\\varepsilon\\sum_{k<n}L^k\\) whenever \\(z,Sz,\\dots,S^{n-1}z\\) lie in that scope. (T2) Without a modulus, no accumulated bound follows."
+    }
+   ],
+   "formal": "(a) e_{k+1} ≤ ε + L·e_k for k < n, so e_n ≤ ε Σ_{k<n} L^k. (b) There are S, T, π, d with one-step discrepancy ≤ ε everywhere, T not Lipschitz, and e_2 larger than any given number.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) the accumulated bound",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) no bound without a modulus",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I77"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC66 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC67",
+   "title": "A declared invertible recoding keeps the content",
+   "source": [
+    {
+     "line": 365,
+     "quote": "A declared, invertible recoding of a carrier preserves the content when a reader who applies the declared convention recovers every pairing (Argument 8)."
+    }
+   ],
+   "formal": "For an invertible recoding r of carrier values and a reader applying r⁻¹, the composite transport is faithful wherever the original was, and the carrier's provenance carries over (I54); so Rep is kept.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I54",
+    "I70"
+   ],
+   "formal_core_sections": [
+    "§12",
+    "§18"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "an invertible recoding keeps fidelity",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "provenance carries over (I54)",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I54",
+      "I70",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC67 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC68",
+   "title": "A failed answer stays failed",
+   "source": [
+    {
+     "line": 369,
+     "quote": "Fix a question \\(p\\), a pair \\((a,b)\\in C\\) and a value \\(y\\neq\\operatorname{Ans}_p(a,b)\\)."
+    },
+    {
+     "line": 369,
+     "quote": "and so on every question with the same target and query whose contract contains \\((a,b)\\)."
+    },
+    {
+     "line": 369,
+     "quote": "no candidate becomes an account by that (E)."
+    }
+   ],
+   "formal": "(a) Ans_E(τa,σb) = y ≠ Ans_p(a,b) ⇒ ¬A_ab ⇒ ¬Acc on p, and on every p' with the same D, Q and δ whose contract holds (a,b). (b) If j has a usable argument ruling out 'Ans_p(a,b) = y', the premise 'Ans_E(τa,σb) = y' is live and the forms are admitted, then X_j(Acc(ℰ)) ≠ ∅ for every such ℰ alike. (c) If a premise of that argument stops being live, the ruling out lapses for all alike, and Acc(ℰ) is unchanged.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I20",
+    "I38",
+    "I40",
+    "I41"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) a failed answer stays failed",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b), (c) every such candidate alike",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I20",
+      "I38",
+      "I40",
+      "I41",
+      "I77",
+      "I78",
+      "I81",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC68 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC69",
+   "title": "(K2) is well founded; the loop read in S101 closes below the step",
+   "source": [
+    {
+     "line": 390,
+     "quote": "\\operatorname{Usable}_j(u)\\iff\\operatorname{Form}_j(u)\\land\\operatorname{Scope}_j(u)\\land\\forall d\\in\\operatorname{Prem}(u),\\operatorname{Live}_j(d;u). \\tag{K2}"
+    },
+    {
+     "line": 393,
+     "quote": "\\(d\\) is the conclusion of a step of the same argument as \\(u\\) that is usable by \\(j\\)"
+    }
+   ],
+   "formal": "Under I40, Usable_j(u) is defined by recursion on height; the loop K2 → Live → a step's usability → K2 (S101) closes on steps strictly below u. Under I40's alternative (any step of the argument), there are arguments where the definition has two fixed points: a root u' concluding d with premise e, and a step u below it concluding e with premise d — both usable or both not.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L389.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I40"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "I40: recursion below the step is well founded",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "I40's alternative: two fixed points",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I40",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC69 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC70",
+   "title": "Withdrawing a premise that is live twice over leaves the step usable",
+   "source": [
+    {
+     "line": 393,
+     "quote": "Withdrawing a premise makes the step unusable; it does not rule the conclusion out."
+    }
+   ],
+   "formal": "There is an argument with a step u and d ∈ Prem(u) such that d is also the conclusion of a usable step below u and d ∈ Accepted_j; after j withdraws d, Live_j(d;u) still holds through the first disjunct, and Usable_j(u) is unchanged. So the first clause holds of a premise live by acceptance only.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L393.s4"
+   ],
+   "round1": [
+    "matter 9: a premise that stays live twice over (L393)"
+   ],
+   "inventions": [
+    "I40",
+    "I41"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "a premise live twice over",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I40",
+      "I41",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC70 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC71",
+   "title": "(K3): a failed prediction rules out the conjunction, and nothing narrower",
+   "source": [
+    {
+     "line": 395,
+     "quote": "For \\(T\\land B\\land I\\Rightarrow O\\), an argument usable by \\(j\\) that rules out \\(O\\) rules out \\(T\\land B\\land I\\) together for \\(j\\), and nothing narrower. (K3)"
+    }
+   ],
+   "formal": "(i) A usable argument concluding ¬O, a live conditional T∧B∧I ⇒ O and an admitted modus tollens give a usable argument ruling out T∧B∧I. (ii) From those premises alone no argument rules out T, B or I by itself: ¬O, (T∧B∧I ⇒ O) and T have a common model.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I38",
+    "I43"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(i) the conjunction is ruled out",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(ii) nothing narrower",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I38",
+      "I43",
+      "I87",
+      "I88",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC71 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC72",
+   "title": "The block on a premise that is the denial, and a premise taken as given",
+   "source": [
+    {
+     "line": 397,
+     "quote": "An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by \"and\", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone;"
+    },
+    {
+     "line": 397,
+     "quote": "a premise from which a step leads to the denial, as one does from \\(r\\) and \"if \\(r\\), this candidate fails (E)\", is a premise taken as given, and using it is the gamble above, not a circular argument."
+    }
+   ],
+   "formal": "(a) If ¬φ is a conjunct of a leaf (I39), then ¬RO(α,φ). (b) If a record leaf is MadeFrom ψ, then ¬RO(α,¬ψ). (c) The argument with leaves r and (r → ¬Acc(ℰ)) and one modus ponens step rules out Acc(ℰ): neither leaf has ¬Acc(ℰ) as a conjunct.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I38",
+    "I39"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a), (b), (c)",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I38",
+      "I39",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC72 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC73",
+   "title": "Inconsistent accepted premises rule out a claim and its denial alike",
+   "source": [
+    {
+     "line": 397,
+     "quote": "Where the premises \\(j\\) tentatively accepts are inconsistent, arguments from them can rule out, for \\(j\\), a claim and its denial alike;"
+    }
+   ],
+   "formal": "There are j and φ with X_j(φ) ≠ ∅ and X_j(¬φ) ≠ ∅ (for example Accepted_j ⊇ {q, q → ¬φ, s, s → φ}, modus ponens admitted).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I38"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "inconsistent premises",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I38",
+      "I87",
+      "I89"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC73 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC74",
+   "title": "A criticism occurrence can exist without bearing",
+   "source": [
+    {
+     "line": 383,
+     "quote": "A criticism occurrence can exist when (K1) fails."
+    }
+   ],
+   "formal": "The data of a criticism (target z, alleged defect δ, premise g, connection, an occurrence in a history) are defined without Acc; so there are models with a criticism occurrence c and ¬Acc(ℰ_c), that is ¬Bearing(c,z,p).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L383.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I45"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "a criticism without bearing",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I45",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC74 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC75",
+   "title": "Active routes: the excluded routes fail the definition's own clauses",
+   "source": [
+    {
+     "line": 375,
+     "quote": "A route that started and did no work, or that was already at rest when the result occurred, is not active for that result; whether a route is active is read from the history, not from the result."
+    }
+   ],
+   "formal": "Under I46: (a) a route none of whose occurrences lies on a ≺_h-chain to r inside it fails the join clause; (b) a route whose value at r does not change when i's port is set across the declared contrasts fails the dependence clause; (c) activity is a function of (h, Org_ℓ(h), i, r, K), not of r's value alone.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L375.s2"
+   ],
+   "round1": [
+    "matter 11: the undefined phrases at L375 and L385"
+   ],
+   "inventions": [
+    "I44",
+    "I46"
+   ],
+   "formal_core_sections": [
+    "§11"
+   ],
+   "look": "A route that ran to completion early, whose product persists and feeds r, is joined to r; whether it is 'already at rest when the result occurred' is not fixed by the definition.",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) a member on no chain to r",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(b) no dependence",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(c) a function of (h, Org, i, r, K)",
+       "kind": "by construction",
+       "status": "holds by construction"
+      },
+      {
+       "label": "a route at rest before the result",
+       "kind": "look",
+       "status": "look: as expected"
+      }
+     ],
+     "rests_on": [
+      "I44",
+      "I46",
+      "I95"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC75 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC76",
+   "title": "Reason use gives neither bearing nor usability",
+   "source": [
+    {
+     "line": 385,
+     "quote": "Using an objection does not give it bearing (K1) or make any argument from it usable (K2)."
+    }
+   ],
+   "formal": "Under I47, UsesReason is defined without Acc and without Usable_j; there are models with UsesReason and ¬Bearing, and with UsesReason and no usable argument from the objection.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L385.s1"
+   ],
+   "round1": [
+    "matter 11: the undefined phrases at L375 and L385"
+   ],
+   "inventions": [
+    "I47"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "reason use without bearing",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I47",
+      "I90",
+      "I95"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC76 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC77",
+   "title": "Without a physical witness, selection is met by every transport",
+   "source": [
+    {
+     "line": 195,
+     "quote": "The transport \\(t\\) is a member of \\(\\mathcal T\\) that survived."
+    },
+    {
+     "line": 205,
+     "quote": "in (R), \\(\\operatorname{Sel}(t)\\) and \\(\\operatorname{Con}(t)\\) abbreviate \\(\\operatorname{Sel}(t;\\mathcal T,\\mu,H)\\) and \\(\\operatorname{Con}(t;h,e)\\) for some such parameters"
+    }
+   ],
+   "formal": "Read with no physical witness: for every t, Sel(t; {t}, id, ∅) holds (fidelity on ∅ is vacuous, and an empty history holds nothing that represents). Then (R) reduces to 'some faithful transport exists'. With I52, Sel needs a physical selection history; test which of I52's requirements block the trivial witness.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I48",
+    "I52"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "Whether (R) keeps any content from 'selected' when the physical module is left open.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "with H = ∅ and an empty selection history",
+       "kind": "for all",
+       "status": "counterexample found"
+      },
+      {
+       "label": "the trivial witness exactly when τ is a homomorphism",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "which of I52's requirements block the trivial witness",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I18",
+      "I48",
+      "I52",
+      "I77",
+      "I78",
+      "I81",
+      "I90"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC77 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC78",
+   "title": "Exactly one of three provenances",
+   "source": [
+    {
+     "line": 193,
+     "quote": "has exactly one of three provenances, determined by its history in the physical module:"
+    },
+    {
+     "line": 201,
+     "quote": "Construction may operate on selected material. Selection may continue to operate beneath construction."
+    }
+   ],
+   "formal": "Under I53, Sel(t) ∧ Con(t) is impossible and Dec(t) := ¬Sel ∧ ¬Con, so exactly one holds. Under I53's alternative there are histories with Sel on one part and Con on another. Per part (I54), exactly one holds of each part.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L47.s2"
+   ],
+   "round1": [],
+   "inventions": [
+    "I52",
+    "I53",
+    "I54"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "exactly one provenance under I53",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      }
+     ],
+     "rests_on": [
+      "I52",
+      "I53",
+      "I54",
+      "I56",
+      "I90",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC78 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC79",
+   "title": "Survival is how the transport got there; fidelity is what it is",
+   "source": [
+    {
+     "line": 41,
+     "quote": "Whether that transport is faithful on changes it was never selected against turns on the transport and the target alone, not on whether it survived."
+    },
+    {
+     "line": 41,
+     "quote": "Survival is how the transport got there; fidelity is what it is."
+    }
+   ],
+   "formal": "Faithful_C(t) is a function of (D, E, t, C); Sel(t;𝒯,μ,H) of (t, 𝒯, μ, H, the selection history). No clause of Faithful takes 𝒯, μ or H, so two transports alike in (D, E, t) have the same Faithful value on every C.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L41.s4"
+   ],
+   "round1": [],
+   "inventions": [
+    "I49",
+    "I52"
+   ],
+   "formal_core_sections": [
+    "§5",
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "fidelity takes no population",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I49",
+      "I52"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC79 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC80",
+   "title": "Argument 3: underdetermination where the population leaves room",
+   "source": [
+    {
+     "line": 572,
+     "quote": "the value of \\(t\\) at \\((a,b)\\) is underdetermined by \\(H\\): survival on \\(H\\) does not distinguish \\(t\\) from \\(t'\\) there."
+    },
+    {
+     "line": 574,
+     "quote": "Where \\(\\mathcal T\\) contains no such transport, \\(H\\) is silent on the value at \\((a,b)\\) and the population fixes it."
+    }
+   ],
+   "formal": "(a) If t, t' ∈ 𝒯 both survive on H and value_t(a,b) ≠ value_t'(a,b) (I71) for (a,b) ∈ C∖H, the survival condition does not separate them. (b) If all survivors on H agree at (a,b), that value is a function of (𝒯, H). (c) The step 'altered at one pair gives another admitted relation' uses I02; under an action law, an alteration at one pair can force others, and (a)'s hypothesis is harder to meet.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I02",
+    "I52",
+    "I71"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a), (b) the survivors on H fix what they share",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(a) underdetermination",
+       "kind": "there is",
+       "status": "witness found"
+      },
+      {
+       "label": "(c) under an action law",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I02",
+      "I52",
+      "I71",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC80 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC81",
+   "title": "Argument 4, and who can be surprised",
+   "source": [
+    {
+     "line": 580,
+     "quote": "**Claim.** A system can be surprised only if it holds a transport selected on a history \\(H\\) strictly smaller than its contract \\(C\\)."
+    },
+    {
+     "line": 223,
+     "quote": "A system with no transport cannot be surprised. A system whose history exhausts its contract cannot be surprised."
+    },
+    {
+     "line": 223,
+     "quote": "a constructed one that fails at an actually occurring pair of its contract is violated, and the failure is not surprise"
+    }
+   ],
+   "formal": "Surp(t;a,b) := Sel(t) ∧ Viol(t;a,b) ∧ (a,b) ∈ C∖H ∧ Occurs(a,b). (a) Surp ⇒ H ⊊ C. (b) No transport ⇒ no Surp. (c) H = C ⇒ no Surp. (d) Con(t) ∧ Viol ⇒ ¬Surp (I53).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L217.s2"
+   ],
+   "round1": [],
+   "inventions": [
+    "I50",
+    "I52",
+    "I53"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(a)-(c)",
+       "kind": "by construction",
+       "status": "holds by construction"
+      },
+      {
+       "label": "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      }
+     ],
+     "rests_on": [
+      "I50",
+      "I52",
+      "I53",
+      "I56",
+      "I90",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC81 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC82",
+   "title": "The two responses to a violation have no common result",
+   "source": [
+    {
+     "line": 225,
+     "quote": "A **selection response** extends the history \\(H\\) of a selected transport and lets \\(\\mu\\) act: the transport is re-tuned within the population. A **construction response** introduces a new organization or a new transport with a construction trace."
+    }
+   ],
+   "formal": "SelResp(t → t'): t' ∈ 𝒯, reached from t by μ, surviving on H ∪ {(a,b)}; ConResp(→ t''): t'' or its codomain new, with Con(t''). Under I53 no transport is the result of both (Sel(t') excludes Con(t')).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L225.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I52",
+    "I53"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "no common result",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      }
+     ],
+     "rests_on": [
+      "I52",
+      "I53",
+      "I56",
+      "I90",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC82 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC83",
+   "title": "Only the construction response can be originative",
+   "source": [
+    {
+     "line": 225,
+     "quote": "Only the second can be originative under Part X."
+    }
+   ],
+   "formal": "Claim to test: SelResp(t → t') ⇒ ¬Origin(s,c',p,h,e) for the content c' that t' carries to. (G) needs Build, and Build needs a subhistory that prepares a represented organization for explanatory use of c' (I56). Sel(t') forbids occurrences that represent t', H or the survival condition (L195), not the organization t' carries to (which Con names, L197).",
+   "type": [
+    "strong candidate",
+    "stated result"
+   ],
+   "s100_units": [
+    "L225.s4"
+   ],
+   "round1": [],
+   "inventions": [
+    "I52",
+    "I56"
+   ],
+   "formal_core_sections": [
+    "§12",
+    "§13"
+   ],
+   "look": "The claim follows only if preparing a represented organization for c' needs t' represented, or if Build excludes subhistories that are selection histories.",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "only construction is originative",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      }
+     ],
+     "rests_on": [
+      "I52",
+      "I56",
+      "I90",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC83 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC84",
+   "title": "Every creative attribution requires construction",
+   "source": [
+    {
+     "line": 47,
+     "quote": "Construction is a separate provenance with a separate trace, and every creative attribution requires it."
+    }
+   ],
+   "formal": "Origin ⇒ Build; CreateEx ⇒ Origin ⇒ Build; the creative-episode class (L528) needs an instance of (G), hence Build; Build's subhistory is what a construction trace identifies (L405). Separate traces: Sel's history holds no represented target (L195), Con's holds one (L197).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L47.s2"
+   ],
+   "round1": [],
+   "inventions": [
+    "I53",
+    "I56"
+   ],
+   "formal_core_sections": [
+    "§12",
+    "§13",
+    "§14"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "every creative attribution requires Build",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I53",
+      "I56"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC84 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC85",
+   "title": "A content matches itself; the matching is read one way",
+   "source": [
+    {
+     "line": 413,
+     "quote": "Write \\(d\\equiv_\\ell c\\) when there are transports from \\(d\\) to \\(c\\) and from \\(c\\) to \\(d\\), both faithful on \\(c\\)'s contract at grain \\(\\ell\\)."
+    },
+    {
+     "line": 416,
+     "quote": "\\operatorname{New}(s,c,h,e)\\iff\\neg\\exists d\\in R_{<e}(s,h),\\ d\\equiv_\\ell c. \\tag{N}"
+    }
+   ],
+   "formal": "Under I48: (a) c ≡_ℓ c (the identity transport both ways), so c ∈ R_<e ⇒ ¬New. (b) d ≡_ℓ c (on C_c) can hold while c ≡_ℓ d (on C_d) fails; (N) uses only d ≡_ℓ c with c fixed.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I48"
+   ],
+   "formal_core_sections": [
+    "§13"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) c ≡ c",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(b) the matching is read one way (random)",
+       "kind": "there is",
+       "status": "no witness found"
+      },
+      {
+       "label": "(b) the matching is read one way (constructed)",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I48",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC85 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC86",
+   "title": "Repair: a protected aim failed in between is lost",
+   "source": [
+    {
+     "line": 438,
+     "quote": "\\operatorname{Repair}_{O,P}(\\xi,\\xi';\\Delta)\\iff\\exists o\\in O[\\neg o(\\xi)\\land o(\\xi')]\\land\\forall r\\in P[r(\\xi)\\Rightarrow r(\\xi')]\\land\\operatorname{ProducedBy}(\\Delta,\\xi,\\xi';O). \\tag{P}"
+    },
+    {
+     "line": 441,
+     "quote": "a protected condition is lost exactly when it fails on an occasion it covers."
+    }
+   ],
+   "formal": "Under I57: a protected r met at ξ and at ξ' and failed on a covered occasion between them makes (P) fail; r is lost ⟺ it fails on a covered occasion in [ξ, ξ'].",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L437.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I57"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "every condition, occasion set and pair of times on 4 times",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "a protected aim already failing at ξ",
+       "kind": "look",
+       "status": "look: as expected"
+      }
+     ],
+     "rests_on": [
+      "I57",
+      "I96"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC86 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC87",
+   "title": "Two sufficient contributions that both ran are both attributed",
+   "source": [
+    {
+     "line": 441,
+     "quote": "where two sufficient contributions both ran, the repair is attributed to both and the history supplies no division of the attribution that it does not contain."
+    }
+   ],
+   "formal": "ProducedBy attributes the repair to each Δ_i with an active route to it; with two such, both; no function from the history to shares of attribution is defined (a weighting is a declared input, L522).",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L437.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I46",
+    "I57"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "both contributions attributed",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I46",
+      "I57"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC87 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC88",
+   "title": "Losses outside P are exposed in the claim, not in (P)",
+   "source": [
+    {
+     "line": 441,
+     "quote": "Losses outside \\(P\\) must be exposed."
+    }
+   ],
+   "formal": "Under I58: a repair claim with aims O, P, Aims* and exposure record X is well formed ⟺ {r ∈ Aims*∖P : r(ξ) ∧ ¬r(ξ')} ⊆ X. The condition bears on the claim: (P) can hold while the claim is not well formed.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L441.s4"
+   ],
+   "round1": [],
+   "inventions": [
+    "I57",
+    "I58"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(P) holds, the claim is not well formed",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I57",
+      "I58",
+      "I96"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC88 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC89",
+   "title": "L443 (after round 1) puts 'deployable' where Deploy's type allows it",
+   "source": [
+    {
+     "line": 443,
+     "quote": "An explanatory aim requires a deployable account, or the correction of a use through one."
+    },
+    {
+     "line": 449,
+     "quote": "\\operatorname{Deploy}_{\\beta,\\ell}(s,c,\\xi';U_c)"
+    }
+   ],
+   "formal": "Deploy takes a content (L403). Under the old wording a correction (a subhistory with changes, L435) was asked to be deployable, a mismatch of type. Under the new wording (I59) both kinds of explanatory aim put Deploy on the account c, which is what (EX) asks for every o ∈ O_ex. (EX) has no condition that tells the two kinds apart; the second kind is carried only by ProducesVia.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L443.s2"
+   ],
+   "round1": [
+    "round-1 change L443",
+    "what the L443 change may have disturbed: (EX) L447–L449, ProducesVia L453"
+   ],
+   "inventions": [
+    "I59",
+    "I60"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "L443's two kinds of explanatory aim",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I59",
+      "I60"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC89 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC90",
+   "title": "The worked case's '(EX) is met' against (EX)'s conjuncts",
+   "source": [
+    {
+     "line": 628,
+     "quote": "If \\(S_1\\) was built by an owned subhistory containing a nontrivial binding construction, the binding of a persistence component to a continuity subnetwork, and \\(S_1\\) is not in the prior repertoire, then (G) is met."
+    },
+    {
+     "line": 628,
+     "quote": "and since \\(S_1\\) is an account on its contract and deployable, (EX) is met."
+    }
+   ],
+   "formal": "(EX) needs: CreativeCriticalEpisode(s,Δ,h,e); Repair; o ∈ O_ex with ¬o(ξ) ∧ o(ξ'); Origin(s,c,p_c,h,e_c) with e_c ⪯_h e; Account; c ∈ Result(Δ); Deploy(s,c,ξ';U_c); ProducesVia(Δ,c,o;ξ,ξ'). L628 states (G)'s Build and New (not Attempt), (P), Account and 'deployable'. Test which of CreativeCriticalEpisode (L429's four parts), Attempt, c ∈ Result(Δ), ProducesVia and e_c ⪯_h e the worked case's description gives, and which it leaves to be read in.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [
+    "what the L443 change may have disturbed: the worked case at L628"
+   ],
+   "inventions": [
+    "I44",
+    "I57",
+    "I59",
+    "I60",
+    "I68"
+   ],
+   "formal_core_sections": [
+    "§14",
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "the worked case's '(EX) is met'",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I44",
+      "I57",
+      "I59",
+      "I60",
+      "I68"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC90 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC91",
+   "title": "(CT1) is C ⊆ F(C) only with (CT1)'s completion read into F",
+   "source": [
+    {
+     "line": 466,
+     "quote": "\\operatorname{RetReal}(\\pi,T,C;\\chi)\\iff\\forall z\\in C\\ \\forall i\\in\\operatorname{dom}T\\ \\forall\\eta\\in\\operatorname{Exec}(\\pi,z,i;\\chi),\\ \\eta\\text{ completes with }o\\in T[i]\\text{ and }z'\\in C. \\tag{CT1}"
+    },
+    {
+     "line": 471,
+     "quote": "\\(F\\) is monotone; \\(C\\subseteq F(C)\\) is the invariant form"
+    }
+   ],
+   "formal": "Under I61: RetReal(π,T,C;χ) ⟺ C ⊆ F(C). With 'complete' read without the output condition, C ⊆ F(C) follows from RetReal and is weaker than it.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L471.s2"
+   ],
+   "round1": [
+    "matter 10: 'complete' in L471's first sentence"
+   ],
+   "inventions": [
+    "I61"
+   ],
+   "formal_core_sections": [
+    "§15"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(CT1) ⟺ C ⊆ F(C) under I61",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "the other reading is weaker",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I61",
+      "I97"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC91 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC92",
+   "title": "(CT2): monotone F and its greatest fixed point",
+   "source": [
+    {
+     "line": 471,
+     "quote": "the greatest fixed point is the union of the sets \\(D\\) with \\(D\\subseteq F(D)\\). (CT2)"
+    },
+    {
+     "line": 546,
+     "quote": "**A mathematical error.** A counterexample to the finite monotone claim, (I2), (O1), (T2), (CT2), or Arguments 1–3 under their stated assumptions."
+    }
+   ],
+   "formal": "(a) X ⊆ Y ⇒ F(X) ⊆ F(Y). (b) U := ∪{D ⊆ Z : D ⊆ F(D)} has F(U) = U and contains every fixed point (the Knaster–Tarski construction on P(Z)). (c) The D of (b) is bound in the clause and is not a question's target. (d) (CT2) has no counterexample under either reading of 'complete', since monotonicity does not use the output condition.",
+   "type": [
+    "strong candidate",
+    "stated result"
+   ],
+   "s100_units": [
+    "L471.s2",
+    "L546.s1"
+   ],
+   "round1": [
+    "round-1 change L471",
+    "what the L471 change may have disturbed: the locally bound D and how L546 names (CT2)"
+   ],
+   "inventions": [
+    "I61"
+   ],
+   "formal_core_sections": [
+    "§15"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(CT2)",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I61",
+      "I97"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC92 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC93",
+   "title": "(CT3), (CT4), and capability at one tolerance",
+   "source": [
+    {
+     "line": 479,
+     "quote": "Then \\(\\mathsf{Cap}^{q,r}_\\Omega(\\xi)\\subseteq\\mathsf{Admit}^{q,r}_\\Theta\\); \\(\\mathsf{Cap}^\\infty=\\bigcap_{q,r}\\mathsf{Cap}^{q,r}\\subseteq\\mathsf{Poss}_\\Theta\\). (CT3, CT4) Capability at a given tolerance does not imply possibility at every tolerance."
+    }
+   ],
+   "formal": "(a) Under I62, Cap^{q,r} ⊆ Admit^{q,r}. (b) Intersecting over (q,r): Cap^∞ ⊆ Poss. (c) There are models with T ∈ Cap^{q,r} and T ∉ Poss.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I62"
+   ],
+   "formal_core_sections": [
+    "§15"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) CT3, (b) CT4",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(c) capability at one tolerance",
+       "kind": "there is",
+       "status": "witness found"
+      }
+     ],
+     "rests_on": [
+      "I62",
+      "I98"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC93 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC94",
+   "title": "Recursion does not entail universality",
+   "source": [
+    {
+     "line": 509,
+     "quote": "Recursion does not entail universality; a historical extension leaves it open; a finite performance record does not suffice for it."
+    }
+   ],
+   "formal": "(a) There is a model of RC with ¬UU. (b) With 𝔈_Θ infinite (I75), no finite set of performed tasks decides UU.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I74",
+    "I75"
+   ],
+   "formal_core_sections": [
+    "§16"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "recursion and universality",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I74",
+      "I75"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC94 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC95",
+   "title": "A system can represent a theory in error",
+   "source": [
+    {
+     "line": 211,
+     "quote": "A system can represent a theory in error: the transport from carrier to content is faithful while the transport from the content's target to the content fails."
+    }
+   ],
+   "formal": "There are o, a content c = (E_c, C_c, Γ_c) and its target D_c with Rep_ℓ(o,c) and ¬Faithful for the candidate's transport t_c: D_c → E_c.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I48",
+    "I52"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "a system can represent a theory in error",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I48",
+      "I52",
+      "I90",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC95 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC96",
+   "title": "Argument 2: same counterparts, one account",
+   "source": [
+    {
+     "line": 562,
+     "quote": "(i) Their answer profiles coincide on \\(C\\). (ii) If a bijection \\(\\varphi\\) of their active components gives each \\(k\\) and \\(\\varphi(k)\\) one counterpart, the same subnetwork of \\(D\\) with port translations that are bijections onto the same ports of \\(D\\), then \\(k\\) and \\(\\varphi(k)\\) are of one kind on \\(C\\) for every \\(k\\);"
+    }
+   ],
+   "formal": "(i) A_C(ℰ) ∧ A_C(ℰ') ⇒ Ans_E(τa,σb) = Ans_E'(τ'a,σ'b) on C. (ii) If φ: Γ → Γ' is a bijection with λ'(φk) = λ(k), θ_k and θ'_φk with the same image, and F1_C for both, then β_k := θ'_φk⁻¹∘θ_k is a footprint bijection under which the signatures of k and φk read through t, t' coincide on C, when the value maps agree (I14); with different value maps they coincide only up to recoding values (I10's alternative).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I10",
+    "I12",
+    "I14"
+   ],
+   "formal_core_sections": [
+    "§4",
+    "§5"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(i) (A) for both ⇒ equal answers",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(ii) same counterparts give one kind",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I12",
+      "I14",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC96 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC97",
+   "title": "Argument 5: a contract can be an organization and a content",
+   "source": [
+    {
+     "line": 588,
+     "quote": "**Claim.** A contract \\(C\\), taken with its edits and its query, can be given the structure of an organization in the sense of (O), and can be the content \\(c\\) in (G)."
+    },
+    {
+     "line": 590,
+     "quote": "Give it ports (the edits and their boundaries), components (the closure conditions, each with the relation it imposes on its ports, as (O) requires), and admitted edits (add or remove a change; alter \\(\\mathcal Q\\))."
+    }
+   ],
+   "formal": "Under I67, D_C (membership ports, a query port, closure components, setting edits) is an organization in the sense of (O): nonempty domains, footprints, a partial composition with identity, a relation for every (j,a,b). With a contract on D_C (I48), Deploy, Build, New and (G) take it as a content.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I01",
+    "I48",
+    "I67"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "a contract as an organization",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "Deploy, Build, New and (G) take it as a content",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I01",
+      "I48",
+      "I67"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC97 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC98",
+   "title": "Argument 6 and the dependence order: acyclic, and ending where the text says",
+   "source": [
+    {
+     "line": 596,
+     "quote": "**Claim.** Every predicate in Parts II–XIII is defined in terms of \\(\\Theta\\) (including \\(\\operatorname{Org}_\\ell\\)) and, where invoked, \\(\\mathcal N\\), together with the structural vocabulary of (O) and (Q), declared indices and declared inputs."
+    },
+    {
+     "line": 526,
+     "quote": "The order has no cycle and no endless descent."
+    }
+   ],
+   "formal": "Graph: nodes the defined symbols of the formal core; an edge from a definition to each symbol it uses. Test (a) acyclicity (S101 read two loops from the wording: build–prov–rep, and K2–arg–livej, which FC69 closes under I40); (b) every sink is Θ (with Org_ℓ), 𝒩, (O), (Q), an index, or a declared input of L522. Symbols the formal core uses that are none of these on their face: Offered (I33), the restriction operation (I29), Integrated and Nontrivial (I55), Prepares, BindingConstruction, TransferComposite (I56), MadeFrom (I39), Applies (I34), Aims* (I58), O_ex (I59), the contrasts K (I46), Rule, Rec, Chg (I47), Occurs (§12), the designation δ (I20). For each: a claim read through Θ, or a primitive the text does not list?",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [
+    "L520.s7"
+   ],
+   "round1": [],
+   "inventions": [
+    "I20",
+    "I29",
+    "I33",
+    "I34",
+    "I39",
+    "I46",
+    "I47",
+    "I55",
+    "I56",
+    "I58",
+    "I59"
+   ],
+   "formal_core_sections": [
+    "§18"
+   ],
+   "look": "The loop build → prov → rep stays open unless Prepares is a primitive (I56): L405's 'prepares a represented organization' asks for (R), (R) for Sel or Con, and Con for a construction trace, which is Build's subhistory. L526 names this risk ('A representation defined only by its own construction … has not supplied its place in the order').",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "the dependence graph",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I20",
+      "I29",
+      "I33",
+      "I34",
+      "I39",
+      "I46",
+      "I47",
+      "I55",
+      "I56",
+      "I58",
+      "I59"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC98 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC99",
+   "title": "Argument 7: an account on C can fail on C'",
+   "source": [
+    {
+     "line": 606,
+     "quote": "and \\(\\mathcal E\\) can meet (E) on \\(C\\) and fail it on \\(C'\\)."
+    }
+   ],
+   "formal": "There are D, C, C', Q and ℰ with Acc on (D, C, …) and ¬Acc on (D, C', …); for example the pole's forward candidate with C1 and with C' adding an edit at which its τ gives the wrong edit of E.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I65"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "an account on C can fail on C'",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I65",
+      "I92"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC99 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC100",
+   "title": "Argument 8: structure-preserving bijections keep (E), (G), (P), (EX)",
+   "source": [
+    {
+     "line": 612,
+     "quote": "Transporting all carriers, relations, transports, histories, contracts and declared inputs along structure-preserving bijections preserves (E), (G), (P), (EX)."
+    },
+    {
+     "line": 612,
+     "quote": "The result does not apply to coarsenings, changed boundaries, or lost event identities."
+    }
+   ],
+   "formal": "Under I70: Acc(φ·ℰ) = Acc(ℰ), and (G), (P), (EX) are kept, for every structure-preserving bijection φ of all the data, NC1's answer slot and the stated scope carried along. Testable on random isomorphic copies of finite models.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I45",
+    "I70"
+   ],
+   "formal_core_sections": [
+    "§18"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(E) is kept by structure-preserving bijections",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "(G), (P), (EX)",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I45",
+      "I70",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC100 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC101",
+   "title": "Argument 9: an input–output description does not fix an account",
+   "source": [
+    {
+     "line": 616,
+     "quote": "**Claim.** If \\(M_0,M_1\\) have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both."
+    },
+    {
+     "line": 616,
+     "quote": "Parallel and priority wiring are an instance."
+    }
+   ],
+   "formal": "(a) For any function f of the projection P: P(M0) = P(M1) ⇒ f(M0) = f(M1). (b) Construct M0 (two parallel routes to the output) and M1 (a priority route with a fallback) with equal input–output projections, a question whose contract holds edits deleting internal components, and a candidate that meets (E) for one and not the other.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I29",
+    "I46"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§7"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(a) a function of the projection",
+       "kind": "by construction",
+       "status": "holds by construction"
+      },
+      {
+       "label": "(b) equal input-output behaviour, different accounts",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I29",
+      "I46",
+      "I78"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC101 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC102",
+   "title": "Argument 10: surprise, the structural failure of selection, and the constructed layer",
+   "source": [
+    {
+     "line": 624,
+     "quote": "\\(S_0\\), predicting from occupancy, predicts nothing there and is violated when the thing re-emerges at a cell consistent with its velocity. This is surprise (Argument 4)."
+    },
+    {
+     "line": 626,
+     "quote": "If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric."
+    },
+    {
+     "line": 626,
+     "quote": "Under (F1), \\(t_1\\) is faithful on the extended contract."
+    }
+   ],
+   "formal": "With I68: (a) t0 (window w) survives on H0 and is violated at the re-emergence pair, which lies in C0∖H0: Surp. (b) If the occlusion hides the thing for longer than w steps, every window-w occupancy predictor fails on the extended history (two histories with equal last-w occupancy and different re-emergence cells); if w is at least that long, an occupancy predictor can extrapolate and the failure is not structural. (c) t1 meets (F1) and (F2) on the extended contract, and each persistence component's signature read through t1 equals its thing's continuity subnetwork's (Argument 1).",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I52",
+    "I68"
+   ],
+   "formal_core_sections": [
+    "§12",
+    "§17"
+   ],
+   "look": "A single occluded cell hides a thing moving one cell a step for one step only; 'recent' has to be shorter than that gap for (b).",
+   "results": [
+    {
+     "status": "COUNTEREXAMPLE FOUND",
+     "parts": [
+      {
+       "label": "(b) first half: the occlusion outlasts the window",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(b) second half: a window longer than the occlusion",
+       "kind": "computation",
+       "status": "computed: not as claimed"
+      },
+      {
+       "label": "(a), (c)",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I52",
+      "I68",
+      "I100"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC102 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC103",
+   "title": "Argument 10: the swap, two pairings, one account",
+   "source": [
+    {
+     "line": 630,
+     "quote": "On any contract containing it that admits each edit for both things alike, composing \\(t_1\\) with the exchange of the two things gives a second transport, which sends each persistence component to the other thing's continuity subnetwork."
+    },
+    {
+     "line": 630,
+     "quote": "A claim that \"component 1 is thing 1 and not thing 2\" is a claim that some admitted change separates the two pairings of persistence components to things, and on this contract none does."
+    }
+   ],
+   "formal": "With I69: ψ an automorphism of P preserving C and the answers; t1' := t1∘ψ. (a) t1' meets (F1), (F2) and (A) on C exactly when t1 does. (b) The exchange of persistence components meets Argument 2 (ii)'s premise, so each k and its image are of one kind on C. (c) No pair of C separates the two pairings (FC51 (b)). (d) The swap edit leaves every occupancy answer unchanged.",
+   "type": [
+    "stated result"
+   ],
+   "s100_units": [],
+   "round1": [],
+   "inventions": [
+    "I10",
+    "I14",
+    "I68",
+    "I69"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "(d) the swap leaves occupancy answers unchanged",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      },
+      {
+       "label": "(a)-(c) on E9",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I14",
+      "I68",
+      "I69",
+      "I100"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC103 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC104",
+   "title": "The two extents of 'fidelity' across the text",
+   "source": [
+    {
+     "line": 189,
+     "quote": "A transport is **faithful on \\(C\\)** when it meets the component and global fidelity conditions of Part V."
+    },
+    {
+     "line": 245,
+     "quote": "Together they are fidelity at every level the contract reaches."
+    },
+    {
+     "line": 247,
+     "quote": "**Question fidelity.**"
+    },
+    {
+     "line": 520,
+     "quote": "Account, from fidelity under change"
+    },
+    {
+     "line": 630,
+     "quote": "carries the fidelity and the answers of \\(t_1\\) over"
+    }
+   ],
+   "formal": "For each line using 'faithful' or 'fidelity' (L17, L23, L37, L41, L43, L49, L67, L69, L151, L189, L195, L205, L208, L211, L220, L233, L245, L247, L271, L277, L325, L339, L403, L407, L413, L520, L576, L622, L626, L630), assign the extent under which the sentence holds as written: narrow (F1) ∧ (F2), or wide (F1) ∧ (F2) ∧ (A). Claim to test: no single extent serves every line; L189, L245 and L630 need the narrow one, L247's heading and L520 the wide one.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L220.s1"
+   ],
+   "round1": [
+    "matter 12: the narrow and wide senses of 'fidelity' (L189, L245, L247, L520, L630)"
+   ],
+   "inventions": [
+    "I49",
+    "I50"
+   ],
+   "formal_core_sections": [
+    "§5",
+    "§12"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "two extents of 'fidelity'",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I49",
+      "I50"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC104 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC105",
+   "title": "'Event' is used and never defined; 'occurrence' is defined",
+   "source": [
+    {
+     "line": 169,
+     "quote": "An **occurrence** is a physically located carrier."
+    },
+    {
+     "line": 161,
+     "quote": "Its formulation is still an event."
+    },
+    {
+     "line": 604,
+     "quote": "**Claim.** An assessment event with contract \\(C\\) and an episode in which \\(C\\) is replaced by \\(C'\\) with a construction trace are both representable without contradiction."
+    }
+   ],
+   "formal": "Under I45 every use of 'event' (L53, L55, L161, L397, L604, L612) is read as a set of occurrences. Test whether any use needs more (for example 'lost event identities' at L612, an identity of an event beyond its occurrences). Argument 6 (L596) speaks of predicates; 'event' is a sort, defined nowhere.",
+   "type": [
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L161.s2"
+   ],
+   "round1": [
+    "matter 2: 'event', never defined, beside 'occurrence' (L169)"
+   ],
+   "inventions": [
+    "I45"
+   ],
+   "formal_core_sections": [
+    "§11"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "'event'",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I45"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC105 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC106",
+   "title": "A question's three defects, as far as they can be written",
+   "source": [
+    {
+     "line": 161,
+     "quote": "A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements."
+    }
+   ],
+   "formal": "Under I76: 'incompatible baseline' is Sol_D(1,b0) = ∅ (then non-vacuity fails and no candidate has Acc) or b0 ∉ B; 'incompatible requirements' is a description whose conditions on (C, Q) have no joint instance; 'fails to pick out its alleged target' is a description met by no organization or by several, and cannot be written with p alone, since D is given in p.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L161.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I76"
+   ],
+   "formal_core_sections": [
+    "§3"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "an incompatible baseline admits no account",
+       "kind": "for all",
+       "status": "holds on all models tried"
+      },
+      {
+       "label": "the other two defects",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I76",
+      "I77",
+      "I78",
+      "I81"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC106 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC107",
+   "title": "Exposing a question's defect is another question",
+   "source": [
+    {
+     "line": 161,
+     "quote": "Exposing the defect is another question with its own contract."
+    }
+   ],
+   "formal": "The question p_δ (whether p has defect δ) has a target, contract and query of its own, so p_δ ≠ p; a candidate for it is assessed by (E) on p_δ, as in (K1).",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L161.s3"
+   ],
+   "round1": [],
+   "inventions": [
+    "I76"
+   ],
+   "formal_core_sections": [
+    "§3",
+    "§9"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "p_δ ≠ p",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I76"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC107 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC108",
+   "title": "The first sentence of non-circular dependence adds no condition",
+   "source": [
+    {
+     "line": 255,
+     "quote": "**Non-circular dependence.** The answer follows by evaluating \\(E\\) under its independent boundary conditions."
+    }
+   ],
+   "formal": "Under I23, NC0 holds of every candidate: every answer is computed by evaluating E at (τ(a),σ(b)), with σ(b) a function of b. A reading on which it adds a condition needs a notion of how an answer is computed (propagation against lookup) that (O) and (Q) do not give.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L255.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I23"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "NC0 adds no condition",
+       "kind": "by construction",
+       "status": "holds by construction"
+      }
+     ],
+     "rests_on": [
+      "I23"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC108 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC109",
+   "title": "'A mathematical error': the named claims, each under its stated assumptions",
+   "source": [
+    {
+     "line": 546,
+     "quote": "**A mathematical error.** A counterexample to the finite monotone claim, (I2), (O1), (T2), (CT2), or Arguments 1–3 under their stated assumptions."
+    }
+   ],
+   "formal": "L546 names the finite monotone claim (FC37), (I2) (FC57), (O1) (FC61), (T2) (FC66), (CT2) (FC92) and Arguments 1–3 (FC17, FC96, FC80). Each is stated in the formal core with its assumptions. A counterexample that rests on an invention is a counterexample to the formalization, not to the text, and is reported with the invention it rests on.",
+   "type": [
+    "strong candidate",
+    "stated result"
+   ],
+   "s100_units": [
+    "L546.s1"
+   ],
+   "round1": [],
+   "inventions": [
+    "I10",
+    "I12",
+    "I13",
+    "I14",
+    "I61",
+    "I63",
+    "I64",
+    "I71"
+   ],
+   "formal_core_sections": [
+    "§18"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "parts": [
+      {
+       "label": "the named results, each under its assumptions",
+       "kind": "computation",
+       "status": "computed: as claimed"
+      }
+     ],
+     "rests_on": [
+      "I10",
+      "I12",
+      "I13",
+      "I14",
+      "I61",
+      "I63",
+      "I64",
+      "I71"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC109 --scale 4 --time-cap 45"
+    }
+   ]
+  },
+  {
+   "id": "FC110",
+   "title": "The classes are defined; no membership is asserted",
+   "source": [
+    {
+     "line": 27,
+     "quote": "It does not decide whether any human, machine, institution or lineage belongs to the classes defined. It defines the classes."
+    },
+    {
+     "line": 528,
+     "quote": "**Membership.** The base class: interpretations supplying these data with typing as declared, meeting physical realization wherever a physical attribution is made."
+    }
+   ],
+   "formal": "Syntactic: each class of L528 (base, creative-episode, explanation-creation, recursive, universal) is the extension of a formula of the formal core; no axiom of the formal core places any particular system in a class.",
+   "type": [
+    "strong candidate",
+    "definition-consequence"
+   ],
+   "s100_units": [
+    "L27.s2"
+   ],
+   "round1": [],
+   "inventions": [
+    "I74",
+    "I75"
+   ],
+   "formal_core_sections": [
+    "§16",
+    "§18"
+   ],
+   "look": "",
+   "results": [
+    {
+     "status": "NOT TESTED",
+     "parts": [
+      {
+       "label": "the classes",
+       "kind": "not tested",
+       "status": "not tested"
+      }
+     ],
+     "rests_on": [
+      "I74",
+      "I75"
+     ],
+     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths\" && python3 -m model.run --claim FC110 --scale 4 --time-cap 45"
+    }
+   ]
+  }
+ ],
+ "strong_candidates": [
+  {
+   "unit": "L546.s1",
+   "line": 546,
+   "before_round_1": "tested",
+   "status": "formalizable",
+   "claims": [
+    "FC109",
+    "FC37",
+    "FC57",
+    "FC61",
+    "FC66",
+    "FC92",
+    "FC17",
+    "FC96",
+    "FC80"
+   ],
+   "why": "A list of named mathematical claims; each is stated and testable."
+  },
+  {
+   "unit": "L255.s1",
+   "line": 255,
+   "before_round_1": "tested",
+   "status": "formal only as a gloss",
+   "claims": [
+    "FC108"
+   ],
+   "why": "Read as NC0 it is met by every candidate (I23); a reading that adds a condition needs a notion of how an answer is computed that (O) and (Q) do not give."
+  },
+  {
+   "unit": "L441.s4",
+   "line": 441,
+   "before_round_1": "tested",
+   "status": "formalizable in part",
+   "claims": [
+    "FC88"
+   ],
+   "why": "Needs the set of aims considered and what 'exposed' is (I58), neither given; then it is a well-formedness condition on a repair claim."
+  },
+  {
+   "unit": "L51.s1",
+   "line": 51,
+   "before_round_1": "tested",
+   "status": "typing only",
+   "claims": [],
+   "why": "A pointer to where aesthetics sits; its formal content is the typing of 𝒩 as an input (NF16)."
+  },
+  {
+   "unit": "L517.s1",
+   "line": 517,
+   "before_round_1": "tested",
+   "status": "typing only",
+   "claims": [],
+   "why": "Lists what the physical module supplies; a signature of types, not a claim (NF17)."
+  },
+  {
+   "unit": "L389.s1",
+   "line": 390,
+   "before_round_1": "tested",
+   "status": "formalizable",
+   "claims": [
+    "FC69",
+    "FC70",
+    "FC56"
+   ],
+   "why": "(K2); well founded under I40."
+  },
+  {
+   "unit": "L437.s1",
+   "line": 438,
+   "before_round_1": "tested",
+   "status": "formalizable",
+   "claims": [
+    "FC86",
+    "FC87"
+   ],
+   "why": "(P), with the occasions read as in I57."
+  },
+  {
+   "unit": "L311.s2",
+   "line": 311,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC40"
+   ],
+   "why": "Every critical block in the example is infinite; critical blocks exist."
+  },
+  {
+   "unit": "L47.s2",
+   "line": 47,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC84",
+    "FC78"
+   ],
+   "why": "Origin, CreateEx and the creative-episode class each require Build."
+  },
+  {
+   "unit": "L383.s1",
+   "line": 383,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC74"
+   ],
+   "why": "A satisfiability claim."
+  },
+  {
+   "unit": "L443.s2",
+   "line": 443,
+   "before_round_1": "never challenged",
+   "status": "formalizable in part",
+   "claims": [
+    "FC89",
+    "FC90"
+   ],
+   "why": "O_ex is a declared marking; the sentence is read as characterizing it (I59)."
+  },
+  {
+   "unit": "L41.s4",
+   "line": 41,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC79"
+   ],
+   "why": "Faithful takes no selection parameter."
+  },
+  {
+   "unit": "L273.s1",
+   "line": 273,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC23"
+   ],
+   "why": "Rests on NC1 (I24): NC2 alone does not exclude the lookup."
+  },
+  {
+   "unit": "L225.s4",
+   "line": 225,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC83"
+   ],
+   "why": "A claim to test; it follows only on a reading of Build (I56) the text does not fix."
+  },
+  {
+   "unit": "L471.s2",
+   "line": 471,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC92",
+    "FC91"
+   ],
+   "why": "Knaster–Tarski on the powerset; clause 2 needs I61's reading of 'complete'."
+  },
+  {
+   "unit": "L520.s7",
+   "line": 520,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC31",
+    "FC32",
+    "FC98"
+   ],
+   "why": "A claim about which definitions Account is built from; tested against (E) and L526."
+  },
+  {
+   "unit": "L113.s2",
+   "line": 113,
+   "before_round_1": "never challenged",
+   "status": "typing only",
+   "claims": [
+    "FC03",
+    "FC04",
+    "FC05"
+   ],
+   "why": "The lead-in to (K); its consequences are claims."
+  },
+  {
+   "unit": "L115.s1",
+   "line": 116,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC03",
+    "FC04",
+    "FC05",
+    "FC16"
+   ],
+   "why": "(K) itself; claims are its consequences."
+  },
+  {
+   "unit": "L123.s1",
+   "line": 123,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC07",
+    "FC10",
+    "FC12"
+   ],
+   "why": "Needs I04, I06 (two readings), I09."
+  },
+  {
+   "unit": "L124.s1",
+   "line": 124,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC06",
+    "FC07",
+    "FC08",
+    "FC12"
+   ],
+   "why": "Needs I06, I07, I09; its first clause holds of every reader (FC06)."
+  },
+  {
+   "unit": "L125.s1",
+   "line": 125,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC09",
+    "FC10",
+    "FC12"
+   ],
+   "why": "Needs I08 ('the world', 'the rule'), I09."
+  },
+  {
+   "unit": "L127.s1",
+   "line": 127,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC13",
+    "FC08"
+   ],
+   "why": "The families are functions of D and C under I04 and I06."
+  },
+  {
+   "unit": "L127.s2",
+   "line": 127,
+   "before_round_1": "never challenged",
+   "status": "syntactic",
+   "claims": [
+    "FC14"
+   ],
+   "why": "A property of the definitions: none takes 'is a cause'."
+  },
+  {
+   "unit": "L127.s3",
+   "line": 127,
+   "before_round_1": "never challenged",
+   "status": "syntactic",
+   "claims": [
+    "FC14"
+   ],
+   "why": "As L127.s2."
+  },
+  {
+   "unit": "L161.s1",
+   "line": 161,
+   "before_round_1": "never challenged",
+   "status": "formalizable in part",
+   "claims": [
+    "FC106"
+   ],
+   "why": "Two defects can be written with p; the first needs a description p answers to (I76)."
+  },
+  {
+   "unit": "L161.s2",
+   "line": 161,
+   "before_round_1": "never challenged",
+   "status": "not formalizable",
+   "claims": [
+    "FC105"
+   ],
+   "why": "'Event' is defined nowhere; only under I45 does the sentence type the formulation as a set of occurrences (NF18)."
+  },
+  {
+   "unit": "L161.s3",
+   "line": 161,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC107"
+   ],
+   "why": "p_δ ≠ p."
+  },
+  {
+   "unit": "L113.s1",
+   "line": 113,
+   "before_round_1": "never challenged",
+   "status": "typing only",
+   "claims": [
+    "FC11",
+    "FC15"
+   ],
+   "why": "Fixes the parameters of (K)."
+  },
+  {
+   "unit": "L217.s2",
+   "line": 217,
+   "before_round_1": "never challenged",
+   "status": "formalizable in part",
+   "claims": [
+    "FC81"
+   ],
+   "why": "'Actually occurring' is a primitive Occurs read through the physical module."
+  },
+  {
+   "unit": "L219.s1",
+   "line": 219,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC20",
+    "FC35"
+   ],
+   "why": "Pred for transports to S; L151's use lies outside it (FC35)."
+  },
+  {
+   "unit": "L220.s1",
+   "line": 220,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC20",
+    "FC104"
+   ],
+   "why": "Needs the extent of 'fidelity' at a pair (I50)."
+  },
+  {
+   "unit": "L225.s1",
+   "line": 225,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC82"
+   ],
+   "why": "The two responses have no common result under I53."
+  },
+  {
+   "unit": "L393.s4",
+   "line": 393,
+   "before_round_1": "never challenged",
+   "status": "formalizable",
+   "claims": [
+    "FC70",
+    "FC56"
+   ],
+   "why": "First clause fails for a premise live twice over; second clause holds (monotonicity)."
+  },
+  {
+   "unit": "L375.s2",
+   "line": 375,
+   "before_round_1": "never challenged",
+   "status": "formalizable in part",
+   "claims": [
+    "FC75"
+   ],
+   "why": "Four phrases undefined ('represented input', 'operative result', 'applicable relations', 'declared contrasts'); I46."
+  },
+  {
+   "unit": "L385.s1",
+   "line": 385,
+   "before_round_1": "never challenged",
+   "status": "formalizable in part",
+   "claims": [
+    "FC76"
+   ],
+   "why": "Four phrases undefined ('structural map', 'role bindings', 'the same transition', 'operative deliberative rule'); I47."
+  },
+  {
+   "unit": "L27.s2",
+   "line": 27,
+   "before_round_1": "never challenged",
+   "status": "syntactic",
+   "claims": [
+    "FC110"
+   ],
+   "why": "The classes are formulas; no membership is asserted."
+  }
+ ],
+ "not_formalized": [
+  {
+   "id": "NF01",
+   "line": 17,
+   "quote": "A candidate would conflict with the conjecture if an argument not using these four ruled out the claim that it is a non-explanation of its question while these four cannot represent it",
+   "why": "'Is a non-explanation of its question' is not a predicate of the semantics, and 'these four cannot represent it' has no definition; only the logical shape can be written."
+  },
+  {
+   "id": "NF02",
+   "line": 536,
+   "quote": "such that an argument not using (E) rules out the claim that it is an explanation of what its question asks.",
+   "why": "(Suff) relates Account to 'is an explanation of what its question asks', which the semantics leaves outside itself; formal shape only: ¬∃ℰ [Acc(ℰ) ∧ ¬Dec(t) ∧ some argument not using (E) is in X_j('ℰ is an explanation')]."
+  },
+  {
+   "id": "NF03",
+   "line": 538,
+   "quote": "whose organization no transport can preserve under any contract on its target.",
+   "why": "The preservation clause is formal (∀C ∀t ¬Faithful_C(t)); 'rules out the claim that it is a non-explanation' is not."
+  },
+  {
+   "id": "NF04",
+   "line": 540,
+   "quote": "and the distinction does explanatory work.",
+   "why": "'Explanatory work' is not defined; the formal part of (Elim) is FC18 and FC96."
+  },
+  {
+   "id": "NF05",
+   "line": 542,
+   "quote": "a method that rewrites every construction trace as a selection history without loss",
+   "why": "'Without loss' is not defined; nor is 'explanation operates on the object layer' in the third item."
+  },
+  {
+   "id": "NF06",
+   "line": 544,
+   "quote": "A case of finding a new question that treating a contract as a content, something that can be constructed, be new, and be the originative contribution of an episode, fails to capture",
+   "why": "'Fails to capture' is not defined; the formal part of (QF) is Argument 5 (FC97)."
+  },
+  {
+   "id": "NF07",
+   "line": 201,
+   "quote": "Neither provenance is reducible to the other",
+   "why": "'Reducible' is not defined; the formal part is exclusivity (FC78)."
+  },
+  {
+   "id": "NF08",
+   "line": 151,
+   "quote": "A measure that identifies an outcome, together with a prediction of the outcome from it through a transport faithful on the contract, answers the identification question",
+   "why": "The candidate made of a measure and a prediction is not specified (organization, commitments, transport), so 'answers' cannot be checked against (E); FC35 takes up only the word 'prediction'."
+  },
+  {
+   "id": "NF09",
+   "line": 407,
+   "quote": "An inexplicit representation is not an absent one.",
+   "why": "'Written in a particular format' has no formal counterpart; formally, (R), Deploy and Build take no format argument (a syntactic property)."
+  },
+  {
+   "id": "NF10",
+   "line": 429,
+   "quote": "Closing an episode is a choice",
+   "why": "No formal content beyond the syntactic fact that no definition outputs a choice (decisions S21, S28)."
+  },
+  {
+   "id": "NF11",
+   "line": 495,
+   "quote": "An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable.",
+   "why": "'Independently characterized' and 'non-question-begging' are not defined."
+  },
+  {
+   "id": "NF12",
+   "line": 497,
+   "quote": "the coherently posed advanceable challenges",
+   "why": "'Coherently posed' and 'advanceable' are not defined, so (U2)'s domain is open."
+  },
+  {
+   "id": "NF13",
+   "line": 8,
+   "quote": "A claim that no argument rules out is only not ruled out, and gets nothing from that",
+   "why": "No notion of a claim 'getting' something exists in the semantics; formally, only the absence of any predicate triggered by NotOut (a syntactic property)."
+  },
+  {
+   "id": "NF14",
+   "line": 397,
+   "quote": "That a person can use a claim so, without containing its explanation, is a costly gamble for all creative agents",
+   "why": "No measure of cost; the text says so ('puts no measure on it')."
+  },
+  {
+   "id": "NF15",
+   "line": 45,
+   "quote": "Whether the combination is new is a question about the literature.",
+   "why": "About other theories, not a claim of the semantics."
+  },
+  {
+   "id": "NF16",
+   "line": 51,
+   "quote": "**8. \"Where is aesthetics?\"** In Part XI, as a declared appraisal relation.",
+   "why": "Strong candidate L51.s1: a pointer; formal content only the typing of 𝒩 ⊆ Act × Occ × Rsn × V_A as an input."
+  },
+  {
+   "id": "NF17",
+   "line": 517,
+   "quote": "1. The **physical module** \\(\\Theta\\): substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, tolerances, and \\(\\operatorname{Org}_\\ell\\), the organization a physical occurrence instantiates at a grain.",
+   "why": "Strong candidate L517.s1: a signature of types for the import, not a claim."
+  },
+  {
+   "id": "NF18",
+   "line": 161,
+   "quote": "Its formulation is still an event.",
+   "why": "Strong candidate L161.s2: 'event' is defined nowhere (FC105); under I45 it types the formulation as a set of occurrences and says nothing further."
+  },
+  {
+   "id": "NF19",
+   "line": 455,
+   "quote": "None is defined as another.",
+   "why": "The three aesthetic relations are typed inputs; 'none is defined as another' is a syntactic property, and no relation among them is given to test."
+  }
+ ]
+}
