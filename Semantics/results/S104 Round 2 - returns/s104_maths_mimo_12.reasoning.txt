@@ -1,0 +1,725 @@
+Let me carefully work through this task. I need to produce a report in five sections (a)–(e), under ~3000 words, ending with "END OF REPORT".
+
+Let me re-read the material and identify the items.
+
+Section 3 definitions:
+- D9.1 Claims (L397) — claims as FO sentences with ¬ and ∧; Incons classical [I38]
+- D9.2 Argument (L397) — finite tree; MadeFrom [I39]
+- D9.3 Essential premises Prem(u) [I40]
+- D9.4 Live [I41, I40]
+- D9.5 Form and scope [I42]
+- D9.6 Usability K2 (L390)
+- D9.7 Rules out (L397)
+- D9.8 Ruled out / not ruled out (L315)
+- D9.9 K3 (L395) [I43]
+- D9.10 Criticism and bearing K1 (L377–L380) [I76, H12]
+- D9.11 Reason use (L385) [I47]
+
+Claims:
+- FC56 (L393, L397) — ruling out grows with acceptance; withdrawal rules nothing out; absence rules out nothing. HOLDS.
+- FC68 (L369) — failed answer stays failed. HOLDS.
+- FC69 (L390, L393) — K2 well founded. HOLDS (and the alternative gives two fixed points).
+- FC70 (L393) — withdrawing a premise live twice over leaves the step usable. HOLDS. Bears on matter 9.
+- FC71 (L395) — K3: conjunction ruled out, nothing narrower. HOLDS.
+- FC72 (L397) — block on premise that is the denial; premise taken as given. HOLDS.
+- FC73 (L397) — inconsistent accepted premises rule out claim and denial. HOLDS.
+- FC74 (L383) — criticism occurrence without bearing. HOLDS (witness found).
+- FC76 (L385) — reason use gives neither bearing nor usability. HOLDS.
+
+No counterexamples found in this part! All claims hold. So (b) will be mostly empty: "no counterexample found in this part" — but the *look* results? There are no "look" entries here. So section (b): I should say there are no counterexamples; but I should still note places where the formal statement diverges from the words (that's section (a)) and attacks in (d).
+
+Wait — "Each counterexample (a part marked *counterexample found* or *computed: not as claimed*, and a *look* that came out *not as expected*)." Here, nothing is marked as counterexample found. FC69 has "computed: as claimed" for both parts. So (b) has no items. I can say so in one line.
+
+Now (a): does each formal statement say what the sentence says?
+
+Key divergences to find:
+
+1. **D9.6 / FC69: (K2) well founded.** The text L393 says "d is the conclusion of a step of the same argument as u that is usable by j" — this does not say the step lies *below* u. The maths (I40) invented the "below" reading to make recursion well founded. Under the alternative reading (any step of the argument), there are two fixed points (FC69 shows). So the words do not force the well-founded reading; the maths forces it by invention. This is a real parting of company: the sentence as written admits cyclic arguments where Usable is not determined (two fixed points). The maths should stand in that the recursion is needed for the semantics to be defined; but the *words* need changing to match: add "of a step below u in the tree" or the text must say the semantics is a least fixed point. I should propose wording.
+
+Also L393's wording "d is the conclusion of a step of the same argument as u that is usable by j, or a premise j tentatively accepts..." — the maths restricts Prem(u) to *essential* premises (the ones the inference form uses), while K2 as written says "∀d ∈ Prem(u)" where Prem(u) is "the premises its inference form uses" (L387). Actually L387 says "For argument step u with essential premises Prem(u), the premises its inference form uses". So that matches. OK.
+
+2. **L393 "Withdrawing a premise makes the step unusable"** — FC70 shows this is false when the premise is live twice over (also the conclusion of a usable step below). So the *sentence* is over-stated relative to (K2). This is a counterexample to the *sentence* even though the formal claim FC70 (which is the maths' own careful statement) holds. The task says: attacks against the sentences the claims formalize. FC70 is "a sentence that stood unchanged through every revision; follows from the definitions as written" — and it shows the sentence says more than K2 gives. This is exactly round-1 matter 9. So in (a) or (e): the sentence should change. Proposed wording: "Withdrawing a premise makes the step unusable, unless the premise is also the conclusion of a usable step of the same argument." Wait, but the first clause of Live is "d = concl(u') for a step u' in the subtree below u with Usable_j(u')". Hmm — but the word "premise" in "withdrawing a premise" — the premise stays as a child of u (a leaf), but it's no longer in Accepted_j; Live still holds via first disjunct. Actually careful: if d is a leaf of the argument and also the conclusion of a step below u... a leaf cannot be a conclusion of a step; leaves are record leaves or stated assumptions. So the configuration: d is in Prem(u) (a child of u), and d is also the conclusion of a step u' below u. In a tree, a node is either a leaf or an internal node; children of u that are internal nodes have their own subtrees. So if d = concl(u') for u' below u — the child node of u that carries d could itself be a step (internal node) whose conclusion is d. Then "d is also in Accepted_j" and withdrawing it leaves Live via the first disjunct. Yes, that's the configuration: the premise is a step's conclusion (an internal node) and also a claim j accepted; withdrawal removes the acceptance but the step below still makes it live. Right.
+
+So the sentence "Withdrawing a premise makes the step unusable" is false in that configuration. Change needed. The owner's words: S21 "Nothing must happen" — well, the wording shouldn't say what must happen to a candidate; this is about a step, fine. Also decision S23: "argument is short hand for reasons why this and not that" — my proposed wording should obey S23 (no verificationist words like "supports", "proves", "reason to believe"). Words like "ruled out" are the text's own; "unusable" is fine.
+
+Proposed replacement for L393 first sentence:
+```
+> L393 | Withdrawing a premise makes the step unusable, unless the premise is also the conclusion of a usable step of the same argument, lower down; it does not rule the conclusion out.
+```
+Hmm — but careful: "Withdrawing a premise makes the step unusable" — what does withdrawal of a premise mean if the premise is a step's conclusion? Actually the point is the sentence asserts a general rule; the exception is when the premise is live by another route. Let me phrase: "Withdrawing a premise that is live only by acceptance makes the step unusable; it does not rule the conclusion out."
+
+That is cleaner and matches FC70's finding ("So the first clause holds of a premise live by acceptance only"). Good.
+
+3. **D9.4 Live's first disjunct requires "usable by j"** — recursion. The text says the same. But the ordering "below u" is the invention. Also note: the text says "a step of the same argument as u" — "the same argument" — argument is an argument tree (L397). Fine.
+
+4. **D9.7 Rules out.** Text: "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)". The maths: RO(α,φ) ⟺ Incons(φ, concl(root)) and no leaf has ¬φ as conjunct and no record leaf MadeFrom ψ whose denial is φ. Text adds: "An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by 'and', read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial."
+
+Hmm, the maths writes RO at the level of the whole argument α (conclusion = concl(root)), while the text also says "Each step of an argument rules out the case in which the step's premises are met and its conclusion fails". The maths (D9.7) covers the step level partly: "A step u, for j with Form_j(u), rules out the case Prem(u) ∧ ¬concl(u)". Fine.
+
+Divergence: "the claim's denial is among its premises" — the maths checks leaves' conjuncts only. But a premise of a step could be an internal node's conclusion, not a leaf; if ¬φ is the conclusion of an internal step, is it "among its premises"? The text says "among its premises" of the *argument* (the premises of an argument = its leaves, per L397: "argument steps whose leaves are premises"). So premises of an argument = leaves. But the block sentence says "when the claim's denial is among its premises, alone or joined to other claims by 'and'". So leaves. The maths's flattening of conjunctions at leaves matches "alone or joined to other claims by 'and'". But what if ¬φ is the conclusion of a sub-step rather than a leaf? Then it is not a leaf, but the argument derives ¬φ... hmm, but the conclusion of the root is inconsistent with φ; if ¬φ is derived internally, then... Actually if ¬φ is derived by a step inside the argument, then the argument's premises entail (via admitted forms) ¬φ, and the root concludes something inconsistent with φ. Is this circular? The text's block is about the denial being *among its premises*, structurally. If ¬φ is derived from premises, then those premises are "a premise from which a step leads to the denial" — and the text at L397 explicitly says: "a premise from which a step leads to the denial, as one does from r and 'if r, this candidate fails (E)', is a premise taken as given, and using it is the gamble above, not a circular argument." So the text explicitly distinguishes: derivation of the denial from a premise is NOT blocked. Good, so the maths matches: only leaves with ¬φ as conjunct are blocked. OK so D9.7 seems faithful, modulo I39's flattening.
+
+But: there's a subtlety. The block says "nor does an argument whose record leaf was made from a claim rule out that claim's denial." The maths: "no record leaf of α is made from a claim whose denial is φ" i.e., MadeFrom(leaf, ψ) and ¬RO(α, ¬ψ). RO(α,φ) requires Incons(φ, concl). If a record leaf was made from ψ, the argument cannot rule out ¬ψ. The maths: "¬RO(α,¬ψ)" — i.e., for φ = ¬ψ. Yes matches.
+
+Hmm, but the text's phrase "nor does an argument whose record leaf was made from a claim rule out that claim's denial" — is this only when that record leaf is used in the derivation? "an argument whose record leaf was made from a claim" — the argument contains the leaf. The maths applies it to α containing the leaf. But what if the leaf is a premise that is not essential (not in Prem(u))? Then the argument contains it but the step doesn't use it. Hmm. Under I40, Prem(u) is the subset of children the form uses. A leaf could be a child of a step but not essential. Does the block still apply? The text says "an argument whose record leaf was made from a claim" — argues for the block applying to any leaf of the argument. But arguably the block should track *dependence*: if the ruling out doesn't depend on that leaf, then no circularity. This is a genuine open point: the text says "read structurally as non-circular dependence reads identity" — dependence. The maths' RO checks all leaves of α regardless of essentiality. Actually wait — RO(α,φ) is defined on the argument α: "no leaf of α has ¬φ as a conjunct". If a leaf exists in the tree but is not essential to any step on the path to the root, does the argument "use" it? The text's L397: "the claim's denial is not among its premises (below)" where premises of an argument = its leaves. So the text as written blocks on any leaf. So maths matches the words. But maybe the words should be refined to essential premises. Hmm — but I should note where they part. I'd note: the maths blocks on every leaf, the words say "among its premises", and L397 defines an argument's premises as its leaves, so they agree; but the block then holds for a leaf the inference forms never use, which is more than "non-circular dependence" suggests. It's a candidate refinement. Under "keep apart what the text forces and what a reader might take it to mean": text forces leaf-level blocking. I could note this and propose nothing, or propose wording. I think I should note the divergence and propose to say "essential premises" — hmm. But careful: the rules say proposals must obey S23 etc. Let me think about whether to propose. The passage "read structurally as non-circular dependence reads identity" suggests dependence. If the denial is a leaf that no step uses, the argument does not depend on it, so blocking it is over-blocking: it would prevent ruling out where no circularity exists. But the text says plainly "among its premises". I think I should note this as a parting: maths follows words; the words over-block; a change is available but it's the owner's call? No — the task says say which should stand. I'd say: the words should change, to essential premises, because the reason given ("non-circular dependence") is about dependence. Give exact wording. Actually, hold on: is this within scope? L397 is quoted in D9.7. Yes. But is this a counterexample? No claim was tested on it (FC72 only tested leaf conjuncts). It's a divergence in (a). Let me include a short entry under (a) for D9.7.
+
+Hmm, but I have a word budget of 3000. Let me prioritize.
+
+Let me list the strongest findings:
+
+**(a) divergences:**
+
+1. **D9.6/FC69 vs L390/L393 — well-foundedness.** The words do not say "below u"; the maths invents it (I40). Under the words as they stand, K2 has two fixed points on a two-step loop (FC69 computes this). So the formal statement does *not* say what the sentence says — it says less (it picks one of the readings). Which should stand? The maths (the below-reading) should stand as the semantics; the words should change to fix it. Proposed wording replacing the Live clause in L393:
+```
+> L393 | ... Live_j(d;u): d is the conclusion of a step of the same argument as u, lying below u, that is usable by j, or ...
+```
+Wait, I must give the whole sentence as it would stand. Let me get L393 exactly:
+
+> L393 | \(d\) is the conclusion of a step of the same argument as \(u\) that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\).
+
+Proposed:
+```
+> L393 | \(d\) is the conclusion of a step of the same argument as \(u\), lying below \(u\), that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\).
+```
+
+And maybe add to L390 or L393 that Usable is read by recursion on height. Actually simpler: "lying below u" suffices.
+
+2. **FC70 / L393 "Withdrawing a premise makes the step unusable"** — over-stated. Change:
+```
+> L393 | Withdrawing a premise that is live only by acceptance makes the step unusable; it does not rule the conclusion out.
+```
+Hmm, careful: "live only by acceptance" is a bit of a mouthful but precise. Alternatively "Withdrawing a premise makes the step unusable when the premise is live by nothing else". Let me write: "Withdrawing a premise makes the step unusable when it is not also the conclusion of a usable step below \(u\); it does not rule the conclusion out." Hmm, but which is better? The first: "Withdrawing a premise that is live only by acceptance makes the step unusable; it does not rule the conclusion out." I'll go with that.
+
+Wait — actually, is this within the owner's decisions? Yes: it's about a step's usability, not what happens to a candidate. Fine.
+
+3. **D9.10 Bearing vs L377 — H12.** The words say "Let p_δ be the question whether z has δ in respect of p, and ℰ_c the explanatory candidate (Part V) for p_δ whose organization is the criticism's connection from g to δ, with its transport and its identified commitments." The maths *supplies* p_δ and ℰ_c with the criticism (tagged [I76], but I76 covers only the defects of a question, L161). So the formal statement makes p_δ and ℰ_c data of c, whereas the words let them be derived: "the question whether z has δ in respect of p" reads as constructed from z, δ, p; and "ℰ_c the explanatory candidate for p_δ whose organization is the criticism's connection" reads as *picked out* (uniquely?) by the connection. The maths does not compute p_δ from z, δ, p, nor verify that ℰ_c is an explanatory candidate in the sense of Part V beyond assembling (Conn, p_δ, t_c, Γ_c, δ_c). So D9.10 says more than L377 fixes: it invents the data. Since Bearing is defined as Acc(ℰ_c), the accuracy of the assembly matters. I should say: the words should fix the construction: p_δ is formed from z, δ and p; ℰ_c is the candidate whose organization is Conn etc. Also, is ℰ_c unique? "the explanatory candidate ... whose organization is the criticism's connection" — definite article implies uniqueness. The maths treats it as supplied. Proposal: wording to make explicit.
+
+But careful with the rule: "Do not propose anything about what hard to vary covers" — fine.
+
+Proposal wording for L377: I'd need to give the whole sentence as it stands and the replacement. Maybe I write:
+
+```
+> L377 | Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments.
+```
+replacement:
+```
+> L377 | Let \(p_\delta\) be formed from \(z\), \(\delta\) and \(p\) as the question whether \(z\) has \(\delta\) in respect of \(p\), and let \(\mathcal E_c\) be supplied with the criticism as the candidate for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments; where more than one such candidate exists, the criticism carries which one.
+```
+Hmm, that last clause addresses uniqueness. But it introduces "supplied with the criticism", which is exactly the maths' invention being written into the text — I must say so: "A proposal that writes an invention into the text says so, naming it." So I say: this writes I76/H12's choice (that p_δ and ℰ_c are supplied with c) into the text — actually it writes H12's added choices. I must name: "writes H12's additions (D9.10) into the text".
+
+Hmm, but is it better to keep the construction derived? The alternative: derive p_δ from (z,δ,p) — the text already says "the question whether z has δ in respect of p", so a construction is implied. The maths just takes it as supplied. I think the cleanest proposal: state that p_δ is formed from z, δ and p by the fixed query (I20? no...). Hmm. Actually careful: p_δ is "the question whether z has δ in respect of p" — a question with target z, query δ in respect of p. Part V's questions have D, Q, contract... The maths couldn't compute it and supplied it. Which should stand? I'd say the words should say the construction is supplied with the criticism where it cannot be formed — but this is a semantics, and the cleanest is: p_δ and ℰ_c are data of the criticism; the text should say so. Because "the question whether z has δ in respect of p" is a definite description that the semantics cannot reduce to the fixed query machinery. So the words should carry "supplied with the criticism". Yes, and I name the invention written in (H12's additions / I76's tag is misplaced).
+
+Also H12 notes I76's tag is wrong (it fills for L161 only). So one proposal could be: change the tag [I76] to [H12]? But tags are the maths' own; the report is about text vs maths. In (c) I treat H12 as an unrecorded choice: the text does not settle it; give exact wording the text should carry. Good — I'll put the wording in (c) for H12 rather than (a). Hmm. But (a) is "does each formal statement say what the sentence says" — D9.10 vs L377. I'll give a brief (a) note and put the wording in (c). Actually the report format says "one entry per item you have something to say about". To avoid duplication, I'll put D9.10's divergence in (a) with the wording, and in (c) H12 entry referring to it. Or simpler: give the wording once, in (a), and in (c) say "settled by the wording proposed under D9.10 above". Let me decide as I write.
+
+4. **D9.9 (K3) vs L395.** Text: "For T∧B∧I ⇒ O, an argument usable by j that rules out O rules out T∧B∧I together for j, and nothing narrower. (K3)". Maths (I43): (i) requires the conditional live for j and j admits modus tollens; then the extended argument rules out T∧B∧I. (ii) "nothing narrower": from those premises alone no argument rules out T, B or I, classically.
+
+Divergence: The words say flatly "rules out T∧B∧I together for j" — no condition of modus tollens or liveness. The maths adds conditions. Which should stand? The words say "an argument usable by j that rules out O rules out T∧B∧I" — but for a step to go from ¬O to ¬(T∧B∧I) you need an admitted form (MT) and the conditional as a live premise. If j does not admit MT, no argument rules out T∧B∧I. So the words say more than the machinery gives: K3 as written asserts unconditionally what the machinery gives only under I43's conditions. So the maths is more careful; the words should change to carry the conditions. Proposal:
+
+```
+> L395 | For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), with that conditional live for \(j\) and its modus tollens admitted, rules out \(T\land B\land I\) together for \(j\), and nothing narrower. (K3)
+```
+
+But also "nothing narrower" — the maths reads it as a *model-theoretic* claim: from ¬O and the conditional and T there's a common model, so no argument rules out T alone. But "nothing narrower" might mean: the ruling out does not isolate which conjunct failed — that's an epistemic point, not "no argument at all rules out T". Actually careful: it says "rules out T∧B∧I together for j, and nothing narrower" — I read: the argument rules out the conjunction, and does not rule out any proper part. The maths' (ii) says: from those premises alone, X_j(T), X_j(B), X_j(I) gain no member. That's a statement about the *test alone* not ruling out narrower things — matching "from those premises alone". But the words say flatly "and nothing narrower", which, read without the qualifier, would say no argument whatsoever rules out T — clearly false in general (j might have another argument ruling out T alone). So the words need the qualifier "by that argument / from that alone". Hmm, actually the words say "(K3)" as a principle about what a test rules out: "For T∧B∧I ⇒ O, an argument ... that rules out O rules out T∧B∧I together ... and nothing narrower." The subject is "an argument ... that rules out O"; "rules out ... and nothing narrower" — the argument rules out the conjunction and nothing narrower. So the claim is about that argument: it does not rule out T alone. But an extended argument could rule out T alone if j has other premises. Hmm — with the test premises alone, no. Since the claim is scoped to "an argument that rules out O", the argument's own premises might include more. So (ii) should read: that argument rules out no narrower claim *by that route*? This is subtle. The safest fix: "and by that ruling out, nothing narrower". Let me write:
+
+```
+> L395 | For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), where that conditional is live for \(j\) and \(j\) admits modus tollens, rules out \(T\land B\land I\) together for \(j\), and by that ruling out nothing narrower. (K3)
+```
+
+Hmm, "by that ruling out nothing narrower" is clunky. "and that ruling out reaches nothing narrower (K3)". Let me refine later.
+
+Actually, hold on. Should I also address: does K3 need modus tollens? The text might intend (K3) as a *constraint on what counts as ruling out* rather than a theorem of (K2). I43's "other choices" includes (b): (K3) as a definition of what a test rules out, not a consequence of (K2). That's a legitimate alternative: the text presents K3 as a standalone principle ("What a test rules out"). If it's a definition, then no MT needed. So the divergence is genuine and the choice is open. I should say: the words present K3 as a standalone claim; the maths makes it a consequence of (K2) plus MT and liveness. Which should stand? Given the text's framing ("What a test rules out ... (K3)"), and given S25–S27 (tests and physical instantiation...), hmm. Actually K3 is about explanation-level conflicts too. I'd say: the words should stand as a principle, but they must say what it rules out *for j*: I'd propose the wording carrying the conditions, since the semantics derives it from (K2). Or propose K3 as a definition of ruling out by test. Let me think about which is better for the theory. The text says at L395: "an argument usable by j that rules out O rules out T∧B∧I together for j, and nothing narrower." The claim is about *arguments* and *ruling out*, both defined in Part IX by K2 and the ruling-out relation. So it is naturally a consequence, and the conditions (MT admitted, conditional live) are needed. Since the words say the antecedent already includes "an argument usable by j that rules out O" — if the argument is usable and rules out O... to *extend* it to rule out T∧B∧I you need the conditional as a premise and MT. So the conditions belong. I propose the wording with conditions.
+
+5. **D9.11 Reason use vs L385.** Words: "A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route." The maths (I47) invents everything: role bindings as maps from role names to ports, Rec and Chg declared sets, Rule declared, trans(m(ρ·ob)) = trans(m(ob)), etc. The words are wholly vague ("structural map", "role bindings", "the same transition", "operative deliberative rule" — flagged Vague, defined nowhere). So the maths says things the words do not: it says reason use is decidable given declared Rec, Chg, Rule. Which should stand? The words cannot be made precise without invention; the text should either carry the definitions or say they are declared per system. I'd propose wording that writes I47 in — but that's a big write-in. Alternatively propose: keep the sentence and add that the map, the recodings, the changes and the rule are declared by the system (data), i.e., minimal write-in of I47's "declared" stance. Proposal:
+
+```
+> L385 | A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route; the map, the role bindings, the recodings, the changes and the operative deliberative rule are declared for the system, and reason use holds when some such declaration makes the four conditions hold.
+```
+Hmm, that's a write-in of I47's "declared" stance. Must say so: "writes I47's declared-inputs choice into the text". Also "the same transition" remains vague. Maybe I propose to spell: "sends content-preserving recodings to the same transition" → "sends content-preserving recodings to recodings of the response that take the same route"? Careful — inventing. Hmm.
+
+Given word limits, maybe: (a) note that D9.11 is not the sentence's content, it is one of several possible precisifications; the words should stand unchanged *as far as they go* but they leave the four phrases undefined and the semantics cannot check them; the text should either carry the definitions (writing I47 in) or say the phrases are per-system declarations. I'll give one proposal that writes I47's declared stance in (naming it). Keep it short.
+
+Actually, careful about a rule: "A wording you propose obeys decision S23" — no "supports", "fits", "believes", "true", "established", etc. "uses a reason" is the text's own; "declared" fine.
+
+6. **D9.5 Scope vs L393.** Words: "Scope_j(u): u is applied within the contract, grain and boundary j has declared for it". Maths (I42): C_u ⊆ C_j(u), ℓ_u = ℓ_j(u), β_u = β_j(u). The words say "within the contract ... j has declared for it" — "within" suggests inclusion for contract, but grain and boundary: "within the grain"? The maths uses equality for grain and boundary. Is equality what "within" means for grain? Grain is a scale; "within the grain" is odd. Divergence: maths uses ⊆ for contract but = for grain and boundary; words say "within" for all three jointly. The alternative (a) equality of contracts is listed. So the words are open. Does the text settle it? "applied within the contract, grain and boundary j has declared" — I read: the step's application index lies within (is no broader than) what j declared. For grain: a step at a finer grain than declared... "within the grain" would mean no finer? Ambiguous. I should say the text does not settle it and propose wording: "Scope_j(u): u's contract is contained in the contract j has declared for it, and u's grain and boundary are the grain and boundary j has declared". That writes I42's choice in. Or leave open. I think propose the wording (naming I42). Small entry.
+
+Hmm — is Scope even used in this part? D9.5 is used by D9.6 (K2). Yes, Scope_j(u) is part of K2. So it's in scope (K2 quoted at L390). Fine.
+
+7. **D9.2 Argument: leaves are premises.** L397: "A record leaf is a reference to an event with an interpreted claim. An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions." Maths matches. But note: "argument steps whose leaves are premises" — the maths allows a step to have a conclusion and children = premises. Fine. MadeFrom primitive [I39] — text says "an argument whose record leaf was made from a claim" — "made from" is a primitive in the text too, arguably. The text uses it without definition; the maths makes it primitive. Does the text settle it? It names the relation but doesn't define it. FC72 (b) relies on it. In (c) for I39: the text does not define "made from"; propose wording? "Made from a claim" relates a record leaf to the claim it was produced from — e.g., a record of an observation made under an assumption. Hmm. Given word budget, maybe a short entry.
+
+8. **FC56 — "absence rules out nothing".** The text L397: "Where no argument usable by j rules out φ, that absence rules out nothing, neither φ nor ¬φ." And L8: "A claim that no argument rules out is only not ruled out, and gets nothing from that" (NF13). The maths formalizes (b) as X_j(φ) = ∅ = X_j(¬φ) possible. That's faithful. But (a): monotonicity in Accepted_j etc. — "Ruling out grows with what is accepted; withdrawal rules nothing out". Wait, is monotonicity in Accepted_j really forced? X_j(φ) = {α : Usable_j(α) ∧ RO(α,φ)}. Enlarging Accepted_j makes more things live, so more arguments usable — yes monotone. But could enlarging Accepted_j ever make an argument *un*usable? Live has only positive conditions; Form and Scope don't depend on Accepted. So no. Holds. But careful: Accepted_j over time — withdrawal. FC56 (a) says withdrawing adds no member to any X_j(φ). But wait: withdrawal makes arguments unusable, so X_j can only *shrink*, not grow. So "it rules out nothing not already ruled out" is right. Good.
+
+Hmm, but here's an attack for (d): Under the alternative reading of Live's first disjunct (any step, least fixed point), monotonicity could fail? With least fixed point, enlarging Accepted still monotone. Fine.
+
+Another attack on FC56: the claim (b) says there are j, φ with X_j(φ)=∅=X_j(¬φ) — trivially, e.g. j with no forms and no accepted claims. Faithful to the words. Fine.
+
+But wait — the *sentence* at L397 "that absence rules out nothing, neither φ nor ¬φ" and L8 "gets nothing from that". Fine, holds.
+
+However: is FC56's title claim "Ruling out grows with what is accepted" a text claim? The text doesn't say ruling out grows with acceptance explicitly... L393 defines live via acceptance; L315 defines ruled out via usable arguments. So monotonicity is a consequence, not a stated sentence. The claim says "a sentence that stood unchanged through every revision; follows from the definitions as written" — the sentences are L393 and L397 quoted. Hmm, L393's sentence is "Withdrawing a premise makes the step unusable; it does not rule the conclusion out." FC56 (a) formalizes "withdrawal rules nothing out" — matches the second clause. Fine.
+
+Attack for (d) on FC56: Consider a case where withdrawal makes an argument unusable but there's another argument... no, X_j only shrinks. What about the claim "Withdrawing a premise makes the step unusable; it does not rule the conclusion out" — FC56 says "So withdrawing a premise adds no member to any X_j(φ): it rules out nothing not already ruled out." True. But note: withdrawal could *remove* rulings out. The sentence says "it does not rule the conclusion out" — meaning the withdrawal doesn't itself rule out the conclusion. Fine.
+
+Hmm, but here's a subtle issue: is X_j really monotone in Accepted_j *when the argument's leaves are "stated assumptions and definitions"*? If j withdraws a claim that is a leaf... The leaf remains in the tree (a stated assumption), but Live fails, so the step becomes unusable. Fine.
+
+Another possible attack: RO does not depend on j (stated). But "the claim's denial is not among its premises" — structural, fine.
+
+Now, what about **FC68** — "A failed answer stays failed". Text L369: "Fix a question p, a pair (a,b) ∈ C and a value y ≠ Ans_p(a,b)... no candidate becomes an account by that (E)." The maths (a) says Ans_E(τa,σb) = y ⇒ ¬A_ab ⇒ ¬Acc on p and every p' with same D, Q, δ whose contract holds (a,b). Is this faithful? The text at L369 presumably is about the failed answer of Part VIII — a candidate whose organization gives y at (a,b) where the answer is not y fails the requirement A_ab... I don't have the full L369 text but the quoted fragments. The formal statement (b) and (c) are about ruling out by arguments — text says nothing about that. (b),(c) are inventions-derived claims ("computed: as claimed"). Divergence: (b) says "If j has a usable argument ruling out 'Ans_p(a,b)=y', the premise ... then X_j(Acc(ℰ)) ≠ ∅ for every such ℰ alike." The text says nothing about arguments here. So (b) and (c) are not the text's sentences; they extend. I should note: the text does not say anything about (b) and (c); the claim "holds" is about the machinery. Fine — short note in (a): FC68(b),(c) have no text sentence; they are consequences of the definitions. Actually the claim header says "a result the text states" and quotes L369 fragments. The formal (a) is the text's; (b),(c) are extra. I'll note that (b) and (c) are not sentences of the text and so neither confirm nor trouble it.
+
+Similarly FC56's (a) monotonicity is a consequence, not a sentence; but "withdrawal rules nothing out" is a sentence.
+
+Now **FC71** divergence with words (modus tollens) — covered above.
+
+**FC72** — divergence: the maths blocks on leaves' conjuncts, and the "premise taken as given" clause (c) confirms no block for derived denial. Matches words. But there's the essentiality point (block applies to unused leaves). Also: the words say "the claim's denial is among its premises, alone or joined to other claims by 'and'". The maths flattens conjuncts "up to renaming and the order of conjuncts". But what about ¬φ joined by 'and' where the leaf says (χ ∧ ¬φ ∧ ψ)? Flattening handles. What about a leaf stating ¬(φ ∨ θ), which is equivalent to ¬φ ∧ ¬θ — not a conjunct occurrence structurally. The text says "not by logical equivalence alone", so structural reading excludes it. Matches I39(a)-(b). Fine.
+
+But one more: the text says "read structurally as non-circular dependence reads identity (Part V)" — referring to NC1 and Part V's structural identity, which the maths could not define (I24, I39). So the words lean on Part V's undefined notion. Note in (a): D9.7 gives one structural reading; the text's pointer to Part V is not a definition; the block is therefore open. Keep short.
+
+**FC73** — "inconsistent accepted premises rule out a claim and its denial alike". Text L397 states this. The maths (I38) with classical inconsistency and arbitrary admitted forms. Faithful. But an attack: the text says "Where the premises j tentatively accepts are inconsistent" — the maths' example uses accepted {q, q→¬φ, s, s→φ}. Fine. But is "inconsistent" classical? I38 says yes; alternatives relative to j's admitted forms. The words say "inconsistent" — unqualified, so classical is reasonable. But note: under (a) "inconsistency relative to j's admitted forms", the result may fail if j's forms are weak. Hmm: FC73 says there exist j, φ with both ruled out — under any reading, if j's forms can derive both φ and ¬φ... Actually the claim "inconsistent accepted premises rule out a claim and its denial alike" — as a general claim, it needs the forms to be able to draw the consequences. With classical inconsistency but only MP admitted, can j rule out both φ and ¬φ from {q, q→¬φ, s, s→φ}? The argument for ¬φ... wait: ruling out φ requires an argument concluding something inconsistent with φ; concluding ¬φ works. And ruling out ¬φ requires concluding something inconsistent with ¬φ, e.g. φ. With MP, from q and q→¬φ derive ¬φ: rules out φ. From s and s→φ derive φ: rules out ¬φ. Yes. But general claim: if accepted premises are classically inconsistent, does *every* j with enough forms rule out both? The text says "arguments from them can rule out, for j, a claim and its denial alike" — "can", existential. Fine.
+
+Attack for (d) FC73: what if j's forms are only AND-introduction/elimination? Then nothing is ruled out. But the text says "can rule out", so no counterexample. OK.
+
+**FC74** — criticism occurrence without bearing. Text L383: "A criticism occurrence can exist when (K1) fails." Matches D9.10. But note L383's preceding sentence: "An adverse signal is not a criticism until an organization represents it as the premise of a criticism alleging a defect in a target." The maths says "A criticism's premise g is represented (D12.5) by an organization of the system." Hmm, is there a divergence: the text requires that an adverse signal becomes a criticism only when represented as the premise of a criticism; the maths' criticism data (z, δ, g, Conn, occ) includes g but does not require that g is *represented* as such by an organization. Actually the note says "A criticism's premise g is represented (D12.5) by an organization of the system." So it does. But D9.10's c includes "an occurrence in a history" [I45]. Fine.
+
+One divergence: Bearing(c,z,p) := Acc(ℰ_c) — K1 says Account(ℰ_c). L380: \operatorname{Bearing}(c,z,p)\iff\operatorname{Account}(\mathcal E_c). The maths writes Acc(ℰ_c). Is Acc = Account? Presumably Acc is the text's (E)-account predicate. Hmm, the text uses \operatorname{Account} at L380 and elsewhere "no candidate becomes an account by that (E)". So Acc = account by (E). Fine, minor: the maths' Acc notation stands for Account. Note? Maybe not worth it.
+
+Another: Bearing(c, z, p) has three arguments, but the definition uses p only through p_δ (which is supplied). If p_δ is supplied with c, then Bearing(c,z,p) doesn't depend on p at all — the p parameter is idle. That's a real divergence: the words say bearing is relative to p ("in respect of p"), the maths makes p_δ data so p drops out. Good catch! In D9.10, Bearing(c,z,p) ⟺ Acc(ℰ_c) where ℰ_c is supplied; so changing p changes nothing. The words intend that the criticism bears on z *in respect of p*. So the formal statement says something the sentence does not: bearing is not relative to p. Fix: require p_δ to be the question formed from z, δ, p — i.e., the p-dependence must be enforced. So the better proposal is: p_δ is formed from z, δ and p (so p is not idle). That contradicts making it supplied... The resolution: c carries δ and z and g and Conn; p_δ is *formed* from them and p. But the maths couldn't form it. Hmm. The cleanest text change: state that p_δ is the question formed from z, δ, p by the fixed query — but the semantics cannot do that (that's I20's machinery applied to questions...). Actually there is machinery for questions (Part V): questions have target D, query Q, contract. Forming p_δ: target z, query "has δ in respect of p". The maths didn't do it. Since the report must propose exact wording, I can propose that p_δ is formed from z, δ, p and thatℰ_c is supplied with the criticism (naming the write-in for the latter). So:
+
+```
+> L377 | Let \(p_\delta\) be formed from \(z\), \(\delta\) and \(p\) as the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments, supplied with the criticism where the connection does not pick one out.
+```
+Hmm wordy. Let me simplify: "Let \(p_\delta\) be formed from \(z\), \(\delta\) and \(p\) as the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments; where the connection does not single one out, the criticism carries \(\mathcal E_c\)."
+
+That keeps p live and handles the uniqueness. Good. And I name: this writes H12's choice (that ℰ_c is supplied with the criticism) into the text, and refuses H12's choice that p_δ is supplied.
+
+OK. Now **(b)**: no counterexamples in this part. One line.
+
+But careful: FC69's "two fixed points" under the alternative reading is "computed: as claimed" — the claim itself is that under the alternative the definition has two fixed points. That's a *look-like* result confirming an alternative. Not a counterexample. And it's evidence that the words are under-determined. So in (b) I say: no part of this section is marked counterexample found or not as claimed; FC69's second computation shows the words alone allow two fixed points, which is handled in (a).
+
+**(c) inventions:**
+
+- I38 (claims as FO with classical ¬,∧; Incons classical; forms arbitrary). Does the text settle? The text says "inconsistent with its conclusion" and uses ¬ and ∧ ("joined to other claims by 'and'"). It does not say classical; it says "read structurally ... not by logical equivalence alone", which shows the author is aware of logical equivalence, so classical connectives are plausible. Does the text settle that admitted forms need not be classically sound? L397: "for someone who admits its inference form (Form_j), while that form stays admitted" — forms are admitted by j, nothing about soundness; S21: "sees no option but to choose the one that isn't ruled out by its best argument"; S27: agents take things as given. So the text does not require soundness; the maths' choice (forms arbitrary) matches. But is it settled? The text says nothing about the language of claims. Proposal: minimal wording to fix that claims are sentences with ¬ and ∧ and inconsistency is classical. E.g. add to L397: "Claims are written with 'not' and 'and'; inconsistent means classically inconsistent." That writes I38 in. Do I want to? The rule: "If not, give the exact wording the text should carry, or say why it should stay open." I think a short write-in is right for I38 since the block clauses ("joined by 'and'", "not by logical equivalence alone") presuppose classical ¬/∧. Let me propose: append to the L397 argument paragraph.
+
+Hmm, but exact wording must be "the whole sentence as it would stand, between fence lines, with the line it replaces". So I need a sentence replacement. The L397 paragraph is long. Let me pick the sentence: "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)." → "it rules out a claim when the claim is classically inconsistent with its conclusion and the claim's denial is not among its premises (below)." That's a one-word change fixing I38's core. Good and cheap.
+
+- I39: "MadeFrom" primitive; flattening. Text: "nor does an argument whose record leaf was made from a claim rule out that claim's denial" — the text itself uses "made from" as unanalysed. So the text settles that it's a relation on record leaves and claims; it does not settle when it holds. Should it stay open? The semantics needs it as a declared input. Proposal: "made from" is a declared relation of the record; wording: append "a record leaf is made from a claim when the record was produced from that claim; whether a leaf is so made is a matter of the record." Hmm. Maybe say it stays open but must be declared: propose one clause. Keep short.
+
+- I40: the "below" reading — covered in (a) with wording. In (c): the text does not settle; the wording proposed under FC69/L393 settles it. Also Prem(u) = essential premises: text L387 says "essential premises Prem(u), the premises its inference form uses" — settled. And arguments as trees: L397 "An argument is an argument tree" — settled. Good: I40 mostly settled by the text; only "below" is not. And the alternative "least fixed point" is excluded by the proposed wording.
+
+- I41: Accepted_j as declared input over time, with withdrawal. Text L393: "a premise j tentatively accepts, having taken it up, for whatever reason, and not withdrawn it" — this fixes time, taking up, withdrawal. Does it fix that Accepted_j is a declared input? L522 is cited in the maths ("Accepted_j is a declared input (L522)") — not quoted here; I must say I rely on a line not given. So: the text settles the temporal shape from L393; whether it is an input is settled at L522 (not given here). Untimed sets (alternative (a)) are excluded by "has taken it up ... and not withdrawn it". Good: I41 settled.
+
+- I42: Scope — "within the contract, grain and boundary j has declared for it". Does not settle ⊆ vs =. Proposal wording (write-in I42's choice).
+
+- I43: K3 — covered in (a). Does the text settle "nothing narrower"? It says "and nothing narrower" without saying whether it means no argument at all or no argument from those premises. Not settled; proposal (in a) fixes "by that ruling out".
+
+- I47: reason use — not settled; proposal writes the declared-input stance in (naming I47).
+
+- H12: covered.
+
+Also, should I mention I76's mis-tag? H12 says I76 fills for L161 only and D9.10's choices are in no entry. In (c) for H12: say the text does not settle; proposal given.
+
+**(d) Attack the claims that held.** I need to try by hand to break FC56, FC68, FC69, FC70, FC71, FC72, FC73, FC74, FC76.
+
+Let me think of genuine attacks.
+
+**FC56 (a) monotonicity.** Attack: consider *Form_j* enlargement — enlarging Forms_j makes more arguments usable, monotone. Contracts: "contracts j declares (grain and boundary held fixed): enlarging any of them never makes an argument unusable". Wait — Scope_j(u) := C_u ⊆ C_j(u). If j declares a *larger* contract C_j(u), then more steps satisfy Scope. So enlarging declared contracts is monotone for usability. OK. But hold on: is that right? If j declares a *broader* scope, a step applied within a narrower contract is still within. Yes monotone.
+
+Attack attempt: What if enlarging Accepted_j makes a *step unusable*? Live is positive. No.
+
+Attack: what about "withdrawal rules nothing out" — the text says "Withdrawing a premise makes the step unusable; it does not rule the conclusion out." FC56 claims withdrawal adds no member to X_j. Right. But could withdrawal *unblock* a ruling out? The block in RO: "no leaf has ¬φ as a conjunct" — not dependent on j. So no. But what about the alternative where the block is on *live* premises (dependence reading)? If the block tracked only essential/live premises, then withdrawal could remove a premise from the used set... but RO is defined on the tree's leaves, and withdrawal doesn't delete leaves. Under a dependence reading where the argument is pruned to what's used, withdrawal makes a step unusable and the argument vanishes. Hmm, still no growth.
+
+Real attack: consider j withdrawing a claim that appears as ¬φ in a leaf of an argument α. Under the maths, RO(α,φ) is blocked by the leaf regardless of whether the leaf is used. If withdrawal pruned unused leaves (a plausible alternative semantics in which arguments are trimmed to essential premises), then after withdrawal the leaf ¬φ disappears from α and α rules out φ. That's a genuine counterexample to FC56's "withdrawal rules nothing out", but it rests on the alternative reading of the block (I39/R0 block on essential premises only). But careful: does withdrawal *prune*? Under the text, withdrawal makes a step unusable (Live fails); the tree is unchanged. If arguments are trimmed to used premises... the text says "argument steps whose leaves are premises" — all leaves are premises. So trimming isn't textual. Hmm, but there is a reading: "the claim's denial is not among its premises" where "its" = the step's or the argument's? The RO sentence: "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)" — "it" = an argument or a step? Preceding: "Each step of an argument rules out the case in which the step's premises are met and its conclusion fails... An argument is usable by j when each of its steps is (K2), and it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises". So "its conclusion" = the argument's conclusion (the root's), "its premises" = the argument's leaves. OK.
+
+Still, a *dependence* reading: if the argument's leaves include ¬φ but no step on the path from that leaf to the root uses it (non-essential child), the argument does not depend on ¬φ; blocking is over-blocking; and if j withdraws that claim, does the leaf leave the argument? No, a stated assumption stays stated. So no growth. OK so FC56 survives this.
+
+Another attack on FC56: monotonicity in Accepted_j with *time* — I41 evaluates at time ξ. "Enlarging Accepted_j" — but Accepted_j(ξ) changes over time in ways that are not simply enlargement (withdrawal shrinks it). The claim's (a) is about enlargement. Fine.
+
+But here's a sharper attack on FC56's first sentence claim ("withdrawal rules nothing out"): Suppose j withdraws claim d which is the *denial* ¬φ in a leaf of α (blocking α from ruling out φ). Under the text's block, the block is structural — about the argument's premises — and the argument still has that leaf. But wait: is the leaf a "premise j tentatively accepts"? If j withdraws it, the step becomes unusable (unless live by another route), so α is no longer usable and rules nothing out. But if the leaf is a *stated assumption* rather than an accepted claim, withdrawal of the corresponding accepted claim doesn't change anything. Hmm.
+
+Actually here's a cleaner attack: **the block and usability interact**. Consider two arguments: α1 rules out φ but has ¬φ as a leaf (blocked). α2 rules out φ and has no such leaf. Withdrawal can only shrink usability. So Out_j(φ) can only shrink. Fine.
+
+So FC56 holds robustly given I38–I41. Attack should instead target the *sentence* "Withdrawing a premise makes the step unusable" (FC70 covers) and the scope of "absence rules out nothing".
+
+Hmm, one more: FC56 (a) claims monotone in Forms_j and contracts; but consider *Scope*: if j declares a contract and later narrows it, arguments become unusable — that's shrinkage, consistent.
+
+What about monotone in Accepted_j holding "for all"1,162 models — can I break it beyond bounds? With larger domains? The definitions are monotone by construction (Live is a positive formula in Accepted). Unless... Accepted_j appears negatively? "a claim j has never taken up is not live for j" — positive. "not withdrawn" — positive in the sense that withdrawal is absence. So monotone. I'd say: FC56(a) holds by the polarity of Live in Accepted_j and Forms_j; no counterexample exists regardless of size. Good — that's an attack that fails, worth one line, showing why.
+
+**FC56(b)**: absence rules out nothing — trivial, j with no admitted forms and no accepted claims; φ any claim; both X empty. Holds by construction. But attack: what if j's accepted set is inconsistent and has enough forms — then both φ and ¬φ are ruled out (FC73) and neither is "absent". Fine. What about a *stronger* reading of the text: "that absence rules out nothing, neither φ nor ¬φ" — could a reader take "absence" to mean the absence of ruling out *is itself* a reason (e.g., for keeping φ)? L8 (NF13) says "gets nothing from that". The maths cannot formalize "gets nothing" (no predicate triggered). Note in (a): NF13 not formalized; the maths says only that no predicate is triggered — matches "gets nothing". Fine.
+
+**FC68.** Attack: The text's L369 says "no candidate becomes an account by that (E)" for a candidate whose answer at (a,b) is y ≠ Ans_p(a,b), "and so on every question with the same target and query whose contract contains (a,b)". Attack: what if the candidate's organization gives the right answer at (a,b) but the *transport* maps (a,b) elsewhere? The maths (a) is Ans_E(τa,σb) = y ⇒ ¬A_ab ⇒ ¬Acc. So it's about the transported pair. Fine. Attack: a candidate could still be an account on a question p'' with a different contract not containing (a,b) — the claim says "on every p' with the same D, Q, δ whose contract holds (a,b)" — consistent with the text ("and so on every question with the same target and query whose contract contains (a,b)"). Fine. Attack beyond bounds: (a) is a universal over models; it held on 17,280. By construction A_ab is a conjunct of Acc. Not much to attack.
+
+But here's an attack on FC68(b): "If j has a usable argument ruling out 'Ans_p(a,b) = y', the premise 'Ans_E(τa,σb) = y' is live and the forms are admitted, then X_j(Acc(ℰ)) ≠ ∅ for every such ℰ alike." Why would ruling out the *answer* rule out Acc(ℰ)? Because Acc(ℰ) implies Ans_E(τa,σb)=y and there's an argument... Hmm: an argument ruling out 'Ans_p(a,b)=y' concludes something inconsistent with it. To rule out Acc(ℰ) you need an argument concluding something inconsistent with Acc(ℰ), e.g. ¬(Ans_E = y) or the failing requirement. The maths presumably builds: from premise Ans_E(τa,σb)=y and the argument's conclusion... Actually it's "computed: as claimed" — an encoding detail. Attack: what if the argument ruling out 'Ans_p(a,b)=y' has a leaf with ¬¬(Ans_p(a,b)=y)? Then the block (RO) applies to ruling out... hmm. Or what if the argument's conclusion is inconsistent with 'Ans_p(a,b)=y' but is not inconsistent with Acc(ℰ)? Then X_j(Acc(ℰ)) gains nothing. Hmm — actually to get a member of X_j(Acc(ℰ)) you need an argument whose conclusion is inconsistent with Acc(ℰ). Since Acc(ℰ) requires Ans_E(τa,σb)=y... wait, does it? Acc(ℰ) is about the candidate meeting (E) on p; the failed answer means A_ab fails, so ¬Acc. But if y ≠ Ans_p(a,b), then the candidate's answer being y fails A_ab. So Acc(ℰ) is inconsistent with the candidate's organization giving y? No — Acc(ℰ) is a claim about ℰ; if ℰ gives y at (a,b) then ¬A_ab so ¬Acc. But classically, is 'Acc(ℰ)' inconsistent with 'Ans_E(τa,σb) = y'? Only if we accept that Acc(ℰ) implies Ans_E = Ans_p = correct. So the argument to rule out Acc(ℰ) needs a step from 'Ans_E = y' and the theory of (E) to ¬Acc. The claim says "the premise ... is live and the forms are admitted" — so j has the forms needed. Fine, it's about the encoding. I'll attack (b) briefly: it rests on the encoding I89's free form (a form that can conclude ¬Acc from Ans_E = y and (E)); without such a form, no argument rules out Acc(ℰ) and the claim's conclusion fails. So (b) rests on I89 (the free form) and on Acc being an abbreviation for the conjunction of (E)'s requirements (I20). That's a decent attack: it shows (b) is not forced by the text; the text says "no candidate becomes an account by that (E)" — which is about (E), not about arguments. So the ruling out part is extra. But since it says "computed: as claimed", an attack is: the claim as stated requires the free form; under the five closed forms only, is it still true? With MP/MT/AND-intro/AND-elim only, can you derive ¬Acc from Ans_E = y? Only if ¬Acc or (Ans_E = y → ¬Acc) is among the accepted/leaves. The claim says "the premise 'Ans_E = y' is live and the forms are admitted" — vague: "the forms". Under I89's free form, yes. So the attack: replace "the forms are admitted" with "j admits a form taking the requirement (E) and the answer to ¬Acc"; then it holds; otherwise not. Good (d) entry.
+
+**FC69.** Attack on the well-foundedness claim: under I40 (below), recursion on height. But what if arguments are infinite? L397 says "An argument is an argument tree" — the maths says finite tree [I40]. Does the text say finite? "argument steps whose leaves are premises" — leaves implies well-founded downward (every branch ends), but an infinitely branching or infinite-depth tree with leaves at infinity? A tree whose branches are all finite but unbounded depth is still well-founded (each node has finite height) — fine. A tree with an infinite branch has no leaves on that branch, contradicting "whose leaves are premises"? Actually "argument steps whose leaves are premises" suggests all maximal nodes are leaves, so no infinite branch — well-founded. So the text does force well-foundedness of the tree (via "leaves"), hence heights exist, hence the recursion is fine *given* "below". So the only gap is "below" vs "any step". Good: attack: even with "below", consider a step u whose premise d is the conclusion of a step u' below u, where u' itself has a premise e whose liveness depends on u's usability? No — u' is below u, so u's usability is not needed for u'; recursion goes strictly down. Fine. Another: could Live_j(d;u) hold via a step *above* u under the words? Yes — that's the two-fixed-point case. So the words must change. Attack: is there a case where the "below" reading differs from a "least fixed point over the whole argument" reading in outcome? Yes: the two-step loop (root concludes d with premise e; step below concludes e with premise d). Under below-reading: is it usable? Let's compute: u' (below) concludes e, premise d. Live(d;u') requires d = concl of a step below u' with Usable, or d ∈ Accepted. d is the root's conclusion, not below u'. So if d ∉ Accepted, Live fails, u' unusable. Then u (root) concluding d with premise e: Live(e;u) requires e = concl(u'') below u with Usable(u'') — u' concludes e but is not usable — or e ∈ Accepted. If neither, u unusable. So both unusable. Under whole-argument reading (least fixed point): same (least fp = both unusable); greatest fp = both usable. So the *words* (as an unqualified recursive definition) admit two readings: least fp matches "below" outcome here? Not always: least fp over the whole argument could differ from below-recursion? Let's see: below-recursion computes usability bottom-up using only strictly lower steps; least fp over all steps... For a node u, Live via a step anywhere; least fp = start all unusable, iterate. Hmm, a step u' *above* u could become usable and then make u's premise live, making u usable — that's allowed in whole-argument least fp but not in below-recursion. Example: root r concludes e, premise d; below, u concludes d with premise e (the loop). Wait that's the same. Let me construct: root r: conclusion f, premise d. Step u below r: conclusion d, premise e. Step v below r: conclusion e, premise... say nothing (premise d?) Let's make: v concludes e with premise d — that's a loop again. To get least-fp ≠ below-recursion, need an upward dependency without a cycle... impossible: if u's liveness depends on a step above u, that step's liveness may depend on u — a cycle. So in a cycle-free dependency there's no upward dependence. Actually upward dependence always implies a cycle (u depends on above-step a; a's premises... a could be usable independent of u). Example: r concludes d, premise g (g ∈ Accepted). u below r: concludes e, premise d. Now u's premise d is live via r (above) and r is usable since g accepted. Under whole-argument reading, u is usable. Under below-reading: is d live for u? d = concl(r) and r is not below u, so no; d ∉ Accepted → u unusable. So yes! A clean divergence: under the words as they stand (any step of the same argument), u is usable; under the maths (below), not. So the two readings differ in outcome even without cycles. That's a strong (a)/(d) point: the choice matters. Good. So I should present this model in (d) as an attack on FC69 (the claim "holds" only under I40; under the words as written, the same argument yields a different answer — and with a cycle, no answer at all).
+
+Actually FC69 as stated already reports the two-fixed-point result for the alternative. The attack beyond: the non-cyclic divergence (upward dependence). I'll give that model.
+
+**FC70.** Attack: does the sentence fail only in that narrow configuration? Yes; and the fix proposed. Also attack: what if the premise is a *record leaf* whose acceptance is withdrawn — a record leaf refers to an event with an interpreted claim; is it in Accepted? If a record leaf's claim is also concluded by a step below... a leaf can't be a conclusion in a tree. In a DAG (I40's alternative (b)), a node can be shared: a leaf node shared as a conclusion? No, a node is one or the other. But in a DAG, the node d could be the conclusion of step u' and a premise of u, and also "accepted" — same as the tree case where the child node of u is an internal node. Fine.
+
+Hmm, wait. In the tree reading, if d ∈ Prem(u) and d = concl(u') for u' below u, then the child of u carrying d *is* the subtree rooted at u'. Then "withdraw d" means j no longer accepts d; but d remains the conclusion of u', so Live via first disjunct. Yes. So the sentence is wrong in that configuration — the words should change (proposal in (a) or (e) since it's matter 9). I'll do it in (e) (round-1 matter 9) and cross-ref. Actually FC70's entry in (a) is about whether the formal statement says what the sentence says: FC70's formal statement is the maths' careful version; the *sentence* says more. So (a) entry: the maths is right, the words over-state; wording in (e). To avoid duplication I'll give the wording in (e) and cross-ref from (a).
+
+**FC71.** Attack: "nothing narrower" — under I43(ii), classical common model. But if j accepts T (say j takes T as given), then j may have another argument ruling out B∧I... but the claim is only "from those premises alone". As the words stand ("and nothing narrower"), a counterexample: j accepts T and (¬O ∧ (T∧B∧I ⇒ O)) and has MT; then... hmm, can j rule out B or I alone? From ¬O, the conditional, and T: derive ¬(B∧I) = ¬B ∨ ¬I; that rules out B∧I but not B or I alone. To rule out B alone you need ¬B or something inconsistent with B. From ¬(B∧I) you cannot get ¬B classically. But if j also accepts "B → I" and "¬I"... contrived. Simple counterexample to the unqualified words: j has an independent argument concluding ¬B. Then that argument rules out B alone — "narrower" than T∧B∧I. So "nothing narrower" read universally is false; it must be read as "that argument rules out nothing narrower / from those premises". Actually careful: does an argument concluding ¬B "rule out B"? Yes: Incons(B, ¬B). So the words as they stand are false if read universally. The fix: scope the claim to the test's own premises. Good — that's the (a) divergence and the (d) attack. Let me make sure my proposal wording handles it.
+
+Proposal for L395:
+```
+> L395 | For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), where that conditional is live for \(j\) and \(j\) admits modus tollens, rules out \(T\land B\land I\) together for \(j\), and reaches no narrower claim from those premises alone. (K3)
+```
+
+Good.
+
+**FC72.** Attack: the block uses leaves' conjuncts. Consider an argument whose leaf states ¬φ ∧χ where ¬φ is *derived* rather than stated... covered by "premise taken as given" clause. Attack: what if ¬φ appears in a leaf *disguised*: leaf states "¬(φ ∧ ¬ψ)"? Not a conjunct occurrence. Structural reading allows. Fine. Attack on (c): "the argument with leaves r and (r → ¬Acc(ℰ)) and one modus ponens step rules out Acc(ℰ)" — is the conditional leaf a *record leaf* or a stated assumption? If it's a record leaf made from ¬Acc(ℰ)... then the block (MadeFrom) applies! Text: "nor does an argument whose record leaf was made from a claim rule out that claim's denial." So if the conditional record was made from the claim "this candidate fails (E)" = ¬Acc(ℰ), then the argument cannot rule out ¬(¬Acc) = Acc... wait, the claim whose denial is ruled out: we're ruling out Acc(ℰ), i.e., φ = Acc(ℰ); the block applies if a record leaf was made from ψ whose denial is φ, i.e., ψ = ¬Acc(ℰ). So if the record leaf (r → ¬Acc(ℰ)) was made from the claim ¬Acc(ℰ) (e.g., recorded from a prior finding that the candidate fails), then the argument is blocked from ruling out Acc(ℰ). Hmm! But the text at L397 says this is "a premise taken as given, and using it is the gamble above, not a circular argument" — the text explicitly says the r → ¬Acc case is *not* blocked ("not a circular argument"). But the MadeFrom block is a separate clause: "nor does an argument whose record leaf was made from a claim rule out that claim's denial." If the conditional is a record leaf made from ¬Acc(ℰ)... is ¬Acc(ℰ) "that claim"? The MadeFrom block blocks ruling out the *denial of the claim the leaf was made from*: leaf made from ψ ⇒ cannot rule out ¬ψ. If ψ = ¬Acc(ℰ), cannot rule out Acc(ℰ). But the text's sentence about r and "if r, this candidate fails (E)" says this is permitted. So there's tension between the two clauses in the text itself if the conditional record is a record leaf made from ¬Acc(ℰ). Resolution: the text's second clause says a premise *from which a step leads to the denial* is a given, not circular. The MadeFrom clause is about the record leaf being *made from* a claim (i.e., the record was produced from that claim), which is a different relation (provenance). So they can coexist: a record made from ¬Acc is blocked; an assumed conditional is not. But then FC72(c)'s "leaves r and (r → ¬Acc(ℰ))" — if these are stated assumptions, fine; if record leaves made from ¬Acc, blocked. So the attack: FC72(c) holds only if the conditional leaf is not a record leaf made from ¬Acc(ℰ); the text does not say which. Good attack, resting on I39's MadeFrom being primitive and on leaves being either record leaves or stated assumptions.
+
+Also attack on FC72(a): "no leaf has ¬φ as a conjunct" — but what if ¬φ appears as a premise of a *step* (internal node conclusion)? E.g., argument derives ¬φ internally fromψ and (ψ → ¬φ), and concludes ¬φ... then the root's conclusion is ¬φ, and ruling out φ is exactly deriving its denial. Then the block "the claim's denial is among its premises" — the denial ¬φ is not among the *leaves* (the leaves are ψ and ψ→¬φ). The text says "a premise from which a step leads to the denial ... is a premise taken as given, and using it is the gamble above, not a circular argument." So not blocked. Matches. Good.
+
+**FC73.** Attack: inconsistent accepted premises. Under I38 (classical), if Accepted is classically inconsistent, is there always an argument ruling out both φ and ¬φ? No! The text says "can rule out" (existential), so fine. But is there a reading where it fails? If j's forms are only conjunction ops, then from inconsistent accepted premises, an argument concluding ¬φ may not exist. "Can" saves it. Attack on the *sentence*: "Where the premises j tentatively accepts are inconsistent, arguments from them can rule out, for j, a claim and its denial alike" — fine. But note the text says "Where the premises j tentatively accepts are inconsistent" — what about premises of an argument (leaves), not just accepted claims? Minor.
+
+Also, hmm: FC73 shows X_j(φ) and X_j(¬φ) both non-empty — so "ruled out" is not a consistent state; the text acknowledges. But what about D9.8 "NotOut_j(φ) ⟺ X_j(φ) = ∅" — fine.
+
+An attack on FC73: with the *relative* inconsistency reading (I38(a)): if inconsistency means "derivable contradiction using j's admitted forms", then from consistent-but-classically-inconsistent... hmm, inverse. Fine.
+
+**FC74.** Attack: "A criticism occurrence can exist when (K1) fails." Witness found: a criticism whose connection candidate fails (E). But is that a criticism at all? L383: "An adverse signal is not a criticism until an organization represents it as the premise of a criticism alleging a defect in a target." So the criticism requires representation of g as the premise. The witness model presumably has that. And Bearing fails because Acc(ℰ_c) fails. Fine. But: is ℰ_c "the explanatory candidate for p_δ whose organization is the criticism's connection"? If the connection is not an organization that forms a candidate at all (no transport, no commitments), then ℰ_c is not well-formed and Acc is undefined — the maths supplies t_c, Γ_c, δ_c (H12). Attack: the witness rests on H12's supplying of ℰ_c's parts; without them, "Bearing" is undefined rather than false, and the claim "a criticism occurrence can exist when (K1) fails" would need K1 to be *evaluable*. So FC74 rests on H12 and I45. Good attack.
+
+**FC76.** Attack: reason use gives neither bearing nor usability. Under I47, UsesReason has no Acc/Usable clause — so it holds by construction. Attack: the *sentence* at L385 says "Using an objection does not give it bearing (K1) or make any argument from it usable (K2)." Is this a substantive claim or a stipulation? If reason use is defined without Acc and Usable, the claim is true by definition — "holds by construction", not a tested claim. But the text's claim is about *not giving*: that using an objection doesn't confer bearing or usability. The maths' definition of UsesReason has no such consequence — consistent. But could reason use *in practice* make an argument usable? If the response includes the objection's content as a premise... hmm: UsesReason is about a map from the objection into the response suborganization; if the response's steps take the objection's claim as a premise and j accepts it, then the argument becomes usable by K2 *independently* of reason use. The text says "does not ... make any argument from it usable" — meaning reason use *by itself* doesn't. Fine. Attack: nothing breaks it; but the claim is by construction, so it tests nothing. Also it rests on I90 (histories by hand) and I95 (toy active routes). Attack: with a different definition of active route (D11.4), the witness might vanish — but "UsesReason and ¬Bearing" needs only that UsesReason be satisfiable and Acc fail; robust. But "UsesReason and no usable argument from the objection" — under I47 nothing links them, so trivially. So FC76 is vacuous given I47; it holds under *any* definition of UsesReason that omits Acc/Usable — which is the text's own stipulation. Note: the risk is the opposite: if a *different* precisification of "structural map" were chosen such that it implies j accepts the objection's premises, then usability could follow. So the claim rests on I47's choice not to include acceptance. Good.
+
+Now **(e) round-1 matter 9**: covered; give wording.
+
+Let me also handle: "Round-1 matter 11" is mentioned in FC76's header ("Bears on round-1 matter 11 (section 8): the undefined phrases at L375 and L385") — but section 8 here lists only matter 9. So matter 11 is not in this part's section 8. I should note that only matter 9 is given in section 8; matter 11 is referred to but not stated, so I can't rule on it beyond noting. Careful: the report should say that. One line.
+
+Also section 7 NF13, NF14: "sentences the maths could not write". Is (a) or (c) the place? They're not definitions or claims; the task's (a) covers "each definition in section 3 and each claim in section 4". NF13/NF14 are in section 7. Hmm, the report structure (a)-(e) doesn't have a slot for section 7. I could mention NF13/NF14 under (a) briefly since they bear on D9.8's reading of L8 and L397's cost remark. I'll add a short entry in (a): NF13 — the maths' treatment is right as far as it goes ("gets nothing" triggers no predicate); but "gets nothing from that" is unformalizable and should stay as a sentence; no change. NF14 — cost has no measure; stays open by the text's own words ('puts no measure on it' — quoted in the maths' note). Keep to one short entry or fold into one line. Given budget, one short entry.
+
+Now word budget: ~3000 words. Let me draft.
+
+Structure:
+
+## (a)
+- D9.6/L390,L393 · FC69 — well-foundedness (wording proposal)
+- D9.7/L397 — RO at the root, leaves vs essential premises; maybe brief
+- D9.9/L395 · FC71 — K3 conditions and "nothing narrower" (wording)
+- D9.10/L377 · H12 — p idle; ℰ_c supplied (wording)
+- D9.11/L385 · FC76 — reason use is all invention (wording, short)
+- D9.5/L393 · I42 — scope (wording)
+- D9.1/L397 · I38 — "classically inconsistent" one word (wording)
+- FC68 — (b),(c) have no text sentence
+- FC56 — matches- NF13/NF14 one line
+
+Maybe consolidate: I want to limit entries to those needing depth.
+
+Let me now write the exact wording proposals carefully with line replacements.
+
+**Proposal 1 (D9.6/FC69, L393 clause).** Replace L393 in full? The line is long. The rule: "Give the exact wording for every proposal: the whole sentence as it would stand, between fence lines, with the line it replaces." So: whole sentence as it would stand, and note the line it replaces. I'll quote "replaces L393 (the Live clause)" and give the sentence. To be safe, give the whole line's sentence as it would stand. L393 contains two sentences? Let's see L393:
+
+> L393 | \(d\) is the conclusion of a step of the same argument as \(u\) that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\).
+
+That's one sentence (with a semicolon). Plus the first sentence "Withdrawing a premise makes the step unusable; it does not rule the conclusion out." is also L393. So L393 has two sentences. My proposals:
+
+Sentence 1 (matter 9 / FC70):
+```
+Withdrawing a premise that is live only by acceptance makes the step unusable; it does not rule the conclusion out.
+```
+Sentence 2 (FC69):
+```
+\(d\) is the conclusion of a step of the same argument as \(u\), lying below \(u\), that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\).
+```
+Hmm, "lying below \(u\)" — is "below" clear? "lower in the tree than \(u\)". Let me use "a step of the same argument as \(u\), lower in the tree than \(u\),". Good.
+
+Maybe also state the recursion: add "Usability is read from the leaves up." Could append to L390? Keep simple: the clause fix suffices.
+
+**Proposal 2 (L395, K3):**
+```
+For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), where that conditional is live for \(j\) and \(j\) admits modus tollens, rules out \(T\land B\land I\) together for \(j\), and reaches no narrower claim from those premises alone. (K3)
+```
+Hmm "reaches no narrower claim from those premises alone" — better: "and, from those premises alone, rules out nothing narrower. (K3)". Let me write:
+```
+For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), where that conditional is live for \(j\) and \(j\) admits modus tollens, rules out \(T\land B\land I\) together for \(j\), and from those premises alone rules out nothing narrower. (K3)
+```
+Good.
+
+Wait — is adding "where that conditional is live for j and j admits modus tollens" writing I43 in? Yes, must name it: "this writes I43's conditions into the text".
+
+**Proposal 3 (L377, bearing):**
+```
+Let \(p_\delta\) be formed from \(z\), \(\delta\) and \(p\) as the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments; where the connection does not single one out, the criticism carries \(\mathcal E_c\).
+```
+Writes H12's choice (ℰ_c supplied with c) in; refuses H12's choice that p_δ is supplied, keeping p in play. Good.
+
+**Proposal 4 (L385, reason use):** Write I47's declared stance in:
+```
+A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route; the map, the role bindings, the recodings, the changes and the operative deliberative rule are declared for the system, and reason use holds when some declaration of them makes all four conditions hold.
+```
+Writes I47's "declared" choice in; leaves the four phrases open. Say: this does not define the four phrases; they stay per-system (I47's alternative (a)/(b) left open).
+
+**Proposal 5 (L393 scope / I42):**
+The Scope clause is part of L393 (the third sentence: "Scope_j(u): u is applied within the contract, grain and boundary j has declared for it"). Proposal:
+```
+\(\operatorname{Scope}_j(u)\): \(u\)'s contract is contained in the contract \(j\) has declared for it, and \(u\)'s grain and boundary are the grain and boundary \(j\) has declared for it;
+```
+Writes I42 in. Note it's a choice between ⊆ and =; the words "within" do not settle grain/boundary.
+
+**Proposal 6 (L397, I38):** one word:
+```
+it rules out a claim when the claim is classically inconsistent with its conclusion and the claim's denial is not among its premises (below).
+```
+Hmm — but the full sentence at L397 is: "An argument is usable by \(j\) when each of its steps is (K2), and it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)." So the whole sentence:
+```
+An argument is usable by \(j\) when each of its steps is (K2), and it rules out a claim when the claim is classically inconsistent with its conclusion and the claim's denial is not among its premises (below).
+```
+Good.
+
+Should I propose for I39 (MadeFrom)? Maybe a short entry without wording: say the text leaves "made from" unanalysed and should carry it as a relation of the record; give wording? Budget... I'll give a compact wording:
+```
+nor does an argument whose record leaf was made from a claim rule out that claim's denial, where a record leaf is made from a claim when the record was produced from that claim and the record says so.
+```
+Hmm, "the record says so" is an invention. Maybe simpler: keep it as a declared relation of the record: "made from is a relation the record carries between a record leaf and a claim". Let me phrase the proposal as an addition... The rule demands the whole sentence as it would stand. The sentence is: "An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by "and", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial."
+
+That's long. Proposal:
+```
+An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by "and", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial, where a record leaf is made from a claim when the record of the event carries that claim as its source.
+```
+OK, that writes I39's primitive into the text as a record-carried relation. Acceptable. But is it needed? FC72's (b) rests on it. I think a short (c) entry with wording is good.
+
+Now, budget management. Let me aim for:
+(a): ~900 words
+(b): ~60 words
+(c): ~700 words
+(d): ~900 words
+(e): ~250 words
+Total ~2800.
+
+Let me write the entries.
+
+### (a) entries
+
+**D9.6 · L390/L393 · FC69.** The maths fixes a reading the words leave open. L393 says "a step of the same argument as u" — no order. Under the words alone, a premise can be made live by a step above u, and K2 then has two fixed points on the two-step loop FC69 computes; on an acyclic case the two readings still part (model: root r concludes d from accepted g; below, u concludes e from d — the words make u usable, the maths does not). So the formal statement does not say what the sentence says; it says a determinate thing where the sentence says an open one. The maths should stand: without a direction, (K2) is not a definition. Wording. (writes I40's below-reading in)
+
+**FC70 · L393.** The maths is right; the sentence over-states (first clause holds only of a premise live by acceptance). Wording in (e) (matter 9).
+
+**D9.9 · L395 · FC71.** Two gaps. (i) The words make K3 unconditional; the maths needs the conditional live and MT admitted. Without MT the machinery gives nothing, so the words say what the definitions do not. (ii) "and nothing narrower" read flatly is false: j may have an independent argument concluding ¬B. The maths' (ii) is the right reading ("from those premises alone"). The words should change. Wording (writes I43's conditions in).
+
+**D9.10 · L377.** p drops out: Bearing(c,z,p) is defined from data supplied with c, so two criticisms differing only in p bear alike; the words make bearing relative to p ("in respect of p"). Also ℰ_c is definite in the words ("the explanatory candidate"), supplied in the maths. Words should say p_δ is formed from z, δ, p and carry ℰ_c where the connection doesn't single one out. Wording (writes H12's choice for ℰ_c in; refuses it for p_δ).
+
+**D9.11 · L385.** Nothing of the sentence is defined; the maths supplies one of several precisifications. The four phrases stay open; the only thing the words fix is that reason use is a matter of a map, recodings, changes, a rule and an active route. Wording writes I47's declared-input stance in, and no more.
+
+**D9.5 · L393.** "within the contract, grain and boundary" — the maths reads ⊆ for contract and = for grain and boundary; the words do not say. Wording (writes I42 in).
+
+**D9.1/D9.7 · L397.** "inconsistent" — classical is the maths' invention; the words' contrast with "logical equivalence alone" shows a classical background. Wording (one word).
+
+**D9.7 · L397.** The block is on the argument's leaves (L397 defines premises as leaves), so a leaf no inference form uses blocks a ruling out that does not depend on it; the text's own reason ("non-circular dependence") is about dependence. I say the words over-block; but the change (block on essential premises only) is available. Should I propose? Let me propose? Hmm. Careful — this could break FC56 (withdrawal rules nothing out) — no, it wouldn't.
+
+Actually hold on: if the block is on essential premises only, then FC56's monotonicity... withdrawal would make a step unusable, shrinking arguments; but could it *unblock*? Suppose α's leaf ¬φ is essential to a step u; j withdraws ¬φ; then u becomes unusable (if ¬φ is live only by acceptance), so α is unusable; no new ruling out. But if ¬φ is live by another route (FC70's configuration), α remains usable, and ¬φ is still an essential premise — the block still applies. So no growth. Fine.
+
+But is proposing this change wise? The words say "among its premises" and L397 defines an argument's premises as its leaves. Changing to essential premises is a substantive change. The instruction: "Where they part company, say how, and which should stand, the maths or the words, with reasons why this and not that. Where the words should change, give the new wording." Here they don't part company — the maths follows the words. So (a) has nothing; I can note in (c) for I39 (the structural reading) or in (d) as an alternative reading attack on FC72. Actually a good (d) attack on FC72: under a dependence reading (essential premises only), a leaf that no step uses would not block; the text's phrase "read structurally as non-circular dependence reads identity" leans that way; the maths blocks anyway. So FC72(a) is sensitive to I39's reading: the *claim* is "if ¬φ is a conjunct of a leaf then ¬RO" — under the dependence reading, false. So FC72 holds only under I39's leaf-level reading. Put in (d). Good — that saves (a) space and fits (d)'s "under another reading, without an invention".
+
+**FC68.** (b),(c) have no text sentence; they are consequences of the definitions and I89's free form; they neither confirm nor trouble the text. One line.
+
+**NF13/NF14.** One line: both stay as they are; the maths can only say that no predicate is triggered (NF13) and measures no cost (NF14), which is what the sentences say.
+
+Now (c) entries: I38, I39, I40, I41, I42, I43, I47, H12.
+
+- I38: text does not settle the language or classicality; settles nothing about soundness of forms (L397 "for someone who admits its inference form" — forms are admitted, not judged). Wording (proposal6) writes classicality in; forms' soundness stays open (S21/S27 support: an agent takes claims as given).
+- I39: "made from" is used but not defined; text settles that it is a relation between a record leaf and a claim and that it blocks; it does not settle when it holds. Wording (proposal 7) writes it in as a record-carried relation. The structural reading of "among its premises" stays open (the pointer to Part V is not a definition; I24 also unrecorded) — say it should stay open? Hmm, the block's scope (leaves vs essential) is left by the words; I'd say it should stay open but the maths' reading is the one the words force (leaves), so nothing to change.
+- I40: mostly settled: L397 "an argument tree", "whose leaves are premises"; L387 "essential premises ... the premises its inference form uses". Not settled: the direction of the Live clause — fixed by proposal 1. So: "settled except the order; proposal 1 writes the below-reading in (I40)".
+- I41: settled by L393 ("taken it up ... not withdrawn it"), and the input status at L522 (not given here; I rely on it). No change.
+- I42: not settled; proposal 5 writes I42's reading in.
+- I43: not settled ("nothing narrower" and the conditions); proposal 2 writes I43's conditions in.
+- I47: not settled; proposal 4 writes I47's declared stance in; the four phrases stay open, as the owner's S21 leaves the choice of method to the person.
+- H12: not settled; proposal 3 writesℰ_c's supply in and refuses the supply of p_δ; also note I76's tag does not cover it — the maths should re-tag, but that's the maths' bookkeeping: say the tag should be replaced by an entry of its own. Hmm, "whether the text settles each invention, and if not what it should say". For H12: what the text should say = proposal 3. Fine.
+
+(d) attacks:
+
+1. **FC56** — try to break monotonicity and "withdrawal rules nothing out". Show it can't be broken by size: Live is positive in Accepted_j and Forms_j; RO is independent of j; so X_j only grows with inputs and only shrinks with withdrawal. But break it under a *dependence* reading? Shown no. But break (b)? trivially true. So the entry: an attack that fails, plus one that bites: the sentence at L393 ("Withdrawing a premise makes the step unusable") is what fails (FC70). Also: under I41's timed reading, "enlarging Accepted_j" is not a move a person makes at a time — but that's cosmetic. Keep short: "no counterexample; here is why the claim is size-independent (polarity), and here is the only place it can go wrong — the words, not the maths (FC70)."
+
+Hmm, but I want at least one real attack per claim where possible. Let me find attacks that actually bite:
+
+**FC56 attack that bites**: Consider j who *admits no form* and accepts nothing; then X_j(φ)=∅. Fine. Consider the claim "absence rules out nothing" — the words add at L8 "gets nothing from that" — unformalizable. OK.
+
+Alternative real attack: monotonicity in the *contracts j declares*: the claim holds grain and boundary fixed. But if j widens its declared grain (ℓ_j changes), Scope_j(u) may start holding for steps at that grain and stop for others — not monotone in a single parameter. The claim explicitly holds grain and boundary fixed, so it dodges. But the words at L393 don't say "held fixed"; a reader could think enlarging everything j declares never unrules. Counterexample: j declares grain g1 for step u (Scope holds); j then declares a coarser grain g2 for u; Scope fails; α unusable; ruling out lost. So the *sentence-adjacent* idea "the more j declares, the more is ruled out" fails for grain and boundary. But the text doesn't state that. So this is an attack on the claim's own wording ("contracts j declares (grain and boundary held fixed)") — fine, it's flagged. I'll note briefly: the claim's monotonicity is in C only; grain and boundary are not monotone parameters (equality in I42), so a reader who takes "declared" broadly would find a counterexample: declaring a different grain for u removes rulings out. That's a good small attack resting on I42's equality choice. Under I42(a) (⊆ for grain) it'd be monotone. Good.
+
+2. **FC68** attack: (b),(c) rest on I89's free form and on Acc being the conjunction of (E)'s requirements (I20). Without a form reaching ¬Acc from the answer, X_j(Acc) stays empty. Also (a) rests on A_ab being a conjunct of Acc — if (E) were read so that a wrong answer is weighed rather than fatal (the text's S20/S21: a person chooses), (a) fails. Hmm — careful, S21 says nothing must happen to a candidate. The text's (E) is a requirement. L369 says "no candidate becomes an account by that (E)". So (E) is decisive: a candidate either is an account or not. That's the text's own. But S21's "Nothing... must happen" — the *person* may choose anyway; but "account by (E)" is a definition. Fine — no conflict: ruling out is a choice (S28). So FC68(a) holds. Attack on (c): "If a premise of that argument stops being live, the ruling out lapses for all alike" — true by FC56's shrinkage. Fine.
+
+So FC68's attack: (b) needs the free form; give the model: j admits only MP; accepts 'Ans_E(τa,σb) = y' and 'Ans_p(a,b) ≠ y'; argument α concludes 'Ans_p(a,b) ≠ y'... wait, to rule out 'Ans_p(a,b) = y' the argument's conclusion must be inconsistent with it — 'Ans_p ≠ y' works. Then to rule out Acc(ℰ), need conclusion inconsistent with Acc(ℰ). With only MP and accepted premises, if j accepts 'Ans_E = y' and 'Ans_E = y → ¬A_ab' and '¬A_ab → ¬Acc' then derive ¬Acc. So it needs those conditionals as accepted/leaves. So (b)'s "the forms are admitted" hides the need for conditionals connecting the answer to (E). Model: j admits MP only, accepts nothing beyond 'Ans_E(τa,σb)=y'; the argument ruling out 'Ans_p(a,b)=y' exists (its own leaves); but no argument concludes anything inconsistent with Acc(ℰ) unless (E)'s link is a premise. Then X_j(Acc(ℰ)) = ∅. Counterexample to (b) as worded, resting on I89 (which supplied the free form) and on the encoding of (E) as premises (I20). Good. But careful: (b) says "the premise 'Ans_E = y' is live and the forms are admitted" — "the forms" might mean all forms including the free one. Then no counterexample. So I frame: the claim's wording "the forms are admitted" hides which forms; under the five closed forms the conclusion fails. Rests on I89. Good.
+
+3. **FC69** attack: upward dependence model (given above) and the two-fixed-point loop. So FC69 "holds" only under I40; under the words, K2 is not determined. Give the model in full:
+- Argument: root r, conclusion d, one child g, with g ∈ Accepted_j(ξ); step u below r, conclusion e, one child d; Prem(r)={g}, Prem(u)={d}; forms: MP for both, admitted; scope declared.
+- Words as they stand: Live(d;u) holds because d is the conclusion of step r of the same argument, usable; so u is usable.
+- Maths (I40): r is not below u, so Live(d;u) fails unless d ∈ Accepted; if j never took up d, u is unusable.
+So the same argument has different usability under the two readings. This is a counterexample to *the sentence* only in the sense that the sentence leaves it open; it shows the maths' statement is not the sentence's content. Rests on I40.
+And the loop: root concludes d with premise e; step below concludes e with premise d; both usable or both not. Under the words (any step), two fixed points; the semantics is undefined. So the sentence needs the fix.
+
+4. **FC70** attack: already the finding. Beyond: is there a configuration where withdrawal removes usability even though the premise is live twice over? No: Live's disjuncts are independent. So FC70 is robust; the *sentence* is what fails.
+
+5. **FC71** attack: "nothing narrower" universal reading is false: model j with an independent argument concluding ¬B (accepted 's' and 's → ¬B', MP) — B is ruled out alone, narrower than T∧B∧I. So the words as they stand are false if read flatly; the maths' (ii) ("from those premises alone") is the reading that survives. Also (i) needs MT: model j who admits MP only, accepts ¬O and the conditional; no argument concludes ¬(T∧B∧I) (from ¬O and the conditional, MP gives nothing; you need MT). Then X_j(T∧B∧I) = ∅ while X_j(O) ≠ ∅. Counterexample to K3 as worded, resting on I43's conditions being *needed*. Good, two attacks.
+
+Wait: does an argument "concluding ¬O" rule out O? RO(α,O) = Incons(O, ¬O) yes. And to rule out T∧B∧I you need a conclusion inconsistent with T∧B∧I, e.g. ¬(T∧B∧I). With only MP, from ¬O and (T∧B∧I ⇒ O) you cannot conclude ¬(T∧B∧I) (that's MT). So X_j(T∧B∧I)=∅. Yes. But careful: the claim FC71(i) is worded with the conditions ("a usable argument concluding ¬O, a live conditional and admitted modus tollens"), so the counterexample attacks the *sentence* (L395) not the formal claim. Good — that's exactly "a counterexample to the sentence the claim formalizes".
+
+6. **FC72** attack: (a) leaf-level block vs dependence reading; (c) record leaf made from ¬Acc blocks the very argument the text calls non-circular. Give the model: leaves r and a record leaf ℓ = (r → ¬Acc(ℰ)) with MadeFrom(ℓ, ¬Acc(ℰ)) — recorded from a prior finding that the candidate fails. Under RO's MadeFrom clause, ¬RO(α, Acc(ℰ)); under L397's "premise taken as given" clause, the argument is exactly the one the text says is permitted. The two clauses of the same line collide when the conditional arrives as a record made from the claim. Which should stand? The text's sentence (given premises are permitted) should stand, and the MadeFrom block should be limited to the leaf whose claim is the one ruled out's denial *and* which is the record the argument's conclusion is drawn from — hmm, that's an invention. Better: say the block's clause should be read as covering a record leaf made from the claim *that the argument rules out* — which it is (ψ = ¬Acc; ruling out ¬ψ = Acc). Hmm, that's exactly the collision. Let me think again about what the text intends.
+
+Text: "An argument does not rule out a claim when the claim's denial is among its premises, alone or joined... nor does an argument whose record leaf was made from a claim rule out that claim's denial."
+
+So: if leaf made from ψ, the argument cannot rule out ¬ψ. In the r + (r → ¬Acc) case, suppose the conditional record leaf was made from ψ = ¬Acc(ℰ). Then the argument cannot rule out ¬ψ = Acc(ℰ). But the next sentence (quoted in the maths under FC72) says: "a premise from which a step leads to the denial, as one does from r and 'if r, this candidate fails (E)', is a premise taken as given, and using it is the gamble above, not a circular argument." So the text explicitly sanctions ruling out Acc(ℰ) from r and (r → ¬Acc). Hence the MadeFrom block cannot apply there — i.e., the conditional record leaf in that example is *not* "made from" ¬Acc(ℰ) in the technical sense; the sense must be narrower: e.g., the record leaf records the very occurrence whose claim is ψ (a record of the claim itself), not a record derived from it. So the collision shows "made from" needs narrowing: a record leaf made from a claim is one recording that claim's own occurrence — e.g., an observation recorded under the assumption. Hmm. I could propose wording narrowing MadeFrom to "a record leaf that records the occurrence of that claim itself". Let me propose for (c)/I39:
+
+```
+nor does an argument whose record leaf was made from a claim rule out that claim's denial, where a record leaf is made from a claim when the record records an occurrence of that claim itself, not a record of something drawn from it.
+```
+Hmm, "drawn from" is fuzzy but it excludes the conditional-record case. This writes a narrowing invention in. I must name it. OK. Maybe simpler: propose that the text add "a record leaf is made from a claim when the record's event is the taking up of that claim". Hmm, too speculative. Let me phrase: "where a record leaf is made from a claim when the event it refers to is the taking up of that claim". Hmm. The event is "an event with an interpreted claim" (L397). So a record leaf refers to an event with an interpreted claim ψ; "made from a claim" then is presumably about how the record was produced. Ugh. Given budget, maybe I present the collision in (d) and, in (c) for I39, say the text does not settle it and give a minimal wording that at least declares it as a relation of the record (leaving the collision to the owner). Let me do: (c) I39 wording: "made from is a relation the record carries between a record leaf and a claim" — safe, doesn't fix the collision, and in (d) I show the collision bites and say the words need a narrowing decision which the owner should make (since S21 leaves choices to the person, and the collision is about what counts as circular). Careful with the rule "Say nothing about what must happen to a candidate". Fine.
+
+Hmm, but the task wants me to say "which should stand". For the collision: I can say the sentence sanctioning the r-case should stand (it's the owner's own reading of non-circularity, and it's stated), and the MadeFrom clause should therefore be read (or worded) to exclude a record produced from a derived conditional. I'll give wording: "...rule out that claim's denial, where a record leaf is made from a claim only when the event it refers to is the taking up of that claim." That's a clean narrowing: the record of *taking up* ¬Acc — then in the r-case the conditional's record is not made from ¬Acc (its event is something else). Good enough. Name it as a narrowing written into the text (new invention).
+
+Actually wait. Let me reconsider: "A record leaf is a reference to an event with an interpreted claim" (L397). So the record leaf refers to an event, and carries an interpreted claim. "Made from a claim" — the record leaf was made from ψ. E.g., an observation record made from the assumption ψ. My narrowing ("the event it refers to is the taking up of that claim") may not fit. Alternative narrowing: "made from a claim when ψ is the claim the record was produced under". Hmm. Honestly, the cleanest is to say the relation is undeclared and must be declared, and to show the collision so the owner sees the stakes. I'll propose: "where a record leaf is made from a claim when the record was produced under that claim as its source" and note the r-case then must not have the conditional record produced under ¬Acc as source. Ugh.
+
+Let me simplify and be honest: In (c) for I39 I give wording declaring it a record-carried relation; in (d) for FC72 I show the collision and say the words must say which of the two clauses wins when a record made from ¬Acc supplies the conditional — and give a wording that resolves it in favour of the "taken as given" sentence (which the text states explicitly), i.e., the MadeFrom block applies only to a leaf whose interpreted claim is the denial itself... hmm, but that would make the MadeFrom clause redundant with the first clause? Not quite: the first clause blocks when ¬φ is a conjunct of a leaf; the MadeFrom clause blocks when the leaf was made from ¬φ even if the leaf's interpreted claim isn't ¬φ. E.g., leaf with claim χ, made from ¬φ: blocks ruling out φ. That's provenance-based blocking: you can't rule out a claim by an argument using a record produced under its denial. In the r-case, the conditional record produced under ¬Acc... if its production was under ¬Acc, then indeed you'd be ruling out Acc using a record made under ¬Acc — which is exactly the "gamble" the text says is permitted! So the text *itself* says the gamble is permitted ("using it is the gamble above, not a circular argument") — so the MadeFrom block must not apply to that case. Therefore the MadeFrom relation must be narrower than "produced under that claim". So the right resolution: the MadeFrom block covers only a record leaf whose event *is* the claim's own occurrence... I'll go with: "where a record leaf is made from a claim when the record's event is an occurrence of that claim". Given L397 says a record leaf is "a reference to an event with an interpreted claim", "an occurrence of that claim" ties in with I45 ("'Event' is a set of occurrences"). OK, acceptable. Let me use:
+
+```
+nor does an argument whose record leaf was made from a claim rule out that claim's denial, where a record leaf is made from a claim when the event it refers to is an occurrence of that claim.
+```
+Good; name as a new narrowing.
+
+7. **FC73** attack: "can rule out" — existential; with weak forms nothing is ruled out, so the words must keep "can". Under I38's classical inconsistency, a model with Accepted classically inconsistent but j admitting only AND-ops: X_j(φ)=∅. So the claim survives only because of "can"; if the words are read as "arguments from them rule out", counterexample. Note briefly. Also FC73's example needs ¬φ and φ both derivable — fine.
+
+8. **FC74** attack: rests on H12 (ℰ_c supplied) and I45. Without supplies, Bearing is undefined, not false: then "a criticism occurrence can exist when (K1) fails" is not evaluable. Also: is the witness's criticism a criticism at all under L383 ("not a criticism until an organization represents it as the premise of a criticism alleging a defect")? If the witness's model has no representing organization, then the occurrence is not a criticism and the witness misses. So the witness rests on D12.5's representation being present. Note: the search note says "a criticism whose connection candidate has ¬Acc" — doesn't say the representing organization is present. So the attack: the witness may only show an occurrence whose data exist, not a criticism in L383's sense; it rests on I45 and on the representation condition (D12.5) not being checked. Good attack.
+
+9. **FC76** attack: holds by construction (no Acc/Usable in UsesReason). Under any precisification of I47 that included j's acceptance of the objection's claims, the second half ("no usable argument from it") could fail: model where the response's steps take the objection's claim as a premise and j accepts it — then an argument from the objection is usable. The words say "does not ... make any argument from it usable" — meaning reason use *alone* confers nothing; that reading survives. But a reader could read it as "no argument from an objection one uses is ever usable", which is false: j can use an objection and also accept its premise, making an argument usable. Counterexample to the flat reading. Good: a sentence-level attack. Model: ob with claim d; response R uses reason (map, etc.); j accepts d; argument α with one step from premise d to conclusion ¬Acc(ℰ) (MP with d → ¬Acc also accepted); then α is usable — an argument from the objection is usable. So "does not make any argument from it usable" must read "does not by itself make". Propose wording change? Yes:
+
+```
+Using an objection does not by itself give it bearing (K1) or make any argument from it usable (K2).
+```
+Good, small. But careful: L385 is the line; the sentence quoted is at L385? FC76 quotes: "Using an objection does not give it bearing (K1) or make any argument from it usable (K2)." attributed to L385. Yes.
+
+Now (e): matter 9 → wording (sentence 1 of L393). Also note matter 11 is referenced in FC76's header but not stated in this part's section 8; no ruling.
+
+Let me also double check S23 compliance in my proposals: words like "unusable", "rules out", "classically inconsistent", "live", "declared", "bearing", "usable" — the text's own vocabulary. No "fits/supports/verifies/believes/true/established/derived from"? "derived" is on the forbidden list! "derived, derived from" — yes: "Better than, worse than, true, not true, more true, established, authority, foundation, foundational, derived, derived from." So I must avoid the word "derived". Careful in my own prose too? The rule: "A wording you propose obeys decision S23" — the *wordings* must. My prose should also try. Let me avoid "derived" and "derived from" in proposals. In my analysis prose I used "derived" above — replace with "drawn" / "obtained" / "reached by steps". Also avoid "supports", "fits", "proves", "reason to believe", "established". Fine.
+
+Also avoid "verificationism" terms. OK.
+
+Also careful: "Say nothing about what must happen to a candidate (decision S21)" — my proposals don't. Note that L369's "no candidate becomes an account by that (E)" is the text's own; I quote but don't propose.
+
+Also: "Do not list, count, grade or rank rivals, and do not argue from how many there are (decision S20)." So don't say "there are two readings and one is better because..." — well, I can compare readings as *meanings*, but not list rival *candidates*/variations? Hmm, S20 is about the set of versions of an explanation and not counting them. The instruction likely means: don't argue "the maths has fewer inventions" or "most claims hold". Also don't say "1,162 models" as an argument from numbers — the report already carries those numbers; I shouldn't argue from them. Fine.
+
+Also "Nothing is settled" — don't say "this settles X". Use tentative language.
+
+Now, also the report format: "one entry per item you have something to say about, headed by its id and line (for example FC05 · L119, I93 · L119, H05, U4, matter 5 · L109), with the exact wording of each proposal between fence lines. Items on which you have nothing to add are named together in one line at the end of the section."
+
+So each section ends with a line naming items with nothing to add. Let me collect: (a) items with nothing: D9.2, D9.3, D9.4, D9.8? Let me decide as I write. (c): I41 maybe nothing (settled). Hmm, I have something to say for I41 (settled by L393 and L522). That's an entry. Items with nothing to add in (c): maybe none, or I76/I77/I78 etc. are named by title only — those are given in full elsewhere; "each invention given in full in section 5" = I38, I39, I40, I41, I42, I43, I47. Plus "each unrecorded choice in section 6" = H12. So (c) covers8 items. All get entries except maybe I41 (short entry fine).
+
+(b): one line "no counterexample in this part".
+
+Now let me watch the word count. Let me write compactly.
+
+Draft:
+
+---
+
+## (a)
+
+**D9.6 · L390, L393 · FC69.** The maths picks a direction the words leave open... [prose ~110 words] + fence.
+
+**FC70 · L393.** The formal statement is the careful one; the sentence says more. The wording is in (e) under matter 9.
+
+**D9.9 · L395 · FC71.** [prose] + fence.
+
+**D9.10 · L377.** [prose] + fence.
+
+**D9.11 · L385 · FC76.** [prose] + fence.
+
+**D9.5 · L393.** [prose] + fence.
+
+**D9.1, D9.7 · L397.** [prose] + fence (one word).
+
+**FC68 · L369.** (b) and (c) have no text sentence...
+
+**NF13 · L8; NF14 · L397.** one line.
+
+Nothing to add: D9.2, D9.3, D9.4, D9.8 (they match L397/L387/L393/L315 as written).
+
+Hmm — D9.8: Out_j(φ) ⟺ X_j(φ) ≠ ∅; text L315: "A claim is ruled out for an assessor j when an argument usable by j (Part IX) rules it out, and a candidate is ruled out for j when the claim that it meets (E) is." matches. Good.
+
+D9.4 Live — matches L393 given I40's direction; but that's the direction point (in the FC69 entry). OK, put D9.4 in the FC69 entry header: "D9.4, D9.6 · L390, L393 · FC69".
+
+Let me finalize headers and write.
+
+Word budget check as I go. Let me write the final answer now, carefully, aiming ~2900 words.
+
+One more consideration for (a) D9.10: also note "Account(ℰ_c)" at L380 vs the maths' Acc — trivial; skip.
+
+Also for (a) FC56: the claim's formal (a) is not a sentence of the text (monotonicity) — the sentences are about withdrawal and absence. Note briefly in the "nothing to add"? Better: short entry "FC56 · L393, L397": (a) is a consequence, not a sentence; (b) matches L397 exactly. And an attack in (d). Fine, keep short.
+
+Let me write.
+
+Also: the report should say, where I rely on a line not given (L522, D12.5, L161), that I do. Mention L522 and D12.5.
+
+Now write.
+
+Draft prose (trim aggressively).
+
+### (a)
+
+**D9.4, D9.6 · L390, L393 · FC69.**
+The maths reads "a step of the same argument as u" as a step below u; the words say only "of the same argument". They part: on the words as they stand the liveness of a premise can come from a step above u (model under FC69 in (d)), and on the two-step loop the words give two fixed points, so Usable is not a definition at all. The maths should stand, because without a direction (K2) says nothing; the words should carry the direction.
+
+```
+replaces L393 (second sentence)
+\(d\) is the conclusion of a step of the same argument as \(u\), lower in the tree than \(u\), that is usable by \(j\), or a premise \(j\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it, whether or not \(j\) holds an explanation of \(d\); a claim \(j\) has never taken up is not live for \(j\).
+```
+This writes I40's below-reading into the text.
+
+**FC70 · L393.** The maths' statement is narrower than the sentence and is the one that stands: withdrawing a premise live twice over leaves the step usable. The sentence should change; wording in (e), matter 9.
+
+**D9.9 · L395 · FC71.**
+Two gaps. The words make (K3) unconditional; the machinery needs the conditional live and modus tollens admitted (models in (d)). And "and nothing narrower", read flatly, says no argument of j rules out B alone, which an independent argument can; the maths' reading ("from those premises alone") is the one the machinery can give. The words should change; this writes I43's conditions into the text.
+
+```
+replaces L395
+For \(T\land B\land I\Rightarrow O\), an argument usable by \(j\) that rules out \(O\), where that conditional is live for \(j\) and \(j\) admits modus tollens, rules out \(T\land B\land I\) together for \(j\), and from those premises alone rules out nothing narrower. (K3)
+```
+
+**D9.10 · L377.**
+Bearing(c,z,p) is defined from data supplied with c, so p drops out: two criticisms differing only in p bear alike. The words make bearing relative to p. The words should say p_δ is formed from z, δ and p, and should say who carries ℰ_c when the connection does not single one out.
+
+```
+replaces L377 (second clause)
+Let \(p_\delta\) be formed from \(z\), \(\delta\) and \(p\) as the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments; where the connection does not single one out, the criticism carries \(\mathcal E_c\).
+```
+This writes H12's choice for ℰ_c into the text and refuses its choice for p_δ.
+
+**D9.11 · L385 · FC76.**
+None of the four phrases is defined anywhere; the maths supplies one precisification among others and thereby makes reason use decidable where the words make it open. The words stay as they are in their four phrases, but should say the data is declared.
+
+```
+replaces L385
+A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route; the map, the role bindings, the recodings, the changes and the operative deliberative rule are declared for the system, and reason use holds when some declaration of them makes all four conditions hold.
+```
+Writes I47's declared-inputs choice in; the four phrases stay open.
+
+**D9.5 · L393.**
+"within the contract, grain and boundary" does not say whether grain and boundary are contained or equal; the maths takes containment for the contract and equality for the other two. The words should fix it (I42 written in).
+
+```
+replaces L393 (the Scope clause)
+\(\operatorname{Scope}_j(u)\): \(u\)'s contract is contained in the contract \(j\) has declared for it, and \(u\)'s grain and boundary are the grain and boundary \(j\) has declared for it;
+```
+
+**D9.1, D9.7 · L397.**
+"inconsistent" is read classically; the words only set it against "logical equivalence alone", which presupposes a classical background but does not say it. One word writes I38 in.
+
+```
+replaces L397 (the sentence beginning "An argument is usable by")
+An argument is usable by \(j\) when each of its steps is (K2), and it rules out a claim when the claim is classically inconsistent with its conclusion and the claim's denial is not among its premises (below).
+```
+
+**FC56 · L393, L397.** (b) is the sentence exactly. (a) is not a sentence: monotonicity in what j accepts and admits follows from Live having only positive conditions and RO not depending on j; the text asserts only the two clauses quoted.
+
+**FC68 · L369.** (a) is the text's. (b) and (c) have no sentence to be true to: they say what the argument machinery does with a failed answer, and rest on I89's free form (see (d)).
+
+**NF13 · L8; NF14 · L397.** Both should stand: the maths can say only that no predicate is triggered and that no cost is measured, which is what the sentences say.
+
+Nothing to add: D9.2, D9.3, D9.8.
+
+### (b)
+No part of this section is marked counterexample found or not as claimed; nothing to rule on. FC69's second computation (two fixed points) is handled in (a).
+
+### (c)
+
+**I38 · L397.** Not settled: the words name "inconsistent" and "and", and set structural reading against "logical equivalence", but say nothing of the language or of classicality; nothing says an admitted form is classically sound, and L397's "for someone who admits its inference form" leaves forms to j. The wording under D9.1 writes classicality in; the soundness of forms should stay open (S21: the person chooses; S27: a claim can be taken as given).
+
+**I39 · L397.** Partly settled: L397 makes premises the leaves, and "alone or joined to other claims by 'and'" fixes conjuncts; "read structurally as non-circular dependence reads identity (Part V)" points at NC1, which is not defined (I24), so the structural reading stays open. "Made from a claim" is used and not defined.
+
+```
+replaces L397 (the sentence beginning "An argument does not rule out a claim")
+An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by "and", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial, where a record leaf is made from a claim when the event it refers to is an occurrence of that claim.
+```
+Writes a narrowing into the text (new, named here: the record's event is an occurrence of the claim); see the clash in (d), FC72.
+
+**I40 · L387, L397.** Mostly settled: L397 has "argument tree" and "whose leaves are premises"; L387 has "essential premises ... the premises its inference form uses". The direction of Live is not settled and is fixed by the wording under D9.6.
+
+**I41 · L393.** Settled for the shape: "having taken it up ... and not withdrawn it" fixes taking up, withdrawal and time; that Accepted_j is an input is stated at L522, which is not quoted here and on which I rely. No change.
+
+**I42 · L393.** Not settled ("within"); wording under D9.5 writes the choice in.
+
+**I43 · L395.** Not settled; wording under D9.9 writes it in.
+
+**I47 · L385.** Not settled; wording under D9.11 writes the declared stance in, leaving the four phrases open, as S21 leaves the choice of method with the person.
+
+**H12 · L377.** Not settled; the wording under D9.10 fixesℰ_c as carried by the criticism and keeps p in play. The maths' tag [I76] does not cover these choices: I76 fills for L161 only, and the report's own check says so; the entry should stand on its own.
+
+### (d)
+
+**FC56 · L393, L397.** Trying to break it: monotone in Accepted_j and Forms_j cannot fail at any size, since Live has only positive conditions and RO does not involve j; withdrawal can only remove arguments. It can break in grain and boundary: j declares grain g for step u and Scope holds; j then declares a coarser grain for u; Scope fails, the argument goes, and a ruling out is lost. The claim excludes this by holding grain and boundary fixed, which the words do not; so the claim's own wording, not the text, carries the restriction. Rests on I42's equality.
+
+**FC68 · L369.** (b) can break. j admits modus ponens only; j accepts 'Ans_E(τa,σb) = y' and has an argument concluding 'Ans_p(a,b) ≠ y', so 'Ans_p(a,b) = y' is ruled out; but nothing j has joins the answer to (E), so no argument's conclusion is inconsistent with 'Acc(ℰ)' and X_j(Acc(ℰ)) = ∅. (b) holds only because I89's free form and I20's encoding of (E) supply that link. The words "the forms are admitted" should say which forms.
+
+**FC69 · L390, L393.** Two models. (1) Upward: root r concludes d from one premise g, g ∈ Accepted; step u below r concludes e from premise d; forms admitted, scope declared. On the words as they stand d is live for u through r, so u is usable; under I40 it is not (r is not below u). (2) The loop: root concludes d from premise e; step below concludes e from premise d; both usable or both not. So "holds" holds only under the invention; the words give no answer. Rests on I40.
+
+**FC70 · L393.** No model breaks the formal claim: the two disjuncts of Live are independent. The sentence is what breaks, in the configuration FC70 exhibits; see (e).
+
+**FC71 · L395.** Two models. (1) j admits modus ponens only, accepts ¬O and 'T∧B∧I ⇒ O': nothing concludes ¬(T∧B∧I), so X_j(T∧B∧I) = ∅ while X_j(O) ≠ ∅. K3 as worded is false. (2) j additionally has 's', 's → ¬B' accepted and modus ponens: B is ruled out alone, which is narrower than T∧B∧I. So "nothing narrower" is false read flatly. Both rest on the words, not on I43.
+
+**FC72 · L397.** Two ways to break it. (1) Reading the block as dependence: a leaf stating ¬φ that no step uses blocks a ruling out that does not depend on it; under the text's own reason ("non-circular dependence") it should not. FC72(a) then fails; it holds on I39's leaf-level reading. (2) The clash: leaves r and a record leaf carrying 'r → ¬Acc(ℰ)' whose event is an occurrence of ¬Acc(ℰ) — a record of the earlier finding that the candidate fails. Under the wording proposed in (c) the block no longer bites; as the words stand, the MadeFrom clause and the "premise taken as given" sentence of the same line contradict each other. The sentence permitting the gamble should stand (it is stated and matches S27); the clause should be narrowed as proposed.
+
+**FC73 · L397.** Holds only because the words say "can rule out". With Accepted = {q, q → ¬φ, s, s → φ} classically inconsistent and j admitting only conjunction steps, both X_j(φ) and X_j(¬φ) are empty. If the words are read as "arguments from them rule out", the model breaks it.
+
+**FC74 · L383.** The witness rests on H12 (t_c, Γ_c, δ_c supplied) and on D12.5's representation being present; the search note records only a connection whose candidate fails (E). If the model carries no organization representing g as the premise of the criticism, L383's own condition ("not a criticism until an organization represents it...") is not met and the witness shows only data, not a criticism. Rests on I45 and H12.
+
+**FC76 · L385.** Holds by construction under I47 (no Acc and no Usable in the definition). The sentence can break: j uses an objection and also takes up its claim d, with 'd → ¬Acc(ℰ)' taken up and modus ponens admitted; then an argument from the objection is usable. So the sentence should say "by itself".
+
+```
+replaces L385 (last sentence)
+Using an objection does not by itself give it bearing (K1) or make any argument from it usable (K2).
+```
+
+### (e)
+
+**matter 9 · L393.** Yes. The first clause holds only of a premise live by acceptance.
+
+```
+replaces L393 (first sentence)
+Withdrawing a premise that is live only by acceptance makes the step unusable; it does not rule the conclusion out.
+```
+
+Matter 11 is named in FC76's header but not stated in this part's section 8; no ruling here beyond the entry under FC76.
+
+END OF REPORT
+
+Now let me count words roughly. The above is maybe 1900-2200 words. Good, room to deepen a couple of items. Let me add depth where needed: maybe expand (a) D9.10 with why p must stay in play (Bearing's signature), and (d) FC56 or FC68 a bit. Also make sure I answer "which should stand" for each divergence explicitly. Let me check each (a) entry states which stands: D9.6 (maths stands, words change), FC70 (maths stands, words change), D9.9 (words change; maths' reading stands), D9.10 (words change; maths' p-idleness is wrong — say the maths should carry p), D9.11 (words' four phrases stand open; maths is one way), D9.5 (words should fix; maths' choice stands), D9.1 (words change one word).
+
+For D9.10 I should be explicit: the *maths* is wrong here — Bearing's signature has p, but the definition ignores it; the fix is either to drop p from the signature or to form p_δ from p. The words want the latter. Say: the maths should change (form p_δ from z, δ, p) and the words should say who carries ℰ_c. Good — that's a place where the maths must change, not the words alone.
+
+Also, should I note that the maths' D9.10 tag [I76] is wrong (belongs to L161)? Mentioned in (c) H12.
+
+One more check: the rule "Give the exact wording for every proposal: the whole sentence as it would stand, between fence lines, with the line it replaces." My fences contain the sentence; I state "replaces L393 (first sentence)". Good. But for L377 I gave only "second clause" — the whole sentence as it would stand is what I wrote (it covers the whole sentence from "Let p_δ..." to "...commitments"). Let me phrase "replaces L377 in full". Similarly L385 in full, L395 in full, L397 sentences in full. For the Scope clause: it's a fragment of L393 (the line also contains Form_j(u) etc.). L393's third fragment: "Form_j(u): the inference form of u is one j admits. Scope_j(u): u is applied within the contract, grain and boundary j has declared for it; Live_j(d;u): ..." Actually L393 contains the definitions of Form, Scope, Live. Let me re-read L393 as given in section 3:
+
+> L387 | \(\operatorname{Usability.}\) For argument step \(u\) with essential premises \(\operatorname{Prem}(u)\), the premises its inference form uses:
+
+> L393 | \(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits. \(\operatorname{Scope}_j(u)\): \(u\) is applied within the contract, grain and boundary \(j\) has declared for it; \(\operatorname{Live}_j(d;u)\): \(d\) is the conclusion of a step of the same argument as \(u\) that is usable by \(j\), or a premise \(j\) tentatively accepts, ...
+
+Hmm wait — but earlier FC56 quotes L393 as "Withdrawing a premise makes the step unusable; it does not rule the conclusion out." So L393 is a long line containing several sentences. So my proposals replace sentences within L393. I'll say "replaces L393 (the sentence ...)" and give the sentence whole. That satisfies "the whole sentence as it would stand".
+
+Also FC70's quote of L393 is the "Withdrawing..." sentence. And FC69 quotes the Live clause of L393. Fine.
+
+Careful: for the Live clause, the "sentence" includes Form_j and Scope_j parts? The L393 run is one long sentence with colons and semicolons: "Form_j(u): ... Scope_j(u): ...; Live_j(d;u): ...; a claim j has never taken up is not live for j." Actually it's a definitional list. My replacement for the Live clause is fine if I label it "the Live clause of L393". For clarity I'll write: "replaces L393 (the \(\operatorname{Live}_j(d;u)\) clause, whole as it would stand)".
+
+Let me also double-check the forbidden-word list in my proposals: "formed from" — contains "from" but not "derived from". OK. "carries" fine. "classically inconsistent" fine. "occurrence of that claim" fine. "lower in the tree" fine. "live only by acceptance" fine. "declared" fine.
+
+Check: "read structurally as non-circular dependence reads identity (Part V)" retained verbatim — fine.
+
+Now also the rule: "Keep apart what the text forces and what a reader might take it to mean." I do this in (d) FC72(1) and FC73 ("can"), and FC76 ("by itself").
+
+Also "Where values are placed is the owner's question; do not propose to move them." Nothing about values. Fine.
+
+One thing: in (d) FC56 I say "the claim's own wording, not the text, carries the restriction" — good.
+
+Let me also reconsider whether to include an entry for FC56 in (a) — yes short.
+
+Let me now also double check FC72(c) claim: "The argument with leaves r and (r → ¬Acc(ℰ)) and one modus ponens step rules out Acc(ℰ): neither leaf has ¬Acc(ℰ) as a conjunct." My clash: if the conditional's record leaf is MadeFrom ¬Acc(ℰ), then RO's clause blocks. Right.
+
+But careful: is (r → ¬Acc(ℰ)) a *record leaf* or a stated assumption? In the text's example "as one does from r and 'if r, this candidate fails (E)'" — the conditional is a claim, possibly stated as an assumption (from (E)). If it's a stated assumption, MadeFrom doesn't apply (MadeFrom is on record leaves). So the clash only arises when the conditional arrives as a record leaf made from ¬Acc. My wording narrowing handles it. Good, I frame it as: the clash arises only where the conditional arrives as a record; and the words say nothing about which. Fine.
+
+Now write the final. Also mention where I rely on lines not given: L522 (I41), D12.5/L383 representation, L161 (I76). I'll add a note in (c) entries.
+
+Word count estimate: let me write and keep an eye.
+
+One more: "the report, section 10" says "Five sections, (a) to (e)". So I write "## (a)" etc. Fine.
+
+Also "Items on which you have nothing to add are named together in one line at the end of the section." — for (d) and (e) too: (d) covers claims that held — all nine have entries except maybe FC74/FC73 yes I have. So (d): nothing-to-add line: none. Actually I have entries for all nine. Fine, skip the line or write "None." Hmm, the instruction says items with nothing to add are named together in one line at the end. If none, I can omit. For (e), matter 11 noted. Fine.
+
+Let me finalize. I'll aim for tight prose.
+
+Also I should make sure I answer in (b) explicitly "no counterexample" and note that (b) is empty.
+
+Final check on format requirements: "End the report with a line that reads exactly END OF REPORT." Yes.
+
+Write it.
