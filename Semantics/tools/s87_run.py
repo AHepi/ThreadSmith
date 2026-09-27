@@ -147,9 +147,9 @@ def dry_run(path, jobs, sha):
     per = {}
     for j in send:
         per[j["model"]] = per.get(j["model"], 0) + 1
-    print("to send: %d calls (%s); at most %d in flight per provider across every process (slot locks in %s)"
-          % (len(send), ", ".join("%s %d" % kv for kv in sorted(per.items())) or "none", C.SLOTS_PER_PROVIDER,
-             C.LOCK_DIR))
+    print("to send: %d calls (%s); at most this many in flight per provider across every process: %s (slot locks "
+          "in %s)" % (len(send), ", ".join("%s %d" % kv for kv in sorted(per.items())) or "none",
+                      C.slot_limits_text(), C.LOCK_DIR))
 
 
 def run(path, jobs, sha):

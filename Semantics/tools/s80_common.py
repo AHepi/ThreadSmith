@@ -105,14 +105,31 @@ def check_ladder(provider, ladder):
 # ---------------------------------------------------------------- outside the repository: slots, pid files, the log
 
 # The providers' slot locks and the runners' pid files live outside the repository (process audit finding 1; lesson
-# S10). Every call to a provider takes one of its SLOTS_PER_PROVIDER slots first (s80_call.call, s80_probe), so the
-# limit of three calls in flight to each provider (decisions S12, S17) holds across every process on this machine that
-# uses these tools, not only within one pool. SEMANTICS_RUN_DIR moves the folder; every runner must then see the same
+# S10). Every call to a provider takes one of its slots first (s80_call.call, s80_probe, s96_glm_call,
+# glm_via_claude_code), so the limit of calls in flight to each provider (three each, decisions S12, S17; Mimo and GLM
+# one each from 27 September 2026, decision S35) holds across every process on this machine that uses these tools, not
+# only within one pool. SEMANTICS_RUN_DIR moves the folder; every runner must then see the same
 # value, or the limit no longer holds between them.
 RUN_DIR = os.environ.get("SEMANTICS_RUN_DIR",
                          "/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad")
 LOCK_DIR = os.path.join(RUN_DIR, "locks")
-SLOTS_PER_PROVIDER = 3
+SLOTS_PER_PROVIDER = 3   # the default limit, for a provider not named in SLOTS_BY_PROVIDER
+# 27 September 2026, decision S35 ("two agents at a time: one GLM and one Mimo"): Mimo's limit is 1, down from 3, and
+# GLM's is 1 (GLM took the default of 3 before; its calls go by s96_glm_call.py and glm_via_claude_code.py, which both
+# take a "glm" slot). provider_slot now reads the limit per provider from this map (slots_for). A process started
+# before this change that still holds a Mimo slot numbered 1 or 2 is not seen by one started after it; none was
+# running when the change was made.
+SLOTS_BY_PROVIDER = {"mimo": 1, "glm": 1}
+
+
+def slots_for(provider):
+    """How many calls may be in flight to `provider` at once, across every process that uses provider_slot."""
+    return SLOTS_BY_PROVIDER.get(provider, SLOTS_PER_PROVIDER)
+
+
+def slot_limits_text():
+    """The limits as one line, for a runner's plan: the named providers, then the default."""
+    return ", ".join("%s %d" % kv for kv in sorted(SLOTS_BY_PROVIDER.items())) + ", others %d" % SLOTS_PER_PROVIDER
 # The S81 Stage 2 runner of 23 September 2026 (pass 2 and the effort controls) ran from the code before the slot lock,
 # so it takes no slot: nothing that sends may start while its pid file names a live process.
 S81_RUN_PIDFILE = os.path.join(RUN_DIR, "s81_run2.pid")
@@ -144,7 +161,7 @@ def _hold(provider, step):
 
 @contextlib.contextmanager
 def provider_slot(provider, label="", poll=5.0):
-    """Hold one of the provider's SLOTS_PER_PROVIDER slots for the length of the block: an exclusive flock on
+    """Hold one of the provider's slots_for(provider) slots for the length of the block: an exclusive flock on
     LOCK_DIR/<provider>.slot<N>, waiting until one is free (said once, through log). The kernel drops a flock when the
     process holding it ends, however it ends, so a dead holder leaves no stale slot and nothing needs cleaning up; the
     pid, label and time written into the file are for a person reading it. Threads of one process each open the file
@@ -152,9 +169,9 @@ def provider_slot(provider, label="", poll=5.0):
     if _inside(LOCK_DIR, REPO):
         raise SystemExit("the lock folder %s is inside the repository; set SEMANTICS_RUN_DIR outside it" % LOCK_DIR)
     os.makedirs(LOCK_DIR, mode=0o700, exist_ok=True)
-    t0, said = time.time(), False
+    t0, said, limit = time.time(), False, slots_for(provider)
     while True:
-        for n in range(SLOTS_PER_PROVIDER):
+        for n in range(limit):
             fd = os.open(os.path.join(LOCK_DIR, "%s.slot%d" % (provider, n)), os.O_RDWR | os.O_CREAT, 0o600)
             try:
                 fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -173,7 +190,7 @@ def provider_slot(provider, label="", poll=5.0):
                 os.close(fd)
             return
         if not said:
-            log("waiting for a free %s slot (all %d held)%s" % (provider, SLOTS_PER_PROVIDER,
+            log("waiting for a free %s slot (all %d held)%s" % (provider, limit,
                                                                  (" for " + label) if label else ""))
             said = True
         time.sleep(poll)
@@ -231,8 +248,8 @@ def refuse_if_runner_alive(pidfiles=None):
     for p in pidfiles or [S81_RUN_PIDFILE]:
         pid = live_pid(p)
         if pid:
-            raise SystemExit("%s names pid %d, which is alive: that runner takes no provider slot, so the limit of %d "
-                             "per provider cannot hold; nothing sent" % (p, pid, SLOTS_PER_PROVIDER))
+            raise SystemExit("%s names pid %d, which is alive: that runner takes no provider slot, so the limits "
+                             "per provider (%s) cannot hold; nothing sent" % (p, pid, slot_limits_text()))
 
 
 def read(p):

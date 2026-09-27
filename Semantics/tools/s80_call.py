@@ -15,7 +15,8 @@ call with thinking on and no effort is refused before anything is sent. The effo
 the receipt. The ladder is checked against s80_common.MAX_TOKENS_CEILING before anything is sent.
 Temperature is pinned (s80_common.TEMPERATURE) and recorded; top_p is left to the provider and recorded as unset.
 Every attempt takes one of the provider's slots (s80_common.provider_slot) for the length of its stream, so at most
-three calls are in flight to a provider across every process that uses this file; stream() refuses to send without one.
+s80_common.slots_for(provider) calls are in flight to a provider across every process that uses this file (three, and
+one for Mimo from 27 September 2026, decision S35); stream() refuses to send without one.
 The whole call holds a lock on its tag in its folder (s80_common.tag_lock): a second sender of the same tag is refused.
 
 call(provider, system, user, out_dir, tag, thinking, ladder, accept, ..., effort) writes, in out_dir:

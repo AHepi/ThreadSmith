@@ -519,12 +519,13 @@ def dry_run(jobs, ladder, C, pass_plan, providers, attempts=6, max_rejects=3):
                                                                           ", ".join(clash) or "none"))
     per = {m: sum(j["model"] == m for j in send) for m in AUDITORS}
     real = [j for j in send if not j["control_of"]]
-    print("to send: %d calls (%s), %d real and %d controls; at most %d in flight per provider across every process "
-          "(slot locks in %s)%s; up to %d attempts per call, at most %d that come back and fail" % (
+    print("to send: %d calls (%s), %d real and %d controls; at most this many in flight per provider across every "
+          "process: %s (slot locks in %s)%s; up to %d attempts per call, at most %d that come back and fail" % (
               len(send), ", ".join("%s %d" % kv for kv in per.items()), len(real), len(send) - len(real),
-              C.SLOTS_PER_PROVIDER, C.LOCK_DIR,
-              ", so all start at once if no other process holds a slot" if max(per.values() or [0]) <= 3
-              else ", so some wait for a free slot", attempts, max_rejects))
+              C.slot_limits_text(), C.LOCK_DIR,
+              ", so all start at once if no other process holds a slot"
+              if all(n <= C.slots_for(m) for m, n in per.items()) else ", so some wait for a free slot",
+              attempts, max_rejects))
     for j in send:
         print("   %-32s %-5s effort %-6s %s" % (j["tag"], j["model"], j["effort"],
                                               "control" if j["control_of"] else "real"))
