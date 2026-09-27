@@ -1,0 +1,502 @@
+We need to produce a report as specified. Task: evaluate the formal semantics of the text (a theory of explanation) regarding organizations, setting edits, roles. We need to answer (a) whether each formal statement says what the sentence says; (b) each counterexample—whether it's counterexample to the text or only to an invention; (c) each invention in full and unrecorded choices—does the text settle it? give wording if not; (d) attack the claims that held (try to find counterexample by hand); (e) round-1 matters and changes.
+
+We must produce a report of about 3,000 words, five sections (a)-(e), each with entries per item, exact wording proposals between fence lines. End with "END OF REPORT".
+
+We need to think carefully. The "text" is a theory of explanation, with lines L83–L110 on organizations and roles, and L325 as the pole of a claim about direction. We have definitions D1.1–D2.5, claims FC01, FC02, FC11, inventions I01, I02, I03, I04, I05, I77, I78, I80 (given in full here), plus other inventions mentioned only by title (I06, I07, I08, I09, I14, I65, I92). Unrecorded choices H03, H04.
+
+We must compare maths vs text, decide which should stand, propose changes. We must respect the owner's decisions: no verificationist language, no claims about what must happen, etc. The task is to analyze where the maths and words differ, what to change.
+
+We need to produce a coherent report. Let's plan.
+
+We have to go through each definition in section 3: D1.1, D1.2, D1.3, D1.4, D2.1, D2.2, D2.3, D2.4, D2.5. Also claims: FC01, FC02, FC11. Inventions in full: I01, I02, I03, I04, I05, I77, I78, I80 (given in section 5,8 in full). Unrecorded choices: H03, H04. Also the round-1 change at L123 and matter 5.
+
+We must also consider the other inventions mentioned only by title (I06, I07, I08, I09, I14, I65, I92) that are used by claims here? FC02 uses I04, I05, I65. FC11 uses I04, I09. FC01 uses I03. So I06, I07, I08, I14, I92 are not directly used in these claims? I65 is used in FC02. I09 is used in FC11. I14 is used in D1.4? Actually D1.4 (subnetwork) uses I14. But D1.4 is in section 3 but not used by any claim in this part? The claims are FC01, FC02, FC11. FC01 uses D1.2, D1.3. FC02 uses D2.1, D2.3, D2.5. FC11 uses D2.2, D4.5 (from other section), D4.6. So D1.4 not used by any claim here. But we still need to evaluate definitions in section 3. So D1.4 must be addressed in (a). Also D2.4 (observation edits) not used in claims? It's referenced in D4.6 families but not directly in FC01, FC02, FC11. However, we need to evaluate definitions.
+
+We must give exact wording proposals for changes. Also we need to "attack the claims that held" by hand to find counterexample.
+
+Let's think about each item.
+
+First, understand the content. The text is a theory of explanation with organizations D = (V, (X_v), J, B, A, L) etc. The maths formalizes. The owner wants exploration of math since words are vague. Inventions recorded where implementation forced invention. We must judge whether the text settles each invention; if not propose wording.
+
+We need to respect owner's decisions: no verificationism (no "fits, supports, verifies, etc."), nothing settled, etc. Our proposals must obey S23 (argument means reasons why this and not that), not propose anything about hard to vary, not move values, etc.
+
+We must quote text exactly with line numbers where we rely.
+
+We need to be careful: The task says "Do not list, count, grade or rank rivals, and do not argue from how many there are (decision S20)." So we cannot say "there are many options", etc. Also "Say nothing about what must happen to a candidate (decision S21)." So we cannot propose that a candidate must be chosen etc. "An argument here means reasons why this and not that (decision S23)." So we must give reasons for our proposals.
+
+We must keep apart what the text forces and what a reader might take it to mean.
+
+Now, let's go through each definition and claim.
+
+### Section 3: Definitions
+
+#### D1.1 Organization.
+
+Text lines L88, L91, L94. The text says:
+
+> L88 | D=(V,(X_v)_{v∈V},J,B,A,L).
+> L91 | \(V\) is a set of ports, each with a nonempty value domain \(X_v\). A valuation is an element of \(X_D=\prod_v X_v\). \(J\) indexes components; each component \(j\) has a footprint \(V_j\subseteq V\). \(B\) is a set of boundary conditions. \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\).
+> L94 | L_j(a,b)\subseteq\prod_{v\in V_j}X_v .
+
+The maths D1.1 adds: L a function from J × A × B with L_j(a,b) ⊆ ...; no law ties L_j(a2·a1, b) to L_j(a1,b) and L_j(a2,b) [I02]; V and J are the same under every edit [I03]. Also composition is Kleene-associative with identity 1 ∈ A [I01].
+
+The text says "closed under a partial associative composition with identity 1." The maths invented I01: partial monoid with Kleene associativity (a3·(a2·a1) defined exactly when (a3·a2)·a1 is, and then equal; 1·a = a·1 = a). Other choices: weak associativity, category, total monoid. Does the text settle? The text says "partial associative composition with identity 1." "Associative" typically means Kleene associativity? Actually in partial algebras, associativity can be defined in different ways: strong associativity (both sides defined iff the other is, and equal) vs weak (if both defined then equal). The text says "closed under a partial associative composition". "Closed" suggests that composition, when defined, yields an element of A. But it doesn't specify the strength of associativity. So the text does not settle the exact associativity. I01 chooses Kleene (strong) associativity. Could we propose wording to settle? Possibly: "A is a set of admitted edits, closed under a partial composition · : A × A ⇀ A that is associative in the strong sense: a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal, with identity 1 such that 1·a = a·1 = a for every a." But we must be careful: the text might want to keep it open? The owner said "if implementation forces invention, that needs to be recorded." So we need to decide if the text should settle or stay open. Since the maths needed to choose, and it affects results (composition matters for homomorphism clause of (F2) and functional transport, but not for claims here), maybe the text should state what it needs. The claims in this part (FC01, FC02, FC11) do not depend on the composition law beyond what's given? FC01 uses I03 (ports/components fixed) but not I01? Actually FC01 rests on I03 only? It says "Inventions it uses: I03." But I01 is used by "1 other claim" (not this part). So for this part, composition not heavily used. But we still need to evaluate the definition. We need to say whether the text settles it. Probably not; we should propose wording to fix the choice or say why it should stay open. Since the owner wants the semantics to hold, maybe we should fix it to make the theory precise. But we must respect S23: arguments are reasons why this and not that. So we can argue that strong associativity is needed for composition to be well-behaved for functional transport and homomorphism, but we cannot say it's "better" without giving reasons. Actually we can give reasons why this and not that: because with weak associativity, a composite's meaning could depend on parenthesization when one side is defined and the other not, which would make the organization's interpretation of a composite edit ambiguous. Since the text says "closed under a partial associative composition", it likely intends that composition is associative in the strong sense so that any way of parenthesizing a defined composite yields the same edit. So maybe the text should specify Kleene associativity. Alternatively, maybe the text wants to allow weak associativity? But the phrase "closed under a partial associative composition" suggests that when composition is defined, it is associative. Usually "associative" in partial algebras means Kleene. So maybe the text is ambiguous. We could propose wording to remove ambiguity.
+
+But careful: The task says "where the words should change, give the new wording." So if we decide the maths should stand, we might not need to change text. But if the text is ambiguous and the maths made a choice, we might want the text to adopt the same choice or leave open. The invention I01 recorded a choice with alternatives. Does the text settle it? Probably not fully. We could propose that the text should carry the wording that fixes Kleene associativity. But we must see if that is consistent with the owner's decisions: nothing forbids it. Also we must not propose anything about hard to vary, etc. So it's fine.
+
+But also note: the text says "closed under a partial associative composition with identity 1." The phrase "closed under" might mean that A is closed under composition, i.e., if a and b are in A and a·b is defined, then it is in A. That's what the maths did: "a composite, when defined, is in A." That seems correct.
+
+So for I01, we might say the text does not settle the strength of associativity; we propose to add "in the strong sense" or something. Or maybe we should say it should stay open because different strengths could be used, but the maths's choice is one possible reading. However, the results of this part do not depend on it. The invention is used by other claims not in this part. But we are to evaluate each invention in full given in section 5. So we need to address I01.
+
+#### I02: No law ties a composite edit's relations to its parts' relations.
+
+Text lines L91 and L574. L574: "The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\)." The text says "supplied independently" which suggests that L is given arbitrarily for each (a,b), with no connection. That seems to settle that there is no law tying composite to parts. But the invention I02 says "L is an arbitrary function... Nothing ties L_j(a2·a1, b) to L_j(a1, b) and L_j(a2, b)." And notes that L574 fixes independence across pairs but does not say whether composites are constrained. Actually L574 says "supplied independently for each (a,b)" which might mean that each (a,b) gets its relation independently, so no constraint linking different (a,b) pairs. That implies that L_j(a2·a1, b) is independent of L_j(a1, b) and L_j(a2, b). So the text does settle that there is no law. But the invention still records it because the math had to decide to allow arbitrary assignment. However, the text explicitly says "independently", so maybe the text does settle. But the invention says "the absence of any such law is the invention." So maybe the text is ambiguous: "supplied independently" could be read as "each relation is given separately, but maybe there is a law that must hold"? Actually "independently" suggests no constraints. So likely the text does settle I02. But the invention still recorded it because the maths had to decide to implement it that way. But according to the task, we need to say whether the text settles it. Possibly yes, and quote L574. But we need to check: L574 is not in the part? Actually it's quoted in the invention. We can quote it. So for I02, we can say the text settles it via L574: "The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\)." That means no law ties composites to parts. So the invention is consistent with the text. But wait: the text also says "A is a set of admitted edits, closed under a partial associative composition with identity 1." That doesn't add a law on L. So indeed the text says L is supplied independently. So I02 is settled. But the invention still recorded it as an invention because maybe the phrase "supplied independently" is not enough to say that there is no action law? Actually it says "supplied independently for each (a,b)" which means each pair (a,b) gets its relation independently, so no constraint linking different pairs. That includes no constraint linking composite to parts. So it's settled. So we can say the text settles I02.
+
+But careful: The invention says "Used by: 1 other claim." Not used by claims in this part. But we still need to evaluate.
+
+#### I03: Ports and components are fixed; deletion and absence are the full relation.
+
+Text lines L103 and L339. L103: "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component." L339: "has a target \(D\) in which the ports and components a rival account would need are absent". The maths invented: An edit never adds or removes a member of V or J. A deleted or absent component is one whose relation under that edit and boundary is the full product. An 'absent' port is one on which every component imposes the full relation.
+
+Does the text settle? L103 says an edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. That suggests that edits do not add new equations, but does it say that ports and components are fixed? It says "replaces the component", implying that the component remains but its relation changes. But it doesn't explicitly say that V and J are unchanged under edits. L339 talks about a target D in which ports and components a rival account would need are absent. That suggests that absence is possible. The maths interprets absence as full relation. But the text doesn't define absence. So I03 is not fully settled. The text likely intends that ports and components are fixed, because the organization D is defined with V, J, etc., and edits change relations L_j(a,b). But could an edit add a new port? The text doesn't say. The invention chooses that V and J are fixed. Also deletion: the text says "A deleted component imposes the full relation on its ports." That is from L103? Actually L103 says "A deleted component imposes the full relation on its ports." Wait, the text L103 as given in the section? Actually in the definitions, after L103, there is "A deleted component imposes the full relation on its ports." That is part of the text? Let's see: In the text, after L103, there is: "A deleted component imposes the full relation on its ports." That seems to be a sentence. Actually in the provided text, under D1.3, it quotes L103 and then L339. But the sentence "A deleted component imposes the full relation on its ports." is likely a separate sentence, maybe L104 or something? But it's given as part of the text in the description: "L103 | A deleted component imposes the full relation on its ports." Actually in the given, it says: "L103 | A deleted component imposes the full relation on its ports." Wait, look: In the "Definitions from other sections that these claims use", there is: "> L103 | A deleted component imposes the full relation on its ports." Actually that appears under D1.3. But earlier, in section 3, under D1.1, it quotes L103 as: "L103 | An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component." Then later, under D1.3, it quotes L103 again as: "L103 | A deleted component imposes the full relation on its ports." So there might be two sentences with the same line number? Possibly it's a mistake. But likely the text has multiple sentences per line. Anyway, the text does say "A deleted component imposes the full relation on its ports." That directly supports the full relation for deleted components. So I03's deletion part is settled. For absence: L339 says "has a target D in which the ports and components a rival account would need are absent". That suggests absence exists. The maths interprets absent component as deleted (full relation). That seems reasonable. But the text doesn't explicitly say that absent port means every component imposes full relation. However, if a component is absent, its relation is full, so it imposes nothing. But what about a port that is absent? Possibly no component has it in its footprint? Actually if a port is not in any component's footprint, then it imposes no constraint. But the maths says "an absent port is one on which every component imposes the full relation". That is a different definition: if every component that includes the port imposes full relation, then effectively the port is free. But if a port is not in any component's footprint, then no component constrains it, so it is also free. So both cases yield no constraint. So the definition might be equivalent. But the text doesn't settle exactly. So I03 might be partially settled: deletion is settled (full relation), but the fixedness of V and J under edits is not explicitly settled. The text says "An edit that sets a port replaces the component assigning that port" which implies the component remains, but doesn't say that the set of components is invariant. It could be that edits can add or remove components? The phrase "replaces the component" suggests substitution, not addition or removal. So likely V and J are fixed. But it's not explicit. So we might propose wording to clarify.
+
+#### I04: Setting a port: a surgical edit, and the assigning component read off the edits.
+
+Text lines L103, L109, L119. The text: "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one." and "A port v is an input under A when A contains an edit that sets v directly." and "An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it". The maths invented: an edit a sets port v at boundary b through component j when L_j(a,b) = {w : w_v = x} for some x and L_k(a,b) = L_k(1,b) for every k ≠ j. 'Directly' is this surgical form. asg(v) is read off A: the component that setting edits of v replace; if multiple, undefined.
+
+Does the text settle? The text says "sets a port directly". It doesn't define "directly". The surgical condition seems to capture "directly" and "replaces only the component that assigns the port, not the relations of the components that read it". The text also says "An edit that sets a port replaces the component assigning that port" which implies that there is a component assigning the port. But the text does not say how to find that component. The maths reads it off the setting edits. That seems to follow from "No role assignment is supplied." So I04 is partly settled: the surgical form might be inferred from "does not add an equation beside an incompatible one" and "replaces only the component that assigns the port". But the exact condition L_j(a,b) = {w: w_v = x} might be too strong: it says the relation becomes exactly the slice, leaving other ports free. But what if the component has multiple ports and the setting edit also constrains other ports? The text says "replaces the component assigning that port" but doesn't say that the new relation is exactly w_v = x. It could be that the new relation still involves other ports. However, "does not add an equation beside an incompatible one" suggests that the old relation is replaced, not supplemented. But it doesn't say the new relation is exactly w_v = x. So the surgical form is an invention. Also the quantifier over boundaries (H03) is unrecorded. So I04 is not fully settled. We need to propose wording to make the definition precise.
+
+#### I05: 'Output': at the identity edit, and 'determined' as at most one value.
+
+Text line L109: "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." The maths invented: v is an output of j when, for every b and all w,w' in L_j(1,b), agreeing off v implies w_v = w'_v. So it reads at identity edit, and "determined" means at most one value.
+
+Does the text settle? It says "given the other ports of V_j across B". "Across B" might mean for every boundary? Or for some? The maths chose every b. Also "determined" could mean exactly one value for each admissible combination of other ports (total function) or at most one (partial function). The text doesn't specify. Also it doesn't say at which edit to evaluate L_j. The text says "L_j given the other ports" but L_j depends on (a,b). Possibly it means at the identity edit? Or across all edits? The text says "across B", so maybe at each boundary. But it doesn't say "at the identity edit". So I05 is not settled. We need to propose wording.
+
+#### I77: Finite models and bounds of the search.
+
+Text lines L91, L105. The text says ports have nonempty value domains; values may be paths, functions, fields, mathematical structures or histories. The maths restricts to finite domains for search. That is an implementation choice, not part of the theory. So the text does not settle that domains are finite; it allows arbitrary sets. So I77 is an invention for the search. We should say the text does not settle it, and it should stay open because the theory allows infinite domains. So no wording change needed.
+
+#### I78: Two families of generated organizations.
+
+This is an implementation choice for the search, not a theoretical choice. The text doesn't specify how to generate organizations. So I78 is not settled by text. It should stay open.
+
+#### I80: The identity edit can be a setting edit.
+
+Text line L109: "A port v is an input under A when A contains an edit that sets v directly." The maths applied D2.1 to every edit including 1: if at identity, some component's relation is already a slice, then 1 sets v. So v is input even without other edits. Does the text settle? It says "A contains an edit that sets v directly." It doesn't say that the identity edit cannot set v. But does the identity edit "set" v? The identity edit typically does nothing. But if the organization's default relation for a component is already a slice, then the identity edit might be seen as setting v. However, the text might intend that setting requires an edit that changes the relation. The invention records this ambiguity. The text does not settle. We need to propose wording.
+
+Now, unrecorded choices:
+
+H03: A setting edit sets its port at every boundary. The text says "sets v directly" but doesn't specify boundaries. The maths added "at every b". The text might intend "across B" as in output. But it's not recorded. So we need to decide.
+
+H04: Direction defined as (Input_A, asg). The text says "The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read." It doesn't define direction explicitly. The maths made it a pair. Is that necessary? Maybe direction is just a consequence, not a formal object. But for FC02, they use it to say direction is carried by asg. Possibly we can leave it as is, or we can propose that direction is not defined but is a consequence. But the maths needs it for claims. Maybe we should say the text does not define direction as a pair; it only says it is a consequence. So the maths's definition is an invention. We could propose wording to define it explicitly, or leave it open. Since FC02 uses it, we might want to define it. But careful: The text says "The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read." That might imply that direction is determined by A, but not that it is a pair. So maybe we can propose that direction is defined as the set of inputs and their assigning components? But that might be too specific. Alternatively, we could say the text does not settle it, and it should stay open because direction is a consequence, not a formal component. However, FC02(c) says "the direction H,θ → L is carried by asg, not by output status." That uses asg. So maybe we need to define direction. We'll see.
+
+Now, claims:
+
+FC01: Solutions shrink as relations shrink; deletion never removes a solution. It held on all models tried. The look found that deletion can make an undetermined answer determined. That is not a counterexample to FC01; it's a separate witness. FC01 itself held. But we need to attack it by hand. Try to find a counterexample beyond the bounds. FC01 is essentially a monotonicity property: if relations are subsets, then solutions are subsets. That is mathematically true given the definition of Sol. So it should hold in general. But the invention I03 (ports and components fixed) is used. Without I03, if deletion could remove ports or components, the statement might not hold. But under I03, it's true. So we can try to break it by considering a scenario where I03 is relaxed. But we must stay with the text's definitions. The text doesn't explicitly say ports and components are fixed, but it says "An edit that sets a port replaces the component assigning that port" which implies components persist. Also "A deleted component imposes the full relation" implies that deleted components still have a footprint. So likely I03 is forced. So FC01 seems solid. But we can attack the "deletion never removes a solution" part: if deletion makes a component impose full relation, then the solutions of D-G are those that satisfy the constraints of remaining components. Since full relation imposes no constraint, any solution of D is also a solution of D-G. That is true. So FC01 holds. But we could try to find a counterexample if deletion is not defined as full relation but as removal of component from J. But the text says "A deleted component imposes the full relation on its ports." So that's fixed. So FC01 should stand. We might not find a counterexample. But we can try: suppose a component has a footprint with ports that are not in any other component. Deleting it imposes full relation, so those ports become free. Solutions of D are those that satisfy L_j. Solutions of D-G are those that satisfy all other components. Since L_j is a subset of full relation, any z satisfying L_j also satisfies full relation. But does z necessarily satisfy the other components? Yes, because if z is a solution of D, it satisfies all components including the others. So z is a solution of D-G. So monotonicity holds. So no counterexample.
+
+But the task says "try by hand to break the claims that held". So we must attempt. We can describe an attempt and why it fails.
+
+FC02: Direction is read from the admitted edits; output status is not. It held on all models tried. We need to attack it. Part (a): Input and asg depend on A. That seems true by definition. Part (b): Output does not depend on A. That is true by I05 (output defined from L_j(1,b)). But could there be a scenario where output depends on A? If we interpret output as depending on edits that do not replace j, maybe. But the text says "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." It doesn't mention A. So it should not depend on A. So (b) seems solid. Part (c): In the pole encoding, c_L's relation determines each of its ports. That is computed as claimed. So FC02 seems solid. But we can try to break (b) by considering that L_j might depend on A? But L_j(a,b) is defined for each (a,b). The output definition uses L_j(1,b) (identity edit). So if A contains edits that change L_j, that doesn't affect L_j(1,b). So output status is invariant under changes to A that do not change the identity relation. But what if A includes an edit that is the identity? That doesn't change L_j(1,b). So still fine. However, if the identity edit is itself a setting edit (I80), then asg(v) might be defined based on 1. But output status is still based on L_j(1,b). So output does not depend on A. So (b) holds. But we could consider a case where the text's phrase "across B" is interpreted as "for some b". Then output could depend on boundaries, but boundaries are part of D, not A. So still not A. So (b) holds. So maybe no counterexample.
+
+But we could attack (a): maybe Input is not a function of A if the definition of "sets v directly" is ambiguous. But under I04, it is. So maybe it holds.
+
+FC11: Roles are relative to A; families are relative to C. It held on all models tried. We need to attack. The claim is that Input(v) quantifies over A, and Causal_C(asg(v)) over C ⊆ A × B. There exist D, C, v with Input(v) and ¬Causal_C(asg(v)) because C holds no setting edit of v. And families use edits of A only. That seems plausible. But we can try to break: maybe if C includes all setting edits of v, then Causal_C(asg(v)) might hold? But the claim only says there exists some C where it fails. That seems easy. But we need to find a counterexample to the claim that roles are relative to A and families to C. Possibly if the contract C is defined differently, but the text says C ⊆ A × B. So it's clear. So maybe no counterexample.
+
+But we must attempt to break by hand. Perhaps consider if asg(v) is undefined (when multiple setting edits through different components). Then Causal_C(asg(v)) is not defined. But the claim might still hold? The formal statement: "There are D, C, v with Input(v) and ¬Causal_C(asg(v)) (C holds no setting edit of v)." If asg(v) is undefined, then Causal_C(asg(v)) is undefined, so maybe we cannot say it's false. But the claim might assume asg(v) defined. So we need to ensure that in the counterexample, asg(v) is defined. The maths's witness likely ensures that. So okay.
+
+Now, inventions in full: we already discussed I01, I02, I03, I04, I05, I77, I78, I80. We need to say whether the text settles each. For those not settled, give exact wording the text should carry, or say why it should stay open.
+
+Also unrecorded choices H03, H04.
+
+Round-1 change at L123: Before, it said "changes under intervention on its output port and under replacement of the component, and is invariant under observation edits". After, it removed "and under replacement of the component". Does the text need a change? The round-1 change removed a clause. We need to evaluate whether that is correct. The change was made because the clause was problematic? Possibly it was redundant or caused issues. We need to decide if the text needs further change. We can look at the current L123: "a causal assignment has a signature that changes under intervention on its output port and is invariant under observation edits;" That seems fine. But maybe we need to check if it's consistent with the definitions. D4.6 defines Causal_C(j) :⟺ Changes_C(j, Set_{o_j}) ∧ Inv_C(j, Obs). That matches the current wording. So the change seems correct. But we might want to ensure that "under intervention on its output port" is exactly Changes_C(j, Set_{o_j}). That is fine. So maybe no further change needed. But we need to consider if the removed clause "and under replacement of the component" was necessary. It might have been part of the signature. But the change removed it. So we can say no further change needed.
+
+Matter 5: L109 gives roles under A while (K) builds a signature on a contract C. This is noted as a matter. Does the text need a change? Possibly we need to clarify that roles are defined under A, and signatures under C, and they are separate. Maybe we need to add a sentence linking them. But the text might already imply that. We could propose wording to make it explicit. But careful: we must not propose anything about hard to vary, etc. We can propose a clarification.
+
+Now, we need to write the report with entries for each item we have something to say about. We need to be concise but deep. The report should be under about 3,000 words. We have many items: definitions D1.1, D1.2, D1.3, D1.4, D2.1, D2.2, D2.3, D2.4, D2.5; claims FC01, FC02, FC11; inventions I01, I02, I03, I04, I05, I77, I78, I80; H03, H04; round-1 change L123; matter 5. Also possibly D4.5 and D4.6 are used in FC11 but they are from other sections. But we are only evaluating this part's items. So we should cover the ones in sections 3,4,5,6,8.
+
+We need to decide which ones we have something to say about. For each, we give an entry. Items with nothing to add are named together at the end.
+
+We need to produce exact wording proposals between fence lines for changes.
+
+We must respect the rules: no verificationist language, no "must happen", arguments are reasons why this and not that, etc.
+
+Let's structure the report.
+
+## Section (a): Does each formal statement say what the sentence says?
+
+We'll go through each definition:
+
+- D1.1 Organization: The maths adds [I01] Kleene associativity and [I03] fixed V,J. The text says "partial associative composition with identity 1" but doesn't specify associativity strength. The maths's Kleene associativity is a plausible reading, but the text should settle it. We can propose wording to fix strong associativity. Also, the text says "V and J are the same under every edit" but that is not explicit in the quoted lines. Actually the text doesn't say that. So maybe we need to add that. But careful: the text might imply it by the way edits are defined (replacing components). But it's not explicit. So we propose to add.
+
+But we need to give the whole sentence as it would stand. Which line to replace? L91 contains the description of V, J, B, A. We might add a sentence after L91 or modify L91. But we must give exact wording between fence lines, with the line it replaces. So we can say: replace L91 with a new wording that includes the conditions. But L91 is long. We might propose to add a new line after L91. But the instruction says "the whole sentence as it would stand, between fence lines, with the line it replaces." So we can propose a new sentence that replaces an existing one, or adds a new one. We need to indicate which line it replaces. For example, "Replace L91 with:" and then the new text. But L91 is a paragraph. Alternatively, we can propose to add a new sentence after L91. But then we need to specify the line number? Maybe we can say "Add after L91:" but that's not replacing a line. The instruction says "the whole sentence as it would stand, between fence lines, with the line it replaces." So if we are adding, we need to indicate which line it replaces, or maybe we are replacing a part of a line. Possibly we can propose to replace L91 with a longer sentence. But L91 already has several sentences. We can break it into multiple lines. But to keep it simple, we can propose to replace L91 with a new version that includes the clarifications. But that might be too much. Alternatively, we can propose to add new lines after L91. But the instruction might allow proposing new sentences to be added at specific lines. I think we can say "Add after L91:" and then the new sentence. But the instruction says "the whole sentence as it would stand, between fence lines, with the line it replaces." So if we are adding, we need to say which line it replaces? Possibly we can say "Replace the sentence 'A is a set of admitted edits...' in L91 with:" but that's part of a line. To avoid complexity, we can propose to replace entire lines where necessary. Since the text is given with line numbers, we can propose to replace a whole line with new wording that includes both old and new content. But that might change the line numbering. However, for the purpose of the report, we can propose new wording for the relevant sentence, indicating the line number where that sentence appears. For example, for D1.1, the sentence "A is a set of admitted edits, closed under a partial associative composition with identity 1." appears in L91. We can propose to replace that sentence with a new one. But L91 contains multiple sentences. We need to specify which part. Perhaps we can quote the exact sentence and say "Replace the sentence 'A is a set of admitted edits, closed under a partial associative composition with identity 1.' in L91 with:" and then the new sentence. That seems acceptable.
+
+But the instruction says "the whole sentence as it would stand, between fence lines, with the line it replaces." So we can say "Replace in L91 the sentence '...' with:" and then fence. That should be fine.
+
+Similarly for other changes.
+
+We'll do that.
+
+Now, let's go through each definition and decide if the formal statement matches the text.
+
+D1.1: The formal statement seems mostly consistent. The text doesn't specify associativity strength, so the maths made a choice. We might propose to settle it.
+
+D1.2 Solutions: It's exactly the text's (O). So no issue.
+
+D1.3 Deletion and absence: The text says "A deleted component imposes the full relation on its ports." The formal statement uses that. For absent components, the text says "has a target D in which the ports and components a rival account would need are absent". The formal statement interprets absence as deletion (full relation). That seems reasonable. But the text doesn't define absence explicitly. So maybe we need to define absence. We can propose wording to define absence.
+
+D1.4 Subnetwork: This is not in the text? The text might not define subnetworks. The maths invented subnetworks. So the formal statement says something the text does not. We need to check: Is there any sentence in the text that formalizes subnetworks? Probably not. So the maths is inventing a concept. But the task says "the maths' definitions were written as mathematics beside the sentences they formalize". So D1.4 should correspond to some sentence. Possibly there is a sentence in the text about subnetworks? Not given here. But since we are told to rely only on the given text, we might say that the text does not contain a sentence for D1.4. So the formal statement is an addition. But the task says "where the words should change, give the new wording." If the text doesn't have it, maybe we need to add it? But D1.4 is not used by any claim in this part. However, it is a definition in section 3. So we need to evaluate it. Possibly the text has a sentence about subnetworks somewhere else. But we are only given lines L83-L110 and L325. So we cannot assume. We should note that D1.4 has no counterpart in the given text, so the maths is inventing. But since it's not used, maybe we can leave it. But the task says to compare each definition in section 3 with the sentences it formalizes. If there are no sentences, then the maths is writing something the text does not say. We should say so. Possibly the text needs to carry a sentence about subnetworks if the concept is used elsewhere. But for this part, it's not used. So we can say that D1.4 is an invention that the text does not settle, and it should stay open unless needed. But since it's not used by claims here, we might not propose wording. However, the instruction says for each invention in full, does the text settle it. D1.4 is not an invention per se; it's a definition. But it uses I14. So we might address it under inventions. Actually I14 is given in full in another part. So we don't need to evaluate I14 here. But D1.4 itself is a definition. We can mention that the text does not define subnetworks, so the maths's D1.4 is an extension. But since it's not used in this part's claims, we can note it and leave it.
+
+Maybe we can say: "D1.4 · no counterpart in given text; the maths adds subnetworks. Since no claim of this part uses D1.4, no change is needed here."
+
+But the task says "each definition in section 3". So we must say something.
+
+D2.1 Setting edit; the assigning component: The text says "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component." The formal statement adds the surgical condition and the reading of asg from A. The text doesn't define "sets a port directly" precisely. So the formal statement goes beyond. We need to see if it matches the sentence. Possibly it does match "does not add an equation beside an incompatible one" by requiring L_j(a,b) = {w: w_v = x} and others unchanged. That seems to capture "replaces the component assigning that port" and "does not add an equation beside an incompatible one". But it also says "A changed rule is a changed component." That is captured by the condition that only j changes. So D2.1 seems a reasonable formalization. But we need to check if the condition "L_j(a,b) = {w ∈ ∏_{V_j} X : w_v = x}" is too strong. It forces the relation to be exactly the slice, meaning all other ports are free. But what if the component has other ports that are constrained by the setting? For example, suppose a component has ports v and w, and setting v to x also forces w to be some value. The text says "replaces the component assigning that port", but doesn't say that the new relation is exactly w_v = x. It could be a more complex relation that still assigns v but also constrains other ports. However, "does not add an equation beside an incompatible one" suggests that the old relation is replaced, but the new relation could be anything. The surgical condition might be too restrictive. So the formal statement might not say exactly what the sentence says. We need to decide which should stand. Possibly the words should change to specify the surgical form, because "sets a port directly" likely means that the edit directly fixes the value of that port and leaves others free. But the text doesn't say that. So we might propose to change the text to include that. Or we might say the maths is too strong and should allow any relation that assigns v (i.e., where v is determined). But then "does not add an equation beside an incompatible one" is vague. I think the surgical form is a reasonable interpretation of "directly" and "replaces the component assigning that port". But we need to give reasons. Since the text says "does not add an equation beside an incompatible one", it suggests that the edit does not introduce an additional constraint alongside the old one, but replaces it. The surgical form replaces the old relation with a new one that exactly sets v. If the new relation set v and also constrained other ports, that would be adding constraints beyond setting v. But is that allowed? The phrase "sets a port" might imply that the edit's purpose is to set that port, but it might have side effects. However, the text says "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one." This could be read as: the edit replaces the component's relation with a new one that sets the port, and does not add an equation that is incompatible with the old one (i.e., doesn't add a constraint that conflicts). But it doesn't say the new relation is exactly w_v = x. So maybe the surgical form is too strong. We need to consider alternatives.
+
+We must decide which should stand. I lean towards the text should be changed to clarify that a setting edit makes the relation exactly the slice w_v = x, because otherwise "sets a port directly" is ambiguous. But we must give reasons. Also, the assignment component reading from A: the text says "No role assignment is supplied." So asg(v) must be read off A. That seems correct.
+
+So for D2.1, we might propose to add wording to the text to define setting edits precisely. Or we might say the maths's formal statement is a valid reading and the text should adopt it. So we propose to replace or augment L103.
+
+D2.2 Input: The text says "A port v is an input under A when A contains an edit that sets v directly." The formal statement is Input_A(v) :⟺ Set_v ≠ ∅. That matches if "sets v directly" is defined as in D2.1. So it's consistent given D2.1.
+
+D2.3 Output: The text says "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." The formal statement uses L_j(1,b) and "determined" as at most one value. The text doesn't specify which edit or "across B" meaning. So there is a divergence. We need to decide. Possibly the text should be changed to say "at the identity edit" and "for every boundary". Or the maths should be changed to use all edits? But output status might depend on the edit. The text says "across B", which suggests for every boundary. It doesn't mention edits. So likely it means at the identity edit? Or perhaps for every edit? The phrase "across B" suggests considering all boundaries. But it doesn't say "across A". So maybe it means for each boundary, considering the relation L_j(1,b). Or perhaps for each edit? The text is vague. Since the theory is about explanations, output might be a property of the component's relation in the default state. So using identity edit seems plausible. But we need to decide which should stand. I think the text should be changed to specify "at the identity edit" and "for every boundary". Because otherwise output could vary with edits. But the text says "given the other ports of V_j across B", which might mean that for each boundary, the value is determined. But it doesn't say at which edit. So we propose to add "at the identity edit" to the text.
+
+D2.4 Observation edits: Two readings. The text says "A port is an observation when A contains an edit that alters the relation reporting it without altering what it reports, that is, when the component assigning it has a measurement's signature (below)." The formal statement has two readings R-i and R-ii. The text is ambiguous about whether setting edits of the observed port are included. So the maths records two readings. The text does not settle. So we need to decide. Possibly the text should be changed to specify which reading. But the text says "alters the relation reporting it without altering what it reports". A setting edit of the observed port changes the relation (by setting it), but does it alter what it reports? Possibly not if it just sets the value. But it might be considered altering the reporting relation. So ambiguity. We could propose wording to clarify. But careful: the text says "that is, when the component assigning it has a measurement's signature (below)." That ties observation to measurement signature. That might force a particular reading. But the measurement signature is defined in D4.6. So maybe the text intends that observation edits are those that make the component satisfy measurement signature? That's different. So there is a mismatch. The formal statement reads observation edits as defined by changing relations, not by signature. So the text's "that is" clause equates a condition on A with a signature, which is a different kind of condition. So the maths notes that as a vagueness. We need to see which should stand. Possibly the words should change to remove the "that is" clause and define observation edits directly. Or we could keep both readings. Since the text says "that is", it seems to intend that the two are equivalent. But they are not. So we need to decide. I think the text should be changed to define observation edits directly without reference to signatures, or to state the equivalence if it holds. But given the complexity, maybe we propose to separate them. However, we must be careful not to propose anything about hard to vary, etc. Observation edits are not hard to vary. So it's okay.
+
+But the task says "do not propose anything about what hard to vary covers". Observation edits are not hard to vary. So fine.
+
+D2.5 Direction: The text says "The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read." The formal statement makes dir(D) = (Input_A, asg). That is a specific definition. The text doesn't define direction as a pair. So the maths is adding. We need to decide if that's what the text intends. The text says direction is a consequence of which edits it admits. So it should be determined by A. The pair (Input_A, asg) is determined by A (under I04). So that could be seen as a way to capture the consequence. But maybe direction is just the fact that some ports are inputs and some are outputs. But the text says "not a stipulation about which way an equation is read", meaning direction is not about reading equations in a certain way. So it's about the admitted edits. So the formal statement seems consistent. However, we might not need to define direction explicitly; it could just be a property. But for claims, we need something. Possibly we can leave it as is. But we should check if the formal statement says exactly what the sentence says. The sentence says "The direction of an organization is a consequence of which edits it admits". The formal statement says dir(D) = (Input_A, asg). That is a specific representation. But the sentence doesn't say that direction is a pair. So the formal statement is making it more specific. We could argue that the words should change to define direction as that pair, or that the formal statement is too specific and direction should be left as a consequence. But since FC02 uses asg, we might need it. I think it's acceptable to define direction that way. But we need to give reasons. Possibly we can say that the formal statement is a valid way to capture "a consequence of which edits it admits" because both components are determined by A. So no change needed. But we should note that the text does not explicitly define direction, so the formal statement is an invention (H04). So we address that under H04.
+
+Now, claims:
+
+FC01: The formal statement seems to match the text's (O) and deletion sentence. The text says "A deleted component imposes the full relation on its ports." That supports the monotonicity. So the formal statement is correct. However, the look found that deletion can make an undetermined answer determined. That is not a counterexample to FC01, but it's a separate observation. So FC01 holds.
+
+FC02: The formal statement: (a) Input and asg depend on A; (b) Output does not depend on A; (c) in pole, c_L determines each of its ports. The text: L109 gives input under A; L325 says under A containing interventions on H and θ, these ports are inputs and L is an output. So (a) matches. (b) matches L109's output definition not mentioning A. (c) is computed from the pole encoding. So the formal statement seems to match.
+
+FC11: The formal statement: roles relative to A, families relative to C. The text: L109 gives input under A; L113 fixes contract C ⊆ A × B. So it matches.
+
+So for claims, the formal statements seem to match. But we need to check if there are any discrepancies. Possibly for FC02(b), the text says "across B", but the formal statement uses every b. That matches "across B" if it means for every b. So fine.
+
+Now, we need to attack the claims that held. We must try by hand to find a counterexample. For each claim that held (FC01, FC02, FC11), we need to attempt to break it. We can consider alternative readings, without inventions, or beyond bounds.
+
+Let's attempt for FC01: As argued, it's mathematically true under the definitions. But we could try without I03: if deletion could remove ports or components, then monotonicity might fail. For example, if deletion removes a component entirely from J, then the solution space for D-G is in a different space if ports are removed. But the text says "A deleted component imposes the full relation", so deletion is not removal. So I03 is forced by the text. So no counterexample.
+
+But we could try a scenario where the full relation is not the full product but something else. But the text says "full relation", so it's forced. So FC01 seems safe.
+
+For FC02: Could output depend on A? Suppose the text's output definition is interpreted as "determined by L_j given the other ports" but L_j might depend on the edit if we consider that the relation is given for each edit. But the text says "L_j given the other ports", without specifying edit. Maybe it means for every edit? If output is defined as: v is an output of j if for every edit a and boundary b, and all w,w' in L_j(a,b), agreement off v implies w_v = w'_v. Then output would depend on A because different A give different sets of edits. That would contradict (b). But does the text suggest that? The text says "across B", not "across A". So it might not intend that. So the formal statement uses only identity edit. But if the text meant "across all edits", then output could depend on A. So we need to decide which reading is correct. The text's phrase "across B" suggests boundaries, not edits. So likely it means for each boundary, considering the relation at that boundary. But it doesn't say at which edit. Possibly it means at the identity edit? Or maybe at every edit? The text is ambiguous. So we could attack FC02(b) by considering a different reading of output. If output is defined across all edits (i.e., for every (a,b) in A×B), then output status could depend on A because A determines which edits are present. For example, if A contains an edit that changes L_j such that v is no longer determined, then under that reading v might not be an output. So output would depend on A. That would contradict (b). So if the text intends that reading, then FC02(b) would be false. But the text says "across B", not "across A". So it's more likely that it means across boundaries, and the edit is fixed (maybe the identity). So the formal statement's choice of identity edit is an invention. So we need to see if the text settles that. It doesn't. So we have an ambiguity. Therefore, FC02(b) holds only under one reading. Under another reading, it could fail. So we need to address that. The claim says "Output does not depend on A". But if output is defined across all edits, then it does. So we need to see which reading the text supports. The text: "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." It says "across B", which might mean for every boundary, but it doesn't say "across A". So it might implicitly consider a fixed edit, probably the identity or the current edit. But it's unclear. So we should note that the text does not settle the quantifier over edits. So FC02(b) is true under the invention I05 (which fixes identity edit), but not under a reading where output quantifies over all edits. So the counterexample to FC02(b) would be against the invention, not necessarily the text, because the text is ambiguous. But if the text were interpreted to quantify over all edits, then FC02(b) would be false. So we need to decide: does the text force the identity edit? The phrase "across B" suggests that we are looking at all boundaries, but not all edits. So perhaps it means: for each boundary, consider the relation L_j(1,b) or L_j(a,b) for some fixed a? The text doesn't say. So it's ambiguous. So we can propose to change the text to specify. We might propose to add "at the identity edit" to the text. Or we could say that output should be defined as determined across all edits and boundaries, but then FC02(b) would be false. So we need to choose which should stand. I think the formal statement's choice is reasonable because output status is a property of the component's relation in the default state. Also, L325 says "L is an output" under A containing interventions. That suggests that even with interventions, L is an output. That might imply that output is invariant under edits that do not replace j? Actually L325: "Under A containing interventions on H and θ, these ports are inputs and L is an output, by Part II." So even when A contains interventions, L is still an output. That suggests that output status is not affected by those interventions, i.e., it's a property of the relation L_j(1,b) or of the relation across all edits? If output were defined across all edits, then adding interventions might change whether L is an output. But L325 says it is an output under that A. So maybe output is defined such that it remains an output even when interventions are present. That could be consistent with defining output at the identity edit only, or across all edits but where interventions do not affect the determining property. So it's messy.
+
+Given L325, I think output is meant to be a property that is not broken by adding edits that set other ports. So defining output at the identity edit and requiring that for every boundary, the value is determined, seems plausible. Also, the formal statement for output uses L_j(1,b) and says "for every b". That matches "across B". So maybe it's correct.
+
+But we can still try to break it: Suppose a component has relation L_j(1,b) that does not determine v, but under some edit a, L_j(a,b) does determine v. Then under the identity-edit reading, v is not an output. Under an all-edits reading, if the edit a is in A, then v might be an output if it is determined for all (a,b). But if a is not in A, then it wouldn't matter. So output could depend on A if A includes edits that change the determining property. But if output is defined at identity only, then A doesn't matter. So FC02(b) holds under that reading.
+
+Given L325, it seems consistent that output is defined independently of A. So I think the formal statement is correct.
+
+For FC11: We can try to break by considering a contract C that is not a subset of A × B? But the text says C ⊆ A × B. So that's fixed. Or consider that asg(v) might be undefined. But the claim only requires existence of some D, C, v where Input(v) and not Causal_C(asg(v)). That seems easy.
+
+So maybe no counterexample.
+
+But we must attempt. We can describe an attempt and why it fails.
+
+Now, inventions: we need to say if the text settles each.
+
+I01: Text says "partial associative composition with identity 1". Does that settle associativity strength? Not exactly. We can propose wording to specify strong associativity.
+
+I02: Text says "supplied independently for each (a,b)" (L574). That seems to settle that there is no law. So we can quote that.
+
+I03: Text says "A deleted component imposes the full relation on its ports." That settles deletion. For fixedness of V and J, the text says "An edit that sets a port replaces the component assigning that port". That implies components persist. But does it say V and J are unchanged? It implies that the same component is replaced, so J stays same. For ports, if a port is not assigned by any component? Possibly ports could be added or removed? The text doesn't say. So we might propose to add that V and J are invariant under edits.
+
+I04: Text does not define "sets a port directly" precisely. So not settled. We can propose wording.
+
+I05: Text does not specify which edit or "across B" meaning. So not settled. We can propose wording.
+
+I77: Not settled (allows infinite domains). Should stay open.
+
+I78: Not settled (no generation specified). Should stay open.
+
+I80: Text does not say whether identity can set. So not settled. We can propose wording.
+
+H03: Not settled. We can propose wording.
+
+H04: Text says direction is a consequence, not a pair. So maybe the formal statement is too specific. We could propose to leave it as is, or change. Since FC02 uses asg, we might need to define direction. But maybe direction is just the fact that some ports are inputs. We could propose to define direction as the set of inputs. But FC02(c) says "the direction H,θ → L is carried by asg, not by output status." That uses asg. So we need asg. So perhaps we should define direction as (Input_A, asg). But the text doesn't say that. So we could propose to add that definition. Or we could say that direction is not a formal object but a consequence, and the claim FC02 can be stated without defining dir. For example, we could say "Input_A and asg are determined by A; output status is not." That is what FC02 says. So maybe we don't need to define dir(D). So we could remove the definition of direction and just state the claim. But the text has a sentence about direction. So we might keep it as a comment. So maybe no change needed.
+
+Round-1 change: L123 removed "and under replacement of the component". That seems correct because the signature definition in D4.6 does not include that clause. So no further change.
+
+Matter 5: L109 roles under A, (K) signatures on C. That is a discrepancy. We might propose to clarify that roles are defined under A, and signatures under C, and they are independent. Maybe add a sentence after L109 or L113.
+
+Now, we need to write the report.
+
+We must keep under3000 words. Let's aim for about 2500-3000.
+
+We'll write in five sections.
+
+We'll name items we have something to say about. Others we list together at end.
+
+Let's draft.
+
+## Section (a): Formal statements vs sentences
+
+We'll go through each definition that we have something to say about.
+
+- D1.1 · L91: The text says "partial associative composition with identity 1". The maths adds Kleene associativity (I01). The text does not fix the strength of associativity. The maths's choice is reasonable because it makes composition well-behaved for parenthesization. Without it, a composite could have two different meanings depending on parenthesization when one side is defined and the other not. The text should adopt the same. Proposal: replace the sentence in L91 with wording that specifies strong associativity.
+
+- D1.3 · L103, L339: The text says "A deleted component imposes the full relation on its ports." That matches the maths. For absence, the text says "has a target D in which the ports and components a rival account would need are absent". The maths interprets absence as deletion (full relation). This is consistent but not explicit. The text should define absence. Proposal: add a sentence defining absence.
+
+- D1.4 · no counterpart: The text does not define subnetworks. Since no claim of this part uses D1.4, no change is needed. But if the concept is used elsewhere, the text should carry a definition. For now, leave as is.
+
+- D2.1 · L103, L109, L119: The text says "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one." The formal statement makes this surgical: L_j(a,b) = {w: w_v = x} and others unchanged. This is stronger than the text. The text's phrase "does not add an equation beside an incompatible one" could be read as the new relation replaces the old, but not necessarily that it is exactly the slice. However, "sets a port directly" suggests that the edit directly fixes the value of that port and leaves others free. The surgical form captures that. The text should adopt it to remove ambiguity. Proposal: replace or augment L103 to include the surgical condition.
+
+- D2.3 · L109: The text says "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." The formal statement reads this at the identity edit and "determined" as at most one value. The text does not specify which edit or whether "determined" means exactly one. The identity edit is a natural reading of "across B" (for every boundary). "At most one" allows partial functions. The text should specify. Proposal: replace L109 with wording that includes "at the identity edit" and "for every boundary".
+
+- D2.4 · L109: The text equates observation edits with a measurement's signature. The formal statement separates them and gives two readings. The text's "that is" is misleading because the two conditions are not equivalent. The text should define observation edits directly without reference to signatures. Proposal: replace L109's sentence with a direct definition.
+
+- D2.5 · L109: The text says direction is a consequence of admitted edits. The formal statement makes it the pair (Input_A, asg). This is one way to capture the consequence, but the text does not define direction as a pair. Since FC02 uses asg, we can keep the formal statement as a working definition, but the text should not prescribe it. Alternatively, the text could be left as is, and the formal statement is an invention. Since the text's sentence is about consequence, not definition, no change is needed.
+
+We'll also note claims FC01, FC02, FC11 match the text given the inventions.
+
+We'll list items with nothing to add: D1.2, D2.2, FC01, FC02, FC11 (except where noted).
+
+## Section (b): Counterexamples
+
+There are no counterexamples marked "counterexample found" in this part. The look for FC01 found a witness that deletion can make an undetermined answer determined. That is not a counterexample to FC01, but it shows a property not claimed. So no counterexample to the text. So we say: no counterexample found; the look witness is not against FC01 but against an unstated claim. So nothing to say.
+
+But wait: The look came out as expected. So no counterexample. So section (b) might be empty. But we should say something. Possibly we can note that the look witness does not contradict FC01. So we can say: "FC01 · no counterexample; the look witness shows a separate property (deletion can determine a query) that does not contradict FC01." That is all.
+
+## Section (c): Inventions and unrecorded choices
+
+We go through I01, I02, I03, I04, I05, I77, I78, I80, H03, H04.
+
+For each, say if text settles, and if not, propose wording or say why stay open.
+
+I01: Not settled. Proposal to add strong associativity.
+
+I02: Settled by L574. Quote it.
+
+I03: Partially settled. Deletion is settled. Fixedness of V and J is not explicit. Proposal to add.
+
+I04: Not settled. Proposal to add surgical definition.
+
+I05: Not settled. Proposal to add "at the identity edit" and "for every boundary".
+
+I77: Not settled; should stay open (infinite domains allowed).
+
+I78: Not settled; should stay open (no generation specified).
+
+I80: Not settled. Proposal to specify whether identity can set.
+
+H03: Not settled. Proposal to specify "at every boundary".
+
+H04: Text says direction is a consequence, not a pair. So the formal statement is an invention. We can say the text does not need to define direction as a pair; the claim FC02 can be stated without it. So no wording change needed. Or we could propose to leave it as is.
+
+## Section (d): Attack the claims that held
+
+We attempt FC01, FC02, FC11.
+
+For FC01: Try without I03. Suppose deletion removes a component from J. Then Sol_{D-G} is in a different space if ports are removed. But text says full relation, so I03 forced. No counterexample.
+
+For FC02: Try alternative reading of output where it quantifies over all edits. Under that reading, output could depend on A. But text says "across B", not "across A". So not forced. So counterexample would be against invention I05, not text. But we can give a model: Let D have one component j with ports v and w. Let L_j(1,b) = {(0,0), (0,1)} so v is not determined (since w can vary with v fixed). Let A contain an edit e that sets w to 0, making L_j(e,b) = {(0,0)} which determines v. Then if output is defined across all edits, v might be an output if it is determined for every (a,b). But here at identity it is not determined, so under all-edits reading, v is not an output because at identity it is not determined. So output does not change with A? Actually adding e might make v determined at e but not at identity. If output requires determination at every edit, then v is not an output regardless of A because at identity it is not determined. So output still does not depend on A. To make output depend on A, we need a case where at identity v is determined, but adding an edit makes it not determined. That would require that the edit changes L_j such that v becomes undetermined. But if output is defined at identity only, then adding an edit doesn't matter. If output is defined across all edits, then adding an edit that makes v undetermined would make v not an output. So output would depend on A. So we can construct: Let L_j(1,b) = {(0,0)} so v is determined (v=0). Let A contain an edit e that sets w to 1, making L_j(e,b) = {(0,1)}? Actually if e sets w to 1, then L_j(e,b) might be {(0,1)} which still determines v=0. To make v undetermined, we need L_j(e,b) to have two tuples with same w but different v. For example, let L_j(1,b) = {(0,0), (0,1)}? That does not determine v. So we need L_j(1,b) to determine v, but L_j(e,b) to not determine v. So we need an edit that changes the relation to one where v is not determined. For instance, let V_j = {v,w}. Let L_j(1,b) = {(0,0), (0,1)}? That doesn't determine v. So we need L_j(1,b) to determine v. So let L_j(1,b) = {(0,0), (0,1)}? No. Let L_j(1,b) = {(0,0), (0,1)} has v always 0? Actually both have v=0, so v is determined to 0. So that determines v. Now let edit e change L_j(e,b) to {(0,0), (1,0)} where v can be 0 or 1 given w=0. Then at e, v is not determined. So if output requires determination at every edit in A, then with A containing e, v is not an output; without e, v is an output. So output depends on A. So under the all-edits reading, FC02(b) fails. But does the text allow that reading? The text says "across B", not "across A". So it doesn't say "across A". So the text does not force that reading. So the counterexample is against the invention if we chose all-edits, but the text leaves it open. So we need to decide which reading to adopt. Since L325 says L is an output under A containing interventions, that suggests that output is not broken by adding interventions. So likely the identity-edit reading is intended. So we can say that the text should be changed to specify "at the identity edit" to avoid this ambiguity. That is a wording change.
+
+For FC11: Try to break by considering a contract C that is not a subset of A × B? But text says C ⊆ A × B. So forced. Or consider that asg(v) might be undefined. But the claim only requires existence of some case. So no counterexample.
+
+So we have one potential counterexample to FC02(b) under a different reading. So we can say that FC02(b) holds only under the invention I05; under another reading it fails, so the text should be changed to settle the reading.
+
+## Section (e): Round-1 matters and changes
+
+Round-1 change at L123: The change removed "and under replacement of the component". This matches the definition in D4.6. No further change needed.
+
+Matter 5: L109 roles under A, (K) signatures on C. The text should clarify that roles are defined under A, and signatures under C, and that these are separate. Proposal: add a sentence after L109 or L113.
+
+Now, we need to write the report with exact wording proposals.
+
+Let's draft the proposals.
+
+For I01: We want to specify strong associativity. We can propose to replace the sentence in L91: "A is a set of admitted edits, closed under a partial associative composition with identity 1." with:
+
+```
+A is a set of admitted edits, closed under a partial composition · : A × A ⇀ A that is strongly associative: a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal; and with identity 1 such that 1·a = a·1 = a for every a.
+```
+
+For I03: For fixedness of V and J. We can add a sentence after L91: "The sets V and J are the same under every edit; an edit changes only the relations L_j(a,b)."
+
+For I04: For setting edit. We can propose to replace L103: "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component." with:
+
+```
+An edit a sets port v at boundary b through component j when L_j(a,b) = {w ∈ ∏_{v∈V_j} X : w_v = x} for some x ∈ X_v, and L_k(a,b) = L_k(1,b) for every k ≠ j. Such an edit replaces the component assigning that port and does not add an equation beside an incompatible one. A changed rule is a changed component. The component assigning v, asg(v), is the component through which the edits of Set_v set v, when there is exactly one; otherwise undefined.
+```
+
+But that combines multiple sentences. We might split.
+
+Alternatively, we can propose to replace L103 with the surgical condition and keep the rest.
+
+For I05: For output. We can propose to replace L109's sentence about output: "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." with:
+
+```
+A port v is an output of component j when, at the identity edit and for every boundary b ∈ B, and all w, w' ∈ L_j(1,b), if w and w' agree on V_j ∖ {v} then w_v = w'_v.
+```
+
+For H03: Setting edit at every boundary. We can incorporate that into D2.1 by saying "at every boundary b". So in the setting edit definition, we can add "for every b ∈ B".
+
+For I80: Identity edit can be a setting edit. We can propose to add a sentence: "The identity edit 1 may set a port if its relation at (1,b) is already a slice as above; in that case the port is an input."
+
+For H04: Direction. We might leave it as is.
+
+Now, we need to be careful about the rules: no verificationist language. Our proposals should avoid words like "true", "supports", etc. They should be neutral.
+
+Also, we must not propose anything about hard to vary. So fine.
+
+Now, let's write the report.
+
+We'll aim for conciseness.
+
+## Report
+
+### (a) Formal statements vs sentences
+
+**D1.1 · L91.** The text says "closed under a partial associative composition with identity 1". The maths (I01) fixes Kleene (strong) associativity. The text does not settle the strength of associativity. The maths's choice stands because with weak associativity a composite could be defined under one parenthesization and not the other, leaving the edit ambiguous. The text should carry the same.
+```
+Replace in L91 the sentence "A is a set of admitted edits, closed under a partial associative composition with identity 1." with:
+A is a set of admitted edits, closed under a partial composition · : A × A ⇀ A that is strongly associative: a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal; and with identity 1 such that 1·a = a·1 = a for every a.
+```
+
+**D1.3 · L103, L339.** The text's "A deleted component imposes the full relation on its ports" matches the maths. Absence is interpreted as deletion; the text's "absent" is not defined. The maths's reading is consistent. The text should define absence.
+```
+Add after L339:
+A component is absent in D when it is deleted; a port is absent when every component that includes it imposes the full relation on its ports.
+```
+
+**D1.4.** No counterpart in the given text. Since no claim of this part uses D1.4, no change is needed.
+
+**D2.1 · L103, L109, L119.** The text's "sets a port directly" is not defined. The maths (I04) makes it surgical: the relation becomes exactly the slice w_v = x and others unchanged. This captures "replaces the component assigning that port" and "does not add an equation beside an incompatible one". The text should adopt it.
+```
+Replace L103 with:
+An edit a sets port v at boundary b through component j when L_j(a,b) = {w ∈ ∏_{v∈V_j} X : w_v = x} for some x ∈ X_v, and L_k(a,b) = L_k(1,b) for every k ≠ j. Such an edit replaces the component assigning that port and does not add an equation beside an incompatible one. A changed rule is a changed component.
+```
+Also, the assigning component asg(v) is read off A; the text should say so.
+```
+Add after L109:
+The component assigning v, asg(v), is the component through which the edits of Set_v set v, when there is exactly one; otherwise it is undefined.
+```
+
+**D2.3 · L109.** The text's output definition is ambiguous over edits and boundaries. The maths (I05) reads it at the identity edit and "across B" as for every boundary. This is a natural reading of "across B". The text should settle it.
+```
+Replace in L109 the sentence "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." with:
+A port v is an output of component j when, at the identity edit and for every boundary b ∈ B, and all w, w' ∈ L_j(1,b), if w and w' agree on V_j ∖ {v} then w_v = w'_v.
+```
+
+**D2.4 · L109.** The text equates observation edits with a measurement's signature ("that is"). The maths separates them and gives two readings. The equivalence does not hold. The text should define observation edits directly.
+```
+Replace in L109 the sentence "A port is an observation when A contains an edit that alters the relation reporting it without altering what it reports, that is, when the component assigning it has a measurement's signature (below)." with:
+A port o is an observation when there exists a port m ∈ V_{asg(o)} ∖ {o} and an edit a ∈ A such that L_{asg(o)}(a,b) ≠ L_{asg(o)}(1,b) for some b, and L_{asg(m)}(a,b) = L_{asg(m)}(1,b) for every b. Whether setting edits of o are included is left open; both readings are considered where relevant.
+```
+
+**D2.5 · L109.** The text says direction is a consequence of admitted edits. The maths makes it the pair (Input_A, asg). This is one way to capture the consequence, but the text does not define direction as a pair. Since FC02 uses asg, we keep the formal statement as a working definition. No change to the text is required; the sentence remains a comment.
+
+**FC01, FC02, FC11.** Given the inventions, the formal statements match the text. No divergence.
+
+Items with nothing to add: D1.2, D2.2.
+
+### (b) Counterexamples
+
+No part of this section is marked *counterexample found* or *computed: not as claimed*. The look for FC01 found a witness that deletion can make an undetermined answer determined; this does not contradict FC01 but shows a property not claimed. So no counterexample to the text.
+
+### (c) Inventions and unrecorded choices
+
+**I01 · L91.** Not settled; the text's "partial associative" is ambiguous. Proposed wording under (a) settles strong associativity.
+
+**I02 · L574.** Settled by the text: "The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\)." That means no law ties composites to parts.
+
+**I03 · L103, L339.** Partially settled: deletion is settled ("full relation"); fixedness of V and J is not explicit. Proposed wording under (a) adds invariance of V and J.
+
+**I04 · L103, L109, L119.** Not settled; "sets a port directly" is undefined. Proposed wording under (a) defines it surgically.
+
+**I05 · L109.** Not settled; which edit and "across B" ambiguous. Proposed wording under (a) specifies identity edit and every boundary.
+
+**I77 · L91, L105.** Not settled; the text allows arbitrary domains. Should stay open; the search's finiteness is an implementation choice.
+
+**I78 · L91, L574.** Not settled; the text does not specify how to generate organizations. Should stay open.
+
+**I80 · L109.** Not settled; whether the identity edit can set a port is open. Proposed wording:
+```
+Add after the definition of Set_v:
+The identity edit 1 may belong to Set_v if for every b, L_{asg(v)}(1,b) is a slice w_v = x; in that case v is an input.
+```
+
+**H03.** Not settled; the quantifier over boundaries is unrecorded. Proposed wording under (a) includes "at every boundary b" in the setting edit definition.
+
+**H04 · L109.** The text says direction is a consequence, not a pair. The formal statement (Input_A, asg) is an invention. Since the claim FC02 can be stated without defining dir, no change is required; the sentence remains as is.
+
+### (d) Attacks on claims that held
+
+**FC01.** Attempt: suppose deletion could remove ports or components. Then Sol_{D-G} would live in a different space. But the text forces I03 ("full relation"), so this is not a counterexample to the text. The monotonicity holds mathematically under the definitions.
+
+**FC02.** Attempt: consider output defined across all edits, not just identity. Model: one component j with ports v,w; X_v = X_w = {0,1}. Let L_j(1,b) = {(0,0), (0,1)} (v determined to 0). Let A contain an edit e that changes L_j(e,b) to {(0,0), (1,0)} (v undetermined given w=0). If output requires determination at every edit in A, then v is an output when A = {1} but not when A contains e. Thus output would depend on A, contradicting FC02(b). However, the text says "across B", not "across A", so this reading is not forced. The counterexample is against invention I05 (identity edit) if we chose all-edits. The text should settle the reading; proposed wording under (a) does so.
+
+**FC11.** Attempt: take a contract C not a subset of A × B. But the text fixes C ⊆ A × B. Or let asg(v) undefined; then Causal_C(asg(v)) is undefined, but the claim only requires existence of some D,C,v where it is false. No counterexample found.
+
+### (e) Round-1 matters and changes
+
+**Round-1 change at L123.** The removal of "and under replacement of the component" matches the definition in D4.6. No further change needed.
+
+**Matter 5 · L109.** L109 gives roles under A while (K) builds signatures on a contract C. The text should clarify that these are separate. Proposed wording:
+```
+Add after L113:
+Roles (input, output, observation) are defined under A; signatures (causal assignment, measurement, rule) are defined under a contract C ⊆ A × B.
+```
+
+Items with nothing to add: (b) has no items; (c) I77, I78 should stay open; (d) no other attacks.
+
+END OF REPORT
+
+We need to check word count. This is about 1500 words. Good.
+
+But we must ensure we don't use forbidden words. We used "determined" which might be borderline? S23 forbids "fits, supports, supported, verifies, verified, corroborates, corroborated, proves, proved, disproves, disproved, reason to believe, reason to reject" and belief-related words. "Determined" is not on that list. Also "true" is forbidden. We avoided "true". We used "false" once? In (d) we said "where it is false". That might be okay? S23 forbids "true, not true, more true". "False" might be considered belief-related? It says "anything that could imply some sort of foundational truth or authority". "False" might imply truth. We should avoid "false". Instead, say "does not hold". Let's change: "where it does not hold". Also "determined" might be okay as it's a technical term. Also we used "correct" maybe? We didn't. We used "reasonable". That's okay.
+
+Also we must not say anything about what must happen to a candidate. We didn't.
+
+We must not propose anything about hard to vary. We didn't.
+
+We must keep apart what the text forces and what a reader might take it to mean. We did.
+
+We must give exact wording for proposals. We did, with fence lines.
+
+We must name items with nothing to add together at the end of each section. We did.
+
+We need to end with exactly "END OF REPORT". We have that.
+
+Now, let's adjust the wording to avoid "false" and "true". In (d) for FC11: "where it is false" -> "where it does not hold". Also in (c) for I02: "means no law ties composites to parts" is fine.
+
+Also in (a) for D2.5: "the formal statement is an invention" is okay.
+
+Also in (d) for FC02: "contradicting FC02(b)" is okay.
+
+Also in (c) for H04: "no change is required" is okay.
+
+We should also ensure we don't use "must". We used "should" which is okay as proposal.
+
+Now, final check: The report is five sections (a)-(e). We have entries for each item we have something to say about. For items with nothing to add, we named them at the end of the section. In (a), we named D1.2, D2.2. In (b), we said no items. In (c), we named I77, I78 as stay open, and also said H04 no change, but we have an entry for H04. So we should list items with nothing to add at the end of the section. For (c), we have entries for I01, I02, I03, I04, I05, I80, H03, H04. I77 and I78 we said should stay open, but we also have entries for them? Actually we listed I77 and I78 in (c) with "Not settled... Should stay open". That is an entry. So we don't need to list them again at the end. But the instruction says "Items on which you have nothing to add are named together in one line at the end of the section." So for items we have nothing to add, we name them at the end. For (c), if we have something to say about I77 and I78 (that they should stay open), that is something. So we don't need to list them at the end. But if we think we have nothing more to add beyond what we said, we could still list them? Actually we have an entry for each. The instruction says "one entry per item you have something to say about". So we should have an entry for each item we have something to say about. For items we have nothing to say about, we name them together at the end. So in (c), we have entries for I01, I02, I03, I04, I05, I77, I78, I80, H03, H04. That's all the inventions in full and unrecorded choices. So we have something to say about each. So we don't need to list any at the end. But for I77 and I78, we said "should stay open". That is a statement. So it's fine.
+
+In (a), we had entries for D1.1, D1.3, D1.4, D2.1, D2.3, D2.4, D2.5, and then said items with nothing to add: D1.2, D2.2. Also we mentioned FC01, FC02, FC11 as matching, but that is also something to say. Actually we said "FC01, FC02, FC11. Given the inventions, the formal statements match the text. No divergence." That is an entry for each claim. So we should have separate entries for FC01, FC02, FC11? The instruction says "one entry per item you have something to say about". So we should have entries for FC01, FC02, FC11. We combined them into one line. We should separate them. But we can combine if we have the same thing to say? The instruction says "one entry per item". So we should have three entries. But we can make three short entries. However, to save words, we can say "FC01 · L100, L103: matches." etc. But we already have a combined line. Let's adjust.
+
+In (a), we'll have separate entries for FC01, FC02, FC11.
+
+Similarly, in (b), we have no items.
+
+In (d), we have entries for FC01, FC02, FC11.
+
+In (e), we have entries for round-1 change and matter 5.
+
+So let's restructure (a) to include FC01, FC02, FC11 as separate entries.
+
+We'll do:
+
+**FC01 · L100, L103.** The formal statement matches the text's (O) and deletion sentence.
+
+**FC02 · L109, L325.** The formal statement matches the text given the inventions.
+
+**FC11 · L109, L113.** The formal statement matches the text.
+
+And then say items with nothing to add: D1.2, D2.2.
+
+Now, we need to ensure we don't exceed word count. It's still fine.
+
+Let's rewrite the report with these adjustments.
+
+Final report below.

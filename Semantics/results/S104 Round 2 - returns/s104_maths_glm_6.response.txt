@@ -1,0 +1,110 @@
+# Part 6 report
+
+## (a) Does each formal statement say what the sentence says?
+
+**D6.2 / NC0 · L255 (with FC108).** The maths reads the first sentence as adding nothing. The words could be read as demanding that the answer be *computed* by E ("follows by evaluating") — propagation against lookup. (O) and (Q) give no notion of computation, and decision S25 keeps physical possibility out of explanation, so no such condition can be written without inventing a module the text lacks. The gloss reading should stand; whether the sentence will one day carry a computation condition stays open. Nothing to change now.
+
+**D6.3 / NC1 · L255.** Here the maths and the words part company, and the words should stand. The words: "The target's answer does not appear … as a component." Appearance is not restricted to a component that constrains nothing else; I24 adds "and constrains nothing else", so a component that fixes the answer ports to the target's answer *and* pins an independent port is not a slot. The model in (d) shows such a candidate passing NC1 and meeting (E). The text's own next sentences ("moving an assertion from an input slot into a component named 'law' does not discharge this"; "structural at the declared grain") close escape routes; they do not open one for decoration. The maths should adopt I24's alternative (b): a component, or boundary coordinate, whose relation by itself fixes the designated answer ports to the target's answer, whatever else it constrains.
+
+**D6.4 / NC2 · L255.** The formalization is faithful to the sentence as written, disjunctions included. Two notes. (i) "in the claimed way" — see I22 in (c). (ii) The maths reads "block" as *any nonempty subset of Γ* and records no choice for this. Under that reading, take G = Γ: with I21's "several values → ⊥" and a two-valued answer port, deleting every component leaves the port unconstrained and the answer ⊥, so Lost's second disjunct is automatic and **NC2 asks only for a contrast on C**. All the bite of non-circular dependence against lookups then lies in NC1 — which is exactly what FC23 found ("through NC1 only"). If "block" is fixed elsewhere (by (K)?) the subset reading is an unrecorded choice of the kind U3 is; if it is not fixed, the text should say whether G may be all of Γ. One wording, if the owner wants a proper part deleted (this writes content in; the owner decides):
+
+> L255 | There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\), \(G\neq\Gamma\), such that the answer of \(E\) at \((\tau(a),\sigma(b))\) differs from its answer at \((1,\sigma(b_0))\), or is not determined at \((\tau(a),\sigma(b))\) in the claimed way, and this contrast is lost when the components of \(G\) are deleted from \(E\)
+
+**D6.6 · L257.** Faithful on both conjuncts. Note that the second conjunct is a condition on a stated scope, which is what makes L265's first sentence false as it stands — see FC33 below.
+
+**D6.7–D6.8 / FC31 · L231, L262, L520.** Five conjuncts under four headings is consistent if "the four conditions" names the four headings of Part V; but L520's three sources then leave question fidelity (A) with no source, unless "fidelity under change" is read wide (I49), against what L189 defines. Wording in (e).
+
+**D6.10 · L269.** The words overstate. Under I32 the table's relation is the baseline projection held fixed; (F1) fails at (a,b) only if the counterpart's projected solutions there differ from the baseline. A contract may contain an intervention on a port outside the table's ports, or one to which the projected solutions are indifferent; the table then meets (F1). Wording:
+
+> L269 | A **table of observed answers** has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing an intervention that changes the solutions its component's counterpart admits.
+
+**FC22 · L141, L255.** The statement follows from the words alone: with C = {(1,b0)} the sentence's own comparison is of a point with itself, and no disjunct of the contrast can hold. It holds unconditionally, not only on the models tried. Maths and words agree; no change.
+
+**FC23 · L273.** See (b).
+
+**FC24 · L273.** The reading is right: strictly, nothing meeting (E) fails non-circular dependence, so "an account" there names a candidate offered as an account. Wording under matter 7 in (e). Its search result rests on I24's narrow slot; under alternative (b) the conclusion is unchanged — a wider slot only fails more candidates.
+
+**FC30 · L43, L67, L277.** Holds by construction and matches all three sentences. The declared scope Σ and grain ℓ are arguments, and L526's "stated, not defined" covers exactly them. No parting.
+
+**FC32 · L526.** After round 1, (E) has two conjuncts for which L526 names no ancestors: non-circular dependence and non-vacuity hang on nothing, and (E)'s dependence on them is unstated. NC1 also uses the grain (a declared index) and the designation (which comes with (Q)); the present second sentence covers indices and inputs, so the first sentence needs the two new nodes:
+
+> L526 | (F1), (F2), (A), non-circular dependence and non-vacuity depend on (O), (Q), (K) and on the declared indices and the declared inputs. (E) depends on those. (O) and (Q) depend on nothing; nor do the declared indices and the declared inputs, which are stated, not defined.
+
+**FC33 · L265.** The claim's own part (b) concedes the point: the first sentence is false of non-vacuity's second conjunct (a condition on what is stated about the contract, not on relations under C) and needs the grain reading for NC1's earlier sentences. The words should change:
+
+> L265 | (F1), (F2), (A) and the final sentence of non-circular dependence are conditions on how supplied relations behave under the changes in \(C\); the other sentences of non-circular dependence are read at the declared grain, and non-vacuity's second sentence is a condition on what is stated about the contract. None inspects a label.
+
+## (b) The counterexample
+
+**FC23(b).** It tells against the claim's own wording and against U3's footprint reading, not against the text. In the model the lookup fails NC1, so L273's verdict — "p because p" fails non-circular dependence — is untouched; what fails is FC23's added statement that NC2 holds there ("through NC1 only"). The model meets the premise "no other component constraining the answer ports" only under U3's footprint reading: bg's empty relation removes every valuation of Sol_E, which under the solutions reading constrains the answer ports as much as anything can. Restate the claim with a satisfiable background — as its own third part already did — or with the solutions reading; the text needs nothing.
+
+## (c) The inventions and the unrecorded choice
+
+**I21 · L255.** Not settled; the text in fact contradicts itself silently. L141 gives Q a codomain Y_p with no member for "not determined", while L255 speaks of answers not determined. L141's full wording is not given here; appended to the sentence defining Q (this writes I21 into the text):
+
+> L141 (addition) | with codomain \(Y_p\), which contains the value \(\bot\), read "not determined"; a query returns \(\bot\) when the solutions do not fix a single value of the designated ports, and two \(\bot\) answers are equal wherever answers are compared.
+
+**I22 · L255.** Not settled; "in the claimed way" has no antecedent in (O) or (Q). Either drop the clause or fix the reading. Proposal (writes I22 in):
+
+> L255 | There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\) such that the answer of \(E\) at \((\tau(a),\sigma(b))\) differs from its answer at \((1,\sigma(b_0))\), or is not determined at \((\tau(a),\sigma(b))\) while it is determined at \((1,\sigma(b_0))\), and this contrast is lost when the components of \(G\) are deleted from \(E\)
+
+**I23 · L255.** Not settled, and should stay open: any condition here needs a notion of how an answer is computed, which the text does not have and which decision S25 bars importing from physical possibility. The gloss reading stands until the text has such a notion.
+
+**I24 · L255.** Settled — against the invention. "The target's answer does not appear … as a component", together with "moving an assertion from an input slot into a component named 'law' does not discharge this", closes the decoration escape; "constrains nothing else" opens one. The maths should move to its own alternative (b). No text change.
+
+**I25 · L255.** Settled, by L273 itself: under alternative (a) (NC2 alone) the lookup of FC23 *meets* non-circular dependence — the claim's own remark — contradicting L273. The earlier sentences are conditions, not commentary. No change.
+
+**I28 · L255.** Settled in effect: L520 and L526 make the declared indices "stated, not defined", so a grain carried as an index, with no map between grains, is the text's own doctrine. Alternative (a) would make the grain defined, against L526. No change.
+
+**I32 · L269.** Partly settled: "has no component whose relation is replaced by an intervention" fixes the constant relation; the counterpart (the whole target projected) is not fixed by the words, and alternative (a) stays open. It should stay open, but L269's "under any contract containing one" should be qualified as in (a), since on either counterpart an indifferent intervention lets the table pass (F1).
+
+**I82 · L141.** Not settled, and the invention narrows the text: for a query that is not a port reader, NC1 as written never fires, so a lookup of, say, a fibre query's answer escapes NC1 in the maths though not in the words. The text lacks a notion of "fixing a query's value" too; this should stay open and be recorded, not silently narrowed. Alternative (a) is the right direction but needs that notion first.
+
+**I83 · L255.** Not settled; "does not appear" is silent where there is no answer. The invented choice is the mildest and can stay, recorded. If the text is to speak (this writes I83 in):
+
+> L255 (addition after the second sentence) | Where the target's answer is not determined at a pair of \(C\), nothing is asked to appear there.
+
+**I79 · L255.** The collapse of the boundary route into the component route is licensed by the text's own sentence — "moving an assertion from an input slot into a component named 'law' does not discharge this" — the two routes name one failure, so testing one tests both. No change.
+
+**U3.** Not the text's choice: the phrase is FC23's own. It should be resolved in the maths toward the solutions reading (an empty relation elsewhere in the candidate still removes every valuation, and a candidate with Sol_E = ∅ determines nothing). Then FC23(b)'s model leaves the premise, and the claim needs only its "satisfiable background" clause.
+
+## (d) Attacks on the claims that held
+
+**The decorated lookup (against I24, and so against the reach FC23(a) and FC24 were searched over).**
+
+```
+question p: target D, b0 = b0, query Q_w reading p0, δ designating p0; C = {(1,b0), (e1,b0)}
+target D
+  ports: p0 ∈ {0,1}; p2 ∈ {0,1}
+  components: c0 on (p0); c2 on (p2)
+  boundaries B = {b0}; edits A = {1, e1}; e1·e1 = undef
+  L_c0(1,b0) = {(0)};  L_c0(e1,b0) = {(1)}
+  L_c2(a,b)  = {(0)} at both pairs
+candidate ℰ: Γ = {k, m}, δ_E designates p0
+  ports: p0, p2 (subset of D's); π identity on both
+  τ: 1↦1, e1↦e1;  σ: b0↦b0
+  λ(k) = ({c0, c2}, p0:=id, p2:=id);  λ(m) = ({c2}, p2:=id)
+  components: k on (p0, p2); m on (p2)
+  L_k(1,b0) = {(0,0)};  L_k(e1,b0) = {(1,0)}
+  L_m(a,b)  = {(0)} at both pairs
+```
+
+Sol_D = Sol_E = {(0,0)} at (1,b0) and {(1,0)} at (e1,b0). (F1) holds for k and m by construction; (F2) with Hom(τ) holds; (A) holds (answers 0 and 1). NC1: k's relation fixes p0 to Ans_p at every pair but also constrains p2, so under I24 it is not a slot; m does not touch p0; no boundary coordinates (I79). NC1 passes. NC2: contrast at (e1,b0) (1 ≠ 0); delete G = {k}: p0 unconstrained, two values, answer ⊥ (I21), so an answer E determined is no longer determined — Lost holds. Non-vacuity: Sol_D(1,b0) ≠ ∅; C stated. So **Acc(ℰ) holds under the inventions as registered** — for a candidate whose component k restates the answer it was asked for with a pin beside it, exactly what L273's second sentence condemns. It rests on I24 ("constrains nothing else"), I82 (the query is a port reader, so NC1 was available and missed only through I24), I83 (answers determined at every pair) and I21. Under I24's alternative (b), k is a slot and NC1 fails, as the words require. This is not a counterexample to a listed FC's formal statement, but it confines the "holds" results of FC23(a) and FC24 to exact slots; the worked cases should be re-run under (b) before it is adopted, since a legitimate case may have one component whose relation alone fixes the answer.
+
+**NC2 near-trivial (against the reading "block = subset").** As in (a): with G = Γ and a two-valued answer port, any candidate with a contrast meets NC2. Every generated organization in the search has such ports, so the "holds" results involving NC2 (FC23(b) with satisfiable background) show little about the clause itself. Not a counterexample to a claim; a limit on what the held results say, resting on the unrecorded subset reading of "block" and on I21.
+
+**FC22, FC30, FC33(a), FC108.** I could not break these. FC22 is logical: a point compared with itself cannot differ from itself, and the second disjunct of the contrast is a contradiction at x = x0 — it holds beyond the models tried, unconditionally. FC30 and FC108 hold by construction, and their sentences say exactly that. FC33(a) is invariance under bijection; slot-ness under either reading of I24 is preserved by renaming, and no cardinality enters any conjunct, so infinite value sets change nothing.
+
+## (e) Round 1
+
+**The change at L520.** The change added "non-circular dependence and non-vacuity" but question fidelity (A) still hangs on "fidelity under change", which L189 defines narrowly (I49); as it stands L520 names no source for (A). Wording:
+
+> L520 | Everything else is defined in terms of the two imports, the structural vocabulary of (O) and (Q), the declared indices and the declared inputs (below). Roles, from admitted edits (Part II). Kinds, from signatures (K). The respect of a question, from its query (Part III). Representation, from fidelity and provenance (R). Provenance, from physical history (Parts IV, XII). Account, from component fidelity under change, question fidelity, non-circular dependence and non-vacuity (E). Understanding, construction, newness, origin, repair, created explanation, capability, recursion, universality, from those.
+
+**Matter 7 · L273.** Needs the change; FC24 shows that on the strict reading the sentence is empty, since nothing meeting (E) fails non-circular dependence. Wording:
+
+> L273 | So does a candidate offered as an account whose only substantive component restates the answer it was asked for; packaging a dependence that answers a different question beside it does not repair this.
+
+Items with nothing to add: D6.1, D6.5, D6.9, FC31 (covered under D6.7–D6.8).
+
+END OF REPORT
