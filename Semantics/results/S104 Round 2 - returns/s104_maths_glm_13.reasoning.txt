@@ -1,0 +1,240 @@
+Let me work through this carefully. This is part 13 of 17 of a formal-semantics review task. I need to produce a report with sections (a)-(e) covering the definitions, claims, counterexamples, inventions, unrecorded choices, round-1 matters (none), and attacks on claims that held.
+
+Let me map the items:
+
+Section 3 definitions: D12.1 (Sel), D12.2 (Con), D12.3 (Dec), D12.4 (provenance per part), D12.5 (Rep), D12.6 (Layers), D12.7 (Pred/Viol/Surp), D12.8 (Responses), D12.9 (value/Underdet).
+
+Section 4 claims: FC77 (counterexample found), FC78 (counterexample found), FC79 (holds by construction), FC95 (computed as claimed).
+
+Section 5 inventions given in full: I48, I52, I53, I54, I56, I71, I90. Also I18, I81, I92 summarized (given in full elsewhere — but the task says "each invention given in full in section 5" — those are I48, I52, I53, I54, I56, I71, I90; I18, I81, I92 are given as summaries "given in full in another part", so I may still comment but perhaps briefly).
+
+Section 6 unrecorded choices: H05, H09, H13.
+
+Section 8: none fall in this part.
+
+Section 9(d): attack FC79 and FC95 (claims that held). Also the parts of FC77 that held ("the trivial witness exactly when τ is a homomorphism" held on all models tried) — arguably attackable.
+
+Let me think about each item substantively.
+
+**(a) Definitions vs sentences.**
+
+D12.1 vs L195: L195 says "No member of the history represents t, H, or the survival condition." The maths reads "member of the history" as occurrences of a physical selection history (I52), since H's members are pairs and cannot represent. That's an invention forced by the text's loose wording — reasonable, but the text should say "no occurrence in the selection history represents…". Also D12.1 leaves out L201/L411's "no represented target and no criticism" — H05. That's the big gap: D12.1 does not encode the text's own exclusion. The text settles it: L201 and L411 say a selected transport has no represented target in its history. So the maths should change, and H05's other choice should be adopted.
+
+D12.2 vs L197: L197 "in which t, or the organization it carries to, is available as a represented target." D12.2 says "t or its codomain is a represented target in it." Matches. But this disjunction is what makes FC78 fail together with D12.1 not excluding represented codomains. Actually per L411 the constructed one "has" represented target. Fine.
+
+D12.3 vs L199: "Neither of the above." Dec := ¬Sel ∧ ¬Con. Matches, given I53 one-history reading. But "exactly one of three" (L193) fails per FC78. So D12.3 with I53's gloss is inconsistent with D12.1 as written; the formal core is at odds with itself (as the second check says). The fix is to bring L201/L411 into D12.1 (or into the reading).
+
+D12.4 vs L211/L405: L211: "A carrier keeps its provenance when present access to it is lost, and a later record made from the carrier carries that provenance, not a second, independent one." L405: "A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance." The maths invents per-part provenance assignment and carrying-over rule. Text doesn't define "inherited" — the invention fills a real gap. The per-part choice is needed to write L405's "the rest of the content keeps", so option (b) (whole transport) can't write L405; option (a) fourth value contradicts "exactly one of three" L193 — actually a fourth value would clash with L193's "exactly one of three". So I54's choice seems right; text should define "inherited". Note: per-part provenance makes "exactly one of three" hold per part, not per transport — the text says "a transport ... has exactly one of three provenances" (L193). So with I54, a transport as a whole may have parts with different provenances, which parts company with L193. The text needs wording: provenance is assigned per part; a transport's provenance is, say, the provenance of... hmm. Actually L211 says "A carrier keeps its provenance" — carrier-level. And L405 speaks of parts of content. So the text itself is mixed. Proposal: define provenance per part, and say a transport's provenance as a whole is declared only when all its parts share one, else it is mixed. Or say "each part of a transport has exactly one of three provenances". I should propose exact wording.
+
+D12.5 vs L205: (R) reads Faithful_C(t: Org_ℓ(o) → c). The text: "there is a transport from the organization that o instantiates under the physical module, at grain ℓ, to c, faithful on c's contract, whose provenance is selected or constructed." Matches, with I48 filling "c's contract". Fine.
+
+D12.6 vs L175/L177/L179: fine; nothing assumed to exist.
+
+D12.7 vs L219–221: Viol⁺ adds (A) — I50; Pred extended to any transport [I51]. Surprise: "a violation of a selected transport at (a,b) ∉ H" — matches; note Sel must hold for some parameters — fine.
+
+D12.8 vs L225: SelResp: "extends the history H ... and lets μ act: the transport is re-tuned within the population." D12.8 says t' ∈ μ*(t) — reflexive-transitive closure, so t' could be t itself (μ*(t) includes t). "Lets μ act" — is re-tuning with zero steps allowed? Reflexive closure permits idling. The text says "lets μ act", which suggests at least one application. μ* should perhaps be μ⁺. Minor point worth noting. Also SelResp requires t' survives on H ∪ {(a,b)} — text says "extends the history", matches.
+
+D12.9 vs L572: value includes τ(a), σ(b), and components' relations. But under I71, members of 𝒯 share the codomain's ports — so τ(a), σ(b) are shared; differences come only through L^E_k. Fine.
+
+**(b) Counterexamples.**
+
+FC77: The counterexample is against the reading "fidelity on ∅ is vacuous" — actually FC77's point: without a physical witness, Sel is met by every transport (with τ a homomorphism). The counterexample found is against FC77's own first sub-claim ("for every t"), showing it fails for non-homomorphic τ — but this is trivial and tells against the claim's wording, not the text. The real point survives: every t figuring in (R) has the trivial witness. Does this tell against the text? The text L195 does require a population, variation operator, history, survival condition — the trivial witness 𝒯={t}, μ=id, H=∅ abuses these. The text arguably settles against it: L195 says "a variation operator μ on 𝒯" and "a finite history H ⊆ C of edit–boundary pairs actually encountered" — H=∅ is a finite history of pairs none encountered; is that allowed? "actually encountered" with empty set is vacuous. And L155 speaks of "the surviving member of a population under a variation-and-survival history". And L481: "The population is the set of transports the physics and the stated construction admit" — an equality, so 𝒯={t} is only legitimate if physics admits only t. H09. Also L481's second clause: "a transport that would need a part every member of the population is built without is not in it" — this cuts against μ = id with population of one? Not exactly. The text settles the population question at L481 (H09): 𝒯 is the whole admitted set, not any supposition. So the fix: read 𝒯 per L481. Then FC77's trivial witness fails whenever physics admits any other transport differing at some pair — actually FC77 is about Sel without physical witness; with I52 (physical witness required) plus L481, Sel(t;{t},id,∅) requires physics admits exactly {t}. So the text, via L481, blocks the trivial witness in general. Change to text: none strictly needed; but sharpening L195 to say the population is as L481 has it, and "no occurrence in the selection history represents…" wording. I'd say FC77 tells only against invention I52's other choice (a) — no physical witness — which the maths already rejected. Its remaining bite: Sel is met too easily; the text should perhaps require H nonempty? The owner's words: S20 "A variation is a competitor. If two discovered variations fit, that constitutes a problem." That suggests population with actual variation. Hmm, but rule says don't list/count rivals — S20 says don't argue from numbers. S20's quote: "A variation is a competitor. Whether anyone can list all variations that still fit is beside the point. If two discovered variations fit, that constitutes a problem." So a population of one with identity variation is not a variation-and-survival history in the owner's sense; μ should be able to produce a competitor. I can cite S20 for requiring μ non-degenerate? Careful: "Do not list, count, grade or rank rivals, and do not argue from how many there are (decision S20)." Requiring that μ moves something is not counting rivals. I could propose that μ's image contains a transport other than t (a competitor), per S20 "A variation is a competitor". That's a wording proposal.
+
+FC78: The counterexample (Sel ∧ Con on one history) rests on D12.1 not encoding L201/L411. The text (L201, L411) settles it: "a selected transport has no represented target and no criticism in its history." So the counterexample tells against the maths (D12.1/I52), not the text; the fix is to write L201/L411 into D12.1 — i.e., adopt H05's other choice. Also possibly add a sentence to the text? The text already has L201 and L411 saying it; no change needed; maybe cross-reference. But there's residual tension: L201 also says "Construction may operate on selected material. Selection may continue to operate beneath construction." So a transport can be selected then constructed — both provenances across time. Then "exactly one of three" (L193) must mean: as attributed at a time, on the whole history, the latest/strongest? I53 reads on whole history and says Con excludes Sel. But L201 says construction may operate on selected material — so a transport that was selected and later constructed has both in its history. Under whole-history reading, Con holds (represented target appears when construction begins) and Sel also held (earlier, before the represented target). Does Sel require no represented target ever in the whole history, or none up to the selection? The text: "a selected transport has no represented target ... in its history" — whole history. So once construction operates on it, it's no longer selected; it's constructed. "Selection may continue to operate beneath construction" — selection on the material beneath. So provenance shifts. The per-part I54 machinery plus a precedence rule could handle it. The text's "exactly one" is then about the attribution now. I think the right reading: at attribution time, on the whole history, Con excludes Sel because once a represented target enters the history the Sel condition fails. And "construction may operate on selected material" means the underlying material (parts) keep Sel per-part (I54) while the whole becomes Con. That's coherent: per part, exactly one; per whole, the transport is Con while some parts keep Sel. Good — I54 + I53 together can write L201. So the answer to FC78: counterexample only against the invention (D12.1 missing L201/L411, and I53's gloss importing what D12.1 lacks); text needs no change; maths should adopt H05. But note a subtlety: with L201 read in, "Selection may continue to operate beneath construction" — the selection histories of parts continue; does a new selection response on a constructed transport re-render it Sel? Per-part handles it. Maybe propose a small clarifying sentence in the text? Could propose adding to L193 or L199: provenance is attributed to each part of a transport; a transport's provenance is the provenance of the parts newly built in it... Hmm. Let me propose wording:
+
+For L193, replace with something like: "A transport t whose domain is an organization of a physical system has exactly one of three provenances, determined by its history in the physical module; the provenance is carried by each part of the transport separately."
+
+Actually the rules require exact wording between fence lines with the line it replaces. Let me draft.
+
+**(c) Inventions.**
+
+I48 (contents/contract): Text L169 "A content is an organization together with its contract-relative commitments." Settles that a content has a contract; doesn't settle that the contract lives on the content's own organization (vs. carrier's). L205 "faithful on c's contract" — the invention's choice (contract on c's own organization, faithfulness on the preimage) vs (a) contract on carrier. Text doesn't settle; proposal wording? Perhaps: "A transport into a content is faithful on c's contract when it meets the conditions of fidelity at every pair whose image lies in c's contract." Should the text settle it? I'd say the preimage reading is what L205 needs (transport's domain is the carrier; contract is on content), so the text nearly settles it; add a sentence. Proposal.
+
+I52: partly settled by L195's words ("No member of the history represents" — members are pairs, cannot represent; text needs rewording to "no occurrence in the selection history"). Also H nonempty? Not settled; S20's competitor remark suggests variation must be able to produce a competitor. Propose wording.
+
+I53: settled by L201/L411 — one history, Con excludes Sel — text already says it. But "exactly one" per L193 combined with L201's "Construction may operate on selected material" needs the per-part story (I54). Text mostly settles; propose adding precedence/per-part wording.
+
+I54: text does not define "inherited" — gap. Propose wording for L409 or after L405: "'Inherited' is not a fourth provenance: a part of a transport received without being newly built keeps the provenance it had on its carrier, and a binding newly built is constructed."
+
+I56 (Build primitives): given here as used by FC78 via I56 ("Prepares a primitive"). Text L405 names prepares, nontrivial binding construction, content-preserving transfer without defining. Not settled. Should it stay open? The physical module Θ is supposed to supply it; perhaps the text should say these are read through the physical module. Propose a sentence: "Whether a subhistory prepares an organization, whether a binding construction is nontrivial, and whether a transfer preserves content are read through the physical module." Something like that. Careful with S25–S27: physical possibility enters only at instantiation/transformation — reading these through Θ is consistent.
+
+I71 (value at a pair): text L572 says "has a different value from t". What is a transport's value at a pair? Not defined. Under I71's choice, members share ports/components so value differences reduce to relations. Alternative (a) prediction only. Text doesn't settle. Proposal: define "the value of a transport at a pair" — maybe: "The value of a transport at an edit–boundary pair is what it carries there: the translated edit, the translated boundary, and the relations its organization has at them." Should the text settle? L572's argument needs it; leaving open weakens. I'd propose settling with the invention's reading, noting it names I71.
+
+I90 (Θ by hand): this is a testing-device invention, not a content choice; text doesn't settle and needn't. But note the caveat: models show what definitions allow, not what physics does. Maybe recommend the alternative (a) toy physics for the FC98 loop — but that's outside this part. Say it should stay open / no text change.
+
+I18, I81, I92: summaries only; brief or skip. I18 relevant to FC77's homomorphism point — "fidelity on ∅ is not vacuous because Hom is on τ as a whole". Is that right per text? The text's fidelity definition (F2) — not quoted here; I can't check. The second check worked it by hand with algebra — consistent. Note the tension: FC77's own statement "fidelity on ∅ is vacuous" is wrong under I18; but that's the claim's wording, not the text.
+
+H05: text settles it (L201, L411); the maths should change — read "no represented target and no criticism" into Sel. The register should record it. No text change.
+
+H09: text settles the population at L481 ("The population is the set of transports the physics and the stated construction admit" — equality). The maths' inclusion reading and 𝒯={t} witnesses conflict with L481. Maths should change to the equality; note no status changes since Θ by hand. Also "parts(t)" undefined — needs definition or invention entry. Propose? The text L481: "a transport that would need a part every member of the population is built without is not in it" — "part" here; text uses "part" without defining; with I54's per-part machinery, "part of a transport" is defined (component with counterpart binding). So propose the text align: maybe no change needed, but register should define parts(t) via I54's parts.
+
+H13: Occurs primitive — the text L217 "actually occurring" relies on Θ ("read through Θ"); D0.2 lists it as primitive with no entry. The text settles its home (Θ) implicitly; register should record. No text change, or a small wording: "actually occurring in the physical module". Propose minor wording.
+
+**(d) Attack FC79 and FC95.**
+
+FC79: "Survival is how the transport got there; fidelity is what it is." Holds by construction — Faithful takes no 𝒯, μ, H. Attack: can the text's fidelity covertly depend on history? L41 first sentence: "Whether that transport is faithful on changes it was never selected against turns on the transport and the target alone." That's the sentence itself. But consider: Faithful_C(t) — could H enter via C? If the contract C were defined through the selection history (e.g., a contract that grows with H), then fidelity on C would depend on H. Is there such a reading? L195's survival condition is "fidelity on H" where H ⊆ C — H comes from C, not the reverse. But FC80/D12.9's underdetermination is about values at pairs in C\H. Suppose a reader takes the "contract" of a selected transport to be its history (i.e., what it was selected on is all it's answerable for) — then Faithful on that contract is history-dependent, violating L41. Does the text anywhere invite that? Not quoted here; I can note the attack: define C_t := H for selected t; then Faithful_{C_t}(t) depends on H. But L41 explicitly denies this reading, so the text settles it against the attack. So FC79 stands on the text's own words; the "holds by construction" status is only as strong as the reading that C is never defined through H — recommend the register note that no definition of a contract may run through a selection history. That's a fair "attack" result: the claim holds because the maths wrote it so; the text backs it with L41; but the register should record the choice (contract never = H). Is there an unrecorded choice here? Possibly worth flagging as a new H-like entry — but I shouldn't invent new IDs arbitrarily; I can mention it in (d).
+
+Another attack on FC79: per-part provenance (I54) — fidelity is per (D,E,t,C); but if t is identified per part, and survival selects parts... still Faithful is extensional. I think one attack line suffices.
+
+FC95: "A system can represent a theory in error" — computed as claimed. Attack: try to build a case where Rep forces faithfulness of the candidate's transport t_c. Rep_ℓ(o,c) requires a faithful transport t: Org_ℓ(o) → E_c on c's contract's preimage. The candidate's transport t_c: D_c → E_c is a different transport. Could the text force t = t_c? If the carrier o instantiates D_c itself (the content's target), then Org_ℓ(o) = D_c, and the faithful transport required by Rep could be t_c itself — then Rep would force Faithful(t_c), blocking the "in error" case. But Rep requires *some* faithful transport, not t_c; a different t: D_c → E_c could be faithful while t_c is not. Unless the text says the representing transport is the candidate's — L205 doesn't. So the attack fails only if multiple transports between same organizations are allowed — which they are (transport space, I81). But wait: if two transports D_c → E_c exist, one faithful one not, does anything in the text forbid that? Not that's quoted. So FC95's witness: o instantiates D_c, t faithful, t_c unfaithful. That's presumably what was computed. Beyond bounds: does (R)'s provenance clause (Sel or Con) constrain? t must be Sel or Con; Sel needs no represented target in history — fine, hand-set (I90). So FC95 holds. A deeper attack: "represent a theory in error" — the sentence says "the transport from carrier to content is faithful while the transport from the content's target to the content fails." The maths' reading requires Rep_ℓ(o,c), i.e., a faithful transport from carrier's organization to content. But the sentence says "the transport from carrier to content is faithful" — singular, the transport. If the carrier-to-content transport is the *same* transport as the target-to-content one (composed?), no. Actually if the carrier instantiates the target's organization, "the transport from carrier to content" and "the transport from the content's target to the content" have the same domain and codomain; the text speaks of them as two transports, so it presumes they can differ. Is that coherent — two transports with identical domain/codomain, one faithful, one not? Yes if transports include structure (τ, σ, λ). Fine. So the attack: if a transport is determined by its domain and codomain (a transport just *is* a map between organizations, and there's at most the "natural" one), FC95 collapses. The text should perhaps say transports between the same organizations may differ. Does it? Not quoted. Flag as an assumption the claim rests on — arguably an unrecorded choice. I'll note it under (d): FC95 holds only if two transports may share domain and codomain and differ; if the text nowhere licenses that, the sentence L211 needs a clause. Propose wording? Maybe: "The transport from carrier to content and the transport from the content's target to the content need not be the same transport." Hmm — but L211 already treats them as two. I'll mention it as resting on the reading, with a small wording option.
+
+Also attack FC95 with S28: "A theory is never settled" — representing a theory "in error" — no conflict.
+
+Also the part of FC77 that held: "trivial witness exactly when τ is a homomorphism" — attack: if (F2)'s homomorphism clause is pointwise (contra I18), then fidelity on ∅ would be vacuous for all t. That depends on the text's (F2), not given here — I can note I can't check beyond I18 and the second check's hand-work, which supports I18. Beyond bounds: transports with τ homomorphism but H=∅ and μ=id — with H09's L481 equality, 𝒯={t} fails unless physics admits only t; so the "held" sub-claim holds under the invented model family but its real-world force depends on I52/H09. Note that.
+
+**(e)** None fall in this part — one line.
+
+Now word budget: under ~3000 words. Let me write concisely with headers.
+
+Proposals needing exact wording between fence lines, with the line replaced. Let me draft the key ones.
+
+1. H05 / FC78 fix — no text change needed (text already says it at L201/L411); change the maths. But maybe add to L195 a sentence making Sel's exclusion self-contained, since L195 is where Sel is defined and the exclusion lives three/fifteen lines later. Proposal, replacing/augmenting L195's second sentence:
+
+> L195 (second sentence) | No member of the history represents \(t\), \(H\), or the survival condition.
+
+→
+
+```
+No occurrence in the selection history represents \(t\), \(H\), the survival condition, \(t\)'s target, or a criticism; a selected transport has no represented target in its history.
+```
+
+This writes H05's other choice (and part of I52's rewording of "member of the history") into the text. Say it names H05 and I52.
+
+2. I52 population/variation wording (S20 competitor):
+
+```
+There is a population \(\mathcal T\) of candidate transports, the set the physics and the stated construction admit (Part XIV), a variation operator \(\mu\) on \(\mathcal T\) whose image on \(t\) contains a transport other than \(t\), and a finite, nonempty history \(H\subseteq C\) of edit–boundary pairs actually encountered in a selection history in which no occurrence represents \(t\), \(H\), the survival condition, \(t\)'s target, or a criticism.
+```
+
+Hmm — "nonempty": is that justified? S20: "A variation is a competitor." Justifies μ non-degenerate. H nonempty: text says "a finite history of pairs actually encountered" — empty is finite; the text doesn't force nonempty. Maybe leave H as is, but require μ to move. Careful about "do not list, count rivals" — requiring μ(t) ∌ only t is not counting. Also mustn't say what must happen to a candidate (S21) — this is about transports, fine. But wait: requiring μ's image contains another transport says something must exist; that's about populations, not candidate explanations. OK.
+
+Also "actually encountered" — keep. And the sentence should keep "and a survival condition requiring fidelity on H" — I'm merging. Let me produce a cleaner version replacing the whole first sentence of L195:
+
+Original L195 first sentence: "There is a population \(\mathcal T\) of candidate transports, a variation operator \(\mu\) on \(\mathcal T\), a finite history \(H\subseteq C\) of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on \(H\)."
+
+Replacement:
+
+```
+There is a population \(\mathcal T\) of candidate transports — the set of transports the physics and the stated construction admit — a variation operator \(\mu\) on \(\mathcal T\) under which \(t\) has a competitor in \(\mathcal T\), a finite history \(H\subseteq C\) of edit–boundary pairs actually encountered in a physical selection history, and a survival condition requiring fidelity on \(H\).
+```
+
+Names I52, H09, S20. "competitor" from S20's own word.
+
+3. I54 inherited provenance wording — add after L405 or replace L409. L409: "Use does not by itself construct: received content used as it was received keeps its inherited provenance." Replace with:
+
+```
+Use does not by itself construct: received content used as it was received keeps its inherited provenance. Provenance is carried by each part of a transport — each component with its counterpart binding — not by a fourth value: a part transferred without being newly built keeps the provenance it had on its carrier, a binding newly built is constructed, and a transport has the provenance of the parts it was last built with, while parts beneath keep theirs.
+```
+
+Hmm, "a transport has the provenance of the parts it was last built with" — supports L201's "construction may operate on selected material; selection may continue beneath". Maybe simpler. Keep it moderate.
+
+4. I48 wording — add after L169:
+
+```
+A transport into a content is faithful on the content's contract when it meets the conditions of fidelity at each pair of its own domain whose image lies in that contract; the contract of a content is on the content's own organization.
+```
+
+Names I48.
+
+5. I71 value definition — near L572:
+
+```
+The value of a transport at an edit–boundary pair is what it carries there: the translated edit, the translated boundary, and the relations of its organization at them; members of a population share ports and components and differ in relations.
+```
+
+Wait — "members share ports and differ in relations" — that's a substantive claim; per S20 don't count rivals... it's a definitional constraint on populations, from the text? L572 assumes values can differ; D12.9's bracket says members share codomain ports/components. Keep it, naming I71.
+
+6. I56 wording — L405 area:
+
+```
+Whether a subhistory prepares an organization, whether a binding construction is nontrivial, and whether a composition is of content-preserving transfers, are read through the physical module.
+```
+
+Names I56, consistent with S25–S27 (physical possibility only at instantiation/transformation — these are about actual subhistories, i.e., transformations, so OK).
+
+7. H13 wording — L217: "For an edit–boundary pair \((a,b)\in C\) actually occurring:" →
+
+```
+For an edit–boundary pair \((a,b)\in C\) actually occurring in the physical module:
+```
+
+Minor; maybe just say register should record it, text needs no change since L31 defines Θ as saying what organization an occurrence instantiates — actually occurrence-hood is Θ's business. Small wording fine.
+
+8. H09 — text settles at L481; maths should change to equality; no text change; parts(t) should be defined via I54's parts. Maybe propose nothing textual; register fix.
+
+9. D12.8 μ* vs μ⁺ — attack/wording: "lets μ act" suggests at least one step. Propose register change (μ⁺), or text stays as is. Mention in (a) under D12.8; say the maths should use μ⁺ since the text says "lets μ act: the transport is re-tuned" — re-tuning with zero applications is not re-tuning. Actually could keep μ* to allow no-change response? The text "the transport is re-tuned within the population" — re-tuned. I'll say μ⁺, maths change, no text change.
+
+Also D12.4 vs L193 "a transport has exactly one of three provenances" — with per-part, the whole transport's provenance needs a rule. Address in (a) D12.4 and propose the L409 wording above covering it.
+
+Also FC77 second sub-claim attack in (d).
+
+Also I53 under (c): settled by L201/L411 (one history); but L201's "Construction may operate on selected material" shows parts keep Sel — consistent with I54. Say text settles; no wording needed beyond I54's.
+
+I90 under (c): should stay as is for testing; recommend alternative (a) eventually for FC98; no text change.
+
+Now, which should stand where maths and words part company:
+
+- D12.1 vs L195: words should stand (plus small rewording of "member of the history"); maths must add L201/L411 exclusion. Both: text's "member" wording should change to "occurrence".
+- D12.2: fine.
+- D12.3: with the fix, matches L199.
+- D12.7: matches.
+- D12.9: text doesn't define "value" — gap; propose wording.
+- D12.8: μ⁺ point.
+
+Structure the report:
+
+(a) entries: D12.1 · L195, D12.2 · L197, D12.3 · L199, D12.4 · L211/L405, D12.5 · L205, D12.6 · L175–L179, D12.7 · L219–221, D12.8 · L225, D12.9 · L572. Then claims: FC77, FC78, FC79, FC95 (do formal statements say what sentences say — brief, cross-ref to (b)).
+
+(b) FC77, FC78.
+
+(c) I48, I52, I53, I54, I56, I71, I90; brief on I18/I81/I92 (given elsewhere — maybe skip per instruction "given in full in section 5": those seven are given in full; I18/I81/I92 only summaries, so not required; mention if needed). H05, H09, H13.
+
+(d) FC79, FC95, FC77's held sub-claim.
+
+(e) one line.
+
+Word budget ~3000. Let me write it. Aim ~2200-2600 words.
+
+For FC79 attack details: construct a reading where the contract of a selected transport is its history (C := H): then "faithful on changes it was never selected against" — L41 explicitly says faithfulness on C\H turns on transport and target alone; if C := H there are no such changes, making L41 vacuous rather than false. Interesting: under C := H, L41's first sentence is vacuously true, not violated. So the attack must make Faithful depend on H differently: e.g., define the survival condition itself as part of fidelity (wide fidelity, I49 mentions narrow/wide extents). If "faithful" is read in the wide extent wherever survival is at issue, does Faithful take H? I49: "'Faithful' and 'fidelity': the narrow extent by default, the wide one where a line asks for it." The wide extent — I don't know what it adds; possibly (A)-clause at pairs, which is still pairwise, not history-dependent. The attack: a reading where fidelity includes "the transport survived its history" — but L41 forbids exactly that, in the same line. So L41 is self-guarding: the sentence both asserts the separation and names it ("survival is how it got there; fidelity is what it is"). Conclusion: FC79 holds against hand attack; the text settles it; but the register should record that no contract of a selected transport may be defined as its history, since that reading makes L41 vacuous rather than false — a reader could take it. Wording proposal? Maybe add to L41: "and a contract is never fixed by a selection history." Hmm, that's inventing a constraint the text may not want. Better: flag it and offer optional wording:
+
+```
+Whether that transport is faithful on changes it was never selected against turns on the transport and the target alone, not on whether it survived; no contract is fixed by what a transport was selected against.
+```
+
+That might overreach — "no contract is fixed by..." could be wrong (a contract might legitimately be scoped by selection in the text elsewhere?). I'll present it as an optional guard, or just note the reading without proposing. The rules say "Give the exact wording for every proposal" — proposals optional. I'll propose it but flag it names a new choice.
+
+FC95 attack: the two-transports assumption. Present model: D_c small organization with one port p (values {0,1}), one component L; E_c with port q, component M; contract C_c = {(a0,b0)}. t1: τ maps edits, faithful at (a0,b0). t2 (the candidate's): τ' differs so the valuation equation fails at (a0,b0). Carrier o with Org_ℓ(o) = D_c; Rep holds via t1 (Sel by hand, I90); t_c = t2 fails. Attack line: if the text (or a reader) takes "the transport from carrier to content" to be the same transport as "the transport from the content's target to the content" whenever the carrier instantiates the target, the sentence becomes contradictory rather than true. The sentence itself speaks of two transports, so the text supports the reading; but a clause could make it explicit. Optional wording for L211 after its first sentence:
+
+```
+The transport by which the carrier represents the content and the candidate's transport from the content's target to the content need not be the same transport.
+```
+
+Name it as resting on I81's transport space? It rests on transports being more than domain-codomain pairs.
+
+Also FC95 attack beyond bounds: grain ℓ — Org_ℓ(o) at fine grain could be D_c plus extra structure; not needed.
+
+One more: check D12.5's use of Γ_c as active components [I48] vs L205 "faithful on c's contract" — fine.
+
+Also (a) for FC77's formal statement: "fidelity on ∅ is vacuous" is the claim's own error, contradicting I18; note the maths (D5.7) should stand; the claim's wording was wrong.
+
+For FC78 formal statement: formal core at odds with itself — I53's gloss imports L201 into Sel but D12.1 lacks it; that's a defect of the formal core, not the text.
+
+Now also (b): does FC78 tell against the text? No — text at L201/L411 says exactly what excludes it. But is there a residual text issue: L193 "exactly one of three" vs L201 "Construction may operate on selected material" — apparent tension the text resolves per-part (I54); the text should say provenance is per part to make "exactly one" precise. That's the D12.4/L193 point; propose wording there too? I have the L409 wording. Maybe also adjust L193:
+
+```
+A transport \(t\) whose domain is an organization of a physical system has exactly one of three provenances, determined by its history in the physical module, carried by each of its parts separately: selected, constructed, or declared.
+```
+
+Hmm, original L193: "A transport \(t\) whose domain is an organization of a physical system has exactly one of three provenances, determined by its history in the physical module:" — I'll propose replacing with a version adding per-part. Name I54.
+
+Let me now also double check the rules: "Do not list, count, grade or rank rivals" — my μ competitor requirement says "t has a competitor in 𝒯" — from S20's word "A variation is a competitor." It says existence of a competitor, not counting. Should be fine. Also "Say nothing about what must happen to a candidate" — S21 is about candidate explanations; transports/populations are okay, but a selected transport is akin to a candidate... SelResp D12.8 defines responses; I'm not proposing content there. Fine.
+
+"Nothing is settled… a ruling out by a claim taken as given is a choice" — my wordings avoid "settled". Check my proposals: "the set the physics and the stated construction admit" is L481's own phrase, fine.
+
+Also H09: note L481's "stated construction" — population depends on construction, aligning with L201. Good.
+
+Now write the report. Keep entries tight. Let me count roughly as I go and trim.
+
+Section ordering per instructions: (a) definitions then claims? "For each definition in section 3 and each claim in section 4". I'll do definitions D12.1–D12.9 then claims briefly.
+
+Write it.
