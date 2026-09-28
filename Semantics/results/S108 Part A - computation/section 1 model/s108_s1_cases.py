@@ -333,6 +333,17 @@ def small_cases():
         print("   %s: |Slc| %s; Obs(R-ii) %d edits; families on C2 (R-ii) %s; on C2* (R-ii) %s; Acc(E_fwd, C2) %s"
               % (v, {j: len(R.slc[j]) for j in D.comps}, len(R.obs("R-ii")), R.families(C2, "R-ii"), R.families(C2s, "R-ii"), tf(account(c))))
     set_variant("none")
+    # ---- other candidates on the owner's questions: does anything still meet (E) on them?
+    print("Other candidates on the owner's questions (S41 Q15's weathervane M13; S44's sign)")
+    c13 = m13()
+    enc13 = table_candidate(c13.p, list(c13.p.D.ports), encode=True)
+    ps = sign_question()
+    encs = table_candidate(ps, list(ps.D.ports), encode=True)
+    for v in ["none"] + VARIANTS:
+        set_variant(v)
+        print("   %s: M13 %s, E_enc on M13's question %s | sign two parts %s, one part %s, E_enc on the sign's question %s"
+              % (v, tf(account(c13)), tf(account(enc13)), tf(account(sign_two(ps))), tf(account(sign_one(ps))), tf(account(encs))))
+    set_variant("none")
     # ---- V1.6, V1.7: flagged by the tabulation (rule 4), not implemented; the baseline side of V1.7's case only
     print("V1.7 (flagged, not implemented): the baseline side of the reply's case (FC34's 'Acc not monotone in C' witness)")
     Lw = {("h_p0", ONE, "b0"): {(1,)}, ("h_p0", "alt", "b0"): set(), ("h_p0", "alt", "b1"): {(0,)}}
