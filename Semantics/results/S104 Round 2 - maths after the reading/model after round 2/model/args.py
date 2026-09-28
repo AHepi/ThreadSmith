@@ -1,6 +1,9 @@
 # S104 round 2 (maths): arguments, usability, ruling out (formal core §9, D9.1-D9.9).
 # Claims are propositional here [I87]; the inference forms are a small fixed set [I89]; X_j ranges
 # over a finite set of arguments [I88]. Each tag names the invention in `inventions register.md`.
+# The owner's answers (S41, Q23): a premise alone is an argument (D9.2); its conclusion is its claim; it is
+# usable by j when j tentatively accepts it (D9.6, I166). ARG_READING "I88" keeps round 2's reading (a bare
+# premise is no argument).
 import itertools
 
 # ---- claims (D9.1, I38, I87) ---------------------------------------------------------------------
@@ -103,9 +106,18 @@ def show(f):
 # ---- argument trees (D9.2, I40, I88, I89) ---------------------------------------------------------
 
 
+ARG_READINGS = ("S41", "I88")
+ARG_READING = "S41"
+
+
 class Leaf:
     def __init__(self, claim, kind="assumption", made_from=None):
         self.claim, self.kind, self.made_from = claim, kind, made_from
+
+    @property
+    def concl(self):
+        """concl(α) for α a premise alone: the premise's claim (D9.2) [owner S41: Q23]."""
+        return self.claim
 
     def steps(self):
         return []
@@ -211,9 +223,13 @@ def usable_step(j, u, memo=None):
     return ok
 
 
-def usable(j, alpha):
+def usable(j, alpha, reading=None):
+    """Usable_j(α) (D9.6). A premise alone d [owner S41: Q23] is usable by j when d ∈ Accepted_j(ξ), Live_j with
+    no step (I166); under ARG_READING "I88" (round 2) it is no argument."""
     if isinstance(alpha, Leaf):
-        return False  # an argument has at least one step [I88]
+        if (reading or ARG_READING) == "I88":
+            return False  # round 2: an argument has at least one step [I88]
+        return canon(alpha.claim) in j.accepted  # [I166]
     memo = {}
     return all(usable_step(j, u, memo) for u in alpha.steps())
 
@@ -248,7 +264,7 @@ def usable_any_step(j, alpha):
 
 
 def rules_out(alpha, phi):
-    """RO(α, φ) (D9.7, I39, I87)."""
+    """RO(α, φ) (D9.7, I39, I87); α may be a premise alone, whose conclusion is its claim [owner S41: Q23]."""
     if not incons(phi, alpha.concl):
         return False
     d = denial(phi)
@@ -265,10 +281,13 @@ def X(j, phi, args):
     return [a for a in args if usable(j, a) and rules_out(a, phi)]
 
 
-def enumerate_args(premises, forms=("MP", "MT", "AndI", "AndE"), depth=2, max_args=4000):
-    """Every argument tree of height ≤ depth over the given premise leaves with the given forms [I88]."""
+def enumerate_args(premises, forms=("MP", "MT", "AndI", "AndE"), depth=2, max_args=4000, bare=None):
+    """Every argument tree of height ≤ depth over the given premise leaves with the given forms [I88]; with
+    the premises alone among them (height 0) [owner S41: Q23], unless bare is False or ARG_READING is "I88"."""
     layer = [Leaf(p) for p in premises]
     allnodes = list(layer)
+    if bare is None:
+        bare = ARG_READING != "I88"
     out = []
     for _ in range(depth):
         new = []
@@ -295,4 +314,4 @@ def enumerate_args(premises, forms=("MP", "MT", "AndI", "AndE"), depth=2, max_ar
         allnodes.extend(new)
         if len(out) >= max_args:
             break
-    return out
+    return (list(layer) + out) if bare else out  # the stepped arguments are those of round 2; the premises alone are added

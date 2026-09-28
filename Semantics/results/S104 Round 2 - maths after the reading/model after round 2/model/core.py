@@ -696,9 +696,19 @@ def NC1(cand, reading=None):
     return not any(slot(cand, k, reading) for k in cand.E.comps)
 
 
-def contrast(ansx, ansx0):
-    """Contrast(E; x) (D6.4, I21, I22)."""
-    return (ansx is not BOT and ansx0 is not BOT and ansx != ansx0) or (ansx is BOT and ansx0 is not BOT)
+# The owner's answers (S41, Q15): NC2's contrast is symmetric, "differs" in Y_p ∪ {⊥} with ⊥ ≠ y and ⊥ = ⊥,
+# as D8.2 reads it; a determined answer at the edited point against ⊥ at the baseline counts. "round2" keeps
+# D6.4 as written in round 2 (I22: a determined baseline asked; only ⊥ at the edited point counts).
+CONTRAST_READINGS = ("S41", "round2")
+CONTRAST_READING = "S41"
+
+
+def contrast(ansx, ansx0, reading=None):
+    """Contrast(E; x) (D6.4, I21) [owner S41: Q15]."""
+    reading = reading or CONTRAST_READING
+    if reading == "round2":
+        return (ansx is not BOT and ansx0 is not BOT and ansx != ansx0) or (ansx is BOT and ansx0 is not BOT)
+    return ansx != ansx0  # BOT equals only itself (I21)
 
 
 def lost(cand, G, x, x0):
@@ -713,14 +723,14 @@ def lost(cand, G, x, x0):
     return False
 
 
-def NC2(cand, witness=False):
+def NC2(cand, witness=False, reading=None):
     p = cand.p
     x0 = (ONE, cand.sigma[p.b0])
     a0 = cand.ans_E(*x0)
     blocks = [frozenset(G) for G in powerset(cand.Gamma) if G]
     for (a, b) in sorted(p.C, key=repr):
         x = (cand.tau[a], cand.sigma[b])
-        if not contrast(cand.ans_E(*x), a0):
+        if not contrast(cand.ans_E(*x), a0, reading):
             continue
         for G in blocks:
             if lost(cand, G, x, x0):

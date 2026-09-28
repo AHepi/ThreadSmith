@@ -1477,7 +1477,7 @@ def fc71(S):
     return parts
 
 
-@claim("FC72", ["I87", "I89"])
+@claim("FC72", ["I87", "I89", "I166"])
 def fc72(S):
     phi = "acc"
     a1 = Step("AndE", Not(phi), [Leaf(And(Not(phi), "q"))])
@@ -1487,8 +1487,30 @@ def fc72(S):
     ok_b = not rules_out(a2, Not("psi"))
     a3 = Step("MP", Not(phi), [Leaf("r"), Leaf(Imp("r", Not(phi)))])
     ok_c = rules_out(a3, phi)
-    return [computed("(a), (b), (c)", "(a) ¬φ a conjunct of a leaf blocks; (b) a record made from ψ does not rule out ¬ψ; (c) r and r → ¬Acc rule out Acc",
-                     ok_a and ok_b and ok_c, "(a) %s; (b) %s; (c) %s" % (ok_a, ok_b, ok_c), ["I87", "I89"])]
+    parts = [computed("(a), (b), (c)", "(a) ¬φ a conjunct of a leaf blocks; (b) a record made from ψ does not rule out ¬ψ; (c) r and r → ¬Acc rule out Acc",
+                      ok_a and ok_b and ok_c, "(a) %s; (b) %s; (c) %s" % (ok_a, ok_b, ok_c), ["I87", "I89"])]
+    # [owner S41: Q23] a premise alone is an argument (D9.2, D9.6, D9.7; I166)
+    PM, design = "PM", "design"
+    psi = Not(PM)  # 'perpetual motion is impossible', taken as given
+    phi_d = And(design, PM)  # 'this design runs and gives perpetual motion'
+    j = Assessor(["MP"], [psi])
+    bare = Leaf(psi)
+    args_d = enumerate_args([psi])
+    ok_d = usable(j, bare) and rules_out(bare, phi_d) and any(isinstance(a_, Leaf) for a_ in X(j, phi_d, args_d))
+    r2 = usable(j, bare, reading="I88")
+    parts.append(computed("(d) owner S41, Q23: a premise alone rules out a design", "ψ alone, ψ ∈ Accepted_j, Incons(φ, ψ), ¬φ no conjunct of ψ ⇒ ψ ∈ X_j(φ): ψ = ¬PM ('perpetual motion is impossible'), φ = design ∧ PM",
+                          ok_d and not r2,
+                          "%s\nusable by j (who accepts ¬PM): %s; rules out design ∧ PM: %s; in X_j(design ∧ PM) over %d arguments (the premise alone among them): %s. "
+                          "Under round 2's reading (I88: an argument has a step) the premise alone is no argument: usable %s."
+                          % (bare.show(2), usable(j, bare), rules_out(bare, phi_d), len(args_d), ok_d, r2), ["I87", "I88", "I166"]))
+    ok_e = usable(j, bare) and not rules_out(bare, PM)
+    parts.append(computed("(e) the block holds of a premise alone", "ψ alone with ψ = ¬φ (read structurally) does not rule out φ: ¬PM alone does not rule out PM ('p because p')",
+                          ok_e, "usable: %s; rules out PM: %s" % (usable(j, bare), rules_out(bare, PM)), ["I87", "I39"]))
+    j0 = Assessor(["MP"], [])
+    ok_f = (not usable(j0, bare)) and not X(j0, phi_d, args_d)
+    parts.append(computed("(f) a premise alone that j has not taken up is not usable (I166)", "ψ ∉ Accepted_j ⇒ ¬Usable_j(ψ alone), so ψ alone rules nothing out for j",
+                          ok_f, "j accepts nothing: usable %s; |X_j(design ∧ PM)| = %d" % (usable(j0, bare), len(X(j0, phi_d, args_d))), ["I166"]))
+    return parts
 
 
 @claim("FC73", ["I87", "I89"])
@@ -1598,8 +1620,35 @@ class Hist:
     which items ('t', 'H', 'surv', 'cod' = the codomain), which pairs occur, whether Θ admits the
     population's members, and the primitive Prepares of construction traces (I56)."""
 
-    def __init__(self, occ, rep, occurs, admitted=True, prepares=False):
+    def __init__(self, occ, rep, occurs, admitted=True, prepares=False, contracts=None, records=None):
         self.occ, self.rep, self.occurs, self.admitted, self.prepares = occ, set(rep), set(occurs), admitted, prepares
+        # [owner S41: Q6] q(o) per occurrence, in the order of occ (None: one contract throughout), and whether
+        # the change of contract into each occurrence, if any, carries a provenance record (D13.8, I165)
+        self.contracts, self.records = contracts, records
+
+
+# ---- Episodes (D13.8) [owner S41: Q6; I165] --------------------------------------------------------------
+# An episode is a subhistory in which every change of contract carries a provenance record, and which need
+# hold no change of contract. "L55" keeps L55 as text 104 words it (a history in which contracts change):
+# at least one change, each recorded. Θ by hand (I90): q(o) and the records are supplied.
+EPISODE_READINGS = ("S41", "L55")
+EPISODE_READING = "S41"
+
+
+def episode(qs=None, recs=None, reading=None):
+    """Episode(h') on a chain o_1 ≺ … ≺ o_n: qs[i] the contract operative at o_i, recs[i] whether the change
+    into o_i (from o_(i-1)), if there is one, carries its provenance record [I165]."""
+    reading = reading or EPISODE_READING
+    chg = [i for i in range(1, len(qs))] if qs else []
+    chg = [i for i in chg if qs[i] != qs[i - 1]]
+    if any(not (recs and recs[i]) for i in chg):
+        return False
+    return bool(chg) if reading == "L55" else True
+
+
+def chain_eps(qs, recs, reading=None):
+    """(i, o) -> Episode of the sub-chain o_i ≺ … ≺ o_o, for Con in prov_fixed_points."""
+    return lambda i, o: episode(qs[i:o + 1] if qs else None, recs[i:o + 1] if recs else None, reading)
 
 
 def faithful_on(cand, H):
@@ -1632,11 +1681,21 @@ def sel(cand, H, h, pop_admitted=True, cod="cod", round2=False, i161=True):
     return not any(x in banned for (_, x) in h.rep)
 
 
-def con(h, cod="cod", name=None):
+def con(h, cod="cod", name=None, reading=None):
     """Con(t; h, e) (D12.2): a trace in h prepares t (primitive, I56) and t or its codomain is a
-    represented target in h."""
+    represented target in an episode of h (D13.8) [owner S41: Q6]: a sub-chain of h ending at its last
+    occurrence, which need hold no change of contract (reading "S41"; "L55": L55 as text 104 words it)."""
     prep = h.prepares if (name is None or isinstance(h.prepares, bool)) else name in h.prepares
-    return bool(prep) and any(x in ("t", cod) for (_, x) in h.rep)
+    if not prep:
+        return False
+    qs, rs = getattr(h, "contracts", None), getattr(h, "records", None)
+    if qs is None:
+        return episode(None, None, reading) and any(x in ("t", cod) for (_, x) in h.rep)
+    for i in range(len(h.occ)):
+        sub = set(h.occ[i:])
+        if episode(qs[i:], rs[i:] if rs else None, reading) and any(x in ("t", cod) and o in sub for (o, x) in h.rep):
+            return True
+    return False
 
 
 # ---- Second check (R1, R3): provenance with Rep computed, not tagged -----------------------------------
@@ -1655,21 +1714,38 @@ PROV_READINGS = ("U", "K", "T", "T'")
 PROV_READING = "T'"
 
 
-def _prov_step(n, held, trace, selc, rd, i161, R):
+def _con_at(o, held, trace, rd, R, eps=None):
+    """Con at o: a trace prepares o's transport and, in some episode o_i ≺ … ≺ o (D13.8), the target is
+    represented as the reading has it [owner S41: Q6]. eps None: every sub-chain is an episode (one contract
+    throughout), and Con is as in the second check (i = 0 gives the widest range)."""
+    if not trace[o]:
+        return False
+    for i in range(o + 1):
+        if eps is not None and not eps(i, o):
+            continue
+        if rd == "U":
+            ok = any(x in R for x in range(i, o + 1))
+        elif rd == "K":
+            ok = any(x in R for x in range(i, o))
+        else:
+            ok = any(held[x] for x in range(i, o + 1))
+        if ok:
+            return True
+    return False
+
+
+def _prov_step(n, held, trace, selc, rd, i161, R, eps=None):
     out = {}
     for o in range(n):
         before, upto = range(o), range(o + 1)
+        c_ = _con_at(o, held, trace, rd, R, eps)
         if rd == "U":
-            c_ = trace[o] and any(x in R for x in upto)
             s_ = selc[o] and not any(x in R for x in upto)
         elif rd == "K":
-            c_ = trace[o] and any(x in R for x in before)
             s_ = selc[o] and not any(x in R for x in before)
         elif rd == "T":
-            c_ = trace[o] and any(held[x] for x in upto)
             s_ = selc[o] and not any(held[x] for x in before)
         else:
-            c_ = trace[o] and any(held[x] for x in upto)
             s_ = selc[o] and not any(x in R for x in before)
         if i161:
             s_ = s_ and not trace[o]
@@ -1689,12 +1765,12 @@ def build_at(n, held, trace, rd, R, o):
     return bool(held[o])
 
 
-def prov_fixed_points(n, held, trace, selc, rd, i161=True):
-    """Every fixed point: a list of (R, {o: (Sel, Con)})."""
+def prov_fixed_points(n, held, trace, selc, rd, i161=True, eps=None):
+    """Every fixed point: a list of (R, {o: (Sel, Con)}). eps: episodes of the chain (chain_eps) [owner S41: Q6]."""
     fps = []
     for bits in itertools.product([0, 1], repeat=n):
         R = frozenset(o for o in range(n) if bits[o])
-        sc = _prov_step(n, held, trace, selc, rd, i161, R)
+        sc = _prov_step(n, held, trace, selc, rd, i161, R, eps)
         if frozenset(o for o in range(n) if held[o] and (sc[o][0] or sc[o][1])) == R:
             fps.append((R, sc))
     return fps

@@ -89,7 +89,7 @@ dict(id="I87", title="Claims as propositional formulas, read structurally",
 
 dict(id="I88", title="X_j ranges over a finite set of arguments; an argument has a step",
  quotes=[(397, r'''An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions.''')],
- invented="X_j(ψ) is computed over a finite set of arguments: those a test builds, or every tree of height at most 2 or 3 over the given premises with the admitted forms. An argument with no step (a bare leaf) is no argument. So 'no argument rules it out' is shown only over that set.",
+ invented="X_j(ψ) is computed over a finite set of arguments: those a test builds, or every tree of height at most 2 or 3 over the given premises with the admitted forms. An argument with no step (a bare leaf) is no argument. So 'no argument rules it out' is shown only over that set. Amended by the owner's answer (S41, Q23): a premise alone is an argument, usable by j when j tentatively accepts it (I166); enumerate_args adds the premises alone; the finite range stays.",
  others=["every argument over the premises (infinite; decidable only by a search over derivations)", "a bare premise counts as an argument"],
  code=["model/args.py (X, enumerate_args, usable)"]),
 

@@ -2,7 +2,7 @@
 
 *Integration, 28 September 2026 (decisions S36, S40). The checkers' provisional inventions, numbered I122 onward in the order A1-01…A1-13, A2-01…A2-10, A3-01…A3-16. Source rows: `area N - verdicts and formal fixes.md` (not edited; the table below is the link). Fix ids: `formal core, after round 2.md`, `formal claims, after round 2.md`; T/A2-T/A3-L: text changes.*
 
-**Counts.** 39 inventions, I122–I160; the second check adds I161–I164 (below). Two are one choice registered twice: I132 = I139 (κ(⊥) := ⊥). Two are recorded and not adopted: I131 (OQ-5), I134. Three leave a choice to the owner: I146 (OQ1), I149 (reading a/b), I153 (OQ12). After the second check: I146 fixed by I162, I153 fixed (per execution); I149's reading stays open, not the owner's.
+**Counts.** 39 inventions, I122–I160; the second check adds I161–I164 (below); the owner's answers (S41) add I165, I166 (below) and settle I22, I131 and I88's 'an argument has a step'. Two are one choice registered twice: I132 = I139 (κ(⊥) := ⊥). Two are recorded and not adopted: I131 (OQ-5), I134. Three leave a choice to the owner: I146 (OQ1), I149 (reading a/b), I153 (OQ12). After the second check: I146 fixed by I162, I153 fixed (per execution); I149's reading stays open, not the owner's.
 
 ## Provisional id → I number
 
@@ -80,7 +80,26 @@
 | I163 | R4 | "a C containing edits to the observed value" (L151) | ∃(a,b),(a',b') ∈ C: obs(a,b) ≠ obs(a',b'), obs the value the fibre is taken at | a setting edit of the observed port (E_rev then fails (F1), (F2): FC28 look); an edit a ≠ 1 of C altering obs (C_id holds none) | L325's identification contract C_id = {1} × B varies the observed L by boundaries only (FC28, R4 part) | D3.3; R4-L151 |
 | I164 | R16 | "The universal class: (U3)" (L528) | Universal := {M : ∃s, ξ0, Ω, β (M, s, ξ0, Ω, β) ∈ UECS} | (U3)'s class of tuples as stated; ∀s (every system of M) | L528's other classes are classes of interpretations; "places its author in the universal class" reads it over some system | D16.5; A3-L528.1 |
 
-Registered inventions ruled by the second check (owner questions re-sorted, `owner questions after round 2.md`): I146 fixed by I162 (Q1); I153 fixed: per execution (Q5); kept on argument, the other side recorded there: I10 (Q9), I14 (value maps need not be injective, Q10), I45 (Q7), I50 (Q11), I51 (Q3), I59 (Q20), I62 (Q21), I67 (Q24), I79 (Q17), I88 (Q23), I100 (Q25), I159 (Q22). Open as the owner's: I22 (Q15), I131 (Q6).
+Registered inventions ruled by the second check (owner questions re-sorted, `owner questions after round 2.md`): I146 fixed by I162 (Q1); I153 fixed: per execution (Q5); kept on argument, the other side recorded there: I10 (Q9), I14 (value maps need not be injective, Q10), I45 (Q7), I50 (Q11), I51 (Q3), I59 (Q20), I62 (Q21), I67 (Q24), I79 (Q17), I88 (Q23), I100 (Q25), I159 (Q22). Open as the owner's: I22 (Q15), I131 (Q6). [owner S41: both answered; see the section below.]
+
+## The owner's answers (S41): I165, I166, and the inventions they settle
+
+*28 September 2026: decision S41, written into the maths and the code (`results/S104 Round 2 - the owner's answers written into the maths.md`). Rule 6: I165 is pointed to at L55 by S41-Q6, I166 at L397 by S41-Q23b (`text changes for the owner's answers.json`).*
+
+| I | serves | fills (line; item) | choice | other choices | why this one | used by |
+|---|---|---|---|---|---|---|
+| I165 | Q6 | "every change carries a provenance record" (L55), kept once "in which contracts change" is dropped (S41-Q6) | Episode(h'): a subhistory in which each change of contract, o ≺ o' with o' immediately after o and q(o) ≠ q(o'), has a record in h' of ρ_{q(o')} with its trace (D3.4); q(o) = (C, Q), the contract operative at o, read through Θ; no change need occur | the record clause dropped too (I131 as registered: any delimited subhistory); L55 as worded (at least one change: excluded by S41, Q6) | keeps the rest of L55's sentence and of its indexing ("the two ways are indexed so they cannot be confused"); the owner's words fix only that no change is needed | D13.8 (Episode; CompleteCritical), D12.2 (Con); model/claims_b.py (episode, chain_eps, _con_at, con); FC84.new1 |
+| I166 | Q23 | a premise alone as an argument (D9.2): when j can use it (L397 "usable by j when each of its steps is (K2)" has no step to apply to) | Usable_j(α) for α a premise alone d :⟺ d ∈ Accepted_j(ξ) (Live_j with no step); no Form_j or Scope_j (no step has a form or an index) | vacuous (every premise alone usable by everyone, since it has no step); also Scope_j on an index the premise is used at | L393 "a claim j has never taken up is not live for j"; L397 "(K2) asks only that they be live for the person using the step"; the owner's example is a claim the person uses, so takes up | D9.6; model/args.py (usable, ARG_READING); FC72 (d)–(f) |
+
+Settled by the owner's answers (the register's entries are not edited; the fixes are here):
+
+| I | now | by |
+|---|---|---|
+| I22 | settled: the contrast is ≠ in Y_p ∪ {⊥} (⊥ ≠ y, ⊥ = ⊥), symmetric; "in the claimed way" leaves L255 | S41 Q15; D6.4; S41-Q15; FC22 (b) |
+| I131 | settled: an episode is a subhistory and need hold no change of contract; its changes, if any, carry records (I165) | S41 Q6; D13.8; S41-Q6; FC84.new1 |
+| I88 | amended: a premise alone is an argument (its second clause, "an argument has a step", reversed); the finite range of X_j stays | S41 Q23; D9.2, D9.6, D9.7; S41-Q23a, S41-Q23b; FC72 (d)–(f) |
+
+Q2 needed no invention: the owner's words fix Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ), and L536 already writes ¬Dec(t) (D16.XV; S41-Q2; FC30.new1). Q15 needed none: D8.2 already reads "differ" in Y_p ∪ {⊥}.
 
 ## Registered inventions fixed or amended in round 2
 

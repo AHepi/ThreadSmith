@@ -822,7 +822,24 @@ def fc22(S):
             return "baseline contract with NC2\n" + c.describe()
         return None
 
-    return [forall(S, "FC22", 1, "the baseline alone gives no contrast", "C = {(1,b0)} ∧ τ(1) = 1 ⇒ ¬NC2", gen, check, SMALL, 60, BOTHFAM)]
+    parts = [forall(S, "FC22", 1, "the baseline alone gives no contrast", "C = {(1,b0)} ∧ τ(1) = 1 ⇒ ¬NC2", gen, check, SMALL, 60, BOTHFAM)]
+    # [owner S41: Q15] (b) M13 of the ruling on L255-L257 (the weathervane): Ans_p(1,b0) = ⊥ (several solutions),
+    # the edit e fixes the answer; E = D, Γ = {c_y}. NC2 holds under the symmetric contrast (D6.4 as S41 has it),
+    # not under round 2's D6.4 (a determined baseline asked).
+    D = _org("D", ["x", "y"], {"x": (0, 1), "y": (0, 1)}, ["cx", "cy"], {"cx": ["x"], "cy": ["x", "y"]}, ["b0"], [ONE, "e"],
+             {("cx", "e", "b0"): {(1,)}, ("cy", ONE, "b0"): {(0, 0), (1, 1)}, ("cy", "e", "b0"): {(0, 0), (1, 1)}})
+    p = Question(D, [(ONE, "b0"), ("e", "b0")], "b0", PortQuery(), "y")
+    c = Candidate(D, p, _T("x", "y"), {ONE: ONE, "e": "e"}, {"b0": "b0"},
+                  {"cx": (frozenset(["cx"]), _T("x")), "cy": (frozenset(["cy"]), _T("x", "y"))}, ["cy"], "y", name="ℰ_M13")
+    w_s41, w_r2 = NC2(c, witness=True), NC2(c, witness=True, reading="round2")
+    acc, d = account(c, detail=True)
+    ok = p.ans(ONE, "b0") is BOT and p.ans("e", "b0") is not BOT and w_s41 is not None and w_r2 is None and acc
+    parts.append(computed("(b) owner S41, Q15: a contrast from ⊥ to a determined answer counts (M13)",
+                          "Ans_E(1,σb0) = ⊥, Ans_E(τe,σb0) determined, the contrast lost when c_y is deleted ⇒ NC2 (D6.4, symmetric); E = D meets (E) on M13's contract",
+                          ok, "Ans_p: baseline %r, at e %r; NC2 witness under D6.4 as S41 has it: %s; under round 2's D6.4: %s; (E): %s %s\n%s\n%s"
+                          % (p.ans(ONE, "b0"), p.ans("e", "b0"), w_s41, w_r2, acc, {k: d[k] for k in ("F1", "F2", "A", "NC1", "NC2", "NonVacuous")}, D.describe(), c.describe()),
+                          ["I21"]))
+    return parts
 
 
 @claim("FC23", ["I77", "I78", "I81", "I82", "I83", "I79"])

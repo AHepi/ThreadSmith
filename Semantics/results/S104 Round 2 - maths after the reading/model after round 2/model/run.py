@@ -13,6 +13,7 @@ from .harness import REG, Settings, overall
 from . import claims_a  # noqa: F401
 from . import claims_b  # noqa: F401
 from . import claims_area1  # noqa: F401  (area 1 new claims)
+from . import claims_s41  # noqa: F401  (the owner's answers, S41: FC30.new1, FC84.new1)
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
