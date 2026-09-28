@@ -414,7 +414,7 @@ SANDBOX = """## 3. The sandbox and your tools
 | `text/the text under review.md` | the text under review, exactly as it stands |
 | `text/the text under review, by line.md` | the same text, one line per text line as `L<n> \\| ...`, long lines cut into pieces of at most 1,500 characters; a star marks the lines the third round changed, a plus the lines the step changed. Read the text here: the Read tool cuts lines longer than 2,000 characters |
 | `text/the text after round 3, before the step.md`; `text/the text before round 3.md` | the text as the third round left it, and as it found it, for comparison |
-| `maths/formal core, now.md` | the definitions D0.1 to D18.x and the encodings E1 to E9, each with the sentences it formalizes; marks [S106: …] and [S106b: …] are the step's and its second checker's, [S47: …] the bridge's |
+| `maths/formal core, now.md` | the definitions D0.1 to D18.x and the encodings E1 to E9, each with the sentences it formalizes; a mark in square brackets names the round, step or ruling that made a change |
 | `maths/formal claims, now.md` and `.json` | the claims and their results now: 128 hold on every model tried, 2 have a counterexample (FC23, FC63), 7 were not tested, of 137 |
 | `maths/inventions I184 onwards, added in the step.md` | the step's inventions (I184 Pin; I185, I186 withdrawn; I187 to I191) and the earlier inventions whose standing it changed |
 | `maths/inventions I165-I183, added in round 3.md`; `... I122-I164, added in round 2.md`; `maths/inventions I01-I102.md`, `... I103-I108, external examples.md`, `... I109-I121, creative transport case.md` | the earlier inventions |
@@ -554,7 +554,7 @@ SCRUB = [r"\bfits?\b", r"\bfitt\w*", r"\bsupport\w*", r"\bverif\w*", r"\bcorrobo
          r"\bAtria\b", r"\bMimo\b", r"\bGLM\b", r"\bFable\b", r"\bOpus\b", r"\bSonnet\b", r"\bDeutsch\b",
          r"\bMarletto\b", r"\bPinker\b", r"\blog S\d", r"\bS(?:9\d|1\d\d)\b", r"\bCONFIRMED\b"]
 # "model" used for a candidate explanation (decision S43; lesson S42). In the frame, also "modelled"/"modelling".
-MODEL_FOR_CANDIDATE = [r"\bmodels? counts?\b", r"\bwhen does a model\b", r"\b(candidate|explanatory) models?\b",
+MODEL_FOR_CANDIDATE = [r"\bmodels? counts? as (cheat|simply|just|an? explanation|explain)", r"\bwhen does a model\b", r"\b(candidate|explanatory) models?\b",
                        r"\bmodels? (that|which) explains?\b", r"\ba model (is|as) an explanation\b"]
 FRAME_MODEL = MODEL_FOR_CANDIDATE + [r"\bmodell?(ed|ing)\b"]
 ALLOWED_IN_FRAME = ["Do not list, count, grade or rank rivals"]
