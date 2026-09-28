@@ -4,15 +4,17 @@
 
 Status: complete, 28 September 2026. The candidate list (rule 7) is `S108 Part A - candidate definitions of explanation.md`.
 
+**Corrected by the second checker** (a fresh Opus 5.5 agent, rule 9; the orchestrator's decision 1), 28 September 2026, on the critical review's O1–O13: rebuilt by `S108 Part A - computation/map/s108_map_build_second_checker.py` (the builder above with each change marked). What changed and why: `S108 Part A - the second checker on the critical review.md`. Two results here are the second checker's runs, not a section's: the owner's weathervane and two-part sign with the change read as a boundary (O1, §2's V2.3 row) and V3.5 with a construction trace spanning occurrences (O3, e3.25c); their scripts and outputs are in `S108 Part A - computation/second checker/`. Nothing ruled; nothing applied to the theory (rule 11).
+
 ## 0. What the map holds, and how to read it
 
 | | count |
 |---|---|
-| nodes | 858: 815 template items (688 sentences, 127 definitions and encodings; 238 FROZEN, 577 middle) + 10 parts of the explanation definition + 31 claims + 2 cases named by edges |
+| nodes | 859: 815 template items (688 sentences, 127 definitions and encodings; 238 FROZEN, 577 middle) + 10 parts of the explanation definition + 32 claims + 2 cases named by edges |
 | variants | 32 tabulated; 29 run; 3 flagged and not run (V1.6, V1.7, V2.8) |
-| source rows | 182 (the four `.json`); 16 split by standing; 3 'none found' rows kept apart (§4) |
-| edges | 219 (21 summary edges): computed 175, claimed only 32, contradicted 12; blocks 23, constrains 33, changes with 76, moves 50, independent of 37 |
-| template items touched | computed 142, claimed only 27, untouched 646 (middle untouched: 473 of 577) |
+| source rows | 182 (the four `.json`); 18 split by standing; 4 'none found' rows kept apart (§4) |
+| edges | 221 (21 summary edges): computed 179, claimed only 31, contradicted 11; blocks 21, constrains 33, changes with 79, moves 50, independent of 38 |
+| template items touched | computed 142, claimed only 26, untouched 647 (middle untouched: 473 of 577) |
 
 - **from**: the item or items the variant varies (definitions; the sentences varied with them are in the `.json`). **to**: the items the edge names: template ids (`L<line>.s|n<k>`, `D…`, `E…`), the parts of the explanation definition (`X:…`, §1), claims (`FC…`) and two cases.
 - **Kinds**: *blocks* (under the variant the item is false or has no reading); *constrains* (the item limits the variant and stays readable); *changes with* (the item's extension or wording moves with the variant); *moves* (what the item holds of changes); *independent of* (computed: the item does not move; a negative edge, kept so that "no move" is not read from silence, rule 3).
@@ -39,7 +41,7 @@ Ancestor symbols that are no definition (D0.2's primitives, declared inputs, Θ)
 
 ## 2. How the explanation definition changes with each varied item (computed)
 
-Counts: worked cases; generated candidates at scale 4, SMALL / SMALL with value maps / proper targets / MID (section 2: single / value maps / MID proper). "Being an explanation as the variant defines it" differs from Account ∧ ¬Dec(t) only for V4.1–V4.3, which redefine it. Last column: is the varied item's node upstream of (E) / Dec / D16.XV's defeat conditions in D18.1's graph (static, not run).
+Counts: worked cases; generated candidates at scale 4, SMALL / SMALL with value maps / proper targets / MID (section 2: single / value maps / MID proper). "Being an explanation as the variant defines it" differs from Account ∧ ¬Dec(t) only for V4.1–V4.3, which redefine it. Last column: is the varied item's node upstream of (E) / Dec / D16.XV's defeat conditions in D18.1's graph (static, not run). Where a history is built so that the variant bites on every account (V2.5's 'nothing tried', V3.5's tag history, V3.6's 'Sel-parts', V4.2's declared and V4.3's relayed histories), the counts equal the population meeting (E), by construction of the history (§6.3).
 
 | variant | item [mark] | Acc (E) | Account ∧ ¬Dec(t) | being an explanation as redefined | what else moves | suite (claims whose status moves) | D18.1 reach (E) / Dec / defeat |
 |---|---|---|---|---|---|---|---|
@@ -53,7 +55,7 @@ Counts: worked cases; generated candidates at scale 4, SMALL / SMALL with value 
 | V1.8 | D2.6 [S1] | 0 | 0 | (as now) | rule and measurement families emptied (2,413 and 169 of 17,280 → 0); idle on the pole | 1 claim | – / – / – |
 | V2.1 | D6.4 [S2] | in: generated 57 / 74 / 8; worked 0 | the same movers (Con, Sel histories) | (as now) | routes: ∅ ∈ S for 63; 120 routes with no critical block | 0 claims | yes / – / yes |
 | V2.2 | D6.4 [S2] | out: generated 23 / 20 / 4; the built L307 case; worked 0 | the same | (as now) | every route has a critical singleton; L307's S realized by none (17 → 0) | 0 claims | yes / – / yes |
-| V2.3 | D6.4 [S2] | out: generated 253 / 213 / 65 (every account on {1}×B: 168 → 0); E_rev and E_fwd on C_id | the same (4 worked (case, history)) | (as now) | – | 2 claims | yes / – / yes |
+| V2.3 | D6.4 [S2] | out: generated 253 / 213 / 65 (every account on {1}×B: 168 → 0); E_rev and E_fwd on C_id; the owner's weathervane and two-part sign where the change (the wind, the day) is read as a boundary: FC28.new2's D_vane (Γ = {cP} or {cW,cP}) and the sign with B = {mon, tue}, A = {1}, Acc T → F, E_enc on each question too (second checker, O1); with the change read as an edit (M13, claims_s106) nothing moves | the same (4 worked (case, history)) | (as now) | – | 2 claims | yes / – / yes |
 | V2.4 | D6.7 [S2] | out: 11 worked (E_enc C1, C2; 'p because p'; M1–M3; the one-part sign; ℰ_myth1; the hand-turned vane; E8's identity candidate; E_rev τ′); generated 972 / 776 / 301 of 1,027 / 847 / 310 | the same (22 worked (case, history)) | (as now) | Bearing (D9.10) of K1's criticism; (E) reads D6.3's quantifier again | 6 claims + 2 parts | yes / – / yes |
 | V2.5 | D12.1 [S2] | 0 | in: every account on a history with nothing tried and no earlier representation: 28 of 28 worked; generated 1,027 / 847 / 310; FC30.new1 (e) in, (d) stays out | (as now) | FC77 counterexample | 2 claims | – / yes / yes |
 | V2.6 | D8.2 [S2] | 0 | 0 | (as now) | rivalry and kind ii: 310 of 310 kind-ii pairs lose rivalry; 492 kind-i pairs lose outside-C conflicts | 1 claim | – / – / – |
@@ -63,8 +65,8 @@ Counts: worked cases; generated candidates at scale 4, SMALL / SMALL with value 
 | V3.2 | D9.4 [S3] | 0 | 0 | (as now) | usability 8,983 T → F; problems grow (FC47.new1) | 7 claims | – / – / yes |
 | V3.3 | D9.6 [S3] | 0 | 0 | (as now) | usability 2,621 F → T; Out_j 703; ruling out no longer depends on j for premises alone | 2 claims | – / – / yes |
 | V3.4 | D13.3 [S3] | 0 | 0 with D12.2 as written; under S108-3-I2: out 122 / 93 / 36 / 200 (claim used on the widest contract), and in and out on provenance chains (Dec F → T 546, T → F 92, T′) | (as now) | Build T → F on every use of an account failing (E) (L403.s3 [FROZEN]) | 1 claim | – / – / – |
-| V3.5 | D13.8 [S3] | 0 | 0 under D12.2's cut T′ (and T) for every candidate meeting (E); in, in the tag encoding: 22 of 27 worked, 1,013 / 881 / 232 / 1,670; under the rejected cut K: 5,118 chains | (as now) | Episode; Con at holdings whose t is not held | 1 claim | – / yes / yes |
-| V3.6 | D15.8 [S3] | 0 | in (S108-3-I4): 22 of 27 worked ('Sel-parts'); generated 1,013 / 881 / 232 / 1,670 | (as now) | pairs newly underdetermined 1,141 / 859 / 469 / 2,577 | 0 claims (text only) | – / yes / yes |
+| V3.5 | D13.8 [S3] | 0 | 0 under D12.2's cut T′ (and T) for every candidate meeting (E) when the trace lies at o_t (the program's encoding: Prepares a label at one occurrence, I56); in where the output's trace spans an unrecorded change of contract and Prepares(h′, o_t, ·) asks h′ to hold the trace's occurrences: every held output with such a trace, Dec T → F (second checker, O3: chains n ≤ 4: 45,072 of the 90,144 held-output chains whose output trace spans an unrecorded change, every one with a trace at the output; 0 where the trace lies at o_t (0 of 57,700, and 11,240 not held: section 3's counts) or spans occurrences with no unrecorded change; smallest n = 2, trace from o1 to o2 across C → C′ unrecorded); in, in the tag encoding: 22 of 27 worked, 1,013 / 881 / 232 / 1,670; under the rejected cut K: 5,118 chains | (as now) | Episode; Con at holdings whose t is not held | 1 claim | – / yes / yes |
+| V3.6 | D15.8 [S3] | 0 | in (S108-3-I4, history 'Sel-parts': parts := E's components, stated construction := all but E's last component): 22 of 27 worked; generated 1,013 / 881 / 232 / 1,670; with the stated construction t's own, t does not move and only t′ = t + an idle part does (the same counts) | (as now) | pairs newly underdetermined 1,141 / 859 / 469 / 2,577 | 0 claims (text only) | – / yes / yes |
 | V3.7 | D11.4 [S3] | 0 | 0 | (as now) | ActRoute 1,436 of 5,724 F → T; ProducedBy, ProducesVia | 1 claim | – / – / – |
 | V3.8 | D14.7 [S3] | 0 | 0 | (as now) | CreateEx 7,086 of 1,929,216 valuations F → T | 1 claim | – / – / – |
 | V4.1 | D16.XV [S4] | 0 | 0 | out: 10 of 29 worked (the one-part sign, E_enc, 'p because p', M1–M3, the hand-turned vane, E8's identity candidate, E_rev τ′ on C_H); generated 941 of 1,019 (MID 1,590 of 1,686) | (Suff) fails by definition unless its antecedent co-varies | 1–2 claims | – / – / yes |
@@ -79,11 +81,12 @@ Counts: worked cases; generated candidates at scale 4, SMALL / SMALL with value 
 ### What the computation shows about the dependencies of the explanation definition (short)
 
 - **(E) moves only when its own reads move.** Of the 29 variants run, six move which candidates meet (E): V1.1 (D1.4, what (F1) reads), V2.1–V2.3 (D6.4, Dependence's witness), V2.4 (D6.7, (E) itself) and V1.5, whose reading adds a conjunct "p is a question" to (E) (S108-1-I5). Every other section-1 item varied (D2.1, D2.4, D2.6, D3.3) moves families, Prod or Ident and never (E) (0 of 61,914 generated candidates), as D18.1's graph has it (Roles and Respects are not upstream of (E)).
-- **Being an explanation moves with Dec and with D16.XV's rule, not with (E).** With (E) unmoved: V2.5 (D12.1, Sel with H = ∅), V3.6 (D15.8, the population's parts clause; on S108-3-I4) and V4.1–V4.3 (D16.XV). V3.4 (D13.3's ExplUse) and V3.5 (D13.8's record clause) reach Dec only under a reading: D12.2 as written reads Prepares, not ExplUse (contradicted, e3.20a), and its Held(o′, x) at o′ ⪯ o_t makes the record clause idle for every candidate meeting (E) (0 of 115,400 chains, cut T′; e3.25a, e3.26).
-- **D18.1's reach is needed, and not enough.** Every computed move of Acc or of Account ∧ ¬Dec(t) is of a variant whose node the graph places upstream of (E) or Dec, or of one whose reading adds that edge (V1.5: ρ_p into (E); V3.4 under S108-3-I2: ExplUse into CT). One reach carries no move for candidates meeting (E): V3.5 (Episode → Con → Dec), screened by Held at o_t (§2's last column).
+- **Being an explanation moves with Dec and with D16.XV's rule, not with (E).** With (E) unmoved: V2.5 (D12.1, Sel with H = ∅), V3.6 (D15.8, the population's parts clause; on S108-3-I4) and V4.1–V4.3 (D16.XV). V3.4 (D13.3's ExplUse) and V3.5 (D13.8's record clause) reach Dec only under a reading: D12.2 as written reads Prepares, not ExplUse (contradicted, e3.20a); and its Held(o′, x) at o′ ⪯ o_t makes the record clause idle for every candidate meeting (E) when the trace lies at o_t (0 of 115,400 chains, cut T′; e3.25a, e3.26), not when the trace spans an unrecorded change of contract (e3.25c, the second checker's run: every such held output moves).
+- **D18.1's reach is needed, and not enough.** Every computed move of Acc or of Account ∧ ¬Dec(t) is of a variant whose node the graph places upstream of (E) or Dec, or of one whose reading adds that edge (V1.5: ρ_p into (E); V3.4 under S108-3-I2: ExplUse into CT). One reach carries no move for candidates meeting (E) in the program's encoding: V3.5 (Episode → Con → Dec), screened by Held at o_t when the trace lies at o_t (§2's last column); with a trace spanning an unrecorded change the reach carries (e3.25c).
+- **What the owner's changes are read as.** V2.3 (a contrast needs an edit) keeps the owner's weathervane and two-part sign as the program encodes them (the wind and Tuesday as edits: M13, `claims_s106`) and drops both, with every candidate on their questions, when the change is read as a boundary (FC28.new2's D_vane; the sign with Monday and Tuesday as boundaries): the second checker's run, §2.
 - **Ruling out, conflict, creation and universality are downstream or aside.** V3.1–V3.3 (D9.7, D9.4, D9.6) and V4.4 move who has ruled what out, problems and the (Suff)/(Nec) defeat sets, never (E) or being an explanation; V2.6, V2.7 (D8.2, D8.5) move rivalry and conflict with a claim; V3.7, V3.8 (D11.4, D14.7) move (P) attribution and (EX); V4.6–V4.8 move 𝔈_Θ, UU (a toy) and (Prov)(i). Each with 0 moves of Acc and of Account ∧ ¬Dec(t) (§2).
-- **Where the frozen words hold the middle.** Computed blocks of FROZEN items: D4.4, D13.4, D13.5 (V1.1); L347.s2 (V1.2, V1.8); L307.s1 (V2.2); L315.s1, L317.s6 (V2.6); L403.s3 (V3.4); L375.s2 (V3.7); L495.s1 (V4.7, toy only); and L528.s2–s3 change with V3.8. By the template's own rule a variant that blocks a FROZEN item is not a reading of the frozen words (§3). No flagged candidate of V2.4, V2.5, V4.1, V4.2 blocks a FROZEN item: what they sit against is an owner's decision (the candidate list).
-- **The replies' claims the computation contradicts: 12 edges** (§5); among them the replies' routes from D13.3 and D13.8 to Dec, V2.3's block of L329.s3, V4.5's reach to E5, V4.3's "no record" case, and V3.2's "fewer problems" (problems grow).
+- **Where the frozen words hold the middle.** Computed blocks of FROZEN items: D4.4 (V1.1); L347.s2 (V1.2, V1.8); L307.s1 (V2.2); L315.s1, L317.s6 (V2.6); L403.s3 (V3.4); L375.s2 (V3.7); L495.s1 (V4.7, toy only); and L528.s2–s3 change with V3.8, D13.4 and D13.5 with V1.1 (V1.1 blocks the claim FC85 (a), 'a content matches itself', which D13.4 does not state). By the template's own rule a variant that blocks a FROZEN item is not a reading of the frozen words (§3). No flagged candidate of V2.3, V2.4, V2.5, V4.1, V4.2 blocks a FROZEN item: what they sit against is an owner's decision (the candidate list).
+- **The replies' claims the computation contradicts: 11 edges** (§5); among them the replies' routes from D13.3 and D13.8 to Dec (the latter only where the trace lies at o_t), V2.3's block of L329.s3, V4.5's reach to E5, V4.3's "no record" case, and V2.2's "every candidate realizing L299.s1 fails (E)". V3.2's "fewer problems" is now a computed move with the reply's direction contradicted (problems grow; e3.09b).
 
 ## 3. FROZEN items the variants reach
 
@@ -106,13 +109,13 @@ Every edge whose target is FROZEN, by standing. A FROZEN item *blocked* (compute
 | D8.4 | e2.18 V2.7: constrains, computed |
 | D8.6 | e2.19 V2.7: changes with, claimed only |
 | D9.11 | e3.34b V3.7: moves, claimed only |
-| D10.1 | e2.16b V2.6: moves, computed; e3.07 V3.1: moves, computed; e3.09b V3.2: moves, contradicted; e3.17 V3.3: moves, computed |
+| D10.1 | e2.16b V2.6: moves, computed; e3.07 V3.1: moves, computed; e3.09b V3.2: moves, computed; e3.17 V3.3: moves, computed |
 | D10.2 | e2.34 V2.1/V2.2/V2.3/V2.4: independent of, computed |
 | D10.4 | e2.05 V2.2: changes with, contradicted; e2.16b V2.6: moves, computed |
 | D12.4 | e4.17 V4.3: constrains, computed; e4.20 V4.3: changes with, computed |
 | D12.5 | e1.09 V1.1: constrains, computed; e4.36 V4.7: changes with, computed |
-| D13.4 | e1.08 V1.1: blocks, computed |
-| D13.5 | e1.08 V1.1: blocks, computed |
+| D13.4 | e1.08b V1.1: changes with, computed |
+| D13.5 | e1.08b V1.1: changes with, computed |
 | D13.6 | e3.22 V3.4: moves, computed |
 | D14.3 | e3.34a V3.7: moves, computed |
 | D14.6 | e3.34a V3.7: moves, computed |
@@ -150,10 +153,9 @@ Every edge whose target is FROZEN, by standing. A FROZEN item *blocked* (compute
 | L528.s2 | e3.39 V3.8: changes with, computed; e4.37 V4.7: changes with, computed |
 | L528.s3 | e3.39 V3.8: changes with, computed; e4.37 V4.7: changes with, computed |
 | L528.s4 | e4.37 V4.7: changes with, computed |
-| L556.s3 | e4.25 V4.4: blocks, claimed only |
 | L574.s2 | e4.38 V4.8: constrains, computed |
 
-61 of 238 FROZEN items are named by an edge; blocks computed: D4.4, D13.4, D13.5, L307.s1, L315.s1, L317.s6, L347.s2, L375.s2, L403.s3, L495.s1.
+60 of 238 FROZEN items are named by an edge; blocks computed: D4.4, L307.s1, L315.s1, L317.s6, L347.s2, L375.s2, L403.s3, L495.s1.
 
 ## 4. The edges
 
@@ -172,7 +174,8 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e1.05 | V1.1 | D1.4 | moves | X:(F1) | computed | E_fwd Acc T->F on C1, C2, C3 ((F1) fails at every pair); ℰ_bv F->T on C1, C2 under S108-1-I1 (i), F both under (ii) |
 | e1.06 | V1.1 | D1.4 | moves | X:(E), X:Expl | computed | 15 of 27 T->F: E1 forward C1-C3, E_rev tau' on C_H, E_rev on C_id (L325.n6, L271.s2), M2, M5, M13 (S41 Q15), E5 x2 (L339), E8 (FC107), E9 x2 (L626, L630), S44 two-part sign, day-port sign; … |
 | e1.07 | V1.1 | D1.4 | changes with | D12.1 [S2], X:Dec | computed | Dec(t) under a hand-set selection history moves in 14 worked cases and 1,360/1,211/106/2,212 generated; CT8 under T': constructed -> declared; FC12.new2, FC12.new3, FC104.new1 move; … |
-| e1.08 | V1.1 | D1.4 | blocks | D13.4 [FROZEN], D13.5 [FROZEN] | computed | FC85 (a) HOLDS -> counterexample: the identity transport c -> c is not faithful (two components on one port, one empty) |
+| e1.08a | V1.1 | D1.4 | blocks | FC85 [claim] | computed | FC85 (a) ('a content matches itself') holds → counterexample: the identity transport c → c is not faithful (two components on one port, one empty) |
+| e1.08b | V1.1 | D1.4 | changes with | D13.4 [FROZEN], D13.5 [FROZEN] | computed | both stay readable; D13.4 states no reflexivity (read with c fixed, L413; not claimed symmetric, FC85), and with c ≢ c (N) can call a content already held new |
 | e1.09 | V1.1 | D1.4 | constrains | D12.5 [FROZEN] | computed | FC95 (L211: a system represents a theory in error): no faithful transport o -> c |
 | e1.10 | V1.1 | D1.4 | changes with | D7.2 [FROZEN], D7.3 [FROZEN], D7.4 [S2] | computed | FC-E1: routes {{d,k}} -> empty, d no longer critical; FC42.new1: /Boundary/ -> 0 |
 | e1.11 | V1.1 | D1.4 | moves | X:(E), FC72.new2 [claim] | computed | FC72.new2 (a): tilt T->F, myth2 T->F, myth1 (a written-in slot) stays T; (d) the finer question's test moves |
@@ -243,7 +246,7 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e2.39 | V2.1 | D6.4 | independent of | – (no claim of the suite separates D6.4 from V2.1: a gap) | computed | no claim's result moves under V2.1 (§6); no worked case moves (§2); only the generated worlds (57 / 74 / 8) separate it — note: a gap for the map: every worked case with a contrast has a … |
 | e2.03 | V2.2 | D6.4 | blocks | L311.s2 [FROZEN] | claimed only | argument: finite part computed: under V2.2 every route has a critical singleton (0 of 1,297 routes … · settle: a computation of S over an infinite Γ (the program enumerates a finite … |
 | e2.04a | V2.2 | D6.4 | constrains | L299.s1 [FROZEN] | computed | 'constrains' computed: realizations 20 → 1 |
-| e2.04b | V2.2 | D6.4 | moves | X:(E) | contradicted | 'such a candidate now fails (E)' contradicted: one generated candidate meets (E) with a block critical and no singleton of it critical |
+| e2.04b | V2.2 | D6.4 | moves | X:(E) | contradicted | claimed: every candidate realizing L299.s1 fails (E) under V2.2; contradicted as worded: one generated candidate meets (E) with a block critical and no singleton of it critical (the … |
 | e2.05 | V2.2 | D6.4 | changes with | D10.4 [FROZEN], D10.6 [S2] | contradicted | V2.2 moves no pair's conflict pairs, rivals or kind (0 of 3,835); Prob_j (D10.1) reads Riv and NotOut, not the value of Acc; so no problem is added or removed |
 | e2.25 | V2.2 | D6.4 | blocks | L307.s1 [FROZEN] | computed | no candidate realizes that S under V2.2 (17 → 0; all 17 become {{a},{b}}); argument: every route has a critical singleton, and in {a,b} neither is |
 | e2.26 | V2.2 | D6.4 | blocks | L313.n3 [S2] | claimed only (the computing agent) | argument: by the argument of R4: L311's candidate has S = ∅ under V2.2, so its example goes · settle: as R4 |
@@ -265,7 +268,7 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e2.36 | V2.4 | D6.7 | changes with | D6.3 [S2] | computed | FC23.new1 (h) under V2.4: counterexample: (E) (F,F,T,T) under (every, some, some-exempt, some-exempt-set) for one component, ⊥ at 1, 1 at e1; with NC1 back in (E), (E) depends on the … |
 | s05 | V2.4 | D6.7 | moves | X:Expl | computed | 22 worked (case, history) T → F; 1,944 generated |
 | e2.12 | V2.5 | D12.1 | constrains | L195.s1 [FROZEN] | computed | under V2.5 Sel accepts H = ∅: 'its pairs having occurred' vacuous, fidelity on ∅ is Hom(τ) (I18); FC77 part 3's 'other choice' is the variant's reading |
-| e2.13 | V2.5 | D12.1 | blocks | L211.s3 [S2] | computed | FC30.new1 (e) under V2.5: the link nobody tried and nobody worked out is Sel, its fixed point {o1: Sel}, so its holding represents (D12.5); as an effect: the transport is no longer … |
+| e2.13 | V2.5 | D12.1 | changes with | L211.s3 [S2] | computed | FC30.new1 (e) under V2.5: the link nobody tried and nobody worked out is Sel, its fixed point {o1: Sel}, so its holding represents (D12.5); as an effect: the transport is no longer … |
 | e2.14 | V2.5 | D12.1 | moves | X:Dec, X:Expl, X:(Suff) | computed | Account ∧ ¬Dec(t) F→T on the history 'nothing tried' for every account: 28 of 28 worked cases, 1,027 / 847 / 310 generated; no other history moves |
 | e2.31 | V2.5 | D12.1 | changes with | D5.5 [FROZEN], X:(F2) | computed | Acc ⇒ (F2) ⇒ Hom(τ); with H = ∅ allowed, Hom(τ) ∧ Θ admits t ⇒ Sel(t;{t},id,∅); so on a holding with nothing tried Account ∧ ¬Dec(t) ⟺ Acc ∧ Θ admits t: ¬Dec(t) adds only Θ's admission … |
 | e2.35 | V2.5/V2.6/V2.7 | D8.2, D8.5, D12.1 | independent of | X:(E) | computed | 0 Acc changes in every population and case |
@@ -299,7 +302,7 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e3.07 | V3.1 | D9.7 | moves | D9.8 [S2], D10.1 [FROZEN] | computed | worlds.args: 1,677 new Out_j(φ), smallest: ¬q accepted rules out q; no usability moves (V3.1 reads RO only) |
 | e3.08 | V3.2 | D9.4 | constrains | L389.s1 [FROZEN] | computed | under V3.2 Live_j(d; u) is still a predicate of (d; u), constant in u; (K2) as displayed is read unchanged; every suite run under V3.2 computes (K2) through it |
 | e3.09a | V3.2 | D9.4 | moves | D9.8 [S2] | computed | fewer usable, fewer ruled out: 8,983 usabilities T → F, 26 Out_j T → F |
-| e3.09b | V3.2 | D9.4 | moves | D10.1 [FROZEN] | contradicted | 'fewer problems' contradicted: with fewer ruled out, problems grow (FC47.new1) |
+| e3.09b | V3.2 | D9.4 | moves | D10.1 [FROZEN] | computed | problems move: with fewer ruled out, problems grow (FC47.new1); the reply's direction ('fewer problems') contradicted |
 | e3.10 | V3.2 | D9.4 | changes with | L393.n2 [S3] | computed | L393.n2 defines Live 'd = concl(u′) for some u′ ∈ Below(u) with Usable_j(u′) (D9.4), or a premise j tentatively accepts': false of D9.4 under V3.2 (FC70: a premise live twice over is no … |
 | e3.11 | V3.2 | D9.4 | changes with | L369.s3 [S3], FC68 [claim] | computed | 'every such candidate alike is ruled out … from the candidate's own answer there': the two-step argument from (A) and each candidate's own answer is not usable: FC68 (b)–(c) as claimed → … |
 | e3.12 | V3.2 | D9.4 | changes with | D9.9 [S3], FC71 [claim] | computed | K3's u⁺ from a failed prediction is a step above the step concluding ¬O; with Live through no step it is unusable unless j accepts ¬O itself (cases §C: T → F; with ¬O accepted T): FC71 … |
@@ -319,13 +322,14 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e3.23 | V3.4 | D13.3 | moves | D12.1 [S2], X:Dec | computed; cond.: under S108-3-I2 | worlds.chains, T′: 92 chains with Dec T → F at a held output: an earlier trace whose output uses a claim failing (E) no longer constructs, its occurrence is no longer represented, and … |
 | s10 | V3.4 | D13.3 | independent of | X:(E) | computed | Acc 0 moves (§3, §6.1) |
 | e3.24 | V3.5 | D13.8 | changes with | L55.n3 [S1] | computed | under V3.5 FC84.new1 (c)'s chain with an unrecorded change C → C′ is an episode (S41 reading F → T); FC84.new1 (a4)'s iv-u chain: Episode F → T (cases §C); L55.n3's words no longer … |
-| e3.25a | V3.5 | D13.8 | moves | X:Dec, D12.2 [S2], X:Expl | contradicted | D12.2's cut T′ (and T): no candidate meeting (E) moves; the record clause idle where t is held |
+| e3.25a | V3.5 | D13.8 | moves | X:Dec, D12.2 [S2], X:Expl | contradicted; cond.: where the trace lies at o_t (the program's Prepares, a label at one occurrence, I56) | D12.2's cut T′ (and T): no candidate meeting (E) moves; the record clause idle where t is held and the trace lies at o_t ({o_t} alone is an episode) |
 | e3.25b | V3.5 | D13.8 | moves | X:Dec, D12.2 [S2], X:Expl | computed; cond.: in the tag encoding, and under the rejected cuts K, U | tag: 22 of 27 worked in, 1,013 / 881 / 232 / 1,670 generated; K: 5,118 chains |
+| e3.25c | V3.5 | D13.8 | moves | X:Dec, D12.2 [S2], X:Expl | computed; cond.: where the output's construction trace spans an unrecorded change of contract (Prepares(h′, o_t, ·) asks h′ to hold the trace's occurrences, D13.3's tuple, L405); the second checker's run, not section 3's | D12.2's cut T′ (and T): every held output whose trace spans an unrecorded change of contract has Dec T → F under V3.5 (chains n ≤ 4: 45,072 of the 90,144 held-output chains whose output … |
 | e3.26 | V3.5 | D13.8 | changes with | D12.2 [S2] | computed | what keeps D13.8's record clause from ¬Dec(t) for a candidate meeting (E) is D12.2's o′ ⪯ o_t with Held at o_t (the chain model, T′): with o′ ≺ o_t only (K) the clause reaches 5,118 held … |
 | e3.27 | V3.5 | D13.8 | changes with | FC84.new1 [claim], FC84.new2 [claim] | computed | suite.V3.5: FC84.new1 (c) as claimed → not as claimed (the unrecorded change C → C′ is an episode under both readings; Con at o2 [T] both under the S41 reading, [F] → [T] under L55's); … |
 | s11 | V3.5 | D13.8 | independent of | X:(E) | computed | Acc 0 moves |
 | e3.29 | V3.6 | D15.8 | constrains | D12.1 [S2] | computed | under V3.6 D12.1 reads t ∈ 𝒯 through s108s3.in_population (Θ's admission alone); Sel computed on every history of §3, §6.1 |
-| e3.30a | V3.6 | D15.8 | moves | D12.1 [S2], X:Dec, X:Expl | computed; cond.: on S108-3-I4 (parts := E's components; stated construction := t's own) | worked cases 'Sel-parts': Account ∧ ¬Dec(t) F → T on the 22 with Acc T; worlds.cands: 1,013 / 881 / 232 / 1,670 in ('Sel-parts'; t′ + an idle part the same); pairs newly underdetermined … |
+| e3.30a | V3.6 | D15.8 | moves | D12.1 [S2], X:Dec, X:Expl | computed; cond.: on S108-3-I4, history 'Sel-parts' (parts := E's components; stated construction := all but E's last component; s108_s3_cases.py l.11–12); with the stated construction t's own, t does not move, only t′ = t + a part; the counts equal the population meeting (E), by construction of the history | worked cases 'Sel-parts': Account ∧ ¬Dec(t) F → T on the 22 with Acc T; worlds.cands: 1,013 / 881 / 232 / 1,670 in ('Sel-parts'; t′ + an idle part the same); pairs newly underdetermined … |
 | e3.30b | V3.6 | D15.8 | moves | FC80 [claim] | claimed only | argument: wider population: more Sel, fewer Dec, wider underdetermination · settle: for FC80 itself: a population with a stated construction built into FC80's generator |
 | e3.31 | V3.6 | D15.8 | changes with | L481.s3 [S3] | computed | L481.s3's second clause ('a transport that would need a part every member of the population is built without is not in it') is false of D15.8 under V3.6: t′ with a part none of 𝒯 has is in … |
 | e3.32 | V3.6 | D15.8 | independent of | FC30.new1 [claim] | computed | unmoved, as the reply says: Dec(t) at o2 T under V3.6 (the copy's defect is the absent trace and D12.3's inheritance, not the population) |
@@ -366,7 +370,8 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | s15 | V4.2 | D16.XV | independent of | X:(E), X:Dec | computed | Acc and Dec: 0 moves |
 | e4.17 | V4.3 | D16.XV | constrains | D12.3 [S2], D12.4 [FROZEN] | computed | a holding with no record is Dec (D12.3: no parameters give Sel, none give Con; H0: Dec on 29 of 29); at every holding not reached by a transfer ¬Dec(t) ⇔ Sel ∨ Con ⇒ Sel ∨ CT (chains: 0 … |
 | e4.18 | V4.3 | D16.XV | moves | X:Expl, X:(Suff) | computed | only relayed or recorded copies move, T → F: (a) of constructed and selected holdings (worked cases 24 + 24; chains 2,692 holdings; generated 1,019 + 1,019), (b) of selected holdings only … |
-| e4.19 | V4.3 | D16.XV | changes with | L17.n2 [S1], L49.n3 [S1], L61.n2 [S1], L69.n3 [S1], FC25.new2 [claim] | contradicted | E_enc with no record is Dec now and under V4.3 (not an explanation either way); with Con or Sel it is one either way; it moves only as a relayed copy; FC25.new2 does not move (suite) |
+| e4.19a | V4.3 | D16.XV | changes with | L17.n2 [S1], L49.n3 [S1], L61.n2 [S1], L69.n3 [S1] | computed | the four sentences write being an explanation, which V4.3 moves at relayed and recorded holdings (e4.18: 24 + 24 worked, 2,692 chain holdings) |
+| e4.19b | V4.3 | D16.XV | changes with | FC25.new2 [claim] | contradicted | the reply's reason, 'the encoding table stops being an explanation' (E_enc with no record): E_enc with no record is Dec now and under V4.3 (no explanation either way); with Con or Sel it … |
 | e4.20 | V4.3 | D16.XV | changes with | D12.4 [FROZEN] | computed | under V4.3 (a) an inherited Con or Sel no longer makes a transferred holding an explanation: FC30.new1 (f)'s K3 reading (the student's component transferred, Con inherited) T → F; E9's t1 … |
 | e4.21 | V4.3 | D16.XV | changes with | D12.2 [S2] | computed | (a) the holding itself: relays of constructed holdings move; (b) the holding or one it was transferred from: they do not; (c) through inherited provenance: V4.3 is now's reading (0 moves) |
 | e4.22 | V4.3 | D16.XV | constrains | D18.2 [S4] | claimed only (the computing agent) | argument: the reply's (d): 'V4.3 is not obviously φ-invariant'; in the program's chains Sel, CT … |
@@ -374,11 +379,10 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | e4.23 | V4.4 | D16.XV | constrains | D9.6 [S3], D9.7 [S3], D9.8 [S2] | computed | the defeat set grows only through X_j: for a j that takes Acc(ℰ′) and Acc(ℰ′) → ¬Expl(ℰ) as given (usable by modus ponens); the record argument (r, r → ¬Expl) is in it under both readings |
 | e4.24a | V4.4 | D16.XV | moves | X:(Suff), X:(Nec) | computed | (Suff): FC30.new1 (h)'s ℰ_fwd and E9's t1∘ψ enter (instance T, symbol F), declared ones do not; generated 1,019 (Con), 1,019 (Sel); (Nec): 3,979 exposed now |
 | e4.24b | V4.4 | D16.XV | independent of | X:(E), X:Expl | computed | Acc and being an explanation: 0 moves; suite: 0 claims move |
-| e4.25 | V4.4 | D16.XV | blocks | L556.s3 [FROZEN] | claimed only | argument: nothing frozen defines Uses(α); the nearest, L556.s3, is about Argument 1's proof |
 | e4.26 | V4.4 | D16.XV | changes with | X:(Nec) | computed | for E_rev on the full pole's C1 both are needed: the rival-citing argument counts only at the instance (V4.4) and E_rev is exposed only on C alone (V4.5); on FC30.new1's pole (θ at 45) it … |
 | e4.27 | V4.5 | D16.XV | constrains | L606.s4 [S4], FC99 [claim] | computed | FC99 unchanged (suite); now's exposure fails for 28 of 29 worked cases, each having a transport faithful at a single baseline pair (C′ = {(1,b)}; for 24 their own t is faithful on C), and … |
 | e4.28 | V4.5 | D16.XV | changes with | L538.s1 [S4], FC30.new1 [claim], E5 [FROZEN] | contradicted | E5's two encodings meet (E), so their own t is faithful on C: exposed under neither shape (contradicted for E5); FC30.new1 (g) unchanged (t faithful); the widening is real elsewhere: E_rev … |
-| e4.29 | V4.5 | D16.XV | moves | L538.s2 [S4] | computed | neither of E5's encodings [FROZEN] is exposed under now's shape or V4.5's; the one worked case exposed now is L257's contract of relabelings (no injective θ_k exists: exact in D5.1's class) |
+| e4.29 | V4.5 | D16.XV | independent of | L538.s2 [S4] | computed | neither of E5's encodings [FROZEN] is exposed under now's shape or V4.5's; the one worked case exposed now is L257's contract of relabelings (no injective θ_k exists: exact in D5.1's class) |
 | e4.30 | V4.5 | D16.XV | moves | X:(Nec) | computed | exposed now: 1 of 29 (the relabelings); under V4.5: 5 (+ E_rev τ and τ′ on C1, E_tab C1 and C2); no candidate meeting (E) is exposed under either |
 | s17 | V4.5 | D16.XV | independent of | X:(E), X:Expl | computed | 0 moves |
 | e4.31 | V4.6 | D16.4 | constrains | D5.3 [FROZEN] | computed | (E) reads δ through (A) and Dependence: the pole on C1 meets (E) with δ = L only; FC90.new1 (c) unchanged |
@@ -406,6 +410,7 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | S3#28 | V3.6 | V3.6 blocks no FROZEN sentence: none states the parts bound (search of the template); L481.s3 [S3] is varied with it |
 | S3#35 | V3.8 | V3.8 makes no FROZEN sentence about (EX) false (L443.s3 names O_ex only); but L528.s2–s3 [FROZEN] change with it (S3#39) |
 | S4#6 | V4.1 | V4.1: in D18.1 the only node gaining an edge is DefeatConds (D16.XV, S4); no FROZEN definition reaches Slot |
+| S4#25 | V4.4 | V4.4: no FROZEN sentence or definition holds 'not using' or Uses (search of the template; the three that hold it, L17.n2, L536.s1, L538.s1, are middle); the reply's 'nearest', L556.s3 [FROZEN], is about Argument 1's proof and is no edge. The reply's question (whether citing a rival's being an account is 'using (E)') is a reading, not a run |
 
 ## 5. Contradicted edges (the computation shows otherwise)
 
@@ -413,15 +418,14 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 |---|---|---|---|
 | e1.04 | V1.1 | changes with FC17, FC18 | recomputed under V1.1: FC17 and FC18 hold; only FC18's I94 look changes its witness |
 | e1.20 | V1.2 | changes with FC27.new1 | FC27.new1 unchanged under V1.2 (every part, status and text) |
-| e2.04b | V2.2 | moves X:(E) | 'such a candidate now fails (E)' contradicted: one generated candidate meets (E) with a block critical and no singleton of it critical |
+| e2.04b | V2.2 | moves X:(E) | claimed: every candidate realizing L299.s1 fails (E) under V2.2; contradicted as worded: one generated candidate meets (E) with a block critical and no singleton of it critical (the critical … |
 | e2.05 | V2.2 | changes with D10.4, D10.6 | V2.2 moves no pair's conflict pairs, rivals or kind (0 of 3,835); Prob_j (D10.1) reads Riv and NotOut, not the value of Acc; so no problem is added or removed |
 | e2.06a | V2.3 | blocks L329.s3 | identification reads no (E); FC57, FC58, FC28's Ident unchanged |
-| e3.09b | V3.2 | moves D10.1 | 'fewer problems' contradicted: with fewer ruled out, problems grow (FC47.new1) |
 | e3.20a | V3.4 | moves X:Dec, D12.2, X:Expl | D12.2 as written: CT reads Prepares, not ExplUse; 0 Dec moves |
-| e3.25a | V3.5 | moves X:Dec, D12.2, X:Expl | D12.2's cut T′ (and T): no candidate meeting (E) moves; the record clause idle where t is held |
+| e3.25a | V3.5 | moves X:Dec, D12.2, X:Expl | D12.2's cut T′ (and T): no candidate meeting (E) moves; the record clause idle where t is held and the trace lies at o_t ({o_t} alone is an episode) |
 | e4.02 | V4.1 | changes with L269.n1, L269.s2, L269.s3, L271.s1, L271.s2, L273.n1, L275.n1, L275.s2, … | L269–L277 speak of (E), which V4.1 does not move (E_enc still meets (E): Acc unchanged on every case); the quoted row is the brief's summary of S44, S45 (brief line 90), not a line of the text; what … |
 | e4.05 | V4.1 | changes with FC23.new3, FC25.new2 | no result of either moves under V4.1 (suite, both sub-choices): they compute the Pin, Slot and Acc facts V4.1 reads, which V4.1 does not change |
-| e4.19 | V4.3 | changes with L17.n2, L49.n3, L61.n2, L69.n3, FC25.new2 | E_enc with no record is Dec now and under V4.3 (not an explanation either way); with Con or Sel it is one either way; it moves only as a relayed copy; FC25.new2 does not move (suite) |
+| e4.19b | V4.3 | changes with FC25.new2 | the reply's reason, 'the encoding table stops being an explanation' (E_enc with no record): E_enc with no record is Dec now and under V4.3 (no explanation either way); with Con or Sel it is one … |
 | e4.28 | V4.5 | changes with L538.s1, FC30.new1, E5 | E5's two encodings meet (E), so their own t is faithful on C: exposed under neither shape (contradicted for E5); FC30.new1 (g) unchanged (t faithful); the widening is real elsewhere: E_rev under τ … |
 
 ## 6. Gaps (rule 6: listed; rule 10: they decide a second round)
@@ -433,13 +437,25 @@ What shows it is cut here; whole in the `.json` (`what_shows_it`, `reply_why`, `
 | S1 | 7 / 7 / 43 | 18 / 4 / 132 |
 | S2 | 28 / 5 / 62 | 39 / 6 / 108 |
 | S3 | 9 / 1 / 39 | 17 / 0 / 120 |
-| S4 | 7 / 1 / 29 | 17 / 3 / 113 |
+| S4 | 7 / 0 / 30 | 17 / 3 / 113 |
 
-Middle definitions neither varied nor named by any edge (17): D5.7, D6.8, D6.9, D8.new1, D9.1, D9.2, D10.3, D11.2, D11.3, D12.7, D12.8, D13.7, D14.1, D15.1, D15.2, D15.5, E9. FROZEN definitions no edge names (38): D0.1, D1.1, D1.2, D1.3, D2.3, D3.2, D3.7, D4.1, D4.2, D4.3, D4.5, D5.1, D5.6, D7.1, D7.5, D7.6, D8.1, D9.3, D9.5, D10.5, D11.1, D11.5, D12.6, D13.1, D13.2, D14.2, D14.4, D14.5, D14.8, D15.3, D15.4, D15.6, D15.7, D16.1, D16.2, E4, E6, E7. Every section had its eight variants; no section is untouched as a whole.
+Middle definitions neither varied nor named by any edge (17). **Upstream of the explanation definition** (7; by D18.1's graph, where Expl, (Suff) and (Nec) share D16.XV's node, or by the part's own statement, §1):
+
+| definition | upstream of |
+|---|---|
+| D6.9 (Relabeling) | (E) (D18.1); Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D11.2 (Content) | Dec (D18.1); Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D11.3 (History) | Dec (D18.1); Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D6.8 (The four conditions) | Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D9.1 (Claims) | Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D9.2 (Argument) | Expl (D18.1); (Suff) (D18.1); (Nec) (D18.1) |
+| D5.7 (Faithful; question fidelity) | Dec (statement); Expl (statement); (Suff) (statement); (Nec) (statement) |
+
+Upstream of no part by either route (10): D8.new1, D10.3, D12.7, D12.8, D13.7, D14.1, D15.1, D15.2, D15.5, E9. FROZEN definitions no edge names (38): D0.1, D1.1, D1.2, D1.3, D2.3, D3.2, D3.7, D4.1, D4.2, D4.3, D4.5, D5.1, D5.6, D7.1, D7.5, D7.6, D8.1, D9.3, D9.5, D10.5, D11.1, D11.5, D12.6, D13.1, D13.2, D14.2, D14.4, D14.5, D14.8, D15.3, D15.4, D15.6, D15.7, D16.1, D16.2, E4, E6, E7. Every section had its eight variants; no section is untouched as a whole.
 
 ### 6.2 Edges the computation could not settle (claimed only)
 
-32 edges: e1.02, e1.03, e1.14, e1.36, e1.37, e1.38, e1.39, e1.40, e1.45, e1.46, e1.47, e1.48, e1.49, e1.50, e1.51, e2.03, e2.06c, e2.07, e2.09, e2.11b, e2.16c, e2.19, e2.20, e2.21, e2.26, e2.33, e3.30b, e3.34b, e3.37b, e4.22, e4.25, e4.40. Each with its argument and what would settle it in §4; 15 of them are of the three variants not run (V1.6, V1.7, V2.8), whose standing waits on the orchestrator's ruling of the tabulation's flags (rule 4).
+31 edges: e1.02, e1.03, e1.14, e1.36, e1.37, e1.38, e1.39, e1.40, e1.45, e1.46, e1.47, e1.48, e1.49, e1.50, e1.51, e2.03, e2.06c, e2.07, e2.09, e2.11b, e2.16c, e2.19, e2.20, e2.21, e2.26, e2.33, e3.30b, e3.34b, e3.37b, e4.22, e4.40. Each with its argument and what would settle it in §4; 9 of them are of the three variants not run (V1.6, V1.7, V2.8), which the orchestrator has now ruled on (its decision 3): V1.6's formula, without its added sentence, to round 2 for section 2; V1.7, and V2.8's part on L315.s7 [FROZEN], to Part B; V2.8's D16.XV part is V4.4's reading, computed (e2.20, e2.21 stand as V2.8's; section 4's V4.4 rows compute the reading).
 
 ### 6.3 Results that rest on one reading, and what the program cannot compute
 
@@ -447,14 +463,21 @@ Middle definitions neither varied nor named by any edge (17): D5.7, D6.8, D6.9, 
 |---|---|
 | S108-1-I5 | V1.5's whole effect (a question with no recorded contract history is declared); other choice: V1.5 computes nothing |
 | S108-1-I1 | whether ℰ_bv becomes an account under V1.1 (reading (i) yes, (ii) no) |
+| edit or boundary for the owner's changes | whether V2.3 drops the owner's weathervane and two-part sign: read as edits (M13, claims_s106) nothing moves; read as boundaries (FC28.new2's D_vane; the sign with B = {mon, tue}) both drop, with E_enc on their questions (the second checker's run, O1). V1.1 drops both either way; V2.4 and V4.1 keep the two-part sign either way under 'every' |
+| D6.3's quantifier (I136) | whether V2.4 and V4.1 drop the owner's two-part sign: kept under 'every' (the program's reading), dropped under 'some', 'some-exempt', 'some-exempt-set' (FC23.new2 (a); computed both encodings by the second checker) |
 | S108-3-I2 | whether V3.4 reaches Dec at all (CT asks Build's ExplUse) |
-| tag encoding / cut K | V3.5's only moves of being an explanation |
-| S108-3-I4 | V3.6's reach (parts := E's components; stated construction := t's own) |
+| the trace's extent (O3) | V3.5 under D12.2's cut T′ (and T): the trace at o_t (the program's Prepares, I56) moves no candidate meeting (E); a trace spanning an unrecorded change of contract moves every such held output (the second checker's run, e3.25c) |
+| tag encoding / cut K | V3.5's moves in section 3's own runs |
+| S108-3-I4 | V3.6's reach, on the history 'Sel-parts' (parts := E's components; stated construction := all but E's last component); with the stated construction t's own, t does not move and only t′ = t + an extra part does |
 | S108-4-I3 | V4.3's reach (Sel ∨ CT read at the holding; through inherited provenance it moves nothing) |
 | S108-4-I7 | V4.7 computed on a toy only |
-| I90 (Θ by hand) | Dec(t) on every worked case and generated candidate: histories set by hand |
+| I90 (Θ by hand) | Dec(t) on every worked case and generated candidate: histories set by hand. Where a history is built so that the variant bites on every account (V2.5's 'nothing tried', V3.5's tag history, V3.6's 'Sel-parts', V4.2's declared and V4.3's relayed histories), the counts equal the population meeting (E), by construction of the history |
 
 Not computable in the program as it stands: an infinite Γ (V2.2, L311); UsesReason over circuits (V3.7, D9.11); 𝔈_Θ membership over every (p, t, Γ) (V4.6); (CT1), Can, Enable, UU, barriers (V4.7); an argument whose premise is a computed ConfCl (V2.7, D8.6, D10.6); an attack on (Nec) through easy to vary (V2.4, V2.6); Desc, BadTarget, BadReq (V1.6); a recorded contract history ρ_p (V1.5). Suite blind spots: no claim separates D6.4 from V2.1 (e2.39); no claim separates D6.4 from V2.2 (e2.38).
+
+Not computed (2nd checker, O12): the bridge (FC84.new1), E2, E3, E4 and E7 carry no candidate and no (E): no variant's effect on them as explanations is computed (sections 1, 2, 4); the four whole-suite runs were made by the computing agents' own scripts, not by Sonnet workers agreeing by script as the rule assigns (sections 2, 3); the critical review's eight reruns agree.
+
+**A finding about the state after round 4** (O4; the orchestrator's decision 2): L538.s2 [S4] ('Eliminative explanation (Part VII) is the exposed case') is not met by E5's encodings under (Nec)'s current shape: no candidate meeting (E) is exposed (Acc ⇒ F1 ∧ F2 = Faithful_C(t), so C′ = C and t′ = t witness it), and FC62 has E5 meet (E) (section 4, E4.5c). For the orchestrator's records and the paused review rounds, not for change in Part A.
 
 ### 6.4 The untouched items, by id (each node in the `.json`)
 
@@ -472,17 +495,17 @@ Not computable in the program as it stands: an infinite Γ (V2.2, L311); UsesRea
 - **S4 definition middle** (1): E9
 - **S4 definition FROZEN** (2): D16.1, D16.2
 - **S4 sentence middle** (112): L487.s2, L489.s1, L495.s2, L495.s3, L505.s1, L515.s1, L518.s1, L520.s1, L520.s2, L520.s6, L520.n7, L520.s8, L522.s1, L522.s2, L522.s3, L524.s1, L524.s2, L524.s3, L524.s4, L526.s1, L526.n4, L526.s5, L526.s7, L526.s8, L526.s12, L526.s13, L526.s15, L526.s16, L526.s17, L526.s18, L528.n5, L528.s6, L534.s1, L534.n2, L534.s3, L536.n2, L536.s3, L540.s1, L540.s2, L542.s1, L554.s1, L556.s1, L558.n1, L558.s2, L562.s1, L562.s3, L564.s1, L564.s2, L564.s3, L566.s1, L566.s2, L568.s1, L568.s2, L572.s1, L572.s3, L574.s1, L574.s3, L574.s5, L576.s2, L576.s3, L580.s1, L582.s1, L582.s2, L582.s3, L582.s4, L584.n1, L584.s2, L588.s1, L588.s2, L590.s1, L590.s2, L590.n3, L590.s4, L590.s5, L592.s1, L592.s2, L592.s3, L596.s1, L598.s2, L600.s1, L600.s2, L600.s3, L606.s1, L606.s2, L606.s3, L608.s1, L608.s2, L612.s1, L612.s2, L612.s3, L616.s2, L616.s4, L620.s1, L620.s2, L622.s1, L622.s3, L624.s1, L624.s2, L626.s1, L626.s2, L626.n3, L626.s4, L626.s6, L626.s7, L626.s8, L628.n1, L630.s1, L630.n3, L630.s4, L630.s5, L632.s1, L632.s2
-- **S4 sentence FROZEN** (27): L487.s1, L491.s1, L499.s1, L502.s1, L509.s1, L517.s1, L520.s3, L520.s4, L520.s5, L526.s2, L526.s3, L526.s6, L526.s9, L526.s10, L526.s14, L546.s1, L558.s3, L562.s2, L598.s1, L604.s1, L616.s1, L616.s3, L622.s2, L624.s3, L624.s4, L626.s5, L630.s2
+- **S4 sentence FROZEN** (28): L487.s1, L491.s1, L499.s1, L502.s1, L509.s1, L517.s1, L520.s3, L520.s4, L520.s5, L526.s2, L526.s3, L526.s6, L526.s9, L526.s10, L526.s14, L546.s1, L556.s3, L558.s3, L562.s2, L598.s1, L604.s1, L616.s1, L616.s3, L622.s2, L624.s3, L624.s4, L626.s5, L630.s2
 
 ## 7. Is a second round of Part A needed? (rule 10)
 
-**Yes.** The map has gaps of both kinds rule 10 names: items no variant touched (§6: 646 of 815 template items, 473 of 577 middle items, 17 middle definitions neither varied nor named) and edges the computation could not settle (32 claimed only). What a second round would need to cover, from the gaps (not a plan; the rule for it is written and committed before sending):
+**Yes.** The map has gaps of both kinds rule 10 names: items no variant touched (§6: 647 of 815 template items, 473 of 577 middle items, 17 middle definitions neither varied nor named) and edges the computation could not settle (31 claimed only). The orchestrator has decided a second round (its decision 4). The gaps, in the critical review's order (not a plan; the rule for round 2 is written and committed before sending):
 
-- the middle items no variant touched, section by section (§6), in particular the middle definitions D5.7, D6.8, D6.9, D8.new1, D9.1, D9.2, D10.3, D11.2, D11.3, D12.7, D12.8, D13.7, D14.1, D15.1, D15.2, D15.5, E9;
-- the three variants not implemented (V1.6, V1.7, V2.8), each after the orchestrator's ruling on its flag;
-- the edges claimed only, each with its "settle" (§4), and the places the program cannot compute: an infinite Γ (V2.2, L311), UsesReason (V3.7), 𝔈_Θ membership (V4.6), Enable/UU/barriers (V4.7, toy only), an argument from ConfCl (V2.7), an attack on (Nec) through easy to vary (V2.4, V2.6);
-- the results that rest on one reading (§6): S108-1-I5, S108-3-I2, S108-3-I4, the tag encoding, S108-4-I3, S108-4-I7, so that each candidate's reach is computed under its other choices too;
-- the suite's blind spots: no claim separates D6.4 from V2.1 or V2.2 (only generated worlds and built cases do).
+1. **The readings the candidates rest on, under their other choices** (§6.3): S108-1-I5 (C2); edit or boundary for the owner's changes (C5; C1 computed both ways); D6.3's quantifier (C6, C11: S44 turns on it); S108-3-I2 and S108-3-I5 (C8); the trace's extent and the tag encoding (C9); S108-3-I4 and its history (C10); S108-4-I1 (C11), S108-4-I2 (C12), S108-4-I3 (C13); the hand-set histories (I90; C7, C9, C10, C12, C13, whose counts equal the population meeting (E) by construction of the history).
+2. **The untouched middle definitions upstream of the explanation definition** (§6.1): D6.9 ((E), Expl, (Suff), (Nec)); D11.2 (Dec, Expl, (Suff), (Nec)); D11.3 (Dec, Expl, (Suff), (Nec)); D6.8 (Expl, (Suff), (Nec)); D9.1 (Expl, (Suff), (Nec)); D9.2 (Expl, (Suff), (Nec)); D5.7 (Dec, Expl, (Suff), (Nec)). Then the other untouched middle definitions: D8.new1, D10.3, D12.7, D12.8, D13.7, D14.1, D15.1, D15.2, D15.5, E9.
+3. **The edges claimed only** (31; §6.2), each with its "settle" (§4), and the places the program cannot compute (§6.3). V1.6's formula, without its added sentence, goes to round 2 as a variant for section 2; V1.7 and V2.8's part on L315.s7 go to Part B; V2.8's D16.XV part is V4.4, computed (the orchestrator's decision 3).
+
+Also: the suite's blind spots (no claim separates D6.4 from V2.1 or V2.2; e2.38, e2.39) get cases; the whole-suite runs go to the Sonnet harness (the orchestrator's decision 5).
 
 ## 8. Unsure
 
@@ -491,6 +514,7 @@ Not computable in the program as it stands: an infinite Γ (V2.2, L311); UsesRea
 - **Summary edges** (`s<n>`) restate the computing files' own summary tables; they add no computation.
 - **D18.1's graph** is the program's `claims_b.DEP` after round 4, read from its source; D_TO_NODE folds several definitions into one node (e.g. D13.8 into CCE, while `Episode` is its own node: mapped here to D13.8 by hand, and `CT` to D12.2). The graph's ancestors of (Suff), (Nec) and being an explanation are those of D16.XV's one node, DefeatConds.
 - **Kinds** follow the computing files' kinds; "keeps", "no claim separates" and the rows "moves nothing in (E)" are read as *independent of*.
-- The whole-suite runs of sections 1–4 were made by the computing agents' own scripts, under load, with capped parts re-run at cap 300 (each file's §7.1); this map takes their results as they give them and reran nothing.
+- The whole-suite runs of sections 1–4 were made by the computing agents' own scripts, under load, with capped parts re-run at cap 300 (each file's §7.1); this map takes their results as they give them and reran nothing. (The critical review reran eight claims; they agree.)
+- **Second checker.** The runs behind O1 and O3 import the section copies and write nothing in them; O3's trace extent is the second checker's encoding (the output's trace from o_s to o_t, the other occurrences' traces at their own occurrence), one of several a round-2 agent could state. Section 4's §3 and §9 and section 1's §8 and §9 carry wording the map no longer uses ("the owner's one-part sign (S44)": the owner's S44 case is the two-part sign; "D13.4's reflexivity": D13.4 states none, FC85 (a) does); the section files are left as they are.
 
-Built by one Opus 5.5 agent under rules 6 and 10, 28 September 2026. Nothing ruled; nothing applied to the theory (rule 11).
+Built by one Opus 5.5 agent under rules 6 and 10, 28 September 2026; corrected by the second checker (Opus 5.5, rule 9), 28 September 2026. Nothing ruled; nothing applied to the theory (rule 11).
