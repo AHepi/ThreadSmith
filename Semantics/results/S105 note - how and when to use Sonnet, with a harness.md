@@ -195,3 +195,26 @@ Limits:
 - **The records check** catches added facts, not facts moved to the wrong place.
 - **The alias `model: 'opus'`**: this note assumes the Workflow resolves it to Opus 5.5. If it does not, drop it, and the agents inherit the session's model.
 - **Tokens**: none measured. The Workflow's report gives them.
+
+### 4.4 The Sonnet run, r2-sonnet-1 (added by the orchestrator after the run)
+
+The orchestrator ran it on 28 September 2026 as §4.2 says. It used one Workflow with 15 agents in all: 6 Sonnet workers, 6 Sonnet verifiers, 2 Opus spot-checks of the extraction sheets, and 1 Sonnet known-answer run. They used about 1.05 million tokens together and took 21 minutes. No job escalated to Opus. The report is `results/S105 note - how and when to use Sonnet - test run r2-sonnet-1, report.json`.
+
+| test | Sonnet's result | verifier | against the known answer |
+|---|---|---|---|
+| (i) claim suite | 105 H / 3 CEX / 7 NT of 115, 421 s | same digest | 0 differences |
+| (ii) text changes | 43 then 5 applied; md5s 735ec1e8…, bc14045a… | same digest | both md5s match; words outside formulas 15,611 → 15,409 → 15,388 |
+| (iii) part 12, harnessed | 51 of 51 items found, 0 missed, 0 extra; marks 60/62; to a checker 30/31; blocks 60/62; lines 60/62; wordings 16/16 | same digest | meets the bar of §4.2: no item Opus sent to a checker was missed, and marks and blocks are above the program-alone baseline (52 and 56). Every difference leans towards "challenges", the side rule 5 takes in doubt (FC73, FC76, D9.10). |
+| (iii) part 12, bare | first attempt: lines 29/62; after one fix, 61/62; marks 60; blocks 59; wordings 16/16 | same digest | without the pre-fill Sonnet gets the lines wrong at first, so the pre-fill is what makes the job safe |
+| merge | the one known conflict (claims_a.py, FC14) | same digest | matches |
+| (iv) log-entry draft | 154 words; no unsupported token; no forbidden word | same digest | Opus still reads every draft before it goes into the records |
+
+**The Opus spot-check of the harnessed sheet** read all 62 rows.
+- It proposed marking 3 more rows "challenges": D9.5, D9.7 and FC73 for GLM. All three are points where a reader said the text settles an invention.
+- It found 4 passages that no row names. These are cross-references and a remark about where a register entry belongs.
+- It found nothing Sonnet had made up.
+
+**What this shows.**
+- **Mechanical jobs:** Sonnet does the claim suite, the text changes, md5 checks and the merge correctly, and the verifier agrees each time. These jobs go to Sonnet from round 4.
+- **Tabulation:** with the harness's pre-fill, Sonnet matched Opus on this one part, and where they differed it erred towards sending more to a checker. That is one part of one round, so from round 4 Sonnet does the tabulation with the pre-fill, followed by the Opus spot-check the harness runs. It keeps that job only while the Opus check misses nothing.
+- **Record drafts:** Sonnet may draft them from facts Opus wrote. Opus reads each draft before it is used.
