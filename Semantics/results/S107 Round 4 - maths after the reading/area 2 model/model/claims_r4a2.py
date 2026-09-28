@@ -210,8 +210,9 @@ def fc23_new4(S):
 
     part = forall(S, "FC23.new4", 3, "(c) D6.3 with the clause is Pin at every pair of Det_C, transports partial", "Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C Pin(ℰ,k;a,b), τ partial and π partial",
                   gen, cc, SMALL, 60, BOTHFAM, ["I16", "I17", "I184"])
-    part["note"] = "components where the displayed clause (no translation conjunct) has no value: %d; where it holds and D6.3 with the clause does not: %d" % (
-        tally["displayed has no value"], tally["displayed True, D6.3 with the clause False"])
+    part.setdefault("space", {})["note"] = ("components where the clause as displayed after S106 (no translation conjunct) has no value: %d; "
+                                            "where it holds and D6.3 with the clause does not: %d" % (
+                                                tally["displayed has no value"], tally["displayed True, D6.3 with the clause False"]))
     parts.append(part)
     # (d) a look (B9, R4A2-02): the pole's forward candidate on C2 pins only where the pair's own edit alters c_L
     D = pole()
