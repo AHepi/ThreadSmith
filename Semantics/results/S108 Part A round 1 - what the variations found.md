@@ -182,7 +182,7 @@ Being an explanation now: Account(ℰ) ∧ ¬Dec(t) (D16.XV), Account = (E) = F1
 
 - Round 2 of Part A (the orchestrator's decision 4), under its own rule, written and committed before sending; aimed at the gaps in the review's order (§8).
 - Then Part B: V1.7 and V2.8's part on L315.s7 go there.
-- Then Claude flags the candidates the two parts find that do not appear to fit the owner's past decisions, and the owner answers each yes or no. Then stop (S52).
+- Then Claude flags the candidates the two parts find that "don't appear to fit decisions I've made in the past", and the owner answers each yes or no. Then stop (S52).
 
 ## Files
 
