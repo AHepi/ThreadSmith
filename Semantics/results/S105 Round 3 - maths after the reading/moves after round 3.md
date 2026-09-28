@@ -51,3 +51,20 @@ The areas' own counts: 18, 0, 10 (28). The difference is row 18. **Moves: 29, no
 | inventions I167–I182 (I166, I162 for Build, I169, I50 at L220 settled in the text) | register entries |
 | new test claims: FC12.new2, FC12.new3, FC13.new1, FC28.new1, FC28.new2, FC84.new2, FC97.new1, FC98.new1, FC104.new1 (A1); FC23.new1, FC25.new1, FC47.new1 (A2); FC98.new2, FC72.new1, FC80.new1, FC32.new1, FC90.new1, FC102.new1, FC103.new1 (A3); test parts FC30.new1 (d)–(f); model/e9.py (E9's instance, I182) | new test claims and test parts |
 | owner question R3-Q1; parked P1–P7 (none new) | records |
+
+## After the second checker on the critical review (28 September 2026)
+
+*`results/S105 Round 3 - the second checker on the critical review.md`; the four objections of `results/S105 Round 3 - critical review of the round.md` §3. Counted as above (rule 16, strictly).*
+
+| # | objection | move | kind |
+|---|---|---|---|
+| 30 | 2 | R3SC-L13: L13, " and criticism" deleted (D12.2 asks no criticism; FC32.new1 (f), FC84.new1 (a)) | text change applied |
+| 31 | 3 | R3SC-L61: L61, "their necessity" → "necessity (D16.XV)" (FC30.new1 (g)) | text change applied |
+
+| | formal | text applied | moves |
+|---|---|---|---|
+| integration | 18 | 11 | 29 |
+| second check | 0 | 2 | 2 |
+| **total** | **18** | **13** | **31** |
+
+Not counted: D16.4's δ (objection 1), the change of row 15 (F4, I180) in its second place, one fix counted once (as X1, X8); I183, a register entry; CT8's constant `held_trees` removed (objection 4), the code of row 12 (F12), output unchanged but CT8's header label; test parts FC30.new1 (g), FC32.new1 (f). If D16.4 were counted apart: 32. **Moves: 31, not 0: the series continues (rule 17).**

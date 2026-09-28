@@ -430,6 +430,13 @@ def fc32_new1(S):
     uses_expl = sorted(n for n in DEP if "Expl" in dep_ancestors(DEP, n))
     parts.append(computed("(e) L526: 'Nothing depends on an undefined predicate that says \"explains\"'", "only D16.XV's defeat conditions reach the atom Expl; (EX) is a node, defined",
                           uses_expl == ["DefeatConds"] and "(EX)" in DEP, "nodes reaching Expl: %s" % uses_expl))
+    # (f) S105 round 3, second checker (critical review, objection 2): L13's "produced by an episode of conjecture and
+    # criticism". Crit is D9.10's criticism; CCE, D13.8's complete critical episode, is (EX)'s (D14.7), not Con's.
+    crit = {rd: {n: "Crit" in dep_ancestors(DEP, n, rd) for n in ("Con", "CT", "Episode", "(EX)")} for rd in ("U", "K", "T", "T'")}
+    parts.append(computed("(f) L13: construction reaches no criticism; created explanation does (critical review, objection 2)",
+                          "under U, K, T and T′, Con (D12.2), CT and Episode (D13.8) reach no Crit (D9.10) in DEP; (EX) (D14.7) does, through CCE: the criticism L13 names is (EX)'s, not construction's (FC84.new1 (a): the bridge, Con with no criticism)",
+                          all(not v["Con"] and not v["CT"] and not v["Episode"] and v["(EX)"] for v in crit.values()),
+                          "; ".join("%s: %s" % (rd, ", ".join("%s ⇝ Crit %s" % kv for kv in v.items())) for rd, v in crit.items())))
     return parts
 
 

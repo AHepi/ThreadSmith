@@ -295,7 +295,7 @@ def main():
          [], True),
     ]
     P("CT8  Provenance of the chosen pair's transport on one history of the run (Θ set by hand, I90): H = the eight settings, all occurring;")
-    P("     Sel as D12.1 has it after round 2 (D12.1': no represented codomain; I161: no trace in the history prepares t), and with L201 and L411 read into it.")
+    P("     Sel as D12.1 has it after round 3 (D12.1: no represented codomain; I161: no trace in the history prepares t), and with L201 and L411 read into it.")
     for rid, text, rep, prep in readings:
         h = Hist(occ, rep, set(H), admitted=True, prepares=prep)
         s1 = sel(cq, H, h)
@@ -308,13 +308,14 @@ def main():
         P("         D12.1: Sel %s, Con %s => %s;  with L201 and L411: Sel %s, Con %s => %s" % (yn(s1), yn(k), cls(s1, k), yn(s2), yn(k), cls(s2, k)))
         # S105 round 3, area 1 (K1): Con as D12.2 has it after the second check, the cut T′ (I162): a trace prepares
         # t and some holding of the episode up to t's holds t or cod t (Held: faithful, no provenance). Held at the
-        # output computed from t's faithfulness; the trees hold the codomain's components (Θ by hand, I90); Sel's
-        # exclusion by the reading's representations at earlier occurrences (the tags); Sel's other conditions computed.
+        # output computed from t's faithfulness; Sel's exclusion by the reading's representations at earlier
+        # occurrences (the tags); Sel's other conditions computed. Round 3's second checker (critical review,
+        # objection 4; lesson S39): the constant held_trees ("o_trees" in occ, True in every reading) is gone, so Con's
+        # Held rests on the computed Held at the output alone; the output is unchanged (held_out is True in R1-R5).
         held_out = bool(faithful(cq))
-        held_trees = "o_trees" in occ
         selc_out = bool(H) and set(H) <= set(cq.p.C) and faithful_on(cq, H) and h.admitted
         s_t = selc_out and not prep and not any(x in ("t", "H", "surv", "cod") for (_, x) in h.rep)
-        k_t = bool(prep) and (held_out or held_trees)
+        k_t = bool(prep) and held_out
         P("         T′ (Held computed at the output): Sel %s, Con %s => %s" % (yn(s_t), yn(k_t), cls(s_t, k_t)))
     P("     faithful on H (the survival condition read as fidelity): %s" % yn(faithful_on(cq, H)))
 

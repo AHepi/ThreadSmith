@@ -6,6 +6,8 @@
 
 **Counts.** 16 inventions, I167–I182, from 17 provisional ids: R3A1-03 and R3A3-01 are one choice (≺_h well founded), one number (I169). Recorded and not chosen: I174 (records keyed two ways), I176 (the exemption's extent, both run). Left to the owner: I136's quantifier (owner question R3-Q1; I176 rides on it). Settled in the text by a change (rule 6): I166 (R3A3-T1), I162 for Build (R3A3-T4), I169 (R3A3-T5), I50's narrow extent at L220 (R3A1-T5, FC104 there).
 
+**Second check on the critical review** (28 September 2026; `results/S105 Round 3 - the second checker on the critical review.md`): one more, I183 (objection 1, D16.4), numbered after I182; 17 inventions in all, I167–I183. Settled in the text by the second check: none (its two text changes, R3SC-L13 and R3SC-L61, write no invention).
+
 ## Provisional id → I number
 
 | prov. | I | prov. | I | prov. | I |
@@ -40,6 +42,7 @@
 | I180 | R3A3-07 | (EX)'s candidate data (L449) | δ_c quantified with c, p_c, t_c, Γ_c | supplied with c (as D9.10) | (EX) quantifies the rest | D14.7 |
 | I181 | R3A3-08 | D18.1's nodes | the folds of D_TO_NODE; D0.2's classes (C_I, J_p, 𝒱, the stated construction, Desc as declared inputs L522 does not list) | a node per paragraph | a record of the graph; L522 not changed (S40) | claims_b DEP, D_TO_NODE, D0_2_R3A3; D0.2 |
 | I182 | R3A3-09 | E9's instance (L620–L630) | 4 cells, frames 0..3, two things; occlusion of cells 1–2 at t = 1, 2; edits on the initial frame; S0 window 2; B0 where H0's windows never conflict; t0 keeps the frame where H0 is silent | edits at t = 1; occluded cells a third value (not computed) | L622, L624, L626; the smallest instance with L_occ = w = 2 | model/e9.py; FC102.new1, FC103.new1 |
+| I183 | second check, objection 1 | 𝔈_Θ's candidate data (L497; D16.4): 'Acc(c, p, t, Γ) for some p, t, Γ' names four data, D6.7 needs δ (D5.3, I20) | δ quantified with p, t, Γ: Acc((c, p, t, Γ, δ)) for some p, t, Γ, δ | δ fixed by I20's default from t (the ports of c whose translations are those Q reads in p's target); supplied with c (as D9.10) | D16.4 quantifies the candidate's other data; as D14.7 (I180) | D16.4; FC90.new1 (c) (Acc not a function of the four) |
 
 ## Registered inventions fixed, amended, settled or pointed to in round 3 (the register's entries are not edited)
 
@@ -59,4 +62,5 @@
 | I163 | obs where g is not single on Sol: ⊥ (I172) | D3.3 (A1 F8) |
 | I165 | "immediately after" defined (I173) | D13.8 (A1 F9) |
 | I166 | settled in the text at L397 | D9.6; R3A3-T1 |
-| I20 | δ_c quantified in (EX) (I180) | D14.7 (A3 F4) |
+| I20 | δ_c quantified in (EX) (I180); δ quantified in 𝔈_Θ (I183) | D14.7 (A3 F4); D16.4 (second check, objection 1) |
+| I75 | 𝔈_Θ's Acc takes the candidate's five data (I183) | D16.4 (second check, objection 1) |

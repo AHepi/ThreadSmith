@@ -149,6 +149,26 @@ def fc30_new1(S):
         ok = ok and v[0] == [{"o1": "Con"}] and v[1] == [{"o1": "Con", "o2": "Con"}]
     parts.append(computed("(f) K3: the student's parts under D12.4", "under D12.4's parts (component with its binding) no part of the student's t is a transfer, so each is Dec, as the whole t is (D12.3, D16.XV); only reading a part as the component alone gives the source's Con",
                           ok, "\n".join(rows), ["I54", "I90"]))
+    # (g) S105 round 3, second checker (critical review, objection 3): L61's "(Nec) their necessity" after R3A1-T1
+    # against L538 (D16.XV's (Nec)). After R3A1-T1 'their' has Account(ℰ) ∧ ¬Dec(t) as antecedent, so (Nec) so read
+    # is defeated by an argument not using (E) that rules out ¬Expl(ℰ) where ℰ does not meet Account ∧ ¬Dec. L538 asks
+    # instead that no transport under any contract preserve E; t faithful on C is one that does, so L538's defeat
+    # fails wherever Faithful_C(t) (only that failure is computed, which is all this case needs).
+    e = "Expl_" + c.name
+    beta = Step("MP", e, [Leaf("r", "record"), Leaf(Imp("r", e))])  # rules out ¬Expl(ℰ)
+    rows, res = [], {}
+    pres = bool(faithful(c))
+    for kind in ("Dec", "Con", "Sel"):
+        s_, k_, dec = provenance_of(c, kind, H)
+        jn = Assessor(["MP"], ["r", Imp("r", e)])
+        outn = bool([a for a in X(jn, Not(e), [beta]) if "Acc_" + c.name not in uses(a)])
+        res[kind] = (outn and not pres, outn and not (acc and not dec))
+        rows.append("%s (Sel %s, Con %s, Dec %s): argument not using (E) that rules out ¬Expl(ℰ), usable: %s; defeats (Nec) as L538 (D16.XV) states it: %s; as L61's 'their' reads after R3A1-T1: %s"
+                    % (kind, s_, k_, dec, outn, res[kind][0], res[kind][1]))
+    ok_g = acc and pres and res["Dec"] == (False, True) and res["Con"] == (False, False) and res["Sel"] == (False, False)
+    parts.append(computed("(g) L61's (Nec) against L538 (critical review, objection 3)",
+                          "the student's declared copy, with an argument not using (E) that rules out ¬Expl(ℰ): in the defeat set of (Nec) as L61's 'their' reads after R3A1-T1 (necessity of Account ∧ ¬Dec), not in L538's (a transport, t, preserves E on C); with a constructed or selected transport in neither: the two differ exactly on Dec, which L538 names nowhere",
+                          ok_g, "Acc(ℰ_fwd) %s; Faithful_C(t) %s\n%s" % (acc, pres, "\n".join(rows)), ["I90"]))
     return parts
 
 
