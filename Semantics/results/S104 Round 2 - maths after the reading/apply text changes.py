@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""S104 round 2, integration: apply the three areas' text changes to tests/103 by program.
+"""S104 round 2, integration, then the second checker on the critical review: apply the final list of text
+changes ("text changes after the review.json": the integration's 42 as amended, and R4-L151) to tests/103 by program.
 
 Writes tests/104 (line for line with 103). Kinds allowed: delete, formal, pointer (decision S40).
 A change is refused when its kind is other, its old span is missing from its line or occurs there
@@ -26,11 +27,12 @@ SRC = SEM + "/tests/103 The semantics, standing alone, after round 1.md"
 MD5 = "f31ebb1f050783f1a84f6136cec20fcd"
 OUT = SEM + "/tests/104 The semantics, standing alone, after round 2.md"
 HERE = os.path.dirname(os.path.abspath(__file__))
-AREAS = [(n, os.path.join(HERE, "area %d - text changes.json" % n)) for n in (1, 2, 3)]
+AREAS = [(n, os.path.join(HERE, "area %d - text changes.json" % n)) for n in (1, 2, 3)]  # the integration's lists (kept for the record)
+CHANGES = os.path.join(HERE, "text changes after the review.json")  # second check: the one list applied
 KINDS = {"delete", "formal", "pointer"}
 HOLD_KEYS = ("waiting", "owner_question", "held", "blocked_by", "hold")
-# Marked waiting in the area files with no JSON entry (nothing to apply): area 3, E03 / D18.1 / OQ1,
-# "the cut is OQ1 (A3-02); no text change until chosen" (L405 'represented organization', L526 'no cycle').
+# Integration: area 3's OQ1 (the cut of 'represented') was held with no JSON entry. Second check: the cut is
+# ruled (T′, I162; owner question Q1 withdrawn), so nothing is held.
 HELD = []
 S95 = SEM + "/tests/S95 Scrub - scripts/scrub_apply.py"
 S96 = SEM + "/tests/S96 Repair - scripts/repair_apply.py"
@@ -59,15 +61,10 @@ def main():
     if hashlib.md5(raw).hexdigest() != MD5:
         die("tests/103 md5 is %s, not %s" % (hashlib.md5(raw).hexdigest(), MD5))
     old = raw.decode("utf-8").split("\n")
-    ch, seen = [], collections.Counter()
-    for n, p in AREAS:
-        for e in json.load(open(p, encoding="utf-8")):
-            e = dict(e)
-            e["area"] = n
-            if "id" not in e:  # area 3's entries carry no id: A3-L<line>, with .1, .2 where a line has two
-                seen[(n, e["line"])] += 1
-                e["id"] = "A%d-L%d.%d" % (n, e["line"], seen[(n, e["line"])])
-            ch.append(e)
+    ch = [dict(e) for e in json.load(open(CHANGES, encoding="utf-8"))]
+    ids = collections.Counter(e["id"] for e in ch)
+    if any(v > 1 for v in ids.values()):
+        die("duplicate ids: %s" % [k for k, v in ids.items() if v > 1])
     refused, held, ok = [], [], []
     for e in ch:
         if any(e.get(k) for k in HOLD_KEYS) or e["id"] in HELD:
@@ -135,15 +132,17 @@ def main():
     md5n = hashlib.md5(text.encode("utf-8")).hexdigest()
 
     print("input md5 %s (as required); output %s" % (MD5, os.path.relpath(OUT, SEM)))
-    print("changes read: %d (area 1: %d, area 2: %d, area 3: %d)" % (len(ch), *[sum(1 for e in ch if e["area"] == n) for n in (1, 2, 3)]))
+    print("changes read: %d from %s (area 1: %d, area 2: %d, area 3: %d; amended or new by the second check: %d)" % (
+        len(ch), os.path.basename(CHANGES), *[sum(1 for e in ch if e["area"] == n) for n in (1, 2, 3)], sum(1 for e in ch if e.get("amended_by"))))
     print("applied: %d on %d lines; refused: %d; held: %d" % (len(applied), len(set(e["line"] for e in applied)), len(refused), len(held)))
     for e in sorted(applied, key=lambda e: (e["line"], e["span"][0])):
-        print("  APPLIED  L%-4d area %d %-6s %-7s prose words %+d" % (e["line"], e["area"], e["id"], e["kind"], len(prose(e["new"])) - len(prose(e["old"]))))
+        print("  APPLIED  L%-4d area %d %-9s %-7s prose words %+d%s" % (e["line"], e["area"], e["id"], e["kind"], len(prose(e["new"])) - len(prose(e["old"])),
+                                                                  "  [%s]" % e["amended_by"] if e.get("amended_by") else ""))
     for e, why in refused:
         print("  REFUSED  L%-4d area %d %s: %s" % (e["line"], e["area"], e["id"], why))
     for e, why in held:
         print("  HELD     L%-4d area %d %s: %s" % (e["line"], e["area"], e["id"], why))
-    print("  held with no JSON entry: area 3 OQ1 (E03, D18.1): the cut of 'represented' at L405 and L526's 'no cycle'; not written")
+    print("  held with no JSON entry: none (the integration's held OQ1 is ruled by the second check: T′, I162)")
     print("lines (newline count) 103: %d; 104: %d; lines differing: %d" % (raw.count(b"\n"), text.count("\n"), sum(1 for a, b in zip(old, new) if a != b)))
     print("md5 104: %s" % md5n)
 

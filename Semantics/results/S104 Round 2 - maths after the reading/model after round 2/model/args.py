@@ -118,8 +118,8 @@ class Leaf:
 
 
 def form_ok(form, prem, concl):
-    """Whether a step instantiates its form [I89]. 'free' is any step (an admitted form need not be
-    classically sound, I38)."""
+    """Whether a step instantiates its form [I89]. 'free' is any step (an admitted form need not be in
+    Forms_cl, I38)."""
     c = canon(concl)
     P = [canon(x) for x in prem]
     if form == "free":

@@ -1408,9 +1408,9 @@ def fc70(S):
 def fc71(S):
     """FC71 after area 3 (D9.9 new): (i) α ∈ X_j(O), the step u⁺ from concl(α) and the conditional to
     ¬(T∧B∧I) usable by j, and no leaf of α blocking ⇒ α⁺ ∈ X_j(T∧B∧I), whatever form u⁺ has; (ii)
-    ¬RO(α⁺, x) for x ∈ {T, B, I}; (iii) with classically sound forms only, no argument from those
-    premises rules out T, B or I; (iv) with an unsound admitted form it can (the committed (ii) read
-    for every form fails)."""
+    ¬RO(α⁺, x) for x ∈ {T, B, I}; (iii) with forms in Forms_cl only (every instance has Incons(Prem ∪
+    {¬concl}), D9.1; second check, R15), no argument from those premises rules out T, B or I; (iv) with an
+    admitted form outside Forms_cl it can (the committed (ii) read for every form fails)."""
     T_, B_, I_, O_ = "T", "B", "I", "O"
     TBI = And(T_, B_, I_)
     cond = Imp(TBI, O_)
@@ -1461,13 +1461,19 @@ def fc71(S):
     common = {x: consistent([Not(O_), cond, x]) for x in (T_, B_, I_)}
     args = enumerate_args([rec, Imp(rec, Not(O_)), cond], forms=("MP", "MT", "AndE"), depth=3, max_args=2000)
     narrower = {x: len(X(j, x, args)) for x in (T_, B_, I_)}
-    parts.append(computed("(iii) sound forms: nothing narrower from those premises", "¬O, (T∧B∧I ⇒ O) and each of T, B, I have a common model; with MP, MT, AndE no argument of height ≤ 3 from these premises rules out T, B or I", all(common.values()) and not any(narrower.values()),
+    parts.append(computed("(iii) forms in Forms_cl: nothing narrower from those premises", "¬O, (T∧B∧I ⇒ O) and each of T, B, I have a common model; with MP, MT, AndE no argument of height ≤ 3 from these premises rules out T, B or I", all(common.values()) and not any(narrower.values()),
                           "common models: %s; arguments ruling out T, B, I: %s (over %d arguments)" % (common, narrower, len(args)), ["I87", "I88", "I89"]))
     jf = Assessor(["free"], [Not(O_), cond])
     beta = Step("free", Not(T_), [Leaf(Not(O_))])
-    unsound = usable(jf, beta) and rules_out(beta, T_)
-    parts.append(computed("(iv) an unsound admitted form (GLM, part 12)", "with a free form ¬O ⊢ ¬T admitted, T alone is ruled out from the premises of the failed prediction: the committed D9.9 (ii), read for every form, fails; D9.9 (ii) now scopes 'nothing narrower' to α⁺", unsound,
+    outside = usable(jf, beta) and rules_out(beta, T_)
+    parts.append(computed("(iv) an admitted form outside Forms_cl (GLM, part 12)", "with a free form ¬O ⊢ ¬T admitted, T alone is ruled out from the premises of the failed prediction: the committed D9.9 (ii), read for every form, fails; D9.9 (ii) now scopes 'nothing narrower' to α⁺", outside,
                           beta.show(2) + "\nThe ruling out is j's, through the form j admits (L397, S28).", ["I87", "I89", "I38"]))
+    jm = Assessor(["MP", "MT"], ["rec", Imp("rec", Not(O_)), cond])
+    s1m = Step("MP", Not(O_), [Leaf("rec", "record", made_from=Not(TBI)), Leaf(Imp("rec", Not(O_)))])
+    am = Step("MT", Not(TBI), [s1m, Leaf(cond)])
+    blocked = usable(jm, s1m) and rules_out(s1m, O_) and usable(jm, am) and not rules_out(am, TBI)
+    parts.append(computed("(i') second check (R8): a record leaf of α made from ¬(T∧B∧I) blocks α⁺", "α ∈ X_j(O), Usable_j(u⁺), a leaf l of α with MadeFrom(l, ¬(T∧B∧I)) ⇒ α⁺ ∉ X_j(T∧B∧I) (D9.9 (i)'s clause, which A3-L395.1 dropped and L395 now writes)",
+                          blocked, am.show(2), ["I39", "I87", "I89"]))
     return parts
 
 
@@ -1602,25 +1608,100 @@ def faithful_on(cand, H):
     return all(cand.translates(*x) and F1_at(cand, *x) and F2eq_at(cand, *x) for x in H) and hom(cand)
 
 
-def sel(cand, H, h, pop_admitted=True, cod="cod", round2=False):
+def prepares_of(h, name):
+    """Whether a construction trace in h prepares the transport `name` (Prepares, I56): h.prepares is a
+    bool (it prepares the transport in question) or a set of transport names."""
+    return h.prepares if isinstance(h.prepares, bool) else name in h.prepares
+
+
+def sel(cand, H, h, pop_admitted=True, cod="cod", round2=False, i161=True):
     """Sel(t; {t}, id, H) (D12.1, I52): H ⊆ C, its pairs occur in h, t faithful on H, members admitted,
     no occurrence of h represents t, H or the survival condition. Area 1 fix (D12.1', settles H05 at
-    L195, as L13, L201, L411 state): nor the organization t carries to (tag `cod`). round2=True gives
-    D12.1 as written in round 2."""
+    L195, as L13, L201, L411 state): nor the organization t carries to (tag `cod`). Second check (R1,
+    I161): and no construction trace in h prepares t. round2=True gives D12.1 as written in round 2.
+    Tags are Θ by hand (I90); FC12.new1 and FC83 compute Rep instead (prov_fixed_points)."""
     if not set(H) <= set(cand.p.C) or not set(H) <= h.occurs:
         return False
     if not faithful_on(cand, H):
         return False
     if not (h.admitted and pop_admitted):
         return False
+    if i161 and not round2 and prepares_of(h, cand.name):
+        return False
     banned = ("t", "H", "surv") if round2 else ("t", "H", "surv", cod)
     return not any(x in banned for (_, x) in h.rep)
 
 
-def con(h, cod="cod"):
+def con(h, cod="cod", name=None):
     """Con(t; h, e) (D12.2): a trace in h prepares t (primitive, I56) and t or its codomain is a
     represented target in h."""
-    return h.prepares and any(x in ("t", cod) for (_, x) in h.rep)
+    prep = h.prepares if (name is None or isinstance(h.prepares, bool)) else name in h.prepares
+    return bool(prep) and any(x in ("t", cod) for (_, x) in h.rep)
+
+
+# ---- Second check (R1, R3): provenance with Rep computed, not tagged -----------------------------------
+# A chain history o1 ≺ … ≺ on, one content c (the codomain of the transport held at the output on).
+# held[o]: Org_ℓ(o) has a faithful transport to c (Held, through Θ, no provenance); at the output it is
+# computed from t's own faithfulness. trace[o]: a construction trace in the history prepares o's transport.
+# selc[o]: Sel's conditions other than its exclusions (population, μ, H occurring, Faithful_H, admitted);
+# at the output computed from t. Rep is every fixed point R of R = {o : held[o] ∧ (Sel(o) ∨ Con(o))}.
+# Readings of 'represented' inside Sel, Con, Build (D18.1, I146, I162):
+#   U  as worded: (R) throughout, o's own occurrence in its history and episode;
+#   K  staged: (R) only at o' ≺ o, in Sel, Con and Build;
+#   T  Held in Con and Build (o' ⪯ o), and Held at o' ≺ o as Sel's exclusion;
+#   T' Held in Con and Build (o' ⪯ o); Sel's exclusion Rep at o' ≺ o (staged along ≺_h) [I162, the cut ruled].
+# i161: Sel also asks that no construction trace in the history prepares the transport [I161].
+PROV_READINGS = ("U", "K", "T", "T'")
+PROV_READING = "T'"
+
+
+def _prov_step(n, held, trace, selc, rd, i161, R):
+    out = {}
+    for o in range(n):
+        before, upto = range(o), range(o + 1)
+        if rd == "U":
+            c_ = trace[o] and any(x in R for x in upto)
+            s_ = selc[o] and not any(x in R for x in upto)
+        elif rd == "K":
+            c_ = trace[o] and any(x in R for x in before)
+            s_ = selc[o] and not any(x in R for x in before)
+        elif rd == "T":
+            c_ = trace[o] and any(held[x] for x in upto)
+            s_ = selc[o] and not any(held[x] for x in before)
+        else:
+            c_ = trace[o] and any(held[x] for x in upto)
+            s_ = selc[o] and not any(x in R for x in before)
+        if i161:
+            s_ = s_ and not trace[o]
+        out[o] = (bool(s_), bool(c_))
+    return out
+
+
+def build_at(n, held, trace, rd, R, o):
+    """Build at o (D13.3): a construction trace whose output o is a represented organization, 'represented'
+    read as the cut reads it (ExplUse, BindingConstruction, Owned, ¬TransferComposite set to hold, I56)."""
+    if not trace[o]:
+        return False
+    if rd == "U":
+        return o in R
+    if rd == "K":
+        return any(x in R for x in range(o))
+    return bool(held[o])
+
+
+def prov_fixed_points(n, held, trace, selc, rd, i161=True):
+    """Every fixed point: a list of (R, {o: (Sel, Con)})."""
+    fps = []
+    for bits in itertools.product([0, 1], repeat=n):
+        R = frozenset(o for o in range(n) if bits[o])
+        sc = _prov_step(n, held, trace, selc, rd, i161, R)
+        if frozenset(o for o in range(n) if held[o] and (sc[o][0] or sc[o][1])) == R:
+            fps.append((R, sc))
+    return fps
+
+
+def prov_show(n, fps):
+    return [{"o%d" % (o + 1): "+".join(k for k, f in zip(("Sel", "Con"), sc[o]) if f) for o in sorted(R)} for R, sc in fps]
 
 
 def viol_at(cand, a, b):
@@ -1849,7 +1930,7 @@ def fc82_strong():
     t = c.replace(E=Ebad, name="t")
     t2 = c.replace(name="t2")
     H = [(ONE, "b1_45")]
-    h = Hist(["o1"], [("o1", "cod:t2")], set(p.C), admitted=True, prepares=True)
+    h = Hist(["o1"], [("o1", "cod:t2")], set(p.C), admitted=True, prepares={"t2"})  # the trace prepares t2 (second check: per transport, I161)
     mu = {"t": ["t2"]}
     return p, t, t2, H, x, h, mu
 
@@ -1875,17 +1956,46 @@ def fc82(S):
 
 @claim("FC83", ["I90", "I92"])
 def fc83(S):
-    p, c, H, h = prov_counterexample()
-    x = sorted([a for a in p.C if a != (ONE, "b1_45")], key=repr)[0]
-    sresp = selresp(c, c, H, x, h, {c.name: [c.name]})
-    sresp2 = selresp(c, c, H, x, h, {}, round2=True)
-    attempt, new, build = True, True, h.prepares  # Attempt read through Θ; empty repertoire; Build's primitives set true
-    origin = attempt and new and build
-    # area 1 FC83': a selection response's own history holds no Build of the content its result carries to:
-    # Build prepares a represented organization (L405); Sel(t') forbids a representation of t''s codomain in t''s history.
-    build_in_sel_history = build and any(tag == "cod" for (_, tag) in h.rep) and sel(c, H + [x], h)
-    return [computed("only construction is originative", "FC83' : SelResp(t → t') ⇒ no Build of cod(t') in the history of t' (so no Origin through the response)", not build_in_sel_history,
-                     "FC78's history, x = %r. Area 1 D12.8' SelResp %s (round 2: %s). Build's primitives set to hold by hand (I56) and Origin %s; a Build of cod(t') inside a history on which Sel(t') holds: %s. FC83 as stated in round 2 (SelResp ⇒ ¬Origin of c') fails only while D12.1 admits a represented codomain." % (x, sresp, sresp2, origin, build_in_sel_history), ["I90", "I92"])]
+    """FC83' with Rep computed (second check, R1): SelResp(t → t'; x) ⇒ no Build of cod t' in h(t'), on every
+    chain history of 1–3 occurrences whose output holds t' (held and Sel's conditions computed from t' on
+    H ∪ {x}), earlier occurrences and the output's trace set by hand (Θ, I90), under U, K, T and T′ (I162),
+    with I161; and without I161, T and T′ admit both (the review's R1)."""
+    p, t, t2, H, x, h0, mu = fc82_strong()
+    viol = viol_at(t, *x)
+    sel_t = sel(t, H, Hist([], [], set(p.C)), i161=False)  # t selected on H in its own (empty) history
+    in_mu = "t2" in mu.get("t", [])
+    held_out = faithful(t2) and faithful_on(t2, H + [x])
+    selc_out = set(H + [x]) <= set(p.C) and faithful_on(t2, H + [x])
+
+    def items():
+        for n in (1, 2, 3):
+            for early in itertools.product(itertools.product([0, 1], repeat=3), repeat=n - 1):
+                for tr_out in (0, 1):
+                    held = [e[0] for e in early] + [held_out]
+                    trace = [e[1] for e in early] + [tr_out]
+                    selc = [e[2] for e in early] + [selc_out]
+                    yield n, held, trace, selc
+
+    def check_with(i161, rds):
+        def check(m):
+            n, held, trace, selc = m
+            for rd in rds:
+                for R, sc in prov_fixed_points(n, held, trace, selc, rd, i161):
+                    sresp = sel_t and viol and in_mu and sc[n - 1][0]
+                    build = any(build_at(n, held, trace, rd, R, o) for o in range(n))
+                    if sresp and build:
+                        return "%s: SelResp(t → t2) and a Build of cod t2 in h(t2): held %s, trace %s, Sel's conditions %s; fixed point %s" % (
+                            rd, held, trace, selc, prov_show(n, [(R, sc)]))
+            return None
+        return check
+
+    pre = "t violated at x = %r: %s; t selected on H: %s; t2 ∈ μ⁺(t): %s; t2 held at the output (faithful, and on H ∪ {x}): %s" % (x, viol, sel_t, in_mu, held_out)
+    parts = [exhaustive("FC83", "FC83' with Rep computed, D12.1 with I161", "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), under U, K, T and T′",
+                        list(items()), check_with(True, PROV_READINGS),
+                        "chains o1 ≺ … ≺ on (n ≤ 3), earlier (held, trace, Sel's conditions) by hand, the output's trace by hand; " + pre, ["I90", "I92", "I161", "I162"]),
+             exhaustive("FC83", "without I161 (the review's R1)", "there is a history with SelResp and a Build of cod t' under T or T′",
+                        list(items()), check_with(False, ("T", "T'")), "the same space", ["I90", "I92"], kind="there is")]
+    return parts
 
 
 @claim("FC84", [])
@@ -2262,15 +2372,15 @@ def fc96(S):
     return parts
 
 
-@claim("FC97", ["I67"])
-def fc97(S):
+def e8_contract_org():
+    """E8 (I67): the contract of a question with edits {1, a1, a2} and boundaries {b0, b1} as an organization:
+    a membership port per pair, a query port q, the baseline and one closure component, setting edits."""
     A_, B_ = [ONE, "a1", "a2"], ["b0", "b1"]
     pairs = [(a, b) for a in A_ for b in B_]
     ports = ["m_%s_%s" % x for x in pairs] + ["q"]
     dom = {v: (0, 1) for v in ports[:-1]}
     dom["q"] = ("Q1", "Q2")
     foot = {"base": ("m_1_b0",), "close": ("m_a1_b0", "m_a2_b0", "m_1_b0")}
-    edits = {v: dom[v] for v in ports}
     Aed, invd, compose = surgical_edits({v: dom[v] for v in ports[:3]})
 
     def Lf(j, a, b):
@@ -2279,7 +2389,12 @@ def fc97(S):
             return frozenset([(1,)]) if "m_1_b0" not in sm else frozenset([(sm["m_1_b0"],)])
         return frozenset(w for w in itertools.product((0, 1), repeat=3) if not (w[0] and w[1]) or w[2])
 
-    Dc = Org("D_C", ports, dom, list(foot), foot, ["β"], Aed, compose, Lf)
+    return Org("D_C", ports, dom, list(foot), foot, ["β"], Aed, compose, Lf), invd, (A_, B_)
+
+
+@claim("FC97", ["I67"])
+def fc97(S):
+    Dc, invd, _ = e8_contract_org()
     ok_dom = all(Dc.dom[v] for v in Dc.ports)
     ok_id = all(Dc.compose(a, ONE) == a and Dc.compose(ONE, a) == a for a in Dc.A)
     ok_assoc = all(Dc.compose(a3, Dc.compose(a2, a1)) == Dc.compose(Dc.compose(a3, a2), a1) for a1 in Dc.A for a2 in Dc.A for a3 in Dc.A)
@@ -2293,19 +2408,45 @@ def fc97(S):
 
 DEP = {  # D18.1 as the text's words give it, 'represented' read through (R); ('<', x) marks a use of x at an earlier occurrence only under the staged reading
     "(K)": ["(O)", "C"], "(F1)": ["(O)", "(Q)", "(K)"], "(F2)": ["(O)", "(Q)", "(K)"], "(A)": ["(O)", "(Q)", "(K)"],
-    "NC": ["(O)", "(Q)", "(K)", "ℓ", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "NC", "NV"],
+    # second check (R5): one edge set for D18.1, the text (L526 points to D18.1) and this graph: NC0–NC2 read no
+    # signature (no (K)) and read C; t and Γ are the candidate's own data, as for (F1), (F2), (A) (FC32)
+    "NC": ["(O)", "(Q)", "C", "ℓ", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "NC", "NV"],
     "(R)": ["(F1)", "(F2)", "Org", "Sel", "Con"], "Sel": ["h", "Θ", ("<", "(R)")], "Con": ["h", "Build", ("<", "(R)")],
     "Build": ["h", "Owned", "(E)", ("<", "(R)")], "Owned": ["h", "β"], "Deploy": ["(R)", "Can"], "Can": ["(CT1)", "Owned", "Ω"],
     "(CT1)": ["Θ"], "New": ["Deploy"], "(G)": ["Attempt", "New", "Build"], "ActRoute": ["h", "Org", "K"],
     "ProducedBy": ["ActRoute", "O,P"], "(P)": ["ProducedBy", "O,P"], "ProducesVia": ["ActRoute", "Build"],
     "(EX)": ["(G)", "(P)", "(E)", "Deploy", "ProducesVia", "CCE"], "CCE": ["(K1)", "UsesReason", "(G)"], "(K1)": ["(E)", "Qf"],
     "UsesReason": ["ActRoute", "Rec", "Chg", "Rule"], "(K2)": ["Forms", "Scope", "Live"], "Live": [("<", "(K2)"), "Accepted"],
+    "Held": ["Org", "(F1)", "(F2)"],  # Held(o', c) :⟺ ∃t Faithful(t: Org_ℓ(o') → c), no provenance (D18.1, cuts T and T′)
 }
 TEXT_SINKS = {"(O)", "(Q)", "Θ", "Org", "𝒩", "C", "ℓ", "β", "Ω", "Σ", "O,P", "Forms", "Scope", "Accepted", "h"}
 
 
-def dep_cycle(staged):
-    edges = {n: [(x[1] if isinstance(x, tuple) else x) for x in xs if not (staged and isinstance(x, tuple))] for n, xs in DEP.items()}
+def dep_edges(reading):
+    """The graph under a reading of 'represented' (D18.1): 'U' as worded; 'K' every ('<', x) edge staged
+    (dropped: a recursion along ≺_h or below the step); 'T' Sel, Con, Build use Held, not (R); "T'" Con and
+    Build use Held, Sel's (R) staged [I162]. (K2) → Live → (K2) is staged below the step in every reading (D9.4)."""
+    out = {}
+    for n, xs in DEP.items():
+        e = []
+        for x in xs:
+            staged = isinstance(x, tuple)
+            y = x[1] if staged else x
+            if y == "(R)" and staged and n in ("Sel", "Con", "Build"):
+                if reading == "U":
+                    e.append(y)
+                elif reading == "T" or (reading == "T'" and n != "Sel"):
+                    e.append("Held")
+                continue  # K, and T′'s Sel: staged along ≺_h
+            if staged and reading != "U":
+                continue
+            e.append(y)
+        out[n] = e
+    return out
+
+
+def dep_cycle(staged, reading=None):
+    edges = dep_edges(reading or ("K" if staged else "U"))
     color, stack = {}, []
 
     def dfs(n):
@@ -2330,52 +2471,13 @@ def dep_cycle(staged):
     return None
 
 
-def rep_fixed_points(case, reading):
-    """Rep on a history o1 ≺ o2 for one content c, from facts set by hand (Θ): held[o] (a faithful
-    transport Org_ℓ(o) → c), trace[o] (a construction trace prepares o's transport, episode {o1, o2}),
-    selhist[o] (a selection history). Readings: 'U' the words with (R) throughout (the output is in its
-    own episode and history); 'K' staged: Sel and Con read (R) only at earlier occurrences; 'T' Con's
-    'represented target' read as held (Θ), Sel's exclusion as held at an earlier occurrence."""
-    occ = ["o1", "o2"]
-    before = {"o1": [], "o2": ["o1"]}
+def rep_fixed_points(case, reading, i161=False):
+    """Rep on a history o1 ≺ o2 for one content c, from facts set by hand (Θ): held[o], trace[o], selhist[o]
+    (FC98's cases); prov_fixed_points on n = 2. Readings U, K, T, T′ as prov_fixed_points."""
     held, trace, selhist = case
-
-    def step(R):
-        out = set()
-        for o in occ:
-            if not held[o]:
-                continue
-            if reading == "U":
-                con = trace[o] and any(x in R for x in occ)
-                sel = selhist[o] and not any(x in R for x in before[o] + [o])
-            elif reading == "K":
-                con = trace[o] and any(x in R for x in before[o])
-                sel = selhist[o] and not any(x in R for x in before[o])
-            else:
-                con = trace[o] and any(held[x] for x in occ)
-                sel = selhist[o] and not any(held[x] for x in before[o])
-            if con or sel:
-                out.add(o)
-        return out
-
-    def prov(R):
-        out = {}
-        for o in occ:
-            if reading == "U":
-                con = trace[o] and any(x in R for x in occ)
-                sel = selhist[o] and not any(x in R for x in before[o] + [o])
-            elif reading == "K":
-                con = trace[o] and any(x in R for x in before[o])
-                sel = selhist[o] and not any(x in R for x in before[o])
-            else:
-                con = trace[o] and any(held[x] for x in occ)
-                sel = selhist[o] and not any(held[x] for x in before[o])
-            if o in R:
-                out[o] = "+".join(n for n, f in (("Sel", sel), ("Con", con)) if f)
-        return out
-
-    subsets = [set(x for x, k in zip(occ, bits) if k) for bits in itertools.product([0, 1], repeat=2)]
-    return [prov(X_) for X_ in subsets if step(X_) == X_]
+    occ = ["o1", "o2"]
+    fps = prov_fixed_points(2, [held[o] for o in occ], [trace[o] for o in occ], [selhist[o] for o in occ], reading, i161)
+    return prov_show(2, fps)
 
 
 @claim("FC98", [])
@@ -2384,23 +2486,32 @@ def fc98(S):
     cyc = dep_cycle(False)
     parts.append(computed("(a) the order as worded", "with 'represented' (L197, L405) read through (R), the dependence graph has a cycle (E03; L526 says it has none)", cyc is not None,
                           "cycle: %s" % (" → ".join(cyc) if cyc else "none"), ["A3-02"]))
-    cyc2 = dep_cycle(True)
-    parts.append(computed("(a') the order staged by ≺_h", "with (R) used inside Sel, Con, Build and (K2) only at earlier occurrences or lower steps, no cycle", cyc2 is None,
-                          "cycle: %s" % (" → ".join(cyc2) if cyc2 else "none"), ["A3-02", "I40"]))
+    cyc2 = {rd: dep_cycle(True, rd) for rd in ("K", "T", "T'")}
+    parts.append(computed("(a') the order under the cuts K, T and T′", "with (R) inside Sel, Con, Build staged (K), replaced by Held (T), or Held in Con and Build and staged in Sel (T′, I162), no cycle",
+                          all(c is None for c in cyc2.values()), "; ".join("%s: %s" % (rd, " → ".join(c) if c else "no cycle") for rd, c in cyc2.items()), ["A3-02", "I40", "I162"]))
     sinks = sorted(set(x[1] if isinstance(x, tuple) else x for xs in DEP.values() for x in xs) - set(DEP) - TEXT_SINKS)
     parts.append(look("(b) sinks the text does not list", "every sink is Θ, 𝒩, (O), (Q), an index or a declared input of L522", False,
-                      "sinks of this graph outside L526's and L522's lists: %s (D0.2 after area 3). Whether each is read through Θ or is a declared input is an owner question." % ", ".join(sinks), ["A3-02"]))
+                      "sinks of this graph outside L526's and L522's lists: %s (D0.2 after area 3). Each is read through Θ or is a declared input, as D0.2 marks (second check, Q4 ruled)." % ", ".join(sinks), ["A3-02"]))
     first = ({"o1": False, "o2": True}, {"o1": False, "o2": True}, {"o1": False, "o2": False})
     selfsel = ({"o1": False, "o2": True}, {"o1": False, "o2": False}, {"o1": False, "o2": True})
     both = ({"o1": True, "o2": True}, {"o1": False, "o2": True}, {"o1": True, "o2": True})
-    res = {(nm, rd): rep_fixed_points(case, rd) for nm, case in (("first construction", first), ("selection", selfsel), ("built on a selected representation", both)) for rd in "UKT"}
+    decl = ({"o1": True, "o2": True}, {"o1": False, "o2": False}, {"o1": False, "o2": True})
+    cases = (("first construction", first), ("selection", selfsel), ("built on a selected representation", both), ("declared earlier holder", decl))
+    res = {(nm, rd): rep_fixed_points(case, rd, i161=True) for nm, case in cases for rd in PROV_READINGS}
     txt = "; ".join("%s, reading %s: fixed points %s" % (nm, rd, res[(nm, rd)]) for (nm, rd) in sorted(res))
-    parts.append(computed("(c) Rep as a fixed point on a two-occurrence history", "reading U (as worded): two fixed points for a first construction and none for a selection (the output in its own history); readings K and T: exactly one each",
-                          len(res[("first construction", "U")]) == 2 and len(res[("selection", "U")]) == 0 and all(len(res[(nm, rd)]) == 1 for nm in ("first construction", "selection", "built on a selected representation") for rd in "KT"),
-                          txt, ["A3-02"]))
-    parts.append(computed("(d) what each cut gives", "K: a first construction of c yields no representation of c (L405's 'A first representation may be constructed' fails); T: it yields one; both give o2 exactly one provenance (Con) when it is built on a selected representation held by o1 (L201: construction may operate on selected material)",
-                          res[("first construction", "K")] == [{}] and res[("first construction", "T")] == [{"o2": "Con"}] and res[("built on a selected representation", "K")] == res[("built on a selected representation", "T")] == [{"o1": "Sel", "o2": "Con"}],
-                          "first construction: K %s, T %s; built on a selected representation: K %s, T %s. The choice between K and T is an owner question (A3-02)." % (res[("first construction", "K")], res[("first construction", "T")], res[("built on a selected representation", "K")], res[("built on a selected representation", "T")]), ["A3-02"]))
+    parts.append(computed("(c) Rep as a fixed point on a two-occurrence history", "reading U (as worded): two fixed points for a first construction and none for a selection (the output in its own history); readings K, T and T′: exactly one each",
+                          len(res[("first construction", "U")]) == 2 and len(res[("selection", "U")]) == 0 and all(len(res[(nm, rd)]) == 1 for nm, _ in cases for rd in ("K", "T", "T'")),
+                          txt, ["A3-02", "I161"]))
+    parts.append(computed("(d) what each cut gives", "K: a first construction of c yields no representation of c (L405's 'A first representation may be constructed' fails); T and T′: it yields one; all three give o2 exactly one provenance (Con) when it is built on a selected representation held by o1 (L201: construction may operate on selected material)",
+                          res[("first construction", "K")] == [{}] and res[("first construction", "T")] == res[("first construction", "T'")] == [{"o2": "Con"}]
+                          and res[("built on a selected representation", "K")] == res[("built on a selected representation", "T")] == res[("built on a selected representation", "T'")] == [{"o1": "Sel", "o2": "Con"}],
+                          "first construction: K %s, T %s, T′ %s; built on a selected representation: K %s, T %s, T′ %s." % (
+                              res[("first construction", "K")], res[("first construction", "T")], res[("first construction", "T'")],
+                              res[("built on a selected representation", "K")], res[("built on a selected representation", "T")], res[("built on a selected representation", "T'")]), ["A3-02", "I162"]))
+    parts.append(computed("(e) second check: an earlier holder with a declared transport (L211), then a selection", "L195 with L211 (a declared transport makes no representation): o2 selected; K and T′ give o2 Sel, T gives o2 nothing (Held at o1 blocks it)",
+                          res[("declared earlier holder", "K")] == res[("declared earlier holder", "T'")] == [{"o2": "Sel"}] and res[("declared earlier holder", "T")] == [{}],
+                          "o1 holds c by a declared transport (no trace, no selection history), o2 holds c with a selection history: U %s, K %s, T %s, T′ %s. With FC98 (d) and FC12.new1, T′ is the one cut meeting L405, L193, L195 with L211, and L526 (I162)." % (
+                              res[("declared earlier holder", "U")], res[("declared earlier holder", "K")], res[("declared earlier holder", "T")], res[("declared earlier holder", "T'")]), ["I162"]))
     return parts
 
 
@@ -2503,24 +2614,26 @@ def fc102(S):
     parts = []
     N, K = 6, 10
 
-    def step(p_, v_):
+    def step(p_, v_, ends="reflect"):
         np_ = p_ + v_
         if not 0 <= np_ < N:
+            if ends == "stop":  # second check (Q25): the other end rule, the thing stops at the end
+                return p_, 0
             v_ = -v_
             np_ = p_ + v_
         return np_, v_
 
-    def run(start, occl):
+    def run(start, occl, ends="reflect"):
         """Things (pos, vel), reflection at the ends; occupancy per cell, None where occluded [I100]."""
         things = list(start)
         traj = []
         for t in range(K):
             occ = tuple((None if (t, c) in occl else int(any(pp == c for pp, _ in things))) for c in range(N))
             traj.append(occ)
-            things = [step(pp, vv) for pp, vv in things]
+            things = [step(pp, vv, ends) for pp, vv in things]
         return traj
 
-    def structural(nthings, w, L_occ):
+    def structural(nthings, w, L_occ, ends="reflect"):
         """Two histories with equal readings over the last w steps before re-emergence and different
         readings at re-emergence (the occlusion hides cells 1..N-2 from t = 3 for L_occ steps)."""
         states = [(pp, vv) for pp in range(N) for vv in (-1, 0, 1)]
@@ -2531,7 +2644,7 @@ def fc102(S):
             return None
         seen = {}
         for st in starts:
-            tr = run(st, occl)
+            tr = run(st, occl, ends)
             key = tuple(tr[t_re - w:t_re])
             val = tr[t_re]
             if key in seen and seen[key][0] != val:
@@ -2562,6 +2675,10 @@ def fc102(S):
     two = sorted((w, L) for (nth, w, L) in table if nth == 2 and fails(2, w, L))
     parts.append(computed("(b'') the bound written into L626", "w ≤ L ⇒ no window-w occupancy predictor survives, for one thing and for two (the formal hypothesis replacing 'can only predict from occupancy')", first,
                           "all (things, w, L) with w ≤ L fail (first half); two things fail also at: %s" % two, ["I100", "A3-11"]))
+    stop = {k: structural(k[0], k[1], k[2], "stop") for k in table}
+    first_stop = all(stop[k] is not None for k in stop if k[2] >= k[1])
+    parts.append(computed("(b3) second check (Q25): the bound under the other end rule", "w ≤ L ⇒ no window-w occupancy predictor survives, one thing and two, with things stopping at the ends instead of reflecting (I100's end rule)", first_stop,
+                          "stop at the ends: failing (things, w, L) with w ≤ L: %d of %d" % (sum(1 for k in stop if k[2] >= k[1] and stop[k] is not None), sum(1 for k in stop if k[2] >= k[1])), ["I100", "A3-11"]))
     parts.append(not_tested("(a), (c)", "t0 survives on H0 and is surprised; t1 meets (F1) and (F2) on the extended contract", "the two-layer organizations S0, S1 and their transports are not built in this round (E9 encodes only the object layer here)"))
     return parts
 
@@ -2606,9 +2723,23 @@ def fc106(S):
             not_tested("the other two defects", "failing to pick out a target; incompatible requirements", "need a description Desc of the question (I76), which the model does not build")]
 
 
-@claim("FC107", [])
+@claim("FC107", ["I67"])
 def fc107(S):
-    return [not_tested("p_δ ≠ p", "exposing a defect is another question", "definitional: p_δ has its own target, contract and query (D9.10)")]
+    """Second check (R13): tested on E8 (L590: a contract is an organization, 𝒬 among its ports). p_δ, whether
+    p's contract has the defect 'baseline missing' (D3.6), is a question on D_C with its own contract (settings
+    of the baseline's membership port) and query (that port); (E) assesses a candidate on it, as in (K1)."""
+    Dc, invd, (A_, B_) = e8_contract_org()
+    sets = [a for a in Dc.A if a != ONE and set(dict(invd[a])) == {"m_1_b0"}]
+    Cd = [(ONE, "β")] + [(a, "β") for a in sets]
+    pd = Question(Dc, Cd, "β", PortQuery(), "m_1_b0", name="p_δ")
+    lam = {k: (frozenset([k]), {v: Translation((v,)) for v in Dc.foot[k]}) for k in Dc.comps}
+    cand = Candidate(Dc, pd, {v: Translation((v,)) for v in Dc.ports}, {a: a for a in Dc.A}, {b: b for b in Dc.B}, lam, list(Dc.comps), "m_1_b0")
+    acc, det = account(cand, detail=True)
+    own = set(Dc.A).isdisjoint(set(A_) - {ONE}) and set(Dc.B).isdisjoint(B_) and "q" in Dc.ports
+    return [computed("p_δ ≠ p on E8", "p_δ's target is D_C (ports m_(a,b) and 𝒬), with a contract and a query of its own; p's target has edits {1, a1, a2} and boundaries {b0, b1}",
+                     own, "p_δ: target D_C (%d ports, 𝒬 = q among them), contract %s, query the port m_1_b0; answers %s" % (len(Dc.ports), [a for a, _ in Cd], [pd.ans(a, "β") for a, _ in Cd]), ["I67"]),
+            computed("(E) assesses a candidate for p_δ (K1)", "Acc is computed on p_δ for the identity candidate on D_C",
+                     isinstance(acc, bool), "Acc %s: %s (NC1 fails: the component 'base' is an answer slot, 'p because p')" % (acc, det), ["I67"])]
 
 
 @claim("FC108", [])

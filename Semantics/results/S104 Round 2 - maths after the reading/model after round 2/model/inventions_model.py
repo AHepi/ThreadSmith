@@ -96,7 +96,7 @@ dict(id="I88", title="X_j ranges over a finite set of arguments; an argument has
 dict(id="I89", title="The inference forms: MP, MT, AND-introduction, AND-elimination and a free form",
  quotes=[(387, r'''For argument step \(u\) with essential premises \(\operatorname{Prem}(u)\), the premises its inference form uses:'''),
          (393, r'''\(\operatorname{Form}_j(u)\): the inference form of \(u\) is one \(j\) admits.''')],
- invented="Five forms: modus ponens, modus tollens, ∧-introduction, ∧-elimination, and a 'free' form (any premises, any conclusion; an admitted form need not be sound, I38). A step counts only where it instantiates its form; every premise of a step is essential.",
+ invented="Five forms: modus ponens, modus tollens, ∧-introduction, ∧-elimination, and a 'free' form (any premises, any conclusion; an admitted form need not be in Forms_cl, I38). A step counts only where it instantiates its form; every premise of a step is essential.",
  others=["forms declared by each assessor as arbitrary relations between premise sets and conclusions",
          "essential premises a proper subset of a step's children"],
  code=["model/args.py (form_ok, Step)"]),

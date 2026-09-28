@@ -2,7 +2,7 @@
 
 *Integration, 28 September 2026 (decisions S36, S40). The checkers' provisional inventions, numbered I122 onward in the order A1-01…A1-13, A2-01…A2-10, A3-01…A3-16. Source rows: `area N - verdicts and formal fixes.md` (not edited; the table below is the link). Fix ids: `formal core, after round 2.md`, `formal claims, after round 2.md`; T/A2-T/A3-L: text changes.*
 
-**Counts.** 39 inventions, I122–I160. Two are one choice registered twice: I132 = I139 (κ(⊥) := ⊥). Two are recorded and not adopted: I131 (OQ-5), I134. Three leave a choice to the owner: I146 (OQ1), I149 (reading a/b), I153 (OQ12).
+**Counts.** 39 inventions, I122–I160; the second check adds I161–I164 (below). Two are one choice registered twice: I132 = I139 (κ(⊥) := ⊥). Two are recorded and not adopted: I131 (OQ-5), I134. Three leave a choice to the owner: I146 (OQ1), I149 (reading a/b), I153 (OQ12). After the second check: I146 fixed by I162, I153 fixed (per execution); I149's reading stays open, not the owner's.
 
 ## Provisional id → I number
 
@@ -68,6 +68,19 @@
 | I158 | A3-14 | "the stated construction admit" (L481) | parts(t) ⊆ the stated construction's parts | any part the physics admits | the reading was unregistered | D15.8 |
 | I159 | A3-15 | "can affect its operative use" (L487; H16) | ∃ admitted owned continuation with a result on an active route to d's use | "can change" (I74); left modal | registered; OQ6 | D16.1 |
 | I160 | A3-16 | two things (L620; H17) | no interaction; may share a cell and cross | things that exclude one another | the encoding's; FC102's two-thing findings rest on it | E9; FC102 |
+
+## Second check on the critical review (I161–I164)
+
+*Second checker (Opus 5.5), 28 September 2026: `results/S104 Round 2 - the second checker on the critical review.md`. Rule 6: I161, I162 are settled at L195 by T9 (amended), I163 at L151 by R4-L151, I164 at L528 by A3-L528.1.*
+
+| I | from | fills (line; item) | choice | other choices | why this one | used by |
+|---|---|---|---|---|---|---|
+| I161 | R1 | "exactly one of three" (L193); "the traces differ" (L411) | Sel(t) also asks ¬∃h' ⊆ h(t): CT(h', t), no construction trace in t's history prepares t | L201's "no criticism in its history" (D12.2 asks no criticism, so no exclusivity); ¬Con(t) inside Sel; none (T, T′ then give Sel ∧ Con: FC12.new1 part 3) | Sel ∧ Con excluded by definition under U, K, T, T′, whatever the cut (FC12.new1, FC83 with Rep computed) | D12.1, D12.3; T9 |
+| I162 | R3, Q1 | "represented" (L195, L197, L405); "no cycle" (L526) | the cut T′: Held in Con (D12.2) and Build (D13.3); Sel's exclusion by Rep at o ≺_h o_t, a recursion along ≺_h (well founded below o_t) | U (as worded: 0–5 fixed points, a selection none); K (a first construction represents nothing, against L405); T (a declared earlier holder blocks a selection, against L195 with L211) | the one of the four meeting L405, L193 (with I161), L195 with L211, L526 (FC98 (c)–(e), FC12.new1) | D12.1, D12.2, D13.3, D18.1; T9 |
+| I163 | R4 | "a C containing edits to the observed value" (L151) | ∃(a,b),(a',b') ∈ C: obs(a,b) ≠ obs(a',b'), obs the value the fibre is taken at | a setting edit of the observed port (E_rev then fails (F1), (F2): FC28 look); an edit a ≠ 1 of C altering obs (C_id holds none) | L325's identification contract C_id = {1} × B varies the observed L by boundaries only (FC28, R4 part) | D3.3; R4-L151 |
+| I164 | R16 | "The universal class: (U3)" (L528) | Universal := {M : ∃s, ξ0, Ω, β (M, s, ξ0, Ω, β) ∈ UECS} | (U3)'s class of tuples as stated; ∀s (every system of M) | L528's other classes are classes of interpretations; "places its author in the universal class" reads it over some system | D16.5; A3-L528.1 |
+
+Registered inventions ruled by the second check (owner questions re-sorted, `owner questions after round 2.md`): I146 fixed by I162 (Q1); I153 fixed: per execution (Q5); kept on argument, the other side recorded there: I10 (Q9), I14 (value maps need not be injective, Q10), I45 (Q7), I50 (Q11), I51 (Q3), I59 (Q20), I62 (Q21), I67 (Q24), I79 (Q17), I88 (Q23), I100 (Q25), I159 (Q22). Open as the owner's: I22 (Q15), I131 (Q6).
 
 ## Registered inventions fixed or amended in round 2
 

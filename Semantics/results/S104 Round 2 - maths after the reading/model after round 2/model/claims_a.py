@@ -1168,6 +1168,19 @@ def fc28(S):
     rid2 = pole_rev_candidate(pid2, delta=("H", "T", "L"))
     parts.append(look("area 2: C_id plus one setting of θ (GLM part 7, reply line 111)", "one setting edit in the identification contract makes (F1) fail for E_rev",
                       not F1(rid2), "F1 at (%s, b1_45): %s; F1 on the contract: %s" % (setT, F1_at(rid2, setT, "b1_45"), F1(rid2)), ["I92"]))
+    # Second check (R4): is p_ident on C_id an identification question by D3.3 (L151)?
+    iL = Dall.ports.index("L")
+
+    def obs(a, b):
+        vals = set(z[iL] for z in Dall.sol(a, b))
+        return next(iter(vals)) if len(vals) == 1 else None
+
+    fibre = str(getattr(pid.Q, "name", "")).startswith("Q_fib")  # the fibre query of E1 (cases.fibre_query)
+    varies = len(set(obs(a, b) for (a, b) in Cid)) > 1
+    edit_alters = any(a != ONE and any(obs(a, b) != obs(ONE, b) for b in Dall.B) for (a, b) in Cid)
+    parts.append(computed("second check (R4): C_id is an identification contract under D3.3", "Ident(p) :⟺ Q returns a fibre ∧ ∃(a,b),(a',b') ∈ C: obs(a,b) ≠ obs(a',b') (I163) holds on C_id; D3.3 read as an edit a ≠ 1 of C altering obs does not",
+                          fibre and varies and not edit_alters,
+                          "Q a fibre: %s; observed L over C_id: %s (varies: %s); an edit a ≠ 1 in C_id altering the observed L: %s" % (fibre, sorted(set(obs(a, b) for (a, b) in Cid)), varies, edit_alters), ["I92", "I163"]))
     return parts
 
 
@@ -1203,8 +1216,45 @@ def fc31(S):
 
 @claim("FC32", [])
 def fc32(S):
-    return [not_tested("Acc's arguments against L526's order", "is every argument of Acc an ancestor of (E) in L526's order?",
-                       "a property of the dependence graph read from the text (S101, D18.1), not of models; the model can only list Acc's arguments (FC30)")]
+    """Second check (R5): L526 now points to D18.1 for (E)'s ancestors, and D18.1's graph is the program's DEP.
+    (1) every argument of Acc (FC30's list) is (O), (Q), an index, a declared input or δ, and each is an
+    ancestor of (E) in DEP; t and Γ are the candidate's own data, as for (F1), (F2), (A). (2) DEP's edges for
+    NonCircular and NonVacuous are the classes of symbols core's NC1, NC2 and nonvacuous read (a scan)."""
+    import inspect
+    from . import core
+    from .claims_b import DEP
+
+    def ancestors(n):
+        seen, todo = set(), [n]
+        while todo:
+            u = todo.pop()
+            for x in DEP.get(u, []):
+                y = x[1] if isinstance(x, tuple) else x
+                if y not in seen:
+                    seen.add(y)
+                    todo.append(y)
+        return seen
+
+    acc_args = {"D": "(O)", "E": "(O)", "C": "C", "b0": "(Q)", "Q": "(Q)", "δ": "δ", "Σ": "Σ", "ℓ": "ℓ"}
+    anc = ancestors("(E)")
+    miss = sorted(set(v for v in acc_args.values() if v not in anc))
+    src_nc = "".join(inspect.getsource(f) for f in (core.slot, core.NC1, core.contrast, core.lost, core.NC2, core.noncircular))
+    src_nv = inspect.getsource(core.nonvacuous)
+
+    def classes(src):
+        out = set()
+        for tok, cl in ((".sol(", "(O)"), (".L(", "(O)"), (".delete(", "(O)"), (".foot", "(O)"), (".ans(", "(Q)"), (".ans_E(", "(Q)"), (".Q", "(Q)"),
+                        (".C", "C"), ("deltaE", "δ"), (".excl", "Σ"), ("sig_", "(K)"), ("one_kind", "(K)")):
+            if tok in src:
+                out.add(cl)
+        return out
+
+    nc_code, nv_code = classes(src_nc), classes(src_nv)
+    nc_dep, nv_dep = set(DEP["NC"]) - {"ℓ"}, set(DEP["NV"])
+    return [computed("(1) Acc's arguments are ancestors of (E) in D18.1 (L526 points there)", "every argument of Acc other than the candidate's own t and Γ maps to an ancestor of (E)",
+                     not miss, "Acc's arguments → nodes: %s; ancestors of (E): %s; missing: %s" % (acc_args, sorted(anc), miss or "none")),
+            computed("(2) D18.1's NonCircular and NonVacuous edges are what the program reads", "classes read by NC1, NC2 = DEP['NC'] less ℓ (one grain in the model); by nonvacuous = DEP['NV']",
+                     nc_code == nc_dep and nv_code == nv_dep, "NC: code %s, D18.1 %s (+ ℓ, L255 'at the declared grain'); NV: code %s, D18.1 %s. No signature (K) is read." % (sorted(nc_code), sorted(nc_dep), sorted(nv_code), sorted(nv_dep)))]
 
 
 @claim("FC33", ["I77", "I78", "I81", "I70"])

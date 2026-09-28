@@ -17,7 +17,13 @@
    "NOT TESTED": 9
   },
   "claims": 113,
-  "note": "r2: restated (formal changed), or a note (the text or the code changed, the statement kept). formal_round2 keeps the committed statement where restated."
+  "note": "r2: restated (formal changed), or a note (the text or the code changed, the statement kept). formal_round2 keeps the committed statement where restated.",
+  "second_check": "second checker on the critical review, 28 September 2026: FC12.new1, FC28, FC32, FC71, FC83, FC98, FC102, FC107 restated or extended; results rerun (scale 4, cap 45 s)",
+  "counts_after_second_check": {
+   "HOLDS ON ALL MODELS TRIED": 103,
+   "COUNTEREXAMPLE FOUND": 3,
+   "NOT TESTED": 7
+  }
  },
  "claims": [
   {
@@ -759,7 +765,7 @@
      "line": 201
     }
    ],
-   "formal": "¬(Sel(t) ∧ Con(t)) on every history h (D12.1'); round 2's D12.1 admits an h with both.",
+   "formal": "¬(Sel(t) ∧ Con(t)) at every fixed point of (R) on every chain history of ≤ 3 occurrences, t's holding of cod t and Sel's conditions computed from t (Rep computed, not tagged), under U, K, T and T′ (D12.1 with I161); without I161, T and T′ give both; round 2's D12.1 gives both.",
    "type": [
     "definition-consequence"
    ],
@@ -767,7 +773,9 @@
     "I52",
     "I53",
     "I56",
-    "I128"
+    "I128",
+    "I161",
+    "I162"
    ],
    "round2_result": null,
    "r2": {
@@ -780,17 +788,34 @@
     "status": "HOLDS ON ALL MODELS TRIED",
     "parts": [
      {
-      "label": "D12.1': exactly one of Sel, Con, Dec",
+      "label": "D12.1 with I161, the pole's forward transport",
       "kind": "for all",
       "status": "holds on all models tried"
      },
      {
-      "label": "round 2's D12.1, for comparison",
+      "label": "D12.1 with I161, random transports",
+      "kind": "for all",
+      "status": "holds on all models tried"
+     },
+     {
+      "label": "without I161 (the review's R1)",
+      "kind": "there is",
+      "status": "witness found"
+     },
+     {
+      "label": "round 2's D12.1 (no cod t exclusion), tags",
       "kind": "there is",
       "status": "witness found"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC12.new1 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC12.new1 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "¬(Sel(t) ∧ Con(t)) on every history h (D12.1'); round 2's D12.1 admits an h with both.",
+   "second_check": {
+    "why": "R1: Rep computed; I161",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -1590,7 +1615,7 @@
      "quote": "It is faithful under the identification contract, whose edits alter the observed \\(L\\)."
     }
    ],
-   "formal": "On C_id := {1} × B (u_H and u_θ varying; no setting edit), E_rev with τ, σ the identity meets (F1), (F2) and (A) (A2-T13). Look: one setting of θ added makes (F1) fail.",
+   "formal": "On C_id := {1} × B (u_H and u_θ varying; no setting edit), E_rev with τ, σ the identity meets (F1), (F2) and (A) (A2-T13). Look: one setting of θ added makes (F1) fail. p_ident on C_id is an identification question by D3.3 (Q a fibre, C varying the observed L, I163), not by 'an edit a ≠ 1 of C altering the observed value'.",
    "type": [
     "stated result"
    ],
@@ -1598,7 +1623,8 @@
    "round1": [],
    "inventions": [
     "I20",
-    "I65"
+    "I65",
+    "I163"
    ],
    "formal_core_sections": [
     "§17"
@@ -1634,9 +1660,21 @@
       "label": "area 2: C_id plus one setting of θ (GLM part 7, reply line 111)",
       "kind": "look",
       "status": "look: as expected"
+     },
+     {
+      "label": "second check (R4): C_id is an identification contract under D3.3",
+      "kind": "computation",
+      "status": "computed: as claimed"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC28 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC28 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "On C_id := {1} × B (u_H and u_θ varying; no setting edit), E_rev with τ, σ the identity meets (F1), (F2) and (A) (A2-T13). Look: one setting of θ added makes (F1) fail.",
+   "second_check": {
+    "why": "R4: D3.3's Ident",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -1807,7 +1845,7 @@
      "quote": "Account, from fidelity under change, non-circular dependence and non-vacuity (E)."
     }
    ],
-   "formal": "In the formal core Acc uses (O), (Q), (K) (through F1), t, Γ, the stated scope Σ (a declared input), the grain ℓ (an index, in NC1) and the designation δ (I20). L526 gives (E) the ancestors (F1), (F2), (A) and 'those'; it names neither non-circular dependence nor non-vacuity, nor any index or declared input, among them. Test: is every argument of Acc an ancestor of (E) in L526's order?",
+   "formal": "(1) Every argument of Acc other than the candidate's own t and Γ ((O), (Q), C, δ, Σ, ℓ) is an ancestor of (E) in D18.1's graph, to which L526 points (A3-L526.1, a pointer). (2) D18.1's edges for NonCircular ({(O), (Q), C, ℓ, δ}) and NonVacuous ({(O), C, Σ}) are the classes of symbols the program's NC1, NC2 and nonvacuous read (ℓ from L255; one grain in the model).",
    "type": [
     "definition-consequence"
    ],
@@ -1835,15 +1873,27 @@
     "note": "L526 names dep(NonCircular), dep(NonVacuous) (A3-L526.1)"
    },
    "after_round2": {
-    "status": "NOT TESTED",
+    "status": "HOLDS ON ALL MODELS TRIED",
     "parts": [
      {
-      "label": "Acc's arguments against L526's order",
-      "kind": "not tested",
-      "status": "not tested"
+      "label": "(1) Acc's arguments are ancestors of (E) in D18.1 (L526 points there)",
+      "kind": "computation",
+      "status": "computed: as claimed"
+     },
+     {
+      "label": "(2) D18.1's NonCircular and NonVacuous edges are what the program reads",
+      "kind": "computation",
+      "status": "computed: as claimed"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC32 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC32 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "In the formal core Acc uses (O), (Q), (K) (through F1), t, Γ, the stated scope Σ (a declared input), the grain ℓ (an index, in NC1) and the designation δ (I20). L526 gives (E) the ancestors (F1), (F2), (A) and 'those'; it names neither non-circular dependence nor non-vacuity, nor any index or declared input, among them. Test: is every argument of Acc an ancestor of (E) in L526's order?",
+   "second_check": {
+    "why": "R5: one edge set; computed",
+    "status_before": "NOT TESTED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -3627,7 +3677,7 @@
      "quote": "For \\(T\\land B\\land I\\Rightarrow O\\), an argument usable by \\(j\\) that rules out \\(O\\) rules out \\(T\\land B\\land I\\) together for \\(j\\), and nothing narrower. (K3)"
     }
    ],
-   "formal": "(i) α ∈ X_j(O) ∧ Usable_j(u⁺) ∧ no leaf of α with ¬(T∧B∧I) as a conjunct ⇒ α⁺ ∈ X_j(T∧B∧I), any form of u⁺; (ii) ¬RO(α⁺, x) for x ∈ {T,B,I}; (iii) with MP, MT, AndE no argument from those premises rules out T, B or I; (iv) with an unsound admitted form, T alone can be ruled out.",
+   "formal": "(i) α ∈ X_j(O) ∧ Usable_j(u⁺) ∧ no leaf of α with ¬(T∧B∧I) as a conjunct ⇒ α⁺ ∈ X_j(T∧B∧I), any form of u⁺; (i') a record leaf of α made from ¬(T∧B∧I) blocks it (D9.9 (i)); (ii) ¬RO(α⁺, x) for x ∈ {T,B,I}; (iii) with forms in Forms_cl (MP, MT, AndE) no argument from those premises rules out T, B or I; (iv) with an admitted form outside Forms_cl, T alone can be ruled out.",
    "type": [
     "stated result"
    ],
@@ -3635,6 +3685,7 @@
    "round1": [],
    "inventions": [
     "I38",
+    "I39",
     "I43"
    ],
    "formal_core_sections": [
@@ -3663,17 +3714,29 @@
       "status": "holds on all models tried"
      },
      {
-      "label": "(iii) sound forms: nothing narrower from those premises",
+      "label": "(iii) forms in Forms_cl: nothing narrower from those premises",
       "kind": "computation",
       "status": "computed: as claimed"
      },
      {
-      "label": "(iv) an unsound admitted form (GLM, part 12)",
+      "label": "(iv) an admitted form outside Forms_cl (GLM, part 12)",
+      "kind": "computation",
+      "status": "computed: as claimed"
+     },
+     {
+      "label": "(i') second check (R8): a record leaf of α made from ¬(T∧B∧I) blocks α⁺",
       "kind": "computation",
       "status": "computed: as claimed"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC71 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC71 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "(i) α ∈ X_j(O) ∧ Usable_j(u⁺) ∧ no leaf of α with ¬(T∧B∧I) as a conjunct ⇒ α⁺ ∈ X_j(T∧B∧I), any form of u⁺; (ii) ¬RO(α⁺, x) for x ∈ {T,B,I}; (iii) with MP, MT, AndE no argument from those premises rules out T, B or I; (iv) with an unsound admitted form, T alone can be ruled out.",
+   "second_check": {
+    "why": "R8, R15",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -4258,7 +4321,7 @@
      "quote": "Only the second can be originative under Part X."
     }
    ],
-   "formal": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t') (Build prepares a represented organization, L405; D12.1' forbids Rep(o, cod t') in h(t')).",
+   "formal": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), with Rep computed as in FC12.new1, under U, K, T and T′ (D12.1 with I161; D13.3 with the cut); without I161, T and T′ admit both.",
    "type": [
     "strong candidate",
     "stated result"
@@ -4269,7 +4332,9 @@
    "round1": [],
    "inventions": [
     "I52",
-    "I56"
+    "I56",
+    "I161",
+    "I162"
    ],
    "formal_core_sections": [
     "§12",
@@ -4288,12 +4353,24 @@
     "status": "HOLDS ON ALL MODELS TRIED",
     "parts": [
      {
-      "label": "only construction is originative",
-      "kind": "computation",
-      "status": "computed: as claimed"
+      "label": "FC83' with Rep computed, D12.1 with I161",
+      "kind": "for all",
+      "status": "holds on all models tried"
+     },
+     {
+      "label": "without I161 (the review's R1)",
+      "kind": "there is",
+      "status": "witness found"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC83 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC83 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t') (Build prepares a represented organization, L405; D12.1' forbids Rep(o, cod t') in h(t')).",
+   "second_check": {
+    "why": "R1: Rep computed; I161",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -4980,7 +5057,7 @@
      "quote": "The order has no cycle and no endless descent."
     }
    ],
-   "formal": "(a) With 'represented' read through (R) the dependence graph has a cycle (E03); (a') staged by ≺_h, none; (b) the sinks outside L522's list (a look; Q4); (c) Rep as a fixed point on a two-occurrence history: as worded two / none, K and T one each; (d) K gives a first construction no representation, T gives one.",
+   "formal": "(a) With 'represented' read through (R) the dependence graph has a cycle (E03); (a') under the cuts K, T and T′, none; (b) the sinks outside L522's list (a look; each read through Θ or a declared input, D0.2); (c) Rep as a fixed point on a two-occurrence history: as worded two / none, K, T and T′ one each; (d) K gives a first construction no representation, T and T′ one; (e) an earlier holder by a declared transport blocks a later selection under T, not under K or T′ (L195 with L211): the cut T′ (I162).",
    "type": [
     "stated result"
    ],
@@ -4999,7 +5076,8 @@
     "I55",
     "I56",
     "I58",
-    "I59"
+    "I59",
+    "I162"
    ],
    "formal_core_sections": [
     "§18"
@@ -5022,7 +5100,7 @@
       "status": "computed: as claimed"
      },
      {
-      "label": "(a') the order staged by ≺_h",
+      "label": "(a') the order under the cuts K, T and T′",
       "kind": "computation",
       "status": "computed: as claimed"
      },
@@ -5040,9 +5118,21 @@
       "label": "(d) what each cut gives",
       "kind": "computation",
       "status": "computed: as claimed"
+     },
+     {
+      "label": "(e) second check: an earlier holder with a declared transport (L211), then a selection",
+      "kind": "computation",
+      "status": "computed: as claimed"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC98 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC98 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "(a) With 'represented' read through (R) the dependence graph has a cycle (E03); (a') staged by ≺_h, none; (b) the sinks outside L522's list (a look; Q4); (c) Rep as a fixed point on a two-occurrence history: as worded two / none, K and T one each; (d) K gives a first construction no representation, T gives one.",
+   "second_check": {
+    "why": "R3, Q1: the cut T′",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -5204,7 +5294,7 @@
      "quote": "Under (F1), \\(t_1\\) is faithful on the extended contract."
     }
    ],
-   "formal": "With I68: (a) t0 survives on H0 and is surprised at re-emergence; (b) occlusion of L ≥ w steps ⇒ two histories with equal last-w occupancy and different re-emergence readings; the converse (the formalizer's gloss) is a look; (b'') w ≤ L_occ ⇒ no window-w occupancy predictor survives, for one thing and two (A3-L626.1); (c) t1 meets (F1), (F2) on the extended contract.",
+   "formal": "With I68: (a) t0 survives on H0 and is surprised at re-emergence; (b) occlusion of L ≥ w steps ⇒ two histories with equal last-w occupancy and different re-emergence readings; the converse (the formalizer's gloss) is a look; (b'') w ≤ L_occ ⇒ no window-w occupancy predictor survives, for one thing and two (A3-L626.1); (b3) the same with things stopping at the ends; (c) t1 meets (F1), (F2) on the extended contract.",
    "type": [
     "stated result"
    ],
@@ -5251,12 +5341,24 @@
       "status": "computed: as claimed"
      },
      {
+      "label": "(b3) second check (Q25): the bound under the other end rule",
+      "kind": "computation",
+      "status": "computed: as claimed"
+     },
+     {
       "label": "(a), (c)",
       "kind": "not tested",
       "status": "not tested"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC102 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC102 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "With I68: (a) t0 survives on H0 and is surprised at re-emergence; (b) occlusion of L ≥ w steps ⇒ two histories with equal last-w occupancy and different re-emergence readings; the converse (the formalizer's gloss) is a look; (b'') w ≤ L_occ ⇒ no window-w occupancy predictor survives, for one thing and two (A3-L626.1); (c) t1 meets (F1), (F2) on the extended contract.",
+   "second_check": {
+    "why": "Q25: the end rule",
+    "status_before": "HOLDS ON ALL MODELS TRIED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {
@@ -5477,7 +5579,7 @@
      "quote": "Exposing the defect is another question with its own contract."
     }
    ],
-   "formal": "The question p_δ (whether p has defect δ) has a target, contract and query of its own, so p_δ ≠ p; a candidate for it is assessed by (E) on p_δ, as in (K1).",
+   "formal": "The question p_δ (whether p has defect δ) has a target, contract and query of its own, so p_δ ≠ p; a candidate for it is assessed by (E) on p_δ, as in (K1). Tested on E8: p_δ on D_C (the contract as an organization, 𝒬 a port) ≠ p; Acc computed for the identity candidate.",
    "type": [
     "strong candidate",
     "definition-consequence"
@@ -5487,6 +5589,7 @@
    ],
    "round1": [],
    "inventions": [
+    "I67",
     "I76"
    ],
    "formal_core_sections": [
@@ -5497,15 +5600,27 @@
    "round2_result": "NOT TESTED",
    "r2": null,
    "after_round2": {
-    "status": "NOT TESTED",
+    "status": "HOLDS ON ALL MODELS TRIED",
     "parts": [
      {
-      "label": "p_δ ≠ p",
-      "kind": "not tested",
-      "status": "not tested"
+      "label": "p_δ ≠ p on E8",
+      "kind": "computation",
+      "status": "computed: as claimed"
+     },
+     {
+      "label": "(E) assesses a candidate for p_δ (K1)",
+      "kind": "computation",
+      "status": "computed: as claimed"
      }
     ],
-    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC107 --scale 4 --time-cap 45"
+    "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S104 Round 2 - maths after the reading/model after round 2\" && python3 -m model.run --claim FC107 --scale 4 --time-cap 45",
+    "second_check": true
+   },
+   "formal_before_second_check": "The question p_δ (whether p has defect δ) has a target, contract and query of its own, so p_δ ≠ p; a candidate for it is assessed by (E) on p_δ, as in (K1).",
+   "second_check": {
+    "why": "R13, Q13: tested on E8",
+    "status_before": "NOT TESTED",
+    "status_after": "HOLDS ON ALL MODELS TRIED"
    }
   },
   {

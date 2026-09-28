@@ -294,7 +294,7 @@ def main():
          [], True),
     ]
     P("CT8  Provenance of the chosen pair's transport on one history of the run (Θ set by hand, I90): H = the eight settings, all occurring;")
-    P("     Sel as D12.1 has it (L195 alone), and with L201 and L411 read into it (H05: no represented target in a selection history).")
+    P("     Sel as D12.1 has it after round 2 (D12.1': no represented codomain; I161: no trace in the history prepares t), and with L201 and L411 read into it.")
     for rid, text, rep, prep in readings:
         h = Hist(occ, rep, set(H), admitted=True, prepares=prep)
         s1 = sel(cq, H, h)

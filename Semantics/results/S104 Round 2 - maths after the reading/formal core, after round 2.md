@@ -2,6 +2,8 @@
 
 *Integration of round 2 (log S104), 28 September 2026: the committed `results/S104 Round 2 - maths/formal core.md` with every change of the three areas (`area N - verdicts and formal fixes.md`) put in place. A changed definition carries its new form; a new one is inserted in place; each is marked [r2: area; items]. Inventions I122–I160: `inventions register - addendum after round 2.md`. Quotations `> Lnnn` are of text 103 as committed; where text 104 changes a quoted line, the bracket names the change (T1–T10, A2-T1–A2-T13, A3-Lnnn.k). Nothing is settled (S28).*
 
+*Second check on the critical review (28 September 2026): changes marked [r2b: second check; Rn or Qn] (R1–R16 of `results/S104 Round 2 - critical review of the round.md`; Qn of `owner questions after round 2.md`); new inventions I161–I164; text changes `text changes after the review.json`.*
+
 *Log S104, review round 2 (the maths round), 27 September 2026, under decision S36 ("maybe exploring the math a bit more might help instead of words. Since words are vague"; "if implementation forces invention, that needs to be recorded"). The text under review is `tests/103 The semantics, standing alone, after round 1.md`, md5 f31ebb1f050783f1a84f6136cec20fcd (not written to). Every quotation of the text is written `> Lnnn | …` and was compared by program (`s104_check.py`) with the line it names; " … " joins fragments of one line, in order.*
 
 **What this is.** The definitions the text's structure rests on, each written as mathematics beside the sentences it formalizes. Where the text fixes something, the mathematics follows it. Where the text leaves something open, the choice made here is marked **[Inn]** and recorded in `inventions register.md` with the other choices that were possible; nothing marked [Inn] is the text's own content. Where the text is vague, the section says so under **Vague**. The claims these definitions let one state and test are in `formal claims.md` (FC01–FC110). Definitions are numbered D§.n; encodings of the text's worked constructions are numbered E1–E9 (§17). Nothing here is settled (S28): every definition is a conjecture about how the text can be written, open to replacement.
@@ -23,7 +25,7 @@
 
 Φ = (Θ with Org_ℓ; 𝒩 where invoked; ℓ, β, Ω, C; the aims O, P with occasions; the scope statement Σ of each contract; boundary and continuity of each attribution; for each assessor j: Forms_j, the scope declarations Scope_j, Accepted_j(ξ); a weighting where one is used).
 
-**D0.2 Primitives this formalization adds.** Beyond Φ, the formal core uses these symbols, which the text names or needs but neither defines nor lists among its imports, indices or declared inputs. Each is an invention, and FC98 asks of each whether it is a claim read through Θ or a primitive the text does not list: the designation δ of a query [I20]; the undetermined answer ⊥ [I21]; Excl(Σ) [I27]; the restriction operation [I29] (the text calls it declared, L287; L522 does not list it); Offered [I33] and Off [I33, r2: A2]; Allow_χ and Applies [I34]; MadeFrom [I39]; the contrast set K of an active route [I46]; Rule, Rec, Chg of reason use [I47]; Integrated and Nontrivial [I55]; Prepares, BindingConstruction, TransferComposite [I56]; Aims* and the exposure record [I58]; O_ex's marking [I59]; Occurs (D11.5) [I130]; Attempt (read through Θ); Qf [I145]; ExplUse [I148]; AtRest [I149]; Org_ℓ(h) and subhistory [I151]. Below (D9.2) is defined. Contrib is dropped (D13.7). Whether each is read through Θ, a declared input or defined is owner question Q4. [r2: A3; D0.2, H20, D13.6, H14, H19; A2: Off]
+**D0.2 Primitives this formalization adds.** Beyond Φ, the formal core uses these symbols, which the text names or needs but neither defines nor lists among its imports, indices or declared inputs. Each is an invention, and FC98 asks of each whether it is a claim read through Θ or a primitive the text does not list: the designation δ of a query [I20]; the undetermined answer ⊥ [I21]; Excl(Σ) [I27]; the restriction operation [I29] (the text calls it declared, L287; L522 does not list it); Offered [I33] and Off [I33, r2: A2]; Allow_χ and Applies [I34]; MadeFrom [I39]; the contrast set K of an active route [I46]; Rule, Rec, Chg of reason use [I47]; Integrated and Nontrivial [I55]; Prepares, BindingConstruction, TransferComposite [I56]; Aims* and the exposure record [I58]; O_ex's marking [I59]; Occurs (D11.5) [I130]; Attempt (read through Θ); Qf [I145]; ExplUse [I148]; AtRest [I149]; Org_ℓ(h) and subhistory [I151]. Below (D9.2) is defined. Contrib is dropped (D13.7). Each is stated, not defined: read through Θ where it is a claim about a history (Occurs, Attempt, Prepares, BindingConstruction, TransferComposite, Integrated, ExplUse, AtRest, Org_ℓ(h), MadeFrom, Rec, Chg, Rule), a declared input otherwise (FC98 (b)) [r2b: second check; Q4 ruled, no text change]. Held (D18.1) and CT (D12.2) are defined. [r2: A3; D0.2, H20, D13.6, H14, H19; A2: Off]
 
 ## §1 Organizations (O)
 
@@ -97,7 +99,7 @@ The X_v are arbitrary sets; no order on J is assumed; nothing selects one soluti
 
 > L151 | A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports. An identification question has a \(\mathcal Q\) that computes a fibre and a \(C\) containing edits to the observed value. An obstruction question has a \(\mathcal Q\) that returns reachable or unreachable.
 
-**D3.3 Respects** **[I72]**. v ⇝ w :⟺ ∃n ≥ 1, j_1…j_n, u_1…u_n: v ∈ V_j1∖{u_1}; Out(u_i, j_i) ∀i ≤ n; u_i ∈ V_j(i+1)∖{u_(i+1)} ∀i < n; u_n = w **[I126]**. Prod(p) :⟺ Q = Q_w with Out(w, j) for some j, and C holds a setting edit of some v ⇝ w. Ident(p) :⟺ Q returns a fibre g⁻¹(y) (E2) and C holds edits to the observed value. Obst(p) :⟺ Y_p = {reachable, unreachable}. Rule-status: Rule_C (D4.6); purpose-achievement: (AR) (D14.8). Prod, Ident, Obst are L151's conditions (by 'fixed by', both ways); they may overlap (FC36). [r2: A1; D3.3, I72]
+**D3.3 Respects** **[I72]**. v ⇝ w :⟺ ∃n ≥ 1, j_1…j_n, u_1…u_n: v ∈ V_j1∖{u_1}; Out(u_i, j_i) ∀i ≤ n; u_i ∈ V_j(i+1)∖{u_(i+1)} ∀i < n; u_n = w **[I126]**. Prod(p) :⟺ Q = Q_w with Out(w, j) for some j, and C holds a setting edit of some v ⇝ w. Ident(p) :⟺ Q returns a fibre g⁻¹(obs(a,b)) (E2), obs(a,b) the observed value g takes on Sol_D(a,b), and ∃(a,b),(a',b') ∈ C: obs(a,b) ≠ obs(a',b') **[I163]** [r2b: second check; R4: was 'C holds edits to the observed value', which C_id = {1} × B (E1, L325) does not meet; L151 writes it (R4-L151); FC28]. Obst(p) :⟺ Y_p = {reachable, unreachable}. Rule-status: Rule_C (D4.6); purpose-achievement: (AR) (D14.8). Prod, Ident, Obst are L151's conditions (by 'fixed by', both ways); they may overlap (FC36). [r2: A1; D3.3, I72]
 
 > L155 | A claim that an episode *found* a question requires \(\rho_p=\text{constructed}\) for the contract in question, with the trace.
 
@@ -320,7 +322,7 @@ A candidate offered for p is the claim Acc(ℰ) on p.
 
 > L397 | **Arguments.** A record leaf is a reference to an event with an interpreted claim. An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions.
 
-**D9.1 Claims.** Claims are sentences of a first-order language with ¬ and ∧; Incons(φ, ψ) is classical inconsistency of {φ, ψ} **[I38]**. The claims used here include 'Acc(ℰ)', 'Ans_p(a,b) = y', records of a test, and conditionals.
+**D9.1 Claims.** Claims are sentences of a first-order language with ¬ and ∧; Incons(φ, ψ) is classical inconsistency of {φ, ψ} **[I38]**. Forms_cl := the inference forms every instance u of which has Incons(Prem(u) ∪ {¬concl(u)}) [r2b: second check; R15: replaces the gloss 'classically sound' in D9.7, D9.9 (S23)]. The claims used here include 'Acc(ℰ)', 'Ans_p(a,b) = y', records of a test, and conditionals.
 
 **D9.2 Argument.** A finite tree α. Each internal node is a step u with an inference form Form(u) and a conclusion concl(u); its children are its premises. Leaves are record leaves (each referring to an event, D11.1, with an interpreted claim) or stated assumptions and definitions. MadeFrom(leaf, ψ) is a primitive: the record leaf was made from the claim ψ **[I39]**. Below(u) := the steps of the subtree of u other than u. [r2: A3; D9.2, I40]
 
@@ -342,13 +344,13 @@ A candidate offered for p is the claim Acc(ℰ) on p.
 
 > L397 | An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by "and", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial.
 
-**D9.7 Rules out.** A step u, for j with Form_j(u), rules out the case Prem(u) ∧ ¬concl(u); forms need not be classically sound **[I38]**. RO(α, φ) :⟺ Incons(φ, concl(root of α)); no leaf of α has ¬φ as a conjunct (flattened, up to renaming and the order of conjuncts) **[I39]**; and no record leaf of α is made from a claim whose denial is φ.
+**D9.7 Rules out.** A step u, for j with Form_j(u), rules out the case Prem(u) ∧ ¬concl(u); forms need not be in Forms_cl **[I38]** [r2b: R15]. RO(α, φ) :⟺ Incons(φ, concl(root of α)); no leaf of α has ¬φ as a conjunct (flattened, up to renaming and the order of conjuncts) **[I39]**; and no record leaf of α is made from a claim whose denial is φ.
 
 > L315 | A claim is **ruled out** for an assessor \(j\) when an argument usable by \(j\) (Part IX) rules it out, and a candidate is ruled out for \(j\) when the claim that it meets (E) is;
 
 > L315 | A candidate is **not ruled out** for \(j\) when no argument usable by \(j\) rules it out.
 
-**D9.8 Ruled out; not ruled out.** X_j(φ) := {α : Usable_j(α) ∧ RO(α, φ)}. Out_j(φ) :⟺ X_j(φ) ≠ ∅; NotOut_j(φ) :⟺ X_j(φ) = ∅. A candidate ℰ is ruled out for j :⟺ Out_j('Acc(ℰ)').
+**D9.8 Ruled out; not ruled out.** X_j(φ) := {α : Usable_j(α) ∧ RO(α, φ)}. Out_j(φ) :⟺ X_j(φ) ≠ ∅; NotOut_j(φ) :⟺ X_j(φ) = ∅. X^ξ_j(φ), Usable^ξ_j: the same with Accepted_j(ξ) (D9.4) at ξ [r2b: second check; R9: L393's pointer names D9.4, D9.8]. A candidate ℰ is ruled out for j :⟺ Out_j('Acc(ℰ)').
 
 > L397 | Where such an argument uses a claim taken as given, the ruling out is a choice the person using it made, not something the claim does by itself (Part 0).
 
@@ -359,7 +361,8 @@ Formally: Out_j depends on Accepted_j and Forms_j, which are declared inputs tha
 **D9.9 (K3).** **[I43, fixed]** u⁺ := the step with Prem(u⁺) = {concl(α), T∧B∧I ⇒ O} and concl(u⁺) = ¬(T∧B∧I); α⁺ := α under u⁺.
 - (i) α ∈ X_j(O) ∧ Usable_j(u⁺) ∧ ∀ leaf l of α [¬(T∧B∧I) ∉ conj(l) ∧ ¬MadeFrom(l, ¬(T∧B∧I))] ⇒ α⁺ ∈ X_j(T∧B∧I), for any Form(u⁺) ∈ Forms_j.
 - (ii) ∀x ∈ {T, B, I}: ¬RO(α⁺, x).
-- (iii) Forms_j classically sound ⇒ no α' with leaves ⊆ leaves(α) ∪ {T∧B∧I ⇒ O} has α' ∈ X_j(x).
+- (iii) Forms_j ⊆ Forms_cl ⇒ no α' with leaves ⊆ leaves(α) ∪ {T∧B∧I ⇒ O} has α' ∈ X_j(x) [r2b: R15].
+[r2b: second check; R8: L395 now writes (i) with its MadeFrom clause and (ii) in symbols (A3-L395.1 amended); FC71 (i').]
 [r2: A3; D9.9, FC71, I43; A3-L395.1]
 
 > L377 | **Bearing.** A criticism has target \(z\), alleged defect \(\delta\), premise \(g\), and a connection. Let \(p_\delta\) be the question whether \(z\) has \(\delta\) in respect of \(p\), and \(\mathcal E_c\) the explanatory candidate (Part V) for \(p_\delta\) whose organization is the criticism's connection from \(g\) to \(\delta\), with its transport and its identified commitments. Then
@@ -436,15 +439,15 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 > L195 | A transport **survives on \(H\)** when it is a member of \(\mathcal T\) that meets the survival condition on \(H\); fidelity on \(H\) without membership in \(\mathcal T\) is not survival. No member of the history represents \(t\), \(H\), or the survival condition.
 
-**D12.1 Selected.** Sel(t; 𝒯, μ, H) :⟺ t ∈ 𝒯; μ: 𝒯 → P(𝒯); H ⊆ C finite, its pairs having occurred in h(t) (D11.5); Faithful_H(t) (D5.7), i.e. t survives on H; 𝒯 = D15.8's population (L481); and ¬∃o ∈ h(t), x ∈ {t, H, surv, cod t}: Rep(o, x) (D12.5), h(t) the one history of t, its preparing episode included **[I52, I53, I128]**. [r2: A1 (D12.1', H05, I52, I53, FC78; T9) + A3 (H09: '𝒯 =', was 'members of 𝒯 admitted'); Rep as D18.1, ρ open (Q1)]
+**D12.1 Selected.** Sel(t; 𝒯, μ, H) :⟺ t ∈ 𝒯; μ: 𝒯 → P(𝒯); H ⊆ C finite, its pairs having occurred in h(t) (D11.5); Faithful_H(t) (D5.7), i.e. t survives on H; 𝒯 = D15.8's population (L481); and ¬∃o ≺_{h(t)} o_t, x ∈ {t, H, surv, cod t}: Rep(o, x) (D12.5), o_t the occurrence at which t is held, h(t) the one history of t, its preparing episode included **[I52, I53, I128, I162]**; and ¬∃h' ⊆ h(t): CT(h', t) (D12.2) **[I161]**. [r2: A1 (D12.1', H05, I52, I53, FC78; T9) + A3 (H09: '𝒯 =', was 'members of 𝒯 admitted')] [r2b: second check; R1: + ¬CT (I161), so Sel ∧ Con is excluded by definition under every cut (FC12.new1, FC83, Rep computed); R3: the exclusion is staged at o ≺ o_t, the cut T′ (D18.1, I162); T9 writes it at L195 (R2)]
 
 > L197 | **Constructed.** There is an episode (Part X) whose construction trace prepares \(t\), and in which \(t\), or the organization it carries to, is available as a represented target. Write \(\operatorname{Con}(t;h,e)\).
 
-**D12.2 Constructed.** Con(t; h, e) :⟺ some episode of h up to e (D13.8) has a construction trace (D13.3) that prepares t, and t or its codomain is a represented target in it. [r2: 'represented' is Rep^ρ of D18.1 (A3; Q1)]
+**D12.2 Constructed.** CT(h', t) :⟺ h' has a construction trace (D13.3) that prepares t. Con(t; h, e) :⟺ some episode h' of h up to e (D13.8) has CT(h', t), and Held(o', x) for some o' ⪯ o_t of h' and x ∈ {t, cod t} (D18.1) **[I162]**. [r2: A3] [r2b: second check; R3: 'available as a represented target' read as Held, the cut T′ (Q1 ruled)]
 
 > L199 | **Declared.** Neither of the above. The transport is entered into the model by its author. Write \(\operatorname{Dec}(t)\).
 
-**D12.3 Declared.** Dec(t) :⟺ no parameters give Sel(t; ·) and none give Con(t; ·). Sel and Con are read on t's one history h(t) (D12.1) **[I53, I128]**. [r2: A1; D12.3 via D12.1'; L199's second sentence deleted (T10)]
+**D12.3 Declared.** Dec(t) :⟺ no parameters give Sel(t; ·) and none give Con(t; ·). Sel and Con are read on t's one history h(t) (D12.1) **[I53, I128]**; they exclude each other by D12.1's ¬CT (I161). [r2: A1; D12.3 via D12.1'; L199's second sentence deleted (T10)] [r2b: R1]
 
 > L211 | A carrier keeps its provenance when present access to it is lost, and a later record made from the carrier carries that provenance, not a second, independent one.
 
@@ -470,7 +473,7 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 > L221 | - **surprise** is a violation of a selected transport at \((a,b)\notin H\).
 
-**D12.7 Prediction, violation, surprise.** For t from P to S with contract C and, if selected, history H, at (a,b) ∈ C with Occurs(a,b,ξ): Pred_t(a,b) := Ans_S(τ(a),σ(b)); Viol(t; a,b) :⟺ ¬(F1 at (a,b) ∧ F2eq at (a,b)), and Viol⁺ adds (A) at (a,b) **[I50]**; Surp(t; a,b) :⟺ Sel(t; 𝒯_t, μ_t, H_t) ∧ (a,b) ∉ H_t ∧ Viol(t; a,b), (𝒯_t, μ_t, H_t) of t's one history (L193, L217); so Sel ∧ Viol(a,b) ⇒ (a,b) ∉ H_t [r2: A1; D12.7, H07; L584 writes it (A3-L584.1)]. Pred is extended to any transport, Pred_t(a,b) := Ans_E(τ(a),σ(b)), where a line uses it so (L151) **[I51]**.
+**D12.7 Prediction, violation, surprise.** For t from P to S with contract C and, if selected, history H, at (a,b) ∈ C with Occurs(a,b,ξ): Pred_t(a,b) := Ans_S(τ(a),σ(b)); Viol(t; a,b) :⟺ ¬(F1 at (a,b) ∧ F2eq at (a,b)), and Viol⁺ adds (A) at (a,b) **[I50]**; Surp(t; a,b) :⟺ Sel(t; 𝒯_t, μ_t, H_t) ∧ (a,b) ∉ H_t ∧ Viol(t; a,b), (𝒯_t, μ_t, H_t) of t's one history (L193, L217); so Sel ∧ Viol(a,b) ⇒ (a,b) ∉ H_t [r2: A1; D12.7, H07; L584 writes it (A3-L584.1)] [r2b: R6: L584 with 𝒯_t, μ_t, H_t]. Pred is extended to any transport, Pred_t(a,b) := Ans_E(τ(a),σ(b)), where a line uses it so (L151) **[I51]**.
 
 > L225 | A **selection response** extends the history \(H\) of a selected transport and lets \(\mu\) act: the transport is re-tuned within the population. A **construction response** introduces a new organization or a new transport with a construction trace.
 
@@ -480,7 +483,7 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 **D12.9 Value at a pair; underdetermination.** value_t(a,b) := (τ(a), σ(b), (L^E_k(τ(a),σ(b)))_{k∈J_E}); members of 𝒯 share the codomain's ports and components **[I71]**. Underdet(t; a,b; 𝒯, H) :⟺ some t' ∈ 𝒯 surviving on H has value_t'(a,b) ≠ value_t(a,b) (FC80).
 
-**Vague.** 'No member of the history represents' (L195) is said of a set of pairs, which cannot represent; the reading as occurrences of a physical history is invented, and without it Sel is met by every transport (FC77) [I52]. 'Exactly one of three' needs Sel and Con read on one history [I53]. 'Inherited provenance' (L405, L409) is used and not defined [I54]. [r2: 'member of the history' read as occurrences of h(t) (D12.1; T9)]
+**Vague.** 'No member of the history represents' (L195) is said of a set of pairs, which cannot represent; the reading as occurrences of a physical history is invented, and without it Sel is met by every transport (FC77) [I52]. 'Exactly one of three' needs Sel and Con read on one history [I53]. 'Inherited provenance' (L405, L409) is used and not defined [I54]. [r2: 'member of the history' read as occurrences of h(t) (D12.1; T9)] [r2b: second check; R1: L201's 'no criticism in its history' and 'a constructed one has both' are carried by neither D12.1 nor D12.2 (D12.2 asks no criticism); I161, not 'no criticism', gives L193's 'exactly one'.]
 
 ## §13 Deploy, Build, New, Origin, ownership, episodes
 
@@ -492,7 +495,7 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 > L405 | **Construction.** \(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) is met when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers.
 
-**D13.3 Build; construction trace.** Build_{β,ℓ}(s, c, h, e) :⟺ ∃h' ⊆ h ending at e [Owned_β(h', s) ∧ ∃o output of h' [Prepares(h', o, c) ∧ Rep^ρ_ℓ(o, c) ∧ ExplUse(o, c)] ∧ BindingConstruction(h', c) ∧ ¬TransferComposite(h')], ρ ∈ {K, T} (D18.1; Q1) **[I56, I148]**. [r2: A3; D13.3] A construction trace is (h', the controlled processes, the incoming carriers, the bindings constructed, the resulting representation) (L405). A binding may be identified by its use: by responses meeting D9.11's clauses (L409).
+**D13.3 Build; construction trace.** Build_{β,ℓ}(s, c, h, e) :⟺ ∃h' ⊆ h ending at e [Owned_β(h', s) ∧ ∃o output of h' [Prepares(h', o, c) ∧ Held_ℓ(o, c) ∧ ExplUse(o, c)] ∧ BindingConstruction(h', c) ∧ ¬TransferComposite(h')] (D18.1) **[I56, I148, I162]**. [r2: A3; D13.3] [r2b: second check; R3: 'represented organization' read as Held, the cut T′ (was Rep^ρ, ρ open, Q1)] A construction trace is (h', the controlled processes, the incoming carriers, the bindings constructed, the resulting representation) (L405). A binding may be identified by its use: by responses meeting D9.11's clauses (L409).
 
 > L413 | **Newness.** Write \(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) and from \(c\) to \(d\), both faithful on \(c\)'s contract at grain \(\ell\).
 
@@ -568,7 +571,7 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 > L469 | Execution families are nonempty on admitted inputs; deadlock is not a vacuous performance of the task.
 
-**D15.2 Retained realization (CT1).** Exec(π, z, i; χ) is a set of executions, each with a completion flag, an output o and a final constructor state z'. RetReal(π, T, C; χ) :⟺ for every z ∈ C, i ∈ dom T and η ∈ Exec(π, z, i; χ): η completes with o ∈ T[i] and z' ∈ C. Standing assumption: Exec(π, z, i; χ) ≠ ∅ for every z ∈ Z and i ∈ dom T (L469) **[I61, fixed]**. RetReal^{q,r}_ϑ(π, T, C; χ), ϑ ∈ {per execution: o ∈ T^q[i] and z' ∈ C^r for every η; over the family: a bound on failing executions}, ϑ not chosen (Q5) **[I153]**. [r2: A3; D15.2, FC92, E17] (Here C is a constructor attribute and π a protocol: the letters of Part XII are local.)
+**D15.2 Retained realization (CT1).** Exec(π, z, i; χ) is a set of executions, each with a completion flag, an output o and a final constructor state z'. RetReal(π, T, C; χ) :⟺ for every z ∈ C, i ∈ dom T and η ∈ Exec(π, z, i; χ): η completes with o ∈ T[i] and z' ∈ C. Standing assumption: Exec(π, z, i; χ) ≠ ∅ for every z ∈ Z and i ∈ dom T (L469) **[I61, fixed]**. RetReal^{q,r}(π, T, C; χ) :⟺ for every z ∈ C, i ∈ dom T and η ∈ Exec(π, z, i; χ): η completes with o ∈ T^q[i] and z' ∈ C^r (per execution) **[I153, fixed]** [r2b: second check; Q5 ruled: (CT1)'s ∀η (L466) and L479's 'a tolerance of performance'; the other side, a bound on failing executions over the family, needs a measure on executions no line gives]. [r2: A3; D15.2, FC92, E17] (Here C is a constructor attribute and π a protocol: the letters of Part XII are local.)
 
 > L471 | **Retention fixed point.** \(F(C)\) = states whose executions all complete and return into \(C\). \(F\) is monotone; \(C\subseteq F(C)\) is the invariant form; the greatest fixed point is the union of the sets \(D\) with \(D\subseteq F(D)\). (CT2)
 
@@ -614,11 +617,11 @@ A criticism's premise g is represented (D12.5) by an organization of the system.
 
 > L506 | \mathsf{UECS}=\{(M,s,\xi_0,\Omega,\beta):M\models\operatorname{RC}\land\operatorname{UU}\land\operatorname{UC}\}. \tag{U3}
 
-**D16.4 Universality.** 𝔈_Θ := {c : Acc(c, p, t, Γ) for some p, t, Γ, and Θ admits a carrier instantiating c} **[I75]**; 𝔓^adv_Θ is not defined beyond its name (NF12). UU, UC, UECS as displayed.
+**D16.4 Universality.** 𝔈_Θ := {c : Acc(c, p, t, Γ) for some p, t, Γ, and Θ admits a carrier instantiating c} **[I75]**; 𝔓^adv_Θ is not defined beyond its name (NF12); it is read through Θ, and (U2), (U3) are stated given it [r2b: second check; Q8 ruled; the other side, a definition, needs content no line gives]. UU, UC, UECS as displayed.
 
 > L528 | **Membership.** The base class: interpretations supplying these data with typing as declared, meeting physical realization wherever a physical attribution is made. The creative-episode class: base interpretations with an instance of (G) connected to a critical episode. The explanation-creation class: an instance of (EX). The recursive class: (RC). The universal class: (U3).
 
-**D16.5 Classes.** Base := the interpretations M of the data of §§1–15 with the typing above and Θ-realization of every physical attribution; CreativeEp := {M ∈ Base : M has a (G) instance with Conn(G, h') for a critical episode h'} **[I152]**; ExplCreation := {M : M ⊨ CreateEx for some s, Δ, h, e}; Recursive := {M : M ⊨ RC}; Universal := {M : ∃s, ξ0, Ω, β (M, s, ξ0, Ω, β) ∈ UECS}. Each is the extension of a formula; no axiom here puts any system in any class (FC110). [r2: A3; D16.4, D16.5; A3-L528.1]
+**D16.5 Classes.** Base := the interpretations M of the data of §§1–15 with the typing above and Θ-realization of every physical attribution; CreativeEp := {M ∈ Base : M has a (G) instance with Conn(G, h') for a critical episode h'} **[I152]**; ExplCreation := {M : M ⊨ CreateEx for some s, Δ, h, e}; Recursive := {M : M ⊨ RC}; Universal := {M : ∃s, ξ0, Ω, β (M, s, ξ0, Ω, β) ∈ UECS} **[I164]** [r2b: R16; A3-L528.1 settles I164]. Each is the extension of a formula; no axiom here puts any system in any class (FC110). [r2: A3; D16.4, D16.5; A3-L528.1]
 
 **D16.XV Part XV, the defeat conditions (formal shapes).** Expl(ℰ): an atom, no definition uses it. Uses(α): the symbols of α's leaves and forms; 'an argument not using (E)' := (E), Acc ∉ Uses(α).
 - (Suff), L536: defeated for j ⟺ ∃ℰ [Acc(ℰ) ∧ ¬Dec(t) ∧ ∃α ∈ X_j(Expl(ℰ)): Acc ∉ Uses(α)]. L17 has no ¬Dec(t): Def(L536) ⊊ Def(L17) (E06; Q2).
@@ -685,10 +688,10 @@ P: N cells, two things (position, velocity ∈ {−1, 0, 1}), steps 0..K, contin
 > L526 | **Dependence order.** (O) and (Q) depend on nothing; nor do the declared indices and the declared inputs, which are stated, not defined.
 
 **D18.1 The dependence graph.** Nodes: the symbols defined in §§1–16 (D-numbered). An edge from a definition to each symbol its right-hand side uses. Sinks allowed by the text (L526, L596): Θ with Org_ℓ, 𝒩, (O), (Q), the indices, the declared inputs of L522. The primitives of D0.2 are sinks the text does not list; FC98 asks of each whether it is a claim read through Θ. Of the two loops S101 read from the wording, K2 → Live → K2 closes below the step (D9.4, D9.6). The other, build → prov → rep, stays open here: L405's 'prepares a represented organization' asks for (R), (R) asks for Sel or Con, and Con asks for a construction trace, which is what Build's subhistory is. D13.3 hides the loop only by making Prepares a primitive [I56]; with 'represented' read through (R), Build, Con and Rep are defined together, as one fixed point, unless Con's trace is read without (R). The text names the risk at L526 ('A representation defined only by its own construction … has not supplied its place in the order'). FC98 tests both loops.
-New [r2: A3; D18.1, FC32, E03; A3-L526.1]: + edges NonCircular → (O), (Q), t, C, ℓ, δ; NonVacuous → (O), C, Σ. The loop Rep → Con → Build → Rep is cut by Rep^ρ, ρ ∈ {K, T} **[I146]**, not chosen (Q1):
-- K: in Sel, Con and Build at o, (R) is read only at o' ≺_h o;
-- T: Con's 'available as a represented target' := Held(o', c) :⟺ ∃t Faithful(t: Org_ℓ(o') → c) (through Θ, no provenance), o' in the episode; Sel's exclusion := ¬Held(o', c) for o' ≺_h o.
-As worded (U): two fixed points for a first construction, none for a selection (FC98 (c)). K and T: one each; K gives a first construction of c no representation of c, T gives one (FC98 (d)).
+New [r2: A3; D18.1, FC32, E03; A3-L526.1] [r2b: second check; R5]: + edges NonCircular → (O), (Q), C, ℓ, δ; NonVacuous → (O), C, Σ (t and Γ are the candidate's own data, as for (F1), (F2), (A); NC0–NC2 read no signature). One edge set: this, the program's DEP and L526's pointer (D18.1) (FC32). The loop Rep → Con → Build → Rep is cut by Rep^ρ **[I146]**; ρ := T′ **[I162]** [r2b: R3; Q1 ruled]:
+- Held_ℓ(o', c) :⟺ ∃t Faithful(t: Org_ℓ(o') → c) (through Θ, no provenance);
+- T′: Con's 'available as a represented target' (D12.2) and Build's 'represented organization' (D13.3) := Held at o' ⪯ o in the episode; Sel's exclusion (D12.1) := ¬Rep at o' ≺_h o_t, a recursion along ≺_h, unique where ≺_h is well founded below o_t (every finite history).
+Rejected, each on a computed case: U (as worded): 0–5 fixed points, none for a selection (FC98 (c)); K ((R) staged in Sel, Con, Build): a first construction of c gives no representation (FC98 (d); against L405); T (Held also in Sel's exclusion): an earlier holder by a declared transport blocks a selection (FC98 (e); against L195 with L211). T′: one fixed point on every chain of ≤ 4 occurrences; with I161, Sel ∧ Con at none (FC12.new1).
 
 **D18.2 Structure-preserving bijections** **[I70]**. A bijection φ of ports, values, components, edits (a partial-monoid isomorphism), boundaries and occurrences (preserving ≺_h and Θ's interpretation), with Q, δ, Σ and every declared input carried along. Argument 8 (FC100) is the claim that (E), (G), (P) and (EX) are kept by every such φ, the indices ℓ, β, Ω held fixed (L612). [r2: A3; D18.2, FC100, I70]
 
@@ -700,6 +703,6 @@ As worded (U): two fixed points for a first construction, none for a selection (
 
 Next after these: the undefined primitives of Parts IX–XI (L375, L385, L403, L405, L453; I46, I47, I55, I56, I60), each read as a plain word by the round-1 checkers and each needing a primitive predicate here.
 
-**Counts.** 115 numbered definitions (D0.1–D18.2) and 9 encodings (E1–E9); 76 inventions, each marked here where it is used and recorded in `inventions register.md`; 110 claims in `formal claims.md`. After round 2: 118 definition paragraphs (D2.6, D8.new1, D16.XV new); 67 [r2] marks; inventions I122–I160 (`inventions register - addendum after round 2.md`); 113 claims (`formal claims, after round 2.md`).
+**Counts.** 115 numbered definitions (D0.1–D18.2) and 9 encodings (E1–E9); 76 inventions, each marked here where it is used and recorded in `inventions register.md`; 110 claims in `formal claims.md`. After round 2: 118 definition paragraphs (D2.6, D8.new1, D16.XV new); 67 [r2] marks; inventions I122–I160 (`inventions register - addendum after round 2.md`); 113 claims (`formal claims, after round 2.md`). Second check on the critical review: 20 [r2b] marks; CT (D12.2) and Held (D18.1) defined; the cut ρ := T′ (Q1 withdrawn); inventions I161–I164.
 
 *Written 27 September 2026; integrated after round 2 on 28 September 2026.*
