@@ -33,7 +33,7 @@ So the two large groups are split by the section of the text each line stands in
 
 The splitting works like this:
 - **Each line goes to the sub-group of its section** (the nearest heading above it).
-- **Sections with no item of their own are merged.** A section whose lines are the home of no item is merged into the sub-group where most of its items have their home. This is how L13 and L77 go with L193–L201, and L219 goes with L217–L225; L568 goes with L315–L317.
+- **Sections with no item of their own are merged.** A section whose lines are the home of no item is merged into the sub-group where most of its items have their home. This is how L13 goes with L193–L201, L77 with L47–L55, L219 with L151, L568 with L315–L317, and L604 with L161.
 - **Each item has one primary checker:** the checker holding most of its lines, or, where two tie, the one whose section comes first. The primary checker rules on what the item comes to (rule 5's second paragraph), and on the item's lines in its own set.
 - **An item whose lines fall in more than one sub-group is also a shared item** for each other checker holding one of its lines. That checker weighs the item's points as they bear on its own lines, rules only those lines, and does not rule on what the item comes to.
 - **Context items.** The context items (E- and C-items that challenge no line) go to every checker whose lines they name, as the addenda say.
