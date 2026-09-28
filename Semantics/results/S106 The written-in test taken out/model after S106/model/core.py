@@ -651,7 +651,7 @@ def faithful(cand):
 
 # ---- dependence, non-vacuity, Account (D6.1-D6.7) ----------------------------------------------
 # S106 (decisions S44, S45): the written-in test, NC1 (no answer slot, D6.3), is taken out of (E). slot() and
-# NC1() stay as defined notions criticism can point at (D6.3, D6.11); the quantifier readings below now read Slot
+# NC1() stay as defined notions criticism can point at (D6.3); the quantifier readings below now read Slot
 # only. (E) is (F1) ∧ (F2) ∧ (A) ∧ Dep ∧ NonVacuous, Dep := NC0 ∧ NC2 (D6.5); account(reading="r3") keeps round 3's.
 
 
@@ -799,7 +799,7 @@ assert ACCOUNT_READING in ACCOUNT_READINGS
 def account(cand, detail=False, reading=None):
     """Acc(ℰ) (E) (D6.7). With detail, the value of each conjunct. After S106 the conjuncts are F1, F2, A, Dep
     (= NC2, NC0 holding of every candidate) and NonVacuous; NC1 (no answer slot, D6.3) is still computed and
-    reported in the detail, as content criticism can point at (D6.11), and is not a conjunct. reading "r3":
+    reported in the detail, as content criticism can point at (D6.3), and is not a conjunct. reading "r3":
     round 3's (E), NC1 a conjunct."""
     reading = reading or ACCOUNT_READING
     d = {}
@@ -821,13 +821,15 @@ def account(cand, detail=False, reading=None):
     return (val, d) if detail else val
 
 
-# ---- S106: a pin, the further question at a part, and what a candidate leaves open (D6.11) -------------------
-# Content criticism can point at (S44, S45), written with the theory's own notions of question (D3.1, D3.2),
-# translation (D5.1) and relabeling (D6.9). Nothing here orders candidates, counts questions or grades (S20, S23).
+# ---- S106: a pin (D6.3: Slot's clause at one pair, I184) -------------------------------------------------------
+# Content criticism can point at (S44, S45). Nothing here orders candidates, counts questions or grades (S20, S23).
+# S106, second checker on the critical review (objection 1): D6.11 withdrawn. Its (a), Pin, is D6.3's clause; its (b), (c)
+# are deleted with RelQuery, further_question and leaves_open (I185, I186): LeavesOpen read a candidate only through
+# dom τ × dom σ, and 'the questions it leaves open' touches what hard to vary covers, parked (P8).
 
 
 def pin(cand, k, a, b):
-    """Pin(ℰ, k; a, b) (D6.11 (a), I184): (a, b) ∈ Det_C, t translates it, δ_E ∈ V_k, and k's relation at
+    """Pin(ℰ, k; a, b) (D6.3, Slot's clause at one pair; I184): (a, b) ∈ Det_C, t translates it, δ_E ∈ V_k, and k's relation at
     (τ(a), σ(b)) by itself fixes δ_E to Ans_p(a, b). Only for a port-reading query (I82). Slot_C(ℰ, k) under
     D6.3's 'every' is Pin at every pair of Det_C (Det_C ≠ ∅); 'some' is Pin at one pair."""
     p, E, w = cand.p, cand.E, cand.deltaE
@@ -843,52 +845,6 @@ def pin(cand, k, a, b):
 def pins(cand):
     """Every (k, (a, b)) with Pin(ℰ, k; a, b), in a fixed order."""
     return [(k, (a, b)) for k in cand.E.comps for (a, b) in sorted(cand.p.C, key=repr) if pin(cand, k, a, b)]
-
-
-class RelQuery:
-    """Q^k (D6.11 (b), I185): the relation the designated subnetwork N gives on the ports `onto`:
-    proj_onto Sol_N(a, b) (D1.4), a query on component structure (D3.2). The designation δ is N."""
-    kind = "relation"
-
-    def __init__(self, onto, name=None):
-        self.onto = tuple(onto)
-        self.name = name or "Q^k (the relation of the designated subnetwork on %s)" % ",".join(self.onto)
-
-    def __call__(self, org, a, b, delta):
-        N = frozenset(c for c in delta if c in org.comps)
-        VN, S = org.sol_sub(N, a, b)
-        if any(v not in VN for v in self.onto):
-            return BOT
-        return org.proj(S, VN, self.onto)
-
-    def __repr__(self):
-        return self.name
-
-
-def further_question(cand, k, D2=None, C2=None, b02=None, name=None):
-    """p^k (D6.11 (b), I185): the question whose query reads the relation λ(k)'s subnetwork gives on the D ports
-    k's port translation reads, on the target D2 (default: p's target, which D2 must extend: D's components among
-    D2's) and the contract C2 (default: p's C)."""
-    p = cand.p
-    D2 = D2 or p.D
-    N, tr = cand.lam[k]
-    onto = []
-    for v in cand.E.foot[k]:
-        for u in tr[v].dports:
-            if u not in onto:
-                onto.append(u)
-    onto = [u for u in D2.ports if u in onto]
-    return Question(D2, C2 if C2 is not None else p.C, b02 if b02 is not None else p.b0, RelQuery(onto), tuple(sorted(N)),
-                    name=name or "p^%s" % k)
-
-
-def leaves_open(cand, p2, witness=False):
-    """LeavesOpen(ℰ, p') (D6.11 (c), I186): every pair of C' that ℰ's transport translates is a relabeling for p'
-    (D6.9: its answer there is the baseline answer, ⊥ = ⊥). The edits and boundaries of p''s target are read by
-    label, p''s target extending p's. witness: the translated pairs at which p''s answer differs from its baseline."""
-    y0 = p2.ans(ONE, p2.b0)
-    reached = [(a, b) for (a, b) in sorted(p2.C, key=repr) if cand.translates(a, b) and p2.ans(a, b) != y0]
-    return reached if witness else not reached
 
 
 # ---- restriction and routes (D7.1-D7.6, I29) ---------------------------------------------------

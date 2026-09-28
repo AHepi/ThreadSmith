@@ -1,19 +1,24 @@
 # S106 (decisions S44, S45): the written-in test taken out of (E). New test claims (not moves, rule 16 of round 3):
-#   FC23.new2  the owner's shop sign (S44): an explanation under (E) after S106; the further question it leaves open,
-#              "why is the red part there in the first place?", built as content (D6.11).
-#   FC23.new3  D6.11 on generated models: Slot and Pin; at a pin the answer is read off the further question's answer;
-#              a candidate that leaves a question open meets (A) and Dependence on it with no Γ, δ; the pole.
+#   FC23.new2  the owner's shop sign (S44): an explanation under (E) after S106; S41 (Q2) kept for it.
+#   FC23.new3  Pin (D6.3's clause at one pair) on generated models and on the pole.
 #   FC25.new2  L269's encoding table meets (E) where its answer varies (its one component a slot).
-# Every value is computed by core.account, core.pin, core.further_question, core.leaves_open; nothing is tagged by
-# hand. Nothing here orders candidates, counts questions or grades (S20, S23); what hard to vary covers is parked.
-import itertools
+# Every value is computed by core.account, core.slot, core.pin and, for FC23.new2 (f), by claims_s41's provenance_of,
+# expl_ruled_out and suff_defeats, as FC30.new1 computes them. Nothing here orders candidates, counts questions or grades
+# (S20, S23); what hard to vary covers is parked.
+# S106, second checker on the critical review: D6.11 withdrawn (objection 1): the further question at a part and
+# LeavesOpen (I185, I186) are deleted and parked (P8), with FC23.new2 (c), (d), (e), FC23.new3 (b), (c) and (d)'s
+# LeavesOpen clause; sign_plus (D⁺, p^r) and read_off with them; letters of the parts kept. FC23.new2 (f) is computed
+# and (g) is a look (objection 3).
+import inspect
 
-from .core import (ONE, BOT, Org, Question, PortQuery, Candidate, Translation, account, slot, NC1, NC2, dep, A, F1, F1_at,
-                   pin, pins, further_question, leaves_open, RelQuery, SLOT_QUANTIFIERS, powerset)
-from .harness import claim, forall, exists, computed, construction, look, VAC
+from .core import (ONE, BOT, Org, Question, PortQuery, Candidate, Translation, account, slot, NC1, NC2,
+                   pin, pins, SLOT_QUANTIFIERS)
+from .harness import claim, forall, exists, computed, look, VAC
 from .gen import gen_candidate, any_candidate, gen_lookup
 from .cases import pole, pole_fwd_candidate, single_settings
 from .claims_a import SMALL, BOTHFAM, D_and_p, pole_contracts, table_candidate, _T
+from .claims_s41 import provenance_of, suff_defeats, expl_ruled_out, expl_ok, SUFF_READINGS
+from .args import Assessor, Imp, Not
 
 COLOURS = ("red", "blue", "green")
 
@@ -65,47 +70,15 @@ def sign_one(p=None):
 
 def sign_mech():
     """A sign with a day port and a palette rule (no pin): the edit tue sets the day; the palette component reads it.
-    The target also admits 'plain' (the owner decides the sign needs no colours by day: the palette component deleted,
-    D1.3), which the sign question's stated scope leaves out: the further question 'why is the palette there at all?'
-    (S44: "Why did the owner decide that the sign needed to be different colours on different days") contrasts it with
-    the baseline. Not 'why blue and not any other colour?', which is parked (P8)."""
+    S106, second checker: the edit 'plain' (the palette deleted), built only for the further question 'why is the
+    palette there at all?', is deleted with it (parked, P8)."""
     pal = {("Mon", "red"), ("Tue", "blue")}
     D = _org("D_sign_day", ["day", "colour"], {"day": ("Mon", "Tue"), "colour": COLOURS}, ["c_day", "c_col"],
-             {"c_day": ("day",), "c_col": ("day", "colour")}, ["b0"], [ONE, "tue", "plain"],
-             {("c_day", ONE, "b0"): {("Mon",)}, ("c_day", "tue", "b0"): {("Tue",)}, ("c_day", "plain", "b0"): {("Mon",)},
-              ("c_col", ONE, "b0"): pal, ("c_col", "tue", "b0"): pal})  # c_col at 'plain': the full relation (deleted)
+             {"c_day": ("day",), "c_col": ("day", "colour")}, ["b0"], [ONE, "tue"],
+             {("c_day", ONE, "b0"): {("Mon",)}, ("c_day", "tue", "b0"): {("Tue",)},
+              ("c_col", ONE, "b0"): pal, ("c_col", "tue", "b0"): pal})
     p = Question(D, [(ONE, "b0"), ("tue", "b0")], "b0", PortQuery(), "colour", name="p_sign_day")
     return Candidate(D, p, _T("day", "colour"), {ONE: ONE, "tue": "tue"}, {"b0": "b0"}, _ident_lam(D), ["c_day", "c_col"], "colour", name="ℰ_day")
-
-
-def sign_plus():
-    """D⁺: the sign with what puts the red part there, the shop owner's choice (a port set by c_choice; the edit
-    'otherwise' sets it to 'none'); the red part reads the choice. The further question p^r: what relation does
-    the red part, as the choice installs it ({c_choice, r}), give on the colour; contract: the baseline and
-    'otherwise' (the owner decides otherwise) [I189]."""
-    rel = {("c_choice", a, "b0"): {("red-Mon",)} for a in (ONE, "tue")}
-    rel[("c_choice", "otherwise", "b0")] = {("none",)}
-    r_on = {("red-Mon", "red")} | {("none", x) for x in COLOURS}
-    rel[("r", ONE, "b0")] = r_on
-    rel[("r", "otherwise", "b0")] = r_on
-    rel[("u", "tue", "b0")] = {("blue",)}
-    D = _org("D_sign+", ["choice", "colour"], {"choice": ("red-Mon", "none"), "colour": COLOURS}, ["c_choice", "r", "u"],
-             {"c_choice": ("choice",), "r": ("choice", "colour"), "u": ("colour",)}, ["b0"], [ONE, "tue", "otherwise"], rel)
-    pr = Question(D, [(ONE, "b0"), ("otherwise", "b0")], "b0", RelQuery(("colour",)), ("c_choice", "r"), name="p^r (why is the red part there?)")
-    mech = Candidate(D, pr, _T("choice", "colour"), {a: a for a in D.A}, {"b0": "b0"}, _ident_lam(D), ["c_choice", "r", "u"], ("c_choice", "r"),
-                     name="ℰ⁺ (the owner's choice)")
-    return D, pr, mech
-
-
-def read_off(c, k, a, b):
-    """The values δ_E takes, read through k's port translation, on the further question's answer at (a, b)."""
-    pk = further_question(c, k)
-    ans_k = pk.ans(a, b)
-    if ans_k is BOT:
-        return None
-    onto = list(pk.Q.onto)
-    tr = c.lam[k][1][c.deltaE]
-    return set(tr.fn(tuple(z[onto.index(u)] for u in tr.dports)) for z in ans_k)
 
 
 def acc_r3_row(c):
@@ -139,7 +112,7 @@ def _tf(row):
     return "(" + ",".join("T" if row[q] else "F" for q in SLOT_QUANTIFIERS) + ")"
 
 
-@claim("FC23.new2", ["I184", "I185", "I186", "I189"])
+@claim("FC23.new2", ["I184", "I189", "I90"])
 def fc23new2(S):
     parts = []
     p = sign_question()
@@ -167,53 +140,38 @@ def fc23new2(S):
                           ok_b, "(E) after S106 %s (conjuncts %s); under the four readings: after S106 %s, round 3's %s; Slot_C(ℰ_one, k): %s\n%s"
                           % (v1, {k: d1[k] for k in ("F1", "F2", "A", "Dep", "NC1", "NonVacuous")}, _tf(s_one), _tf(r3_one),
                              {q: slot(one, "k", quantifier=q) for q in SLOT_QUANTIFIERS}, one.describe()), ["I184", "I189"]))
-    # (c) the further question: why is the red part there in the first place?
-    Dp, pr, mech = sign_plus()
-    y0, y1 = pr.ans(ONE, "b0"), pr.ans("otherwise", "b0")
-    lo_two, lo_one = leaves_open(two, pr), leaves_open(one, pr)
-    vm, dm = account(mech, detail=True)
-    retarget = [(G, dl) for G in powerset(two.E.comps) for dl in two.E.ports
-                if A(two.replace(p=pr, Gamma=tuple(G), deltaE=dl)) and dep(two.replace(p=pr, Gamma=tuple(G), deltaE=dl))]
-    ok_c = y0 != y1 and lo_two and lo_one and vm and not retarget
-    parts.append(computed("(c) the further question 'why is the red part there in the first place?' as content (D6.11)",
-                          "p^r on D⁺ (the sign with the shop owner's choice): its answer differs between the baseline and 'the owner decides otherwise'; "
-                          "both sign candidates leave it open (every pair of its contract they translate is a relabeling for it), so none with their transport meets (A) and "
-                          "Dependence on it; D⁺'s own organization, the owner's choice, meets (E) on it",
-                          ok_c, "p^r: %s; answers: baseline %s, otherwise %s; LeavesOpen: ℰ_two %s, ℰ_one %s (pairs of C' they translate: %s); ℰ_two re-aimed at p^r with some Γ', δ' "
-                          "meeting (A) and Dependence: %s; ℰ⁺ (E) %s, conjuncts %s, Dependence witness %s\n%s"
-                          % (pr.describe(), sorted(y0), sorted(y1), lo_two, lo_one, [x for x in sorted(pr.C, key=repr) if two.translates(*x)],
-                             retarget or "none", vm, {k: dm[k] for k in ("F1", "F2", "A", "Dep", "NonVacuous")}, NC2(mech, witness=True), Dp.describe()),
-                          ["I185", "I186", "I189"]))
-    # (d) at a pin the answer is read off the further question at the part
-    rows, ok_d = [], True
+    # (f) S41 (Q2) kept, computed as FC30.new1 (a) computes it: provenance by hand (I90) through sel and con; an
+    # argument not using (E) that rules out Expl(ℰ); (Suff)'s defeat set under each reading (D16.XV)
+    rows, ok_f = [], True
     for c in (two, one):
-        for (k, (a, b)) in pins(c):
-            got = read_off(c, k, a, b)
-            rows.append("%s: %s at (%s,%s): Ans_p %r; read off p^%s's answer %s" % (c.name, k, a, b, p.ans(a, b), k, sorted(got) if got else got))
-            ok_d = ok_d and F1_at(c, a, b) and got == {p.ans(a, b)}
-    parts.append(computed("(d) at a pin, Ans_p is read off the further question's answer (D6.11 (b))",
-                          "at every pin of ℰ_two and ℰ_one, with (F1) there, the value the part's counterpart gives on the colour is the target's answer",
-                          ok_d, "; ".join(rows), ["I184", "I185"]))
-    # (e) a sign with no pin: the day is set by the edit and a palette component reads it
-    mc = sign_mech()
-    vmc = account(mc)
-    pcol = further_question(mc, "c_col", C2=[(ONE, "b0"), ("plain", "b0")], name="p^c_col (why is the palette there at all?)")
-    ok_e = vmc and not pins(mc) and pcol.ans(ONE, "b0") != pcol.ans("plain", "b0") and leaves_open(mc, pcol)
-    parts.append(look("(e) a sign with a day port and a palette rule", "the look: it meets (E), no part pins the answer (the colour is read off the palette jointly with the day the edit sets), "
-                      "and it too leaves a further question open (why did the owner decide the sign needed different colours on different days?): LeavesOpen is a relation of one candidate and one question, not a grade",
-                      ok_e, "(E) %s; pins %s; %s: answers baseline %s, plain %s; left open: %s\n%s"
-                      % (vmc, pins(mc), pcol.name, sorted(pcol.ans(ONE, "b0")), sorted(pcol.ans("plain", "b0")), leaves_open(mc, pcol), mc.describe()),
-                      ["I185", "I186"]))
-    # (f) S41 Q2 kept; (g) no order
-    parts.append(construction("(f) S41 (Q2) kept: a declared link is no explanation", "Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ) (D16.XV) applies to the sign candidates as to any: (E) takes no provenance (FC30)",
-                              True, "core.account reads no provenance; D16.XV's rule is unchanged by S106; a sign candidate whose transport was only declared is no explanation (S41), one whose "
-                              "transport was found or worked out is, under (Suff), unless an argument not using (E) rules that out"))
-    parts.append(construction("(g) no grade (S20, S23)", "pin, further_question and leaves_open are relations of one candidate (and one question); no function of this program takes two candidates and returns an order",
-                              True, "the functions of D6.11 in core.py take one candidate (pin, pins, leaves_open) or one candidate and one part (further_question)"))
+        acc = account(c)
+        ok_f = ok_f and acc
+        for kind in ("Dec", "Con", "Sel"):
+            s_, k_, dec = provenance_of(c, kind, [(ONE, "b0")])
+            j = Assessor(["MP"], ["r", Imp("r", Not("Expl_" + c.name))])
+            out, _ = expl_ruled_out(j, c.name)
+            d = {r: suff_defeats(acc, dec, out, r) for r in SUFF_READINGS}
+            expl = acc and not dec  # Expl := Acc ∧ ¬Dec, FC30.new1 (c)'s common model
+            rows.append("%s, %s (Sel %s, Con %s, Dec %s), argument usable %s: %s; Acc ∧ Dec ⇒ ¬Expl with Expl := Acc ∧ ¬Dec: %s"
+                        % (c.name, kind, s_, k_, dec, out, "; ".join("%s %s" % (r, d[r]) for r in SUFF_READINGS), expl_ok(acc, dec, expl)))
+            ok_f = ok_f and out and expl_ok(acc, dec, expl) and d["L17 (S41)"] == d["L536"]
+            if kind == "Dec":
+                ok_f = ok_f and dec and not d["L17 (S41)"] and d["L17 as text 104 words it"]
+            if kind == "Con":
+                ok_f = ok_f and not dec and d["L17 (S41)"]
+    parts.append(computed("(f) S41 (Q2) kept: a declared link is no explanation",
+                          "ℰ_two and ℰ_one meet (E); with a declared transport (Dec) and an argument not using (E) that rules out Expl(ℰ), each is outside (Suff)'s defeat set as S41 writes it "
+                          "and as L536 writes it (Acc ∧ Dec ⇒ ¬Expl applies), inside it as text 104's L17 words it; with a constructed transport it is inside all three (as FC30.new1 (a))",
+                          ok_f, "\n".join(rows), ["I90"]))
+    # (g) a look: the functions of D6.3 take one candidate
+    sigs = {f.__name__: list(inspect.signature(f).parameters) for f in (slot, NC1, pin, pins)}
+    ok_g = all(ps[0] == "cand" and sum(1 for x in ps if x.startswith("cand")) == 1 for ps in sigs.values())
+    parts.append(look("(g) no grade (S20, S23)", "the look: slot, NC1, pin and pins each take one candidate; none takes two candidates, so none orders candidates",
+                      ok_g, "; ".join("%s(%s)" % (n, ", ".join(ps)) for n, ps in sigs.items())))
     return parts
 
 
-@claim("FC23.new3", ["I77", "I78", "I81", "I82", "I184", "I185", "I186"])
+@claim("FC23.new3", ["I77", "I78", "I81", "I82", "I184"])
 def fc23new3(S):
     parts = []
 
@@ -244,51 +202,8 @@ def fc23new3(S):
     parts.append(forall(S, "FC23.new3", 1, "(a) Slot (D6.3, 'every') is Pin at every pair of Det_C", "Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C Pin(ℰ,k;a,b)",
                         gen, ca, SMALL, 60, BOTHFAM, ["I184"]))
 
-    # (b) at a pin with (F1) there, the answer is read off the further question's answer
-    def cb(m):
-        p, c = m
-        hit = False
-        for (k, (a, b)) in pins(c):
-            if k not in c.Gamma or not F1_at(c, a, b):  # (F1) and λ are the commitments' (D5.4)
-                continue
-            hit = True
-            got = read_off(c, k, a, b)
-            if got != {p.ans(a, b)}:
-                return "Pin at (%s,%s) by %s with (F1), and the further question's answer gives %s, not {%r}\n%s\n%s" % (a, b, k, got, p.ans(a, b), p.describe(), c.describe())
-        return None if hit else VAC
-
-    parts.append(forall(S, "FC23.new3", 2, "(b) at a pin, Ans_p is read off Ans_{p^k}", "k ∈ Γ ∧ Pin(ℰ,k;a,b) ∧ F1 at (a,b) ⇒ the values λ(k)'s relation gives δ_E at (a,b) are {Ans_p(a,b)}",
-                        gen, cb, SMALL, 60, BOTHFAM, ["I184", "I185"]))
-
-    # (c) LeavesOpen(ℰ, p') ∧ τ(1) = 1 ⇒ no Γ', δ' makes (E, p', t, Γ', δ') meet (A) and Dependence
-    def gen_c(rng, size):
-        m = gen(rng, size)
-        if m is None:
-            return None
-        p, c = m
-        D = p.D
-        pairs = [(a, b) for a in D.A for b in D.B if (a, b) != (ONE, p.b0)]
-        C2 = [(ONE, p.b0)] + [x for x in pairs if rng.random() < 0.5]
-        p2 = Question(D, C2, p.b0, PortQuery(), rng.choice(D.ports), name="p'")
-        return p, c, p2
-
-    def cc(m):
-        p, c, p2 = m
-        if c.tau.get(ONE) != ONE or not leaves_open(c, p2):
-            return VAC
-        for G in powerset(c.E.comps):
-            for dl in c.E.ports:
-                c2 = c.replace(p=p2, Gamma=tuple(G), deltaE=dl)
-                if A(c2) and dep(c2):
-                    return "LeavesOpen(ℰ, p') and yet Γ' = %s, δ' = %s meet (A) and Dependence on p'\n%s\n%s\n%s" % (sorted(G), dl, p2.describe(), p2.D.describe(), c.describe())
-        return None
-
-    parts.append(forall(S, "FC23.new3", 3, "(c) a question left open is answered with ℰ's transport under no Γ', δ'",
-                        "LeavesOpen(ℰ, p') ∧ τ(1) = 1 ⇒ ∀Γ' ⊆ J_E ∀δ': ¬(A ∧ Dependence) for (E, p', t, Γ', δ') (FC21 (a); pairs not translated fail (A))",
-                        gen_c, cc, SMALL, 60, BOTHFAM, ["I186"]))
-
     # (d) the pole: E_fwd on C1 has no pin; on C2 it pins only at the settings of L, where the pair's own edit puts
-    # c_L's slice there, and the further question at c_L on C2 is not left open (t translates those settings)
+    # c_L's slice there
     D = pole()
     C1, C2, _ = pole_contracts(D)
     rows, ok = [], True
@@ -298,15 +213,14 @@ def fc23new3(S):
         ps = pins(c)
         Lset = [(a, b) for (a, b) in C if "L" in dict(D.meta["inv"][a])]
         at = sorted(set(x for _, x in ps), key=repr)
-        lo = leaves_open(c, further_question(c, "c_L"))
-        rows.append("%s: (E) %s; pins %d, all by c_L: %s, at exactly the settings of L: %s; p^c_L on %s left open: %s"
-                    % (nm, account(c), len(ps), all(k == "c_L" for k, _ in ps), at == sorted(Lset, key=repr), nm, lo))
+        rows.append("%s: (E) %s; pins %d, all by c_L: %s, at exactly the settings of L: %s"
+                    % (nm, account(c), len(ps), all(k == "c_L" for k, _ in ps), at == sorted(Lset, key=repr)))
         if nm == "C1":
             ok = ok and account(c) and not ps
         else:
-            ok = ok and account(c) and bool(ps) and all(k == "c_L" for k, _ in ps) and at == sorted(Lset, key=repr) and not lo
-    parts.append(computed("(d) the pole's forward candidate (E1)", "on C1 no part pins the answer; on C2 c_L pins it exactly at the settings of L (the pair's own edit puts the slice there), "
-                          "and the further question at c_L is not left open on C2 (t translates the settings of L, at which c_L's relation changes)", ok, "; ".join(rows), ["I184", "I185", "I186"]))
+            ok = ok and account(c) and bool(ps) and all(k == "c_L" for k, _ in ps) and at == sorted(Lset, key=repr)
+    parts.append(computed("(d) the pole's forward candidate (E1)", "on C1 no part pins the answer; on C2 c_L pins it exactly at the settings of L (the pair's own edit puts the slice there)",
+                          ok, "; ".join(rows), ["I184"]))
     return parts
 
 

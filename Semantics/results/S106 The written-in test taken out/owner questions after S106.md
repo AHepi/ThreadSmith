@@ -24,4 +24,4 @@ Every use of the written-in test was settled by the owner's words (S44, S45) or 
 | the block on an argument whose premise is the claim's denial (L397) and L331's "it is circular" kept | they are about ruling a claim out, not about what makes an explanation: (E) never registered L331's circularity (FC60 (a)); the block is D9.7's (FC72) |
 | (K1): a criticism whose connection writes its defect in now has bearing when it meets the rest of (E) (FC107) | it follows from (E) without the test, as S45's "everywhere" asks |
 | (Suff): candidates with a slot now fall in its range | S44 and S45 hold them explanations, bad ones; (Suff)'s shape is unchanged (D16.XV) |
-| "bad" (S44) | not formalized as a grade (S20, S21, S23); only the further questions a part leaves open are written, as content (D6.11) |
+| "bad" (S44) | not formalized as a grade (S20, S21, S23); a slot or a pin is content (D6.3); the questions a part leaves open are parked (P8; S106b, objection 1) |

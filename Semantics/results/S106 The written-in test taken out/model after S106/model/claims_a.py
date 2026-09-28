@@ -1015,7 +1015,7 @@ def fc24(S):
         return None
 
     return [forall(S, "FC24", 1, "packaging another dependence leaves the slot", "E_lk with an added commitment still fails NC1", gen, check, SMALL, 60, BOTHFAM),
-            not_tested("L273's 'an account' names a candidate", "reading of the word 'account' at L273", "a reading of wording; S106: L273 is replaced by a formula (S106-T6), and the slot left in place is content (D6.11), not a failure of (E)")]
+            not_tested("L273's 'an account' names a candidate", "reading of the word 'account' at L273", "a reading of wording; S106: L273 is replaced by a pointer to D6.3, FC23 and FC24 (S106-T6), and the slot left in place is content (D6.3), not a failure of (E)")]
 
 
 def table_candidate(p, U, encode=False):

@@ -2536,9 +2536,10 @@ DEP = {
     "(F1)": ["(O)", "(Q)", "(K)"], "(F2)": ["(O)", "(Q)", "(K)"], "(A)": ["(O)", "(Q)", "(K)"],
     # S106 (S44, S45): (E)'s fourth conjunct is Dependence := NC0 ∧ NC2 (D6.5), no longer NonCircular (NC0 ∧ NC1 ∧ NC2):
     # the node "NC" is renamed "Dep" and loses ℓ, which only NC1's 'at the declared grain' read (I28); NC1's Slot (D6.3)
-    # is a node of its own, not an ancestor of (E); D6.11 (a pin, the further question, what a candidate leaves open) is "Open".
+    # is a node of its own, not an ancestor of (E). Second checker on the critical review (objection 1): D6.11 withdrawn, its
+    # node "Open" deleted; Pin is D6.3's clause (node "Slot").
     "Dep": ["(O)", "(Q)", "C", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "Dep", "NV"],
-    "Slot": ["(O)", "(Q)", "C", "ℓ", "δ", "Cand"], "Open": ["Slot", "(O)", "(Q)", "Transport", "C"],
+    "Slot": ["(O)", "(Q)", "C", "ℓ", "δ", "Cand"],
     # §7–§8
     "(S)": ["(E)", "restriction"], "(B)": ["(S)"], "(D)": ["(E)", "𝒱"],
     "Conf": ["(F1)", "(F2)", "(A)", "(O)", "(Q)"], "ConfCl": ["Conf", "Allow_χ", "Applies"], "Riv": ["Conf", "Offered", "Off"],
@@ -2586,7 +2587,6 @@ D_TO_NODE = {
     "D4.1": "(K)", "D4.2": "Kind", "D4.3": "Kind", "D4.4": "(K)", "D4.5": "Families", "D4.6": "Families",
     "D5.1": "Transport", "D5.2": "Transport", "D5.3": "Cand", "D5.4": "(F1)", "D5.5": "(F2)", "D5.6": "(A)", "D5.7": "Held",
     "D6.1": "Dep", "D6.2": "Dep", "D6.3": "Slot", "D6.4": "Dep", "D6.5": "Dep", "D6.6": "NV", "D6.7": "(E)", "D6.8": "(E)", "D6.9": "Dep", "D6.10": "(E)",
-    "D6.11": "Open",  # S106
     "D7.1": "(S)", "D7.2": "(S)", "D7.3": "(B)", "D7.4": "(D)", "D7.5": "(B)", "D7.6": "(S)",
     "D8.1": "Conf", "D8.2": "Conf", "D8.new1": "Conf", "D8.3": "Riv", "D8.4": "ConfCl", "D8.5": "ConfCl", "D8.6": "Riv_χ",
     "D9.1": "Claims", "D9.2": "Arg", "D9.3": "Arg", "D9.4": "Live", "D9.5": "(K2)", "D9.6": "(K2)", "D9.7": "RO", "D9.8": "OutCand",

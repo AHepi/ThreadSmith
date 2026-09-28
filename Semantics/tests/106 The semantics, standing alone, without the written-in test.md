@@ -270,7 +270,7 @@ A **table of observed answers** has no component whose relation is replaced by a
 
 A **reversed calculation**, identification presented as production, fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's. It may be faithful under the identification contract, which is a different question (Part III).
 
-\(\operatorname{Slot}_C(\mathcal E,k)\not\Rightarrow\neg\operatorname{Account}(\mathcal E)\) (D6.3, D6.11, FC23, FC23.new2).
+(D6.3, FC23, FC24).
 
 A candidate whose only substantive contrast is one that no edit the target admits realizes has no pair of \(C\) at which the contrast appears, and fails \(\operatorname{Dependence}\). A contrast that no one could produce, or that could not come about, is still a contrast of its question when the target admits the edit that realizes it; whether it can be produced bears on testing (Part XII), not on (E).
 

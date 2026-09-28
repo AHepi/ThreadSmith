@@ -48,7 +48,8 @@ REVERT_IDS = {"S47-T1"}  # the only revert allowed (decision S47)
 R3_CHANGES = SEM + "/results/S105 Round 3 - maths after the reading/text changes after the review.json"
 R3_INPUT = SEM + "/tests/104 The semantics, standing alone, after round 2, with the owner's answers.md"
 R3_INPUT_MD5 = "bc14045aae3139df710d8339a9c1c81b"
-REBUILD_OVER = "0e56b581a4b5f3c7a9e19bdceb4d8cb3"  # tests/106 as first written (S106 changes only)
+# tests/106 as first written (S106 changes only); with S47's revert (second checker on the critical review writes over it)
+REBUILD_OVER = ("0e56b581a4b5f3c7a9e19bdceb4d8cb3", "7d58eeecda84b1508068568b82f2113e")
 # Lines held for an owner question: none. L255 was held for R3-Q1 (round 3), answered by S44 and S45.
 HELD_LINES = {}
 S95 = SEM + "/tests/S95 Scrub - scripts/scrub_apply.py"
@@ -86,8 +87,8 @@ def main():
         prev = hashlib.md5(open(OUT, "rb").read()).hexdigest()
         if "--rebuild" not in sys.argv[1:]:
             die("output exists already (md5 %s); pass --rebuild to write over this program's own earlier output" % prev)
-        if prev != REBUILD_OVER:
-            die("output exists with md5 %s, not this program's earlier output %s: not written over" % (prev, REBUILD_OVER))
+        if prev not in REBUILD_OVER:
+            die("output exists with md5 %s, not this program's earlier output %s: not written over" % (prev, " or ".join(REBUILD_OVER)))
         print("rebuild: output md5 before %s" % prev)
     raw = open(SRC, "rb").read()
     if hashlib.md5(raw).hexdigest() != MD5:

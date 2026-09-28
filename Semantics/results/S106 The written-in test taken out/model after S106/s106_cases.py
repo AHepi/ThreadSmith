@@ -6,6 +6,8 @@
 # Run from "results/S106 The written-in test taken out/model after S106":  PYTHONHASHSEED=0 python3 -B s106_cases.py
 # Standard library only; imports the package model/ of this folder and changes none of it; writes nothing.
 # FC-E1 to FC-E5 (s104_external.py) and CT1 to CT8 (s104_creative_transport.py) are run separately.
+# S106, second checker on the critical review: objection 5's case added (Mimo's τ' restricted to a contract of H settings
+# only, θ at 45); objection 1: the row of D⁺'s organization on the further question p^r deleted (parked, P8).
 import os
 import sys
 
@@ -19,7 +21,7 @@ from model.cases import pole, pole_fwd_candidate, pole_rev_candidate, single_set
 from model.claims_a import pole_contracts, table_candidate, area2_lookups, _org, _T  # noqa: E402
 from model.claims_r3a2 import m5, m13, elim  # noqa: E402
 from model.claims_b import e8_contract_org, e6_parts  # noqa: E402
-from model.claims_s106 import sign_question, sign_two, sign_one, sign_mech, sign_plus  # noqa: E402
+from model.claims_s106 import sign_question, sign_two, sign_one, sign_mech  # noqa: E402
 from model import e9  # noqa: E402
 
 
@@ -88,6 +90,13 @@ def main():
         return lab.get(tuple(sorted(new.items())))
     t2 = {a: tau2(a) for a in D.A}
     case("E1 pole, reversed calculation under Mimo's τ', C1", "FC27 (look)", r.replace(tau={a: x for a, x in t2.items() if x is not None}, name="ℰ_rev τ'"))
+    # critical review, objection 5: τ' restricted to a production contract of H settings only (θ at 45)
+    CH = frozenset([(ONE, "b1_45")] + [(a, "b1_45") for a in single_settings(D, ["H"])])
+    pH = Question(D, CH, "b1_45", PortQuery(), "L", name="C_H")
+    rH = pole_rev_candidate(pH)
+    case("E1 pole, reversed calculation under Mimo's τ', H only", "FC27 (look); review obj. 5",
+         rH.replace(tau={a: t2[a] for a in sorted(set(x for x, _ in CH), key=repr)}, name="ℰ_rev τ' (H only)"),
+         "τ' restricted to C_H's edits; L271, L325 speak of C1 (H and θ settings), where (F2)'s composition clause excludes it")
     Did = pole(bounds=[(1, 45), (2, 45), (3, 45)])
     pid = Question(Did, frozenset((ONE, b) for b in Did.B), "b1_45", fibre_query(), ("H", "T", "L"), name="p_ident")
     case("E1 pole, reversed calculation, identification C_id", "L325, L151; FC28", pole_rev_candidate(pid, delta=("H", "T", "L")),
@@ -156,9 +165,7 @@ def main():
     p = sign_question()
     case("S44 the shop sign, two parts (red on Mon, blue on Tue)", "S44; FC23.new2 (a)", sign_two(p))
     case("S44 the shop sign, one part (red on Mon, blue on Tue)", "S44; FC23.new2 (b)", sign_one(p))
-    case("the sign with a day port and a palette rule", "FC23.new2 (e)", sign_mech())
-    _D, pr, mech = sign_plus()
-    case("the sign's further question p^r, D⁺'s own organization", "FC23.new2 (c)", mech, "the owner's choice answers 'why is the red part there?'")
+    case("the sign with a day port and a palette rule", "I189", sign_mech())
     print("=" * 150)
     print("Worked cases with no candidate's (E) computed (unchanged: no NC1 in them): E2 identification (L329; FC57, FC58), E3 the two balances (L331; FC59, FC60),")
     print("E4 obstruction (L335; FC61), E7 transport results (L353-L363; FC64-FC66), the route examples of Part VI (L307-L311; FC37-FC40, set systems).")
