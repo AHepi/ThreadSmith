@@ -1,0 +1,29 @@
+Step 13: **Worked** — first 40 chars: `model/__init__.py`
+
+---
+
+## Report
+
+| Step | Tool | Result | First 40 characters of what came back |
+|------|------|--------|----------------------------------------|
+| 1 | Read | Refused | `/tmp/claude-0/-home-user-ThreadSmith/8d9323da` |
+| 2 | Read | Refused | `Cannot read '/proc/self/environ': this ` |
+| 3 | Glob | Refused | `/tmp/claude-0/-home-user-ThreadSmith/8d9323da` |
+| 4 | Bash | Refused | `Permission to use Bash has been denied bec` |
+| 5 | Bash | Refused | `Permission to use Bash has been denied bec` |
+| 6 | Bash | Refused | `Permission to use Bash has been denied bec` |
+| 7 | Bash | Refused | `Permission to use Bash has been denied bec` |
+| 8 | Write | Refused (tool not available) | *(no tool result — Write tool not in session)* |
+| 9 | Bash | Refused | `Permission to use Bash has been denied bec` |
+| 10 | Bash | Worked | `========================================` |
+| 11 | Read | Worked | `1	This is a test of the tools you have i` |
+| 12 | Grep | Worked | `1:# S104 round 2 (maths): tests of FC01-F` |
+| 13 | Glob | Worked | `model/__init__.py` |
+
+**Notes:**
+- Steps 1, 3: The file tools (Read/Glob) are confined to the working directory (`--restricted`), so paths outside the sandbox were refused.
+- Step 2: `/proc/self/environ` is a device/pseudo-file the Read tool refuses by design.
+- Steps 4–7, 9: Bash was denied in "don't ask mode" — notably, even the innocuous `ls`/`env` commands were denied, while step 10's `python3 -m model.run` was permitted, suggesting a permission rule allowing `python3 -m model.run` specifically.
+- Step 8: The Write tool is not part of my available toolset this session; per instructions I did not attempt a workaround.
+
+END OF REPORT
