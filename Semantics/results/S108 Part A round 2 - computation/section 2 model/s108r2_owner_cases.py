@@ -76,9 +76,12 @@ def vane_mixed(gamma=("cW",)):
                      name="vane-mixed Γ=" + "".join(gamma))
 
 
-def vane_edit():
+def vane_edit(gamma=("cy",)):
+    """M13 (claims_r3a2): Γ = {cy} as the program has it; Γ = {cx} (the wind's commitment) added (P-R2S2-6)."""
     c = m13()
     c.p.D.meta["phenomenon"] = "vane"
+    if tuple(gamma) != ("cy",):
+        c = c.replace(Gamma=tuple(gamma), name="ℰ_M13 Γ=" + "".join(gamma))
     return c
 
 
@@ -145,6 +148,8 @@ def enc(c):
 # (case label, encoding, builder); E_enc is added on each question by the callers
 CASES = [
     ("vane", "edit", "M13 (Γ = {cy})", vane_edit),
+    ("vane", "edit", "M13 Γ = {cx} (the wind's commitment)", lambda: vane_edit(("cx",))),
+    ("vane", "boundary", "D_vane Γ = {cW} (the wind's commitment)", lambda: vane_boundary(["cW"])),
     ("vane", "boundary", "D_vane Γ = {cP}", lambda: vane_boundary(["cP"])),
     ("vane", "boundary", "D_vane Γ = {cW,cP}", lambda: vane_boundary(["cW", "cP"])),
     ("vane", "mixed", "D_vane^mix Γ = {cW} (the reply's ℰ_mix)", lambda: vane_mixed(("cW",))),

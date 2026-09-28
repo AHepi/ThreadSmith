@@ -11,6 +11,7 @@ from .claims_b import (Hist, sel, con, fwd_pole_cand, prov_fixed_points, prov_sh
                        EPISODE_READINGS, faithful_on)
 from .cases import pole_rev_candidate  # S107 round 4, area 3 (W5): FC30.new1 (h)
 from . import s108s3  # S108 Part A, section 3: V3.8 (D14.7) in FC84.new1 (a4)
+from . import s108r2s3  # S108 Part A round 2, section 3: R2V3.6 in provenance_of
 
 
 # ---- Part XV, (Suff) (D16.XV) [owner S41: Q2] ------------------------------------------------------------
@@ -62,6 +63,8 @@ def provenance_of(cand, kind, H):
     """A history for t, Θ by hand (I90): 'Dec' no selection admitted and no trace; 'Con' a trace preparing t and
     cod t represented; 'Sel' a selection history on H. Returns (Sel, Con, Dec) as computed by sel and con."""
     occ = set(cand.p.C)
+    if s108r2s3.on("R2V3.6"):
+        return _provenance_chain(cand, kind, H)
     if kind == "Dec":
         h = Hist(["o1"], [], occ, admitted=False, prepares=False)
     elif kind == "Con":
@@ -70,6 +73,25 @@ def provenance_of(cand, kind, H):
         h = Hist(["o1"], [], occ, admitted=True, prepares=False)
     s, k = sel(cand, H, h), con(h)
     return s, k, (not s and not k)
+
+
+def _provenance_chain(cand, kind, H):
+    """S108 Part A round 2, section 3, R2V3.6 (I90's other choice, R2-3-I6): the same three histories as a chain with Rep computed
+    (prov_fixed_points, the cut T′, the least fixed point): 'Dec' one occurrence, no trace, Sel's conditions not met (nothing
+    admitted); 'Con' o1 (nothing) ≺ o2 (a trace, the output); 'Sel' one occurrence, Sel's conditions as sel computes them on a
+    history with no representation and no trace. Held at the output computed from t (Faithful). Returns (Sel, Con, Dec) at the
+    output."""
+    from .claims_b import prov_fixed_points
+    held_out = bool(faithful(cand))
+    selc = bool(sel(cand, H, Hist(["o1"], [], set(cand.p.C), admitted=True, prepares=False))) if kind != "Dec" else False
+    if kind == "Con":
+        n, held, trace, sc_ = 2, [0, held_out], [0, 1], [0, selc]
+    else:
+        n, held, trace, sc_ = 1, [held_out], [0], [selc]
+    fps = prov_fixed_points(n, held, trace, sc_, "T'", True)
+    R, sc = min(fps, key=lambda f: (len(f[0]), sorted(f[0])))
+    s, k = sc[n - 1]
+    return bool(s), bool(k), (not s and not k)
 
 
 @claim("FC30.new1", ["I90"])

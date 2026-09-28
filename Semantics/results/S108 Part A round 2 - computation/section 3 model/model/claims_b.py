@@ -11,6 +11,7 @@ from .core import (ONE, BOT, Org, Roles, Question, PortQuery, FnQuery, Candidate
                    rivals, problem_kind)
 from . import core
 from . import s108s3  # S108 Part A, section 3: V3.4 (D13.3), V3.5 (D13.8), V3.6 (D15.8), and D18.1's edges
+from . import s108r2s3  # S108 Part A round 2, section 3: R2V3.1–R2V3.10 (D13.8's key, D15.8, D11.3's ⪯, D15.5; s108r2s3.py)
 from .gen import (Size, sizes, gen_surg, gen_free, gen_org, gen_question, gen_candidate, gen_lookup,
                   gen_random_candidate, any_candidate, rename_org, rand_rel)
 from .cases import (pole, pole_fwd_candidate, pole_rev_candidate, single_settings, identified, rank, det, surgical_edits)
@@ -1645,7 +1646,9 @@ def episode(qs=None, recs=None, reading=None):
     reading = reading or EPISODE_READING
     chg = [i for i in range(1, len(qs))] if qs else []
     chg = [i for i in chg if qs[i] != qs[i - 1]]
-    if (not s108s3.on("V3.5")) and any(not (recs and recs[i]) for i in chg):  # S108 V3.5: the record clause deleted
+    # S108 V3.5: the record clause deleted; S108 round 2, R2V3.2: the record keyed by the change (the program, default) or by
+    # the new contract (S108R2_S3_RECKEY=contract, the formal core's words, I174)
+    if (not s108s3.on("V3.5")) and not s108r2s3.changes_recorded(qs, recs):
         return False
     return bool(chg) if reading == "L55" else True
 
@@ -1692,7 +1695,15 @@ def sel(cand, H, h, pop_admitted=True, cod="cod", round2=False, i161=True, h_non
         return False
     # S108 V3.6: t ∈ 𝒯 (D15.8) read by s108s3.in_population: Θ admits t ∧ parts(t) ⊆ the stated construction's parts (I158),
     # the parts clause deleted under V3.6; a history that states no construction meets the clause (S108-3-I3)
-    if not (s108s3.in_population(h.admitted, getattr(h, "parts", None), getattr(h, "stated", None)) and pop_admitted):
+    # S108 round 2: R2V3.4 reads parts(t) as S108R2_S3_PARTS gives (components, the default; ports; edits), R2V3.5 makes 𝒯 = ∅ where
+    # the history states no construction (R2-3-I5)
+    parts_r = s108r2s3.parts_read(cand, getattr(h, "parts", None))
+    stated_r = s108r2s3.parts_read(cand, getattr(h, "stated", None))
+    if (parts_r is None or stated_r is None) and not s108r2s3.no_construction_admits() and not s108s3.on("V3.6"):
+        in_pop = False  # R2V3.5 reads D15.8's parts clause; under round 1's V3.6 the clause is deleted, so it has nothing to read
+    else:
+        in_pop = s108s3.in_population(h.admitted, parts_r, stated_r)
+    if not (in_pop and pop_admitted):
         return False
     if i161 and not round2 and prepares_of(h, cand.name):
         return False
@@ -1711,9 +1722,12 @@ def con(h, cod="cod", name=None, reading=None):
         return False
     qs, rs = getattr(h, "contracts", None), getattr(h, "records", None)
     if qs is None:
+        if s108r2s3.on("R2V3.7"):  # S108 round 2, R2V3.7: a tag counts at the last occurrence or its immediate predecessor only
+            sub = set(h.occ[x] for x in s108r2s3.witnesses(0, len(h.occ) - 1))
+            return episode(None, None, reading) and any(x in ("t", cod) and o in sub for (o, x) in h.rep)
         return episode(None, None, reading) and any(x in ("t", cod) for (_, x) in h.rep)
     for i in range(len(h.occ)):
-        sub = set(h.occ[i:])
+        sub = set(h.occ[x] for x in s108r2s3.witnesses(i, len(h.occ) - 1))  # h.occ[i:] unless R2V3.7 (D11.3's ⪯)
         if episode(qs[i:], rs[i:] if rs else None, reading) and any(x in ("t", cod) and o in sub for (o, x) in h.rep):
             return True
     return False
@@ -1746,12 +1760,13 @@ def _con_at(o, held, trace, rd, R, eps=None, explu=None):
     for i in range(o + 1):
         if eps is not None and not eps(i, o):
             continue
+        # S108 round 2, R2V3.7: the witness x ⪯ o (x ≺ o under K) read through s108r2s3.witnesses: every x from i (default)
         if rd == "U":
-            ok = any(x in R for x in range(i, o + 1))
+            ok = any(x in R for x in s108r2s3.witnesses(i, o))
         elif rd == "K":
-            ok = any(x in R for x in range(i, o))
+            ok = any(x in R for x in s108r2s3.witnesses(i, o, strict=True))
         else:
-            ok = any(held[x] for x in range(i, o + 1))
+            ok = any(held[x] for x in s108r2s3.witnesses(i, o))
         if ok:
             return True
     return False
@@ -2634,8 +2649,18 @@ def s108_s3_dep(dep, variant=None, ct=None):
     return d
 
 
+# S108 Part A round 2, section 3: D18.1's edges under the round-2 variant (R2V3.1's CT → ExplUse comes through round 1's V3.4 with
+# CT reading ExplUse, which s108r2s3 sets).
+def s108r2_s3_dep(dep, variant=None):
+    variant = variant or s108r2s3.VARIANT
+    d = dict(dep)
+    if variant == "R2V3.10":
+        d["Can"] = [x for x in d["Can"] if x != "Ω"]  # Can := owned RetReal: Ω was read only by the construction disjunct
+    return d
+
+
 DEP_S108_NONE = dict(DEP)
-DEP = s108_s3_dep(DEP)
+DEP = s108r2_s3_dep(s108_s3_dep(DEP))
 # Round 2's D18.1 for Build: ExplUse a primitive (D0.2, I148), so no edge from Build to (E) (S2(iii)).
 DEP_EXPLUSE_PRIMITIVE = dict(DEP, ExplUse=[])
 

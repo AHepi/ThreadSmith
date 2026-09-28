@@ -7,6 +7,7 @@
 import itertools
 
 from . import s108s3  # S108 Part A, section 3: V3.1 (D9.7), V3.2 (D9.4), V3.3 (D9.6)
+from . import s108r2s3  # S108 Part A round 2, section 3: R2V3.8 (D9.2), R2V3.9 (D9.1)
 
 # ---- claims (D9.1, I38, I87) ---------------------------------------------------------------------
 
@@ -112,6 +113,25 @@ ARG_READINGS = ("S41", "I88")
 ARG_READING = "S41"
 
 
+def _arg_reading():
+    """ARG_READING, or "I88" under S108 round 2's R2V3.8 (D9.2: every argument has at least one step)."""
+    return "I88" if s108r2s3.on("R2V3.8") else ARG_READING
+
+
+def _node_claim(node):
+    """S108 round 2, R2V3.9 (D9.1 without 'Ans_p(a,b) = y'): whether a node of an argument carries a claim. A record leaf of a test
+    stays a claim under R2-3-I8 (S108R2_S3_I8=kept, the default); every other node needs is_claim."""
+    if isinstance(node, Leaf) and node.kind == "record" and s108r2s3.I8 == "kept":
+        return True
+    return s108r2s3.is_claim(node.claim, atoms)
+
+
+def _all_claims(alpha):
+    if not s108r2s3.on("R2V3.9"):
+        return True
+    return all(_node_claim(x) for x in alpha.leaves()) and all(s108r2s3.is_claim(u.concl, atoms) for u in alpha.steps())
+
+
 class Leaf:
     def __init__(self, claim, kind="assumption", made_from=None):
         self.claim, self.kind, self.made_from = claim, kind, made_from
@@ -213,6 +233,8 @@ def usable_step(j, u, memo=None):
     if id(u) in memo:
         return memo[id(u)]
     ok = u.form in j.forms and form_ok(u.form, u.prem, u.concl) and j.scope_ok(u)
+    if ok and s108r2s3.on("R2V3.9"):  # S108 round 2, R2V3.9: a step whose conclusion or premise is no claim is no step of an argument
+        ok = s108r2s3.is_claim(u.concl, atoms) and all(_node_claim(ch) for ch in u.children)
     if ok:
         below = u.below()
         for d in u.prem:
@@ -229,8 +251,10 @@ def usable_step(j, u, memo=None):
 def usable(j, alpha, reading=None):
     """Usable_j(α) (D9.6). A premise alone d [owner S41: Q23] is usable by j when d ∈ Accepted_j(ξ), Live_j with
     no step (I166); under ARG_READING "I88" (round 2) it is no argument."""
+    if not _all_claims(alpha):
+        return False  # S108 round 2, R2V3.9: a tree with a node that is no claim is no argument
     if isinstance(alpha, Leaf):
-        if (reading or ARG_READING) == "I88":
+        if (reading or _arg_reading()) == "I88":
             return False  # round 2: an argument has at least one step [I88]
         if s108s3.on("V3.3"):
             return True  # S108 V3.3: Usable_j(α) :⟺ ∀u ∈ steps(α) Usable_j(u); a premise alone has no step (vacuous)
@@ -271,6 +295,8 @@ def usable_any_step(j, alpha):
 
 def rules_out(alpha, phi):
     """RO(α, φ) (D9.7, I39, I87); α may be a premise alone, whose conclusion is its claim [owner S41: Q23]."""
+    if not s108r2s3.is_claim(phi, atoms):
+        return False  # S108 round 2, R2V3.9: only a claim is ruled out (X_j(ψ) = ∅ for ψ no claim)
     if not incons(phi, alpha.concl):
         return False
     if s108s3.on("V3.1"):
@@ -295,7 +321,7 @@ def enumerate_args(premises, forms=("MP", "MT", "AndI", "AndE"), depth=2, max_ar
     layer = [Leaf(p) for p in premises]
     allnodes = list(layer)
     if bare is None:
-        bare = ARG_READING != "I88"
+        bare = _arg_reading() != "I88"
     out = []
     for _ in range(depth):
         new = []

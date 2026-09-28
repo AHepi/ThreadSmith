@@ -96,13 +96,19 @@ P = print
 
 # ---- 1. the worked cases under every setting ------------------------------------------------------------------------
 
+_WC = []
+
+
 def worked_cases():
+    if _WC:
+        return _WC[0]
     got = [(lab, where, c) for lab, where, c in R1.written_in_step_cases() + R1.more_worked_cases()]
     for ph, en, lab, c in OW.all_cases():
         got.append(("owner %s (%s): %s" % (ph, en, lab), "R2V2.1", c))
     got.append(("e2.06c: the two balances as a question with a candidate (ℰ_bal, Γ = {cd})", "e2.06c; Inv-R2-5", balances()))
     got.append(("R2V2.3 (b): ℰ_bad (M13 with L_cy(e,b0) = {(0,1),(1,0)} in E)", "R2V2.3 (b)", e_bad()))
     got.append(("R2V2.5: a two-pair contract answering ⊥ at both, identity candidate", "R2V2.5", r25_case()))
+    _WC.append(got)
     return got
 
 
@@ -236,18 +242,21 @@ def section_histories(json_out):
     stats = {}
     shapes = {}
     for lab, c in accounts:
+        fa = 1 if under("off", faithful, c) else 0
         for Hx, hlab in (([], "H=∅"), ([(ONE, c.p.b0)], "H={(1,b0)}")):
+            s0 = {}
+            for v in ("off", "V2.5 (C7)"):
+                with setting(**SETTINGS[v]):
+                    s0[v] = bool(sel(c, Hx, Hist(["o1"], [], set(c.p.C), admitted=True, prepares=False)))
             for n in (1, 2, 3):
                 for pat in itertools.product([(0, 0), (1, 0), (0, 1), (1, 1)], repeat=n - 1):
-                    held = [x[0] for x in pat] + [1 if faithful(c) else 0]
+                    held = [x[0] for x in pat] + [fa]
                     trace = [x[1] for x in pat] + [0]
                     for rd in ("T'", "U", "T"):
                         vals = {}
                         for v in ("off", "V2.5 (C7)"):
                             with setting(**SETTINGS[v]):
-                                h = Hist(["o1"], [], set(c.p.C), admitted=True, prepares=False)
-                                s0 = sel(c, Hx, h)
-                                fps = prov_fixed_points(n, held, trace, [0] * (n - 1) + [1 if s0 else 0], rd, True)
+                                fps = prov_fixed_points(n, held, trace, [0] * (n - 1) + [1 if s0[v] else 0], rd, True)
                                 vals[v] = tuple(sorted(set(not sc[n - 1][0] and not sc[n - 1][1] for R, sc in fps)))
                         key = (hlab, rd)
                         st = stats.setdefault(key, {"chains": 0, "Dec off": 0, "C7 admits (Dec off → not Dec on)": 0})
@@ -555,13 +564,20 @@ def alpha_from_confcl(c, confcl):
 
 def main():
     json_out = {}
-    rows = section_worked(json_out)
-    section_encodings(json_out)
-    section_quantifier(rows, json_out)
-    section_histories(json_out)
-    section_desc(json_out)
-    section_small(json_out)
-    section_edges(json_out)
+    only = sys.argv[sys.argv.index("--sections") + 1].split(",") if "--sections" in sys.argv else ["1", "2a", "2b", "2c", "3", "4", "5"]
+    rows = section_worked(json_out) if "1" in only else None
+    if "2a" in only:
+        section_encodings(json_out)
+    if "2b" in only:
+        section_quantifier(rows, json_out)
+    if "2c" in only:
+        section_histories(json_out)
+    if "3" in only:
+        section_desc(json_out)
+    if "4" in only:
+        section_small(json_out)
+    if "5" in only:
+        section_edges(json_out)
     if "--json" in sys.argv:
         with open(sys.argv[sys.argv.index("--json") + 1], "w", encoding="utf-8") as f:
             json.dump(json_out, f, ensure_ascii=False, indent=1, default=repr)

@@ -6,6 +6,7 @@ import random
 
 from .core import ONE, BOT, Org, Roles, Question, FnQuery, F1_at, F2eq_at, A_at, faithful, hom
 from .harness import claim, exhaustive, computed, construction
+from . import s108r2s3  # S108 Part A round 2, section 3: R2V3.7 in _dag_fixed_points
 from .claims_a import SMALL, gen_p_cand
 from .claims_b import (Hist, sel, con, prov_fixed_points, prov_show, _prov_step, PROV_READINGS, fwd_pole_cand,
                        faithful_on, episode)
@@ -165,7 +166,10 @@ def _dag_fixed_points(n, lt, held, trace, selc):
         for o in range(n):
             below = [x for x in range(n) if (x, o) in lt]
             s_ = selc[o] and not trace[o] and not any(x in R for x in below)
-            k_ = trace[o] and (held[o] or any(held[x] for x in below))
+            # S108 round 2, R2V3.7 (D11.3: ⪯_h the reflexive closure of ≺_h, ≺_h the covering steps): Con's Held witness at o or
+            # at an immediate predecessor of o; Sel's exclusion keeps every x ≺ o
+            wit = [x for x in below if not any((x, z) in lt and (z, o) in lt for z in range(n))] if s108r2s3.on("R2V3.7") else below
+            k_ = trace[o] and (held[o] or any(held[x] for x in wit))
             sc[o] = (bool(s_), bool(k_))
         if frozenset(o for o in range(n) if held[o] and (sc[o][0] or sc[o][1])) == R:
             fps.append((R, sc))
