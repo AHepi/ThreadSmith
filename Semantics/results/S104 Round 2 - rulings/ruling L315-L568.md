@@ -111,7 +111,7 @@ Every other sentence of L315 stands as it is. The points, sentence by sentence:
 
 #### L315: the ruling
 
-**FIX**, with the three changes (a), (c) and (d); every other sentence of the line is unchanged. For the program, the three changes as one span of the line (the first change's start to the last change's end, everything between copied unchanged), 2,491 characters old and 2,797 new, are given below under "Exact spans for the program" and in the structured result of this ruling; applied, they give the same line as the three changes applied one after another (checked by program, and each old span stands exactly once in L315).
+**FIX**, with the three changes (a), (c) and (d); every other sentence of the line is unchanged. For the program, the structured result of this ruling gives the three changes as three entries for L315, the Old and New spans above: each old span stands exactly once in the line, none overlaps another, and applied in any order they give the same line (checked by program). The same changes as one span of the line (the first change's start to the last change's end, everything between copied unchanged), 2,491 characters old and 2,797 new, are given below under "Exact spans for the program"; applied, that span gives the same line.
 
 ### L317 (Part VI, **Problems**; one paragraph of many sentences)
 
@@ -185,7 +185,7 @@ Every other sentence of L317 stands as it is. The points, sentence by sentence:
 
 #### L317: the ruling
 
-**FIX**, with the two changes (b) and (g); every other sentence of the line is unchanged. For the program, the two changes as one span of the line (2,088 characters old, 2,134 new) are given below under "Exact spans for the program" and in the structured result; applied, they give the same line as the two changes applied one after the other (checked by program; each old span stands exactly once in L317).
+**FIX**, with the two changes (b) and (g); every other sentence of the line is unchanged. For the program, the structured result gives the two changes as two entries for L317, the Old and New spans above: each old span stands exactly once in the line, they do not overlap, and applied in either order they give the same line (checked by program). The same changes as one span of the line (2,088 characters old, 2,134 new) are given below under "Exact spans for the program"; applied, that span gives the same line.
 
 ### L568 (Part XVI, Argument 2, **Consequence**)
 
