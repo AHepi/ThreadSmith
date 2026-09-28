@@ -240,7 +240,11 @@ def fc98_new1(S):
 
 @claim("FC84.new2", ["I90"])
 def fc84_new2(S):
+    from . import s108s3  # S108 V3.5: D13.8's record clause deleted, in each of its three forms here as in claims_b.episode
+
     def episode_forms(n, lt, q, recs):
+        if s108s3.on("V3.5"):
+            return True, True, True
         cover = {(i, j) for (i, j) in lt if not any((i, k) in lt and (k, j) in lt for k in range(n))}
         imm = all(q[j] in recs for (i, j) in cover if q[i] != q[j])
         ordd = all(q[j] in recs for (i, j) in lt if q[i] != q[j])
@@ -274,7 +278,7 @@ def fc84_new2(S):
 
     def check_c(m):
         n, q, r = m
-        cover_ok = all(r[i] for i in range(1, n) if q[i] != q[i - 1])
+        cover_ok = s108s3.on("V3.5") or all(r[i] for i in range(1, n) if q[i] != q[i - 1])
         return None if episode(q, r, "S41") == cover_ok else "program %s, covering %s: %s" % (episode(q, r, "S41"), cover_ok, m)
 
     return [exhaustive("FC84.new2", "(a) covering (B9) and every ordered pair", "Episode with 'o′ immediately after o' as the covering relation of ≺⁺_h′ = Episode over every o ≺⁺ o′, records Rec_h′(ρ_{q(o′)}) as D13.8 keys them",
