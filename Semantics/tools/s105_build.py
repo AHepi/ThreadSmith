@@ -45,7 +45,8 @@ REPO = os.path.dirname(SEM)
 # The text under review: the text after round 2 with the owner's answers of decision S41 written in (by the answers
 # step, recorded in ANSWERS). Its md5, and the md5 of every file the answers step updates, are not known in advance:
 # each must be committed and unchanged from HEAD when the build runs, and the build records the md5 it read.
-TEXT = ("tests/104 The semantics, standing alone, after round 2, with the owner's answers.md", None)
+TEXT = ("tests/104 The semantics, standing alone, after round 2, with the owner's answers.md",
+        "bc14045aae3139df710d8339a9c1c81b")
 TEXT_R2 = ("tests/104 The semantics, standing alone, after round 2.md", "735ec1e8256cc6a251715a031944ea65")
 TEXT_R1 = ("tests/103 The semantics, standing alone, after round 1.md", "f31ebb1f050783f1a84f6136cec20fcd")
 ANSWERS = "results/S104 Round 2 - the owner's answers written into the maths.md"
@@ -56,13 +57,16 @@ DECISIONS = ("records/Semantics - Decisions.md", None)
 SOURCES = [
     ("text/the text, with the owner's answers.md", TEXT[0], None),
     ("text/the text after round 2, before the owner's answers.md", TEXT_R2[0], TEXT_R2[1]),
-    ("maths/formal core, after round 2.md", R2 + "/formal core, after round 2.md", None),
-    ("maths/formal claims, after round 2.md", R2 + "/formal claims, after round 2.md", None),
-    ("maths/formal claims, after round 2.json", R2 + "/formal claims, after round 2.json", None),
-    ("maths/inventions I122 onwards, added in round 2.md", R2 + "/inventions register - addendum after round 2.md", None),
-    ("maths/owner questions after round 2.md", R2 + "/owner questions after round 2.md", None),
-    ("maths/parked after round 2.md", R2 + "/parked after round 2.md", None),
-    ("round 2/the owner's answers written into the maths.md", ANSWERS, None),
+    ("maths/formal core, after round 2.md", R2 + "/formal core, after round 2.md", "96798d3bf3b60da8d67175c39462ef4a"),
+    ("maths/formal claims, after round 2.md", R2 + "/formal claims, after round 2.md", "0306ff0a8d4727823864bb853e8dfde6"),
+    ("maths/formal claims, after round 2.json", R2 + "/formal claims, after round 2.json", "745cc40c12ff3ff0b4e48d7dafafee08"),
+    ("maths/inventions I122 onwards, added in round 2.md", R2 + "/inventions register - addendum after round 2.md",
+     "507a0d56a4596f93a1118eaf3677c00a"),
+    ("maths/owner questions after round 2.md", R2 + "/owner questions after round 2.md", "59fd4bd63a434bf90ae233dd67b93483"),
+    ("maths/parked after round 2.md", R2 + "/parked after round 2.md", "a62db83b8420c7e948ceaade2fadef98"),
+    ("round 2/the owner's answers written into the maths.md", ANSWERS, "732e483c6c2882a6469929cae1267956"),
+    ("round 2/text changes for the owner's answers.json", R2 + "/text changes for the owner's answers.json",
+     "8836b844ef122be01a6dc4a8bfb60c6a"),
     ("maths/inventions I01-I102.md", R2M + "/inventions register.md", None),
     ("maths/inventions I103-I108, external examples.md", R2M + "/inventions register - addendum for the external examples.md", None),
     ("maths/inventions I109-I121, creative transport case.md",
@@ -88,9 +92,12 @@ SOURCES = [
     ("cases/code of the creative transport case (read only).py", MODEL_DIR + "/s104_creative_transport.py",
      "cdde2bf3c1270d185463a12a673d36e5"),
 ]
-MODEL_FILES = ["__init__.py", "args.py", "cases.py", "claims_a.py", "claims_area1.py", "claims_b.py", "core.py", "gen.py",
-               "harness.py", "inventions_model.py", "phys.py", "register.py", "report.py", "run.py"]
-MODEL_MD5 = {}   # the answers step may change any model file: each is checked as committed instead
+MODEL_FILES = ["__init__.py", "args.py", "cases.py", "claims_a.py", "claims_area1.py", "claims_b.py", "claims_s41.py",
+               "core.py", "gen.py", "harness.py", "inventions_model.py", "phys.py", "register.py", "report.py", "run.py"]
+MODEL_MD5 = {"core.py": "68c9a65a202c2f85365c5d7c4ef9bd47", "args.py": "81ae45be0a7c5870c71bd5814448fd79",
+             "claims_a.py": "cba30de265f14fd9f7ca726aabea53ff", "claims_b.py": "449920633217e8f497935e61cbfeadc3",
+             "claims_s41.py": "1f07a6a2b7fd82f361e25057aa2f1a8c", "run.py": "f3d491e3706d84d5488efb0bf9ea76a6",
+             "inventions_model.py": "eb410a1316b0b09da791ee2294cc7680"}   # as the answers record gives them
 PRINTOUTS = [
     ("program printouts/whole suite after round 2, scale 4, time cap 45.txt", MAT + "/printout - whole suite after round 2.txt",
      ["-B", "-m", "model.run", "--scale", "4", "--time-cap", "45", "--no-write"], 2400),
@@ -287,12 +294,13 @@ SANDBOX = """## 3. The sandbox and your tools
 | `text/the text, with the owner's answers, by line.md` | the same text, one line per text line as `L<n> \\| ...`, long lines cut into pieces of at most 1,500 characters; a star marks the lines round 2 changed, a plus the lines the owner's answers changed. Read the text here: the Read tool cuts lines longer than 2,000 characters |
 | `text/the text after round 2, before the owner's answers.md` | the text as round 2 left it, for comparison |
 | `maths/formal core, after round 2.md` | the definitions D0.1 to D18.x and the encodings E1 to E9, each with the sentences it formalizes |
-| `maths/formal claims, after round 2.md` and `.json` | the claims and their results, with the owner's answers written in |
+| `maths/formal claims, after round 2.md` and `.json` | the claims and their results, with the owner's answers written in: 105 hold on every model tried, 3 have a counterexample (FC18, FC23, FC63), 7 were not tested, of 115 |
 | `maths/inventions I122 onwards, added in round 2.md` | the inventions round 2 and the owner's answers added, among them I161, I162, I163, I164; and the earlier inventions they fixed or amended |
 | `maths/inventions I01-I102.md`, `... I103-I108, external examples.md`, `... I109-I121, creative transport case.md` | the earlier inventions |
 | `maths/formal claims FC-E1 to FC-E5, external examples.md` | five claims from an outside cross-examination, with the models the program built for them |
 | `maths/owner questions after round 2.md` | the questions of round 2: the four the owner answered, and those ruled on argument |
-| `round 2/the owner's answers written into the maths.md` | how the owner's four answers were written into the maths, the program and the text: each change, with its reasons |
+| `round 2/the owner's answers written into the maths.md` | how the owner's four answers were written into the maths, the program and the text: each change, the claims that test it, the inventions it made (I165, I166), and the conflicts it found and left open (its section 6; section 4 below) |
+| `round 2/text changes for the owner's answers.json` | the 5 changes the answers made to the text on 4 lines: line, kind, old span, new span, what each settles |
 | `maths/parked after round 2.md` | points parked (section 4) |
 | `round 2/the second checker on the critical review.md` | the last ruling of round 2 before the owner's answers: what was changed at the end and why, with the strict count of its changes (its section 5 lists every definition and claim round 2 changed) |
 | `round 2/critical review.md`, `round 2/the orchestrator's decisions on the critical review.md` | the objections of the review of round 2 and what was done with them |
@@ -300,16 +308,46 @@ SANDBOX = """## 3. The sandbox and your tools
 | `round 2/text changes applied in round 2.json` | the 43 changes applied to the text on its 32 lines: for each, the line, the kind, the old span, the new span, what it settles and the items behind it |
 | `cases/creative transport case card.md`; `cases/code of ... (read only).py` | a worked case supplied by the owner, and the code that reads it and the external examples on the model (you can read it; it does not run here) |
 | `program printouts/` | the program's printouts on the model as it now stands: the whole suite at scale 4 (every claim, in full), the external examples FC-E1 to FC-E5, and the creative transport case CT1 to CT8 |
-| `model/` | the program, standard-library Python: `core.py` (organizations, questions, candidates, the account), `claims_a.py`, `claims_b.py`, `claims_area1.py` (one function per claim), `args.py`, `phys.py`, `gen.py` (the model generators), `inventions_model.py` |
+| `model/` | the program, standard-library Python: `core.py` (organizations, questions, candidates, the account), `claims_a.py`, `claims_b.py`, `claims_area1.py`, `claims_s41.py` (one function per claim), `args.py`, `phys.py`, `gen.py` (the model generators), `inventions_model.py` |
 | `BRIEF.md` | this brief |
 
 Your tools. **Read** (read a long file in pieces with offset and limit), **Glob** and **Grep**, inside this folder only. **Bash** runs one command only, typed plainly from this folder: `python3 -m model.run` with `--claim FCnn` (repeatable, for example `--claim FC12.new1 --claim FC83`), `--scale N` (at most 4), `--time-cap N` (at most 60), `--brief`, `--help`. Anything else is refused, and nothing can be written. One claim at the default scale takes seconds; the whole suite takes several minutes (give the Bash tool a timeout of 600000 for it), and its printout at scale 4 is already in `program printouts/`. You cannot change the program or run new code: a new definition, a changed claim or a new small model goes into your report as Python in the program's own notation (as in `model/core.py` and `model/claims_b.py`), with the output you expect, marked "not run"; the next step of the round will run it. Work economically: read what your job needs, search with Grep, run a claim where its result bears on your point.
 
 **Only your final message is kept.** Write the whole report in your last message, after your last tool call."""
 
-HELD = """## 4. The owner's answers, parked matters, values
+OPEN_POINTS = [   # (id, line, the exact words of the text, the answer they meet); each quotation checked by the build
+    ("O1", 61, "(Suff) sufficiency of the four conditions of Account",
+     "Q2: the four conditions are not enough where the link is only declared"),
+    ("O2", 49, "A piece of mathematics explains, relative to a question, when its components respond to those edits as "
+               "the target structure does", "Q2: not an explanation if its link was only declared"),
+    ("O3", 69, "\"Explanation\" in this commitment means an account, an explanatory candidate meeting "
+               "\\(\\operatorname{Account}\\) on its contract",
+     "Q2: a candidate meeting (E) whose link was only declared is not an explanation"),
+    ("O4", 397, "What a stated premise cannot do is stand in for the steps.",
+     "Q23: a single claim used alone to decide this and not that is an argument"),
+    ("O5", 397, "A premise taken as given differs from such a premise in that the argument has steps from it to what it "
+                "rules out", "Q23: an argument may be a premise alone, with no step"),
+]
+HELD = """## 4. The owner's answers, the known open points, parked matters, values
 
-- **The owner's four answers (S41) are given.** Q2: a candidate whose link to what it explains was only declared is not an explanation, however it meets (E) (L17 with L536). Q6: something can be constructed in a stretch of work in which the question never changes; an episode need not hold a change of contract (L55; "episode" at L197, L405, L429). Q15: where the baseline answer is not determined and a change gives a definite one, that change can be explained (non-circular dependence at L255; D6.4, I22). Q23: a single claim used alone to rule something out is an argument (L397; I88). No line is held. Do not argue the answers. Attack how each was written: does the changed maths say what the answer says, no more and no less; does it break a claim, a worked case or another definition; is a choice it made recorded as an invention. A proposal that would reverse or weaken an answer is not taken.
+**The owner's four answers (S41), as they were written** (`round 2/the owner's answers written into the maths.md`, sections 1 and 3; `round 2/text changes for the owner's answers.json`). No line is held. Do not argue the answers: attack how they were written. A proposal that would reverse or weaken an answer is not taken.
+
+| answer | the owner's words | written as | text | tested by |
+|---|---|---|---|---|
+| Q2 | "No, not if just declared" | D16.XV: Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ); Def(L17) = Def(L536); (E) itself takes no provenance | L17 (S41-Q2) | FC30.new1 |
+| Q6 | "Yes, it can" | D13.8: Episode(h′) asks a record for each change of contract in it, and no change need occur (I165); D12.2 as before; q(o) and Rec added to D0.2's primitives | L55 (S41-Q6) | FC84.new1 |
+| Q15 | "Yes, it can be explained" | D6.4: Contrast :⟺ Ans_E(x) ≠ Ans_E(x0) in Y_p ∪ {⊥}, ⊥ ≠ y; I22 settled | L255 (S41-Q15) | FC22 (b) |
+| Q23 | "Yes, it's an argument" | D9.2: an argument may be one leaf, a premise alone, with concl(α) its claim; D9.6: a premise alone is usable by j when j tentatively accepts it (I166); D9.7 | L397 (S41-Q23a, S41-Q23b) | FC72 (d) to (f) |
+
+**Known open points.** The answers step found six conflicts with the answers and left them unapplied (its section 6). For each, propose a fix from your job's angle, in one of the forms of section 6: maths, code, or a text change that deletes a span, or replaces it by its formal statement or by a pointer. No new prose. No change to the owner's answers.
+
+| point | where | the words | the answer they meet |
+|---|---|---|---|
+{open_rows}
+| O6 | decision S27 | the bare claim "is not enough for a creative agent to do anything about it" | Q23: a single claim used alone to decide this and not that is an argument; S28: a ruling out by a claim taken as given "is a choice that was made" |
+
+*For O6, the orchestrator's reading: the orchestrator's, not the owner's; recorded as a reading, not a decision; you may argue against it.* S27 says a bare claim is enough to trigger a conflict, but not enough to know how to repair the design. S28 says a ruling out by a claim taken as given is a choice the person made. So using the claim alone to rule a design out (an argument, by S41) is not the same act as doing something about the conflict, such as repairing the design, and the two need not clash. S27 and S28 are the owner's words: a fix for O6 changes the maths or the text, never the owner's words.
+
 - **Parked.** What hard to vary covers is parked (S33, S34; `maths/parked after round 2.md`, P1 to P7). Do not argue it.
 - **Values.** Where values are placed is the owner's question. Propose nothing that moves them."""
 
@@ -348,7 +386,7 @@ Put the most pressure on the three inventions the last ruling of round 2 added:
 - **I162**: the cut T′ of the loop in "represented" (Held in Con, D12.2, and in Build, D13.3; Sel's exclusion by Rep at o ≺_h o_t, a recursion along ≺_h; D18.1; FC98 (a′) to (e)). Is the recursion well founded on every history the core admits (a history with no least occurrence below o_t, occurrences not ordered by ≺_h, a first construction)? Does T′ give exactly one of the three provenances (L193) on every history? Build the smallest history on which T′ and the text part ways.
 - **I163**: identification by a varying observed value (D3.3: Ident :⟺ the query returns a fibre ∧ ∃(a,b),(a′,b′) ∈ C: obs(a,b) ≠ obs(a′,b′); FC28 (R4); L151 and L325). Does it now admit a question the text would not call an identification question, or exclude one it would (the pole at L325, E1, E2)? What if obs varies only across boundaries, or only through an edit that also alters what is identified?
 
-Then **the owner's four answers as written** (`round 2/the owner's answers written into the maths.md`): for each definition or claim they changed or added, the smallest model that breaks it, or on which it says more or less than the answer.
+Then **the owner's four answers as written** (section 4: D16.XV, D13.8 with I165, D6.4, D9.2 and D9.6 with I166; FC30.new1, FC84.new1, FC22 (b), FC72 (d) to (f)): for each definition or claim they changed or added, the smallest model that breaks it, or on which it says more or less than the answer.
 
 For each: (i) what exactly the definition says, in one line; (ii) the smallest model that breaks it, or makes it disagree with a line of the text or another definition, in the program's format; (iii) the program's check where one exists (run the claim); (iv) a fix, in one of the forms of section 6.""",
      """(a) I161; (b) I162; (c) I163; (d) the owner's answers as written; (e) the other definitions and claims round 2 changed or added; (f) what held under attack, one line each."""),
@@ -357,7 +395,7 @@ For each: (i) what exactly the definition says, in one line; (ii) the smallest m
 Where a formula or a pointer replaced words in the text, and wherever a definition formalizes a sentence, does the maths say what the sentence needs, no more and no less?
 
 1. **The 43 text changes of round 2** (`round 2/text changes applied in round 2.json`; the lines are starred in the reading copy of the text). For each change of kind "formal" or "pointer": compare the old span with the new span, and with the definition or claim the new span points to. Verdict: **same** (the formula says what the words said), **more** (what it adds), **less** (what it drops), or **other** (where it differs). For every verdict but "same", give a witness: the smallest case on which the words and the formula give different answers. For each change of kind "delete": does anything the rest of the text or the maths uses go with it?
-2. **The owner's four answers as written** (`round 2/the owner's answers written into the maths.md`; the lines marked with a plus in the reading copy): for each changed line, compare the old span (in `text/the text after round 2, before the owner's answers.md`) with the new span and with the answer in S41; for each changed definition or claim, compare it with the answer. Same, more, less, or other, with a witness. The answer is given: the question is only whether the maths and the text now say it.
+2. **The owner's four answers as written** (section 4; `round 2/text changes for the owner's answers.json`; the lines marked with a plus in the reading copy): for each changed line, compare the old span (in `text/the text after round 2, before the owner's answers.md`) with the new span and with the answer in S41; for each changed definition or claim, compare it with the answer. Same, more, less, or other, with a witness. The answer is given: the question is only whether the maths and the text now say it.
 3. **The definitions round 2 changed or added** (section 5 of `round 2/the second checker on the critical review.md`), each against the sentences quoted above it in the formal core: same, more, less, or other, with a witness.
 4. **Any other definition** you meet where the formula and its quoted sentence part ways in a way that changes a claim's result.
 
@@ -382,7 +420,7 @@ Run the cases through the maths after round 2, by hand or by the program, and sa
 1. **The text's worked cases**: the encodings E1 to E9 of the formal core (the pole and its shadow, identification, the two balances, obstruction, explanation that removes structure, odd-order skew-symmetric matrices, the transport results, a contract as an organization, the two-layer episode) and the cases the text works through in its lines (among them the table of observed answers, the reversed calculation, the swap and the occlusion case at L626 to L630). For each: what the text says the result is, what the maths gives now, and whether round 2's changes or the owner's answers moved it.
 2. **The external examples FC-E1 to FC-E5** (`maths/formal claims FC-E1 to FC-E5, external examples.md`; now: `program printouts/external examples ...`). For each: the result before round 2, now, and whether it moved; if it moved, which change moved it.
 3. **The creative transport case, CT1 to CT8, CT8 above all** (`cases/creative transport case card.md`; now: `program printouts/creative transport case ...`). Round 2 moved one reading of CT8 from "selected" to "neither". Does the move follow from the maths as changed (I161, I162), and does it match what the text says of such a history (L193 to L211, L405, L411)? Under the cut T′, would a pair in CT8 count as constructed?
-4. **The owner's four answers as written** (`round 2/the owner's answers written into the maths.md`). Run the owner's own four examples through the maths as it now stands: the student who copies a pendulum formula from a book and declares "this stands for the pendulum" (Q2: not an explanation); the engineer who designs a new bridge to a brief that never changes (Q6: something can be constructed); the weathervane in still air that a north wind makes point north (Q15: the change can be explained); the single claim "perpetual motion is impossible" used alone to rule out a design (Q23: an argument). Encode each as a small model in the program's format. Does the maths now give the owner's answer? Did any other case's result move with the answers?
+4. **The owner's four answers as written** (section 4). The owner's own four examples are encoded by the answers step: the student who copies a pendulum formula from a book and declares "this stands for the pendulum" (Q2, not an explanation: FC30.new1 (a)); the engineer who designs a new bridge to a brief that never changes (Q6, something can be constructed: FC84.new1 (a)); the weathervane in still air that a north wind makes point north (Q15, the change can be explained: FC22 (b), M13); the single claim "perpetual motion is impossible" used alone to rule out a design (Q23, an argument: FC72 (d)). Is each encoding faithful to its example? Does the maths give the owner's answer? Build, for each, the nearest variant the encoding would judge otherwise than the answer does. Did any other case's result move with the answers (the answers record, section 2, lists the details that moved)?
 5. **New small cases, at most six**, each built to probe one of round 2's new cuts and inventions or of the changes for the answers: I161, I162, I163, the one edge set of D18.1, D15.2 per execution, Forms_cl in D9.1 and D9.7. Each as a small model in the program's format, with the result you expect under the maths after round 2 and under the text's words, and whether the two agree.
 
 Where a result moves, say which change moved it and whether the move matches the text; where the maths and the text part ways, the fix goes in one of the forms of section 6.""",
@@ -418,7 +456,11 @@ def scan(text):
 
 def build_brief(n, title, owner, counts):
     job_title, job, sections = JOB_TEXT[n]
-    parts = [INTRO.format(n=n, title=title, **counts), owner, SANDBOX, HELD, job, FORM,
+    rows = "\n".join("| %s | L%d | \"%s\" | %s |" % (i, ln, q, a) for i, ln, q, a in OPEN_POINTS)
+    held = HELD.replace("{open_rows}", rows)
+    sections = sections.rstrip(".") + ("; (o) the known open points O1 to O6 (section 4): for each, a fix in one of the "
+                                       "forms of section 6, or one line on why none is needed.")
+    parts = [INTRO.format(n=n, title=title, **counts), owner, SANDBOX, held, job, FORM,
              REPORT.format(sections=sections)]
     return "\n\n".join(parts) + "\n"
 
@@ -434,6 +476,9 @@ def check_sources(printouts_too=True):
         need(os.path.isfile(path(src)), "%s is not there" % src)
         if want:
             need(md5_file(src) == want, "%s has md5 %s, expected %s" % (src, md5_file(src), want))
+    for f, want in MODEL_MD5.items():
+        rel = MODEL_DIR + "/model/" + f
+        need(md5_file(rel) == want, "%s has md5 %s, expected %s" % (rel, md5_file(rel), want))
     for rel in all_sources():
         need(os.path.isfile(path(rel)), "%s is not there" % rel)
         need(committed(rel), "%s is not committed, or differs from HEAD: the material must be fixed first" % rel)
@@ -452,6 +497,9 @@ def build():
     bl = by_line(text, md5_file(TEXT[0]), r2, ans)
     files[BYLINE] = bl
     counts = {"nlines": len(lines_of(text)), "n_r2": len(r2), "n_ans": len(ans)}
+    tl = lines_of(text)
+    for i, ln, q, a in OPEN_POINTS:
+        need(tl[ln - 1].count(q) == 1, "open point %s: its words are not once in L%d" % (i, ln))
     owner, own = owner_words(read(DECISIONS[0]))
     rows = []
     for n, name, title, tag in JOBS:
