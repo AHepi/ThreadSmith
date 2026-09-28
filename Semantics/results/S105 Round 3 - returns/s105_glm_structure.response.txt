@@ -1,0 +1,123 @@
+# Job 3 — the structure of the formal core
+
+All findings read `maths/formal core, after round 2.md` (D-numbers as there), `maths/formal claims, after round 2.md`, `model/`, and the text. Program runs are named; everything else is by reading.
+
+## (a) Cycles and the cut loop
+
+Dependence (corrected; `model/claims_b.py` DEP:2485 plus the edges its entries omit, marked +):
+
+| node | depends on |
+|---|---|
+| (K) | (O), C |
+| (F1),(F2),(A) | (O),(Q),(K) |
+| NC | (O),(Q),C,ℓ,δ |
+| NV | (O),C,Σ |
+| (E) | (F1),(F2),(A),NC,NV |
+| Held | Org,(F1),(F2) |
+| Sel | h,Θ,(F1),(F2) **+Build (via ¬CT, D12.1)**, staged (R) at o′≺o_t |
+| Con | h,Build,Held(o′⪯o_t),Episode **+q(o),Rec** |
+| Build | h,Owned,Held,ExplUse **+(E) only if ExplUse is read through Acc — see S2** |
+| (R) | (F1),(F2),Org,Sel,Con |
+| Deploy,Can,(CT1),New,(G),Attempt | as DEP |
+| (K2)→Live | staged below the step (D9.4 Below) — closes, well founded by height (FC69 H) |
+
+**S1 — the cut loop: well founded on finite histories, neither on ones the core admits.** D11.3 requires ≺_h *acyclic* only. Under the cut T′ the only Rep-in-Rep dependence is Sel's exclusion at o′ ≺_h o_t; on a finite (hence well-founded) history that is a well-founded recursion with a unique value — FC98 (c)/(d) and FC84.new1 (d) confirm (run: `--claim FC98 --claim FC32`, both "HOLDS ON ALL MODELS TRILS [sic] TRIED"; cycle (R)→Sel→(R) as worded; no cycle under K, T, T′). But D11.3 admits h with an infinite descending chain o_0 ≻ o_1 ≻ o_2 ≺ … below o_t. Witness (not run, infinite): all o_n held, Sel's other conditions met, no traces. Fixed points of R = {o : held ∧ (Sel ∨ Con)}: {o_1} and {o_2} are both fixed points (o_n ∈ R ⟺ no later o_m ∈ R), incomparable, and no least one exists. Rep, hence Sel, Con, Dec — and, since Q2, L17's Def condition — take different values at o_t. So: not a cycle, a well-founded recursion exactly where ≺_h is well founded below o_t, and *neither* on other admitted histories; L526's "no endless descent" fails on them. Fix: proposal P1.
+
+**S2 — D18.1's "one edge set" is not the order the definitions have.** Three defects. (i) DEP has 28 nodes; D18.1 announces "Nodes: the symbols defined in §§1–16" (118 paragraphs). (S),(B),(D),(K3), Result, Episode, Scr, RC, UU, UC are absent, so FC98 (b)'s check "every sink is listed" sees only the subgraph's sinks. (ii) DEP["Sel"] = ["h","Θ",staged] omits Sel's own Faithful_H (→(F1),(F2)) and its ¬CT clause (→Build); no cycle is hidden (Build's cone does not reach Sel), but the entry is wrong. (iii) DEP["Build"] carries an edge to (E), matching L526 ("Build depends on histories, Ownership and (E)"), but D13.3's only route to (E) is ExplUse, which D0.2 declares a *primitive read through Θ*. Either the edge has no definition behind it or ExplUse is wrongly classed a primitive. Fix: P5, P7.
+
+**S3 — one dependence L526 states and the core lacks.** L526: "(K3) on (K2)". DEP has no (K3) node; D9.9 depends on Forms_cl and MadeFrom as well. Same subgraph point as S2(i).
+
+## (b) Primitives used and never defined
+
+Listed = named in D0.2 or in L31/L522's declared inputs.
+
+| symbol | used at | listed |
+|---|---|---|
+| 𝒱 (family of organization edits) | D7.4 | no |
+| parts(t), "the stated construction" | D15.8 (I158 registered) | no (I158 not added to D0.2) |
+| surv | D12.1 (x ∈ {t,H,surv,cod t}) | no |
+| h(t), "the one history of t", o_t | D12.1, D12.3 | no (I53 adjacent, not this) |
+| cod t | D12.1, D12.2, D18.1 | no |
+| val_r, Org_ℓ(h)|_R[i:=x], ⇝_R | D11.4 | no (Org_ℓ yes) |
+| trans(·), ρ·ob, γ·ob | D9.11 (Rec, Chg listed; the actions are not) | no |
+| Exec(π,z,i;χ), completion, protocol | D15.2–D15.3 | no |
+| Desc (description of p) | D3.6 | no |
+| "immediately after" | D13.8 (Q6's own writing) | no |
+| "output of h′" | D13.3 | no |
+| 𝔓^adv_Θ | D16.4 | acknowledged in core, not in D0.2 |
+
+D0.2's own list (δ, ⊥, Excl(Σ), restriction, Offered/Off, Allow_χ/Applies, MadeFrom, K, Rule/Rec/Chg, Integrated/Nontrivial, Prepares/BindingConstruction/TransferComposite, Aims*/X, O_ex, Occurs, Attempt, Qf, ExplUse, AtRest, Org_ℓ(h), subhistory, q(o), Rec_h′) is complete as far as I checked. Fix: P7 makes the unlisted sinks visible; the table's rows should be added to D0.2 or defined (P3, P4 cover surv, cod t, "immediately after").
+
+## (c) Definitions no claim uses
+
+No claim's statement, and nothing in `model/`, uses: **D2.5** (dir), **Found(p)** in D3.4, **D7.4** (Boundary (D)), **D10.3** (Test, Arg_test — FC47 builds such an argument by hand instead), **D10.6** (Solved; parked P7), **D12.6** (Layers — E9 builds layers as organizations, not by D12.6), **D14.8** (𝓡, (AR), 𝒩), **D15.4**, **D15.6** (CanAdv), **D16.1** (Scr). D16.2–D16.4 appear in statements only (FC94, FC110: NT). None is idle: each carries a line the text needs (L109, L155, L302, L317, L175–L179, L455, L473, L495, L487). No proposal; note only that D10.3 and FC47 should point at each other.
+
+## (d) Conflicts
+
+**D1 — D4.6 vs D2.1/I124: two definitions of "the port j assigns".** D4.6: "o_j is the port j assigns" (singular, I124). I124's registered choice is "the ports j assigns… with a union"; `Roles.outputs_of`/`set_oj` (core.py:312–320) take the union over several. Witness (not run): V = {v,w}, J = {k}, V_k = {v,w}, edits setv0, setw0 each slicing one port through k; asg(v) = asg(w) = k, so D4.6's o_k has no value and Causal_C(k) is ill-defined while the program returns one. Fix: P2.
+
+**D2 — Rep and Held applied outside their type.** D12.5 types Rep_ℓ(o, c) on contents c = (E_c, C_c, Γ_c); D12.1 evaluates Rep(o, x) for x = t (a transport), H (a finite set of pairs) and surv. D18.1's Held_ℓ(o′, c) is likewise applied in D12.2 to x ∈ {t, cod t}, and Held names no contract (D12.5 specifies the preimage of C_c; D18.1 says only "Faithful"). A history in which some occurrence carries a record made from H makes D12.1's exclusion clause evaluable only by changing Rep's signature. Fix: P3.
+
+## (e) Notation used two ways
+
+| symbol | uses |
+|---|---|
+| δ | designation (D3.1–D3.2) vs alleged defect of a criticism (D9.10, p_δ) |
+| B | boundary set (D1.1) vs block B ⊆ W (D7.3) vs background in T∧B∧I (L395) |
+| G | block G ⊆ Γ (D6.1, D6.4) vs achievement set G (D14.8) vs the (G) tag |
+| K | contrast set of a route (D0.2, D11.4) vs the (K) tag — collides inside DEP itself ("ActRoute": [… "K"] vs "(K)") |
+| κ | kind-label κ(ℰ) (D16.XV Elim) vs value maps κ_{k,v} (D5.1) |
+| O | aims O_p/O (D3.1, D14.1) vs occurrences O_h (D11.3) vs (O) tag |
+| S / P | routes S_{E,p} and aims P vs simulation/object layers S, P (D12.6) |
+| T | task (D15.1) vs theory in T∧B∧I vs cut names T, T′, K, U |
+| q | query port (E8) vs q(o) (I165) vs tolerance index q in RetReal^{q,r} |
+| CT | construction-trace predicate (D12.2) vs (CT1)–(CT4) tags |
+| π, C | transport π / contract C vs protocol π / constructor attribute C (D15.2 — flagged there, not fixed) |
+| Pred / Ans | after I51, Pred_t(a,b) := Ans_E(τa,σb) with no residue: two names, one predicate (FC35 NT) |
+| "represented" | Rep (provenance, D12.5, used in D13.1) vs Held (none, D18.1, used in D12.2, D13.3) vs neither (D11.4 "represented input", D13.8 "represented failure") |
+| primed ids | FC07/FC36/FC77/FC81–FC83 cite D2.4′, D3.3′, D4.6′, D12.1′, D12.7′, D12.8′ — ids that no longer exist (definitions were replaced in place) |
+| Acc arity | D6.7's eleven arguments vs D14.7's Acc(c, p_c, t_c, Γ_c) — four, and no δ_c: (EX) evaluates a query with no designation |
+
+Fixes: P6 (Acc arity), P10 ("represented" in the text), P11 (primed ids); the letter collisions are editorial and I propose only the δ and K renamings, as inventions of notation.
+
+## (f) The owner's answers as written
+
+- **Q2 (D16.XV, L17).** Expl as an atom with Acc ∧ Dec ⇒ ¬Expl: no new cycle (Dec → Sel → staged Rep → (E); (Suff) is in no definition's cone), no undefined symbol, Uses(α) defined for leaves. It *does* put the defeat condition inside S1's non-uniqueness: on an admitted infinite history Dec(t) itself is fixed-point dependent. Def(L17) = Def(L536) verified by FC30.new1 (H).
+- **Q6 (D13.8, L55).** Sits without cycle (Con → Episode → q, Rec, both Θ sinks), but "o′ immediately after o in h′" is undefined (table (b)); the program implements adjacency on chains only (`episode`, claims_b.py:1638).
+- **Q15 (D6.4).** Clean: the new Contrast is exactly D8.2's reading; no new symbol; Lost unchanged and rightly so.
+- **Q23 (D9.2, D9.6, D9.7).** Clean: concl(α) total, the block in `rules_out` catches a bare premise that is the denial structurally (canon flattens conjunctions and double negations, so reworded denials are caught too — args.py:62–91, 266–276, read; FC72 (d)–(f) H). I166 leaves Form_j/Scope_j inapplicable to a leaf, recorded with its alternative.
+
+## (g) Proposals
+
+**P1 (maths).** D11.3, beside: "≺_h acyclic" → "≺_h acyclic **and well founded** [I167; other choices: the least fixed point of the staged recursion — none exists in general, see S1's witness; the greatest — admits Rep everywhere]. L526's 'no endless descent' asks for this." No text change; invention registered.
+
+**P2 (maths).** D4.6: "o_j is the port j assigns (asg(o_j) = j)" → "O_j := {v : asg(v) = j} [I124], Set_{O_j} := ∪_{v∈O_j} Set_v; Causal_C(j) :⟺ Changes_C(j, Set_{O_j}) ∧ Inv_C(j, Obs)". Matches the program as it stands.
+
+**P3 (maths).** D18.1/D12.1: "Held_ℓ(o, x) :⟺ ∃t′ Faithful(t′: Org_ℓ(o) → cod x) on the preimage of C_{cod x} (D12.5's extent), for x ∈ {t, cod t}, with (C_{cod x}, Γ_{cod x}) declared with t; D12.1's exclusion ranges over x ∈ {t, cod t}, and 'no member of the history represents H or the survival condition' := no record leaf of h(t) is MadeFrom H or surv (D9.2)."
+
+**P4 (maths).** D13.8: "for every o ≺_{h′} o′, o′ immediately after o in h′, with q(o) ≠ q(o′)" → "for every o, o′ ∈ h′ with q(o) ≠ q(o′)" (extensionally equal wherever immediacy is defined; removes the undefined symbol). No new invention: an amendment to I165.
+
+**P5 (maths).** D0.2/D13.3: remove ExplUse from D0.2 and add to D13.3: "ExplUse(o, c) :⟺ the occurrence's use is of a claim Acc((E_c, p_c, t_c, Γ_c, δ_c)) [Inn; other choices: keep ExplUse a primitive and drop (E) from Build's edges and from L526 by a text change]". This is what makes L526's "Build depends on … (E)" true.
+
+**P6 (maths).** D14.7: "Acc(c, p_c, t_c, Γ_c)" → "Acc((E_c, p_c, t_c, Γ_c, δ_c)), δ_c supplied with c (as D9.10 supplies δ_c)". Same change at L449 by its formal statement.
+
+**P7 (code, not run).** Extend `DEP` (claims_b.py:2485) with the missing nodes — (S),(B),(D),(K3),Result,Episode(+q,Rec),Scr,RC,UU,UC — and the missing edges "Sel": […, "(F1)", "(F2)", "Build"]. Expected: `dep_cycle(False)` still returns a cycle, `dep_cycle(True,"T'")` none; FC98 (b)'s sink list grows by 𝒱, parts(t), surv, Desc, h(t) — the rows of table (b). Command: `python3 -m model.run --claim FC98 --claim FC32 --scale 4`.
+
+**P8 (code, not run).** For D1: `Org("Dcoll", ["v","w"], {"v":(0,1),"w":(0,1)}, ["k"], {"k":("v","w")}, ["b"], [ONE,"sv","sw"], compose, Lf)` with Lf slicing v under sv and w under sw through k; `Roles(...).asg == {"v":"k","w":"k"}`; `set_oj("k") == {"sv","sw"}`. Expected: D4.6's o_k has no value; the program's Causal(k) is computed — the conflict of D1 made runnable.
+
+**P9 (maths, editorial).** Re-base the dangling primed ids in the claims file to the current ids (D2.4, D3.3, D4.6, D12.1, D12.7, D12.8).
+
+**P10 (text).** L405: old "prepares a represented organization for explanatory use of c" → new "prepares \(\operatorname{Held}_\ell(o,c)\) (D18.1) for explanatory use of c" (replacement by formal statement; fixes the text side of the "represented" double use).
+
+## (o) The known open points
+
+- **O1 (L61).** Text change: old "(Suff) sufficiency of the four conditions of Account" → new "(Suff) sufficiency of \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) (D16.XV)" — the same form as L17's change.
+- **O2 (L49).** Text change: old "when its components respond to those edits as the target structure does (Part VII)" → new "when \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) holds of it (Part VII, D16.XV)".
+- **O3 (L69).** Text change: old "an explanatory candidate meeting \(\operatorname{Account}\) on its contract (Part V)" → new "an explanatory candidate meeting \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) on its contract (Part V, D16.XV)".
+- **O4 (L397).** Delete the span "What a stated premise cannot do is stand in for the steps. " (contradicts D9.2 as written by Q23).
+- **O5 (L397).** Text change: old "in that the argument has steps from it to what it rules out: it finds that the candidate gives what the premise excludes" → new "(D9.2)".
+- **O6 (S27).** None needed: the ruling out (D9.6–D9.8) and the response (D12.8, D14.2) share no definition, and L315 already writes the separation ("ruling the candidate out by χ is already doing something about it… a response that changes the candidate, the claim or the question is construction and repair").
+
+Examined and nothing against: D6.4/D8.2 alignment under Q15; D9.2–D9.7 internal consistency; the K2→Live staging; D15.2–D15.3's (CT1)/(CT2); E1–E9 (each used by its claims); D18.2; the Q23 block against reworded denials.
+
+END OF REPORT
