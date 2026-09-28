@@ -1,0 +1,83 @@
+# Part A, section 3 (criticism, construction, repair, physical module): report
+
+Baseline lines cited "run" come from `python3 -m model.run --claim …` in this sandbox (same results as `--brief`); every "after" line is **not run**.
+
+## (a) The variants
+
+| id | item(s) varied | old → new (formula) | kind | why chosen | owner decision departed from |
+|---|---|---|---|---|---|
+| V3.1 | D9.7 (RO), with L397.n14, L397.s16 (S3) | RO(α,φ) :⟺ Incons(φ, concl(α)) ∧ no leaf has ¬φ as conjunct ∧ no record leaf made from a claim whose denial is φ **→** RO(α,φ) :⟺ Incons(φ, concl(α)) | delete | the block is the only thing telling an argument from the denial (D9.7's own r3 mark); delete it to see what else, if anything, blocks "p because p" | rejected by S23 (an argument is reasons why this and not that, not its conclusion among its premises) |
+| V3.2 | D9.4 (Live) | Live_j(d;u) :⟺ ∃u′∈Below(u)[d=concl(u′)∧Usable_j(u′)] ∨ d∈Accepted_j(ξ) **→** Live_j(d;u) :⟺ d∈Accepted_j(ξ) | delete | tests how much ruling out rests on the tree and how much on the person's taking up | none |
+| V3.3 | D9.6 (Usable, premise alone) | Usable_j(α) :⟺ ∀u∈steps(α) Usable_j(u) ∧ [steps(α)=∅ ⇒ concl(α)∈Accepted_j(ξ)] **→** Usable_j(α) :⟺ ∀u∈steps(α) Usable_j(u) | delete | the words-alone reading of L397 (FC72.new1 (a)): a bare claim would rule out with no one taking it up | rejected by S28 ("that ruling out is a choice that was made, not something the claim does by itself"), with S41 Q23 |
+| V3.4 | D13.3 (ExplUse) | ExplUse(o,c) :⟺ UsesClaim(o,'Acc(ℰ)') for some ℰ with c∈{E,t,C_p} **→** ExplUse(o,c) :⟺ UsesClaim(o,'Acc(ℰ)') ∧ Acc(ℰ) for some such ℰ | strengthen | tests whether construction may feed on an account in error; the registered third choice of I178 | blocked by L403.s3 (FROZEN, "A system may understand a theory in error") |
+| V3.5 | D13.8 (Episode) | Episode(h′) :⟺ subhistory ∧ every covering contract change carries a record **→** Episode(h′) :⟺ h′⊆h is a subhistory | delete | the record clause is invention (I165/I174); delete it to see how much of Con, hence of ¬Dec, rests on records | none (S41 Q6 dropped "in which contracts change", not the record) |
+| V3.6 | D15.8 (population), with L481.s3 (S3) | 𝒯 := {t : Θ admits t ∧ parts(t) ⊆ parts of the stated construction} **→** 𝒯 := {t : Θ admits t} | delete | tests how much of Sel — hence of ¬Dec — is fixed by the stated construction's part inventory | none |
+| V3.7 | D11.4 (Active route) | delete the conjunct ∃(x,x′)∈K: val_r(Org_ℓ(h)\|_R[i:=x]) ≠ val_r(Org_ℓ(h)\|_R[i:=x′]) | delete | tests whether the "did work" clause is read by the definition or only carried by the frozen sentence | none |
+| V3.8 | D14.7 ((EX)), i.e. L445.s1's formal statement | CreateEx :⟺ CreativeCriticalEpisode ∧ ∃ξ,ξ′[Repair ∧ ∃o∈O_ex … ] **→** CreateEx :⟺ ∃ξ,ξ′[Repair_{O,P}(ξ,ξ′;Δ) ∧ ∃o∈O_ex ∃c,p_c,e_c,t_c,Γ_c,δ_c (e_c⪯_h e ∧ ¬o(ξ) ∧ o(ξ′) ∧ Origin ∧ Acc((c,p_c,t_c,Γ_c,δ_c)) ∧ c∈Result(Δ) ∧ Deploy ∧ ProducesVia)] | delete | tests whether the critical episode does work in "created explanation" beyond repair+origin+account+deployment | in tension with S47 read strongly ("the maths asks for nothing"); A3's B12 ruling kept the episode — flag for the owner's yes/no |
+
+## (b) Traces
+
+**V3.1.** Run (`--claim FC72`): "(e) … usable: True; rules out PM: False"; "(b) a record made from ψ does not rule out ¬ψ: True". After (not run): ¬PM alone rules out PM for j who accepts ¬PM; a record made from ψ rules out ¬ψ. Candidates: no candidate newly meets (E) or stops; Expl = Acc ∧ ¬Dec takes no assessor (FC30) and is unmoved. What moves: with φ = Expl(ℰ), any j who has taken up ¬Expl(ℰ) alone puts ℰ in the defeat sets of (Suff) and (Nec) by acceptance alone; and j accepting 'Ans_p(a,b)=y' rules out every candidate answering y at (a,b) with no test, against L369.s3's "once an argument usable by an assessor rules out y…" (S3, varied with it).
+
+**V3.2.** Run (`--claim FC70`): "usable before j withdraws d: True; after: True". After (not run): after: False. Multi-step arguments (Arg_test: record leaf plus conditionals) become unusable unless each intermediate conclusion is separately in Accepted_j. Effect: X_j shrinks; fewer candidates ruled out for any j (D9.8, S2); fewer problems (D10.1, FROZEN) and fewer solved; the (Suff)/(Nec) defeat sets shrink. Which candidates meet (E) is untouched.
+
+**V3.3.** Run (`--claim FC72`): "(f) j accepts nothing: usable False; |X_j(design ∧ PM)| = 0"; (d) "usable by j (who accepts ¬PM): True". After (not run): (f) usable True, |X_j| = 1 — "perpetual motion is impossible" alone rules out the design for every assessor, taken up or not. S27's split ("enough to trigger a conflict… not enough for a creative agent to do anything") collapses: the conflict and the ruling out coincide with no chooser. (E) and Expl untouched; the defeat sets and Prob_j become j-independent.
+
+**V3.4.** Run (`--claim FC90.new1`): "ℰ_rev, the claim must hold: Acc(ℰ): (False, False)"; "ℰ_fwd … (True, True)". After (not run): Build fails wherever the use rests on an account failing (E) on its contract of use. Small case (program's printout format, not run): the reversed calculation on the identification contract meets (F1),(F2),(A) (FC28, run: "{'F1': True, 'F2': True, 'A': True}"); a system that works it out and uses it, but claims it on the production contract (where Acc is False, FC27), gets Build = False → CT fails → t not Con → Dec(t) → the candidate stops being an explanation on the identification contract, where it meets (E). Before: Build True (L403.s3), Con true, explanation. So candidates whose transport's construction is knotted to an account in error stop counting as explanations.
+
+**V3.5.** Run (`--claim FC84.new1`): (c) "change unrecorded, S41: o1 ≺ o2 an episode False; Con at o2 [True]"; (iv-u) "Episode(o1 ≺ o2), (base, iv-u): S41 (True, False)". After (not run): on iv-u the whole chain is an episode; Con at the output unchanged where it already held via a sub-episode, but a transport worked out across an unrecorded scope change (L453.s5's "later narrowing… to rescue c's meeting (E)", S3) now has its preparing stretch count as the episode: CT gains witnesses, Con grows, Dec shrinks. Candidates: some that meet (E) with a transport previously Dec (no episode after the change) become explanations. Direction: Expl widens.
+
+**V3.6.** No claim computes the parts clause (I158). Small case (not run, printout format): 𝒯 into the pole's forward organization; t with parts {set H, set T}, t′ = t plus a setting of L (a part the stated construction lacks); H = {(1,b1_45)} occurred; both faithful on H; environment keeps both. Before: t′ ∉ 𝒯, Sel(t) witnessable, t′ no competitor. After: t′ ∈ 𝒯; if the environment keeps both, both Sel; where t and t′ differ at a pair of C1, Argument 3's underdetermination (FC80, S4) now reaches it. Candidates: transports physically admitted but never built become selectable, so holdings previously Dec (no Sel witness, no trace) can become Sel: ¬Dec holds and candidates meeting (E) become explanations. Direction: Expl widens; the student's declared copy (FC30.new1 (d), run under `--brief`: "Dec(t) at o2 [True]") is untouched, its defect being the absent trace, not the population.
+
+**V3.7.** Run (`--claim FC75`): "(a′) dependence only outside R … D11.4 after area 3: False"; "(a) did no work … no dependence along R on the declared contrasts". After (not run): both routes active. Effect: ProducedBy (D14.3) attributes a repair to a contribution whose route did no work; ProducesVia (D14.6) lets (EX) hold through an idle binding; UsesReason (D9.11, FROZEN) lands on routes that ignore the objection. (E), Acc, Expl unmoved; (P) and (EX) attribution widens.
+
+**V3.8.** Run (`--claim FC84.new1`): (a4) "CreateEx over the 1024 Θ-values of its other conjuncts: [False, True]" under I191; "[False]" under I192 (d) (question labelled, no criticism). After (not run): [True] under both labellings — whether a question occurred to the agent no longer decides; the bridge (a1) counts as creating an explanation whenever repair, origin, Account, Deploy and ProducesVia hold. Expl and Acc untouched; the class of created explanations widens to every originative repair through an account.
+
+## (c) Edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| V3.1 | constrains | L397.s5 (FROZEN, S3 stretch) | X_j(ψ) = usable ∧ RO must stay a reading of the frozen words; the variant lives inside RO | yes |
+| V3.1 | changes with | L8.s3 (S1) | "the claim's denial is not among its premises" states the block in Part 0; must change with the variant | yes |
+| V3.1 | moves | (Suff) and (Nec) defeat sets (D16.XV, S4) | ruling out by bare acceptance enters them; being an explanation (Acc ∧ ¬Dec) unmoved | yes |
+| V3.2 | constrains | L389.s1 (FROZEN, K2 display) | Live must remain a predicate of (d;u) read by K2's ∀d | yes |
+| V3.2 | moves | X_j and everything downstream (D9.8, S2; D10.1, FROZEN) | fewer usable arguments; no conjunct of (E) moves | yes |
+| V3.3 | constrains | L397.s5 (FROZEN) | as V3.1 | yes |
+| V3.3 | changes with | L393.n2 (S3, same section; "a claim j has never taken up is not live for j") | the varied D9.6 contradicts it | yes |
+| V3.3 | moves | (Suff)/(Nec) defeat sets; Prob_j becomes assessor-independent | bare claims rule out with no chooser, against S28 | yes |
+| V3.4 | blocks | L403.s3 (FROZEN, Part X) | "A system may understand a theory in error": a use in error can no longer prepare explanatory use | yes |
+| V3.4 | moves | Dec(t), via CT (D12.2, S2) and Build | transports constructed only through uses-in-error become Dec; Expl = Acc ∧ ¬Dec shrinks on that class | yes |
+| V3.4 | constrains | L526 (S4) "Build depends on … (E)" | ExplUse must keep reading the claim 'Acc(ℰ)' — it does, conjoined with Acc | yes |
+| V3.5 | changes with | L55.n3 (S1) | "An episode is a history in which every change C→C′ carries a provenance record (D13.8)" points at D13.8 and would be false of it | yes |
+| V3.5 | moves | Dec(t) via Episode → CT (D12.2, S2) | more episodes → more Con → fewer Dec → more explanations | yes |
+| V3.6 | blocks | — none found: no frozen sentence states the parts bound (L481.s3 is S3, varied with it) | — | yes (checked by search) |
+| V3.6 | constrains | D12.1 (S2) writes 𝒯 = D15.8's population | the variant must still define a set 𝒯; it does | yes |
+| V3.6 | moves | Sel (D12.1, S2), hence Dec and Expl; Argument 3's extent (FC80, S4) | wider population: more Sel, fewer Dec, wider underdetermination | yes |
+| V3.7 | blocks | L375.s2 (FROZEN) | "nonconstant dependence on the represented distinction under the declared contrasts" is part of the frozen definition the varied D11.4 must read | yes |
+| V3.7 | moves | (P) via ProducedBy (D14.3), (EX) via ProducesVia (D14.6), reason use (D9.11 FROZEN) | idle routes become active; no part of (E) moves | yes |
+| V3.8 | blocks | — none: L443.s3 (FROZEN) constrains only O_ex ⊆ O; L445.s1 and L429.s1–s3 are S3 | — | yes |
+| V3.8 | constrains | L443.n1 (S3) "an explanatory aim requires a deployable account" | Deploy conjunct kept | yes |
+| V3.8 | changes with | L628 (S4) and D18.1's DEP (S4) | FC90: CreativeCriticalEpisode is "left unstated by L628", so no sentence change is forced; DEP's (EX) node loses its Crit edge (FC32.new1 (f)) | unsettled whether the owner wants the Crit edge kept (S47's strength) — the owner's yes/no settles it |
+| V3.8 | moves | the class of created explanations; not (E), not Expl, not (Suff)/(Nec) | (EX) is a defined relation of an episode (L31.s4, S1) | yes |
+
+## (d) Items of my section not varied, that bear most on how explanation is defined
+
+- **D9.2 (Argument; a premise alone is an argument, S41 Q23)** — the shape of X_j and hence of the (Suff)/(Nec) defeat sets; not varied because V3.3 already explores its usable-clause, and reversing Q23 itself was round 2's rejected reading (I88).
+- **D9.9 (K3)** — keeps a failed prediction from ruling out one candidate alone; it is what lets frozen L369.s1–s2 ("a failed answer stays failed") read every such candidate alike; a variant here would move a frozen pair's reading, so it is left alone.
+- **D11.3 (History, well founded)** — carries the uniqueness of the T′ fixed point (FC98.new2), hence "exactly one of three" provenances, hence the totality of Dec and the sense of Expl = Acc ∧ ¬Dec; the acyclic-only alternative is already computed (no fixed point, Dec undefined).
+- **D13.7 (Ownership)** — feeds Owned_β (D15.5) → Can → Deploy → (EX); its content is fixed by frozen L427.s3 (contribution of content ≠ ownership of a process).
+- **D14.1 (Aims, occasions)** — the interval reading of r(ξ′) is fixed by frozen L441.s2; the "only at ξ′" variant is blocked by it (FC86 computes the difference).
+- **D15.1/D15.2 (Tasks; RetReal and its tolerances)** — where physical possibility enters as instantiation and transformation (S25–S27); not varied because their only route to explanation is Can → Deploy, and pointing them at (E) or its question would move physical possibility into explanation, against S25.
+
+## (e) Inventions the variants rest on
+
+- **V3.1**: I39 (the block read structurally: flattened conjuncts, up to renaming and order). Other choice: by logical equivalence — excluded by L397.n14's "not by logical equivalence alone".
+- **V3.2**: I40 (Below(u) = the steps strictly below u). Other choice: any step of the argument (FC69's two fixed points).
+- **V3.3**: I166 (a premise alone usable only if accepted). The variant **is** I166's registered other choice (the words-alone reading, FC72.new1 (a)).
+- **V3.4**: I178 (ExplUse = UsesClaim of 'Acc(ℰ)', the claim need not hold). The variant is the registered third choice ("the claim must hold"); P5 (c its organization) is the second.
+- **V3.5**: I165/I174 (a record keyed by the new contract; the program keys by the change — recorded, not chosen). The variant deletes both keys.
+- **V3.6**: I158 (parts(t) ⊆ the stated construction's parts). The variant is I158's registered other choice (Θ's admission alone).
+- **V3.7**: I46 (the contrast set K and the dependence clause), with I149 (AtRest readings a/b) and I150 (Org_ℓ(h)|_R) kept; I46's earlier other choices (the chain clause) are computed in FC75 (a′), (a′′).
+- **V3.8**: I59 (O_ex's marking) and I180 (δ_c quantified with c) are kept; the variant touches only the CCE conjunct, whose own invention basis is I152 (Conn(G, h′)) and I190/I192 (the readings of "no question occurred"), under which the variant's effect is computed.
+
+END OF REPORT

@@ -1,0 +1,95 @@
+# Part A, section 1 (S1): the opening, organizations, kinds and questions — report
+
+Baseline runs cited below (all `--scale 4`): FC26, FC27, FC28, FC07, FC2.new1, FC25, FC30, FC106, FC34. Program results are paraphrased (✓/✗) ; everything after a variant is marked **not run**.
+
+## (a) The variants
+
+| id | item(s) varied | old → new | kind | why chosen | owner decision departed from |
+|---|---|---|---|---|---|
+| V1.1 | D1.4 (Subnetwork) | `Sol_N(a,b) := {z ∈ ∏_{v∈V_N}X_v : ∀j∈N, z|V_j ∈ L_j(a,b)}` → `Sol_N(a,b) := {y|V_N : y ∈ Sol_D(a,b)}` | swap | (F1)'s left side is built on Sol_{N_k}; the two readings of "the constraints of λ(k)" are the biggest lever S1 has on (F1) | none |
+| V1.2 | D2.1 (setting edit) | delete the clause `∀k≠j: L_k(a,b)=L_k(1,b)` from "a sets v through j at b" | delete | grows Set_v, hence what Prod(p) (the respect "production") and Input read | none |
+| V1.3 | D2.4 (observation edits) | `Obs(o,m) := {a ∈ Alt_j ∖ Slc_j : L_asg(m)(a,·)=L_asg(m)(1,·)}` → `Obs(o,m) := {a ∈ Alt_j : L_asg(m)(a,·)=L_asg(m)(1,·)}` (reading R-i) | weaken | the registered other reading of L109's observation; probes whether the families reach (E) at all | none |
+| V1.4 | D3.3 (Ident clause) | `Ident(p) :⟺ Q a fibre ∧ ∃(a,b),(a',b')∈C: obs(a,b)≠obs(a',b')` → `Ident(p) :⟺ Q a fibre ∧ ∃(a,b)∈C: a≠1 ∧ obs(a,b)≠obs(1,b0)` | swap | decides whether C_id (boundaries only) asks an identification question — the respect under which the reversed calculation is an account | none |
+| V1.5 | D3.4 (contract provenance) | `ρ_p ∈ {declared, selected, constructed}` → `ρ_p ∈ {selected, constructed}`; a contract with neither history is no question's contract | delete | maps whether ρ_p, unlike Dec(t), is read anywhere in being an explanation | none |
+| V1.6 | D3.6 (defects) + new sentence in Part III | add: `BadTarget(p) ∨ BadReq(p) ⇒ ∀ℰ ¬Acc(ℰ,p)` | strengthen | BadBaseline already blocks through NonVacuous; the other two defects are read by nothing — wiring them in is a candidate definition of explanation | tension with S21 ("Notice I never once claimed what must happen … the problem may be ill posed") |
+| V1.7 | D0.2 (primitives) | `Excl(Σ)` moved from primitive to defined: `Excl(Σ) := (A×B) ∖ C` | other | makes Stated(C,Σ) hold always: the silent narrowing L43.s4 says is caught | none |
+| V1.8 | D2.6 (Slc_j) | `Slc_j := {a ∈ Alt_j : …slice…}` → `Slc_j := Alt_j` | weaken | empties the measurement and rule families; probes D2.6's distance from (E) | none |
+
+## (b) The traces
+
+**V1.1 (D1.4 swap).** Before (run, `--claim FC26`): E_fwd on C1 meets every conjunct (F1 ✓, Acc ✓). After (**not run**): at (1, b1_45), for k = c_L with λ(c_L) = {c_L}: Sol_{{c_L}} becomes {z|V_N : z ∈ Sol_D(1,b1_45)} = {(1,45°,1)}, so proj^λ = {(1,45°,1)} ≠ L_cL(1,b1_45) = {(h,t,h·cot t)} — (F1) fails at every pair; **E_fwd stops meeting (E) on C1 and C2, so stops being an explanation**. Newly meeting: ℰ_bv, E_bv = D_pole with c_L replaced by c_bv on (H,T,L), L_bv(1,b) := {(u_H,u_θ,u_H·cot u_θ)} (the boundary's values written into the component), Γ = {c_bv}, τ, σ, π identity, λ(c_bv) = {c_L}. As it stands (not run): (F1) fails (full cot relation ≠ singleton). Under V1.1 (not run): proj = singleton = L_bv ✓; (F2): Sol_{E_bv} = Sol_D ✓; (A), Dependence (delete c_bv → L free → ⊥ at settings of H), NonVacuous ✓ — **a boundary-written component becomes an account**. E_enc (D6.10) still meets (F1) (both sides are the same projection); E_tab still fails it where the projection moves.
+
+**V1.2 (D2.1 delete).** On the pole, a = set(H=2,T=60): currently a ∉ Set_H ∉ Set_T (c_T, c_H also altered), so it is in no Set_v. After (**not run**): a ∈ Set_H ∩ Set_T (each is left a slice on its own port). Take p* = (D_pole, C* = {(1,b1_45), (set(H=2,T=60), b1_45)}, Q_L). Before: C* holds no setting edit, so Prod(p*) fails — p* asks nothing named. After: H ⇝ L (H ∈ V_cL∖{L}, Out(L,c_L)), C* holds a setting of H, so **Prod(p*) holds: p* becomes a production question**. E_fwd meets (E) on C* before and after (identity transport; contrast at the composite pair; not run). So no candidate starts or stops meeting (E); what meeting (E) says changes (the respect). Families: FC07's computed precedent (run) — round 2's freer D2.1 "counted composites as rule edits and gave no causal component" on C2*; account untouched.
+
+**V1.3 (D2.4 → R-i).** Before (run, `--claim FC07 --claim FC2.new1`): on C2, R-ii gives causal = {c_H, c_L, c_T}; R-i gives causal = {c_H, c_T}, meas = {(c_L,H),(c_L,T)}. After = R-i as the one reading (**not run** — the program already computes it): c_L is no longer a causal assignment on C2; no reader of an assigned port is causal anywhere (FC2.new1, for-all part, run). **Which candidates meet (E): unchanged** — `core.account` never calls Roles (FC30's construction check, run: account reads E, p, π/τ/σ/λ, Γ, δ_E only). Being an explanation unchanged in extension.
+
+**V1.4 (D3.3 Ident swap).** Before (run, `--claim FC28`): on C_id = {1}×B, E_rev meets (F1), (F2), (A) (and Dependence), and the R4 check computes Ident(p_id) ✓ under I163 ("observed L over C_id … varies: ✓; an edit a ≠ 1 in C_id altering the observed L: ✗"). After (**not run**): Ident(p_id) fails (no edit a ≠ 1 in C_id). Acc on C_id is untouched (no conjunct reads Ident): **E_rev still meets (E) and is still an explanation, but of a question whose respect is no longer named** — L271.s2's "faithful under the identification contract" no longer points at C_id, and E1's reading of C_id changes with it.
+
+**V1.5 (D3.4 delete "declared").** Before (run, `--claim FC26`): E_fwd meets (E) on C1, a question whose contract the encodings leave declared (the program's `Question` carries no ρ_p at all — ρ_p is in frozen D3.1 but unmodelled). After (**not run**): p with ρ_p = declared is not a question; there is no candidate of it, so none meets (E). Every worked case E1–E6 needs its contract given a selected or constructed history to keep its subject. Found(p) is unchanged in form. The block sits upstream of (E): (E) still takes no provenance (FC30, run) and Expl = Account ∧ ¬Dec(t) still reads only the transport's provenance — **the asymmetry ρ_p unread, Dec(t) read, is the finding**.
+
+**V1.6 (D3.6 strengthen).** Before (run, `--claim FC106`): BadBaseline blocks via NonVacuous (for-all part); "the other two defects … not tested: need a description Desc of the question (I76), which the model does not build" — and FC34's witnesses meet (E) on questions no Desc is asked about. After (**not run**): let Desc' := "an organization with ports H, T, L and a component on all three" (met by both D_pole and E_rev — not exactly one): p' with target D_pole is BadTarget; E_fwd, which meets (E) on p' as it stands, **stops being an explanation there**. Being an explanation becomes Account(ℰ) ∧ ¬Dec(t) ∧ ¬BadTarget(p) ∧ ¬BadReq(p).
+
+**V1.7 (D0.2 define Excl).** Case (from FC34's "Acc not monotone in C" witness, run): D with one port p0, edits {1, [alt]}, B = {b0,b1}; C = {(1,b0),(1,b1),([alt],b1)}, C' = {(1,b0),(1,b1)}; Acc on C ✗ (F1 fails at ([alt],b1)), Acc on C' ✓ with the default scope. Now let the modeller narrow to C' and state no scope: Σ' with Excl(Σ') = ∅. Before (**not run**, derivable from D3.5 + D6.6): (A×B)∖C' ⊄ ∅, so Stated(C',Σ') ✗, NonVacuous ✗, Acc ✗ — the narrowing is caught. After (**not run**): Excl(Σ') := (A×B)∖C', Stated ✓ always, NonVacuous = Sol_D(1,b0) ≠ ∅ alone, **Acc ✓: the silent narrowing meets (E)**; only criticism supplying the excluded change (L43.s4's second half) remains.
+
+**V1.8 (D2.6 weaken).** Before (run, `--claim FC07`): on C2 R-ii, causal = {c_H,c_L,c_T}, meas = ∅, rule = ∅. After (**not run**): Obs = ∅ (R-ii draws Obs from Alt_j∖Slc_j = ∅), so Causal_C(j) := Changes_C(j, Set_{O_j}) alone; Meas and Rule require Changes_C(j, ∅), which D4.5 makes false — **the measurement and rule families are empty everywhere**; no rule relation (L347) can any longer be variable under edits to itself. On the pole the causal list happens not to move; elsewhere every rule application disappears. Which candidates meet (E): unchanged (account reads no Roles data, FC30 run).
+
+## (c) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| V1.1 | blocks | D4.4 (FROZEN, §4 in S1's stretch) | for N = {j}, sig becomes the full-solution projection, not L_j, so "extends (K)" (L115 FROZEN) fails wherever a sibling constrains | yes, by wording |
+| V1.1 | constrains | D5.2 (FROZEN, S2) | proj^λ stays readable, but "hidden ports projected away" stops matching: siblings' constraints now reach the projection through Sol_D | yes |
+| V1.1 | changes with | L233.s1 (S2), L556.n2 (S4), FC17/FC18 | L233's "imposing the constraints of λ(k)" words the old reading; Argument 1's two signatures and its claims must be recomputed | yes |
+| V1.1 | moves | (F1): what it reads (Sol_{N_k}) | E_fwd out, ℰ_bv in; component fidelity stops isolating the counterpart's own constraints | yes |
+| V1.2 | blocks | L103.s2 (FROZEN, S1) | an edit that sets v through j while altering k does "add an equation beside" | yes, by wording |
+| V1.2 | constrains | D2.2, D2.5 (FROZEN, S1) | Input and dir stay readable; their extensions grow with Set_v | yes |
+| V1.2 | changes with | D2.6, D2.4 (S1, mine), E1's setting-edit meta I04 (S2), FC27.new1 (S2) | Slc_j and Obs read Set_v; E1's "each setting replacing its component" and "the production contract" re-read | partly — whether Slc_j must grow with Set_v to keep L57's split is open; a computation of families under the grown Set would settle it |
+| V1.2 | moves | no conjunct of (E); the respect "production" | what meeting (E) says on composite-only contracts | yes |
+| V1.3 | constrains | L124.s1, L125.s1 (FROZEN, S1) | the families stay definable; their extensions shift (FC07 computes both) | yes |
+| V1.3 | changes with | L123.n1 (S1), D4.6 (S1) | the causal-assignment gloss excludes readers of assigned ports (FC2.new1) | yes |
+| V1.3 | moves | nothing in (E) | D2.4 → families → not (E): the reading choice never reaches the account | yes (FC30 run) |
+| V1.4 | constrains | L151.s1 (S1), L151.s2 (FROZEN, S1) | "fixed by the type of Q and the shape of C" and the Prod clause are untouched | yes |
+| V1.4 | changes with | E1's C_id (S2), L271.s2 (S2), L325.n6 (S2), FC28/FC28.new2 | the identification reading of C_id and the reversed calculation's home question move with it | yes |
+| V1.4 | moves | what meeting (E) says on C_id | the respect is unnamed; Acc's extension unchanged | yes |
+| V1.5 | blocks | L155.s2, L155.s5 (S1, varied with it) | declared contracts and "any assessment may use any of the three" are negated | yes |
+| V1.5 | constrains | L155.s6 (FROZEN, S1), D3.1 (FROZEN, S1) | found ⇒ constructed stays readable; ρ_p's slot stays in the tuple | yes |
+| V1.5 | changes with | D13.8 q(o)/Rec (S3), D16.4 𝔓^adv (S4), (QF) L544 (S4), E8 (S2) | episode records and question-finding quantify over contracts that must now be non-declared | yes |
+| V1.5 | moves | which questions exist | candidates on declared-contract questions stop meeting (E), with (E) and Expl unchanged in form | yes |
+| V1.6 | constrains | L161.s1–s3 (FROZEN, S1), D6.6 (FROZEN, S2) | defective questions stay questions; NonVacuous keeps BadBaseline, the variant adds the other two beside it | yes |
+| V1.6 | changes with | D16.XV (Suff)/(Nec) (S4), FC106 (S1) | the defeat sets would quantify over non-defective p; FC106's untested parts become testable | yes |
+| V1.6 | moves | being an explanation | gains the question's non-defect beside Account ∧ ¬Dec(t) | yes |
+| V1.7 | blocks | D3.5 (FROZEN, §3 in S1's stretch), L43.s4, L159.s1 (S1) | "Σ is a declared input naming Excl(Σ)"; the stated-scope requirement and grievance 4's answer fall | yes |
+| V1.7 | constrains | D6.6 (FROZEN, S2) | NonVacuous keeps its form; its second conjunct becomes vacuous | yes |
+| V1.7 | changes with | none required | the theory hangs together; L317.s15 (FROZEN, S2) is safe (narrowing still makes a new question) | yes |
+| V1.7 | moves | NonVacuous: what its second conjunct reads (nothing) | silently narrowed contracts newly meet (E) | yes |
+| V1.8 | blocks | L347.s2 (FROZEN, S2's stretch) | Changes_C(j, Alt_j∖Slc_j) = Changes_C(j,∅) is false by D4.5, so no rule relation's signature is variable under edits to itself | yes |
+| V1.8 | constrains | L57.s1 (FROZEN, S1) | the rule/cause difference stays definable; the rule side is empty | yes |
+| V1.8 | changes with | D4.6, L123.n1 (S1) | the families' form is unchanged; their extensions empty | yes |
+| V1.8 | moves | nothing in (E) | Slc_j → families → not (E) | yes (FC30 run) |
+
+Unsettled edge: V1.2's — whether D2.6 must co-vary. A run of the families on C2* under the grown Set_v (the program's `Roles` with a `sets_through` that drops the k≠j test) would settle it.
+
+## (d) Items of S1 not varied, and why
+
+- **L17.s1–L17.n2 (the constitutive conjecture, with Account ∧ ¬Dec(t))**: the target itself; its defeat shapes are D16.XV (S4), and varying it here would duplicate S4's section.
+- **L11.s1 (the opening definition)**: its maths is (E) in S2; a variant of the prose alone is what S40 refuses.
+- **L49.n3, L69.n3 (the pointer sentences fixing "explanation" = Account ∧ ¬Dec(t))**: keeping one definition of Expl; the owner's Q2 answer lives here and is not mine to move.
+- **L119.s3–L119.n5 (kinds between candidates, Arguments 1–2's comparisons)**: frozen D4.2–D4.4 carry them; (F1) already fixes the counterpart comparison (FC17).
+- **L159.s3 (admitting a change is not a claim it can be carried out)**: fixed by the owner's words (S25–S27); bears on (E) only through L275.s2 (S2).
+- **D4.6 itself**: its predicates are read by nothing in (E); V1.3 and V1.8 already probe it through its inputs, and a direct variant would move only the families.
+- **L141.n3, L151.n6–n7**: frozen D3.2/D3.7 carry their content; (A)'s dependence on the query is S2's lever.
+
+## (e) Inventions the variants rest on
+
+- **V1.1 — I14** (Sol_N = constraints of N alone). Other choice: the projection of Sol_D (the variant). I138 (V_{J_D} := V_D) kept as registered.
+- **V1.2 — I04** (asg read off setting edits; the k≠j clause). Other choices: keep the clause (as registered); require the slice at every b only (kept). I122 (1 ∉ Set_v) kept.
+- **V1.3 — I06** (two readings of L109's observation). R-i is the registered other choice; the variant makes it the one reading.
+- **V1.4 — I163** (Ident's two-pair condition, R4). Other choices: the pre-R4 reading (an edit a ≠ 1 altering obs — the variant); "C holds edits to the observed value" (R4's note); an exists-pair reading with no a ≠ 1 (as registered).
+- **V1.5 — I127** (ρ_p's three values, declared := neither). Other choices: two values (the variant); declared defined by a stipulation event.
+- **V1.6 — I76** (Desc, the description a question answers to). Other choices: no Desc (defects unreadable, the current state); Desc replaced by conditions on (D, C, Q) alone.
+- **V1.7 — I27** (Excl(Σ) a stated input). Other choices: defined as the complement (the variant); I85 (the program's default: everything outside C excluded) — the variant makes I85 a definition.
+- **V1.8 — I125** (Slc_j's slice clause). Other choices: Slc_j := Alt_j (the variant); Slc_j := Alt_j ∖ ⋃_{asg(v)≠j} Set_v.
+
+Candidate definitions of explanation surfaced, for the owner's yes or no: (i) V1.1's — explanation with (F1) reading the full-solution projection (boundary-written components in, the pole's forward candidate out); (ii) V1.6's — Account ∧ ¬Dec(t) ∧ the question not defective; (iii) V1.7's — Account ∧ ¬Dec(t) with non-vacuity's stated-scope conjunct vacuous. V1.3, V1.4, V1.8 leave the extension of explanation as it is; V1.2 and V1.5 move what or which questions it is evaluated on, not the conditions.
+
+END OF REPORT
