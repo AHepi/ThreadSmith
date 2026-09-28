@@ -2,6 +2,8 @@
 
 *Checker 2 of 3 (Opus 5.5), decision S40. Maths and code; no new prose. Text: `tests/103 …after round 1.md` (md5 f31ebb1f050783f1a84f6136cec20fcd). Model copy: `area 2 model/model/` (run from `area 2 model/`: `PYTHONHASHSEED=0 python3 -B -m model.run --claim FCnn --scale 4 --time-cap 45`). Runs: `area 2 - runs.txt`. Text changes: `area 2 - text changes.json` (A2-T1…T13).*
 
+M1-M13: the models of `ruling L255-L257.md` (its Appendix A); "ruling check n": the checks of `ruling L315-L568.md`.
+
 Verdicts: **HM** holds against the maths · **HW** holds against the words · **INV** rests only on an invention the text leaves open (rule 6) · **NO** does not hold. Weighed on arguments (rule 8); the finished rulings L255-L257 and L315-L568 used where their arguments hold.
 
 ## 1. The formal fixes (old → new)
@@ -49,7 +51,7 @@ Verdicts: **HM** holds against the maths · **HW** holds against the words · **
 | D3.5 | HW | L257 "subset of the edits" vs C ⊆ A×B (L141); pairs needed (L43, L159) | D3.5 unchanged; A2-T1 settles I27 | none | FC21, FC26 held |
 | D5.1 | INV | π partial, τ,σ partial, κ: I16, I17, I14 open; "on the stated scope" consistent with partial π; L189 is area 1 | none | none | — |
 | D5.3 | INV | δ_E (I20): (a) excluded by L253, (b) by L265 ("None inspects a label"); I20 vs (c) open | none | none | — |
-| D5.4 | NO | L245's "signature on C" of a component of E is read through τ (L119, D4.3); true of every component with a counterpart | none | none | FC17 held |
+| D5.4 | NO | L245's "signature on C" of a component of E is read through τ (L119, D4.3); it holds of every component with a counterpart | none | none | FC17 held |
 | D5.5 | INV | range of Hom (I18) and I84 open; "(F2) at a pair" = F2eq (D5.7) | none | none | FC19 held |
 | D5.6 | INV | ⊥=⊥ (I21), κ(⊥) (U1) are the program's | none | none | FC20 unchanged (CEX, area 1) |
 | D5.7 | HM | Fid⁺ not needed by L245, L247 | §1 D5.7 | none | — |
@@ -87,10 +89,10 @@ Verdicts: **HM** holds against the maths · **HW** holds against the words · **
 | FC29 | NO | C ⊆ A_D×B_D; holds by construction | none | none | held |
 | FC33 | HW | L265's first sentence fails of Stated(C,Σ) | A2-T4 | none | held |
 | FC40 | HW | matter 8: L313's "such commitments" at L311 needs step (c) | A2-T7 | none | held |
-| FC41 | NO | "when Γ is infinite … can" is true; finite blocks: FC41 (c) | none | none | held |
+| FC41 | NO | "When Γ is infinite, a block of such commitments can still be critical" holds (L311); finite blocks: FC41 (c) | none | none | held |
 | FC43 | NO | symmetric by form (Conf) and by "one … the other" (Riv); Mimo's reading parked (P-1) | none | none | held |
 | FC44 | HW | "one counterpart", "different relations" unfixed at L315 (fixed only at L562, L564) | §1 D8.new1; A2-T9 | none | held |
-| FC46 | NO | L315 "claims (F1), (F2), (A) at every pair of C"; "whatever the target does there" | none | none | held |
+| FC46 | NO | L315 "claims (F1), (F2) and (A) at every pair of C"; "Whatever the target does there" (L317) | none | none | held |
 | FC47 | NO | L317 itself unpacks "who can use it"; GLM's case is I89's | none | none | held |
 | FC48 | HW (H10); INV (partial τ, I17) | fixed by A2-T8; formal hypothesis added | §1 FC48 | none | held |
 | FC49 | NO | "admitted" as D8.2 | none | none | held |
@@ -153,7 +155,19 @@ Verdicts: **HM** holds against the maths · **HW** holds against the words · **
 
 Context items (no verdict asked): E01, E18 (consistent with FC25 (a*), (b)), E21 (FC-E5 reproduced, 193 families, 0 failures), C12 (scope), H20 (D10.3's argument named Arg_test).
 
-**Counts.** HW 26 · HM 30 · INV 20 · NO 34 (split verdicts counted once, by the first). Text changes: 13 (formal 5, pointer 8, delete 0).
+**Counts** (by the first verdict of a row): NO 44 · HW 22 · HM 21 · INV 17 = 104. Split rows: D8.2, FC25, FC48, FC58, FC63, I03, I64. Text changes: 13 (formal 5, pointer 8, delete 0).
+
+## 2b. Code changes in the copy (`area 2 model/`)
+
+| file | change | fix |
+|---|---|---|
+| model/core.py | `slot`, `NC1`: reading "area2" (default) and "registered" | D6.3, A2-01 |
+| model/core.py | `conf_claim`: existence clauses, reading "area2" (default) and "registered"; `parts=True` returns both disjuncts | D8.5, A2-03 |
+| model/core.py | `rivals(…, both_offered)` | D8.3 |
+| model/core.py | `Org.sol_sub`: V_{J_D} := V_D | A2-04 |
+| model/claims_a.py | FC21 parts (a2), (d); FC23 parts (c), (d) with M1-M3, M5; FC27 look (τ'); FC28 parts (C_id); FC14 fallback path to the committed formal core (copy only) | §1 |
+| model/claims_b.py | FC52 parts 2, 3; FC67 provenance part → not tested | §1 |
+| s104_external.py | text path one folder deeper (copy only) | FC-E1, FC-E5 |
 
 ## 3. New inventions (provisional ids; the integration numbers them from I122)
 

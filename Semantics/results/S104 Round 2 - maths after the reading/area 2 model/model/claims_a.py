@@ -518,7 +518,10 @@ def fc13(S):
 @claim("FC14", [])
 def fc14(S):
     here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    txt = open(os.path.join(here, "formal core.md"), encoding="utf-8").read().split("\n")
+    fc = os.path.join(here, "formal core.md")
+    if not os.path.exists(fc):  # area 2 copy: read the committed formal core
+        fc = os.path.join(here, "..", "..", "S104 Round 2 - maths", "formal core.md")
+    txt = open(fc, encoding="utf-8").read().split("\n")
     hits = [l for l in txt if l.startswith("**D") and re.search(r"\bis a cause\b|IsCause|Cause\(", l)]
     return [computed("syntactic scan", "no definition of the formal core takes a predicate 'is a cause'", not hits,
                      "definition lines of formal core.md matching 'is a cause' / 'IsCause' / 'Cause(': %d" % len(hits))]
