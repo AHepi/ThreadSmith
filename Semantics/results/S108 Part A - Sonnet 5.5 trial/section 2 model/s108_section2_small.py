@@ -17,6 +17,7 @@ sys.path.insert(0, HERE)
 from model import core, claims_b  # noqa: E402
 from model.core import (ONE, BOT, Question, PortQuery, Candidate, account, routes, minimal, NC2, conflict_pairs, rivals,  # noqa: E402
                         problem_kind, conf_claim, F1, NC1)
+from model.claims_s41 import provenance_of  # noqa: E402
 from model.claims_s106 import _org, _ident_lam  # noqa: E402
 from model.claims_a import _T  # noqa: E402
 from model.claims_r4a3 import seasons_target, seasons_question, tilt, myth_written, myth_told, GREEKS, EVERY_PAIR  # noqa: E402
@@ -48,7 +49,13 @@ def cand_row(c):
     v, d = account(c, detail=True)
     S = routes(c) if len(c.Gamma) <= 6 else None
     w = NC2(c, witness=True)
-    return dict(acc=bool(v), conj={k: bool(d[k]) for k in ("F1", "F2", "A", "NC1", "Dep", "NonVacuous") if k in d},
+    # Acc and not Dec in the three provenance scenarios of s108_section2_cases.py: (i) constructed, (ii) declared with no pair
+    # tried (H empty), (iii) declared with one pair tried (H = {(1, b0)})
+    and_nd = {}
+    for lab, kind, H in (("con", "Con", [(ONE, c.p.b0)]), ("decl_H0", "Sel", []), ("decl_H1", "Sel", [(ONE, c.p.b0)])):
+        s_, k_, dec_ = provenance_of(c, kind, H)
+        and_nd[lab] = bool(v and not dec_)
+    return dict(acc=bool(v), acc_not_dec=and_nd, conj={k: bool(d[k]) for k in ("F1", "F2", "A", "NC1", "Dep", "NonVacuous") if k in d},
                 witness=repr(w) if w else None, routes=fmt_routes(S) if S is not None else "skipped",
                 min_routes=fmt_routes(minimal(S)) if S is not None else "skipped")
 
@@ -167,12 +174,15 @@ def main():
             rows[v or "off"] = cand_row(c)
         set_on("")
         off = rows["off"]
-        print("   off : Acc %s  conj %s  witness %s  S %s" % (tf(off["acc"]), off["conj"], off["witness"], off["routes"]))
+        print("   off : Acc %s  Acc&notDec (i) %s (ii) %s (iii) %s  conj %s  witness %s  S %s" % (tf(off["acc"]), tf(off["acc_not_dec"]["con"]), tf(off["acc_not_dec"]["decl_H0"]), tf(off["acc_not_dec"]["decl_H1"]), off["conj"], off["witness"], off["routes"]))
         for v in VARIANTS:
             r = rows[v]
             mv = []
             if r["acc"] != off["acc"]:
                 mv.append("Acc %s->%s" % (tf(off["acc"]), tf(r["acc"])))
+            for k_, nm_ in (("con", "(i)"), ("decl_H0", "(ii)"), ("decl_H1", "(iii)")):
+                if r["acc_not_dec"][k_] != off["acc_not_dec"][k_]:
+                    mv.append("Acc&notDec %s %s->%s" % (nm_, tf(off["acc_not_dec"][k_]), tf(r["acc_not_dec"][k_])))
             if r["routes"] != off["routes"]:
                 mv.append("S %s -> %s" % (off["routes"], r["routes"]))
             if r["witness"] != off["witness"]:
