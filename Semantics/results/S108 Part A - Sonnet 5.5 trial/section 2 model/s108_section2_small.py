@@ -2,7 +2,8 @@
 # computed with no variant on (off) and with each of V2.1 to V2.7 on (V2.3b: V2.3 read as tau(a) other than 1).
 # Cases: A (V2.1's x, y, z), B (L307, redundant routes), C (a finite cousin of L311, routes of two or more), D (L309,
 # interference), E (V2.7's wheel), F (the tilt and the myth, FC72.new2 (b), (d)), G (a candidate with no commitments),
-# H (the pole's forward and reversed calculation on the identification contract, FC28), I (a contract {1} x B, any candidate).
+# H (the pole's forward and reversed calculation on the identification contract, FC28), I (a contract {1} x B, any candidate),
+# J (the x, y, z target with the contract {(1, b0)} only: the contrast the reply's case A has lies outside C; L275.n1, FC29).
 # Run from the folder "section 2 model":  PYTHONHASHSEED=0 python3 -B s108_section2_small.py [json path]
 # Standard library only; imports the package model/; writes nothing but the printout (and the json when a path is given).
 # Nothing here changes the theory (S40).
@@ -138,9 +139,19 @@ def case_I():
     return [("I. a contract {1} x B with two boundaries: identity transport, Γ = {cx,dz}", c, "the reply: no candidate meets (E) on any {1} x B contract under V2.3")]
 
 
+def case_J():
+    """As case A, but the contract is {(1,b0)} only: the pair (e,b0), where the answer changes, is outside C (L275.n1, FC29)."""
+    rel = {("cx", "e", "b0"): {(1,)}, ("cy", ONE, "b0"): {(0, 0), (1, 1)}, ("cy", "e", "b0"): {(0, 0), (1, 1)}}
+    D = _org("D_xyz1", ["x", "y", "z"], {"x": (0, 1), "y": (0, 1), "z": (0, 1)}, ["cx", "cy", "dz"],
+             {"cx": ("x",), "cy": ("x", "y"), "dz": ("z",)}, ["b0"], [ONE, "e"], rel)
+    p = Question(D, [(ONE, "b0")], "b0", PortQuery(), "y", name="p_xyz_1")
+    c = Candidate(D, p, _T("x", "y", "z"), {ONE: ONE, "e": "e"}, {"b0": "b0"}, _ident_lam(D), ["dz"], "y", name="ℰ_xyz1 (Γ = {dz}, C = {(1,b0)})")
+    return [("J. as case A with the contract {(1,b0)} only: the contrast lies outside C", c, "L275.n1 / FC29: NC2's contrast lies on tau[C]; V2.1 must not read a contrast outside C")]
+
+
 def main():
     cands = []
-    for f in (case_A, case_B, case_C, case_D, case_G, case_H, case_I):
+    for f in (case_A, case_B, case_C, case_D, case_G, case_H, case_I, case_J):
         cands.extend(f())
     out = {"candidate_cases": {}, "conflict_cases": {}}
     print("S108 section 2, the small cases: Acc (E) with no variant on (off) and with each variant on; T holds, F fails")
