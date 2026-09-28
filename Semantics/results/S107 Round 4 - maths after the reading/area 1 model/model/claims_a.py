@@ -1254,7 +1254,9 @@ def fc30(S):
 
 @claim("FC31", [])
 def fc31(S):
-    return [not_tested("five conjuncts, four headings, L520's sources", "counting and reading of L61, L231, L520, L536", "a reading of wording, not a model property")]
+    # S107 round 4, area 1 (N2: B-N2, W-N2, S-N2, C-N2): re-based; L61's phrase was replaced in round 3 (R3A1-T1), and
+    # L520 writes (E)'s five conjuncts (round 2, A3-L520.1; S106-T12). The part's label is kept.
+    return [not_tested("five conjuncts, four headings, L520's sources", "counting and reading of L231, L520, L536", "a reading of wording, not a model property")]
 
 
 @claim("FC32", [])

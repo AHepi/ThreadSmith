@@ -884,6 +884,14 @@ def minimal(S):
     return [W for W in S if not any(U < W for U in S)]
 
 
+def boundary(family):
+    """Boundary (D) (D7.4 after S107 round 4, area 2; N1): family maps each v of a declared family 𝒱 of organization edits
+    to its candidate ℰ_v = (E_v, p, t_v, Γ_v, δ_v), δ_v the designation the operation carries δ_E to (R4A2-03), as t_v
+    is the transport it carries t to and Γ_v the commitments it leaves (L231). Returns {(v, w) : Acc(ℰ_v) ≠ Acc(ℰ_w)}."""
+    acc = {v: account(c) for v, c in family.items()}
+    return frozenset((v, w) for v in family for w in family if acc[v] != acc[w])
+
+
 # ---- conflict, rivals, claims (D8.1-D8.6, I19, I33-I36) ---------------------------------------
 
 
