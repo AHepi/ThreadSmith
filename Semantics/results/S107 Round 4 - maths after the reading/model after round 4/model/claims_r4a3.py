@@ -108,8 +108,8 @@ def fc72_new2(S):
         rb[m.name] = (cps, rivals(tG, m), problem_kind(tG, m))
     ok_b = all(set(v[0]) == {(ONE, "S"), ("dec", "S")} and v[1] and v[2] == "ii" for v in rb.values())
     parts.append(computed("(b) the tilt against the myth, one offered in place of the other",
-                          "they conflict only in the south, outside the Greeks' contract: rivals, and for an assessor who rules out neither a problem of the second kind, "
-                          "each easy to vary against the other (D10.2, D10.4); for either encoding of the myth",
+                          "they conflict only in the south, outside the Greeks' contract: rivals, and for an assessor who rules out neither a problem of the second kind "
+                          "(D10.2); for either encoding of the myth",
                           ok_b, "; ".join("tilt against %s: conflict pairs %s; rivals %s; kind %s" % (n, v[0], v[1], v[2]) for n, v in rb.items()),
                           ["R4A3-02", "I33"]))
     # (c) arguments with no test (L397, D9.6–D9.8): the finding that the myth has its answer written in, taken up
@@ -139,22 +139,26 @@ def fc72_new2(S):
                           % (slot1, acc1, out0, out1, out2, prob["j0"], prob["j1"], alpha1.show(2), usable(j1, alpha1), rules_out(alpha1, "Acc_myth1"),
                              alpha2.show(2), usable(j2, alpha2), rules_out(alpha2, "Acc_myth1")), ["R4A3-02", "I87", "I88", "I166"]))
     # (d) the finer question (the south in): a problem of the first kind, which a record decides for whoever can use it
-    tF, mF = tilt(pF), myth_written(pF)
+    # second check (critical review O6): both encodings of the myth, as (b) has them
+    tF = tilt(pF)
     vF_t, dF_t = account(tF, detail=True)
-    vF_m, dF_m = account(mF, detail=True)
-    kind_F = problem_kind(tF, mF)
     x = (ONE, "S")
     y_rec = pF.ans(*x)  # what the target gives there; recording it is a test (L317, D10.3)
     rec = "rec_june_south_%s" % y_rec
-    links = [Imp(rec, Not("Acc_%s_F" % c.name)) for c in (tF, mF) if c.ans_E(c.tau[x[0]], c.sigma[x[1]]) != y_rec]  # (A) fails there
-    j3 = Assessor(["MP"], [rec] + links)
-    prem3 = [rec] + links
-    out3 = (_out(j3, "Acc_ℰ_myth1_F", prem3), _out(j3, "Acc_ℰ_tilt_F", prem3))
-    ok_d = vF_t and not vF_m and kind_F == "i" and out3 == (True, False)
+    rd_, ok_d = [], bool(vF_t)
+    for mF in (myth_written(pF), myth_told(pF)):
+        vF_m, dF_m = account(mF, detail=True)
+        kind_F = problem_kind(tF, mF)
+        links = [Imp(rec, Not("Acc_%s_F" % c.name)) for c in (tF, mF) if c.ans_E(c.tau[x[0]], c.sigma[x[1]]) != y_rec]  # (A) fails there
+        prem3 = [rec] + links
+        j3 = Assessor(["MP"], prem3)
+        out3 = (_out(j3, "Acc_%s_F" % mF.name, prem3), _out(j3, "Acc_%s_F" % tF.name, prem3))
+        ok_d = ok_d and not vF_m and kind_F == "i" and out3 == (True, False)
+        rd_.append("%s (E) %s, conjuncts %s; kind %s; June in the south, the target gives %r, the tilt %r, %s %r; ruled out for j3 (myth, tilt): %s"
+                   % (mF.name, vF_m, {k: dF_m[k] for k in ("F1", "F2", "A", "Dep", "NonVacuous")}, kind_F, y_rec, tF.ans_E(ONE, "S"), mF.name,
+                      mF.ans_E(ONE, "S"), out3))
     parts.append(computed("(d) the finer question: a test decides",
-                          "with the south in the contract the myth fails (E) and the tilt meets it; they conflict inside the contract (a problem of the first kind); "
+                          "with the south in the contract either encoding of the myth fails (E) and the tilt meets it; they conflict inside the contract (a problem of the first kind); "
                           "a record of June in the south rules out the myth, not the tilt, for an assessor who takes it and (A)'s premise up (L317, K2, K3)",
-                          ok_d, "on the finer contract: tilt (E) %s; myth (E) %s, conjuncts %s; kind %s; June in the south, the target gives %r, the tilt %r, the myth %r; "
-                          "ruled out for j3 (myth, tilt): %s" % (vF_t, vF_m, {k: dF_m[k] for k in ("F1", "F2", "A", "Dep", "NonVacuous")}, kind_F, y_rec,
-                                                                tF.ans_E(ONE, "S"), mF.ans_E(ONE, "S"), out3), ["R4A3-02"]))
+                          ok_d, "on the finer contract: tilt (E) %s\n%s" % (vF_t, "\n".join(rd_)), ["R4A3-02"]))
     return parts

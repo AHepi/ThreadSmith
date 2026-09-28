@@ -5,7 +5,7 @@ import itertools
 
 from .core import ONE, account, faithful
 from .args import Not, Imp, Leaf, Step, Assessor, X, atoms
-from .harness import claim, forall, exhaustive, computed, construction, VAC
+from .harness import claim, forall, exhaustive, computed, construction, look, VAC
 from .claims_a import SMALL, BOTHFAM, gen_p_cand
 from .claims_b import (Hist, sel, con, fwd_pole_cand, prov_fixed_points, prov_show, build_at, episode, chain_eps,
                        EPISODE_READINGS, faithful_on)
@@ -306,19 +306,58 @@ def fc84_new1(S):
                      "no question about the brief: I191 %s, R4A1-01 (d) %s, (e) %s; %s"
                      % (key, lab, qs3, recs3, crit, quest, rd3[0], rd3[1], rd3[2],
                         "; ".join("%s: %d fixed point(s), Con at o2 %s, Build %s" % (rd, cb[rd][0], cb[rd][1], cb[rd][2]) for rd in EPISODE_READINGS)))
-    T_, F_ = True, False
-    readings_as_claimed = [vals3[k][0] for k, *_ in cases3] == [(T_, T_, T_), (T_, F_, T_), (F_, T_, T_), (F_, F_, T_), (F_, F_, F_), (F_, F_, F_)]
+    # Second check (critical review O4): the three readings are functions of labels set by hand (Θ, I90); they are printed
+    # as the labels give them and compared with nothing (lesson S39). What (a3) computes is Con and Build.
     s41_same = all(vals3[k][1]["S41"] == (1, [True], True) for k in vals3)
     l55_as_b = all(vals3[k][1]["L55"] == ((1, [True], True) if k == "iv-r" else (1, [False], True)) for k in vals3)
     parts.append(computed("(a3) N6: the readings of 'no question about the brief occurred' (I191; R4A1-01 (d), (e))",
                           "which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as "
                           "question-occurrences, with or without an alleged defect (R4A1-01 (d)); or as a question found (L15, L155, L161), operative at its "
-                          "occurrence (R4A1-01 (e)). The readings part ways (B11's (i), (ii); a question found and operative); under D13.8 as S41 has it, Con "
-                          "and Build at the output are the same in every case, one fixed point each (T′): no computed value reads the labels (S47: the maths "
+                          "occurrence (R4A1-01 (e)). The labels of each case (Θ by hand, I90) give the three readings as printed; under D13.8 as S41 has it, Con "
+                          "and Build at the output are the same in every case, one fixed point each (T′), whichever reading the labels give (S47: the maths "
                           "asks nothing); under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b)",
-                          readings_as_claimed and s41_same and l55_as_b,
+                          s41_same and l55_as_b,
                           "chain o1 ≺ o2; held, trace at o2 (Θ by hand, I90).\n" + "\n".join(rows3),
                           ["I90", "I162", "I165", "I190", "I191", "R4A1-01"]))
+    # (a4) Second check (critical review O1): what does read the labels. One history, o1 ≺ o2, a question about the brief at o1
+    # ('why this brief?'), no defect alleged, the brief kept; two labellings (Θ by hand, I90): I191's, the question a criticism
+    # aimed at the brief (crit[o1]); I192 (d)'s, a question label and no criticism (quest[o1]). Con and Build at o2 from the chain
+    # (T′, both readings of L55). CreateEx (D14.7; D13.8's CompleteCritical and CreativeCriticalEpisode; L429, L447–L449): its
+    # criticism clause read off the chain's criticism labels, Build computed, every other conjunct read through Θ and all 2^10
+    # values tried (area 3's encoding of B12, runs §4). Episode of the whole chain (D13.8) reads q(o), which I192 (e) sets:
+    # (a3)'s base and iv-u. A look: it never makes the claim's status.
+    theta4 = ("recognized difficulty", "target represented before its criticism", "a response using the criticism (D9.11)",
+              "Conn(G, h')", "Repair (P)", "o in O_ex", "Attempt, New", "Deploy", "ProducesVia", "Acc(c, p_c, t_c, Γ_c, δ_c)")
+    labs4 = (("I191", "the question a criticism aimed at the brief", [("C_brief (the contract)", "why this brief?"), None], [None, None]),
+             ("I192 (d)", "a question label, no criticism", [None, None], ["C_brief (the contract)", None]))
+    vals4, rows4 = {}, []
+    for key, lab, crit, quest in labs4:
+        cb = {}
+        for rd in EPISODE_READINGS:
+            fps = prov_fixed_points(2, held3, trace3, [0, 0], "T'", True, chain_eps(["C_brief"] * 2, [False] * 2, rd))
+            cb[rd] = (len(fps), [sc[1][1] for R, sc in fps], build_at(2, held3, trace3, "T'", fps[0][0] if fps else frozenset(), 1))
+        crit_clause = any(x is not None for x in crit)
+        cx = set()
+        for bits in itertools.product([False, True], repeat=len(theta4)):
+            v = dict(zip(theta4, bits))
+            cce = (crit_clause and v["recognized difficulty"] and v["target represented before its criticism"]
+                   and v["a response using the criticism (D9.11)"] and v["Conn(G, h')"] and cb["S41"][2] and v["Attempt, New"])
+            cx.add(bool(cce and v["Repair (P)"] and v["o in O_ex"] and v["Deploy"] and v["ProducesVia"] and v["Acc(c, p_c, t_c, Γ_c, δ_c)"]))
+        vals4[key] = (cb, sorted(cx))
+        rows4.append("%s (%s): criticism per occurrence %s, question per occurrence %s; %s; CreateEx over the %d Θ-values of its other conjuncts: %s"
+                     % (key, lab, crit, quest, "; ".join("%s: Con at o2 %s, Build %s" % (rd, cb[rd][1], cb[rd][2]) for rd in EPISODE_READINGS),
+                        2 ** len(theta4), sorted(cx)))
+    ep4 = {rd: (episode(["C_brief"] * 2, [False] * 2, rd), episode([Q_B, "C_brief"], [False, False], rd)) for rd in EPISODE_READINGS}
+    ok_a4 = (vals4["I191"][0] == vals4["I192 (d)"][0] and vals4["I191"][1] == [False, True] and vals4["I192 (d)"][1] == [False]
+             and ep4["S41"] == (True, False))
+    parts.append(look("(a4) what reads the labels: (EX) and Episode (second check, O1)",
+                      "on one history with a question about the brief and no defect alleged, Con and Build at the output are the same under I191's "
+                      "labelling and I192 (d)'s; CreateEx can hold only under I191's, where the question is labelled a criticism (CompleteCritical's "
+                      "criticism, D13.8; L429 'a conjectural objection'); Episode of the whole chain reads q(o), which I192 (e) sets: under D13.8 as S41 "
+                      "has it, o1 ≺ o2 is an episode on (a3)'s base chain and not on iv-u",
+                      ok_a4, "chain o1 ≺ o2; held, trace at o2 (Θ by hand, I90).\n" + "\n".join(rows4)
+                      + "\nEpisode(o1 ≺ o2), (base, iv-u): " + "; ".join("%s %s" % (rd, ep4[rd]) for rd in EPISODE_READINGS),
+                      ["I90", "I190", "I191", "R4A1-01"]))
     # (b) a recorded change of contract C → C' at o2; (c) the same change unrecorded
     out = []
     ok_b = ok_c = True

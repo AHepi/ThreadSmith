@@ -268,7 +268,7 @@ Every conjunct but \(\operatorname{Stated}(C,\Sigma)\) (D3.5, D6.6) is a conditi
 
 A **table of observed answers** has no component whose relation is replaced by an intervention; it fails (F1) under \(C\) when \((1,b),(a,b)\in C\) and \(\operatorname{proj}^{\lambda}_{V_k}[\operatorname{Sol}_{\lambda(k)}(a,b)]\neq\operatorname{proj}^{\lambda}_{V_k}[\operatorname{Sol}_{\lambda(k)}(1,b)]\) for a component \(k\) of it (FC25). A table that encodes an organization's response to every admitted change is not a table in that sense: it meets (F1) as a decomposition does, and it is an account when it meets the other conjuncts of (E). The word "table" fixes nothing; the response under the admitted changes does.
 
-A **reversed calculation**, identification presented as production, fails (F2) under the production contract \(C_1\) (E1, FC27): intervening on the upstream port changes the target's downstream value but not the calculation's. It may be faithful under the identification contract, which is a different question (Part III).
+A **reversed calculation**, identification presented as production, fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's. It may be faithful under the identification contract, which is a different question (Part III).
 
 (D6.3, FC23, FC24).
 
@@ -533,7 +533,7 @@ Everything else is defined in terms of the two imports, the structural vocabular
 
 The claims the rest depends on, in the order of how much falls if they fail, each with what would rule it out. None is protected by notation or by the availability of this document. A case whose assessment turns on an input the case does not state, where the input is one of the declared inputs Part XIV lists or the appraisal relation, is a case with a missing input, not an argument that rules a claim out.
 
-**(Suff) Sufficiency.** A candidate meeting all four conditions of (E) on a contract of its question, with a transport whose provenance is not declared (Part IV), such that an argument not using (E) rules out the claim that it is an explanation of what its question asks. Part V says which of the four each classic attempt fails: a table of observed answers fails (F1); a reversed calculation fails (F2) under \(C_1\). A table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and such an argument rules out the claim that it is an explanation.
+**(Suff) Sufficiency.** A candidate meeting all four conditions of (E) on a contract of its question, with a transport whose provenance is not declared (Part IV), such that an argument not using (E) rules out the claim that it is an explanation of what its question asks. Part V says which of the four each classic attempt fails: a table of observed answers fails (F1); a reversed calculation fails (F2) under the production contract. A table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and such an argument rules out the claim that it is an explanation.
 
 **(Nec) Necessity.** A candidate such that an argument not using (E) rules out the claim that it is a non-explanation, whose organization no transport can preserve under any contract on its target. Eliminative explanation (Part VII) is the exposed case.
 

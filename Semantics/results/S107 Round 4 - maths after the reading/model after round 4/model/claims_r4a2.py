@@ -1,5 +1,6 @@
 # S107 round 4, area 2 (L229-L372, Parts V-VIII): test claims for the area's rulings (not moves, rule 16).
-#   FC27.new1  the reversed calculation on the production contracts: C1 under τ and τ', C_H under τ and τ' (B4, C-K1; R4A2-01)
+#   FC27.new1  the reversed calculation on the production contracts: C1 under τ and τ', C_H under τ and τ' (B4, C-K1; R4A2-01 = I193,
+#              settled by L271's colon: second check, O2)
 #   FC23.new4  Slot (D6.3) with Pin's translation clause; pins made by the pair's own edit (B8, S3; B9, R4A2-02)
 #   FC23.new5  the owner's two-part sign on a target with one part (C-K3; I189)
 #   FC42.new1  (D) Boundary with the designation carried by the operation (N1: B-N1, W-N1, S-N1, C-N1; R4A2-03)
@@ -78,7 +79,7 @@ def fc27_new1(S):
         bad = [a for (a, b) in sorted(C, key=repr) if not F2eq_at(r, a, b)]
         rows.append("%s: F2eq fails at %s; (E) %s, conjuncts F1 %s, F2 %s, A %s, Dep %s" % (nm, bad, v, d["F1"], d["F2"], d["A"], d["Dep"]))
         ok = ok and bool(bad) and not d["F2"] and not v
-    parts.append(computed("(b) under τ, E_rev fails (F2) on C1 and on C_H", "with each edit carried to itself, intervening on H changes the target's L and not E_rev's: F2eq fails at a setting of H on C1 and on C_H",
+    parts.append(computed("(b) under τ, E_rev fails (F2) on C1 and on C_H", "with each edit carried to itself (L271's colon), intervening on H changes the target's L and not E_rev's: F2eq fails at a setting of H on C1 and on C_H",
                           ok, "; ".join(rows), ["I92"]))
     # (c) under τ': on C1 (F2) fails by its homomorphism clause; on C_H every conjunct of (E) holds
     p1 = Question(D, C1, "b1_45", PortQuery(), "L", name="C1")
@@ -94,9 +95,10 @@ def fc27_new1(S):
     parts.append(computed("(c) under τ' on C1: (F2) fails by its homomorphism clause", "E_rev under τ' meets F2eq at every pair of C1 and fails Hom, so fails (F2) on C1",
                           ok_c1, "conjuncts %s" % d1, ["I84", "I92"]))
     ok_cH = vH and dH["F2"] and dH["F1"] and dH["A"] and dH["Dep"] and dH["NonVacuous"] and not dH["NC1"] and not any(r3H.values()) and all(sH.values())
-    parts.append(computed("(d) under τ' on C_H: every conjunct of (E) holds; L271 read of every production contract states an (F2) failure the computation does not give",
+    parts.append(computed("(d) under τ' on C_H: every conjunct of (E) holds; a candidate other than the one L271's colon describes",
                           "E_rev under τ' restricted to C_H meets (F1), (F2), (A), Dependence and non-vacuity after S106, under every reading of D6.3's quantifier; "
-                          "round 3's (E) excluded it by NC1 alone (r_L a slot): a written-in candidate, an explanation under S44, S45; read of C1 (R4A2-01), L271 is (b) and (c)",
+                          "round 3's (E) excluded it by NC1 alone (r_L a slot): a written-in candidate, an explanation under S44, S45; τ′ sets the calculation's L, so L271's colon "
+                          "(the intervention on the upstream port carried to itself) is false of it: another candidate; L271 is (b) (I193, settled by its colon; second check, O2)",
                           ok_cH, "conjuncts %s; slots under each reading %s; (E) under (every, some, some-exempt, some-exempt-set): after S106 %s, round 3's %s"
                           % (dH, slots_H, _tf(sH), _tf(r3H)), ["I65", "I92"]))
     return parts

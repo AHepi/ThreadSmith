@@ -52,9 +52,15 @@
   },
   "second_check_s106": "second checker on the critical review of S106, 28 September 2026 (results/S106 The written-in test taken out/S106 the second checker on the critical review.md): s106b notes on FC23, FC24, FC32, FC23.new2, FC23.new3; D6.11 withdrawn; whole suite rerun (scale 4, cap 45 s, PYTHONHASHSEED=0, --no-write); statuses unchanged",
   "r4": "S107 round 4 (log S107), integration, 28 September 2026: r4 = {areas, findings, restated, note} (restated: the statement changed, formal_after_s106 keeps S106's); after_round4 = the result expected on results/S107 Round 4 - maths after the reading/model after round 4/ (the merged program; scale 4, time cap 45 s, PYTHONHASHSEED=0, --no-write), from the area record that changed the claim, else the S106 record; the claims the merge touches were run singly by the integration; the whole suite is the harness job 'r4 claim suite, merged'. New claims: type 'test (round 4)'. Inventions I192–I197. Record: integration notes.md",
-  "text_under_review_round4": "tests/106 The semantics, standing alone, without the written-in test.md (md5 c7af964c329ab7959243405d394e6574); text changes: text changes after round 4.json → tests/107 The semantics, standing alone, after round 4.md",
+  "text_under_review_round4": "tests/106 The semantics, standing alone, without the written-in test.md (md5 c7af964c329ab7959243405d394e6574); text changes: text changes after round 4.json → tests/107 The semantics, standing alone, after round 4.md; after the second check the list is empty (R4A2-T1, R4INT-T1 withdrawn, O2) and tests/107 is tests/106 unchanged (md5 c7af964c329ab7959243405d394e6574)",
   "model_round4": "results/S107 Round 4 - maths after the reading/model after round 4/",
   "counts_after_round4": {
+   "HOLDS ON ALL MODELS TRIED": 133,
+   "COUNTEREXAMPLE FOUND": 2,
+   "NOT TESTED": 7
+  },
+  "second_check_round4": "second checker on the critical review of round 4, 28 September 2026 (results/S107 Round 4 - the second checker on the critical review.md): r4b = {objection, note} on FC84.new1 (O1, O4: (a3) restated, look (a4) added), FC27.new1 and FC27 (O2: title, (d), note; B4, C-K1 ruled I), FC83 (O3: restated to T and T′; a look added), FC72.new2 (O5, O6: (b) cut to kind ii, (d) both encodings); title_before_r4b, formal_before_r4b keep what they were; after_round4 is the result on the program after the second check (whole suite rerun, scale 4, cap 45 s, PYTHONHASHSEED=0, --no-write); statuses unchanged",
+  "counts_after_second_check_round4": {
    "HOLDS ON ALL MODELS TRIED": 133,
    "COUNTEREXAMPLE FOUND": 2,
    "NOT TESTED": 7
@@ -4829,23 +4835,27 @@
     "areas": "A2",
     "findings": "B4, C-K1",
     "restated": false,
-    "note": "note: L271 reads 'the production contract \\(C_1\\) (E1, FC27)' (R4A2-T1), L536 'under \\(C_1\\)' (R4INT-T1), settling I193; FC27.new1"
+    "note": "note: I193 settled by L271's colon (the intervention on the upstream port carried to itself; FC27.new1 (b)); τ′ on C_H (FC27.new1 (d)) is another candidate, which L271 does not describe; no text change"
+   },
+   "r4b": {
+    "objection": "O2",
+    "note": "the r4 note was: 'L271 reads 'the production contract \\(C_1\\) (E1, FC27)' (R4A2-T1), L536 'under \\(C_1\\)' (R4INT-T1), settling I193; FC27.new1'"
    }
   },
   {
    "id": "FC27.new1",
-   "title": "L271's 'the production contract': C1 (E1), not every production contract",
+   "title": "L271's reversed calculation: under the transport its colon describes, (F2) fails on C1 and C_H",
    "source": [
     {
      "line": 271,
-     "quote": "fails (F2) under the production contract:"
+     "quote": "fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's."
     },
     {
      "line": 151,
      "quote": "a \\(C\\) containing interventions on upstream ports"
     }
    ],
-   "formal": "(a) C1 and C_H := {1} ∪ settings of H are production contracts (L151; D3.3 Prod). (b) Under τ (each edit to itself) E_rev fails (F2) on C1 and on C_H. (c) Under τ′ on C1, E_rev meets F2eq at every pair and fails Hom: (F2) fails. (d) Under τ′ on C_H, E_rev meets (F1), (F2), (A), Dependence and non-vacuity under every reading of D6.3's quantifier (r_L a slot: an explanation, S44, S45): L271 read of every production contract states an (F2) failure the computation does not give; read of C1 (I193) it is (b), (c).",
+   "formal": "(a) C1 and C_H := {1} ∪ settings of H are production contracts (L151; D3.3 Prod). (b) Under τ (each edit carried to itself: L271's colon) E_rev fails (F2) on C1 and on C_H. (c) Under τ′ on C1, E_rev meets F2eq at every pair and fails Hom: (F2) fails. (d) Under τ′ on C_H, E_rev meets (F1), (F2), (A), Dependence and non-vacuity under every reading of D6.3's quantifier (r_L a slot: an explanation, S44, S45): τ′ sets the calculation's L, so it is a candidate other than the one L271's colon describes; I193 is settled by L271's colon, which (b) computes.",
    "type": [
     "test (round 4)"
    ],
@@ -4891,13 +4901,19 @@
       "status": "computed: as claimed"
      },
      {
-      "label": "(d) under τ' on C_H: every conjunct of (E) holds; L271 read of every production contract states an (F2) failure the computation does not give",
+      "label": "(d) under τ' on C_H: every conjunct of (E) holds; a candidate other than the one L271's colon describes",
       "kind": "computation",
       "status": "computed: as claimed"
      }
     ],
     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S107 Round 4 - maths after the reading/model after round 4\" && PYTHONHASHSEED=0 python3 -B -m model.run --claim FC27.new1 --scale 4 --time-cap 45",
-    "from": "area 2"
+    "from": "second check (O2)"
+   },
+   "title_before_r4b": "L271's 'the production contract': C1 (E1), not every production contract",
+   "formal_before_r4b": "(a) C1 and C_H := {1} ∪ settings of H are production contracts (L151; D3.3 Prod). (b) Under τ (each edit to itself) E_rev fails (F2) on C1 and on C_H. (c) Under τ′ on C1, E_rev meets F2eq at every pair and fails Hom: (F2) fails. (d) Under τ′ on C_H, E_rev meets (F1), (F2), (A), Dependence and non-vacuity under every reading of D6.3's quantifier (r_L a slot: an explanation, S44, S45): L271 read of every production contract states an (F2) failure the computation does not give; read of C1 (I193) it is (b), (c).",
+   "r4b": {
+    "objection": "O2",
+    "note": "B4, C-K1 ruled I (L271's colon fixes the transport), not W; title and (d) restated; statuses unchanged; R4A2-T1, R4INT-T1 withdrawn"
    }
   },
   {
@@ -10928,7 +10944,7 @@
      "quote": "one that finds, by examining it, that at a pair of \\(C\\) it gives what a claim the assessor tentatively accepts excludes"
     }
    ],
-   "formal": "(a) On the Greeks' contract C_G = {(June, N), (Dec, N)} the tilt meets (E) with no slot; the myth with its answer written in (one part) is a slot under 'every' and meets (E) after S106 (round 3's (E): no, under every reading); the myth as told (two parts) has no slot under 'every' and meets (E). (b) Offered one in place of the other: conflict pairs {(June, S), (Dec, S)}, outside C_G: rivals; for an assessor who rules out neither, a problem of kind ii, each easy to vary against the other (D10.2, D10.4), for either encoding. (c) j0 takes up the finding Slot(myth): no argument usable by j0 rules out Acc(myth); j1 also takes 'Slot → ¬Acc' as given ((E) does not give it): MP rules the myth out for j1, not blocked, j1's choice (L397, S28); j2 holds Slot ∧ ¬Acc as one premise: blocked (D9.7). (d) With the south in the contract the myth fails (E) and the tilt meets it: kind i; a record of June in the south with (A)'s premise rules out the myth, not the tilt, for whoever takes them up (L317, K2, K3).",
+   "formal": "(a) On the Greeks' contract C_G = {(June, N), (Dec, N)} the tilt meets (E) with no slot; the myth with its answer written in (one part) is a slot under 'every' and meets (E) after S106 (round 3's (E): no, under every reading); the myth as told (two parts) has no slot under 'every' and meets (E). (b) Offered one in place of the other: conflict pairs {(June, S), (Dec, S)}, outside C_G: rivals; for an assessor who rules out neither, a problem of kind ii (D10.2), for either encoding. (c) j0 takes up the finding Slot(myth): no argument usable by j0 rules out Acc(myth); j1 also takes 'Slot → ¬Acc' as given ((E) does not give it): MP rules the myth out for j1, not blocked, j1's choice (L397, S28); j2 holds Slot ∧ ¬Acc as one premise: blocked (D9.7). (d) With the south in the contract either encoding of the myth fails (E) and the tilt meets it: kind i; a record of June in the south with (A)'s premise rules out the myth, not the tilt, for whoever takes them up (L317, K2, K3).",
    "type": [
     "test (round 4)"
    ],
@@ -10980,6 +10996,11 @@
     ],
     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S107 Round 4 - maths after the reading/model after round 4\" && PYTHONHASHSEED=0 python3 -B -m model.run --claim FC72.new2 --scale 4 --time-cap 45",
     "from": "area 3"
+   },
+   "formal_before_r4b": "(a) On the Greeks' contract C_G = {(June, N), (Dec, N)} the tilt meets (E) with no slot; the myth with its answer written in (one part) is a slot under 'every' and meets (E) after S106 (round 3's (E): no, under every reading); the myth as told (two parts) has no slot under 'every' and meets (E). (b) Offered one in place of the other: conflict pairs {(June, S), (Dec, S)}, outside C_G: rivals; for an assessor who rules out neither, a problem of kind ii, each easy to vary against the other (D10.2, D10.4), for either encoding. (c) j0 takes up the finding Slot(myth): no argument usable by j0 rules out Acc(myth); j1 also takes 'Slot → ¬Acc' as given ((E) does not give it): MP rules the myth out for j1, not blocked, j1's choice (L397, S28); j2 holds Slot ∧ ¬Acc as one premise: blocked (D9.7). (d) With the south in the contract the myth fails (E) and the tilt meets it: kind i; a record of June in the south with (A)'s premise rules out the myth, not the tilt, for whoever takes them up (L317, K2, K3).",
+   "r4b": {
+    "objection": "O5, O6",
+    "note": "(b): 'each easy to vary against the other (D10.2, D10.4)' cut to kind ii (D10.2), what K1 needs; D10.4's reading pointed to under P4 (parked; S33, S34) (O5); (d) computed for both encodings of the myth, each (E) no, kind i (O6); statuses unchanged"
    }
   },
   {
@@ -12411,7 +12432,7 @@
      "quote": "Only the second can be originative under Part X."
     }
    ],
-   "formal": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), with Rep computed as in FC12.new1, under U, K, T and T′ (D12.1 with I161; D13.3 with the cut); without I161, T and T′ admit both.",
+   "formal": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), with Rep computed as in FC12.new1, under T and T′ (D12.1 with I161; D13.3: Held_ℓ(o, c), L405 since R3A3-T4); without I161, T and T′ admit both. Under U and K, build_at keeps round 2's reading of L405's old wording, a comparison, under which it holds too. Look: with D13.3 as it now reads (Build reads Held under every reading, D18.1), U gives no counterexample and K gives one, K's defect (FC98 (d)).",
    "type": [
     "strong candidate",
     "stated result"
@@ -12529,16 +12550,26 @@
       "label": "without I161 (the review's R1)",
       "kind": "there is",
       "status": "witness found"
+     },
+     {
+      "label": "U and K with Build read as Held (D13.3 as it now reads; second check, O3)",
+      "kind": "look",
+      "status": "look: as expected"
      }
     ],
     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S107 Round 4 - maths after the reading/model after round 4\" && PYTHONHASHSEED=0 python3 -B -m model.run --claim FC83 --scale 4 --time-cap 45",
-    "from": "S106 record"
+    "from": "second check (O3)"
    },
    "r4": {
     "areas": "integration",
     "findings": "pair 5",
     "restated": false,
     "note": "note: build_at unchanged: round 2's reading under U and K (named alternatives), Held under T and T′, as DEP reads under every cut"
+   },
+   "formal_before_r4b": "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), with Rep computed as in FC12.new1, under U, K, T and T′ (D12.1 with I161; D13.3 with the cut); without I161, T and T′ admit both.",
+   "r4b": {
+    "objection": "O3",
+    "note": "restated: under T and T′ (Build reads Held, D13.3), U and K with round 2's reading a comparison; look added (U and K with Build read as Held: U none, K a counterexample, K's defect); status unchanged"
    }
   },
   {
@@ -12675,7 +12706,7 @@
    "look": "",
    "round2_result": null,
    "r2": null,
-   "formal": "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′). (a3) Which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as question-occurrences, with or without an alleged defect (I192 (d)); or as a question found (L15, L155, L161), operative at its occurrence (I192 (e)). The readings part ways and agree on (a1)'s chain; under D13.8 as S41 has it, Con and Build at the output are the same in every case, one fixed point each (T′): no computed value reads the labels; under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b).",
+   "formal": "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′). (a3) Which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as question-occurrences, with or without an alleged defect (I192 (d)); or as a question found (L15, L155, L161), operative at its occurrence (I192 (e)). The labels of each case (Θ by hand, I90) give the three readings as printed; under D13.8 as S41 has it, Con and Build at the output are the same in every case, one fixed point each (T′), whichever reading the labels give; under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b). (a4) Look: on one history with a question about the brief and no defect alleged, labelled as I191 (a criticism aimed at the brief) and as I192 (d) (a question, no criticism), Con and Build at the output are the same; CreateEx (D14.7, CompleteCritical D13.8; L429) can hold only under I191's labelling (its criticism clause), over all 2^10 values of its Θ-read conjuncts; Episode of the whole chain reads q(o), which I192 (e) sets (under D13.8 as S41 has it, o1 ≺ o2 an episode on (a3)'s base, not on iv-u).",
    "s41": {
     "answers": "Q6",
     "restated": true,
@@ -12789,6 +12820,11 @@
       "status": "computed: as claimed"
      },
      {
+      "label": "(a4) what reads the labels: (EX) and Episode (second check, O1)",
+      "kind": "look",
+      "status": "look: as expected"
+     },
+     {
       "label": "(b) a recorded change of contract",
       "kind": "computation",
       "status": "computed: as claimed"
@@ -12805,7 +12841,7 @@
      }
     ],
     "reproduce": "cd \"/home/user/ThreadSmith/Semantics/results/S107 Round 4 - maths after the reading/model after round 4\" && PYTHONHASHSEED=0 python3 -B -m model.run --claim FC84.new1 --scale 4 --time-cap 45",
-    "from": "area 1"
+    "from": "second check (O1, O4)"
    },
    "r4": {
     "areas": "A1",
@@ -12813,7 +12849,12 @@
     "restated": true,
     "note": "test part (a3) added (area 1): the readings of 'no question about the brief occurred' (I191; I192 (d), (e)); Con and Build the same under all three"
    },
-   "formal_after_s106": "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′)."
+   "formal_after_s106": "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′).",
+   "formal_before_r4b": "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′). (a3) Which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as question-occurrences, with or without an alleged defect (I192 (d)); or as a question found (L15, L155, L161), operative at its occurrence (I192 (e)). The readings part ways and agree on (a1)'s chain; under D13.8 as S41 has it, Con and Build at the output are the same in every case, one fixed point each (T′): no computed value reads the labels; under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b).",
+   "r4b": {
+    "objection": "O1, O4",
+    "note": "(a3) restated: its condition reads Con and Build only, the three readings printed as the hand-set labels give them (O4, lesson S39); 'no computed value reads the labels' replaced by what is computed (O1); look (a4) added: (EX) reads the criticism label through CompleteCritical, Episode of a whole chain reads q(o) (O1)"
+   }
   },
   {
    "id": "FC84.new2",

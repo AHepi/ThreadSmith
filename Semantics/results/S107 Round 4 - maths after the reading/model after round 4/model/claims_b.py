@@ -2095,11 +2095,27 @@ def fc83(S):
         return check
 
     pre = "t violated at x = %r: %s; t selected on H: %s; t2 ∈ μ⁺(t): %s; t2 held at the output (faithful, and on H ∪ {x}): %s" % (x, viol, sel_t, in_mu, held_out)
-    parts = [exhaustive("FC83", "FC83' with Rep computed, D12.1 with I161", "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), under U, K, T and T′",
+    parts = [exhaustive("FC83", "FC83' with Rep computed, D12.1 with I161",
+                        "SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), under T and T′ (Build reads Held, D13.3; L405 since R3A3-T4); under U and K "
+                        "with round 2's reading of L405's old wording (build_at), a comparison",
                         list(items()), check_with(True, PROV_READINGS),
                         "chains o1 ≺ … ≺ on (n ≤ 3), earlier (held, trace, Sel's conditions) by hand, the output's trace by hand; " + pre, ["I90", "I92", "I161", "I162"]),
              exhaustive("FC83", "without I161 (the review's R1)", "there is a history with SelResp and a Build of cod t' under T or T′",
                         list(items()), check_with(False, ("T", "T'")), "the same space", ["I90", "I92"], kind="there is")]
+    # (a″) second check (critical review O3): U and K with Build read as Held (D13.3 as the core now reads it, D18.1), the rejected
+    # cuts: U gives no counterexample, K gives K's own defect (a first construction unrepresented, then a selection: FC98 (d)).
+    def cex_held(rd):
+        out = []
+        for n, held, trace, selc in items():
+            for R, sc in prov_fixed_points(n, held, trace, selc, rd, True):
+                if sel_t and viol and in_mu and sc[n - 1][0] and any(trace[o] and held[o] for o in range(n)):
+                    out.append("held %s, trace %s, Sel's conditions %s; fixed point %s" % (held, trace, selc, prov_show(n, [(R, sc)])))
+        return out
+    ch = {rd: cex_held(rd) for rd in ("U", "K")}
+    parts.append(look("U and K with Build read as Held (D13.3 as it now reads; second check, O3)",
+                      "with Build read as Held_ℓ(o, c) under the rejected cuts too, U gives no counterexample and K gives one: K's defect (FC98 (d)), not the text's",
+                      not ch["U"] and bool(ch["K"]), "%d models; U: %d counterexamples; K: %d, the first: %s" % (
+                          len(list(items())), len(ch["U"]), len(ch["K"]), ch["K"][0] if ch["K"] else None), ["I90", "I161", "I162"]))
     return parts
 
 
