@@ -1,0 +1,66 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-merge-area-models",
+ "job": "merge_models",
+ "kind": "mechanical",
+ "purpose": "Three-way merge of round 2's three area copies of the model program against the committed program, as the integration did it. Known answer (integration report, section 1): one textual conflict, in claims_a.py at FC14 (areas 1 and 2 added the same path fallback); core.py and claims_b.py merge clean; claims_area1.py, harness.py and run.py come from area 1, phys.py from area 3.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-merge-area-models",
+ "inputs": [],
+ "steps": [
+  {
+   "name": "git merge-file, file by file",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/merge_models.py",
+    "--base",
+    "{SEM}/results/S104 Round 2 - maths/model",
+    "--area",
+    "A1={SEM}/results/S104 Round 2 - maths after the reading/area 1 model/model",
+    "--area",
+    "A2={SEM}/results/S104 Round 2 - maths after the reading/area 2 model/model",
+    "--area",
+    "A3={SEM}/results/S104 Round 2 - maths after the reading/area 3 model/model",
+    "--out",
+    "{OUT}/merged"
+   ],
+   "timeout_s": 300,
+   "save": "merge.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "one file in conflict",
+   "file": "merge.json",
+   "path": "conflicts",
+   "length_equals": 1
+  },
+  {
+   "name": "the conflict is in claims_a.py",
+   "file": "merge.json",
+   "path": "conflicts.0.file",
+   "equals": "claims_a.py"
+  },
+  {
+   "name": "one conflict hunk",
+   "file": "merge.json",
+   "path": "conflicts.0.conflicts",
+   "equals": 1
+  },
+  {
+   "name": "seven files changed by the areas",
+   "file": "merge.json",
+   "path": "changed",
+   "length_equals": 7
+  }
+ ],
+ "on_fail": "escalate to Opus; in a real round every conflict goes to Opus (which side, or what combination, is a judgement)",
+ "never": [
+  "resolve a conflict",
+  "edit a model file",
+  "write outside the out folder",
+  "open a key file",
+  "call GLM",
+  "commit"
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-claim-suite",
+ "job": "claim_suite",
+ "kind": "mechanical",
+ "purpose": "Re-run round 2's whole claim suite on the final model (after the owner's answers) and compare every claim and part with the recorded result: 105 hold, 3 counterexamples, 7 not tested, of 115.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-claim-suite",
+ "inputs": [
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/run.py", "md5": "f3d491e3706d84d5488efb0bf9ea76a6"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/core.py", "md5": "68c9a65a202c2f85365c5d7c4ef9bd47"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/args.py", "md5": "81ae45be0a7c5870c71bd5814448fd79"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/claims_a.py", "md5": "cba30de265f14fd9f7ca726aabea53ff"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/claims_b.py", "md5": "449920633217e8f497935e61cbfeadc3"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/claims_s41.py", "md5": "1f07a6a2b7fd82f361e25057aa2f1a8c"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/model after round 2/model/inventions_model.py", "md5": "eb410a1316b0b09da791ee2294cc7680"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/formal claims, after round 2.json", "md5": "745cc40c12ff3ff0b4e48d7dafafee08"}
+ ],
+ "steps": [
+  {"name": "the whole suite, compared with the record",
+   "argv": ["{PY}", "-B", "{H}/run_claims.py", "--model-dir", "{SEM}/results/S104 Round 2 - maths after the reading/model after round 2",
+            "--out-dir", "{OUT}/suite", "--scale", "4", "--time-cap", "45", "--timeout", "1800",
+            "--expect", "{SEM}/results/S104 Round 2 - maths after the reading/formal claims, after round 2.json",
+            "--expect-key", "after_s41", "--expect-counts", "H=105,CEX=3,NT=7,of=115"],
+   "timeout_s": 2000, "save": "suite.json"}
+ ],
+ "check_steps": [
+  {"name": "an independent re-run of nine claims (the three counterexamples, one not tested, the owner's answers, a path-sensitive one)",
+   "argv": ["{PY}", "-B", "{H}/run_claims.py", "--model-dir", "{SEM}/results/S104 Round 2 - maths after the reading/model after round 2",
+            "--out-dir", "{OUT}/spot", "--scale", "4", "--time-cap", "45", "--timeout", "600",
+            "--claim", "FC18", "--claim", "FC23", "--claim", "FC63", "--claim", "FC31", "--claim", "FC22", "--claim", "FC72",
+            "--claim", "FC30.new1", "--claim", "FC84.new1", "--claim", "FC14",
+            "--expect", "{SEM}/results/S104 Round 2 - maths after the reading/formal claims, after round 2.json", "--expect-key", "after_s41"],
+   "timeout_s": 700, "save": "spot.json"}
+ ],
+ "checks": [
+  {"name": "the suite ran to its end", "file": "suite.json", "path": "exit", "equals": 0},
+  {"name": "no claim raised an error", "file": "suite.json", "path": "claims_with_error", "empty": true},
+  {"name": "105 hold", "file": "suite.json", "path": "counts.H", "equals": 105},
+  {"name": "3 counterexamples", "file": "suite.json", "path": "counts.CEX", "equals": 3},
+  {"name": "7 not tested", "file": "suite.json", "path": "counts.NT", "equals": 7},
+  {"name": "115 claims", "file": "suite.json", "path": "counts.of", "equals": 115},
+  {"name": "every claim and every part equal to the record", "file": "suite.json", "path": "differences", "empty": true},
+  {"name": "no claim outside the record", "file": "suite.json", "path": "claims_not_in_record", "empty": true},
+  {"name": "nothing written in the model folder", "file": "suite.json", "path": "model_folder_changed", "empty": true},
+  {"name": "the independent re-run equal to the record", "file": "spot.json", "path": "ok", "equals": true}
+ ],
+ "on_fail": "escalate to Opus with result.*.json and suite/raw.txt",
+ "never": ["decide whether a claim should hold", "edit the model", "write outside the out folder", "open a key file", "call GLM", "commit"]
+}

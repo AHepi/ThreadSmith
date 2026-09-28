@@ -1,0 +1,53 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-text-changes",
+ "job": "apply_text_changes",
+ "kind": "mechanical",
+ "purpose": "Re-apply round 2's text changes to tests/103 ('text changes after the review.json', then 'text changes for the owner's answers.json') into the scratchpad, check each change byte for byte, and compare the md5s of the two results with tests/104 (735ec1e8256cc6a251715a031944ea65) and tests/104 with the owner's answers (bc14045aae3139df710d8339a9c1c81b).",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-text-changes",
+ "inputs": [
+  {"path": "Semantics/tests/103 The semantics, standing alone, after round 1.md", "md5": "f31ebb1f050783f1a84f6136cec20fcd"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/text changes after the review.json", "md5": "3f43745f9da7680eb85f60cef8b38172"},
+  {"path": "Semantics/results/S104 Round 2 - maths after the reading/text changes for the owner's answers.json", "md5": "8836b844ef122be01a6dc4a8bfb60c6a"}
+ ],
+ "steps": [
+  {"name": "apply the 43 changes after the review to tests/103",
+   "argv": ["{PY}", "-B", "{H}/apply_changes.py", "--src", "{SEM}/tests/103 The semantics, standing alone, after round 1.md",
+            "--src-md5", "f31ebb1f050783f1a84f6136cec20fcd",
+            "--changes", "{SEM}/results/S104 Round 2 - maths after the reading/text changes after the review.json",
+            "--out", "{OUT}/104 after round 2.md", "--expect-md5", "735ec1e8256cc6a251715a031944ea65"],
+   "timeout_s": 120, "save": "step1.json"},
+  {"name": "apply the 5 changes for the owner's answers to that result",
+   "argv": ["{PY}", "-B", "{H}/apply_changes.py", "--src", "{OUT}/104 after round 2.md",
+            "--src-md5", "735ec1e8256cc6a251715a031944ea65",
+            "--changes", "{SEM}/results/S104 Round 2 - maths after the reading/text changes for the owner's answers.json",
+            "--out", "{OUT}/104 with the owner's answers.md", "--expect-md5", "bc14045aae3139df710d8339a9c1c81b"],
+   "timeout_s": 120, "save": "step2.json"}
+ ],
+ "check_steps": [
+  {"name": "md5 of both results, and of the committed texts they must equal",
+   "argv": ["{PY}", "-B", "{H}/md5_check.py",
+            "--expect", "{OUT}/104 after round 2.md=735ec1e8256cc6a251715a031944ea65",
+            "--expect", "{OUT}/104 with the owner's answers.md=bc14045aae3139df710d8339a9c1c81b",
+            "--expect", "Semantics/tests/104 The semantics, standing alone, after round 2.md=735ec1e8256cc6a251715a031944ea65",
+            "--expect", "Semantics/tests/104 The semantics, standing alone, after round 2, with the owner's answers.md=bc14045aae3139df710d8339a9c1c81b"],
+   "timeout_s": 60, "save": "md5.json"}
+ ],
+ "checks": [
+  {"name": "first list: md5 equals tests/104", "file": "step1.json", "path": "md5_match", "equals": true},
+  {"name": "first list: 43 applied", "file": "step1.json", "path": "applied_count", "equals": 43},
+  {"name": "first list: none refused", "file": "step1.json", "path": "refused_count", "equals": 0},
+  {"name": "first list: none held", "file": "step1.json", "path": "held_count", "equals": 0},
+  {"name": "first list: no new word on decision S23's list", "file": "step1.json", "path": "s95_new_on_s23_list", "equals": 0},
+  {"name": "first list: words outside formulas 15,611 -> 15,409", "file": "step1.json", "path": "after.words_outside_formulas", "equals": 15409},
+  {"name": "first list: no heading, defined term or tag lost", "file": "step1.json", "path": "marks_missing", "empty": true},
+  {"name": "second list: md5 equals tests/104 with the owner's answers", "file": "step2.json", "path": "md5_match", "equals": true},
+  {"name": "second list: 5 applied", "file": "step2.json", "path": "applied_count", "equals": 5},
+  {"name": "second list: none refused", "file": "step2.json", "path": "refused_count", "equals": 0},
+  {"name": "second list: words outside formulas 15,409 -> 15,388", "file": "step2.json", "path": "after.words_outside_formulas", "equals": 15388},
+  {"name": "second list: no new S95 hit", "file": "step2.json", "path": "s95_new_total", "equals": 0},
+  {"name": "all four md5s", "file": "md5.json", "path": "ok", "equals": true}
+ ],
+ "on_fail": "escalate to Opus with result.*.json, step1.json and step2.json",
+ "never": ["write any file under tests/ or results/", "choose which changes to apply", "edit a change", "open a key file", "call GLM", "commit"]
+}
