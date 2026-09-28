@@ -32,6 +32,7 @@ from model.args import Not, Imp, Leaf, Step, Assessor, X  # noqa: E402
 import s108_s4_cases as SC  # noqa: E402
 
 PER = int(os.environ.get("S108_S4_PER", "160"))  # 40 × scale 4
+NO_NEC = os.environ.get("S108_S4_NO_NEC") == "1"  # skip the exposure search (V4.5); used for the MID run only
 NSIZES = int(os.environ.get("S108_S4_NSIZES", "0"))  # 0: every size of SMALL (a smaller number only for timing tests)
 
 
@@ -66,7 +67,8 @@ class Tally:
         return [dict(key=list(k) if isinstance(k, tuple) else k, count=self.n[k], smallest=self.first[k]) for k in sorted(self.n, key=repr)]
 
 
-def part_cands(seed):
+def part_cands(seed, SIZES=None):
+    SIZES = SIZES or SMALL
     rng = random.Random(seed)
     t0 = time.time()
     n = accT = 0
@@ -78,7 +80,7 @@ def part_cands(seed):
     v46_gen_not_desig = 0
     slot_q = Tally()
     exp_tot = {"now": 0, "V4.5": 0}
-    for si, size in enumerate(SMALL[:NSIZES] if NSIZES else SMALL):
+    for si, size in enumerate(SIZES[:NSIZES] if NSIZES else SIZES):
         print("size %d %r: %.0f s" % (si, size, time.time() - t0), file=sys.stderr, flush=True)
         for i in range(PER):
             fam, kind, p, c = gen_world(rng, size)
@@ -115,6 +117,8 @@ def part_cands(seed):
             # V4.5: exposure; t faithful on C is a witness against both
             if faithful(c):
                 en, e5 = False, False
+            elif NO_NEC:
+                en = e5 = None
             else:
                 en, _, st1 = NEC.exposed_none(p.D, c.E, list(c.Gamma), time_cap=20)
                 e5, w5, st2 = NEC.exposed_v45(p.D, c.E, list(c.Gamma), p.C, time_cap=20)
@@ -326,6 +330,9 @@ def main():
     part, outp = sys.argv[1], sys.argv[2]
     if part == "cands":
         res = part_cands(108401)
+    elif part == "cands-mid":
+        from model.claims_a import MID
+        res = part_cands(108405, MID)
     elif part == "pops":
         res = part_pops(108402)
     elif part == "pops-wide":
