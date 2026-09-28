@@ -107,9 +107,9 @@ def check_ladder(provider, ladder):
 # The providers' slot locks and the runners' pid files live outside the repository (process audit finding 1; lesson
 # S10). Every call to a provider takes one of its slots first (s80_call.call, s80_probe, s96_glm_call,
 # glm_via_claude_code), so the limit of calls in flight to each provider (three each, decisions S12, S17; Mimo and GLM
-# one each from 27 September 2026, decision S35) holds across every process on this machine that uses these tools, not
-# only within one pool. SEMANTICS_RUN_DIR moves the folder; every runner must then see the same
-# value, or the limit no longer holds between them.
+# one each from 27 September 2026, decision S35; GLM four from 28 September 2026, decision S39) holds across every
+# process on this machine that uses these tools, not only within one pool. SEMANTICS_RUN_DIR moves the folder; every
+# runner must then see the same value, or the limit no longer holds between them.
 RUN_DIR = os.environ.get("SEMANTICS_RUN_DIR",
                          "/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad")
 LOCK_DIR = os.path.join(RUN_DIR, "locks")
@@ -119,7 +119,13 @@ SLOTS_PER_PROVIDER = 3   # the default limit, for a provider not named in SLOTS_
 # take a "glm" slot). provider_slot now reads the limit per provider from this map (slots_for). A process started
 # before this change that still holds a Mimo slot numbered 1 or 2 is not seen by one started after it; none was
 # running when the change was made.
-SLOTS_BY_PROVIDER = {"mimo": 1, "glm": 1}
+# 28 September 2026, decision S39 ("I think you can run 4 agents"): GLM's limit is 4, from round 3. Four GLM calls at
+# once through glm_via_claude_code.py (glm-5.3 through Claude Code, effort medium, one shared scratchpad home) were
+# tested before the change and all four came back (results/S104 note - four GLM calls at once, tested before round 3).
+# Mimo stays at 1 although decision S38 takes Mimo out after round 2: a limit of 0 would make provider_slot wait for
+# ever (range(0) has no slot to take), and removing "mimo" would give Mimo the default of 3; so Mimo is kept out by
+# not sending to it, not by this map. No GLM or Mimo call was running when this change was made.
+SLOTS_BY_PROVIDER = {"mimo": 1, "glm": 4}
 
 
 def slots_for(provider):
