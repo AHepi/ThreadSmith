@@ -154,3 +154,90 @@ The job itself was not run.
 
 - "Merged clean" for `claims_a.py` and `claims_s41.py` is read from where the hunks sit, not from git merge-file. If git says otherwise, the job escalates.
 - 133 / 2 / 7 of 142 rests on the call check of §3, not on a run.
+
+## 9. Second part: the conflicts resolved, the maths after round 4, the two specs
+
+*Integration agent, second part, under rule 7 (a fresh Opus 5.5 agent; the rule and its addendum read whole first; decisions S20-S52 read; S40, S41, S43, S44, S45, S46, S47 bind). Read: §§1-8 above; the three area files; the merge job's result (`r4-merge-area-models`: worker and checking agent ok, digests equal, 6ada1a5a6ddba2b3; `merge.json`: 23 files, 9 changed, 1 conflict, `run.py`, markers at L23, L25, L27). Written: the files of §9.4 and the two specs of §9.6. Not written: the text under review, any earlier text or file, the rule, its addendum, the replies, the decisions, the area files and copies. "Model" means only the program or its folder (S43).*
+
+### 9.1 The merge
+
+| file | merge | decision |
+|---|---|---|
+| `run.py` | CONFLICT, 1 hunk: A2's `import claims_r4a2`, A3's `import claims_r4a3`, both after `claims_s106`'s | both kept, A2's first; one comment line. Not the same code in substance (two imports), so no named alternatives. Plus one header line ("run from … model after round 4") |
+| `claims_a.py`, `claims_s41.py` | merged clean | checked by diff against each area's copy: A1's hunks (FC31's return; `no_question_about_brief`, FC84.new1 (a3)) and A3's (FC14 through `corefile`; `USES_READINGS`, `not_using_E`, `expl_ruled_out`, FC30.new1 (h)) all present |
+| `corefile.py` (A3) | taken | `NAME` → "formal core, after round 4.md"; the committed folder → "S107 Round 4 - maths after the reading" (note 6) |
+| the 6 files taken from one area, the 14 base files | taken | unchanged |
+| case scripts | not merged | copied from `model after S106/` (md5-equal in all four folders) |
+
+`model after round 4/`: 26 files (23 in `model/`, 3 case scripts), no conflict marker, no `__pycache__`; their md5s are the inputs of `r4 claim suite, merged`.
+
+### 9.2 The pairs of §4, decided
+
+| pair | decision |
+|---|---|
+| 1 | both imports kept (§9.1) |
+| 5 | `build_at` unchanged: under the rejected cuts U and K it keeps round 2's reading of L405's old wording, named alternatives FC83 names; under T and T′ it reads Held, as DEP does. Read as Held under K, FC83 (a) gives K's own defect (FC98 (d)). Recorded in D18.1 ([r4: integration; pair 5]) for the critical review. No finding asks it; no status moves |
+| 6 | `corefile.py` points at the core after round 4; FC14 and FC32.new1 read it (run: 118 definition lines, none with 'is a cause'; 114 paragraphs of §§1-16, all mapped, none extra) |
+| 7 | the integration's text change R4INT-T1 at L536 (kind formal): "fails (F2) under the production contract." → "fails (F2) under \(C_1\)." B4 and C-K1 hold (W) against these words as against L271's; the text should now settle I193 there too (rule 6), C1 being introduced at L271 with its pointers (E1, FC27). Words outside formulas: R4A2-T1 +2, R4INT-T1 −2, total 15,204 → 15,204 (not grown) |
+| 9 | δ checked: D7.4 uses δ_v, δ_w, δ_E only as designations; the convention stated in the core's preamble |
+| 11 | D0.2's F3 and F4 counted as 2 moves: two findings (S4, S6), two changes; round 3 counted D12.1's three fixes as three rows |
+| 13 | D13.8's [S47] note kept as written; [r4] marks on D12.2 and D13.8 name I192 and FC84.new1 (a3) |
+| 14 | D6.9 marked (A2 F3); D9.7's [S106] mark already names S106-T11; one convention, stated in the preamble |
+| 18 | numbered: R4A1-01 → I192, R4A2-01 → I193, R4A2-02 → I194, R4A2-03 → I195, R4A3-01 → I196, R4A3-02 → I197 (no I192 or higher was in use) |
+| 2, 3, 4, 8, 10, 12, 15, 16, 17, 19 | nothing to decide (as §4 found) |
+
+### 9.3 Runs on the merged program (PYTHONHASHSEED=0, scale 4, cap 45, --no-write, -B)
+
+| run | result |
+|---|---|
+| 16 claims singly: FC27.new1, FC23.new4, FC23.new5, FC42.new1, FC72.new2; FC14, FC32.new1, FC31, FC30.new1, FC84.new1, FC23.new2, FC98, FC83, FC23, FC63, FC32 | every status and part equal to `after_round4` (compared by run_claims.py's parser); FC14 and FC32.new1 read `formal core, after round 4.md` (md5 4f9bef648e2a876be27ac920dd561b54) |
+| `s104_external.py`, `s104_creative_transport.py`, `s106_cases.py` | outputs 86a67664a9a3584351fd4836a4140b69, d473944e74d2f349b1fdfb83277843cf, 043aeb3647a9004ae43009a7fed50b4e: as recorded |
+| the text changes on a scratch copy (apply_changes.py, text_scan.py) | 2 applied, 0 refused, 4 byte checks; out md5 6e9bd68fb1f98b52a3a02fc896cdc9bd; S95 and S96: 0 new; no mark lost; words outside formulas 15,204 → 15,204 |
+
+The whole suite is Sonnet's (`r4 claim suite, merged`). `after_round4` for the other 126 claims is the S106 record, equal in all three areas' suites (checked by the claims builder); the merged suite decides.
+
+### 9.4 Files written (all new; md5)
+
+| file | md5 |
+|---|---|
+| `model after round 4/` (26 files) | per file in the spec's inputs |
+| `formal core, after round 4.md` (by `build formal core after round 4.py`, 91294e0c8dbe859ce02d259c386ba353) | 4f9bef648e2a876be27ac920dd561b54 |
+| `formal claims, after round 4.json` / `.md` (by `build formal claims after round 4.py`, 944997aa0bba2769b2a7c890f8f2d193) | c6fea9d95235cd7483ebc0a0cc8b1afc / b91b201a3d292c700f7977df43312b8a |
+| `inventions register - addendum after round 4.md` | 567c1d51977cc67ee8419d67f7dbad80 |
+| `owner questions after round 4.md` (none new) | 600c4e477750d5a51d70c985c6b5e1a3 |
+| `parked after round 4.md` (none new) | e6b46848e238ed7fd3b302cf07f0af4e |
+| `text changes after round 4.json` (R4A2-T1, R4INT-T1) | a05100798b237684fcf95b5704b4f7aa |
+
+The formal core: 20 exact replacements, each span found once; 118 definition paragraphs, as S106's. Claims: 142, expected 133 H, 2 CEX (FC23, FC63), 7 NT; new FC27.new1, FC23.new4, FC23.new5, FC42.new1, FC72.new2; new parts FC84.new1 (a3), FC30.new1 (h); restated FC31, FC98; notes on FC14, FC32.new1, FC23.new2, FC23.new3, FC27, FC83. No claim changed by two areas (checked).
+
+### 9.5 Moves (rule 16, strict)
+
+| # | area | finding | move | kind |
+|---|---|---|---|---|
+| 1 | A2 | B8, S3 | D6.3: t translates (a,b) inside the ∀ (F1) | changed definition |
+| 2 | A2 | N1 | D7.4: δ_v carried (F2) | changed definition |
+| 3 | A3 | S2 | D18.1's T′ item; DEP['Build'] → Held (F2) | the program's reading of a definition |
+| 4 | A3 | S4 | D0.2: 'subhistory' out of the primitives (F3) | changed definition |
+| 5 | A3 | S6 | D0.2: D16.XV's five undefined terms in (F4) | changed definition |
+| 6 | A3 | W5 | D16.XV's Uses read at the symbol (F7, I196) | the program's reading of a definition |
+| 7 | A2 | B4, C-K1 | R4A2-T1 (L271) | text change applied |
+| 8 | integration | B4, C-K1 (pair 7) | R4INT-T1 (L536) | text change applied |
+
+**Moves: 8, not 0: the series is not ended by this round (rule 17; S52 governs what follows).** Not counted: A2 F3, the D9.7, D12.2, D13.8, E1 and pair-5 marks (no definition changes); A3 F1 (a path), F5, F6 (notation); FC31, FC98, FC32.new1 re-based; the five new test claims and two test parts; I192-I197; K1 (settled, no owner question); no owner question, nothing parked.
+
+### 9.6 The two specs (briefs printed under `--run r4-reading`)
+
+| spec | inputs | what it runs | checks |
+|---|---|---|---|
+| `r4 claim suite, merged.json` (2d543d80ba508cb8cc4033ace9622b03) | 28: the 26 files of `model after round 4/`, the claims json, the formal core after round 4 | the whole suite from `model after round 4/` against `after_round4` (counts H=133, CEX=2, NT=7, of=142); a spot re-run of 14 claims | 15: exit, no timeout, no error, counts, 142 compared, no difference, none outside the record, folder unchanged, no `__pycache__`, spot ok, 14 compared, spot no timeout |
+| `r4 text changes.json` (6a0c3f25668b17eca0b1614e92c83ecb) | tests/106, the list | apply_changes.py → NEW `tests/107 The semantics, standing alone, after round 4.md` (--allow-new-in-sem, --expect-md5 6e9bd68fb1f98b52a3a02fc896cdc9bd); check steps: text_scan.py (106 against 107), md5_check.py | 23: md5, ok, 2 read, 2 applied, 0 refused, 0 held, the two ids in order, 4 byte checks, 2 lines differ, line count, words outside formulas 15,204 before and after, not grown, S95 0 new, S23 list 0, S96 0 new, no mark lost; the independent scan ok, 0 new, no mark lost, delta 0; the three md5s |
+
+Both checked by `run_task.py --phase validate` under a run label of their own (int2-selfcheck: inputs ok, no command run). `tests/107` did not exist when the spec was written; the applier refuses to write over a file.
+
+**Departures, recorded (lesson S19).** (a) The harness table's `r4 scans` is not a spec of its own: `apply_changes.py` runs the scans, and `r4 text changes` re-runs them independently (text_scan.py) as a check step. (b) `r4 md5s` and `r4 key grep`: the md5s are the specs' inputs (checked at every run); the key grep before this commit was run by this agent, by the orchestrator's pattern.
+
+### 9.7 Unsure
+
+- R4INT-T1 is the integration's own text change (rule 7: the integration chooses the text changes); the critical review may contest it.
+- Pair 5 is left as two readings in the program; the review may ask for FC83 to read Held under U and K too (a counterexample under K, a rejected cut).
+- 133 / 2 / 7 of 142 rests on the area records and the 16 claims run singly; the merged suite decides.
