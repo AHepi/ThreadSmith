@@ -2193,7 +2193,7 @@ def fc97(S):
 
 # ---- FC98 after area 3: the dependence order (D18.1) and E03's loop ------------------------------
 
-DEP = {  # D18.1 as the text's words give it, 'represented' read through (R); ('<', x) marks a use of x at an earlier occurrence only under the ranked reading
+DEP = {  # D18.1 as the text's words give it, 'represented' read through (R); ('<', x) marks a use of x at an earlier occurrence only under the staged reading
     "(K)": ["(O)", "C"], "(F1)": ["(O)", "(Q)", "(K)"], "(F2)": ["(O)", "(Q)", "(K)"], "(A)": ["(O)", "(Q)", "(K)"],
     "NC": ["(O)", "(Q)", "(K)", "ℓ", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "NC", "NV"],
     "(R)": ["(F1)", "(F2)", "Org", "Sel", "Con"], "Sel": ["h", "Θ", ("<", "(R)")], "Con": ["h", "Build", ("<", "(R)")],
@@ -2206,8 +2206,8 @@ DEP = {  # D18.1 as the text's words give it, 'represented' read through (R); ('
 TEXT_SINKS = {"(O)", "(Q)", "Θ", "Org", "𝒩", "C", "ℓ", "β", "Ω", "Σ", "O,P", "Forms", "Scope", "Accepted", "h"}
 
 
-def dep_cycle(ranked):
-    edges = {n: [(x[1] if isinstance(x, tuple) else x) for x in xs if not (ranked and isinstance(x, tuple))] for n, xs in DEP.items()}
+def dep_cycle(staged):
+    edges = {n: [(x[1] if isinstance(x, tuple) else x) for x in xs if not (staged and isinstance(x, tuple))] for n, xs in DEP.items()}
     color, stack = {}, []
 
     def dfs(n):
@@ -2236,7 +2236,7 @@ def rep_fixed_points(case, reading):
     """Rep on a history o1 ≺ o2 for one content c, from facts set by hand (Θ): held[o] (a faithful
     transport Org_ℓ(o) → c), trace[o] (a construction trace prepares o's transport, episode {o1, o2}),
     selhist[o] (a selection history). Readings: 'U' the words with (R) throughout (the output is in its
-    own episode and history); 'K' ranked: Sel and Con read (R) only at earlier occurrences; 'T' Con's
+    own episode and history); 'K' staged: Sel and Con read (R) only at earlier occurrences; 'T' Con's
     'represented target' read as held (Θ), Sel's exclusion as held at an earlier occurrence."""
     occ = ["o1", "o2"]
     before = {"o1": [], "o2": ["o1"]}
@@ -2287,7 +2287,7 @@ def fc98(S):
     parts.append(computed("(a) the order as worded", "with 'represented' (L197, L405) read through (R), the dependence graph has a cycle (E03; L526 says it has none)", cyc is not None,
                           "cycle: %s" % (" → ".join(cyc) if cyc else "none"), ["A3-02"]))
     cyc2 = dep_cycle(True)
-    parts.append(computed("(a') the order ranked by ≺_h", "with (R) used inside Sel, Con, Build and (K2) only at earlier occurrences or lower steps, no cycle", cyc2 is None,
+    parts.append(computed("(a') the order staged by ≺_h", "with (R) used inside Sel, Con, Build and (K2) only at earlier occurrences or lower steps, no cycle", cyc2 is None,
                           "cycle: %s" % (" → ".join(cyc2) if cyc2 else "none"), ["A3-02", "I40"]))
     sinks = sorted(set(x[1] if isinstance(x, tuple) else x for xs in DEP.values() for x in xs) - set(DEP) - TEXT_SINKS)
     parts.append(look("(b) sinks the text does not list", "every sink is Θ, 𝒩, (O), (Q), an index or a declared input of L522", False,
