@@ -341,3 +341,243 @@ def fc80_new1(S):
                         "t survives on H under fidelity and an environment's condition on its values at H; (τ(a),σ(b)) ∉ (τ×σ)[H] ⇒ t altered at (τ(a),σ(b)) survives too",
                         gen_step, check, SMALL, 40, BOTHFAM, ["I71"]))
     return parts
+
+
+# ---- S2(i), S2(ii), S2(iii), S3, S-b: D18.1's graph against the formal core and against L526 ----------------------
+
+L526_PAIRS = [  # (x, y): L526 says x depends on y; grouped subjects read collectively (R3A3-06)
+    ("(K)", "(O)"), ("(K)", "C"),
+    ("(F1)", "(O)"), ("(F1)", "(Q)"), ("(F1)", "(K)"), ("(F2)", "(O)"), ("(F2)", "(Q)"), ("(F2)", "(K)"), ("(A)", "(O)"), ("(A)", "(Q)"), ("(A)", "(K)"),
+    ("(E)", "(F1)"), ("(E)", "(F2)"), ("(E)", "(A)"), ("(S)", "(E)"), ("(B)", "(E)"), ("(D)", "(E)"),
+    ("(R)", "(F1)"), ("(R)", "(F2)"), ("(R)", "h"), ("(K1)", "(E)"), ("(K2)", "Forms"), ("(K2)", "Scope"), ("(K2)", "Accepted"), ("(K3)", "(K2)"),
+    ("Deploy", "(R)"), ("Deploy", "(CT1)"), ("Owned", "h"), ("Owned", "β"), ("Can", "Owned"), ("Can", "(CT1)"), ("Can", "Ω"),
+    ("Build", "h"), ("Build", "Owned"), ("Build", "(E)"), ("New", "Deploy"), ("(G)", "Deploy"), ("(G)", "Build"),
+    ("(EX)", "(G)"), ("(EX)", "(E)"), ("(EX)", "Deploy"), ("(P)", "ProducedBy"), ("(P)", "O,P"), ("(EX)", "(P)"), ("ProducedBy", "h"), ("ProducedBy", "ActRoute"),
+    ("Conf", "(F1)"), ("Conf", "(F2)"), ("Conf", "(A)"), ("Conf", "(O)"), ("ConfCl", "(F1)"), ("ConfCl", "Allow_χ"), ("Riv", "Conf"), ("Riv", "Offered"),
+    ("Riv_χ", "ConfCl"), ("Riv_χ", "Offered"), ("OutCand", "(K2)"), ("OutCand", "(E)"), ("Prob", "Riv"), ("Prob", "OutCand"), ("ETV", "Prob"),
+]
+L526_DISTRIBUTIVE = [("New", "Build"), ("(P)", "(G)"), ("(P)", "(E)"), ("(P)", "Deploy")]  # read each subject alone
+
+
+def dep_ancestors(dep, n, reading="T'"):
+    edges = claims_b.dep_edges(reading, dep)
+    seen, todo = set(), [n]
+    while todo:
+        u = todo.pop()
+        for y in edges.get(u, []):
+            if y not in seen:
+                seen.add(y)
+                todo.append(y)
+    return seen
+
+
+def core_def_ids():
+    path = os.path.join(HERE, "..", "..", "..", "S104 Round 2 - maths after the reading", "formal core, after round 2.md")
+    ids = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            m = re.match(r"\*\*(D(\d+)\.(?:\d+|new\d+|XV))\b", line)
+            if m and 1 <= int(m.group(2)) <= 16:
+                ids.append(m.group(1))
+    return ids
+
+
+@claim("FC32.new1", [])
+def fc32_new1(S):
+    DEP, DEP_R2 = claims_b.DEP, claims_b.DEP_R2
+    parts = []
+    ids = core_def_ids()
+    miss = [d for d in ids if d not in claims_b.D_TO_NODE]
+    extra = [d for d in claims_b.D_TO_NODE if d not in ids]
+    nodes = set(DEP) | claims_b.TEXT_SINKS | set(claims_b.D0_2)
+    bad_fold = sorted(set(v for v in claims_b.D_TO_NODE.values() if v not in nodes))
+    r2_missing = sorted(set(claims_b.D_TO_NODE.values()) - set(DEP_R2) - claims_b.TEXT_SINKS - set(claims_b.D0_2))
+    parts.append(computed("(a) S2(i): D18.1's nodes against the formal core's paragraphs (§§1–16)",
+                          "every definition paragraph of §§1–16 is a node of DEP or folded into one; round 2's DEP (28 nodes) lacked nodes for many",
+                          not miss and not extra and not bad_fold and len(r2_missing) > 0,
+                          "%d paragraphs read from the formal core; not mapped: %s; mapped but not in the core: %s; folds into a missing node: %s. DEP now %d nodes (round 2: %d). "
+                          "Holders round 2's DEP lacked: %s." % (len(ids), miss or "none", extra or "none", bad_fold or "none", len(DEP), len(DEP_R2), ", ".join(r2_missing))))
+    cyc = {rd: claims_b.dep_cycle(False, rd) for rd in ("U", "K", "T", "T'")}
+    cyc_r = claims_b.dep_cycle(False, "U", through="(R)")
+    parts.append(computed("(b) cycles of the extended graph", "U (as worded): a cycle through (R); K, T, T′: none (the new nodes and edges, Sel → (F1), (F2), CT among them, hide no cycle: S2(ii))",
+                          cyc_r is not None and all(cyc[rd] is None for rd in ("K", "T", "T'")),
+                          "U: %s (through (R): %s); K: %s; T: %s; T′: %s" % (" → ".join(cyc["U"]) if cyc["U"] else "none", " → ".join(cyc_r) if cyc_r else "none",
+                                                                            cyc["K"], cyc["T"], cyc["T'"])))
+    sinks = sorted(set(x[1] if isinstance(x, tuple) else x for xs in DEP.values() for x in xs) - set(DEP) - claims_b.TEXT_SINKS)
+    unl = [x for x in sinks if x not in claims_b.D0_2]
+    unl_after = [x for x in unl if x not in claims_b.D0_2_R3A3]
+    parts.append(computed("(c) S-b: sinks outside the text's lists and D0.2's", "the sinks D0.2 (after round 2) does not list are the symbols S-b names that the graph uses; D0.2 after area 3 classes every one",
+                          len(unl) > 0 and not unl_after,
+                          "unlisted by D0.2 after round 2: %s. After area 3: %s. Classes: %s" % (", ".join(unl), unl_after or "none",
+                                                                                              "; ".join("%s: %s" % (x, claims_b.D0_2_R3A3[x]) for x in unl))))
+    res = {(x, y): y in dep_ancestors(DEP, x) for (x, y) in L526_PAIRS}
+    bad = [p for p, v in res.items() if not v]
+    b_prim = "(E)" in dep_ancestors(claims_b.DEP_EXPLUSE_PRIMITIVE, "Build")
+    k3_r2 = "(K3)" in DEP_R2
+    sel_dir = [y for y in ("(F1)", "(F2)", "CT") if y in DEP["Sel"]]
+    sel_r2 = [y for y in ("(F1)", "(F2)", "CT", "Build") if y in DEP_R2["Sel"]]
+    dist = {p: p[1] in dep_ancestors(DEP, p[0]) for p in L526_DISTRIBUTIVE}
+    parts.append(computed("(d) S2(ii), S2(iii), S3: L526's dependences as paths of the graph (T′)",
+                          "every dependence L526 states (grouped subjects read collectively, R3A3-06) is a path of DEP; with ExplUse a primitive (round 2's D13.3), Build does not reach (E); round 2's DEP has no (K3)",
+                          not bad and not b_prim and not k3_r2 and len(sel_dir) == 3,
+                          "%d pairs; failing: %s. Build ⇝ (E) with ExplUse a primitive: %s; with ExplUse defined through the claim 'Acc(ℰ)' (R3A3-05): %s. (K3) a node of round 2's DEP: %s; (K3) ⇝ (K2) now: %s. "
+                          "Sel's direct edges now %s (round 2: %s). Read distributively (each subject alone), L526 also says: %s."
+                          % (len(res), bad or "none", b_prim, res[("Build", "(E)")], k3_r2, res[("(K3)", "(K2)")], sel_dir, sel_r2 or "none",
+                             "; ".join("%s on %s: %s" % (x, y, v) for (x, y), v in dist.items()))))
+    uses_expl = sorted(n for n in DEP if "Expl" in dep_ancestors(DEP, n))
+    parts.append(computed("(e) L526: 'Nothing depends on an undefined predicate that says \"explains\"'", "only D16.XV's defeat conditions reach the atom Expl; (EX) is a node, defined",
+                          uses_expl == ["DefeatConds"] and "(EX)" in DEP, "nodes reaching Expl: %s" % uses_expl))
+    return parts
+
+
+# ---- S2(iii): 'explanatory use' (D13.3, L405, L425, L526); S-e-Acc: (EX)'s Account and the designation (D14.7, L449) --
+
+EXPLUSE_READINGS = ("R3A3-05: uses the claim 'Acc(ℰ)', c its organization, transport or contract",
+                    "P5: uses the claim 'Acc(ℰ)', c its organization only", "the claim must hold: Acc(ℰ)")
+
+
+def expl_use(reading, c_role, acc):
+    """ExplUse(o, c) given that o uses the claim 'Acc(ℰ)' (Θ, I90), c_role the role c has in ℰ, acc = Acc(ℰ) computed."""
+    if reading.startswith("R3A3"):
+        return c_role in ("organization", "transport", "contract")
+    if reading.startswith("P5"):
+        return c_role == "organization"
+    return c_role in ("organization", "transport", "contract") and acc
+
+
+@claim("FC90.new1", ["I56", "I90", "I148"])
+def fc90_new1(S):
+    from .claims_a import pole_contracts
+    parts = []
+    D = pole()
+    C1, C2, C2s = pole_contracts(D)
+    p = Question(D, C1, "b1_45", PortQuery(), "L", name="p_prod")
+    fwd, rev = pole_fwd_candidate(p), pole_rev_candidate(p)
+    acc = {"ℰ_fwd": account(fwd), "ℰ_rev": account(rev)}
+    # Build's other conjuncts (Owned, Prepares, Held, BindingConstruction, ¬TransferComposite) and Attempt, New: set to hold (Θ, I90)
+    rows = []
+    for nm in ("ℰ_fwd", "ℰ_rev"):
+        for rd in EXPLUSE_READINGS:
+            build = expl_use(rd, "organization", acc[nm])
+            rows.append((nm, rd, build, build and acc[nm]))
+    tbl = {(r[0], r[1][:4]): r for r in rows}
+    ok_a = (tbl[("ℰ_rev", "R3A3")][2] and not tbl[("ℰ_rev", "R3A3")][3] and not tbl[("ℰ_rev", "the ")][2]
+            and acc["ℰ_fwd"] and not acc["ℰ_rev"])
+    parts.append(computed("(a) S2(iii): a system builds the reversed calculation and uses it as an account, in error",
+                          "Acc computed (ℰ_fwd yes, ℰ_rev no, FC27); with ExplUse through the claim 'Acc(ℰ)' (R3A3-05) Build holds for ℰ_rev and (EX) fails at its Account conjunct; if the claim had to hold, Build would fail and (EX)'s Account conjunct would add nothing to Origin",
+                          ok_a, "Acc: %s. Per candidate and reading, (Build, (EX) with the other conjuncts met): %s. L403 ('A system may understand a theory in error') and (EX)'s own Account conjunct "
+                          "(L449) need Build not to ask that the claim hold; L526 ('Build depends on … (E)') needs (E) in Build's definition: the claim's content supplies it."
+                          % (acc, "; ".join("%s, %s: (%s, %s)" % (r[0], r[1][:40], r[2], r[3]) for r in rows)), ["I56", "I90"]))
+    # (b) L425: c may be a contract; the found question is used explanatorily as the contract of a claimed account
+    role_contract = C1 == frozenset(p.C)
+    rb = {rd[:4]: expl_use(rd, "contract", acc["ℰ_fwd"]) for rd in EXPLUSE_READINGS}
+    parts.append(computed("(b) L425, Argument 5: c a contract (the pole's production contract C1)", "under R3A3-05 a contract is used explanatorily as the contract of a claimed account; under P5 (organization only) no contract ever is, so (G) never holds of a contract, against L588",
+                          role_contract and rb["R3A3"] and not rb["P5: "],
+                          "C1 is the contract of ℰ_fwd's question: %s; ExplUse(o, C1): R3A3-05 %s, P5 %s, claim must hold %s." % (role_contract, rb["R3A3"], rb["P5: "], rb["the "]), ["I67"]))
+    # (c) S-e-Acc: Acc needs δ_E (D5.3, D6.7); (EX)'s Account((c, p_c, t_c, Γ_c)) (D14.7, L449) supplies none
+    aL, aH = account(fwd.replace(deltaE="L"), detail=True), account(fwd.replace(deltaE="H"), detail=True)
+    parts.append(computed("(c) S-e-Acc: one (c, p_c, t_c, Γ_c), two designations", "Acc differs between δ_E = L and δ_E = H for the pole's forward candidate: Account((c, p_c, t_c, Γ_c)) is not a function of the four",
+                          aL[0] != aH[0], "δ_E = L: %s; δ_E = H: %s" % (aL, aH), ["I20"]))
+    return parts
+
+
+# ---- K4: E9's simulation layers built (L620-L630); FC102 (a), (c) and FC103 (a)-(c) computed ------------------------
+
+def e9_setup():
+    from . import e9
+    D = e9.object_layer()
+    C = [(a, b) for a in D.A for b in D.B]
+    p = e9.question(D, C)
+    E = e9.sim_layer_S1()
+    return e9, D, C, p, E
+
+
+def fid_table(cand, C):
+    out = {}
+    for (a, b) in C:
+        out[(a, b)] = (F1_at(cand, a, b), F2eq_at(cand, a, b), A_at(cand, a, b))
+    return out
+
+
+@claim("FC102.new1", ["I68", "I100", "I155", "I160"])
+def fc102_new1(S):
+    from .claims_b import viol_at
+    e9, D, C, p, E = e9_setup()
+    parts = []
+    # (a) S0 and t0: H0 has displacements and velocity changes, no occlusion; B0 is built so a window predictor survives
+    A_H0 = [a for a in D.A if a == ONE or a.startswith("disp") or a.startswith("vel")]
+    table, B0 = {}, []
+    for b in D.B:
+        new, ok = {}, True
+        for a in A_H0:
+            g = e9.frames_of(D, a, b)
+            for w, nxt in (((g[0], g[1]), g[2]), ((g[1], g[2]), g[3])):
+                old = table.get(w, new.get(w))
+                if old is not None and old != nxt:
+                    ok = False
+                new.setdefault(w, nxt)
+        if ok:
+            B0.append(b)
+            table.update(new)
+    f0 = lambda prev, cur: table.get((prev, cur), cur)  # a member of the population: the survivor that keeps the frame where H0 is silent
+    A_occ = [a for a in D.A if a.startswith("occ") and not a.endswith("swap")]
+    C0 = [(a, b) for a in A_H0 + A_occ for b in B0]
+    p0 = e9.question(D, C0) if (ONE, e9.BOUNDS[0]) in C0 else None
+    if p0 is None:
+        p0 = Question(D, C0, B0[0], PortQuery(), "o1_3", name="p_E9_0")
+    S0 = e9.sim_layer_S0(D, f0)
+    t0 = e9.t0_candidate(p0, S0)
+    H0 = [(a, b) for a in A_H0 for b in B0]
+    h = Hist(["o1"], [], set(C0), admitted=True, prepares=False)
+    s_t0 = sel(t0, H0, h)
+    viol = [(a, b) for (a, b) in C0 if (a, b) not in H0 and viol_at(t0, a, b)]
+    reemerge = []
+    for (a, b) in viol:
+        g = e9.frames_of(D, a, b)
+        pred = next(iter(S0.sol(a, b)))
+        pf = [tuple(pred[S0.ports.index("o%d_%d" % (c, t))] for c in range(e9.N)) for t in range(e9.T + 1)]
+        if pf[3] != g[3] and any(g[3][c] == 1 and pf[3][c] == 0 for c in range(e9.N)):
+            reemerge.append((a, b))
+    parts.append(computed("(a) t0 survives on H0 and is surprised at re-emergence", "t0 (window-2 occupancy predictor, R3A3-09) meets Sel on H0 (displacements, velocity changes, no occlusion); at occlusion pairs outside H0 it is violated, among them where a hidden thing re-emerges: Surp",
+                          s_t0 and bool(reemerge),
+                          "B0: %d of %d initial states (those on which H0's windows never conflict); |H0| = %d; Sel(t0; 𝒯, μ, H0): %s; occlusion pairs violated: %d of %d; violated at a re-emergence "
+                          "(a thing shown at t = 3 that t0 predicts absent): %d, first %r. Surp = Sel ∧ (a,b) ∉ H0 ∧ Viol (D12.7): %s."
+                          % (len(B0), len(D.B), len(H0), s_t0, len(viol), len([x for x in C0 if x not in H0]), len(reemerge), reemerge[:1], s_t0 and bool(reemerge)), ["I68", "I155"]))
+    groups = {}
+    for (a, b) in [x for x in C0 if x[0] in A_occ]:
+        g = e9.frames_of(D, a, b)
+        groups.setdefault((g[0], g[1]), set()).add((g[2], g[3]))
+    amb = [k for k, v in groups.items() if len(v) > 1]
+    parts.append(computed("(b'') in this instance: no window-2 predictor survives the extended history", "two occlusion pairs give S0 the same observed frames and differ at t = 2 or 3, so every f fails at one of them (structural, not parametric)",
+                          bool(amb), "observed-frame pairs shared by occlusion pairs with different later frames: %d of %d (w = 2 ≤ L_occ = 2)" % (len(amb), len(groups)), ["I155"]))
+    # (c) t1 meets (F1), (F2) and (A) on the extended contract (occlusion, swap and every other edit, every initial state)
+    t1 = e9.t1_candidate(p, E)
+    ft = fid_table(t1, C)
+    ok_c = all(all(v) for v in ft.values())
+    parts.append(computed("(c) t1 meets (F1), (F2) on the extended contract", "S1's persistence components carry each thing through occlusion; t1 (λ(k_i) = thing i's continuity subnetwork) meets (F1), the (F2) equation and (A) at every pair, and Hom(τ)",
+                          ok_c and hom(t1), "|C| = %d pairs (%d edits × %d initial states); pairs failing (F1, F2eq, A): %d; Hom(τ): %s; Acc's fidelity part F1 ∧ F2: %s"
+                          % (len(C), len(D.A), len(D.B), sum(1 for v in ft.values() if not all(v)), hom(t1), F1(t1) and F2(t1)), ["I68", "I69", "I160"]))
+    return parts
+
+
+@claim("FC103.new1", ["I69", "I160"])
+def fc103_new1(S):
+    e9, D, C, p, E = e9_setup()
+    parts = []
+    t1, t1s = e9.t1_candidate(p, E), e9.t1_candidate(p, E, swapped=True)
+    psiC = {(e9.psi_edit(a), e9.psi_bound(b)) for (a, b) in C} == set(C)
+    ans_sym = all(p.ans(a, b) == p.ans(e9.psi_edit(a), e9.psi_bound(b)) for (a, b) in C)
+    f1, f2 = fid_table(t1, C), fid_table(t1s, C)
+    same = all(f1[x] == f2[x] for x in C)
+    parts.append(computed("(a) t1∘ψ meets (F1), (F2), (A) on C exactly when t1 does", "ψ[C] = C and Ans_p∘ψ = Ans_p; at every pair, (F1, F2eq, A) of t1∘ψ equal t1's; Hom for both",
+                          psiC and ans_sym and same and hom(t1) == hom(t1s),
+                          "ψ[C] = C: %s; Ans_p∘ψ = Ans_p: %s; per-pair equality over %d pairs: %s; both meet all three everywhere: %s; Hom: %s, %s"
+                          % (psiC, ans_sym, len(C), same, all(all(v) for v in f1.values()) and all(all(v) for v in f2.values()), hom(t1), hom(t1s)), ["I69"]))
+    prem = t1.lam["k1"][0] == t1s.lam["k2"][0] and t1.lam["k2"][0] == t1s.lam["k1"][0]
+    ok_kind = one_kind(E, "k1", E, "k2", C, (t1.tau, t1.sigma), (t1s.tau, t1s.sigma)) and one_kind(E, "k2", E, "k1", C, (t1.tau, t1.sigma), (t1s.tau, t1s.sigma))
+    parts.append(computed("(b) the exchange meets Argument 2 (ii)'s premise, and each k and its image are of one kind on C", "λ(k1) = λ'(k2), λ(k2) = λ'(k1) (one counterpart, the same subnetwork); k1 through t1 and k2 through t1∘ψ of one kind on C, and k2, k1 likewise (core.one_kind)",
+                          prem and ok_kind, "one counterpart: %s; one kind: %s" % (prem, ok_kind), ["I69"]))
+    sep = [x for x in C if all(f1[x]) != all(f2[x])]
+    parts.append(computed("(c) no pair of C separates the two pairings", "no (a,b) ∈ C at which one pairing meets (F1), (F2), (A) and the other does not (FC51 (b) on E9)",
+                          not sep, "separating pairs: %d of %d" % (len(sep), len(C)), ["I69"]))
+    return parts
