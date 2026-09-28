@@ -814,10 +814,11 @@ def fc21(S):
     c6 = Candidate(E6, p6, {"y": Translation(["y"]), "z": Translation(["y"])}, {ONE: "e1", "a": "e2"}, {"b0": "b0"},
                    {"k": (frozenset(["c"]), {"y": Translation(["y"]), "z": Translation(["y"])}), "m": (frozenset(["c"]), {"z": Translation(["y"])})},
                    ["k", "m"], "y")
-    ok6 = A(c6) and NC1(c6) and bool(NC2(c6)) and not hom(c6)
-    parts.append(computed("(d) area 2: τ(1) ≠ 1", "on a contract of relabelings a candidate with τ(1) ≠ 1 meets (A), NC1 and NC2 and fails (F2)", ok6,
-                          "A %s, NC1 %s, NC2 witness %s, Hom (τ(1) = 1 in (F2)) %s, F2 %s: so L257's sentence needs (F2) as well as (A)"
-                          % (A(c6), NC1(c6), NC2(c6, witness=True), hom(c6), F2(c6))))
+    # S106: Dependence is NC2 (D6.5); NC1 is no longer a conjunct and no longer asked here (it holds for c6: printed).
+    ok6 = A(c6) and bool(NC2(c6)) and not hom(c6)
+    parts.append(computed("(d) area 2: τ(1) ≠ 1", "on a contract of relabelings a candidate with τ(1) ≠ 1 meets (A) and Dependence (NC2) and fails (F2)", ok6,
+                          "A %s, Dependence (NC2) witness %s, NC1 %s (not a conjunct after S106), Hom (τ(1) = 1 in (F2)) %s, F2 %s: so L257's sentence needs (F2) as well as (A)"
+                          % (A(c6), NC2(c6, witness=True), NC1(c6), hom(c6), F2(c6))))
     return parts
 
 
@@ -897,13 +898,14 @@ def fc23(S):
     parts.append(forall(S, "FC23", 2, "(b) as stated", "Ans_p not constant on C ⇒ NC2(E_lk) with G = {k}", gen, cb, SMALL, 80, BOTHFAM))
     parts.append(forall(S, "FC23", 3, "(b) with satisfiable background", "Ans_p not constant on C ∧ Sol_E(τa,σb) ≠ ∅ on C ⇒ NC2(E_lk)", gen, cb2, SMALL, 80, BOTHFAM))
     # Area 2 (c): the readers' lookups M1-M3 (the ruling L255-L257), under D6.3 as registered and as rewritten (A2-01).
+    # S106 (S44, S45): NC1 is no longer a conjunct of (E); M1-M3 have slots under D6.3 as rewritten and meet (E).
     rows, ok = [], True
     for name, (c, ans) in area2_lookups().items():
-        acc_reg = _acc_with(c, "registered")
-        acc_new = _acc_with(c, "area2")
-        rows.append("%s: Acc with NC1 as registered %s, with NC1 rewritten (A2-01) %s; answers %s" % (name, acc_reg, acc_new, ans))
-        ok = ok and acc_reg and not acc_new
-    parts.append(computed("(c) area 2: restating lookups", "M1 (a slot with a pin beside it), M2 (a slot sheltered by an undetermined pair), M3 (one component on two ports) meet (E) under D6.3 as registered and fail NC1 as rewritten",
+        nc1_reg, nc1_new = NC1(c, "registered"), NC1(c, "area2")
+        acc, acc_r3 = account(c), _acc_with(c, "area2", "r3")
+        rows.append("%s: NC1 as registered %s, as rewritten (A2-01) %s; (E) after S106 %s; round 3's (E) %s; answers %s" % (name, nc1_reg, nc1_new, acc, acc_r3, ans))
+        ok = ok and nc1_reg and not nc1_new and acc and not acc_r3
+    parts.append(computed("(c) area 2: restating lookups", "M1 (a slot with a pin beside it), M2 (a slot sheltered by an undetermined pair), M3 (one component on two ports) fail NC1 as rewritten (D6.3: slots) and meet (E) after S106 (round 3's (E) excluded them)",
                           ok, "; ".join(rows)))
     # Area 2 (d): the quantifier left open (A2-02): M5, a target whose answer is fixed at each pair by a different component.
     D5 = _org("D", ["y"], {"y": (1, 2)}, ["ca", "cb"], {"ca": ["y"], "cb": ["y"]}, ["b0"], [ONE, "e"],
@@ -911,8 +913,17 @@ def fc23(S):
     p5 = Question(D5, [(ONE, "b0"), ("e", "b0")], "b0", PortQuery(), "y")
     c5 = Candidate(D5, p5, _T("y"), {ONE: ONE, "e": "e"}, {"b0": "b0"},
                    {"ca": (frozenset(["ca"]), _T("y")), "cb": (frozenset(["cb"]), _T("y"))}, ["ca", "cb"], "y")
-    parts.append(look("(d) area 2: the slot quantifier (A2-02, left open)", "M5 (the answer asserted at each pair by a different component) meets (E) under A2-01's every-determined-pair test",
-                      _acc_with(c5, "area2"), "Acc under A2-01: %s; under D6.3 as registered: %s. A some-pair test would fail it; the text does not fix the quantifier." % (_acc_with(c5, "area2"), _acc_with(c5, "registered"))))
+    parts.append(look("(d) area 2: the slot quantifier (A2-02; R3-Q1, answered by S44, S45)", "M5 (the answer asserted at each pair by a different component) meets (E) under A2-01's every-determined-pair test",
+                      _acc_with(c5, "area2"), "Acc under A2-01: %s; under D6.3 as registered: %s. After S106 (E) reads no slot, so no reading of the quantifier changes it (FC23.new1 (h))." % (_acc_with(c5, "area2"), _acc_with(c5, "registered"))))
+
+    # S106 (e): the lookup E_lk ('p because p', L273) meets (E) on some models
+    def ce(m):
+        p, c = m
+        if account(c):
+            return "E_lk meets (E) after S106 (NC1 %s, a slot: %s)\n%s\n%s\n%s" % (NC1(c), [k for k in c.E.comps if slot(c, k)], p.describe(), p.D.describe(), c.describe())
+        return None
+
+    parts.append(exists(S, "FC23", 5, "(e) S106: a lookup E_lk meets (E)", "there is an E_lk (an answer slot, NC1 failing) meeting (E) after S106", gen, ce, SMALL, 200, BOTHFAM, ["I101"]))
     return parts
 
 
@@ -932,12 +943,14 @@ def _T(*ps):
     return {v: Translation([v]) for v in ps}
 
 
-def _acc_with(c, reading):
+def _acc_with(c, reading, account_reading=None):
+    """Acc with NC1 read as `reading`; account_reading "r3" gives round 3's (E), in which NC1 is a conjunct (S106:
+    after S106 NC1_READING changes no Acc value)."""
     from . import core as _core
     old = _core.NC1_READING
     _core.NC1_READING = reading
     try:
-        return account(c)
+        return account(c, reading=account_reading)
     finally:
         _core.NC1_READING = old
 
@@ -1002,7 +1015,7 @@ def fc24(S):
         return None
 
     return [forall(S, "FC24", 1, "packaging another dependence leaves the slot", "E_lk with an added commitment still fails NC1", gen, check, SMALL, 60, BOTHFAM),
-            not_tested("L273's 'an account' names a candidate", "reading of the word 'account' at L273", "a reading of wording")]
+            not_tested("L273's 'an account' names a candidate", "reading of the word 'account' at L273", "a reading of wording; S106: L273 is replaced by a formula (S106-T6), and the slot left in place is content (D6.11), not a failure of (E)")]
 
 
 def table_candidate(p, U, encode=False):
@@ -1099,7 +1112,7 @@ def fc26(S):
     for nm, C in (("C1", C1), ("C2", C2)):
         p = Question(D, C, "b1_45", PortQuery(), "L", name=nm)
         v, d = account(pole_fwd_candidate(p), detail=True)
-        parts.append(computed("forward organization on %s" % nm, "E_fwd meets (F1), (F2), (A), NC1, NC2 and non-vacuity on %s" % nm, v, "conjuncts: %s" % d, ["I92", "I85"]))
+        parts.append(computed("forward organization on %s" % nm, "E_fwd meets (F1), (F2), (A), NC1, NC2 and non-vacuity on %s" % nm, v and d["NC1"], "conjuncts: %s (S106: (E) is (F1), (F2), (A), Dependence = NC2 and non-vacuity; NC1 holds too)" % d, ["I92", "I85"]))
     C3 = frozenset([(ONE, "b1_45")] + [(a, "b1_45") for a in single_settings(D, ["L"])])
     p3 = Question(D, C3, "b1_45", PortQuery(), "L", name="C3")
     c3 = pole_fwd_candidate(p3)
@@ -1157,7 +1170,7 @@ def fc27(S):
     slots = [k for k in r2.E.comps if slot(r2, k)]
     parts.append(look("area 2: Mimo's τ' (set H := h carried to a setting of L)", "under τ' E_rev meets the valuation equation of (F2) at every pair of C1, fails the homomorphism clause of (F2), and fails NC1 (r_L a slot)",
                       f2eq_C1 and not d2["Hom"] and not d2["NC1"],
-                      "F2eq at every pair of C1: %s; conjuncts %s; slots %s. So the lever moves only the pointwise equation: (F2)'s homomorphism clause (L242) and NC1 (L255) still exclude the reversed calculation on the production contract."
+                      "F2eq at every pair of C1: %s; conjuncts %s; slots %s. So the lever moves only the pointwise equation: (F2)'s homomorphism clause (L242) still excludes the reversed calculation on the production contract; NC1 fails too, and after S106 it is not a conjunct of (E)."
                       % (f2eq_C1, d2, slots), ["I92", "I84"]))
     return parts
 
@@ -1249,7 +1262,10 @@ def fc32(S):
     """Second check (R5): L526 now points to D18.1 for (E)'s ancestors, and D18.1's graph is the program's DEP.
     (1) every argument of Acc (FC30's list) is (O), (Q), an index, a declared input or δ, and each is an
     ancestor of (E) in DEP; t and Γ are the candidate's own data, as for (F1), (F2), (A). (2) DEP's edges for
-    NonCircular and NonVacuous are the classes of symbols core's NC1, NC2 and nonvacuous read (a scan)."""
+    NonCircular and NonVacuous are the classes of symbols core's NC1, NC2 and nonvacuous read (a scan).
+    S106 (S44, S45): (E)'s fourth conjunct is Dependence := NC0 ∧ NC2 (D6.5); its edges are the classes NC2 and dep
+    read, and ℓ, which only NC1's 'at the declared grain' read (I28), is no longer an argument of Acc (D6.7) nor an
+    edge of Dependence (D18.1); NC1 is the node Slot (D6.3), not an ancestor of (E)."""
     import inspect
     from . import core
     from .claims_b import DEP
@@ -1265,10 +1281,11 @@ def fc32(S):
                     todo.append(y)
         return seen
 
-    acc_args = {"D": "(O)", "E": "(O)", "C": "C", "b0": "(Q)", "Q": "(Q)", "δ": "δ", "Σ": "Σ", "ℓ": "ℓ"}
+    acc_args = {"D": "(O)", "E": "(O)", "C": "C", "b0": "(Q)", "Q": "(Q)", "δ": "δ", "Σ": "Σ"}  # S106: ℓ dropped (D6.7)
     anc = ancestors("(E)")
     miss = sorted(set(v for v in acc_args.values() if v not in anc))
-    src_nc = "".join(inspect.getsource(f) for f in (core.slot, core.NC1, core.contrast, core.lost, core.NC2, core.noncircular))
+    # NC2 reads the designation δ_E through Candidate.ans_E (the query at δ_E), so its source is scanned too
+    src_nc = "".join(inspect.getsource(f) for f in (core.contrast, core.lost, core.NC2, core.dep, core.Candidate.ans_E))
     src_nv = inspect.getsource(core.nonvacuous)
 
     def classes(src):
@@ -1280,11 +1297,11 @@ def fc32(S):
         return out
 
     nc_code, nv_code = classes(src_nc), classes(src_nv)
-    nc_dep, nv_dep = set(DEP["NC"]) - {"ℓ"}, set(DEP["NV"])
+    nc_dep, nv_dep = set(DEP["Dep"]), set(DEP["NV"])
     return [computed("(1) Acc's arguments are ancestors of (E) in D18.1 (L526 points there)", "every argument of Acc other than the candidate's own t and Γ maps to an ancestor of (E)",
-                     not miss, "Acc's arguments → nodes: %s; ancestors of (E): %s; missing: %s" % (acc_args, sorted(anc), miss or "none")),
-            computed("(2) D18.1's NonCircular and NonVacuous edges are what the program reads", "classes read by NC1, NC2 = DEP['NC'] less ℓ (one grain in the model); by nonvacuous = DEP['NV']",
-                     nc_code == nc_dep and nv_code == nv_dep, "NC: code %s, D18.1 %s (+ ℓ, L255 'at the declared grain'); NV: code %s, D18.1 %s. No signature (K) is read." % (sorted(nc_code), sorted(nc_dep), sorted(nv_code), sorted(nv_dep)))]
+                     not miss, "Acc's arguments → nodes: %s; ancestors of (E): %s; missing: %s; ℓ an ancestor of (E): %s; Slot an ancestor of (E): %s" % (acc_args, sorted(anc), miss or "none", "ℓ" in anc, "Slot" in anc)),
+            computed("(2) D18.1's Dependence and NonVacuous edges are what the program reads", "classes read by NC2 and dep = DEP['Dep'] (S106: no ℓ); by nonvacuous = DEP['NV']",
+                     nc_code == nc_dep and nv_code == nv_dep, "Dependence: code %s, D18.1 %s; NV: code %s, D18.1 %s. No signature (K) is read." % (sorted(nc_code), sorted(nc_dep), sorted(nv_code), sorted(nv_dep)))]
 
 
 @claim("FC33", ["I77", "I78", "I81", "I70"])
@@ -1310,7 +1327,7 @@ def fc33(S):
 
     return [forall(S, "FC33", 1, "(a) Acc is kept by renaming E's components and ports", "Acc(ℰ') = Acc(ℰ) for a renamed copy with t, δ, Γ carried along",
                    gen, check, SMALL, 40, BOTHFAM, ["I70"]),
-            not_tested("(b) which conjuncts inspect a declared statement or a grain", "non-vacuity's scope clause and NC1's grain", "a reading of the conjuncts' arguments; see FC30")]
+            not_tested("(b) which conjuncts inspect a declared statement or a grain", "non-vacuity's scope clause and NC1's grain", "a reading of the conjuncts' arguments; see FC30. S106: NC1 is not a conjunct, so no conjunct reads the grain; the scope clause is the one exception L265 names")]
 
 
 @claim("FC34", ["I77", "I78", "I81", "I85", "I101", "I79"])

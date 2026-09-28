@@ -918,7 +918,7 @@ def fc59(S):
 @claim("FC60", ["I87", "I89"])
 def fc60(S):
     parts = [construction("(a) (E) does not register how an input was chosen", "two candidates alike in (D, C, E, t, Γ, Σ) have one Acc value", True,
-                          "core.account takes no record of why b_B was set (FC30); NC1 compares relations with the answer, and b_B = 0 is not the answer (I24)")]
+                          "core.account takes no record of why b_B was set (FC30); NC1 compares relations with the answer, and b_B = 0 is not the answer (I24); after S106 NC1 is not a conjunct of (E) either")]
     xm, bb0 = "x_is_m", "bB_is_0"
     rec = Leaf(bb0, "record", made_from=xm)
     alpha = Step("MP", xm, [rec, Leaf(Imp(bb0, xm))])
@@ -2534,7 +2534,11 @@ DEP = {
     # §5–§6
     "Transport": ["(O)"], "Cand": ["(O)", "(Q)", "Transport", "δ"],
     "(F1)": ["(O)", "(Q)", "(K)"], "(F2)": ["(O)", "(Q)", "(K)"], "(A)": ["(O)", "(Q)", "(K)"],
-    "NC": ["(O)", "(Q)", "C", "ℓ", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "NC", "NV"],
+    # S106 (S44, S45): (E)'s fourth conjunct is Dependence := NC0 ∧ NC2 (D6.5), no longer NonCircular (NC0 ∧ NC1 ∧ NC2):
+    # the node "NC" is renamed "Dep" and loses ℓ, which only NC1's 'at the declared grain' read (I28); NC1's Slot (D6.3)
+    # is a node of its own, not an ancestor of (E); D6.11 (a pin, the further question, what a candidate leaves open) is "Open".
+    "Dep": ["(O)", "(Q)", "C", "δ"], "NV": ["(O)", "C", "Σ"], "(E)": ["(F1)", "(F2)", "(A)", "Dep", "NV"],
+    "Slot": ["(O)", "(Q)", "C", "ℓ", "δ", "Cand"], "Open": ["Slot", "(O)", "(Q)", "Transport", "C"],
     # §7–§8
     "(S)": ["(E)", "restriction"], "(B)": ["(S)"], "(D)": ["(E)", "𝒱"],
     "Conf": ["(F1)", "(F2)", "(A)", "(O)", "(Q)"], "ConfCl": ["Conf", "Allow_χ", "Applies"], "Riv": ["Conf", "Offered", "Off"],
@@ -2581,7 +2585,8 @@ D_TO_NODE = {
     "D3.1": "(Q)", "D3.2": "(Q)", "D3.3": "Respects", "D3.4": "ProvC", "D3.5": "Σ", "D3.6": "Defects", "D3.7": "(Q)",
     "D4.1": "(K)", "D4.2": "Kind", "D4.3": "Kind", "D4.4": "(K)", "D4.5": "Families", "D4.6": "Families",
     "D5.1": "Transport", "D5.2": "Transport", "D5.3": "Cand", "D5.4": "(F1)", "D5.5": "(F2)", "D5.6": "(A)", "D5.7": "Held",
-    "D6.1": "NC", "D6.2": "NC", "D6.3": "NC", "D6.4": "NC", "D6.5": "NC", "D6.6": "NV", "D6.7": "(E)", "D6.8": "(E)", "D6.9": "NC", "D6.10": "(E)",
+    "D6.1": "Dep", "D6.2": "Dep", "D6.3": "Slot", "D6.4": "Dep", "D6.5": "Dep", "D6.6": "NV", "D6.7": "(E)", "D6.8": "(E)", "D6.9": "Dep", "D6.10": "(E)",
+    "D6.11": "Open",  # S106
     "D7.1": "(S)", "D7.2": "(S)", "D7.3": "(B)", "D7.4": "(D)", "D7.5": "(B)", "D7.6": "(S)",
     "D8.1": "Conf", "D8.2": "Conf", "D8.new1": "Conf", "D8.3": "Riv", "D8.4": "ConfCl", "D8.5": "ConfCl", "D8.6": "Riv_χ",
     "D9.1": "Claims", "D9.2": "Arg", "D9.3": "Arg", "D9.4": "Live", "D9.5": "(K2)", "D9.6": "(K2)", "D9.7": "RO", "D9.8": "OutCand",
@@ -2942,12 +2947,12 @@ def fc107(S):
     return [computed("p_δ ≠ p on E8", "p_δ's target is D_C (ports m_(a,b) and 𝒬), with a contract and a query of its own; p's target has edits {1, a1, a2} and boundaries {b0, b1}",
                      own, "p_δ: target D_C (%d ports, 𝒬 = q among them), contract %s, query the port m_1_b0; answers %s" % (len(Dc.ports), [a for a, _ in Cd], [pd.ans(a, "β") for a, _ in Cd]), ["I67"]),
             computed("(E) assesses a candidate for p_δ (K1)", "Acc is computed on p_δ for the identity candidate on D_C",
-                     isinstance(acc, bool), "Acc %s: %s (NC1 fails: the component 'base' is an answer slot, 'p because p')" % (acc, det), ["I67"])]
+                     isinstance(acc, bool), "Acc %s: %s (NC1 %s: the component 'base' is an answer slot, 'p because p'; S106: not a conjunct of (E); round 3's (E): %s)" % (acc, det, det.get("NC1"), account(cand, reading="r3")), ["I67"])]
 
 
 @claim("FC108", [])
 def fc108(S):
-    return [construction("NC0 adds no condition", "NC0 holds of every candidate", True, "core.noncircular is NC1 ∧ NC2; every answer is computed by evaluating E at (τ(a), σ(b))")]
+    return [construction("NC0 adds no condition", "NC0 holds of every candidate", True, "core.dep (Dependence, D6.5 after S106) is NC2; round 3's core.noncircular was NC1 ∧ NC2; every answer is computed by evaluating E at (τ(a), σ(b))")]
 
 
 @claim("FC109", [])

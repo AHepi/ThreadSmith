@@ -15,11 +15,23 @@ from .claims_a import SMALL, BOTHFAM, D_and_p, pole_contracts, area2_lookups, _o
 
 
 def acc_q(c, q):
-    """Acc(ℰ) with D6.3's quantifier read as q."""
+    """Acc(ℰ) with D6.3's quantifier read as q. S106 (S44, S45): NC1 is no longer a conjunct of (E), so this is
+    now Acc(ℰ) ∧ NC1_q(ℰ), 'meets (E) and has no slot under q' (round 3's (E) under q, account(reading="r3"));
+    FC23.new1's parts (a)-(g) keep round 3's patterns under it; (h) computes (E) after S106 under the four readings."""
     old = core.SLOT_QUANTIFIER
     core.SLOT_QUANTIFIER = q
     try:
-        return account(c)
+        return account(c, reading="r3")
+    finally:
+        core.SLOT_QUANTIFIER = old
+
+
+def acc_s106_q(c, q):
+    """(E) after S106 with D6.3's quantifier read as q (the quantifier reads Slot only; S106)."""
+    old = core.SLOT_QUANTIFIER
+    core.SLOT_QUANTIFIER = q
+    try:
+        return account(c, reading="S106")
     finally:
         core.SLOT_QUANTIFIER = old
 
@@ -91,6 +103,24 @@ def both(p, c):
     return "%s\n%s\n%s" % (p.describe(), p.D.describe(), c.describe())
 
 
+# (g) the eliminative construction (L339, FC62) under the four readings: FC62's encoding, whose background
+# component 'rest' is the constant e = 0 at the baseline, and a second encoding whose baseline e = 0 comes from two
+# components (h_u: u = 1; rest: e = 1 - u), with the same answers, the same edit a_x and the same commitment k (λ(k) = {x})
+def elim(rest_base):
+    fu = {(0, 0), (0, 1), (1, 0), (1, 1)}
+    foot_rest = ("e",) if rest_base == "const" else ("u", "e")
+    base = {(0,)} if rest_base == "const" else {(0, 1), (1, 0)}
+    full_rest = {(0,), (1,)} if rest_base == "const" else fu
+    D = Org("D_elim" + ("" if rest_base == "const" else "2"), ["u", "e"], {"u": (0, 1), "e": (0, 1)}, ["h_u", "x", "rest"],
+            {"h_u": ("u",), "x": ("u", "e"), "rest": foot_rest}, ["b0"], [ONE, "a_x"], lambda a2, a1: None,
+            lambda j, a, b: {"h_u": {(1,)}, "x": (fu if a == ONE else {(0, 0), (1, 1)}), "rest": (base if a == ONE else full_rest)}[j])
+    p = Question(D, [(ONE, "b0"), ("a_x", "b0")], "b0", PortQuery(), "e", name="p_noX")
+    lam = {"k": (frozenset(["x"]), _T("u", "e")), "k_u": (frozenset(["h_u"]), _T("u")), "k_rest": (frozenset(["rest"]), _T(*foot_rest))}
+    E = Org("E_elim", ["u", "e"], D.dom, ["k_u", "k", "k_rest"], {"k_u": ("u",), "k": ("u", "e"), "k_rest": foot_rest}, ["b0"], [ONE, "a_x"],
+            lambda a2, a1: None, lambda j, a, b: D.L({"k_u": "h_u", "k": "x", "k_rest": "rest"}[j], a, b))
+    return p, Candidate(E, p, _T("u", "e"), {ONE: ONE, "a_x": "a_x"}, {"b0": "b0"}, lam, ["k"], "e", name="ℰ_elim")
+
+
 @claim("FC23.new1", ["I77", "I78", "I81", "I82", "I79", "I136"])
 def fc23new1(S):
     parts = []
@@ -108,7 +138,7 @@ def fc23new1(S):
     ok = all(tuple(rows[nm][q] for q in SLOT_QUANTIFIERS) == expect[nm] for nm in expect)
     ok = ok and all(not any(rows[nm + " (FC23 (c))"].values()) for nm in area2_lookups())
     txt = "readings %s. " % (SLOT_QUANTIFIERS,) + "; ".join("%s: %s" % (nm, tuple(r[q] for q in SLOT_QUANTIFIERS)) for nm, r in rows.items())
-    parts.append(computed("(a) Acc on the pole (E1) and the round-2 models under the four readings of D6.3's quantifier",
+    parts.append(computed("(a) Acc on the pole (E1) and the round-2 models under the four readings of D6.3's quantifier [S106: Acc ∧ NC1_q, round 3's (E)]",
                           "pole C1 (T,T,T,T); C2 and C3 (T,F,T,T): 'some' makes the setting of L, which replaces c_L by L = l, an answer slot; "
                           "M5 (T,F,F,F); M13 (T,T,T,T); M1-M3 fail under all four", ok, txt, ["I136", "I79", "I82"]))
 
@@ -127,7 +157,7 @@ def fc23new1(S):
                         % (k, hit, miss, tuple(acc_q(c, q) for q in SLOT_QUANTIFIERS), both(p, c)))
         return None
 
-    parts.append(exists(S, "FC23.new1", 2, "(b) W3's partial lookup meets (E) under D6.3 as it stands",
+    parts.append(exists(S, "FC23.new1", 2, "(b) W3's partial lookup meets (E) under D6.3 as it stands [S106: Acc ∧ NC1_q, round 3's (E)]",
                         "∃ℰ: Acc under 'every' ∧ ∃k, (a,b), (a',b') ∈ Det_C: k fixes δ_E to Ans_p at (a,b), τ(a) leaves k as at 1 there, and not at (a',b')",
                         gen_acc, cb, SMALL, 200, BOTHFAM, ["I136"]))
 
@@ -140,7 +170,7 @@ def fc23new1(S):
             return "Acc %s; slots under 'some' only: %s\n%s" % (tuple(r[q] for q in SLOT_QUANTIFIERS), ks, both(p, c))
         return None
 
-    parts.append(exists(S, "FC23.new1", 3, "(c) 'some' excludes a candidate the other readings keep",
+    parts.append(exists(S, "FC23.new1", 3, "(c) 'some' excludes a candidate the other readings keep [S106: Acc ∧ NC1_q, round 3's (E)]",
                         "∃ℰ: Acc under 'every', 'some-exempt', 'some-exempt-set' ∧ ¬Acc under 'some'", gen_acc, cc, SMALL, 200, BOTHFAM, ["I136"]))
 
     # (d) the exempt reading is not stronger than 'every': the answer supplied by the contract's own edits at every determined pair
@@ -152,7 +182,7 @@ def fc23new1(S):
             return "Acc %s; slots under 'every': %s\n%s" % (tuple(r[q] for q in SLOT_QUANTIFIERS), ks, both(p, c))
         return None
 
-    parts.append(exists(S, "FC23.new1", 4, "(d) 'some-exempt' keeps a candidate 'every' excludes",
+    parts.append(exists(S, "FC23.new1", 4, "(d) 'some-exempt' keeps a candidate 'every' excludes [S106: Acc ∧ NC1_q, round 3's (E)]",
                         "∃ℰ: Acc under 'some-exempt' ∧ ¬Acc under 'every'", gen_acc, cd, SMALL, 200, BOTHFAM, ["I136"]))
 
     # (e) 'some' is the strongest reading
@@ -163,7 +193,7 @@ def fc23new1(S):
             return "Acc %s\n%s" % (tuple(r[q] for q in SLOT_QUANTIFIERS), both(p, c))
         return None
 
-    parts.append(forall(S, "FC23.new1", 5, "(e) 'some' implies the other three", "Acc under 'some' ⇒ Acc under 'every', 'some-exempt', 'some-exempt-set'",
+    parts.append(forall(S, "FC23.new1", 5, "(e) 'some' implies the other three [S106: Acc ∧ NC1_q, round 3's (E)]", "Acc under 'some' ⇒ Acc under 'every', 'some-exempt', 'some-exempt-set'",
                         gen_acc, ce, SMALL, 60, BOTHFAM, ["I136"]))
 
     # (f) the exemption's two extents (R3A2-02): an edit that alters k without setting δ_E through k alone
@@ -174,36 +204,38 @@ def fc23new1(S):
             return "Acc %s\n%s" % (tuple(r[q] for q in SLOT_QUANTIFIERS), both(p, c))
         return None
 
-    parts.append(exists(S, "FC23.new1", 6, "(f) the exemption's two extents differ",
+    parts.append(exists(S, "FC23.new1", 6, "(f) the exemption's two extents differ [S106: Acc ∧ NC1_q, round 3's (E)]",
                         "∃ℰ: Acc under 'some-exempt' ≠ Acc under 'some-exempt-set'", gen_acc, cf, SMALL, 200, BOTHFAM, ["I136"]))
 
-    # (g) the eliminative construction (L339, FC62) under the four readings: FC62's encoding, whose background
-    # component 'rest' is the constant e = 0 at the baseline, and a second encoding whose baseline e = 0 comes from two
-    # components (h_u: u = 1; rest: e = 1 - u), with the same answers, the same edit a_x and the same commitment k (λ(k) = {x})
-    def elim(rest_base):
-        fu = {(0, 0), (0, 1), (1, 0), (1, 1)}
-        foot_rest = ("e",) if rest_base == "const" else ("u", "e")
-        base = {(0,)} if rest_base == "const" else {(0, 1), (1, 0)}
-        full_rest = {(0,), (1,)} if rest_base == "const" else fu
-        D = Org("D_elim" + ("" if rest_base == "const" else "2"), ["u", "e"], {"u": (0, 1), "e": (0, 1)}, ["h_u", "x", "rest"],
-                {"h_u": ("u",), "x": ("u", "e"), "rest": foot_rest}, ["b0"], [ONE, "a_x"], lambda a2, a1: None,
-                lambda j, a, b: {"h_u": {(1,)}, "x": (fu if a == ONE else {(0, 0), (1, 1)}), "rest": (base if a == ONE else full_rest)}[j])
-        p = Question(D, [(ONE, "b0"), ("a_x", "b0")], "b0", PortQuery(), "e", name="p_noX")
-        lam = {"k": (frozenset(["x"]), _T("u", "e")), "k_u": (frozenset(["h_u"]), _T("u")), "k_rest": (frozenset(["rest"]), _T(*foot_rest))}
-        E = Org("E_elim", ["u", "e"], D.dom, ["k_u", "k", "k_rest"], {"k_u": ("u",), "k": ("u", "e"), "k_rest": foot_rest}, ["b0"], [ONE, "a_x"],
-                lambda a2, a1: None, lambda j, a, b: D.L({"k_u": "h_u", "k": "x", "k_rest": "rest"}[j], a, b))
-        return p, Candidate(E, p, _T("u", "e"), {ONE: ONE, "a_x": "a_x"}, {"b0": "b0"}, lam, ["k"], "e", name="ℰ_elim")
-
+    # (g) the eliminative construction (L339, FC62) under the four readings (elim: module level, S106)
     (p1, c1), (p2, c2) = elim("const"), elim("two")
     r1, r2 = acc_row(c1), acc_row(c2)
     same_ans = (p1.ans(ONE, "b0"), p1.ans("a_x", "b0")) == (p2.ans(ONE, "b0"), p2.ans("a_x", "b0")) == (0, 1)
-    parts.append(computed("(g) the eliminative construction (L339) under the four readings",
+    parts.append(computed("(g) the eliminative construction (L339) under the four readings [S106: Acc ∧ NC1_q, round 3's (E)]",
                           "FC62's encoding (rest: e = 0 at the baseline): Acc (T,F,F,F); the second encoding (rest: e = 1 − u, h_u: u = 1): Acc (T,T,T,T); answers 0 at the baseline, 1 at a_x in both",
                           same_ans and tuple(r1[q] for q in SLOT_QUANTIFIERS) == (True, False, False, False) and all(r2.values()),
                           "FC62's encoding: %s; second encoding: %s; slots of FC62's encoding under 'some-exempt': %s\n%s\n%s"
                           % (tuple(r1[q] for q in SLOT_QUANTIFIERS), tuple(r2[q] for q in SLOT_QUANTIFIERS),
                              [k for k in c1.E.comps if slot(c1, k, quantifier="some-exempt")], p2.D.describe(), c2.describe()),
                           ["I136", "I03", "I78"]))
+
+    # (h) S106 (S44, S45): (E) reads no slot, so the four readings give one value of (E) on every case above and on
+    # generated models; the readings (a)-(g) now tell apart Slot only (Acc ∧ NC1_q), content criticism can point at
+    rows_h = {nm: {q: acc_s106_q(c, q) for q in SLOT_QUANTIFIERS} for nm, c in list(cases.items()) + [("FC62's encoding", c1), ("second encoding", c2)]}
+    ok_h = all(len(set(r.values())) == 1 and all(r.values()) for r in rows_h.values())
+    parts.append(computed("(h) S106: (E) after S106 under the four readings on the cases of (a) and (g)",
+                          "every case of (a) and (g) meets (E) after S106 under all four readings: the quantifier no longer changes (E)",
+                          ok_h, "; ".join("%s: %s" % (nm, tuple(r[q] for q in SLOT_QUANTIFIERS)) for nm, r in rows_h.items()), ["I136"]))
+
+    def ch(m):
+        p, c = m
+        r = [acc_s106_q(c, q) for q in SLOT_QUANTIFIERS]
+        if len(set(r)) != 1:
+            return "(E) after S106 differs across the readings: %s\n%s" % (r, both(p, c))
+        return None
+
+    parts.append(forall(S, "FC23.new1", 8, "(h) S106: the quantifier does not change (E)", "Acc (after S106) is the same under 'every', 'some', 'some-exempt', 'some-exempt-set'",
+                        gen_acc, ch, SMALL, 60, BOTHFAM, ["I136"]))
     return parts
 
 

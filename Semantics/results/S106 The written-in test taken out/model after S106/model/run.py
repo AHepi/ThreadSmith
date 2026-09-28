@@ -2,6 +2,8 @@
 #   python3 -m model.run                 every claim; writes search results.md and .json
 #   python3 -m model.run --claim FC23    one claim, printed in full (reproduces its counterexamples)
 # Run from the folder "results/S104 Round 2 - maths". Standard library only.
+# S106: run from "results/S106 The written-in test taken out/model after S106"; S106_ACCOUNT_READING=r3 in the
+# environment computes round 3's (E) (NC1 a conjunct) for comparison; the default is (E) after S106.
 import argparse
 import json
 import os
@@ -17,6 +19,7 @@ from . import claims_s41  # noqa: F401  (the owner's answers, S41: FC30.new1, FC
 from . import claims_r3a1  # noqa: F401  (S105 round 3, area 1: FC12.new2, FC12.new3, FC13.new1, FC28.new1, FC28.new2, FC84.new2, FC97.new1, FC98.new1, FC104.new1)
 from . import claims_r3a2  # noqa: F401  (S105 round 3, area 2: FC23.new1, FC25.new1, FC47.new1)
 from . import claims_r3a3  # noqa: F401  (S105 round 3, area 3: FC98.new2, FC72.new1, FC80.new1, FC32.new1, FC90.new1, FC102.new1, FC103.new1)
+from . import claims_s106  # noqa: F401  (S106, the written-in test taken out: FC23.new2, FC23.new3, FC25.new2)
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
