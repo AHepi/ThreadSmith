@@ -65,13 +65,15 @@ def sign_one(p=None):
 
 def sign_mech():
     """A sign with a day port and a palette rule (no pin): the edit tue sets the day; the palette component reads it.
-    The target also admits 'repaint' (the owner picks another palette, green on Mondays), which the sign question's
-    stated scope leaves out: the further question 'why this palette?' contrasts it with the baseline."""
+    The target also admits 'plain' (the owner decides the sign needs no colours by day: the palette component deleted,
+    D1.3), which the sign question's stated scope leaves out: the further question 'why is the palette there at all?'
+    (S44: "Why did the owner decide that the sign needed to be different colours on different days") contrasts it with
+    the baseline. Not 'why blue and not any other colour?', which is parked (P8)."""
     pal = {("Mon", "red"), ("Tue", "blue")}
     D = _org("D_sign_day", ["day", "colour"], {"day": ("Mon", "Tue"), "colour": COLOURS}, ["c_day", "c_col"],
-             {"c_day": ("day",), "c_col": ("day", "colour")}, ["b0"], [ONE, "tue", "repaint"],
-             {("c_day", ONE, "b0"): {("Mon",)}, ("c_day", "tue", "b0"): {("Tue",)}, ("c_day", "repaint", "b0"): {("Mon",)},
-              ("c_col", ONE, "b0"): pal, ("c_col", "tue", "b0"): pal, ("c_col", "repaint", "b0"): {("Mon", "green"), ("Tue", "blue")}})
+             {"c_day": ("day",), "c_col": ("day", "colour")}, ["b0"], [ONE, "tue", "plain"],
+             {("c_day", ONE, "b0"): {("Mon",)}, ("c_day", "tue", "b0"): {("Tue",)}, ("c_day", "plain", "b0"): {("Mon",)},
+              ("c_col", ONE, "b0"): pal, ("c_col", "tue", "b0"): pal})  # c_col at 'plain': the full relation (deleted)
     p = Question(D, [(ONE, "b0"), ("tue", "b0")], "b0", PortQuery(), "colour", name="p_sign_day")
     return Candidate(D, p, _T("day", "colour"), {ONE: ONE, "tue": "tue"}, {"b0": "b0"}, _ident_lam(D), ["c_day", "c_col"], "colour", name="ℰ_day")
 
@@ -195,12 +197,12 @@ def fc23new2(S):
     # (e) a sign with no pin: the day is set by the edit and a palette component reads it
     mc = sign_mech()
     vmc = account(mc)
-    pcol = further_question(mc, "c_col", C2=[(ONE, "b0"), ("repaint", "b0")], name="p^c_col (why this palette?)")
-    ok_e = vmc and not pins(mc) and pcol.ans(ONE, "b0") != pcol.ans("repaint", "b0") and leaves_open(mc, pcol)
+    pcol = further_question(mc, "c_col", C2=[(ONE, "b0"), ("plain", "b0")], name="p^c_col (why is the palette there at all?)")
+    ok_e = vmc and not pins(mc) and pcol.ans(ONE, "b0") != pcol.ans("plain", "b0") and leaves_open(mc, pcol)
     parts.append(look("(e) a sign with a day port and a palette rule", "the look: it meets (E), no part pins the answer (the colour is read off the palette jointly with the day the edit sets), "
-                      "and it too leaves a further question open (why this palette and not green on Mondays?): LeavesOpen is a relation of one candidate and one question, not a grade",
-                      ok_e, "(E) %s; pins %s; %s: answers baseline %s, repaint %s; left open: %s\n%s"
-                      % (vmc, pins(mc), pcol.name, sorted(pcol.ans(ONE, "b0")), sorted(pcol.ans("repaint", "b0")), leaves_open(mc, pcol), mc.describe()),
+                      "and it too leaves a further question open (why did the owner decide the sign needed different colours on different days?): LeavesOpen is a relation of one candidate and one question, not a grade",
+                      ok_e, "(E) %s; pins %s; %s: answers baseline %s, plain %s; left open: %s\n%s"
+                      % (vmc, pins(mc), pcol.name, sorted(pcol.ans(ONE, "b0")), sorted(pcol.ans("plain", "b0")), leaves_open(mc, pcol), mc.describe()),
                       ["I185", "I186"]))
     # (f) S41 Q2 kept; (g) no order
     parts.append(construction("(f) S41 (Q2) kept: a declared link is no explanation", "Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ) (D16.XV) applies to the sign candidates as to any: (E) takes no provenance (FC30)",
