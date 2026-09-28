@@ -236,37 +236,49 @@ def fc84_new1(S):
                                  "\n".join(sub_rows), tag["S41"], tag["L55"]), ["I90", "I162", "I165", "I190", "I191"]))
     # (a3) S107 round 4, area 1 (N6: B11, W-N6, S-N6, C-N6): which occurrences are "a question about the brief occurred to
     # the agent as worth investigating" is read through Θ (I90). I191 reads them as criticisms (D9.10) aimed at the brief
-    # (crit[o]); R4A1-01 records the other reading, a question-occurrence as its own label, with or without an alleged
-    # defect (quest[o]). On (a1)'s chain, with the labels set as each case says, both readings are computed from the
-    # labels, and Con and Build at the output from the chain (T′, both readings of L55). The readings part ways on B11's
-    # (i), (ii); Con and Build are the same in every case under each episode reading: the maths asks nothing (S47).
-    cases3 = (("base", "(a1)'s chain: no criticism, no question", [None, None], [None, None]),
+    # (crit[o]); R4A1-01 records two other readings: (d) a question-occurrence as its own label, with or without an alleged
+    # defect (quest[o]); (e) a question found (L15, L155; L161: "another question with its own contract"), operative at
+    # its occurrence (q(o) is not the brief there). On (a1)'s chain, with the labels and contracts set as each case says
+    # (Θ by hand, I90), the three readings are computed from them, and Con and Build at the output from the chain (T′,
+    # both readings of L55). The readings part ways; under D13.8 as S41 has it Con and Build are the same in every case
+    # (the maths asks nothing, S47); under L55 as text 104 words it only a recorded change of contract moves Con, as (b).
+    Q_B = "C_brief? (a question found at o1, its target the brief)"
+    cases3 = (("base", "(a1)'s chain: no criticism, no question", [None, None], [None, None], ["C_brief"] * 2, [False] * 2),
               ("i", "a question about the brief occurred at o1, no defect alleged, the brief kept (B11 (i))",
-               [None, None], ["C_brief (the contract)", None]),
+               [None, None], ["C_brief (the contract)", None], ["C_brief"] * 2, [False] * 2),
               ("ii", "a criticism aimed at the brief used as a given, no question occurred to the agent (B11 (ii); S27)",
-               [("C_brief (the contract)", "the brief is wrong"), None], [None, None]),
+               [("C_brief (the contract)", "the brief is wrong"), None], [None, None], ["C_brief"] * 2, [False] * 2),
               ("iii", "a question about the brief occurred at o1 and was not pursued (C-N6's NC4)",
-               [("C_brief (the contract)", "why this brief?"), None], ["C_brief (the contract)", None]))
-    qs3, recs3, held3, trace3 = ["C_brief"] * 2, [False] * 2, [0, 1], [0, 1]
+               [("C_brief (the contract)", "why this brief?"), None], ["C_brief (the contract)", None], ["C_brief"] * 2, [False] * 2),
+              ("iv-r", "a question about the brief found at o1 and operative there, the brief taken up again at o2, the change recorded",
+               [None, None], ["C_brief (the contract)", None], [Q_B, "C_brief"], [False, True]),
+              ("iv-u", "as iv-r, the change back to the brief unrecorded",
+               [None, None], ["C_brief (the contract)", None], [Q_B, "C_brief"], [False, False]))
+    held3, trace3 = [0, 1], [0, 1]
     vals3, rows3 = {}, []
-    for key, lab, crit, quest in cases3:
-        r191, rwide = no_brief_question(qs3, crit), no_question_about_brief(qs3, quest)
+    for key, lab, crit, quest, qs3, recs3 in cases3:
+        rd3 = (no_brief_question(qs3, crit), no_question_about_brief(qs3, quest), all(q == "C_brief" for q in qs3))
         cb = {}
         for rd in EPISODE_READINGS:
             fps = prov_fixed_points(2, held3, trace3, [0, 0], "T'", True, chain_eps(qs3, recs3, rd))
             cb[rd] = (len(fps), [sc[1][1] for R, sc in fps], build_at(2, held3, trace3, "T'", fps[0][0] if fps else frozenset(), 1))
-        vals3[key] = (r191, rwide, cb)
-        rows3.append("(%s) %s: criticism per occurrence %s; question per occurrence %s; no question about the brief: I191 %s, R4A1-01 %s; %s"
-                     % (key, lab, crit, quest, r191, rwide,
+        vals3[key] = (rd3, cb)
+        rows3.append("(%s) %s: q per occurrence %s, records %s; criticism per occurrence %s; question per occurrence %s; "
+                     "no question about the brief: I191 %s, R4A1-01 (d) %s, (e) %s; %s"
+                     % (key, lab, qs3, recs3, crit, quest, rd3[0], rd3[1], rd3[2],
                         "; ".join("%s: %d fixed point(s), Con at o2 %s, Build %s" % (rd, cb[rd][0], cb[rd][1], cb[rd][2]) for rd in EPISODE_READINGS)))
-    part_ways = ([vals3[k][:2] for k in ("base", "i", "ii", "iii")] == [(True, True), (True, False), (False, True), (False, False)])
-    same_cb = all(vals3[k][2] == vals3["base"][2] for k in vals3) and vals3["base"][2]["S41"] == (1, [True], True) and vals3["base"][2]["L55"][1:] == ([False], True)
-    parts.append(computed("(a3) N6: the two readings of 'no question about the brief occurred' (I191; R4A1-01)",
-                          "which occurrences are a question about the brief is read through Θ (I90): I191 reads them as criticisms (D9.10) aimed at the brief, "
-                          "R4A1-01's other reading as question-occurrences on the brief, with or without an alleged defect. The two part ways (B11's (i), (ii)) and agree "
-                          "on (a1)'s chain and on a question that occurred and was not pursued (NC4); Con and Build at the output are the same in every case, "
-                          "one fixed point each (T′): nothing computed reads either label (S47: the maths asks nothing)",
-                          part_ways and same_cb, "chain o1 ≺ o2; q = C_brief throughout; no record; held, trace at o2 (Θ by hand, I90).\n" + "\n".join(rows3),
+    T_, F_ = True, False
+    readings_as_claimed = [vals3[k][0] for k, *_ in cases3] == [(T_, T_, T_), (T_, F_, T_), (F_, T_, T_), (F_, F_, T_), (F_, F_, F_), (F_, F_, F_)]
+    s41_same = all(vals3[k][1]["S41"] == (1, [True], True) for k in vals3)
+    l55_as_b = all(vals3[k][1]["L55"] == ((1, [True], True) if k == "iv-r" else (1, [False], True)) for k in vals3)
+    parts.append(computed("(a3) N6: the readings of 'no question about the brief occurred' (I191; R4A1-01 (d), (e))",
+                          "which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as "
+                          "question-occurrences, with or without an alleged defect (R4A1-01 (d)); or as a question found (L15, L155, L161), operative at its "
+                          "occurrence (R4A1-01 (e)). The readings part ways (B11's (i), (ii); a question found and operative); under D13.8 as S41 has it, Con "
+                          "and Build at the output are the same in every case, one fixed point each (T′): no computed value reads the labels (S47: the maths "
+                          "asks nothing); under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b)",
+                          readings_as_claimed and s41_same and l55_as_b,
+                          "chain o1 ≺ o2; held, trace at o2 (Θ by hand, I90).\n" + "\n".join(rows3),
                           ["I90", "I162", "I165", "I190", "I191", "R4A1-01"]))
     # (b) a recorded change of contract C → C' at o2; (c) the same change unrecorded
     out = []

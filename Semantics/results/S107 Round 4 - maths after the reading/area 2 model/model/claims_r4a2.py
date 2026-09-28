@@ -325,10 +325,51 @@ def fc42_new1(S):
     # (c) a renaming: δ_E = L is no port of E_v; only the carried designation gives Acc a value
     parts.append(computed("(c) a renaming carries δ_E to a port of E_v", "δ_E = L is not a port of the renamed E_v, so Acc(E_v, p) with δ_E has no value; with δ_v = the port the renaming carries L to, Acc(E_v) = Acc(E)",
                           ("L" not in o.ports) and acc["renamed"] == acc[v0], "renamed ports %s; δ_v = %s; Acc(E_v) %s, Acc(E) %s" % (o.ports, pm["L"], acc["renamed"], acc[v0]), ["I70", "I20"]))
-    # (d) a look: the other choice, δ_v quantified (∃δ, as D14.7 and D16.4 quantify δ), gives another Boundary here
-    acc_ex = {v: any(account(c.replace(deltaE=d)) for d in c.E.ports) for v, c in fam.items()}
-    B_ex = frozenset((v, w) for v in fam for w in fam if acc_ex[v] != acc_ex[w])
-    parts.append(look("(d) the other choice: δ_v quantified", "with ∃δ_v the designation may change from edit to edit, against L253's fixed query; Boundary then differs from (a) on this family",
-                      B_ex != B, "Acc with ∃δ_v %s; |Boundary| %d against %d; pairs only under ∃δ_v %s; only with δ carried %s"
-                      % (acc_ex, len(B_ex), len(B), sorted(B_ex - B)[:3], sorted(B - B_ex)[:3]), ["I20"]))
+    # (d) a look: the other choice, δ_v quantified (∃δ, as D14.7 and D16.4 quantify δ); an edit that moves the answer onto a
+    # new port L2 and leaves L constant, the operation carrying the designation L unchanged
+    fam2 = {"E": fwd, "moved": _moved_answer(p)}
+    fam2.update(fam)
+    B2 = boundary(fam2)
+    acc_ex = {v: any(account(c.replace(deltaE=d)) for d in c.E.ports) for v, c in fam2.items()}
+    B_ex = frozenset((v, w) for v in fam2 for w in fam2 if acc_ex[v] != acc_ex[w])
+    parts.append(look("(d) the other choice: δ_v quantified", "with ∃δ_v the designation may change from edit to edit, against L253's fixed query: the edit that moves the answer onto L2 keeps Acc under ∃δ_v and loses it with δ carried, so Boundary differs",
+                      B_ex != B2 and ("E", "moved") in B2 and ("E", "moved") not in B_ex,
+                      "Acc with δ carried %s; with ∃δ_v %s; |Boundary| with δ carried %d, with ∃δ_v %d; pairs only with δ carried %s; only under ∃δ_v %s"
+                      % ({v: account(c) for v, c in fam2.items()}, acc_ex, len(B2), len(B_ex), sorted(B2 - B_ex)[:4], sorted(B_ex - B2)[:4]), ["I20"]))
     return parts
+
+
+def _moved_answer(p):
+    """An organization edit of the pole's forward organization (E1) that moves the answer onto a new port L2 (m_L2: L2 = H cot θ)
+    and leaves L constant (m_L, background); the edit carries t to t_v (π(L2) := L, π(L) := the constant) and the designation
+    δ_E = L to itself. Built for FC42.new1 (d)."""
+    D = p.D
+    inv, bval = D.meta["inv"], D.meta["bval"]
+    one = next(x for x in D.dom["L"] if x == 1)
+    dom = dict(D.dom)
+    dom["L2"] = D.dom["L"]
+    ports = ["H", "T", "L", "L2"]
+    foot = {"m_H": ("H",), "m_T": ("T",), "m_L2": ("H", "T", "L2"), "m_L": ("L",)}
+    home = {"m_H": "H", "m_T": "T", "m_L2": "L2", "m_L": "L"}
+    sets = {"H": "H", "T": "T", "L": "L2"}
+
+    def Lfun(j, a, b):
+        sm = {sets[v]: x for v, x in dict(inv[a]).items()}
+        v = home[j]
+        if v in sm:
+            i = foot[j].index(v)
+            return frozenset(w for w in itertools.product(*[dom[u] for u in foot[j]]) if w[i] == sm[v])
+        uH, uT = bval[b]
+        if j == "m_H":
+            return frozenset([(uH,)])
+        if j == "m_T":
+            return frozenset([(uT,)])
+        if j == "m_L":
+            return frozenset([(one,)])
+        return frozenset(w for w in itertools.product(dom["H"], dom["T"], dom["L2"]) if w[2] == w[0] * COT[w[1]])
+
+    E = Org("E_moved", ports, dom, ["m_H", "m_T", "m_L2", "m_L"], foot, D.B, D.A, D._compose, Lfun, meta=dict(bval=bval, inv=inv))
+    pi = {"H": Translation(("H",)), "T": Translation(("T",)), "L2": Translation(("L",)), "L": Translation(("L",), fn=(lambda xs: one), name="const 1")}
+    lam = {"m_H": (frozenset(["c_H"]), {"H": Translation(("H",))}), "m_T": (frozenset(["c_T"]), {"T": Translation(("T",))}),
+           "m_L2": (frozenset(["c_L"]), {"H": Translation(("H",)), "T": Translation(("T",)), "L2": Translation(("L",))})}
+    return Candidate(E, p, pi, {a: a for a in D.A}, {b: b for b in D.B}, lam, ["m_H", "m_T", "m_L2"], "L", name="ℰ moved")
