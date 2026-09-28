@@ -4,7 +4,13 @@ Adapted from round 3's "apply text changes.py" (results/S105 Round 3 - maths aft
 apply the S106 text changes by program.
 
 Reads  tests/105 The semantics, standing alone, after round 3.md  (md5 checked)
-and    text changes for S106.json (beside this program; read only).
+and    text changes for S106.json and text changes for S47.json (beside this program; read only).
+S47 (28 September 2026): one exception to the three kinds, kind "revert", for S47-T1 only: it must name the round-3
+change it undoes ("reverts"), found in round 3's "text changes after the review.json" (read only) on the same line;
+its new span must equal its old span with that change's deleted words ("restores" = the change's old span) put back
+at one place, and must stand in that line of the round-3 input (text 104 with the owner's answers) exactly.
+Words outside formulas are reported with and without the reverts.
+Rebuild: with --rebuild the program may write over the output, only if it is its own earlier output (md5 REBUILD_OVER).
 Writes a NEW file, line for line with the input:
        tests/106 The semantics, standing alone, without the written-in test.md
 It never writes the input or any earlier text. Kinds allowed: delete, formal, pointer (decision S40).
@@ -36,8 +42,13 @@ SRC = SEM + "/tests/105 The semantics, standing alone, after round 3.md"
 MD5 = "da9a30cd052d46f2a5ead259cea97d3c"
 OUT = SEM + "/tests/106 The semantics, standing alone, without the written-in test.md"
 HERE = os.path.dirname(os.path.abspath(__file__))
-CHANGES = os.path.join(HERE, "text changes for S106.json")
-KINDS = {"delete", "formal", "pointer"}
+CHANGES = [os.path.join(HERE, "text changes for S106.json"), os.path.join(HERE, "text changes for S47.json")]
+KINDS = {"delete", "formal", "pointer", "revert"}
+REVERT_IDS = {"S47-T1"}  # the only revert allowed (decision S47)
+R3_CHANGES = SEM + "/results/S105 Round 3 - maths after the reading/text changes after the review.json"
+R3_INPUT = SEM + "/tests/104 The semantics, standing alone, after round 2, with the owner's answers.md"
+R3_INPUT_MD5 = "bc14045aae3139df710d8339a9c1c81b"
+REBUILD_OVER = "0e56b581a4b5f3c7a9e19bdceb4d8cb3"  # tests/106 as first written (S106 changes only)
 # Lines held for an owner question: none. L255 was held for R3-Q1 (round 3), answered by S44 and S45.
 HELD_LINES = {}
 S95 = SEM + "/tests/S95 Scrub - scripts/scrub_apply.py"
@@ -72,12 +83,36 @@ def main():
     if os.path.abspath(OUT) == os.path.abspath(SRC) or os.path.basename(OUT) in earlier:
         die("output would overwrite the input or an earlier text")
     if os.path.exists(OUT):
-        die("output exists already; this program writes a new file only (remove it by hand to rebuild)")
+        prev = hashlib.md5(open(OUT, "rb").read()).hexdigest()
+        if "--rebuild" not in sys.argv[1:]:
+            die("output exists already (md5 %s); pass --rebuild to write over this program's own earlier output" % prev)
+        if prev != REBUILD_OVER:
+            die("output exists with md5 %s, not this program's earlier output %s: not written over" % (prev, REBUILD_OVER))
+        print("rebuild: output md5 before %s" % prev)
     raw = open(SRC, "rb").read()
     if hashlib.md5(raw).hexdigest() != MD5:
         die("input md5 is %s, not %s" % (hashlib.md5(raw).hexdigest(), MD5))
     old = raw.decode("utf-8").split("\n")
-    ch = [dict(e) for e in json.load(open(CHANGES, encoding="utf-8"))]
+    ch = [dict(e) for path in CHANGES for e in json.load(open(path, encoding="utf-8"))]
+    r3 = {e["id"]: e for e in json.load(open(R3_CHANGES, encoding="utf-8"))}
+    r3in = open(R3_INPUT, "rb").read()
+    if hashlib.md5(r3in).hexdigest() != R3_INPUT_MD5:
+        die("round 3's input md5 is not %s" % R3_INPUT_MD5)
+    r3lines = r3in.decode("utf-8").split("\n")
+    for e in ch:
+        if e.get("kind") != "revert":
+            continue
+        if e["id"] not in REVERT_IDS:
+            die("%s: kind revert is allowed for %s only" % (e["id"], sorted(REVERT_IDS)))
+        x = r3.get(e.get("reverts"))
+        if x is None or x["line"] != e["line"] or x["kind"] != "delete" or x["new"] != "":
+            die("%s: 'reverts' must name a round-3 delete on the same line" % e["id"])
+        if e.get("restores") != x["old"] or e["new"].count(x["old"]) < 1 or not any(
+                e["new"][:k] + e["new"][k + len(x["old"]):] == e["old"] for k in range(len(e["new"])) if e["new"].startswith(x["old"], k)):
+            die("%s: new span is not old span with %r restored at one place" % (e["id"], x["old"]))
+        if e["new"] not in r3lines[e["line"] - 1]:
+            die("%s: the restored span is not in L%d of round 3's input" % (e["id"], e["line"]))
+        e["revert_checked"] = True
     for e in ch:
         if e.get("replaces_term") and e.get("kind") != "formal":
             die("%s: replaces_term on a change of kind %r (only a formal change may replace a term by its formal name)" % (e["id"], e.get("kind")))
@@ -155,13 +190,14 @@ def main():
     md5n = hashlib.md5(text.encode("utf-8")).hexdigest()
 
     print("input md5 %s (as required); output %s" % (MD5, os.path.relpath(OUT, SEM)))
-    print("changes read: %d from %s (kinds: %s)" % (len(ch), os.path.basename(CHANGES),
+    print("changes read: %d from %s (kinds: %s)" % (len(ch), ", ".join(os.path.basename(c) for c in CHANGES),
           ", ".join("%s %d" % (k, sum(1 for e in ch if e.get("kind") == k)) for k in sorted(KINDS))))
     print("applied: %d on %d lines; refused: %d" % (len(applied), len(set(e["line"] for e in applied)), len(refused)))
     for e in sorted(applied, key=lambda e: (e["line"], e["span"][0])):
-        print("  APPLIED  L%-4d %-9s %-7s bytes equal %s  prose words %+d  settles: %s" % (
+        print("  APPLIED  L%-4d %-9s %-7s bytes equal %s  prose words %+d  settles: %s%s" % (
             e["line"], e["id"], e["kind"], "yes" if e.get("bytes_equal") else "NO",
-            len(prose(e["new"])) - len(prose(e["old"])), "; ".join(e.get("settles") or []) or "-"))
+            len(prose(e["new"])) - len(prose(e["old"])), "; ".join(e.get("settles") or []) or "-",
+            "  [reverts %s: restores %r; checked against round 3's list and input]" % (e["reverts"], e["restores"]) if e.get("revert_checked") else ""))
     for e, why in refused:
         print("  REFUSED  L%-4d %s: %s" % (e["line"], e["id"], why))
     shared = sorted(ln for ln, es in byline.items() if len(es) > 1)
@@ -224,6 +260,13 @@ def main():
     for k, what, t in miss:
         print("  MISSING L%d %s: %s" % (k, what, t))
 
+    # words outside formulas without the reverts: the reverts undone on the new text
+    nr = list(new)
+    for e in applied:
+        if e["kind"] == "revert":
+            nr[e["line"] - 1] = nr[e["line"] - 1].replace(e["new"], e["old"], 1)
+    p_norev = len(prose("\n".join(nr)))
+    print("words outside formulas: input %d; new without the reverts %d (%+d); new with them %d (%+d)" % (p_old, p_norev, p_norev - p_old, p_new, p_new - p_old))
     w_old, w_new = len("\n".join(old).split()), len(text.split())
     print("words: input %d, new %d (%+d); words outside formulas: input %d, new %d (%+d)" % (w_old, w_new, w_new - w_old, p_old, p_new, p_new - p_old))
     print("prose check (new outside formulas <= input): %s" % ("yes" if p_new <= p_old else "NO"))

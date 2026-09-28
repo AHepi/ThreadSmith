@@ -112,11 +112,11 @@ P1–P7 untouched. P8 new: "Why blue and not any other colour?" and "bad … thr
 | 2 | D6.11: a pin, the further question, LeavesOpen | new definition |
 | 3–15 | S106-T1 … T13 | text changes applied |
 
-**Moves: 15.** The ground is the owner's decision (S45), not a finding. Not counted: D6.7, D6.8, D18.1 and the program's DEP and `account` (re-based on row 1: the one fix in its other places; 17 if D6.7 and D18.1 were counted apart); restated or re-based claims FC21, FC23, FC23.new1, FC24, FC30, FC31, FC32, FC34, FC108 (statement follows row 1, status unchanged); notes FC26, FC27, FC33, FC60, FC100, FC107; new test claims FC23.new2, FC23.new3, FC25.new2, FC23 (e), FC23.new1 (h); `s106_cases.py`; I184–I189; P8.
+**Moves: 15** for S106; with S47's 2 (§15), **17**. The ground is the owner's decisions (S45, S47), not findings. Not counted: D6.7, D6.8, D18.1 and the program's DEP and `account` (re-based on row 1: the one fix in its other places; 17 if D6.7 and D18.1 were counted apart); restated or re-based claims FC21, FC23, FC23.new1, FC24, FC30, FC31, FC32, FC34, FC108 (statement follows row 1, status unchanged); notes FC26, FC27, FC33, FC60, FC100, FC107; new test claims FC23.new2, FC23.new3, FC25.new2, FC23 (e), FC23.new1 (h); `s106_cases.py`; I184–I189; P8.
 
 ## 12. The new text
 
-`tests/106 The semantics, standing alone, without the written-in test.md`: md5 **0e56b581a4b5f3c7a9e19bdceb4d8cb3**.
+`tests/106 The semantics, standing alone, without the written-in test.md`: md5 0e56b581a4b5f3c7a9e19bdceb4d8cb3 with S106's changes; **7d58eeecda84b1508068568b82f2113e** rebuilt with S47's revert (§15).
 
 ## 13. What is unsure
 
@@ -124,11 +124,11 @@ P1–P7 untouched. P8 new: "Why blue and not any other colour?" and "bad … thr
 - The rename (I188): the heading now reads \(\operatorname{Dependence}\) in formula type; the kinds S40 allows gave no plain-word rename.
 - Deleting "independent" (I187) rests on its two readings being vacuous or the test.
 - (K1): a criticism whose connection writes its defect in now has bearing (FC107). (Suff): candidates with a slot are now in its range. Both follow from S45's "everywhere"; neither was asked about.
-- S47 (the bridge; "and criticism" back into L13), recorded while this work ran, is not in text 106: it was not this task's. Text 106 is text 105 with S106's changes only.
+- S47 was applied afterwards, inside S106 (§15).
 - S48 (a plain-words file for every round, S106 included), recorded while this work ran: not written here; the records and plain files are the other agent's.
 - FC23's CEX (its (b) as stated) and FC26's look "not as expected" are round 3's, unchanged.
 
-## 14. Files written (md5)
+## 14. Files written (md5, before S47; after S47: §15)
 
 | file | md5 |
 |---|---|
@@ -140,4 +140,45 @@ P1–P7 untouched. P8 new: "Why blue and not any other colour?" and "bad … thr
 | `text changes for S106.json`, `apply text changes.py` | 7db0fc5e136921a65b61a48d9eb858f2, 3b5ed14e52671072cfbdf7391d3f675e |
 | `S106 - runs.txt`, `S106 - whole suite, printout.txt` | 16fb72dbc5b3570a4d9bdf898748d12a, a3cf40840ec4a0e9fc8f087f11cfe41d |
 | `model after S106/` (core.py; claims_s106.py; s106_cases.py) | 964030de3cb4756e60aa61fdfe3aad78; 0ca6f373f3de5c8a84c9f7d0e4a0e9ef; 7e4212128446972d45cc6710ae24c528 |
+
+## 15. S47 (applied inside S106, 28 September 2026)
+
+*Decision S47, read whole: the maths asks for nothing; the agent asks, when a question occurs to it as worth investigating. Round 3's removal of "and criticism" (R3SC-L13) and its reading of the bridge as "no criticism" made a stronger claim than "no questions occurred to the agent".*
+
+**Old → new.**
+
+| where | old | new |
+|---|---|---|
+| L13 (text) | "produced by an episode of conjecture;" (R3SC-L13, round 3) | "produced by an episode of conjecture and criticism;" (S47-T1, kind **revert**: reverts R3SC-L13, restores " and criticism"; `apply text changes.py` checks the revert against round 3's change list and against L13 of text 104, md5 bc14045aae3139df710d8339a9c1c81b) |
+| FC84.new1 (a) (`claims_s41.py`) | the bridge: o1 ≺ o2, one contract, Con (no criticism occurrence encoded; D12.2's r3 mark: "Con with no criticism") | (a1) the bridge with no criticism in the history, (a2) with a criticism of an earlier design before the built one; in both, no question about the brief occurred to the agent (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191); Con at the output in both (S41 reading), not under L55's wording; with the criticism aimed at the brief instead, NoBriefQuestion fails |
+| D12.2, D13.8, §12 Vague (formal core, notes) | D12.2's r3 mark "Con with no criticism: FC84.new1 (a), N2" | withdrawn; I190: L13's "an episode of conjecture and criticism" names D13.8's episode, which includes one in which no question occurred to the agent as worth investigating; the maths asks for no criticism event (Con, CT, Episode read no Crit); a criticism, when there is one, is the agent's asking |
+| FC32.new1 (f) | "the criticism L13 names is (EX)'s, not construction's (FC84.new1 (a): the bridge, Con with no criticism)" | the computation unchanged; its reading: the maths asks construction for no criticism event, and an episode of conjecture and criticism includes one in which no question occurred to the agent (I190) |
+
+**The other places (item 4).**
+
+| place | stronger claim S47 rejects? | done |
+|---|---|---|
+| L13, R3SC-L13 (round 3, second checker) | yes: construction with no criticism | reverted (S47-T1) |
+| D12.2's r3 mark (area 1, K2, N2): "Con with no criticism" | yes: the bridge as a history with no criticism | withdrawn by an [S47] note; the bridge re-encoded (FC84.new1 (a1), (a2)) |
+| FC32.new1 (f)'s statement (round 3, second checker) | yes, in its reading (the criticism L13 names is not construction's) | restated; computation kept (the maths asks for no criticism event) |
+| L201's pointer "(D12.1, D12.2)" (R3A1-T6, round 3, K2) | no: it claims nothing about criticism | kept: the words it replaced claimed a criticism in every constructed history and none in a selected one, which neither D12.2 nor D12.1 carries (round 2's R1) and which S47's "the maths doesn't ask for anything" does not restore |
+| §12 Vague's r2b R1 mark (round 2): "D12.2 asks no criticism" | no: the maths asking for nothing, as S47 says | kept, with an [S47] note |
+| L411 "a selected transport has no represented target in its history; a constructed one does" | no: says nothing about criticism | kept |
+| D13.8's CompleteCritical, CreativeCriticalEpisode ((EX)'s) | no: they hold a criticism because the agent asked | kept, [S47] note |
+| case programs: `s104_external.py`, `s104_creative_transport.py` (CT8's "L201 and L411" reading reads represented targets only), `s106_cases.py` | no: none encodes the bridge or criticism | unchanged; outputs identical |
+| round 3's second-checker file, round 3's plain file 105 | yes (the plain file's "the maths asks for no criticism, and the bridge counts as worked out with none") | not edited: round files and records are not this task's |
+
+**Runs** (`S106 - runs.txt` §8). Whole suite: **128 H, 2 CEX, 7 NT of 137**, as before S47 (559.8 s; no traceback); the only printed changes: FC84.new1's part (a) replaced by (a1), (a2), both as claimed; FC32.new1 (f) relabelled, as claimed. `s104_external.py`, `s104_creative_transport.py`, `s106_cases.py`: identical outputs (md5 86a67664a9a3584351fd4836a4140b69, d473944e74d2f349b1fdfb83277843cf, d1d9f4bcff94241b7523f995eeabf471).
+
+**Text** (`apply text changes.py --rebuild`, from tests/105, md5 da9a30cd052d46f2a5ead259cea97d3c, not written): 14 changes on 11 lines (delete 5, formal 7, pointer 1, revert 1), none refused; scans, headings, terms and formulas as in §6. The program writes over tests/106 only when it is its own earlier output (md5 0e56b581a4b5f3c7a9e19bdceb4d8cb3).
+
+**Word counts** (outside formulas): text 105: 15,322; text 106 without the revert: 15,203; **with it: 15,205** (+2, " and criticism"). All words: 16,221 → 16,106.
+
+**Moves (strict).** 2: S47-T1 (text change applied) and FC84.new1 (a) (a changed encoding). Not counted: the D12.2, D13.8 and §12 notes (no formal change); FC32.new1 (f) (restated reading, computation and status unchanged); I190, I191 (register entries). **Total: 15 + 2 = 17.**
+
+**Inventions.** I190 (L13's phrase names D13.8's episode; the maths asks for no criticism event); I191 (NoBriefQuestion: the brief the contract throughout, no criticism aimed at it).
+
+**md5, before → after.** tests/106: 0e56b581a4b5f3c7a9e19bdceb4d8cb3 → **7d58eeecda84b1508068568b82f2113e**. Formal core after S106: bcedecc8b98e75fe7b127702a589ab81 → de745f5e4fecd8f965f04c1bad3bfb79. Formal claims after S106 .md / .json: 72a9806787ff47128eeeed8868a833e5 / 3d225297a9ea6179365debab0eab9b44 → e7707ebfd711ebe485793bdc66bce7a2 / d02562b63a3f2c2366d30d17aad1f0a8. Inventions addendum: daa17b946060094f6658091edb259300 → 79363dff7290d59824921b50b950add8. `apply text changes.py`: 3b5ed14e52671072cfbdf7391d3f675e → 85c43fc76bcfe679e059e9e10b4f2c90. Printout: a3cf40840ec4a0e9fc8f087f11cfe41d → 440f1cfd30d6d874bf290b9e89fe3dda. New: `text changes for S47.json` 431206c572803507df09e60af273b616. Code: `claims_s41.py` f0611d34990664a342390068b427f57b, `claims_r3a3.py` 6a49482b69cb49598a0a03aa6ba021a8.
+
+**Unsure.** NoBriefQuestion encodes "a question about the brief occurred to the agent as worth investigating" as a criticism occurrence (D9.10) aimed at the brief (I191); which occurrences are criticisms, and of what, is read through Θ (I90), and the other readings are recorded with I191.
 

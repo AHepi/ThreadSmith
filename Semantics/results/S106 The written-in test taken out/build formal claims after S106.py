@@ -18,6 +18,8 @@ R3 = os.path.join(HERE, "..", "S105 Round 3 - maths after the reading", "formal 
 PRINTOUT = os.path.join(HERE, "S106 - whole suite, printout.txt")
 OUT_JSON = os.path.join(HERE, "formal claims, after S106.json")
 OUT_MD = os.path.join(HERE, "formal claims, after S106.md")
+# S47 (28 September 2026): --rebuild writes over this program's own earlier outputs, only if their md5s are these
+REBUILD_OVER = {OUT_JSON: "3d225297a9ea6179365debab0eab9b44", OUT_MD: "72a9806787ff47128eeeed8868a833e5"}
 REPRO = 'cd "/home/user/ThreadSmith/Semantics/results/S106 The written-in test taken out/model after S106" && PYTHONHASHSEED=0 python3 -B -m model.run --claim %s --scale 4 --time-cap 45'
 H, CEX, NT = "HOLDS ON ALL MODELS TRIED", "COUNTEREXAMPLE FOUND", "NOT TESTED"
 SHORT = {H: "H", CEX: "CEX", NT: "NT"}
@@ -54,6 +56,10 @@ S106 = {
     "FC74": (False, None, None, "note: another first witness (bearing relative to p), since Acc changed"),
     "FC100": (False, None, None, "note: Acc after S106; NC1's answer slot still carried along (content)"),
     "FC107": (False, None, None, "note: Acc of E8's identity candidate for p_δ is True after S106 (a slot; round 3's (E): False); the claim asks only that (E) assesses it"),
+    "FC84.new1": (True, "Episode(h') :⟺ h' a subhistory whose changes of contract, if any, each carry a provenance record (D13.8, I165). (a) The bridge to a fixed brief (S47): an episode in which no question about the brief occurred to the agent as worth investigating (NoBriefQuestion: one contract throughout, no criticism aimed at it, I191), a construction trace preparing t, cod t held at the output: Con(t) at the output (one fixed point of (R), cut T′), and Build; under L55 as text 104 words it (an episode holds a change of contract) Con fails and Build holds; (a1) with no criticism in the history (o1 ≺ o2); (a2) with a criticism of an earlier design in it (o1 ≺ o2 ≺ o3, o2 criticizing the design at o1): Con either way, since Con reads no criticism event (I190); with that criticism aimed at the brief instead, NoBriefQuestion fails. (b) A recorded change of contract C → C′ at o2: o1 ≺ o2 is an episode under both readings, and Con. (c) The change unrecorded: o1 ≺ o2 is no episode; Con at o2 through {o2} under S41, none under L55's wording. (d) Every chain of ≤ 3 occurrences with contracts and records: Con(S41) ⊇ Con(L55's wording), differing exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′).",
+                  None, "restated (S47): (a) re-encoded as an episode in which no question about the brief occurred to the agent, not a history with no criticism; two parts, (a1) without and (a2) with criticism of designs, Con in both"),
+    "FC32.new1": (True, "(a) every definition paragraph of §§1–16 a node of DEP or folded into one (I181); (b) U: a cycle through (R); K, T, T′: none; (c) the sinks D0.2 (after round 2) does not list are classed; (d) every dependence L526 states is a path (grouped subjects together, I179); Build ⇝ (E) only with ExplUse defined (I178); (e) only D16.XV reaches the atom Expl; (f) under U, K, T, T′, Con, CT and Episode reach no Crit (D9.10), (EX) does through CCE: the maths asks construction for no criticism event, and an episode of conjecture and criticism (L13) includes one in which no question occurred to the agent (S47, I190).",
+                  None, "restated (S47): (f)'s reading; its computation unchanged; round 3 drew from it the deletion of L13's ' and criticism', which S47 reverts (S47-T1)"),
     "FC108": (True, "Under I23, NC0 holds of every candidate: every answer is computed by evaluating E at (τ(a),σ(b)), with σ(b) a function of b. A reading on which it adds a condition needs a notion of how an answer is computed (propagation against lookup) that (O) and (Q) do not give; I23's other reading (a) was the written-in test on a boundary, closed by S45 (I187: L255's 'independent' deleted, S106-T2).",
               "The first sentence of Dependence adds no condition", "re-based on D6.5, I187"),
 }
@@ -87,9 +93,12 @@ def parse(path):
 
 
 def main():
+    import hashlib
     for p in (OUT_JSON, OUT_MD):
         if os.path.exists(p):
-            sys.exit("REFUSED: %s exists" % os.path.basename(p))
+            md5 = hashlib.md5(open(p, "rb").read()).hexdigest()
+            if "--rebuild" not in sys.argv[1:] or md5 != REBUILD_OVER[p]:
+                sys.exit("REFUSED: %s exists (md5 %s); --rebuild writes over this program's own earlier output only" % (os.path.basename(p), md5))
     d = json.load(open(R3, encoding="utf-8"))
     res = parse(PRINTOUT)
     ids = [c["id"] for c in d["claims"]]
@@ -107,6 +116,9 @@ def main():
                     c["title"] = title
         else:
             c["s106"] = None
+        for inv in {"FC84.new1": ["I190", "I191"], "FC32.new1": ["I190"]}.get(c["id"], []):  # S47
+            if inv not in c["inventions"]:
+                c["inventions"].append(inv)
     for n in NEW:
         r = res[n["id"]]
         c = dict(id=n["id"], title=n["title"], source=n["source"], formal=n["formal"], type=["test (S106)"], s100_units=[], round1=[],
@@ -132,7 +144,7 @@ def main():
     json.dump(d, open(OUT_JSON, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
     M = ["# S106 — formal claims, after S106", "",
-         "*S106 (decisions S44, S45), 28 September 2026: `results/S105 Round 3 - maths after the reading/formal claims, after round 3.md` and `.json` (not written) with each claim's statement as it now stands, three new test claims, and the result on `model after S106/` (scale 4, time cap 45 s, PYTHONHASHSEED=0; whole suite with --no-write; printout `S106 - whole suite, printout.txt`). Sources, quotations, parts: `formal claims, after S106.json`. The S106 column: 'restated' = the statement changed (round 3's kept in the json); 'note' = the code or its print changed, the statement kept; 'new' = a test claim of S106 (not a move). H holds on all models tried; CEX counterexample found; NT not tested. Built by `build formal claims after S106.py`.*", "",
+         "*S106 (decisions S44, S45), 28 September 2026; S47 applied inside S106 (FC84.new1, FC32.new1 restated): `results/S105 Round 3 - maths after the reading/formal claims, after round 3.md` and `.json` (not written) with each claim's statement as it now stands, three new test claims, and the result on `model after S106/` (scale 4, time cap 45 s, PYTHONHASHSEED=0; whole suite with --no-write; printout `S106 - whole suite, printout.txt`). Sources, quotations, parts: `formal claims, after S106.json`. The S106 column: 'restated' = the statement changed (round 3's kept in the json); 'note' = the code or its print changed, the statement kept; 'new' = a test claim of S106 (not a move). H holds on all models tried; CEX counterexample found; NT not tested. Built by `build formal claims after S106.py`.*", "",
          "**Counts.** After round 3: 125 H, 2 CEX, 7 NT of 134. **After S106: %d H, %d CEX, %d NT of %d** (134 + 3 new, each H; no status of an earlier claim changed; FC23.new1 would have gone H → CEX had its parts kept reading (E), and is restated to read round 3's (E) as Acc ∧ NC1_q, with (h) added). CEX: %s. NT: %s." % (
              cnt[H], cnt[CEX], cnt[NT], len(d["claims"]),
              ", ".join(c["id"] for c in d["claims"] if c["after_s106"]["status"] == CEX),

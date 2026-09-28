@@ -438,9 +438,12 @@ def fc32_new1(S):
                           uses_expl == ["DefeatConds"] and "(EX)" in DEP, "nodes reaching Expl: %s" % uses_expl))
     # (f) S105 round 3, second checker (critical review, objection 2): L13's "produced by an episode of conjecture and
     # criticism". Crit is D9.10's criticism; CCE, D13.8's complete critical episode, is (EX)'s (D14.7), not Con's.
+    # S47 (28 September 2026): the computed fact stands (the maths asks for no criticism event); the reading drawn from
+    # it does not: L13's "an episode of conjecture and criticism" names D13.8's episode, which includes one in which no
+    # question occurred to the agent as worth investigating (I190), and " and criticism" is back in L13 (S47-T1).
     crit = {rd: {n: "Crit" in dep_ancestors(DEP, n, rd) for n in ("Con", "CT", "Episode", "(EX)")} for rd in ("U", "K", "T", "T'")}
-    parts.append(computed("(f) L13: construction reaches no criticism; created explanation does (critical review, objection 2)",
-                          "under U, K, T and T′, Con (D12.2), CT and Episode (D13.8) reach no Crit (D9.10) in DEP; (EX) (D14.7) does, through CCE: the criticism L13 names is (EX)'s, not construction's (FC84.new1 (a): the bridge, Con with no criticism)",
+    parts.append(computed("(f) L13: construction asks for no criticism event; created explanation does (critical review, objection 2; S47)",
+                          "under U, K, T and T′, Con (D12.2), CT and Episode (D13.8) reach no Crit (D9.10) in DEP; (EX) (D14.7) does, through CCE: the maths asks construction for no criticism event, and an episode of conjecture and criticism (L13) includes one in which no question occurred to the agent (I190; FC84.new1 (a1), (a2): the bridge, Con with or without criticism of designs)",
                           all(not v["Con"] and not v["CT"] and not v["Episode"] and v["(EX)"] for v in crit.values()),
                           "; ".join("%s: %s" % (rd, ", ".join("%s ⇝ Crit %s" % kv for kv in v.items())) for rd, v in crit.items())))
     return parts

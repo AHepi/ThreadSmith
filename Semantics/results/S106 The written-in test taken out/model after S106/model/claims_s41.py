@@ -174,24 +174,58 @@ def fc30_new1(S):
 
 # ---- Episodes and construction (D13.8, D12.2) [owner S41: Q6] ---------------------------------------------
 
+
+def no_brief_question(qs, crit, brief="C_brief"):
+    """S47 (I191): no question about the brief (the contract) occurred to the agent as worth investigating in the chain:
+    the contract operative at every occurrence is the brief, and no occurrence is a criticism (D9.10) whose target z is
+    the brief. crit[o]: None, or (z, δ) for a criticism occurrence; which occurrences are criticisms, and of what, is
+    read through Θ (I90). A criticism of a design (z a transport) is allowed: the agent asks, the maths asks nothing (I190)."""
+    return all(q == brief for q in qs) and not any(c is not None and c[0].startswith(brief) for c in crit)
+
+
 @claim("FC84.new1", ["I90"])
 def fc84_new1(S):
     parts = []
-    # (a) the bridge to a fixed brief: o1 ≺ o2, one contract throughout; a trace prepares t (at o2); cod t held at o2
-    n, held, trace, selc = 2, [0, 1], [0, 1], [0, 0]
-    qs = ["C_brief", "C_brief"]
-    rows, res = [], {}
-    for rd in EPISODE_READINGS:
-        eps = chain_eps(qs, [False, False], rd)
-        fps = prov_fixed_points(n, held, trace, selc, "T'", True, eps)
-        conv = [sc[1][1] for R, sc in fps]
-        res[rd] = (len(fps), conv, build_at(n, held, trace, "T'", fps[0][0] if fps else frozenset(), 1))
-        rows.append("%s: %d fixed point(s) %s; Con at o2 %s; Build at o2 %s" % (rd, len(fps), prov_show(n, fps), conv, res[rd][2]))
-    h_s41 = Hist(["o1", "o2"], [("o2", "cod")], set(), prepares=True, contracts=qs, records=[False, False])
-    tag = {rd: con(h_s41, reading=rd) for rd in EPISODE_READINGS}
-    ok_a = res["S41"][0] == 1 and res["S41"][1] == [True] and res["S41"][2] and res["L55"][1] == [False] and res["L55"][2] and tag["S41"] and not tag["L55"]
-    parts.append(computed("(a) the bridge to a fixed brief", "one contract throughout, a trace preparing t, cod t held at the output: Con(t) under D13.8 as S41 has it; under L55 as text 104 words it Con fails; Build holds under both",
-                          ok_a, "chain o1 ≺ o2, q = %s; held %s, trace %s, Sel's conditions %s; cut T′ (I162), I161.\n%s\ntag model (con): S41 %s, L55 %s" % (qs, held, trace, selc, "\n".join(rows), tag["S41"], tag["L55"]), ["I90", "I162", "I165"]))
+    # (a) S47 (28 September 2026): the bridge to a fixed brief is an episode in which no question about the brief (the
+    # contract) occurred to the agent as worth investigating (I191), not a history with no criticism. Criticism of
+    # designs may or may not be in the history; Con (D12.2) reads no criticism event (the maths asks for nothing, I190),
+    # so Con holds either way: (a1) no criticism occurrence; (a2) a first design criticized ("fails the load case")
+    # before the design that is built. Θ by hand (I90): the chain, held, trace, q(o), records, and crit[o], the
+    # criticism an occurrence is (D9.10: its target z and alleged defect δ), or None.
+    n = 2  # kept for parts (b), (c)
+    trace, selc = [0, 1], [0, 0]
+    rows, res, ok_a = [], {}, {}
+    cases = (("a1", "no criticism in the history", ["o1", "o2"], [0, 1], [0, 1], [None, None]),
+             ("a2", "a first design criticized before the built one", ["o1", "o2", "o3"], [0, 0, 1], [0, 0, 1],
+              [None, ("t0 (the first design, at o1)", "fails the load case"), None]))
+    for key, lab, occ, held_, trace_, crit in cases:
+        n_ = len(occ)
+        qs = ["C_brief"] * n_
+        recs = [False] * n_
+        noq = no_brief_question(qs, crit)
+        sub_rows, r_ = [], {}
+        for rd in EPISODE_READINGS:
+            fps = prov_fixed_points(n_, held_, trace_, [0] * n_, "T'", True, chain_eps(qs, recs, rd))
+            conv = [sc[n_ - 1][1] for R, sc in fps]
+            r_[rd] = (len(fps), conv, build_at(n_, held_, trace_, "T'", fps[0][0] if fps else frozenset(), n_ - 1))
+            sub_rows.append("%s: %d fixed point(s) %s; Con at %s %s; Build %s" % (rd, len(fps), prov_show(n_, fps), occ[-1], conv, r_[rd][2]))
+        h_ = Hist(occ, [(occ[-1], "cod")], set(), prepares=True, contracts=qs, records=recs)
+        tag = {rd: con(h_, reading=rd) for rd in EPISODE_READINGS}
+        # the same history with the criticism aimed at the brief instead: a question about the brief occurred to the
+        # agent; the encoding tells the two apart, and Con, which reads no criticism, is the same (the maths asks nothing)
+        crit_b = [x if x is None else ("C_brief (the contract)", x[1]) for x in crit]
+        noq_b = no_brief_question(qs, crit_b) if any(crit) else None
+        ok_a[key] = (noq and r_["S41"][0] == 1 and r_["S41"][1] == [True] and r_["S41"][2] and r_["L55"][1] == [False] and r_["L55"][2]
+                     and tag["S41"] and not tag["L55"] and (noq_b is None or noq_b is False))
+        rows.append((key, lab, occ, crit, noq, noq_b, sub_rows, tag))
+    for key, lab, occ, crit, noq, noq_b, sub_rows, tag in rows:
+        parts.append(computed("(%s) S47: the bridge to a fixed brief, %s" % (key, lab),
+                              "an episode in which no question about the brief occurred to the agent as worth investigating (one contract throughout, no criticism aimed at it; I191), "
+                              "a trace preparing t, cod t held at the output: Con(t) under D13.8 as S41 has it, %s; under L55 as text 104 words it Con fails; Build holds under both"
+                              % ("with no criticism in the history" if key == "a1" else "with a criticism of an earlier design in the history (Con reads no criticism event, I190)"),
+                              ok_a[key], "chain %s; q = C_brief throughout; criticism per occurrence %s; no question about the brief occurred: %s%s; cut T′ (I162), I161.\n%s\ntag model (con): S41 %s, L55 %s"
+                              % (" ≺ ".join(occ), crit, noq, ("; with the criticism aimed at the brief instead: no question about the brief %s (Con's computation takes no criticism: its value is the same)" % noq_b) if noq_b is not None else "",
+                                 "\n".join(sub_rows), tag["S41"], tag["L55"]), ["I90", "I162", "I165", "I190", "I191"]))
     # (b) a recorded change of contract C → C' at o2; (c) the same change unrecorded
     out = []
     ok_b = ok_c = True

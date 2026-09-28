@@ -11,7 +11,7 @@ Every use of the written-in test was settled by the owner's words (S44, S45) or 
 | # | status after S106 |
 |---|---|
 | R3-Q1 (L255, D6.3's quantifier) | answered by S44 ("Neither") and S45 ("Yes, take the test out"): neither side; NC1 is out of (E) (D6.5, D6.7), so the quantifier reads Slot only and changes no value of (E) (FC23.new1 (h)); L255's two sentences deleted (S106-T3); L255 no longer held |
-| Q2, Q6, Q15, Q23 (S41) | not reversed or weakened: Q2's Acc ∧ Dec ⇒ ¬Expl holds for written-in candidates as for any (FC23.new2 (f)); Q15's symmetric contrast is NC2, now (E)'s Dependence (D6.4, D6.5); Q6 and Q23 untouched. S47 (the bridge: "and criticism" back into L13) came after this task was set and is not applied in text 106 (see `S106 report.md` §13) |
+| Q2, Q6, Q15, Q23 (S41) | not reversed or weakened: Q2's Acc ∧ Dec ⇒ ¬Expl holds for written-in candidates as for any (FC23.new2 (f)); Q15's symmetric contrast is NC2, now (E)'s Dependence (D6.4, D6.5); Q6 and Q23 untouched. S47 (the bridge: "and criticism" back into L13) is applied inside S106 (`S106 report.md` §15): Q6's bridge is now an episode in which no question about the brief occurred to the agent, with or without criticism of designs (FC84.new1 (a1), (a2)); Q6 is kept, not weakened |
 | the rest of round 2's and round 3's | nothing in S106 reopens them |
 
 ## C. Points raised in S106 and not the owner's
