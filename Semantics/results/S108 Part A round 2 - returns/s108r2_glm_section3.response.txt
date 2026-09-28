@@ -1,0 +1,139 @@
+# Round 2, section 3 (Part VIII–XII): variants, traces, edges
+
+Baseline runs quoted below: `python3 -m model.run --claim FC90.new1 --brief --scale 3` (and FC84.new1, FC30.new1, FC80, FC72, FC75 likewise). All "after" results are **not run**.
+
+## (a) The variants
+
+| id | item(s)/reading varied | old → new | kind | share | departs from |
+|---|---|---|---|---|---|
+| R2V3.1 | S108-3-I2 ∧ S108-3-I5 (D13.3 ExplUse; CT via D12.2) | CT(h′,t) := some Build subhistory of h′ (S108-3-I2) ∧ ExplUse(o,c) :⟺ UsesClaim(o,′Acc(ℰ′)′) ∧ Acc(ℰ′), ℰ′ = (E, p′, t, Γ, δ′) for **another question p′ sharing t** (S108-3-I5's untried choice; here p′ = p with δ′ = H) | other choice of a reading | 1 (C8) | none of itself; C8's flag below |
+| R2V3.2 | D13.8's record key (I174, recorded not chosen) | Rec_h′(ρ_{q(o′)}) keyed by the **new contract** → keyed by the **change** q(o)→q(o′) | swap | 1 (C9) | none |
+| R2V3.3 | trace extent / tag encoding vs D13.3's tuple (I56, I162), **record clause kept** | (a) Held read as a Θ tag at o1 before an unrecorded change (not computed from t at o_t); (b) extent := the **whole subhistory** (every occurrence of h′ in the trace), Held still at o_t | other choice of a reading (two sub-readings) | 1 (C9) | none found |
+| R2V3.4 | D15.8's parts (I158/S108-3-I4) | parts(t) := the components of E_t with their bindings → the **ports of E_t's codomain with their bindings** (stated construction's parts read the same way); clause kept | swap | 1 (C10) | none |
+| R2V3.5 | D15.8 / S108-3-I3 | history stating no construction meets the clause → **no construction stated ⇒ 𝒯 = ∅** | strengthen | 1 (C10) | none |
+| R2V3.6 | I90 (Θ by hand) | Dec(t) on every worked case computed on a **chain history** (prov_fixed_points, Rep computed, cut T′; H := one occurring pair; trace per occurrence) | other choice of a reading | 1 (hand-set histories) | none |
+| R2V3.7 | D11.3 (History; untouched, upstream) | ⪯_h := ≺_h* → ⪯_h := the **reflexive closure** of ≺_h (not transitive) | weaken | 2 | none |
+| R2V3.8 | D9.2 (Argument; untouched, upstream) | α may be one leaf → **every argument has at least one step** (reverts I88) | strengthen | 2 | **rejected by S41 Q23** ("Yes, it's an argument") |
+| R2V3.9 | D9.1 (Claims; untouched, upstream) | "The claims used here include 'Acc(ℰ)', 'Ans_p(a,b) = y', records of a test, and conditionals" → **drop 'Ans_p(a,b) = y'** | delete | 2 | none |
+| R2V3.10 | D15.5 (Owned capability; untouched) | Can := owned RetReal ∨ owned construction → **delete the construction disjunct** | delete | 2 | none |
+
+Not varied again (round 1 did): D9.4, D9.6, D9.7, D9.9, D9.10, D11.4, D13.3 (as a definition), D13.8 (clause), D14.7, D15.8 (clause).
+
+## (b) The traces
+
+**R2V3.1** — (E) unmoved. Under CT as written or CT-as-Build with the candidate's own claim, nothing moves (round 1, computed). Under this variant, a trace whose output uses the claim of ℰ′ on another question sharing t, with Acc(ℰ′) F and Acc(ℰ) T, no longer constructs: Con F, Dec T, Account ∧ ¬Dec(t) F. Case (pole; before, run, `FC90.new1 (c)`: "δ_E = L: (True, …); δ_E = H: (False, {'A': False})"):
+```
+ℰ = (E_pole, p_C1, t_fwd, Γ={c_H,c_T,c_L}, δ_E=L)   Acc T (run)
+ℰ′ = same E, p, t, Γ, δ′=H                            Acc F (run)
+trace at o1 uses 'Acc(ℰ′)'; output holds t (Held at o_t)
+now:  Con T, Dec F, Account ∧ ¬Dec(t) T   (D12.2 as written; run, FC90.new1 (a))
+R2V3.1: ExplUse(o1,c) F ⇒ Build F ⇒ CT F ⇒ Con F, Dec T, Account ∧ ¬Dec(t) F   not run
+```
+C8: its drop class extends beyond the widest-contract claims (round 1: 122/93/36/200 out) to *any* question sharing t whose claim fails; the pole's own forward candidate drops when the claim used reads the designation. **C8's flag (S41 Q2) rests wholly on S108-3-I5's choice**: under the candidate's own question C8 moves nothing and has no flag; under the widest contract or another question it drops worked-out links and the flag stands. Expected: same order as round 1's widest-contract counts, plus the designation axis. not run.
+
+**R2V3.2** — (E) unmoved; Dec moves on re-entry chains. Case:
+```
+chain o1 ≺ o2 ≺ o3; q = [C′, C, C]; one record in h′, of ρ_C; target tag at o1; trace prepares t at o3
+now (keyed by the new contract): change into o2 needs Rec(ρ_C) ✓ ⇒ o1..o3 an episode; Held(o1) ⇒ Con T, Dec F
+R2V3.2 (keyed by the change): needs Rec(ρ_{C′→C}), none ⇒ no episode ⇒ Con F, Dec T, Account ∧ ¬Dec(t) F   not run
+```
+Before, run (`FC84.new1 (c)`): "change unrecorded, S41: o1 ≺ o2 an episode False; Con at o2 [True]" — the keyed-by-change reading agrees there (no re-entry). C9: gains re-entry chains as a further resting; no flag either way.
+
+**R2V3.3** — the untried cell of C9's table. Round 1's tag counts (22 of 27 worked in; 1,013/881/232/1,670) were computed **with the record clause deleted** (V3.5). With the clause kept:
+```
+h = Hist(occ=["o1","o2"], rep=[("o1","cod")], occurs=[(1,b1)], prepares=True,
+         contracts=["C","C′"], records=[False,False])   # tag at o1; unrecorded C→C′
+now (Held at o_t computed):  Con at o2 [True] (run, FC84.new1 (c)); Dec F; Account ∧ ¬Dec(t) T
+R2V3.3a (tag, clause kept):  {o1,o2} no episode (unrecorded); {o2} an episode but the Held witness o1 ∉ {o2}
+                             ⇒ Con F, Dec T ⇒ every Acc-T candidate on such a history stops   not run
+R2V3.3b (whole-subhistory extent, Held at o_t): bites only where the trace spans o_s..o_t and the
+   episode must hold an occurrence outside the trace: Con F there, Con T at {o_t} otherwise   not run
+```
+So round 1's tag row is an artefact of the deletion, not of the encoding: the record clause is **not** idle once Held is tagged off the output. New candidate **C9′**: drops every candidate meeting (E) whose target is labelled represented before an unrecorded change of contract. Flag: none found (S41 Q6's bridge holds one contract throughout; unaffected).
+
+**R2V3.4** — (E) unmoved; Sel moves without deleting the clause. Case (pole, stated := t's own parts; before, run, `FC80 (a)` witness format):
+```
+t′ = t_fwd + k_x on port L, deviating at x ∈ C1∖H; H = {(1,b1_45)} occurring; stated parts (ports) = {H,T,L}
+now (parts := components): parts(t′) ⊄ stated ⇒ t′ ∉ 𝒯 ⇒ Sel(t′) F, Dec(t′) T, x underdetermined 0
+R2V3.4 (parts := ports): parts(t′) = {H,T,L} ⊆ stated ⇒ Sel(t′) T, Dec(t′) F, Account ∧ ¬Dec(t′) T;
+   x underdetermined 0 → 1   not run
+```
+C10: its reach does not need the deletion; under the ports reading every t′ whose extra components sit on stated ports enters (round 1's 'deviate' counts 638/627/22/889, there under deletion, become reachable by the reading alone). Expected: underdetermined pairs grow as in round 1's V3.6 deviating run. not run.
+
+**R2V3.5** — the reverse of C10. On every history stating no construction (the program's default Θ, I90): 𝒯 = ∅ ⇒ Sel F; no trace ⇒ Con F ⇒ Dec T ⇒ **every candidate meeting (E) on such a history stops being an explanation** (expected: 22 of 27 worked, 1,013/881/232/1,670 out; CT8's R1–R5 all "Sel no"). The student's declared copy stays declared (no change, run `FC30.new1 (d)`: "Dec(t) at o2 [True]"). New candidate **C10′**, opposite direction to C10; no flag (it declares more, which Q2 permits). not run.
+
+**R2V3.6** — histories built otherwise. Expected (not run): on every worked case with a trace at the output and H ≠ ∅ occurring, the computed chain (T′: Sel's exclusion staged at o′ ≺ o_t) gives the fixed point {o_t: Con} or {o_t: Sel} and **0 moves** against the hand-set Θ — the counts of C7 and C10 reproduce. The tag histories of C9 **do not** reproduce: with Rep computed, a tag at o1 before an unrecorded change gives Con F (as R2V3.3a), not Con T. So C9's tag counts (and only those) rest wholly on Θ by hand (I90), not on the computed chain.
+
+**R2V3.7** — (E) unmoved; Dec moves where the Held witness is ≥2 steps before the output:
+```
+chain o1 ≺ o2 ≺ o3; one contract; target tag at o1; trace prepares t at o3
+now: o1 ⪯ o3 ⇒ Con T, Dec F (2-chain analogue run, FC84.new1 (a1): "Con at o2 [True]")
+R2V3.7: o1 ⋢ o3 ⇒ Held witness fails ⇒ Con F, Dec T ⇒ Account ∧ ¬Dec(t) F   not run
+```
+Also D14.7's e_c ⪯_h e: origin episodes ending ≥2 steps before e leave (EX). Expl moves with Dec; (Suff)/(Nec) unmoved in value.
+
+**R2V3.8** — (E) and Account ∧ ¬Dec(t) unmoved (arguments read neither). X_j loses every premise-only member: run, `FC72 (d)`: "usable by j (who accepts ¬PM): True … Under round 2's reading (I88: an argument has a step) the premise alone is no argument: usable False". Expected: bare-claim rulings vanish (S27's ¬PM alone; "p because p" for j who accepts p); problems grow (fewer ruled out); (Suff)/(Nec) defeat sets lose every entry reachable only by bare acceptance of ¬Expl(ℰ) or Expl(ℰ) (V3.1's in-moves all vanish). **Rejected by S41 Q23.** not run.
+
+**R2V3.9** — (E), Expl unmoved. X_j('Ans_p(a,b) = y') = ∅ always: D10.3's Arg_test concludes about answers and rules nothing out; the answer y is never ruled out by accepting its denial (V3.1's case vacuous); problems and the defeat sets shrink where only answer-rulings filled them. not run.
+
+**R2V3.10** — (E), Dec, Expl unmoved (S25–S27 respected: the physical module is read only where a capability is carried out). Deploy (D13.1) harder ⇒ (EX) smaller on contents whose only realization is a construction; (G) unmoved (Build reads no Can). not run.
+
+## (c) The claimed-only edges of my share
+
+| edge | settling variant/case | outcome expected |
+|---|---|---|
+| e3.30b (V3.6 → Sel → Dec → FC80) | FC80's generator extended to state a construction per population (stated := a member's parts), run under none and under R2V3.4: (a)/(a′)/(d′) recomputed | **computed** — the edge stands: more Sel, fewer Dec, wider underdetermination (R2V3.4's case above is the smallest witness). not run |
+| e3.34b (V3.7 → UsesReason, D9.11) | circuits of ≤ 4 occurrences (S108-3-I6) each given a represented objection ob with role bindings, m: ports(ob) → ports(R) onto an active route, Rec = {id}, Chg = ∅; UsesReason under none vs V3.7 on the 1,436 routes that did no work (baseline run, `FC75 (a)`: "no dependence along R on the declared contrasts") | **computed** — UsesReason T under V3.7, F under none, on exactly those routes: the edge stands. not run (the program builds no objection; e3.34a's ProducedBy/ProducesVia already computed) |
+| e3.37b | the owner's yes or no (S47 with S41 Q6): whether (EX) keeps its critical episode. **Note only** — not computable and not mine to settle |
+
+## (d) The edges
+
+| variant | kind | item | why (one line) | settled |
+|---|---|---|---|---|
+| R2V3.1 | blocks | L403.s3 [FROZEN] | inherited from V3.4 (e3.19): Build F on every use of an account in error | computed (round 1) |
+| R2V3.1 | moves | X:Dec, X:Expl | CT asks ExplUse on another question; Con F where that claim fails (E) | not run |
+| R2V3.1 | changes with | D12.2 [S2], D13.3 [S3] | CT's reading and ExplUse's ℰ-quantifier; the claim 'Acc(ℰ′)' names ℰ′ with its designation (I180) | – |
+| R2V3.2 | moves | X:Dec, X:Expl | Episode flips on re-entry chains; Con at pre-change Held witnesses | not run |
+| R2V3.2 | changes with | L55.n3 [S1], FC84.new2 [claim] | the sentence describes D13.8's key; the ordered/unordered/covering encodings differ under re-entry | – |
+| R2V3.3 | moves | X:Dec, X:Expl | the record clause decides Con for every Acc-T candidate once Held is tagged off the output | not run |
+| R2V3.3 | changes with | D12.2 [S2] (Held's reading), D13.3's tuple [S3] | the trace's extent and the tag are readings of L405's tuple (I56, I162) | – |
+| R2V3.4 | moves | X:Dec, X:Expl, D12.9 [S2] (underdetermination) | t′ on stated ports enters 𝒯; Sel moves without the deletion | not run |
+| R2V3.4 | constrains | D12.1 [S2] | 𝒯 = D15.8's population; Sel reads it through the parts reading | – |
+| R2V3.4 | changes with | L481.s3 [S3] | its second clause co-varies with the parts reading | – |
+| R2V3.5 | constrains | L195.s1 [FROZEN] | "There is a population 𝒯 of candidate transports": on construction-less histories the population is empty; whether that falsifies the sentence is a reading | claimed only |
+| R2V3.5 | changes with | L481.s3 [S3] | the clause's failure condition | – |
+| R2V3.6 | constrains | FC30 [claim] | (E) takes no provenance; Acc unmoved | – |
+| R2V3.6 | changes with | I90 (Θ by hand; not a template item) and C7/C9/C10's counts | C9's tag counts do not reproduce on computed chains; C7's and C10's do | not run |
+| R2V3.7 | moves | X:Dec, X:Expl | Con's Held witness needs o′ ⪯ o_t; without transitivity only o_t and its immediate predecessors | not run |
+| R2V3.7 | changes with | D14.7 [S3] (e_c ⪯_h e), D12.2 [S2] | both read ⪯; (EX) loses origin episodes ending ≥2 steps early | – |
+| R2V3.8 | moves | X:(Suff), X:(Nec), D10.1 [FROZEN] | premise-only arguments leave X_j; bare-acceptance defeats vanish; problems grow | not run |
+| R2V3.8 | changes with | D9.6 [S3] (premise-alone clause), D9.7 [S3], L397.s16 [S3] | the three state the premise-alone reading the variant deletes | – |
+| R2V3.9 | constrains | L397.s5 [FROZEN] | X_j(ψ) stays readable, but ψ can no longer be an answer claim | – |
+| R2V3.9 | changes with | D9.8 [S2], D10.3 [S2] | ruling out candidates keeps 'Acc(ℰ)'; Arg_test's conclusion ceases to be a claim | – |
+| R2V3.10 | constrains | D15.7 [FROZEN] | Cap keeps its construction disjunct while Can loses it; CT3/CT4 stay readable | – |
+| R2V3.10 | changes with | D13.1/D13.2 [FROZEN], D14.7 [S3], D16.1 [S4] | Deploy, (EX) and Scrutinizable read Can | – |
+
+No blocks of a FROZEN item computed this round (R2V3.1 inherits e3.19; R2V3.5's L195.s1 edge is claimed only).
+
+## (e) Not reached
+
+- **D14.1, D15.1, D15.2** (untouched middle definitions): their variants move only repair attribution and RetReal → Can → Deploy → (EX), whose channel R2V3.10 already maps; left out for budget.
+- **D13.7** (Ownership): not varied as a definition; its edge into Dec appears only under the CT-as-Build reading (R2V3.1): with CT := Build, D13.7's ownership feeds Dec — recorded in R2V3.1's row rather than run.
+- **The 112 S3 middle sentences** (map §6.4): not reached, except L405.s2–s5 and L481.s3 as the co-varied readings of R2V3.3/R2V3.4; a sentence-by-sentence pass needs a round of its own.
+- **The whole-subhistory extent** was taken only as R2V3.3b (one sub-reading), not crossed with R2V3.2's key.
+- **e3.37b**: the owner's yes or no; noted only.
+
+## (f) Inventions
+
+| id | where | choice made | other choices |
+|---|---|---|---|
+| R2-3-I1 | R2V3.1 | p′ := p with δ′ = H (the claim reads the designation) | same question, different Γ; same target, different query port; the widest contract (round 1's S108-3-I5) |
+| R2-3-I2 | R2V3.2 | the re-entry chain holds exactly one record, of ρ_C | records keyed both ways; a record per change |
+| R2-3-I3 | R2V3.3a | one tag, at o1, of cod t | a tag at every occurrence before the change; Held computed at o_t (now; the second checker's span reading) |
+| R2-3-I4 | R2V3.4 | parts := the codomain's ports with their bindings; stated parts read the same way | parts as edits (μ's settings, "set H"/"set T"); components with bindings (I158 as registered) |
+| R2-3-I5 | R2V3.5 | no construction stated ⇒ 𝒯 = ∅ | admitted alone (S108-3-I3, the program's); the case left out |
+| R2-3-I6 | R2V3.6 | H := one occurring pair of C per case; trace per occurrence; least fixed point of the T′ staging | H = ∅; all pairs; every fixed point must agree (Dec undefined where they differ) |
+| R2-3-I7 | R2V3.7 | ⪯ := reflexive closure of ≺ | ≺* (now); well-founded transitive (now) |
+| R2-3-I8 | R2V3.9 | records of a test kept as claims | records dropped too; answers kept, tests only dropped |
+
+END OF REPORT
