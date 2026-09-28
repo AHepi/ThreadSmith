@@ -55,18 +55,21 @@ S42. An owner question used the word "model" for a candidate explanation, and wa
 S43. Claude Code's permission flags alone did not close the sandbox. In round 3's build (log S105), stand-in decoy runs showed that with the flags alone read-only commands (`cat`, `ls`, `ps -ef`, `git log` …) ran in the sandbox and a glob inside the allowed command reached outside; the environment scrub needs bubblewrap, absent here. Fix: a shell guard as `CLAUDE_CODE_SHELL_PREFIX` that runs only the program's exact command; every escape then refused. Rule: before an outside model gets tools, test each lock with decoys, and add a second lock where the first leaves a route.
 S44. Sonnet without the program's pre-fill got the reply lines wrong. In the Sonnet test on round 2's part 12 (log S105), the bare run had 29 of 62 lines right at the first attempt; with the harness's pre-fill it matched Opus (0 of 51 items missed, marks 60 of 62). Rule: extraction by Sonnet goes only with a program pre-fill and a script check; by decision S46 the tabulation stays with Opus.
 S45. A session limit stopped an agent mid-task. Round 3's build agent (log S105) was stopped once by a session limit and resumed by message, by the orchestrator's account; the round's files do not record it. Rule: an agent stopped by a limit is resumed by message, not restarted, and what it had written is checked first; the stop and the resume are recorded in the round's files when they happen.
+S46. A plain-words sentence made a stronger claim than the owner's answer. Plain file 105 said "the maths asks for no criticism, and the bridge counts as worked out with none", and round 3 deleted " and criticism" from L13 on that reading. The owner's answer (S41, Q6) was only that no question about the brief occurred to the agent. Found by the owner (S47): "The math doesn't ask for anything. The agent does". Fix: " and criticism" restored as a checked revert; the bridge re-encoded as an episode in which no question about the brief occurred to the agent (log S106). Rule: write what the agent does, not what the maths "asks"; before a plain sentence restates an owner's answer, check that it claims no more than the answer.
+S47. Claude's reading of one owner answer about one example went further than the answer. The owner's S44 was about the shop sign; Claude's reading, that the written-in test leaves what makes something an explanation everywhere, went beyond it. It was put back to the owner and confirmed (S45) before log S106 applied it, so nothing was built on the reading alone. Rule: an owner's answer about one example is made general only after the owner confirms the general reading.
+S48. A formal construct told no candidate from another, so it did not do the work its name says. In log S106, LeavesOpen (D6.11 (c)), built for the owner's "the questions it leaves open", read a candidate only through the transport's domains. Every candidate for the sign left the further question open, one with no pin included; D6.11 (b) restated (F1) at a pin. Found by the critical review, by computation. Fix: withdrawn and parked (P8). Rule: before a construct is kept, compute it on candidates that should differ; if they all give the same value, it is not doing its named work.
 
 ## Lessons by category
 An index, added 23 September 2026 at the owner's word ("create new ones for different categories"). The entries above stay where they were written; this list files each one under a heading.
-- **Instruments that pass what they should catch:** 26, 35, 49, 50, S6, S9, S29, S39, S43.
+- **Instruments that pass what they should catch:** 26, 35, 49, 50, S6, S9, S29, S39, S43, S48.
 - **The answer reaching the tested agent:** S2, S9.
 - **Wording handed to the other model:** 27.
 - **Running outside models (size, budgets, limits, deadlines):** S7, S8, S10, S11, S13, S14, S16, S17, S20, S21, S24, S27, S34, S43.
 - **The repository, commits and scripts:** S1, S4, S17, S23, S25, S29, S30, S33.
-- **Reading the project and the owner's word:** S3, S4, S16, S18, S26, S31, S37, S40, S42.
+- **Reading the project and the owner's word:** S3, S4, S16, S18, S26, S31, S37, S40, S42, S46, S47.
 - **Numbering and names:** S5, S19, S33.
 - **Rules and versions fixed before the data:** S2, S12, S15, S36.
-- **Keeping the record true (log, Decisions, receipts, commit messages):** S12, S17, S18, S19, S23, S25, S41.
+- **Keeping the record true (log, Decisions, receipts, commit messages):** S12, S17, S18, S19, S23, S25, S41, S46.
 - **Limits the owner set, and how they are kept:** S10, S16, S22, S29, S30, S31, S32, S35, S38, S44.
 - **Framing the source ideas (hard to vary, error correction):** S26.
 - **Helpers, restarts and stopping processes:** S24, S27, S28, S30, S35, S37, S45.
