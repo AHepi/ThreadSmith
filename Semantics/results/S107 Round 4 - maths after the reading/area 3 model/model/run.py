@@ -20,6 +20,7 @@ from . import claims_r3a1  # noqa: F401  (S105 round 3, area 1: FC12.new2, FC12.
 from . import claims_r3a2  # noqa: F401  (S105 round 3, area 2: FC23.new1, FC25.new1, FC47.new1)
 from . import claims_r3a3  # noqa: F401  (S105 round 3, area 3: FC98.new2, FC72.new1, FC80.new1, FC32.new1, FC90.new1, FC102.new1, FC103.new1)
 from . import claims_s106  # noqa: F401  (S106, the written-in test taken out: FC23.new2, FC23.new3, FC25.new2)
+from . import claims_r4a3  # noqa: F401  (S107 round 4, area 3: FC72.new2, K1 the winter-myth knock-on)
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

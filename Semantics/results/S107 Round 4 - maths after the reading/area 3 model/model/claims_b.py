@@ -1772,22 +1772,15 @@ def _prov_step(n, held, trace, selc, rd, i161, R, eps=None, rec_of=None):
     return out
 
 
-BUILD_READINGS = ("S107", "r3")
-BUILD_READING = "S107"
-
-
-def build_at(n, held, trace, rd, R, o, build_reading=None):
-    """Build at o (D13.3): a construction trace whose output o holds Held_ℓ(o, c) (ExplUse, BindingConstruction, Owned,
-    ¬TransferComposite set to hold, I56). S107 round 4, area 3 (S2): Held under every reading of 'represented', as
-    D13.3 and L405 (since R3A3-T4) write it; build_reading "r3" keeps the reading before: L405's old 'a represented
-    organization' read as the cut reads it (U: Rep at o; K: Rep at an earlier occurrence; T, T′: Held)."""
+def build_at(n, held, trace, rd, R, o):
+    """Build at o (D13.3): a construction trace whose output o is a represented organization, 'represented'
+    read as the cut reads it (ExplUse, BindingConstruction, Owned, ¬TransferComposite set to hold, I56)."""
     if not trace[o]:
         return False
-    if (build_reading or BUILD_READING) == "r3":
-        if rd == "U":
-            return o in R
-        if rd == "K":
-            return any(x in R for x in range(o))
+    if rd == "U":
+        return o in R
+    if rd == "K":
+        return any(x in R for x in range(o))
     return bool(held[o])
 
 
@@ -2637,7 +2630,8 @@ TEXT_SINKS = {"(O)", "(Q)", "Θ", "Org", "𝒩", "C", "ℓ", "β", "Ω", "Σ", "
 def dep_edges(reading, dep=None):
     """The graph under a reading of 'represented' (D18.1): 'U' as worded; 'K' every ('<', x) edge staged
     (dropped: a recursion along ≺_h or below the step); 'T' Sel and Con use Held, not (R); "T'" Con uses Held, Sel's
-    (R) staged [I162]. Build uses Held under every reading (D13.3, L405 since R3A3-T4; S107 round 4, area 3, S2).
+    (R) staged [I162]. In DEP, Build uses Held under every reading (D13.3, L405 since R3A3-T4; S107 round 4, area 3,
+    S2); build_at, which FC83 reads under the four cuts, keeps round 2's reading of L405's old wording.
     (K2) → Live → (K2) is staged below the step in every reading (D9.4)."""
     out = {}
     for n, xs in (DEP if dep is None else dep).items():
