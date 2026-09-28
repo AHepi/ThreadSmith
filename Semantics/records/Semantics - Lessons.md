@@ -51,21 +51,25 @@ S38. Far more checkers were started than the work needed. One checker per group 
 S39. A fix held under only one reading, and a claim passed on hand-set inputs. Area 1's selection fix and the integration's "no clash" rested on the program reading hand-set tags; the critical review ran the program's own function and found a history both selected and constructed under one staging of "represented" (R1). Fix: I161, and the claims now compute "represented" under every staging tried. Rule: a fix that depends on an open reading is run under each reading, from computed inputs.
 S40. Questions were passed to the owner that the texts settle. The three areas raised 25 owner questions; the second checker found 22 settled by the texts or the computations, leaving three, and one more returned because it turns on the owner's reading of "argument" (S23). Rule: a question goes to the owner only where the owner's words leave it open and neither the texts nor a computation settles it.
 S41. Moves were counted loosely. The integration counted 120, including register entries, re-based claims and new test claims; counted strictly by the governing note (formal changes answering a challenge that holds, plus text changes applied), 115. Since a round with no moves ends the series, the count follows the note's definition and says what it leaves out.
+S42. An owner question used the word "model" for a candidate explanation, and was read as being about AI. Round 3's one owner question (R3-Q1, log S105) asked, in the words of `owner questions after round 3.md`, "when does a model count as simply having the answer written into it?"; the owner answered "LLMs are not part of the semantics" (S43). Fix: asked again with the shop sign and without the word (S44). Rule: in owner questions, say "explanation" or "candidate" for what the theory judges; never "model".
+S43. Claude Code's permission flags alone did not close the sandbox. In round 3's build (log S105), stand-in decoy runs showed that with the flags alone read-only commands (`cat`, `ls`, `ps -ef`, `git log` …) ran in the sandbox and a glob inside the allowed command reached outside; the environment scrub needs bubblewrap, absent here. Fix: a shell guard as `CLAUDE_CODE_SHELL_PREFIX` that runs only the program's exact command; every escape then refused. Rule: before an outside model gets tools, test each lock with decoys, and add a second lock where the first leaves a route.
+S44. Sonnet without the program's pre-fill got the reply lines wrong. In the Sonnet test on round 2's part 12 (log S105), the bare run had 29 of 62 lines right at the first attempt; with the harness's pre-fill it matched Opus (0 of 51 items missed, marks 60 of 62). Rule: extraction by Sonnet goes only with a program pre-fill and a script check; by decision S46 the tabulation stays with Opus.
+S45. A session limit stopped an agent mid-task. Round 3's build agent (log S105) was stopped once by a session limit and resumed by message, by the orchestrator's account; the round's files do not record it. Rule: an agent stopped by a limit is resumed by message, not restarted, and what it had written is checked first; the stop and the resume are recorded in the round's files when they happen.
 
 ## Lessons by category
 An index, added 23 September 2026 at the owner's word ("create new ones for different categories"). The entries above stay where they were written; this list files each one under a heading.
-- **Instruments that pass what they should catch:** 26, 35, 49, 50, S6, S9, S29, S39.
+- **Instruments that pass what they should catch:** 26, 35, 49, 50, S6, S9, S29, S39, S43.
 - **The answer reaching the tested agent:** S2, S9.
 - **Wording handed to the other model:** 27.
-- **Running outside models (size, budgets, limits, deadlines):** S7, S8, S10, S11, S13, S14, S16, S17, S20, S21, S24, S27, S34.
+- **Running outside models (size, budgets, limits, deadlines):** S7, S8, S10, S11, S13, S14, S16, S17, S20, S21, S24, S27, S34, S43.
 - **The repository, commits and scripts:** S1, S4, S17, S23, S25, S29, S30, S33.
-- **Reading the project and the owner's word:** S3, S4, S16, S18, S26, S31, S37, S40.
+- **Reading the project and the owner's word:** S3, S4, S16, S18, S26, S31, S37, S40, S42.
 - **Numbering and names:** S5, S19, S33.
 - **Rules and versions fixed before the data:** S2, S12, S15, S36.
 - **Keeping the record true (log, Decisions, receipts, commit messages):** S12, S17, S18, S19, S23, S25, S41.
-- **Limits the owner set, and how they are kept:** S10, S16, S22, S29, S30, S31, S32, S35, S38.
+- **Limits the owner set, and how they are kept:** S10, S16, S22, S29, S30, S31, S32, S35, S38, S44.
 - **Framing the source ideas (hard to vary, error correction):** S26.
-- **Helpers, restarts and stopping processes:** S24, S27, S28, S30, S35, S37.
+- **Helpers, restarts and stopping processes:** S24, S27, S28, S30, S35, S37, S45.
 - **The owner's accounts, money and terms of use:** S32.
 
 ## Traps
