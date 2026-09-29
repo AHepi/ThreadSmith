@@ -138,6 +138,8 @@ def r2v43_chains():
     n_tot = n_fp = 0
     diff = {"e": 0, "a": 0, "b": 0}
     ex = {"e": None, "a": None, "b": None}
+    diffh = {"e": 0, "a": 0, "b": 0}
+    exh = {"e": None, "a": None, "b": None}
     for n in (1, 2, 3):
         rec_choices = [[None]] + [list(range(o)) + [None] for o in range(1, n)]
         for held in itertools.product([0, 1], repeat=n):
@@ -165,9 +167,14 @@ def r2v43_chains():
                                 diff[k] += 1
                                 if ex[k] is None:
                                     ex[k] = dict(n=n, held=held, trace=trace, selc=selc, rec=rec, prov=prov_show(n, fps))
+                                if held[last]:  # t held at the output, as for every candidate meeting (E) (Faithful ⇒ held)
+                                    diffh[k] += 1
+                                    if exh[k] is None:
+                                        exh[k] = dict(n=n, held=held, trace=trace, selc=selc, rec=rec, prov=prov_show(n, fps))
     P("   chains: %d; with one fixed point under T′: %d" % (n_tot, n_fp))
     for k in ("e", "a", "b"):
         P("   reading (%s): holdings where ¬Dec ∧ (Sel ∨ CT) ≠ ¬Dec: %d%s" % (k, diff[k], ("; smallest: %s" % ex[k]) if ex[k] else ""))
+        P("      of them with t held at the last holding (as for a candidate meeting (E)): %d%s" % (diffh[k], ("; smallest: %s" % exh[k]) if exh[k] else ""))
 
 
 def r2v44(cases):
