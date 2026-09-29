@@ -13,7 +13,7 @@
 #      student's-copy shape, off against on;
 #   E. the program's made-up cases of the copy (s104_external.py: FC-E1-E5; s104_creative_transport.py: CT1-CT8),
 #      run under the variant and compared by md5 with their output under 'none' (the differing lines kept).
-# The bridge (FC84.new1) is read from the whole-suite runs. Writes only OUT.json (and OUT.json's .txt summary).
+# F. (B3) the bridge (FC84.new1 (a1), (a2)): Con and Build at the output. The bridge is also read from the whole-suite runs. Writes only OUT.json (and OUT.json's .txt summary).
 import argparse
 import hashlib
 import itertools
@@ -221,6 +221,21 @@ def chains():
     return res
 
 
+def bridge():
+    """(B3) the owner's bridge, FC84.new1 (a1) and (a2): the chain as the claim builds it (q = C_brief throughout, no record,
+    T′, D13.8 as S41 has it): the fixed points, Con at the output, Build at the output. [Added before section B2's and B3's
+    scope runs; section B1's run was made without it.]"""
+    from model.claims_b import chain_eps
+    from model.claims_b import build_at
+    out = {}
+    for key, held_, trace_ in (("a1", [0, 1], [0, 1]), ("a2", [0, 0, 1], [0, 0, 1])):
+        n_ = len(held_)
+        fps = prov_fixed_points(n_, held_, trace_, [0] * n_, "T'", True, chain_eps(["C_brief"] * n_, [False] * n_, "S41"))
+        out[key] = dict(fixed_points=prov_show(n_, fps), con_at_output=[bool(sc[n_ - 1][1]) for R, sc in fps],
+                        build=bool(build_at(n_, held_, trace_, "T'", fps[0][0] if fps else frozenset(), n_ - 1)))
+    return out
+
+
 def run_script(name, env_extra):
     env = dict(os.environ)
     env["PYTHONHASHSEED"] = "0"
@@ -241,6 +256,7 @@ def main():
     setv("none")
     sbase = student_copy()
     cbase = chains() if ARGS.section == "B3" else None
+    bbase = bridge() if ARGS.section == "B3" else None
     scripts = ["s104_external.py", "s104_creative_transport.py"]  # s106_cases.py: its cases are part A's worked list, rebuilt above (A)
     sc_base = {s: run_script(s, {}) for s in scripts}
     worlds = []
@@ -271,6 +287,8 @@ def main():
                                          expl=[[b["prov"][k][3], e["prov"][k][3]] for k in ("Dec", "Con", "Sel")]))
         rec["student"] = student_copy()
         rec["student_moves"] = rec["student"] != sbase
+        if bbase is not None:
+            rec["bridge"] = dict(off=bbase, on=bridge())
         if cbase is not None:
             cv = chains()
             diff = [k for k in cbase if cbase[k] != cv[k]]
