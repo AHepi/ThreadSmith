@@ -12,6 +12,8 @@ run and at each saved moment:
       averaged separately over the 15 essential sites (whose knockout stops self-copying, from
       "copying and knockouts.json") and the 85 others;
   M2  the share of organisms carrying the ancestor's copy loop and its head exactly, and the whole ancestral genome;
+      added after the plan (marked so in the results): the share of organisms whose genotype, run alone in Avida's test
+      processor, still makes an exact copy of itself;
   tasks: organisms performing each of the nine logic tasks at the end;
 and the controls K1 to K5. Writes a compact summary (JSON and a Markdown table) into
 "Semantics/results/S111 Avida - the runs/".
@@ -26,6 +28,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from s111_run_the_avida_worlds import OUT as RUNS, RATES, SEEDS  # noqa: E402
+import s111_avida_test_processor as T  # noqa: E402
 
 RES = os.path.join(os.path.dirname(HERE), 'results', 'S111 Avida - the runs')
 TASKS = ['NOT', 'NAND', 'AND', 'ORN', 'OR', 'ANDN', 'NOR', 'XOR', 'EQU']
@@ -144,6 +147,10 @@ def one_run(name, anc, essential, saves):
         c = conservation(anc, pop, essential)
         s.update({'conserved_essential': c['essential'], 'conserved_non_essential': c['non_essential'],
                   'conserved_essential_least_site': c['essential_min_site']})
+        # added after the plan (see the results file): the share of organisms whose genotype, run alone in the test
+        # processor, still makes an exact copy of itself; every living genotype is run
+        ev = T.evaluate([q for q, _ in pop])
+        s['share_organisms_self_copying'] = round(sum(n for (q, n), r in zip(pop, ev) if r['viable']) / s['organisms'], 4)
         res['saves'][u] = s
         res['per_site_conservation_at_last_save'] = c['per_site']
     return res
@@ -179,6 +186,7 @@ def main():
             'organisms_min_from_1000': spread([r['organisms_min_from_1000'] for r in rs]),
             'at_last_save': {k: spread([s[k] for s in last]) for k in
                              ['conserved_essential', 'conserved_non_essential', 'copy_loop_exact', 'head_exact',
+                              'share_organisms_self_copying',
                               'whole_ancestor', 'mean_length', 'genotypes']},
             'tasks_at_end_runs_with_any': {t: sum(1 for r in rs if r['tasks_at_end'][t] > 0) for t in TASKS}}
     # controls
@@ -229,6 +237,7 @@ def write_md(out):
                    ('conserved_non_essential', 'non-essential sites still the ancestor\'s (R3)'),
                    ('copy_loop_exact', 'organisms with the ancestor\'s copy loop exactly (M2)'),
                    ('head_exact', 'organisms with the ancestor\'s head exactly (M2)'),
+                   ('share_organisms_self_copying', 'organisms whose genotype still copies itself exactly (added)'),
                    ('whole_ancestor', 'organisms identical to the ancestor (M2)'),
                    ('mean_length', 'mean genome length'), ('genotypes', 'living genotypes')]:
         rows.append((lab + ', at the last save', (lambda k: lambda c: fmt(c['at_last_save'][k], 1 if k in ('mean_length', 'genotypes') else 3))(k)))
@@ -237,11 +246,13 @@ def write_md(out):
     for lab, f in rows:
         L.append('| %s | %s |' % (lab, ' | '.join(f(c) for c in out['by_condition'].values())))
     L += ['', '## Over time, per run: essential / non-essential sites still the ancestor\'s, and share with the copy loop exactly', '',
+          'Each cell: essential sites / non-essential sites still the ancestor\'s / share with the copy loop exactly / share '
+          'whose genotype still copies itself exactly (added).', '',
           '| run | ' + ' | '.join(str(u) for u in SAVES) + ' |', '|---|' + '---|' * len(SAVES)]
     for name, r in out['runs'].items():
-        L.append('| %s | %s |' % (name, ' | '.join('%.2f / %.2f / %.2f' % (r['saves'][u]['conserved_essential'],
-                 r['saves'][u]['conserved_non_essential'], r['saves'][u]['copy_loop_exact']) if u in r['saves'] else '-'
-                 for u in SAVES)))
+        L.append('| %s | %s |' % (name, ' | '.join('%.2f / %.2f / %.2f / %.2f' % (r['saves'][u]['conserved_essential'],
+                 r['saves'][u]['conserved_non_essential'], r['saves'][u]['copy_loop_exact'],
+                 r['saves'][u]['share_organisms_self_copying']) if u in r['saves'] else '-' for u in SAVES)))
     L += ['', '## Tasks at the end, organisms performing each (of about 3,600)', '', '| run | ' + ' | '.join(TASKS) + ' |',
           '|---|' + '---|' * len(TASKS)]
     for name, r in out['runs'].items():
