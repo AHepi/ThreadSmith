@@ -1,0 +1,409 @@
+====================================================================================================
+FC12.new1  HOLDS ON ALL MODELS TRIED  (14.7 s)
+-- D12.1 with I161, the pole's forward transport [for all] holds on all models tried
+   statement: ¬(Sel(t) ∧ Con(t)) at every fixed point of (R), under U, K, T and T′
+   models_tried: 146
+   hypothesis_met: 146
+   space: {'note': "chains o1 ≺ … ≺ on, n ≤ 3; t held at on (computed: Faithful_C(t) True; Sel's conditions on H = {(1,b1_45)} True)"}
+-- D12.1 with I161, random transports [for all] holds on all models tried
+   statement: ¬(Sel(t) ∧ Con(t)) at every fixed point, t's holding and Sel's conditions computed from t, under U, K, T and T′
+   seed: 105212
+   models_tried: 8640
+   hypothesis_met: 8640
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 80, 'families': ['G-surg', 'G-free'], 'note': 'histories of 1–2 occurrences per transport'}
+-- without I161 (the review's R1) [there is] witness found
+   statement: there is a history with Sel(t) ∧ Con(t) under T or T′
+   models_tried: 2
+   space: {'note': 'the same space as part 1'}
+   witness:
+      T: Sel and Con both hold at the output: held [True], trace [1], Sel's conditions [True]; fixed point [{'o1': 'Sel+Con'}]
+-- round 2's D12.1 (no cod t exclusion), tags [there is] witness found
+   statement: there is h with Sel(t) ∧ Con(t)
+   models_tried: 10
+   space: {'note': 'every set of tagged items ⊆ {t, H, surv, cod, other} × Prepares'}
+   witness:
+      round 2 D12.1: Sel and Con both hold: represented ('cod',), Prepares True
+====================================================================================================
+FC12.new2  HOLDS ON ALL MODELS TRIED  (0.1 s)
+-- (a) B1 / B-e6: a record made from a selected carrier [computation] computed: as claimed
+   statement: without D12.3′ the record's own history makes it Dec (o1 represents cod t before it), against L211; with D12.3′ it carries o1's Sel; under K, T, T′
+   result:
+      held [1, 0, 1], trace [0, 1, 0], Sel's conditions [1, 0, 1].
+      U: D12.1–D12.3 on the record's own history []; D12.3′ (the record carries o1's) []
+      K: D12.1–D12.3 on the record's own history [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]; D12.3′ (the record carries o1's) [{'o1': 'Sel', 'o2': '–', 'o3': 'Sel'}]
+      T: D12.1–D12.3 on the record's own history [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]; D12.3′ (the record carries o1's) [{'o1': 'Sel', 'o2': '–', 'o3': 'Sel'}]
+      T': D12.1–D12.3 on the record's own history [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]; D12.3′ (the record carries o1's) [{'o1': 'Sel', 'o2': '–'
+-- (b) B1: a selected transport prepared again by a construction trace [computation] computed: as claimed
+   statement: per holding: o1 Sel, o3 Con (L405: construction; L201: construction may operate on selected material); B1's fix makes o3 Dec
+   result:
+      held [1, 0, 1], trace [0, 1, 1], Sel's conditions [1, 0, 1].
+      U: per holding []; B1's fix (Con blocked by an earlier Sel holding) []
+      K: per holding [{'o1': 'Sel', 'o2': '–', 'o3': 'Con'}]; B1's fix (Con blocked by an earlier Sel holding) [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]
+      T: per holding [{'o1': 'Sel', 'o2': '–', 'o3': 'Con'}]; B1's fix (Con blocked by an earlier Sel holding) [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]
+      T': per holding [{'o1': 'Sel', 'o2': '–', 'o3': 'Con'}]; B1's fix (Con blocked by an earlier Sel holding) [{'o1': 'Sel', 'o2': '–', 'o3': 'Dec'}]
+-- (c) B1's fix on FC98 (d): built on a selected representation [computation] computed: as claimed
+   statement: D12.2 gives o2 Con (L201); B1's fix gives o2 Dec, against L201 and L405
+   result:
+      K: D12.2 [{'o1': 'Sel', 'o2': 'Con'}]; B1's fix [{'o1': 'Sel', 'o2': 'Dec'}]
+      T: D12.2 [{'o1': 'Sel', 'o2': 'Con'}]; B1's fix [{'o1': 'Sel', 'o2': 'Dec'}]
+      T': D12.2 [{'o1': 'Sel', 'o2': 'Con'}]; B1's fix [{'o1': 'Sel', 'o2': 'Dec'}]
+-- (d) D12.3′ on every chain of ≤ 3 holdings [for all] holds on all models tried
+   statement: one fixed point under T′; every record has its source's provenance; Sel ∧ Con nowhere
+   models_tried: 1768
+   hypothesis_met: 1768
+   space: {'note': "chains n ≤ 3; held, trace, Sel's conditions per holding; each holding a record of an earlier holding or not (a record is held)"}
+-- (d′) without D12.3′ [there is] witness found
+   statement: there is a record whose own history gives it a provenance its source lacks (D12.3 against D12.4, B-e6)
+   models_tried: 44
+   space: {'note': 'the same space'}
+   witness:
+      o2, a record of o1, gets Sel from its own history, its source Dec: (2, [1, 1], [0, 0], [0, 1], [None, 0])
+-- (e) N1 (K5): a trace prepares t on a selection history [computation] computed: as claimed
+   statement: tags (Con read from (R)-tags, the reading T′ replaced): Sel no, Con no, Dec; T′ with Held computed at the output: Con
+   result:
+      tag model: Sel False, Con False, Sel without I161 True; computed (held True, Sel's conditions True, trace 1): {'U': [{'o1': 'Dec'}, {'o1': 'Con'}], 'K': [{'o1': 'Dec'}], 'T': [{'o1': 'Con'}], "T'": [{'o1': 'Con'}]}
+====================================================================================================
+FC12.new3  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- B2: selection on material a trace built [computation] computed: as claimed
+   statement: CT(h′, t) with t an output of the trace (exact): t selected; transitive: t 'constructed' though no trace prepared it (against L405's 'the rest of the content keeps its inherited provenance', L201)
+   result:
+      t the pole's forward transport (held True, Sel's conditions on H True).
+      U: exact []; transitive [{'o1': '–', 'o2': 'Dec'}, {'o1': '–', 'o2': 'Con'}]
+      K: exact [{'o1': '–', 'o2': 'Sel'}]; transitive [{'o1': '–', 'o2': 'Dec'}]
+      T: exact [{'o1': '–', 'o2': 'Sel'}]; transitive [{'o1': '–', 'o2': 'Con'}]
+      T': exact [{'o1': '–', 'o2': 'Sel'}]; transitive [{'o1': '–', 'o2': 'Con'}]
+====================================================================================================
+FC23.new2  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- (a) S44: the two-part sign is an explanation under (E) after S106 [computation] computed: as claimed
+   statement: ℰ_two (a red part that switches on on Mondays, a blue part on Tuesdays) meets (E) under every reading of D6.3's quantifier; the red part pins the answer on Mondays, the blue part on Tuesdays; no part is a slot under 'every'
+   result:
+      answers: Monday 'red', Tuesday 'blue'; (E) after S106: True, conjuncts {'F1': True, 'F2': True, 'A': True, 'Dep': True, 'NC1': True, 'NonVacuous': True}; Dependence witness (('tue', 'b0'), ['r']); under the four readings (every, some, some-exempt, some-exempt-set): after S106 (T,T,T,T), round 3's (E) (T,F,F,F); pins [('r', ('1', 'b0')), ('u', ('tue', 'b0'))]; slots under each reading {'every': [], 'some': ['r', 'u'], 'some-exempt': ['r'], 'some-exempt-set': ['r', 'u']}
+      organization D_sign
+        ports: colour ∈ {red,blue,green}
+        components: r on (colour); u on (colour)
+        boundaries B = {b0}; edits
+-- (b) the one-part sign: a slot, an explanation under (E) after S106, none under round 3's [computation] computed: as claimed
+   statement: ℰ_one (one part giving red on Mondays and blue on Tuesdays) has a slot under every reading and meets (E) after S106; round 3's (E) excluded it under every reading
+   result:
+      (E) after S106 True (conjuncts {'F1': True, 'F2': True, 'A': True, 'Dep': True, 'NC1': False, 'NonVacuous': True}); under the four readings: after S106 (T,T,T,T), round 3's (F,F,F,F); Slot_C(ℰ_one, k): {'every': True, 'some': True, 'some-exempt': True, 'some-exempt-set': True}
+      candidate ℰ_one for p_sign: Γ = {k}, δ_E = colour
+        π: colour := id(colour)
+        τ: 1↦1, tue↦tue; σ: b0↦b0
+        λ(k) = ({r,u}, colour:=id(colour))
+      organization E_one
+        ports: colour ∈ {red,blue,green}
+        components: k on (colour)
+        boundaries B = {b0}; edits A = {1,tue}
+        composition (other than with 1): tue·tue=undef
+        L_k(1,b
+-- (f) S41 (Q2) kept: a declared link is no explanation [computation] computed: as claimed
+   statement: ℰ_two and ℰ_one meet (E); with a declared transport (Dec) and an argument not using (E) that rules out Expl(ℰ), each is outside (Suff)'s defeat set as S41 writes it and as L536 writes it (Acc ∧ Dec ⇒ ¬Expl applies), inside it as text 104's L17 words it; with a constructed transport it is inside all three (as FC30.new1 (a))
+   result:
+      ℰ_two, Dec (Sel False, Con False, Dec True), argument usable True: L536 False; L17 as text 104 words it True; L17 (S41) False; Acc ∧ Dec ⇒ ¬Expl with Expl := Acc ∧ ¬Dec: True
+      ℰ_two, Con (Sel False, Con True, Dec False), argument usable True: L536 True; L17 as text 104 words it True; L17 (S41) True; Acc ∧ Dec ⇒ ¬Expl with Expl := Acc ∧ ¬Dec: True
+      ℰ_two, Sel (Sel True, Con False, Dec False), argument usable True: L536 True; L17 as text 104 words it True; L17 (S41) True; Acc ∧ Dec ⇒ ¬Expl with Expl := Acc ∧ ¬Dec: True
+      ℰ_one, Dec (Sel False, Con False, Dec True), argument usable True: L536 False; 
+-- (g) no grade (S20, S23) [look] look: as expected
+   statement: the look: slot, NC1, pin and pins each take one candidate; none takes two candidates, so none orders candidates
+   result:
+      slot(cand, k, reading, quantifier); NC1(cand, reading, quantifier); pin(cand, k, a, b); pins(cand)
+====================================================================================================
+FC30.new1  HOLDS ON ALL MODELS TRIED  (7.5 s)
+-- (a) the student's formula: a declared account ruled out as an explanation [computation] computed: as claimed
+   statement: the pole's forward candidate meets (E) (FC26); with a declared transport and an argument not using (E) that rules out Expl(ℰ), it is in Def(L17 as text 104 words it) and in neither Def(L536) nor Def(L17) as S41 writes it; with a constructed transport it is in all three
+   result:
+      Acc(ℰ_fwd) True; argument:
+        step [MP] ⊢ ¬Expl_ℰ_fwd
+          record leaf: r
+          assumption leaf: (r → ¬Expl_ℰ_fwd)
+      Dec (Sel False, Con False, Dec True), argument usable True: L536 False; L17 as text 104 words it True; L17 (S41) False
+      Dec (Sel False, Con False, Dec True), argument usable False: L536 False; L17 as text 104 words it False; L17 (S41) False
+      Con (Sel False, Con True, Dec False), argument usable True: L536 True; L17 as text 104 words it True; L17 (S41) True
+      Con (Sel False, Con True, Dec False), argument usable False: L536 False; L17 as text 104 words it False; L17 (S41) False
+      Sel (Sel Tr
+-- (b) one defeat set [for all] holds on all models tried
+   statement: Def_j(L17, S41) = Def_j(L536); Def_j(L17 as text 104 words it) = Def_j(L536) ∪ {ℰ : Acc ∧ Dec(t) ∧ Expl(ℰ) ruled out}
+   seed: 107012
+   models_tried: 17280
+   hypothesis_met: 17280
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 160, 'families': ['G-surg', 'G-free'], 'note': 'provenance Θ by hand (I90): Dec, Con or Sel, each computed by sel and con'}
+-- (c) the owner's condition and (Suff) have a common model [by construction] holds by construction
+   statement: Expl := Acc ∧ ¬Dec meets Acc ∧ ¬Dec ⇒ Expl ((Suff) as conjectured) and Acc ∧ Dec ⇒ ¬Expl (S41, Q2), on every candidate
+   result:
+      checked on the four values of (Acc, Dec); (E) itself takes no provenance (FC30): ¬Dec(t) stands beside it
+-- (d) the student's copy, provenance computed (B8) [computation] computed: as claimed
+   statement: a source holding E (constructed) before the student's holding, no trace at the student's: Dec(t) under U, T and T′, whether or not one pair was tried; so Acc ∧ Dec ⇒ ¬Expl reaches the owner's example (K, rejected in round 2 because a first construction represents nothing there, FC98 (d), leaves the source unrepresented and gives Sel when one pair was tried)
+   result:
+      Acc(ℰ_fwd) True; argument usable, not using (E): True
+      H = {(1,b1_45)}, U: fixed points [{'o1': 'Con'}]; Dec(t) at o2 [True]; Def(L17, S41) [False]
+      H = {(1,b1_45)}, K: fixed points [{'o2': 'Sel'}]; Dec(t) at o2 [False]; Def(L17, S41) [True]
+      H = {(1,b1_45)}, T: fixed points [{'o1': 'Con'}]; Dec(t) at o2 [True]; Def(L17, S41) [False]
+      H = {(1,b1_45)}, T': fixed points [{'o1': 'Con'}]; Dec(t) at o2 [True]; Def(L17, S41) [False]
+      H = ∅, U: fixed points [{}, {'o1': 'Con'}]; Dec(t) at o2 [True, True]; Def(L17, S41) [False, False]
+      H = ∅, K: fixed points [{}]; Dec(t) at o2 [True]; Def(L17, S41) [False]
+      H
+-- (e) a link no pair tried and nobody worked out (B8, FC77) [computation] computed: as claimed
+   statement: after round 2 it is selected (H = ∅), so ¬Dec and Q2's condition misses it; with H ≠ ∅ it is declared and the owner's condition applies
+   result:
+      D12.1 after round 2 (H = ∅ allowed): Sel's conditions True; fixed points [{'o1': 'Sel'}]; Dec False; in Def(L17, S41) True
+      D12.1 with H ≠ ∅ (R3A1-05): Sel's conditions False; fixed points [{}]; Dec True; in Def(L17, S41) False
+-- (f) K3: the student's parts under D12.4 [computation] computed: as claimed
+   statement: under D12.4's parts (component with its binding) no part of the student's t is a transfer, so each is Dec, as the whole t is (D12.3, D16.XV); only reading a part as the component alone gives the source's Con
+   result:
+      part c_H: D12.4 (component with its binding: the binding declared, not transferred) [{'o1': 'Con'}]; K3's reading (the component alone, transferred) [{'o1': 'Con', 'o2': 'Con'}]
+      part c_T: D12.4 (component with its binding: the binding declared, not transferred) [{'o1': 'Con'}]; K3's reading (the component alone, transferred) [{'o1': 'Con', 'o2': 'Con'}]
+      part c_L: D12.4 (component with its binding: the binding declared, not transferred) [{'o1': 'Con'}]; K3's reading (the component alone, transferred) [{'o1': 'Con', 'o2': 'Con'}]
+-- (g) L61's (Nec) against L538 (critical review, objection 3) [computation] computed: as claimed
+   statement: the student's declared copy, with an argument not using (E) that rules out ¬Expl(ℰ): in the defeat set of (Nec) as L61's 'their' reads after R3A1-T1 (necessity of Account ∧ ¬Dec), not in L538's (a transport, t, preserves E on C); with a constructed or selected transport in neither: the two differ exactly on Dec, which L538 names nowhere
+   result:
+      Acc(ℰ_fwd) True; Faithful_C(t) True
+      Dec (Sel False, Con False, Dec True): argument not using (E) that rules out ¬Expl(ℰ), usable: True; defeats (Nec) as L538 (D16.XV) states it: False; as L61's 'their' reads after R3A1-T1: True
+      Con (Sel False, Con True, Dec False): argument not using (E) that rules out ¬Expl(ℰ), usable: True; defeats (Nec) as L538 (D16.XV) states it: False; as L61's 'their' reads after R3A1-T1: False
+      Sel (Sel True, Con False, Dec False): argument not using (E) that rules out ¬Expl(ℰ), usable: True; defeats (Nec) as L538 (D16.XV) states it: False; as L61's 'their' reads after R
+-- (h) W5 (R4A3-01): 'not using (E)' read at the level of the symbol [computation] computed: as claimed
+   statement: an argument usable by j whose only use of (E) is Acc(ℰ′) for another candidate rules out Expl(ℰ); read as D16.XV writes it ((E), Acc ∉ Uses(α)) it does not put ℰ in (Suff)'s defeat set; read at the level of the instance (no use of Acc(ℰ) itself) it does; the argument from a record (r, r → ¬Expl(ℰ)) is in it under both
+   result:
+      Acc(ℰ_fwd) True; Acc(ℰ′ = ℰ_rev) False (not read by the argument's usability); ℰ_fwd constructed: Sel False, Con True, Dec False
+      argument:
+        step [MP] ⊢ ¬Expl_ℰ_fwd
+          assumption leaf: Acc_ℰ_rev
+          assumption leaf: (Acc_ℰ_rev → ¬Expl_ℰ_fwd)
+      usable by j and ruling out Expl(ℰ_fwd): True; Uses(α) ['Acc_ℰ_rev', 'Expl_ℰ_fwd']; ℰ_fwd in (Suff)'s defeat set (L536): symbol False, instance True; with the record argument: symbol True, instance True
+====================================================================================================
+FC77  HOLDS ON ALL MODELS TRIED  (4.7 s)
+-- with H = ∅ (D12.1: H ≠ ∅) [for all] holds on all models tried
+   statement: no transport has Sel(t; {t}, id, ∅): a link no encountered pair tried is not selected (Q2's 'not found by trial'; L13, L195 'survived')
+   seed: 104771
+   models_tried: 8640
+   hypothesis_met: 8640
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 80, 'families': ['G-surg', 'G-free'], 'note': ''}
+-- the other choice: D12.1 after round 2 (H = ∅ allowed) [for all] holds on all models tried
+   statement: FC77' as it stood: every transport t with Hom(τ) has Sel(t; {t}, id, ∅) when Θ admits t
+   seed: 104772
+   models_tried: 8640
+   hypothesis_met: 8429
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 80, 'families': ['G-surg', 'G-free'], 'note': ''}
+-- the other choice: the trivial witness exactly when τ is a homomorphism [for all] holds on all models tried
+   statement: under D12.1 after round 2, Sel(t; {t}, id, ∅) ⟺ Hom(τ), when Θ admits t
+   seed: 104773
+   models_tried: 8640
+   hypothesis_met: 8640
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 80, 'families': ['G-surg', 'G-free'], 'note': ''}
+-- which of I52's requirements block the trivial witness [computation] computed: as claimed
+   statement: under D12.1 with H ≠ ∅, H = ∅ blocks it; under D12.1 after round 2 only Θ's admission of t and Hom(τ) did
+   result:
+      With H = ∅: 'the pairs of H occur', (F1) and the (F2) equation on H are vacuous; an empty history has no occurrence, so none represents t, H or the survival condition. After round 2 what remained was Hom(τ) (not pair-relative, I18) and 'the members of 𝒯 are admitted by the physics' (L481). S105 round 3 (B8): D12.1 asks H ≠ ∅ (I52's registered other choice), so a link with no encountered pair is not selected and, with no trace, is declared (D12.3).
+====================================================================================================
+FC78  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- exactly one provenance under I53 [computation] computed: as claimed
+   statement: Sel(t) ∧ Con(t) is impossible on one history
+   result:
+      One history h: o1 represents the organization t carries to (its codomain), a construction trace in h prepares t (Prepares, I56), no occurrence represents t, H or the survival condition, and t (the pole's forward transport) is faithful on H = {(1,b1_45)}, whose pair occurs. Area 1 D12.1' (no occurrence of the history of t represents t, H, the survival condition or the organization t carries to; settles H05 at L195): Sel False, Con True. D12.1 as written in round 2: Sel True. Θ is supplied by hand here (I90).
+      candidate ℰ_fwd for p: Γ = {c_H,c_T,c_L}, δ_E = L
+        π: H := id(H); T := id(T); L := id(
+====================================================================================================
+FC80.new1  HOLDS ON ALL MODELS TRIED  (5.0 s)
+-- (a) W6: fidelity on H is required, not all the environment asks [there is] witness found
+   statement: some member of 𝒯 is faithful on H and fails an environment's further condition on its values at H: Sel under D12.1 as after round 2, not under D12.1 with surv
+   seed: 112011
+   models_tried: 4
+   smallest_size: ports=1 dom≤2 comps=1 |B|=1 edits=0
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 240, 'families': ['G-surg', 'G-free'], 'note': 'proper targets (D_and_p proper), nonempty solutions of D and of E at every translated pair of C'}
+   witness:
+      two members of 𝒯 faithful on H = [('1', 'b0')] with different values at ('1', 'b0') ∈ H (a background relation there); an environment keeping only the first (the survival condition asks fidelity and that value at ('1', 'b0'): a condition on H, L195, L574): the second is Sel under D12.1 as after round 2 (True), not under D12.1 with the environment's condition (False)
+      question p: target D, b0 = b0, query Q_w (reads the designated port) designating p0, C = {(1,b0)}
+      candidate t0 for p: Γ = {k0}, δ_E = p0
+        π: p0 := id(p0)
+        τ: 1↦1; σ: b0↦b0
+        λ(k0) = ({c0}, p0:=id(p0))
+      organization t0
+        ports: p0 
+-- (b) L574's step (Argument 3) with the environment's condition [for all] holds on all models tried
+   statement: t survives on H under fidelity and an environment's condition on its values at H; (τ(a),σ(b)) ∉ (τ×σ)[H] ⇒ t altered at (τ(a),σ(b)) survives too
+   seed: 112012
+   models_tried: 10128
+   hypothesis_met: 5318
+   space: {'sizes_from': 'ports=1 dom≤1 comps=1 |B|=1 edits=0', 'sizes_to': 'ports=3 dom≤2 comps=3 |B|=2 edits=2', 'n_sizes': 108, 'per_size': 160, 'families': ['G-surg', 'G-free'], 'note': ''}
+====================================================================================================
+FC81  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- (a)-(c) [by construction] holds by construction
+   statement: Surp ⇒ H ⊊ C; no transport ⇒ no Surp; H = C ⇒ no Surp
+   result:
+      Surp needs (a,b) ∈ C∖H with H ⊆ C (Sel), and a transport; each follows from D12.7 as written
+-- (d) Con(t) ∧ Viol ⇒ ¬Surp (under I53) [computation] computed: as claimed
+   statement: a constructed transport violated at an occurring pair is not surprised
+   result:
+      In a history like FC78's (the codomain represented, Prepares, no representation of t, H or the survival condition), t (the pole's forward transport into an organization whose c_L gives L = 1 under set H=2) is faithful on H = {(1,b1_45)} (Hom included) and violated at (set(H=2), b1_45) ∉ H, which occurs. Con: True; Sel: False; Viol: True; Surp: False. Area 1 D12.1' (a represented codomain excluded from a selection history); under D12.1 as written in round 2 Sel was True.
+====================================================================================================
+FC82  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- no common result [computation] computed: as claimed
+   statement: no transport is the result of both a selection response and a construction response
+   result:
+      t' = t = the pole's forward transport on FC78's history, x = ('set(H=1)', 'b1_45'). Area 1 D12.8' (Sel(t) on H, Viol(t; x), t' ∈ μ⁺(t), Sel(t') on H ∪ {x}): SelResp False; ConResp True. D12.8 with D12.1 as written in round 2: SelResp True.
+-- no common result, the second check's stronger case [computation] computed: as claimed
+   statement: 𝒯 = {t, t2}, μ(t) = {t2}, t violated at x ∉ H, t2 survives on H ∪ {x}, h represents t2's codomain and prepares t2: no common result
+   result:
+      Viol(t; x): True; t2 faithful on H ∪ {x}: True. Area 1 D12.8': SelResp(t → t2) False; ConResp(t2) True. D12.8 as written in round 2 (t2 ∈ μ*(t), t2 survives on H ∪ {x}): SelResp True, a common result with ConResp.
+====================================================================================================
+FC83  HOLDS ON ALL MODELS TRIED  (0.1 s)
+-- FC83' with Rep computed, D12.1 with I161 [for all] holds on all models tried
+   statement: SelResp(t → t') ⇒ ¬∃ Build of cod t' in h(t'), under T and T′ (Build reads Held, D13.3; L405 since R3A3-T4); under U and K with round 2's reading of L405's old wording (build_at), a comparison
+   models_tried: 146
+   hypothesis_met: 146
+   space: {'note': "chains o1 ≺ … ≺ on (n ≤ 3), earlier (held, trace, Sel's conditions) by hand, the output's trace by hand; t violated at x = ('set(H=2)', 'b1_45'): True; t selected on H: True; t2 ∈ μ⁺(t): True; t2 held at the output (faithful, and on H ∪ {x}): True"}
+-- without I161 (the review's R1) [there is] witness found
+   statement: there is a history with SelResp and a Build of cod t' under T or T′
+   models_tried: 2
+   space: {'note': 'the same space'}
+   witness:
+      T: SelResp(t → t2) and a Build of cod t2 in h(t2): held [True], trace [1], Sel's conditions [True]; fixed point [{'o1': 'Sel+Con'}]
+-- U and K with Build read as Held (D13.3 as it now reads; second check, O3) [look] look: as expected
+   statement: with Build read as Held_ℓ(o, c) under the rejected cuts too, U gives no counterexample and K gives one: K's defect (FC98 (d)), not the text's
+   result:
+      146 models; U: 0 counterexamples; K: 26, the first: held [1, True], trace [1, 0], Sel's conditions [0, True]; fixed point [{'o2': 'Sel'}]
+====================================================================================================
+FC84.new1  HOLDS ON ALL MODELS TRIED  (1.3 s)
+-- (a1) S47: the bridge to a fixed brief, no criticism in the history [computation] computed: as claimed
+   statement: an episode in which no question about the brief occurred to the agent as worth investigating (one contract throughout, no criticism aimed at it; I191), a trace preparing t, cod t held at the output: Con(t) under D13.8 as S41 has it, with no criticism in the history; under L55 as text 104 words it Con fails; Build holds under both
+   result:
+      chain o1 ≺ o2; q = C_brief throughout; criticism per occurrence [None, None]; no question about the brief occurred: True; cut T′ (I162), I161.
+      S41: 1 fixed point(s) [{'o2': 'Con'}]; Con at o2 [True]; Build True
+      L55: 1 fixed point(s) [{}]; Con at o2 [False]; Build True
+      tag model (con): S41 True, L55 False
+-- (a2) S47: the bridge to a fixed brief, a first design criticized before the built one [computation] computed: as claimed
+   statement: an episode in which no question about the brief occurred to the agent as worth investigating (one contract throughout, no criticism aimed at it; I191), a trace preparing t, cod t held at the output: Con(t) under D13.8 as S41 has it, with a criticism of an earlier design in the history (Con reads no criticism event, I190); under L55 as text 104 words it Con fails; Build holds under both
+   result:
+      chain o1 ≺ o2 ≺ o3; q = C_brief throughout; criticism per occurrence [None, ('t0 (the first design, at o1)', 'fails the load case'), None]; no question about the brief occurred: True; with the criticism aimed at the brief instead: no question about the brief False (Con's computation takes no criticism: its value is the same); cut T′ (I162), I161.
+      S41: 1 fixed point(s) [{'o3': 'Con'}]; Con at o3 [True]; Build True
+      L55: 1 fixed point(s) [{}]; Con at o3 [False]; Build True
+      tag model (con): S41 True, L55 False
+-- (a3) N6: the readings of 'no question about the brief occurred' (I191; R4A1-01 (d), (e)) [computation] computed: as claimed
+   statement: which occurrences are a question about the brief is read through Θ (I90): as criticisms (D9.10) aimed at the brief (I191); as question-occurrences, with or without an alleged defect (R4A1-01 (d)); or as a question found (L15, L155, L161), operative at its occurrence (R4A1-01 (e)). The labels of each case (Θ by hand, I90) give the three readings as printed; under D13.8 as S41 has it, Con and Build at the output are the same in every case, one fixed point each (T′), whichever reading the labels give (S47: the maths asks nothing); under L55 as text 104 words it, only a recorded change of contract moves Con, as in (b)
+   result:
+      chain o1 ≺ o2; held, trace at o2 (Θ by hand, I90).
+      (base) (a1)'s chain: no criticism, no question: q per occurrence ['C_brief', 'C_brief'], records [False, False]; criticism per occurrence [None, None]; question per occurrence [None, None]; no question about the brief: I191 True, R4A1-01 (d) True, (e) True; S41: 1 fixed point(s), Con at o2 [True], Build True; L55: 1 fixed point(s), Con at o2 [False], Build True
+      (i) a question about the brief occurred at o1, no defect alleged, the brief kept (B11 (i)): q per occurrence ['C_brief', 'C_brief'], records [False, False]; criticism per occurrence [No
+-- (a4) what reads the labels: (EX) and Episode (second check, O1) [look] look: as expected
+   statement: on one history with a question about the brief and no defect alleged, Con and Build at the output are the same under I191's labelling and I192 (d)'s; CreateEx can hold only under I191's, where the question is labelled a criticism (CompleteCritical's criticism, D13.8; L429 'a conjectural objection'); Episode of the whole chain reads q(o), which I192 (e) sets: under D13.8 as S41 has it, o1 ≺ o2 is an episode on (a3)'s base chain and not on iv-u
+   result:
+      chain o1 ≺ o2; held, trace at o2 (Θ by hand, I90).
+      I191 (the question a criticism aimed at the brief): criticism per occurrence [('C_brief (the contract)', 'why this brief?'), None], question per occurrence [None, None]; S41: Con at o2 [True], Build True; L55: Con at o2 [False], Build True; CreateEx over the 1024 Θ-values of its other conjuncts: [False, True]
+      I192 (d) (a question label, no criticism): criticism per occurrence [None, None], question per occurrence ['C_brief (the contract)', None]; S41: Con at o2 [True], Build True; L55: Con at o2 [False], Build True; CreateEx over the 1024 Θ-va
+-- (b) a recorded change of contract [computation] computed: as claimed
+   statement: C → C' at o2 with its provenance record: o1 ≺ o2 is an episode under both readings, and Con(t) at o2
+   result:
+      change recorded, S41: o1 ≺ o2 an episode True; Con at o2 [True]
+      change recorded, L55: o1 ≺ o2 an episode True; Con at o2 [True]
+-- (c) an unrecorded change of contract [computation] computed: as claimed
+   statement: o1 ≺ o2 is then no episode (L55's record clause, I165); Con at o2 needs an episode after the change holding the target: {o2} under S41, none under L55's wording
+   result:
+      change unrecorded, S41: o1 ≺ o2 an episode False; Con at o2 [True]
+      change unrecorded, L55: o1 ≺ o2 an episode False; Con at o2 [False]
+-- (d) every chain of ≤ 3 occurrences [for all] holds on all models tried
+   statement: Con(S41) ⊇ Con(L55's wording), the difference exactly where no episode ending at the output holds a change of contract and the target; Sel ∧ Con at no fixed point; one fixed point each (T′)
+   models_tried: 8456
+   hypothesis_met: 8456
+   space: {'note': "chains o1 ≺ … ≺ on, n ≤ 3; held, trace, Sel's conditions per occurrence; q(o) ∈ {C, C'}; records per change"}
+====================================================================================================
+FC84.new2  HOLDS ON ALL MODELS TRIED  (0.8 s)
+-- (a) covering (B9) and every ordered pair [for all] holds on all models tried
+   statement: Episode with 'o′ immediately after o' as the covering relation of ≺⁺_h′ = Episode over every o ≺⁺ o′, records Rec_h′(ρ_{q(o′)}) as D13.8 keys them
+   models_tried: 103668
+   hypothesis_met: 103668
+   space: {'note': 'every labelled partial order on ≤ 4 occurrences, q(o) ∈ {C, C′, C″}, any set of recorded contracts'}
+-- (b) P4 as written (every o, o′ ∈ h′, unordered) [there is] witness found
+   statement: there is h′ where P4's form and the covering form differ
+   models_tried: 9
+   space: {'note': 'the same space'}
+   witness:
+      covering True, P4 as written (unordered) False: n 2, order [], q ('C', "C'"), recorded []
+-- (c) the program's episode on chains [for all] holds on all models tried
+   statement: claims_b.episode (a record per change into o_i) = the covering form with a record per covering change
+   models_tried: 340
+   hypothesis_met: 340
+   space: {'note': 'chains ≤ 4, q ∈ {C, C′}, a record flag per occurrence'}
+====================================================================================================
+FC98  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- (a) the order as worded [computation] computed: as claimed
+   statement: with 'represented' (L195's Rep, L197) read through (R), the dependence graph has a cycle (E03; L526 says it has none); Build reads Held (L405 since R3A3-T4)
+   result:
+      cycle: (R) → Con → (R)
+-- (a') the order under the cuts K, T and T′ [computation] computed: as claimed
+   statement: with (R) inside Sel and Con staged (K), replaced by Held (T), or Held in Con and staged in Sel (T′, I162), Build reading Held under each (L405, D13.3), no cycle
+   result:
+      K: no cycle; T: no cycle; T': no cycle
+-- (b) sinks the text does not list [look] look: not as expected
+   statement: every sink is Θ, 𝒩, (O), (Q), an index or a declared input of L522
+   result:
+      sinks of this graph outside L526's and L522's lists: Aims*, Allow_χ, Applies, AtRest, Attempt, BindingConstruction, C_I, Chg, Desc, Expl, FailsToCapture, ImmAfter, Integrated, J_p, K, MadeFrom, Nontrivial, NotCreative, O_ex, Occurs, Off, Offered, OperatesOn, Org(h), Prepares, Qf, Rec, Rec_h', Rule, TransferComposite, UsesClaim, WithoutLoss, Work, parts, q(o), restriction, stated construction, surv, trans, δ, 𝒱, 𝔓adv. D0.2 as after round 2 lists all but C_I, Desc, Expl, FailsToCapture, ImmAfter, J_p, NotCreative, OperatesOn, UsesClaim, WithoutLoss, Work, parts, stated construction, surv, trans,
+-- (c) Rep as a fixed point on a two-occurrence history [computation] computed: as claimed
+   statement: reading U (as worded): two fixed points for a first construction and none for a selection (the output in its own history); readings K, T and T′: exactly one each
+   result:
+      built on a selected representation, reading K: fixed points [{'o1': 'Sel', 'o2': 'Con'}]; built on a selected representation, reading T: fixed points [{'o1': 'Sel', 'o2': 'Con'}]; built on a selected representation, reading T': fixed points [{'o1': 'Sel', 'o2': 'Con'}]; built on a selected representation, reading U: fixed points []; declared earlier holder, reading K: fixed points [{'o2': 'Sel'}]; declared earlier holder, reading T: fixed points [{}]; declared earlier holder, reading T': fixed points [{'o2': 'Sel'}]; declared earlier holder, reading U: fixed points []; first construction, read
+-- (d) what each cut gives [computation] computed: as claimed
+   statement: K: a first construction of c yields no representation of c (L405's 'A first representation may be constructed' fails); T and T′: it yields one; all three give o2 exactly one provenance (Con) when it is built on a selected representation held by o1 (L201: construction may operate on selected material)
+   result:
+      first construction: K [{}], T [{'o2': 'Con'}], T′ [{'o2': 'Con'}]; built on a selected representation: K [{'o1': 'Sel', 'o2': 'Con'}], T [{'o1': 'Sel', 'o2': 'Con'}], T′ [{'o1': 'Sel', 'o2': 'Con'}].
+-- (e) second check: an earlier holder with a declared transport (L211), then a selection [computation] computed: as claimed
+   statement: L195 with L211 (a declared transport makes no representation): o2 selected; K and T′ give o2 Sel, T gives o2 nothing (Held at o1 blocks it)
+   result:
+      o1 holds c by a declared transport (no trace, no selection history), o2 holds c with a selection history: U [], K [{'o2': 'Sel'}], T [{}], T′ [{'o2': 'Sel'}]. With FC98 (d) and FC12.new1, T′ is the one cut meeting L405, L193, L195 with L211, and L526 (I162).
+====================================================================================================
+FC98.new1  HOLDS ON ALL MODELS TRIED  (0.4 s)
+-- (a) B3 / S1: an infinite descending chain below o_t (D11.3 acyclic only) [computation] computed: as claimed
+   statement: each truncation at depth N has one fixed point, Rep at its deepest occurrence only, so the pointwise limit is ∅; the infinite chain has no fixed point: ∅ and every finite R fail the equations at some depth (checked for all R within depth 10), and an infinite R fails at each member (a member lies below it); S1's {o_1}, {o_2} fail
+   result:
+      N = 1: 1 fixed point(s), Rep at depth [1], o_t Dec
+      N = 2: 1 fixed point(s), Rep at depth [2], o_t Dec
+      N = 3: 1 fixed point(s), Rep at depth [3], o_t Dec
+      N = 4: 1 fixed point(s), Rep at depth [4], o_t Dec
+      N = 5: 1 fixed point(s), Rep at depth [5], o_t Dec
+      N = 6: 1 fixed point(s), Rep at depth [6], o_t Dec
+      N = 7: 1 fixed point(s), Rep at depth [7], o_t Dec
+      N = 8: 1 fixed point(s), Rep at depth [8], o_t Dec
+      N = 9: 1 fixed point(s), Rep at depth [9], o_t Dec
+      N = 10: 1 fixed point(s), Rep at depth [10], o_t Dec
+      first depth at which S1's candidates fail: {'{o_1}': 2, '{o_2}': 3, '∅': 1}; every R ⊆ d
+-- (b) well-founded histories, branching included [for all] holds on all models tried
+   statement: T′ has exactly one fixed point; Rep ⊆ Held; Sel ∧ Con nowhere
+   models_tried: 9928
+   hypothesis_met: 9928
+   space: {'note': "every labelled partial order on ≤ 3 occurrences; held, trace, Sel's conditions per occurrence"}
+-- (c) B4: L195's formula (strict ≺) read with (R) [computation] computed: as claimed
+   statement: a selection has one fixed point with the output Sel under the strict exclusion (K, T′); only U, which puts o_t in its own history, has none
+   result:
+      n = 1, U: []
+      n = 1, K: [{'o1': 'Sel'}]
+      n = 1, T: [{'o1': 'Sel'}]
+      n = 1, T': [{'o1': 'Sel'}]
+      n = 2, U: []
+      n = 2, K: [{'o1': '–', 'o2': 'Sel'}]
+      n = 2, T: [{'o1': '–', 'o2': 'Sel'}]
+      n = 2, T': [{'o1': '–', 'o2': 'Sel'}]
+====================================================================================================
+FC102.new1  HOLDS ON ALL MODELS TRIED  (29.1 s)
+-- (a) t0 survives on H0 and is surprised at re-emergence [computation] computed: as claimed
+   statement: t0 (window-2 occupancy predictor, R3A3-09) meets Sel on H0 (displacements, velocity changes, no occlusion); at occlusion pairs outside H0 it is violated, among them where a hidden thing re-emerges: Surp
+   result:
+      B0: 72 of 108 initial states (those on which H0's windows never conflict); |H0| = 1080; Sel(t0; 𝒯, μ, H0): True; occlusion pairs violated: 992 of 1080; violated at a re-emergence (a thing shown at t = 3 that t0 predicts absent): 858, first [('occ', 'b0m1m')]. Surp = Sel ∧ (a,b) ∉ H0 ∧ Viol (D12.7): True.
+-- (b'') in this instance: no window-2 predictor survives the extended history [computation] computed: as claimed
+   statement: two occlusion pairs give S0 the same observed frames and differ at t = 2 or 3, so every f fails at one of them (structural, not parametric)
+   result:
+      observed-frame pairs shared by occlusion pairs with different later frames: 15 of 28 (w = 2 ≤ L_occ = 2)
+-- (c) t1 meets (F1), (F2) on the extended contract [computation] computed: as claimed
+   statement: S1's persistence components carry each thing through occlusion; t1 (λ(k_i) = thing i's continuity subnetwork) meets (F1), the (F2) equation and (A) at every pair, and Hom(τ)
+   result:
+      |C| = 3456 pairs (32 edits × 108 initial states); pairs failing (F1, F2eq, A): 0; Hom(τ): True; Acc's fidelity part F1 ∧ F2: True
+====================================================================================================
+FC104.new1  HOLDS ON ALL MODELS TRIED  (0.0 s)
+-- (a) W1: (F1) and the (F2) equation at a pair, (A) failing there [computation] computed: as claimed
+   statement: narrow Viol (D12.7; L189's 'faithful') fails at the pair, Viol⁺ (with (A)) holds: the two extents differ
+   result:
+      (1, b1_45): F1 True, F2eq True, (A) False
+      (set(H=1), b1_45): F1 True, F2eq True, (A) False
+      (set(H=2), b1_45): F1 True, F2eq True, (A) False
+-- (b) under the wide extent a selected transport is violated at a pair of its own history [computation] computed: as claimed
+   statement: Sel(t; {t}, id, H) with H = {(1, b1_45)}: Viol⁺ at a pair of H, so D12.7's Sel ∧ Viol(a,b) ⇒ (a,b) ∉ H (L221, L223) holds only under the narrow extent
+   result:
+      Sel True; Viol (narrow) False; Viol⁺ (wide) True at ('1', 'b1_45') ∈ H
+total 63.6 s

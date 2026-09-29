@@ -276,14 +276,14 @@ def section_histories(json_out):
                                                                                            stats[key]["C7 admits (Dec off → not Dec on)"], shapes.get(key, {})))
     # which shapes C7 admits, in words: with H = ∅, exactly the chains in which no earlier occurrence is represented (T′: in R)
     P("   (b) tried pairs that nothing survives: every worked account survives on every nonempty H ⊆ C (Env ≡ ⊤, I177)?")
+    # Faithful_H (D5.7 as faithful_on computes it) is (F1) and the (F2) equation at each pair of H, and Hom(τ): a conjunction over
+    # H's pairs. So surv holds on every nonempty H ⊆ C exactly when it holds on every singleton {(a,b)}, (a,b) ∈ C (Hom included).
     bad = []
     for lab, c in accounts:
-        C = sorted(c.p.C, key=repr)
-        for r in range(1, len(C) + 1):
-            for H in itertools.combinations(C, r):
-                if not faithful_on(c, list(H)):
-                    bad.append((lab, H))
-    P("       accounts %d; (account, H) with surv false: %d" % (len(accounts), len(bad)))
+        for x in sorted(c.p.C, key=repr):
+            if not faithful_on(c, [x]):
+                bad.append((lab, x))
+    P("       accounts %d; (account, pair of C) with surv false on {pair} (so on every H holding it): %d" % (len(accounts), len(bad)))
     cb = e_bad()
     with setting():
         acc = account(cb, detail=True)
