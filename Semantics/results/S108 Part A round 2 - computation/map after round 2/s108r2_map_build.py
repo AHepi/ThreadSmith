@@ -294,7 +294,7 @@ M["gaps"] = OrderedDict(untouched_middle_definitions=untouched_mid_defs, middle_
 M.pop("second_round_needed", None)
 FLAGS = {"C1": ["S44"], "C2": ["S44 (on that reading)", "S41 Q15 (on that reading)", "S41 Q6 (on that reading)"],
          "C3": [], "C4": [], "C5": ["S41 Q15 (on that reading)", "S44 (on that reading)"], "C6": ["S45", "S44 (on that reading)"],
-         "C7": ["S41 Q2 (in part)"], "C8": ["S41 Q2 (on that reading)"], "C9": [], "C10": [], "C11": ["S45", "S44 (on that reading)"],
+         "C7": ["S41 Q2 (in part)"], "C8": ["S41 Q2 (on that reading)", "S41 Q15 (on that reading)"], "C9": [], "C10": [], "C11": ["S45", "S44 (on that reading)"],
          "C12": ["S41 Q2"], "C13": [], "C14": [], "C15": ["S44 (at that grain)", "S41 Q15 (at that grain)"],
          "C16": ["S41 Q2", "S44 (on a selection history)", "S41 Q15 (on a selection history)"], "C17": [], "C18": [], "C19": [],
          "C20": [], "C21": ["S41 Q2 (on the reply's reading)"]}

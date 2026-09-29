@@ -226,6 +226,6 @@ So, on this map: a third round is **not** needed for gaps that bear on the expla
 - **Touched** counts as round 1's map: varied, or named by a computed or contradicted edge; claimed only otherwise. Round 2's rows of the flagged variants count their items as claimed only.
 - **The Sonnet trial's O1, O3, O4** are the trial's counts as the Opus review reran them; this agent did not rerun them.
 - **e2.19** is marked contradicted (the edge claims V2.7 changes with D8.6; section 2 computed the argument from ConfCl and found D8.6's ConfG_χ unmoved).
-- **Section 3's worked-case run** (part A of its script) ran in the queue while this map was built; its parts B to E, the chains and the generated worlds carry every result used here.
+- **Section 3's worked-case run** (part A of its script) ended while this map was built; its results (section 3's §10) agree with the generated worlds and add the owner's cases to C8 and C16.
 
 Built by one Opus 5.5 agent under rules 6 and 10 and decision S56, 29 September 2026. Nothing ruled; nothing applied to the theory (rule 11).

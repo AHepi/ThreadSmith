@@ -67,7 +67,7 @@ Discovered changes to which candidates meet (E): none. To which count as explana
 
 ## 4. The worked cases and the owner's cases (rule 5.1)
 
-`s108r2_s3_cases.py` A (the 27 cases of the written-in step's script and the owner's 8: the vane and the signs, edit and boundary) under each state of §0 against its baseline; B, C, D, E: `section 3 runs/cases/cases B-E.txt` (this agent's rerun of parts B to E, unbuffered, while part A ran in the queue: `cases/cases.txt`). What part A shows is in the addendum (§10) when its run ends; parts B to E:
+`s108r2_s3_cases.py` A (the 27 cases of the written-in step's script and the owner's 8: the vane and the signs, edit and boundary) under each state of §0 against its baseline; B, C, D, E: `section 3 runs/cases/cases B-E.txt` (this agent's rerun of parts B to E, unbuffered, while part A ran in the queue: `cases/cases.txt`). Part A is in §10; parts B to E:
 
 | part | what | result |
 |---|---|---|
@@ -135,4 +135,20 @@ Run by the agent that continued after the restart with `tools/sonnet_harness/run
 
 ## 10. Addendum: part A (the worked cases)
 
-Filled from `cases/cases.txt` when its run ends; see below.
+`cases/cases.txt` (the queue's run, 2,194 s, exit 0; the reruns of parts B to E agree with its B to E). 35 cases, 30 meeting (E) (27 of the written-in step's script, 8 of the owner's: the vane as an edit and as a boundary, the signs as edits and as boundaries). (E) moves under no state (0 of 35 × 26). Account ∧ ¬Dec(t), (case, history) moving against each state's baseline:
+
+| state | moves | the owner's cases among them |
+|---|---|---|
+| R2V3.1 (C8 with CT reading ExplUse) | out 18 (the claim about another port, δ′), 10 (the claim on the question on another port), 2 (the widest contract) | **the weathervane** (M13; as an edit and as a boundary, Γ = {cP}, {cW,cP}) on the δ′ and port claims; the day-port sign; not the two-part or one-part sign |
+| C8 with CT reading Prepares | 0 | – |
+| R2V3.2 key 'contract' against 'change' | in 30 (re-entry, tags and spanning chains) | all 8 |
+| R2V3.4 ports / edits | in 7 / 30 ('Sel-parts') | edits: all 8 |
+| R2V3.5 | **out 30: every candidate meeting (E) on the 'Sel' history** | **all 8: the vane and both signs, in every encoding** |
+| R2V3.6 | 0 (5 Dec moves, all on candidates failing (E)) | – |
+| R2V3.7 | out 30 ('Con-far' tags) | all 8 |
+| R2V3.8, R2V3.9, R2V3.10 | 0 | – |
+| C9: V3.5 (key change / contract / with R2V3.7 / with R2V3.6) | in 30 on each history it reaches (four / two / three / four histories) | all 8 |
+| C10: V3.6 components / ports / edits / with R2V3.6 / against R2V3.5 | in 30 / 23 / 0 / 30 / 30 + 30 | all 8 where 30 |
+| C7: V2.5, and with R2V3.6 | in 30 ('Sel (H = ∅)') | all 8 |
+
+The worked cases give the same pattern as the generated worlds (§3, §6): each reading bites on every candidate meeting (E) on the history it names, except R2V3.1, which bites only where the claim the construction used fails (E), and R2V3.4 with ports (7 of 30). On the owner's cases, **C8 under S108-3-I2 drops the weathervane** (on the claims about another port), and **R2V3.5 drops the vane and both signs on a selection history** (the candidate list's C8 and C16).

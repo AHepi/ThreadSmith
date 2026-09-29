@@ -36,6 +36,9 @@ JOBS_FILE = 'tools/s108r2x_jobs - Part A round 2, GLM cross-examination.json'
 CAP = 7000
 OWNER_EXTRA = [53, 54, 55, 56]           # the owner's words after S52, quoted like the others
 TEXT_EXT = ('.py', '.md', '.txt', '.json', '.sh')
+EXTRA_NOTE = {'round 2/the dependency map, after round 2.json': "the map after round 2: every node and edge, the changes to round 1's edges, the corrections, the suite runs, the gaps",
+              'round 1/the dependency map.json': "round 1's corrected map, as the map after round 2 was built on it",
+              "record/the owner's decisions.md": "the project's record of the owner's decisions, whole"}
 
 COMMON = [
     ('round 2/the rule for reading round 2.md', R2 + 'how the replies will be read, written before sending.md'),
@@ -189,7 +192,7 @@ def build():
             B.need(not re.search(r'(\.env$|key)', dst, re.I), 'a sandbox path looks like a key file: %s' % dst)
             entries.append({'path': dst, 'src': rel, 'md5': B.md5_file(rel)})
         extra_rows = '\n'.join('| `%s/` | %s |' % (dst, 'files of %s' % src.split('/')[-1]) for src, dst in j['trees']) + \
-            ('\n' if j['trees'] and j['extra'] else '') + '\n'.join('| `%s` | %s |' % (d, s.split('/')[-1]) for d, s in j['extra'])
+            ('\n' if j['trees'] and j['extra'] else '') + '\n'.join('| `%s` | %s |' % (d, EXTRA_NOTE.get(d, 'a copy')) for d, s in j['extra'])
         b = '\n\n'.join([INTRO.format(job=j['job'], title=j['title']), owner,
                          TOOLS_TEXT.format(root_note=root_note, extra_rows=extra_rows),
                          '## 4. Your job: ' + j['title'] + '\n\n' + ANGLE[j['job']] +
