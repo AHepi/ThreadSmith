@@ -1,0 +1,133 @@
+# Part B, round 1, section B1: organizations, kinds, questions and contracts
+
+Baselines run (before any variant): `--claim FC25`, `--claim FC21 --claim FC22 --claim FC34`, `--claim FC05 --claim FC23 --claim FC28 --claim FC33` — all HOLDS except FC23 (counterexample, as its record says). Results quoted below are those runs; everything after a variant is marked "not run".
+
+## (a) The variants
+
+| id | free item(s) | kind | carry-over | old → new formal statement | old → new sentence | departs from |
+|---|---|---|---|---|---|---|
+| PB1.1 | D3.5 | replace | V1.7 (a) | Σ a declared input naming Excl(Σ) ⊆ A×B; Stated(C,Σ) :⟺ (A×B)∖C ⊆ Excl(Σ) → **D3.5.b1**: Excl(Σ) := (A×B)∖C (defined, no primitive); Stated(C,Σ) holds of every (C,Σ) | none (the words it read, L43.s4, L159.s1, are FROZEN; the input they name is dropped) | none |
+| PB1.2 | D3.1 | strengthen | R2V1.9 | C ⊆ A×B with (1,b0) ∈ C → **D3.1.b2**: ∧ Question(p) ⇒ ∀(a,b) ∈ C: Θ_admits(a); a C holding an unadmitted pair names no question | none (L159.s3, "admitting a change is not a claim that it can be carried out", is FROZEN and contradicted) | **S25–S27**: physical possibility would enter what a question is |
+| PB1.3 | D3.2 | replace | R2V1.8 | Q(O,a,b;δ_O) ∈ Y_p ∪ {⊥}, Y_p free → **D3.2.b3**: Y_p := X_δD; Q(O,a,b;δ_O) ∈ X_{δ_O} ∪ {⊥} | none (L141.n3 is FROZEN; only the codomain invention moves) | none |
+| PB1.4 | D4.2 | replace | R2V1.7 | j ~_C j′ :⟺ ∃β: V_j→V_j′ bijection, X_v = X_β(v), L_j′(a,b) = β_*(L_j(a,b)) ∀(a,b)∈C → **D4.2.b4**: j ~_C j′ :⟺ V_j = V_j′ (ordered) ∧ sig_C(j) = sig_C(j′) | none (L119's kind words are FROZEN; their reading loses the bijection) | none |
+| PB1.5 | L155.s6 (changes with D3.4) | replace | R2V1.4 | Found(p) requires ρ_p = constructed → **Found(p) :⟺ ρ_p ∈ {selected, constructed}** (D3.4.b5) | "A claim that an episode *found* a question requires ρ_p = constructed for the contract in question, with the trace." → "…requires ρ_p selected or constructed." | none |
+| PB1.6 | L103.s1, D1.3 | replace | – | j deleted at (a,b) :⟺ L_j(a,b) = ∏_{V_j}X_v; D−G sets that full relation → **D1.3.b6**: L_j(a,b) = ∅, and D−G sets the empty relation; absent port: every component imposes ∅ on it | "A deleted component imposes the full relation on its ports." → "A deleted component imposes the empty relation on its ports." | none |
+| PB1.7 | L141.s2, D3.1 | strengthen | – | (1,b0) ∈ C → **D3.1.b7**: ∧ ∃(a,b) ∈ C: a ≠ 1 | "…it contains the baseline (1,b0)." → "…it contains the baseline (1,b0) and at least one edit other than 1." | none |
+| PB1.8 | L115.s1, D4.1 | strengthen (SC) | – (lifts block e1.00, V1.1 on D4.4) | sig_C(j) = {(a,b,L_j(a,b)):(a,b)∈C} → **D4.1.b8**: sig⁺_C(j) = {(a,b,L_j(a,b), Sol_D(a,b)\|_{V_j}):(a,b)∈C} | (K) gains a fourth component: the values the ports take in the solutions | none (blocks a FROZEN sentence; see (d)) |
+| PB1.9 | L113.s1 (D4.1, D4.2 read with it) | replace (SC) | – | sig_C(j) on C; kinds classes of ~_C → **D4.1.b9**: sig(j) := {(a,b,L_j(a,b)):(a,b)∈A×B}; kinds classes of ~_{A×B}; D4.3, D4.4 read sig^{t}_{A×B} | "Fix an organization D and a contract C ⊆ A×B (Part III)." → "Fix an organization D." | none |
+
+Not taken up: R2V1.2 — see (e).
+
+## (b) Meaning
+
+**PB1.1.** NonVacuous moves: `Sol_D(1,b0) ≠ ∅ ∧ Stated(C,Σ)` → `Sol_D(1,b0) ≠ ∅` (second conjunct vacuous). (E) as a formula is unchanged (D6.7 FROZEN); one of its five conjuncts loses half its content. Σ leaves the argument list of Acc (D6.7 says "(D, C, b0, Q, δ_D, E, t, Γ, δ_E, Σ)"; with Stated always true, Σ is no longer read — a change *with* FC30's list, not of it).
+
+**PB1.2.** No conjunct of (E) changes; what (E) is quantified over shrinks: every C in every Question(p) now holds only Θ-admitted edits. Being an explanation (Acc ∧ ¬Dec(t)) is unchanged in form, its domain narrowed by the physical module. This is the only variant of the nine that lets an import read what a question is.
+
+**PB1.3.** What (A) and Dependence compare moves: answers live in X_δD ∪ {⊥}, not Y_p ∪ {⊥}. (A): `Ans_E(τ(a),σ(b)) = Ans_p(a,b)` unchanged in form; the space of legitimate Ans shrinks. D6.4's Contrast/Lost (FROZEN) unchanged in form, its `Y_p` now fixed. Queries returning anything but a value of the designated port (fibres, {reachable, unreachable}) name no question.
+
+**PB1.4.** No part moves: no conjunct of (E) reads a kind. The meaning that moves is Argument 1's: "of one kind" no longer up to a relabeling of footprints; D4.3's cross-candidate comparison loses β the same way.
+
+**PB1.5.** Found(p) moves from "constructed only" to "selected or constructed". No part of (E), Dec, Expl, (Suff) or (Nec) moves: Acc takes no provenance of the question (FC30).
+
+**PB1.6.** Dependence moves in content, not in form. D6.1 (B2, FROZEN) reads "E−G as in D1.3"; under D1.3.b6, Sol_{E−G}(y) = ∅ for every nonempty G whose footprints are nonempty, so Ans_{E−G}(y) = ⊥, so Lost(E,G;x) holds whenever Ans_E is determined at x or x0. NC2 collapses to nearly Contrast alone:
+old: ∃(a,b)∈C, G ⊆ Γ nonempty: Contrast(E;x) ∧ Lost(E,G;x);
+new (equivalent under b6): ∃(a,b)∈C: Contrast(E;x) ∧ [Ans_E(x) ≠ ⊥ ∨ Ans_E(x0) ≠ ⊥].
+Dependence stops asking that the *commitments* carry the contrast; it asks only that E determine an answer somewhere and the question have a contrast.
+
+**PB1.7.** No conjunct moves. Question(p) gains a clause; the class of questions shrinks by those whose contract holds no edit other than 1. L257's frozen exclusion ("admits no candidate that meets (F2), (A) and Dependence") becomes vacuous on them: what was a fact about candidates becomes a fact about questions.
+
+**PB1.8.** No part of (E) moves (no conjunct reads a signature). What moves is (K) itself and everything defined on it: kinds become finer (two components of one kind on C that differ in solution values separate); Argument 1's bridge (L556.n2, FC17, FC18) now compares signature-with-solutions against D4.4's projection-of-solutions, which already reads solutions — (K) and D4.4 align, which is what V1.1 found they did not (e1.03).
+
+**PB1.9.** No part of (E) moves. Kinds stop being contract-relative: ~_{A×B} is fixed by the level's whole edit set, not by C. Meaning moves in Argument 1 and in D4.5's Changes/Inv, which keep their C (a re-order: kinds no longer vary with the contract that (F1) is judged on).
+
+## (c) Scope
+
+**PB1.1.** Enter: candidates on questions whose stated scope names fewer exclusions than (A×B)∖C (Acc F → T through NonVacuous alone). Leave: none. Owner's cases: sign **stays**, vane **stays**, bridge **stays**, student **stays** (none turns on a narrower Σ; the pole's E_fwd, which FC26 says needs "a scope statement", now has it trivially — stays). Made-up: only a hand-built question with Excl(Σ) ⊊ (A×B)∖C moves; the program's default (I85) already equals the formula, so no generated case moves. Claims: none of the computed claims move (their questions use the default); FC33 (b) stays not-tested. First case to move: FC34's first witness with Σ naming ∅ — Acc on C: True → still True; a twin with C ⊃ {baseline} and Excl(Σ) = ∅: Acc False → **True** (not run).
+
+**PB1.2.** Enter: none. Leave: every candidate whose contract holds an edit the attributed organization's physics excludes — in the program's worlds Θ is not computed, so nothing generated moves; the leaving is real only where Θ is asked. Owner's cases: vane **on that reading** (a north wind is a change in what the target does — stays if Θ admits it); sign **on that reading** (a day-switch is a boundary, not an edit — stays); bridge and student **on that reading** (their edits are on a mathematical target; L49.s4 says an admitted change need not be a physical intervention, so under Θ read strictly both questions leave). Claims: FC-E external examples, where Θ is read; nothing in the suite. First case: any worked case with a counterfactual edit (the pole's settings of H) — **on that reading** it leaves, not run.
+
+**PB1.3.** Enter: none. Leave: every candidate of a query whose answers are not designated-port values — E2's fibre query (identification), D3.3's Obst ({reachable, unreachable}), E9's Q_id. Owner's cases: vane **stays** (Q_w on y), sign **stays**, bridge **stays**, student **stays** (all port-reading). Made-up: the pole's identification question leaves; with it E_rev's account on C_id (run before: FC28, "C_id = {1}×B … meets (F1), (F2), (A)" — after: **no question**, not run). Claims: FC28's C_id parts, FC36 (Prod/Ident/Obst no longer overlap — Ident and Obst are empty), D3.3's I163 clause. First case: FC28's area-2 case above.
+
+**PB1.4.** Enter/leave (E): none — kinds read nowhere in Acc or Dec. What moves: components with the same signature up to a footprint relabeling become two kinds; candidates compared "of one kind" in Argument 2's sense separate. Owner's cases: all four **stay**. Claims: FC05 (ii) loses its β-witness form (its reading (i) is gone; the counterexample it prints dissolves — the claim would be restated on tuples, expected to hold); FC17, FC18 unchanged in truth (they compare via D4.4's θ_k, not via β). First case to move: two components on (p0,p1) and (p1,p0), equal domains, mirrored relations — one kind before, two after (not run).
+
+**PB1.5.** Enter/leave: none, in (E) and in being an explanation. What grows: the set of episodes that *found* a question, by every selected contract (a surviving member of a population of contracts, D3.4). Owner's cases: all four **stay**. Claims: the (QF) claim's class (L544) grows; FC84.new1 (a3) unaffected — Con and Build do not read Found. First case: a contract that survived a variation-and-survival history (E8's arrangement) — not found before, found after (not run).
+
+**PB1.6.** Enter: candidates whose commitments are idle for the answer, on any question with contrast — Dependence now holds of them. Leave: none. Owner's cases: vane **stays** (FC22 (b) run: NC2 witness ((e,b0),[c_y]); under b6 the same witness, T); sign **stays** (its parts' deletion already crashed or equalized answers — FC23.new2 unchanged); student **stays** (FC26's Γ = {c_H, c_θ, c_L}: under b6 NC2 holds a fortiori); bridge **stays** (CreateEx reads no deletion). Claims: FC21 (a) holds (no contrast on relabelings, still); FC22 (a) holds; FC23 (b) holds a fortiori; no existing claim names the entering class — a claim "Γ idle ⇒ ¬NC2" (none is stated) would flip. Small case, program's format, before (run, `--claim FC21`, its witness structure) and after (not run):
+
+```
+question p: target D, b0 = b0, query Q_w designating p0, C = {(1,b0), ([p0=0],b0)}
+organization D = E:  ports p0,p1 ∈ {0,1}; comps h on (p0), c on (p1)
+  B = {b0}; A = {1,[p0=0]};  L_h(1,b0)={(0)}, L_h([p0=0],b0)={(1)};  L_c = full at both pairs
+candidate ℰ: identity π, τ, σ; λ(h)=({h},p0:=id), λ(c)=({c},p1:=id); Γ = {c}; δ_E = p0
+before: Contrast T (0 vs 1); delete c → full on (p1) → answers unchanged → Lost F → NC2 F → Acc F
+after (D1.3.b6): delete c → L_c = ∅ → Sol_{E−{c}} = ∅ → Ans = ⊥ at x → Lost T → NC2 T → Acc T
+```
+First case to move: exactly this one — an idle commitment becomes enough for Dependence.
+
+**PB1.7.** Enter: none. Leave: every candidate on a contract with no edit other than 1 — not by failing (E) but by losing its question. Owner's cases: vane **stays** (C holds e), sign **stays**, bridge **stays**, student **stays**. Made-up: the pole's C_id = {1}×B (E1) names no question; E_rev on it ceases to be a candidate (before, run: FC28, C_id parts hold). Claims: FC28's C_id parts (the results become "no question"), FC22 (a) vacuous but true, D3.3's Ident on C_id (FC28's second check) — the I163 clause can still be met by boundaries, but on no question. First case: FC28's area-2 case, as under PB1.3, by a different route (not run).
+
+**PB1.8.** Enter/leave (E): none. What moves: kinds with solutions read are strictly finer; two components that differ only in solution values separate (the exact case L119's frozen sentence says are one kind). Argument 1: F1_C ⇒ SameKind_C may fail, since (F1) fixes L_k against proj Sol_{λ(k)} while sig⁺ adds E-side solution values L_k need not fix. Owner's cases: all four **stay** (their Acc reads no signature). Claims: FC17, FC18 restated on sig⁺ — FC18's "a same-kind condition adds nothing" is the one at risk (expected: F1 no longer implies SameKind⁺; not run); FC05 (i) ("signatures use relations only") fails as stated. First case: a commitment k whose L_k(τ(a),σ(b)) equals the counterpart projection while E leaves an extra port of V_k free that D fixes — one kind before, two after (not run).
+
+**PB1.9.** Enter/leave (E): none. What moves: every kind-claim's index. Argument 1 on a contract C compares signatures read on A×B: commitments that agree on C and differ off C are now different kinds while (F1) still holds — FC17 and FC18 fail as stated (expected, not run). Owner's cases: all four **stay**. Claims: FC05, FC17, FC18; D4.6's families become contract-free in the same stroke (they are FROZEN — an edge, not a change). First case: the pole's c_L and a twin differing only at an edit outside C1 — one kind before, two after (not run).
+
+## (d) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| PB1.1 | blocks | L43.s4, L159.s1 (FROZEN) | their "requirement that the exclusion be stated" has nothing to read | yes |
+| PB1.1 | constrains | D6.6 (B2) | NonVacuous's second conjunct becomes vacuous; D6.6's words still name Stated | yes |
+| PB1.1 | changes with | D0.2 (FROZEN, I27) | Excl(Σ) leaves the primitives; D0.2's list shrinks with the free words dropped | yes |
+| PB1.1 | moves | NonVacuous (conjunct of (E)) | half the conjunct's content goes | yes |
+| PB1.2 | blocks | L159.s3, L49.s4 (FROZEN) | "admitting a change is not a claim that it can be carried out"; mathematics needs no intervention | yes |
+| PB1.2 | constrains | Θ (import, D0.1) | Θ_admits must be a predicate of edits for the clause to have a value; the text gives it only at a grain, of occurrences | partly — what Θ_admits(a) is for a bare edit is not fixed; the owner's yes/no would settle it |
+| PB1.2 | moves | the domain of (E) | every C restricted to Θ-admitted edits; no conjunct's form changes | yes |
+| PB1.3 | constrains | D3.3 (FROZEN) | Ident and Obst become unsatisfiable; D3.3's words stand with an empty extent | yes |
+| PB1.3 | changes with | E4, E9 [B2] | E4 "would carry no question"; E9's Q_id likewise | yes (B2 to compute) |
+| PB1.3 | moves | what (A) and Contrast read | the answer space becomes X_δD ∪ {⊥} | yes |
+| PB1.4 | changes with | D4.3 (B1, not varied) | cross-candidate kinds lose β the same way | yes |
+| PB1.4 | moves | nothing in (E) | kinds read by no conjunct | yes |
+| PB1.5 | changes with | D3.4 (FROZEN, formalization of L155.s6) | Found's clause, as the free words permit | yes |
+| PB1.5 | constrains | (QF) (L544, B4) | Found is (QF)'s subject; its class grows | yes |
+| PB1.6 | constrains | D3.6 BadBaseline (FROZEN) | with the absent-port clause read on ∅, an absent port empties every Sol; NonVacuous's first conjunct screens it | yes |
+| PB1.6 | changes with | D6.1 [B2] | "E−G as in D1.3": the frozen words carry the new deletion unchanged | yes |
+| PB1.6 | moves | Dependence (conjunct of (E)) | NC2 collapses to Contrast plus one determined answer | yes |
+| PB1.7 | constrains | L257 / D6.9 (FROZEN) | the relabeling exclusion becomes vacuous on baseline-only contracts, not false | yes |
+| PB1.7 | changes with | E1/E2 [B2] | the pole's identification question leaves | yes |
+| PB1.7 | moves | the domain of (E) | questions with changeless contracts cease; no conjunct moves | yes |
+| PB1.8 | blocks | L119's "built from a component's relation … not from the values its ports take in a solution" (FROZEN) | the variant adds exactly those values | yes |
+| PB1.8 | changes with | D4.4 (B1; lifts block e1.00) | with (K) reading solutions, D4.4's "extends (K)" holds again, undoing e1.03's failure | yes |
+| PB1.8 | moves | nothing in (E); Argument 1's claims | signatures read by FC17/FC18, not by Acc | yes |
+| PB1.9 | blocks | L119's "Kinds are therefore relative to the contract; a coarser contract identifies more components" (FROZEN) | kinds become level-wide | yes |
+| PB1.9 | constrains | L11.s2 (FROZEN) | "a kind is nothing over and above how a component responds to the changes that **level** admits" reads more nearly this way — the constraint runs *for* the variant | yes |
+| PB1.9 | moves | nothing in (E); Argument 1's claims | as PB1.8 | yes |
+
+## (e) Free items bearing on explanation that I did not vary
+
+- **L87.s1, L91.s1–s6, L93.s1, D1.1**: the organization tuple's own clauses (X_v ≠ ∅, Kleene composition, I02's no-law clause, I03) — varying any changes every structure at once, and Part A's map shows no part of (E) moves unless its *readers* (Sol, deletion, L) move; those I varied at D1.3.
+- **L99.s1, D1.2 ((O))**: (O) is the vocabulary every conjunct of (E) is written in; a variant here is a variant of everything, which is Part A's finding about the middle, not a small change.
+- **L105.s2, L105.s3**: representational freedom (paths, cyclic constraints, several solutions); no conjunct reads them, and "several solutions remain several" is what ⊥ in D3.2 already carries.
+- **L137.s1, L143.s1**: displays of the tuple and (Q); their content is D3.1/D3.2, varied as PB1.2/PB1.3/PB1.7.
+- **L147.s1 (O_p)**: read only by §14 (repair, aims), outside (E); varying it moves nothing here.
+- **L147.s2 (ρ_p) beyond PB1.5**: ρ_p's other values are B3's subject (D3.4's selected/constructed clauses); only Found, which L155.s6 owns, is mine.
+- **D3.7**: FC34 already computes both readings with a witness each; a variant would only flip I73's register, and the record holds both sides.
+- **D4.4**: the block on it (e1.00) is lifted by PB1.8 instead, which changes what (K) is; a separate D4.4 variant would duplicate it.
+- **L103.s2** (blocked by V1.2): its formalization D2.1 is FROZEN and its free words ("replaces the component assigning that port") do not reach D2.1's asg/Set_v machinery; a variant would change a FROZEN item beyond the free words — out of Part B.
+- **L103.s3, L113.s2, L124.s1, L125.s1, L127.s2, L127.s3**: glosses and family bullets whose formalizations (D2.1, D4.1, D4.6) are FROZEN or already varied; the families themselves (D4.6) were Part A's middle.
+- **L161.s1–s3**: defect sentences; their formalization D3.6 is FROZEN, and no part of (E) reads a defect (BadTarget and BadReq sit on Acc only through R2V2.8, already computed in Part A).
+- **L27.s2, L41.s4, L47.s2, L51.s1, L57.s1, L67.s1, L109.s1–s5, L151.s2, D0.1, D2.2, D2.3, D2.5, D4.5**: none bears on (E), Dec, Expl, (Suff) or (Nec) (L41.s4's content is D3.5's, varied as PB1.1); D2.2/D2.3/D2.5 feed only the families and direction (FC02, FC13), which no conjunct of (E) reads.
+- **R2V1.2** not taken up: its new `constructed` clause is stated in terms of Prepares, Rec and contents — definitions of B3's section; taking it up here would vary another section's items.
+
+## (f) Inventions the variants rest on
+
+- **PB1.1** drops I27 (Excl a primitive). Other choice kept: I27 as is. Settles I27 by deletion; I85's default becomes the only reading.
+- **PB1.2** rests on Θ_admits as a predicate of a bare edit (from R2V1.9, not the text's). Other choices: Θ_admits(a) only of an edit *of an attributed organization at a grain* (the text's words, L159.s3), under which PB1.2 bites only on physical targets — the gentler choice; or Θ read of the pair (a,b).
+- **PB1.3** settles I21 (Y_p free) one way. Other choices: Y_p free (as now); Y_p := any set with ⊥ adjoined.
+- **PB1.4** drops I10 (β). Other choices: β as now; β required to preserve port domains *and* an ordering (a middle reading).
+- **PB1.5** rests on I127's three values unchanged; the invention is only which two count as found. Other choice: all three (declared too), which would make Found vacuous.
+- **PB1.6** invents the empty-relation reading of deletion. Other choices: the full relation (the text's, L103.s1); deletion removes the component from J (so D−G has fewer components — closest to "absent"), which would need D1.1's J fixed under edits (I03) to move too, and so is out of reach here.
+- **PB1.7** invents "at least one edit other than 1" as the clause. Other choices: "some edit of C is no relabeling" (D6.9's, weaker, and D6.9 is FROZEN — constrains); "C holds two pairs with different answers" (strongest, reads Q).
+- **PB1.8** invents the fourth signature component as Sol_D(a,b)|_{V_j}. Other choices: Sol of the subnetwork N = {j} alone; solutions at the baseline only.
+- **PB1.9** invents A×B as the kind index. Other choices: C (the text's); any C′ with C ⊆ C′ ⊆ A×B.
+
+END OF REPORT
