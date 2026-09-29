@@ -30,7 +30,7 @@ The owner's question has three parts: a definition exists (constructor theory's)
 
 *Example.* A cyclist rides home every day without falling. To stop that happening reliably, what would you have to remove? Not the bicycle (another will do), not today's legs (they recover): the balance the rider learned as a child, which would have to be unlearned everywhere it has been passed on.
 
-*What the source says* [book]. The best way to define this kind of information is that “it is exactly the thing one would ultimately have to eliminate in order to prevent a particular transformation from being performed reliably.” (Marletto, ch. 5) The book's cases are a mole cricket's genome and an aircraft factory's recipe.
+*What the source says* [book]. Marletto's test for this kind of information: it is what one “would ultimately have to eliminate in order to prevent a particular transformation from being performed reliably.” (Marletto, ch. 5) The book's cases are a mole cricket's genome and an aircraft factory's recipe.
 
 *What it would take to check it on a case.* (1) Name a transformation the agent performs reliably (riding, solving a kind of equation, writing in a style). (2) List what is needed for it. (3) Find the part that would have to be removed *everywhere it is copied* to stop the transformation for good; that part is the knowledge [implied]. For a creative agent the difficulty is (1): its most creative acts are not repeated transformations but first discoveries, and a first discovery is not a repeatable task (FW5 and the present theory, Part XII, "A first discovery is not a repeatable task"). So the test applies to the agent's retained abilities more readily than to its single creations [reading].
 
