@@ -54,8 +54,12 @@ def split(eid, keep_to, part_to, part_label, part_standing, why, obj, part_id=No
 
 
 # ---- Xc1: rows whose parts differ in standing are split (round 1's convention; correction O2's lesson)
-split("r2e3.18", ["X:(Suff)"], ["X:(Nec)", "D10.1"], "X:(Nec), D10.1 [FROZEN]", "claimed only",
-      "section 3 §8 (R3E18): D10.1 and (Nec) not computed", "Xc1")
+split("r2e3.18", ["X:(Suff)"], ["D10.1"], "D10.1 [FROZEN]", "claimed only",
+      "section 3 §8 (R3E18): D10.1 not computed", "Xc1", part_id="r2e3.18c")
+split("r2e3.18", None, ["X:(Nec)"], "X:(Nec) (as L538 states it)", "contradicted",
+      "computed after the cross-examination (cross-examination runs/xc1_nec_under_r2v38.py, section 3's copy): (Nec) as L538 states it is "
+      "defeated on no history, off or under R2V3.8 (t faithful on C); under L61's 'their' reading the Dec history with j accepting only "
+      "r ∧ (r → Expl(ℰ)) and MP moves in → out of the defeat set (the premise-alone argument gone), the mirror of the (Suff) case", "Xc1")
 split("r2e3.22", ["D13.1", "D14.7"], ["D13.2", "D16.1"], "D13.2 [FROZEN], D16.1 [FROZEN]", "claimed only",
       "section 3 (R3E22): D13.2, D16.1 not computed", "Xc1")
 split("r2e3.17", ["D9.6", "D9.7"], ["L397.s16"], "L397.s16 [S3]", "claimed only",
@@ -120,6 +124,17 @@ for rid in ("e2.38", "e2.39"):
 for rid in ("r2e2.02", "r2e2.05", "r2e2.06", "e2.06c", "e2.07"):
     e = edges[rid]
     note(e, "Xa1", "the numbers are reproduced by the rerun after the cross-examination (%s); the earlier runs ended at the timeout" % XA1)
+
+# ---- rule 5's check (not an objection): e2.14b, an edge on (Suff) claimed only since correction O2, settled by a run
+e = edges["e2.14b"]
+e["standing"] = "computed"
+e["what_shows_it"] = ("computed after the cross-examination (cross-examination runs/e2_14b_suff_under_v25.py, section 2's copy): on the 51 worked "
+                      "accounts with history 'nothing tried, H=∅' and j holding an argument not using (E) that rules out Expl(ℰ), (Suff)'s defeat set "
+                      "as L536 and as L17 (S41) has 0 off and 51 under V2.5 (and under V2.5 × R2V2.3a); as L17 as text 104 words it, 51 either way")
+e["what_would_settle"] = ""
+note(e, "rule 5", "claimed only → computed (V2.5 moves (Suff)'s defeat set: 0 → 51)")
+changes.append(OrderedDict(edge="e2.14b", round1_standing="claimed only (after round 2, O2)", after_round2="computed",
+                           what_changed_it="the settlement of the GLM cross-examination (rule 5's check)", why=e["what_shows_it"]))
 
 # ---- assemble, recompute touched (the round-2 builder's logic)
 all_edges = list(edges.values())

@@ -21,6 +21,7 @@ GLM's own ids (X1.1 … X4.2) are renamed Xa1 … Xd2 in the order each reply gi
 - **Xa1**: section 2's worked-case script `s108r2_s2_cases.py` rerun section by section (`--sections 2a`, `2c`, `3`, `4`, `5`, and `1,2b`), timeout 3 hours each, 4 CPUs; section 1 also in three shards of the cases after the 23rd (the same code path, `shard.py`), because two of its cases (E9's two-layer episode, L626 and L630) take minutes each.
 - **Xb1**: `xb1_e_readings.py` in section 4's copy: R2V4.3's reading (e) on the same 3,208 chains under three readings of "Sel at o".
 - **Xb3, Xc4**: `python3 -m model.run --claim FC98 --claim FC32.new1 --no-write` in section 4's copy (off).
+- **Xc1**: `xc1_nec_under_r2v38.py` in section 3's copy: R2V3.8's effect on (Nec)'s defeat set, the one part split off that a short run could settle (the mirror of section 3's part D for (Suff)).
 - **The map's amendments**: `s108r2x_map_amend.py` (reads the map after round 2, md5-asserted, never written; writes the corrected copy).
 
 ## 1. The objections and their settlement
@@ -69,7 +70,8 @@ GLM's own ids (X1.1 … X4.2) are renamed Xa1 … Xd2 in the order each reply gi
 
 **Xc1. Round-2 edges whose parts differ in standing enter the map under their headline standing, so parts the section files say are not computed, or contradicted, count as computed** (round 1 split such rows; the round-2 builder takes one standing per row).
 *Settlement: **stands**.* The builder (`map after round 2/s108r2_map_build.py`) takes one standing per row. Every round-2 edge whose `standing_as_written` names parts of different standing (found by search, not only those the reply lists; its ids are one row off in places): r2e3.18 (D10.1, (Nec) not computed), r2e3.22 (D13.2, D16.1 not computed), r2e3.17 (L397.s16 a sentence), r2e3.03 (L55.n3 a sentence), r2e2.18 (L231.s3 not computed), r2e2.20 (contradicted as to Surp at a pair of H), r2e2.21 (D12.1 unchanged), r2e2.16 ((Nec) independent), r2e4.09 (L630.s5 not computed), r2e2.13 (contradicted at the sentence's reach, computed with the whole exclusion dropped); and the round-1 edge e1.46, settled by R2V2.8 with the same shape ((Nec) independent). r2e4.21 is contradicted in both its parts and needs no split.
-*Changes:* map: eleven splits, each part `<id>b` marked Xc1: six parts claimed only (r2e3.18b, r2e3.22b, r2e3.17b, r2e3.03b, r2e2.18b, r2e4.09b), four contradicted (r2e2.20b, r2e2.21b, r2e2.16b, e1.46b), one computed (r2e2.13b: R2V2.6 at the reply's reach moves Dec and Expl, C21's ground). Items that lose "computed": L231.s3, L630.s5, D13.2, D16.1 (now claimed only); L55.n3, L397.s16, D10.1, D12.1 and X:(Nec) stay computed through other edges. §6.2's list of edges claimed only gains the six parts.
+Of the parts, one could be settled at once by a run: R2V3.8's effect on (Nec) (`xc1_nec_under_r2v38.py`, section 3's copy, the pole's constructed candidate on the three hand-set histories): (Nec) as L538 states it is defeated on no history, off or under R2V3.8 (t is faithful on C, which L538's defeat excludes); under L61's 'their' reading the declared history with j accepting only r ∧ (r → Expl(ℰ)) and modus ponens goes from in the defeat set to out (the premise-alone argument is no argument), the mirror of the (Suff) case section 3 computed. So "R2V3.8 moves (Nec)" is contradicted as to D16.XV's (Nec) and computed as to L61's reading, as e2.11b was in round 2.
+*Changes:* map: eleven rows split into twelve parts, each marked Xc1: six claimed only (r2e3.18c D10.1, r2e3.22b, r2e3.17b, r2e3.03b, r2e2.18b, r2e4.09b), five contradicted (r2e3.18b (Nec) under R2V3.8, r2e2.20b, r2e2.21b, r2e2.16b, e1.46b), one computed (r2e2.13b: R2V2.6 at the reply's reach moves Dec and Expl, C21's ground). Items that lose "computed": L231.s3, L630.s5, D13.2, D16.1 (now claimed only); L55.n3, L397.s16, D10.1, D12.1 and X:(Nec) stay computed through other edges. §6.2's list of edges claimed only gains the six claimed-only parts.
 
 **Xc2. The map's §7 verdict (no third round) does not reckon with the middle definitions upstream of the explanation definition that no variant of either round has varied: D6.5 (Dependence), D12.3 (Dec), D18.1 (the order).** §7 argues about D5.7 only; its sentence that every upstream middle definition is varied or computed holds only under the convention that a definition named by a computed edge counts as touched.
 *Settlement: **stands in part**.* True that §7 names only D5.7 and that D6.5, D12.3 and D18.1 are never varied themselves (the map's §6.1 lists them). Not true that this leaves a gap a third round inside Part A's rule could reach and that the computation has not already given:
@@ -106,10 +108,32 @@ The four jobs checked most counts against the kept outputs and reran claims the 
 
 ## 3. Totals after the cross-examination
 
-(RESULT_TOTALS)
+**The map** (`S108 Part A round 2 - the dependency map, after the cross-examination.md` / `.json`; the map after round 2 kept as sent):
+
+| | after round 2 (as sent) | after the cross-examination |
+|---|---|---|
+| nodes | 876 | 876 |
+| edges | 337: computed 265, claimed only 46, contradicted 26 | **351: computed 268, claimed only 51, contradicted 32** |
+| round-2 edges | 110: 70 / 32 / 8 | 123: 72 / 38 / 13 |
+| parts split off | – | 14 (12 from 11 rows [Xc1]; 2 [Xb1]) |
+| template items touched (815) | computed 191, claimed only 33, untouched 591 | computed 187, claimed only 37, untouched 591 (L231.s3, L630.s5, D13.2, D16.1 now claimed only) |
+| middle items untouched | 426 | 426 |
+| middle definitions untouched | D5.7, D8.new1, D13.7, D14.1, D15.1, D15.2 | the same |
+
+One more edge was settled by this agent's own check under rule 5, not by an objection: **e2.14b** (V2.5 moves (Suff)'s defeat set; claimed only since correction O2, "not computed in either round"): run `e2_14b_suff_under_v25.py` in section 2's copy: on the 51 worked accounts with the history 'nothing tried', with an argument not using (E) that rules the explanation out, (Suff)'s defeat set as L536 and as L17 (S41) holds 0 off and 51 under V2.5 (and crossed with R2V2.3a); as L17 as text 104 words it, 51 either way. Standing: computed.
+
+**The list** (`S108 Part A round 2 - candidate definitions of explanation, after the cross-examination.md`; the list after round 2 kept as sent): **21 candidates**, **11 flagged** (the same eleven; no flag added or removed): C1 (S44); C2 (S44, S41 Q15, S41 Q6, each on that reading; for the bridge also its history, "created" and the brief [Xd1]); C5 (S41 Q15, S44, on that reading); C6 (S45; S44 on that reading); C7 (S41 Q2 in part); C8 (S41 Q2, S41 Q15, on that reading); C11 (S45; S44 on that reading); C12 (S41 Q2); C15 (S44, S41 Q15, at that grain); C16 (S41 Q2 with the owner's words [Xd2]; S44, S41 Q15 on a selection history); C21 (S41 Q2, on the reply's reading). C13's reading (e) is qualified [Xb1] and stays unflagged.
 
 ## 4. A third round of Part A, or Part B (rule 5)
 
-(RESULT_DECISION)
+**Part A ends; Part B follows (S52).** No third round.
+
+Rule 5 asks whether gaps that bear on the explanation definition remain after the settled findings: items still untouched that are upstream of (E), Dec, Expl, (Suff) or (Nec), or edges on them the computation could not settle, that a variant inside Part A's rule could reach. After the settlement:
+
+- **Untouched upstream items.** The middle definitions still untouched are D5.7, D8.new1, D13.7, D14.1, D15.1, D15.2. Of these only D5.7 is upstream, and its one variant rewrites L189.s2 [FROZEN], so it cannot be varied inside Part A's rule; it belongs to Part B. Xc2's three never-varied definitions (D6.5, D12.3, D18.1) leave nothing a variant could reach that the computation has not already given (§1, Xc2). The 426 untouched middle sentences are mostly not upstream (the section agents' reading, not contested by any job); a sentence-by-sentence pass would be a round of its own, and round 2's evidence (only R2V1.6 among sentence variants moved Expl) says it would rarely reach the definition.
+- **Unsettled edges on the definition's parts.** After the settlement, the claimed-only edges on (E), Dec, Expl, (Suff), (Nec) are e1.51, e2.20, e2.21 (V1.7, V2.8: ruled to Part B, or computed as V4.4 in round 1), r2e1.28, r2e1.33, r2e1.36, r2e2.07 (variants the tabulation flagged out of scope and did not implement: the orchestrator's, rule 4), and r2e4.13 (R2V4.6's unindexed defeat sets: a reading with no code). e2.14b was settled by a run (§3), and R2V3.8's (Nec) part (r2e3.18b) too. None is an edge a variant inside Part A's rule could reach that has not been reached.
+- **The readings the owner's cases turn on** (the change as an edit or a boundary; D6.3's quantifier; a question's recorded history; Desc's grain; now also the bridge's history, Xd1) are the owner's to settle, not a round's (rule 6).
+
+So Part B follows: freeze all but the hard-to-vary parts and vary those (S52), under its own rule written and committed before sending, then the flags for the owner's yes or no.
 
 Settled by one Opus 5.5 agent under rules 3 to 7 of the cross-examination's rule and decision S56, 29 September 2026. Nothing applied to the theory (rule 11); no owner decision added.
