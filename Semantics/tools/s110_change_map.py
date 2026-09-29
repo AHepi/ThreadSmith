@@ -54,7 +54,7 @@ STEPS = OrderedStep = [
 # id, theme, name, where (section heading, locator), what
 N = [
  # ---- FW0 (Revision E of CR-2.0) ----
- ('FW0.1', 'MET', 'model and record kept apart', 'Part I "What the document is for"', 'what holds in a model and what a finite record of evidence currently supports are two things never to be confused'),
+ ('FW0.1', 'MET', '"model" and "record" kept apart', 'Part I "What the document is for"', 'what holds in a model and what a finite record of evidence currently supports are two things never to be confused'),
  ('FW0.2', 'ERR', 'the kernel applied to its own evidence', 'Part I "What this revision does"; §7.1', 'certificates are content; rejecting one is an attack, itself content and criticisable'),
  ('FW0.3', 'STA', 'four-valued raw ledger (Belnap)', '§7.2 "Raw ledger (Belnap)"; §21', 'OPEN, SUPPORTED, REFUTED, CONTESTED with an information ("knowledge") order; the ledger is monotone in it'),
  ('FW0.4', 'ERR', 'grounded adjudication, attacks propagated along essential dependencies', '§7.3', "Dung's grounded semantics on an acyclic attack graph; the adjudicated view keeps certificates that survive attack"),
@@ -75,7 +75,7 @@ N = [
  ('FW0.19', 'EXP', 'decisive relations kept as primitives, each given a witness', 'Part I "What the document is for"; §10', '"explains, authors, uses the reason, improves the situation" stay primitives; explanation objects record them'),
  ('FW0.20', 'MET', 'final criterion: every disputed attribution answerable by a finite, attackable object', '"Final criterion"', 'an event path, an explanation object, a body or a countermodel, each itself attackable'),
  # ---- I2 (executable specification 0.4 of FW1a) ----
- ('I2.1', 'MET', 'inquiry material, not certified truth', 'Part I "The product is creative inquiry material, not certified truth"', 'the engine exports attempts, not a creativity label; its authority lines A1, A7'),
+ ('I2.1', 'MET', '"creative inquiry material, not certified truth"', 'Part I "The product is creative inquiry material, not certified truth"', 'the engine exports attempts, not a creativity label; its authority lines A1, A7'),
  ('I2.2', 'MET', 'prose is a complete interface', 'Part I "Prose is a complete interface to participation"', 'no participant must code, emit JSON or supply a confidence'),
  ('I2.3', 'ERR', 'error correction is reason-sensitive revision with an operative return', 'Part I, section of that name', '"The error-correction method is conjecture and criticism applied recursively to whatever is doing explanatory work"; mere change is not correction'),
  ('I2.4', 'ERR', 'the collection is not the working set; parking', 'Part II "The collection is not the active working set"', 'error correction stops the operative reuse of an error without erasing it; withdrawal is use-relative'),
@@ -88,7 +88,7 @@ N = [
  ('I2.11', 'INF', 'tokens as a flow of computational allowance', 'Part VII; "Why computation does not explode by construction of the controller"', 'reading and generating are counted as allowance; the bound is on traffic, not on "information retained"'),
  ('I2.12', 'KNO', 'knowledge creation needs actual explanatory progress; use does not certify learned knowledge', 'Part I first section; Part V first section', '"Successful explanatory knowledge creation has further requirements, including actual explanatory progress"'),
  ('I2.13', 'CRE', 'daydreaming and jolts', 'Part VIII', 'exploration without immediate usefulness; jolts alter conditions, not scores'),
- ('I2.14', 'PHY', 'finite resources are realisation conditions', 'authority register A10; Parts VI and VII', 'resources bound a realisation; they do not redefine universality'),
+ ('I2.14', 'PHY', 'finite resources are realisation conditions', '"Authority register" A10; Parts VI and VII', 'resources bound a realisation; they do not redefine universality'),
  # ---- FW2 ----
  ('FW2.1', 'MET', 'K-REAL: reality is not conferred by a judgment', 'Part I-A "Reality is not conferred by a judgment"', 'errors can be real when nobody has identified them; no procedure turns a fallible judgment into a guarantee'),
  ('FW2.2', 'ERR', 'K-PROBLEM: a problem is an interpreted difficulty that matters', 'Part I-A', 'a tension, inadequacy or unresolved relation among ideas that a system recognises and attends to'),
@@ -118,7 +118,7 @@ N = [
  ('FW2.26', 'KNO', 'biological contrast', 'Part III "Distributed inquiry and biological contrast"', 'a lineage "instantiates physical knowledge without explanatory criticism"'),
  ('FW2.27', 'KNO', 'evolved constraints as provisional background', 'Part II "Argument dependencies ..." last paragraph; Part III', '"physical knowledge in the organism, deployed as premises, withdrawable, and not warrant"'),
  ('FW2.28', 'CRE', 'generator constraints and the extensible class', 'Part II "Methods can be criticized from within inquiry"; "The stratified hierarchy"', 'a standard whose withdrawal changes what the system can conjecture; E1 makes them eligible targets'),
- ('FW2.29', 'EXP', 'a predictive-model account of intelligence as contrast', 'Part III "General model learning is not explanatory organization" (from A1.1); source H1', 'continuous predictive learning with many models and consensus can instantiate no explanatory activity'),
+ ('FW2.29', 'EXP', 'a "predictive-model account of intelligence" as contrast', 'Part III "General model learning is not explanatory organization" (from A1.1); source H1', 'continuous predictive learning with many models and consensus can instantiate no explanatory activity'),
  ('FW2.30', 'MET', 'three standpoints', 'Part II "The model and the three standpoints"', 'model satisfaction, situated judgment, attribution evidence; none identified with another'),
  ('FW2.31', 'ERR', 'Progress: kinds of improvement with no common scale', 'Part II "Progress, possession, and historical assessment"', 'replacing a false mechanism, explaining why an approximation worked, exposing an artifact, a better question, a limit'),
  ('FW2.32', 'INF', 'contents, occurrences and interpretations', 'Part II "Contents, occurrences, and interpretations"', 'an occurrence is a token, artifact or embodied state; its identity is distinct from its interpreted content; an interpretation is indexed by grain, context and attributed system'),
@@ -149,7 +149,7 @@ N = [
  # ---- FW4 ----
  ('FW4.1', 'MET', 'commitments, with Indexing', 'Part I', 'realism, fallibility, conjecture before criticism, no standing from generation, recursion, indexing'),
  ('FW4.2', 'EXP', 'Because, seven prohibitions, modes changed', 'Part II', 'modes: production, determination, invariant, constitutive, selection; direction fixed by an organization'),
- ('FW4.3', 'EXP', 'support families; work as critical membership', 'III.1', 'finite lemma: work is the union of minimal supports, indispensability their intersection; joint work without contributors'),
+ ('FW4.3', 'EXP', '"support families"; work as critical membership', 'III.1', 'finite lemma: work is the union of minimal supports, indispensability their intersection; joint work without contributors'),
  ('FW4.4', 'EXP', 'organizations and recoding', 'III.2', 'supports are defined over the organization, preserved by recoding, not by substitution'),
  ('FW4.5', 'HTV', 'reach and the monotonicity lemma; HTV as indispensability of every commitment', 'III.1; III.3', 'adding a preservation requirement cannot enlarge the permitted variation set; no comparison across contents follows'),
  ('FW4.6', 'EXP', 'transport: recoding, idealization, approximation', 'III.5', 'approximation with a bounded discrepancy on a scope; work is the unit of transport'),
@@ -172,10 +172,10 @@ N = [
  ('FW5.2', 'MET', 'explanatory realism and fallibility', '"The commitments", first section', '"What cannot count as successful explanation is an error in the very dependence alleged to account for that feature"'),
  ('FW5.3', 'PHY', 'substrate independence with physical obligations', '"The commitments", last section', 'any carrier may bear organization; claimed distinctions and retained capacities must be physically permitted'),
  ('FW5.4', 'EXP', 'structural answer (E)', '"Explanatory adequacy without a Because primitive"', 'anchoring, fidelity, question fidelity, non-circular dependence, non-vacuity'),
- ('FW5.5', 'HTV', 'support families without minimality; hard to vary and reach as containment', '"Work, redundancy, interference, and infinity"; "Hard-to-vary and reach"', 'no upward closure assumed; more reach constrains variation for a fixed organization and family, not a count'),
+ ('FW5.5', 'HTV', '"support families" without minimality; hard to vary and reach as containment', '"Work, redundancy, interference, and infinity"; "Hard-to-vary and reach"', 'no upward closure assumed; more reach constrains variation for a fixed organization and family, not a count'),
  ('FW5.6', 'ERR', 'approximate transport: accumulated error bound (T2)', '"Transport and preservation", "Approximate transport"', 'e_n <= eps * sum L^k; without a Lipschitz bound or modulus no accumulated bound follows'),
  ('FW5.7', 'ERR', 'criticism and its bearing; reason use as causal organization', '"Criticism, evidence, and operative decisions"', 'reason use is not an output comparison'),
- ('FW5.8', 'ERR', 'elimination without a truth machine; what a test contradicts (K3)', 'same Part, "Elimination without a truth machine"', 'a failed prediction contradicts T and B and I together, not T alone'),
+ ('FW5.8', 'ERR', '"Elimination without a truth machine"; what a test contradicts (K3)', 'same Part, "Elimination without a truth machine"', 'a failed prediction contradicts T and B and I together, not T alone'),
  ('FW5.9', 'STA', 'evidence receipts', '"Evidence receipts without false certainty"', 'P_j and N_j, positive and negative receipt sets: "descriptions of available arguments, not four kinds of reality"'),
  ('FW5.10', 'CRE', 'construction and transfer; newness; the originative act', '"Understanding, provenance, and creative events"', 'realized use, not logical omniscience; construction, transfer, reacquisition distinguished'),
  ('FW5.11', 'ERR', 'obligations and Repair (P)', '"Obligations rather than a hidden score"', 'a declared obligation met, protected ones kept, the change produced by the contribution'),
@@ -237,7 +237,7 @@ N = [
 # id, step, from, to, kind, how, standing, by
 E = [
  # FW0 -> FW2 (gap)
- ('e1', 'FW0>FW2', ['FW0.1'], ['FW2.30'], 'changed', 'model against record becomes three standpoints: a situated judgment is added between them', 'inferred', 'the wording of both; no document joins them'),
+ ('e1', 'FW0>FW2', ['FW0.1'], ['FW2.30'], 'changed', '"model" against "record" becomes three standpoints: a situated judgment is added between them', 'inferred', 'the wording of both; no document joins them'),
  ('e2', 'FW0>FW2', ['FW0.3'], ['FW2.14'], 'changed', 'the four-valued ledger with an adjudication operator becomes four optional descriptions of a record, "not four kinds of truth"', 'inferred', 'FW2 Part II "Appraisal is also conjectural content"'),
  ('e3', 'FW0>FW2', ['FW0.4'], [], 'dropped', "grounded (Dung) adjudication has no counterpart; FW2: a schematic attack edge cannot supply bearing", 'inferred', 'FW2 Part II "Argument dependencies ..."'),
  ('e4', 'FW0>FW2', ['FW0.5'], ['FW2.5'], 'changed', 'recordability of any criticism becomes target closure, role preservation and return relevance', 'inferred', ''),
@@ -259,7 +259,7 @@ E = [
  ('e19', 'FW0>I2', ['FW0.5'], ['I2.3'], 'changed', 'recordable criticism becomes error correction with an operative return that a host must check', 'inferred', ''),
  ('e20', 'FW0>I2', ['FW0.2'], ['I2.6'], 'changed', 'certificates as attackable content become bounded mechanical checks whose results are open to criticism', 'inferred', ''),
  ('e21', 'FW0>I2', ['FW0.4'], ['I2.9'], 'replaced', 'automatic adjudication gives way to no rankings and no automatic semantic adjudication', 'inferred', 'I2 "P: subordinate supplied profile": "automatic semantic adjudication ... not inherited" (of M8, not of FW0)'),
- ('e22', 'FW0>I2', ['FW0.1'], ['I2.1'], 'changed', 'model against record becomes material against certified truth', 'inferred', ''),
+ ('e22', 'FW0>I2', ['FW0.1'], ['I2.1'], 'changed', '"model" against "record" becomes "material" against "certified truth"', 'inferred', ''),
  ('e23', 'FW0>I2', ['FW0.8'], ['I2.12'], 'changed', 'knowledge creation needs actual progress; I2 adds that continued use of a method certifies nothing', 'inferred', ''),
  ('e24', 'FW0>FW2', ['FW0.7'], ['FW2.32'], 'changed', '"tokens are not their contents" becomes contents, occurrences and interpretations indexed by grain', 'inferred', ''),
  # FW2 -> FW3 (stated by FW3's change register)
@@ -285,7 +285,7 @@ E = [
  ('e49', 'FW2>FW3', ['FW2.32'], ['FW3.17'], 'added', 'occurrence-level questions ("Is this string knowledge?") ill-formed until an interpretation is fixed', 'stated', 'FW3 change register, row "Part II, contents"'),
  # FW3 -> FW4 (related)
  ('e50', 'FW3>FW4', ['FW3.1'], ['FW4.2'], 'changed', 'the same seven prohibitions; the open mode list changes from mechanism, geometry ... to production, determination, invariant, constitutive, selection', 'inferred', 'the two lists'),
- ('e51', 'FW3>FW4', ['FW3.2'], ['FW4.3'], 'replaced', 'minimal working subsets replaced by critical membership in support families', 'stated', 'FW5 "Reconciliation", "What the structurally extended source had already repaired"'),
+ ('e51', 'FW3>FW4', ['FW3.2'], ['FW4.3'], 'replaced', 'minimal working subsets replaced by critical membership in "support families"', 'stated', 'FW5 "Reconciliation", "What the structurally extended source had already repaired"'),
  ('e52', 'FW3>FW4', ['FW3.3'], ['FW4.5'], 'changed', '"reaches more, harder to vary" restricted to the monotonicity lemma for one organization and family', 'stated', 'FW5 "Reconciliation", "More reach is not a count-based warrant"'),
  ('e53', 'FW3>FW4', ['FW3.4'], ['FW4.8'], 'changed', 'non-circularity (A2) moved out of Account into discharge', 'stated', 'FW5 "Reconciliation": FW4 "relocates circular evidential support away from the truth of a content"'),
  ('e54', 'FW3>FW4', [], ['FW4.13'], 'added', 'the discharge quadruple with anti-smuggling conditions', 'stated', 'FW4 "Where this belongs"'),
@@ -296,7 +296,7 @@ E = [
  ('e59', 'FW3>FW4', ['FW3.11', 'FW3.14'], ['FW4.11'], 'kept', 'physical knowledge one-place, different type, extensionally independent; "uptake" becomes "imitation"', 'inferred', 'FW3 T2, T5 against FW4 Part VI'),
  ('e60', 'FW3>FW4', ['FW3.12'], ['FW4.12'], 'kept', 'acquisition is creation', 'inferred', ''),
  ('e61', 'FW3>FW4', ['FW3.15', 'FW3.16'], ['FW4.16'], 'kept', 'licensed count; warrant eliminated', 'inferred', ''),
- ('e62', 'FW3>FW4', ['FW3.21'], ['FW4.17'], 'changed', 'discipline kept; a machine may verify a structural claim and may not assert application or relevance', 'inferred', ''),
+ ('e62', 'FW3>FW4', ['FW3.21'], ['FW4.17'], 'changed', 'discipline kept; a machine "may verify S" (the structural claim) and may not assert application or relevance', 'inferred', ''),
  ('e63', 'FW3>FW4', ['FW3.19', 'FW3.20'], ['FW4.15'], 'kept', 'custody, deployability, operative role; generator constraints now stated in the relation', 'inferred', ''),
  ('e64', 'FW3>FW4', ['FW3.5', 'FW3.6'], ['FW4.9'], 'kept', 'Bearing and Progress as instances of Account, still conjectures', 'inferred', ''),
  ('e65', 'FW3>FW4', ['FW3.22', 'FW3.23'], [], 'dropped', "the repairs addressed to FW2's text are not in FW4, which stands alone", 'inferred', 'FW4 "Where this belongs": "standalone rather than a patch"'),
@@ -339,7 +339,7 @@ E = [
  ('e135', 'I2>FW5', ['I2.7'], ['FW5.8'], 'kept', 'formal backing gives no immunity from prose criticism', 'inferred', 'FW5 "Reconciliation", "What the executable audit does and does not settle" (of the 0.2 audit)'),
  ('e136', 'I2>FW5', ['I2.8'], ['FW5.5'], 'kept', 'hard to vary is no score; no count chooses explanations', 'inferred', ''),
  ('e96', 'I2>FW5', ['I2.4', 'I2.5'], ['FW5.8'], 'kept', 'admitting prose, enacting a working-use change and certifying a semantic conclusion kept apart', 'inferred', 'FW5 "What is retained" says this of specification 0.1 (S7); I2 is 0.4'),
- ('e97', 'I2>FW5', ['I2.6'], ['FW5.8'], 'kept', 'a machine check establishes a limited proposition, never immunity from prose criticism', 'inferred', 'FW5 "Elimination without a truth machine"; version gap as e96'),
+ ('e97', 'I2>FW5', ['I2.6'], ['FW5.8'], 'kept', 'a machine check "can establish a limited proposition", never immunity from prose criticism', 'inferred', 'FW5 "Elimination without a truth machine"; version gap as e96'),
  ('e98', 'I2>FW5', ['I2.10', 'I2.11', 'I2.13', 'I2.14'], [], 'dropped', 'implementation choices (scheduler, token allowance, storage policy) are "not a condition of this class"', 'stated', 'FW5 "Reconciliation", "What is retained" (of S7)'),
  # FW5 -> PT (through files 10 to 107)
  ('e100', 'FW5>PT', ['FW5.4'], ['PT.1', 'PT.3'], 'changed', '(E) kept in shape; being an explanation adds that the transport is not merely declared', 'recorded', 'results/S108 Part A round 2 (D16.XV, the owner\'s answer Q2 of S41)'),
@@ -349,7 +349,7 @@ E = [
  ('e104', 'FW5>PT', ['FW5.15', 'FW5.3'], ['PT.6'], 'changed', 'interoperability returns without its name: contents passing between media, and a barrier where they cannot', 'inferred', 'results/S89 missed relation M4 proposed it; the revision that added it is not traced here'),
  ('e105', 'FW5>PT', ['FW5.16'], ['PT.21'], 'kept', 'CT1 and CT2', 'recorded', 'results/S89, observation 3 (10:464 "nearly repeats" FW5)'),
  ('e106', 'FW5>PT', ['FW5.17', 'FW5.20'], ['PT.22'], 'kept', 'owned capability, achievement, CT3 and CT4 as tolerances', 'inferred', ''),
- ('e107', 'FW5>PT', ['FW5.12'], ['PT.19'], 'replaced', '(EK), created explanatory knowledge, renamed (EX), created explanation, at the S95 scrub, "pending the owner"', 'recorded', 'results/S95 Does the semantics hold without verificationist words.md, lines on (EK) and the OWNER row'),
+ ('e107', 'FW5>PT', ['FW5.12'], ['PT.19'], 'replaced', '(EK), created explanatory knowledge, renamed (EX), created explanation, at the S95 scrub, "pending the owner"', 'recorded', '`results/S95 Does the semantics hold without verificationist words.md`, lines on (EK) and the OWNER row'),
  ('e108', 'FW5>PT', ['FW5.11'], ['PT.18'], 'kept', 'Repair (P); obligations become aims', 'inferred', ''),
  ('e109', 'FW5>PT', ['FW5.7'], ['PT.10', 'PT.11'], 'kept', 'Bearing as Account on the defect question (K1); reason use', 'inferred', ''),
  ('e110', 'FW5>PT', ['FW5.8'], ['PT.12'], 'changed', 'K3 kept; usability tied to premises live for the person, a premise taken as given allowed', 'recorded', 'decisions S23, S27; results/S96'),
@@ -394,7 +394,7 @@ MISSING = [
     ('O1, O2', 'FW5', 'the source-cited Deutsch books and constructor theory (S89, observation 1)'),
     ('Q3, Q4', 'FW5 leads to them', 'audits of FW5: structural weaknesses; proofs and anti-smuggling'),
     ('D4', 'FW5 leads to it', 'the audit theory: audits and conformance'),
-    ('T3', 'FW5 leads to it', 'the language-model study'),
+    ('T3', 'FW5 leads to it', 'the "Language-model study"'),
     ('layout.md', 'every file', 'the naming key and family tree'),
     ('file 20', 'this repository', 'the revised standalone theory, kept out on purpose (decision S4); between FW5 and file 10 nothing is supplied'),
 ]
