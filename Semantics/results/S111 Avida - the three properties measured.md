@@ -116,7 +116,7 @@ For each task: (T1) in the most common genotype, each instruction knocked out in
 
 (Rows count run-task pairs where the task passed 10%; AND passed in six runs.)
 
-- **Eliminating in one copy does not stop the transformation**: knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by under one point (the dominant genotype is a small part of a diverse population).
+- **Eliminating in one copy does not stop the transformation**: knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points (the most common genotype holds 5 to 44 of about 3,600 organisms in those runs; a diverse population).
 - **Eliminating in every copy does**: with every genotype's own task-only sites knocked out, EQU is performed by 1.1% to 4.4% of the covered organisms, and 93% to 100% of the former performers still copy themselves. So, for EQU, the test picks out about 19 to 26 instructions per genotype (in the dominant of low seed 2, for instance, `IO`, `nand`, `swap`, `push`, `pop`, `sub` and their labels), distinct from the copying machinery, spread over thousands of copies.
 - **Not fully**: the joint knockout of single-knockout sites leaves some performers, most for NOT (21% on average, up to 46%): a task that can be done by more than one route in the same genome is not stopped by removing what single knockouts find. The test's "ultimately" then needs more than this map.
 - The planned version, knocking out *all* the sites whose single knockout stops the task, drops every task to 0.000 in every run, but it also removes copying (those sites include the copy machinery, and a program that does not finish a copy registers no task in the test processor); so it does not separate the task from copying, and the task-only version was added (section 7).
@@ -132,7 +132,7 @@ For each task: (T1) in the most common genotype, each instruction knocked out in
 | resists change (a), what it does | the arrangement of instructions decides which changes are harmless | chose that arrangement by which variants lasted: more neutral changes at the high rate | one-change programs; low beside high |
 | resists change (b), its instructions | its essential sites are those whose change stops copying | removes the organisms that cannot copy (age, overwriting); makes every change in the first place | essential above non-essential at 54 of 54 saves; K5 (no change without the world's errors) |
 | remains | is copied faster than it is removed | removes by age and by overwriting | K1, K2 gone; K3 remains when nothing dies of age; K4 overwritten |
-| a task (Marletto's test) | computes the function (19 to 26 instructions for EQU) | supplies inputs, checks, rewards | one genotype's knockout: under one point; every genotype's: to 1% to 4% |
+| a task (Marletto's test) | computes the function (19 to 26 instructions for EQU) | supplies inputs, checks, rewards | one genotype's knockout: 0.2 to 1.4 points less; every genotype's: to 1% to 4% |
 
 No instruction of Avida's default set checks a copied instruction against its original or puts one back (`if-label` compares, only to find the end; build notes). So every "resisting" found here is either the program's structure, shaped by the world's weeding, or the world's weeding itself.
 
@@ -164,7 +164,7 @@ Observations only; they settle nothing (S28).
 - Structure that keeps what it does through most single changes (69% to 79% still copy themselves), and loses less to them when the world makes more errors.
 - Parts that stay the same while the rest changes (essential sites above non-essential at every save), because the world removes the copies whose change stopped the copying.
 - A line that lasted 50,000 updates and thousands of generations, although not one organism identical to the first remained and its copy loop was rewritten.
-- Instructions that compute a logic function the world rewards; by Marletto's test, eliminating them in one genotype leaves the transformation performed almost as before (under one point for EQU), and eliminating them in every genotype leaves it performed by 1% to 4% of the organisms (EQU).
+- Instructions that compute a logic function the world rewards; by Marletto's test, eliminating them in one genotype leaves the transformation performed almost as before (0.2 to 1.4 points less for EQU), and eliminating them in every genotype leaves it performed by 1% to 4% of the organisms (EQU).
 
 **They do not have**:
 - **No problem.** Nothing in an organism states or holds a problem; the tasks are set, checked and paid for by the world, and an organism does a task or does not.
