@@ -125,6 +125,19 @@ The files:
 {extra_rows}"""
 
 
+REPORT = """## 5. The report
+
+Terse. No summary of the material, no praise, no restating of what holds. At most about 3,000 words.
+
+(a) **Objections**, one table, most serious first: id (X{job}.1, X{job}.2, ...); the file and the place (section, table row, edge id, candidate id); the objection in one or two lines; what shows it (a quotation with its place, a count from a file, or a run you made: the command and the program's result line); **the exact fix** (the value, the standing, the sentence or the row as it should read, or the run that would settle it: copy, switch, script).
+(b) **Checked, no objection**: one line listing what you examined and found nothing to object to (ids only).
+(c) **Not reached**: one line each, with why.
+
+Write the whole report as your final message. Its last line must be exactly:
+
+END OF REPORT"""
+
+
 def frame_scan(b):
     f = B.frame_of(b)
     return sorted({m.group(0) for pat in B.SCRUB + B.FRAME_MODEL for m in re.finditer(pat, f, re.I)})
