@@ -167,6 +167,7 @@ Claims that move (whole suite): the whole suite was not run: no code changes.
 | PB2.4 | blocks | L369.s2 (B2) | claimed only | – | not computed |
 | PB2.4 | changes with | D6.4, D8.2 (FROZEN) | computed | – | FC96 (i): (A) for both no longer gives equal answers |
 | PB2.4 | moves | X:(A) | computed | – | meaning only: no candidate enters |
+| PB2.4 | moves | X:(E): 'enter: candidates that determine an answer where the target gives ⊥' (the reply) | contradicted | – | none enters on any case computed; the reply's own case fails (F1), (F2) |
 | PB2.5 | moves | X:Dependence, X:(E) | computed | – | 149 / 12 generated leave |
 | PB2.5 | constrains | D6.5 (FROZEN) | claimed only | – | NC0 stays a conjunct |
 | PB2.6 | moves | X:NonVacuous | computed | e1.51 | as PB1.1 |

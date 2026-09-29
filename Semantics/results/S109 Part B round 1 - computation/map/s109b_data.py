@@ -70,7 +70,8 @@ v("PB1.8", section="B1", free=["L115.s1", "D4.1"], kind="strengthen", carry="–
   meaning=[("none of the five parts", "sig_C(j) = {(a,b,L_j(a,b))}", "sig⁺_C(j) = {(a,b,L_j(a,b),Sol_D(a,b)↾V_j)}")],
   scope_note="No case moves; FC05 fails ((i) signatures use relations only; (ii) reading (i)); FC17, FC18 hold (the reply's 'FC18 at risk' does not happen).",
   edges=[("changes with", "D4.4", "computed", "e1.00", "FC17, FC18 unchanged"),
-         ("blocks", "L119 (FROZEN): kinds 'not from the values its ports take in a solution'", "computed", None, "FC05 (i)")])
+         ("blocks", "L119 (FROZEN): kinds 'not from the values its ports take in a solution'", "computed", None, "FC05 (i)"),
+         ("changes with", "FC18 (Argument 1: a same-kind condition adds nothing), the reply's 'at risk'", "contradicted", None, "FC18 holds under PB1.8")])
 v("PB1.9", section="B1", free=["L113.s1", "D4.1", "D4.2", "D4.3", "D4.4"], kind="replace", carry="–", impl="yes", switch="S109B_VARIANT=PB1.9 (core.one_kind)",
   readings=["PB1.9"], suite=["B1 PB1.9"], inventions=["S109-B1-I3: A×B read as every pair both readings reach (others: C, as now; C ⊆ C′ ⊆ A×B)"],
   meaning=[("none of the five parts", "kinds: classes of ~_C", "kinds: classes of ~_{A×B}")],
@@ -105,7 +106,8 @@ v("PB2.4", section="B2", free=["D5.6", "L249.s1"], kind="weaken", carry="–", i
   scope_note="Meaning moves, scope unchanged on every case computed (49 cases, 17,280 generated, FC-E, CT); the reply's small cases fail (F1) and (F2) on and off; FC21 (a2), FC96 (i) and FC109 fail (two candidates both meeting (A) with different answers at ⊥ pairs).",
   edges=[("blocks", "L369.s2 (B2)", "claimed only", None, "not computed"),
          ("changes with", "D6.4, D8.2 (FROZEN)", "computed", None, "FC96 (i): (A) for both no longer gives equal answers"),
-         ("moves", "X:(A)", "computed", None, "meaning only: no candidate enters")])
+         ("moves", "X:(A)", "computed", None, "meaning only: no candidate enters"),
+         ("moves", "X:(E): 'enter: candidates that determine an answer where the target gives ⊥' (the reply)", "contradicted", None, "none enters on any case computed; the reply's own case fails (F1), (F2)")])
 v("PB2.5", section="B2", free=["D6.2"], kind="strengthen", carry="–", impl="nearest reading", switch="S109B_VARIANT=PB2.5, S109B_NC0=bg or bg-input (core.NC0, dep)",
   readings=["PB2.5 bg", "PB2.5 bg-input"], suite=["B2 PB2.5-bg", "B2 PB2.5-bg-input"],
   inventions=["S109-B2-I3: 'carries Ans_p' read as Pin (D6.3's clause at one pair) by a background component (k ∉ Γ): 'bg' any, 'bg-input' one that assigns an input port of E (Roles(E)); other: I23's gloss (NC0 always true)"],

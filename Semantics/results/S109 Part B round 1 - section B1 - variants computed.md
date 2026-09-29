@@ -167,6 +167,7 @@ Claims that move (whole suite): FC04 parts: (b) a finer contract can separate; F
 | PB1.7 | constrains | L257, D6.9 (FROZEN) | claimed only | – | the relabeling exclusion vacuous on baseline-only contracts |
 | PB1.8 | changes with | D4.4 | computed | e1.00 | FC17, FC18 unchanged |
 | PB1.8 | blocks | L119 (FROZEN): kinds 'not from the values its ports take in a solution' | computed | – | FC05 (i) |
+| PB1.8 | changes with | FC18 (Argument 1: a same-kind condition adds nothing), the reply's 'at risk' | contradicted | – | FC18 holds under PB1.8 |
 | PB1.9 | blocks | L119 (FROZEN): kinds relative to the contract | computed | – | FC04 (b), FC16 |
 | PB1.9 | constrains | L11.s2 (FROZEN) | claimed only | – | reads more nearly this way |
 

@@ -122,3 +122,82 @@ for sec in ("B1", "B2", "B3", "B4"):
     json.dump(dict(section=sec, status="complete", variants=[rec_json(v) for v in V.values() if v["section"] == sec]),
               open(os.path.join(RES, PB + "section %s - variants computed.json" % sec), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print("four section files written")
+
+
+# ---------------------------------------------------------------- the map (rule 6)
+LEVEL = {  # which part of the definition each variant's meaning moves first; Expl, (Suff), (Nec) contain (E) and Dec
+    "(E)": ["PB1.1", "PB1.2", "PB1.3", "PB1.6", "PB1.7", "PB2.2", "PB2.3", "PB2.4", "PB2.5", "PB2.6", "PB2.7", "PB2.9"],
+    "Dec": ["PB2.1", "PB2.2", "PB3.1", "PB3.2", "PB3.3", "PB3.4", "PB3.5", "PB3.6"],
+    "X_j (the defeat sets of (Suff), (Nec) only)": ["PB4.2", "PB4.3", "PB4.4"],
+}
+SCOPE_MOVES = {  # computed: which candidates meet (E), or count as explanations, or fall in a defeat set, changes
+    "(E)": {"PB1.1": "the hand case with Excl(Σ) = ∅ enters", "PB1.2": "Θ strict: 36 cases and 813 generated leave (the sign and vane as edits or mixed)",
+            "PB1.3": "C_id leaves", "PB1.6": "61 generated enter", "PB1.7": "8 cases (the sign and vane as boundaries, C_id) and 186 generated leave",
+            "PB2.2": "1 worked case and 11 generated enter", "PB2.3": "214 generated leave", "PB2.5": "bg: 1 case, 149 generated leave; bg-input: 12 generated leave",
+            "PB2.6": "the hand case enters (as PB1.1)", "PB2.7": "20 to 28 cases, 855 to 946 generated leave (as C6)"},
+    "Dec": {"PB2.1": "FC104.new1 (b)'s selection becomes declared", "PB2.2": "the relabeling candidate on a Sel history", "PB3.1": "the student's copy stops being declared",
+            "PB3.2": "10 chain outputs become declared", "PB3.3": "every Sel-history case (44 cases, 999 generated) becomes declared", "PB3.4": "the student's copy and 82 chain outputs stop being declared",
+            "PB3.6": "the student's copy stops being declared (on that reading)"},
+    "X_j": {"PB4.2": "FC56 (a″)'s coarse-grain assessor's argument becomes usable", "PB4.4": "X_j empty everywhere: nothing ruled out, the defeat sets empty"},
+}
+MEANING_ONLY = ["PB2.4", "PB2.9", "PB3.5", "PB4.3", "PB4.1"]
+NEITHER = ["PB1.4", "PB1.5", "PB1.8", "PB1.9", "PB2.8", "PB3.7", "PB4.5", "PB4.6", "PB4.7", "PB4.8"]
+FLAGGED_OUT = ["PB3.8"]
+
+allv = list(V.values())
+edges = [dict(variant=v["id"], kind=e[0], item=e[1], standing=e[2], part_A=e[3], why=e[4]) for v in allv for e in v["edges"]]
+tot = {}
+for e in edges:
+    tot[e["standing"]] = tot.get(e["standing"], 0) + 1
+kinds = {}
+for e in edges:
+    kinds.setdefault(e["kind"], {}).setdefault(e["standing"], 0)
+    kinds[e["kind"]][e["standing"]] += 1
+
+M = ["# S109 Part B round 1 - how explanation changes in meaning and scope", "",
+     "*Rule 6 of `S109 Part B round 1 - how the replies will be read, written before sending.md`. The one Opus 5.5 agent of decision S56 (effort high), 29 September 2026. "
+     "Built by `computation/map/s109b_map_build.py` from the four \"section Bn - variants computed\" files (and their hand record `computation/map/s109b_data.py`, the scope runs and the whole-suite results). "
+     "Part A's map (`S108 Part A round 2 - the dependency map, after the cross-examination.md` / `.json`) is never written; edges that join it cite its ids. Nothing here is applied; nothing is ruled. "
+     "\"Candidate\" or \"explanation\" for what the theory judges; \"model\" only for the program (S43).*", "",
+     "## 0. What is mapped", "",
+     "Being an explanation = Account(ℰ) ∧ ¬Dec(t), Account = (E) = (F1) ∧ (F2) ∧ (A) ∧ Dependence ∧ NonVacuous; (Suff) and (Nec) are the claims about it, read through their defeat sets X_j (D16.XV). "
+     "**Meaning** = the changed formal statement, old beside new, of each part that moves. **Scope** = which things count, computed off against on: the text's worked cases (27), the owner's four cases (the two-part sign and the weathervane under the three readings of the owner's change, the student's copy FC30.new1 (d), the bridge FC84.new1 (a1), (a2)), the made-up candidates (17,280 generated at scale 4, FC-E1-E5, CT1-CT8; chains of up to three holdings for Dec), and the whole claim suite (142 claims) per variant and reading. "
+     "34 variants: 31 implemented as switches (PB2.8, PB2.9, PB4.3 with no code change, PB1.5 with no reader), PB3.8 flagged out (no formal statement), PB4.4 flagged out as written and computed as PB4.4′ restated on D9.8. The three class-a carry-overs are computed (V1.7 as PB1.1, R2V2.7 as PB2.1, V2.8's L315.s7 part as PB4.1); of class b, R2V1.4, R2V1.7, R2V1.8, R2V1.9, R2V2.4 (as PB1.5, PB1.4, PB1.3, PB1.2, PB3.1); R2V1.2 was not taken up.", "",
+     "## 1. Per variant", "",
+     "| id | free item(s) | kind | meaning: part (old → new) | scope (computed) | claims that move | edges (computed / contradicted / claimed only) |", "|---|---|---|---|---|---|---|"]
+for v in allv:
+    sc = "; ".join(x[v["id"]] for x in SCOPE_MOVES.values() if v["id"] in x) or ("meaning moves, scope unchanged on every case computed" if v["id"] in MEANING_ONLY else ("flagged out, not computed" if v["id"] in FLAGGED_OUT else "no candidate moves (nothing in the definition reads it)"))
+    mc = moved_claims(v)
+    st = [sum(1 for e in v["edges"] if e[2] == s) for s in ("computed", "contradicted", "claimed only")]
+    mean = "; ".join("%s: %s → %s" % m for m in v["meaning"])
+    M.append("| %s | %s | %s | %s | %s | %s | %d / %d / %d |" % (v["id"], ", ".join(v["free"]), v["kind"], mean.replace("|", "∣"), sc, ", ".join(sorted(mc)) or ("none" if v["suite"] else "not run"), *st))
+M += ["", "## 2. Per part of the definition", "",
+      "| part | free items its meaning was found to turn on (variants) | free items its scope was found to turn on (computed moves) |", "|---|---|---|"]
+for lvl, ids in LEVEL.items():
+    key = "X_j" if lvl.startswith("X_j") else lvl
+    mi = "; ".join("%s (%s)" % (", ".join(V[i]["free"]), i) for i in ids)
+    si = "; ".join("%s (%s: %s)" % (", ".join(V[i]["free"]), i, SCOPE_MOVES[key][i]) for i in ids if i in SCOPE_MOVES[key])
+    M.append("| %s | %s | %s |" % (lvl, mi, si))
+M.append("| Expl | everything under (E) and Dec (Expl := Account ∧ ¬Dec(t)) | everything under (E) and Dec |")
+M.append("| (Suff), (Nec) | everything under (E) and Dec (their antecedent), and X_j's items | everything under (E) and Dec (FC30.new1's defeat-set parts move with PB1.2, PB3.1, PB3.3, PB3.4, PB3.6), and X_j's (PB4.2, PB4.4′) |")
+M += ["", "Varied, meaning of a part moved, scope unchanged on every case computed: %s." % "; ".join("%s (%s)" % (i, ", ".join(V[i]["free"])) for i in MEANING_ONLY),
+      "", "Varied, moving neither the meaning nor the scope of any of the five parts (what moves is kinds, Found, routes, New, criticism, problems or the class's list; claims move as §1 says): %s." % "; ".join("%s (%s)" % (i, ", ".join(V[i]["free"])) for i in NEITHER),
+      "", "Not varied: see §5.", "",
+      "## 3. Edges", "", "| variant | kind | item | standing | Part A id | why |", "|---|---|---|---|---|---|"]
+for e in edges:
+    M.append("| %s | %s | %s | %s | %s | %s |" % (e["variant"], e["kind"], e["item"], e["standing"], e["part_A"] or "–", e["why"]))
+M += ["", "Edges joining Part A's map: e1.48, e1.49, e1.51 (V1.7, now computed as PB1.1: e1.51 and e1.49 computed, e1.48 still claimed only); e2.20 (computed), e2.21 (still claimed only: under S109-B4-I1 the defeat sets do not move); r2e2.14 (R2V2.7, computed as PB2.1); r2e1.30 (R2V1.4: no reader, claimed only); r2e1.34 (R2V1.7, computed as PB1.4); e1.00 (V1.1's block on D4.4: PB1.8 lifts it and FC17, FC18 hold); e3.34b (the neighbour of PB4.6).", "",
+      "## 4. Totals", "",
+      "**%d edges**: %s." % (len(edges), ", ".join("%s %d" % kv for kv in sorted(tot.items()))), "",
+      "| kind | computed | contradicted | claimed only |", "|---|---|---|---|"]
+for k, d in sorted(kinds.items()):
+    M.append("| %s | %d | %d | %d |" % (k, d.get("computed", 0), d.get("contradicted", 0), d.get("claimed only", 0)))
+M += ["", "Variants: %d implemented and computed (%d moving scope, %d meaning only, %d neither), %d flagged out (PB3.8; PB4.4 computed as PB4.4′)." % (
+    len(allv) - 1, sum(1 for v in allv if any(v["id"] in x for x in SCOPE_MOVES.values())), len(MEANING_ONLY), len(NEITHER), 1)]
+tail = open(os.path.join(HERE, "s109b_map_tail.md"), encoding="utf-8").read()
+open(os.path.join(RES, PB + "how explanation changes in meaning and scope.md"), "w", encoding="utf-8").write("\n".join(M) + "\n\n" + tail)
+json.dump(dict(about="S109 Part B round 1, rule 6: how explanation changes in meaning and scope, per variant and per part; built by computation/map/s109b_map_build.py",
+               variants=[rec_json(v) for v in allv], levels=LEVEL, scope_moves=SCOPE_MOVES, meaning_only=MEANING_ONLY, neither=NEITHER, flagged_out=FLAGGED_OUT,
+               edges=edges, totals=dict(edges=len(edges), by_standing=tot, by_kind=kinds)),
+          open(os.path.join(RES, PB + "how explanation changes in meaning and scope.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print("map written (§5, §6 from s109b_map_tail.md)")
