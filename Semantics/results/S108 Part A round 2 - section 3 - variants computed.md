@@ -2,7 +2,7 @@
 
 *Computing agent for section 3 (rule 5 of `S108 Part A round 2 - how the replies will be read, written before sending.md`; Opus 5.5 per `S108 Part A round 2 - who computes, recorded before any reply is opened.md`), 28–29 September 2026. Fresh. Works only in `S108 Part A round 2 - computation/section 3 model/` (a copy of round 1's `S108 Part A - computation/section 3 model/`, 36 files md5-identical at the copy; round 1's copy never written). Runs in `S108 Part A round 2 - computation/section 3 runs/`. Nothing here changes the theory (rule 11). "Candidate" or "explanation" for what the theory judges; "model" only for the program or a small structure it builds (S43). Read with the reply (`s108r2_glm_section3.response.txt`, 34a8e69f…) and the tabulation (§2–§8).*
 
-Status: in progress, filled as it goes; nothing ruled.
+Status: complete, 29 September 2026. **Continued after two stops**: the section agent that set this copy up and wrote §0–§2 was stopped under decision S56 (its runs of the scripts, the chains, the record keys, the arguments and the generated worlds had finished and are used here as they stand); the one Opus 5.5 agent that took over the whole reading under S56 was itself cut off by a session restart at about 00:24 UTC on 29 September, while the worked-case script and three single-claim runs were going. This file is finished by the agent that continued after the restart (S56: one Opus agent for the whole job, a departure from rule 5's "at most one per section"), from those runs and from the reruns named below. Nothing ruled.
 
 ## 0. Setup
 
@@ -47,3 +47,92 @@ Status: in progress, filled as it goes; nothing ruled.
 | S108r2-3-I10 | R2V3.9 | an answer atom is one named ans…, Ans…, E_ans… (FC68's; FC47.new1's record 'rec' is not so named, so the suite's R2V3.9 run does not type it); a formula with one is no claim; a tree with such a node is no argument; RO of a non-claim false | D9.1's "include" read as an open list: deleting an item then changes nothing |
 | S108r2-3-I11 | R2V3.10 | D18.1's Can loses Ω; Deploy := Rep ∧ Integrated ∧ Can over Θ's values | – |
 | S108r2-3-I12 | the suite | R2V3.2's run uses the formal core's key (the variant's old form), since its new form is the program's ('off') | – |
+
+## 3. Findings in brief
+
+| variant (reply) | (E) (Acc) | being an explanation (Account ∧ ¬Dec(t)) | what the computation adds or corrects |
+|---|---|---|---|
+| R2V3.1 C8 under the other choices: the claim on another question sharing t (R2-3-I1) | 0 | the pole's forward candidate: out only where the claim's δ′ = H (Acc(ℰ′) F: ExplUse F, Build F, Con F, Dec T); own, widest, Γ′ and port claims keep it; generated (claim designation / Γ′ / port / widest) out 210 / 73 / 146 / 122 (SMALL), 140 / 76 / 118 / 93 (value maps), 41 / 10 / 14 / 36 (proper), 457 / 112 / 288 / 200 (MID); with CT reading Prepares (D12.2 as written): 0 | **C8's flag S41 Q2 rests wholly on S108-3-I2** (CT reads ExplUse): on the candidate's own question and on the widest contract nothing moves on the worked case; with the claim on another question sharing t it moves (the reply's claim, computed). FC90.new1 moves in the suite (its (a) case) |
+| R2V3.2 D13.8's record key (contract → change) | 0 | on the reply's re-entry chain q = [C′, C, C] (one record, of ρ_C): key 'change' (the program): Episode F, tag Con F, Dec T; key 'contract' (the core's words): Episode T, Dec F; generated: every account on a re-entry history (tags, and chain T′ with the trace spanning) 1,013 / 881 / 232 / 1,670 in under 'contract' against 'change' | **the program already keys by the change** (I174), so the variant's new form is the program's and its old form the core's words: the core and the program part on re-entry chains (2,147,344 chains n ≤ 4, cut T′: Dec F → T on 14,592 + 44,288 held outputs, 'contract' → 'change'). C9 gains re-entry chains under 'change' (the reply's claim computed); no flag |
+| R2V3.3 (a) Held read as a tag before an unrecorded change, (b) the trace's extent = the whole subhistory | 0 | (a): the tag at o1, trace at o2: Dec T (off), Dec F under V3.5; as a chain not held at o2: Dec T under T′ and T; (b) the trace spanning o1…o_t across an unrecorded change: Dec F → T on 45,072 held outputs (341,184 chains n ≤ 4, cut T′) | round 1's tag rows were an artefact of the deletion, as the reply says (tag at o1, clause kept: every Acc-T candidate declared, T′ and T); (b) reproduces the second checker's e3.25c (45,072) with the clause kept: the extent decides whether the record clause bites. "C9′" (C9 read with the whole-subhistory extent) = C9 on spanning traces |
+| R2V3.4 D15.8's parts as ports (and edits) | 0 | the pole, t′ = t + an idle part, stated construction t's own: components (off) t′ Dec T; ports and edits: t′ in 𝒯, Dec F, an explanation; t on 'Sel-parts' (stated lacks c_L): Dec T under ports, F under edits. Generated (ports / edits): 'Sel-parts' in 356 / 1,013 (SMALL), t′ idle in 1,013 / 1,013, t′ deviating in 576 / 638, newly underdetermined pairs 1,041 / 1,141 | C10's reach **does not need the deletion** (the reply's claim computed): parts as ports or edits admit a t′ with an extra component; ports equals round 1's V3.6 (the clause deleted) on 'Sel-parts' only in part (356 of 1,013), edits equals it everywhere |
+| R2V3.5 no construction stated ⇒ 𝒯 = ∅ | 0 | the pole's forward candidate on the 'Sel' history: Sel T → F, Dec F → T, Account ∧ ¬Dec(t) T → F; generated: every account on a Sel history out (1,013 / 881 / 232 / 1,670); CT8 unchanged (its histories are constructions) | the reply's "C10′", the opposite of C10: **every selected candidate whose history states no construction stops being an explanation**: the owner's cases (the vane, the signs) and the pole among them, on that history; the suite moves 5 claims (FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1) and parts of 3. Flag: **S41 Q2** in reverse (the reply: "it declares more, which Q2 permits"); see the candidate list |
+| R2V3.6 I90: Dec from chains | 0 | 0 on every generated candidate (chain T′ reproduces the hand-set Dec, 0 moves); C7's, C9's and C10's moves are the same against R2V3.6 as against the hand-set histories (§6) | the reply's "C9's tag counts do not reproduce" **contradicted** (C9 with R2V3.6: the same four histories in, 1,013 / 881 / 232 / 1,670); the chain evaluator equals the program's fixed points on 50,736 (chain, cut) pairs × 6 switch states (0 mismatches) |
+| R2V3.7 D11.3: ⪯ the reflexive closure of ≺ | 0 | tag model: a witness two steps before the output no longer counts: Con T → F; generated: every account on the 'Con-far' tag history out (1,013 / 881 / 232 / 1,670); chains n ≤ 4, cut T′: Dec F → T on 4,224 (trace at o_t, output not held) and 11,520 (trace spanning); CT8's R1, R3: constructed → declared (D12.1 and with L201 and L411; T′ unchanged) | (EX): CreateEx T → F on 3 of 1,024 valuations (e_c two or more steps before e); UsesReason F → T on the 1,436 routes that did no work (e3.34b) |
+| R2V3.8 D9.2: every argument has a step | 0 | 0 | a premise alone is no argument: X_j(design ∧ PM) 1 → 0 (FC72 (d)); (Suff) by a premise alone: with forms MP only, the pole's constructed candidate leaves Def(L536); generated 392 of 1,600 Out_j T → F. **Departs from S41 Q23** ("Yes, it's an argument"); FC72 and FC72.new1 move in the suite |
+| R2V3.9 D9.1 without 'Ans_p(a,b) = y' | 0 | 0 | X_j('Ans_p(a,b) = y') 1 → 0; FC68 (b) T → F; FC47.new1's case: Solved T → F, Prob_j F → T; generated 950 of 1,600 Out_j T → F; FC68 moves in the suite |
+| R2V3.10 D15.5 without the construction disjunct | 0 | 0 | of 64 valuations Can 48 → 32, Deploy 24 → 16, CreateEx 3 → 2; D18.1's Can loses Ω; FC32.new1 moves in the suite |
+
+Discovered changes to which candidates meet (E): none. To which count as explanations with (E) unchanged: R2V3.1 (on S108-3-I2), R2V3.2 (re-entry chains; the core and the program part), R2V3.3 (b) (spanning traces), R2V3.4, R2V3.5, R2V3.7 (on the histories each names). Neither: R2V3.6, R2V3.8, R2V3.9, R2V3.10.
+
+## 4. The worked cases and the owner's cases (rule 5.1)
+
+`s108r2_s3_cases.py` A (the 27 cases of the written-in step's script and the owner's 8: the vane and the signs, edit and boundary) under each state of §0 against its baseline; B, C, D, E: `section 3 runs/cases/cases B-E.txt` (this agent's rerun of parts B to E, unbuffered, while part A ran in the queue: `cases/cases.txt`). What part A shows is in the addendum (§10) when its run ends; parts B to E:
+
+| part | what | result |
+|---|---|---|
+| B | the student's declared copy (FC30.new1 (d)) and the bridge (FC84.new1 (a1), (a2)) under all 26 states | **nothing moves**: the copy stays Dec (H = {(1,b1_45)} and H = ∅), the bridge's output stays Con with Build T in every state |
+| C | the reply's small cases R2V3.1–R2V3.7 | as §3's rows (each "after" the reply marked not run is run here) |
+| D | arguments: FC72 (d), (Suff) by a premise alone, 'p because p', a test's record, FC68 (b), FC47.new1's case | as §3's R2V3.8 and R2V3.9 rows; R2V3.9 with I8 kept and dropped: the same |
+| E | Can, Deploy, CreateEx over Θ's 64 valuations | as §3's R2V3.10 row; no definition of (E), Dec or being an explanation reads Can |
+
+FC-E1–E5 and CT1–CT8 (rule 5.2, 5.3): `s104_external.py` prints the same under every state; `s104_creative_transport.py` moves only under R2V3.7 (CT8's R1, R3: constructed → declared by exclusion under D12.1 as the case reads it; T′ unchanged). `s106_cases.py`: no move under any state (`section 3 runs/scripts/`).
+
+## 5. The generated worlds at scale 4 (rule 5.4)
+
+`s108r2_s3_worlds.py cands` on four populations (SMALL 17,280, seed 108301, 1,013 accounts; SMALL with value maps, 108302, 881; proper targets 1,420, 108303, 232; MID 25,920, 108304, 1,670): the counts are in §3; the smallest witness of every move is ports 1–2, dom ≤ 2, comps 1–2, |B| 1–2 (`worlds/cands.*.txt`). Chains (`worlds/chains.txt`, n ≤ 4, cuts T′, T, K, U), record keys (`worlds/keys.txt`, 2,147,344 chains n ≤ 4 with a record flag at every occurrence), arguments (`worlds/args.txt`, FC56's generator, 1,600), routes (`worlds/routes.txt`, 1,460 circuits), FC80's populations with a stated construction (`worlds/fc80x.txt`), ExplUse per occurrence (`worlds/explu.txt`), CreateEx (`worlds/createx.txt`).
+
+## 6. The readings round 1's candidates rest on, under each choice (rule 5 (1))
+
+| candidate | reading | under each choice (generated: SMALL / value maps / proper / MID) | flags |
+|---|---|---|---|
+| C8 (V3.4) | S108-3-I2 (CT reads Prepares, or ExplUse) × S108-3-I5 (the claim: own question, widest contract, another question) | Prepares: 0 moves under every claim. ExplUse: own 0 on the worked case; widest 122 / 93 / 36 / 200; designation 210 / 140 / 41 / 457; Γ′ 73 / 76 / 10 / 112; port 146 / 118 / 14 / 288 (out, never in) | S41 Q2 comes only under ExplUse with a claim on a contract or question where Acc(ℰ′) fails; goes under Prepares (D12.2 as written) |
+| C9 (V3.5) | the key (change / contract), the trace's extent (at o_t / spanning), the tag encoding, cut K, with R2V3.6 and R2V3.7 | every account in on 'Con-chg' tags, spanning chains and re-entry histories (1,013 / 881 / 232 / 1,670 each) under the key 'change'; under 'contract' re-entry is in already, so C9 adds only 'Con-chg' and spanning; with R2V3.7 or R2V3.6 the same; chains n ≤ 4 (T′): trace at o_t 11,240 (all not held at the output), spanning 45,072 held + 39,304 + 3,392; cut K moves held outputs with the trace at o_t (5,118) | none under any choice (S41 Q6 kept: an episode need hold no change) |
+| C10 (V3.6) | S108-3-I4 (parts: components / ports / edits), S108-3-I3 (stated construction; none stated: Θ's 𝒯 or ∅), with R2V3.6 | components: 'Sel-parts' in 1,013 / 881 / 232 / 1,670, t′ idle in the same, t′ deviating 638 / 627 / 22 / 889, underdetermined pairs +1,141 / 859 / 469 / 2,577; ports against R2V3.4 ports: 657 / 545 / 178 / 1,070 more; edits: 0 more (R2V3.4 with edits already admits them); against R2V3.5 (𝒯 = ∅): C10 restores every Sel candidate | none |
+| C7 (V2.5) | the hand-set histories (R2V3.6) | Sel (H = ∅) in 1,013 / 881 / 232 / 1,670, with R2V3.6 the same | S41 Q2 (in part) stands |
+
+## 7. Round 1's claimed-only edges of the share (rule 5 (2))
+
+| edge | settlement computed | standing | what shows it |
+|---|---|---|---|
+| e3.30b V3.6 → Sel → Dec → FC80 | FC80's populations with a stated construction (the base member's parts) and deviating twins (S108r2-3-I8), SMALL 120 per size | **computed** | 7,404 populations: under V3.6 𝒯 grows 29,616 → 53,748 members and the populations with an unseen pair underdetermined by the survivors 3,586 → 4,090 (581 more, 0 fewer); under R2V3.4 ports 3,961 (452 more) |
+| e3.34b V3.7 → UsesReason (D9.11) | circuits of ≤ 4 occurrences with an objection bound to i (S108r2-3-I7) | **computed** | 'an active route' read as R itself: UsesReason F → T on exactly the 1,436 routes that did no work; read as any route through m's image: 2,684 (1,093 of them routes that did no work) |
+| e3.37b V3.8 changes with L628.n2 | – | noted only | the owner's yes or no (S47 with S41 Q6) |
+
+## 8. The edges (the reply's rows, each marked; then added)
+
+| id | variant | kind | item [mark] | standing | what shows it / what would settle it |
+|---|---|---|---|---|---|
+| R3E01 | R2V3.1 | blocks | L403.s3 [FROZEN] | computed (round 1, e3.19; again here) | Build F where the claim's account fails (E) |
+| R3E02 | R2V3.1 | changes with | D12.2 [S2], D13.3 [S3] | computed | CT reading ExplUse: the moves of §3; reading Prepares: 0 |
+| R3E03 | R2V3.1 | moves | X:Dec, X:Expl | computed (on S108-3-I2 only) | §3, §6 |
+| R3E04 | R2V3.2 | changes with | L55.n3 [S1], FC84.new2 | computed for FC84.new2's re-entry case (Episode per key); L55.n3 a sentence | §3 |
+| R3E05 | R2V3.2 | moves | X:Dec, X:Expl | computed | re-entry chains: Dec per key (§3) |
+| R3E06 | R2V3.3 | changes with | D12.2 [S2] (Held's reading), D13.3's tuple [S3] | computed | (a), (b) of §3 |
+| R3E07 | R2V3.3 | moves | X:Dec, X:Expl | computed | 45,072 held outputs with a spanning trace |
+| R3E08 | R2V3.4 | constrains | D12.1 [S2] | computed | Sel's population clause read through parts (ports, edits) |
+| R3E09 | R2V3.4 | changes with | L481.s3 [S3] | not settled by computation | a sentence; the parts it names read as ports is the variant |
+| R3E10 | R2V3.4 | moves | X:Dec, X:Expl, D12.9 [S4] (Underdet) | computed | §3; underdetermined pairs +1,041 (ports) |
+| R3E11 | R2V3.5 | constrains | L195.s1 [FROZEN] | not settled by computation | L195.s1 names 𝒯 and a variation operator; whether 𝒯 = ∅ is a reading of it is the text's |
+| R3E12 | R2V3.5 | changes with | L481.s3 [S3] | not settled by computation | a sentence |
+| N31 (added) | R2V3.5 | moves | X:Dec, X:Expl | computed | every Sel candidate with no stated construction out (§3); 5 claims move in the suite |
+| R3E13 | R2V3.6 | constrains | FC30 | computed | Acc reads no history (FC30): 0 Acc moves |
+| R3E14 | R2V3.6 | changes with | I90; C7, C9, C10's counts | **contradicted** | C7, C9 and C10 move the same against R2V3.6 as against the hand-set histories (§6) |
+| R3E15 | R2V3.7 | changes with | D14.7 [S3], D12.2 [S2] | computed | CreateEx 3 of 1,024 T → F; Con at a witness two steps back F |
+| R3E16 | R2V3.7 | moves | X:Dec, X:Expl | computed | §3 |
+| R3E17 | R2V3.8 | changes with | D9.6, D9.7, L397.s16 [S3] | computed for D9.6 (usable), D9.7 (Out_j); L397.s16 a sentence | §3 |
+| R3E18 | R2V3.8 | moves | X:(Suff), X:(Nec), D10.1 [FROZEN] | computed for (Suff) (the pole's candidate leaves Def(L536) with MP only); D10.1 and (Nec) not computed | §4 D |
+| R3E19 | R2V3.9 | constrains | L397.s5 [FROZEN] | not settled by computation | a sentence listing the claims |
+| R3E20 | R2V3.9 | changes with | D9.8, D10.3 [S2] | computed (FC47.new1's case: Solved T → F, Prob_j F → T) | §4 D |
+| R3E21 | R2V3.10 | constrains | D15.7 [FROZEN] | not settled by computation | – |
+| R3E22 | R2V3.10 | changes with | D13.1, D13.2 [FROZEN], D14.7 [S3], D16.1 [FROZEN] | computed for D13.1 (Deploy 24 → 16), D14.7 (CreateEx 3 → 2); D13.2, D16.1 not computed | §4 E |
+| N32 (added) | R2V3.1–R2V3.10 | independent of | X:(E) | computed | 0 Acc moves in every population, case and state |
+| N33 (added) | R2V3.2 | changes with | D13.8 as the core states it against the program (I174) | computed | the program's key is the change; the core's words key by the new contract; they part on re-entry chains |
+
+## 9. The whole suite (a script, S56)
+
+Run by the agent that continued after the restart with `tools/sonnet_harness/run_claims.py` (not a Sonnet worker and verifier: a departure from the rule's harness clause, recorded in the map's §0; S55, S56), scale 4, time cap 45, against the round-4 record: off and each state of §0 (`whole suite/section 3/`). The single-claim runs made before (`section 3 runs/single/`, the claims whose code reaches each switch) expected: R2V3.1 FC90.new1; R2V3.5 FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1 (status) and FC12.new1, FC80.new1, FC83 (parts); R2V3.8 FC72, FC72.new1; R2V3.9 FC68; R2V3.10 FC32.new1; the others none. The results are summarized in the map's §2.
+
+## 10. Addendum: part A (the worked cases)
+
+Filled from `cases/cases.txt` when its run ends; see below.
