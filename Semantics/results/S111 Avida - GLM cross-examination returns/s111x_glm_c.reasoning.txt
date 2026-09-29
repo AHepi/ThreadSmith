@@ -1,0 +1,431 @@
+Let me explore the sandbox first.
+
+Note: main runs' commands do NOT include `-set DIVIDE_INS_PROB 0 ...` — but the K5 command sets copy mut to 0 and divide ins/del to 0. Fine.
+
+An important issue: The K1 command uses default avida.cfg with the standard instset? But the controls needed nop-X in the instruction set — how is the instruction set chosen? Avida uses `instset-heads.cfg` from the run directory. Let me check the configuration files and scripts.
+
+Now the scripts. Read all scripts.
+
+Important details noted so far:
+
+1. **K1 random programs control**: `write_org` writes random letters drawn from `LETTERS` (a–z, the 26 real instructions) — good, not nop-X. But the control K1 world has nop-X added to the instruction set (instset_extra=True), which doesn't matter for injection but does matter for copy errors — actually K1 organisms never copy, so fine. K2/K3/K4 worlds have nop-X in the instruction set, so copy errors in K4 can draw nop-X (departure 7 acknowledges this). Also note: adding nop-X as 27th instruction changes the *copy error draw space* in K4 — random instruction is drawn from the whole set (27 not 26), slightly lowering per-instruction probability. Minor.
+
+2. **Knockout with nop-X**: nop-X has flags 0 (no NOP flag) so it isn't read as a label — replacing an essential *label* nop with nop-X removes the label function, which is the point. But there's a subtle issue: replacing `nop-C` at site 3 (a label) with nop-X — good. However, in the main runs nop-X doesn't exist, so a copy error can never produce nop-X; that's fine since knockouts are analysis-only.
+
+3. **Test processor's `viable` definition**: "viable if run alone it divides and its offspring is identical... No mutations are applied there." But note in C3 they used SAMPLE_OFFSPRING with the world's copy mutation rates copied in — good.
+
+4. **Confounds listed in the brief**: 
+   - The analysis instruction set holds a 27th instruction the main runs lack. Consequence: single-point mutant scans replace each site with "each of the 25 other instructions of the set" — of the *26*-instruction set (25 others). The plan says "each of the 25 other instructions of the set", correct for 26. But wait — in R1, mutants are evaluated in the test processor whose instruction set has 27 instructions including nop-X. Does nop-X being in the set affect evaluation? Only if drawn — the mutant generation excludes nop-X (25 others), so fine. But the copy mutation during SAMPLE_OFFSPRING in analysis: the random instruction drawn comes from the 27-instruction set (including nop-X), whereas the world draws from 26. So C3's test-processor column (723/436/124) is measured with a slightly different error distribution than the world column — the "expected" range says upper end "if an error can redraw the same one". With 27 instructions, probability of redrawing the same = 1/27 vs 1/26. Negligible but technically a confound: the fidelity comparison (test processor vs world) isn't like-for-like. Minor.
+   
+   - Also: does the analysis mode apply DIVIDE_INS/DEL mutations? SAMPLE_OFFSPRING copies "the world's mutation rates" — the analysis avida.cfg has DIVIDE_INS_PROB 0.05, DIVIDE_DEL_PROB 0.05 defaults. Expected formula uses ×0.95×0.95, so yes they accounted for it.
+
+5. **Fitness in the test processor**: "Fitness there is merit divided by the time taken to copy" — with tasks performed counted? The test CPU runs tasks too (task.0..8 fields). Evolved genotypes get merit from tasks in the test processor as well; fitness of mutants includes task changes. So "neutral" mutants are neutral w.r.t. copy-speed + task merit. Fine.
+
+6. **Fixed inputs**: the test processor gives fixed inputs (two 32-bit numbers?) — section 5 acknowledges world counts exceed test processor, partly INHERIT_MERIT 1 and fixed inputs. Acknowledged as not checked.
+
+7. **K3**: "K3 in a world where nothing dies of age... expected to remain, showing that when nothing removes it, a program that cannot copy remains too; remaining is then the world's doing." But wait — K3's world still has copy mutations irrelevant (no copying). K3 remains for 2,000 updates making nothing. But is K3 truly showing "remaining is the world's doing"? In K3, nothing removes anything, so of course nothing disappears. But this doesn't fully separate: the conclusion in section 4 says "K3 shows that when the world removes nothing, a program that cannot copy remains as well as one that can". Hmm — but a *program that can copy* in a no-death world would fill the grid; the knocked-out one merely persists as a single organism. "remains as well as one that can" — K4 shows the copier fills the grid and overwrites the non-copier. The claim "remains as well as one that can" is loose: remaining-as-alive vs remaining-as-population. Actually the sentence is about the single organism remaining. Minor wording.
+
+More significant potential objections to examine:
+
+**A. K3/K4 confound: DEATH_METHOD 0 also changes the copier's world in K4.** In K4, the intact ancestor in a no-age-death world — the ancestor dies of age normally at 20×length; without age death, the ancestor would be immortal except overwriting. Fine, that's the point.
+
+**B. K4's interpretation**: "whether the non-copier is removed by the copier's offspring taking the space" — but BIRTH_METHOD 0 with PREFER_EMPTY 1: offspring prefer empty cells; when the grid is full they replace a random neighbour. In K4, initial state: 2 organisms (cell 0 knocked out, cell 1 ancestor). Grid mostly empty, so offspring of the ancestor go to empty cells preferentially — the knocked-out organism at cell 0 is not necessarily "taking its space" preferentially; it's a random neighbour choice among 8 (including empty preference). The knocked-out one was gone by update 500 (first save). Was it removed by overwriting or by chance? With PREFER_EMPTY 1, an offspring only replaces a neighbour when no empty neighbour exists... Actually PREFER_EMPTY overrides to choose empty cells "preferentially" — when empty cells exist in the neighborhood. Early on, all cells empty, so offspring lands in an empty cell. The knocked-out organism should NOT be overwritten until the grid fills. So its disappearance by update 500 is expected by grid filling — the causal claim "its cell taken by the intact one's offspring" is plausible but the measurement (first save at 500, gone) can't distinguish overwriting by the intact one's descendant from... well, there's nothing else that removes (no age death). So it must be overwriting. But whose offspring? Only the ancestor's lineage exists. OK, that attribution holds by elimination. But note K3 vs K4: in K3 the single knocked-out organism remains; in K4 with a copier present, the world fills and it's overwritten. That does separate.
+
+Wait — one subtlety: in K3, does the knocked-out organism still execute instructions? Yes, it executes its genome (nop-X does nothing; h-alloc etc. execute). With no age death it remains forever. Fine.
+
+**C. The knockout test C2 and "15 essential sites"**: The knockout replaces each instruction with nop-X, judged in the test processor. Claim: sites whose knockout stops self-copying are essential. But there's a confound: `mov-head` at site 5 and the label nops at sites 3,4 — knocking out a *label* nop with nop-X changes label matching of *other* head instructions (h-search targets complement labels). Fine — that's the intent.
+
+Bigger issue: knockout of `h-alloc` (site 1) — in Avida, REQUIRE_ALLOCATE 1; a program without h-alloc cannot divide. Good.
+
+**D. C3 "in the worlds" column**: "Avida's own count at the 50 saved updates ... for genomes that were no longer 100 long". Hmm — num_breed_true counts births whose offspring identical to parent. But the denominator? "births with an identical offspring" — is the denominator all births in those updates? But note this counts evolved organisms of varying lengths, not the ancestor. So the world column isn't measuring the *ancestor's* fidelity at the world's rate; it's the population's fidelity, which conflates evolved lengths, robustness, selection. The table presents three columns as if comparable ("expected from the rates" uses length 100). The evolved genomes at low rate are ~106 long at 50k. Also insert/delete mutations 0.05/0.05 apply. Actually the "expected" column explicitly uses (1-rate)^100×0.95×0.95, the ancestor. So the world column differs from the other two columns both in whose fidelity (evolved population vs ancestor) and in mutation context. It's disclosed partially ("for genomes that were no longer 100 long" — cryptic). This is a moderate objection: the world column isn't the ancestor's fidelity; a like-for-like check of "the world applies the rate faithfully" would need the ancestor's fidelity in-world, which the runs can't give after evolution. Where is the number computed? Check measure script.
+
+**E. Merit and processor time confound**: The scheduler gives time by merit; tasks multiply merit by 2^value. In the main runs, organisms that perform tasks get up to 2^(1+1+2+2+3+3+4+4+5) huge multipliers. So births per organism per update (C4) conflates program copying speed with task rewards — fine, that's the world. But the attribution table says copied: program asks; world "hands out processor time by merit". OK.
+
+But for the *knockout* claims, the test processor has no scheduler — fine.
+
+**F. R1/R2 confound**: mutants judged in test processor with no mutations and no neighbours, fixed inputs. Fitness in the test processor = merit/gest_time where merit includes task bonuses. Neutral defined as fitness within 1e-6. For the ancestor, no tasks. OK.
+
+Confess: high-rate genomes shorter (89 vs 106) — acknowledged in "Unsure".
+
+**G. The 27th instruction confound in robustness**: R1 uses "25 other instructions" — from the 26-letter set. Confirmed? Check measure_mutational_robustness script.
+
+**H. Marletto test**: "a program that does not finish a copy registers no task in the test processor" — so joint knockout removing copying drops task shares to 0 trivially; they added task-only version. Fine.
+
+The "one copy against every copy" T2(ii): knockout in dominant genotype only — share barely falls (0.2–1.4 points). They attribute to diversity. Fine.
+
+**I. Attribution "resists change (a)": "chose that arrangement by which variants lasted"** — this is asserted from the low-vs-high comparison; but the confound (length) is acknowledged. Also, three seeds; the rule (every seed of one beyond every seed of other) applied. Fine.
+
+**J. K1 claim**: "random programs never copy" — 0 of 10,000 length-100 random programs viable in the test processor. This supports "copying is the program's doing". But the random programs are drawn evenly from 26 instructions. Ancestral copy loop needs specific instructions; fine. But one confound: the test processor gives each program TEST_CPU_TIME_MOD 20 × length time? "TEST_CPU_TIME_MOD 20 # Time allocated in test CPUs (multiple of length)" — a program that would copy but slower than the cap would be judged not viable. Random programs that copy slowly would be missed. Minor, doesn't change conclusion direction (it biases toward *understating* random copying — the control is conservative). Fine.
+
+**K. C5 "from one to thousands"**: by update 1,000 every world held 3,566–3,600. The first PrintCountData is at u 0? MAIN_EVENTS: "u 0:1000:end PrintCountData" — starts at update 0. "by update 1,000" — first save at 1000. OK.
+
+Attribution: growth from one injected ancestor — but the world's scheduler with merit = length executed: the ancestor gets merit proportional to length... the world supplies time; program asks. Fine.
+
+**L. Death method default 2**: "death after executing 20 times the genome's length" — build notes say AGE_LIMIT 20, DEATH_METHOD 2: "may execute at most AGE_LIMIT (20) times its genome length". cOrganism.cc 223-231. OK.
+
+**M. K5 "no mutation"**: sets COPY_MUT_PROB 0, DIVIDE_INS 0, DIVIDE_DEL 0. But what about POINT_MUT_PROB (0 default), DIV_MUT_PROB 0 — all defaults 0. OK, K5 fully no mutation. Result: 3,600 organisms, one genotype, ancestor. Used as baseline for R3/M2: "when the world applies no change, nothing changes". But careful: K5 is the ancestor *without nop-X in the instruction set* (setup without instset_extra — correct, control_jobs K5 setup(name, ev) default instset_extra=False). Good.
+
+But wait — a deeper point about K5 as baseline for R4: in K5 the population stays the ancestor entirely, so essential AND non-essential both 1.0. Fine as "world changes nothing → nothing changes". But it doesn't separate program from world for conservation; it shows changes come from the world. That's what's claimed. OK.
+
+**N. Attribution table row "remains"**: "is copied faster than it is removed" — shown by contrast K1, K2 gone; K3 remains when nothing dies; K4 overwritten. Reasonable.
+
+**O. Issue: the essential/non-essential classification (C2) is measured on the ANCESTOR, but conservation R3 is measured on evolved populations whose copy loop was rewritten (zvvfcaxvvgab etc.).** The essential sites were defined by knocking out the *ancestor's* 100 sites; after 50k updates, genomes differ in length (89–128) and copy-loop organization (copy 2–3 instructions per pass). An alignment of evolved genotypes to the ancestor maps evolved positions to ancestral sites; counting "essential site still the ancestor's instruction" — but whether that site is still essential in the evolved genome is untested (no knockout map for evolved genomes except the dominant in the Marletto test T1). So the claim "essential sites are those whose change stops copying" is asserted for the evolved population using the ancestor's map. E.g., in the new copy loop `zvvfcaxvvgab` with two h-copy instructions (vv), knocking out one may not stop copying (the other still copies... actually the loop structure changed). The high-rate conservation of essential sites 0.582 while non-essential 0.051 — the gap is real, but the interpretation "because their change stops copying" is carried over from the ancestor. This is a genuine attribution objection: the essential-site map is the ancestor's, applied to evolved genomes; a knockout map of the dominant evolved genotypes (which exists for tasks in T1 but copying-survival was recorded: "the sites whose knockout stops the task are split into those whose knockout also stops copying and the task-only sites") — so T1 data partially covers this but is not used to re-derive essentiality in evolved genomes for R3. The fix: recompute essential/non-essential per dominant evolved genotype (knockout maps already made for T1 could be reused), or state the limitation.
+
+**P. Test processor "fixed inputs"**: for task determination in T2 — acknowledged. But also affects "viable with fitness within 1%": fitness includes task merit with fixed inputs; in the world, inputs vary. Acknowledged partially.
+
+**Q. K2/K3/K4 first attempt failure** (nop-X line ran onto last line without newline) — disclosed, rerun. Fine.
+
+**R. C3 column "of those 1,000, able to copy themselves exactly"**: 950/876/664 — interesting: of 1000 offspring samples (only those that were born?), those identical 723, and of the 1000, 950 able to copy themselves. Wait re-read: "1,000 offspring made in the test processor: identical" = 723; "of those 1,000, able to copy themselves exactly" = 950. So at high rate, only 664 of 1000 offspring can themselves copy. This is the world's fidelity again. Fine.
+
+Hmm wait — there's something subtle: SAMPLE_OFFSPRING with mutation rates: one gestation per sample, so 1,000 samples each one gestation, counting offspring genomes. Counts sum to 1000. OK.
+
+**S. "the analysis instruction set holds a 27th instruction the main runs lack"** — beyond the copy-draw space point: the *fitness* landscape of mutants: in the main world, a copy error can produce one of 26 instructions; the analysis set has 27 but they only test the 26-25 others. Fine. The one real effect: K4's copy errors can write nop-X (acknowledged, departure 7). And C3 test-processor sampling draws error replacements from 27 (1/27 chance same instruction vs 1/26 in world). Small systematic difference: the analysis set makes copies slightly MORE faithful (higher chance of redrawing same instruction). Check the numbers: low 723 vs expected 703–710; the world 693. 723 > 710 upper? Expected range 0.703–0.710; measured test-processor 723 — above the range even at the upper end. Could partly be the 1/27 vs 1/26 and... Actually also `0.95×0.95` insertion/deletion: at low rate, insertions/deletions at divide: probability the offspring is identical requires no ins and no del: 0.9025; copy errors: (1-0.0025)^100 ≈ 0.7787... times... hmm 0.7787×0.9025=0.7028. Yes matches 0.703. Measured 723. Slightly above the stated upper bound 0.710 (which assumed redraw-same possible). With 27 instructions: P(no effective error) = (1 - 0.0025×26/27)^100 = (1-0.002407)^100 ≈ 0.7860 ×0.9025 = 0.7093. Still below 0.723. Hmm, but also insertion "max one per divide" 0.05 — an insertion changes length → not identical. Deletion likewise. So 0.9025 factor right. 723/1000 vs expected ~709: binomial sd ≈ 14.4, so 723 is within 1 sd of 709. Fine. And the world 693 vs ancestor-expected 703: the world's population has longer genomes (106) at low rate → lower fidelity. Consistent with my objection D: the world column reflects evolved genomes, not the ancestor. Actually wait — is the world column restricted to births of length-100 genomes? "for genomes that were no longer 100 long" — I need to read the measure script to interpret. Let me read the measuring scripts.
+
+Let me read the remaining scripts and summary tables.
+
+Notes:
+- C3's "expected_identical_if_an_error_can_redraw_the_same_instruction" uses `mu * 25/26` — but in the analysis the instruction set has 27 instructions, so redraw-same chance is 1/27, i.e. should be `mu * 26/27`. Tiny discrepancy between the stated formula and the actual analysis condition. Minor but it's a mismatch of stated vs actual world: the sampled offspring column is generated with a 27-instruction set while the formula says 26. Objection (minor, exact fix: use 26/27 and note it, or restrict the random draw to the 26).
+
+- Robustness scan: mutants use `T.LETTERS` (a–z) — the 25 others of the 26. Good; matches plan.
+
+- `near` uses within 1%. Fine.
+
+- The scan is on the dominant genotype at each save; fitness includes tasks.
+
+Now read the worlds-over-time script (spop, conservation alignment, K controls measurement) and the Marletto script, plus summary tables.
+
+Key findings building up. Let me now scrutinize several technical issues:
+
+**Issue 1: C3 world column — numerator/denominator columns in count.dat.** Script uses `r[8]` as births and `r[10]` as "breed true". I can't verify column indices without count.dat format, but cStats line references... The count.dat columns: update, organisms, ... I recall count.dat has many columns. Can't verify; but there's a subtle bug possibility: `table()` takes `line.split()[:20] if _num(x)` — filters to first 20 numeric tokens. If count.dat has more than 20 columns, later ones dropped; indices 8 and 10 within 20, fine. But if the row starts with non-numeric? Unlikely.
+
+But a real concern: results file says "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." — cryptic. Actually the script sums r[8] over rows with r[0]>=1000 — 50 rows (updates 1000..50000 by 1000). Hmm "for genomes that were no longer 100 long" probably refers to the population having evolved (lengths no longer 100), which is my point: the world column measures the evolved population's fidelity, not the ancestor's at that error rate, so the three columns of the C3 table are not measuring the same thing: expected (ancestor, formula), test processor (ancestor, sampled), world (evolved population of mixed lengths and knock-out-prone backgrounds, under selection). Presenting them in one row invites the reading "the world's fidelity matches the rate" — but selection in the world biases toward faithful copiers, and genome lengths changed (mean length ~106 at low, 89 at high). At high rate world 0.131 vs expected 0.120–0.130 — close, but at low: 0.693 vs 0.703 — slightly lower; default 0.400 vs 0.425 — lower. Whatever; the objection is about attribution/comparability, disclosed only in a cryptic clause. The results file's "Program or world" says "the table's three columns follow the rate the world applies" — as if they measure the same dependence. Fix: state in the table heading that the world column is the whole evolved population (lengths 75–128), not the ancestor, so the close agreement is not an ancestor-level check; or restrict the world count to length-100 births (not available) or drop the comparison.
+
+Actually wait — is that right? num_breed_true counts births of identical offspring regardless of genotype. Yes, population-level. Confirmed objection.
+
+**Issue 2: `later = [r for r in count if r[0] >= 1000]`** — count.dat rows every 1000 updates from event `u 0:1000:end PrintCountData`. Wait — the event is `u 0:1000:end` meaning starting at update 0, every 1000. So count.dat has rows at 0, 1000, ..., 50000 = 51 rows. later = 50 rows. OK.
+
+But `births_per_organism_per_update`: mean of r[8]/r[2] over rows — births in an update divided by organisms at that update. Fine.
+
+**Issue 3: The essential-site definition vs evolved genomes (my point O above).** The conservation measure (R3) classifies sites by the *ancestor's* knockout map while measuring evolved populations whose copy machinery has been rewritten (copy loop `zvfcaxgab` → `zvvfcaxvvgab`, two h-copy instructions, unrolled loop). The attribution claim "its essential sites are those whose change stops copying" (section 6 table, row resists-change-b) is derived on the ancestor and transferred to evolved genomes without a contrast. Notably the Marletto script *did* compute, for the dominant genotype, which sites' knockout stops copying (`dominant_task_sites_whose_knockout_leaves_copying`, `still_copies`), so an evolved-genome essentiality map partly exists but is not used to test whether the conserved "essential" sites are still essential. Fix: recompute essential/non-essential per dominant genotype from its own knockout map (data already in the Marletto run) and re-do the R3 averaging over that map; or mark the claim as resting on the ancestor's map.
+
+Also note: alignment ambiguity in repetitive filler is acknowledged ("Unsure"). But the deeper problem: `align` maps evolved positions to ancestral sites; with an unrolled loop (zvvfcaxvvgab = extra v inserted), the alignment of the 9-site loop to 11 letters introduces gaps — per-site conservation of loop sites depends on arbitrary alignment choices among equal-scoring paths. Acknowledged for filler but not for the copy loop, which is the essential set that matters. So the headline "essential 0.836 / non-essential 0.178" has unquantified alignment arbitrariness in exactly the essential region. Fix: report the loop-region conservation using an exact-match criterion (like M2's substring test) or by hand-checking the dominant genotypes' alignments, or give a range over co-optimal alignments.
+
+**Issue 4: The K4 measurement of "knocked-out alive"** — counts only exact knocked-out genome (departure 7). But copy errors in K4's world apply to the intact ancestor's offspring (COPY_MUT_PROB 0.0075 default in K4 — the control command didn't set mutation to 0). So the K4 world has mutations on. That's per design? The plan says "K4. K2 and the intact ancestor injected side by side, nothing dying of age: whether the non-copier is removed by the copie's offspring taking the space." With mutations on, the world also makes mutated descendants — fine, doesn't undermine. Also the knocked-out organism cannot copy so remains exactly itself until overwritten. OK.
+
+But one attribution gap in K4: the intact ancestor's descendants overwrite *each other* too; the claim "its cell taken by the intact one's offspring" — could the knocked-out organism have been overwritten by a *mutated* descendant (possibly non-copier)? Either way it's the copier lineage's offspring taking the space. Fine.
+
+**Issue 5: K3's interpretation.** Results section 4: "K3 shows that when the world removes nothing, a program that cannot copy remains as well as one that can". Wait — "as well as one that can"? K3 contains only the knocked-out program. There's no copier in K3. The comparison "as well as one that can" is not shown by K3; K4 shows a copier's descendants remain (fill the grid). The sentence overreaches: in K3 the non-copier remains as a single organism; a copier in a no-death world would fill the grid — different senses of "remain". This is a small but real overstatement in the attribution contrast. Fix: reword to "remains too" / "a program that cannot copy also remains (as a single organism)".
+
+Hmm, is that worth an objection? The plan's K3 expectation: "expected to remain, showing that when nothing removes it, a program that cannot copy remains too; remaining is then the world's doing." The results phrasing "as well as one that can" adds an unearned comparison. Minor objection.
+
+**Issue 6: 27th instruction in C3 sampling and expected formula.** The expected upper bound uses `mu * 25/26` (script line 55: `exp_changed = (1 - mu * 25 / 26) ** L ...`), but SAMPLE_OFFSPRING ran with the 27-instruction analysis set, where an error redraws the same instruction with probability 1/27, so the effective no-change probability is (1 − mu·26/27). Also K4's world draw space includes nop-X. The effect is tiny (changes the third decimal at most) but the stated formula doesn't match the condition actually run; the build notes correctly say the draw is "from the whole set". Fix: change the formula to `mu * 26 / 27` for the sampled column (or run the sampling with a 26-instruction set), and note it in the results file.
+
+Let me quantify: low: (1-0.0025·26/27)^100 = (1-0.0024074)^100. ln = 100·ln(0.9975926) ≈ 100·(−0.0024103) = −0.24103 → 0.7859; ×0.9025 = 0.7093. With 25/26: 0.0024038… wait mu·25/26 = 0.0024038? 0.0025·25/26 = 0.0024038. Hmm that's *larger* than 26/27=0.0024074? No: 0.0025×25/26 = 0.00240385; 0.0025×26/27 = 0.00240741. So 25/26 gives higher expected than 26/27. exp_changed(25/26) = (1−0.00240385)^100 = e^{−0.24066} = 0.7861 → ×0.9025 = 0.7094. And with 26/27: 0.7093. Truly negligible (0.0001). So the direction: the true expected under the 27-set is *lower* than the formula's upper bound. 723 observed vs 709.4 expected — still high by ~14, ~1 sd. Hmm, why would sampled exceed the redraw-same upper bound? Possibly because in SAMPLE_OFFSPRING, the divide ins/del probabilities (0.05 each) — maybe Avida's "max one per divide" insertion at 0.05: identical requires no ins AND no del: 0.9025. Unless... an insertion of... no, any ins changes length. Or maybe DIVIDE_INS applies before... Or gestation-limited sampling means only organisms that *divide* produce offspring — a mutant that fails to divide produces no sample, so the sample of 1000 offspring comes only from successful gestations; the counts sum to n=1000. That's fine.
+
+Or the copy mutation applies per copied instruction where the copied length is 100 but with h-alloc extra space... The ancestor allocates extra room (wzcag head: h-alloc makes room) — copy_length 100. Errors only on copied instructions? If the last instruction or some region isn't copied via h-copy (e.g., divided after MIN_COPIED_LINES 0.5)... it copies all 100 (copy_length 100 reported). Hmm.
+
+Anyway — 723 vs 710 is within binomial noise (sd 14.2, z≈0.9). Not an objection. The formula mismatch stands as a nitpick; probably not worth a top slot, but the brief explicitly names "the analysis instruction set holds a 27th instruction the main runs lack" as a confound to examine. The places where the 27th instruction matters:
+
+1. C3 SAMPLE_OFFSPRING draw space (tiny).
+2. Robustness scan: mutants only over 25 others of 26 — but a *real* copy error in the main world can produce any of the other 25 of 26 too (26 instructions, error draws from whole set incl. same). So robustness scan's instruction range matches the world's possible changes... except errors can also redraw the *same* instruction (no change) — counted as neutral trivially. Fine. Actually wait: in the world, an error at a site replaces the instruction with a random one of 26 → 25 possible changed values + same. The scan uses 25 changed values. Match. Good.
+3. K4 world: nop-X can be written by copy errors (acknowledged, departure 7).
+4. Fitness values: fitness in test processor computed on 27-inst set — no effect.
+
+So the 27th instruction confound is essentially immaterial — worth one "checked, no objection" line with the tiny formula note... Actually the formula mismatch: `exp_changed` described as "if an error can redraw the same instruction" — with 26. In the analysis set it's 27. The description in the results .md: "the upper if an error can redraw the same one (it can: source/cpu/cInstSet.cc 83-88)". The magnitude is 0.0001 — immaterial. I'll fold into a minor objection or checked line. I'll put it as a low-priority objection since it's a stated-formula/actual-condition mismatch, exactly the kind of thing cross-examination should name, with exact fix `(1 - mu * 26 / 27)`.
+
+**Issue 7: Merit/scheduler confound in C4 and in "copied" attribution.** The attribution table says the world "hands out processor time by merit". In the main runs, tasks evolved and multiplies merit enormously (2^sum of values). So births per organism per update (C4: 0.0751 low → 0.0363 high) conflates task merit with copying. Not really an attribution error since it's assigned to the world. Fine.
+
+But here's a subtler attribution issue: **the test processor's "fitness" for evolved genotypes includes task merit earned with fixed inputs and no resource limits; the "neutral" classification (fitness within 1e-6) in R1 therefore bundles copy-speed neutrality with task-neutrality under fixed inputs.** A mutant that loses a task under some inputs but not the fixed ones would count neutral. The plan's R1 is "viable and fitness within one part in a million" — as planned. The confound (fixed inputs) is acknowledged in section 5 for tasks but NOT for R1's neutral share, which drives the R2 "flattest" conclusion. Fix: add one sentence in section 3(a) noting the fixed-inputs limit of the test processor's fitness, since the neutral share is the quantity the low-vs-high comparison rests on.
+
+Is that right that test CPU inputs are fixed? Section 5 says "the test processor gives fixed inputs". Actually in Avida the test CPU cycles through 10 input pairs? The results file says fixed inputs; I take it as given. The neutral share includes task merit; tasks in test CPU use the fixed inputs. A one-change mutant that breaks EQU under other inputs but not the fixed pair counts neutral. So the neutral share is an overestimate of task-neutrality generally — but "resists change" as measured is about what the program does in the test processor. It's a caveat. Medium-low priority.
+
+**Issue 8: The claim "the other 85 leave self-copying and fitness exactly as they were (fitness ratio 1.0 in all 85)".** With nop-X knockouts at non-essential sites — fine. But hmm: knockout of a filler nop-C with nop-X: the filler is a label for...? h-search at site 2 searches for complement of following label? The ancestor: `wzcag` = h-alloc, h-search, nop-C, nop-A, mov-head, nop-C. Site 6 essential (mov-head reads it as label). OK consistent.
+
+**Issue 9: C2 uses nop-X which "is not read as part of a label" — so knocking out a label nop doesn't merely damage the label, it *deletes* it from label space while keeping the site occupied.** An alternative knockout (e.g., nop-C→nop-A) would swap label meaning. Using a null instruction is standard. But there's an attribution subtlety: replacing `nop-A` (site 4) with nop-X changes the label that `mov-head` at site 5 jumps to? Whatever — the knockout test's logic is sound: it identifies sites whose content matters for self-copying. Fine.
+
+**Issue 10: K1's claim "random programs never copy" supports "the copying is the program's". But K1 random programs were tested only for length 100 and viability in the test processor with TEST_CPU_TIME_MOD 20×length cycles... If a random program needs more than 20×100=2000 instructions executed to complete a copy it's marked not viable. The ancestor uses 389 for 100. A random copier would plausibly be far slower. So the 0/10,000 could partly be a time-cap artifact. Direction: biases toward K1 showing zero — overstating the contrast. But honestly no random program copies at all (they almost surely lack h-alloc+h-copy+h-divide structure), so cap irrelevant. I'd call it checked/minor. Actually also in-world K1: 100 random programs injected, made no offspring, gone by update 66 — death by age confirms the world removes non-copiers. Fine.
+
+**Issue 11: "births_after_update_0" for controls and 'last_update_with_organisms'** — for K1, count printed every update (departure 5 says counts printed every update). Fine.
+
+**Issue 12: The `align` function** — I should check its correctness since per-site conservation is a headline number. It's a global alignment with gap −1, mismatch −1, match +1, with affine-ish trick `np.maximum.accumulate(X + ar) - ar`?? Wait, that's weird. Let me look:
+
+```
+X = np.empty(m+1)
+X[0] = H[i, 0]
+X[1:] = np.maximum(H[i-1, :-1] + s, H[i-1, 1:] - 1)
+H[i] = np.maximum.accumulate(X + ar) - ar
+```
+
+Standard Gotoh-like: X[j] = max(H[i-1, j-1]+s, H[i, j-1]−1) (gap in b, extending along row i). X[0] = H[i,0] = −i (gap so far). Then H[i] = max over j'≤j of (X[j'] − (j − j'))?? They compute maximum.accumulate(X + ar) − ar where ar = 0..m. accumulate max of X[j']+j', then subtract j. That gives max_{j'≤j}(X[j'] + j' − j) = max_{j'≤j} (X[j'] − (j−j')) — a gap of length (j−j') in a... this allows a gap in `a` (consuming b letters) at cost −1 per gap letter. But wait, they're missing the diagonal within the recurrence for gaps in the other direction; they handle only row-direction gaps via accumulate; column gaps (consuming a letters, gap in b) come from H[i-1, j] − 1, included via X[0]=H[i,0] then... hmm, H[i, j] should be max(X[j], H[i-1, j] − 1). Their H[i] = maxaccum(X + ar) − ar includes X[j] itself (j'=j) and gaps extending in b-direction; but H[i-1,j]−1 (gap in b at column j, i.e., a-letter unmatched)... Is it included? X[j] = max(H[i-1,j-1]+s, H[i-1,j]−1)? No — X[1:] = max(H[i-1, :-1]+s, H[i-1, 1:]−1): for j≥1, X[j] = max(H[i-1,j-1]+s[j-1], H[i-1,j]−1). Yes! H[i-1, 1:] − 1 for index j is H[i-1, j] − 1. So X[j] includes the vertical step. Then accumulate handles horizontal gaps. This is the standard O(nm) with linear gaps both directions. Looks correct (Needleman–Wunsch with linear gap −1). Good.
+
+Traceback: standard, prefers diagonal. Ties broken arbitrarily — alignment ambiguity acknowledged.
+
+**Issue 13: M2 'head_exact' uses anc[:5] = 'wzcag'; 'copy_loop_exact' anc[-9:] = 'zvfcaxgab'. Substring match anywhere. Fine.
+
+**Issue 14: `one_run` — `share_organisms_self_copying` runs every living genotype in the test processor; at 50k there may be hundreds of genotypes. Fine.
+
+**Issue 15: A subtle one about "world's fidelity... at the 50 sampled updates (1,000 to 50,000), not every birth"** — disclosed. But also, `num_breed_true` counts births whose offspring identical — includes divide ins/del effects. Fine, matches expected formula's ×0.9025.
+
+**Issue 16: C4's "every organism counts, including those that cannot copy"** — fine.
+
+**Issue 17: Attribution of "population growth from one" (C5) — is it the program? The world also seeds... The world injects one organism (the event). Growth requires copying. K2 shows the non-copier alone makes no population. Good contrast.
+
+**Issue 18: M3 "every organism descends from the one injected ancestor (one injection, no other source)"** — asserted, not measured; but by construction (events file injects only default-heads.org at begin; no REACTIONS... no other injection). Acceptable as construction-based. Though "the ancestor's lineage (every organism descends...)" plan says measure; result says by construction. Fine.
+
+**Issue 19: The tasks → merit → processor time confound on R3/M2 comparisons across rates?** The three conditions differ only in copy error rate; but populations evolved different task profiles, so different merit distributions — attribution "the world's error rate shaping that arrangement" (R2) has the length confound acknowledged, but also the task/merit confound: high-rate genomes shorter AND maybe fewer tasks; shorter genomes → different robustness. Acknowledged partially ("shorter, which the robustness comparison does not separate"). Enough? They acknowledge length only. The merit difference (fewer tasks at high rate → less processor time) doesn't directly affect neutral share measured in test processor. Neutral share measured on dominant genotype in isolation — unaffected by merit except through which genotype dominates. OK, length acknowledgment covers the main channel.
+
+**Issue 20: R3's "essential above non-essential at every save of every run (54 of 54)"** — 9 runs × 6 saves = 54. Good.
+
+**Issue 21: Section 5 "Avida's world counts give higher shares than the test processor... Not checked"** — the Marletto T2 shares are of *covered* organisms (90%); the world count shares of all. Also task selection criterion (10%) used world counts (`tasks[t+1]/orgs >= 0.10`) — the selection uses world counts but the measurement uses test processor; mixing. Disclosed as not checked. Could name as an attribution gap: the discrepancy direction (INHERIT_MERIT) is a candidate explanation, untested; the fix is a one-line check (compare a genotype's world task flag vs test CPU). But they marked it "Not measured/Not checked". The brief says "for each attribution: shown by contrast or only asserted?" — this one is asserted-but-flagged. I'll list as a modest objection: the claim "a newborn carries its parent's task credit (INHERIT_MERIT 1)" is an untested conjecture in a file otherwise built on contrasts; exact fix: run one contrast (e.g., recount tasks from genotypes in the test processor vs world at update 50,000 — data already exist in the T2 output: share_performing_as_found vs share_performing_world_count per run-task; the comparison is in the JSON; just report the ratio and check INHERIT_MERIT by testing a genotype's first-update task flag). Hmm — actually the discrepancy is already quantified per run-task in the JSON. The conjectured *cause* is untested. Modest.
+
+**Issue 22: K5 as "the baseline where the world changes nothing" for R3/M2.** K5 sets COPY_MUT 0, DIVIDE_INS 0, DIVIDE_DEL 0 — but leaves POINT_MUT etc at 0 default anyway. Fine. K5 result: one genotype, the ancestor, 3,600 organisms. But note: K5 without age death? No — DEATH_METHOD default 2, so organisms die of age at 20×100=2000 instructions, but are replaced by identical copies; population stays 3,600 of the ancestor. Good. And K5's copy fidelity count 1.000. Fine.
+
+**Issue 23: "the test processor has fixed inputs and no neighbours" (brief) — covered in Issues 7/21.
+
+**Issue 24: S23 compliance check** — forbidden words in Claude's own sentences: "true", "established", "derived", "proves", "supports", "better than", "worse than", "true"... Let me grep the results and plain words for forbidden vocabulary: "true" — hmm! "num_breed_true", "copied true", "breed true" are Avida's technical terms (column names). "true" in "True no-operation instruction" quoted from source. Does S23 forbid these? S23: "Better than, worse than, true, not true, more true, established, authority, foundation, foundational, derived, derived from." The rule as stated is about words implying verificationism/foundational truth/authority. Avida's `breed_true` is a technical identifier — quoting Avida's own field name is arguably fine, but the theory's record-keeper has previously (S20-S23) been strict. Hmm. Section 4 of my brief says: "no word S23 removes in Claude's own sentences". So I should check Claude's own sentences for: fits, supports, verified, corroborates, proves, disproves, reason to believe/reject, belief, better than, worse than, true, established, authority, foundation(al), derived (from), accepted (must mean tentatively). Let me grep the S111 files.
+
+In "2 the three properties measured.md": "not fully", "carried out"... Let me grep for specific words: "true" appears in "num_breed_true" (Avida's), "copied true" in build notes (quoted from source?), "breed true" (Avida's). In C2 results: "leave self-copying and fitness exactly as they were" fine. "proves"? Let me search. Also "neutral" fine. Let me grep to be careful. Also "the world counts" fine. Words like "shows", "shown" fine (not forbidden). "established"? "authority"? Let me grep.
+
+Also plain words file needs reading. And check the rule-for-reading file quickly for context (not strictly needed). Let me grep for forbidden terms across S111 files.
+
+The grep found only one match in "the rule for reading" file (line 34 — likely the rule's own text listing forbidden words). Good: no S23-forbidden words in the results or plain words files in Claude's own sentences. Wait — I should double check "true" — grep pattern included "true" as \b(...|true|...)\b and found nothing in S111/2, 3, 1 — but the build notes are in runs/, not S111/. Let me grep runs/ too. Also check "plain words" claims against the data: "the drop was 0.2 to 1.4 points", "44 of the 3,600". Also plain words section 3: "15 stop the copying, the 5 at the start, the first of the middle ones... and the 9 at the end" = 5+1+9 = 15. Consistent with results (sites 1–6 and 92–100). Good.
+
+Plain words section 5: "its place taken by the working program's copies" — matches K4.
+
+One thing in plain words: "Not completely: some programs can do a sum in more than one way" — matches.
+
+Plain words section 4: "84% of the programs (on average over the three runs) still had the first program's instruction at the places of the 15 copying instructions" — matches R3 low 0.836.
+
+Also plain words: "close to what the rates alone lead one to expect" (section 3) — this is the C3 comparison; my objection D says the world column is the evolved population, so "close to what the rates alone lead one to expect" is misleading: at the default rate 0.400 vs expected 0.425–0.438 — a 6–10% relative gap, plausibly from longer genomes; the plain-words sentence presents it as the world matching the expectation for "the rate the world sets". Actually here the plain words says "How often a copy is exact depends on the rate the world sets: in the world, about 69 in 100..." — it doesn't mention that these are evolved populations of different lengths. The full record's clause "for genomes that were no longer 100 long" is cryptic. So objection D covers both files; fix both.
+
+Now let me check the summary tables (runs/*.md) for consistency, and the "rule for reading" file. Also verify K3 numbers and the "copying and knockouts.md" content.
+
+Wait — I see something in the per-run table. Look at "essential sites still the ancestor's" for low seed 1 at update 1000: 0.96 essential / 0.88 non-essential. At update 10,000: essential 0.91, non-essential 0.23. Fine.
+
+But notice: at update 1000 non-essential 0.88 — very high; big drop by 10,000. Fine, evolution.
+
+Now — important check on the tasks table vs claims: "Tasks evolved in every run. By update 50,000, NOT, NAND, ORN, OR, ANDN and NOR were performed in all nine runs, AND in nine, XOR in three and EQU in six." Count from table: AND column: 3524, 25, 17, 2738, 3088, 3289, 2131, 136, 2666 — all >0 → 9 runs. XOR: 0,3179,0,2785,2688,0,0,0,0 → 3 runs. EQU: 0,3222,3316,2799,2975,0,2079,1740,0 → 6 runs. Consistent. Results file said "first seen between updates 13,000 and 44,000" — fine.
+
+But note low_seed1 performs 0 EQU yet "AND passed in six runs" — matches note "(Rows count run-task pairs where the task passed 10%; AND passed in six runs)". Check: AND ≥10% in low1 (3524/3600=98%), low2 (25→0.7% no), low3 (17 no), def1 2738 yes, def2 3088 yes, def3 3289 yes, high1 2131 yes, high2 136 (3.8% no), high3 2666 yes → 6 runs. Consistent!
+
+EQU rows: 6 run-task pairs where ≥10%: low2, low3, def1, def2, high1, high2 → 6. XOR 3. Good.
+
+Now K4: "knocked_out_alive_at_500: 0, organisms_at_500: 3137" — grid not yet full at 500 (3137 < 3600). And results file says "the knocked-out one was gone by update 500 (the first save); by update 1,000 the grid was full of them". OK.
+
+Hmm wait — K4 at update 500: grid 3137 full? Not full — 3137 of 3600. The knocked-out organism gone by 500 while 463 cells still empty. So it *was* overwritten despite empty cells available. PREFER_EMPTY 1: "Override BIRTH_METHOD to preferentially choose empty cells" — probabilistic, so sometimes replaces neighbours even when empty cells exist. Fine — the elimination is by overwriting (nothing else removes in DEATH_METHOD 0). Solid.
+
+Now — a check on the "54 of 54" claim: 9 runs × 6 saves, essential > non-essential in each cell shown. Yes, by inspection each cell's first number > second. Good.
+
+Now let me look at remaining items:
+- mutational robustness.md table — check numbers cited in results file (0.698, 0.169 etc.).
+- Marletto md — check a few numbers (EQU dominant drop 0.2–1.4 points; 19–26 sites).
+- the rule for reading file — brief context.
+- Also check C1 numbers: 389 instructions per copy.
+
+Also I want to double-check the results' claim "of those 1,000, able to copy themselves exactly: 950" — the script computes `via = sum(counts[r['sequence']] for r in viable_offspring if r['viable'])` — number of *offspring* (out of 1000 samples) that are themselves viable. But note: a "viable" offspring in the test processor means it makes an exact copy of *itself* — but many of those offspring differ from the parent. Also, subtle: viability as defined includes "or one that, run in turn, cycles back to it" — fine.
+
+One more important check: the results file section 2 says C3 world column "for genomes that were no longer 100 long". Hmm, actually reading again: "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." I think this clause means: in the worlds by then genomes were no longer 100 long (population evolved). It's garbled but points at exactly the mismatch I flagged. Also mean genome length at last save: low 105.3, default 109.4, high 87.8 — so fidelity per birth differs from ancestor expectation mostly through length and selection. At high rate, genomes shorter (88) → expected identical (1−0.02)^88×0.9025 ≈ e^{−1.785}×0.9025 = 0.1677×0.9025 = 0.151 vs measured 0.131 — measured *below* length-adjusted expectation. Interesting but fine — mixed lengths and deleterious-selected backgrounds.
+
+Actually hold on, at low: (1−0.0025)^105×0.9025 = e^{−0.263}×0.9025 = 0.7687×0.9025 = 0.694 ≈ measured 0.693. Default: (1−0.0075)^109×0.9025 = e^{−0.820}×0.9025=0.440×0.9025=0.397 ≈ 0.400. High: 0.151 vs 0.131. So actually the world figures match length-adjusted expectations remarkably for low/default. This strengthens the "world applies the rate" reading but the table doesn't say it. My objection D stands as a presentation/attribution issue: the row compares three different things; the fix is to state the world column is the evolved population with mean lengths 105/109/88 and optionally give the length-adjusted expectation.
+
+Now the essential-map-carried-to-evolved-genomes objection (O) — the strongest attribution objection along with the alignment issue. Let me also check whether the Marletto data could actually support it: T1 computed, for the dominant genotype, `dominant_task_sites_whose_knockout_leaves_copying` — i.e., sites whose knockout stops copying = evolved essential sites (at least those overlapping task genes' neighborhoods... no wait — task_sites are sites whose knockout stops the *task*; among those, some also stop copying. That's not a full knockout map of the dominant. `maps()` computes knockout of EVERY site (flat = every single-site knockout of every chosen genotype) and evaluates tasks; but viability of every knockout is also available in `ko` rows! `dm['ko'][i]['viable']` for all i — the full essential map of the dominant genotype exists in the Marletto data but was only used to classify task sites. So the fix is cheap: derive essential sites per dominant genotype from `maps()` output and recompute R3's essential/non-essential split for the dominants at least. Good — exact fix available.
+
+Next: check the mutational robustness and Marletto md tables briefly, and the reading rule. Also double check plan vs results on "copying two or three instructions per pass" — evidence from sequences quoted. Fine.
+
+Also one more potential issue: **R3's essential set includes site 6 (first filler nop-C), classified essential because mov-head reads it as a label.** In evolved genomes the head was often gone (head_exact 0 in default/high) — so "essential sites" 1–5 (the head) may no longer be essential in evolved genomes, yet they're counted in the essential average. Actually the head instructions were *replaced* by evolved versions; conservation of sites 1–5 measured by alignment. If the evolved genome no longer uses a label at site 6, that site isn't essential anymore — the essential/non-essential contrast partly rests on sites that may have changed roles. This is part of objection O; mention explicitly.
+
+Also potential objection: **C2's fitness ratio "1.0 in all 85"** — knockout of filler nop-C with nop-X: 85 sites unchanged fitness exactly. But wait — site 6's knockout is essential (not in the 85). And the other 85 include... 100−15 = 85. Consistent.
+
+Another check: results section 2 C1: "executing 389 instructions per copy and copying all 100". Script gest_time 389. OK.
+
+Potential issue with `T.evaluate` for the world-population genotypes (share_organisms_self_copying, ~1700–3300 genotypes): CHUNK 4000 — one LOAD_SEQUENCE batch; fine.
+
+Another: **the `table()` function drops rows/fields**: `line.split()[:20] if _num(x)` — takes first 20 whitespace tokens that parse as float. count.dat columns: update, ave_rep_cycle? Let me think about count.dat format: typically: update, ave_age?, ... Actually standard count.dat: `update organisms ever...`? I can't verify column indices 8 and 10 without source. cStats.cc line 1099 num_breed_true referenced. Risk: column indices wrong would show nonsense (e.g., share > 1). Values are all in [0,1] and plausible, consistent with SAMPLE_OFFSPRING — so indices likely right. Also K5 fidelity 1.0 — consistent. I'll trust it but can note as unverifiable here (no raw output). Not an objection.
+
+Now the merit confound more carefully — the brief asks: "tasks change merit and so processor time". Where could an attribution be wrong because of that? C4 "offspring per organism: births per organism per update... for comparison, the ancestor alone in the test processor" — plan C4 said "for comparison, the ancestor alone in the test processor", but the results don't give the ancestor's test-processor offspring rate! Results C4 gives only world numbers. Minor departure not flagged? Plan C4: "Offspring per organism: in the world, births per organism per update, and the average generation reached at 50,000 updates; for comparison, the ancestor alone in the test processor." The results file gives no test-processor comparison figure for C4. The departures list doesn't mention it. Small unflagged departure from plan. Also C5 "From one injected ancestor, the population size over time" — given as M1-ish. Fine.
+
+Actually wait, could give: ancestor gestation 389 instructions per copy; with 30 cycles/org/update → copy per ~13 updates → ~0.077 births/org/update. Observed low 0.0751! Interesting — but task merit should *raise* the rate above the ancestor's... At low rate 0.075 ≈ ancestor-no-task rate. Hmm, evolved organisms do tasks → merit multipliers → more cycles → faster copying per update. But genome longer and copy loop unrolled → faster. Whatever — the missing comparison is the objection: the plan promised it, cheap to compute from C1's gestation time (389/30 ≈ 0.077 copies per organism per update at merit 1, no tasks), and it would sharpen the program-vs-world attribution for C4 (how much of the births rate is the world's scheduling). Exact fix: add one number: "ancestor in the test processor: one copy per 389 instructions = 0.077 copies per organism per update at the world's 30 cycles" or rerun plan's comparison.
+
+Now, next: is there an issue with **K3's DEATH_METHOD 0 also switching off age-death for... nothing else in K3**. Fine.
+
+**K1 "the last was gone after update 66 (they die of age)"** — controls JSON says last_update_with_organisms 66, organisms_at_last_line 8?? K1: "organisms_at_last_line": 8 — the last line of count.dat shows 8 organisms while last update *with* organisms is 66? That's odd: if last line shows 8 > 0 then last_update_with_organisms = count[-1][0]. Unless count.dat's last line is at update 66 with 8 organisms but then the run ended (Avida ends when no organism left — exit). Hmm: "organisms_at_last_line": 8 and "last_update_with_organisms": 66 — maybe the count.dat has a final line where organisms=8 at update 66, and then Avida printed a final line with 0? Then last line would be 0. Contradiction? Not necessarily: maybe count.dat's last line is update 66 with 8 organisms, and Avida exited because... Actually Avida "ends a run when no organism is left" per departure 6. If last line shows 8 organisms, maybe the population crashed right after? The results file says "the last was gone after update 66". If count.dat's last row has 8 organisms, we don't actually know they all died — the run ended at update 66 by Exit event? No — K1's follow event: `u 0:1:end PrintCountData`, `u 0:500:end SavePopulation`, `u 2000 Exit`. So Exit at 2000. If the run had organisms until 2000, last_update_with_organisms would be 2000. So organisms hit 0 at some update ≤ 66... but then what is "organisms_at_last_line: 8"? 
+
+Look at the code: `c = {'last_update_with_organisms': int(max(r[0] for r in count if r[2] > 0)), 'organisms_at_last_line': int(count[-1][2])...}`. If count[-1][2] = 8 > 0, then max(r[0] for r[2]>0) ≥ count[-1][0] → last_update_with_organisms would equal the last update (e.g., 66) — consistent only if the last line is update 66 with 8 organisms and no line after. So the count file's last line has 8 organisms at update 66, and the run stopped there (all died between print? Avida ends when population empty; count printed every update; the final print may be the state before the crash, or Avida prints a last row at exit). So "the last was gone after update 66" means gone after that update; the exact extinction update isn't pinned (could be 66). K2 similar: last line 1 organism at 65. Fine — "gone after update 66" is accurate phrasing ("after"). OK.
+
+Note also K1/K2 die of *age* — 20×100 = 2000 instructions ≈ 66 updates at 30 cycles/update. Consistent: 66×30 = 1980 ≈ 2000. Nice internal consistency check. Good.
+
+K4 "births_after_update_0": 266,353 over 2000 updates... wait that's births after update 0: 266k births / 2000 updates = 133 births per update, with 3600 organisms — 0.037 births/org/update, slower than main runs because no age death and full grid: deaths only by overwriting. Plausible.
+
+Now, is there an issue with **K4's claim "by update 1,000 the grid was full of them"** — organisms_at_1000 = 3600. Fine.
+
+Let me now read the mutational robustness md and the Marletto md, plus the reading rule.
+
+Now check some results-file claims against the Marletto table:
+
+1. "knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points" — check EQU rows (no cap): low2: 0.764→0.750 (1.4 points); low3: 0.819→0.810 (0.9); def1: 0.528→0.524 (0.4); def2: 0.572→0.569 (0.3); high1: 0.324→0.322 (0.2); high2: 0.299→0.298 (0.1). Range 0.1–1.4, not 0.2–1.4! The results file says "0.2 to 1.4 points". high2 no-cap: 0.299 to 0.298 = 0.1 points. Hmm — which rows does the results table use? "the table above uses that" (no cap). Check capped: high2 capped: 0.645→0.637 = 0.8. So in the capped version the drop is bigger. In the results text: "knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points (the most common genotype holds 5 to 44 of about 3,600 organisms in those runs...)". Using no-cap numbers: drops are low2 1.4, low3 0.9, def1 0.4, def2 0.3, high1 0.2, high2 0.1. So "0.2 to 1.4" misses high2's 0.1. Also "the most common genotype holds 5 to 44" — check: low2 dominant abundance? EQU runs' dominant abundance: low2 — capped coverage 1997/3600; dominant abundance not in md but in json. The drop for high2 capped = 0.8 points with dominant of 589/3542 = 16.6%. Hmm wait the drop under cap: share of covered organisms, dominant is 589/3542=16.6% of population but covered 589 → dominant IS the whole covered set?? Covered 589 = dominant abundance! So for high2 capped, coverage = the dominant alone. Then knocking it out: 0.645→0.637, drop 0.8 points — tiny because the dominant still performs after knockout?? dom_after: they test whether the knocked-out dominant still performs the task (it might, joint knockout may not stop it — redundancy). OK.
+
+Anyway: the "0.2 to 1.4" claim vs data 0.1 to 1.4 (no cap). A number-level error? Let me recompute precisely. Results table section 5 uses "no cap" per departure 4. The per-task "after the dominant only" EQU row: 0.589 (0.497 to 0.736)? Wait no — that's XOR. EQU row: as found 0.551 (0.299 to 0.819); after dominant only 0.546 (0.298 to 0.810). Per-run drops (found − after): low2 0.764−0.750=0.014; low3 0.819−0.810=0.009; def1 0.528−0.524=0.004; def2 0.572−0.569=0.003; high1 0.324−0.322=0.002; high2 0.299−0.298=0.001. So drops: 0.1 to 1.4 points. The text says "0.2 to 1.4". Off at the low end (0.1, high seed 2). Minor numeric error — exact fix: "0.1 to 1.4". Also section 6 table says "one genotype's knockout: 0.2 to 1.4 points less". And section 8: "leaves the transformation performed almost as before (0.2 to 1.4 points less for EQU)". Fix all three places to 0.1.
+
+Hmm wait, but maybe they mean drops measured differently: share_performing_after_dominant_only relative to found, in "points" = percentage points. Yes. So 0.001 = 0.1 points. Text says 0.2–1.4. Wrong at one end. Small but concrete objection.
+
+2. "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs" — dominant abundance for EQU runs. Capped coverage numbers: low2 1997? No wait — coverage ≠ dominant abundance. Dominant abundance in JSON. Can't verify from md. The drop in "dominant only" for low2 = 1.4 points ≈ 50/3240 ≈ dominant ~48 organisms (plus the knocked-out dominant might still perform). Plausible 5–44. Fine.
+
+3. "with every genotype's own task-only sites knocked out, EQU is performed by 1.1% to 4.4% of the covered organisms" — EQU no-cap task-only: low2 0.011, low3 0.011, def1 0.021, def2 0.044, high1 0.025, high2 0.030. Range 1.1–4.4. ✓.
+
+4. "93% to 100% of the former performers still copy themselves" — EQU still-copying: 0.931 (low2), 0.996, 0.974, 0.970, 0.999, 1.000. Range 93.1–100 ✓.
+
+5. "about 19 to 26 instructions per genotype" — EQU task-only sites in dominant: 26, 25, 26, 19, 20, 20 → 19–26 ✓. And example low seed 2: `IO, nand, swap, push, pop, sub and their labels` — low2 EQU instructions: push pop nop-C swap nop-A IO nop-C nop-C nop-C IO nop-C nand nop-A nand nand IO nop-C sub nop-C nand nop-C swap nop-C nand swap IO — includes IO, nand, swap, push, pop, sub ✓.
+
+6. "the joint knockout ... leaves some performers, most for NOT (21% on average, up to 46%)": NOT no-cap task-only: 0.390, 0.363, 0.459, 0.187, 0.117, 0.059, 0.158... wait that's 9 runs. NOT performed in all 9 runs: no-cap values: low1 0.390, low2 0.363, low3 0.459, def1 0.187, def2 0.117, def3 0.066, high1 0.059, high2 0.158, high3 0.083. Mean = (0.390+0.363+0.459+0.187+0.117+0.066+0.059+0.158+0.083)/9 = 1.882/9 = 0.209 ≈ 21% ✓. Max 0.459 ≈ 46% ✓.
+
+7. Results section 5 table row NOT: "performing, as found 0.718 (0.521 to 0.896)" — no-cap found NOT: 0.896, 0.844, 0.870, 0.728, 0.705, 0.706, 0.521, 0.583, 0.612. Mean = (0.896+0.844+0.870+0.728+0.705+0.706+0.521+0.583+0.612)/9 = 6.465/9 = 0.718 ✓. Min 0.521, max 0.896 ✓.
+
+8. NAND row mean found: (0.884+0.831+0.898+0.729+0.684+0.746+0.504+0.365+0.631)/9 = 6.272/9 = 0.697 ✓ (0.365 to 0.898 ✓).
+
+9. "task-only sites in the dominant" EQU mean: (26+25+26+19+20+20)/6 = 136/6 = 22.67 ✓ (19 to 26 ✓).
+
+10. NOT task-only sites: 2,5,9,1,4,4,7,3,3 → mean 4.22 ✓ (1 to 9 ✓).
+
+Table verified. Good.
+
+Now the mutational robustness numbers cited in results: low 50k viable 0.698 (0.688 to 0.714) ✓; neutral 0.169 (0.139–0.188) ✓; high 0.758 (0.740–0.779) ✓, neutral 0.312 (0.272–0.361) ✓. Per seed at 50k neutral: low 0.188, 0.139, 0.181 ✓; high 0.272, 0.301, 0.361 ✓. "neutral higher at the high rate at all three moments" ✓ per low-beside-high. "viable share higher at high rate at 50,000 only" ✓ (no clear at 10k, 30k).
+
+"Evolved genomes less robust than ancestor in viable share (0.70 to 0.76 against 0.81)" — by-condition viable at 50k: 0.698, 0.754, 0.758 → 0.70–0.76 ✓. Ancestor 0.812 ✓.
+
+"69% to 79% still copy themselves" — hmm, per-run viable at 50k range: min 0.688 (low seed1), max 0.786 (default seed3)? and high seed3 0.740; default seed3 0.786 — wait that's 30k. At 50k: values 0.688...0.779? high1 0.779, def3 0.786 is at 50000? Row "main_default_seed3 | 50000 ... 0.786". Yes 0.786. So range 0.688–0.786 ≈ "69% to 79%" ✓.
+
+Now — the "share_higher_fitness" for ancestor: 0.573! Of the ancestor's one-change programs, 57% have *higher* fitness (copy faster, 388 vs 389). Mentioned in departure 2 ("57% of one-change programs copy one cycle faster"). OK, consistent.
+
+Now, the worlds-over-time R3 low 0.836 etc. verified from table ✓. M2 numbers ✓ (copy_loop high 0.163 (0 to 0.487) — from per-run cells high1 0.00, high2 0.00, high3 0.49 → mean 0.163 ✓; head low 0.373 (0 to 0.743): low1 0.00? per-run cells at 50k show third number = copy loop, not head. Head values in JSON; can't verify from md but plausible (low1 0.90... whatever). Fine.
+
+Now check the claim in results section 3: "the ancestor's exact copy loop zvfcaxgab was gone from every organism by update 20,000 in all six low and default runs" — per-run copy loop column at 20k: low1 0.00, low2 0.00, low3 0.00, def1 0.00, def2 0.00, def3 0.00 ✓. At 10k low2 0.01 — "by update 20,000" ✓.
+
+But note default_seed2 at 10k: 0.09. Fine.
+
+Now, one more check on C3 table in results: "in the worlds: births with an identical offspring" low 0.693 (0.684 to 0.704) ✓ matches worlds-over-time table ✓.
+
+Results section 2 C2 listing: "sites 1 to 6 ... and 92 to 100" ✓ matches copying and knockouts.md ✓.
+
+Now the remaining files: the rule for reading (read for context), and check "S111/2 .json" summarize script briefly. Also double check the plan's C4 ancestor comparison missing from results — confirm: results C4 paragraph has no test-processor ancestor figure. ✓ objection.
+
+Also plan said R1 "for the dominant genotype of each run at updates 10,000, 30,000 and 50,000, and for the ancestor: every single-point mutant (each site replaced by each of the 25 other instructions of the set)" — done ✓.
+
+Plan K1: "10,000 random genomes tested in test processor; and 100 of them injected into the world, one per cell, followed" ✓ done (injection at cells i*36 spacing — "one per cell"? they injected 100 organisms into cells 0,36,72,... i.e., spread out; plan said "one per cell" meaning each into a cell. OK).
+
+Now, "K1 ... 100 of them injected into a world made no offspring, and the last was gone after update 66 (they die of age)" ✓.
+
+Now check reading-rule file, then the summarise script (that numbers gathered). Also verify results' claim: "Each ran 32 to 40 minutes; all nine ended at update 50,000 with exit code 0" — exit.txt in scratch, not verifiable here. Fine — noted as unverifiable but consistent with timeout 7200.
+
+One more important check: **the events file for main runs** — `u 0:1000:end PrintCountData` — from update 0 every 1000. And "PrintTimeData" gives average generation. SavePopulation at 1000 then 10000:10000:end. So saves at 1000, 10000, 20000, 30000, 40000, 50000 ✓ (SAVES list matches). Note: no SavePopulation at update below 1000 — plan said "the whole population ... at updates 1,000, 10,000, 20,000, 30,000, 40,000 and 50,000" ✓.
+
+Also: "PrintTasksData" from 0. tasks.dat's last line = 50000 ✓.
+
+Wait — one thing: MAIN_EVENTS 'u 0:1000:end' starts at update 0 — so count rows at 0,1000,...,50000 = 51 rows; `later` takes r[0]>=1000 = 50 rows ✓ "50 saved updates" ✓.
+
+Now the reading rule file.
+
+Important discovery in the JSON: `copied.ancestor.executed_length: 97` and `copy_length: 100`. Hmm, "exe_length 97" — BASE_MERIT_METHOD 4 uses min(executed, copied) = 97. Not a problem.
+
+Now the EQU dominant-only drop: uncapped as_found mean 0.5511, dominant_only mean 0.5457 → mean drop 0.54 points. Per-run: low2 0.764→0.750 (1.4), low3 0.819→0.8105 (0.86), def1 0.528→0.524, def2 0.572→0.569, high1 0.324→0.322, high2 0.299→0.2977 (0.13). So drops 0.13–1.4 points. Results say "0.2 to 1.4" — the low end is 0.13, i.e., ~0.1. So the stated "0.2" is wrong (should be 0.1). Confirmed objection (numeric, small). It appears in results §5 text, §6 table ("0.2 to 1.4 points less"), §8, and plain words §6 ("the drop was 0.2 to 1.4 points"). Exact fix: change to "0.1 to 1.4" in all four places.
+
+Wait — but maybe they computed drop only over runs where...? "(the most common genotype holds 5 to 44 of about 3,600 organisms in those runs; a diverse population)". Dominant abundance for the 6 EQU runs — from capped coverage data: low2 capped covered 1997 — the dominant holds ≤1997. Hmm, "5 to 44": def1 capped covered 1002, high2 589, high3 521... these are totals of top genotypes up to 90% or cap. Not dominant abundance. Can't verify 5–44 from what I have (dominant abundance in per-run JSON, not included here). The per-run "abundance" field exists in mutational robustness JSON but wasn't included in the summary. Hmm — can't check "5 to 44". Mark unverifiable.
+
+Actually wait, we can infer: drop in "dominant only" = dom_before − dom_after (if knocked-out dominant loses task). For high2, drop = 0.0013 × 3542 ≈ 4.6 organisms — dominant holds ~5? Consistent with "5". For low2, drop 0.014×3240 ≈ 45 ≈ 44. ✓ consistent.
+
+Now, one more check — the results' §5 sentence: "knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points". Also plain words says 0.2 to 1.4. And "in one low-rate run, the most common program does EQU with 26 instructions... that program makes up only 44 of the 3,600" — low seed2 dominant has 26 task-only EQU sites ✓ (from md: 26 instructions listed). Good.
+
+Also check plain words claim "in the six runs, the drop was 0.2 to 1.4 points" — same error 0.1–1.4.
+
+Another numeric check: results §2 C3 "low 723" etc ✓.
+
+Results §4: "K1 and K2 (section 2) were gone by update 67 and 66" — controls JSON says 66 and 65! "last_update_with_organisms": K1 66, K2 65. Results §2 says "the last was gone after update 66" (K1) and "gone after update 65" (K2) — correct there. But §4 says "gone by update 67 and 66" — off by one, or intentional rounding ("by update 67" = at update 67 they were gone)? "were gone by update 67 and 66" — arguably "by update 67, K1 was gone" is true if it was gone after 66. Hmm: last update WITH organisms is 66, so at update 67 zero. "gone by update 67" — consistent. But "gone by update 66" for K2: last with organisms 65, so at 66 gone. Consistent! OK, §4 phrasing is fine (gone BY update X = at X they are gone). Actually then plain words says "were all gone, dead of old age, after 66 time steps" and "gone after 65" — fine.
+
+Hmm wait, K1 "organisms_at_last_line": 8 — the last line of count.dat shows 8 organisms. But then "last_update_with_organisms" = 66 = last line's update. So the record actually shows the run *ended* (Avida exit at population 0 prints final count?) — ambiguous but as discussed, fine.
+
+Now, checking one thing in the worlds-over-time JSON: "share_births_identical_to_parent" low each: 0.704, 0.6843, 0.6892 — mean 0.6925 ✓.
+
+Now — the results file §1 claims "Each ran 32 to 40 minutes" — unverifiable (exit.txt in scratch). Also "all nine ended at update 50,000 with exit code 0" — unverifiable; last_update values... worlds JSON "last_update" per run not in summary; average_generation_at_end implies completion. OK.
+
+Now, one more potential attribution objection: **The test processor's fitness for evolved genotypes counts task merit; the ancestor's fitness 0.249357 with gestation 389 — fitness = merit/gest_time where merit ∝ min(exe,copy) length = 97. 97/389 = 0.2494 ✓. Good consistency.
+
+Now consider the "resists change (a)" attribution more: "chose that arrangement by which variants lasted: more neutral changes at the high rate". Contrast: low vs high worlds. Confound: length (acknowledged). Additional confound not acknowledged: the *dominant genotype* at high rate may perform fewer tasks (high seed2 at 50k does NOT + EQU; low does 8 tasks) — task count affects fitness of mutants' neutral classification (more tasks → more ways to change fitness). Also dominant genotypes differ in age structure. But the length confound acknowledgment partially covers. I'll fold this into the R1 fixed-inputs caveat objection or keep separate as minor. Actually there's a cleaner one: the neutral share counts fitness within 1e-6 where fitness includes task merit; a mutant that keeps copying at the same speed but *loses a task* is counted as fitness-changed (not neutral) — fine, that's real. And a mutant that breaks a task only detectable with other inputs is miscounted neutral. It's the fixed-inputs caveat. OK.
+
+Another thing to check per my brief: "the control worlds allow nop-X in copies" — K4 departure 7 ✓ acknowledged; K2/K3 don't copy. Also the K1 world has nop-X added (instset_extra=True) though K1 genomes are a–z; K1 organisms never copy so nop-X never enters. Fine.
+
+"tasks change merit and so processor time" — check: does any *control* have tasks? No. Main runs: yes. Does the attribution table account for it? Row "copied": world "hands out processor time by merit" ✓; row "a task": world "supplies inputs, checks, rewards" ✓. C4's number mixes both; the plan promised the ancestor-alone comparison which would have shown the pure-copy rate; missing (objection). I'll merge "missing planned ancestor-alone comparison" with the C4 merit confound into one objection.
+
+Also — one more possible issue: `births_per_organism_per_update` uses `statistics.mean(r[8]/r[2] for r in later)` — mean of ratios over the 50 sampled updates, each equally weighted. Fine.
+
+Now — the K1 "0 of 10,000" claim and TEST_CPU_TIME_MOD: Avida's test CPU time... In analysis mode, LOAD_SEQUENCE + RECALCULATE: genotypes are tested with enough time? cTestCPU TEST_CPU_TIME_MOD 20 (× length). If a random program would copy but need >2000 cycles, it's missed. Direction favors the work's conclusion (random programs don't copy), so as a *control for the program's part* it's conservative. But wait — the same cap applies to the ancestor (389 < 2000, fine) and to mutants (unrolled loops etc. fine). And to evolved genotypes: gestation must be ≤ 20×length; e.g. dominant of default seed2 at 30k has length 147 → cap 2940; a copying genotype's gestation is roughly length×(loop overhead) ~ 4×length — fine. OK, no objection; mention in checked.
+
+One more: **"viable" definition includes "or its offspring's line cycles back to it"** — for mutants, a mutant whose offspring is the original (back-mutation? no — mutation-free) — fine.
+
+Now, potential objection about K1's injection: "100 of them injected into the world, one per cell" — injected at cells 0,36,...,324 (i*36). With BIRTH_METHOD... they don't copy. Fine.
+
+Now, an important one I should double-check: **the essential site 6 attribution.** Results say "Site 6, the first filler instruction, is in the set: mov-head reads it as a label." Site 5 is mov-head; site 6 nop-C. Actually the head is `wzcag`: w=h-alloc, z=h-search, c=nop-C, a=nop-A, g=mov-head. h-search reads the following label (nop-C nop-A) to compute flow... then mov-head jumps to complement label. Site 6 = first filler 'c'. Plausible as stated. But plan said ancestor is "5-instruction head ... 85 filler ... 10-instruction copy loop" vs actual 5/86/9 — departure 1 ✓ acknowledged.
+
+Now the question of whether "copying rests on 15 instructions" could be overstated because knocking out a *label* nop (sites 3,4,95,96,99,100) with nop-X *both* removes the label and... it's fine; label sites are part of the program's information. OK.
+
+Next, check the summarise script quickly for faithfulness — it's the 7th script; JSON seems consistent with tables. I'll skim it.
+
+Actually time to consider: the brief also says "Is any 'resisting' or 'remaining' credited to the program that the world's rules alone would produce?" — Check §6 table and §8: "the organism's instructions are a necessary part (the knockouts; K1, K2 against the ancestor), and the world's rules are the other part". For "resists change (b)" the credit is given to the world ("what keeps essential sites unchanged is the world") ✓. For (a) "the arrangement of instructions decides which changes are harmless" — program's structure; but the arrangement was chosen by the world — both named ✓. For "remains": "is copied faster than it is removed" — program part = copying (shown by knockouts) ✓; world part = removal (K3) ✓.
+
+But one attribution claim IS overreached: §4 "K3 shows that when the world removes nothing, a program that cannot copy remains as well as one that can". "as well as one that can" — no copier in K3. Also plain words §5: "a program that cannot copy itself also remains, for as long as you like, in a world where nothing dies of old age" — fine there. The results sentence should be "remains too" — the plan's own wording. This is the overreach objection (minor).
+
+Now let me quickly skim the summarise script to be thorough (it's listed in my brief as one of the seven scripts).
+
+I now have everything needed. Let me also double check the instset file to verify nop-X addition format and whether the appended line could alter the meaning of the default instruction set (e.g., letter codes). Read instset-heads.cfg quickly and default-heads.org.
+
+Verify ancestor letters: w z c a g + 86×c + z v f c a x g a b. Count: default-heads.org lines 4–103: h-alloc(w), h-search(z), nop-C(c), nop-A(a), mov-head(g), then nop-C lines 9–94 = 86 lines ✓, then lines 95–103: h-search(z), h-copy(v), if-label(f), nop-C(c), nop-A(a), h-divide(x), mov-head(g), nop-A(a), nop-B(b) = 9 ✓. Matches JSON letters "wzcag" + c×86 + "zvfcaxgab" ✓. K2 knockout replaces the LAST 'v' (rindex('v')) = site 93, the h-copy ✓ (JSON K2 letters show 'A' at position of the loop's v ✓).
+
+Everything checks. Now note: the knocked-out K2 genome contains 'A' (nop-X); injected into K2/K3/K4 worlds which have nop-X defined ✓ (first failure disclosed and fixed ✓).
+
+Now finalize objections. Ranked:
+
+**X3.1 (attribution, R3 essential-site map from the ancestor applied to evolved genomes).** File: `S111/2 ...md` §3(b) R3 and §6 table row "resists change (b)" ("its essential sites are those whose change stops copying"); script `s111_measure_the_worlds_over_time.py` line 12–13 (essential sites from `copying and knockouts.json`, i.e. the ancestor's C2 map). The conservation contrast (essential 0.58–0.84 vs non-essential 0.05–0.18) is real, but the causal reading — that those sites stay the ancestor's *because* their change stops copying — is carried over from the ancestor although by the work's own finding the copy machinery was rewritten (copy loop gone by update 20,000 in six runs; unrolled loops with a second h-copy `zvvfcaxvvgab`), so a single change at the ancestral "essential" positions in an evolved genome may no longer stop copying (in the unrolled loop, one h-copy knocked out may still copy... actually depends). No contrast exists for evolved essentiality — yet the Marletto script computed exactly the needed knockout maps (every single-site knockout of the most common genotypes, with `viable` recorded, `maps()` line 47–55) and did not use them for this. Fix: derive essential sites per dominant genotype from its own knockout map (already in the Marletto data) and recompute the essential/non-essential split at 50,000; or mark in §3(b) and §6 that "essential" is the ancestor's map and may not hold in the evolved genomes.
+
+**X3.2 (C3 world column compares unlike things).** §2 C3 table + "Program or world" ("the table's three columns follow the rate the world applies"); plain words §3 "close to what the rates alone lead one to expect". Expected and sampled columns are the ancestor (length 100, no selection); the world column is the whole evolved population (mean lengths 105/109/88, 1,700–3,300 genotypes, under selection). The cryptic clause "for genomes that were no longer 100 long" (§2, line 29) doesn't say this. Fix: state in the table's note that the world column counts all births of the evolved populations (mean lengths 105.3 / 109.4 / 87.8), and if a like-for-like check is wanted, give the length-adjusted expectation (e.g. (1−rate)^105×0.95×0.95 ≈ 0.69 at low) or drop the "expected" comparison to the world column; plain words §3 to say the numbers come from the changed populations.
+
+**X3.3 (K3 overstatement).** §4 Controls: "K3 shows that when the world removes nothing, a program that cannot copy remains as well as one that can" — K3 contains no copier; a copier in that world fills the grid (K4), a different sense of "remains". The plan's own wording was "remains too". Fix: replace "as well as one that can" with "too" (the plan's word), or add the copier-side contrast explicitly.
+
+**X3.4 (numeric: EQU dominant-only drop 0.2–1.4 should be 0.1–1.4).** §5 bullet, §6 table, §8, and plain words §6. From `Marletto test on the logic tasks.md` (no cap), high seed2: 0.299 → 0.298 = 0.1 points. Fix: "0.1 to 1.4" in all four places.
+
+**X3.5 (C4: promised ancestor-alone comparison missing; births rate conflates task merit).** Plan §2 C4: "for comparison, the ancestor alone in the test processor"; results C4 gives only world numbers, and the departures list doesn't note it. The world's scheduler pays task merit (up to 2^24 for the full task set), so births per organism per update mixes the program's copying with the world's rewards; the ancestor-alone figure (389 instructions per copy ⇒ about 0.077 copies per organism per update at Avida's 30 cycles, no tasks) is the contrast that would separate them, and it is one line of arithmetic from C1. Fix: add that number to C4 (from C1: 30/389 ≈ 0.077), and note in §7 departures that the plan's comparison was not run as such.
+
+**X3.6 (R1 neutral share judged with the test processor's fixed inputs).** §3(a) — "neutral (viable and fitness within one part in a million)" where fitness includes task merit computed on the test processor's fixed inputs (acknowledged for tasks in §5, not for R1). A mutant that breaks a task on inputs other than the fixed pair counts neutral; the low-vs-high "flattest" conclusion rests on this share. Fix: one sentence in §3(a) noting the fixed-input limit; ideally a check varying inputs (Avida's test CPU input method) on one dominant genotype.
+
+**X3.7 (expected-fidelity formula vs the 27-instruction analysis set).** `s111_measure_copying_and_knockouts.py` line 55 uses `mu * 25/26` for the "error can redraw the same one" bound, but the sampling ran with nop-X as a 27th instruction (test-processor helper appends it), so redraw-same is 1/27: `(1 - mu * 26/27)`. Immaterial in size (≈0.0001) but the stated formula does not match the condition run; also the build notes say the draw is over "the whole set" without noting the analysis set is larger than the world's. Fix: change line 55 to `exp_changed = (1 - mu * 26 / 27) ** L * (1 - DIVIDE_INS) * (1 - DIVIDE_DEL)` and add to §7 item 8 that the sampled-offspring draw space is 27, not 26.
+
+Hmm, is X3.7 worth keeping? The brief explicitly lists the 27th instruction as a confound to examine. I checked: the effect is negligible except the formula mismatch. I'll keep it as a low objection with exact fix. 
+
+Also possible: **K4's mutation rate** — K4 ran with default COPY_MUT_PROB 0.0075 and DIVIDE ins/del 0.05 while claiming "the knocked-out one was gone by update 500... its cell taken by the intact one's offspring". Mutations don't confound the overwriting attribution (removal is by overwriting regardless of the overwriter's genotype). Not an objection.
+
+Another candidate: §4 M3 "every organism descends from the one injected ancestor (one injection, no other source)" — asserted from construction; the events file confirms only one Inject. Checked, fine (construction is checkable from the events in the script).
+
+Also: "the essential information is present, changed, in most organisms" (§4 shown) — given essential conservation 0.58–0.84 and copy loop letters rewritten, "present, changed" is the hedged phrasing; they flag the against-case. Fine.
+
+One more: **the "54 of 54" claim** — verified from the per-run table ✓.
+
+One more possible objection: in the §5 text "with every genotype's own task-only sites knocked out, EQU is performed by 1.1% to 4.4% of the covered organisms" — but 4.4% is default seed2 ANDN-like value... EQU task-only: 0.011, 0.011, 0.021, 0.044, 0.025, 0.030 → 1.1–4.4 ✓.
+
+Also check §5: "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs" — inferred consistent (drop ≈ dominant count). Can't fully verify; put in "not reached/checked"? It's in "checked" via inference. I'll note under (b) as checked by inference.
+
+Also verify the §6 table row copied: "fidelity 0.69, 0.40, 0.13" ✓ matches world column.
+
+And §6 row "a task": "one genotype's knockout: 0.2 to 1.4 points less" — EQU-specific; labelled for EQU ("for EQU" appears in §5 but the table row says generally "a task (Marletto's test) ... one genotype's knockout: 0.2 to 1.4 points less" — it's the EQU figure in a row standing for tasks generally; combined with X3.4 numeric error. Fix together.
+
+Word on S23/S43 compliance: no forbidden words found in Claude's own sentences (only Avida's technical `num_breed_true`/"breed true" and quoted source strings); "model" not used for candidates; nothing ranks, nothing settled. One borderline: §8 "Whether 'causes itself' asks for more than this is the owner's to say" — good, leaves it open. Plain words §1 "Whether 'causes itself' should ask for more than that is yours to say. Nothing here settles it." ✓ S28.
+
+Wait — one more S23 check: the word "expected" fine. "close to what the rates alone lead one to expect" — fine. OK.
+
+Also check whether anything "chooses for the owner" (S21): plain words §9 proposes a next step and says "Which way to take it is yours to choose" ✓.
+
+Now "Checked, no objection" list: C1/C2 knockout logic and 15/85 sites (instset, default-heads.org cross-check); the align() implementation; K1 (0/10,000 conservative under the test-CPU time cap); K2; K5 as no-change baseline (all mutation channels set to 0); K4's overwriting attribution (nothing else removes under DEATH_METHOD 0) and the departure-7 correction; the low-beside-high rule applied as planned; consistency of the results-file numbers with the four summary tables (robustness means and ranges, conservation 54/54, tasks-per-run counts, EQU 1.1–4.4% and 19–26 sites, NOT 21%/46%); the events files match the saves used; essential-site list matches the ancestor's genome; S23/S43/S28/S21 compliance in both S111 files.
+
+"Not reached": the raw run output and Avida source (not in the folder): cannot check count.dat column indices 8/10 (births, breed-true), exit codes and run durations, dominant abundances ("5 to 44"), or the build notes' reading of the source lines. Also whether SAMPLE_OFFSPRING copies DIVIDE_INS/DEL rates as assumed — build notes assert it (cAnalyze.cc 1604–1690) but the expected formula's ×0.95×0.95 agreement with the world column supports it. And the INHERIT_MERIT explanation for world-vs-test task counts is flagged "not checked" by the work itself — I couldn't check it either (needs raw data or source).
+
+Word budget: keep terse. Let me now also decide ordering by seriousness: X3.1 (attribution gap on the headline R3 causal claim), X3.2 (C3 table comparability, feeds plain words "close to what the rates lead one to expect"), X3.5 (C4 missing planned contrast; merit confound), X3.6 (fixed inputs on neutral share), X3.3 (K3 overstatement), X3.4 (numeric 0.2→0.1), X3.7 (formula 25/26 vs 27).
+
+Actually X3.4 is a definite factual error — maybe rank above X3.3. Order: X3.1, X3.2, X3.5, X3.6, X3.4, X3.3, X3.7. Hmm — X3.4 being a concrete wrong number in four places including the owner's plain-words file: I'd put it after the attribution ones but before style ones. Fine.
+
+Write the report now. Include quotes with places. Keep ~ terse, under 3000 words.
