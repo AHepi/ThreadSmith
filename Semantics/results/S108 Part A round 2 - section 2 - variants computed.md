@@ -247,3 +247,7 @@ The reply's inventions: Inv-R2-1 (implemented), Inv-R2-2 (§9, with this agent's
 - **Words.** "True"/"False" appear only as program values; no statement or gloss here uses a word S23 lists; "model" names only the program's folder.
 
 Computed by one Opus 5.5 agent under rule 5, 28–29 September 2026. Nothing ruled.
+
+## Addendum (29 September 2026, after S56): the whole-suite runs
+
+This agent stopped (S56) before the harness ran its spec. The one Opus agent that continued the whole reading after the session restart ran the 18 settings of §6 itself, by script (`tools/sonnet_harness/run_claims.py`, scale 4, cap 45, compared with the round-4 record; a departure from the rule's harness clause, S55, S56; the map's §0), in `S108 Part A round 2 - computation/whole suite/section 2/`. Every run whose moves §6 lists claim by claim moved exactly those (s00, s01–s03, s07–s13, s15–s17); the lower-bound runs moved at least the claims listed: s04–s06 add FC62 (E5's encoding, §7.2), s14 moves 19 (the same as every question declared in section 1). s17: 144 claims, FC21.v1 and FC21.v2 hold. Nothing else of this file changes. The edge `.json` was written from §8 and §11 by the same agent.

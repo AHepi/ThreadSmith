@@ -138,7 +138,7 @@ R2V4.2 is round 1's V4.2 (1,019 admitted, MID 1,686; not rerun); R2V4.3 is compu
 
 ## 8. The whole suite (addendum)
 
-Run by this agent with `tools/sonnet_harness/run_claims.py` (a script, not a Sonnet worker and verifier: a departure from the rule's harness clause, recorded in the map's §0; S55, S56: cost), scale 4, time cap 45, compared with the round-4 record (key after_round4). Runs: off; R2V4.1 with 'some', 'some-exempt', 'some-exempt-set' co-varied; R2V4.5; R2V4.7. Results: `S108 Part A round 2 - computation/whole suite/section 4/`; summarized in the map's §2.
+Run by this agent with `tools/sonnet_harness/run_claims.py` (a script, not a Sonnet worker and verifier: a departure from the rule's harness clause, recorded in the map's §0; S55, S56: cost), scale 4, time cap 45, compared with the round-4 record (key after_round4). Runs: off; R2V4.1 with 'some', 'some-exempt', 'some-exempt-set' co-varied; R2V4.5; R2V4.7. Results (`S108 Part A round 2 - computation/whole suite/section 4/`): off 133 / 2 / 7, no difference; R2V4.1 co-varied under 'some', 'some-exempt', 'some-exempt-set': each moves FC23.new2 and FC30.new1 (131 / 4 / 7); R2V4.5: FC103.new1 (132 / 3 / 7); R2V4.7: 14 claims about arguments, ruling out and the defeat sets (119 / 16 / 7). The map's §5.
 
 ## 9. Inventions (S36)
 

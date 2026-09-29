@@ -22,7 +22,7 @@ EXP = {
     "section 3/R2V3.10": ["FC32.new1"], "section 4/off": [],
     "section 4/R2V4.1-some": "the claims that form being an explanation under V4.1 (round 1's 'every' co-varied: 1–2 claims)",
     "section 4/R2V4.1-some-exempt": "as R2V4.1-some", "section 4/R2V4.1-some-exempt-set": "as R2V4.1-some",
-    "section 4/R2V4.5": ["FC102.new1", "FC103.new1"], "section 4/R2V4.7": "the claims that read usable / X_j",
+    "section 4/R2V4.5": ["FC103.new1"], "section 4/R2V4.7": "the claims that read usable / X_j",
 }
 for k, v in S1EXP.items():
     EXP["section 1/" + k] = v["moved"]

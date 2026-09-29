@@ -131,7 +131,7 @@ FC-E1–E5 and CT1–CT8 (rule 5.2, 5.3): `s104_external.py` prints the same und
 
 ## 9. The whole suite (a script, S56)
 
-Run by the agent that continued after the restart with `tools/sonnet_harness/run_claims.py` (not a Sonnet worker and verifier: a departure from the rule's harness clause, recorded in the map's §0; S55, S56), scale 4, time cap 45, against the round-4 record: off and each state of §0 (`whole suite/section 3/`). The single-claim runs made before (`section 3 runs/single/`, the claims whose code reaches each switch) expected: R2V3.1 FC90.new1; R2V3.5 FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1 (status) and FC12.new1, FC80.new1, FC83 (parts); R2V3.8 FC72, FC72.new1; R2V3.9 FC68; R2V3.10 FC32.new1; the others none. The results are summarized in the map's §2.
+Run by the agent that continued after the restart with `tools/sonnet_harness/run_claims.py` (not a Sonnet worker and verifier: a departure from the rule's harness clause, recorded in the map's §0; S55, S56), scale 4, time cap 45, against the round-4 record: off and each state of §0 (`whole suite/section 3/`). The single-claim runs made before (`section 3 runs/single/`, the claims whose code reaches each switch) expected: R2V3.1 FC90.new1; R2V3.5 FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1 (status) and FC12.new1, FC80.new1, FC83 (parts); R2V3.8 FC72, FC72.new1; R2V3.9 FC68; R2V3.10 FC32.new1; the others none. Results: off 133 / 2 / 7, no difference; every state moved exactly the claims the single runs expected (R2V3.1 FC90.new1; R2V3.5 the eight; R2V3.8 FC72, FC72.new1; R2V3.9 FC68; R2V3.10 FC32.new1; the others none). The map's §5.
 
 ## 10. Addendum: part A (the worked cases)
 

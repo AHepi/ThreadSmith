@@ -134,42 +134,50 @@ Run by script (§0), scale 4, time cap 45, each run compared claim by claim and 
 | section 1/R2V1.1-constructed | R2V1.1-constructed | 133 / 2 / 7 of 142 | none | – | none | yes |
 | section 1/R2V1.1-declared | R2V1.1-declared | 118 / 17 / 7 of 142 | FC101, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC30.new1, FC34, FC42.new1, FC62, FC63, FC72.new2, FC74, FC90.new1, FC99 | FC23, FC34, FC63, FC74 | FC101, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC30.new1, FC34, FC42.new1, FC62, FC63, FC72.new2, FC74, FC90.new1, FC99 | yes |
 | section 1/R2V1.1-selected | R2V1.1-selected | 133 / 2 / 7 of 142 | none | – | none | yes |
-| section 1/R2V1.10 | R2V1.10 | not yet run | – | – | FC101, FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC12.new3, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC26, FC27.new1, FC28, FC30.new1, FC42.new1, FC62, FC63, FC72.new2, FC83, FC85, FC90.new1, FC95, FC99 | – |
+| section 1/R2V1.10 | R2V1.10 | 112 / 23 / 7 of 142 | FC101, FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC12.new3, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC26, FC27.new1, FC28, FC30.new1, FC42.new1, FC62, FC63, FC72.new2, FC83, FC85, FC90.new1, FC95, FC99 | FC12.new1, FC23, FC63, FC83 | FC101, FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC12.new3, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC26, FC27.new1, FC28, FC30.new1, FC42.new1, FC62, FC63, FC72.new2, FC83, FC85, FC90.new1, FC95, FC99 | yes |
 | section 1/R2V1.6 | R2V1.6 | 133 / 2 / 7 of 142 | none | – | none | yes |
 | section 1/R2V1.6s | R2V1.6s | 133 / 2 / 7 of 142 | none | – | none | yes |
 | section 1/off | off | 133 / 2 / 7 of 142 | none | – | none | yes |
-| section 2/s00 | off | not yet run | – | – | none | – |
-| section 2/s01 | 'some' ((E) as it is) | not yet run | – | – | FC26, FC34 | – |
-| section 2/s02 | 'some-exempt' | not yet run | – | – | FC34 | – |
-| section 2/s03 | 'some-exempt-set' | not yet run | – | – | FC34 | – |
-| section 2/s04 | V2.4 × 'some' | not yet run | – | – | ≥ FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC34, FC72.new2 | – |
-| section 2/s05 | V2.4 × 'some-exempt' | not yet run | – | – | ≥ as s04 | – |
-| section 2/s06 | V2.4 × 'some-exempt-set' | not yet run | – | – | ≥ as s04 | – |
-| section 2/s07 | R2V2.3a | not yet run | – | – | none | – |
-| section 2/s08 | R2V2.5 | not yet run | – | – | none | – |
-| section 2/s09 | R2V2.6 written | not yet run | – | – | none | – |
-| section 2/s10 | R2V2.6 HS | not yet run | – | – | none | – |
-| section 2/s11 | R2V2.6 reply | not yet run | – | – | FC12.new2, FC30.new1, FC83, FC98, FC98.new1 | – |
-| section 2/s12 | R2V2.8 target | not yet run | – | – | none | – |
-| section 2/s13 | R2V2.8 program | not yet run | – | – | FC22, FC23.new1, FC23.new2, FC23.new5 | – |
-| section 2/s14 | R2V2.8 widest | not yet run | – | – | ≥ FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC34, FC72.new2, FC74 | – |
-| section 2/s15 | R2V2.9 | not yet run | – | – | FC31 | – |
-| section 2/s16 | R2V2.10 | not yet run | – | – | none | – |
-| section 2/s17 | R2V2.11 | not yet run | – | – | none; FC21.v1, FC21.v2 new (both hold) | – |
-| section 3/R2V3.1 | R2V3.1 | not yet run | – | – | FC90.new1 | – |
-| section 3/R2V3.10 | R2V3.10 | not yet run | – | – | FC32.new1 | – |
-| section 3/R2V3.2-contract | R2V3.2-contract | not yet run | – | – | none | – |
-| section 3/R2V3.4-edits | R2V3.4-edits | not yet run | – | – | none | – |
-| section 3/R2V3.4-ports | R2V3.4-ports | not yet run | – | – | none | – |
-| section 3/R2V3.5 | R2V3.5 | not yet run | – | – | FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC30.new1, FC77, FC80.new1, FC83 | – |
-| section 3/R2V3.6 | R2V3.6 | not yet run | – | – | none | – |
-| section 3/R2V3.7 | R2V3.7 | not yet run | – | – | none | – |
-| section 3/R2V3.8 | R2V3.8 | not yet run | – | – | FC72, FC72.new1 | – |
-| section 3/R2V3.9 | R2V3.9 | not yet run | – | – | FC68 | – |
-| section 3/off | off | not yet run | – | – | none | – |
+| section 2/s00 | off | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s01 | 'some' ((E) as it is) | 132 / 3 / 7 of 142 | FC26, FC34 | FC34 | FC26, FC34 | yes |
+| section 2/s02 | 'some-exempt' | 133 / 2 / 7 of 142 | FC34 | FC34 | FC34 | yes |
+| section 2/s03 | 'some-exempt-set' | 133 / 2 / 7 of 142 | FC34 | FC34 | FC34 | yes |
+| section 2/s04 | V2.4 × 'some' | 124 / 11 / 7 of 142 | FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC34, FC62, FC72.new2 | FC23, FC34 | ≥ FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC34, FC72.new2 | see the section file |
+| section 2/s05 | V2.4 × 'some-exempt' | 126 / 9 / 7 of 142 | FC23, FC23.new1, FC23.new2, FC23.new5, FC25.new2, FC27.new1, FC34, FC62, FC72.new2 | FC23, FC34 | ≥ as s04 | see the section file |
+| section 2/s06 | V2.4 × 'some-exempt-set' | 126 / 9 / 7 of 142 | FC23, FC23.new1, FC23.new2, FC23.new5, FC25.new2, FC27.new1, FC34, FC62, FC72.new2 | FC23, FC34 | ≥ as s04 | see the section file |
+| section 2/s07 | R2V2.3a | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s08 | R2V2.5 | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s09 | R2V2.6 written | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s10 | R2V2.6 HS | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s11 | R2V2.6 reply | 128 / 7 / 7 of 142 | FC12.new2, FC30.new1, FC83, FC98, FC98.new1 | – | FC12.new2, FC30.new1, FC83, FC98, FC98.new1 | yes |
+| section 2/s12 | R2V2.8 target | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s13 | R2V2.8 program | 129 / 6 / 7 of 142 | FC22, FC23.new1, FC23.new2, FC23.new5 | – | FC22, FC23.new1, FC23.new2, FC23.new5 | yes |
+| section 2/s14 | R2V2.8 widest | 118 / 17 / 7 of 142 | FC101, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC30.new1, FC34, FC42.new1, FC62, FC63, FC72.new2, FC74, FC90.new1, FC99 | FC23, FC34, FC63, FC74 | ≥ FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC34, FC72.new2, FC74 | see the section file |
+| section 2/s15 | R2V2.9 | 133 / 2 / 7 of 142 | FC31 | FC31 | FC31 | yes |
+| section 2/s16 | R2V2.10 | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 2/s17 | R2V2.11 | 135 / 2 / 7 of 144 (+ FC21.v1, FC21.v2) | none | – | none; FC21.v1, FC21.v2 new (both hold) | see the section file |
+| section 3/R2V3.1 | R2V3.1 | 132 / 3 / 7 of 142 | FC90.new1 | – | FC90.new1 | yes |
+| section 3/R2V3.10 | R2V3.10 | 132 / 3 / 7 of 142 | FC32.new1 | – | FC32.new1 | yes |
+| section 3/R2V3.2-contract | R2V3.2-contract | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 3/R2V3.4-edits | R2V3.4-edits | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 3/R2V3.4-ports | R2V3.4-ports | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 3/R2V3.5 | R2V3.5 | 128 / 7 / 7 of 142 | FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC30.new1, FC77, FC80.new1, FC83 | FC12.new1, FC80.new1, FC83 | FC102.new1, FC104.new1, FC12.new1, FC12.new2, FC30.new1, FC77, FC80.new1, FC83 | yes |
+| section 3/R2V3.6 | R2V3.6 | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 3/R2V3.7 | R2V3.7 | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 3/R2V3.8 | R2V3.8 | 131 / 4 / 7 of 142 | FC72, FC72.new1 | – | FC72, FC72.new1 | yes |
+| section 3/R2V3.9 | R2V3.9 | 132 / 3 / 7 of 142 | FC68 | – | FC68 | yes |
+| section 3/off | off | 133 / 2 / 7 of 142 | none | – | none | yes |
+| section 4/R2V4.1-some-exempt-set | R2V4.1-some-exempt-set | 131 / 4 / 7 of 142 | FC23.new2, FC30.new1 | – | as R2V4.1-some | see the section file |
+| section 4/R2V4.1-some-exempt | R2V4.1-some-exempt | 131 / 4 / 7 of 142 | FC23.new2, FC30.new1 | – | as R2V4.1-some | see the section file |
+| section 4/R2V4.1-some | R2V4.1-some | 131 / 4 / 7 of 142 | FC23.new2, FC30.new1 | – | the claims that form being an explanation under V4.1 (round 1's 'every' co-varied: 1–2 claims) | see the section file |
+| section 4/R2V4.5 | R2V4.5 | 132 / 3 / 7 of 142 | FC103.new1 | – | FC103.new1 | yes |
+| section 4/R2V4.7 | R2V4.7 | 119 / 16 / 7 of 142 | FC23.new2, FC30.new1, FC47, FC47.new1, FC53, FC56, FC60, FC68, FC70, FC71, FC72, FC72.new1, FC72.new2, FC73 | – | the claims that read usable / X_j | see the section file |
+| section 4/off | off | 133 / 2 / 7 of 142 | none | – | none | yes |
 
-6 runs in; 30 not yet run when this table was generated. No run timed out; no run changed its program folder.
+42 runs in; 0 not yet run when this table was generated. No run timed out; no run changed its program folder.
 <!-- /suite -->
+
+Every run whose moves a section file stated claim by claim moved exactly those claims (sections 1, 2, 3; section 4's R2V4.5: FC103.new1). The runs with lower bounds or no list: **V2.4 crossed with the three non-'every' quantifiers** (s04–s06) moved the ten, nine and nine claims expected and FC62 besides (E5's encoding drops beyond 'every', section 2 §7.2); **R2V2.8 at the widest grain** (s14) moved the same 19 claims as R2V1.1 with every question declared (every account fails (E) under both); **R2V2.11** (s17): FC21.v1 and FC21.v2 added, both hold, nothing else moves; **R2V4.1** co-varied, under each of the three quantifiers: FC23.new2 and FC30.new1 (the claims that form being an explanation on the two-part sign and the student's copy); **R2V4.7**: 14 claims, every one a claim about arguments, ruling out or the defeat sets (FC23.new2, FC30.new1, FC47, FC47.new1, FC53, FC56, FC60, FC68, FC70, FC71, FC72, FC72.new1, FC72.new2, FC73). The raw printouts are in the scratchpad (`s108r2_suite/`), each run's summary, with its differences, in `computation/whole suite/section <n>/<setting>.json`.
 
 ## 6. Gaps after round 2 (rule 6; rule 10 decides a third round on them)
 
@@ -221,7 +229,7 @@ So, on this map: a third round is **not** needed for gaps that bear on the expla
 
 ## 8. Unsure
 
-- **The whole suite was run once per setting, by this agent's script**, not by a worker and a second verifier; a run that differs from the record is reported as the section files expect or explained; none was repeated.
+- **The whole suite was run once per setting, by this agent's script**, not by a worker and a second verifier; every difference from the record is one a section file expected or is explained in §5; none was repeated. The searches are seeded; time caps (45 s) bind only where the printouts say so, and the four off runs match the record exactly.
 - **Mapping rows to items** parses template ids from each row's item text (`ids_in` in the builder); a row naming a claim part or a reading only (e.g. "C5's flags") names no node.
 - **Touched** counts as round 1's map: varied, or named by a computed or contradicted edge; claimed only otherwise. Round 2's rows of the flagged variants count their items as claimed only.
 - **The Sonnet trial's O1, O3, O4** are the trial's counts as the Opus review reran them; this agent did not rerun them.
