@@ -25,9 +25,9 @@ Paths under `avida-core/source/`.
 | 7 | The ancestry files the first reply lists cannot support a per-birth ancestry analysis. | holds | `SavePopulation` with `save_historic=0` leaves out extinct sequences; matches reply 01's own finding that ancestry needs `SaveHistoricPopulation` or a lineage file. |
 | 8 | The patch is 204 added C++ lines in four files and applies to 47f13dad. | holds | Counted here: 204 added lines. `git apply --check` passes on a fresh copy of the source (section 3). |
 | 9 | The patch's globals leave stock behaviour unchanged unless a Mini event runs. | holds (read) | `s115_active`, `s115_budget`, `s115_step` are off by default; `cEnvironment::TestOutput` returns early only when `s115_active` is set; `cTestCPU::ProcessGestation` changes only when `s115_budget > 0`. |
-| 10 | Its runs cost seconds: 0.71, 3.82, 2.80 and 6.63 s for B1, B2, B3 and C to update 5,000. | to be measured | Needs the patched build (section 3). |
+| 10 | Its runs cost seconds: 0.71, 3.82, 2.80 and 6.63 s for B1, B2, B3 and C to update 5,000. | holds | Run here: 0.4 to 2.8 s each (section 3). |
 
-Count so far: 9 hold (two read only), 0 in part, 0 do not hold, 1 to be measured.
+Count: 10 hold (two read only), 0 in part, 0 do not hold, 0 unchecked.
 
 **Where reply 06 and the S114 check agree or differ.** They agree on every mechanism of save and reload, on the reset of generation and task records, and on the new random seed at each reload. They differ in wording only on the tag against the build (06 stresses 133 commits, S114 that nothing checked differs). Reply 06 adds the 1,001-updates-per-piece count, which S114 did not note. Reply 06 says the effect of reloading "is unknown" in size and direction; the S114 audit has since measured it for two environments: no consistent change in FIXED GRADED, a lean towards fewer births and common capabilities in COMMON TASKS PAY LESS, below thresholds. Nothing in reply 06 is contradicted by the audit.
 
@@ -42,7 +42,18 @@ git apply --check -v mini-all.patch   → exit 0, all four files
 git apply mini-all.patch              → three files changed, S115Mini.h added
 ```
 
-**Not yet reproduced:** the build, the six cases and the four miniature runs. By the machine rules, nothing is built until S113's runner (PID 2411) has exited; this section is completed then.
+**After S113's runner had exited**, in that copy: `cmake` as for reply 07 (Release, command line only), `cmake --build build --target avida -j 2` → exit 0, 225 s, upstream warnings only. Then `python3 setup.py src small-runs` (writes `B1/`, `B2/`, `B3/`, `C/`) and `python3 smoke.py <patched binary> small-runs small-smoke`:
+
+| Case | Reply | Here |
+|---|---|---|
+| B1, a constant-zero population | target changes to −1 | same (`1 1 16 0 -1`: one output value, 16 programs, target −1) |
+| B2, eight matching and eight mismatching candidates | credits 1 and 0; supplier 0.5 | same: 8 × 1, 8 × 0, supplier 0.5 |
+| B3, a route 0→1→3 | the path succeeds; a wrong second move fails | same: 8 successes, 8 failures |
+| C with judges choosing 0 | audit counts 0 and 2; wins 16:0; judge credit 0 | same |
+| C with judges choosing 1 | wins 0:16; judge credit 1 | same |
+| B2 with the unchanged ancestor | invalid bank, no credits | same (`INVALID`) |
+
+**The twelve miniature runs** (four designs × seeds 11501-11503, 5,000 updates each, one at a time, `nice -n 19`): all exit 0, in 0.4 to 2.8 s each (the reply: 0.71, 3.82, 2.80, 6.63 s for seed 11501). What they did, read from their logs (not a result about the designs; worlds of 16 to 48 cells): **C never scored once** (all 51 scorings invalid, in every seed: no supplier ever gave the outputs a scoring needs); **B2 was invalid at 42 to 50 of 51 scorings**, with 0 to 16 credited candidate rows; **B3 had 6 to 25 usable graphs** and 2 to 28 credited rows; **B1's target moved among 13 to 21 values**. So in these tiny worlds the problem-setting and judging hardly start, as the reply's own "empty bank" warning foresaw.
 
 ## 4. Every run or measurement it proposes
 
@@ -54,13 +65,13 @@ Files in `/home/user/ThreadSmith/Semantics/tools/s115/06/`: `mini-all.patch`, `s
 - *Seeds and length:* seed 11501; 0 or 1 update each.
 - *CPU:* seconds, plus a build of about 10 to 20 minutes on one processor.
 - *What would count against it:* any case not giving the reported credits.
-- *Dependencies:* S113's runner must have exited (build). *Problems:* hand-made programs; the reply says they are not results.
+- *Dependencies:* S113's runner must have exited (build). *Status:* **done here; all six matched** (section 3). *Problems:* hand-made programs; the reply says they are not results.
 
 **R06-b. The four miniatures, three seeds each.**
 - *What it tests:* whether any of the four ways of letting programs set problems or judge each other keeps anything going in a tiny world (16 to 48 cells) over 5,000 updates.
 - *Patch:* yes. *Files:* `setup.py avida small-runs` makes `B1/`, `B2/`, `B3/`, `C/`; change `RANDOM_SEED` for 11502 and 11503 in separate folders.
 - *Seeds and length:* 11501-11503; 5,000 updates; 12 runs.
-- *CPU:* the reply reports 14 s for all four at one seed; about 1 minute for twelve. Negligible.
+- *CPU:* measured here: about 20 s for all twelve. **Already run here** (section 3); a longer or larger version would be a new design.
 - *What would count against it, as the reply puts it:* B1 cycling between two values while no capability is kept; B2 and B3 banks empty or wholly unsolved; C wins not following the hidden check.
 - *Dependencies:* R06-a. None on S113's results.
 - *Problems found (from reading the patch):*
