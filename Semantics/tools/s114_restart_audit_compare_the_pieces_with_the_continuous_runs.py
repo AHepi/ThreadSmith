@@ -137,6 +137,26 @@ def check_c2():
                 'rerun_updates_0_20_median': q(rer, 0.5), 'rerun_updates_0_20_p99': q(rer, 0.99)}}
 
 
+def check_reload_of_continuous(env, seed):
+    """The follow-up check (a departure, added after the first results): the continuous run's program population at
+    update 5,000 loaded as S113 loads a piece, run 1,000 updates, against the continuous run's own updates 5,000-6,000."""
+    d = os.path.join(CHECKS, 'reload_the_continuous_population', '%s_seed%d' % (env, seed), 'data')
+    if not os.path.exists(os.path.join(d, 'count.dat')):
+        return None
+    c, a = rows(os.path.join(d, 'count.dat')), rows(os.path.join(d, 'average.dat'))
+    cc = rows(os.path.join(CONT_OUT, '%s_seed%d' % (env, seed), 'data', 'count.dat'))
+    ca = rows(os.path.join(CONT_OUT, '%s_seed%d' % (env, seed), 'data', 'average.dat'))
+    b = lambda lo, hi: sum(c[u][8] for u in range(lo, hi)) / (hi - lo)
+    cont_b = mean([cc[u][8] for u in (5250, 5500, 5750, 6000)])
+    return {'births_per_update_after_reload': {'1-10': round(b(1, 10), 1), '10-50': round(b(10, 50), 1),
+                                               '50-250': round(b(50, 250), 1), '250-1000': round(b(250, 1000), 1)},
+            'births_continuous_samples_5250_6000_mean': cont_b,
+            'births_250_1000_relative_to_continuous': round((b(250, 1000) - cont_b) / cont_b, 3),
+            'gestation_time_at_1000': {'reloaded': round(a[1000][2], 1), 'continuous_6000': round(ca[6000][2], 1)},
+            'generations_over_1000_updates': {'reloaded_piece_measure': round(a[1000][12], 1),
+                                              'continuous_increase_5000_6000': round(ca[6000][12] - ca[5000][12], 1)}}
+
+
 def main():
     out = {'plan': 'results/S114 Restart audit - how it will be tested, written before running.md', 'seeds': SEEDS,
            'environments': {}}
@@ -209,6 +229,14 @@ def main():
                                'verdict': classify(diffs['T5_prev'][t], 5)} for t in TWO}}
         out['environments'][env] = E
     out['C2_reload_resource_check'] = check_c2()
+    out['follow_up_reload_of_the_continuous_population_at_5000'] = {
+        env: {str(s): check_reload_of_continuous(env, s) for s in SEEDS} for env in ENVS}
+    for env in ENVS:
+        E = out['environments'][env]
+        E['births_mean_at_piece_ends_5000_10000_relative'] = [
+            round((E['per_seed'][str(s)]['births_mean_at_piece_ends_5000_10000']['pieces'] -
+                   E['per_seed'][str(s)]['births_mean_at_piece_ends_5000_10000']['continuous']) /
+                  E['per_seed'][str(s)]['births_mean_at_piece_ends_5000_10000']['continuous'], 3) for s in SEEDS]
     json.dump(out, open(OUT_JSON, 'w'), indent=1)
     for env in ENVS:
         print('==', env)

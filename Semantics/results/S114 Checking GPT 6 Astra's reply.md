@@ -38,7 +38,7 @@ So **no difference matters for any claim below or for S111 to S113**; the reply'
 | 5 | the random-generator state is not restored | **holds** | not in the saved file; S113's runner gives every piece a new seed (1,000 × seed + piece) |
 | 6 | resource dynamics are not restored | **holds** for Avida's files | no resource field in the saved file; a new Avida process starts every resource at its environment file's `initial=` level (default 0). S113's runner carries the levels itself (it writes each resource's last printed level into the next piece's `initial=`), so for S113 the question is whether that carry is exact: measured by the restart audit (check C2) |
 | 7 | "Restart-induced replenishment could conceal depletion" | **holds in part** | with stock Avida a reload *resets* each resource to its `initial=` level; with S113's environments (no `initial=` in the first piece) that would mean **emptied**, not replenished, unless a level is given. S113 avoids either by carrying the levels |
-| 8 | applying the same pieces to every environment does not remove their possible interaction with resources or curriculum changes | reasoning, **tested** by the restart audit | see `results/S114 Restart audit - results.md` |
+| 8 | applying the same pieces to every environment does not remove their possible interaction with resources or curriculum changes | **holds** (tested by the restart audit) | `results/S114 Restart audit - results.md`: with resources, each reload sets off swings in the resource levels (median 13% per update over the next 20 updates, against 3.6% unbroken), and the runs in pieces leaned towards fewer births and common capabilities in all three seeds, below the thresholds; without resources (FIXED GRADED) no consistent difference. The curriculum part (GROWING LIST) was not tested |
 | 9 | omitting `LoadPopulation`'s optional update argument makes local time start at zero | **holds** | `source/actions/SaveLoadActions.cc` 73, 89 |
 | 10 | `SavePopulation filename=detail:save_historic=0` is valid syntax | **holds**, and **ran** | `SaveLoadActions.cc` 151-160 (colon-separated, name=value); Astra's first-segment events wrote `data/detail-0.spop` and `data/detail-1000.spop` |
 | 11 | its native restart-audit event files run on stock Avida | **holds**, **ran** | first segment and one reloaded segment (1,000 updates each) exited normally; the saved file held 3,596 programs, and the reloaded segment's first count showed 3,597 |
@@ -111,12 +111,12 @@ So **no difference matters for any claim below or for S111 to S113**; the reply'
 |---|---|---|---|
 | 37 | at full occupancy the S111/S113 set-up schedules about 5.4 billion instructions in 50,000 updates | **holds** | 3,600 × 30 (`AVE_TIME_SLICE`, `cAvidaConfig.h` 548) × 50,000; observed in S113 `count.dat`: about 107,000 instructions per update |
 | 38 | its probe pass can request 22.1 billion | **holds** (arithmetic) | 6 snapshots × 3,600 × 512 inputs × 2,000 instructions |
-| 39 | its restart audit (six runs of 5,000 updates) needs about 0.6 CPU-hours | see the audit results | measured there |
+| 39 | its restart audit (six runs of 5,000 updates) needs about 0.6 CPU-hours | **holds** | measured in the audit: 10,000 updates took 650 to 881 s beside three other Avida processes, so six 5,000-update runs about 0.55 to 0.73 CPU-hours |
 | 40 | the tag it pinned is 2.14.0 at `c6179ff` | **holds** | the tag resolves to that commit |
 
 | 41 | (its unchecked assumption) the owner's Avida corresponds to the pinned tag | **holds in part** | our build is a later commit (47f13dad); section 1: no difference in anything checked |
 
-**Count, 41 claims**: **35 hold** (1-6, 9-25, 27-29, 31-38, 40), **3 hold in part** (7, 26, 41), **none does not hold**, **1 not checked** (30), **2 answered by the restart audit** (8, 39). The JSON file lists each.
+**Count, 41 claims**: **37 hold** (1-6, 8-25, 27-29, 31-40; 8 and 39 answered by the restart audit), **3 hold in part** (7, 26, 41), **none does not hold**, **1 not checked** (30). The JSON file lists each.
 
 **The ones that matter most**, because they bear on work already done: 1 to 7 (what a reload keeps and loses; the audit measures what it does to S113), 15 (S113's listing of 77 tasks is an unrestricted detector), 20 and 23 (the division insertion and deletion; section 4), and the four findings not in the reply (generation count reset, task record emptied, merit averaged, the births of update 0).
 
