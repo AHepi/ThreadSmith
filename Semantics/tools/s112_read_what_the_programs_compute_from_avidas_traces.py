@@ -265,17 +265,26 @@ class Replay:
 
 
 def has_input(nodes, i, memo):
-    if i in memo:
-        return memo[i]
-    d = nodes[i]
-    if d['kind'] == 'in':
-        r = True
-    elif d['kind'] == 'const':
-        r = False
-    else:
-        r = any(has_input(nodes, c, memo) for c in d['kids'])
-    memo[i] = r
-    return r
+    """does the number at node i depend on an input read? (worked without recursion: a node's parts are always
+    earlier nodes, and chains in long runs are deep)"""
+    stack = [i]
+    while stack:
+        j = stack[-1]
+        if j in memo:
+            stack.pop()
+            continue
+        d = nodes[j]
+        if d['kind'] in ('in', 'const'):
+            memo[j] = d['kind'] == 'in'
+            stack.pop()
+            continue
+        pend = [c for c in d['kids'] if c not in memo]
+        if pend:
+            stack.extend(pend)
+            continue
+        memo[j] = any(memo[c] for c in d['kids'])
+        stack.pop()
+    return memo[i]
 
 
 def const_class(v):
@@ -283,58 +292,146 @@ def const_class(v):
     return 'ZERO' if v == 0 else ('ONES' if v == -1 else 'OTHER')
 
 
-def circuit_string(nodes, root, names, memo_in, reduce=False, values=False):
-    """Written form of the circuit from root: wires skipped, constant parts folded, nand/add operands sorted.
-    names maps env input index -> leaf name. reduce: steps that leave a number as it is are dropped (add or sub of
-    ZERO, inc after dec and dec after inc) and nand with ONES is written as nand of the number with itself (both are
-    NOT). values: OTHER constants are written with their value. Returns (string, set of distinct operation strings)."""
-    memo, ops = {}, set()
+def reach(nodes, root):
+    """all nodes the number at root was made from, earliest first"""
+    seen, stack = set(), [root]
+    while stack:
+        i = stack.pop()
+        if i in seen:
+            continue
+        seen.add(i)
+        stack += nodes[i].get('kids', [])
+    return sorted(seen)
 
-    def f(i):
-        if i in memo:
-            return memo[i]
+
+COMMUTATIVE = ('nand', 'add', 'nor', 'and', 'or', 'xor')
+
+
+def circuit_terms(nodes, root, names, memo_in, reduce=False, values=False):
+    """The circuit from root as a table of distinct parts (identical parts merged): wires (movers) skipped, constant
+    parts folded to ZERO, ONES or OTHER, operands of nand and add in a fixed order. names maps the input index (0, 1, 2
+    = which of the three numbers handed in) to a leaf name. reduce: steps that leave a number as it is are dropped (add
+    or sub of ZERO, inc after dec and dec after inc) and nand with ONES is written as nand of the number with itself
+    (both are NOT). values: OTHER constants are written with their value. Returns (label of root, table) where table
+    maps each part's label to (operation, labels of its operands); a leaf's label is its name.
+    (Replaces the first version, which wrote the circuit out as a tree: with parts used many times the written tree
+    grew too large to hold in memory; see the S112 results, departures.)"""
+    import hashlib
+    lab, table = {}, {}
+    vals = {}
+    for i in reach(nodes, root):
         d = nodes[i]
         if d['kind'] == 'wire':
-            r = f(d['kids'][0])
-        elif d['kind'] == 'in':
-            r = names.get(d['which'], 'in?')
-        elif d['kind'] == 'const' or not has_input(nodes, i, memo_in):
+            lab[i] = lab[d['kids'][0]]
+            continue
+        if d['kind'] == 'in':
+            lab[i] = names.get(d['which'], 'in?')
+            continue
+        if d['kind'] == 'const' or not has_input(nodes, i, memo_in):
             r = const_class(d['value'])
-            if values and r == 'OTHER':
-                r = 'K%d' % d['value']
-        else:
-            ks = [f(c) for c in d['kids']]
-            op = d['op']
-            r = None
-            if reduce:
-                if op == 'add' and 'ZERO' in ks:
-                    r = ks[1] if ks[0] == 'ZERO' else ks[0]
-                elif op == 'sub' and ks[1] == 'ZERO':
-                    r = ks[0]
-                elif (op == 'inc' and ks[0].startswith('dec(')) or (op == 'dec' and ks[0].startswith('inc(')):
-                    r = ks[0][4:-1]
-                elif op == 'nand' and 'ONES' in ks:
-                    a = ks[1] if ks[0] == 'ONES' else ks[0]
-                    ks = [a, a]
-            if r is None:
-                if op in ('nand', 'add', 'nor', 'and', 'or', 'xor'):
-                    ks = sorted(ks)
-                r = '%s(%s)' % (op, ','.join(ks))
-                ops.add(r)
-        memo[i] = r
-        return r
-    return f(root), ops
+            lab[i] = ('K%d' % d['value']) if (values and r == 'OTHER') else r
+            continue
+        ks = [lab[c] for c in d['kids']]
+        op = d['op']
+        r = None
+        if reduce:
+            if op == 'add' and 'ZERO' in ks:
+                r = ks[1] if ks[0] == 'ZERO' else ks[0]
+            elif op == 'sub' and ks[1] == 'ZERO':
+                r = ks[0]
+            elif op in ('inc', 'dec') and ks[0] in table and table[ks[0]][0] == {'inc': 'dec', 'dec': 'inc'}[op]:
+                r = table[ks[0]][1][0]
+            elif op == 'nand' and 'ZERO' in ks:
+                r = 'ONES'
+            elif op == 'nand' and 'ONES' in ks:
+                x = ks[1] if ks[0] == 'ONES' else ks[0]
+                ks = [x, x]
+        if r is None:
+            if op in COMMUTATIVE:
+                ks = sorted(ks)
+            r = 'h' + hashlib.sha1(('%s(%s)' % (op, ','.join(ks))).encode()).hexdigest()[:20]
+            table[r] = (op, ks)
+            vals[r] = d['value']
+        lab[i] = r
+    circuit_terms.values = vals
+    return lab[root], table
+
+
+def written_form(root, table):
+    """The circuit written as numbered parts, g1 = nand(x0,x1); g2 = ..., the last part being the output; parts in
+    order of height (inputs first), ties by label. Returns (written form, number of parts)."""
+    if root not in table:
+        return 'out=' + root, 0
+    seen, stack, order = set(), [root], []
+    while stack:
+        h = stack.pop()
+        if h in seen or h not in table:
+            continue
+        seen.add(h)
+        stack += table[h][1]
+    height = {}
+    todo = sorted(seen)
+    while todo:
+        rest = []
+        for h in todo:
+            ks = [k for k in table[h][1] if k in table]
+            if all(k in height for k in ks):
+                height[h] = 1 + max([height[k] for k in ks] or [0])
+            else:
+                rest.append(h)
+        todo = rest
+    order = sorted(seen, key=lambda h: (height[h], h))
+    name = {h: 'g%d' % (k + 1) for k, h in enumerate(order)}
+    parts = ['%s=%s(%s)' % (name[h], table[h][0], ','.join(name.get(k, k) for k in table[h][1])) for h in order]
+    written_form.order = order
+    return '; '.join(parts), len(order)
+
+
+def nested_form(root, table, limit=40):
+    """the same circuit written as one nested expression, if it has at most `limit` operations written out"""
+    size = {}
+
+    def sz(h):
+        if h not in table:
+            return 0
+        if h not in size:
+            size[h] = 1 + sum(sz(k) for k in table[h][1])
+        return size[h]
+    try:
+        if sz(root) > limit:
+            return None
+    except RecursionError:
+        return None
+
+    def f(h):
+        if h not in table:
+            return h
+        op, ks = table[h]
+        return '%s(%s)' % (op, ','.join(f(k) for k in ks))
+    return f(root)
+
+
+def circuit_string(nodes, root, names, memo_in, reduce=False, values=False):
+    r, t = circuit_terms(nodes, root, names, memo_in, reduce, values)
+    return written_form(r, t)
 
 
 PERMS = [(0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 2, 0), (2, 0, 1), (2, 1, 0)]
 
 
-def canonical(nodes, root, memo_in, reduce=False):
+def canonical(nodes, root, memo_in, reduce=False, buf=None):
+    """the written form under the renaming of the three inputs that gives the smallest written form (so programs
+    running the same circuit on different inputs are counted together), its number of parts, its nested form, and
+    (with buf, the route's three most recent inputs) the logic id of each part's number in turn: which bit-by-bit
+    function of the inputs it is (-1: not a bit-by-bit function, e.g. a number with carries)"""
     best = None
     for p in PERMS:
-        s, ops = circuit_string(nodes, root, {k: 'x%d' % p[k] for k in range(3)}, memo_in, reduce)
+        r, t = circuit_terms(nodes, root, {k: 'x%d' % p[k] for k in range(3)}, memo_in, reduce)
+        vals = circuit_terms.values
+        s, n = written_form(r, t)
         if best is None or s < best[0]:
-            best = (s, len(ops))
+            ids = [logic_id(vals[h], buf) for h in written_form.order] if (buf is not None and n) else None
+            best = (s, n, nested_form(r, t), ids)
     return best
 
 
@@ -413,30 +510,31 @@ PREDICTIONS = ['nand read as nor', 'nand read as and'] + list(OTHER_INPUTS)
 
 
 def recompute(nodes, i, gate, env_new, memo):
-    """The value node i would have if the gate letter meant `gate` and the inputs were env_new, on the same path."""
-    if i in memo:
-        return memo[i]
-    d = nodes[i]
-    if d['kind'] == 'const':
-        v = d['value']
-    elif d['kind'] == 'in':
-        v = env_new[d['which']] if d['which'] >= 0 else d['value']
-    elif d['kind'] == 'wire':
-        v = recompute(nodes, d['kids'][0], gate, env_new, memo)
-    else:
-        ks = [recompute(nodes, c, gate, env_new, memo) for c in d['kids']]
-        op = d['op']
-        if op == 'nand':
-            v = GATES[gate](ks[0], ks[1])
-        elif op == 'add':
-            v = ks[0] + ks[1]
-        elif op == 'sub':
-            v = ks[0] - ks[1]
+    """The value node i would have if the gate letter meant `gate` and the inputs were env_new, on the same path.
+    (Worked earliest node first, without recursion.)"""
+    for j in reach(nodes, i):
+        if j in memo:
+            continue
+        d = nodes[j]
+        if d['kind'] == 'const':
+            v = d['value']
+        elif d['kind'] == 'in':
+            v = env_new[d['which']] if d['which'] >= 0 else d['value']
+        elif d['kind'] == 'wire':
+            v = memo[d['kids'][0]]
         else:
-            v = UNARY[op](ks[0])
-    v = s32(v)
-    memo[i] = v
-    return v
+            ks = [memo[c] for c in d['kids']]
+            op = d['op']
+            if op == 'nand':
+                v = GATES[gate](ks[0], ks[1])
+            elif op == 'add':
+                v = ks[0] + ks[1]
+            elif op == 'sub':
+                v = ks[0] - ks[1]
+            else:
+                v = UNARY[op](ks[0])
+        memo[j] = s32(v)
+    return memo[i]
 
 
 def predict(nodes, outputs, env, gate, env_new):
@@ -488,8 +586,8 @@ def read_program(seq, path):
                 roles.setdefault(o['site'], set()).add('output write')
             if o['mod'] is not None:
                 roles.setdefault(o['mod'], set()).add('register choice')
-            can, gates = canonical(nodes, o['node'], memo_in)
-            red, rgates = canonical(nodes, o['node'], memo_in, reduce=True)
+            can, gates, nested, _ = canonical(nodes, o['node'], memo_in)
+            red, rgates, rnested, part_ids = canonical(nodes, o['node'], memo_in, reduce=True, buf=o['buf'])
             exact, _ = circuit_string(nodes, o['node'], names_exact, memo_in)
             keyv, _ = circuit_string(nodes, o['node'], names_exact, memo_in, values=True)
             gen = generality(nodes, o['node'], o['buf'], env, T, (T, keyv, tuple(env.index(x) if x in env else x
@@ -498,6 +596,7 @@ def read_program(seq, path):
             entry['routes'].append({'step': o['step'], 'cycle': o['cycle'], 'output_site': o['site'],
                                     'logic_id': o['logic_id'], 'canonical': can, 'gates': gates,
                                     'reduced': red, 'reduced_gates': rgates, 'generality': gen,
+                                    'nested': nested, 'reduced_nested': rnested, 'reduced_part_ids': part_ids,
                                     'gates_executed': gx, 'exact': exact,
                                     'sites': {str(i): sorted(v) for i, v in sorted(roles.items())},
                                     'letters': letters})

@@ -11,3 +11,17 @@
 #    numbers, one to add the predictions for the environment tests, one to change the input numbers and add the
 #    reduced circuit form and the generality check; their partial output was set aside unread for results):
 cd $SCRATCH/s112 && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 3
+
+# ---- Resumed 30 September 2026 after a planned stop; from here on in the owner's Avida terms (decision S61). ----
+# The trace job of step 1 (process 3076) was found ended: its pool of workers had broken ("a process in the process
+# pool was terminated abruptly") while reading the second run (main_low_seed2); started again (process 4220), one
+# worker grew past 1.6 GB of memory within a minute, and it was stopped by its exact process numbers. Cause: the trace
+# reader wrote each circuit out as one nested expression, and in Avida programs whose parts are used many times over
+# that expression grows without bound. The reader was changed to keep each circuit as a table of distinct parts (identical
+# parts merged, as the plan asks), to work without recursion, to fold nand with ZERO to ONES in the reduced form, and
+# to give each part's logic id. Partial and first outputs set aside unread for results:
+#   $SCRATCH/s112/traces_third_attempt_broken/, $SCRATCH/s112/traces_first_complete_run_old_forms/
+# Instruction ablation, stage 1 (every single site of every distinct instruction sequence), started meanwhile:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py singles 2
+# Avida's trace of every distinct instruction sequence, read by the changed reader:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 1
