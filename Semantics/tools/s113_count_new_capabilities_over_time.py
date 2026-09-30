@@ -355,6 +355,18 @@ def main():
             by_env_under[env] = {'pieces': len(r), 'smallest': round(min(r), 3), 'middle': round(statistics.median(r), 3),
                                  'largest': round(max(r), 3), 'pieces under 0.5': sum(1 for x in r if x < 0.5)}
     out['check: performances counted 250 updates after a load, by environment'] = by_env_under
+    # growing list: for each task that became common, was its level already rewarded when it first became common?
+    before = {}
+    for k, steps in growing_steps.items():
+        rewarded_from = {1: 0}
+        for st in steps:
+            rewarded_from[st['level_added']] = st['rewarded_from_update']
+        fc = per[k]['first_common']
+        early = sorted(t for t, u in fc.items() if levels[t] not in rewarded_from or u < rewarded_from[levels[t]])
+        never_rewarded_common = sorted(t for t in fc if levels[t] not in rewarded_from)
+        before[k] = {'tasks ever common': len(fc), 'common before their level was rewarded': len(early),
+                     'of which never rewarded in the run': len(never_rewarded_common), 'tasks': early}
+    out['growing list: tasks common before their level was rewarded (world count)'] = before
     path = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUT
     json.dump(out, open(path, 'w'), indent=1)
     for env in by_env:

@@ -19,6 +19,8 @@ TWO = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ']
 
 
 def fmt(x):
+    if isinstance(x, bool):
+        return 'yes' if x else 'no'
     return '-' if x is None else str(x)
 
 
@@ -125,7 +127,7 @@ def main():
         print('|---|---|---|---|---|---|---|---|---|---|---|---|')
         for r in d['reuse (M6)']['runs']:
             print('| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |' % (
-                r['run'], r['programs_with_this_sequence'], r['length'], r['replicates'], r['required_for_replication'],
+                r['run'], r['programs_with_this_sequence'], r['length'], fmt(r['replicates']), r['required_for_replication'],
                 r['tasks_performed'], r['pairs'], fmt(r['mean_shared']), fmt(r['mean_expected']),
                 r['pairs_above_expected'], r['pairs_below_expected'], r['pairs_sharing_nothing']))
         print('\n', json.dumps(d['reuse (M6)']['all runs']))
@@ -142,7 +144,8 @@ def main():
                 cells = [' / '.join(fmt(tp['per run'].get('%s_seed%d' % (env, s), {}).get('%s_at_marks' % what, {}).get(u))
                                     for s in (1, 2, 3)) for u in marks]
                 print('| %s | %s |' % (tp['environments'][env]['label'], ' | '.join(cells)))
-        print('\n| environment | common at 50,000 | two-input | three-input | present at 50,000 | common and replicating | '
+        print('\n### At update 50,000, test processor\n')
+        print('| environment | common at 50,000 | two-input | three-input | present at 50,000 | common and replicating | '
               'last new high | levelled off | ever common | kept common |')
         print('|---|---|---|---|---|---|---|---|---|---|')
         for env in ENVS:
