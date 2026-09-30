@@ -15,7 +15,7 @@ Four GLM jobs at once (S39), each cross-examining the S113 work from one angle:
   (d) the plain-words file against the results.
 Each sandbox holds copies of the S113 plan, the results (.md and .json), the plain-words file 113, the reading rule,
 the owner's Avida terms, the exact commands, the S113 configuration files and task ranking, S111's configuration files
-and build notes (Avida's rules as read from its source), and the four S113 scripts, plus, per job, the records its
+and build notes (Avida's rules as read from its source), and the six S113 scripts, plus, per job, the records its
 angle needs; NEVER the Avida source or binary, and no raw output (Avida's data files and saved program populations stay
 in the scratch space and are not under Semantics/). There is no program in the sandbox, so the guard refuses every
 command: GLM only reads (Read, Glob, Grep) and writes nothing.
@@ -50,7 +50,8 @@ RESJ = PRE + 'results.json'
 PLAIN = 'plain words/113 Which execution environments learn new things, in plain words.md'
 TERMS = 'records/Semantics - Avida terms, given by the owner.md'
 SCRIPTS = ['s113_rank_the_tasks_by_the_fewest_nand_steps_they_need.py', 's113_run_the_avida_execution_environments.py',
-           's113_count_new_capabilities_over_time.py', 's113_measure_reuse_of_task_circuits.py']
+           's113_count_new_capabilities_over_time.py', 's113_measure_capabilities_in_the_saved_program_populations.py',
+           's113_measure_reuse_of_task_circuits.py', 's113_print_the_results_tables.py']
 CONF113 = ['environment - %s, first piece.cfg' % e for e in
            ['fixed_graded', 'equ_only', 'no_rewards', 'growing', 'common_pays_less', 'fixed_large']] + \
           ['environment - growing, all ten levels rewarded.cfg', 'events - first piece.cfg', 'events - every later piece.cfg']
@@ -125,7 +126,7 @@ The files:
 | `runs/configuration/` | each environment's environment file (first piece; the growing list also with all levels rewarded) and the events of the pieces |
 | `runs/configuration from log S111/` | S111's Avida configuration files, which every S113 run uses unchanged (its `environment.cfg` is S111's, for comparison) |
 | `runs/build notes and Avida's rules as read from its source (from log S111).md` | the build, and the rules of Avida, with source lines |
-| `scripts/` | the four S113 scripts |
+| `scripts/` | the six S113 scripts (the test-processor reading was added after the runs; the table printer copies the results tables from the `.json`) |
 {extra_rows}"""
 
 REPORT = """## 5. The report
