@@ -295,6 +295,19 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Not done | The readings the owner's cases turn on (edit or boundary; D6.3's quantifier; a question's recorded history; Desc's grain; the bridge's history). 426 of 577 middle sentences untouched. The whole suite run once, no verifier. The ten flagged variants not implemented (the orchestrator's). The cases not read. Part B follows. |
 | Lessons | S61, S62. |
 
+## Research state: GPT 6 Astra's reply checked against Avida's source, and a restart audit of S113's pieces (log S114) - no GLM check, on purpose; nothing in the theory changed
+
+| | |
+| --- | --- |
+| Story | The owner (S65): "Ok. Can you give me a task I can hand off to another very capable model. Then tell it what to return. It's GPT 6 Astra on max effort. If using Ultra is better, let me know." (S66): "I need more. More is better. But consider strengths and weaknesses. And consider that I'm using a fresh agent every time." See [log S114](<records/Semantics - project story.md>). |
+| Material | [The brief](<tests/S114 Brief for GPT 6 Astra - execution environments that keep learning.md>) (37b2175); [Astra's reply](<tests/S114 Return from GPT 6 Astra - execution environments report.md>) (7a3bb1a). |
+| Check | [Checking GPT 6 Astra's reply](<results/S114 Checking GPT 6 Astra's reply.md>) and [its data](<results/S114 Checking GPT 6 Astra's reply.json>): 41 claims, 37 hold, 3 in part, 0 fail, 1 unchecked; tag c6179ff against build 47f13dad; section 4, the insertion and deletion settings; dated note lines at the top of plain files 111 and 112. |
+| Plan | [Restart audit, written before running](<results/S114 Restart audit - how it will be tested, written before running.md>) (73ea5de). |
+| Runs | `tools/s114_restart_audit_run_the_pieces_and_the_continuous_runs.py` (S113's `run_one` reused unchanged), `tools/s114_restart_audit_reload_the_continuous_populations.py` (follow-up, a departure), `tools/s114_restart_audit_compare_the_pieces_with_the_continuous_runs.py`; raw output in the scratch space only. |
+| Outputs | [Restart audit results](<results/S114 Restart audit - results.md>) and [data](<results/S114 Restart audit - results.json>); [plain file 114](<plain words/114 What GPT 6 Astra proposed, and what checking it found, in plain words.md>). |
+| Interpretation | Observations only. Resources carried exactly at every reload, then swinging for at least 20 updates; FIXED GRADED no consistent difference; COMMON TASKS PAY LESS generations lower (counts by the letter; mainly the measure) and births and common capabilities leaning lower below thresholds; S113's generations not to be used as printed. |
+| Not done | S113's other four environments; more seeds or longer runs; how long the resource swings last; Astra's proposed environments (need source changes). |
+
 ## Research state: what had to be removed for the evolved logic tasks to stop, and what that evolved information is (log S112) - plan, runs, results and a plain file, in the owner's Avida terms; GLM cross-examination settled, results corrected in copies; nothing in the theory changed
 
 | | |
