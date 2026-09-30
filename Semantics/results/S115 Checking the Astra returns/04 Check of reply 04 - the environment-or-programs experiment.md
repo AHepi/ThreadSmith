@@ -2,6 +2,8 @@
 
 *Written by Claude (Opus 5.5) on 30 September 2026, decision S67. Reply checked: "tests/S115 Returns from GPT 6 Astra/04 Return - testing the claim that the execution environment is the clue.md", answering brief 04 ("Testing the owner's claim that the execution environment is the clue"). Source checked: Avida 2.14.0 at commit 47f13dad, in the scratchpad copy. Everything run here was a short test on the stock binary, one at a time, under `nice -n 19` with a timeout, while S113's runner (PID 2411) was still using the processors. No building, no long run.*
 
+*Kept unchanged by the one agent that finished S115 (decision S68), after its extracted files were confirmed to be the reply's code blocks unchanged below their notes (`summarise_experiment_B.py` is Claude's own, as section 4 says). Where its runs fall in the plan of runs: `00 What the eight replies offer, and a plan of runs.md` in this folder.*
+
 ## 1. What the reply offers
 
 1. Both accounts are argued: the Avida execution environment supplies instruction meanings, inputs and rewards, and the programs' instructions also decide what a program does; the reply says the S111-S112 measurements fit both.
