@@ -10,3 +10,7 @@ Before the plan was written:
 The runs (every Avida process's exact command, with its exit code and seconds, is in SP/s113/runs/<environment>_seed<k>/run.log; each piece's command is:
    cd SP/s113/runs/<environment>_seed<k>/piece_<nn> && timeout 900 SP/avida/cbuild/bin/avida -s <1000 k + nn> -set VERBOSITY 0 -set COPY_MUT_PROB 0.0075
  with that piece's environment.cfg and events.cfg written by the runner and, from piece 1 on, start.spop = the previous piece's data/detail-1000.spop):
+4. Started detached at 2026-09-30T08:26:32Z (session leader PID 2408, in SP/s113/runs_driver.pid; log SP/s113/runs_driver.log), after the plan was committed (d61006a):
+   setsid nohup bash -c 'cd Semantics/tools || exit 1; echo started ...; timeout 36000 python3 -B s113_run_the_avida_execution_environments.py; echo driver ended ...' > SP/s113/runs_driver.log 2>&1 < /dev/null &
+   Order: seed 1 of fixed_graded, equ_only, no_rewards, growing, common_pays_less, fixed_large; then seed 2; then seed 3; three at a time.
+   Note: runs with the same seed number use the same Avida seeds piece by piece (1000 s + k) in every environment, so their random sequences start alike; fixed_graded seed 1's first piece uses seed 1000, as the check in step 3 did.
