@@ -9,7 +9,10 @@ which sums each program still does and whether it still copies itself. The chang
   E3  other numbers handed in: three triples of random 32-bit numbers, and Avida's fixed three in another order
       (Avida's RECALCULATE with manual inputs; the numbers are those of the trace reader, so that its predictions,
       made from the circuits before this runs, can be compared)
-  E4  the 26 meanings assigned to the 26 letters in another order (three random shufflings, seeded)
+  E4  the 26 meanings assigned to the 26 letters in another order (three random shufflings, seeded). Avida requires
+      the three nop instructions to be listed first in an instruction set (a first try with all 26 shuffled was refused
+      by Avida: "invalid NOP placement"), so the three nop meanings are shuffled among the letters a to c and the
+      other 23 meanings among the letters d to z.
 Writes one JSON line per genotype into the scratch space (s112/environment/<run>.jsonl); nothing into the repository.
 Everything runs inside Avida's simulated processor.
 
@@ -29,9 +32,10 @@ OUT = P.SCRATCH + '/s112/environment'
 _rng = random.Random(1122)
 SHUFFLES = {}
 for k in (1, 2, 3):
-    names = list(P.NAMES)
-    _rng.shuffle(names)
-    SHUFFLES['letters shuffled %d' % k] = names
+    nops, rest = list(P.NAMES[:3]), list(P.NAMES[3:])
+    _rng.shuffle(nops)
+    _rng.shuffle(rest)
+    SHUFFLES['letters shuffled %d' % k] = nops + rest
 
 
 def variants():
