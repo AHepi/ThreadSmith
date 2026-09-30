@@ -295,6 +295,19 @@ The audit of the authority document as a timeline. Numbers are log entries; the 
 | Not done | The readings the owner's cases turn on (edit or boundary; D6.3's quantifier; a question's recorded history; Desc's grain; the bridge's history). 426 of 577 middle sentences untouched. The whole suite run once, no verifier. The ten flagged variants not implemented (the orchestrator's). The cases not read. Part B follows. |
 | Lessons | S61, S62. |
 
+## Research state: GPT 6 Astra's eight replies to the S115 briefs checked against Avida's source, their short tests reproduced, and a plan of runs (log S115) - one agent after a stopped multi-agent attempt; no GLM check, on purpose; nothing in the theory changed
+
+| | |
+| --- | --- |
+| Story | The owner (S66): "I need more. More is better. But consider strengths and weaknesses. And consider that I'm using a fresh agent every time." (S67): "Here"; "Which ones missing?" (S68): "Noo too many agents". See [log S115](<records/Semantics - project story.md>). |
+| Material | [The eight briefs and the guide](<tests/S115 Briefs for GPT 6 Astra/>) (b1047da, f83f393); [the eight replies](<tests/S115 Returns from GPT 6 Astra/>) (30cc215, ffabf1e), kept unchanged. |
+| Checks | One file per reply in [S115 Checking the Astra returns](<results/S115 Checking the Astra returns/>): claims against 47f13dad (01: 9 hold, 1 in part; 02: 6, 1, 1 unchecked; 03: 6 hold, 1 does not; 04: 22, 1; 05: 6, 1; 06: 10 hold; 07: 8 hold; 08: 7, 4 in part); what was reproduced; every proposed run with files, seeds, CPU-hours and what would count against it. |
+| Reproduced | Reply 04's Experiment A byte for byte; reply 02's encounters and 100-update runs; reply 08's gates, conservation and probe; reply 01's probe battery end to end; reply 03's save-only arm; reply 05's P and K in miniature; replies 06 and 07's patches built in copies after S113's runner exited, their tests matching; reply 06's twelve miniatures run. |
+| Tools | The replies' files extracted unchanged below notes in `tools/s115/<nn>/` (01, 02, 04, 06, 07, 08; 03 and 05 have no code); `tools/s115/04/summarise_experiment_B.py` and `tools/s115/0105_s113/` are Claude's. Raw output in the scratch space only. |
+| Outputs | [What the eight replies offer, and a plan of runs](<results/S115 Checking the Astra returns/00 What the eight replies offer, and a plan of runs.md>); [plain file 115](<plain words/115 What Astra's eight replies offer, in plain words.md>). |
+| Plan | Nine batches of at most three Avida processes; batch 1 done here; routine batches 2 and 3 about 2.4 CPU-hours after S113's reading; batches 4 to 9 about 53 CPU-hours for the owner's word. |
+| Not done | Every longer run; reply 05's references not re-read; reply 03's P1, P2, P4's extension and P6-P7 not planned. |
+
 ## Research state: GPT 6 Astra's reply checked against Avida's source, and a restart audit of S113's pieces (log S114) - no GLM check, on purpose; nothing in the theory changed
 
 | | |
