@@ -1,0 +1,12 @@
+Log S113: the exact commands, in the order run. Scratch space: /tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad (called SP below).
+Avida: SP/avida/cbuild/bin/avida, Avida 2.14.0, built in log S111 (commit 47f13dad), unchanged.
+
+Before the plan was written:
+1. Task ranking: cd SP/s113 && timeout 3000 python3 Semantics/tools/s113_rank_the_tasks_by_the_fewest_nand_steps_they_need.py "Semantics/results/S113 Which execution environments learn - the runs/the 77 tasks ranked by the fewest nand steps.json"
+   (a first version searched without a step limit and was stopped by the machine for memory at 9 steps (exit 137); a second, after the step-9 search found all but one task, was stopped by Claude with `pkill -f`, a pattern that also ended Claude's own shell; both were Claude's own processes only; the search was then capped at 9 steps.)
+2. Runner tests (not used for any result): python3 Semantics/tools/s113_run_the_avida_execution_environments.py test common_pays_less 2 ; ... test growing 3   (seed 99; output in SP/s113/test_runs/)
+3. Check that listing unrewarded tasks with value 0 changes nothing: in SP/s113/neutral_check/nine (S111's environment.cfg) and SP/s113/neutral_check/seventyseven (the FIXED GRADED environment with 77 tasks), each with S111's avida.cfg, instset-heads.cfg, default-heads.org and the first piece's events: timeout 600 SP/avida/cbuild/bin/avida -s 1000 -set VERBOSITY 0 -set COPY_MUT_PROB 0.0075 ; tasks.dat (the nine columns) and count.dat identical; detail-1000.spop differs only in its date line.
+
+The runs (every Avida process's exact command, with its exit code and seconds, is in SP/s113/runs/<environment>_seed<k>/run.log; each piece's command is:
+   cd SP/s113/runs/<environment>_seed<k>/piece_<nn> && timeout 900 SP/avida/cbuild/bin/avida -s <1000 k + nn> -set VERBOSITY 0 -set COPY_MUT_PROB 0.0075
+ with that piece's environment.cfg and events.cfg written by the runner and, from piece 1 on, start.spop = the previous piece's data/detail-1000.spop):
