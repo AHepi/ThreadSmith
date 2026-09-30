@@ -1,0 +1,272 @@
+# NOTE (S115, added by Claude): Astra's source patch adding RUN_BOUNDED to Avida's analyze mode. git apply skips these lines.
+# Copied unchanged from GPT 6 Astra's reply 07 (tests/S115 Returns from GPT 6 Astra/07 Return - a bounded test runner patch.md); only these note lines were added.
+diff --git a/avida-core/source/analyze/cAnalyze.cc b/avida-core/source/analyze/cAnalyze.cc
+index bdf4bbe..8963501 100644
+--- a/avida-core/source/analyze/cAnalyze.cc
++++ b/avida-core/source/analyze/cAnalyze.cc
+@@ -59,6 +59,7 @@
+ #include "cPhenPlastGenotype.h"
+ #include "cPlasticPhenotype.h"
+ #include "cReaction.h"
++#include "cReactionLib.h" // Temporarily disable and restore all task reactions.
+ #include "cReactionProcess.h"
+ #include "cResource.h"
+ #include "cResourceHistory.h"
+@@ -79,6 +80,7 @@
+ #include <string>
+ #include <queue>
+ #include <stack>
++#include <stdexcept>
+ #include <stdlib.h>
+ 
+ #include <cerrno>
+@@ -10258,6 +10260,120 @@ void cAnalyze::BatchDuplicate(cString cur_string)
+   batch[batch_to].SetAligned(false);
+ }
+ 
++// Disabling reactions also disables nonnumeric rewards and bonus instructions.
++namespace {
++  class BoundedReactionPause {
++    cReactionLib& lib;
++    std::vector<bool> active;
++  public:
++    explicit BoundedReactionPause(cReactionLib& reactions)
++      : lib(reactions), active(reactions.GetSize()) {
++      for (int i = 0; i < lib.GetSize(); ++i) {
++        active[i] = lib.GetReaction(i)->GetActive();
++        lib.GetReaction(i)->SetActive(false);
++      }
++    }
++    ~BoundedReactionPause() {
++      for (int i = 0; i < lib.GetSize(); ++i) lib.GetReaction(i)->SetActive(active[i]);
++    }
++  };
++}
++
++void cAnalyze::CommandRunBounded(cString cur_string)
++{
++  try {
++    // Parse completely before opening the output, including integer overflow.
++    std::istringstream args((const char*)cur_string);
++    std::string input_name, output_name, extra;
++    int budget;
++    if (!(args >> input_name >> output_name >> budget) || (args >> extra) || budget < 0)
++      throw std::runtime_error("usage: RUN_BOUNDED inputs.txt output.tsv nonnegative_budget");
++    std::ifstream input(input_name.c_str());
++    if (!input) throw std::runtime_error("cannot open input file");
++    std::vector< Apto::Array<int> > triples;
++    std::string line;
++    while (std::getline(input, line)) {
++      line = line.substr(0, line.find('#'));
++      std::istringstream row(line);
++      row >> std::ws;
++      if (row.eof()) continue;
++      Apto::Array<int> values(3);
++      if (!(row >> values[0] >> values[1] >> values[2]) || (row >> extra))
++        throw std::runtime_error("each input row must contain exactly three signed integers");
++      triples.push_back(values);
++    }
++    if (input.bad() || triples.empty()) throw std::runtime_error("empty or unreadable input file");
++
++    // These guards make one CPU step one dispatched instruction and at most one IO.
++    const cAvidaConfig& cfg = m_world->GetConfig();
++    if (sizeof(int) != 4 || cfg.PROMOTERS_ENABLED.Get() || cfg.CONSTITUTIVE_REGULATION.Get() ||
++        cfg.USE_AVATARS.Get() || cfg.ENERGY_ENABLED.Get() || cfg.USE_RESOURCE_BINS.Get() ||
++        cfg.IMPLICIT_REPRO_BONUS.Get() || cfg.IMPLICIT_REPRO_CPU_CYCLES.Get() ||
++        cfg.IMPLICIT_REPRO_TIME.Get() || cfg.IMPLICIT_REPRO_END.Get() || cfg.IMPLICIT_REPRO_ENERGY.Get())
++      throw std::runtime_error("RUN_BOUNDED requires the ordinary heads execution model");
++    const char* names[] = {"nop-A", "nop-B", "nop-C", "if-n-equ", "if-less", "if-label",
++      "mov-head", "jmp-head", "get-head", "set-flow", "shift-r", "shift-l", "inc", "dec",
++      "push", "pop", "swap-stk", "swap", "add", "sub", "nand", "h-copy", "h-alloc",
++      "h-divide", "IO", "h-search"};
++    tListIterator<cAnalyzeGenotype> check(batch[cur_batch].List());
++    cAnalyzeGenotype* genotype;
++    while ((genotype = check.Next()) != NULL) {
++      const Genome& genome = genotype->GetGenome();
++      const cInstSet& is = m_world->GetHardwareManager().GetInstSet(genome.Properties().Get("instset").StringValue());
++      if (genome.HardwareType() != 0 || is.GetHardwareType() != 0 || is.GetSize() != 26 ||
++          is.HasCosts() || is.HasFTCosts() || is.HasEnergyCosts() || is.HasResCosts() ||
++          is.HasFemResCosts() || is.HasFemaleCosts() || is.HasChoosyFemaleCosts() ||
++          is.HasPostCosts() || is.HasBonusCosts())
++        throw std::runtime_error("RUN_BOUNDED requires the unmodified, unit-cost 26-instruction heads set");
++      for (int i = 0; i < 26; ++i)
++        if (is.GetName(i) != names[i] || is.GetProbFail(Instruction(i)) != 0.0 ||
++            is.GetAddlTimeCost(Instruction(i)) != 0)
++          throw std::runtime_error("RUN_BOUNDED found an altered instruction set");
++      ConstInstructionSequencePtr seq;
++      seq.DynamicCastFrom(genome.Representation());
++      if (!seq || seq->GetSize() == 0) throw std::runtime_error("empty instruction sequence");
++      for (int i = 0; i < seq->GetSize(); ++i)
++        if ((*seq)[i].GetOp() >= 26) throw std::runtime_error("instruction outside the heads set");
++    }
++
++    std::ofstream out(output_name.c_str());
++    if (!out) throw std::runtime_error("cannot open output file");
++    out << "# sequence_index\tsequence_id\ttriple_index\tx\ty\tz\treads\tinstructions\tdivided\thit_budget\toutputs\n";
++    BoundedReactionPause pause(m_world->GetEnvironment().GetReactionLib());
++    tListIterator<cAnalyzeGenotype> entries(batch[cur_batch].List());
++    int sequence_index = 0;
++    while ((genotype = entries.Next()) != NULL) {
++      for (size_t t = 0; t < triples.size(); ++t) {
++        // New settings and test CPU isolate each sequence/triple and suppress all mutations.
++        cCPUTestInfo info(1);
++        info.UseManualInputs(triples[t]);
++        info.MutationRates().Clear();
++        info.GetBoundedRun().budget = budget;
++        cTestCPU cpu(m_ctx, m_world);
++        cpu.TestGenome(m_ctx, info, genotype->GetGenome());
++        const cCPUTestInfo::BoundedRun& run = info.GetBoundedRun();
++        const bool divided = info.GetTestPhenotype().GetNumDivides() != 0;
++        out << sequence_index << '\t' << genotype->GetID() << '\t' << t;
++        for (int k = 0; k < 3; ++k) out << '\t' << triples[t][k];
++        out << '\t' << run.reads << '\t' << run.instructions << '\t' << divided
++            << '\t' << (run.instructions == budget) << '\t';
++        if (run.outputs.empty()) out << '-';
++        for (size_t k = 0; k < run.outputs.size(); ++k) {
++          if (k) out << ',';
++          out << run.outputs[k];
++        }
++        out << '\n';
++      }
++      ++sequence_index;
++    }
++    out.close();
++    if (!out) throw std::runtime_error("output write failed");
++  } catch (const std::exception& error) {
++    cerr << "error: RUN_BOUNDED: " << error.what() << endl;
++    if (exit_on_error) exit(1);
++  }
++}
++
+ void cAnalyze::BatchRecalculate(cString cur_string)
+ {
+   Apto::Array<int> manual_inputs;  // Used only if manual inputs are specified
+@@ -11310,6 +11426,7 @@ void cAnalyze::SetupCommandDefLibrary()
+   AddLibraryDef("PURGE_BATCH", &cAnalyze::BatchPurge);
+   AddLibraryDef("DUPLICATE", &cAnalyze::BatchDuplicate);
+   AddLibraryDef("RECALCULATE", &cAnalyze::BatchRecalculate);
++  AddLibraryDef("RUN_BOUNDED", &cAnalyze::CommandRunBounded); // inputs, output, instruction budget
+   AddLibraryDef("RECALC", &cAnalyze::BatchRecalculateWithArgs);
+   AddLibraryDef("RENAME", &cAnalyze::BatchRename);
+   AddLibraryDef("CLOSE_FILE", &cAnalyze::CloseFile);
+@@ -11410,4 +11527,3 @@ void cAnalyze::RunInteractive()
+   
+   if (!saved_analyze) m_ctx.ClearAnalyzeMode();
+ }
+-
+diff --git a/avida-core/source/analyze/cAnalyze.h b/avida-core/source/analyze/cAnalyze.h
+index 3a04c87..9e982a3 100644
+--- a/avida-core/source/analyze/cAnalyze.h
++++ b/avida-core/source/analyze/cAnalyze.h
+@@ -324,6 +324,7 @@ private:
+   void BatchPurge(cString cur_string);
+   void BatchDuplicate(cString cur_string);
+   void BatchRecalculate(cString cur_string);
++  void CommandRunBounded(cString cur_string); // Capture reward-free, bounded IO trials.
+   void BatchRecalculateWithArgs(cString cur_string);
+   void BatchRename(cString cur_string);
+   void CloseFile(cString cur_string);
+diff --git a/avida-core/source/cpu/cCPUTestInfo.cc b/avida-core/source/cpu/cCPUTestInfo.cc
+index 64e648a..bbedbb7 100644
+--- a/avida-core/source/cpu/cCPUTestInfo.cc
++++ b/avida-core/source/cpu/cCPUTestInfo.cc
+@@ -57,6 +57,7 @@ cCPUTestInfo::cCPUTestInfo(const cCPUTestInfo& test_info)
+ 
+ cCPUTestInfo& cCPUTestInfo::operator=(const cCPUTestInfo& test_info)
+ {
++  m_bounded = test_info.m_bounded; // Preserve the optional capture when copying settings.
+   generation_tests = test_info.generation_tests;
+   trace_task_order = test_info.trace_task_order;
+   use_random_inputs = test_info.use_random_inputs;
+@@ -90,6 +91,9 @@ cCPUTestInfo::~cCPUTestInfo()
+ 
+ void cCPUTestInfo::Clear()
+ {
++  // Clear observations without discarding the requested instruction budget.
++  m_bounded.instructions = m_bounded.reads = 0;
++  m_bounded.outputs.clear();
+   is_viable = false;
+   max_depth = -1;
+   depth_found = -1;
+diff --git a/avida-core/source/cpu/cCPUTestInfo.h b/avida-core/source/cpu/cCPUTestInfo.h
+index 2cbf9b6..0b9dcea 100644
+--- a/avida-core/source/cpu/cCPUTestInfo.h
++++ b/avida-core/source/cpu/cCPUTestInfo.h
+@@ -28,6 +28,7 @@
+ #include "nHardware.h"
+ #include "cHardwareTracer.h"
+ #include "cMutationRates.h"
++#include <vector>
+ 
+ class cOrganism;
+ class cPhenotype;
+@@ -46,7 +47,15 @@ enum eTestCPUResourceMethod { RES_INITIAL = 0, RES_CONSTANT, RES_UPDATED_DEPLETA
+ class cCPUTestInfo
+ {
+   friend class cTestCPU;
++public:
++  // Optional, single-generation capture for the unit-cost heads instruction set.
++  struct BoundedRun {
++    int budget, instructions, reads;
++    std::vector<int> outputs;
++    BoundedRun() : budget(-1), instructions(0), reads(0) { }
++  };
+ private:
++  BoundedRun m_bounded;
+   // Inputs...
+   int generation_tests; // Maximum depth in generations to test
+   bool trace_task_order;      // Should we keep track of ordering of tasks?
+@@ -94,6 +103,7 @@ public:
+   
+   void SetCurrentStateGridID(int sg) { m_cur_sg = sg; }
+   cMutationRates& MutationRates() { return m_mut_rates; }
++  BoundedRun& GetBoundedRun() { return m_bounded; }
+ 
+   // Input Accessors
+   int GetGenerationTests() const { return generation_tests; }
+diff --git a/avida-core/source/cpu/cTestCPU.cc b/avida-core/source/cpu/cTestCPU.cc
+index 0c317e3..8f49e34 100644
+--- a/avida-core/source/cpu/cTestCPU.cc
++++ b/avida-core/source/cpu/cTestCPU.cc
+@@ -150,8 +150,10 @@ bool cTestCPU::ProcessGestation(cAvidaContext& ctx, cCPUTestInfo& test_info, int
+   // Determine how long this organism should be tested for...
+   ConstInstructionSequencePtr seq;
+   seq.DynamicCastFrom(organism.UnitGenome().Representation());
+-  int time_allocated = m_world->GetConfig().TEST_CPU_TIME_MOD.Get() * seq->GetSize();
+-  time_allocated += m_res_cpu_cycle_offset; // If the resource offset has us starting at a different time, adjust @JEB
++  // Bounded runs use an absolute limit, independent of sequence length.
++  cCPUTestInfo::BoundedRun& run = test_info.GetBoundedRun();
++  int time_allocated = (run.budget >= 0) ? run.budget :
++    m_world->GetConfig().TEST_CPU_TIME_MOD.Get() * seq->GetSize() + m_res_cpu_cycle_offset;
+ 
+   // Prepare the inputs...
+   cur_input = 0;
+@@ -163,6 +165,7 @@ bool cTestCPU::ProcessGestation(cAvidaContext& ctx, cCPUTestInfo& test_info, int
+ 	
+   // This way of keeping track of time is only used to update resources...
+   int time_used = m_res_cpu_cycle_offset; // Note: the offset is zero by default if no resources being used @JEB
++  if (run.budget >= 0) time_used = 0;
+   
+   organism.GetHardware().SetTrace(test_info.GetTracer());
+   while (time_used < time_allocated && organism.GetPhenotype().GetNumDivides() == 0 && !organism.IsDead())
+@@ -174,7 +177,15 @@ bool cTestCPU::ProcessGestation(cAvidaContext& ctx, cCPUTestInfo& test_info, int
+     // Resources will be updated as if each update takes a number of cpu cycles equal to the average time slice
+     UpdateResources(ctx, time_used);
+     
++    // Capture each IO before the rolling buffer can overwrite its value.
++    const int outputs_before = (run.budget >= 0) ? organism.GetOutputBuf().GetTotal() : 0;
+     organism.GetHardware().SingleProcess(ctx);
++    if (run.budget >= 0) {
++      ++run.instructions;
++      run.reads = organism.GetInputBuf().GetTotal();
++      if (organism.GetOutputBuf().GetTotal() > outputs_before)
++        run.outputs.push_back(organism.GetOutputBuf()[0]);
++    }
+   }
+   
+   organism.GetHardware().SetTrace(HardwareTracerPtr(NULL));
+@@ -433,4 +444,3 @@ void cTestCPU::ResetInputs(cAvidaContext& ctx)
+ 	if (!m_use_manual_inputs)
+ 		m_world->GetEnvironment().SetupInputs(ctx, input_array, m_use_random_inputs);
+ }
+-
