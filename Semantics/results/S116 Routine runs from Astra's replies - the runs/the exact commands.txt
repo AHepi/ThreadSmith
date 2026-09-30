@@ -1,0 +1,46 @@
+Log S116: the exact commands, in the order run, 30 September 2026 (times UTC). Written by the one Opus 5.5 agent of log S116.
+SP = /tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad ; T = /home/user/ThreadSmith/Semantics/tools
+Stock Avida 2.14.0 at commit 47f13dad: $SP/avida/cbuild/bin/avida (no patched build used).
+Every Avida process ran through the wrapper $SP/s116/bin/avida:
+    exec nice -n 19 timeout 3600 $SP/avida/cbuild/bin/avida "$@"
+except the continuation's pieces and test-processor calls, which S113's own functions start with their own time limits
+(900 s per piece; 3,600 s and nice -n 10 per test-processor call), inside a Python process run under nice -n 19 (so every
+Avida process ran at the lowest priority). At most three Avida processes at once throughout (4 processors).
+Raw output: $SP/s116/ (never in git). Nothing was written into $SP/s113/.
+
+0. Before the plan (a mechanics test, recorded in the plan's opening note):
+   cd $SP/s116/r02gen && cp $T/s115/02/make_experiments.py . && python3 make_experiments.py
+       -> manifest stock_avida_evaluation/files.sha256.json, sha256 fc37c313e6c3eb7967eccf48d0622a6033b486c3915fc8d0341417f461b94093 (as in S115)
+   a copy of scalar/evolution in a 10 x 10 world with 'u 1000 Exit': $SP/s116/bin/avida -c avida.cfg -> exit 0; data/detail-1000.spop written.
+   So no save line was added to reply 02's events (check 02's added line was for a 100-update test only).
+   The plan committed: 732cf7f (16:5x UTC). Then the runs:
+
+1. Batch 3a, reply 02 (16:59 to 17:16 UTC), unchanged suite, three Avida processes at once:
+   cd $SP/s116/r02gen && nice -n 19 timeout 10800 python3 stock_avida_evaluation/run_suite.py --avida $SP/s116/bin/avida --output $SP/s116/r02/results_5000
+       -> "Finished 6 evolution runs and 36 bank assays"; every run and assay passed the suite's own checks.
+   python3 -B $T/s116_read_the_evaluation_banks.py -> $SP/s116/r02/summary.json (Avida CPU seconds from the suite's own timing: 3,003)
+
+2. From 17:16 UTC a driver ($SP/s116/driver.sh, under nice -n 19) ran, in order, keeping three Avida processes or fewer:
+   (a) the continuation, one process:  python3 -B $T/s116_continue_fixed_large_list_seed_2.py run
+       -> copies $SP/s113/runs/fixed_large_seed2/{state.json, run.log, piece_49/} into $SP/s116/extension/runs/fixed_large_seed2/,
+          then S113's run_one('fixed_large', 2, pieces=75, out=...): pieces 50 to 74, Avida seeds 2050 to 2074, all exit 0,
+          1,966 s of piece time in all (76 to 83 s each), 17:16 to 18:08.
+   (b) at the same time, the probe, two at once:  python3 -B $T/s116_probe_the_saved_program_populations.py probe 2
+       -> copies of the 180 saved program populations into $SP/s116/copies/<run>/u<update>.spop (253 MB), then per run:
+          python3 -B $T/s115/01/probe_task_audit.py --source $SP/avida --run-dir $SP/s116/probe_rundir
+              --snapshot u5000 5000 <copy> ... --snapshot u50000 50000 <copy> --out $SP/s116/probes/<run>
+              --avida $SP/s116/bin/avida --profiles core,logic_high --run
+          python3 -B $T/s115/01/summarize_probes.py $SP/s116/probes/<run> --rewards <run>/reward_history.tsv
+       18 of 18 runs: both profiles "exit 0 missing 0"; summariser exit 0. 17:16 to 17:59; 4,217 s of Avida time in all.
+       python3 -B $T/s116_probe_the_saved_program_populations.py summary -> $SP/s116/probes/summary.json
+       (run again at about 18:05 and 18:12, after two descriptive readings were added to the summary: see departures)
+   (c) K, two at once:  python3 -B $T/s116_count_the_instructions_whose_ablation_lowers_avida_fitness.py 2
+       -> one analyze-mode process per run, 18 of 18 exit 0, 17:59 to 18:08 (at most about 1,040 s of Avida time).
+   (d) the continuation's counts:  python3 -B $T/s116_continue_fixed_large_list_seed_2.py count
+       -> S113's one_snapshot at 50,000 (the copy: 41 common, as S113) to 75,000; world count from tasks.dat and count.dat.
+   (e) the competition:  python3 -B $T/s116_compete_a_rare_and_a_common_kind.py choose ; ... run 3 ; ... count
+       -> 15 runs of 2,000 updates, three at once, from 18:08 UTC.
+
+3. python3 -B $T/s116_gather_the_results.py -> results/S116 Routine runs from Astra's replies - results.json
+
+Departures: see the results, section "Departures".

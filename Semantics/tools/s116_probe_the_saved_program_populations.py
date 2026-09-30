@@ -8,7 +8,10 @@ Avida's test CPU with 8 fixed input triples, every checkable task listed at rewa
 Then it runs reply 01's summariser (tools/s115/01/summarize_probes.py, UNCHANGED) with a reward history made from S113's
 own environments, and adds its own summary of what the plan (results/S116 ... written before running.md, section 1)
 measures: per run and saved update, how many logic and never-rewarded arithmetic capabilities were present and common,
-ever seen, kept; the same for logic_high.
+ever seen, kept; the same for logic_high. It also gives one reading the plan did not name (added after the first results,
+descriptive only): logic tasks credited on at least ONE of the 8 inputs (and viable), to set beside S113's test
+processor, which used one set of inputs; and logic tasks on the logic_high input triples whose numbers come in the
+order Avida's world gives them (credited on all of those and viable).
 
 Avida is called through a wrapper (scratch s116/bin/avida) that adds nice -n 19 and a one-hour time limit to every Avida
 process. At most two probe processes at once (the caller keeps the whole job at three Avida processes or fewer).
@@ -103,8 +106,18 @@ def arithmetic(name):
     return name in ('echo', 'add', 'add3', 'sub') or name.startswith('math_')
 
 
-def read_logic_high(out, key):
-    """Same rule as the summariser (credited on all 8 inputs and viable), for the logic_high profile."""
+def world_order_inputs(out):
+    """logic_high input triples whose three numbers come in the order Avida's world gives them (high bytes 15, 51, 85)."""
+    ids = []
+    for r in csv.DictReader(open(os.path.join(out, 'inputs.tsv')), delimiter='\t'):
+        if r['profile'] == 'logic_high' and [int(r['input%d' % j]) >> 24 for j in range(3)] == [15, 51, 85]:
+            ids.append(int(r['input_id']))
+    return ids
+
+
+def read_logic_high(out, key, only=None):
+    """Same rule as the summariser (credited on all 8 inputs and viable), for the logic_high profile; with only=[ids],
+    on those input triples only."""
     tasks = [r for r in csv.DictReader(open(os.path.join(out, 'tasks.tsv')), delimiter='\t')
              if r['profile'] == 'logic_high' and r['name'] == r['canonical']]
     schema = [r['column'] for r in sorted((r for r in csv.DictReader(open(os.path.join(out, 'schema.tsv')),
@@ -114,7 +127,7 @@ def read_logic_high(out, key):
     for m in MARKS:
         per = {}
         total = None
-        for i in range(8):
+        for i in (only if only is not None else range(8)):
             rows = []
             for line in open(os.path.join(out, 'results', 'logic_high', 'u%d-input%d.dat' % (m, i))):
                 if line.startswith('#') or not line.strip():
@@ -144,7 +157,12 @@ def summarise_run(key):
         rows = {r['task']: r for r in cap if int(r['update']) == m}
         pres = {n for n, r in rows.items() if int(r['viable_all']) > 0}
         com = {n for n, r in rows.items() if r['fraction_all'] != '' and float(r['fraction_all']) >= COMMON}
+        # an added, descriptive reading (not in the plan): credited on at least one of the 8 inputs and viable
+        pres1 = {n for n, r in rows.items() if int(r['viable_any']) > 0}
+        com1 = {n for n, r in rows.items() if int(r['population']) and int(r['viable_any']) / int(r['population']) >= COMMON}
         per[m] = {'population': int(next(iter(rows.values()))['population']),
+                  'logic_present_on_any_input': sorted(pres1 & set(logic_names)),
+                  'logic_common_on_any_input': sorted(com1 & set(logic_names)),
                   'logic_present': sorted(pres & set(logic_names)), 'logic_common': sorted(com & set(logic_names)),
                   'arith_present': sorted(pres & set(arith_names)), 'arith_common': sorted(com & set(arith_names))}
     ever = set()
@@ -154,7 +172,9 @@ def summarise_run(key):
         ever |= now
         table[str(m)] = {'present_logic': len(per[m]['logic_present']), 'common_logic': len(per[m]['logic_common']),
                          'present_arith': len(per[m]['arith_present']), 'common_arith': len(per[m]['arith_common']),
-                         'present_all': len(now), 'ever_seen_all': len(ever), 'population': per[m]['population']}
+                         'present_all': len(now), 'ever_seen_all': len(ever), 'population': per[m]['population'],
+                         'present_logic_on_any_input': len(per[m]['logic_present_on_any_input']),
+                         'common_logic_on_any_input': len(per[m]['logic_common_on_any_input'])}
     ret = list(csv.DictReader(open(os.path.join(out, 'summary', 'retention.tsv')), delimiter='\t'))
     r25 = [r for r in ret if r['from_label'] == 'u25000' and r['to_label'] == 'u50000'][0]
     # the summariser's sets are all core tasks (fib_ included); recompute on logic + arithmetic for the plan's reading
@@ -166,6 +186,8 @@ def summarise_run(key):
             cont &= sets[m]
     endpoint = base & sets[50000]
     high = read_logic_high(out, key)
+    wo = world_order_inputs(out)
+    world = read_logic_high(out, key, only=wo)
     dyn = list(csv.DictReader(open(os.path.join(out, 'summary', 'snapshot_dynamics.tsv')), delimiter='\t'))
     return {'per_save': table,
             'present_at_50000': per[50000],
@@ -178,6 +200,9 @@ def summarise_run(key):
             'logic_high': {str(m): {'present': len(high[m]['present']), 'common': len(high[m]['common'])}
                            for m in MARKS},
             'logic_high_sets_at_50000': high[50000],
+            'logic_high_world_order_inputs': wo,
+            'logic_high_world_order': {str(m): {'present': len(world[m]['present']), 'common': len(world[m]['common'])}
+                                       for m in MARKS},
             'distinct_sequences': {r['update']: int(r['distinct_sequences']) for r in dyn},
             'arithmetic_tasks_probed': arith_names}
 
