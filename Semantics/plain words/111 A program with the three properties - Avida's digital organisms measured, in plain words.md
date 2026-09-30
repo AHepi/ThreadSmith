@@ -1,5 +1,7 @@
 # A program with the three properties: Avida's digital organisms measured. In plain words
 
+*Note added 30 September 2026 (log S114): this page's description of the changes the world makes at each split (section 2: one time in twenty an added instruction, one time in twenty a removed one, besides the copying mistakes) was checked against Avida's own code in log S114 and holds; the only looseness is "or": the adding and the removing are separate chances, and both can happen at the same split. No number here changes. Details: "Semantics/results/S114 Checking GPT 6 Astra's reply.md", section 4.*
+
 *A note first. Written on 29 September 2026 by a Claude agent, for you, and **now following GLM's check**: GLM went over the work behind this page, a second Claude agent that had not done the work weighed each of its 30 objections, and this page was corrected to match (section 9 says what changed). It uses none of the words you asked to be removed, except inside quotations. The full record, as corrected, is "Semantics/results/S111 Avida - the three properties measured, after the cross-examination.md" (with a data file beside it; the version before the check is kept unchanged beside it), and the weighing of each objection is in "Semantics/results/S111 Avida - the GLM cross-examination, settled.md"; the plan, written before anything was run, is "Semantics/results/S111 Avida - how the three properties will be measured, written before running.md". Nothing in the theory was changed.*
 
 ---
