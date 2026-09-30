@@ -112,9 +112,29 @@ def check_c2():
     init = [float(x) for x in re.findall(r'initial=([0-9.eE+-]+)',
                                          open(os.path.join(orig, 'piece_05', 'environment.cfg')).read())]
     before = rows(os.path.join(orig, 'piece_04', 'data', 'resource.dat'))[1000][1:]
+    # For comparison (added after the plan, when the update-0 print turned out to come after one update of running):
+    # how much a resource level changes in one update in the continuous run of the same seed, updates 5,000-6,000,
+    # for the resources in use (level below 9,000), against the changes in the rerun's first 20 updates.
+    cres = rows(os.path.join(CONT_OUT, 'common_pays_less_seed11401', 'data', 'resource.dat'))
+    def steps(get, us):
+        out = []
+        for u in us:
+            a, b = get(u), get(u + 1)
+            out += [abs(y - x) / x for x, y in zip(a, b) if 0 < x < 9000]
+        return sorted(out)
+    cont = steps(lambda u: cres[u][1:], range(5000, 6000))
+    rer = steps(lambda u: r[u][1:], range(0, 20))
+    first = [abs(y - x) / x for x, y in zip(init, r[0][1:]) if 0 < x < 9000]
+    q = lambda xs, p: xs[min(len(xs) - 1, int(p * len(xs)))]
     return {'rerun_repeats_original_counts_exactly': same, 'before_piece4_end': before, 'initial_written': init,
             'printed_update_0': r[0][1:], 'printed_update_1': r[1][1:], 'printed_update_2': r[2][1:],
-            'max_relative_difference_update0_vs_initial': max(abs(a - b) / b for a, b in zip(r[0][1:], init) if b)}
+            'printed_updates_0_to_20': {u: r[u][1:] for u in range(0, 21)},
+            'max_relative_difference_update0_vs_initial': max(abs(a - b) / b for a, b in zip(r[0][1:], init) if b),
+            'one_update_relative_change': {
+                'continuous_5000_6000_median': q(cont, 0.5), 'continuous_5000_6000_p99': q(cont, 0.99),
+                'continuous_5000_6000_max': cont[-1],
+                'rerun_initial_to_update0_median': statistics.median(first), 'rerun_initial_to_update0_max': max(first),
+                'rerun_updates_0_20_median': q(rer, 0.5), 'rerun_updates_0_20_p99': q(rer, 0.99)}}
 
 
 def main():
