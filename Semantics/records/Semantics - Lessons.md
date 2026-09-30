@@ -73,6 +73,7 @@ S60. The records brief carried the map's first counts. The orchestrator's brief 
 S61. A result was written from a run that had not finished. In Part A's round 2 (log S108, continued), section 2's worked-case script was killed twice by its timeout (exit 143 in its run log); its output stopped after 22 of 60 cases and its declared `.json` was never written, yet the section file cited both and gave numbers only that run could produce (§2, §7, §9, §10), and did not record the two failures. Found by the GLM cross-examination (Xa1). Fix: rerun section by section to exit 0 (12 minutes), every number reproduced, outputs kept in `computation/cross-examination runs/`. Rule: cite only a run whose run log shows exit 0 and whose declared outputs exist; record a cut run as cut, with what it did and did not reach.
 S62. A map builder flattened mixed standings and dropped a row, both silently. Round 2's builder took one standing per section row, so parts the row's own text marked not computed or contradicted counted as computed (the shape round 1's correction O2 had named), and it skipped a row whose round-1 edge id carried a trailing comma (`if rid not in edges: continue`), so R2V2.11's closure of e2.38 and e2.39 never reached the map's `.json`. Found by the GLM cross-examination (Xc1, Xc3). Fix: a corrected copy splits eleven rows into twelve parts and carries the closure (`s108r2x_map_amend.py`). Rule: a builder fails on any row it cannot place instead of skipping it, and splits every row whose written standing names parts of different standing.
 S63. The orchestrator's snapshot commits, made while a worker was still writing, captured that worker's unfinished rule for reading a GLM check (log S111, commit 566eb03). The worker amended the rule before any brief was sent, so the rule was still written before sending, but the record shows a half-written rule as its first version. While a worker is writing a rule meant to be committed before sending, leave its rule files for the worker to commit.
+S64. Claude split the checking of Astra's eight replies (log S115) into five agents, one per group of replies plus a planner and one more for reply 08, because the replies were separate. The owner stopped it: too many agents. Decision S56 already said one agent does a whole job; a job made of several parts is still one job. Before starting agents, count everything already running, and keep to one agent per job and no more than two at once.
 
 ## Lessons by category
 An index, added 23 September 2026 at the owner's word ("create new ones for different categories"). The entries above stay where they were written; this list files each one under a heading.
@@ -87,7 +88,7 @@ An index, added 23 September 2026 at the owner's word ("create new ones for diff
 - **Keeping the record true (log, Decisions, receipts, commit messages):** S12, S17, S18, S19, S23, S25, S41, S46, S51, S56, S60, S61.
 - **Limits the owner set, and how they are kept:** S10, S16, S22, S29, S30, S31, S32, S35, S38, S44, S58.
 - **Framing the source ideas (hard to vary, error correction):** S26.
-- **Helpers, restarts and stopping processes:** S24, S27, S28, S30, S35, S37, S45, S58, S63.
+- **Helpers, restarts and stopping processes:** S24, S27, S28, S30, S35, S37, S45, S58, S63, S64.
 - **The owner's accounts, money and terms of use:** S32.
 
 ## Traps
