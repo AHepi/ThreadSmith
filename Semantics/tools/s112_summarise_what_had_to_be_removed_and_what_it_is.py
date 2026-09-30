@@ -80,6 +80,14 @@ def site_role(site, T, trace):
         return 'control (jumps, heads, conditions, labels)'
     if names & R.COPYING:
         return 'replication instruction'
+    if 'IO' in names:
+        return 'IO outside the routes (it takes the next number of the input rotation, so later reads get other numbers)'
+    if 'swap-stk' in names:
+        return 'stack switch outside the routes (decides which stack later push and pop use)'
+    if names & {'push', 'pop', 'swap'}:
+        return 'mover outside the routes'
+    if names & {'nand', 'add', 'sub', 'inc', 'dec', 'shift-l', 'shift-r'}:
+        return 'operation outside the routes'
     return 'other executed instruction outside the routes'
 
 
@@ -159,6 +167,7 @@ def main():
         irr_kind = collections.Counter()
         redundancy = collections.Counter()
         circ, circ_red, circ_any = {}, {}, collections.Counter()
+        req_strings, req_names = collections.Counter(), collections.Counter()
         credited_agree = collections.Counter()
         generality = collections.Counter()
         for run, seq, n in doers:
@@ -186,6 +195,9 @@ def main():
             e = tr['sums'].get(T)
             nroutes = len(e['routes']) if e else 0
             redundancy[(k == '1', 'one route' if nroutes == 1 else ('no route' if nroutes == 0 else 'more routes'))] += 1
+            if one:
+                req_strings[''.join(s['seq'][i] for i in one)] += 1
+                req_names[' '.join(P.name_of(s['seq'][i]) for i in one)] += n
             for i in one:
                 kinds1[P.name_of(s['seq'][i])] += 1
                 r = site_role(i, T, tr)
@@ -234,6 +246,8 @@ def main():
             'required_instructions_per_sequence': {'mean': round(sum(n_required) / len(n_required), 2),
                                                    'min': min(n_required), 'max': max(n_required)},
             'required_instruction_kinds': dict(kinds1.most_common()),
+            'distinct_required_instruction_strings': len(req_strings),
+            'most_common_required_instruction_strings_by_programs': dict(req_names.most_common(5)),
             'required_instruction_roles': dict(roles1.most_common()),
             'required_instruction_roles_weighted_by_programs': dict(roles1_w.most_common()),
             'ablation_against_routes': dict(cut_all_routes),
@@ -251,7 +265,8 @@ def main():
                                                     key=lambda x: 99 if x is None else x),
             'reduced_circuits_top': red[:12], 'circuits_top': full[:5],
         })
-        examples_wanted[T] = red[0]['example']
+        x = red[0]['example']
+        examples_wanted[T] = (x['programs'], x['run'], x['sequence'])
         out['tasks'][T] = entry
 
     # environment tests
