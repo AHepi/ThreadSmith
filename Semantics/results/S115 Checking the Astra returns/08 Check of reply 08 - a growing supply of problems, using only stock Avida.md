@@ -47,6 +47,8 @@ Count: 7 hold (one read only), 4 hold in part, 0 do not hold, 0 unchecked.
 
 No difference in anything rebuilt, apart from the market level, which depends on the performers used.
 
+**One extra pilot, not in the reply** (`scratchpad/s115/r08/pilotA/`): design A as given, from the stock ancestor, seed 1, stopped by its 30-second timeout at about update 1,000. The market was 0 until about update 500, 1.2 at 550 and 45.8 at 950, above the 10-unit gate, with 171 programs performing NOT at update 1,000 and the world full (3,598 programs). So in this seed the market opened within the first thousand updates, as problem (1) of R08-A below expects. One seed, 1,000 updates: no result about the design.
+
 ## 4. Every run or measurement it proposes
 
 Files in `/home/user/ThreadSmith/Semantics/tools/s115/08/`, each copied unchanged below a note: `avida.cfg-entries.txt`, `launch.sh`, `designA-market-environment.cfg`, `designA-events.cfg`, `designB-exchange-environment.cfg`, `designB-events.cfg`, `probe-environment.cfg`, `probe-analyze.cfg`, `probe-launch.sh`. The controls are described as edits in the reply (section E); a later runner must make them with the same two `sed` edits used above (`conversion=1` → `conversion=0`; the four `product=right` → `product=left` and five `product=left` → `product=right`).
