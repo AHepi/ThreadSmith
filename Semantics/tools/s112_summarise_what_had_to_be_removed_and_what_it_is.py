@@ -206,13 +206,30 @@ def main():
 
     examples_wanted = {}
     for T in TASKS:
-        doers = []          # (run, seq, organisms)
+        doers = []          # (run, sequence, number of Avida programs with it)
         for run in runs:
             for seq, s in data[run][0].items():
                 if (s['base'] & 1) and T in sums_in(s['base']):
                     doers.append((run, seq, s['organisms']))
         n_seq, n_prog = len(doers), sum(x[2] for x in doers)
+        # Avida's test processor credits the tasks of a program's last split (GetLastTaskCount, cAnalyzeGenotype.cc
+        # 590), and calls a program viable only if it forms a colony (its copy is exact, or leads back to it; cTestCPU.cc
+        # 282-313). So a program that splits but does not replicate is still credited; one that never splits is not.
+        # Those programs, and the replication-required sites of the replicating ones, are counted apart.
+        nonrep = [(run, seq, s['organisms']) for run in runs for seq, s in data[run][0].items()
+                  if not (s['base'] & 1) and T in sums_in(s['base'])]
+        nonrep_single = sum(1 for run, seq, n in nonrep
+                            if any(not ((c >> 1) & (1 << TASKS.index(T))) for c in data[run][0][seq]['sites']))
+        repl_sites = collections.Counter()
+        for run, seq, n in doers:
+            for c in data[run][0][seq]['sites']:
+                if not (c & 1):
+                    repl_sites['task still credited (the ablated program still splits)' if (c >> 1) & (1 << TASKS.index(T))
+                               else 'task no longer credited'] += 1
         entry = {'sequences': n_seq, 'programs': n_prog, 'share_of_all_programs_pct': pct(n_prog, total_programs),
+                 'credited_with_it_but_not_replicating (splits, copy not exact)': {'sequences': len(nonrep), 'programs': sum(x[2] for x in nonrep),
+                                                       'with_a_single_site_whose_ablation_stops_it': nonrep_single},
+                 'replication_required_sites_of_performing_sequences': dict(repl_sites),
                  'world_count_at_update_50000': sum(world[r][T] for r in runs),
                  'runs_with_doers': sorted({x[0] for x in doers}, key=runs.index)}
         if not doers:
@@ -229,6 +246,7 @@ def main():
         redundancy = collections.Counter()
         circ, circ_red, circ_any = {}, {}, collections.Counter()
         req_strings, req_names = collections.Counter(), collections.Counter()
+        overlap = collections.Counter()
         credited_agree = collections.Counter()
         generality = collections.Counter()
         for run, seq, n in doers:
@@ -274,6 +292,13 @@ def main():
                                    'pair does not cut every route'] += 1
                     pair_roles[tuple(sorted(site_role(i, T, tr) for i in p))] += 1
                 ro = e['routes'][0]
+                rs0 = {int(x) for x in ro['sites']}
+                one_set = set(one)
+                overlap['credited route sites'] += len(rs0)
+                overlap['credited route sites that are required'] += len(rs0 & one_set)
+                overlap['required sites'] += len(one_set)
+                overlap['required sites in the credited route'] += len(one_set & rs0)
+                overlap['required sites in some route of the task'] += len(one_set & set().union(*rsets))
                 credited_agree[bool(e['agree'])] += 1
                 generality[ro['generality']] += 1
                 for key, store in (('canonical', circ), ('reduced', circ_red)):
@@ -323,6 +348,7 @@ def main():
             'required_instruction_roles': dict(roles1.most_common()),
             'required_instruction_roles_weighted_by_programs': dict(roles1_w.most_common()),
             'ablation_against_routes': dict(cut_all_routes),
+            'required_sites_against_the_credited_route': dict(overlap),
             'minimal_pair_roles': {' + '.join(k): v for k, v in pair_roles.most_common(12)},
             'single_site_stops_it_vs_number_of_routes': {'%s, %s' % ('a single site stops it' if a else
                                                                      'no single site stops it', b): v
@@ -361,8 +387,8 @@ def main():
             for run in runs:
                 singles, pairs, irr, traces, env = data[run]
                 for seq, r in env.items():
-                    if T not in r['variants']['unchanged']['sums']:
-                        continue
+                    if T not in r['variants']['unchanged']['sums'] or not r['variants']['unchanged']['viable']:
+                        continue          # the same set of Avida programs as the ablations: replicating and performing T
                     n += 1
                     x = r['variants'][v]
                     viable += x['viable']

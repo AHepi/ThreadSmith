@@ -31,3 +31,15 @@ cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_read_w
 cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_test_what_the_sums_depend_on_in_the_environment.py 2
 # Instruction ablation, stage 2 (every pair of sites whose single ablation leaves program replication):
 cd /home/user/ThreadSmith && timeout 14400 python3 -B Semantics/tools/s112_find_minimal_removals.py pairs 2
+# Instruction ablation, stage 4 (every triple of the most common distinct instruction sequence of each run):
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py triples 2
+# The most common sequence of each run with each replication-required site ablated, traced by Avida (after the traces):
+cd /home/user/ThreadSmith && timeout 3600 python3 -B Semantics/tools/s112_find_minimal_removals.py without_copying 1
+# The last run's traces (main_high_seed3) went slowly with one worker (its programs write many outputs, each a route);
+# stopped by its exact process numbers before its time limit, the partial output set aside, and read again with three:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 3
+# Instruction ablation, stage 3 (the irreducible-set search, for the program-task pairs no set of 1 or 2 sites stops):
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py irreducible 2
+# (without_copying, above, run with 3 workers after the traces: python3 -B ... without_copying 3)
+# The summary written into the repository (results/... what had to be removed and what it is.json):
+cd /home/user/ThreadSmith && timeout 900 python3 -B Semantics/tools/s112_summarise_what_had_to_be_removed_and_what_it_is.py
