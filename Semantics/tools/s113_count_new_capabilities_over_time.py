@@ -10,7 +10,10 @@ of common tasks after update 40,000); and the spread over the three seeds of eac
 makes the comparisons the plan named (results/S113 Which execution environments learn - how it will be tested, written
 before running.md, section 6), by the plan's rule: "more" only if every seed of one environment is above every seed
 of the other. It also compares the FIXED GRADED runs with S111's three unbroken runs, and reads the growing list's
-steps. If the reuse file of tools/s113_measure_reuse_of_task_circuits.py exists, its summary is added.
+steps. If the reuse file of tools/s113_measure_reuse_of_task_circuits.py exists, its summary is added. If the summary of
+tools/s113_measure_capabilities_in_the_saved_program_populations.py exists (a second reading, added after the runs:
+the saved program populations every 5,000 updates, each distinct instruction sequence run in Avida's test processor),
+the same measures and comparisons are also made on it and added as "test processor reading".
 
 It reads only the scratch space and the S113 ranking file, and writes one JSON file (the path given as the first
 argument; default: the S113 results .json). It runs nothing in Avida.
@@ -26,6 +29,7 @@ RESULTS = os.path.join(os.path.dirname(HERE), 'results')
 RANKS = os.path.join(RESULTS, 'S113 Which execution environments learn - the runs',
                      'the 77 tasks ranked by the fewest nand steps.json')
 REUSE = SCRATCH + '/s113/reuse/reuse_summary.json'
+TPSUM = SCRATCH + '/s113/test_processor/summary.json'
 DEFAULT_OUT = os.path.join(RESULTS, 'S113 Which execution environments learn - results.json')
 
 ENVS = ['fixed_graded', 'equ_only', 'no_rewards', 'growing', 'common_pays_less', 'fixed_large']
@@ -179,32 +183,7 @@ def s111_check():
     return out
 
 
-def main():
-    ranks = json.load(open(RANKS))['tasks']
-    tasks = [r['task'] for r in ranks]
-    levels = {r['task']: r['fewest_nand_steps'] for r in ranks}
-    per = {}
-    growing_steps = {}
-    under = []
-    for env in ENVS:
-        for seed in SEEDS:
-            key = '%s_seed%d' % (env, seed)
-            if not os.path.exists(os.path.join(RUNS, key, 'state.json')):
-                continue
-            state, samples = read_run(env, seed, tasks)
-            if not samples:
-                continue
-            per[key] = measure(samples, tasks, levels)
-            per[key]['pieces_done'] = state['done']
-            per[key]['seconds'] = sum(h['seconds'] for h in state['history'])
-            if env == 'growing':
-                steps = []
-                for h in state['history']:
-                    if h.get('unlocked_after_piece', 0) > h['unlocked_during_piece']:
-                        steps.append({'level_added': h['unlocked_after_piece'], 'rewarded_from_update': h['update_end']})
-                growing_steps[key] = steps
-                per[key]['highest_level_rewarded_at_end'] = state['unlocked']
-            under += undercount_check(env, seed, tasks)
+def by_environment(per, tasks, levels, marks):
     by_env = {}
     for env in ENVS:
         runs = [per.get('%s_seed%d' % (env, s)) for s in SEEDS]
@@ -215,14 +194,16 @@ def main():
             return [r[f] if r else None for r in runs]
         e = {'label': LABEL[env]}
         for f in ['common_at_end', 'any_at_end', 'common_two_input_at_end', 'common_three_input_at_end',
-                  'any_two_input_at_end', 'any_three_input_at_end', 'highest_common', 'last_new_high_of_common',
+                  'any_two_input_at_end', 'any_three_input_at_end', 'last_new_high_of_common',
                   'rise_of_common_over_last_10000', 'ever_common', 'kept_common_at_end',
-                  'ever_common_performed_by_none_at_end', 'times_a_common_task_fell_to_none', 'updates_reached',
-                  'programs_at_end']:
+                  'ever_common_performed_by_none_at_end']:
             e[f] = spread(col(f))
+        for f in ['highest_common', 'times_a_common_task_fell_to_none', 'updates_reached', 'programs_at_end']:
+            if runs[0] and f in runs[0]:
+                e[f] = spread(col(f))
         e['levelled_off_per_seed'] = col('levelled_off')
-        e['common_at_marks'] = {u: spread([r['common_at_marks'][u] if r else None for r in runs]) for u in map(str, MARKS)}
-        e['any_at_marks'] = {u: spread([r['any_at_marks'][u] if r else None for r in runs]) for u in map(str, MARKS)}
+        e['common_at_marks'] = {u: spread([r['common_at_marks'][u] if r else None for r in runs]) for u in map(str, marks)}
+        e['any_at_marks'] = {u: spread([r['any_at_marks'][u] if r else None for r in runs]) for u in map(str, marks)}
         firsts = {}
         for t in tasks:
             fa = [r['first_any'].get(t) if r else None for r in runs]
@@ -231,7 +212,10 @@ def main():
                 firsts[t] = {'level': levels[t], 'first_any_per_seed': fa, 'first_common_per_seed': fc}
         e['first_appearance'] = firsts
         by_env[env] = e
+    return by_env
 
+
+def comparisons(per, by_env):
     def endv(env, f='common_at_end'):
         return [per['%s_seed%d' % (env, s)][f] if '%s_seed%d' % (env, s) in per else None for s in SEEDS]
 
@@ -291,6 +275,37 @@ def main():
     comp['E7 keeping'] = {'share of ever-common tasks common at 50,000, per seed': keep,
                           'against the expectation': any(statistics.median(v) < 0.9 for env, v in keep.items()
                                                          if v and env != 'no_rewards')}
+    return comp
+
+
+def main():
+    ranks = json.load(open(RANKS))['tasks']
+    tasks = [r['task'] for r in ranks]
+    levels = {r['task']: r['fewest_nand_steps'] for r in ranks}
+    per = {}
+    growing_steps = {}
+    under = []
+    for env in ENVS:
+        for seed in SEEDS:
+            key = '%s_seed%d' % (env, seed)
+            if not os.path.exists(os.path.join(RUNS, key, 'state.json')):
+                continue
+            state, samples = read_run(env, seed, tasks)
+            if not samples:
+                continue
+            per[key] = measure(samples, tasks, levels)
+            per[key]['pieces_done'] = state['done']
+            per[key]['seconds'] = sum(h['seconds'] for h in state['history'])
+            if env == 'growing':
+                steps = []
+                for h in state['history']:
+                    if h.get('unlocked_after_piece', 0) > h['unlocked_during_piece']:
+                        steps.append({'level_added': h['unlocked_after_piece'], 'rewarded_from_update': h['update_end']})
+                growing_steps[key] = steps
+                per[key]['highest_level_rewarded_at_end'] = state['unlocked']
+            under += undercount_check(env, seed, tasks)
+    by_env = by_environment(per, tasks, levels, MARKS)
+    comp = comparisons(per, by_env)
     out = {'what': 'log S113: computational capabilities in the program population over time, per Avida execution '
                    'environment (written by tools/s113_count_new_capabilities_over_time.py)',
            'common share': COMMON, 'levelled off if the last new high is at or before': LEVEL_OFF_BY,
@@ -302,6 +317,44 @@ def main():
            'per run': per}
     if os.path.exists(REUSE):
         out['reuse (M6)'] = json.load(open(REUSE))
+    if os.path.exists(TPSUM):
+        tp = json.load(open(TPSUM))
+        per_tp = {}
+        for k, v in tp['per run'].items():
+            r = dict(v['performing'])
+            r['performing_and_replicating'] = {f: v['performing_and_replicating'][f] for f in
+                                               ['common_at_end', 'any_at_end', 'common_at_marks', 'any_at_marks',
+                                                'last_new_high_of_common', 'ever_common', 'kept_common_at_end']}
+            r['replicating_share_at_marks'] = v['replicating_share_at_marks']
+            r['programs_at_marks'] = v['programs_at_marks']
+            r['distinct_sequences_at_marks'] = v['distinct_sequences_at_marks']
+            per_tp[k] = r
+        be = by_environment(per_tp, tasks, levels, MARKS)
+        out['test processor reading'] = {
+            'what': 'the second reading, added after the runs (a departure from the plan): the program populations '
+                    'saved every 5,000 updates, each distinct instruction sequence run alone in Avida\'s test processor '
+                    '(tools/s113_measure_capabilities_in_the_saved_program_populations.py); "levelled off" and the '
+                    'rise are read at 5,000-update steps',
+            'environments': be, 'comparisons': comparisons(per_tp, be), 'per run': per_tp}
+        # the two readings side by side at the ten saved updates: common and present, world count / test processor
+        side = {}
+        for k in per:
+            if k in per_tp:
+                side[k] = {u: [per[k]['common_at_marks'][u], per_tp[k]['common_at_marks'][u],
+                               per[k]['any_at_marks'][u], per_tp[k]['any_at_marks'][u]] for u in map(str, MARKS)}
+        out['check: world count against test processor count at the saved updates'] = {
+            'columns': ['common, world count', 'common, test processor', 'present, world count',
+                        'present, test processor'], 'per run': side}
+    by_env_under = {}
+    for env in ENVS:
+        r = []
+        for seed in SEEDS:
+            if os.path.exists(os.path.join(RUNS, '%s_seed%d' % (env, seed), 'state.json')):
+                r += undercount_check(env, seed, tasks)
+        if r:
+            by_env_under[env] = {'pieces': len(r), 'smallest': round(min(r), 3), 'middle': round(statistics.median(r), 3),
+                                 'largest': round(max(r), 3), 'pieces under 0.5': sum(1 for x in r if x < 0.5)}
+    out['check: performances counted 250 updates after a load, by environment'] = by_env_under
     path = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUT
     json.dump(out, open(path, 'w'), indent=1)
     for env in by_env:

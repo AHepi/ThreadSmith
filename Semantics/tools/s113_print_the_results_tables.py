@@ -87,6 +87,26 @@ def main():
         for t in TWO:
             cells.append(' / '.join(fmt(per.get('%s_seed%d' % (env, s), {}).get('first_any', {}).get(t)) for s in (1, 2, 3)))
         print('| %s | %s |' % (envs[env]['label'], ' | '.join(cells)))
+    ranks = {}
+    for env in ENVS:
+        for t, f in envs.get(env, {}).get('first_appearance', {}).items():
+            ranks[t] = f['level']
+    print('\n### Tasks ever common, by level (seeds 1 / 2 / 3), and the earliest update any task of the level was common\n')
+    levels = sorted(set(ranks.values()))
+    print('| environment | ' + ' | '.join('level %d' % l for l in levels) + ' |')
+    print('|---|' + '---|' * len(levels))
+    for env in ENVS:
+        if env not in envs:
+            continue
+        cells = []
+        for l in levels:
+            parts = []
+            for s in (1, 2, 3):
+                fc = per.get('%s_seed%d' % (env, s), {}).get('first_common', {})
+                ts = [t for t in fc if ranks.get(t) == l]
+                parts.append('%d (%s)' % (len(ts), min(fc[t] for t in ts)) if ts else '0')
+            cells.append(' / '.join(parts))
+        print('| %s | %s |' % (envs[env]['label'], ' | '.join(cells)))
     print('\n### Growing list: update from which each level was rewarded\n')
     for k, steps in d['growing list steps'].items():
         print('- %s: %s; highest level rewarded at the end: %s' % (
@@ -109,6 +129,39 @@ def main():
                 r['tasks_performed'], r['pairs'], fmt(r['mean_shared']), fmt(r['mean_expected']),
                 r['pairs_above_expected'], r['pairs_below_expected'], r['pairs_sharing_nothing']))
         print('\n', json.dumps(d['reuse (M6)']['all runs']))
+    if 'test processor reading' in d:
+        tp = d['test processor reading']
+        print('\n## Test processor reading\n')
+        for what in ['common', 'any']:
+            print('\n### %s, test processor, per seed, every 5,000 updates\n' % what)
+            print('| environment | ' + ' | '.join('%dk' % (int(u) // 1000) for u in marks) + ' |')
+            print('|---|' + '---|' * len(marks))
+            for env in ENVS:
+                if env not in tp['environments']:
+                    continue
+                cells = [' / '.join(fmt(tp['per run'].get('%s_seed%d' % (env, s), {}).get('%s_at_marks' % what, {}).get(u))
+                                    for s in (1, 2, 3)) for u in marks]
+                print('| %s | %s |' % (tp['environments'][env]['label'], ' | '.join(cells)))
+        print('\n| environment | common at 50,000 | two-input | three-input | present at 50,000 | common and replicating | '
+              'last new high | levelled off | ever common | kept common |')
+        print('|---|---|---|---|---|---|---|---|---|---|')
+        for env in ENVS:
+            if env not in tp['environments']:
+                continue
+            rs = [tp['per run'].get('%s_seed%d' % (env, s)) for s in (1, 2, 3)]
+
+            def col(f):
+                return ' / '.join(fmt(r[f]) if r else '-' for r in rs)
+            print('| %s | %s | %s | %s | %s | %s | %s | %s | %s | %s |' % (
+                tp['environments'][env]['label'], col('common_at_end'), col('common_two_input_at_end'),
+                col('common_three_input_at_end'), col('any_at_end'),
+                ' / '.join(fmt(r['performing_and_replicating']['common_at_end']) for r in rs),
+                col('last_new_high_of_common'), col('levelled_off'), col('ever_common'), col('kept_common_at_end')))
+        print('\n### Comparisons, test processor reading\n')
+        print(json.dumps(tp['comparisons'], indent=1))
+        print('\n### World count against test processor\n')
+        print(json.dumps(d['check: world count against test processor count at the saved updates'], indent=None)[:3000])
+        print(json.dumps(d['check: performances counted 250 updates after a load, by environment']))
     print('\n### Comparisons\n')
     print(json.dumps(d['comparisons'], indent=1))
 
