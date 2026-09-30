@@ -91,6 +91,67 @@ def site_role(site, T, trace):
     return 'other executed instruction outside the routes'
 
 
+PATTERN = [0x0f0f0f0f, 0x33333333, 0x55555555]    # every byte holds all eight combinations of three bits
+
+
+def truth_table(v):
+    """the bit-by-bit function (8-bit truth table over x0, x1, x2) a 32-bit number computed from PATTERN is, or None"""
+    tt = [-1] * 8
+    for b in range(32):
+        pos = sum(((PATTERN[i] >> b) & 1) << i for i in range(3))
+        bit = (v >> b) & 1
+        if tt[pos] not in (-1, bit):
+            return None
+        tt[pos] = bit
+    return sum(tt[i] << i for i in range(8))
+
+
+def permute_tt(tt, p):
+    """the same truth table with the inputs renamed by p (x_i becomes x_p[i])"""
+    out = 0
+    for pos in range(8):
+        bits = [(pos >> i) & 1 for i in range(3)]
+        new = sum(bits[i] << p[i] for i in range(3))
+        out |= ((tt >> pos) & 1) << new
+    return out
+
+
+def evaluate_circuit(form):
+    """computes each part of a written circuit (g1=nand(x0,x1); ...) on PATTERN, as Avida's 32-bit registers would;
+    returns the list of the parts' truth tables (None: not a bit-by-bit function) or None if a constant OTHER occurs"""
+    if form.startswith('out='):
+        return []
+    val = {'x0': PATTERN[0], 'x1': PATTERN[1], 'x2': PATTERN[2], 'ZERO': 0, 'ONES': 0xffffffff}
+    tts = []
+    for part in form.split('; '):
+        name, rhs = part.split('=', 1)
+        op, args = rhs[:-1].split('(', 1)
+        ks = args.split(',')
+        if any(k not in val for k in ks):
+            return None
+        a = [val[k] for k in ks]
+        v = {'nand': lambda: ~(a[0] & a[1]), 'add': lambda: a[0] + a[1], 'sub': lambda: a[0] - a[1],
+             'inc': lambda: a[0] + 1, 'dec': lambda: a[0] - 1, 'shift-l': lambda: a[0] << 1,
+             'shift-r': lambda: R.s32(a[0]) >> 1}[op]() & 0xffffffff
+        val[name] = v
+        tts.append(truth_table(v))
+    return tts
+
+
+def function_skeleton(form):
+    """the distinct bit-by-bit functions the circuit's parts compute, as truth tables, with the inputs renamed to give
+    the smallest list: what the circuit computes on the way, whatever instructions compute it"""
+    tts = evaluate_circuit(form)
+    if tts is None:
+        return None
+    best = None
+    for p in R.PERMS:
+        x = tuple(sorted({permute_tt(t, p) for t in tts if t is not None}))
+        if best is None or x < best:
+            best = x
+    return best
+
+
 def pct(a, b):
     return round(100.0 * a / b, 2) if b else None
 
@@ -232,7 +293,12 @@ def main():
             rows = []
             for form, c in sorted(store.items(), key=lambda kv: -kv[1]['programs']):
                 ops = set(x.split('(')[0].split('=')[-1] for x in form.split('; '))
+                tts = evaluate_circuit(form)
+                out_tt = tts[-1] if tts else None
                 rows.append({'circuit': form, 'nested': c['nested'], 'parts': c['gates'],
+                             'part_truth_tables': tts,
+                             'output_accepted_for_the_task': None if out_tt is None else out_tt in R.ACCEPT[T],
+                             'function_skeleton': function_skeleton(form),
                              'nand_only': ops <= {'nand'} or form.startswith('out='),
                              'sequences': c['sequences'], 'programs': c['programs'], 'runs': len(c['runs']),
                              'distinct_route_instruction_strings': len(c['route_letters']),
@@ -240,6 +306,12 @@ def main():
                                          'programs': c['example'][0]}})
             return rows
         full, red = table(circ), table(circ_red)
+        skel = collections.Counter()
+        skel_seq = collections.Counter()
+        for r in red:
+            skel[r['function_skeleton']] += r['programs']
+            skel_seq[r['function_skeleton']] += r['sequences']
+        checked = collections.Counter(str(r['output_accepted_for_the_task']) for r in red)
         entry.update({
             'smallest_ablation_stopping_it': {'by_sequence': dict(size), 'by_program': dict(size_w)},
             'irreducible_search_start': dict(irr_kind),
@@ -258,6 +330,10 @@ def main():
             'credited_output_is_first_accepted_output': {str(k): v for k, v in credited_agree.items()},
             'generality_of_credited_circuit': {str(k): v for k, v in sorted(generality.items())},
             'distinct_circuits': len(full), 'distinct_reduced_circuits': len(red),
+            'reduced_circuits_output_checked_on_all_eight_bit_combinations': dict(checked),
+            'distinct_function_skeletons': len(skel),
+            'function_skeletons_top': [{'truth_tables': list(k) if k is not None else None, 'programs': v,
+                                        'sequences': skel_seq[k]} for k, v in skel.most_common(8)],
             'distinct_reduced_circuits_over_all_routes': len(circ_any),
             'smallest_nand_circuit_possible': SMALLEST_NAND[T],
             'smallest_reduced_circuit_found': min(r['parts'] for r in red),
