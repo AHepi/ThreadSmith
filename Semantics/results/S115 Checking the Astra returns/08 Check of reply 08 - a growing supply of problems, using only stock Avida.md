@@ -47,7 +47,7 @@ Count: 7 hold (one read only), 4 hold in part, 0 do not hold, 0 unchecked.
 
 No difference in anything rebuilt, apart from the market level, which depends on the performers used.
 
-**One extra pilot, not in the reply** (`scratchpad/s115/r08/pilotA/`): design A as given, from the stock ancestor, seed 1, stopped by its 30-second timeout at about update 1,000. The market was 0 until about update 500, 1.2 at 550 and 45.8 at 950, above the 10-unit gate, with 171 programs performing NOT at update 1,000 and the world full (3,598 programs). So in this seed the market opened within the first thousand updates, as problem (1) of R08-A below expects. One seed, 1,000 updates: no result about the design.
+**One extra pilot, not in the reply** (`scratchpad/s115/r08/pilotA/`): design A as given, from the stock ancestor, seed 1, stopped by its 30-second timeout at about update 1,000. The market was 0 until about update 500, 1.2 at 550 and 45.8 at 950, above the 10-unit gate, with 171 programs performing NOT at update 1,000 and the world full (3,598 programs). So in this seed the market opened within the first thousand updates, as problem (1) of R08-A below expects. One seed, 1,000 updates: no result about the design. The same pilot of design B (`pilotB/`, seed 1, stopped at about update 1,040): with 26 programs doing NOT and 25 doing NAND at update 1,000, the left pool had already dipped below its 1,000-unit gate (993.9 at update 850, 965.7 at 940) and the right pool had risen to about 2,450; so B's gates start to move as soon as its first tasks appear.
 
 ## 4. Every run or measurement it proposes
 
