@@ -50,7 +50,7 @@ Paste everything below the line in each file into a fresh Astra.
 ## How to run them
 
 - **Order:** they can all go at once, one fresh agent each. None depends on another's answer.
-- **Max or Ultra:** use Ultra for 02, 03, 06 and 07, which need the most careful reading or reasoning, if Ultra means more thinking. Max is likely enough for the rest. I don't know exactly how Astra's settings differ, so treat this as a guess.
+- **Max or Ultra:** the owner explained that Ultra means several helper agents working at once, each of which can be set to max. So use Ultra, with every helper at max, for the briefs that split into separate pieces that can be checked side by side: 01, 02, 04, 05, 06 and 08. Use a single agent at max for 03 (one line of reasoning that must hang together) and 07 (one small piece of code that must fit together). Leave these two out of Ultra, because pieces done separately may not join up.
 - **What to bring back:** upload each reply here as it comes. Put the brief's number in the file name if you can.
 
 Claude will check each reply's statements about Avida against its code before running anything. Replies can propose runs, but nothing is run without being checked first.
