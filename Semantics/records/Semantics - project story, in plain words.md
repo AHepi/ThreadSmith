@@ -554,7 +554,17 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent for the whole job. Outside calls: none.
 
+**S119. Four tasks for Astra (folder "S119 Briefs for GPT 6 Astra").** Your words, while S118 was running: "Can you send me work for the other agent to do? 4 right now."
+- *What was done:* one agent wrote four briefs, each complete on its own for a fresh Astra, and a short guide for you. Each carries your three statements in your words, your Avida terms in full, what the earlier runs found, and how strictly to say whether a target is named. Each tells Astra to say plainly what it could not run, to paste what it did run, and never to write self-copying code for a real machine.
+- *The four:* 01, a small change to Avida's code: the world hands in numbers with a hidden rule and pays a program whose output matches the next number, without the rule ever being named to the selector (single agent at maximum). 02, a selector with a memory, paying most for what is improving fastest or for what it has not seen before, with controls and enough runs to tell a difference (Ultra). 03, the research on selectors driven without a fixed target, every source checked (Ultra). 04, what an autonomous agent's selection has and Avida's lacks, item by item, each with the smallest addition and a test (single agent at maximum).
+- *Not presumed:* the S118 pilots' results, which are not in yet.
+- *Your questions:* none new. Still yours: the open reading of file 117, what knowledge is, file 115's costly runs.
+- *Moves left:* none; nothing in the theory was changed; nothing was run.
+- *Agents:* one Opus agent for the whole job. Outside calls: none.
+
 ## The next step
+
+**From S119 (the four briefs):** send each brief to a fresh Astra, as the guide in the folder says (01 and 04 as a single agent at maximum, 02 and 03 with Ultra), and bring each reply back unchanged as a file. Claude checks each against Avida's code before anything is run.
 
 **First, from S117 (file 117 and its map):** your word on the open reading: does a task list and its checking code, written by people, count as part of the history of the programs it selected? Then, as before, your word on file 115's costly runs and on the questions file 116 leaves to you. Nothing more is run until then.
 
