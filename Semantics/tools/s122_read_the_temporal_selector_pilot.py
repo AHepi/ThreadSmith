@@ -4,7 +4,8 @@
 # reply 01's own runner) and prints, for each run, piece by piece: capabilities common (at least
 # 10 in 100 programs) in the world's input order and in all six orders, common withheld ones,
 # latches open and released, the least and most pay offered to a paid detector, the paid total,
-# and the share of the 18 doublings going to detectors with an open latch. Then: every latch
+# the share of the 18 doublings going to detectors with an open latch, and the names of the
+# capabilities common in all six orders (added after the restart). Then: every latch
 # episode (detector, piece set, piece cleared or still open, why it was set), the capabilities
 # common at the last piece, the first piece at which the two arms of a seed were offered
 # different pay, and the CPU time of the Avida pieces and of the assays (from cpu.jsonl).
@@ -30,7 +31,10 @@ def main():
     global TASKS
     base = Path(sys.argv[1]).resolve() / "pilot"
     out = {}
-    for folder in sorted(p for p in base.iterdir() if p.is_dir()):
+    # Only run folders (each has a manifest); the folder of unfinished pieces moved aside after
+    # the restart of about 22:40 UTC (see s122_resume_the_temporal_selector_pilot_after_the_restart.py)
+    # is skipped.
+    for folder in sorted(p for p in base.iterdir() if p.is_dir() and (p / "manifest.json").exists()):
         manifest = json.loads((folder / "manifest.json").read_text())
         TASKS = manifest["tasks"]
         eligible = set(manifest["eligible"])
@@ -62,7 +66,8 @@ def main():
                              applied_min=round(min(paid), 4), applied_max=round(max(paid), 4),
                              applied_total=round(sum(applied), 6),
                              next_latched_share=round(latched_share, 4),
-                             programs=obs["population_size"]))
+                             programs=obs["population_size"],
+                             common_names=[TASKS[j] for j in range(len(TASKS)) if obs["q"][j] >= .1]))
         for j, episode in open_latch.items():
             episode["cleared_after_piece"] = None
             episodes.append(episode)
@@ -98,11 +103,12 @@ def main():
         if not name.startswith(("full", "memoryless")):
             continue
         print(f"\n== {name}: {run['pieces']} pieces")
-        print("piece world all withheld present latches releases min max total latched_share")
+        print("piece world all withheld present latches releases min max total latched_share common_in_all_orders")
         for r in run["rows"]:
             print(f"{r['piece']:5} {r['world_common']:5} {r['all_order_common']:3} {r['withheld_common']:8} "
                   f"{r['present_world']:7} {r['latches_open']:7} {r['releases']:8} {r['applied_min']:.3f} "
-                  f"{r['applied_max']:.3f} {r['applied_total']:.3f} {r['next_latched_share']:.3f}")
+                  f"{r['applied_max']:.3f} {r['applied_total']:.3f} {r['next_latched_share']:.3f} "
+                  f"{' '.join(r['common_names'])}")
         print("latch episodes:", json.dumps(run["latch_episodes"]))
         print("common at last piece (task, world share, all-order share):", run["common_at_last_piece"])
     print("\nCPU:", json.dumps(out["cpu"]))
