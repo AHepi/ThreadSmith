@@ -1,0 +1,59 @@
+# What GPT 6 Astra's three replies offer, and a plan of runs (log S120)
+
+*Written by Claude (Opus 5.5) on 1 October 2026, decision S74, by the one agent that did the whole S120 job (S56, S68; no subagent or workflow). The owner's words with the replies: "First 3 in." The three check files beside this one hold the detail. The replies are kept unchanged in `tests/S119 Returns from GPT 6 Astra/`; their code blocks are extracted unchanged into `tools/s120/01/` and `tools/s120/02/` (reply 03 has none). The reply to brief 04 had not come; it is not covered here. In the owner's Avida terms (S61): the **execution environment** is the whole simulated world, and it is the selector under test (S72); the programs are its material. No GLM check (S70's latest word on GLM).*
+
+**The owner's question** (S63, S71, S72): can an Avida execution environment, the selector, have an instinct to solve problems without exact target goals? S118 found: at grade 2 at best (the class of answers still written down); variety, not growing difficulty; "solve to replicate" a floor, not a drive.
+
+## 1. Per reply
+
+| Reply | What it offers the owner's question | Source claims | Reproduced here | Main flaws |
+|---|---|---|---|---|
+| 01 Paying for anticipating the next number | A five-file C++ patch (71 lines): the world hands each program a private stream made by a hidden rule (random, repeat, add one, or repeat then add one), and pays a program whose output equals the number it will read next. The checker never computes the rule. | 14 hold, 2 in part (line ranges starting inside the function), 0 do not | **All of it, exactly**: patch applies cleanly; Release build; the harness's 15 output lines identical; the 400-update stock-against-off comparison 7 of 7 files equal and the same last line. Three further comparisons added here (stock default `SPECULATIVE 1`; the 77-task environment; a program performing all nine tasks): all equal. | R1 is met by repeating (`IO` alone); R2 is one fixed two-instruction relation, so for a fixed rule the target is one named function of the last input (grade 1). Reload loses the streams. The proposed 84-run experiment rests on a borrowed spread and would cost far more than stated at the measured rate. |
+| 02 A selector that changes what it pays as it goes | Two stock selectors with a memory, driven between pieces of 1,000 updates: A pays tasks whose share is rising; B pays tasks with little recorded exposure; a blind replay and a fixed control; a six-order assay; sizing. | 12 hold, 0 in part, 0 do not | **All of it, exactly**: self-tests, attack cases, aggregation checks, dry run, the four smoke runs (every live count), the assay on the smoke and on the constructed fixture, the sizing figures; the four control checks it reports, by Claude's own script. | A pays almost nothing, and nothing once nothing rises. A pays a fall and return as progress. Both read Avida's piece-end count, which a reload can lower (S113). All pay is weak (7.7 doublings over 77 tasks). The sized experiment is 672 to 1,296 CPU-hours. |
+| 03 Research on selecting without fixed objectives | 16 lines of work (novelty, minimal criteria, coevolving challenges, POET, PAIRED, OMNI, learning and compression progress, empowerment, MAP-Elites, Avida parasites, prediction, resource feedback, fluctuating worlds, POWERPLAY), each with its written-down part, grade, cost and what counts against; 21 references marked checked. | 10 of 10 Avida claims hold | Not runnable (no code). **8 sources spot-checked on the web**: 7 hold to the number; 1 exists but its numbers could not be checked from what was reachable. | Costs are estimates; most options need large drivers or C++. Adds to S115's reply 05 (which was about measuring change) the mechanisms of selecting, two Avida prediction studies, a negative result on paying for prediction, an Avida live-against-replay result (Nahum 2017) that supports reply 02's control, and the fact that heads programs cannot be parasitized. |
+
+**Where they agree.** All three say grade 3 is not reached: a changing checker is still a checker, and a world whose next number comes from a fixed written rule is a checker in disguise. Replies 02 and 03 both put a blind replay at the centre (does responding to the program population matter, or only changing?). Replies 01 and 03 both say matching the next number is not by itself anticipation in a wider sense.
+
+## 2. The two pilots (reported as pilots, not as the experiments)
+
+Plans and what would count against them were committed before running (`pilots - what would count, written before running.md`, 4bf8fef).
+
+**Reply 01's anticipating execution environment, from the stock ancestor** (patched copy; 20,000 updates; R2 seeds 1 and 2, R1 seed 1; and, added after the first three had started, R2 seed 1 with no pay for 10,000 updates):
+- In the world, matching passed 10 in 100 programs by update 600 (R2 seed 1), 800 (R2 seed 2) and 300 (R1), and stood at **95, 96 and 97 in 100 at 20,000**. Without pay it never passed 3 in 100.
+- On the test CPU with fresh streams, R2 programs matched under R2 in 70 and 77 in 100 (93 and 95 among programs that can copy), under R1 in 30 and 32, under R0 in none; R1 programs matched under R2 in only 3 in 100. The most common R2 program in seed 2 contains `IO inc IO`.
+- So **the pressure works and works fast**: an execution environment paying for "what comes next" made a program population that could not read or write find the step "add one" and keep it. It is one fixed short relation: a demonstration, not grade 3, and not growing difficulty.
+
+**Reply 02's selectors, A and B against a fixed control** (stock; 20 pieces of 1,000 updates; one seed each): **no task became common in any arm in any piece**; at most 6 tasks present at once; A offered nothing at all in 5 of 19 pieces and never more than 0.03 of a doubling in total after piece 1. At this pay all three execution environments look like S113's NO TASK REWARDS. The reply's own assay agreed (0 common in every order). So the experiment the reply sizes would, as written, probably compare three execution environments that all do nothing.
+
+## 3. The plan of runs, in order
+
+Costs use this job's measured rates: about **0.7 CPU-hours per 20,000-update run** of the anticipating environment and about **0.5** for reply 02's driver, three at once on 4 CPUs. "Routine" means under about 3 CPU-hours, no new C++ and no change of question; everything else waits for the owner's word.
+
+| # | Run | From | Runs, length | CPU-hours | Wall-hours | What it would show | What would count against | Needs the owner's word |
+|---|---|---|---|---|---|---|---|---|
+| 1 | **R-switch**: repeat, then add one from update 10,000; and R0 (random) | reply 01 (built here) | 2 seeds × 20,000; R0 1 seed × 10,000 | about 1.8 | about 0.8 | whether the execution environment's pressure acts again when the world's rule changes (the brief's own test), and how often chance matches occur in a world | R2 matching under 10 in 100 at 20,000 in both seeds; R0 matching above chance | no (routine) |
+| 2 | **Reply 02's selectors from an evolved start, with pay that can bite**: A, B and the fixed control started from S118 P1 seed 1's population at 20,000 (12 to 21 functions already common), total pay 77 doublings (one per task, as P1); then A's blind replay | reply 02 (driver unchanged except the starting population and the pay total) | 4 runs × 20 pieces | about 2.4 | about 1.3 | whether a selector with memory keeps adding tasks past where P1 levelled off, and whether responding to its own program population matters (replay) | A and B no more common tasks than the fixed control at the end; A within 2 tasks of its replay; A offering no pay in most pieces | routine by cost, but the start and the pay scale are Claude's changes to the reply's design, made after seeing the pilot: **put to the owner** before running |
+| 3 | **Reply 01's experiment, cut down**: R0, R1, R2, R-switch and R2 without pay | reply 01 | 5 arms × 3 seeds × 20,000 | about 10.5 | about 3.5 | the pilot's effect across seeds, with the payment control the reply itself suggests | as the reply states: no R2 matching beyond chance; matching only by repeating; no recovery after the switch | **yes** (cost). The reply's own 84 runs × 50,000 would be about 147 CPU-hours (about 49 wall-hours) at the measured rate, not 84; the pilot's effect is large enough that 3 seeds would show it |
+| 4 | **A next number that no written rule makes**: hand each program, as its stream, the outputs of a neighbouring program, and pay a match | new (the brief's own grade-3 example, taken literally) | new C++ on top of reply 01's patch (perhaps 50 to 150 lines), a rebuild, then 3 runs × 20,000 | about 0.2 to build, about 2 to run | about 1 | whether an execution environment whose standard is set by other evolving programs, not by its own code, makes the programs anticipate | no matching above the R0 rate; matching that is only copying a neighbour's last output | **yes** (new code; changes the question; touches S117's open reading) |
+| 5 | Reply 02's sized experiment | reply 02 | 336 or 648 runs × 100,000 | 672 or 1,296 at nine-task rates; more at 77-task rates | 224 to 432 | as the reply states | as the reply states | **yes**; Claude does not propose it unless run 2 shows a separation |
+| 6 | Reply 03's options: parasites on the TransSMT hardware (a set-up check first); live resource depletion against a replay | reply 03 | set-up check; then 3 seeds × 2 conditions | set-up about 0.2; parasites about 60; resource replay about 12 (plus 150 to 500 lines) | 20; 4 | whether other evolving programs as judges (parasites) or a world that responds to use (resources) do what a written list does not | parasites dying out or cycling among old tasks; replay doing as well as live feedback | **yes** |
+
+S118's own proposals (P1 to 50,000; more seeds; P1 and P2 together) and S115's batches 4 to 9 still wait for the owner's word, unchanged.
+
+## 4. What this job cost and where it departed
+
+**CPU time, Avida runs: about 14,085 CPU-seconds, 3.9 CPU-hours**: reply 02's pilot 5,342; reply 01's pilot 7,605 plus the no-pay control 1,063; every comparison, harness, smoke run and assay together about 75. The build of the patched copy took 322 s of wall time with two jobs. At most three Avida processes ran at once throughout.
+
+**Departures.**
+1. The no-pay control of reply 01's pilot was added after the first three pilot runs had started and their first few hundred updates had been seen; it was then shortened to 10,000 updates before it started, to stay near the job's budget.
+2. Three comparisons of stock against off were added beyond the reply's one (section 7 of check 01).
+3. Reply 02's pilot used the `all77` arm as its fixed control (0.1 for every task), not the reply's `fixed` mode, which needs a finished donor; with A paying nothing, its replay and its donor-mean control would also have paid almost nothing, so they were not run.
+4. Reply 02's sizing script needs SciPy, which the machine lacked; it was installed in a scratch environment (SciPy 1.17.1; the reply used 1.17.0). The output was identical.
+5. The first try at the build failed at once because the build script called a timing program that is not installed; it was rerun without it (no compile had started).
+
+## 5. Recorded for the owner, not decided
+
+- Whether a world whose next number comes from something not written as a rule (other programs, an outside process) would be grade 3; this touches S117's open reading.
+- Whether a fixed way of selecting counts as the execution environment's instinct (left open in S118); reply 02's selectors keep a fixed rule and change only their memory.
+- Whether run 2's changes to reply 02's design (an evolved start and a larger pay total) are acceptable.
+- Which of runs 3 to 6 to make; what knowledge is; S115's batches 4 to 9; Part B.
