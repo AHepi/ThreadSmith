@@ -1,6 +1,6 @@
 # What Astra's three replies offer, in plain words
 
-*Log S120, 1 October 2026. Your words with the replies: "First 3 in." The fourth reply has not come yet.*
+*Log S120, 1 October 2026. Your words with the replies: "First 3 in." The fourth reply came later and is checked separately.*
 
 ## The main point
 

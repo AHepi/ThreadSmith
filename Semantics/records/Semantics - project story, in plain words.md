@@ -571,7 +571,19 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* two Opus agents, one after the other (the first stopped by your correction). Outside calls: none.
 
+**S120. What Astra's first three replies offer (file 120).** Your words, with the replies: "First 3 in."
+- *What was done:* one agent checked every claim the three replies make about Avida's code, copied their code out unchanged, and reran everything replies 1 and 2 said they had run. It built reply 1's change to Avida in a separate copy and ran its tests. It looked up eight of reply 3's sources on the web. Before running anything new, it wrote down and saved what would count against each of two small trials, then ran them.
+- *The answer:* reply 1's execution environment, which pays a program for handing back the number it is about to be handed, works. Starting from a program that could not read a number at all, programs that add one to the last number appeared within a few hundred updates and were 95 in every 100 by the end. Without the pay, never more than 3 in 100. Retested with fresh numbers, they add one; they do not merely repeat. But the rule behind the numbers is one a person wrote, so the standard is still inside the execution environment. Reply 2's two choosers with a memory made no task common at all in 20,000 updates: their pay is too weak to get started, and the one that pays for improvement stopped paying almost at once. Reply 3's research holds where checked (seven of eight sources to the number, one could not be checked) and finds no method anywhere whose standard is free of written rules.
+- *Failures:* none in the replies: everything they said they ran came out the same here. The first build attempt failed at once because a timing program is not installed; it was rerun without it.
+- *Departures:* a trial without pay was added after the main trial had started; three extra checks that the switched-off change leaves Avida as it was (all passed).
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether learning a fixed step like "add one" counts as an instinct to solve problems; whether a world whose next number comes from something no one wrote (another program) would count as having no named target, which is close to the open reading of file 117; whether to try reply 2's choosers with stronger pay and an evolved start (a change to its design). Still yours: what knowledge is, file 115's costly runs, Part B.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent for the whole job. Outside calls: none. Astra's fourth reply came during this job and was checked by another agent; it is not folded in here.
+
 ## The next step
+
+**From S120 (file 120):** your word on the runs in the plan (`results/S120 Checking the Astra returns to S119/00 ...`). The cheapest that bears on your question, the world that switches from repeating a number to adding one, takes under two hours of computer time and is ready. Trying reply 2's choosers with stronger pay changes its design, so it waits for you; the rest are costly or need new code. Nothing more is run until then.
 
 **From S118 (file 118):** your word on whether a fixed way of choosing is what you meant, and on the further runs listed in its results (each a few hours of processor time). The most direct next test, an execution environment that pays for anticipating something the world does that it never works out itself, is what Astra's brief 01 from S119 asks for; Claude checks Astra's reply first. Nothing more is run until then.
 
