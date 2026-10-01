@@ -618,7 +618,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent, beside the one checking reply 2. Outside calls: none.
 
+**S122, continued. Astra's second timing reply: programs that need a past.** No words from you with it; its first copy came empty and you sent it again.
+- *What was done:* a second agent checked the reply against Avida's code, ran everything the reply said it ran, and tried it out: four short runs of 10,000 updates, two tasks, each with and without pay. The computer restart stopped the first agent on this job too; the second picked up what it had saved and checked it before using it.
+- *The answer:* Astra's change to Avida hands each program short runs of signals and pays only for telling "A came before B" (or "A came just before B", or "A, then B, then C") from the same signals in another order, right both times. All its claims about Avida's code held, and everything it ran came out the same here, to the last character. Its weak spot: a program can earn much of that pay just by counting how many signals it has read, without remembering any of them; for "A before B" counting alone earns all of it. Even so, when the execution environment paid for "A came just before B", 14 of the 50 commonest kinds of program remembered where the A came and earned more than counting ever could; without pay, none did.
+- *Failures:* the first way of testing evolved programs read zero, because a program that copies itself moves its earnings to another record; it was fixed before the main runs were read, and said so.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether to repeat the trial with more tries and the third task (under two hours, nothing new needed); whether to change Astra's design so that counting cannot earn (new code); whether a list written by people that pays for using the past counts in the programs' history.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent at a time on this job (the first stopped by the restart), beside the agent checking the other replies, and waiting for it to finish before touching shared files. Outside calls: none.
+
 ## The next step
+
+**From S122, continued (file 122, reply 2 added):** nothing new to do first. File 122 now covers all four replies and its next step is unchanged. Repeating reply 2's trial with more tries is cheap and routine; changing its design so that counting cannot earn waits for your word.
 
 **From S124 (file 124, Pinker):** nothing for you to do first. The S123 agent writes the four Astra tasks once reply 2's check is finished, with `tests/S124 Material - Pinker context for the Astra briefs.md` to attach.
 

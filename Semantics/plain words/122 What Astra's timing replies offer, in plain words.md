@@ -1,6 +1,6 @@
 # What Astra's timing replies offer, in plain words
 
-*Log S122, 1 October 2026. The three replies came with no words from you. The second reply first arrived as an empty file; its second copy is being checked separately and will be added here.*
+*Log S122, 1 October 2026. This file covers all four of Astra's timing replies. They came with no words from you. The second reply first arrived as an empty file; its second copy was checked separately and is added near the end.*
 
 ## The main point
 
@@ -39,6 +39,10 @@ The pay was weak (each job was worth about a fifth more running time), and at th
 - Whether a fixed way of choosing, even one with memory, counts for you as an instinct.
 - Whether a chooser that runs between stretches of Avida counts as part of the execution environment.
 
+## Reply 2, programs that need a past (added later on 1 October)
+
+Astra wrote a small change to Avida that pays a program only for telling "A came just before B" (or "A before B", or "A, then B, then C") from the same signals in another order; everything it said it ran came out the same here. Its weak spot: a program can earn much of that pay just by counting the signals it has read, so more programs earning says nothing on its own. Still, in one short trial where the execution environment paid for "A came just before B", some of the commonest programs did remember where the A came and earned more than counting ever could, and none did without pay. It is the first time programs in this project were seen earning pay by telling the same signals apart by their order in time; one try only.
+
 ## One next step
 
-Run the remembering execution environment again with pay strong enough to matter, against two comparisons: memory wiped, and memory removed but everything else kept. That would show whether the parts that need a past ever switch on, and whether memory changes what the programs learn. It takes about two hours of computer time, but it changes Astra's design, so it waits for your word.
+Run the remembering execution environment again with pay strong enough to matter, against two comparisons: memory wiped, and memory removed but everything else kept. That would show whether the parts that need a past ever switch on, and whether memory changes what the programs learn. It takes about two hours of computer time, but it changes Astra's design, so it waits for your word. Reply 2 gives no better step; repeating its trial with more tries is cheap and is in the plan.
