@@ -581,7 +581,19 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent for the whole job. Outside calls: none. Astra's fourth reply came during this job and was checked by another agent; it is not folded in here.
 
+**S121. Four more tasks for Astra: a selector with a sense of time.** Your words, with your report on timing in neurons: "Can you see where I'm going with this? If so, 4 more tasks for Astra. Unless only one task makes sense right Now"
+- *What Claude took you to mean:* every Avida program so far answers from the numbers it is handed at that moment; it has no "before". What was found missing (prediction, surprise, holding a problem open) all needs a "before": something earlier changes how a system responds now. Your report shows cheap units that do this: a fading trace, a response that tires with use, a switch that stays on, a detector for "A then B". So the selector, the execution environment, might be built of units like these, its instinct being how it behaves over time rather than a list someone wrote; and the programs might need tasks that need a "before" too. Your report's own caution is kept: timing adds nothing that ordinary logic with memory cannot do; any gain is in cost and simplicity, and must be measured.
+- *What was done:* four briefs for fresh Astra agents, each carrying everything it needs, and a short guide for you, in `tests/S121 Briefs for GPT 6 Astra/`. 01: design the selector as a small system of such units, tested against the same selector with its memory wiped. 02: a small change to Avida's code giving programs tasks only a program with a memory can do ("A then B", two events close together, A, B, C in order), building on Astra's last patch. 03: research, every source checked, on where such units are already used to judge or select, and a check of your report's 22 sources. 04: gap by gap, whether such a selector supplies what was missing, what still needs something written down, and the one test that would tell a selector with a memory from one without.
+- *Which matters most:* brief 01, if only one is run: it tests your idea itself.
+- *Failures:* none. Brief 01 is a little longer than aimed for (about 2,350 words below the line against 2,300).
+- *The check:* none; nothing was run.
+- *Your questions:* none new. Still yours: the open reading of file 117, what knowledge is, whether a fixed way of choosing counts as an instinct, which costly runs come next, Part B.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* the agent that had checked Astra's fourth reply was only waiting; it was stopped so that no more than two agents run at once. Folding that reply into the S120 plan and file 120 is still to do. One Opus agent wrote the briefs. Outside calls: none.
+
 ## The next step
+
+**From S121 (the four new briefs):** send each to a fresh Astra as the guide in the folder says (01 and 03 with Ultra, 02 and 04 as a single agent at maximum; brief 01 if you send only one), attach your report to each, and bring each reply back unchanged as a file. Claude checks each against Avida's code before anything is run.
 
 **From S120 (file 120):** your word on the runs in the plan (`results/S120 Checking the Astra returns to S119/00 ...`). The cheapest that bears on your question, the world that switches from repeating a number to adding one, takes under two hours of computer time and is ready. Trying reply 2's choosers with stronger pay changes its design, so it waits for you; the rest are costly or need new code. Nothing more is run until then.
 
