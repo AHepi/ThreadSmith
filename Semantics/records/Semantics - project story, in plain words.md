@@ -600,7 +600,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* two Opus agents, one after the other: one checked the reply, one added it to the plan and to file 120. Outside calls: none.
 
+**S122. Astra's timing replies checked, and a first short trial.** No words from you with the replies. The reply to the second brief first arrived as an empty file; you sent it again, and a second agent is checking it; its part comes after this.
+- *What was done:* one agent checked replies 1, 3 and 4 against Avida's code and against their sources, ran everything reply 1 said it ran, and tried reply 1's remembering execution environment against the same one with its memory wiped, two tries each of 20,000 updates. The computer restarted partway through; a second agent picked up from what the first had saved, and finished the trial from where each try had stopped.
+- *The answer:* reply 1's execution environment keeps a fading memory of what the programs can do and sets its pay from it, like nerve cells that tire, hold a state or notice "this, then that". It works exactly as written, and it does pay differently after two different pasts that end the same way. But in the trial its pay was weak and nearly even, memory made no difference beyond chance in how many jobs the programs learned (2 to 6 in every try), and the part meant to hold a problem open never switched on. Reply 3's thirteen sources checked out; it also found three faults in your report's sources, none touching the report's main line. Reply 4 says timing gives persistence, forecasts and alarms, but never says what they are about; that stays a written list.
+- *Failures:* the restart cost the three unfinished stretches of the trial (a few minutes of computer time); the computer-time rate first written into two of the checks came from the very first stretch alone and was too low; it is corrected and marked.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether to run the remembering execution environment again with stronger pay and a comparison that removes only memory (about two hours, but it changes Astra's design); whether a fixed way of choosing, even with memory, counts as an instinct; whether a chooser that runs between stretches of Avida is part of the execution environment. On your question about knowledge acting on Avida itself: in this design what the programs can do changes what the execution environment pays next, but through a route its authors wrote. The longer runs (about 16 to 400 hours) are yours.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent at a time for this job (the first stopped by the restart, the second continuing it), beside the one checking reply 2. Outside calls: none.
+
 ## The next step
+
+**From S122 (file 122, replies 1, 3 and 4 on timing):** your word on whether to try the remembering execution environment again with pay strong enough to matter, against a comparison that removes only its memory (about two hours of computer time; it changes Astra's design, so it waits for you). The longer runs in the plan (`results/S122 Checking the Astra returns to S121/00 ...`) need your word by cost. Reply 2's check comes next, from the second agent.
 
 **From S120, continued (file 120, reply 4 added):** nothing new to do first. File 120 now covers all four replies; its next step, the world that switches from repeating a number to adding one, is unchanged. Reply 4's first try waits for your word on how its question is worded. The notes below that this is still to do are done.
 
