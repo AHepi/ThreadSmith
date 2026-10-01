@@ -8,6 +8,10 @@
 #   read     - reads each run's tasks.dat and count.dat and prints, every 1,000 updates, how
 #              many programs performed the match in their last copy cycle, and when the match
 #              was first performed by 1 and by 10 in 100 programs.
+#   prepare_zero_pay - added after the first three runs had started (a control the reply
+#              itself suggests): one more R2 run, seed 1, in which the match is detected but
+#              pays nothing (process:value=0), to see whether matching appears without pay.
+#              Shortened to 10,000 updates before it started, to keep the job near its budget.
 #   cross    - reruns every saved program of each run on Avida's test CPU (analyze mode, the
 #              patched binary) under each rule (R0 random, R1 repeat, R2 add one), with fresh
 #              number streams, and prints the share of programs that match under each rule.
@@ -25,20 +29,22 @@ PATCHED = SCRATCH / "src-anticipate/build/bin/avida"
 PILOT = SCRATCH / "pilot01"
 UPDATES = 20000
 RUNS = [("R2-seed1", 2, 1), ("R2-seed2", 2, 2), ("R1-seed1", 1, 1)]
+ZERO_PAY = ("R2-seed1-no-pay", 2, 1)
 ENVIRONMENT = "REACTION ANT anticipate process:value=1:type=pow requisite:max_count=1\n"
 SETTINGS = ["-set SPECULATIVE 0", "-set MERIT_INC_APPLY_IMMEDIATE 1", "-set ANTICIPATE_START -1",
             "-set REQUIRE_SINGLE_REACTION 0", "-set COPY_MUT_PROB 0.0075",
             "-set DIVIDE_INS_PROB 0.05", "-set DIVIDE_DEL_PROB 0.05", "-set VERBOSITY 1"]
 
 
-def prepare():
+def prepare(runs=RUNS, environment=None, jobs_name="jobs.json"):
+    environment = environment or ENVIRONMENT
     jobs = []
-    for name, mode, seed in RUNS:
+    for name, mode, seed in runs:
         folder = PILOT / name
         folder.mkdir(parents=True, exist_ok=False)
         for item in ("avida.cfg", "instset-heads.cfg", "default-heads.org"):
             (folder / item).write_bytes((SUPPORT / item).read_bytes())
-        (folder / "environment.cfg").write_text(ENVIRONMENT)
+        (folder / "environment.cfg").write_text(environment)
         (folder / "events.cfg").write_text(
             "u begin Inject default-heads.org\n"
             "u 0:100:end PrintTasksData\n"
@@ -51,8 +57,16 @@ def prepare():
         command = "%s -s %d %s -set ANTICIPATE_MODE %d > avida.log 2>&1" % (
             PATCHED, seed, " ".join(SETTINGS), mode)
         jobs.append({"name": name, "cwd": str(folder), "timeout_seconds": 3 * 3600, "command": command})
-    (PILOT / "jobs.json").write_text(json.dumps(jobs, indent=1))
+    (PILOT / jobs_name).write_text(json.dumps(jobs, indent=1))
     print("prepared", len(jobs), "runs in", PILOT)
+
+
+def prepare_zero_pay():
+    prepare([ZERO_PAY], ENVIRONMENT.replace("value=1", "value=0"), "jobs-no-pay.json")
+    events = PILOT / ZERO_PAY[0] / "events.cfg"
+    text = events.read_text()
+    text = text.replace("u %d SavePopulation filename=population:save_historic=0\n" % UPDATES, "\n")
+    events.write_text(text.replace("u %d Exit" % UPDATES, "u 10000 Exit"))
 
 
 def table(path):
@@ -65,8 +79,10 @@ def table(path):
 
 def read():
     result = {}
-    for name, mode, seed in RUNS:
+    for name, mode, seed in RUNS + [ZERO_PAY]:
         folder = PILOT / name / "data"
+        if not folder.exists():
+            continue
         tasks = {int(r[0]): r[1] for r in table(folder / "tasks.dat")}
         counts = {int(r[0]): r[2] for r in table(folder / "count.dat")}
         # count.dat column 3 is the number of programs (checked against its header below)
@@ -92,9 +108,11 @@ def read():
 
 def cross():
     result = {}
-    for name, mode, seed in RUNS:
+    for name, mode, seed in RUNS + [ZERO_PAY]:
         for update in (10000, UPDATES):
             snapshot = PILOT / name / "data" / ("population-%d.spop" % update)
+            if not snapshot.exists():
+                continue
             for rule in (0, 1, 2):
                 out = PILOT / name / ("cross-u%d-rule%d" % (update, rule))
                 out.mkdir(exist_ok=True)
@@ -123,4 +141,4 @@ def cross():
 
 
 if __name__ == "__main__":
-    {"prepare": prepare, "read": read, "cross": cross}[sys.argv[1]]()
+    {"prepare": prepare, "prepare_zero_pay": prepare_zero_pay, "read": read, "cross": cross}[sys.argv[1]]()

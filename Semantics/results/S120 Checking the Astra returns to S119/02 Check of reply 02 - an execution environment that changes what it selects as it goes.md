@@ -76,4 +76,26 @@ Reproduced in `/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99
 6. **Grade 2 holds.** Every task still has a written detector, and A and B are written rules over those detectors. The reply says so; Claude agrees with every line of its grade table. Neither selector changes its own rule: what changes is its memory and so its pay. Whether such a selector "learns" in the owner's sense (S63) is the question S118 left open (whether a fixed way of selecting counts as an instinct); **recorded for the owner, not decided**.
 7. **The proposed experiment is out of reach.** 336 or 648 runs of 100,000 updates, 672 or 1,296 CPU-hours at the nine-task rate (28 to 54 days of wall time at three at once), before the slower 77-task rate is measured. The reply says the costly choice is the owner's.
 
-PILOT_SECTION_PLACEHOLDER
+## 6. The pilot: A and B against a fixed control, 20,000 updates
+
+**What ran** (plan and expectations written and committed before running: `pilots - what would count, written before running.md`, 4bf8fef). The reply's driver, unchanged, on the stock binary through a small wrapper that adds a one-hour timeout and `nice -n 19` to each Avida process; 60 x 60 world; task-free ancestor; all 77 tasks detected; 20 pieces of 1,000 updates; one seed per arm: A (`progress`, seed 1001), B (`archive`, seed 4001), and the fixed control (`all77`, seed 7001: 0.1 of a doubling for every task, every piece, the same total as B). All three ran at once from 19:49 to about 20:20 UTC, every piece exit 0. Raw output in the scratch space (`s120/pilot02/`); the numbers below come from the driver's own `observations.json` (`tools/s120_check_reply_02_controls_and_read_its_pilot.py pilot`).
+
+| Arm | Pay offered after piece 1 | Tasks present at a piece end | Tasks common (10 in 100 programs) | Largest share of any task |
+|---|---|---|---|---|
+| A, learning progress | at most 0.0235 doublings in total; **nothing at all in 5 of 19 pieces**; largest for one task 0.018 | 0 to 4 | **0 in every piece** | 1.1 in 100 |
+| B, rarity against an archive | 7.7 in total; 0.080 to 0.100 per task at the end | 0 to 3 | **0 in every piece** | 5.2 in 100 |
+| Fixed control, 0.1 per task | 7.7 in total; 0.1 per task | 1 to 6 | **0 in every piece** | 4.9 in 100 |
+
+No task was ever first common, lost or regained in any arm.
+
+**Against the expectations written before running.**
+- "A pays almost nothing": **held.** A's total offered pay after piece 1 never reached 0.03 of a doubling (the "against" threshold was at least 1 doubling in 5 pieces), and A had no common task.
+- "B is like the fixed control": **held, but trivially**: both had no common task.
+
+**What the pilot shows.** At this pay, none of the three execution environments made any task common in 20,000 updates from the task-free ancestor. All three look like S113's NO TASK REWARDS (no common task at 50,000), and unlike S118's P1 (which paid up to a full doubling per function: 5 to 7 common tasks by 5,000 updates, 12 to 21 by 20,000). The reason is the size of the pay, not the memory: 0.1 of a doubling per task is a 7% gain, and B moves it by at most a few hundredths. So **the experiment the reply proposes, run as written, would most likely compare three execution environments that all do nothing**, and could not show whether a selector with memory helps. A change of the pay scale (for example a total of 77 doublings, one per task, as in S118's P1), or a start from a program population that already performs tasks, would be needed first; either is a change to the reply's design made after seeing a result, and is **recorded as a proposal, not applied** (see the plan, file 00).
+
+**What it does not show.** One seed per arm; 20,000 updates (the reply proposes 100,000); the blind replay was not run (with A paying nothing, its replay would also pay nothing).
+
+**Cost.** A 1,740.7, B 1,817.2, fixed 1,784.3 CPU-seconds: **5,342 CPU-seconds, about 1.48 CPU-hours** (about 0.5 per run, more than the 0.3 to 0.5 expected), 31 minutes of wall time at three at once.
+
+**The reply's own assay on the pilot's last program populations** (`measure_orders.py`, unchanged, piece 20 of each arm; 3,599 programs each): 0 common tasks in native order and in all six orders, with or without the copying check, in all three arms. About 4 to 5 CPU-seconds each.

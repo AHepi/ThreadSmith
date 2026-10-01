@@ -78,4 +78,49 @@ The briefs' grades: **1**, a list of functions, each paid or required; **2**, a 
 
 **Is matching the next number anticipating it?** For R2 a program that matches holds, in its instructions, the step from the last number to the next. It does not hold a model of a rule it could change: the reply's own example (S116) shows that a capability tied to the world's order can fail when the order changes, and R2's regularity is fixed. The reply's proposed tests (fresh starts, other rules, a switch) are the right ones; the pilot's cross test (section 6) is the first of them.
 
-PILOT_SECTION_PLACEHOLDER
+## 6. The pilot: is anticipation found at all from the stock ancestor?
+
+**What ran** (plan and what would count against it written and committed before running: `pilots - what would count, written before running.md`, 4bf8fef). The patched binary; 60 x 60 world; the stock heads instructions and the default ancestor (which has no `IO` at all); copy changes 0.0075, one insertion and one deletion each with chance 0.05 per division; the single capped reaction (one doubling, at most once per copy cycle); `ANTICIPATE_START -1`, `SPECULATIVE 0`, `MERIT_INC_APPLY_IMMEDIATE 1`, no copying requirement (the settings of the reply's proposed experiment); one continuous process per run, 20,000 updates: **R2 seeds 1 and 2, R1 seed 1**, all three at once from 20:21 to about 21:04 UTC, every run exit 0. **Added after these three had started, and after their first few hundred updates had been seen** (a departure; the reply itself proposes it): **R2 seed 1 with the match detected but paid nothing** (`process:value=0`), shortened to 10,000 updates before it started to stay near the job's budget. Raw output in the scratch space (`s120/pilot01/`); the numbers below from `tools/s120_anticipation_pilot_prepare_read_and_cross_test.py read` and `cross`.
+
+**In the world** (Avida's count: programs that matched in their last copy cycle):
+
+| Run | First update with 1 in 100 matching | First with 10 in 100 | Share at 1,000 | at 5,000 | at 10,000 | at 20,000 |
+|---|---|---|---|---|---|---|
+| R2, seed 1 | 300 | 600 | 39 in 100 | 91 | 93 | **95** |
+| R2, seed 2 | 500 | 800 | 28 | 92 | 95 | **96** |
+| R1, seed 1 | 200 | 300 | 88 | 97 | 97 | **97** |
+| R2, seed 1, **no pay** | 1,200 | never (largest 120 programs, 3 in 100, at 8,000) | under 1 | 0.8 | 2.3 | not run |
+
+**On the test CPU, every saved program rerun with fresh streams under each rule** (share of all programs that match; in brackets, among the programs that can copy themselves, about 70 to 78 in 100 of all):
+
+| Programs from | under R0 (random) | under R1 (repeat) | under R2 (add one) |
+|---|---|---|---|
+| R2 seed 1, update 20,000 | 0 | 30 in 100 (40) | **70 in 100 (93)** |
+| R2 seed 2, update 20,000 | 0 | 32 (40) | **77 (95)** |
+| R1 seed 1, update 20,000 | 0 | **79 (97)** | 3 (4) |
+| R2 seed 1 **no pay**, update 10,000 | 0 | 23 (31) | 2 (2) |
+
+At update 10,000 the shares are close to these (R2: 66 and 73 in 100 under R2; R0: 2 programs of 3,597 in seed 1, 0 elsewhere).
+
+**Against what was written before running.**
+- "Against anticipation being found at all": fewer than 1 in 100 matching at 20,000 in both R2 seeds. **Not met: 95 and 96 in 100.** The match was found within 300 to 800 updates in both seeds.
+- "Against reading an R2 match as more than repeating": R2 programs matching as often under R1 as under R2, or matching under R0 above chance. **Not met**: under R2 70 and 77 in 100, under R1 30 and 32 (many evolved programs also hold a plain repeat somewhere among their several `IO`s, which costs them nothing), under R0 none. The R1 programs, conversely, match under R2 only 3 in 100: they repeat; they do not add one.
+- **Pay is what produced it**: without pay, the same seed never passed 3 in 100 matching in the world, and 2 in 100 under R2 on the test CPU, against 70 to 77 with pay. Repeats (R1) arise without pay in 23 in 100 programs: two `IO`s on one register is a common accident.
+
+**What the programs do.** In R2 seed 2 the most common program contains `IO inc IO`: it reads a number, adds one, and hands out the result just before the next read. That is the two-instruction recipe the reply wrote by hand.
+
+**What this shows for the owner's question.** The execution environment that pays for "the next number" made the program population find the fixed relation behind it, from a program that could not read or write at all, in a few hundred updates, and keep it. It is the fastest acquisition seen in this project. But the relation is one short fixed function of the last input (grade 1 when the rule is fixed, section 5): this is a demonstration that the pressure works, not of an execution environment whose standard comes from outside its own code, and not of growing difficulty. Whether the pressure acts again when the world's rule changes (R-switch) was not run here; it is the first run in the plan (file 00).
+
+**Cost.** R2 seed 1 2,485.4, seed 2 2,541.5, R1 2,578.1, no-pay (10,000 updates) 1,062.5 CPU-seconds: **8,667.5 CPU-seconds, about 2.4 CPU-hours** (about 0.7 CPU-hours per 20,000-update run, more than the 0.2 to 0.4 expected); the cross test 8.7 CPU-seconds.
+
+## 7. Two further checks of "off behaves as stock", added here
+
+The reply's 400-update comparison starts from the task-free ancestor, and in 400 updates no program performs any task (`tasks.dat` all zero), so it never exercises the paths that pay. Two more comparisons, each a stock run against the patched run with the feature off, seed 119, 400 updates (`tools/s120_compare_stock_and_patched_off_runs.py`):
+
+| Setting | Files equal after the date line | Last line |
+|---|---|---|
+| `SPECULATIVE 1` (stock default), nine-task environment | 7 of 7 (all byte for byte) | identical |
+| `SPECULATIVE 1`, the 77-task environment | 7 of 7 (all byte for byte) | identical |
+| `SPECULATIVE 1`, nine-task environment, injecting Avida's stock `9task.org` (a program that performs all nine tasks) | 7 of 7 | identical (`Fit: 7224072.`, 3,596 programs; 2,724 to 3,270 programs per task at 400) |
+
+**With the feature off, the patched binary behaved exactly as stock in all four comparisons, including one where thousands of programs were paid for tasks.** About 50 CPU-seconds in all.
