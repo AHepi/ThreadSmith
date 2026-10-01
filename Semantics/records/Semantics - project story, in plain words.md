@@ -543,7 +543,20 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent for the whole weighing. Outside calls: none by this agent (the four GLM checks had already ended).
 
+**S117. How the Avida work and the semantics relate (file 117 and its map).** Your words, after file 116: "Ok. Send out a worker to see if and how Avida work lines up with the semantics exactly." And seconds later: "Oh and no need for GLM to review. I can't really make sense of the results you handed me. So I need a relationship mapped so I can see more clearly what doesn't work and why."
+- *What was done:* the first agent sent for this was stopped seconds after it started and wrote nothing. One agent then did the whole job. It first wrote down how each piece would be judged, and saved that before judging anything. Then it took the semantics' 284 pieces one at a time and asked, for each, what in Avida sits in the same place and whether it behaves as the semantics says. Where it could, it computed: on the earlier studies' own records, in Avida itself on the saved program populations (about 100 seconds of computer time), and in a copy of the semantics' own program.
+- *The answer:* in part. 114 pieces line up exactly, 36 in part, 18 do not, and 116 have nothing in Avida (49 of those are the text's own examples or its wording). The pieces about things, their parts, changes and selection line up, often with numbers. The pieces about explanation as something done (problems, arguments, criticism, building something new) have nothing in Avida. And whether an evolved program counts as standing for its task, and so as an explanation of it, flips on one reading the semantics has not settled: whether the task list and the code that checks it, written by people, count as part of the program's history. Eight breaks are drawn on the map with their reasons and examples; among them, Avida's ablation is not the semantics' "taking a part away", and the earlier answer to "what is it?", the circuit, gets every ablation right in fewer than 9 in 100 programs.
+- *The map:* a page in the plain words folder, file 117, with the breaks first, then the map (the semantics' groups on one side, Avida's things on the other, lines marked by kind), then the same map written out. Checked on a wide and a narrow screen, light and dark: no errors, nothing sliding sideways.
+- *Failures:* one counting script stopped on a missing entry and was fixed and run again; no number moved.
+- *The check:* none, as you asked.
+- *Your questions:* the open reading above, which decides whether the semantics calls Avida's programs explanations. Also proposed, not applied: a wording fix in the semantics, so that a part made by a copying mistake is not counted as built. Left to you, as before: what knowledge is; how "causes itself" is read; whether a skill tied to the world's order of numbers counts as learned; which of file 115's costly runs to make; Part B.
+- *Parked:* nothing new; what hard to vary covers stays parked (S34).
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent for the whole job. Outside calls: none.
+
 ## The next step
+
+**First, from S117 (file 117 and its map):** your word on the open reading: does a task list and its checking code, written by people, count as part of the history of the programs it selected? Then, as before, your word on file 115's costly runs and on the questions file 116 leaves to you. Nothing more is run until then.
 
 **First, from S116 (file 116):** GLM's check has been weighed and file 116 corrected (21 of 28 points stand, 7 in part). Next, your word on the costly runs of file 115 (about 53 hours of processor time), and on the questions file 116 leaves to you; nothing more is run until then. **Before it, from S114 (file 114):** the save-and-reload test goes into S113's reading: COMMON TASKS PAY LESS compared with caution, generation counts not used as they stand, FIXED GRADED read through the spread of its three seeds. Then S115, by one agent (S68).
 
