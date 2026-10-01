@@ -1,6 +1,6 @@
 # What Astra's three replies offer, in plain words
 
-*Log S120, 1 October 2026. Your words with the replies: "First 3 in." The fourth reply came later and is checked separately.*
+*Log S120, 1 October 2026. Your words with the replies: "First 3 in." The fourth reply came later; another agent checked it, and it is added below (S120, continued). This file now covers all four replies.*
 
 ## The main point
 
@@ -25,6 +25,10 @@ So the pressure works, and fast. What the programs found is one short fixed step
 **Reply 2, a chooser with a memory.** Two ways for the execution environment to change its pay as it goes: pay most for what the programs are getting better at, or pay most for what it has seen least. All its small checks were rerun and matched exactly. But a short trial showed that its pay is too weak to get started. In 20,000 updates no task became common, and the "getting better" version stopped paying almost at once, because nothing was getting better yet.
 
 **Reply 3, research.** Sixteen known ways to choose without a final goal, from novelty-seeking to systems that set themselves new tasks. Eight of its sources were looked up. Seven said exactly what it said, and one could not be checked. Every claim about Avida's code held. It finds no method anywhere whose standard is free of written rules. It also found that in Avida's usual setup programs cannot be infected by parasites, which closes one route the last report hoped for.
+
+## Reply 4, added later (1 October 2026)
+
+**Reply 4, a chooser that remembers.** It lists eight things an agent's choosing has that the execution environment's choosing lacks, such as remembering what it tried, keeping a question open, and keeping two rival programs for one question, and it designs a small execution environment with three of them; every one of its 13 claims about Avida's code held. Its question is still written in advance ("does this program still do the simple task NOT when the three numbers come in another order?"), so its standard still comes from written rules, and it says so itself. On two saved programs, a changed order broke copying, not NOT, so the question as worded points at the wrong thing. A first try, one run of each version, would take about two hours of computer time once its code is written, and the full experiment 24 to 48 hours; both wait for your word, and neither changes the next step below.
 
 ## Tested, not tested, unsure
 
