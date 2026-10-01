@@ -591,7 +591,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* the agent that had checked Astra's fourth reply was only waiting; it was stopped so that no more than two agents run at once. Folding that reply into the S120 plan and file 120 is still to do. One Opus agent wrote the briefs. Outside calls: none.
 
+**S120, continued. Astra's fourth reply, added to file 120.** No new words from you with this reply; it came while the first three were being checked.
+- *What was done:* a second agent checked the fourth reply against Avida's code while the first agent was still at work, and saved its check. It was then stopped, to keep to two agents at once, before it could add the reply to the plan and to file 120. One agent has now done that, without running anything new.
+- *The answer:* the fourth reply lists eight things an agent's choosing has that the execution environment's choosing lacks, such as remembering what it tried, keeping a question open, and keeping two rival programs for one question, and designs a small execution environment with three of them. All 13 of its claims about Avida's code held. Its question is still written in advance, so it does not reach a standard free of written rules, and it says so. On two saved programs, a changed order of the numbers broke copying, not the task its question asks about, so the question as worded points at the wrong thing. Avida can already try a program out before letting it in, a setting never switched on in this project, but it never keeps a forecast to be surprised by.
+- *Failures:* none. For about two seconds four Avida runs went at once, one over the limit.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether a program outside Avida that decides between stretches of a run counts as part of the execution environment; a proposed note to file 117, not applied; whether to make reply 4's runs: a count from saved files (no computer time), a first try (about two hours, once its code is written; the wording of its question is yours to choose) and the full experiment (24 to 65 hours). Still yours: what knowledge is, file 115's costly runs, Part B.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* two Opus agents, one after the other: one checked the reply, one added it to the plan and to file 120. Outside calls: none.
+
 ## The next step
+
+**From S120, continued (file 120, reply 4 added):** nothing new to do first. File 120 now covers all four replies; its next step, the world that switches from repeating a number to adding one, is unchanged. Reply 4's first try waits for your word on how its question is worded. The notes below that this is still to do are done.
 
 **From S121 (the four new briefs):** send each to a fresh Astra as the guide in the folder says (01 and 03 with Ultra, 02 and 04 as a single agent at maximum; brief 01 if you send only one), attach your report to each, and bring each reply back unchanged as a file. Claude checks each against Avida's code before anything is run.
 
