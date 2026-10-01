@@ -609,7 +609,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent at a time for this job (the first stopped by the restart, the second continuing it), beside the one checking reply 2. Outside calls: none.
 
+**S124. What Steven Pinker's books add.** Your words: "Shit there's also a lot of context to be added from Steven Pinkers books: How the mind Works, and Learning and Cognition. I just realised you don't have this info anywhere, and it's essential. So research agent first, then the one I suggested."
+- *What was done:* one agent gathered what Pinker says about the mind and about learning from data, from his own papers, a 1997 interview, his 2023 conversation with Deutsch, reviews, a dissertation, encyclopedia entries and one Avida study. Neither book was read: the How the Mind Works file stays closed after the 23 September safety stop, and the second book is not here. There is no Pinker book called "Learning and Cognition"; Claude took it to be *Learnability and Cognition* (1989), with the 1984 book before it.
+- *The answer:* on Pinker's account nothing learns from data alone. A learner needs data from outside that carry a pattern it does not already have, a second view of what the data are about, built-in links from its categories to the data, and limits on what it will guess. Avida gives its programs none of these: what they are checked against is in Avida's own code, they get only numbers, and almost any instruction sequence is a possible guess. Four ways forward are set out for your S78 question, none chosen. Pinker agrees with Deutsch that data alone do not make knowledge, and disagrees on whether minds are universal and on where the limits come from.
+- *Failures:* none. Some sources refused access; what could not be checked is marked unverified (8 of 82 claims).
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* none new; the readings it offers (which of three meanings of knowledge to test, whether a learned grammar is selected or built) are for the S123 tasks to test, not decided here.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent, beside the one checking reply 2. Outside calls: none.
+
 ## The next step
+
+**From S124 (file 124, Pinker):** nothing for you to do first. The S123 agent writes the four Astra tasks once reply 2's check is finished, with `tests/S124 Material - Pinker context for the Astra briefs.md` to attach.
 
 **From S122 (file 122, replies 1, 3 and 4 on timing):** your word on whether to try the remembering execution environment again with pay strong enough to matter, against a comparison that removes only its memory (about two hours of computer time; it changes Astra's design, so it waits for you). The longer runs in the plan (`results/S122 Checking the Astra returns to S121/00 ...`) need your word by cost. Reply 2's check comes next, from the second agent.
 
