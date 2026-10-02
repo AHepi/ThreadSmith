@@ -645,7 +645,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent. Outside calls: none.
 
+**S127. What Avida taught us about the semantics.** Your words: "This is the think outside the box part. Is it actually worth persuing this line? What can we really tell right now?", then, after my answer, "Agree. Let's do that".
+- *What was done:* one agent, writing only, set out the open choice in the theory that Avida exposed, and went through the nine things Avida shows that the theory has no word for, asking of each whether the theory needs one. Two long files and file 127.
+- *The answer:* the theory cannot yet say whether an evolved program stands for its task: that turns on whether the code people wrote to check the task counts as something earlier in the program's history already aiming at it. Three answers are set out: A, the checker is a rule of Avida's world, and the program's match is selected; B, it is people's work aiming at the task, and the match is only declared; C, new, it depends on where the system's edge is drawn, and with your edge (the whole execution environment) it comes out as A. Living things come out the same under all three. My recommendation, yours to decide: C with your edge. Of the nine missing words, one is needed (being copied more, as against strictly surviving), three are useful (copying itself, withstanding change, what a program can become next), five are out of scope. Your three properties have no words in the theory; one sentence could name them as constructor theory's knowledge.
+- *Failures:* one count in a table and one line reference were wrong in the first drafts and were fixed before saving; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* A, B or C; whether being copied more counts as surviving; whether "the explanation kind" means a created explanation; whether to bring the word "knowledge" into the theory.
+- *Moves left:* none; nothing in the theory was changed; every wording is a proposal.
+- *Agents:* one Opus agent, beside the agent running the closing knock-out test. Outside calls: none.
+
 ## The next step
+
+**From S127 (file 127, what Avida taught us about the semantics):** your choice of A, B or C, and whether being copied more counts as surviving. Nothing is run; the proposed wordings go to a checker only after your word.
 
 **From S125 (file 125, the refined hypothesis):** the next experiment, removing the instructions for one task from every program in two saved populations of the earlier "common tasks pay less" runs, with a harmless removal and a putting-back to compare, and watching that task's store, takes about an hour of computer time and needs nothing new built; it is under the three-hour limit, so it can go ahead as routine, with what would count written down before it runs. Your words are needed on the points listed under S125 above, and on any of the costlier runs in `results/S125 Refining the knowledge hypothesis/05 The refined hypothesis.md`, section 7.
 
