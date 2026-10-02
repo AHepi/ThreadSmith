@@ -636,7 +636,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent. Outside calls: none.
 
+**S125. Astra's four replies checked, and the knowledge hypothesis refined.** No words from you with the replies.
+- *What was done:* one agent checked every claim the replies made about Avida's code, every reading they made of the theory, eight of their outside sources and all their sums; ran seven short trials of ordinary Avida (under two minutes of computer time); listed every claim of ours the replies correct, with a verdict on each; and merged the four into one refined answer, with the one next experiment.
+- *The answer:* all of the replies' claims about Avida's code and the theory held. They corrected 30 of our claims (17 fully, 12 in part, none wrongly): chiefly, Avida is not closed to outside data (a script can feed real measurements into every program, and a trial confirmed it); a skill does not reach "exactly" as far as what the programs met; "nothing builds, so nothing explains" does not follow from the theory; only the instruction sequence passing on, and resets at copying stopping all change in a life, were both overstated. The refined answer: knowledge in an Avida run is an arrangement of instructions across the programs that a task depends on, that the run keeps copying, that matches whatever was paid for, and that changes the execution environment through that task; so far all of it is the evolved kind. Two of our six rival answers were dropped as badly built.
+- *Failures:* a few line references and one word count were wrong in the first drafts and were fixed before saving; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether the checking code written by people counts in the programs' history; what "Avida itself" means (its code, its settings, or its current state); what knowledge is, including whether resisting change needs active repair; whether you meant "constant" input as a requirement; whether a process run between stretches of Avida belongs to the execution environment; which environment; which costly runs.
+- *Moves left:* none; nothing in the theory was changed.
+- *Agents:* one Opus agent. Outside calls: none.
+
 ## The next step
+
+**From S125 (file 125, the refined hypothesis):** the next experiment, removing the instructions for one task from every program in two saved populations of the earlier "common tasks pay less" runs, with a harmless removal and a putting-back to compare, and watching that task's store, takes about an hour of computer time and needs nothing new built; it is under the three-hour limit, so it can go ahead as routine, with what would count written down before it runs. Your words are needed on the points listed under S125 above, and on any of the costlier runs in `results/S125 Refining the knowledge hypothesis/05 The refined hypothesis.md`, section 7.
 
 **From S123 (file 123, the four Astra tasks):** send the four tasks to fresh Astras as the guide in their folder says (01 and 02 with Ultra, 03 and 04 as a single agent at maximum; 01 if only one), each with the four attachments, and send the replies back unchanged. One agent then checks, compares and merges them, by rules written before sending.
 
