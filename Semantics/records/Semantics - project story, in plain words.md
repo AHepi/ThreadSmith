@@ -681,7 +681,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; the theory itself is unchanged.
 - *Agents:* one Opus agent. Outside calls: none. No Avida run; under an hour of computer time for the program's checks.
 
+**S130. Knowledge, not explanation; and an experiment on created knowledge beyond maths, planned.** Your words: "Oh I don't know about explanation. It seems like it counts as knowledge, not explanation. Which is the part we are currently at. Knowledge evolved through natural selection is case closed. And knowledge created is mostly. Actually, can we experiment with created knowledge again. But this time beyond just math?"
+- *What was done:* one agent checked, strictly, whether the evolved NOT program really passes the theory's test of an explanation, and on what question; set out what it would take to keep "explanation" for what was worked out; and wrote, before anything runs, what an experiment on created knowledge beyond maths needs, which materials and subjects could do it, and one recommended experiment with its plan.
+- *The answer:* the program passes the test, but narrowly: the question was written by us and held by nothing inside your edge, it covers only the two inputs the program was always given, and it passes only taken whole. What called it an explanation is the theory's guess about itself, that anything passing the test and not simply written in is an explanation; your objection is exactly the kind that guess names as sinking it. The smallest repair: keep "explanation" for an account that was worked out, and call what evolution makes a representation, which is your "knowledge". The experiment: a subject works out a sealed box with hidden parts by trying things, keeps a notebook, is tested on changes it never saw, and uses its account to open the door of a changed box; with checks that should come out as copied, as evolved, and as no mistake to repair.
+- *Failures:* two line references were wrong in the first draft and were fixed before it was committed; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* keep "explanation" for what was worked out, or keep the theory as it is; and yes or no on a language model (a fresh Claude session, knowing nothing of this project) as the subject of the sealed-box experiment.
+- *Moves left:* none; nothing in the theory was changed; every wording is a proposal; nothing is built or run before your word.
+- *Agents:* one Opus agent. Outside calls: none. No Avida run; no experiment.
+
 ## The next step
+
+**From S130 (file 130, created knowledge beyond maths):** your choice on "explanation" (keep it for what was worked out, or keep the theory as it is), and your yes or no on a fresh Claude session as the subject of the sealed-box experiment. Nothing is built or run before you say; a checker computes any change to the theory first.
 
 **From S129 (file 129, Reading C carried through):** your word on writing both decisions into the theory itself, with the new wording they need; a checker reads it first. Nothing is run.
 
