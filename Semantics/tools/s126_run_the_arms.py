@@ -135,7 +135,7 @@ def make_run(name, spop, stores, seed, n, instset=None):
 def run_avida(d):
     meta = json.load(open(os.path.join(d, 'run.json')))
     argv = ['timeout', str(TIMEOUT), 'nice', '-n', '19', AVIDA, '-s', str(meta['seed']), '-set', 'VERBOSITY', '0',
-            '-set', 'COPY_MUT_PROB', '0.0075']
+            '-set', 'COPY_MUT_PROB', '0.0075'] + EXTRA_SET
     t0 = time.time()
     with open(os.path.join(d, 'avida.log'), 'w') as log:
         p = subprocess.Popen(argv, cwd=d, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
@@ -260,11 +260,18 @@ def restore_sequence(seq, contexts):
     return ''.join(t), notes
 
 
+RESTORE_AT = 100        # addendum 2 (after phase 1): restore at update 100, where population 2's q store stood high
+RESTORE_POPS = [2]      # addendum 2: population 1's q store never rose, so there is nothing to return there
+
+
 def restore():
+    """Addendum 2 to the plan (written after phase 1, before any restoration was run): Lq is rerun from the same reload
+    with the same seed to update 100 and saved there (Avida being deterministic, it must repeat phase 1's Lq exactly;
+    checked); from that save, Lq-then-restored and Lq-then-reloaded."""
     report = {}
     dirs = []
     inputs = F.panel()
-    for pop in POPS:
+    for pop in RESTORE_POPS:
         cuts = read_cuts(pop)
         q = cuts['summary']['q']
         contexts = {}
@@ -273,10 +280,15 @@ def restore():
             for i, x in zip(r['cut_sites'], r['cut_removed']):
                 key = (c[max(0, i - CONTEXT):i][::-1], c[i + 1:i + 1 + CONTEXT])
                 contexts.setdefault(key, Counter())[x] += r['programs']
-        for seed in SEEDS[pop]:
-            lq = os.path.join(RUNS, 'pop%d_Lq_seed%d' % (pop, seed))
-            saved = os.path.join(lq, 'data', 'detail-1000.spop')
-            stores = stores_at(os.path.join(lq, 'data', 'resource.dat'), 1000)
+        stores0 = stores_at(os.path.join(source(pop), 'resource.dat'))
+        to100 = [make_run('pop%d_Lq_to%d_seed%d' % (pop, RESTORE_AT, seed), os.path.join(PREP, 'seed%d' % pop, 'Lq.spop'),
+                          stores0, seed, RESTORE_AT) for seed in SEEDS[pop]]
+        run_all(to100)
+        for seed, lq in zip(SEEDS[pop], to100):
+            same = data_lines(os.path.join(lq, 'data', 'resource.dat')) == data_lines(
+                os.path.join(RUNS, 'pop%d_Lq_seed%d' % (pop, seed), 'data', 'resource.dat'))[:RESTORE_AT + 1]
+            saved = os.path.join(lq, 'data', 'detail-%d.spop' % RESTORE_AT)
+            stores = stores_at(os.path.join(lq, 'data', 'resource.dat'), RESTORE_AT)
             lines = living_lines(saved)
             new_of, notes_all = {}, []
             for n, (s, k) in lines.items():
@@ -290,7 +302,9 @@ def restore():
             c_spop = os.path.join(d, 'Lq_then_reloaded_seed%d.spop' % seed)
             edit_spop(saved, c_spop, lambda n, s: s)
             # probe: share of programs doing q on the panel, before and after restoration
-            before = {s: k for s, k in lines.values()}
+            before = Counter()
+            for s, k in lines.values():
+                before[s] += k
             after = Counter()
             for n, (s, k) in lines.items():
                 after[new_of.get(n, s)] += k
@@ -300,7 +314,8 @@ def restore():
             share = lambda pr, cnt: sum(k for s, k in cnt.items() if any(q in r[2] for r in pr[s])) / tot
             copies = lambda pr, cnt: sum(k for s, k in cnt.items() if any(r[0] == 1 for r in pr[s])) / tot
             report['pop%d_seed%d' % (pop, seed)] = {
-                'programs at 1,000 updates in Lq': tot,
+                'rerun to update %d repeats phase 1 Lq exactly (stores)' % RESTORE_AT: same,
+                'programs at the restoring update in Lq': tot,
                 'programs carrying at least one nop-X': sum(k for n, (s, k) in lines.items() if NULL in s),
                 'nop-X sites put back (programs counted)': sum(x['programs'] for x in notes_all),
                 'of which ambiguous': sum(x['programs'] for x in notes_all if x['ambiguous']),
@@ -308,7 +323,7 @@ def restore():
                 'share of programs doing q on the panel, after restoring': round(share(pa, after), 4),
                 'share copying on some panel input, before': round(copies(pb, before), 4),
                 'share copying on some panel input, after': round(copies(pa, after), 4),
-                'stores at 1,000 updates in Lq': stores,
+                'stores at the restoring update in Lq': stores,
                 'restored instructions': dict(Counter(x['restored'] for x in notes_all)),
             }
             dirs.append(make_run('pop%d_Lq-then-restored_seed%d' % (pop, seed), r_spop, stores, seed, 1000))
@@ -323,5 +338,137 @@ def phase2():
     print('phase 2 exits:', run_all(dirs))
 
 
+def diagnose():
+    """Added after phase 1 (a departure, reported): Lq of population 1, first seed, 40 updates, the program population
+    saved every 5 updates, to see whether the programs born after the reload still carry the cuts."""
+    pop, seed = 1, SEEDS[1][0]
+    stores = stores_at(os.path.join(source(pop), 'resource.dat'))
+    d = make_run('diagnose_pop1_Lq_seed%d' % seed, os.path.join(PREP, 'seed1', 'Lq.spop'), stores, seed, 40)
+    ev = open(os.path.join(d, 'events.cfg')).read().replace('u 40 SavePopulation', 'u 5:5:40 SavePopulation')
+    open(os.path.join(d, 'events.cfg'), 'w').write(ev)
+    run_all([d])
+    loaded = set(x for x, _ in living_lines(os.path.join(PREP, 'seed1', 'Lq.spop')).values())
+    out = {}
+    for u in range(5, 45, 5):
+        fmt, a = None, Counter()
+        for line in open(os.path.join(d, 'data', 'detail-%d.spop' % u)):
+            if line.startswith('#format'):
+                fmt = line.split()[1:]
+                continue
+            if line.startswith('#') or not line.strip():
+                continue
+            r = dict(zip(fmt, line.split()))
+            k = int(r['num_units'])
+            if k > 0:
+                kind = 'a sequence of the loaded population' if r['sequence'] in loaded else 'a new sequence'
+                a[(kind, NULL in r['sequence'])] += k
+        out[u] = {'%s, with nop-X: %s' % key: v for key, v in sorted(a.items())}
+    json.dump(out, open(os.path.join(PREP, 'diagnose.json'), 'w'), indent=1)
+    print(json.dumps(out, indent=1))
+
+
+def diagnose_inject():
+    """Added after phase 1 (a departure, reported): one program put alone into an empty world (no copying errors, no
+    insertions or deletions), its offspring filling the world for 300 updates, every store starting full: the most
+    common q-sequence of each population with a clean cut, as cut and as original, and its sham. Does the cut program
+    draw q's store down in the world, although the test processor shows it not doing q?"""
+    dirs = []
+    for pop in POPS:
+        cuts = read_cuts(pop)
+        q = cuts['summary']['q']
+        recs = sorted([r for r in cuts['records'] if r['cut_kind'] == 'clean'], key=lambda r: -r['programs'])[:1] + \
+            sorted([r for r in cuts['records'] if r['cut_kind'] == 'collateral'], key=lambda r: -r['programs'])[:1]
+        for j, r in enumerate(recs):
+            for label, seq in (('original', r['sequence']), ('cut', r['cut_sequence']), ('sham', r['sham_sequence'])):
+                name = 'inject_pop%d_%s_%d_%s' % (pop, r['cut_kind'], j, label)
+                stores = {'res' + t.upper(): 10000.0 for t in TASKS}
+                d = make_run(name, os.path.join(PREP, 'seed%d' % pop, 'L0.spop'), stores, 7, 300)
+                names = F.instset_text().split('\n')
+                names = [l.split()[1].split(':')[0] for l in names if l.startswith('INST ')]
+                with open(os.path.join(d, 'program.org'), 'w') as f:
+                    for ch in seq:
+                        f.write(names[(ord(ch) - ord('a')) if ch != NULL else 26] + '\n')
+                ev = open(os.path.join(d, 'events.cfg')).read().replace('u begin LoadPopulation start.spop',
+                                                                       'u begin Inject program.org')
+                open(os.path.join(d, 'events.cfg'), 'w').write(ev)
+                meta = json.load(open(os.path.join(d, 'run.json')))
+                meta.update({'q': q, 'sequence': seq, 'record_programs': r['programs']})
+                json.dump(meta, open(os.path.join(d, 'run.json'), 'w'), indent=1)
+                dirs.append(d)
+    global EXTRA_SET
+    EXTRA_SET = ['-set', 'COPY_MUT_PROB', '0', '-set', 'DIVIDE_INS_PROB', '0', '-set', 'DIVIDE_DEL_PROB', '0']
+    run_all(dirs)
+    out = {}
+    for d in dirs:
+        meta = json.load(open(os.path.join(d, 'run.json')))
+        q = meta['q']
+        k = TASKS.index(q)
+        res = [l.split() for l in open(os.path.join(d, 'data', 'resource.dat')) if l.strip() and not l.startswith('#')]
+        tsk = [l.split() for l in open(os.path.join(d, 'data', 'tasks.dat')) if l.strip() and not l.startswith('#')]
+        cnt = [l.split() for l in open(os.path.join(d, 'data', 'count.dat')) if l.strip() and not l.startswith('#')]
+        out[os.path.basename(d)] = {
+            'q': q, 'q store at 100, 200, 300': [float(res[u][1 + k]) for u in (100, 200, 300)],
+            'programs credited with q at 100, 200, 300': [int(tsk[u // 10][1 + k]) for u in (100, 200, 300)],
+            'programs at 100, 200, 300': [int(cnt[u // 10][2]) for u in (100, 200, 300)],
+            'all nine credited at 300': {t: int(tsk[30][1 + i]) for i, t in enumerate(TASKS)}}
+    json.dump(out, open(os.path.join(PREP, 'diagnose_inject.json'), 'w'), indent=1)
+    print(json.dumps(out, indent=1))
+
+
+EXTRA_SET = []
+
+
+def keep_lines(src, dst, keep):
+    """Copy a saved program population keeping only the living lines whose line number is in keep as they are; every
+    other living program is replaced by a program of nop-X only, which does no task, never copies and dies of age (about
+    20 times its length in executed instructions). Leaving the lines out, or writing them as no longer living, made Avida
+    fail at load."""
+    edit_spop(src, dst, lambda n, s: s if n in keep else NULL * len(s))
+
+
+def diagnose_lines():
+    """Added after phase 1 (a departure, reported): with no copying errors, insertions or deletions, 100 updates from
+    the same reload: A, Lq whole; B, only the programs whose sequence was cut (every other program left out); C, the
+    same programs as B with their original sequences; D, only the programs that were not cut. Which programs keep
+    drawing q's store down in Lq?"""
+    global EXTRA_SET
+    EXTRA_SET = ['-set', 'COPY_MUT_PROB', '0', '-set', 'DIVIDE_INS_PROB', '0', '-set', 'DIVIDE_DEL_PROB', '0']
+    dirs = []
+    for pop in POPS:
+        cuts = read_cuts(pop)
+        by_seq = {r['sequence']: r for r in cuts['records']}
+        src = os.path.join(source(pop), 'detail-1000.spop')
+        lines = living_lines(src)
+        cut_lines = set(n for n, (sq, _) in lines.items() if sq in by_seq and by_seq[sq]['cut_sites'])
+        d = os.path.join(PREP, 'seed%d' % pop)
+        keep_lines(os.path.join(d, 'Lq.spop'), os.path.join(d, 'diag_B_cut_only.spop'), cut_lines)
+        keep_lines(os.path.join(d, 'L0.spop'), os.path.join(d, 'diag_C_same_original.spop'), cut_lines)
+        keep_lines(os.path.join(d, 'L0.spop'), os.path.join(d, 'diag_D_not_cut_only.spop'), set(lines) - cut_lines)
+        stores = stores_at(os.path.join(source(pop), 'resource.dat'))
+        for tag, f in (('A_Lq_whole', 'Lq.spop'), ('B_cut_only', 'diag_B_cut_only.spop'),
+                       ('C_same_original', 'diag_C_same_original.spop'), ('D_not_cut_only', 'diag_D_not_cut_only.spop')):
+            dirs.append(make_run('diaglines_pop%d_%s' % (pop, tag), os.path.join(d, f), stores, SEEDS[pop][0], 100))
+    run_all(dirs)
+    out = {}
+    for x in dirs:
+        pop = int(os.path.basename(x).split('_')[1][3:])
+        k = TASKS.index(read_cuts(pop)['summary']['q'])
+        res = {int(float(l.split()[0])): float(l.split()[1 + k]) for l in open(os.path.join(x, 'data', 'resource.dat'))
+               if l.strip() and not l.startswith('#')}
+        cnt = {int(float(l.split()[0])): int(float(l.split()[2])) for l in open(os.path.join(x, 'data', 'count.dat'))
+               if l.strip() and not l.startswith('#')}
+        perf = {}
+        for u in range(1, 101):
+            r0 = res[u - 1]
+            perf[u] = (100 - 0.01 * r0 - (res[u] - r0)) / min(1.0, 0.0025 * r0)
+        out[os.path.basename(x)] = {
+            'q store at 0, 8, 20, 50, 100': [round(res[u], 1) for u in (0, 8, 20, 50, 100)],
+            'q performances per update (from the store), mean 1-8, 9-30, 31-100': [
+                round(sum(perf[u] for u in range(a, b + 1)) / (b - a + 1), 1) for a, b in ((1, 8), (9, 30), (31, 100))],
+            'programs at 0, 50, 100': [cnt[u] for u in (0, 50, 100)]}
+    json.dump(out, open(os.path.join(PREP, 'diagnose_lines.json'), 'w'), indent=1)
+    print(json.dumps(out, indent=1))
+
+
 if __name__ == '__main__':
-    {'rig': rig, 'prepare': prepare, 'phase1': phase1, 'restore': restore, 'phase2': phase2}[sys.argv[1]]()
+    {'diagnose_lines': diagnose_lines, 'diagnose_inject': diagnose_inject, 'diagnose': diagnose, 'rig': rig, 'prepare': prepare, 'phase1': phase1, 'restore': restore, 'phase2': phase2}[sys.argv[1]]()
