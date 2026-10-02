@@ -690,7 +690,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed; every wording is a proposal; nothing is built or run before your word.
 - *Agents:* one Opus agent. Outside calls: none. No Avida run; no experiment.
 
+**S132. How the sealed box would be run; the worry about training; your own problem; Avida.** Your words: "Correct. Knowledge doesn't need to be worked out, explanation does. That is an excellent experiment. How are you going to pull it off though? LLMs may already have the shape of the solution in its training data. Should I invent a difficult problem then see what happens? Or are you using one of these machines in Avida?"
+- *What was done:* one agent wrote how the experiment would be carried out, piece by piece, with the order of building, the tests of each piece, a trial and the cost; answered your worry about training in depth, with a new set of boxes to test it; said how your own problem could be added and why it cannot be the whole experiment; and said why an Avida program cannot be the subject. One tiny test call checked that a fresh Claude session can be started here, sealed off from this project.
+- *The answer:* it can be done from here. Each box is wired from a secret number, so no box is in any training; what is allowed to come from training is the method and the common kinds of part, and what must be worked out is how this box is wired. If the subject succeeds only because the parts are familiar, that is weaker, so a second set of boxes has parts that follow random rules no textbook names; about as good on those means worked out, much worse means remembered (written down before anything runs). Your problem: welcome as an extra, written fully beforehand, kept out of the subject's reach, and you never talk to the subject. Avida: not as the subject; a blind search makes the evolved comparison for far less. The test call: a fresh Opus 5.5 session answered in under four seconds and saw only its empty folder; three small threads to this session to cut.
+- *Failures:* one cost figure was first put as an increase over the earlier plan and was corrected; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* yes or no on a fresh Claude session (Opus 5.5) as the subject; yes or no on the set of unfamiliar boxes; your own problem only if you want to write one.
+- *Moves left:* none; nothing built or run; the theory unchanged.
+- *Agents:* one Opus agent, beside the agent carrying your word on explanation into copies. Outside calls: none; one test call to a fresh Claude session. No Avida run; no experiment.
+
 ## The next step
+
+**From S132 (file 132, how the sealed box would be run):** your yes or no on a fresh Claude session (Opus 5.5) as the subject, with the set of unfamiliar boxes added (about 9,800 calls, under three hours of computer time, after building and a trial whose cost you see first), and your own problem as an extra only if you want to write one. Nothing is built or run before you say.
 
 **From S130 (file 130, created knowledge beyond maths):** your choice on "explanation" (keep it for what was worked out, or keep the theory as it is), and your yes or no on a fresh Claude session as the subject of the sealed-box experiment. Nothing is built or run before you say; a checker computes any change to the theory first.
 
