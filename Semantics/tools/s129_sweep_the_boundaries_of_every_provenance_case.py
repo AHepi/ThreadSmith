@@ -12,8 +12,8 @@ narrower boundary (every subset of the stated occurrences that keeps the holding
 subset of the named occurrences), and records which calls give a different verdict there, and how. The wrapped
 functions return what the copy computes with no boundary, so every claim's own result is the copy's.
 Every claim of the suite is run once, at scale 1 and a 20 s time cap (the sweep is about which histories the suites
-build, not about the record's numbers); the copy is imported, never written. Output: printed, and the scratch file
-s129/sweep.json.
+build, not about the record's numbers); the copy is imported, never written. Output: printed, and
+results/S129 Reading C carried into copies/suite boundary sweep.json (and the scratch file s129/sweep.json).
 
   PYTHONHASHSEED=0 python3 -B Semantics/tools/s129_sweep_the_boundaries_of_every_provenance_case.py
 
@@ -33,7 +33,8 @@ from model import claims_b as cb  # noqa: E402
 
 ORIG = {'prov_fixed_points': cb.prov_fixed_points, 'sel': cb.sel, 'con': cb.con}
 CUR = {'claim': None}
-LOG = defaultdict(lambda: defaultdict(lambda: {'calls': 0, 'distinct': set(), 'flipping': set(), 'examples': []}))
+LOG = defaultdict(lambda: defaultdict(lambda: {'calls': 0, 'distinct': set(), 'flipping': set(), 'examples': [],
+                                                'changes': defaultdict(set)}))
 
 
 def _subsets(items, keep=()):
@@ -51,6 +52,8 @@ def _note(fn, key, base, flips, describe):
     rec['distinct'].add(key)
     if flips:
         rec['flipping'].add(key)
+        for f in flips:
+            rec['changes'][f.get('change', '?')].add(key)
         if len(rec['examples']) < 4 and describe not in [e['case'] for e in rec['examples']]:
             rec['examples'].append({'case': describe, 'verdict with no boundary declared': base,
                                     'narrower boundaries that change it': flips[:4], 'how many': len(flips)})
@@ -63,6 +66,14 @@ def _fp_view(fps, inside):
     return sorted(tuple('o%d %s' % (o + 1, lab(sc[o])) for o in sorted(inside)) for R, sc in fps) or ['no fixed point']
 
 
+def _change(res, r2, o):
+    """How the verdict of the last holding moves: 'Dec -> Sel', 'Con -> Dec', 'no fixed point -> ...', and so on."""
+    lab = lambda sc: 'Sel' if sc[0] else ('Con' if sc[1] else 'Dec')
+    a = '/'.join(sorted(set(lab(sc[o]) for R, sc in res))) or 'no fixed point'
+    b = '/'.join(sorted(set(lab(sc[o]) for R, sc in r2))) or 'no fixed point'
+    return '%s -> %s' % (a, b) if a != b else 'last holding unchanged; an earlier holding inside the boundary changes'
+
+
 def pfp(n, held, trace, selc, rd, i161=True, eps=None, rec_of=None, beta=None):
     res = ORIG['prov_fixed_points'](n, held, trace, selc, rd, i161, eps, rec_of, beta)
     if beta is None and CUR['claim'] is not None and n >= 2:
@@ -71,7 +82,8 @@ def pfp(n, held, trace, selc, rd, i161=True, eps=None, rec_of=None, beta=None):
             r2 = ORIG['prov_fixed_points'](n, held, trace, selc, rd, i161, eps, rec_of, b)
             if _fp_view(r2, b) != _fp_view(res, b):
                 flips.append({'boundary (occurrences inside)': ['o%d' % (o + 1) for o in sorted(b)],
-                              'verdict there': _fp_view(r2, b), 'the same occurrences with no boundary': _fp_view(res, b)})
+                              'verdict there': _fp_view(r2, b), 'the same occurrences with no boundary': _fp_view(res, b),
+                              'change': 'cut %s: %s' % (rd, _change(res, r2, n - 1))})
         key = (n, tuple(held), tuple(trace), tuple(selc), rd, i161, tuple(rec_of) if rec_of else None, eps is not None)
         desc = 'n=%d held=%s trace=%s Sel-conditions=%s reading=%s records=%s%s' % (
             n, list(held), list(trace), list(selc), rd, rec_of, ' (episodes given)' if eps is not None else '')
@@ -92,7 +104,7 @@ def sel(cand, H, h, *a, **k):
             h2.beta = set(b)
             r2 = ORIG['sel'](cand, H, h2, *a, **k)
             if r2 != res:
-                flips.append({'boundary (occurrences inside)': sorted(b), 'Sel there': r2})
+                flips.append({'boundary (occurrences inside)': sorted(b), 'Sel there': r2, 'change': 'Sel %s -> %s' % (res, r2)})
         key = (tuple(h.occ), tuple(sorted(h.rep)), res, tuple(sorted(k.items())))
         desc = 'occurrences %s, tags %s, Sel with no boundary %s%s' % (list(h.occ), sorted(h.rep), res,
                                                                       (' ' + str(k)) if k else '')
@@ -109,7 +121,7 @@ def con(h, *a, **k):
             h2.beta = set(b)
             r2 = ORIG['con'](h2, *a, **k)
             if r2 != res:
-                flips.append({'boundary (occurrences inside)': sorted(b), 'Con there': r2})
+                flips.append({'boundary (occurrences inside)': sorted(b), 'Con there': r2, 'change': 'Con %s -> %s' % (res, r2)})
         key = (tuple(h.occ), tuple(sorted(h.rep)), res, tuple(sorted(k.items())))
         desc = 'occurrences %s, tags %s, Con with no boundary %s' % (list(h.occ), sorted(h.rep), res)
         _note('con', key, res, flips, desc)
@@ -141,8 +153,11 @@ def main():
         out['claims_that_compute_provenance'][cid] = {
             fn: {'calls': d['calls'], 'distinct histories': len(d['distinct']),
                  'distinct histories whose verdict changes at some narrower boundary': len(d['flipping']),
+                 'how the verdict changes (distinct histories with at least one such change)': {k: len(v) for k, v in sorted(d['changes'].items())},
                  'examples': d['examples']} for fn, d in fns.items()}
     json.dump(out, open(os.path.join(SC, 'sweep.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False, default=str)
+    json.dump(out, open(os.path.join(ROOT, 'results', 'S129 Reading C carried into copies', 'suite boundary sweep.json'), 'w',
+                        encoding='utf-8'), indent=1, ensure_ascii=False, default=str)
     print('claims run %d in %.0f s; claims computing provenance: %d' % (len(ids), out['seconds'], len(LOG)))
     for cid, fns in sorted(out['claims_that_compute_provenance'].items(), key=lambda kv: (int(kv[0][2:].split('.')[0]), kv[0])):
         print('%-11s %s | %s' % (cid, status[cid][:24], '; '.join('%s: %d distinct, %d boundary-relative' % (

@@ -5,7 +5,8 @@ What it does, in plain words: for log S129 (decisions S83 and S84). Runs the mod
 worked-case scripts on the COPY of the program (results/S129 Reading C carried into copies/model after Reading C/)
 under four settings of its two switches, and compares every claim's status and every part's status, and the printed
 results, with the ORIGINAL program run the same way (a byte-equal copy of results/S107 Round 4 - maths after the
-reading/model after round 4/ in the scratch space, so the original is never run in place) and with the record
+reading/model after round 4/ in the scratch space, laid out as the original expects, so the original is never run in
+place) and with the record
 (formal claims, after round 4.json, key after_round4):
   C off, graded off   the copy with both decisions switched off (must compute what the original does)
   C on,  graded off   Reading C alone (S83)
@@ -24,7 +25,25 @@ import json, os, re, subprocess, sys, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SC = '/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad/s129'
-ORIG_DIR = os.path.join(SC, 'baseline', 'model after round 4')
+SRC_DIR = os.path.join(ROOT, 'results', 'S107 Round 4 - maths after the reading')
+# The original, copied byte for byte into the scratch space with the layout it expects around it (the formal core beside
+# its folder; a link from tests/ to the project's tests/, which s104_external.py and s104_creative_transport.py read
+# text 103 and the owner's case from), so that it is never run in place. (The original's whole-suite printout was first
+# made from a plain copy, s129/baseline/; the suite does not read tests/, and that printout is kept.)
+BASE = os.path.join(SC, 'base')
+ORIG_DIR = os.path.join(BASE, 'results', 'S107 Round 4 - maths after the reading', 'model after round 4')
+
+
+def ensure_baseline():
+    import hashlib, shutil
+    if not os.path.isdir(ORIG_DIR):
+        shutil.copytree(os.path.join(SRC_DIR, 'model after round 4'), ORIG_DIR, ignore=shutil.ignore_patterns('__pycache__'))
+        shutil.copy(os.path.join(SRC_DIR, 'formal core, after round 4.md'), os.path.dirname(ORIG_DIR))
+    if not os.path.exists(os.path.join(BASE, 'tests')):
+        os.symlink(os.path.join(ROOT, 'tests'), os.path.join(BASE, 'tests'))
+    h = lambda d: {os.path.relpath(os.path.join(r, f), d): hashlib.md5(open(os.path.join(r, f), 'rb').read()).hexdigest()
+                   for r, _, fs in os.walk(d) if '__pycache__' not in r for f in fs}
+    assert h(ORIG_DIR) == h(os.path.join(SRC_DIR, 'model after round 4')), 'the baseline copy is not byte-equal'
 COPY_DIR = os.path.join(ROOT, 'results', 'S129 Reading C carried into copies', 'model after Reading C')
 RECORD = os.path.join(ROOT, 'results', 'S107 Round 4 - maths after the reading', 'formal claims, after round 4.json')
 OUT = os.path.join(ROOT, 'results', 'S129 Reading C carried into copies', 'suite runs.json')
@@ -122,6 +141,7 @@ def compare(a, b):
 def main():
     compare_only = '--compare' in sys.argv
     if not compare_only:
+        ensure_baseline()
         jobs = []
         if not os.path.exists(suite_file('original')):
             jobs.append((ORIG_DIR, 'original', '0', '0'))
