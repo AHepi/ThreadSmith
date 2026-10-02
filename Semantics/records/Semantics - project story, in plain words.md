@@ -663,7 +663,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed; every wording is a proposal.
 - *Agents:* one Opus agent, beside the agent running the closing knock-out test. Outside calls: none.
 
+**S128. Was the neurons' behaviour seen in Avida, and what does its maths say about the theory?** Your words: "Ok. Going back to that behaviour in neurons. Was it demonstrated in Avida or another environment? And given the math that describes it, can anything be derived from it that looks vaguely like anything in the semantics or its kernal?"
+- *What was done:* one agent went through every timing behaviour in your report and looked, strictly, for where it had been seen in a run with numbers: in our Avida work, in other people's Avida work, and in the report's own sources. It read the part of Avida's code that fills and drains the task stores, ran Avida once for 50 updates to check that code's law, and set the report's mathematics beside the theory's definitions one by one.
+- *The answer:* some of it was seen in Avida, mostly in the execution environment rather than the programs. Each task's store is exactly a fading trace (it forgets with a time constant of 99.5 updates and fills to 9,950, not 10,000); the drop in pay when many programs do a task is tiring; the growing list is a switch that stays on (worked by my runner, not by Avida); and programs in specially changed copies of Avida kept a number for one step, or where an event came within a short frame. Astra's switch and rebound parts never acted. Learning within a life was seen only in other people's Avida work; resonance, bursting and the rest only in the report's sources. On the theory, thirteen of sixteen comparisons follow from its definitions in whole or in part; the clearest: a fading-trace detector is exactly the short-memory predictor in the theory's hidden-object example, and fails the same way; the theory's rule for how small errors add up gives exactly the gap between Avida's store and the simple rule a reader would assume; learning from a teacher's answers counts as built under all three of your readings A, B and C.
+- *Failures:* the test written before the run allowed too little error for the way Avida rounds its numbers, so by its letter the run neither confirmed nor counted against the law (every value fitted to Avida's rounding); one reading of the theory was corrected while writing, which changed one verdict; a number and a count were fixed before saving; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* your choice of A, B or C, now with the teacher result in view; whether the theory should record when each case of a selection history happened (useful; needed if you accept file 127's proposal); whether to add one sentence on something that happens twice.
+- *Moves left:* none; nothing in the theory was changed; every wording is a proposal.
+- *Agents:* one Opus agent. Outside calls: none. One Avida run of a fifth of a second.
+
 ## The next step
+
+**From S128 (file 128, the neurons' behaviour and the theory):** your choice of A, B or C (file 127), now knowing that under all three, learning from a teacher's answers within a life counts as built; and your word on the proposals (when each case happened; one sentence on repeats; naming the window). Nothing is run.
 
 **From S126 (file 126, does the programs' knowledge change Avida itself):** your reading of "Avida itself" and whether this effect is the kind your definition asks for. Nothing more is run without your word.
 
