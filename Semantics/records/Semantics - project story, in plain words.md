@@ -645,6 +645,15 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed.
 - *Agents:* one Opus agent. Outside calls: none.
 
+**S126. Does the programs' knowledge change Avida itself? The closing test.** Your words: "Don't stop or start anything. The definition of knowledge says it must has a causal affect on its surroundings. Not just other little programs, but Avida itself. Has that been demonstrated yet?"; later, "This is the think outside the box part. Is it actually worth persuing this line? What can we really tell right now?"; then, after my answer, "Agree. Let's do that".
+- *What was done:* one agent took two saved populations from the "common tasks pay less" runs, where each task pays out of its own store that programs wear down. In each it found, program by program, the smallest change that stops one task (NOT in one population, OR-NOT in the other) while the program still copies itself, and a harmless change of the same size. Then it ran copies: untouched, with the task taken out, with the harmless change, and with the task taken out and later put back, recording every store at every update. What would count was written down before running; two later changes to the plan were written down before the parts they changed were run.
+- *The answer:* partly yes, for a short while, if "Avida itself" means the state Avida keeps. With NOT taken out, its store rose from about 290 to about 4,300 within 100 updates; the harmless change did nothing; putting NOT back drew the store down to about 300 within 100 updates. Left alone, the programs won NOT back by themselves and the store fell again within about 1,000 updates. With OR-NOT, the store rose fourfold for only eight updates, because a quarter of the programs had not been reached and took over. The strict tests written beforehand were not met. If "Avida itself" means its rules, nothing here bears: no program changed a rule, and the store is a channel Avida's makers built.
+- *Failures:* one comparison first showed a false difference, two trial designs made Avida stop at loading, and one sentence about pay was wrong; all were caught and fixed before saving.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* what "Avida itself" means for your definition (the state it keeps, its settings, or its rules), and whether an effect that the run itself undoes counts.
+- *Moves left:* none; this closes the Avida line, as agreed in S81; nothing in the theory was changed.
+- *Agents:* one Opus agent, beside the writing agent of S127. Outside calls: none. About 1.8 hours of computer time.
+
 **S127. What Avida taught us about the semantics.** Your words: "This is the think outside the box part. Is it actually worth persuing this line? What can we really tell right now?", then, after my answer, "Agree. Let's do that".
 - *What was done:* one agent, writing only, set out the open choice in the theory that Avida exposed, and went through the nine things Avida shows that the theory has no word for, asking of each whether the theory needs one. Two long files and file 127.
 - *The answer:* the theory cannot yet say whether an evolved program stands for its task: that turns on whether the code people wrote to check the task counts as something earlier in the program's history already aiming at it. Three answers are set out: A, the checker is a rule of Avida's world, and the program's match is selected; B, it is people's work aiming at the task, and the match is only declared; C, new, it depends on where the system's edge is drawn, and with your edge (the whole execution environment) it comes out as A. Living things come out the same under all three. My recommendation, yours to decide: C with your edge. Of the nine missing words, one is needed (being copied more, as against strictly surviving), three are useful (copying itself, withstanding change, what a program can become next), five are out of scope. Your three properties have no words in the theory; one sentence could name them as constructor theory's knowledge.
@@ -655,6 +664,8 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Agents:* one Opus agent, beside the agent running the closing knock-out test. Outside calls: none.
 
 ## The next step
+
+**From S126 (file 126, does the programs' knowledge change Avida itself):** your reading of "Avida itself" and whether this effect is the kind your definition asks for. Nothing more is run without your word.
 
 **From S127 (file 127, what Avida taught us about the semantics):** your choice of A, B or C, and whether being copied more counts as surviving. Nothing is run; the proposed wordings go to a checker only after your word.
 
