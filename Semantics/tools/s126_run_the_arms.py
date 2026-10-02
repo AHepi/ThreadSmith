@@ -158,7 +158,7 @@ def run_all(dirs):
 
 
 def data_lines(path):
-    return [l for l in open(path) if not l.startswith('#')]
+    return [l for l in open(path) if not l.startswith('#') and l.strip()]
 
 
 def source(pop):

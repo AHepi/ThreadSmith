@@ -115,6 +115,16 @@ def main():
                     first = u
                     break
             row['q executions back above 10% of L0 rate for 50 updates, from update'] = first
+            # addendum 2: q performances per update inferred from the store itself (inflow 100, outflow 1%, each
+            # performance taking the smaller of 1.0 and 0.25% of the store)
+            perf = {u: (100 - 0.01 * st[u - 1] - (st[u] - st[u - 1])) / min(1.0, 0.0025 * st[u - 1])
+                    for u in range(1, n + 1) if u in st and u - 1 in st}
+            row['q performances per update inferred from the store, mean over bins'] = {
+                '%d-%d' % (a, b): round(mean(perf[u] for u in range(a, b + 1)), 1)
+                for a, b in [(1, 8), (9, 30), (31, 100), (101, 250), (251, 500), (501, 1000), (1001, 1500), (1501, 2000)]
+                if b <= n}
+            row['q store mean, updates 1-200'] = round(window_mean(st, 1, 200), 1)
+            row['q store peak and its update'] = [round(max(st.values()), 1), max(st, key=st.get)]
             row['q store first above 5,000 at update'] = next((u for u in sorted(st) if st[u] >= 5000), None)
             P['arms']['%s seed %d' % (arm, seed)] = row
         # Lr against L0, same seed, over Lr's 1,000 updates
@@ -158,7 +168,8 @@ def main():
         p = os.path.join(R.PREP, 'seed%d' % pop, 'prepare_check.json')
         if os.path.exists(p):
             out['preparation']['seed %d' % pop]['prepare_check'] = json.load(open(p))
-    for name in ['rig_check.json', 'restore_report.json']:
+    for name in ['rig_check.json', 'restore_report.json', 'diagnose.json', 'diagnose_inject.json',
+                 'diagnose_lines.json']:
         p = os.path.join(R.PREP, name)
         if os.path.exists(p):
             out[name[:-5]] = json.load(open(p))
@@ -170,6 +181,9 @@ def main():
             print('%-28s win %8.1f  at %s  exe %s  other-out %s  prog %s' % (
                 arm, row['q store window mean'], {u: row['q store at'][u] for u in (0, 50, 100, 300, 1000, 2000, 3000) if u in row['q store at']},
                 row['q executions per update, mean over bins'], row['other stores outside their L0 band'], row['programs at']))
+        for arm, row in P['arms'].items():
+            print('   %-26s inferred %s  mean1-200 %s  peak %s' % (arm, row['q performances per update inferred from the store, mean over bins'],
+                                                             row['q store mean, updates 1-200'], row['q store peak and its update']))
         print(json.dumps(P['criteria']), P['Lr numbers identical to L0, same seed'])
     print('CPU seconds, all runs:', out['cpu_seconds_all_runs'])
 
