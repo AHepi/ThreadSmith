@@ -672,7 +672,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing in the theory was changed; every wording is a proposal.
 - *Agents:* one Opus agent. Outside calls: none. One Avida run of a fifth of a second.
 
+**S129. Reading C carried through.** Your words: "Oh clearly C."; then, after I set out the second choice, "Well yes. That is how selected is defined. But does that help us understand what knowledge is? Or what counts as knowledge?"
+- *What was done:* one agent wrote both decisions into copies of the theory's text, its mathematics and its program (three lines of the text; the originals untouched), ran all the program's checks and worked examples on the copies with each decision switched on and off, fed the copies the Avida cases the map was built from, recounted the map by program, and worked out with small computed cases what else the decisions commit the theory to.
+- *The answer:* none of the theory's own checks changes where a case names no edge. Inside your edge the most common NOT program now stands for NOT and, taken whole, counts as a narrow explanation of it; with an edge that takes in Avida's makers it is declared. The 11 programs doing NOT in the run that paid for nothing are no longer selected for it. The map moves from 114 lining up exactly, 36 in part, 18 not, 116 nothing in Avida, to 122, 28, 18, 116, as file 127 counted by hand. Bred animals, crops and scored searches follow the edge; traits shaped by mates choosing stay declared; learning from a teacher stays built; something learned only by rote stands for nothing inside the learner, so working it out later counts as new. "Explanation", "exactly one history" and the rule against borrowed help need new wording.
+- *Failures:* one check first counted cases outside the family it was meant for and was narrowed; the first list of how verdicts change at narrower edges did not say how, and was rerun; two worked examples were first compared with a copy that could not find the text they read, and were rerun; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your questions:* whether to write both decisions into the theory itself, with the new wording they need; whether a copied formula counts as arriving whole (it keeps your student example declared); whether you want something learned only by rote to stand for nothing inside the learner.
+- *Moves left:* none; the theory itself is unchanged.
+- *Agents:* one Opus agent. Outside calls: none. No Avida run; under an hour of computer time for the program's checks.
+
 ## The next step
+
+**From S129 (file 129, Reading C carried through):** your word on writing both decisions into the theory itself, with the new wording they need; a checker reads it first. Nothing is run.
 
 **From S128 (file 128, the neurons' behaviour and the theory):** your choice of A, B or C (file 127), now knowing that under all three, learning from a teacher's answers within a life counts as built; and your word on the proposals (when each case happened; one sentence on repeats; naming the window). Nothing is run.
 
