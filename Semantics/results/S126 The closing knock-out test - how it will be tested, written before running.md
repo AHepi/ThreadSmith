@@ -97,3 +97,16 @@ Every update: every store (`PrintResourceData`) and the number of times each tas
 ## 8. Files
 
 Scripts in `tools/s126_*.py`, each with a plain note at the top. Raw output in the scratch space (`s126/`), never in git; S113's scratch folder is only read (the two saves and their resource files are copied). Results: `results/S126 The closing knock-out test - results.md` and `.json`; the plain file `plain words/126 Does the programs' knowledge change Avida itself, in plain words.md`.
+
+## 9. Addendum, written after the cuts were found and before any arm was run (2 October 2026)
+
+**What the cut search found** (preparation, not an intervention result; `tools/s126_find_the_cuts_and_the_shams.py`, output in the scratch space `s126/prep/`):
+
+| Population, q | q-sequences (programs) | Clean cut, size 1 or 2 (programs) | Cut with collateral losses (programs) | No cut found (programs) | Shams that change nothing |
+|---|---|---|---|---|---|
+| seed 1, ORN | 1,556 (2,645) | 309 (352) | 1,127 (2,172) | 120 (121) | every cut sequence has one |
+| seed 2, NOT | 1,810 (2,324) | 980 (1,179) | 746 (1,061) | 84 (84) | every cut sequence has one |
+
+Every cut, on the four-input panel, stops q and keeps copying; every sham changes nothing (checked once more on the whole panel). But in seed 1 most programs that do ORN cannot lose it, by one or two do-nothing replacements, without losing other tasks too: the collateral cuts lose, counted in programs, XOR 1,923, NOR 1,703, NOT 1,599, NAND 1,514, EQU 1,394, OR 747, ANDN 710, AND 113. In seed 2 the losses are smaller: NOR 873, XOR 395, EQU 393, OR 309, others under 100. The instructions most often replaced are nop-C (a register modifier) and IO (which writes an output and reads the next input). Copying programs that the panel shows doing q are about 2,645 of the 3,382 credited with ORN in the world (seed 1) and 2,324 of 3,237 credited with NOT (seed 2); the rest are mostly programs that fail to copy in the test processor (849 and 1,056 programs) or that inherit their parent's credit. **So criterion 3 (specificity) is expected to be hard to meet in seed 1**; this is the cuts' finding, and the criteria are not changed for it. The fallback rule was applied as written (size first, then fewest losses); a wider search (other replacement instructions, or larger sets) was not affordable.
+
+**Departure in cost and length.** The cut search took 3,801 CPU-seconds (1.06 CPU-hours), not the "under 0.3" estimated (seed 2's longer programs and the pair search). To stay near the 2-hour budget and under 3, the arms are shortened, before any is run: **L0, Lq, Ls: 2,000 updates** (not 3,000), two seeds each; **Lr: 1,000 updates, the first seed only** (its question, whether the handling changes anything, is answered by one seed: Avida is deterministic for identical files and seed); **Lq-then-restored and Lq-then-reloaded: 1,000 updates** (not 2,000), two seeds each. The window (updates 201 to 1,000 after a reload) and every criterion are unchanged; re-evolution of q is watched to 2,000 updates instead of 3,000. Expected cost of the arms: about 30,000 updates, about 0.8 to 1.0 CPU-hours; total about 2 CPU-hours.
