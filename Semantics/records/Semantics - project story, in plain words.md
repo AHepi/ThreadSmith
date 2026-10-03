@@ -717,7 +717,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing built or run; the theory unchanged.
 - *Agents:* one Opus agent. Outside calls: none. No Avida run; a few seconds of computer time for the program.
 
+**S134. The reading record behind your outside experiment, and whether its machine would construct.** Your words, with the upload: "Ok. So this is what it was doing."
+- *What was done:* one agent read the record (the outside model's readings of Pinker's two books, the ten checks against the pages, and the outside agent's own plan for a thinking machine with its two short proposals), set the plan against the theory line by line, asked whether the machine it sketches would work things out or only find them, checked the plan's tests against ours, and said what should go into the constructor experiment. Nothing was run.
+- *The answer:* the record is homework, not a machine: no machine was built or tested in it. Of the plan's 26 commitments, 9 say what the theory says, 14 overlap with a difference, 3 have no word in the theory. Its machine would find its first rules, as your experiment did; when one fails and it repairs it against everything it has itself seen, the repaired rule could count as worked out, but only inside the family of formulas its builders wrote. Ways to tell, by experiment: shuffle the order in which it tries formulas, restart without the failed rule, take the new piece out and put it back. Of its eight tests, we have two, half of five, and lack one (failing honestly on cases its account never covered). Proposed: build its machine, which has no language model, in the same box world, with and without its repair step, and run it first to check our test of "worked out" where the right answer is known; keep the sealed box as the world, since circles and squares are textbook.
+- *Failures:* two citations were wrong and were corrected; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your question:* when a machine repairs its own failed guess by changing the formula and checking the new version against everything it has itself seen, inside a family of formulas its builders wrote, is the repaired rule worked out, or only found?
+- *Moves left:* none; nothing built or run; the theory unchanged.
+- *Agents:* one Opus agent, beside the agent writing the constructor experiment. Outside calls: none. No Avida run; no computer time beyond writing.
+
 ## The next step
+
+**From S134 (file 134, the reading record and its machine):** your answer to one question: is a repair a machine checks against its own record, inside its builders' family of formulas, worked out or only found? Then, with S133's yes or no, whether its machine without a language model is built first, to check our test where the right answer is known (about 1,500 to 2,500 lines, a few hours of computer time, no model calls). Nothing is built or run before you say.
 
 **From S133 (file 133, the found rules and the constructor experiment):** your yes or no on running the repair experiment first: a fresh Claude session (Opus 5.5) handed a sealed box's rule sheet, with one hidden part secretly changed (about 9,000 calls, under three hours of computer time, after building and a trial whose cost you see first). Nothing is built or run before you say.
 
