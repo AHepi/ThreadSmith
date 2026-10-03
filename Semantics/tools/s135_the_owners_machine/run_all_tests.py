@@ -29,6 +29,7 @@ import os
 import random
 import sys
 import time
+import zlib
 from collections import Counter
 
 import the_world
@@ -242,7 +243,7 @@ def section_b(machines, seen_triples):
             key = '%s, the screen lifts on %d (%s)' % (triple_name, shown, 'expected' if outcome == 'possible' else 'impossible')
             out[key] = {'seen while building': (before, added, taken) in seen_triples}
             for machine_name, machine in machines.items():
-                rng = random.Random(hash(key) % 100000 + TEST_SEED)
+                rng = random.Random(zlib.crc32(key.encode()) % 100000 + TEST_SEED)  # a stable hash: the same seed in every process
                 violations, rights = 0, 0
                 for repeat in range(10):
                     scene = the_world.amounts_scene(rng, before, added, taken,
