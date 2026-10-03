@@ -1,0 +1,183 @@
+# S104 Round 2 - area 2 - runs of the model copy (area 2 model/)
+# Command (from 'area 2 model/'): PYTHONHASHSEED=0 python3 -B -m model.run --claim FCnn ... --scale 4 --time-cap 45 (timeout 5400 s); -B: no byte code written.
+# 'before' = the same command on the copy before any edit (identical to model/ as committed; FC18, FC20, FC45, FC74, FC76, FC100, FC101, FC106 run from 'S104 Round 2 - maths' with -B, nothing written).
+# 'after' = the copy with the area 2 changes (core.slot A2-01, core.conf_claim A2-03, core.rivals, Org.sol_sub A2-04; new parts in FC21, FC23, FC27, FC28, FC52; FC67 part dropped).
+# 28 September 2026.
+
+## 1. Claims the fixes touch, and claims that held before in the same definitions (53)
+# claim | scale | before | after | time after (s) | parts new or changed
+FC01 | 4 | HOLDS | HOLDS | 3.7 | none
+FC17 | 4 | HOLDS | HOLDS | 2.5 | none
+FC18 | 4 | CEX | CEX | 3.2 | none
+FC19 | 4 | HOLDS | HOLDS | 1.3 | none
+FC20 | 4 | CEX | CEX | 14.0 | none
+FC21 | 4 | HOLDS | HOLDS | 8.4 | (a2) area 2: relabelings with ⊥ allowed, τ(1) = 1 and (A) exclude NC2: new -> holds on all models tried; (d) area 2: τ(1) ≠ 1: new -> computed: as claimed
+FC22 | 4 | HOLDS | HOLDS | 3.5 | none
+FC23 | 4 | CEX | CEX | 5.8 | (c) area 2: restating lookups: new -> computed: as claimed; (d) area 2: the slot quantifier (A2-02, left open): new -> look: as expected
+FC24 | 4 | HOLDS | HOLDS | 2.0 | none
+FC25 | 4 | CEX | HOLDS | 6.3 | (b) with a port of D in no footprint: counterexample found -> holds on all models tried
+FC26 | 4 | HOLDS | HOLDS | 0.3 | none
+FC27 | 4 | HOLDS | HOLDS | 0.1 | area 2: Mimo's τ' (set H := h carried to a setting of L): new -> look: as expected
+FC28 | 4 | HOLDS | HOLDS | 0.2 | area 2: C_id = {1} × B (u_H and u_θ both varying): new -> computed: as claimed; area 2: C_id plus one setting of θ (GLM part 7, reply line 111): new -> look: as expected
+FC29 | 4 | HOLDS | HOLDS | 2.7 | none
+FC30 | 4 | HOLDS | HOLDS | 0.0 | none
+FC33 | 4 | HOLDS | HOLDS | 5.6 | none
+FC34 | 4 | HOLDS | HOLDS | 12.2 | none
+FC37 | 4 | HOLDS | HOLDS | 6.2 | none
+FC38 | 4 | HOLDS | HOLDS | 0.0 | none
+FC39 | 4 | HOLDS | HOLDS | 0.0 | none
+FC40 | 4 | HOLDS | HOLDS | 3.3 | none
+FC41 | 4 | HOLDS | HOLDS | 0.8 | none
+FC42 | 4 | HOLDS | HOLDS | 0.0 | none
+FC43 | 4 | HOLDS | HOLDS | 20.9 | none
+FC44 | 4 | HOLDS | HOLDS | 1.4 | none
+FC45 | 4 | HOLDS | HOLDS | 7.3 | none
+FC46 | 4 | HOLDS | HOLDS | 3.0 | none
+FC47 | 4 | HOLDS | HOLDS | 5.3 | none
+FC48 | 4 | HOLDS | HOLDS | 2.4 | none
+FC49 | 4 | HOLDS | HOLDS | 3.3 | none
+FC50 | 4 | HOLDS | HOLDS | 2.7 | none
+FC51 | 4 | HOLDS | HOLDS | 12.1 | none
+FC52 | 4 | HOLDS | HOLDS | 4.0 | (restated, area 2) where some R lets ℰ meet: new -> holds on all models tried; (area 2) the 'or' is two routes: new -> witness found
+FC53 | 4 | HOLDS | HOLDS | 0.0 | none
+FC54 | 4 | HOLDS | HOLDS | 2.2 | none
+FC57 | 4 | HOLDS | HOLDS | 0.1 | none
+FC58 | 4 | HOLDS | HOLDS | 2.4 | none
+FC60 | 4 | HOLDS | HOLDS | 0.0 | none
+FC62 | 4 | HOLDS | HOLDS | 0.0 | none
+FC63 | 4 | CEX | CEX | 14.3 | none
+FC64 | 4 | HOLDS | HOLDS | 1.4 | none
+FC65 | 4 | HOLDS | HOLDS | 1.3 | none
+FC66 | 4 | HOLDS | HOLDS | 16.4 | none
+FC67 | 4 | HOLDS | HOLDS | 4.2 | provenance (dropped from FC67, area 2): new -> not tested
+FC68 | 4 | HOLDS | HOLDS | 4.4 | none
+FC74 | 4 | HOLDS | HOLDS | 0.0 | none
+FC76 | 4 | HOLDS | HOLDS | 0.0 | none
+FC99 | 4 | HOLDS | HOLDS | 0.4 | none
+FC100 | 4 | HOLDS | HOLDS | 5.1 | none
+FC101 | 4 | HOLDS | HOLDS | 0.0 | none
+FC104 | 4 | NOT TESTED | NOT TESTED | 0.0 | none
+FC106 | 4 | HOLDS | HOLDS | 2.8 | none
+
+## 2. The whole suite, 110 claims (--no-write --brief), the committed model/ against the area 2 copy
+# before: 87 HOLDS, 12 CEX, 11 NOT TESTED (276.4 s). after: 87 HOLDS, 11 CEX, 12 NOT TESTED (297.4 s).
+# status changes: FC25 CEX -> HOLDS (A2-04, intended). FC14 HOLDS -> NOT TESTED in that run only: the copy could not find 'formal core.md' (a path, not a result); fixed by a fallback path, FC14 re-run: HOLDS (0.0 s).
+# part changes: 11 (193 parts after, 185 before): the 9 new area 2 parts, FC25 (b) counterexample -> holds, FC67's provenance part replaced by 'not tested'. No part that held before newly fails.
+# claim | before | after | time after (s)
+FC01 | HOLDS | HOLDS | 4.0
+FC02 | HOLDS | HOLDS | 3.6
+FC03 | HOLDS | HOLDS | 2.7
+FC04 | HOLDS | HOLDS | 3.2
+FC05 | CEX | CEX | 4.6
+FC06 | HOLDS | HOLDS | 2.0
+FC07 | HOLDS | HOLDS | 0.8
+FC08 | HOLDS | HOLDS | 1.5
+FC09 | HOLDS | HOLDS | 0.0
+FC10 | HOLDS | HOLDS | 1.9
+FC11 | HOLDS | HOLDS | 0.7
+FC12 | HOLDS | HOLDS | 3.5
+FC13 | HOLDS | HOLDS | 4.4
+FC14 | HOLDS | NOT TESTED | 0.0
+FC15 | HOLDS | HOLDS | 2.3
+FC16 | HOLDS | HOLDS | 3.2
+FC17 | HOLDS | HOLDS | 2.5
+FC18 | CEX | CEX | 2.7
+FC19 | HOLDS | HOLDS | 1.3
+FC20 | CEX | CEX | 12.5
+FC21 | HOLDS | HOLDS | 9.1
+FC22 | HOLDS | HOLDS | 3.6
+FC23 | CEX | CEX | 5.8
+FC24 | HOLDS | HOLDS | 2.0
+FC25 | CEX | HOLDS | 6.0
+FC26 | HOLDS | HOLDS | 0.3
+FC27 | HOLDS | HOLDS | 0.1
+FC28 | HOLDS | HOLDS | 0.2
+FC29 | HOLDS | HOLDS | 2.7
+FC30 | HOLDS | HOLDS | 0.0
+FC31 | NOT TESTED | NOT TESTED | 0.0
+FC32 | NOT TESTED | NOT TESTED | 0.0
+FC33 | HOLDS | HOLDS | 5.8
+FC34 | HOLDS | HOLDS | 13.0
+FC35 | NOT TESTED | NOT TESTED | 0.0
+FC36 | HOLDS | HOLDS | 0.0
+FC37 | HOLDS | HOLDS | 6.8
+FC38 | HOLDS | HOLDS | 0.0
+FC39 | HOLDS | HOLDS | 0.0
+FC40 | HOLDS | HOLDS | 3.3
+FC41 | HOLDS | HOLDS | 0.7
+FC42 | HOLDS | HOLDS | 0.0
+FC43 | HOLDS | HOLDS | 21.7
+FC44 | HOLDS | HOLDS | 1.4
+FC45 | HOLDS | HOLDS | 6.9
+FC46 | HOLDS | HOLDS | 2.9
+FC47 | HOLDS | HOLDS | 5.8
+FC48 | HOLDS | HOLDS | 2.4
+FC49 | HOLDS | HOLDS | 3.5
+FC50 | HOLDS | HOLDS | 2.9
+FC51 | HOLDS | HOLDS | 12.6
+FC52 | HOLDS | HOLDS | 4.1
+FC53 | HOLDS | HOLDS | 0.0
+FC54 | HOLDS | HOLDS | 2.3
+FC55 | HOLDS | HOLDS | 0.0
+FC56 | HOLDS | HOLDS | 45.1
+FC57 | HOLDS | HOLDS | 0.1
+FC58 | HOLDS | HOLDS | 2.0
+FC59 | HOLDS | HOLDS | 0.0
+FC60 | HOLDS | HOLDS | 0.0
+FC61 | HOLDS | HOLDS | 0.0
+FC62 | HOLDS | HOLDS | 0.0
+FC63 | CEX | CEX | 13.4
+FC64 | HOLDS | HOLDS | 1.1
+FC65 | HOLDS | HOLDS | 1.2
+FC66 | HOLDS | HOLDS | 14.4
+FC67 | HOLDS | HOLDS | 4.4
+FC68 | HOLDS | HOLDS | 4.4
+FC69 | HOLDS | HOLDS | 0.0
+FC70 | HOLDS | HOLDS | 0.0
+FC71 | HOLDS | HOLDS | 0.0
+FC72 | HOLDS | HOLDS | 0.0
+FC73 | HOLDS | HOLDS | 0.0
+FC74 | HOLDS | HOLDS | 0.0
+FC75 | HOLDS | HOLDS | 0.0
+FC76 | HOLDS | HOLDS | 0.0
+FC77 | CEX | CEX | 1.3
+FC78 | CEX | CEX | 0.0
+FC79 | HOLDS | HOLDS | 0.0
+FC80 | HOLDS | HOLDS | 3.0
+FC81 | CEX | CEX | 0.0
+FC82 | CEX | CEX | 0.0
+FC83 | CEX | CEX | 0.0
+FC84 | HOLDS | HOLDS | 0.0
+FC85 | HOLDS | HOLDS | 3.4
+FC86 | HOLDS | HOLDS | 0.0
+FC87 | HOLDS | HOLDS | 0.0
+FC88 | HOLDS | HOLDS | 0.0
+FC89 | NOT TESTED | NOT TESTED | 0.0
+FC90 | NOT TESTED | NOT TESTED | 0.0
+FC91 | HOLDS | HOLDS | 0.3
+FC92 | HOLDS | HOLDS | 2.3
+FC93 | HOLDS | HOLDS | 0.6
+FC94 | NOT TESTED | NOT TESTED | 0.0
+FC95 | HOLDS | HOLDS | 0.0
+FC96 | HOLDS | HOLDS | 4.5
+FC97 | HOLDS | HOLDS | 0.1
+FC98 | NOT TESTED | NOT TESTED | 0.0
+FC99 | HOLDS | HOLDS | 0.3
+FC100 | HOLDS | HOLDS | 5.7
+FC101 | HOLDS | HOLDS | 0.0
+FC102 | CEX | CEX | 0.0
+FC103 | HOLDS | HOLDS | 0.0
+FC104 | NOT TESTED | NOT TESTED | 0.0
+FC105 | NOT TESTED | NOT TESTED | 0.0
+FC106 | HOLDS | HOLDS | 2.8
+FC107 | NOT TESTED | NOT TESTED | 0.0
+FC108 | HOLDS | HOLDS | 0.0
+FC109 | HOLDS | HOLDS | 4.0
+FC110 | NOT TESTED | NOT TESTED | 0.0
+FC14 (re-run after the path fallback) | HOLDS | HOLDS | 0.0
+
+## 3. External examples (s104_external.py, copied into 'area 2 model/', its text path set one folder deeper)
+FC-E1 | - | reproduced: yes; (E) of the full candidate yes; E|{k} fails F2eq; CriticalBlock({d};{k,d}) yes; d globally indispensable yes | <1
+FC-E5 | - | reproduced: yes; 193 families, 0 failures of the finite monotone claim | <1
+
+## 4. Scale-1 smoke run while editing (not a record run): FC23, FC27, FC28 at --scale 1 --time-cap 20: new parts as claimed / as expected.

@@ -1,0 +1,725 @@
+Let me start by exploring the sandbox folder structure.
+
+Right, no commands run. I must only use Read, Glob, Grep.
+
+Now let me read the scripts.
+
+Some things to check in the K script:
+
+1. The plan says: "loaded, recalculated, kept if viable, and Avida's ANALYZE_KNOCKOUTS ... is run". The script LOAD_SEQUENCEs the top 100, RECALCULATE, FILTER viable == 1, then DETAIL and ANALYZE_KNOCKOUTS. But note: ANALYZE_KNOCKOUTS runs after the FILTER, so knockouts are only run on viable sequences. Good.
+
+2. Question: does ANALYZE_KNOCKOUTS re-run the knockout with the environment.cfg in the run dir? Yes, analyze mode reads environment.cfg from cwd. The environment text is R.environment_text('fixed_graded', R.load_ranks()) — need to check that against S113's runner.
+
+3. `count[s] = count.get(s, 0) + n` — this collapses duplicate sequences within top. But note the LOAD_SEQUENCE with duplicate sequences: pop may contain the same sequence twice (same w[16]) with different counts; they are collapsed in count. But in seqs (from DETAIL file), the duplicates may also be collapsed by Avida (LOAD_SEQUENCE of identical sequence creates two genotypes?). Hmm — the assert len(seqs) == len(knock) is just between the two output files. But if the same sequence appears twice in top (unlikely since distinct sequences... wait, top_sequences counts distinct instruction sequences by w[16], so duplicates could occur if the same sequence appears on two lines? w[16] is presumably the genome column. In an spop file each line is one genotype (distinct sequence) with number of units in w[4]. So duplicates unlikely. Actually wait — check: `pop.append((int(w[4]), w[16]))` — is w[4] the number of units and w[16] the genome? Need to check the spop format from S113/build notes.
+
+4. K_weighted_mean weights by count[s], the number of programs carrying the sequence — matches "mean weighted by programs".
+
+5. `k[1] + k[2]` — knock file columns: need to verify column meanings (lethal + detrimental). Need to check Avida's knockouts output format. Typically the knockout file has lines with genotype name, number lethal, detrimental, neutral, beneficial? Need to check the build notes or reply 05 docs. The brief says "K as lethal plus detrimental single instruction ablations". Let me check the build notes file for the knockout output format.
+
+6. Potential issue: `assert len(seqs) == len(knock)` — the seqs file is written by DETAIL after FILTER viable, so lines only include viable. OK.
+
+7. Issue: in `one_run`, if rc != 0, returns error and `main` prints res — but `out[key] = res` regardless; fine.
+
+8. Bug candidate: `K_weighted_mean` uses `w = sum(n for n, _ in ks)`, the total programs among the viable; that matches "weighted by programs" over viable sequences. But `programs_in_tested` uses `sum(n for n, _ in top)` which double counts if duplicates. Minor.
+
+9. Bigger: the plan says "its 100 most common distinct instruction sequences (by the number of programs carrying them; all if fewer)". top_sequences sorts by -count; stable ties keep file order. OK.
+
+10. The environment: 'no resources' — check R.environment_text produces a resource-free environment for fixed_graded.
+
+Also check that `avida.cfg` copied for K runs — S111's avida.cfg with a 60x60 world; in analyze mode probably fine.
+
+One more potential issue: `RECALCULATE` then `FILTER viable == 1` — does Avida's FILTER accept that syntax? Stock Avida analyze commands: "FILTER <column> <operator> <value>"? Actually I recall Avida's analyze `FILTER` command: `FILTER <test>` where test like "viable==1"? Need to check source docs. Reply 01's probe script might use similar syntax. Let me look at reply 01's probe script to see how it does filters.
+
+Also the K script detail: `DETAIL seqs_u%d.dat viable fitness sequence` — the last column is the sequence, so `l.split()[-1]` gives the sequence string. OK.
+
+`knock` file: Avida's ANALYZE_KNOCKOUTS writes a file with header lines starting with #; each line: genotype name, then counts? Let me check Avida source knowledge: cAnalyzeCommand "Knockouts" — outputs file with columns: "name" ... Actually I don't remember. In Avida 2.14, analyze command ANALYZE_KNOCKOUTS <filename> < knockout type >. The file format: each line has the genotype name, then for each... Hmm. k[1]+k[2] — the script assumes columns 1 and 2 (0-indexed) are lethal and detrimental. Need to verify from build notes.
+
+Let me now read the other scripts and S113 scripts.
+
+Note: run_one sets `-set COPY_MUT_PROB 0.0075` — that's a copy error rate; the brief says S111 config has copy error 0.0075 default, but also there's the "0.05 insertion and 0.05 deletion per division" mentioned in S66 correction. That's from S111 config presumably (in avida.cfg). Fine.
+
+Note: run_one uses `timeout` directly, not nice. But commands file says the continuation runs inside a Python process under nice -n 19, so all child processes inherit nice 19. And test-processor calls use "3,600 s and nice -n 10 per test-processor call". OK.
+
+Wait — run_one doesn't set `-set COPY_MUT_PROB` from S111 config? It does: '0.0075'. But avida.cfg from S111 may already have it; harmless.
+
+Also insertion/deletion: avida.cfg may have DIVIDE_INS_PROB 0.05 etc. For the competition, the plan says "S111's avida.cfg with every instruction change off (copy error 0, one-instruction insertion and deletion 0)". Need to check the competition script.
+
+Also note in run_one: `-s` seed and '-set VERBOSITY 0'. The continuation calls run_one('fixed_large', 2, pieces=75, out=...). State has done=50; continues. Seeds: piece_seed = seed*1000 + k = 2000+k, k=50..74 → 2050..2074. Matches plan.
+
+Now read the measuring function s113_measure... and the other s116 scripts.
+
+Important: `s116_continue...` "count" uses `snap['performing']` — S113's summary used both 'performing' and 'performing_and_replicating'. The results table reports "test processor, common" = 41. Which kind? Need to check what S113 reported (the 41). In S113 results, "41 at 50,000" — which count did S113 lead with? The continuation plan says "the test-processor count at every 5,000 ... with S113's own measuring function" and "it must give 41 common". The script computes both common and common_and_replicating, so consistent.
+
+But wait — a subtle issue: in `count`, `R.OUT = RUNS` is set. But `M.one_snapshot` calls `evaluate` which uses `R.S111CONF` and `R.AVIDA` — fine. And `M.one_snapshot` reads `os.path.join(R.OUT, key, ...)` — R.OUT reassigned. OK.
+
+But there's a subtlety: R.run_one in "run" mode also uses R.OUT default; called with out=RUNS. Good.
+
+Another check: `world_count` iterates k in range(49, 75) and includes piece_49 (updates 49,000–50,000). The results say "41 common at all 100 samples from 50,250 to 75,000 (and at 49,250 to 50,000)". Piece 49 data: samples at 49,250...50,000 (updates within piece 49 are k*1000 + update where update runs 0..1000). Actually label = k*1000 + tr[0]; for k=49, labels 49000..50000. Wait — tr[0] is update within piece (0..1000). For piece 49, world updates are 49,000..50,000. OK.
+
+Hmm, but one thing: piece numbering. S113's run_one: piece k covers updates k*1000+1 .. (k+1)*1000. piece_49 ends at 50,000. The extension's pieces 50..74 end at 75,000. Good.
+
+Now the potential mismatch: the results say "its last new high stays S113's 48,250". World count includes samples every 250 updates. OK.
+
+Now check the "count" mode check at 50,000: one_snapshot reads from R.OUT/key/piece_49/data/detail-1000.spop — the copy. Good, and it gives 41.
+
+Now an important check: does `M.one_snapshot`'s MARKS matter? No, MARKS used only in summarise.
+
+Potential objection: in count mode, `tp` uses 'performing' (not requiring viable) as 'common' and reports both. In the results table only "test processor, common" 41 and "present" 67 are given. Which matches 'common' (performing) and present = performing>0. In S113, which did they lead with? Let me check S113 results file to see whether 41 was 'performing' or 'performing_and_replicating'. If S113's 41 was 'performing', consistent.
+
+Now read the competition script and bank reader.
+
+Now let me examine several potential objections:
+
+**Competition script:**
+
+1. `probe_rows()` starts each sequence's 'tasks' as `set(R.TWO)` and discards on any input where the task is not credited — so 'tasks' ends as the set of nine tasks credited on ALL 8 inputs. That matches the plan ("using batch 2's probe (core, all 8 inputs, viable)"). But 'viable' is set False if any input row has viable<=0, i.e. requires viable on all 8 — consistent with "viable on all 8" (the summariser's viable_all). OK.
+
+2. But wait — the plan says B = "the most common viable sequence whose set of the nine paid two-input tasks includes at least one that A lacks (if none, the most common with a different set of the nine)". The script: `b = next((s for s in order[1:] if s['tasks'] - a['tasks']), None)` — B must differ from order[0]. But could a sequence ranked before order[1:]... order[0] is A. Right. But note `order.index(b)` for 'viable_sequences_ranked_before_B' = 29, consistent with results ("29 viable sequences were ranked before it"). OK.
+
+3. `decode`: maps letters a-zA-Z to instruction names from instset-heads.cfg in order of INST lines. Check: the spop genome is encoded in Avida's 52-letter code; the mapping assumes the i-th INST line maps to the i-th letter. Standard Avida behavior: letters assigned in order of instruction set load. Plausible. But note: if the sequence contains a letter beyond the number of INST lines (e.g., a mutation to an instruction not in heads set — impossible since instset defines all available). And `table[c]` would KeyError otherwise — runs succeeded. OK.
+
+4. **Instruction changes off**: `-set COPY_MUT_PROB 0 -set DIVIDE_INS_PROB 0 -set DIVIDE_DEL_PROB 0`. Need to check avida.cfg for other mutation settings — e.g., `POINT_MUT_PROB`? In Avida 2.14 avida.cfg, mutation options: COPY_MUT_PROB, DIVIDE_MUT_PROB? Actually the standard avida.cfg has `COPY_MUT_PROB`, `DIVIDE_INS_PROB`, `DIVIDE_DEL_PROB`, and also `POINT_MUT_PROB` maybe not. Let me check the avida.cfg file in runs/configuration from log S111/. Also "every instruction change off" — but there could also be `DIVIDE_MUT_PROB`? In Avida 2.x, config entries: COPY_MUT_PROB (copy error), DIVIDE_INS_PROB, DIVIDE_DEL_PROB, and also STERILIZE_UNSTABLE? Also there might be "REACTION" ... Let me read avida.cfg.
+
+Also — the tasks.dat shows "no other sequence appeared" so empirically instruction changes were off.
+
+5. **Inject at update 0 filling the whole world**: events `u begin Inject A.org <cell>` per cell. Inject with a cell id: Avida's Inject event supports "Inject <filename> <cell>"? There's an event "Inject" with args filename, [cell]. Injecting 3,600 organisms — world filled. But does avida.cfg have "birth method" etc.? The initial world is empty (no default ancestor injected since avida.cfg's START_CREATURES?) Hmm — avida.cfg may specify `INJECT_START_CREATURE 1` or "first organism" — if avida.cfg injects a default creature as well, there'd be a 3601st program (the default ancestor). The count showed only A and B ("No other sequence appeared"), so fine.
+
+Wait, actually the counts: 'other' counted and reported, "No other sequence appeared (instruction changes off)" — good.
+
+6. **Resource levels**: `res = R.resources_left(...piece_49)` — reads S113's original piece_49's resource.dat (last row). Then environment_text with `:initial=` per resource. But `resources_left` parses names from header comments: `if line.startswith('#') and ':' in line and line[1:].strip()[:1].isdigit()`. Need to trust S113's runner — it's unchanged and was used for S113 runs. OK.
+
+But subtle: resources_left returns the last row of resource.dat. piece_49's resource.dat samples every 1,000 updates (PrintResourceData at u 1000 only per piece — events: 'u %d PrintResourceData' % PIECE, so printed at update 1000 of each piece, i.e., once). So last row is the end-of-piece state. Good — "every resource starting at the level S113's seed 1 had at update 50,000".
+
+7. **Share counting**: share_A = na/(na+nb), excluding 'other'. Since other=0, fine.
+
+8. **Placement seed**: `rng = random.Random(1000 * placement + si)` — plan says "Avida seed 116000 + 10 x placement + share index" — that's the Avida seed, matches. The placement seed isn't specified in the plan. Fine.
+
+9. Hmm — plan says "cells chosen at random by a placement seed". OK.
+
+10. `round(share * CELLS)` = 36 for 1%, 360, 1800, 3240, 3564. OK.
+
+11. **Time limit**: wrapper gives nice 19 timeout 3600. Plan's running rules satisfied. The runs took ~238s each. OK.
+
+12. One issue: plan says "if the first run shows more than 1.5 CPU-hours in all, the 1% and 99% shares run with one placement only" — fine, not triggered.
+
+13. **world filled at update 0** — plan says "the full 60 x 60 world filled at update 0". Inject events at 'u begin'. OK.
+
+14. Check `ev` includes PrintCountData etc. — fine.
+
+15. Potential problem: avida.cfg copied from S111 — does it contain a different world size or "rewards"? World 60x60 per S113. Also `avida.cfg` may contain `COPY_MUT_PROB 0.0075` overridden by -set 0. OK.
+
+16. The competition runs 2,000 updates continuous. events 'u 50:50:%d PrintCountData' etc. Resource data every 50 → used in results section 4 to say AND resource stayed between 140 and 240. OK.
+
+Now the **bank reader**:
+
+- `weight[g] = int(r['weight'])` — assumes contrasts.csv has a weight column = number of programs. Need to check reply 02's summarize_bank.py / make_experiments.py for column names. Let me read those scripts.
+
+- `if sum(vals)/len(vals) >= 5` — "gives 10 energy units" — the grant threshold 5 = half of 10. Reasonable. But `grants[g][cue].append(grant_left)` and `grant_right` — each cue appears in two pairs (left and right), so vals has 2 entries per cue; inconsistent if they differ. But floats: grants may be e.g. 10.0 vs 0.0; `len(set(vals)) > 1` catches exact differences. Could grants be fractional (e.g., average of multiple evaluations)? The assay presumably evaluates each pair once. OK.
+
+- `share_discriminating = total - reject - accept_all` — this assumes only patterns () and (0,1,2) are non-discriminating. What about a genotype giving to cues 0 and 1 only... that's discriminating. Fine. But what about empty patterns with zero weight — fine.
+
+- `top = max(patterns.items(), key=lambda kv: kv[1])` — ties broken arbitrarily; fine.
+
+- **Population weighting**: patterns counted by weight (programs), but 'distinct_sequences': len(grants) — grants only includes genotypes seen in the active arm. Fine.
+
+- Total = sum of weights of genotypes in the bank assay. But the bank assay is run with a saved population of candidate showing cues... the "bank" is the saved population at update 1000/5000; each sequence is tested against candidates showing cues 0,1,2. Is the weight the number of programs in the evolving population? Need reply 02's script to confirm.
+
+Now the probe summary script details:
+
+- `world_order_inputs`: selects logic_high inputs whose three numbers' top bytes are 15, 51, 85. Results text says "the first number's top byte 15, the second 51, the third 85". OK, assuming Avida's world inputs are like that (25,51,85 in older Avida: inputs are 0x0FFFFFFF style...). Actually classic Avida default inputs: 25, 51, 85, 170, ... The build notes may confirm. Not critical.
+
+- `read_logic_high` recomputes present/common per the same rule. One bug candidate: `for i in (only if only is not None else range(8))` — file names 'u%d-input%d.dat' with i from... input ids. In world_order branch, ids come from inputs.tsv input_id — presumably 0..7. OK.
+
+- Another: `p['ok'][j]` set False if task not credited on ANY input or not viable on any input. Correct for "all 8 and viable".
+
+- `total = sum(p['n'] for p in per.values())` — num_units summed over distinct sequences. That equals the population if all programs accounted. OK.
+
+- Common share: counts[j]/total >= 0.10. The summariser presumably uses fraction_all. OK.
+
+- In summarise_run: `com = {n ... float(r['fraction_all']) >= COMMON}` — but does capabilities.tsv include fraction_all possibly blank when population 0? They check `r['fraction_all'] != ''`. OK.
+
+- **'present'/'common' for logic uses viable_all only** — matches plan definition.
+
+- **arith_names** = names in arithmetic() among the probe's canonical tasks. The plan says never-rewarded arithmetic = echo, add, add3, sub and every math_* (canonical names only). The script's tasks filter at line 93-94: `r['name'] == r['canonical']` — dedup by canonical. Good. But does the filter exclude 'dontcare'? Line 94 excludes 'dontcare'. And fib_* left out of both counts: logic_names = names in LOGIC (the 77 tasks from ranks file — which are the 77 logic tasks; fib and math not among them), arith = arithmetic(). fib_* excluded. Good.
+
+- **B2.1 definition**: "ever seen (a run, at a saved update): tasks present at that save or any earlier one" — computed via cumulative union over MARKS of logic+arith present. Good.
+
+- **Kept continuously**: "present at every save from a given save to a later one (the summariser's every_saved_snapshot)". The script recomputes: cont = base ∩ all sets[m] for m>=25000. base = sets[25000]. Note: `cont = set(base)` then for m in MARKS if m >= 25000: cont &= sets[m] — so continuous = tasks present at 25,000 and every save from 25,000 to 50,000. Endpoint = base ∩ sets[50000]. "present after a sampled gap" = endpoint - cont. Matches B2.2's plan reading ("of the tasks present at 25,000, how many are present at 50,000 (endpoint), how many at every save between (continuous)").
+
+- B2.2 threshold "continuous at least 80% of endpoint in the paying environments' middle seed" — reported 0.92 etc. Middle seed = seed 2. OK.
+
+- B2.2 "against" rule: "more than a fifth of the endpoint-kept tasks were missing at some save between" → gap share > 20%. Reported "1 to 5 tasks per run" — but they report counts, not shares; the verdict "for" uses ≥80%. 5 tasks out of, say, 50 endpoint = 10% — fine. But if endpoint were small... FIXED GRADED middle seed 0.92. Fine.
+
+- **B2.3**: no_rewards seeds: present 11/11/7 — "not separated from NO TASK REWARDS in any environment". Check three-seed rule: FIXED GRADED 13/11/14 vs NO TASK 11/11/7: is every FIXED GRADED seed above every NO TASK seed? 11 vs 11 not above → not separated. FIXED LARGE 8/15/11: 8 < 11 → not separated. OK.
+
+- **B2.4 K**: rise in all three seeds of FIXED GRADED (4.2/4.5/18.8 yes), GROWING (yes), CTPL (yes); FIXED LARGE seed 3 fell (-4.0) → "no". NO TASK fell all. "rise against NO TASK REWARDS: more" — check: is every seed of a paying environment's rise above every NO TASK rise? FIXED GRADED rises 4.2,4.5,18.8 vs NO TASK -9.3,-11.3,-24.0: yes more. FIXED LARGE 27.1,37.5,-4.0 vs -9.3..: -4.0 > -9.3 yes. OK.
+
+- The K weighted mean: NO TASK seed 3 "60 to 100 viable" noted. OK.
+
+- **B2.5**: "the two within 10% of the core count in every paying run" — results: "common counts equal or higher on large inputs in every paying run (GROWING seed 1: 51 small, 65 large); present counts ... except GROWING LIST seed 2 (27 small, 23 large, 15% lower)". Hmm — GROWING seed 2 common on core was 0 (from table 2.1: 51/0/55)! But B2.5 says "GROWING seed 1: 51 small, 65 large" — so common counts: seed1 51 small vs 65 large; seed2 0 small vs 0 large presumably; seed3 55/55. OK. So the "against by the letter" is on the present count of seed 2. The plan's B2.5 measure: "logic capabilities present and common under core and under logic_high, at 50,000"; counts-against: "a paying run where logic_high is more than 10% below core". Present count 23 vs 27 = 15% below → against by the letter. Reported as "a caution on S113's counts". Consistent.
+
+Now check the exactness of claims in results 2.1: "In GROWING LIST seed 2 at 50,000, 2,377 of 3,489 programs copy themselves and perform NOT when the three numbers come in the order Avida's world always gives them" — from world_order reading (large inputs, 2 sets): 2,377 and 2,381. Fine.
+
+Now let me check the reply scripts for column names: probe_task_audit.py, summarize_probes.py, make_experiments.py. These are run unchanged, but the S116 scripts parse their outputs, so I need to verify column names like 'viable_all', 'fraction_all', 'viable_any', 'population', 'num_units', 'id', 'task_index', 'weight', 'cue_left', 'grant_left', 'arm', 'contrast', 'genotype_id', 'update', 'distinct_sequences', 'from_label', 'to_label', 'task', 'canonical', 'name', 'profile', 'input_id', 'input%d', 'column', 'position', 'task.%s'.
+
+Key observations:
+
+1. `triples`: for `high=False`, masks [15, 51, 85] are placed in shuffled bit order then `rng.shuffle(values)` — so input channel order is shuffled. For `high=True` (logic_high): values = [(mask<<24)|rand for mask in [15,51,85]] then shuffle(values). So the top byte order is shuffled among {15,51,85}. So for logic_high, "world order" (15,51,85 top bytes in order) happens in ~1/6 of the 8 triples → the script expects exactly 2 of 8 keep world order. Consistent with results ("two of them keep the world's order").
+
+2. The probe uses `LOAD <path>` then `FILTER num_units > 0`, then RECALCULATE with inputs. Note `RECALCULATE 0 -1 0 ...` — arguments: 0 -1 0? Presumably lineage, alive, silent flags. Whatever, unchanged.
+
+3. The `core` profile includes 'dontcare' as a task with task_index; the S116 summary filters out dontcare.
+
+4. Schema columns: 'id num_units viable length ... task.N task_quality.N'. The S116 read_logic_high uses `r['id']`, `int(r['num_units'])`, `int(r['viable'])`, `int(r['task.%s' % t['task_index']])`. Good.
+
+5. Note in probe tasks.tsv, logic_high rows are appended after core rows. tasks.tsv columns: profile, task_index, name, status, canonical, args, reason, default_enabled. The s116 summary uses r['canonical'] etc. Good.
+
+Now the summarize_probes.py to verify capabilities.tsv columns: 'task','update','viable_all','fraction_all','viable_any','population', retention.tsv 'from_label','to_label', snapshot_dynamics.tsv 'update','distinct_sequences'.
+
+The summariser's capabilities.tsv columns: label, update, task, task_kind, canonical, first_reward_update, reward_status, population, raw_any, viable_any, viable_all, fraction_all, inputs. Matches the S116 summary usage ('viable_all','fraction_all','viable_any','population','task','update').
+
+Note the summariser's retention 'sets' are 'present' = tasks with all_n>0 — i.e., tasks credited on all 8 inputs and viable, across ALL core tasks (including fib? No — fib_ tasks: status constant_output but profile? fib_ tasks: `core = ... or name.startswith(("logic_", "math_", "fib_"))` — so fib_ IS in core profile! And tasks filter in summariser line 49 excludes only dontcare and aliases. So the summariser's sets include fib_* and math_* etc. — the S116 script notes exactly this: "the summariser's sets are all core tasks (fib_ included); recompute on logic + arithmetic for the plan's reading". Good, and it does recompute. But note it also stores 'summariser_row_all_core_tasks'.
+
+Wait — the S116 'arith' definition excludes fib_ (fib is constant_output, left out). Logic_names = the 77 from ranks. Sets = logic ∪ arith. Good.
+
+But hold on — the summariser's 'present' sets include ALL core tasks, e.g. 'logic_*' non-77? No, core = echo, add, add3, sub, dontcare, BOOL, logic_*, math_*, fib_*. The 77 tasks in ranks file: 9 two-input BOOL + 68 logic_3input presumably. So logic_names (77) ⊂ core names. OK.
+
+Now the assert in s116 probe summary: `assert len(logic_names) == 77` — checks all 77 logic tasks appear in capabilities.tsv. Good.
+
+Now check `reward_history` in the S116 probe script:
+
+```python
+if env == 'growing':
+    hist = json.load(...)['history']
+    for t, level in ranks.items():
+        when = [h['piece'] * 1000 for h in hist if h['unlocked_during_piece'] >= level]
+        first[t] = min(when) if when else 'never'
+```
+
+`ranks = dict(R.load_ranks())` maps task → level. For growing: a task is first rewarded at the start of the first piece where unlocked >= its level. h['piece']*1000 = update at start of piece? Piece k covers updates k*1000+1..(k+1)*1000, so the first update at which the task is rewarded is piece*1000+1. Using piece*1000 is within rounding. Fine — reward history is only used for the summariser's reward_status labels (descriptive), and the S116 plan reading doesn't hinge on it. Actually the "never-rewarded arithmetic" definition doesn't depend on the reward history at all (it's defined by task name). Fine.
+
+Wait, but there's an inconsistency: for 'equ_only' the paid map is `t == 'equ'`, for 'fixed_graded' TWO, 'common_pays_less' TWO, 'fixed_large' True (all), 'no_rewards' False. Matches S113's environment_text. Good.
+
+Now `world_order_inputs`: reads inputs.tsv rows for logic_high; checks top bytes [15,51,85]. In `triples(high=True)`, values = masks 15,51,85 shifted, then shuffled. So 2 of 8 expected. And in the core (small) inputs, values are also shuffled with masks [15,51,85] preserved in low bits — but the check for logic_high world-order uses `>> 24`. Fine.
+
+One subtlety: the results text says "the first number's top byte 15, the second 51, the third 85" — is that actually Avida's world input order? Avida's standard inputs in the world: the environment's inputs are generated... In Avida, tasks receive inputs from the environment resource/input system: default input values in avida.cfg are "25 51 85 170"? Hmm, actually the classic Avida default environment inputs (from environment.cfg "REACTION ... " no). Avida's cHardwareCPU inputs: inputs are updated from the environment's "input buffer", which by default cycles through a fixed list: 25, 51, 85, 170? Wait, but 15/51/85 top bytes: a 32-bit number with top byte 15 = 0x0F...... In Avida, organisms' inputs come from the environment; the "ENV_INPUT..." Actually in analyze mode RECALCULATE you specify the inputs. For the world, Avida's default inputs are set in avida.cfg? Let me check the build notes and avida.cfg. S113's test processor used "the world order" — what did S113 use as inputs? S113's measure script used RECALCULATE with NO input arguments — so Avida's default test-CPU inputs. Avida's default inputs (cTestCPU / default): In Avida 2.x, the default inputs are taken from `cEnvironment::GetInput` which uses the resource... The standard default input values: 25, 51, 85, 170 (0x19, 0x33, 0x55, 0xAA...)? Hmm — actually the classic default inputs in Avida are "25 51 85 170 51 85 170 25..."? I recall avida.cfg has no input setting; environment.cfg in old Avida had "INPUT 25 51 85 170"? Let me check the build notes file, which may document it. Actually the results say "Avida's world always gives them in one order (the first number's top byte 15, the second 51, the third 85)" — 15, 51, 85 in the top byte of a 32-bit input. S111's build notes might say default inputs are 0x0F...... Let me grep.
+
+Also, an important consistency check: the claim "Read on the two probe input sets that keep the world's order, the counts are S113's exactly" — the world-order reading requires viability too, on both sets. And notably the world-order reading is computed on logic_high (large inputs), whereas S113's test processor presumably used default (small?) inputs. S113's default test inputs: Avida's default inputs are 32-bit? The claim that logic_high world-order inputs match S113's counts exactly for all seeds suggests Avida's default analyze inputs are large numbers 0x0F......, 0x33......, 0x55...... Let me check the build notes for "input".
+
+Let me also check make_experiments.py (reply 02) for the bank assay column names: 'arm', 'contrast', 'genotype_id', 'weight', 'cue_left', 'cue_right', 'grant_left', 'grant_right'.
+
+The bank assay design: each genotype is tested in panels for pairs (0,1),(0,2),(1,2), each with two sides (swap identity/swap). Each cue appears in 4 grant observations (2 pairs × 2 sides). In contrasts.csv, groups are (arm, genotype_id, cue_left, cue_right) with 2 members each (the two sides), averaged. So per genotype, 3 rows per arm, each with grant_left and grant_right averaged over 2 panels.
+
+The S116 bank reader: `grants[g][int(r['cue_left'])].append(float(r['grant_left']))` and cue_right similarly. So per cue, 2 values (from the two pairs that include it), each an average of 2. If the genotype is consistent, both equal 10 or 0. `inconsistent` counts genotypes with differing values. Fine.
+
+Threshold `>= 5` for "gives": grants are exactly 0 or 10 per panel (asserted in summarize_bank: `all(min(abs(v),abs(v-10))<1e-8 ...)`, but averaged over 2 panels could give 5.0 if the two sides disagree!). Hmm — wait, with the swap permutation, one side is identity and other is swapped; for the active arm, a genotype's grant to a given candidate should be deterministic... but its behavior might depend on position (left/right)? The candidate on the left vs right of the evaluator. If the evaluator's donation depends on faced cell... Actually `donate-energy-faced10` donates to faced cell; the scaffold rotates? Position shouldn't matter. But if the two sides disagree, the average is 5, and `>= 5` counts it as given. With threshold 5 inclusive, a 5.0 counts as "gives". That's a choice; the results say "sequences_with_inconsistent_grants" is tracked. Not objectionable per se; and the plan says "from the active arm's grants in the three pairs" — implemented.
+
+Note `weight` column exists in contrasts.csv. Good.
+
+One check on the bank reader: `share_discriminating = total - reject - accept_all`. A pattern like (0,) etc. counts as discriminating. OK. But what about genotypes missing from contrasts (e.g., not living)? All bank members come from the snapshot, fine.
+
+Now — the more significant checks:
+
+**Bank reader population**: "3,600 programs, 401 to 447 distinct sequences in every bank" — total is sum of weights across all sequences in the snapshot. OK.
+
+**B3a.1 rule check**: "at 5,000, discriminating programs at least 10% in at least two of three seeds of a mechanism". Results: scalar 0.09/0.19/0.11 → seeds 102 (0.19) and 103 (0.11) ≥ 0.10; seed 101 0.09 < 0.10. Two of three → satisfied. reputation 0.16/0.20/0.09 → two ≥ 0.10. Satisfied. "most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's" — most common is reject all → different from founder's. OK, "for by the letter". Correct reading.
+
+Wait — founder's rule: ancestor sequence prefix + inc,dec,inc,dec,dec... does the founder give only to cue 1? The plan states founder = "accept only 1". Reply 02's design presumably. Fine.
+
+Now the **K script details**:
+
+- knock file format: Avida's ANALYZE_KNOCKOUTS output. Let me recall from Avida source: cAnalyzeCommand_Knockouts writes for each genotype a line: name... Actually the format (Avida 2.14 analyze command "Knockouts <filename> [knockout_method]"): the file has header "# name" ... I need evidence. The build notes file may document. Let me grep the build notes for "knockout".
+
+- k[1] + k[2]: columns after name. Common Avida knockout output columns: "total", "lethal", "detrimental", "neutral", "beneficial"? Then k[0]=name, k[1]=lethal... Actually if columns are [name, lethal, detrimental, neutral, beneficial], then k[1]+k[2] = lethal+detrimental. The script calls k[1] 'lethal' in lethal_weighted_mean: `count[s] * k[1]`. So the assumption: column 1 = lethal, column 2 = detrimental. Need to verify from build notes or Avida docs. Let me check build notes.
+
+Also `FILTER viable == 1` syntax — need to check Avida's analyze FILTER command accepts "viable == 1". In Avida 2.x analyze mode, commands include "FILTER <test>" where test is like "viable==1" (cAnalyzeCommand_Filter uses a math expression with variables like viable, fitness...). Space-separated "viable == 1" — the analyze command parser splits on whitespace: command "FILTER", then arguments "viable", "==", "1"? cAnalyzeCommand::Convert... Actually in Avida, the analyze.cfg lines are split into command and args; FILTER takes the rest of the line as an expression? I believe Avida's analyze commands join args back. In Avida 2.14 (avida-core/source analyze/cAnalyzeCommand.cpp?), the command lookup uses the first word and passes the rest. The FILTER implementation constructs the expression from the remaining args concatenated. I'm not 100% sure, but reply 01's probe used "FILTER num_units > 0" with spaces — and it worked ("exit 0 missing 0"), which strongly suggests space-separated comparisons work. And S113's scripts used 'FILTER viable == 1'? No — S113 measure used no FILTER. The K script's run exited 0 and produced non-empty files with assertions passing (len(seqs)==len(knock)), and DETAIL ... viable — if the FILTER failed to filter, seqs would include non-viable ones and K would include garbage (non-viable sequences' knockouts). But the DETAIL includes viable column; the script doesn't check it. Hmm — 'viable' count reported per save: 'viable': len(ks) where ks = one per line in seqs file, i.e., count of filtered rows. Results say "96 to 100 of the 100 viable except NO TASK REWARDS / ONE HARD TASK ONLY seed 3, 60 to 100" — i.e., some sequences were filtered out as non-viable, so the FILTER worked. Good evidence.
+
+- The plan says "loaded, recalculated, kept if viable" — yes.
+
+- RECALCULATE without inputs → default test inputs (world's default). K under "S113's FIXED GRADED environment" — the fitness computed on the test CPU with the environment.cfg rewards. Note: environment_text('fixed_graded', ranks) gives nine two-input at rewards 1..5, others 0, no resources. The plan says "the nine two-input tasks at their S111 rewards 1 to 5" — matches `value = level` where level = fewest_nand_steps from the ranks file (levels 1..5?). Let me check the ranks json quickly to confirm levels are 1..5.
+
+- The knockouts: 'ANALYZE_KNOCKOUTS knock_u%d.dat 1' — second arg 1 = knockout method? Avida's Knockouts command signature: `Knockouts <filename> <knockout_method>` where method 0 = "replace with default instruction"? OK.
+
+- A subtle problem: `count[s]` built from `top` (the 100 most common), collapsing duplicate sequences; `seqs` from DETAIL. If Avida's DETAIL output rows correspond to loaded genotypes in order — LOAD_SEQUENCE per sequence creates new batch entries each time (since PURGE_BATCH before each mark's block), so duplicates would each get a row. zip(seqs, knock) then assumes row i corresponds to top[i]'s i-th entry. If Avida dedups identical sequences within a batch... LOAD_SEQUENCE creates a new genotype each time, presumably listed in order. Since top sequences are distinct by construction (each line of spop is a distinct genotype — is it? An spop "detail" save lists genotypes; each distinct sequence appears once with num_units). Yes — spop genotype files have one row per genotype, distinct sequences. So no duplicates. OK.
+
+- `K_weighted_mean` weights by programs among viable only; plan says "the mean weighted by programs" — ambiguous whether over all 100 or over viable; the script also reports 'viable' count so it's transparent. Minor.
+
+- The K environment: `events.cfg` 'u begin Exit\n' and avida.cfg from S111 — avida.cfg copied but S111's avida.cfg might specify EVENT_FILE etc. In analyze mode, the -c config is read; environment.cfg written in cwd overrides? For avida.cfg, the copy is of S111's avida.cfg which sets ENVIRONMENT_FILE environment.cfg presumably. The script writes environment.cfg in cwd d. And analyze.cfg written in cwd — avida.cfg sets ANALYZE_FILE analyze.cfg presumably. OK, same pattern as S113's evaluate().
+
+Wait, one difference: the probe driver copies avida.cfg, instset-heads.cfg, default-heads.org into RUNDIR, and the probe command uses `-c <run_dir>/avida.cfg` and cwd... The probe command from reply 01 runs with cwd=c["cwd"]=run_dir. Good.
+
+**The wrapper**: commands say wrapper adds `nice -n 19 timeout 3600`. All Avida processes: batch 3a suite called avida via `--avida $SP/s116/bin/avida` — yes. The continuation: run_one uses `['timeout', '900', AVIDA, ...]` directly — no nice, but inside `nice -n 19 python3` process, children inherit niceness 19. And test-processor evaluate uses `['timeout', '3600', 'nice', '-n', '10', AVIDA...]` — nice -n 10 lowers priority from 19 to 10? Actually `nice -n 10` sets niceness to max(current, 10)? No — `nice -n 10 cmd` runs cmd with niceness increased by 10 relative to the caller: if caller is 19, child gets min(19+10, 39)=29? Actually nice utility: "run a program with modified scheduling priority" — with -n 10, it adds 10 to the current niceness (niceness can only increase for non-root). So it'd be 29 — even lower priority. Fine ("lowest priority" claim holds; "nice -n 10 per test-processor call" is what S113 did, documented).
+
+Hmm, but the claim in commands: "except the continuation's pieces and test-processor calls, which S113's own functions start with their own time limits (900 s per piece; 3,600 s and nice -n 10 per test-processor call), inside a Python process run under nice -n 19 (so every Avida process ran at the lowest priority)". OK, consistent.
+
+**Nothing written into S113's folder**: 
+- copy_saves reads from R.OUT (S113's folder) and writes copies into S116/copies. Read-only on S113. Good.
+- competition's resources_left reads S113's piece_49 resource.dat — read-only. Good.
+- continuation prepare() copies state.json, run.log, piece_49 from S113 into S116 — read only on S113. But wait: R.run_one('fixed_large', 2, pieces=75, out=RUNS) — run_dir = RUNS/fixed_large_seed2. All writes there. Good.
+- BUT: the continuation's run_one deletes... no, within its own folder.
+- One more: `s116_continue...` count sets R.OUT = RUNS. M.one_snapshot reads from R.OUT — pointed at extension. Good.
+- However — subtle: in `count` mode, `M.one_snapshot` for mark 50000 reads piece_49 under RUNS (the copy). Good.
+
+But hold on — the probe driver's `probe_one`... `R.OUT` unchanged, reads S113 saves. And the competition reads S113's piece_49. All reads. OK.
+
+**Time limits**: probe wrapper 3600s; K wrapper; competition wrapper; suite wrapper. Continuation 900/3600. At most three at once: driver ran continuation (1 process) + probe (2 at once) = 3. Then K 2 at once + ... "at the same time" — continuation was 1 Avida process at a time (sequential pieces). OK.
+
+Wait — one thing: the continuation `run_one` is called in-process; each piece is one subprocess; sequential. Probe 2 at once. Total 3. K 2 at once — during continuation? The commands: (a) continuation and (b) probe "at the same time"; K (c) 17:59–18:08 while continuation ran until 18:08. So continuation + K(2) = 3. OK.
+
+**CPU total**: 3,003 + 4,217 + ~1,040 + 1,966 + 19 + 3,570 ≈ 13,815 s ≈ 3.84 h. Results say "about 13,800 s, 3.8 CPU-hours". OK. But note the continuation's test-processor calls: 19 s. And the suite 3,003 s from suite's own timing (user+sys). OK.
+
+Now, consistency checks between results.json and results.md would be good. Let me read results.json (may be large). Let me check its size first via Glob? Can't run commands. Read with limit.
+
+Also I should verify claims like "K's is an upper bound from wall time" and "at most about 1,040 s" (17:59–18:08 is 9 min = 540 s wall with 2 at once → ~1,080 s; consistent as an upper bound).
+
+Now the two most important numbers: results 2.1's world-order claim "the counts are S113's exactly (65/46/55, 32/41/13, 16/9/8, 7/8/8 common at 50,000)". Interesting: world-order reading uses logic_high inputs (large, >>24 top bytes 15/51/85) — and S113's test processor used Avida's default inputs. For these to agree exactly, Avida's default test inputs must be (0x0Fxxxxxx, 0x33xxxxxx, 0x55xxxxxx)-ish. Actually wait — in the results it says "the first number's top byte 15, the second 51, the third 85". Hmm, 0x0F = 15, 0x33 = 51, 0x55 = 85. Avida's classic default inputs: 0x0fffffff? I don't remember. But S113's own counts came from RECALCULATE with no inputs → Avida's default inputs. And the world: Avida's world inputs come from... in Avida, organisms' input buffers are filled from the environment's resources? No — from `cEnvironment::GetNextInput`? Actually in Avida the inputs are drawn from a rotating list of "input values" set via avida.cfg "INPUT" or default. Classic avida.cfg doesn't set inputs; the environment.cfg... Hmm, in Avida 2.x, `ENVIRONMENT_FILE` reactions, and inputs come from `cResource`... no. I recall Avida's default input: the "input" for tasks in the world comes from a fixed list of values [0x00ffffff...]. The build notes may document. Let me grep the build notes for "input".
+
+The important claim "Avida's world always gives them in one order (the first number's top byte 15, the second 51, the third 85)" — plausibly from Avida source (cEnvironment::GetInput uses rotating buffer initialized with 15<<24|...? Hmm). Actually Avida 2.12+ has "input inputs from resource 'input'"? I'm not sure. The S111 build notes might document. Let me search.
+
+Also check: does the world-order reading require "viable" too — read_logic_high applies `int(r['viable']) > 0` in the same condition as task credit, so present requires viable AND credited on both world-order inputs. S113's count 'performing' does NOT require viable (it has separate performing_and_replicating). So the "exactly S113's" claim: 65/46/55 vs S113's test processor 65/46/55 (world order, one input set). If some programs perform tasks without being viable, the numbers could differ, but they match exactly, so empirically fine. But strictly the two readings differ in the viable requirement; since they match exactly, no objection—wait, in GROWING seed 2, the world-order count is 46 = S113's 46, and the core count is 0. So the difference is entirely input-order. OK.
+
+Hmm, actually wait: for FIXED LARGE LIST seed 1, world order gives 32 = S113's 32. And core small inputs give 0. logic_high all-8 gives 0, but world-order (2 of 8 large) gives 32. And section 2.1 says "FIXED LARGE LIST seed 1 at 50,000: on the small inputs only 26 to 169 of 3,484 programs copy themselves; on the large inputs about 1,900 to 2,160, except one order (137)". Hmm — "except one order (137)": on large inputs, one of the 6 shuffled orders gives 137 viable. But the all-8 logic_high count for FIXED LARGE seed 1 is 0 common — plausible since requiring all 8 orders (incl. small? no, logic_high is large only — 8 large orders, 2 world-order + 6 shuffled). If ~1,900-2,160 copy in most orders but only 137 in one, then all-8 viable would be ≤137 programs... plus 2 world-order sets. So common (10% of 3,484 ≈ 348) fails. Consistent.
+
+But note: "on the large inputs about 1,900 to 2,160" — how was this derived? Not from any script in the summary (the summary reports only sets/counts at save level, and world_order counts). The descriptive claim about per-order viability numbers (2,377/2,381, 62-370, 26-169, 1,900-2,160, 137) — where does it come from? The summary.json includes 'logic_high_world_order_inputs' and counts, but per-input viable counts per order? Not in the summary. The results text says these were found after the first results — Claude may have computed them ad hoc from the raw .dat files (raw output not in our folder). This is a descriptive departure; the results mark the world-order reading as an added departure (departure 2 covers "logic tasks on the two logic_high input sets that keep the world's order"). But the viability-per-order numbers (2,377 of 3,489 etc.) are not computed by any script in scripts/ — they're quoted without a script. Is that a problem? The departures section mentions the added summary readings; the viability counts are quoted in results 2.1 as evidence. There's no script that computes "programs copy themselves and perform NOT" per order. Hmm — this is worth an objection: numbers in the results not produced by any committed script. Though they could be derived by one-off reading of the raw .dat files, which the record allows? The plan's running rules say departures are recorded; departure 2 mentions the two added readings but not the per-order viability counts. Weak-to-medium objection: evidence cited without a script; the fix: add the per-order viable/task counts to the summary script (or record the command that produced them) and mark it in Departures.
+
+Actually let me re-read departure 2: "Two descriptive readings were added to the probe's summary after the first results (not in the plan, no verdict drawn from them): logic tasks credited on at least one of the 8 small inputs, and logic tasks on the two logic_high input sets that keep the world's order." The per-order viable program counts (2,377, 62-370, 26-169, 1,900-2,160, 137) are a third, unrecorded computation. Objection stands but minor.
+
+Now — bigger checks. Let me look at results.json to cross-check numbers vs md. And the S113 results for the 41 figure and the "28/37/41" rise. And check the plain words file for forbidden words / overstatement.
+
+Also check the "reward history made from S113's environments" — the plan says "with a reward history for each run made from S113's own environment files and the GROWING LIST's recorded additions (never-rewarded tasks marked 'never')". The script makes it from S113's runner logic (TWO sets etc.) and growing's state.json history — equivalent to "S113's own environment files". OK.
+
+But one bug candidate in reward_history for growing: `when = [h['piece'] * 1000 for h in hist if h['unlocked_during_piece'] >= level]` — uses unlocked_during_piece; if the task's level was unlocked during piece k, the first reward update is k*1000 (start of piece k+1? no — during piece k, environment had unlocked = unlocked_during_piece, so the task was rewarded during updates k*1000+1..(k+1)*1000; first reward update ≈ k*1000+1). Using k*1000 could mark the task as rewarded at 25,000 when actually first rewarded 25,001 — off-by-one that never crosses a snapshot boundary. Snapshot updates are multiples of 5,000; rewarded_by_snapshot if int(exposure) <= update. A task first rewarded during piece 25 (updates 25,001-26,000) gets exposure 25,000 ≤ 25,000 → "rewarded_by_snapshot" at update 25,000, though it was actually first rewarded at 25,001. Slight mislabel, descriptive only, no verdict leans on it. Not worth a major objection; could note as minor.
+
+Now check the K "reference environment" claim: "S113's FIXED GRADED environment (the nine two-input tasks at their S111 rewards 1 to 5, the other 68 logic tasks listed at 0, no resources)". environment_text('fixed_graded', ranks): value = level for TWO, 0 otherwise. levels from ranks file — check they're 1..5. Let me peek at the ranks json.
+
+Also "no resources": fixed_graded adds no RESOURCE lines. Good. But note: process:value=%.1f:type=pow — for value 0... fine.
+
+Now, check the competition's claim about AND resource: "2^(2 x 0.0025 x level)" — process:frac=0.0025:max=1.0, type=pow: value multiplier = 2^(value * frac * resource_level)? Hmm: the claim "AND still paid A about 2^(2 × 0.0025 × level) = 1.6 to 2.3 times". level of AND: AND's level from ranks = 2 presumably. resource 140-240: 2^(2*0.0025*140)=2^0.7≈1.62; 2^(2*0.0025*240)=2^1.2≈2.30. OK arithmetic consistent.
+
+Full pay needs 400: max=1.0 caps at... 2^(2*0.0025*400)=2^2=4 = 2^value. So "full pay needs 400" consistent.
+
+Now B3b reading: "A's share rises from 1% and from 10% and falls from 90% and from 99%, in all three placements" counts for. Result: A took the whole world from every start — share 1.0 at 2,000 from 1%. So A's share rose from 1% (yes) but does NOT fall from 90%/99% (it stays 1.0). So the "for" condition fails; the "against" condition: "A's share falls from 1% in all three placements, or rises from 99% in all three" — hmm! A's share from 99%: stays at 1.0 (it was already 0.98-1.0 at 500). "rises from 99%" — from 99% to 100% is a rise. So the against-branch "rises from 99% in all three" holds. Verdict "against, no growth from rare: B, rare or common, was lost in every run." Correct.
+
+Now check the results' claim "A took the whole world from every start, 1% to 99%, in all three placements, by update 1,500." The saves are every 500; share at 500 from 1%: 0.96/0.95/0.92; at 1000 presumably 1.0? The table shows at 2000 all 1.0 and at 500 near 1. So "by update 1,500" — the save at 1,000 or 1,500 must be 1.0. Plausible; can't verify directly without json. Let me check results.json for the competition saves.
+
+Also the "In the test CPU without resources, B copies itself slightly faster (545 against 577 instruction executions)" — where computed? Not by any script in scripts/! No script computes gest_time/merit of A and B. The kinds.json records sequences etc. The 545/577 numbers presumably from an ad-hoc analyze run — unrecorded. Another instance of numbers without a committed script. Same class of objection.
+
+Let me now read results.json.
+
+The JSON is large. Let me grep for specific keys to verify claims: "growing_seed2" 50000 entries, fixed_large_seed1, retention_25000_to_50000, logic_high, K, competition, extension.
+
+Retention is inside "B2 probe per run" dicts but under key names? Let me look at the structure around line 2000-2140 and find retention and fixed_large_seed1.
+
+Note: results.md B2.2 says "present after a sampled gap (present at both ends, missing between): 1 to 5 tasks per run" — fixed_graded_seed1 shows 4, seed2 1, seed3 2. OK.
+
+But there's a discrepancy: results.md section 2.2 says "B2.2 ... middle seed: FIXED GRADED 0.92" — json middle seed (seed2) 0.966. The md says 0.92 for FIXED GRADED. Hmm: md "FIXED GRADED 0.92, GROWING LIST 0.987, COMMON TASKS PAY LESS 0.875, FIXED LARGE LIST 0.945". json "middle seed continuous over endpoint": 0.92 for FIXED GRADED — wait, seed2's value is 0.966 but the "middle seed" reported is 0.92, which is seed3's value! Seeds: seed1 0.871, seed2 0.966, seed3 0.92. The middle by update ordering is seed2 = 0.966, but reported 0.92 = seed3. Hmm, maybe "middle" is the median of the three values: 0.871, 0.966, 0.92 → median 0.92. Median of the three values, not "seed 2". The plan says "the paying environments' middle seed". Ambiguous: middle seed could mean median-by-value. The md says "0.92" while seed2 is 0.966. This might be the median of values rather than seed 2. Let me check the gather script to see how "middle seed continuous over endpoint" is computed.
+
+Also B2.2 in md: "GROWING LIST 0.987, COMMON TASKS PAY LESS 0.875, FIXED LARGE LIST 0.945" — check json for those.
+
+Important findings in the gather script:
+
+1. **B2.2 "middle seed" = median of the three seeds' values, not seed 2.** `mid = statistics.median(fr)`. The plan says "continuous at least 80% of endpoint in the paying environments' middle seed". Median of values ≠ middle seed necessarily; and the results.md section 2.2 says "middle seed" while reporting the median. FIXED GRADED: seed1 0.871, seed2 0.966, seed3 0.92 → median 0.92 (seed3's value, coincidentally). The md reports 0.92, but seed 2 (the middle seed by number) is 0.966. For FIXED LARGE: md says 0.945, json seed values: seed1?, seed2?, seed3? reported 0.95 at line 2276 — median 0.945? Line 2276 shows 0.95 for one seed (probably seed3), and median 0.945. Wait median of three values equals one of them exactly; 0.945 is not equal to any seed value shown (0.95 is one). Hmm — values are rounded per seed to 3 decimals (0.95?? weird, round(x,3) giving 0.95 suggests 0.95 exactly). Median 0.945 ≠ any element? Median of a 3-element list must equal the middle element. So 0.945 must equal one seed's continuous_over_endpoint. Line 2276 shows 0.95 for the last seed shown (seed3?), but the median 0.945 — then some seed has 0.945. Only the value 0.95 was visible in the grep window. Fine.
+
+But the deeper issue: is "middle seed" ambiguous enough to be a problem? The plan: "continuous at least 80% of endpoint in the paying environments' middle seed". Interpretation as median is defensible and arguably better (robust); but the md text presents the number as the middle seed's. Since all verdicts are 'for' with values 0.92–0.987 vs threshold 0.8, and seed2's own values (0.966 etc.) also pass, no verdict changes. Minor objection at most: name the statistic ("median of the three seeds") instead of "middle seed". Worth listing as a minor.
+
+Also note equ_only/no_rewards B2.2 have no verdict — fine (paying only). But wait: "ONE HARD TASK ONLY" md says nothing about B2.2; fine.
+
+2. **B3a.1 "for" condition bug**: 
+```python
+forr = sum(d >= 0.10 for d in disc) >= 2 and any(t != 'accept only 1' or t != t1 for t, t1 in zip(top, top1))
+```
+`t != 'accept only 1' or t != t1` — this is `not (t == 'accept only 1' and t == t1)`, i.e., true unless t == 'accept only 1' and t == t1. So the second clause is false only when the most common pattern at 5,000 is the founder's AND equals 1,000's. The plan says: "the most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's" — i.e., different from founder OR different from 1,000's. The code implements exactly that (t != founder or t != t1). OK, that matches. Good.
+
+3. **B3b verdict conditions**: `up_rare = all(x > 0.01 ...) and all(x > 0.10 ...)` — "A's share rises from 1% and from 10%". Using strict > start share. OK. `down_common = all(x < 0.90) and all(x < 0.99)`. against: `a_falls_rare = all(x < 0.01 for x in end[0.01])` — "falls from 1%": share at 2,000 below 1%... A's share at 2000 from 1% was 1.0 → false. `a_rises_common = all(x > 0.99 ...)` — from 99%: share 1.0 > 0.99 → true → 'against: no growth from rare'. Matches plan text "or rises from 99% in all three (then one kind wins from every start)". OK.
+
+Hmm, but "rises from 99%" as coded is x > 0.99 at 2,000 — from 0.99 start, 1.0 counts as a rise. Plan's wording "A's share falls from 1% in all three placements, or rises from 99% in all three". Fine.
+
+4. **E verdict**: e_against = |tp 75000 - 41| <= 1 and no new test-processor high after 60,000 and (no world new high after 60,000). Plan: "levelled off: test-processor count at 75,000 within 1 of 41 and no new high of either count after 60,000". tp_after60_new: `any(tp_counts[m] > max(...≤60000) for m > 60000)` — counts after 60,000 (65,000, 70,000, 75,000) vs max up to 60,000. OK.
+
+`run_high = max(s113 highest_common (41, at 48,250), max(upto.values()))` — new high = strictly greater than 41. World counts after 50,000 all 41 → last_new_high None. Levelled off. OK.
+
+5. **B2.4 verdict**: matches. `b24[NAMES[e]]['rise against NO TASK REWARDS rise'] = three_seed(rises[e], rises['no_rewards'])` — "more" if min(a) > max(b). FIXED LARGE: rises 27.1, 37.5, -4.0; no_rewards rises -9.3..-24.0; min(-4.0) > max(-9.3) → 'more'. OK. The verdict "for, in FIXED LIST GRADED, GROWING LIST, COMMON TASKS PAY LESS" matches md.
+
+6. **B2.5**: `if cc and (cc - h[kind]) / cc > 0.10` — core common vs logic_high common. GROWING seed2: core common 0, so cc=0 falsy → skipped; present: 27 vs 23 → 14.8% → listed. Verdict 'against (a caution...)'. Matches md.
+
+But note the md's B2.5 "against" wording and the plan's reading "counts against: a paying run where logic_high is more than 10% below core". Yes matches.
+
+7. **B3a founder share**: `patterns.get('accept only 1', 0) / 3600` — divides by 3600 (world size) rather than total programs. If the population at bank time isn't exactly 3600, the share is off. The evolution runs are continuous with SavePopulation at 1,000 and 5,000; population may be 3600 (full world) — with death method 0 and births, likely full. The md table "founder's rule ... 0.049, 0.031 / ..." — these are computed as /3600. If total programs < 3600, shares understated. Also 'programs': total from read_bank — md says "3,600 programs". If read_bank's total is exactly 3600 in every bank, then /3600 is right. md: "3,600 programs, 401 to 447 distinct sequences in every bank" — so total = 3600. Fine.
+
+8. **three_seed for B2.3** — as analyzed. In md: "not separated from NO TASK REWARDS in any environment, by either count". Check common: NO TASK 6/6/0; FIXED GRADED common 0-7? "the paying environments 0 to 7" — FIXED GRADED common e.g. 7 in seed? If FIXED GRADED common were 7/7/7 vs NO TASK 6/6/0 — min(7)>max(6) → 'more'! That would separate. Let me check json B2.3 values. The md says not separated by either count. Need to verify: FIXED GRADED common arithmetic at 50,000 could be e.g. [2, 1, 7]. From per-save data: fixed_graded_seed1 50000 common_arith 7! (from json line 108: common_arith 7). NO TASK common 6/6/0. If FIXED GRADED seeds' common_arith are all 7 → 7 > 6 → 'more' → separated → md claim wrong! Check seeds 2 and 3. Let me grep B2.3 in json.
+
+B2.3 checks out ("not separated" everywhere correct: FIXED GRADED common 7/6/7 vs 6/6/0: min 6 > max 6? No, 6>6 false → not separated. Correct).
+
+Note: md B2.3 says "Common: NO TASK REWARDS 6 / 6 / 0, the paying environments 0 to 7" — matches.
+
+Now check B3b runs (share at each save, "by update 1,500" claim), B3a banks, and extension world count. Read json around B3b.
+
+Consistent with md ("from 1%: 1.0/1.0/1.0 at 2,000 (0.96, 0.95, 0.92 at 500)"; "by update 1,500" — placements 1 and 3 reach 1.0 at 1,000; placement 2 at 1,500. So "by update 1,500" is accurate for all three. Good.
+
+Note: from 1%, A at 500 is already 92-96%! That's remarkably fast — A outcompetes B that quickly. 36 A programs → 3,456 in 500 updates. Plausible given fitness differences (A does 9 tasks vs B 8, plus resources).
+
+Hmm wait — but there's a design question: the plan's mechanism expectation was that B (rare kind doing tasks few others do) should grow when rare. Here B lacks AND. With A at 99%, the AND resource stays 140-240 so AND still pays 1.6-2.3x, vs B's 5% faster copying. A wins. Fine — matches results.
+
+But the deeper cross-examination point: the plan chose A = the most common viable sequence and B per the rule. The environment for the competition starts resources at seed-1's 50,000-update levels — those are levels reached by a diverse population doing all 9 tasks. Filling with 99% A (all nine tasks) — consistent. But when A is at 1% and B at 99%, initial resource levels are the same (S113's end levels, high usage). With 99% B (no AND), the AND resource is barely consumed, so it inflates — but B doesn't do AND, so no effect; and the other 8 resources run low? The claim in md: "with A at 99%, the AND resource stayed between about 140 and 240". OK.
+
+One design question: B's being 5% faster copying yet losing — fine.
+
+Now check the extension world count and B3a in json. Also check S113 results for "highest_common" (41 at 48,250) and tp113 keys used by the gather script: `s113['test processor reading']['per run']` with 'common_at_marks' — need S113 json presence, but that file is not in our folder (only the md after cross-examination). Let me check S113 results md for the 41/48,250 and for the counts used in table 2.1 (65/46/55 etc.) to verify they match the md table.
+
+S113's test-processor common at 50,000 (line 139-140): GROWING 65/46/55, FIXED LARGE 32/41/13? Line 139 shows growing row of a corrected table: "GROWING LIST | 65 / 46 / 55 ...". Line 130 gives Avida's world count. The S116 table 2.1 column "S113 test processor (one input set, world order)": GROWING 65/46/55 ✓, FIXED LARGE 32/41/13 — need S113's test processor row for fixed large. Line 140 not shown; but E4 quotes "65 / 46 / 55 against 32 / 41 / 13 (test processor)". ✓. FIXED GRADED 7/8/8 ✓ (line 198: "GROWING | 68/56/62 | 65/48/55 ..." — that's another table). CTPL 16/9/8 ✓ (md 2.1). Present at 50,000 probe vs S113: "GROWING LIST 73/27/69 against 74/65/72" ✓ (line 115). FIXED LARGE 34/59/47 against 54/67/51 ✓ (line 117). FIXED GRADED 20/25/15 vs 22/31/23 — line ~113? plausible.
+
+Also the extension check "it must give 41 common": S113's fixed_large_seed2 test-processor common = 41 ✓ (line 228 "fixed_large_seed2 | 5 | 195 | yes | 19 | 41 ..."). And "28 at 40,000, 37 at 45,000, 41 at 50,000" — S113 line ~? plausible.
+
+Now check A/B choice numbers: md says A 14 programs, 93 instructions; json: A programs_at_50000 14, length 93 ✓; B 8 programs, 93 instructions ✓. md: "A ... performs all nine paid tasks" — json paid_tasks for A: and, andn, equ, nand, nor, not, or, orn — only 8 listed +? The read cut at 3475: "and, andn, equ, nand, nor, not, or, orn" — wait, A should have all nine: and, andn, equ, nand, nor, not, or, orn, xor = 9. The visible list shows 8 before the cut (line 3467-3475 shows: and, andn, equ, nand, nor, not, or, orn) and the next line would be xor presumably (line 3476 cut). Let me verify A has xor.
+
+A has 9 tasks ✓ (and, andn, equ, nand, nor, not, or, orn, xor). B has 8 (all but AND) ✓.
+
+Now remaining checks:
+
+1. **Avida's knockout output columns (k[1]=lethal, k[2]=detrimental)** — check build notes for the knockout file format.
+
+2. **The spop column indices** w[4] = num_units, w[16] = sequence. From S113's measure script read_spop: n = int(w[4]), sequence w[16] — same. Consistent with the probe's schema (#format header order: id num_units viable length gest_time fitness update_born parent_id depth sequence ...). Hmm wait — in the summarize detail spop parse, they use the #format header. The spop format for detail saves: "#format id num_units viable length gest_time fitness update_born parent_id depth cells genome_type... sequence"? Actually in s113 read_spop, w[16] is sequence — hard-coded index. The s116 K top_sequences also uses w[4] and w[16]. Since both S113 (already cross-examined and settled) and S116 use the same indices, and results are consistent (A length 93 = decode works; competition A sequence matched w[16] with spop), fine. But wait — do detail spop files have the sequence at a fixed column? The spop #format line for detail saves: "id update_born parent_id num_units depth length gest_time fitness ..."? If w[16] were wrong, the K and competition results would be garbage. The competition's A share counting used w[16] == a where a came from kinds.json 'sequence' (from the probe's r['sequence'] via DETAIL output, not spop index). If w[16] in count() were a different column, A/B counts would be 0/other=3600. They weren't. And in top_sequences w[16] matches. OK consistent.
+
+3. **Build notes** — check for knockouts format and default inputs and nand steps/levels 1-5. Let me grep the build notes.
+
+Build notes don't document the knockout output format or default input values. So the K script's reading of knock file columns (k[1]=lethal, k[2]=detrimental) and the claim "Avida's world always gives them in one order (top bytes 15, 51, 85)" are not backed by anything in the folder. From my knowledge of Avida source (cAnalyzeCommand.cc, "Knockouts"): the output line format... Let me recall. In Avida's analyze mode, there's a "Knockouts" command implemented in cAnalyzeCommand.cc? The knockout file written by cAnalyze::RunKnockouts writes per genotype: genotype name, then counts by class: lethal, detrimental, neutral, beneficial. Header "# name lethal detrimental neutral beneficial" or similar. The script uses k[1]+k[2] as lethal+detrimental, i.e. columns 1 and 2 after the name. That matches lethal first, detrimental second. This is the standard Avida knockout output order (from cAnalyze.cc: file << name << " " << n_lethal << " " << n_detrimental ...). I'm fairly confident the order is total? Hmm. Let me think about the magnitude check: K values ~56-90 out of ~93-195 instruction sequences. A is 93 instructions with K? If k[1]+k[2] counted all but neutral... A genome of 93 instructions with K≈60 means 60 of 93 instructions are lethal or detrimental — plausible for evolved programs. NO TASK seed 3 K=22.9 with shorter genomes? Plausible.
+
+An internal consistency check: 'lethal_weighted_mean' would be ≤ K mean. Not in json (only K_weighted_mean in gather). Hmm.
+
+The instructions lengths: md says "96 to 100 of the 100 viable except NO TASK REWARDS / ONE HARD TASK ONLY seed 3, 60 to 100". Fine.
+
+I cannot verify the knockout column order from the folder. This is a genuine "not reached / unverifiable" item: no documentation of the knock_u.dat format in the folder (build notes cover other rules). Since results lean on k[1]+k[2] = lethal+detrimental, and the md quotes "lethal plus detrimental", if the actual order were e.g. "neutral beneficial lethal detrimental" the numbers would be wrong. But there's a sanity check: for a viable sequence, lethal ≤ ... hmm no.
+
+Actually, I recall Avida's analyze knockout output from source (avida-core/source/analyze/cAnalyzeCommand.cc? or cAnalyze.cc): `RunKnockouts` writes lines: genotype name, number of knockouts of each type: "lethal", "detrimental", "neutral", "beneficial" — the classification in cTestCPU feedback. I'm fairly confident. I'll flag it as an unverifiable-from-folder assumption worth one line in the report (a documentation gap, not necessarily an error): the build notes document the rules the measures lean on, but not this one.
+
+Similarly the default test-CPU inputs claim (top bytes 15/51/85 = world order). The empirical cross-check: world-order reading exactly reproduces S113's counts in every environment/seed (65/46/55, 32/41/13, 16/9/8, 7/8/8), and S113's RECALCULATE used Avida's default inputs. This strongly supports the identification. So no objection; it's empirically anchored.
+
+Now let me check the plain words file for forbidden words (S23: fits, supports, verified, proves, true, better than, established, etc.), and check whether anything is settled or chosen for the owner.
+
+Plain-words issues:
+
+1. Section 4 "The yardstick": "five of the twelve runs where something was paid came out lower" — consistent with results. "on the stricter yardstick, the growing list and the all-77 environment are not clearly apart" — consistent.
+
+2. Section 4 "Sums, once there, mostly stayed" — "in the growing list's middle run, 98.7 in 100 ... In every environment that paid, it was at least 87 in 100." The B2.2 numbers were the *median* seed (0.92 FIXED GRADED, 0.987 GROWING, 0.875 CTPL, 0.945 FIXED LARGE). "In every environment that paid, it was at least 87 in 100" — if that refers to the median value per environment, fine. But if read as "in every paying run", is it true? Seed values: FIXED GRADED 0.871/0.966/0.92 — min 0.871. CTPL 0.875 median; what are its three seeds? If one seed were below 0.87... the sentence "in every environment that paid" is ambiguous between environments and runs. Check json for CTPL and FIXED LARGE seed values.
+
+3. Section 4 K paragraph: "in the growing list, taking out any one of about 37 to 53 instructions lowered a typical program's share of the computer's time at update 5,000, and 74 to 82 at 50,000" — matches K table (52.7/37.2/46.5 at 5,000... wait "37 to 53" — 37.2 to 52.7 ✓; at 50,000 74.2/81.9/74.7 → "74 to 82" ✓).
+
+4. Plain words says "The one doing all nine took over the whole world from every start, even from 1 in 100, within 1,500 updates" ✓.
+
+5. "which of the two counts is the right one for your question is not settled here" — good, nothing settled.
+
+6. Forbidden words check: "true"? The doc says "It uses ... none of the words you asked to be removed, except inside quotations". Scan: "right one" — 'right' ok. "verified"? no. "supports"? no. "better"? no. "proves"? no. Search: "true" — line: none. "believe"? none. Good, seems clean. But note line 3 claims "none of the words you asked to be removed, except inside quotations" — check for "exact/exactly" — not forbidden. OK.
+
+Now let me check B2.2 seed values for CTPL and FIXED LARGE in the json, plus B3a banks numbers (founder shares etc.), and extension tp numbers.
+
+B2.2 seed values: all paying runs ≥ 0.871 → "at least 87 in 100" holds for every paying run too. OK.
+
+Also note the md section 2.2 says "of the tasks present at 25,000 and at 50,000, 87% to 99% were present at every save between in the paying environments' middle seeds" — range 0.875..0.987 across medians ✓ (87% to 99% ✓).
+
+Interesting: md says "'present after a sampled gap' ... 1 to 5 tasks per run" — but json shows equ_only seed1: 2, and values 1-5 ✓ (fixed_graded_seed1 has 4, CTPL seed1 has 5). And no_rewards seed1 0.429 etc. Fine.
+
+Now check B3a banks in the json (discriminating shares, founder shares), and extension tp.
+
+Note: "most common at 1,000" is "reject all" for all — so the second clause of `forr` is satisfied via `t != 'accept only 1'` (most common at 5,000 is 'reject all' ≠ founder). Plan's condition: "the most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's" — satisfied. OK.
+
+md section 3 says "At 1,000 the discriminating share was 0.16 to 0.25" — json scalar: 0.18/0.17/0.25; reputation presumably 0.16..? plausible.
+
+md: "the founder's rule fell from all programs to 2% to 6%" — founder shares at 5,000: 0.031-0.059 scalar; reputation 0.019-0.052. That's 1.9% to 5.9% → "2% to 6%" ✓.
+
+Now check B3a.2 largest contrast — zero? And extension tp values.
+
+All consistent with md table.
+
+Now check the ranks json levels (1 to 5 for the two-input tasks, 77 tasks) to verify the K reference environment claim and the reward-history 'growing' mapping.
+
+Levels 1..5 presumably. Also interesting: the NOT task's logic_ids are 15, 51, 85 — those are the classic Avida input masks! (Avida's default inputs are built from the bit patterns 15, 51, 85, 170...). This confirms the world inputs derive from masks 15,51,85 — supporting the world-order identification. Good.
+
+Now let me check the S115 plan of runs (batch 2/3 definitions) to see whether the S116 plan matches what S115 proposed (e.g., "11 saves" already noted; the K definition; the competition definition; whether S115's plan required anything S116 dropped).
+
+S115 batch 2: "18 runs × 11 saves" — noted departure (10 saves). Batch 3 matches S116's plan.
+
+Now let me quickly read S115/01 and S115/05 checks for anything the S116 measures leaned on (e.g., known probe caveats about "viable_all" semantics, or K's meaning), and S115/02 check for the "accept only 1" founder claim and the bank structure. Also check S113's settlement (section 5 continuation proposal) and the "the rule for reading" file. Priority: the rule for reading file, then S113 settlement (what was proposed: "50,000 to 75,000"?), then S114 audit thresholds (COMMON TASKS PAY LESS caveat).
+
+The continuation: "about 20 pieces, roughly 1 CPU-hour" proposed; S116 ran 25 pieces (to 75,000), 1,966 s ≈ 0.55 h. Plan says "the continuation proposed by the S113 settlement (section 5)" — the settlement said "beyond 50,000: about 20 pieces". S116 chose 25 pieces (to 75,000). Fine.
+
+Now a few remaining verifications:
+
+**A. The competition's avida.cfg mutation settings.** Check S111's avida.cfg for what mutation settings exist, to confirm "every instruction change off" covers all. In Avida 2.14, the mutation settings are exactly the ones in reply 02's cfg: COPY_MUT_PROB, COPY_INS/DEL/UNIFORM/SLIP, DIV_MUT/INS/DEL/UNIFORM/SLIP, DIVIDE_*, PARENT_*, POINT_*, INJECT_*, META_*, INST_POINT_MUT_PROB. If S111's avida.cfg has nonzero values only for COPY_MUT_PROB (0.0075) and DIVIDE_INS/DEL (0.05 per S66), then setting those three to 0 turns off every instruction change. Check avida.cfg.
+
+avida.cfg: nonzero mutation rates are COPY_MUT_PROB 0.0075, DIVIDE_INS_PROB 0.05, DIVIDE_DEL_PROB 0.05 (plus GERMLINE_* which apply only to deme germlines, off since NUM_DEMES 1 / DEMES_USE_GERMLINE 0). So the competition's three `-set` flags do turn off every instruction change. ✓ "every instruction change off (copy error 0, one-instruction insertion and deletion 0)" ✓.
+
+Also note: S113's runner passes only `-set COPY_MUT_PROB 0.0075` (already the cfg value) — the 0.05 ins/del come from the cfg (consistent with S66).
+
+Also ENERGY_ENABLED 0 in S111's config — reply 02's suite uses its own cfg with energy. Fine.
+
+One more thing for the competition: avida.cfg has `BIRTH_METHOD 0, PREFER_EMPTY 1, ALLOW_PARENT 1`, `DEATH_METHOD 2` — same world rules as S113's runs. The competition fills all 3,600 cells at update 0 — births replace neighbors. OK.
+
+`SPECULATIVE 1` etc. fine.
+
+Now potential issues to weigh for objections:
+
+**Issue 1 (medium): "middle seed" is the median of values, not a seed.** Gather script line 84: `mid = statistics.median(fr)`. Results.md §2.2 and plain words present it as "the paying environments' middle seed" / "the growing list's middle run, 98.7 in 100". For FIXED GRADED, the median 0.92 is seed 3's value while the middle seed (seed 2) is 0.966; for GROWING, median 0.987 = seed 3's value, and the plain-words file says "in the growing list's middle run, 98.7 in 100" — but the growing list's middle run (seed 2) is 0.933, not 0.987! That's a factual misstatement in the plain-words file: 0.987 is seed 3 (present_at_25000 81, both ends 79, every save 78 → 0.987). Seed 2's is 28/30 = 0.933. So plain words §4 attributes seed 3's number to "the middle run". Also results.md §2.2 "GROWING LIST 0.987" labelled "middle seed" is seed 3's number. No verdict changes (all ≥0.8; all runs pass anyway), but the sentence is wrong as written. Fix: call the statistic "the median of the three seeds" and in plain words either use the median wording or seed 2's 93 in 100 (or seed 3's 98.7 labelled as the highest run). This is a genuine objection.
+
+**Issue 2 (medium): numbers in the results with no committed script.** (a) The per-order viability counts in §2.1 (2,377/2,381 of 3,489; 62 to 370; 26 to 169; ~1,900–2,160; 137); (b) A's and B's copy speed "545 against 577 instruction executions" (§4, also plain words "copies itself about 5 in 100 faster"); (c) the AND-resource range "140 to 240" (this one is readable from resource data printed every 50 updates, but no script reads it); (d) "by update 1,500" (verifiable from summary.json saves — fine, actually that's in the json). The plan's running rules say "Every departure is recorded in the results"; departure 2 records only two added summary readings. Items (a)–(c) are descriptive claims leaned on in the results and the plain-words file (the plain-words "Second" point rests entirely on (a); the competition explanation rests on (b) and (c)). Fix: add these computations to the summary scripts (or a small recorded script) and record them as a departure; or mark them in Departures as one-off readings with the command.
+
+**Issue 3 (small/medium): the reward_history off-by-one for growing** — minor, no verdict leans on it. Maybe fold into a minor.
+
+**Issue 4 (documentation gap): the knockout file column order.** The build notes list "Avida's rules the measures lean on" but not the ANALYZE_KNOCKOUTS output format; K = k[1]+k[2] assumes columns name, lethal, detrimental. If the order differs, every K number is wrong, though rises/falls would likely still be informative. There's an internal check available: K_weighted_mean ≤ sequence length. A is 93 instructions; growing seed 2 at 50,000 K = 81.9 ≤ plausible genome lengths (growing seed 2 mean length 109 from S113 table line 222? "growing_seed2 | 46 | 109 | yes ..." — the 109 is likely mean length). 81.9 ≤ 109 ✓. FIXED LARGE seed 2 length 195, K 74.5 ✓. NO TASK seed 3: length? K 22.9. OK plausible. Also 'viable' counts behave. So k[1]+k[2] is at most length — consistent. I'd raise as a minor: name the source line for the knock file format in the build notes (the fix: add to build notes the format line from cAnalyze source, and the assertion `k[1]+k[2] <= length`). Actually a real check could be an assert. List as minor with exact fix: document/verify column order from Avida's source (cAnalyze::RunKnockouts) in the build notes or an assertion in the script.
+
+**Issue 5: B3a "most common pattern at 5,000 different from the founder's or from 1,000's"** — implemented right. No objection.
+
+**Issue 6: The bank reader's grant threshold `>= 5`.** If a genotype's two panel-averages for a cue are 10 and 0 (inconsistent), the mean is 5 → counted as "gives to that cue". With threshold exactly at 5 inclusive, an inconsistent genotype counts as giving. `sequences_with_inconsistent_grants` is recorded but not reported in results.md. If inconsistency is nonzero somewhere, patterns are ambiguous. Results don't report it. Minor: report the inconsistent count (it's in summary.json? The 'sequences_with_inconsistent_grants' key is in read_bank's output → in banks in json). Let me check its value in the json — if 0 everywhere, no issue.
+
+**Issue 7: B2.5 reading** — plan says "the two within 10% of the core count in every paying run" for "counts for". The gather marks 'against' if any paying run >10% below on either present or common. GROWING seed 2 present 27 vs 23 → against. Consistent with plan text. But note the md's B2.5 counts "GROWING seed 1: 51 small, 65 large" — logic_high HIGHER than core. The plan's against-branch: "a paying run where logic_high is more than 10% below core: part of S113's capabilities hold only for small numbers". Fine.
+
+Hmm wait, actually there's a subtlety: logic_high higher than core by 14 tasks (51 vs 65) is itself a red flag explained by input order (all-8 core small inputs include 6 shuffled orders; all-8 large also 6 shuffled...). Both require all 8. Why would large give 65 vs small 51 for seed 1? Because programs perform tasks on large inputs in shuffled orders too but not on small inputs. Whatever — reported, not leaned on.
+
+**Issue 8: The competition's initial resource levels.** The plan says "every resource starting at the level S113's seed 1 had at update 50,000 (as S113's runner carries it)". resources_left(piece_49) — reads resource.dat's last row. But wait: does resource.dat in piece_49 have multiple rows? events: PrintResourceData at 'u %d PrintResourceData' % PIECE = only at update 1000 of the piece. So one row (plus header). resources_left takes rows[-1]. ✓.
+
+But a subtle issue: `resources_left` parses names from header comments: lines starting '#' with ':' and digit — S113's runner used this to carry resources between pieces; presumably validated in S113's cross-examination (Xb5 mentioned "add the guard on the resource parse"). Fine, unchanged.
+
+**Issue 9: the continuation count world_count includes piece_49 samples 49,000–50,000 (S113's own run) but labels them; and skips update 0 of each piece.** Consistent with S114's finding. ✓.
+
+**Issue 10: `s116_continue...` count mode: `M.WORK = EXT + '/test_processor'` and `R.OUT = RUNS` reassignments — but `M.one_snapshot` references `R.OUT` at call time (module attribute lookup inside function → uses updated R.OUT ✓ since it does `os.path.join(R.OUT, ...)` at runtime). ✓. And M.evaluate uses R.S111CONF, R.AVIDA — unchanged ✓. And argv includes 'nice -n 10' and 'timeout 3600' ✓.
+
+**Issue 11: probe driver's copy_saves skip condition**: `if not (os.path.exists(dst) and getsize(dst)==getsize(src))` — if a partial copy existed, recopied. ✓.
+
+**Issue 12: The probe uses `-c <run_dir>/avida.cfg` with cwd=run_dir, and DATA_DIR is set via -set to an absolute path — the probe writes results into $out/results. run_dir contains copies of S111 cfg files. But avida.cfg's DATA_DIR 'data' overridden. ✓. And RUNDIR is in S116 scratch. ✓.
+
+**Issue 13: In probe_one, after the probe, it writes reward_history.tsv using tasks.tsv rows for canonical core tasks; `first.get(r['canonical'], 'never')` — for core canonical tasks all in ranks? math_* and echo etc. are not in ranks (ranks = 77 logic tasks only). reward_history's `first` covers only ranks tasks; `.get(..., 'never')` marks every arithmetic task 'never' ✓ (they're never rewarded — correct). And logic tasks present ✓. Good.
+
+**Issue 14: `summarise_run` uses `int(next(iter(rows.values()))['population'])` — takes population from an arbitrary row; all rows same snapshot have same total ✓ (the summariser writes total per row).
+
+**Issue 15: B2.1's ever-seen rise computed as ever_seen_all(50,000) - ever_seen_all(25,000)** ✓ cumulative union. ✓.
+
+**Issue 16: results.md §2.1 text "probe core (8 small inputs, all 8)" column header and "157 tasks"** — §1 table says core profile 157 tasks. The audit says core includes echo, BOOL(9), logic_*, math_*, fib_* minus aliases minus dontcare... 214 names total, core subset = 157? Plausible; the md says "(157 tasks)" — where from? tasks.tsv count. Not verifiable but plausible.
+
+**Issue 17: The exact commands file says the probe was "run again at about 18:05 and 18:12, after two descriptive readings were added to the summary"** — i.e., summary-only reruns, no Avida rerun. Consistent with departures. ✓ But note this means the summary was regenerated after results were first seen — flagged as departure 2 ✓.
+
+**Issue 18: The competition md claim "B ... 93 instructions" and B copies faster "545 against 577 instruction executions"** — as noted, unrecorded computation. Also "In the test CPU without resources" — the K script's environment has no resources; the copy-speed measure used some analyze run. Unrecorded.
+
+**Issue 19: One seed for continuation etc. all stated.** §9 Unsure lists 8 inputs one draw, 100 sequences, one pair 2,000 updates, one seed. The plan's limits: "What do the limits leave open ... Is each stated where a result leans on it?" Check: the K limit "100 most common sequences carry a varying share of the programs (not reported per save)" — stated in Unsure ✓ (and the summary json has programs_in_population and programs_in_tested per save, so the share could be reported; minor). 10 saves 5,000 apart — stated (departure 3 and plan §0) ✓. 8 inputs stated ✓ (§9). Competition one pair stated ✓ (§4 and results §7) ✓. Continuation one seed ✓ (§5 caveat) ✓.
+
+**Issue 20: probe reading of `logic_high` "same rule"** ✓ read_logic_high implements all-inputs+viability. ✓
+
+**Issue 21: `world_order_inputs` uses `>>24` on int(r['input%d'])** — logic_high inputs are (mask<<24)|rand ✓. And the world's inputs: is the world order actually (15<<24, 51<<24, 85<<24)+random? The claim "the first number's top byte 15..." — where's the evidence? The logic_ids of NOT are 15, 51, 85 → the classic Avida default inputs are exactly 0x0F0F0F0F? Hmm, classic Avida default environment inputs are 25, 51, 85, 170? Actually — in Avida, the input buffer is filled from the environment's input list which by default cycles {0x0000FFFF...}? I recall in Avida's cEnvironment, inputs come from a "input buffer" of values from the resource "input"... The strongest evidence in-folder: the world-order reading exactly reproduces S113's test-processor counts (S113's RECALCULATE with no explicit inputs = Avida's default test inputs). It matches in all 12 paying runs — that's the empirical anchor. But strictly, the claim "Avida's world always gives them in this order" (i.e., the world's inputs equal the default test inputs) is a further claim. If the world's inputs differed from default test inputs, S113's test-processor count wouldn't be "the count for the world the programs lived in". Hmm. The results.md says "Avida's world always gives them in one order (the first number's top byte 15, the second 51, the third 85), and S113's test processor used that order". Two claims: (i) world inputs come in a fixed order; (ii) the default test inputs match. From Avida source, default inputs are indeed generated with masks 15,51,85 (e.g., cHardwareCPU test inputs use (rand & 0xFF00...)<<... I can't verify. The identification "world order = probe world-order sets" is supported by the exact match with S113's test processor only if the test CPU default inputs equal the world inputs. This chain is asserted, with a guess-level explanation in §9. Given the exact reproduction across 12 runs and 3,000+ programs, it's well supported empirically as far as "the test processor's default inputs" go; the "world" claim is the residual assumption. Minor note: not verified from source; could be flagged as needing a source line (like build notes). I'll fold this into the documentation objection or a separate minor: add to the build notes the source line for how the world's inputs and the test CPU's default inputs are made (both fixed as 15/51/85-masked), since §2.1's explanation leans on it.
+
+**Issue 22: check plain words "Counted on the two sets of numbers that keep the world's order, every run gives page 113's numbers exactly"** — verified in md table ✓ (last column = S113 exactly).
+
+**Issue 23: B2.2 "against" branch not evaluated per plan?** Plan B2.2 against: "in any paying environment's middle seed, more than a fifth of the endpoint-kept tasks were missing at some save between". Gather doesn't compute this explicitly, but 'for' at ≥0.8 implies against at <0.8; complementary. Verdicts 'for' all. Fine.
+
+**Issue 24: B2.4's plan wording "K higher at 50,000 than at 5,000 in all three seeds of a paying environment, and that rise larger than NO TASK REWARDS's in every seed"** — gather: three_seed gives 'more' iff min(a)>max(b) — "larger in every seed" ✓.
+
+**Issue 25: results.md §1 table "Batch 2, K ... at most about 1,040 s"** — wall 17:59–18:08 (9 min = 540s) × 2 at once ≈ 1,080. "at most about 1,040" — hmm, that's oddly precise; stated as upper bound from wall time ✓ and flagged in §9 ✓.
+
+**Issue 26: "Nothing is written into S113's folder"** — one more scan: `s116_probe...` copy_saves writes only to COPIES; probe writes to PROBES. `s116_count...` writes KDIR. Competition writes COMP, reads S113 piece_49. Continuation writes EXT. gather reads scratch, writes results. ✓. But note: `M.one_snapshot`'s evaluate() makes tempdirs in M.WORK which is redirected to EXT/test_processor ✓.
+
+Wait — actually one more: in `count` mode, `R.OUT = RUNS` is assigned — but `world_count()` uses RUNS directly ✓; `json.load(open(os.path.join(RUNS, KEY, 'state.json')))` ✓.
+
+Hmm, but there's a subtle bug risk: `R.run_one` in 'run' mode is called BEFORE `prepare()`? No: prepare() then run_one. ✓.
+
+**Issue 27: The extension pieces 50-74 write state.json in RUNS, appending to copied run.log ✓.**
+
+**Issue 28: reply 02 suite checks** — run_suite checks exit, log errors, reached update, living>0 ✓ "every run and assay passed the suite's own checks" ✓.
+
+**Issue 29: bank reader "3 arms each" — 36 assays = 6 runs × 2 updates × 3 arms ✓.**
+
+**Issue 30: plain words "about 3.8 hours of computer time, under the 4 allowed" ✓.**
+
+Now, checking the md's §3 claim "At 1,000 the discriminating share was 0.16 to 0.25" — scalar at 1,000: 0.18/0.17/0.25; need reputation at 1,000. Let me grep. Also verify "founder's rule fell from all programs to 2% to 6%" — at 1,000 founder shares are 0.029–0.061 (from md table), so founder was already low at 1,000; "from all programs" refers to start. OK.
+
+Let me check reputation discriminating at 1,000 and inconsistent grants.
+
+No nonzero inconsistent-grants values found (all zero presumably) — good, threshold issue moot.
+
+Reputation discriminating at 5,000: 0.16/0.20/0.09 — md table says 0.16 / 0.20 / 0.09 ✓.
+
+Need reputation at 1,000 for "0.16 to 0.25" claim — line ~3222. Let me just check quickly.
+
+Discriminating at 1,000 range: 0.1614–0.2469 → "0.16 to 0.25" ✓.
+
+Note: B3a.1's "for" letter: discriminating at 5,000 reputation seed 103 = 0.0919 < 0.10, but two of three ≥ 0.10 ✓.
+
+Also interesting: discriminating fell from 0.16–0.25 at 1,000 to 0.09–0.20 at 5,000 — declining, consistent with md's honest note.
+
+Now, one more check: results.md §3 "0.049, 0.031 / 0.050, 0.059 / 0.029, 0.039" for scalar founder shares — json scalar founder: [0.0486, ...] — read earlier showed 0.0486 at line 3186; presumably matches.
+
+Also check the md §2.2 numbers "0.92, 0.987, 0.875, 0.945" ✓ from json medians.
+
+Now check remaining items in my brief: "the columns read from Avida's files as the scripts read them" — verify w[4]/w[16] in spop. The probe reads spop via reply 01's detail() with #format header (robust). S113/S116 K/competition use hard-coded w[4], w[16]. Cross-check: the spop #format for detail saves in Avida 2.14: "#format id update_born parent_id num_cpus ... "? Hmm — actually for population files ("detail-1000.spop"), Avida writes genotype records with fields: id, update_born, parent_id, num_units (or num_cpus?), depth, length, gest_time, fitness, ... sequence. If w[4] were 'depth' not count, counts would be tiny. The K results: 'programs_in_population' totals ~3,500s consistent with population 3,595 (e.g., fixed_graded populations ~3,595). And md says populations 3,484/3,489 for growing seed 2 — plausible ~world 3,600 minus dead cells. So w[4]=num_units ✓. w[16]=sequence: the competition matched A/B sequences exactly (na+nb=3600, other=0), and A's decoded length 93 = kinds.json length ✓. So column indices verified empirically. ✓.
+
+Also "count.dat column 3: number of organisms" (R.shares_at_end uses count[2]) — S113's, already settled. ✓.
+
+Now the last checks: S115 checks of replies 01/02/05 for anything bearing on measures — quickly scan S115/01 check for known caveats about the probe (e.g., that RECALCULATE resets inputs; that viable requires exact copy). And S115/05 check for K's definition (lethal+detrimental). Let me grep briefly.
+
+S115's check ran ANALYZE_KNOCKOUTS in miniature and got "ancestor 12 lethal, 3 detrimental, 85 neutral" — the knockout file has separate columns for lethal, detrimental, neutral, beneficial. The S115 check read these columns successfully and cross-checked against S111 (12 vs 15, differs, noted). So the column order (lethal, detrimental, neutral, beneficial) was verified in S115's check by reading the values and finding them plausible (ancestor 100 instructions: 12+3+85=100 ✓! The default ancestor is 100 instructions? Avida's default ancestor is 100 lines? Actually default-heads.org — the standard Avida ancestor is 100 instructions? Hmm, the classic default ancestor is 100 lines ("headless seed organism"). 12+3+85+0 = 100 ✓ consistent). This strongly suggests the format is name-lethal-detrimental-neutral-beneficial and that k[1]+k[2] = lethal+detrimental is right. Good — no objection; the S115 check anchors it. (Though the S116 script's assumption k[1]=lethal, k[2]=detrimental matches the order in which S115 quoted them; and K=15=12+3 for the ancestor consistent with "lethal plus detrimental".)
+
+Also this check's note: "the ancestor's 12 'lethal' differs from S111's 15 instructions whose ablation stops replication" — fine.
+
+Now, S115/01 check — anything about probe caveats? Quick grep for "viable_all" or known issues.
+
+Nothing alarming. Now let me double-check two md claims that could be wrong:
+
+1. §2.1 "Present at 50,000 (probe core against S113's test processor): ... the two others equal (3 / 2 / 0)." Check json "B2 probe against S113 test processor" present values for equ_only and no_rewards quickly.
+
+2. §2.1 says "the probe gives lower counts than S113 in five of the 12 paying runs". Paying runs = 4 envs × 3 = 12. Lower in: GROWING seed 1 (51<65), GROWING seed 2 (0<46), FIXED LARGE seed 1 (0<32), FIXED LARGE seed 2 (24<41), CTPL seed 2 (7<9) = 5 ✓.
+
+3. Also check "probe, large inputs in the world's order (2 sets)" column: FIXED LARGE 32/41/13 — but wait, 13 for seed 3: S113's test processor gave 13 ✓. GROWING 65/46/55 ✓.
+
+Let me verify the "two others equal (3 / 2 / 0)" via json.
+
+All md §2.1/§2.2 numbers verified against json. One catch: md §2.1 last paragraph says "nor GROWING against FIXED GRADED, nor FIXED LARGE against FIXED GRADED" — json confirms. And "FIXED GRADED is above NO TASK REWARDS" ✓.
+
+Hmm wait — "probe core (8 small inputs, all 8)" column in md table 2.1 shows GROWING "51 / 0 / 55". Common logic probe core ✓.
+
+One inconsistency to check: FIXED LARGE LIST seed 3 probe core common = 13 while probe core present = 47 and S113 = 13. OK.
+
+But note: FIXED LARGE seed 1: probe core common 0, but probe present 34. And md says "on the small inputs only 26 to 169 of 3,484 programs copy themselves" — so common (≥348 programs) fails everywhere ✓ consistent.
+
+Now, one more possible objection regarding **B2.5's "against by the letter"** — fine.
+
+Let me also double-check the plain words claim "for example the fixed list's three runs, 7, 8 and 8 sums common, exactly as before" ✓.
+
+Now, remaining verification: the S114 audit thresholds referenced in §0 of the plan (COMMON TASKS PAY LESS lowered). Not my angle per se (angle 1's), skip.
+
+**One more script-level check: the probe's `--run-dir` (RUNDIR) contains avida.cfg etc.; the probe command runs with cwd=run_dir and `-c <abs avida.cfg>`. The avida.cfg in RUNDIR is S111's, which references instset-heads.cfg via #include INST_SET — relative path resolved from config location ✓ copied there ✓. But the K script copies avida.cfg and instset-heads.cfg into d and runs with cwd=d and NO -c: Avida default looks for 'avida.cfg' in cwd ✓. environment.cfg, events.cfg, analyze.cfg in cwd ✓ per cfg's CONFIG_FILE_GROUP ✓.
+
+But wait — K script writes events.cfg 'u begin Exit' — in analyze mode, events aren't run? Harmless. And the avida.cfg in the K dir: S111's has RANDOM_SEED -1 → but -s 1 passed ✓. DATA_DIR 'data' relative → d/data ✓.
+
+And the K script's DETAIL writes 'seqs_u%d.dat' with fields 'viable fitness sequence' — seqs = last column ✓. But note DETAIL rows include a header? Lines starting '#' skipped ✓. The `DETAIL` command's output includes '#format' line ✓ skipped.
+
+One subtle thing in K: `lines += ['PURGE_BATCH'] + ['LOAD_SEQUENCE ' + s ...]` — LOAD_SEQUENCE with the sequence string; Avida analyzes with the current environment (environment.cfg in cwd). ✓. RECALCULATE — default inputs (world order) — consistent with S113's test processor. ✓ (K's fitness computed with default test inputs — a choice; plan says "under one fixed reference environment" ✓.)
+
+**And check: does the K script's avida.cfg have world size etc. irrelevant in analyze mode ✓.**
+
+**Timing check on the whole job**: batch 3a 17:00–17:16 (16 min ≈ 960 s wall × 3 processes ≈ 2,880 s ≈ 3,003 reported CPU ✓). Probe 17:16–17:59 (43 min, 2 at once ≈ 5,160 s ≥ 4,217 ✓). K 17:59–18:08. Continuation 17:16–18:08 (52 min = 3,120 s ≥ 1,966 ✓). Competition from 18:08, 15 runs 238 s each, 3 at once → 5×238 = 1,190 s ≈ 20 min... wait 15/3 = 5 waves × 238 = 1,190 s wall ≈ 3,570 CPU ✓ matches.
+
+All consistent.
+
+**Now the "world count 41 at all 100 samples from 50,250 to 75,000 (and at 49,250 to 50,000)"** — samples every 250 → from 50,250 to 75,000 = 100 samples ✓; plus piece_49's 49,250/49,500/49,750/50,000 (4) ✓ json shows.
+
+Now, assemble objections. Ranked:
+
+**X2.1** Plain words §4 (and results §2.2) attribute the median of the three seeds to "the middle seed/middle run": plain words says "in the growing list's middle run, 98.7 in 100" but the growing list's middle run (seed 2) is 0.933 (json: growing_seed2 28/30); 0.987 is seed 3. results.md §2.2 "middle seed" likewise reports medians (FIXED GRADED 0.92 is seed 3's value; seed 2's is 0.966). Gather script line 84 `mid = statistics.median(fr)`. No verdict changes (every paying run ≥ 0.871). Fix: rename the statistic "median of the three seeds" in results §2.2 and json key; in plain words use seed 2's number ("93 in 100") or say "its highest run, 98.7 in 100".
+
+**X2.2** Numbers in results and plain words produced by no committed script and not recorded as departures: (a) per-order viable-performing counts (§2.1: 2,377/2,381 of 3,489; 62–370; 26–169; ~1,900–2,160; 137) — the two summary readings recorded in departure 2 do not produce these; (b) A's and B's test-CPU copy cost "545 against 577 instruction executions" (§4; plain words "about 5 in 100 faster"); (c) the AND resource range "about 140 and 240" (§4). The plan's running rule: "Every departure is recorded in the results." Fix: extend `s116_probe_the_saved_program_populations.py` summary and `s116_compete_a_rare_and_a_common_kind.py` count to emit these (per-input viable counts; a gestation-time DETAIL for A and B; min/max of resource resAND over the runs), rerun summary only, and add them to Departures as a third item; or mark the numbers as one-off readings with the exact command.
+
+**X2.3** The claim "Avida's world always gives them in one order (the first number's top byte 15, the second 51, the third 85), and S113's test processor used that order" (results §2.1) is leaned on (the world-order column, the "counts are S113's exactly" reading, plain words "the order their world always uses") but is nowhere tied to Avida's source: the build notes ("Avida's rules the measures lean on") document other rules and not how the world's inputs or the test CPU's default inputs are made. The empirical anchor (exact match with S113's default-input test processor in 12 runs) supports "the test CPU's default order"; that the world's inputs are the same is an added assumption. Fix: add to the build notes the source lines for the world's input generation and the test CPU's default inputs (cEnvironment/cHardwareCPU input buffers), or state in §2.1 that the identification of the world's input order rests on that source line plus the exact match.
+
+**X2.4** Minor: `reward_history` for the growing list marks a task first rewarded during piece k (updates k·1000+1 …) as rewarded from k·1000, so at a snapshot exactly at k·1000 the summariser can label a task "rewarded_by_snapshot" one save early... wait actually snapshots are at multiples of 5,000 and pieces at 1,000, so a task unlocked during piece 25 gets exposure 25,000 and snapshot 25,000 → labelled rewarded at 25,000 though first paid at 25,001. Descriptive only (reward_status is not used in any verdict). Fix: `when = [h['piece'] * 1000 + 1 ...]`.
+
+**X2.5** Minor: K's weighting — `K_weighted_mean` divides by programs among viable sequences only, while `programs_in_tested` counts all 100 (double counts a sequence if two spop lines share it, which they do not); and the share of the population carried by the 100 tested is in the json but not reported per save in the md (md §9 flags it). Suggest: state in §2.2/§2.4 the weighted-mean denominator ("over the viable sequences, weighted by programs") and report the share of programs covered. Low severity.
+
+**X2.6?** The `>= 5` threshold in the bank reader: an inconsistent genotype (10 on one side, 0 on the other, mean 5) counts as giving. All banks had zero inconsistent grants (json), so nothing changes; still, the threshold should be `> 5` to keep an exactly-split genotype out of "gives", or the inconsistency reported. Very minor; maybe include.
+
+**X2.7?** B2.2's plan "against" branch ("more than a fifth of the endpoint-kept tasks missing at some save between") is not computed by the gather script; only the ≥0.8 "for" is. Since for/against are complements here, no gap. Not an objection.
+
+**X2.8?** The continuation's test-processor count uses 'performing' (not requiring replication) as the headline "common", as S113 did (S113's headline table "common at 50,000 ... test processor" — S113's corrected table line 139 shows growing 65/46/55 which matches 'performing'? In S113's summarise, 'performing' vs 'performing_and_replicating'; S113's test-processor table row for growing (line 139) 65/46/55 — matches tp 'performing'. ✓ consistent.
+
+Also check: the md §5 "test processor, common 41 ... at 75,000 within 1 of 41" ✓.
+
+**X2.9?** The competition's placement RNG `random.Random(1000*placement + si)` differs from the Avida seed — plan says "cells chosen at random by a placement seed" ✓ fine.
+
+**X2.10?** One more: the competition ran with resources at S113's end levels but with 99% B at start (runs starting at 1% A): the resource levels then evolve. Fine, as planned.
+
+**X2.11?** Results §4 says "no viable sequence performs a paid task A lacks" — from probe_rows requiring credit on all 8 inputs; "performs" here by the probe's strict rule. Plan's rule said "using batch 2's probe (core, all 8 inputs, viable)" ✓.
+
+**X2.12?** Results §4 "B ... (8 programs, 93 instructions) performs eight, all but AND (29 viable sequences were ranked before it)" — json viable_sequences_ranked_before_B = 29 ✓.
+
+Also check the md claim §4 "In the test CPU without resources, B copies itself slightly faster (545 against 577 instruction executions)" — 577/545 = 1.0587 → "about 5 in 100 faster" ✓ internally.
+
+Also md §4 "the AND resource stayed between about 140 and 240 (full pay needs 400)" — 2^(2×0.0025×level): AND level 2 ✓ from ranks (and: fewest_nand_steps 2) ✓.
+
+Wait — actually check: is the resource "resAND" initial level from S113's piece_49? The claim "with A at 99%, the AND resource stayed between about 140 and 240" — from the 99% runs' resource data. Unrecorded computation (part of X2.2).
+
+One more check — **the plan said the competition fills "the full 60 x 60 world ... A in a share s of the 3,600 cells and B in the rest"**. The script does Inject per cell with `Inject A.org <cell>` — Avida's Inject event args: filename, cell, ...? In reply 02's prepare_bank they use "Inject ancestor.org 0 -1 10 0 evaluator0.trace" — filename, cell, merit?, ... So 'Inject <file> <cell>' should work; the runs had A+B=3600 with other=0, so placement worked ✓.
+
+**Also: "Saved every 500 updates"** — events 'u 500:500:%d SavePopulation' % UPDATES ✓; files detail-500.spop ... detail-2000.spop read in count ✓.
+
+**Now, the "at most three at once" claim for batch 3a**: suite run with `--processes 3` default; run alone (16:59–17:16) — the driver started at 17:16. Commands say suite finished 17:16, driver from 17:16 ✓ no overlap.
+
+**Priority**: wrapper nice 19 ✓; suite calls avida through wrapper via --avida ✓ (the timed_driver runs `avida -c avida.cfg` where avida = wrapper path ✓).
+
+**Probe max 2 at once, called with arg 2 ✓; K with arg 2 ✓.**
+
+Now the "Not reached" items:
+- Whether Avida's ANALYZE_KNOCKOUTS output column order is lethal, detrimental (k[1], k[2]): anchored only by S115's miniature ("12 lethal, 3 detrimental, 85 neutral" summing to the ancestor's length); Avida's source is not in the folder, so the column order itself could not be read. Hmm — I could treat this as checked (consistent) or not reached. I'll put under checked-with-note or a minor objection asking to add the format to build notes. I'll fold into X2.3? No — separate minor: add the knockout-file format line to the build notes. Actually I'll make X2.3 cover both undocumented formats leaned on by measures: the knockout file columns and the world/test inputs. Both are "rules the measures lean on" not in the build notes. Good, one objection.
+
+- Reply 01's probe internals (RECALCULATE semantics, DETAIL schema) — run unchanged, checked in S115; I read them, no objection.
+- Whether the raw .dat numbers are as summarized (raw output not in folder) — by consistency only.
+
+Checked, no objection list:
+- Probe driver: copies before probing, nothing written into S113's folder (copy_saves, probe_one, K, competition, continuation all read-only on S113 paths); 10 saves from piece_(m/1000-1) detail-1000.spop; definitions implemented as written (all-8 + viable, present/common at 10%, logic 77 via assert, arithmetic set echo/add/add3/sub/math_*, fib/dontcare excluded, ever seen cumulative, kept-continuous recomputed on logic∪arith rather than the summariser's all-core sets, with the summariser's row kept beside); logic_high same rule via read_logic_high.
+- Reward history matches S113's environment definitions (TWO/equ/all/none; growing from state.json history).
+- K script: top-100 by programs, stable ties; FILTER viable== 1 empirically effective (viable counts < 100 where expected); fixed GRADED reference environment from S113's own function, no resources; weighted mean as documented; assertions on row counts.
+- Bank reader: patterns from active arm's three pairs, weights = census counts, reject/accept-all/discriminating shares, swapped/off contrast zero everywhere (json 0.0); B3a.1 for/against implemented per plan (0.0889 < 0.10 with two of three ≥ 0.10).
+- Competition: rule for A and B implemented as written (second branch used, recorded); S113 environment_text unchanged; resources from S113 piece_49 end; all instruction changes off (only three nonzero rates in S111's cfg, all three set to 0); world filled at update 0; seeds as planned; share counted from saves; other sequences zero everywhere.
+- Continuation: S113's run_one and one_snapshot unchanged, only out/WORK redirected; seeds 2050–2074; 900 s/piece and 3,600 s test-CPU limits inherited; the 50,000 copy check gave 41; E.1/E.2 rules implemented as in the plan (levelled off correct).
+- Time limits and priorities: wrapper nice 19 + timeout 3600 on every directly started Avida; inherited niceness for the continuation's children; at most three at once throughout; CPU totals consistent with wall times (3,003 + 4,217 + ≤1,040 + 1,966 + 19 + 3,570 ≈ 13,800 s).
+- Results.md/json/plain-words numbers cross-checked (tables 2.1, 2.2, B2.3–B2.5, K table, 3a table, competition shares, extension table) — consistent with json and with S113's published numbers.
+- Limits stated where leaned on: 8 inputs (results §9, plain §5), 10 saves (departure 3), 100 sequences (§9), one pair/2,000 updates (§7, plain §5), one seed (§5 caveats, plain §4–5).
+- Owner's words: no forbidden S23 words in plain words; nothing settled; no ranking; "model" not used for candidates (checked "model" — plain words doesn't use it; results.md? Let me check quickly for "model" in S116 files.
+
+Let me grep "model" in S116 files to be safe. Also forbidden words like "true" (used in "copied true"? build notes quote source "copied true" — that's S111's, not mine to judge; but results.md? Let me check.
+
+The plan line 69: "A positive result would support E6's mechanism" — "support" is a forbidden word per S23 ("Fits, supports, supported, verifies..."). It appears in Claude's own sentence in the plan (not a quotation). S23 binds the work as content: "Get rid of all words that imply verificationism... Forbidden words and phrases... supports, supported". The plan is a committed file; the results.md doesn't use it? Let me check results.md for "support". The grep above covered S116 dir: only plan line 69 and the terms file (quoting the glossary table, fine) and the rule file (which itself quotes S23). So one instance of "support" in the plan's own prose. Also check "true"/"holds" — "holds" isn't forbidden. Check "fits"? grep "fits" quickly... Also results.md section 8/plan section 5 phrasing. And "settle" — "settles" used with negation ("settling nothing") fine.
+
+The fix for plan line 69: replace "would support E6's mechanism for this pair only" with e.g. "would be an instance of E6's mechanism for this pair only" or "would count for E6's mechanism". Note: the results.md §3... let me check results.md for "support": not in grep results (only plan). And plain words: no.
+
+Also check "true" in results/plain words.
+
+"true" only as JSON booleans — fine. Plain words has no "settled"? Actually line 38 of plain words: "Which of the two counts is the right one for your question is not settled here." — grep for "settled" in plain words returned nothing? Pattern was `settled|settle|rank|best|worst` with glob "3 plain words.md" — no matches?? But I read "is not settled here" at line 38. Hmm — the glob may not have matched. Whatever; I read the file, it says "not settled here" — fine (negated, appropriate).
+
+Wait, actually plain words line 38 says "is not settled here" — fine.
+
+Now finalize the "support" objection: plan §3 ("Not tested") line 69. It's in the owner's forbidden list, in Claude's own sentence. Minor but a genuine content-rule violation. Fix: "A positive result would be E6's mechanism shown for this pair only".
+
+Also check results.md for "support": none found. Good.
+
+Now, one more verification I promised: the results.md §2.2 md text "B2.2 ... middle seed: FIXED GRADED 0.92, GROWING LIST 0.987, COMMON TASKS PAY LESS 0.875, FIXED LARGE LIST 0.945; all at least 0.8" ✓ medians.
+
+And §2.2 "'present after a sampled gap' ... 1 to 5 tasks per run" ✓.
+
+Also confirm: results.md §2.2 says "of the tasks present at 25,000 and at 50,000, 87% to 99%..." — 0.875 to 0.987 ✓.
+
+Another check on B2.1 md: "Elsewhere, where present fell (FIXED GRADED seed 1, 36 to 33), ever seen rose by fewer than 3" ✓ (json: -3, rise 2). "FIXED LARGE LIST seeds 2 and 3, 56 to 74 and 42 to 58" ✓ (present_change 18, 16; 56→74 ✓ 42→58 ✓). "COMMON TASKS PAY LESS 54 to 56, 29 to 35, 30 to 34" ✓ (changes 2, 6, 4 ✓).
+
+Also B2.1 md: "FIXED LARGE LIST seed 1 (ever seen 69 to 72, present 64 to 42)" ✓ (rise 3, change -22 ✓).
+
+Everything checks.
+
+Now, one more thing worth checking per my brief: "the continuation calling S113's runner and measuring function unchanged, with only their output folders redirected". Verified: run_one called with out=RUNS; one_snapshot with R.OUT reassigned. But note that R.run_one also uses module-level OUT? No, it takes out param. ✓. And `M.one_snapshot` uses R.OUT at runtime ✓. Also note prepare() copies run.log and appends — fine.
+
+One subtlety: in `run_one`, when it resumes with state['done']=50, for k=50, prev = piece_49 (the copy) ✓, and events_text(k==0) false → LoadPopulation start.spop ✓; environment from environment_text('fixed_large', ranks, unlocked=..., resources=None) — fixed_large ignores unlocked ✓ same as S113's.
+
+Also: after each piece, `if prev and (k % KEEP_EVERY) != 0: os.remove(prev spop)` — deletes piece_49's spop after piece 50 (50%5=0 → kept!). k=50: 50%5==0 → piece_49's detail-1000.spop is NOT removed ✓ (that's the 50,000 save, kept for the count). ✓ Good — the copy at 50,000 survives for the test-processor check.
+
+But: the extension keeps only every 5th piece's saves — so saves at 55,000, 60,000... kept (k=54 ends 55,000, 54%5=4 ≠0 → hmm! k=54: piece_54 ends at update 55,000. 54 % 5 = 4 → the spop of piece_54 WOULD be deleted after piece 55 runs. Wait the deletion applies to `prev` (piece k-1) when finishing piece k. Piece 54's save (55,000) is prev when k=55: 55%5=0 → kept ✓. Right: save at update (k+1)*1000 kept when (k+1)%5==0 ✓. So saves at 55,000...75,000 kept ✓ (M.MARKS used? no — count uses explicit list of marks ✓; one_snapshot computes piece = mark//1000-1 ✓, e.g., 55,000 → piece_54 ✓).
+
+Everything consistent.
+
+Last: check the S116 results §1 "Batch 2, probe ... 36 of 36 'exit 0 missing 0'" ✓ commands.
+
+Also "Estimated cost" plan vs actual: plan said probe ~1 CPU-hour (actual 1.17), K 0.3 (actual ≤0.29), 3a 0.8 (actual 0.84), 3b 1.0 (actual ~0.99), continuation 0.6 (actual ~0.55). ✓ within, total 3.8 ≤ 4 ✓.
+
+Now write the report. Objections ordered most serious first:
+
+X2.1 — plain words/results "middle seed" is the median of values, not a seed; plain words attributes 0.987 to "the growing list's middle run" whose value is 0.933 (json growing_seed2 28/30). Fix given.
+
+X2.2 — numbers leaned on without a committed script or recorded departure (per-order viable counts; 545/577; AND resource 140–240).
+
+X2.3 — "Avida's rules the measures lean on" missing the two rules the new measures lean on: the world's/test CPU's fixed input order (top bytes 15/51/85) and the ANALYZE_KNOCKOUTS output column order (k[1]=lethal, k[2]=detrimental). The latter is anchored only by S115's miniature (12+3+85=100); the former only by the exact match with S113's default-input counts. Fix: add source lines to the build notes (or an assertion in the K script that k[1]+k[2] ≤ length).
+
+X2.4 — plan §3 "A positive result would support E6's mechanism" — "support" is on the owner's forbidden list (S23), in Claude's own sentence. Fix wording.
+
+X2.5 — reward_history growing off-by-one (piece*1000 vs piece*1000+1); descriptive only. Fix line.
+
+X2.6 — bank reader threshold >= 5 counts an exactly-split inconsistent grant as "gives" (zero such cases in these banks; make it > 5 or report the inconsistent count in the md).
+
+Also consider: K_weighted_mean denominator — over viable only; md §2.2 B2.4 doesn't say. Fold into X2.5 or separate small. I'll make it X2.7 (state the denominator; report the population share carried by the 100 per save — already in json as programs_in_tested/programs_in_population).
+
+Word budget ~3000; fine.
+
+Checked-no-objection line: list ids/sections.
+
+Not reached: raw .dat/.spop values (no raw output in folder — judged by consistency only); reply 01's RECALCULATE/DETAIL semantics inside Avida (unchanged scripts, S115-checked); whether Avida's Inject event semantics for the 3,600-cell fill behave as intended (verified only indirectly: A+B=3600, other=0).

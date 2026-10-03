@@ -1,0 +1,1095 @@
+Let me start by exploring the folder structure.
+
+No commands run. I must use Read, Glob, Grep tools only.
+
+Now let me read the scripts. Start with the scripts folder.
+
+A few things noted so far:
+
+1. In `s111_measure_copying_and_knockouts.py` line 68: `rand = [''.join(rng.choice(T.LETTERS) for _ in range(L)) for _ in range(10000)]` — T.LETTERS is 'abcdefghijklmnopqrstuvwxyz' (26 letters, no 'A'). Plan says "each instruction drawn evenly from the 26" — correct.
+
+2. C3 fidelity: sample_offspring with only COPY_MUT_PROB set; the divide insertion/deletion rates default 0.05 remain in avida.cfg (copied). Expected computation: exp_any = (1-mu)^L * (1-0.05)*(1-0.05). Hmm, wait: Avida's DIVIDE_INS_PROB — the probability an insertion happens at divide. But is the insertion exactly one instruction? Presumably. Also note the offspring identical requires same length; an insertion or deletion changes length. So expected identical = (1-mu)^100 * 0.95 * 0.95. But the "upper" bound exp_changed = (1 - mu*25/26)^L * ... — the probability an error changes the instruction is 25/26 since redraw can be same. OK.
+
+But wait: in results file, table column "expected from the rates" low: 0.703 to 0.710. Compute: (1-0.0025)^100 = 0.9975^100. ln = 100*ln(0.9975) ≈ 100*(-0.0025031) = -0.25031, e^-0.25031 = 0.7785. times 0.9025 = 0.7027 ≈ 0.703. Good. Upper: (1-0.0025*25/26)^100 = (1-0.0024038)^100 = e^{-0.24067}=0.7861*0.9025=0.7094≈0.709-0.710. OK.
+
+default: 0.9925^100 = e^{-0.7528}=0.4712*0.9025=0.4252 → 0.425 ✓. upper: (1-0.0075*25/26)=1-0.0072115; ^100 = e^{-0.72375}=0.4849*0.9025=0.4376 → 0.438 ✓.
+
+high: 0.98^100 = e^{-2.0202}=0.1326*0.9025=0.1197→0.120 ✓. upper: 1-0.02*25/26=1-0.019231; ^100 = e^{-1.942}=0.1437*0.9025=0.1297→0.130 ✓.
+
+3. The C3 world figure: "births with an identical offspring" from num_breed_true / births. Need to check the worlds-over-time script.
+
+4. `via = sum(counts[r['sequence']] for r in viable_offspring if r['viable'])` — viable_offspring evaluates sorted(counts) — sorted list of unique offspring sequences. OK.
+
+Note in the results table C3, column "of those 1,000, able to copy themselves exactly": low 950, default 876, high 664. Hmm — interesting: those are counts out of 1000. In JSON "offspring_that_copy_themselves". Fine.
+
+Wait, but there's a subtlety: the sample_offspring runs with settings COPY_MUT_PROB only; but does the test processor also apply DIVIDE_INS/DEL? In the analysis mode with SAMPLE_OFFSPRING, mutation rates copied from world's rates — avida.cfg defaults have DIVIDE_INS_PROB 0.05. Actually the note in build notes says "with the world's mutation rates copied in". The -set COPY_MUT_PROB changes it. So insertion/deletion at 0.05 also applied. Consistent with expectation formula. OK.
+
+5. K2 knockout: `ko_seq = anc[:anc.rindex('v')] + T.NULL + ...` — anc.rindex('v') is the last 'v' in the ancestor. Ancestor letters: 'wzcag' + 'c'*86 + 'zvfcaxgab'. Copy loop `zvfcaxgab`: letters z,v,f,c,a,x,g,a,b. 'v' is h-copy? NAMES index: LETTERS 'abcdefghijklmnopqrstuvwxyz'; NAMES[21] = 'h-copy' (index: a0 nop-A, b1 nop-B, c2 nop-C, d3 if-n-equ, e4 if-less, f5 if-label, g6 mov-head, h7 jmp-head, i8 get-head, j9 set-flow, k10 shift-r, l11 shift-l, m12 inc, n13 dec, o14 push, p15 pop, q16 swap-stk, r17 swap, s18 add, t19 sub, u20 nand, v21 h-copy, w22 h-alloc, x23 h-divide, y24 IO, z25 h-search).
+
+So ancestor: w=z? wait 'wzcag': w=h-alloc, z=h-search, c=nop-C, a=nop-A, g=mov-head. Plan says head is 5 instructions "wzcag" = h-alloc, h-search, nop-C, nop-A, mov-head. Results file section C2 says sites 1 to 6 (h-alloc, h-search, nop-C, nop-A, mov-head, nop-C). Hmm — site 6 is the first filler (nop-C) but "mov-head reads it as a label". Wait, but the results §1 says ancestor = 5 head + 86 filler + 9 copy loop. Site 6 = first filler 'c'. So essential sites: 1-6 and 92-100. 92-100 is 9 sites: the copy loop. So essential = 6 + 9 = 15 ✓.
+
+Copy loop 'zvfcaxgab' at sites 92-100: z=h-search (92), v=h-copy (93), f=if-label (94), c=nop-C (95), a=nop-A (96), x=h-divide (97), g=mov-head (98), a=nop-A (99), b=nop-B (100). Results say sites 92 to 100 (h-search, h-copy, if-label, nop-C, nop-A, h-divide, mov-head, nop-A, nop-B) ✓ matches.
+
+Wait — results file §1 says the copy loop is 9 instructions `zvfcaxgab`. Plan said 10 `zvfcaxgab`? Plan §1 said "a 10-instruction copy loop ... `zvfcaxgab`" — that's 9 letters described as 10. Departure #1 records this: plan said 5+85+10=100 but actually 5+86+9=100. OK, recorded.
+
+K2: anc.rindex('v') — the only 'v' in ancestor is at site 93 (h-copy) since filler is 'c' and head 'wzcag'. So rindex('v') = index 92 (0-based), correct site of h-copy. ✓ But careful: rindex finds last 'v'; only one v. ✓
+
+6. Control K1 in world: 100 random programs "one per cell" — the events inject 100 organisms with counts i*36? `Inject random_%03d.org %d` with count i*36 — so 100 genotypes with counts 0, 36, 72, ..., 3564, total 356400? Hmm wait: Inject org count — injecting with count i*36 for i in range(100) means i=0 gets count 0 (inject none?). Total = 36*sum(0..99) = 36*4950 = 178,200 organisms — far more than 3,600 cells. That's over-injection; Avida will place as many as fit? Actually Inject with count larger than available cells just fills. Hmm, this is the world-run script; not necessarily objectionable but "one per cell" description mismatches: the plan says "100 of them injected into the world, one per cell". The command injects 100 genotypes each with count i*36. Hmm, that's odd. But maybe that was intended to fill the grid: to have each of the 100 random programs present in many copies. But the results say "100 of them injected into a world made no offspring, and the last was gone after update 66". Hmm. Actually injecting i*36 — the i=0 one gets count 0 = not injected at all. So only 99 genotypes injected, not 100. And "one per cell" isn't what happens. This is a discrepancy between plan (K1: "100 of them injected into the world, one per cell") and the script. Is it in my remit? My job is scripts and numbers: "a cap or threshold applied differently from what is said". This injection scheme differs from what the plan says. But wait — is this "the exact commands" file? Let me check runs/the exact commands.txt to see what was actually run.
+
+Also the last organism gone at update 66 — with injection of ~178k into 3600 cells, most are discarded randomly. Actually maybe Avida's Inject places count organisms but only until grid full. So effectively ~3600 placed, a random subset. The claim "100 of them injected" — with count i*36, the first has count 0. Minor.
+
+Hmm, but also each random organism is length 100; age limit 20*100=2000 instructions... they die of age. Fine.
+
+7. Test processor evaluate: reads 'out.dat' with FIELDS including sequence. `_read` maps fields to line words. The DETAIL command outputs columns in given order presumably. OK.
+
+Note: `evaluate` sets gest_time etc. as int. fitness/merit float.
+
+Now let me read the remaining scripts: measure_the_worlds_over_time, measure_mutational_robustness, marletto, summarise, and the run summary tables.
+
+Now key checks on the worlds-over-time script:
+
+- `table(path)` reads rows of floats but keeps only first 20 columns `[:20]`. count.dat columns: need the build notes or configuration to know column indices. It uses r[0]=update, r[2]=organisms, r[8]=births, r[10]=num_breed_true. I need to check Avida's count.dat format. Standard Avida count.dat columns: I recall from Avida source `cStats::PrintCountData` header: "update alive divided births deaths imbue... "? Let me recall. Avida 2.x count.dat columns: `update  average_fitness  ...`? Actually count.dat contains: update, ave_metabolic_rate, ... hmm. Let me look at avida.cfg maybe there's a setting. The standard count.dat columns in Avida 2.14 (from cStats.cc PrintCount):
+
+I recall the count.dat header is something like:
+```
+#format:update average_fitness organisms ...
+```
+Hmm, I don't remember exactly. Common knowledge: count.dat fields: update, ave_metabolic_rate, ave_fitness, tot_creatures? Let me think. In many Avida papers, count.dat columns include: update, average generation... Actually time.dat has update, ave_generation, ... The build notes cite `cStats.cc 1099` for num_breed_true in count.dat. Without source, I can't verify indices 8 and 10. But maybe the configuration avida.cfg has "COUNTS" ... Hmm.
+
+Actually, in Avida 2.x, `count.dat` format (from source/tools/data... ) the header line in count.dat: `#format:update average_fitness average_metabolic_rate ...`? I can't verify without source. The cross-examination says wrong columns are a thing to look for; I can check internal consistency: e.g., share_births_identical should be ≤ 1 and consistent with expected fidelity: low 0.693, default 0.400, high 0.131 — close to expectations (0.703, 0.425, 0.120). Plausible. births per organism per update ~0.075 → ~0.03..0.08; population ~3600, births per update ~ 270/3600... plausible.
+
+Wait, but one check: "births" column r[8] — in Avida, count.dat has both "births" (current update) and "breed_true"? The build notes say num_breed_true in count.dat at cStats.cc 1099. Column 10 vs 8. Can't verify directly, but consistency: K5 share_births_identical computed same way; check the JSON value later.
+
+One important check: in `one_run`, `later = [r for r in count if r[0] >= 1000]`. count.dat prints every 1000 updates (u 0:1000:end PrintCountData), so 51 rows 0..50000. later = rows 1000..50000 (50 rows). Results say "at the 50 saved updates (1,000 to 50,000)" ✓. But note births r[8] — is births in count.dat a per-update count or cumulative? If per-update, summing over rows is fine.
+
+Hmm wait, actually there's a subtlety: `births_per_organism_per_update': statistics.mean(r[8] / r[2] for r in later)` — mean of per-update ratios, fine.
+
+- `table` uses `[:20] if _num(x)` — filters non-numeric columns. If a column in the middle is non-numeric (e.g., a string), indices would shift. Presumably count.dat is all numeric.
+
+Potential off-by-one / wrong column: `average_generation_at_end': time_[-1][2]` — time.dat column 2. Avida time.dat: update, time?, average_generation? I recall time.dat columns: update, real time, cpu cycles... Hmm. Standard time.dat header: `#format:update time_generation ...`? Not sure. Consistency: avg generation 7,474 at low... plan expected 3,500-4,000 generations at 50,000 updates. Measured 7,474-11,521. Hmm, plan's estimate was rough. Generation vs update: each update ~30 instructions per organism... an organism of length 100 executes ~389 instructions per copy, so ~0.077 copies per organism per update → generations should be ~ up to 50,000*30/389? Wait an update is defined so average organism executes 30 instructions? Then time to copy 389 instructions ≈ 13 updates per generation → ~3,850 generations at 50,000 updates. But measured 7,474 to 11,521 — much higher. Hmm, but merit rewards multiply executed speed: with tasks, merit up to 2^large, so organisms execute many more than 30 instructions per update on average? Actually Avida's update is calibrated so that the *average* organism executes 30 instructions... no — Avida's update is defined by total cpu cycles such that average organism gets 30 instructions per update (ave_cpu cycles). Hmm, if that's true, generations ~ 50,000*30/389 ≈ 3,850. Measured average generation is higher — 7,474 low, 9,208 default, 11,521 high. That's odd: high error rate gives MORE generations? With more errors, fewer offspring... average generation counts lineage depth of living organisms. Hmm.
+
+Actually Avida's U date: "an update is a unit of virtual time comprising roughly 30 instructions executed per organism on average". The average includes all organisms. Merit differences mean some execute more. But the population average is fixed at 30/update. So generations per update ≈ 30/gestation_time = 30/389 ≈ 0.077 → 3,860 generations in 50k updates. Measured 7,474-11,521 is 2-3× that. But evolved organisms copy faster (unrolled loops, 2-3 instructions per pass → gestation ~250?), and high-rate genomes shorter (89) with gestation maybe ~150? Still 30/150 = 0.2 → 10,000 generations. Plausible! Low condition: 7,474 generations → gestation ~200 (vs ancestor 389): consistent with "copy two or three instructions per pass". OK plausible.
+
+Hmm, wait — but the update is calibrated by *executed* instructions? Actually Avida: "UPDATE_TARGET" ... The ave organism executes ~30 insts/update by default (AVIDA_PIPELINE?). Fine, plausible.
+
+- Conservation: align — check the DP. It's a global alignment with gap penalty -1, match +1, mismatch -1. Linear gap penalty. The recurrence via "maximum.accumulate(X + ar) - ar" — this is the Gotoh-like trick for affine gaps? Actually for linear gap penalty -1 per gap, H[i][j] = max(H[i-1][j-1]+s, H[i-1][j]-1, H[i][j-1]-1). The vectorized computation: X[0] = H[i,0]; X[1:] = max(H[i-1,:-1]+s, H[i-1,1:]-1). Then H[i] = max.accumulate(X + ar) - ar where ar = 0..m. max-accumulate of (X[j] + j) then subtract j gives max_{k<=j} (X[k] + (j-k)), which equals max over k<=j of X[k] - (j-k): this computes the best "delete in b" (gap extending leftward) with penalty (j-k)*(-1). So H[i][j] = max(X[j], max_{k<j} X[k] - (j-k)) which handles gaps in a (i.e., consuming b letters without consuming a). Combined with X[j] = max(H[i-1][j-1]+s, H[i-1][j]-1). So H[i][j] = max of diagonal, up-gap, left-gap with linear -1. Correct global alignment (Needleman-Wunsch with linear gaps). OK.
+
+Traceback: while i>0 and j>0: prefers diagonal, then up (gap in b → ancestral site gets '-'), else j-=1 (gap in a → consumed seq letter, no ancestral site). If i>0, j==0 loop ends leaving out[i-1]='-' default. OK.
+
+Edge: if H[i][j] equals none of the three (can't happen if consistent).
+
+- conservation: `per_site += n * np.array([...])` weighted by count ✓. ess = [s-1 for s in essential] — essential sites are 1-based from knockouts (site: i+1), so -1 for 0-based ✓. non = others ✓ (85 sites).
+
+- shares: copy_loop_exact: `loop in s` — substring anywhere ✓ ("anywhere in the genome" per plan). head_exact anc[:5]. whole_ancestor s == anc ✓.
+
+- share_organisms_self_copying: evaluates every living genotype. Note: the genotypes include those containing 'A'? No — main runs don't have nop-X. But evolved sequences contain only a-z. Test processor uses instset with nop-X added (27th); sequences parsed as letters... wait — how does evaluate() pass sequences to Avida? Via 'LOAD_SEQUENCE ' + s in analyze.cfg. Avida's LOAD_SEQUENCE takes letters a-z (and A for nop-27th?). Since main-run genomes have only a-z, fine.
+
+But the robustness scan: mutants use T.LETTERS (26) — "each of the 25 other instructions of the set" ✓ (excluding nop-X, the 27th). Hmm — is that right per plan? Plan R1: "each site replaced by each of the 25 other instructions of the set" — the set of 26. ✓.
+
+- per_site_viable: rows[i*25+k] indexing — muts built as for i in range(len(seq)) for c in LETTERS if c != seq[i] → 25 per site in order ✓.
+
+- Robustness ancestor numbers: 2500 mutants, viable 81.2%, neutral 17.6%, within 1% 75.0%. Hmm wait: "75.0% viable with fitness within 1%" — that's near = viable & within 1%. But results text says "viable 81.2%, neutral 17.6%, viable with fitness within 1% 75.0%, 18.8% no longer copy". 81.2+18.8=100 ✓.
+
+Wait, but there's a problem: 15 essential sites of the ancestor — any mutation at those sites kills viability? Actually essential defined via nop-X knockout; a mutation to another instruction at those sites may preserve function (e.g., nop-A → nop-B label complement changes... actually labels matter). Viable 81.2% ⇒ 18.8% lethal = 470 mutants ≈ 18.8 sites fully lethal. Plausible.
+
+- Departure #2 says "for the ancestor, 57% of one-change programs copy one cycle faster (388 instead of 389)". Neutral 17.6% + ... within 1% 75.0%. Fitness ∝ 1/gestation presumably: 389 vs 388: fitness ratio 389/388 = 1.00258 — within 1% → near. And faster copies give higher fitness: share_higher_fitness ~? Not in results. OK.
+
+Now check the neutral definition: fitness within 1e-6 — viable and |r.f/w − 1| ≤ 1e-6. Note that "neutral" in plan: "viable and fitness within one part in a million of the unmutated genotype's" ✓.
+
+But wait: `neutral` requires `w > 0`; base fitness of evolved dominant genotypes should be > 0. OK.
+
+Now check worlds-over-time control K4: saves at 500:1000... follow = "u 0:1:end PrintCountData\nu 0:500:end SavePopulation\nu {end} Exit". So K4 saves populations at 0,500,...,2000. The results say "gone by update 500 (the first save)". But wait — departure 5 says controls printed counts every update instead of every 100 — because events file written with PrintCountData every 1 update. Fine.
+
+K4 count 'knocked_out_alive_at_%d' — sum n for s == ko exact ✓ (departure 7).
+
+Now: K5 events: MAIN_EVENTS with SavePopulation replaced: original lines: "u 1000 SavePopulation\nu 10000:10000:end SavePopulation\n" → replace the second line with "u 5000 SavePopulation\n". So K5 saves at 1000 and 5000, prints count data every 1000, exits at 5000 ✓. K5 uses default instset (no nop-X) ✓ departure 8. K5 copy mutation 0 and divide ins/del 0. But what about POINT_MUT_PROB (other mutation rates)? avida.cfg default POINT_MUT_PROB — hmm! Avida has multiple mutation methods: COPY_MUT_PROB, POINT_MUT_PROB (point mutations not tied to copy), DIVIDE_INS_PROB, DIVIDE_DEL_PROB, plus POINT_INS_PROB etc. The main runs only changed COPY_MUT_PROB. If avida.cfg defaults have nonzero POINT_MUT_PROB, all runs would have additional mutations. I should check avida.cfg in configuration folder. Let me read it.
+
+Also check environment.cfg and instset and default-heads.org. And the exact commands.txt. Then the summary tables and marletto script and summarise script. Let me read configuration files.
+
+Config: copy error 0.0075 default; DIVIDE_INS/DEL 0.05 ✓. POINT_MUT_PROB 0 ✓. Note: "MUT_RATE_SOURCE 1 = Mutation rates determined by environment" — hmm, environment.cfg may set reaction... but mutation rates from environment? Probably fine.
+
+Note interesting: SLIP_FILL_MODE 0. Not relevant.
+
+Important config check: the timing claims "an update is Avida's unit of time: about 30 instructions executed per organism" — AVE_TIME_SLICE 30 ✓.
+
+Now check the exact commands: main runs copy avida.cfg and inject default-heads.org. COPY_MUT_PROB set via -set. K5 sets COPY_MUT_PROB 0, DIVIDE_INS_PROB 0, DIVIDE_DEL_PROB 0 ✓ matches script.
+
+But K1: command has no -set changes; events inject 100 random orgs with counts i*36. The plan says "100 of them injected into the world, one per cell". The exact command file doesn't show events; the script shows counts i*36. Total 178,200 into 3,600 cells. This is a real departure from the plan's description ("one per cell") that is not recorded in the departures list. Is it material? The claim tested by K1: random programs vanish. Over-injection doesn't change that. But the results file §2 says "100 of them injected into a world made no offspring" — actually 99 genotypes injected (i=0 count 0), each at count 36*i. Hmm, also with random neighbor replacement during mass injection? Whatever. It's a discrepancy between what is said and what the script does — my remit explicitly: "a cap or threshold applied differently from what is said". I'll raise it as a minor objection: the events line injects counts 0,36,...,3564, not one per cell; either fix the sentence or the script.
+
+Wait, actually let me reconsider: maybe intent was to inject 100 organisms one per cell but they wrote %d % i*36... Inject syntax: "Inject filename [count] [cell]". The code: 'u begin Inject random_%03d.org %d\n' % (i, i*36) → filename random_000.org, count 0 for i=0. So random_000.org is never injected. Then results claim "100 of them injected into a world" is wrong in detail (99 injected, thousands of copies). Objection.
+
+Also note K2/K3 inject "knocked_out.org" with no count → default count 1 ✓.
+
+K4: Inject knocked_out.org 0, Inject default-heads.org 1 — third arg is cell index ✓.
+
+Now, K1 in the *test processor* part: 10,000 random programs evaluated. Those contain letters a-z ✓. In the world K1 run, random orgs written via write_org with LETTERS only ✓ (nop-X instset added, fine).
+
+Now read the remaining scripts and tables: marletto script, summarise script, and the four summary tables (md and json). The JSONs may be large; read md files first, then targeted parts of JSON.
+
+Now examine the Marletto script carefully for issues:
+
+- `chosen = [t for t in range(9) if tasks[t + 1] / orgs >= 0.10]` — tasks.dat columns: update, then 9 task columns? Presumably tasks.dat has update + 9 tasks = 10 columns. r[t+1] ✓ consistent with worlds script tasks_at_end mapping.
+
+But: "tasks performed by at least 10% of the organisms at update 50,000" — tasks.dat counts from Avida's world (with inherited merit inflation, as noted in results §5: world counts exceed test processor). The 10% threshold is applied on world counts, but the share "as found" is measured in the test processor over covered organisms. Results note this discrepancy. The plan says "each task performed by at least 10% of the organisms there" — ambiguous; using world counts is a choice. Consistency: results says 69 run-task pairs; check counts later in the md table.
+
+- Top selection loop: `for s, n in pop: if cov/total >= 0.90 or (cap and len(top) >= cap): break; top.append((s,n)); cov += n`. So it appends until coverage ≥ 90% or cap reached. With cap=300 coverage might be < 90% (recorded departure 4a). Without cap: coverage ≥ 90%. OK.
+
+But note: pop is all genotypes with num_units > 0. Sorted by -n. Ties broken arbitrarily (stable sort by original order). Fine.
+
+- `m = maps([s for s, _ in top])` — maps evaluates base and every single knockout of every chosen genotype: len(genome) evaluations per genotype. With up to hundreds of genotypes × ~100 sites — huge but fine.
+
+- `maps` task_sites: sites where base performs t and knockout does not: `b['task.%d' % t] > 0 and r['task.%d' % t] == 0` ✓.
+
+- (ii) dominant only: dko = knock(dom_seq, sites) where sites = dm['task_sites'][t] — all stopping sites (including copy-essential ones). dom_after = dom_n if dko performs else 0. one_copy = found − dom_before + dom_after. Shares divided by cov ✓.
+
+- (iii) joint: knock each performing genotype at its own task sites, all at once. Note: `joint` list comprehension includes only genotypes with task_sites non-empty; then iteration `for (s,n),g in zip(top,m): if base==0: continue; if task_sites: r=next(jr)...` ✓ aligned.
+
+- Wait, there's a subtle bug candidate: in `maps`, `task_sites` computed only where base performs. For genotypes that don't perform the task, task_sites[t] = []. In joint knockout they're skipped (they're not performers anyway). ✓.
+
+- The "task-only" version: `only = [[i for i in g['task_sites'][t] if g['ko'][i]['viable']] for g in m]` — computed for all m, indexed per genotype. jo built for performers with non-empty o. ✓.
+
+- share_copying_among_performers_after_every_genotype_task_only_sites = only_copying / performers ✓. In results table "of former performers, still copying themselves" ✓.
+
+- One conceptual check: knocking out task-only sites in a genotype that performs; `only_after += n if r['task.%d'%t] > 0`. ✓.
+
+- In the md writer: `'share_copying_..._task_only_sites'] or 0` — if value is 0.0, `or 0` gives 0 fine; if None → 0. OK.
+
+Now the summarise script: gathers. `knockouts_leaving_copying_and_fitness` counts fitness_ratio == 1.0 — results C2 says "The other 85 leave self-copying and fitness exactly as they were (fitness ratio 1.0 in all 85)". Fine.
+
+Now check numbers consistency between tables and the results file. Read the summary tables.
+
+Check robustness numbers vs results file §3:
+
+Results: "The ancestor: of 2,500, 81.2% ... 75.0% viable with fitness within 1%, 18.8% no longer copy" ✓ table: viable 0.812, neutral 0.176, lethal 0.188, higher 0.573. Hmm — "higher fitness 0.573" — that's 57.3% with higher fitness, matching departure 2's "57% copy one cycle faster". But wait: 0.812 viable; 0.573 higher fitness → neutral 0.176 + higher 0.573 = 0.749 ≈ 75.0% within 1%? Wait, "within 1%" includes fitness ratio up to 1.01. 389/388 = 1.00258 — that's "higher fitness" (>1+1e-6) but within 1%. So near = neutral + higher-within-1% = 0.750 ✓ consistent. Good.
+
+Results evolved at 50,000: low 0.698 (0.688-0.714) ✓; neutral 0.169 (0.139-0.188) ✓; within1% 0.235 (0.198-0.272) ✓; length 106 (100-110) ✓. default 0.754 (0.719-0.786) ✓ 0.214 (0.173-0.257) ✓ 0.285 (0.246-0.336) ✓ length 107 (89-128) ✓. high 0.758 (0.740-0.779) ✓ 0.312 (0.272-0.361) ✓ 0.410 (0.311-0.490) ✓ length 89 (75-99) ✓.
+
+Per-seed neutral at 50,000: low 0.188 (seed1), 0.139 (seed2), 0.181 (seed3) ✓; high 0.272, 0.301, 0.361 ✓.
+
+Low beside high: results says "the neutral share is higher at the high rate at all three moments" ✓ and "the viable share is higher at the high rate at 50,000 only" — check viable at 50000: low max 0.714, high min 0.740 → high above low ✓. At 10000: low max 0.796, high min 0.779 → no clear ✓. At 30000 low max 0.736, high min 0.695 → no clear ✓.
+
+Hmm wait, viable at 50,000 high above low: high min 0.740 > low max 0.714 ✓.
+
+Also check means: low 50000 viable mean = (0.688+0.714+0.694)/3 = 2.096/3 = 0.69867 → 0.699? Table says 0.698. Hmm: 0.688+0.714 = 1.402, +0.694 = 2.096; /3 = 0.69867 → round 4 → 0.6987, displayed %.3f → 0.699! But table shows 0.698. Let me recheck: values: seed1 50000: 0.688; seed2 50000: 0.714; seed3 50000: 0.694. Mean = 0.698666... The %.3f would print 0.699. The table prints 0.698. Discrepancy!
+
+Wait — but the displayed per-run values are themselves rounded to 4 decimals (share_viable rounded to 4 in scan). The mean is computed from the rounded values: e.g. actual 0.6875→0.6875? round(x,4). 0.688 could be 0.6876 etc. Mean of the unrounded-then-rounded values could be 0.6984 → 0.698. Possible. So can't call arithmetic slip from displayed 3-decimal roundings. E.g. 0.6876+0.7136+0.6941=2.0953/3=0.69843→0.698. Fine, plausible.
+
+Check neutral mean at 50000 low: (0.188+0.139+0.181)/3 = 0.508/3=0.16933→0.169 ✓. high neutral: (0.272+0.301+0.361)/3=0.934/3=0.31133→0.311? Table says 0.312. 0.272+0.301+0.361 = 0.934. /3 = 0.311333. Displayed 0.312 — again could be from 4-decimal underlings (0.2716+0.3014+0.3612=0.9342/3=0.3114→0.311). Hmm, that would print 0.311. But 0.2724+0.3017+0.3609=0.935/3=0.31167→0.312 ✓. Plausible. OK, can't object.
+
+within 1% high 50000: (0.429+0.311+0.490)/3 = 1.230/3 = 0.410 ✓.
+default 50000 viable: (0.758+0.719+0.786)/3=2.263/3=0.75433→0.754 ✓. neutral: (0.173+0.257+0.212)/3=0.642/3=0.214 ✓. within: (0.246+0.336+0.273)/3=0.855/3=0.285 ✓.
+
+length default 50000: (105+128+89)/3=322/3=107.33→107 ✓.
+
+Now the "length" claim in results §3: "high-rate genomes are also shorter (89 against 106)" ✓.
+
+Results §3 text: "most single changes leave copying in place (69% to 79% across the nine runs)" — per-run viable at 50000 ranges 0.688 to 0.786 → 69% to 79% ✓. "21% to 31% of single changes stop copying" ✓ lethal 0.214–0.312.
+
+Now the worlds over time table.
+
+Checks:
+
+- Results §3 R3 table at 50,000: low 0.836 (0.682-0.930). Per-run 50,000 essential: low 0.90, 0.93, 0.68 → mean = 2.51/3 = 0.8367 ✓ (0.682? wait min is 0.68 but table says 0.682 — rounding to 2 decimals in per-run table; consistent: 0.682 min. Max 0.930 ✓). Non-essential low: 0.15, 0.20, 0.18 → mean 0.1767→0.178 ✓ (0.150-0.205 ✓). default essential: 0.79, 0.57, 0.69 → 2.05/3=0.683 ✓ (0.567-0.788 ✓). non-ess: 0.12, 0.10, 0.06 → 0.0933→0.094 ✓ (0.056-0.123 ✓). high: 0.72, 0.49, 0.53 → 1.74/3=0.58 ✓ (0.495-0.724 ✓). non-ess: 0.06, 0.03, 0.06 → 0.05→0.051? (0.058+0.034+0.059)/3 ≈ 0.0503→0.051 ✓ plausible (0.034-0.059 ✓).
+
+- "Essential sites are above non-essential ones at every save of every run (54 of 54)". 9 runs × 6 saves = 54 ✓. Check each cell: yes, all essential > non-essential. ✓
+
+- Results §3: "by update 50,000, 16% to 42% of their places no longer hold the ancestor's instruction, by condition means": low 1−0.836=0.164 ✓, default 1−0.682=0.318 ✓, high 1−0.582=0.418 ✓. "7% to 51% across runs": min across runs 1−0.93=0.07 ✓; max 1−0.49=0.51 ✓ (0.495 → 0.505, hmm 1−0.495=0.505 → "51%" rounds ✓).
+
+- M2 table: copy loop exactly low 0, default 0, high 0.163 (0-0.487) ✓ (high seed1 0.49 at 50,000 → 0.487 ✓). head exactly low 0.373 (0-0.743): per-run low heads at 50,000... the per-run table doesn't show head. From JSON maybe. 0.743 max plausible. "identical to ancestor" all 0 ✓.
+
+- share self-copying: low 0.857 (0.829-0.872): per-run 0.87, 0.83, 0.87 ✓. default 0.710 (0.659-0.768): 0.70, 0.66, 0.77 ✓ mean 2.13/3=0.71 ✓. high 0.650 (0.623-0.686): 0.62, 0.69, 0.64 → mean 1.95/3=0.65 ✓.
+
+- M1: "from update 1,000 on, no world held fewer than 3,481 organisms (low 3,597 (3,597 to 3,598)...)" ✓ table.
+
+- C4: births/organism/update ✓ table matches results.
+
+- C5: "by update 1,000 every world held 3,566 to 3,600 organisms" — hmm, the table gives min from 1,000 on: low min 3,597, default 3,558, high 3,481. At update 1,000 specifically the per-run counts aren't in the md; results claims 3,566 to 3,600 at update 1,000. Note that the fewest from 1,000 on is 3,481 (high). At 1,000 the populations might indeed be 3,566-3,600. Check JSON for saves at 1000 'organisms'. Will check.
+
+- Tasks at end: XOR: low 1 run (seed2 3179), default 2 (2785, 2688), high 0 → results §5 says "XOR in three" ✓ (1+2+0=3). EQU: low 2 (3222, 3316), default 2 (2799, 2975), high 2 (2079, 1740) = 6 ✓. AND: low: 3524, 25, 17 → AND >0 in all three low runs (yes 25 and 17 >0). Results §5 says "AND in nine" (all nine runs) — check: low all 3 (>0), default all 3 (>0: 2738, 3088, 3289), high: 2131, 136, 2666 all >0 → 9 ✓.
+
+Wait, results §5 line: "NOT, NAND, ORN, OR, ANDN and NOR were performed in all nine runs, AND in nine, XOR in three and EQU ... in six". ✓ matches.
+
+- But interesting: results §5 says tasks "performed by at least 10% of the organisms at update 50,000 was tested (69 run-task pairs)". Count run-task pairs with ≥10%: Using tasks.dat counts / orgs. Need orgs at 50,000 per run — roughly 3,5xx. Compute threshold: low seed1: orgs ~3,59x? Let me get counts: I'll check the JSON for organisms at end. Let me count roughly with 3,590 (low seed1): 3557/3590=0.991 ✓; all 7 tasks pass (XOR EQU 0). low seed2 (3464+?): NAND 3442, AND 25 (no), ORN 3494, OR 3309, ANDN 3216, NOR 3323, XOR 3179, EQU 3222 → 8 tasks pass (AND fails). low seed3: AND 17 fails → 8. default seed1: orgs? say 3,5xx; AND 2738 → ~0.77 ✓; all 9 pass. default seed2: all 9 pass. default seed3: XOR 0, EQU 0 → 7 pass. high seed1: orgs ~3,5xx: NAND 2755 ~0.78 ✓, AND 2131 ✓, all 8 (XOR 0) pass. high seed2: orgs ~3,5xx: NAND 1814/35xx ≈ 0.52 ✓, AND 136 fails → 7 pass. high seed3: XOR, EQU 0 → 7 pass.
+
+Total pairs: 7+8+8+9+9+7+8+7+7 = 70. Hmm results says 69. Borderline: one pair may be just under/over 10% — e.g. high seed2 NAND 1814/orgs: if orgs=3,532... 1814/3532=0.5137 fine. Some pair near 10%? E.g. low seed2 AND 25 no. Which pair is near 0.10? Possibly high seed1 EQU 2079 — fine. Hmm, maybe some count/orgs < 10%: e.g. low seed1? All ~98%. Perhaps default seed3 AND 3289 vs orgs — fine. So which is the 69th vs 70th? Let me get exact orgs at end from JSON. Actually maybe I'm wrong: XOR in low seed1 = 0, that's excluded. Let me recount:
+
+low1: NOT 3557 ✓, NAND 3523 ✓, AND 3524 ✓, ORN 3510 ✓, OR 3351 ✓, ANDN 3475 ✓, NOR 3372 ✓, XOR 0, EQU 0 → 7
+low2: NOT 3464 ✓, NAND 3442 ✓, AND 25 ✗, ORN 3494 ✓, OR 3309 ✓, ANDN 3216 ✓, NOR 3323 ✓, XOR 3179 ✓, EQU 3222 ✓ → 8
+low3: 7 + AND ✗ → 8
+def1: 9
+def2: 9
+def3: 7 (XOR, EQU zero)
+high1: 8 (XOR zero; EQU 2079 ✓)
+high2: AND 136 ✗; NAND 1814 ✓ → 7
+high3: XOR EQU zero → 7
+
+7+8+8+9+9+7+8+7+7 = 70.
+
+Results says 69 run-task pairs. Off by one, unless one of these is below 10%: candidates near threshold: high2 NAND 1814 — need orgs at 50,000 for high2. If orgs = 3,5xx, 1814/35xx ≈ 0.51 — no. low1 OR 3351/3590=0.933 no. Hmm what about low3 AND=17 → no. So all 70 pass unless organisms at end is much larger than counts... Actually wait — high2: AND 136: if orgs=3,5xx → 3.8% < 10% excluded ✓ (already excluded). Everything else > 50%.
+
+Hmm, but wait: default seed1: orgs? default seed1 at end. From md row "fewest organisms from 1,000 on: default 3,577 (3,558 to 3,588)". So orgs ~3,560-3,588. AND 2738/3,5xx ≈ 0.77 ✓.
+
+So 70 pairs vs stated 69. But maybe "organisms" used in the marletto script is count[2] from count.dat at update 50,000 — same as orgs. All above 10% except low2 AND (25), low3 AND (17), high2 AND (136) → excluded. So chosen = 70 pairs. Unless one run's EQU or something is between... let me check with actual numbers: I need count.dat organisms at 50,000 per run — not in folder, but the marletto JSON has 'organisms' and per-task entries; count tasks in the JSON! Let me count entries in Marletto JSON. That will settle 69 vs 70.
+
+Also verify the results-file Marletto table numbers vs summarise JSON. Let me read the Marletto md table and JSON.
+
+Count run-task pairs (capped rows, which correspond to chosen tasks): low1: 7; low2: 8; low3: 7; def1: 9; def2: 9; def3: 7; high1: 8; high2: 7; high3: 7. Total = 7+8+7+9+9+7+8+7+7 = 69. 
+
+Earlier I counted low3 as 8 — but the table shows low3 has 7 rows: NOT, NAND, ORN, OR, ANDN, NOR, EQU — no XOR (XOR=0 in low3? tasks at end table: low3 XOR 0, EQU 3316 ✓). And low3 AND=17 → excluded. So 7. I earlier mistakenly said low3 = 8. Total 69 ✓ matches results "69 run-task pairs".
+
+Wait, but hold on: low2 has AND=25 excluded → NOT, NAND, ORN, OR, ANDN, NOR, XOR, EQU = 8 ✓.
+
+Interesting anomaly in the md: high_seed1 capped AND row: "still copying 1.000"... fine. But note high_seed1 NAND capped "still copying 0.326" vs no-cap 0.487 — odd but that's the data.
+
+Now verify the results-file Marletto table (§5) means against these uncapped rows:
+
+NOT: as found values (no cap): 0.896, 0.844, 0.870, 0.728, 0.705, 0.706, 0.521, 0.583, 0.612. Mean = sum: 0.896+0.844=1.740; +0.870=2.610; +0.728=3.338; +0.705=4.043; +0.706=4.749; +0.521=5.270; +0.583=5.853; +0.612=6.465. /9 = 0.7183 → 0.718 ✓. min 0.521 ✓ max 0.896 ✓.
+
+dominant only: differences ~0.005-0.012 each: NOT after dominant: 0.887,0.830,0.861,0.724,0.702,0.703,0.520,0.581,0.611 → mean = 6.465-0.051? compute: 0.887+0.830+0.861+0.724+0.702+0.703+0.520+0.581+0.611 = 6.419; /9 = 0.7132 → 0.713 ✓.
+
+every genotype task-only: NOT: 0.390, 0.363, 0.459, 0.187, 0.117, 0.066, 0.059, 0.158, 0.083. Sum = 0.390+0.363=0.753; +0.459=1.212; +0.187=1.399; +0.117=1.516; +0.066=1.582; +0.059=1.641; +0.158=1.799; +0.083=1.882; /9 = 0.2091 → 0.209 ✓ (0.059 to 0.459 ✓).
+
+still copying NOT: 1.000, 0.999, 0.999, 0.992, 0.998, 0.999, 0.950, 1.000, 0.932. Sum = 1.000+0.999+0.999+0.992+0.998+0.999+0.950+1.000+0.932 = 8.869; /9 = 0.9854 → 0.985 ✓ (0.932 to 1.000 ✓).
+
+task-only sites in dominant NOT: 2, 5, 9, 1, 4, 4, 7, 3, 3 → mean = 38/9 = 4.22 → 4.2 ✓ (1 to 9 ✓).
+
+EQU rows (no cap): low2 0.764/0.750/0.000/0.011/0.932; low3 0.819/0.810/0.000/0.011/0.996; def1 0.528/0.524/0.000/0.021/0.974; def2 0.572/0.569/0.000/0.044/0.970; high1 0.324/0.322/0.000/0.025/0.999; high2 0.299/0.298/0.000/0.030/1.000.
+
+as found mean: (0.764+0.819+0.528+0.572+0.324+0.299)=3.306; /6=0.551 ✓ (0.299 to 0.819 ✓). dominant only: (0.750+0.810+0.524+0.569+0.322+0.298)=3.273; /6=0.5455→0.546 ✓. task-only: (0.011+0.011+0.021+0.044+0.025+0.030)=0.142; /6=0.02367→0.024 ✓ (0.011 to 0.044 ✓). still copying: (0.932+0.996+0.974+0.970+0.999+1.000)=5.871;/6=0.9785→0.979 ✓ (0.932-1.000 ✓). task-only sites dominant: 26,25,26,19,20,20 → mean 136/6=22.67→22.7 ✓ (19-26 ✓).
+
+Results §5 claims: "knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points". Differences as_found − dominant_only: low2 0.014, low3 0.009, def1 0.004, def2 0.003, high1 0.002, high2 0.001. Hmm: 0.2 to 1.4 points: low2 1.4 points ✓, low3 0.9, def1 0.4, def2 0.3, high1 0.2, high2 0.1. So range is 0.1 to 1.4 points, not 0.2 to 1.4! high2: 0.299 → 0.298 = 0.001 = 0.1 points. Minor. But wait — these are rounded to 3 decimals; the actual values in JSON have 4 decimals. 0.299−0.298 could be 0.2994−0.2980=0.0014 → 0.14 → "0.1 points". Claim "0.2 to 1.4" slightly off at the lower end (0.1 vs 0.2). Hmm, borderline. Could also be from capped numbers: capped high2 EQU: 0.645 → 0.637 = 0.8 points. Not that. def2 no-cap 0.572→0.569 = 0.3 points. Let me compute with 4-decimal JSON to be sure. The table used is uncapped per departure 4a ("the table above uses that" = without cap). So lower end 0.1 points (high2), upper 1.4 (low2). Claim says 0.2 to 1.4. Small numeric slip. Check JSON for exact 4-decimal values.
+
+"with every genotype's own task-only sites knocked out, EQU is performed by 1.1% to 4.4% of the covered organisms" ✓ (0.011 to 0.044). "93% to 100% of the former performers still copy" ✓ (0.932-1.000).
+
+"the test picks out about 19 to 26 instructions per genotype (in the dominant of low seed 2, for instance, `IO`, `nand`, `swap`, `push`, `pop`, `sub` and their labels)" — low2 EQU task-only instructions list: push pop nop-C swap nop-A IO nop-C nop-C nop-C IO nop-C nand nop-A nand nand IO nop-C sub nop-C nand nop-C swap nop-C nand swap IO ✓ contains those.
+
+"Not fully: the joint knockout of single-knockout sites leaves some performers, most for NOT (21% on average, up to 46%)": NOT after-every-genotype-all-sites is 0.000 everywhere; that sentence refers to task-only version: NOT mean 0.209 ≈ 21% ✓, max 0.459 ≈ 46% ✓.
+
+"The planned version, knocking out all the sites whose single knockout stops the task, drops every task to 0.000 in every run" ✓ column every genotype all sites = 0.000 everywhere ✓.
+
+"Avida's world counts give higher shares than the test processor (for EQU at high seed 1: 2,079 of 3,532 organisms, 59%, in the world; 32% in the test processor)" — 2079/3532 = 0.5885 ✓ 59%; uncapped as found 0.324 ✓ 32%.
+
+Now check the results §5 table rows against computed means — spot check a few more:
+
+NAND task-only sites dominant: 7,12,0,2,7,4,10,7,0 → sum=49; /9=5.44→5.4 ✓ (0 to 12 ✓).
+NAND as found: 0.884,0.831,0.898,0.729,0.684,0.746,0.504,0.365,0.631 → sum: 0.884+0.831=1.715;+0.898=2.613;+0.729=3.342;+0.684=4.026;+0.746=4.772;+0.504=5.276;+0.365=5.641;+0.631=6.272; /9=0.6969→0.697 ✓ (0.365-0.898 ✓).
+NAND after dominant: 0.876,0.817,0.890,0.726,0.682,0.742,0.502,0.363,0.629 → sum 6.227;/9=0.6919→0.692 ✓.
+NAND every task-only: 0.022,0.125,0.051,0.095,0.101,0.067,0.048,0.037,0.102 → sum: 0.022+0.125=0.147;+0.051=0.198;+0.095=0.293;+0.101=0.394;+0.067=0.461;+0.048=0.509;+0.037=0.546;+0.102=0.648; /9=0.072 ✓ (0.022-0.125 ✓).
+NAND still copying: 0.991,0.975,0.997,0.996,1.000,1.000,0.487,0.998,0.983 → sum: 0.991+0.975=1.966;+0.997=2.963;+0.996=3.959;+1.000=4.959;+1.000=5.959;+0.487=6.446;+0.998=7.444;+0.983=8.427;/9=0.9363→0.936 ✓ (0.487-1.000 ✓).
+
+AND (6 rows): sites 7,7,27,12,8,17? Wait: AND rows: low1 7; def1 27; def2 12; def3 8; high1 17; high2 20. Sum=7+27+12+8+17+20=91; /6=15.17→15.2. But results table says AND 13.8 (7 to 27)! Hmm. Wait — which runs have AND at 10%? low1 AND 3524 ✓; low2 AND 25 ✗; low3 17 ✗; def1 2738 ✓; def2 3088 ✓; def3 3289 ✓; high1 2131 ✓; high2 136 ✗; high3 2666 ✓. So AND rows: low1 (7), def1 (27), def2 (12), def3 (8), high1 (17), high3 (12). Wait high3 AND task-only sites = 12 (row: high_seed3 AND 25 stopping, 12 task-only). Sum = 7+27+12+8+17+12 = 83; /6 = 13.83 → 13.8 ✓ (7 to 27 ✓). I mistakenly used high2. ✓.
+
+AND as found: low1 0.882, def1 0.516, def2 0.607, def3 0.718, high1 0.346, high3 0.485 → sum: 0.882+0.516=1.398;+0.607=2.005;+0.718=2.723;+0.346=3.069;+0.485=3.554; /6=0.5923→0.592? Results says 0.593. Close: 3.554/6 = 0.59233. With 4-decimal underlings could be 0.5927 → 0.593. Plausible ✓. min 0.346 ✓ max 0.882 ✓.
+
+AND after dominant: 0.874,0.513,0.604,0.715,0.344,0.484 → sum 3.534 /6=0.589 ✓.
+AND every task-only: 0.009,0.017,0.366,0.028,0.027,0.054 → sum 0.501 /6 = 0.0835 → 0.084 ✓ (0.009-0.366 ✓).
+AND still copying: 0.996,0.960,0.979,1.000,0.992,0.978 → sum 5.905 /6 = 0.9842→0.984 ✓ (0.960-1.000 ✓).
+
+ORN: rows: all 9 runs. sites: 7,8,7,17,6,7,9,3,3 → sum=67; /9=7.44→7.4 ✓ (3-17 ✓).
+ORN as found: 0.881,0.846,0.888,0.601,0.681,0.702,0.519,0.557,0.638 → sum: 0.881+0.846=1.727;+0.888=2.615;+0.601=3.216;+0.681=3.897;+0.702=4.599;+0.519=5.118;+0.557=5.675;+0.638=6.313; /9=0.7014→0.701 ✓ (0.519-0.888 ✓).
+ORN after dominant: 0.872,0.832,0.880,0.598,0.679,0.698,0.517,0.555,0.637 → sum 6.268/9=0.6964→0.696 ✓.
+ORN every task-only: 0.122,0.134,0.030,0.073,0.100,0.039,0.048,0.103,0.103 → sum: 0.122+0.134=0.256;+0.030=0.286;+0.073=0.359;+0.100=0.459;+0.039=0.498;+0.048=0.546;+0.103=0.649;+0.103=0.752; /9=0.0836→0.084 ✓ (0.030-0.134 ✓).
+ORN still copying: 1.000,0.995,0.997,0.964,0.997,0.993,0.988,0.999,0.988 → sum: 1.000+0.995+0.997+0.964+0.997+0.993+0.988+0.999+0.988 = 8.921; /9=0.9912→0.991 ✓ (0.964-0.999 ✓).
+
+OR: rows 9. sites: 21,21,16,19,10,10,14,11,6 → sum=128; /9=14.22→14.2 ✓ (6-21 ✓).
+OR as found: 0.830,0.786,0.857,0.578,0.624,0.642,0.443,0.461,0.581 → sum: 0.830+0.786=1.616;+0.857=2.473;+0.578=3.051;+0.624=3.675;+0.642=4.317;+0.443=4.760;+0.461=5.221;+0.581=5.802;/9=0.6447→0.645 ✓ (0.443-0.857 ✓).
+OR after dominant: 0.821,0.773,0.849,0.574,0.621,0.639,0.441,0.460,0.580 → sum 5.758/9=0.6398→0.640 ✓.
+OR every: 0.006,0.012,0.012,0.024,0.050,0.028,0.038,0.047,0.032 → sum: 0.006+0.012+0.012+0.024+0.050+0.028+0.038+0.047+0.032=0.249;/9=0.02767→0.028 ✓ (0.006-0.050 ✓).
+OR still: 0.981,0.958,0.999,0.970,0.972,0.998,0.972,0.999,0.920 → sum: 0.981+0.958=1.939;+0.999=2.938;+0.970=3.908;+0.972=4.880;+0.998=5.878;+0.972=6.850;+0.999=7.849;+0.920=8.769;/9=0.9743→0.974 ✓ (0.920-0.999 ✓).
+
+ANDN: rows 9. sites: 8,29,9,6,6,13,12,7,9 → sum=99; /9=11.0 ✓ (6-29 ✓).
+ANDN as found: 0.869,0.760,0.885,0.680,0.662,0.618,0.467,0.598,0.491 → sum: 0.869+0.760=1.629;+0.885=2.514;+0.680=3.194;+0.662=3.856;+0.618=4.474;+0.467=4.941;+0.598=5.539;+0.491=6.030;/9=0.67 ✓ (0.467-0.885 ✓).
+ANDN after: 0.861,0.747,0.876,0.677,0.659,0.614,0.465,0.596,0.490 → sum 5.985/9=0.665 ✓.
+ANDN every: 0.056,0.010,0.000,0.104,0.433,0.027,0.039,0.086,0.052 → sum: 0.056+0.010+0.000+0.104+0.433+0.027+0.039+0.086+0.052 = 0.807;/9=0.0897→0.089/0.090? Results says 0.091. Hmm: 0.807/9 = 0.08967 → 0.090, not 0.091. But underlings 4-decimal: e.g. 0.0556+0.0104+0.0002+0.1040+0.4330+0.0274+0.0391+0.0864+0.0524 = 0.8085 /9 = 0.08983 → 0.090. To get 0.091 need sum ≥ 0.8145, i.e. +0.0075 above displayed sum — impossible given 3-decimal rounding (max shift 9×0.0005=0.0045). So displayed values imply mean 0.0897–0.0902, rounds to 0.090, but results says 0.091 and range (0.010 to 0.433). Hmm wait check range: min 0.000 (low3 ANDN every = 0.000), not 0.010! Results ANDN row: "0.091 (0.010 to 0.433)". But low3 ANDN no-cap every-genotype task-only = 0.000 (line 51: 0.016? no wait). Let me recheck: line 50 low3 no-cap ANDN: "0.885 | 0.876 | 0.000 | 0.016 | 0.999". So every-task-only = 0.016. Line 51 is NOR. Let me re-map:
+
+low3 (no cap): NOT 0.459; NAND 0.051; ORN 0.030; OR 0.012; ANDN 0.016; NOR 0.012; EQU 0.011.
+So ANDN values: low1 0.056, low2 0.010, low3 0.016, def1 0.104, def2 0.433, def3 0.027, high1 0.039, high2 0.086, high3 0.052. Sum: 0.056+0.010+0.016+0.104+0.433+0.027+0.039+0.086+0.052 = 0.823; /9 = 0.0914 → 0.091 ✓ min 0.010 ✓ max 0.433 ✓. I used ORN's 0.030 by mistake. ✓ Good.
+
+ANDN still copying: 0.981,0.963,0.999,0.996,0.985,0.998,0.991,0.998,0.978 → sum: 0.981+0.963=1.944;+0.999=2.943;+0.996=3.939;+0.985=4.924;+0.998=5.922;+0.991=6.913;+0.998=7.911;+0.978=8.889;/9=0.9877→0.988 ✓ (0.963-0.999 ✓).
+
+NOR: rows 9. sites: 19,19,19,27,8,11,17,11,15 → sum=146;/9=16.22→16.2 ✓ (8-27 ✓).
+NOR as found: 0.834,0.793,0.845,0.520,0.621,0.642,0.394,0.473,0.391 → sum: 0.834+0.793=1.627;+0.845=2.472;+0.520=2.992;+0.621=3.613;+0.642=4.255;+0.394=4.649;+0.473=5.122;+0.391=5.513;/9=0.6126→0.613 ✓ (0.391-0.845 ✓).
+NOR after: 0.826,0.780,0.836,0.516,0.618,0.638,0.392,0.471,0.390 → sum 5.467/9=0.6074→0.608 ✓ (0.390-0.836 ✓).
+NOR every: 0.006,0.014,0.012,0.018,0.047,0.028,0.035,0.051,0.040 → sum: 0.006+0.014+0.012+0.018+0.047+0.028+0.035+0.051+0.040=0.251;/9=0.0279→0.028 ✓ (0.006-0.051 ✓).
+NOR still: 0.982,0.946,0.998,0.964,0.978,0.999,0.956,0.999,0.921 → sum: 0.982+0.946=1.928;+0.998=2.926;+0.964=3.890;+0.978=4.868;+0.999=5.867;+0.956=6.823;+0.999=7.822;+0.921=8.743;/9=0.9714→0.972 ✓ (0.921-0.999 ✓).
+
+XOR: 3 rows: low2, def1, def2. sites: 32,26,25 → mean 83/3=27.67→27.7 ✓ (25-32 ✓).
+XOR as found: 0.750,0.524,0.499 → 1.773/3=0.591 ✓ (0.499-0.750 ✓).
+XOR after: 0.736,0.521,0.497 → 1.754/3=0.5847→0.585 ✓ (0.497-0.736 ✓).
+XOR every: 0.011,0.020,0.033 → 0.064/3=0.0213→0.021 ✓ (0.011-0.033 ✓).
+XOR still: 0.932,0.968,0.970 → 2.870/3=0.9567→0.957 ✓ (0.932-0.970 ✓).
+
+Great, the Marletto table checks out.
+
+Now "0.2 to 1.4 points" for EQU: differences: low2 0.764−0.750=0.014 (1.4 points); low3 0.819−0.810=0.009; def1 0.528−0.524=0.004; def2 0.572−0.569=0.003; high1 0.324−0.322=0.002; high2 0.299−0.298=0.001. So the range is 0.1 to 1.4 points, not 0.2 to 1.4. With 4-decimal underlings: high2 could be 0.2994−0.2976=0.0018 → 0.18 ≈ 0.2 points? Possible but tight. Check JSON to be fair. Also §6 table repeats "one genotype's knockout: 0.2 to 1.4 points less". Let me check the JSON exact values.
+
+Also check the "dominant holds 5 to 44 of about 3,600" claim: dominant abundances: low runs dominant_n... capped coverage 2036/3600 means top genotypes... dominant abundance from mutational robustness JSON ('abundance'). Not in md. Check marletto JSON 'dominant'/'abundance'.
+
+Also results §5 note "(the most common genotype holds 5 to 44 of about 3,600 organisms in those runs; a diverse population)" — need abundance for EQU runs: low2, low3, def1, def2, high1, high2. Check JSON.
+
+Also check C3 note: "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." Hmm, odd phrase "for genomes that were no longer 100 long" — num_breed_true counts offspring identical to parent regardless of length. Whatever, it's a parenthetical.
+
+Also check the "expected" formula note: "the lower end if every error changes the instruction, the upper if an error can redraw the same one (it can: source/cpu/cInstSet.cc 83-88)" — build notes cite cInstSet.cc 83-88 as "a weighted draw over the set; all weights are equal in the default set" but wait — the build notes' quote of cHardwareCPU.cc 7139-7146 says read_inst = random inst from set "which can be the same instruction". OK consistent.
+
+But the expected formula: (1 − rate)^100 × 0.95 × 0.95. Is the copy-error probability applied per copied instruction — yes, 100 instructions copied. But also: are copy errors applied during the ancestor's copy of exactly 100 lines? Yes. But subtlety: the divide-time insertion/deletion (0.05 each) also possibly triggers both insertion AND deletion (they're independent), which would restore length but not identity. The expectation ignores that; negligible and the bounds given are labeled rough. Fine.
+
+Now, the low row: sampled 723 identical of 1000 vs expected 0.703-0.710 — 723 slightly above upper bound 0.710; sampling noise (n=1000, sd ~1.4%) fine. default 436 vs 0.425-0.438 ✓. high 124 vs 0.120-0.130 ✓.
+
+Interesting: "of those 1,000, able to copy themselves exactly" 950/876/664 — these are counts of offspring (of the 1000) that are themselves viable. OK.
+
+Now check the results §2 C2 claim: "The other 85 leave self-copying and fitness exactly as they were (fitness ratio 1.0 in all 85)" ✓ md line 9.
+
+Results §2 C1: "executing 389 instructions per copy and copying all 100" ✓ md line 3 (copy_length not in md but in JSON).
+
+C5: "by update 1,000 every world held 3,566 to 3,600 organisms" — need per-run organisms at save 1000. Check worlds JSON.
+
+M1: results "no world held fewer than 3,481" ✓.
+
+M3: "over 6,310 to 15,940 generations" ✓ min/max of average generation.
+
+§4 M2 table vs worlds md ✓ (already).
+
+Controls: K1 last at 66, K2 65 ✓ results says "gone after update 66"/"update 65" and §4 "gone by update 67 and 66" (i.e., after 66/65 → by 67/66) — fine.
+
+K3: remained whole 2,000 updates ✓. K4: knocked_out_alive_at_500 = 0, organisms_at_500 = 3137; results says "gone by update 500 (the first save), its cell taken by the intact one's offspring; by update 1,000 the grid was full" ✓ (3600 at 1000).
+
+Hmm wait: K4 injects knocked_out at cell 0 and ancestor at cell 1. Save at update 0? "u 0:500:end SavePopulation" → saves at 0, 500, ... The script only reads 500-2000. Fine.
+
+K5: births_after_update_0 = 1027 over 5,000 updates; share_births_identical = 1.0 ✓.
+
+Now, one more consistency: results §2 C3 world column: "0.693 (0.684 to 0.704)" ✓ etc.
+
+Now C4 low 0.0751 (0.0707 to 0.0815) ✓.
+
+Now check "births with the offspring identical to the parent divided by all births, per run, averaged over updates 1,000 to 50,000" — script computes sum(same)/sum(births) over the 50 rows, not an average of per-update shares. The results file §2 C3 (iii) says "births with the offspring identical to the parent divided by all births, per run, averaged over updates 1,000 to 50,000" — the script's pooled ratio is a reasonable reading; §7 says "The world's own fidelity is Avida's count at 50 sampled updates, not every birth". Minor wording, not an objection.
+
+Now the column indices in count.dat (r[8] births, r[10] num_breed_true) and time.dat (r[2] average generation) — cannot verify without source; but build notes cite cStats.cc 1099 for num_breed_true in count.dat. I recall Avida's count.dat header format:
+
+#format:update tot_creatures ... Hmm. Actually, from Avida source (cStats::PrintCountData), the count.dat columns are:
+update, ave_metabolic_rate, ... I genuinely don't remember. Common Avida 2.x count.dat: "update average_fitness total_organisms ..." Hmm.
+
+Standard Avida count.dat (from avida docs): columns are:
+1 update
+2 average fitness (?)...
+
+Actually, I recall the header of count.dat in Avida 2.13:
+"#format:update tot_entropy ave_entropy ... " no.
+
+Let me think about time.dat: Avida's time.dat has columns update, wall-time? No, time.dat: "update, time_utilization?, average_generation"? The script uses time_[-1][2] as average generation at end. If time.dat column 2 (0-based) is average generation... In Avida, time.dat columns are: update, total_time? Hmm.
+
+I can't verify these without source; they're internally consistent (values plausible), and the build notes claim the rules were read from source. I'll note as not-reached/checked-by-consistency: can't verify column indices without Avida's source. Consistency check: births/organism/update 0.075 at low: over 50,000 updates → 0.075*3597*50000 ≈ 13.5M births; generation 7,474 — each generation every organism replaced: births per generation ≈ population → 7474*3597 ≈ 26.9M births... vs births 0.0751*3597 per update *50,000 = 13.5M. Factor 2 discrepancy? Hmm — GENERATION_INC_METHOD 1: generation increments on divide for both parent and offspring. Average generation of living organisms ≈ number of divisions along the lineage. Births per update = 0.0751*3597 ≈ 270/update. Over 50,000 updates = 13.5M births. If each birth advances the lineage generation by 1, average generations across the population would grow at ~270 births/update / 3597 organisms ≈ 0.075 generations/update → 3,755 generations at 50,000. But measured average generation 7,474 — exactly 2×. Interesting! Why factor 2? DIVIDE_METHOD 1: "Divide resets state of mother (effectively creating 2 offspring)". With GENERATION_INC_METHOD 1, both parent and offspring get generation+1 at each divide. So each birth increments two organisms' generations: the parent (reset, counts as new organism) and the offspring. The average generation then rises at twice the birth rate per organism? Let's see: total generation sum increases by 2 per birth (parent +1, offspring +1) but also death removes organisms. Average generation G: d(sum)/dt = 2*births − (deaths remove their generation). In steady state with turnover, average generation of living ≈ ... Each organism's generation counts the number of divisions since the ancestor, incrementing for both daughters at each division (since parent is reset as a new daughter). So a lineage's generation increments once per division event, i.e., per birth the lineage continues with both daughters at gen+1. The population's average generation grows at rate births/population = 0.075/update → 3,750. Hmm, that gives 3,750 not 7,474.
+
+Hmm wait — actually with both daughters incremented, when the parent divides, the parent continues living as gen+1 and offspring gen+1. An organism that has lived through k divisions of its own has gen = k + inherited. Each division event produces gen+1 for two organisms, so average gen increases at (2 × births)/(2 × ... hmm. In steady state, population constant N, births B per update, deaths B per update. The average generation of living organisms: each division replaces effectively... Let's model: population N, per update B births and B deaths. Each birth: one organism (parent) goes from g to g+1, new organism at g+1, one organism killed. Sum of generations change: +2(g+1)... no: parent g→g+1 (+1), offspring +（g+1) added, one organism with some gen g_d removed (−g_d). Average gen of the population roughly: lineage depth. Actually average generation ≈ number of divisions from ancestor along the lineage. Each organism's lineage: from birth (as offspring at gen g) to its death, it may divide d times, each time its gen +1. So an organism's gen at death = gen_at_birth + d. Average gen across living organisms grows at rate = (rate of division events per organism) × ... each division event adds +1 to the dividing organism's gen, and the newborn starts at parent's gen+1 (which is +1 relative to parent's pre-division gen).
+
+Think of it as a branching process: gen increments per division along both branches. The average gen of the population grows at exactly the division rate per organism: each organism accumulates +1 gen per division it undergoes; every organism undergoes divisions at rate b = B/N per update while alive; mean lifetime = 1/b updates (each birth displaces one organism; also age deaths). Hmm, actually every organism will eventually be displaced; the rate of gen increase per organism per update = its own division rate ≈ b (if all divide at the same rate). So average gen grows at b per update = 0.075 → 3,750 at 50,000 updates. Measured 7,474. Factor ~2.
+
+Unless... the offspring also gets +1 relative to parent, meaning gen counts 2 per division along a single lineage: parent at g divides → parent now g+1, offspring g+1. Along the offspring's lineage, its gen = parent's gen after division + 0 extra... The offspring's gen is g+1, and parent also g+1. So along a lineage (following offspring), each division adds +1. And following the parent, +1. So per lineage, +1 per division. Average gen grows at b. So 3,750 expected vs 7,474 measured. Discrepancy of exactly 2×.
+
+Hmm, but wait — my birth-rate figure: is r[8] per-update births? births_per_organism_per_update mean(r[8]/r[2]) = 0.0751. If Avida's count.dat "births" column counts... maybe it's "births" per update — yes.
+
+But hold on: gestation ~200 instructions executed per copy at 30 instructions/update → 0.15 births/organism/update, not 0.075. Factor 2 again! Interesting: 30 instructions per organism per update; gestation 389 for ancestor → 0.077/update — matches the low-condition birth rate 0.075 with ancestor-like gestation. But we said evolved gestation ~200 → expected 0.15. And expected generations 7,474*... let's cross-check: average generation 7,474 over 50,000 updates → 0.149 gen/update ≈ 30/201 — consistent with gestation ≈ 201 instructions! So births per organism per update should also be ≈ 0.149, but the script reports 0.0751 — exactly half. So either the births column (r[8]) is half the true births (e.g., it's "divides" counted differently?) or the generation column is 2× (GENERATION_INC_METHOD 1 increments both parent and offspring, so lineage +2?).
+
+Reconsider GENERATION_INC_METHOD 1: "Increase generation of both parent and offspring". At divide: parent g→g+1 AND offspring gets parent's original g+1? Or offspring = parent's new g? If both get +1 relative to parent's pre-division gen, then following the offspring lineage: gen increases by 1 per division. Average gen grows at division rate per organism. Hmm.
+
+But actually consider: the parent continues to live and later divides again, each time +1. An organism's gen at any time = number of divisions it has personally undergone + gen at birth. Gen at birth = parent's gen at that moment (post-increment). So along a single immortal lineage of dividing organisms (parent keeps dividing), gen = number of divisions undergone. Rate = b. So average gen grows at b = 0.075/update → 3,750 at 50k. But measured 7,474. So either births column is half of actual divisions, or generations double-count.
+
+Alternative: maybe time.dat column 2 is not average generation but something else... but 7,474 is plausible-looking as a generation number. Or maybe count.dat column 8 is "births" counted per update but the script's mean(r[8]/r[2]) — fine.
+
+Alternatively maybe count.dat r[8] is "divided" (number of organisms that divided) hmm same thing.
+
+Let me test internal consistency with K5: births_after_update_0 = 1027 over 4,000 update-rows (1,000-5,000) → 0.2569 births/update... with 3,600 organisms → 7.1e-5/organism/update. That's tiny. In K5 with no mutations, the ancestor fills the grid (3,600) by update ~? and then births only occur to replace age deaths. Wait nothing dies of age? DEATH_METHOD 2 default — organisms die after executing 20×length. So in a full grid, each death is replaced by a birth; steady-state births = deaths. Organism executes 30 inst/update, dies after 2,000 executed instructions → lives ~67 updates, gestation 389 → ~5.7 divisions per life? But offspring need empty cells; with PREFER_EMPTY and full grid, offspring replace neighbors. Births per update in steady state = N/67 ≈ 54/update. Over 4,000 updates ≈ 214,000. But K5 births_after_update_0 = 1,027?! That's way off... unless the "births" column isn't births per update.
+
+Hmm wait — but in K5, all organisms are the identical ancestor; a birth replaces a neighbor... but actually organisms die of age and their cell becomes empty; births fill empties. Steady state: births = deaths ≈ 54/update → 1,027 over 4,000 updates is 0.26/update. That doesn't match at all.
+
+Unless... in a full-grid steady state with identical genotypes, when a cell empties (age death), neighbors divide into it. Age at death = 20×100=2,000 instructions executed = 67 updates; but division takes 389 instructions ≈ 13 updates. So each organism divides ~5 times in its life. The population would be constantly turning over: ~3,600/67 ≈ 54 deaths and 54 births per update. 1,027 total births over 4,000 updates contradicts this badly.
+
+Hmm, unless Avida counts "births" in count.dat only as... maybe r[8] isn't births. Or unless in K5 the population dynamics are different: with merit inheritance (INHERIT_MERIT 1)... no.
+
+Wait, actually reconsider: maybe column 8 is "germline births"? Or maybe count.dat columns: update, ave_fitness?, ... Let me think about actual Avida count.dat format. I recall Avida's count.dat contains per-update lines with many columns, from cStats::PrintCountData. The columns (Avida 2.14, source/main/cStats.cc ~line 1050-1120) — I believe the order is something like:
+
+"update gen_birthday...?" no.
+
+Honestly I remember count.dat having columns: update, average fitness... hmm no, average fitness is in "average.dat"/"stats.dat". count.dat: I believe it has: update, tot_organisms?...
+
+Hmm. Actually I recall from Avida-GPU and avida papers: count.dat columns include: "update, average_metabolic_rate, average_fitness, ..." no.
+
+Let me instead use the numbers to infer. The script: r[0] update; r[2] organisms (used as denominator for births per organism and for min organisms; also tasks share denominator orgs = count[2] in marletto). r[8] births; r[10] breed_true share numerator.
+
+Consistency test with C5: "by update 1,000 every world held 3,566 to 3,600 organisms" — r[2] plausible as organisms.
+
+Test with K1: "births_after_update_0 = 0" for K1, K2, K3 — no births since no copying ✓ any sensible column.
+
+K4 births_after_update_0 = 266,353 over 2,000 updates ≈ 133/update. Grid fills by ~1,000 (3137 at 500, 3600 at 1,000). Growth from 2 organisms to 3,600 needs ~3,600 births total (logistic doubling: ~12 doublings ≈ 3,600 births). Then steady state 2,000 updates × ~54-65 deaths/update ≈ 120k births. Total ≈ 124k. Measured 266k — factor ~2 again! Interesting — the same factor 2 as generations vs births in the main runs (7,474 vs 3,750).
+
+Hmm! So maybe column r[8] counts something at half... or maybe r[8] is not births but something else that's ~2× births? Let's test: if r[8] were actually "deaths" — same magnitude as births. Factor-2 patterns: In K4: if births per update steady ≈ 65 and script column gives 133/update → the column ≈ 2×births. In main runs: if births column were 2× actual, actual birth rate = 0.0375/organism/update → gestation = 800 instructions?? Unlikely. Alternatively the births column is right and generations are 2× births (7,474 ≈ 2×3,750): with GENERATION_INC_METHOD 1 both parent and offspring increment — maybe offspring gets parent's post-increment gen +1 = g+2? I.e., offspring gen = parent gen + 2? Then lineage +2 per division → average gen grows 2b → 7,500 ✓!! And K4: hmm what about K4 births 266k? Expected ~124k. Unless deaths in K4 are higher: DEATH_METHOD 0 in K4 — nothing dies of age! Then how do organisms get replaced? By offspring overwriting (BIRTH_METHOD 0 random neighbor, PREFER_EMPTY 1). In a full grid, births overwrite neighbors — each birth kills one → births unlimited by deaths: the population stays full because births replace. Birth rate limited only by division speed: gestation 389 inst ≈ 13 updates → each organism divides every ~13 updates → 3,600/13 ≈ 277 births/update at saturation → over ~1,500 updates of saturation ≈ 415k. Measured 266k over 2,000 updates = 133/update average. Plausible with partial saturation and merit variation! OK so K4 doesn't contradict.
+
+And K5: births_after_update_0 = 1,027 over 4,000 updates. With DEATH_METHOD 2 (K5 keeps default deaths), grid full at 3,600 quickly (from 1 organism: ~12 doublings, all before update 100). Then steady state births = deaths ≈ 3,600/67 ≈ 54/update → ~215k births over 4,000 updates. Measured 1,027!! Massive contradiction.
+
+Hmm wait — but K5's share_births_identical = 1.0 (sum r[10]/sum r[8] = 1.0 over rows 1,000-5,000): with 1,027 births all identical. But if actual births were ~215k, and r[8]=1,027, then r[8] is not births.
+
+Unless organisms in K5, once the grid is full, mostly stop dividing? Why would they? An organism divides when it finishes copying; offspring goes to a neighboring cell (PREFER_EMPTY 1 — prefer empty cells; with none empty... "otherwise whoever is there is replaced" per build notes). Hmm, but maybe with BIRTH_METHOD 0 + PREFER_EMPTY, if no empty cell in neighborhood, the birth fails? Build notes say "a random cell next to the parent, an empty one first; otherwise whoever is there is replaced". If that's right, births continue.
+
+But wait — actually is that right? In Avida, with a full grid and PREFER_EMPTY, births still happen replacing a neighbor. Hmm.
+
+Alternatively, maybe in K5 organisms die of age BEFORE completing their first division after the grid fills? No — gestation 389 ≪ 2,000 age limit.
+
+Hmm, alternatively maybe merit matters: SLICING_METHOD 1 probabilistic proportional to merit. All identical → equal. 30 inst/update each. Division every ~13 updates. So ~277 births/update. So K5 should show ~1.1M births over 4,000 updates. The script's r[8] gives 1,027.
+
+So r[8] as "births" is very much in doubt. What could r[8] be that equals ~1,027 in K5 between updates 1,000-5,000 (i.e., 0.26/update), 266,353 in K4 (133/update), and ~0.075×pop/update in main runs?
+
+Hmm wait, maybe I'm wrong that the K5 grid stays churny. Consider: when the population is entirely one genotype and grid full: each birth kills a neighbor (age resets?). Actually in Avida, offspring placed into an occupied cell kills the occupant. But occupants also die of age. There's a subtlety: Avida's default world — do organisms divide indefinitely? Yes.
+
+Hmm, hold on — maybe in K5, mutations are 0 and REQUIRE... no.
+
+Let me reconsider: maybe count.dat column 8 is not per-update births but "current number of organisms divided this update"... same. Or maybe it's cumulative? If cumulative, summing over 50 rows would be nonsense (huge). Main runs: births_sampled = sum over 50 rows — the md doesn't show totals. births per org per update = mean(r[8]/r[2]) = 0.075. If r[8] cumulative, ratio would grow over time; mean 0.075 with population 3,600 → r[8] ≈ 270 at row... cumulative births at update 50,000 would be ~10M. mean of ratio wouldn't be 0.075 stable. Actually the ratio's mean is 0.075 with min/max across seeds 0.0707-0.0815 — these are means of per-row ratios; can't tell stability. Hmm.
+
+Let me check the worlds JSON for 'births_sampled' totals per run: that will discriminate. If births_sampled ~ 13.5M (270×50,000) → per-update column. If ~ much larger (cumulative sums), different. And K5's count of 1,027 over 4 rows (1,000-5,000, 4 rows) → 0.26/update. That's the puzzle.
+
+Actually WAIT. Reconsider K5. INHERIT_MERIT 1: merit inherited from parent. All same. Hmm.
+
+Reconsider whether organisms in a full grid keep dividing: offspring placement BIRTH_METHOD 0 (random organism in neighborhood), PREFER_EMPTY 1 overrides to prefer empty. In Avida, if the chosen neighbor cell... it's always a valid placement (replaces). So yes, constant churn ~54 deaths+54... hmm, actually deaths of age at 54/update means ~54 empty cells at any moment; births ~277/update would far exceed deaths, but births replace living organisms. Net: high churn. Total births ~277/update × 4,000 ≈ 1.1M.
+
+Unless Avida's real behavior: with SPECULATIVE and full grid... no.
+
+OK here's another thought: maybe r[8] is not "births" but "num births with identical offspring"? No, that's r[10] supposedly.
+
+Alternatively the column order could be shifted and r[8] is something like "currently dividing"? Hmm.
+
+Actually, let me recall the actual count.dat format from Avida 2.x source (cStats.cc PrintCountData). I believe it's:
+
+```
+void cStats::PrintCountData(std::ostream& fp)
+{
+  fp.setf(std::ios::left);
+  fp << " " << std::setw(9) << GetUpdate();
+  fp << " " << std::setw(9) << GetNumOrganisms();
+  fp << " " << std::setw(9) << GetNumCreatures(); // genotypes?
+  ...
+```
+
+Hmm. Honestly, from avida documentation "count.dat" columns are:
+update, ave_metabolic_rate?, ...
+
+I've seen count.dat in Avida analyses (e.g., "tot_creatures", "current pop size"...). In the Avida source I remember PrintCountData printing: update, sum_entrophy?...
+
+Alternatively — the well-known avida count.dat header from Avida 2.12/2.14 is:
+
+```
+#format:update average_generation... 
+```
+no, that's time.dat? time.dat: update, average_generation, generation_stddev?...
+
+Hmm, time.dat in Avida: I believe time.dat holds "update, time, generation" statistics: columns: update, average_generation, ... The script uses time_[-1][2] as average generation — column index 2 (third column). If time.dat were "update, ave_gen, ..." then index 1 would be ave_gen, not 2. Hmm.
+
+I can't settle these from memory. The cross-examination instruction says the column lists are "in the build notes and in the scripts" — the build notes only document num_breed_true in count.dat (cStats.cc 1099). The brief says to look for wrong columns; but I cannot verify without Avida source. However, I found an internal-consistency anomaly worth raising: K5's births (1,027 over updates 1,000-5,000, i.e., ~0.26 per update for a full 3,600 grid of ancestors) is inconsistent with the same column reading ~0.075×3,600≈270 births/update in the main runs under identical ancestor-like organisms... wait, no — main runs' evolved organisms have shorter gestation (~200), so expected ~0.15/update each → 540/update. The measured 270/update in main runs is already half of what generation counts imply (7,474 generations ≈ 0.15/update). And K5's 0.26/update is ~1,000× less than the expected ~277/update for a grid full of ancestors with gestation 389.
+
+Hmm wait, actually, hold on. Let me recompute K5 expected more carefully. K5 run: inject 1 ancestor at update 0. Population doubles every gestation (13 updates) until grid fills (~3,600) around update 130. From then, per my reasoning, churn at ~1/13 divisions per organism per update. But maybe not: once the grid is full, an organism divides → offspring placed into neighboring cell, killing its occupant. So the population keeps dividing constantly. Yes — 277/update.
+
+Unless Avida does NOT overwrite when PREFER_EMPTY... From avida.cfg comments: BIRTH_METHOD 0 = "Random organism in neighborhood"; PREFER_EMPTY 1 = "Override BIRTH_METHOD to preferentially choose empty cells". So default: place into random neighbor, replacing. High churn. So count.dat births in K5 should be ~1M, not 1,027.
+
+So there is a real numerical inconsistency somewhere: either the column index for births is wrong (e.g., r[8] is something else, like "genotypes" or "threshold genotypes"), or K5's dynamics differ radically.
+
+Hmm — but wait: what about r[10] = num_breed_true? K5 share = 1.0: sum(r[10])/sum(r[8]) = 1.0. If r[8] were "births"=1,027 and r[10]=1,027, then breed_true/births=1 ✓ but the number itself is odd.
+
+Actually! Maybe I'm wrong about churn: in K5 with INHERIT_MERIT... consider merit: BASE_MERIT_METHOD 4 (min of executed/copied size = 100) times task bonuses. Ancestors perform no tasks? default-heads.org performs no logic tasks (just copies). DEFAULT_BONUS 1.0. So merit 100 for all.
+
+Hmm, wait, one more consideration: Avida "births" in count.dat might be counted per update as the number of DIVIDES completed in that update. 277/update expected. 1,027 total over 4,000 updates can't be divides.
+
+UNLESS: Avida's scheduler — with 3,600 organisms each getting 30 cycles/update — total 108,000 cycles/update, each divide needs 389 → up to 278 divides/update. Yes.
+
+So the K5 number 1,027 is impossible as "births per update summed over 4 rows". Something's off. Possibilities:
+1. r[8] is not births (wrong column) — but then main-run C3/C4 numbers are also mislabeled, yet they match copy-fidelity expectations well (0.693 vs expected 0.703!). The agreement of share_births_identical with theoretical fidelity strongly suggests r[10]/r[8] is genuinely breed_true/births. Also births/organism/update 0.0751... hmm interesting: at low rate, evolved gestation... generation 7,474 → 0.15/update. So r[8] ≈ half of true births?
+
+Actually hmm! Maybe r[8] is births counted per update but Avida prints count.dat every 1,000 updates with the value being the count in the LAST update only, not accumulated. That's what I assumed. OK.
+
+2. Maybe in K5 something does drastically reduce division: REQUIRE... "TEST_CPU_TIME_MOD 20"... no. Think: K5 sets DIVIDE_INS_PROB 0 and DIVIDE_DEL_PROB 0 and COPY_MUT_PROB 0. Nothing stops division.
+
+Hmm wait, actually — maybe in K5 the count.dat is only printed every 1,000 updates (MAIN_EVENTS for K5: 'u 0:1000:end PrintCountData' retained). And the K5 'births_after_update_0' sums rows r[0]>0 → rows 1,000..5,000 = 4 rows... wait 5 rows (1000,2000,3000,4000,5000). If each row's births ≈ 205, total 1,027. 205 births/update in a full grid?? Expected 277 — close order! Oh wait, that's actually consistent!! 1,027/5 = 205 per update. Hmm no: 1,027 over 5 rows = 205/update. Expected ~277/update. Same order! I made an arithmetic error before: births_after_update_0 sums the per-update values across 5 sampled updates, NOT across all 4,000 updates. Duh — count.dat only has rows at sampled updates. So 205/update vs expected 277/update — plausible (some organisms are newborns that haven't reached division; churn dynamics reduce the rate somewhat... actually 205 vs 277 within reason).
+
+Redo the main-run consistency: r[8] per update ≈ 270 (0.0751×3,597). Generations 7,474 over 50,000 updates = 0.149/update. With GENERATION_INC_METHOD 1 both parent and offspring get +1 — following a single lineage, +1 per division. Average gen growth should equal divisions per organism per update = 270/3,597 = 0.075 → 3,750 generations. Measured 7,474 = 2×. Hmm. So still a factor 2 between births column and average generation.
+
+Possible resolution: offspring generation = parent's generation + 1 where parent's generation ALSO +1 → when following the offspring-lineage: parent g → divides → parent g+1, offspring g+1. Offspring's gen = parent's pre-division gen + 1. So +1 per division along lineage. Average across population grows at division rate 0.075/update → 3,750.
+
+But measured 7,474 ≈ 2 × 3,750. Suspicious exact factor 2. default: 9,208 vs births 0.0603×50,000 = 3,015 → ratio 3.05?? That breaks the factor-2 pattern: 9,208/3,015 = 3.05. high: 11,521 vs 0.0363×50,000 = 1,815 → ratio 6.3! So generations/births ratio varies wildly (2, 3, 6). So the "average generation" doesn't track births/organism at all. Interesting.
+
+Why would high-rate populations have MORE generations (11,521) despite FEWER births per organism (0.0363)? Because "average generation" is dominated by the fastest-dividing lineages — merit inequality! With task rewards, some organisms have huge merit (2^bonus), dividing far more often than 30 instructions/update. The average generation is the mean over living organisms of their lineage generation. High-merit lineages rack up generations quickly. In high-error worlds, merit spread may be larger... Also shorter genomes (75-99) → faster division. So the variation is plausible: average generation is a mean over organisms whose lineages divided at very different rates.
+
+Hmm OK, actually the average-generation figure: lineages with higher merit divide more frequently, so the population's mean generation is weighted by... each division creates 2 organisms at g+1, so the population mean gen grows at the division rate per organism of the *average organism* — but living organisms are increasingly descended from fast dividers. Fine — no clean invariant. So I can't call a contradiction there. Actually let me sanity check magnitude: low: mean 7,474 generations over 50,000 updates → 0.15 div/organism-update → mean gestation 200 instructions — consistent with unrolled loops (copy 2-3 per pass) — good. And births column says 0.075 div/organism-update → gestation 400. Both can't be the same quantity... unless average generation over-represents fast dividers (which it does — a lineage dividing 2× faster contributes disproportionately to the mean since it has more descendants). Actually the mean generation over living organisms: if subpopulations divide at different rates, mean gen growth = mean over organisms of their own division rate = harmonic-ish weighting toward fast dividers. So mean gen growth ≥ population-average division rate. 0.15 ≥ 0.075 ✓ consistent (fast dividers dominate the living population).
+
+OK so births column is plausible after all. Good, no objection there. This was worth checking.
+
+Now — the C4 note in results: "births per organism per update ... every organism counts, including those that cannot copy themselves." Fine.
+
+Now let me check JSONs for specific claims: (1) EQU dominant-only drop "0.2 to 1.4 points" (check 4-decimal); (2) "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs"; (3) C5 "3,566 to 3,600 at update 1,000"; (4) ancestor copy_length 100, executed 389; (5) check the worlds JSON values match md. Also (6) check "high seed 1: 2,079 of 3,532" — from tasks md high_seed1 EQU 2079 ✓, and marletto organisms 3532 ✓.
+
+Also verify per-run save-1000 organisms 3,566-3,600. Let me grep the worlds JSON.
+
+C5 claim: "by update 1,000 every world held 3,566 to 3,600 organisms". Check all nine runs at save 1000. I saw 3600, 3598, 3600, 3598, 3596... need the remaining four (high seeds). Let me grep all "1000" blocks. Also dominant abundances: the EQU-run dominants (low2, low3, def1, def2, high1, high2 at 50,000). The abundances listed are in order of runs dict: low_seed1 at 10000, 30000, 50000 → 34, 42, 27; low_seed2 → 46, 31, 44; low_seed3 → 45, 28, 28; default_seed1 → 10, 12, 12; default_seed2 → 10, 8, 9; default_seed3 → 14, 14, 12; high_seed1 → 5, 8, 5; high_seed2 → 4, 5, 4; high_seed3 → 5, 5, 4.
+
+EQU runs at 50,000: low2 = 44, low3 = 28, def1 = 12, def2 = 9, high1 = 5, high2 = 4. Results claim: "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs". Low end: high2 = 4, not 5! Claim says 5 to 44; actual 4 to 44. Minor numeric slip (unless "those runs" means something slightly different — EQU runs: low2 44, low3 28, def1 12, def2 9, high1 5, high2 4). So "5 to 44" should be "4 to 44". Small but checkable slip. Hmm, but wait — maybe they used the Marletto JSON 'dominant'/'abundance' — same number (dominant at 50,000 = same as robustness dominant). Yes 4. I'll flag as minor.
+
+Now get the 1000-save organisms for high seeds, and the EQU 4-decimal shares for the "0.2 to 1.4 points" claim. Grep the marletto JSON for high_seed2 EQU and low_seed2 EQU entries.
+
+High seed1: min_from_1000 3481; save-1000 organisms? Not shown; need saves 1000 organisms for the high runs to check C5 "3,566 to 3,600". The md says fewest from 1,000 on: high 3,481-3,518. The C5 claim says "by update 1,000 every world held 3,566 to 3,600 organisms". Check save 1000 for high seeds — grep.
+
+Also, note share_births_identical high seed1 0.1483 and seed2 0.1537, seed3 0.09 — results high (0.090 to 0.154) ✓.
+
+births_sampled high seed1 = 7,520 over 50 rows → 150/update; 150/3532 = 0.0426 ✓.
+
+Now grep the specific 4-decimal values: share_performing_as_found and after_dominant_only for EQU per run. Search for "share_performing_as_found" near EQU blocks — easier: grep with context in the JSON for '"share_performing_as_found"' within EQU entries. The JSON structure: run → tasks → EQU → keys. I'll grep -A 40 on '"EQU"' was too long. Instead grep for 'share_performing_after_dominant_only' with -B? There are many. Better: read specific line ranges. The EQU blocks: at 2308 (low_seed2?), 3320 (low_seed2 no cap), 4007, 4686... Let me just grep for the two fields with line numbers and correlate by proximity.
+
+I need the EQU uncapped entries specifically: EQU appears in low_seed2 (capped at ~2454? no wait). The EQU runs: main_low_seed2, main_low_seed3, main_default_seed1, main_default_seed2, main_high_seed1, main_high_seed2, each with capped and uncapped. From the md (uncapped rows):
+- low2 no-cap EQU: 0.764 → 0.750 (diff 0.0136 from 4-dec? JSON 3466: 0.7639 → 0.7503: diff 0.0136 = 1.36 points ✓ "1.4")
+- low3 no-cap EQU: 4826: 0.8191 → 0.8105: 0.0086 (0.9 points)
+- def1 no-cap EQU: 6870: 0.5282 → 0.5244: 0.0038 (0.4)
+- def2 no-cap EQU: 8706: 0.5719 → ? (next lines beyond 150 limit). md: 0.572→0.569 (0.3)
+- high1 no-cap EQU: 0.3242→0.3222? md 0.324→0.322 (0.2)
+- high2 no-cap EQU: md 0.299→0.298 (0.1)
+
+So the range is 0.1 to 1.4 points, and the results file says "0.2 to 1.4 points" (twice: §5 and §6 table). Let me get exact 4-decimal for high2 and high1 uncapped EQU. high1 no-cap: capped 0.702/0.693; uncapped 0.324/0.322. From the grep list: high1 no-cap entries: 0.521/0.520 (NOT), 0.504/0.502 (NAND), 0.346/0.344 (AND), 0.519/0.517 (ORN), 0.443/0.441 (OR), 0.467/0.465 (ANDN), 0.394/0.392 (NOR), 0.324?/0.322? — beyond limit 150. Let me grep specifically for EQU entries with context to get the 4-decimal numbers for high1 and high2 uncapped.
+
+High1 uncapped EQU: 0.3240 → 0.3224 = 0.0016 = 0.16 points ≈ 0.2 points (rounded to one decimal: 0.2). High2: 0.2992 → 0.2977 = 0.0015 = 0.15 points → rounds to 0.2? 0.15 rounds to 0.2 (one decimal, round-half-up) or 0.1 (round-half-even). Claim "0.2 to 1.4 points" — with values 0.15, 0.16, 0.38, 0.86, 1.36 and def2: 0.5719→0.5698? Let me be careful: def2 uncapped EQU md shows 0.572 → 0.569; 4-decimal: from grep line 8706: 0.5719 → (next line cut). Values ~0.0015–0.0136. So the true range is about 0.15 to 1.4 points. "0.2 to 1.4" overstates the lower end slightly (0.15 → "0.2" only if rounding up). Borderline; 0.0015 written as points is 0.15, which most would write "0.1 to 1.4". This is a nitpick — arguably a rounding presentation. I'll mention it as a minor numeric slip: lower end is 0.15 points (high seed 2), so "0.2 to 1.4" should read "0.1 to 1.4" or "about 0.15 to 1.4". Actually, hmm: to be fair, maybe they rounded each difference to one decimal: 0.0015→0.0? or 0.2? Standard rounding of 0.15 to one decimal place is ambiguous. The claim "0.2 to 1.4 points" is defensible only if each per-run difference rounds to ≥0.2; 0.0015 rounds to 0.0 or 0.2 (never cleanly). I'll flag it as minor.
+
+The dominant abundance claim "5 to 44" vs actual 4 (high seed 2). Let me verify high_seed2 dominant abundance at 50,000 from the robustness JSON: from the ordered abundances: high_seed1: 5,8,5; high_seed2: 4,5,4; high_seed3: 5,5,4. So at 50,000: high1=5, high2=4, high3=4. EQU runs: low2=44, low3=28, def1=12, def2=9, high1=5, high2=4. So "5 to 44" is wrong: it's 4 to 44. But wait — does the Marletto dominant equal the robustness dominant? Both take max by count from detail-50000.spop — same. Confirm via marletto JSON "abundance" for high_seed2. Let me check.
+
+Also check C5: save-1000 organisms for the high runs. Need those. From the grep -A9 earlier, only run headers shown. Let me grep the saves at 1000 for high seeds: pattern '"main_high_seed1"' with more context or search "1000" blocks. The earlier organisms grep showed lines 35-96 (run1: low_seed1: 3600 at 1000), 243-304 (run2 low_seed2: 3598), 451-512 (run3 low_seed3: 3600), 659-720 (default_seed1: 3598), 867+ (default_seed2: 3596)... need default_seed3 and high seeds. Let me grep '"1000"' with -A 1.
+
+Save-1000 organisms: 3600, 3598, 3600, 3598, 3596, 3599, 3579, 3566, 3590 → min 3,566 (high seed2), max 3,600 ✓ C5 claim "3,566 to 3,600" ✓.
+
+Dominant abundances: low1 27, low2 44, low3 28, def1 12, def2 9, def3 12, high1 5, high2 5 (length 75)? wait: order of runs in marletto JSON: low_seed1 (27), low_seed2 (44), low_seed3 (28), default_seed1 (12), default_seed2 (9), default_seed3 (12)? hmm the 8721 entry: length 89, abundance 12 — that would be default_seed3 (length 89 at 50,000 ✓ from robustness table). Then high_seed1: 9777: length 93, abundance 5 ✓. Then 11435: length 75, abundance 5 → high_seed2 (length 75 ✓ robustness high2 50,000 length 75). Then 12559: length 99, abundance 4 → high_seed3.
+
+Wait, so high_seed2 dominant abundance is 5, not 4! Earlier from the robustness JSON order I assumed high2=4. Let me recheck: robustness JSON order of runs: low1(34,42,27), low2(46,31,44), low3(45,28,28), def1(10,12,12), def2(10,8,9), def3(14,14,12), high1(5,8,5), high2(4,5,4)?, high3(5,5,4)? But marletto says high2 dominant (length 75) abundance 5, high3 (length 99) abundance 4. Hmm — robustness high2 at 50,000 has length 75 ✓; abundance listed 27 values; let me recount the grep: abundances in order: 34,42,27 | 46,31,44 | 45,28,28 | 10,12,12 | 10,8,9 | 14,14,12 | 5,8,5 | 4,5,4 | 5,5,4. So high1: 5,8,5; high2: 4,5,4 (at 50,000: 4); high3: 5,5,4 (at 50,000: 4).
+
+But marletto high_seed2 dominant abundance = 5 with length 75, and high_seed3 = 4 with length 99. Robustness high2 50,000: length 75, abundance 4. Conflict! Same population file, same max — abundance should be identical. Unless... ties! max(pop, key=lambda x: x[1]) — with ties, `max` returns the FIRST max in iteration order. spop returns genotypes in file order (same file), so both scripts should get the same genotype... unless the file has multiple genotypes with equal max count and... both scripts use identical `max(pop, ...)` over the same list → identical result. So abundance must match. 5 ≠ 4.
+
+Hmm wait, maybe I misassigned. Maybe robustness order differs: dict insertion order: for cond in RATES (low, default, high), for seed in SEEDS. Same as marletto (for cond in RATES: for seed in SEEDS). So both high2. Robustness high2 50,000 abundance: the 24th value = index 23: values: [34,42,27, 46,31,44, 45,28,28, 10,12,12, 10,8,9, 14,14,12, 5,8,5, 4,5,4, 5,5,4] — position: low1(3): 34,42,27; low2: 46,31,44; low3: 45,28,28; def1: 10,12,12; def2: 10,8,9; def3: 14,14,12; high1: 5,8,5; high2: 4,5,4; high3: 5,5,4. So robustness high2 at 50,000 = abundance 4, length 75.
+
+Marletto high2: length 75, abundance 5?? Wait — maybe the 11435 entry (length 75, abundance 5) is high_seed2 and 11996 (length 75, abundance 5) is its no-cap rerun; 12559 (length 99, abundance 4) is high_seed3. So marletto high2 abundance 5 vs robustness 4. Discrepancy of 1 in the same quantity — impossible unless data changed between runs (departure 10 says scripts were run on low runs while others running; "reported numbers are from the final run of every script after all runs ended" — both run after). Or unless the dominant genotype in the marletto script differs: marletto takes top[0] from `sorted(spop(p), key=lambda x: -x[1])` — sorted descending by count; ties: sorted is stable → first in file order among equals. max() also picks first among equals. Same. So both should give same (seq, n).
+
+Hmm, wait — maybe I mis-mapped robustness runs to abundances because some saves missing? All runs have all three saves presumably. Let me verify by reading the robustness JSON directly around high_seed2 entries: check 'abundance' and 'length' per update for high2.
+
+Actually, wait: maybe the marletto abundance 5 entries at length 75 are high_seed2 with... and robustness high2 50,000 length is 75 with abundance 4. Both read detail-50000.spop of main_high_seed2. Let me read the JSON directly to be sure (I may have misread the order). Let me grep '"main_high_seed2"' -A 5 in robustness JSON and the abundance fields with lengths. Better: read specific segment of mutational robustness.json.
+
+So for main_high_seed2: saves at 10000, 30000, 50000 → abundances 4, 5, 5? Wait: the "abundance" matches in range 577-653 (high_seed2): lines 595-598 → abundance 4? Line numbers: high_seed2 block starts 577. Within it: first save 10000 block: abundance at 598? Hmm the grep -B3 shows: 595 share_higher_fitness 0.1026 (that's high1 10000 per md: 0.062? no). Let me map: md rows: high1 10000 higher fitness 0.062; high1 30000 0.084; high1 50000 0.114; high2 10000 0.103; high2 30000 0.045; high2 50000 0.032; high3 10000 0.095; high3 30000 0.046; high3 50000 0.080.
+
+From grep: 516-519: share_higher 0.0623 → abundance 5 (high1 10000). 569-572: 0.114 → abundance 5 (high1 50000). 595-598: 0.1026 → abundance 4 (high2 10000). 619-622: 0.0452 → abundance 5 (high2 30000). 645-648: 0.032 → abundance 5 (high2 50000). 671-674: 0.0952 → abundance 4 (high3 10000). 697-700: 0.0462 → 4 (high3 30000). 723-726: 0.0796 → 4 (high3 50000).
+
+So robustness high2 at 50,000: abundance 5 (line 648). Earlier I misordered. So dominant abundances at 50,000: low1 27, low2 44, low3 28, def1 12, def2 9, def3 12, high1 5, high2 5, high3 4. Consistent with marletto (high1 5, high2 5, high3 4) ✓. EQU runs: low2 44, low3 28, def1 12, def2 9, high1 5, high2 5 → "5 to 44" ✓. Good, no objection. (high1 at 30000 = 8, fine.)
+
+Now, remaining checks:
+
+1. The worlds md C3 note: results file §2 C3 says "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." — This trailing clause is confusing/wrong: num_breed_true counts births with offspring identical to parent regardless of genome length. Actually maybe they meant: relevant because evolved genomes are no longer 100 long, so the expectation formula (1-rate)^100 no longer applies exactly. It's a garbled sentence but not a numeric error. Could flag as unclear sentence, minor. Hmm, "for genomes that were no longer 100 long" — hmm. Actually wait, maybe it means the fidelity expectation from the rates used L=100 but the world's organisms have lengths ≠100, so the world figure isn't directly comparable. The sentence as written asserts the world's count is "for genomes that were no longer 100 long", which is a misstatement (many organisms still length ~100; count is length-agnostic). Minor wording objection, maybe not worth it. I'll consider including as a low-priority wording fix.
+
+2. K1 injection mismatch (plan says "one per cell"; script injects 100 genotypes at counts 0,36,...,3564; i=0 not injected at all). Results §2 says "100 of them injected into a world made no offspring". The exact commands file shows only the avida command, not the events. The events in the run script control injection. This is a discrepancy between what is said (plan K1: "100 of them injected into the world, one per cell") and what the script does. Objection: either fix the sentence or note the departure. Severity: low-moderate (control conclusion unchanged, but the record misstates what was run, and departures list doesn't record it).
+
+Wait, actually let me double-check the total injected: 36*sum(1..99) = 36*4950 = 178,200 into 3,600 cells. Avida's Inject event with count larger than free cells: it injects until grid full, discarding the rest? If it injects sequentially, genotype 99 (3564 copies) fills most of the grid; earlier genotypes mostly placed. Order: i=0 (0 copies), i=1 (36), ..., i=99 (3564). The grid fills during i=99's injection mostly. So the final population ≈ 3,564 copies of genotype 99 + earlier ones partially overwritten? Inject places into random cells? (Inject uses... placement method for injected orgs — probably random cell or next free). Whatever — K1's conclusion (random programs make no offspring, die of age by update 66) unaffected. But "100 of them injected" is inaccurate (99 genotypes; and massively more than one per cell). Also the world K1 measures "100 random programs injected" — the plan intended each of 100 random programs in the world; the actual run has 99 genotypes present (mostly genotype 99). Conclusion robust but description wrong.
+
+3. Check the worlds script's count.dat column usage vs build notes: unverifiable here (no source). But there's a documented claim inconsistency: the build notes table documents only num_breed_true's source location; the script's docstring says "C3 ... Avida's own counts at the 50 updates". Column indices 8 and 10 — can't verify. I'll put in "not reached / checked by consistency": the fidelity shares match the theoretical expectation closely and across conditions monotonically, so wrong-column risk is low but unverifiable.
+
+4. Check the alignment traceback tie-breaking: prefers diagonal, then deletion in seq (i-=1 → ancestral site '-'), then j-=1. For repetitive filler (86 × 'c') aligned to evolved genomes with inserted task code, alignment is non-unique — recorded as "Unsure" in §7 ✓.
+
+One potential subtlety in the alignment: gaps in the ancestor (j -= 1 consuming seq letters without an ancestral site) — fine.
+
+But wait, there's a real concern with conservation: essential site identity counted when aligned letter equals ancestor's letter. For the copy loop that moved/changed (e.g. `zvvfcaxvvgab`), essential sites still count matches. OK.
+
+5. Check the ancestor description consistency: plan said 5 + 85 + 10; results §1 says 5, 86, 9 ✓ departure 1 recorded. But results §1 says "a 5-instruction head (`wzcag`), 86 filler instructions that do nothing (`nop-C`), and a 9-instruction copy loop" — 5+86+9 = 100 ✓. Also plan's letter string "zvfcaxgab" is 9 letters called 10 — plan error recorded ✓.
+
+Let me verify default-heads.org actually is wzcag + 86 c + zvfcaxgab. Read the config file quickly.
+
+6. Check results §2 C2 claim "Site 6, the first filler instruction, is in the set: mov-head reads it as a label." — mov-head (g) is site 5; site 6 is nop-C. The claim "mov-head reads it as a label" — plausible (label after mov-head). Fine.
+
+7. Results §3 claim: "the most common genotypes copy two or three instructions per pass of the loop (low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`)". These are 11-12 char strings with doubled/tripled v (h-copy). Plausible; can't verify without genomes. OK.
+
+8. §4 M2 "identical to the ancestor" = 0 everywhere ✓ table.
+
+9. Check "the ability to copy itself exactly remained in 65% to 86% of the organisms (condition means)": low 0.857, default 0.710, high 0.650 ✓.
+
+10. §5 "first seen between updates 13,000 and 44,000" for EQU — check worlds JSON first_update_task_seen for EQU across runs with EQU at end. Can't easily verify without grep; let me check quickly. Actually EQU first seen: the claim is about EQU presumably in the six runs. Let me grep "first_update_task_seen" EQU values.
+
+11. The summarise JSON → S111/2 json. Check a couple of values in S111/2 json match runs JSONs. Spot check: 'the three properties measured.json' marletto EQU runs=6 etc.
+
+12. Check the worlds md "living genotypes, at the last save" default 2801 — with 3,592 organisms, 2,801 genotypes — plausible (Sk=1 mostly).
+
+13. Results §3 (a) text: "the ancestor: of 2,500, 81.2% still copy themselves exactly" — but ancestor has 100 sites × 25 = 2,500 ✓.
+
+14. Check the claim in results §3 R1 "For the ancestor and for the most common genotype of each run at updates 10,000, 30,000 and 50,000" ✓ script SAVES.
+
+15. One more: results §2 C3 header column "of those 1,000, able to copy themselves exactly" low 950 default 876 high 664 ✓ md.
+
+16. Departure 5: controls first attempt failed (nop-X line ran onto last line with no final newline). Check instset-heads.cfg last line has no trailing newline? The fix appends '\nINST nop-X...' — with leading \n, safe regardless. Fine.
+
+17. environment.cfg — check tasks/reactions briefly for consistency with "nine logic tasks, each rewarded once per life". Let me read it quickly (small file presumably).
+
+18. Check default-heads.org.
+
+19. One arithmetic check in results §3: "The evolved genomes are less robust than the ancestor in the viable share (0.70 to 0.76 against 0.81)" — evolved viable means at 50,000: 0.698, 0.754, 0.758 ✓.
+
+20. §8: "Structure that keeps what it does through most single changes (69% to 79% still copy themselves)" ✓.
+
+21. Check low_beside_high claim in results: "the neutral share is higher at the high rate at all three moments (10,000, 30,000, 50,000); the viable share is higher at the high rate at 50,000 only" ✓ md.
+
+Also check the plan's rule wording "every seed of one lies beyond every seed of the other" — script: b['min'] > a['max'] ✓ correct implementation.
+
+22. Check "share_offspring_viable" col in results C3 table: header says "of those 1,000, able to copy themselves exactly" — script computes via = sum over unique offspring sequences evaluated viable, weighted by counts ✓.
+
+Hmm — one subtle thing in the fidelity script: `T.sample_offspring(anc, 1000, [('COPY_MUT_PROB', mu)])` — but does SAMPLE_OFFSPRING in analysis mode apply DIVIDE_INS/DEL probabilities? The build notes say mutation rates are copied from the world's; the -set changes COPY_MUT_PROB only. If divide ins/del also applied (0.05 each), then of 1,000 offspring ~100 have indels; consistent with expectation including 0.9025 factor ✓ they did include it. Good.
+
+But also: does sample_offspring count only *viable-divide* offspring? "one gestation per sample" — samples that never divide produce nothing? If a mutant never divides... the ancestor almost always divides (divide doesn't require exact copy). Offspring genomes counted — n = sum(counts) = 1,000 in each condition? Results table says "identical of 1,000 sampled" implying n=1000. The md says 723 of 1000. If some samples failed to divide, n < 1000. JSON has 'sampled_offspring': n. Check quickly in copying and knockouts.json.
+
+23. Check the essential-site instruction list in results C2 vs md ✓ (identical).
+
+24. Also confirm results §2's statement "executing 389 instructions per copy and copying all 100" vs JSON ancestor copy_length=100, gest 389, exe_length? Check JSON.
+
+Let me read copying and knockouts.json and environment.cfg and default-heads.org.
+
+Ancestor: wzcag + 'c'×86 + zvfcaxgab. Count the c's: line 6 is site 6 (first filler after head at sites 1-5)... lines 6-94 are nop-C = 89 lines? Sites: line 4 = site 1 (h-alloc), line 5 = site 2, lines 6-8 = sites 3-5? Wait: site 3 = nop-C (line 6), site 4 = nop-A (line 7), site 5 = mov-head (line 8), site 6 = nop-C (line 9), then lines 10-94 nop-C... line 95 = h-search (site 92?). Lines 4-103 = 100 instructions. Sites 1-5 = lines 4-8 (w z c a g ✓). Sites 6-91 = lines 9-94 = 86 nop-C ✓. Sites 92-100 = lines 95-103 (z v f c a x g a b ✓ = h-search, h-copy, if-label, nop-C, nop-A, h-divide, mov-head, nop-A, nop-B) ✓ matches essential sites 92-100 exactly and results §2 text ✓.
+
+Note: default-heads.org line 8 comment "Place write-head at beginning of offspring" — mov-head at site 5 ✓.
+
+Interesting: exe_length 97, copy_length 100, gestation 389 ✓ "executing 389 instructions per copy" — the results say "executing 389 instructions per copy and copying all 100" ✓.
+
+Hmm wait: one nuance — the results C1 says "makes an exact copy of itself, executing 389 instructions per copy". OK.
+
+Note fitness 0.2494 for ancestor in test processor.
+
+Now check the fidelity JSON block and K1/K2 to confirm sampled_offspring = 1000. Also check environment.cfg quickly. Then look at "S111/2 the three properties measured.json" spot values and "first_update_task_seen" EQU range 13,000-44,000.
+
+K2 letters: h-copy (v, site 93) replaced by A ✓ (position 92 0-based).
+
+The "equ" grep failed — tasks keys are uppercase? In worlds script TASKS = ['NOT',...,'EQU']; first_update_task_seen keys are t in TASKS uppercase. Grep '"EQU": '.
+
+EQU first seen: 13,000 (low2), 25,000 (low3), 16,000 (def1), 22,000 (def2), 35,000 (high1), 44,000 (high2) → "first seen between updates 13,000 and 44,000" ✓.
+
+Environment: nine tasks, rewarded "once per life each" — requisite:max_count=1 ✓. Values 2^1..2^5 as "extra processor time" ✓. Note: results §1 says "the nine logic tasks rewarded" ✓.
+
+Now spot-check the S111/2 json (the three properties measured.json) vs summary tables — check a few gathered values: marletto EQU runs list, and e.g. 'coverage'. Also check the JSON "marletto_test_by_task" AND runs = 6.
+
+Also remaining: check the instset-heads.cfg for the 26 instructions matching NAMES order (matters for letter mapping!). The test processor maps letters a-z to NAMES in order; if the actual instset file order differs, the letter mapping would be wrong. Check instset-heads.cfg.
+
+The instruction file itself has the letter comments a..z in the same order as NAMES ✓. Letter mapping verified against the file: a=nop-A ... z=h-search ✓ 26 instructions ✓. And the appended nop-X line uses 'A' as its letter (comment "# A") — wait, in the script they append "INST nop-X         # A". Avida's LOAD_SEQUENCE uses lowercase letters for the 26 and presumably 'A' (uppercase) for the 27th. The instset comment convention defines the letter. Plausible; Avida's analysis mode maps characters per instset comments. OK.
+
+Interesting: Avida's default instset actually has 26 instructions; SLIP_FILL_MODE mentions nop-X as an internal concept ("1 = nop-X" fill) — hmm, interesting: Avida's SLIP_FILL_MODE comment says fill with "nop-X". So nop-X exists conceptually in Avida (a true no-op); adding it as a 27th named instruction is consistent.
+
+Now spot-check S111/2 json gathered values.
+
+Consistent (line 1815+ is the capped_300 block; results table uses uncapped ✓).
+
+Now let me look at the remaining unexamined items:
+
+1. `s111_measure_the_worlds_over_time.py` line 43: `rows.append([float(x) for x in line.split()[:20] if _num(x)])` — filtering within the first 20 columns; if any of columns 0-19 were non-numeric they'd be dropped, shifting indices. count.dat is numeric presumably. OK.
+
+2. One more check on the marletto script's `dom_after`: when `sites` is non-empty, dko = evaluate(knock(dom_seq, sites)); dom_after = dom_n if dko performs else 0. Note: `one_copy = found - dom_before + dom_after` — correct arithmetic for "knockout in the dominant genotype only".
+
+But subtle: if `dm['base']['task.t'] == 0` (dominant doesn't perform the task) yet task chosen (≥10% in world counts) — then sites = [] (task_sites empty because base doesn't perform), still_copies empty, dko None, dom_after = dom_n if base performs else 0 → 0; dom_before 0. Fine. Note: happened for no runs? low_seed3 NAND: task-only sites 0 but dominant performs (12 stopping sites all copy-essential). OK.
+
+3. Now, a possible conceptual issue with the "task-only" joint knockout in genotypes where task_sites exist but only copy-essential: o = [] → genotype counted as performer left as is (only_none), inflating only_after. Recorded via 'share_of_performers_with_no_task_only_site'. Results §5 mentions "the joint knockout of single-knockout sites leaves some performers, most for NOT (21%...)" — that's share after; also fine.
+
+Hmm wait — there's something to check in results §5: "Not fully: the joint knockout of single-knockout sites leaves some performers, most for NOT (21% on average, up to 46%): a task that can be done by more than one route in the same genome is not stopped by removing what single knockouts find." — The 21%/46% are the after-every-genotype-task-only shares. But the share of performers with NO task-only site is different (only_none/performers). The claim "a task that can be done by more than one route" matches both mechanisms. OK.
+
+4. Check the results-file §5 sentence: "Each task performed by at least 10% of the organisms at update 50,000 was tested (69 run-task pairs)" ✓ verified 69.
+
+5. Check "task-only sites in the dominant" AND row: "13.8 (7 to 27)" — computed 13.83 ✓ min 7 (low1) max 27 (def1) ✓.
+
+6. Now the worlds script: 'average_generation_at_end': time_[-1][2] — time.dat third column. In Avida, time.dat columns are: update, average_generation, ... hmm. Actually I now recall Avida's time.dat header: "#format:update time ave_generation...". Hmm no. There are two candidates: time.dat might be "update, average generation, stddev..."? If column 1 (0-based) were average generation, using [2] would be wrong. The values (7,220-15,940) look like generations. Column 2 could be "generation variance" or "max generation" — no way to tell. Can't verify; note as unverifiable (no source/raw data). But cross-check: is there another derived stat consistent? The results claim "Average generation reached at update 50,000" — nothing else to cross-check against. The build notes don't document time.dat columns at all, though the brief says "the column lists are in the build notes and in the scripts" — the build notes list only num_breed_true for count.dat. So the column choices for count.dat (0,2,8,10), time.dat (2), tasks.dat (1-9) are undocumented in the folder. That's a checkability gap worth an objection? The brief for my job says look for wrong columns; I can only flag that the build notes don't record the column layouts for count.dat/time.dat/tasks.dat that the scripts index numerically, so the mapping cannot be cross-examined from this folder. Internal consistency (fidelity vs expectation; tasks counts vs marletto organisms; K5=1.0) supports them being right. I'll raise as a low-severity record gap with exact fix: add the column headers to the build notes.
+
+Wait — actually one more consistency test for count.dat columns: tasks_at_end counts (e.g., 3557 of 3600 organisms performing NOT at low seed1) are ≤ organisms ✓ all. And marletto uses count[2] as orgs = 3600 for low_seed1 ✓ consistent with worlds save 50000 organisms 3600 ✓. Good.
+
+Also the C3 world figure 0.693 for low — vs expected 0.703. The world's genomes have length ~105 (evolved), so expectation with L=105: 0.9975^105*0.9025 = 0.693 — spot on! Actually mean length low at last save 105.3 → 0.9975^105 = e^{-0.2628}=0.7689*0.9025=0.694 ✓ matches 0.693 beautifully. Default: 0.9925^109*0.9025: e^{-0.8215}=0.4398*0.9025=0.397 ≈ 0.400 ✓. High: 0.98^88*0.9025 = e^{-1.782}=0.1683*0.9025=0.1519 vs measured 0.131 — close-ish (high genotypes shorter, 75-99; using 88). Good consistency; r[10]/r[8] as breed-true/births is well supported.
+
+7. Now check departures list #4: "the planned cap of 300 genotypes covered only 15% to 57% of the organisms" — check capped coverage: low1 2036/3600 = 56.6% ✓ (the max); high1 560/3532 = 15.9%; high3 521/3539 = 14.7% — hmm "15% to 57%": high3 = 521/3539 = 0.1472 = 14.7% → "15%" ok rounded. ✓.
+
+8. Results §5 "(the most common genotype holds 5 to 44 of about 3,600 organisms in those runs; a diverse population)" ✓ verified 5-44.
+
+9. "0.2 to 1.4 points" — EQU dominant-only drops: 1.36, 0.86, 0.38, ~0.2 (def2 0.5719−0.569?=0.002), 0.16, 0.15. Precise: def2 0.5719→? md 0.569; from grep 8706: 0.5719 → cut. Likely 0.5698 → 0.0021 = 0.21 points. So the six values: ≈1.36, 0.86, 0.38, 0.21, 0.16, 0.15 points. Two of six (0.16, 0.15) round to 0.2 under one-decimal round-half-up. "0.2 to 1.4" is defensible as "about"; strictly the smallest is 0.15. I'd flag as borderline-minor: exact values are 0.0015–0.0136. Given the brief wants terse objections with exact fixes, I'll include it as a minor item: change "0.2 to 1.4 points" to "0.15 to 1.4 points" (or "up to 1.4 points"). Both §5 and §6 table ("0.2 to 1.4 points less").
+
+10. K1 world injection mismatch — main objection candidate (script vs plan/description).
+
+11. The odd sentence in C3 note about "for genomes that were no longer 100 long". Actually reread: "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." Perhaps intended: "the world's genomes were no longer 100 long". As written it misattaches. Minor wording.
+
+12. Now think about whether the K1 control as run undermines the "0 of 10,000 random programs" claim — no, that's the test-processor part, fine.
+
+13. Another check: results §2 says K1 world: "100 of them injected into a world made no offspring, and the last was gone after update 66 (they die of age)". births_after_update_0 = 0 ✓. last_update_with_organisms 66 ✓.
+
+But note: K1 injected 178,200 organisms (counts 36·i); "the last was gone after update 66" — with age limit 20×100=2,000 instructions ≈ 67 updates ✓ consistent.
+
+14. Robustness: the plan said R1 reports shares "viable / neutral / lethal" — results report lethal implicitly ✓.
+
+15. Check the per_site_viable indexing when len(seq) varies — fine.
+
+16. The worlds script computes `res['per_site_conservation_at_last_save']` inside the saves loop — assigns on each save, ending with last ✓ (name matches only if last iteration is 50000; loop order is `for u in saves` ascending ✓).
+
+17. `one_run`: `later = [r for r in count if r[0] >= 1000]` — includes update 50,000 ✓; "averaged over updates 1,000 to 50,000" ✓ (weighted by births).
+
+18. Marletto: `chosen` uses tasks.dat counts (world counts) — the 10% threshold applied on world counts, while "as found" is test-processor share. The results file §5 explains the world-vs-test-processor gap. Also plan said "each task performed by at least 10% of the organisms there" — ambiguous but world counts is a defensible reading ("Avida's world counts"). Note a subtle asymmetry: had the threshold been applied to test-processor shares, low_seed1's NOT (0.896 uncapped) etc. — some pairs near 10% in world counts but lower in test processor... e.g., high_seed2 NAND world 51%, test 36.5% — still in. Any pair that would flip? low_seed2 AND: world 25/3600 <10%. No pair near boundary except maybe none. Fine — no objection.
+
+19. Now check S111/3 plain words.md quickly for numbers matching (it's the owner-facing file; numbers should match). Let me read it.
+
+Plain words checks:
+- §1: "over about 6,300 to 16,000 generations" — actual 6,310 to 15,940 ✓ rounded.
+- §3: "100 of them put into the world made no copies and were all gone... after 66 time steps" — repeats the "100 of them put into the world" claim; the actual K1 run injected 99 genotypes (i=0 count 0) at multiplicities up to 3,564. Same objection as K1.
+- §4: "14% to 19% at the low rate and 27% to 36% at the high rate, and every high-rate run was above every low-rate run" ✓ (low 0.139-0.188, high 0.272-0.361).
+- §4: "at the end of a low-rate run, 84% ... 15 copying instructions ... 18%" ✓ (0.836, 0.178).
+- §5: "Its 9 copying instructions ... in 0% to 49% at the high rate" ✓ (0-0.487).
+- §5: "58% to 84%" ✓.
+- §6: "the share ... drops by 1.4 points ... (in the six runs, the drop was 0.2 to 1.4 points)" — repeats the 0.2 lower bound; actual smallest 0.15. Minor.
+- §6: "the most common program does EQU with 26 instructions... makes up only 44 of the 3,600" ✓ low seed2 dominant abundance 44 ✓.
+- §7 unsure: "59% against 32%" ✓.
+- §2: "about 1 in 400 (low)" — 0.0025 = 1/400 ✓; "1 in 133" ≈ 0.0075 ✓; "1 in 50" = 0.02 ✓.
+
+One more possible check: results §3 (b) "Essential sites are above non-essential ones at every save of every run (54 of 54)" ✓.
+
+Now, K2 in plain words §3: "The first program with its 'copy one instruction' step switched off, put into the world alone, made no copies and was gone after 65" ✓.
+
+Now — a deeper question about the K2/K3/K4 controls: the knocked-out organism contains 'A' (nop-X) — requires instset_extra=True ✓ used.
+
+Now let me also double check the worlds script MAIN_EVENTS: "u 10000:10000:end SavePopulation" → saves at 10000, 20000, 30000, 40000, 50000 ✓ plus 1000 ✓ six saves ✓ (54 = 9×6 ✓).
+
+PrintTimeData every 1000 ✓, PrintCountData every 1000 — wait, the results say "the counts... at the 50 saved updates (1,000 to 50,000)" — events: 'u 0:1000:end PrintCountData' → prints at 0, 1000, ..., 50000 = 51 lines; script filters r[0]>=1000 → 50 ✓.
+
+PrintTasksData, PrintDominantData, PrintAverageData ✓ (dominant not used by scripts; fine).
+
+Now — a subtle check on the robustness script's `by_condition` construction: for cond loop then inner seed loop then... Actually structure: `for cond in RATES: for seed in SEEDS: ...` then after seed loop, `for u in SAVES:` builds by_condition — inside the cond loop ✓ (indentation: the `for u in SAVES:` block is inside `for cond`). ✓.
+
+Now think about whether there are any arithmetic/formula errors I haven't checked:
+
+C3 expected: uses (1-DIVIDE_INS)*(1-DIVIDE_DEL) = 0.9025 ✓; both applied independently per divide; an insertion and deletion both occurring would give length 100 again but different letters — counted in expectation as identical? No: exp assumes identity requires no indel event; an ins+del pair yields length 100 but not identical → expectation slightly overestimates? Actually exp_any = P(no copy error)×P(no ins)×P(no del) — but genomes with ins+del (length restored, content differs) are not identical, so correct to exclude; genomes with only ins or only del aren't identical either (length ≠ 100) — correct. But what about ins+del both occurring: length 100, not identical → also excluded ✓. So expected identical = P(no copy err AND no ins AND no del)? No wait — that's not right either: identity requires no copy errors, no ins, no del. So exp = (1-mu)^L(1-0.05)(1-0.05) exactly (modulo redraw-same). ✓ correct.
+
+One subtlety: is the copy error drawn per copied instruction including the possibility that a redraw gives the same instruction — handled with two bounds ✓.
+
+Robustness EPS: "fitness within one part in a million" — abs(r/w − 1) ≤ 1e-6 ✓.
+
+Now — the one remaining substantial check: the worlds script `spop` — detail-*.spop format: uses '#format' header fields; takes num_units. Plausible; Avida's spop format has fields including "num_units" and "sequence"... I believe Avida's population files have columns: genotype id, length, merit, fitness, update born, update deactivated, parents..., num_units, sequence... The code keys on names, robust. OK.
+
+Another check — the marletto md capped coverage claim in departure 4: "covered only 15% to 57%" — low1 56.6%, high3 14.7% ✓.
+
+Also check results §5 "(AND passed in six runs)" ✓.
+
+Now potential off-by-one checks in marletto: 'task_only_sites_in_dominant': [i+1 ...] 1-based ✓ results §5 cites e.g. "4.2 (1 to 9)" ✓.
+
+Another possible objection: In the marletto script, `maps()` evaluates every single-knockout of every top genotype — but `task_sites` uses `b['task.%d' % t] > 0 and r[...] == 0`. Note task counts in test processor are 0/1. Fine.
+
+Now, one more possible issue: the worlds script's `shares()` — 'head_exact' uses `head in s` (substring anywhere) ✓ plan says "carrying the ancestor's copy loop zvfcaxgab and its head wzcag exactly (anywhere in the genome)" ✓.
+
+And 'copy_loop_exact' uses anc[-9:] = 'zvfcaxgab' ✓ (not the plan's erroneous 10-char reading; results §1 corrected to 9) ✓.
+
+Potential issue: `loop in s` for high seed 1 gives 0.49 at 50,000 — copy loop exact present. Fine.
+
+Now the departures: #2 says "for the ancestor, 57% of one-change programs copy one cycle faster (388 instead of 389)" ✓ share_higher_fitness 0.573 ✓.
+
+Now assemble objections:
+
+X2.1 (most serious?) — What is most serious? Let me rank candidates:
+
+(a) K1 world control injected differently from what the plan and both reports say (counts 0,36,...,3564; genotype 0 never injected; ~178,200 placements into 3,600 cells vs "100 of them injected, one per cell"). The numbers reported ("100 of them injected into a world made no offspring, gone after update 66") don't match the script. Not recorded in departures. Fix: correct the sentences in S111/2 §2 and S111/3 §3 (e.g. "99 random programs, in thousands of copies, filling the grid") or rerun K1 with one per cell.
+
+(b) The "0.2 to 1.4 points" lower bound (actual 0.15 points, high seed 2; 0.16 high seed 1). Appears in S111/2 §5, §6 table, and S111/3 §6. Fix: "0.15 to 1.4" or "0.2 to 1.4" → "up to 1.4 points; smallest 0.15". Given rounding conventions defensible, but strictly a slip.
+
+(c) The build notes do not record the column layouts of count.dat/time.dat/tasks.dat that the scripts index by number (count r[2] organisms, r[8] births, r[10] breed_true; time r[2] average generation; tasks r[1..9]) — only num_breed_true's source line is given. Not checkable from this folder. Fix: add the headers (Avida prints #format lines) to the build notes. Low severity; consistency checks support the indices (K5 share=1.0; fidelity matches (1-μ)^L·0.9025 at evolved lengths; tasks ≤ organisms).
+
+(d) The C3 sentence "for genomes that were no longer 100 long" — garbled/misleading. Fix wording: e.g. "the genomes in the worlds were by then no longer 100 instructions long, so the expected column (which uses 100) is only a near guide".
+
+(e) Anything else? Let me check "births per organism per update" mean-of-ratios vs ratio-of-sums — fine either way.
+
+(f) In the worlds md, the row "runs performing each task at the end" default: "3 3 3 3 3 3 3 2 2" ✓; low "3 3 3 3 3 3 3 1 2" ✓; high "3 3 3 3 3 3 3 0 2" ✓ matches tasks table (high XOR all 0 ✓).
+
+(g) results §2 C4: "every organism counts, including those that cannot copy themselves" — fine.
+
+(h) One more: results §3 (a) claims "the neutral share moves with the error rate" — R2 verdicts support for neutral at all three moments ✓.
+
+(i) Check S111/2 §1: "each ran 32 to 40 minutes; all nine ended at update 50,000 with exit code 0" — exit.txt data not in folder; can't verify; also plan estimated 30 min. Not verifiable — fine, not reached.
+
+(j) The "essential_instructions" in summarise json ✓.
+
+(k) The K1 test-processor control: 10,000 random programs with rng seed 1111; plan says "each instruction drawn evenly from the 26" ✓ (T.LETTERS 26).
+
+(l) Robustness: "every one-change program" — for evolved genotypes of length up to 128: 25×length mutants ✓.
+
+(m) One consideration: the robustness script evaluates mutants including those with letters mapped to the 26 default instructions — but the evolved genotypes came from main runs WITHOUT nop-X. Mutants substituted from 26 letters ✓ consistent with "each of the 25 other instructions of the set" (the run's set). Fine.
+
+(n) Marletto: knockouts use T.NULL ('A' = nop-X) ✓ plan says nop-X knockout ✓.
+
+(o) Hmm — one more check on `dominant()` in robustness vs `top[0]` in marletto: consistent (verified abundances match).
+
+(p) What about the worlds script using count r[2] for organisms_min_from_1000 including update rows where r[2] might be... fine.
+
+(q) The marletto script `count = table(...)` filtered by int(r[0]) == UPDATE — takes tasks row at exactly 50,000 ✓ and count row ✓.
+
+(r) Wait — one more: in the marletto md header it says "at most 300 genotypes" but the summary tables show both; results table uses uncapped ✓ stated.
+
+(s) Also check: results §5 says "across the most common genotypes (taken in order of abundance until they held 90% of the organisms; see section 7 on the planned cap)" — script's uncapped loop condition `if cov / total >= 0.90 ... break` → coverage ends ≥ 90% (actually 88.9%→90.6% etc.) — coverage values: 3240/3600 = 0.90 ✓.
+
+(t) The summarise script's coverage: organisms_covered/organisms ✓.
+
+Now also double-check the claim in results §3: "the copy loop `zvfcaxgab` was gone from every organism by update 20,000 in all six low and default runs" — per-run table copy_loop_exact at 10,000: low1 0.00, low2 0.01, low3 0.00; def1 0.01, def2 0.09, def3 0.01; at 20,000 all 0.00 ✓. Good.
+
+And "in its place the most common genotypes copy two or three instructions per pass (low seed 1: ...zvvfcaxvvgab; low seed 2: ...zvvvfcaxgab)" — unverifiable here (genomes not in folder); the robustness JSON has 'sequence' fields! I could check that low_seed1's dominant at 50,000 contains 'zvvfcaxvvgab' and low_seed2's contains 'zvvvfcaxgab'. Let me grep the robustness JSON sequences for those substrings.
+
+Also check M2 claim "its head exactly remained only in some runs" — low 0.373 head_exact. OK.
+
+Let me grep for zvvfcaxvvgab in mutational robustness.json.
+
+Sequences found: line 225 (low_seed3 30000?), 304, 332, 469. Results claim: "low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`". Found strings: `zvvvfcaxvgab` and `zvvfcaxvgab`. Note differences from the results text: results says low seed 1 `zvvfcaxvvgab` (v,g,ab → 'vvga b': z v v f c a x v v g a b) and low seed 2 `zvvvfcaxgab` (z v v v f c a x g a b). Found: `zvvfcaxvgab` (z v v f c a x v g a b) and `zvvvfcaxvgab` (z v v v f c a x v g a b).
+
+So the results file's quoted strings do NOT match the actual dominant sequences! Results §3: "(low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`)". Actual: low seed 1 has `zvvfcaxvgab` (one v after x), low seed 2 has `zvvvfcaxvgab` (v after x present!). The results text dropped/moved a 'v': wrote "vvv gab" vs actual "vv...vgab". Let me be careful about which line belongs to which run. Lines: 225, 304, 332, 469. The runs dict order: low_seed1 (lines ~30-160), low_seed2 (~171-330?), low_seed3 (~331-500?). Earlier abundances: line 171 abundance 44 (low_seed2 10000), 197 abundance 44? wait no. Earlier abundance grep: 171:44, 197:45, 223:28, 249:28, 275:10... Hmm: 39:34, 65:42, 91:27 (low1), 118:46, 144:31, 171:44 (low2), 197:45, 223:28, 249:28 (low3), 275:10, 302:12, 330:12 (def1), 358:10, 386:8, 414:9 (def2), 441:14, 467:14, 493:12 (def3), 519:5... (high1), etc.
+
+So line 225 (zvvvfcaxvgab) is in low_seed3 (block 197-249) — at 30000 presumably (abundance 28 at 223 → the 30000 entry). Line 304 (zvvfcaxvgab) is in def1 block (275-330) — at 10000 (abundance 10 line 275; sequence for 10000 entry near line 304?). Each scan entry has 'sequence' after fitness/abundance. Line 304 in def1 block: entries at ~275 (10000), ~302 (30000), ~330 (50000). Sequence line 304 likely def1's 10000 entry. Line 332 zvvfcaxvgab — just after 330 (def1 50000 abundance 12) → def1 50000's sequence. Line 469 zvvvfcaxvgab in def3 block (441-493): def3 30000 entry.
+
+So the unrolled loops `zvvfcaxvgab`/`zvvvfcaxvgab` appear in low_seed3, def1, def3 — NOT in low_seed1 or low_seed2! The results file §3 says "(low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`)" — both attribution and spelling look wrong. The actual dominants of low seed 1 and low seed 2 at 50,000 may have different loops entirely. Let me verify by extracting the 'sequence' lines with line numbers and mapping to runs. Grep '"sequence"' with line numbers.
+
+The 'sequence' appears BEFORE 'abundance'? Order in scan result dict: length, viable_itself, fitness, gestation, tasks, mutants, share_*, sites_*, then updated with abundance, organisms, sequence. From the JSON snippet earlier: keys ... 'sites_where_no_change_is_lethal', 'abundance', 'organisms', 'sequence'. So sequence comes ~2 lines after abundance. Mapping:
+
+abundance lines: 39(34), 65(42), 91(27) → low1: 10000, 30000, 50000; sequences at 41, 67, 93 → low1 sequences.
+118(46),144(31),171(44) → low2; sequences 120,146,173.
+197(45),223(28),249(28) → low3; sequences 199,225,251.
+275(10),302(12),330(12) → def1; sequences 277,304,332.
+358(10),386(8),414(9) → def2; sequences 360,388,416.
+441(14),467(14),493(12) → def3; sequences 443,469,495.
+519(5),545(8),572(5) → high1; sequences 521,547,574.
+598(4),622(5),648(5) → high2; sequences 600,624,650.
+674(4),700(4),726(4) → high3; sequences 676,702,728.
+
+So the unrolled-loop strings:
+- line 225 (zvvvfcaxvgab) = low_seed3 at 30000.
+- line 304 (zvvfcaxvgab) = def1 at 30000.
+- line 332 (zvvfcaxvgab) = def1 at 50000.
+- line 469 (zvvvfcaxvgab) = def3 at 30000.
+
+The results file §3 claims: "in its place the most common genotypes copy two or three instructions per pass of the loop (low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`)". 
+
+Actual: the pattern shows in low seed 3 and default seeds 1 and 3 — not low seed 1 or low seed 2. And the exact strings are `zvvfcaxvgab` and `zvvvfcaxvgab` — the results' quoted strings have the letters after 'x' wrong ("vvgab"/"gab" vs actual "vgab"). So both the attribution (wrong runs) and the quotations (wrong letters) are incorrect. This is a genuine error in the results file — a quotation of data that doesn't match the summary table it should come from.
+
+Wait — maybe the results text refers not to dominants at the three robustness saves but to "the most common genotypes" at 50,000 from the population files (worlds script doesn't store sequences). The only sequences in the folder are the robustness JSON ones. low seed 1 at 50,000: sequence at line 93: "wzcagctrwcxlavicncls..." (first 20 chars) — starts with the head 'wzcag' then 'trw...' — task code in filler. Its copy loop region unknown from first 20 chars. Let me check low1 50000 full sequence for its loop: grep the full sequences at lines 93 and 173. Let me get the full strings.
+
+Now the mapping (sequence line = abundance line + 2):
+
+low_seed1: 10000 (line 41): ...yzvfcaxvgab — wait line 41 ends "yzvfcaxvgab": that's the plain loop plus a 'v' before 'gab'? Ancestor loop: zvfcaxgab. Line 41: "...y z v f c a x v g a b" → `zvfcaxvgab` (one extra v before g=mov-head). 30000 (67): "yzvfcaxvvgab" → `zvfcaxvvgab`. 50000 (93): "yzvvfcaxvvgab" → `zvvfcaxvvgab`.
+
+low_seed2: 10000 (120): `zvfcaxgab` (plain! ends "fhqpzvvfcaxgab" — hmm that's 'zvvfcaxgab': z v v f...). Let me look: line 120 ends "...umcwyzfhqpzvvfcaxgab" — hmm wait there's "fhqp" then "zvvfcaxgab"? The grep matched `zv|zvv|zvvv)fcax...` — for line 120 the match starts at... it printed the whole sequence; ending: "cwyzfhqpzvvfcaxgab" — hmm, actually it reads "...bxccumcwyz fhqpzvvfcaxgab"? Let me take the tail: "tcuycrcybucoczpcnejbxccumcwyzfhqpzvvfcaxgab" hmm. Hmm wait, that doesn't look right. Let me re-read line 120 tail: "...umcwyzfhqpzvvfcaxgab". Hmm, actually I see "wyzfhqpz" then "vvfcaxgab"? The regex matched zv+fcax...: in "fhqpzvvfcaxgab" the match would start at "zv" in "zvvfcaxgab"? "zvvfcaxgab" = z v v f c a x g a b → that's 'z' + 'vv' + 'fcax' + 'gab'. So low_seed2 10000 loop = zvvfcaxgab? Hmm wait, but the earlier shorter grep (zvv+fcaxvg?ab) matched only 4 lines: 225, 304, 332, 469 — those require 'v' between x and g. Line 120 has zvvfcaxgab (no v between x and g).
+
+Let me carefully extract tails:
+- 41 (low1 @10000): "...y z v f c a x v g a b" → `zvfcaxvgab` (2 copies per pass? extra v = extra h-copy).
+- 67 (low1 @30000): `zvfcaxvvgab` (two extra v? z v f c a x v v g a b → hmm that's v before x? no: z-v-f-c-a-x-v-v-g-a-b).
+- 93 (low1 @50000): `zvvfcaxvvgab` — z v v f c a x v v g a b.
+- 120 (low2 @10000): `zvvfcaxgab`.
+- 146 (low2 @30000): `zvvvfcaxgab`.
+- 173 (low2 @50000): `zvvvfcaxgab`.
+- 199 (low3 @10000): `zvvfcaxgab`.
+- 225 (low3 @30000): `zvvvfcaxvgab`.
+- 251 (low3 @50000): `zvvvfcaxvvgab`.
+- 277 (def1 @10000): `zvfcaxvgab`.
+- 304 (def1 @30000): `zvvfcaxvgab`.
+- 332 (def1 @50000): `zvvfcaxvgab`.
+- 469 (def3 @30000): `zvvvfcaxvgab`.
+- 495 (def3 @50000): `zvvvfcaxvvgab`.
+- 521 (high1 @10000): `zvfcaxgoab`.
+- 547 (high1 @30000): `zvfcaxgfab`.
+- 600 (high2 @10000): `bzvfcaxgab` → plain loop `zvfcaxgab`!
+
+So at 50,000: low1 (93): `zvvfcaxvvgab`; low2 (173): `zvvvfcaxgab`.
+
+The results file says: "(low seed 1: `...zvvfcaxvvgab`; low seed 2: `...zvvvfcaxgab`)".
+
+low seed 1: `zvvfcaxvvgab` ✓ MATCHES line 93!
+low seed 2: `zvvvfcaxgab` ✓ MATCHES line 173!
+
+My earlier grep pattern `zvv+fcaxvg?ab` missed them because low1's has "vvgab" (two v's before g) — pattern had `vg?ab` = optional single v. So the results quotations are CORRECT. My mistake. Good — the attributions and quotations check out precisely. Excellent, that's a strong verification.
+
+Also interesting: high2 at 10000 has the plain ancestral loop — consistent with copy_loop_exact > 0 in high runs at some saves.
+
+OK so that objection dissolves.
+
+Now let me also double check the results §3 claim "the most common genotypes copy two or three instructions per pass": low1's `zvvfcaxvvgab`: two h-copy (vv) at start + two more (vv) before mov-head — hmm, that's 4 h-copy per pass? z h-search, v h-copy, v h-copy? wait 'zvvfcaxvvgab': z=h-search, v=h-copy, v=h-copy, f=if-label... Hmm but if-label comes after two h-copies? Actually unrolled loops in Avida: h-copy; h-copy; if-label... The exact reading doesn't matter — "two or three instructions per pass" ≈ observed (low2 has 3 h-copies vvv; low1 50000 has vv...vv = 4?). Eh: `zvvfcaxvvgab` contains v at positions: 2,3 (after z) and 8,9 (after x). x = h-divide — wait x is h-divide! Sequence: z h-search, v h-copy, v h-copy, f if-label, c nop-C, a nop-A, x h-divide, v h-copy, v h-copy, g mov-head, a nop-A, b nop-B. Hmm, h-divide in the middle? Unrolled: copy twice, check label, divide... hmm whatever — not my business to interpret; the letters match, that's what matters. Actually "copy two or three instructions per pass" — low1: vv (two h-copy before if-label), low2: vvv (three). ✓ Correct.
+
+Now, remaining candidate objections:
+
+1. K1 world injection description mismatch (script vs plan + both reports). Also not in the departures list.
+
+2. "0.2 to 1.4 points" — smallest is 0.15 points (high seed 2, 0.2992→0.2977). Also high seed 1 is 0.16. In S111/2 §5, §6 table; S111/3 §6.
+
+3. Build notes lack the count.dat/time.dat/tasks.dat column layouts (scripts index by number); unverifiable from the folder. (Record gap, low severity.)
+
+4. C3 sentence "for genomes that were no longer 100 long" garbled (S111/2 §2 C3 note).
+
+Anything else? Let me re-scan the results file numbers I haven't verified:
+
+§2 C4: "low 0.0751 (0.0707 to 0.0815)" ✓.
+
+§2 C5 ✓. §2 controls ✓.
+
+§3: R1 ancestor: "of 2,500, 81.2% viable, 17.6% neutral, 75.0% viable with fitness within 1%, 18.8% no longer copy" ✓ md.
+
+Evolved table ✓.
+
+"Low beside high ... the viable share is higher at the high rate at 50,000 only" ✓.
+
+"Per seed at 50,000, neutral: low 0.188, 0.139, 0.181; high 0.272, 0.301, 0.361" ✓.
+
+"The high-rate genomes are also shorter (89 against 106)" ✓.
+
+"The evolved genomes are less robust than the ancestor in the viable share (0.70 to 0.76 against 0.81)" ✓.
+
+R3 table ✓. "54 of 54" ✓. K5 ✓.
+
+M2 table ✓ (whole ancestor 0 etc.). M1 ✓. M3 "6,310 to 15,940" ✓.
+
+Controls ✓ (K3 2,000, K4 by 500, full by 1,000 ✓).
+
+§5 table ✓ verified extensively. "69 run-task pairs" ✓.
+
+"NOT ... 21% on average, up to 46%" ✓ 0.209/0.459.
+
+"for EQU at high seed 1: 2,079 of 3,532, 59%; 32% in the test processor" ✓.
+
+§6 table: "fidelity 0.69, 0.40, 0.13" ✓; "15 essential sites" ✓; "essential above non-essential at 54 of 54 saves" ✓; "19 to 26 instructions for EQU" ✓ (min 19: def2's 19? EQU task-only sites: 26,25,26,19,20,20 → 19-26 ✓); "one genotype's knockout: 0.2 to 1.4 points less" — the 0.2 issue; "every genotype's: to 1% to 4%" ✓ 0.011-0.044.
+
+§7 departures — #4 "covered only 15% to 57%" ✓ (14.7-56.6 → rounds to 15-57 ✓).
+
+§8: "69% to 79% still copy themselves" ✓; "15 of its instructions" ✓; "random sequences of the same length never copy" ✓; "eliminating them in one genotype leaves the transformation performed almost as before (0.2 to 1.4 points less for EQU)" — 0.2 again.
+
+Also S111/2 §2 C3 note about expected: "the lower end if every error changes the instruction, the upper if an error can redraw the same one" ✓.
+
+One more check: results §2 C2: "sites 1 to 6 (h-alloc, h-search, nop-C, nop-A, mov-head, nop-C) and 92 to 100 (h-search, h-copy, if-label, nop-C, nop-A, h-divide, mov-head, nop-A, nop-B)" ✓ matches md and default-heads.org ✓.
+
+Now what about a check that "viable" per the plan's C2: "for each, viable or not" — script measures viable (exact self-copy) ✓.
+
+What about the knockout test's use of nop-X vs the plan ✓.
+
+Potential deeper methodological points within my remit (scripts and numbers):
+
+A. The robustness comparison "low beside high" compares dominant genotypes only (one genotype per run per save) — that's per plan R1 ✓.
+
+B. In `one_run`, `births = sum(r[8] for r in later)`; `same = sum(r[10])` — if count.dat r[10] is num_breed_true ✓ per build notes.
+
+C. In the marletto script, `share_performing_world_count': tasks[t+1]/orgs` — orgs from count.dat at 50,000 ✓.
+
+D. The marletto `one_run(run, cap=None)` rerun: `if cov / total >= 0.90 or (cap and len(top) >= cap)` — with cap=None, runs until ≥90% ✓. Note: `top` may include genotypes with n=0? spop filters n>0 ✓.
+
+E. Hmm, one more: in `maps()`, base evaluation `T.evaluate(seqs)` and knockout rows for EVERY site of EVERY top genotype — for the uncapped run with hundreds of genotypes of length ~100, that's ~30k-40k evaluations... plausible but expensive. Not an error.
+
+F. `shares()`: 'copy_loop_exact' etc. — denominator total (living organisms) ✓.
+
+G. conservation: 'per_site[ess].mean()' — ess non-empty ✓ 15 sites.
+
+H. A subtle one in conservation weighting: `total = sum(n for _, n in pop)` ✓ weights by organisms ✓ per plan "weighted by count" ✓.
+
+I. The alignment: equal-scoring alignments may misassign matches in repetitive regions — recorded as unsure ✓.
+
+J. In `align`, `out[i-1] = seq[j-1]` when diagonal — correct letter; if the aligned letter differs, per_site counts 0 ✓.
+
+K. Check `conservation` rounding: round 4 ✓.
+
+Now the K1 issue — let me double-check the Inject event syntax in Avida: "Inject filename [count] [cell_id]". Yes, count is number of organisms. So `'u begin Inject random_%03d.org %d' % (i, i*36)` injects i*36 copies of genotype i. i=0 → 0 copies. So the description "100 of them injected into the world, one per cell" (plan §4 K1) and results §2 "100 of them injected into a world" and plain words §3 "100 of them put into the world" are all wrong versus the script. Also the intent "one per cell" would be `Inject random_%03d.org 1 [cell i]` or similar.
+
+Actually, wait: could "%d" with i*36 have been intended as cell number, i.e., 'Inject random_%03d.org %d' where second arg is count... The format string: 'Inject random_%03d.org %d\n' % (i, i*36) — filename random_i.org, count i*36. If they had meant one per cell they'd write count 1. So the script deliberately injected many copies. Why 36·i? Maybe to give each program a chance proportional... whatever. It contradicts the plan and is undisclosed. Objection stands. Severity: moderate — it's a control whose conclusion is unaffected, but the written description of what was run is false, and my brief says numbers in results must match scripts/commands.
+
+Also check: K1's 100 random genomes in the world are from rng seed 111 (different draw from the 10,000 test-processor ones with seed 1111) — fine.
+
+Another check: results §2 K1: "100 of them injected into a world made no offspring, and the last was gone after update 66 (they die of age)". With ~178k injections into 3,600 cells — Avida's Inject with count: it tries to place count organisms; if the grid fills, remaining are skipped (I believe). So effectively ~3,600 random organisms from the last-injected genotypes. "100 of them injected" → actually 99 genotypes (random_000.org never injected). Minor but concrete.
+
+Now also the worlds script K5: 'MAIN_EVENTS.replace(...)' — MAIN_EVENTS contains 'u 10000:10000:end SavePopulation\n'; replace with 'u 5000 SavePopulation\n' → events: Inject, PrintCountData etc. every 1000, SavePopulation at 1000 and 5000, Exit at 5000 ✓.
+
+One more check on `follow` events for K1-K4: "u 0:1:end PrintCountData" — every update (departure 5 notes controls printed every update ✓). SavePopulation every 500 ✓. But note K2/K3 controls: last_update_with_organisms 65/2000 computed from count rows with r[2] > 0 ✓; K2 "organisms_at_last_line": 1 — the run ended when no organism left (departure 6). Wait: last line has 1 organism? "last_update_with_organisms": 65 but organisms_at_last_line 1 — meaning the final count row (at exit, update 66?) shows... r[2]>0 filter for max update; last line 1 organism at update 65 or 66? If Avida exits when empty, the last line might be update 65 with 1 organism, then exit. Hmm: "last_update_with_organisms" 65 and "organisms_at_last_line" 1 → consistent: last row update 65 with 1 organism; run then ended (update 66 has 0 or no row). Results say "the last was gone after update 65" — i.e., last alive AT 65, gone after ✓. K1: last with organisms 66, last line 8 organisms?? organisms_at_last_line 8 but last_update_with_organisms 66 — so last row (update 66) has 8 organisms; then update 67 row with 0? or exit. "gone after update 66" ✓.
+
+Wait, there's an inconsistency: K1 last line has 8 organisms but last_update_with_organisms = 66 = the last row's update? If the last row has 8 > 0 then max(r[0] where r[2]>0) = last row's update. Then "last was gone after update 66" — but at update 66 there were still 8 organisms. They die of age at ~67. Fine, close enough ("after update 66" — actually they were still 8 at 66; gone by 67). Eh — the phrasing "gone after update 66" is compatible.
+
+Hmm, but why would count.dat end with 8 organisms? Because Avida exits when 0 organisms... the events say u 2000 Exit; Avida also self-terminates when population empty (departure 6). The final row may be mid-update. Fine.
+
+Now, is there anything wrong with `table()` reading only first 20 columns for count.dat? If count.dat has >20 columns and columns of interest are within first 20 ✓ (indices 8, 10).
+
+OK. Also check tasks.dat: script uses r[t+1] for 9 tasks — assumes tasks.dat column order matches environment.cfg task order (not, nand, and, orn, or, andn, nor, xor, equ). Avida's tasks.dat column order is by task id as loaded from environment.cfg ✓ same order. And TASKS list in worlds script = ['NOT','NAND','AND','ORN','OR','ANDN','NOR','XOR','EQU'] ✓ matches environment.cfg order ✓. Good.
+
+Also marletto NAMES order ✓ same.
+
+Now the low_beside_high rule implementation: "b['min'] > a['max']" — strict ✓ "every seed of one lies beyond every seed of the other" ✓.
+
+Check: results §3 says "the neutral share is higher at the high rate at all three moments" ✓ md lines 54, 57, 60 ✓.
+
+Now: one more subtle numerical check — results §3 evolved table "length 89 (75 to 99)" for high at 50,000: lengths 93, 75, 99 → mean 89 ✓.
+
+§3 text: "0.70 to 0.76" for evolved viable means ✓ (0.698-0.758).
+
+OK, now also check S111/2 json quickly for 'low_beside_high' and controls consistency — likely fine.
+
+One more thing: the brief says "the tasks at 10%" — script uses >= 0.10 ✓ "at least 10%" ✓.
+
+Also "births identical to the parent" — r[10]/r[8] ✓.
+
+Now the K1 objection — where exactly: scripts/s111_run_the_avida_worlds.py line 117; plan §4 K1; results §2 "Controls"; plain words §3.
+
+Second objection: "0.2 to 1.4 points" (three places: S111/2 §5 bullet, §6 table row "a task", §8 bullet; S111/3 §6). Exact fix: "0.15 to 1.4 points" (or "0.2" → "0.15"; strictly the min difference is 0.0015: high seed 2, 0.2992→0.2977).
+
+Third: build notes missing column layouts. Exact fix: add to build notes the #format header of count.dat (columns incl. index 2 organisms, 8 births, 10 num_breed_true), time.dat (index 2 average generation) and tasks.dat (1-9) as printed by the runs, so the indices in s111_measure_the_worlds_over_time.py lines 131-139 can be checked.
+
+Fourth: C3 wording "for genomes that were no longer 100 long".
+
+Anything about arithmetic in write_md of worlds: fmt(...) 'mean with min/max' ✓.
+
+One more: worlds md "living genotypes, at the last save | 1695.3 ... 2801.0 ... 3281.0" — the marletto uncapped used up to hundreds of genotypes to reach 90% ✓ consistent with diversity.
+
+And results §5 "(taken in order of abundance until they held 90% of the organisms...)" ✓.
+
+Also check plain words §4: "In the nine runs, 69% to 79%" ✓; "21% to 31%" ✓.
+
+Plain words §5: "in 0% to 49% at the high rate" ✓.
+
+Plain words §6: "the share of programs doing EQU drops by 1.4 points" ✓ (low2 1.36); "makes up only 44 of the 3,600" ✓.
+
+Plain words §1: "over about 6,300 to 16,000 generations" — actual max 15,940 → "16,000" ✓ round.
+
+Plain words §5: "never fewer than 3,481" ✓; "6,300 to 15,900 generations" ✓.
+
+OK. Also one more possible check: results §4 M2 note: "At the high rate about a third of the organisms cannot copy themselves exactly" — 1−0.650 = 0.35 ✓.
+
+Now, is there any issue with "the share of organisms whose genotype, run alone in the test processor, still makes an exact copy of itself" being computed on every living genotype — evaluate() called on all genotypes (up to ~3,300). Fine.
+
+One more numerical cross-check for R3: K5 conservation 1.000 ✓ table.
+
+Potential issue: the worlds script's controls K4 'knocked_out_alive' uses exact match `s == ko`; copy errors in K4 could produce the knocked-out genome again — negligible.
+
+I think I also should verify the claim in results §7 departure 2: "for the ancestor, 57% of one-change programs copy one cycle faster (388 instead of 389 instructions)" — share_higher_fitness 0.573 ✓.
+
+And results §3 R1 ancestor gestation 389 ✓.
+
+Also — the "viable, fitness within 1% (added)" column for ancestor = 0.750; plain words doesn't quote it. ✓.
+
+Let me also double check one Marletto mean in the results table I haven't: NAND runs=9 ✓ rows; "task-only sites in the dominant 5.4 (0 to 12)" ✓ computed 49/9=5.44 ✓ min 0 (low3 NAND, high3 NAND) ✓ max 12 ✓.
+
+EQU rows=6 ✓.
+
+NOT "4.2 (1 to 9)" ✓.
+
+Check "ORN 7.4 (3 to 17)" ✓.
+
+Now — the "of former performers, still copying themselves" column for NAND "0.936 (0.487 to 1.000)" ✓.
+
+OK — the last item to verify is whether "0.2 to 1.4" appears in S111/2 §5: "knocking out EQU's sites in the most common genotype lowers the population's share performing EQU by 0.2 to 1.4 points" — yes line 119. §6 table line 135: "one genotype's knockout: 0.2 to 1.4 points less". §8 line 167: "(0.2 to 1.4 points less for EQU)". Plain words line 73: "(in the six runs, the drop was 0.2 to 1.4 points)".
+
+Precise drops: low2 0.7639−0.7503=0.0136; low3 0.8191−0.8105=0.0086; def1 0.5282−0.5244=0.0038; def2 0.5719−0.569?=~0.002; high1 0.3240−0.3224=0.0016; high2 0.2992−0.2977=0.0015. So range 0.15–1.36 points. "0.2 to 1.4" — the top rounds to 1.4 ✓, bottom 0.15→"0.2" only by round-half-up. Strictly should be "0.15 to 1.4". I'll report it as a minor slip with exact fix.
+
+Let me get def2's exact after_dominant_only to complete: from grep line 8706: 0.5719 → next line was cut. Line 8707 would be after_dominant_only. Let me grep it quickly to be precise in the report. Also double-check low3: 0.8191→0.8105 = 0.0086 ✓ (line 4826-4827).
+
+def2: 0.5719−0.5691 = 0.0028 = 0.28 points. So the six EQU drops: 1.36, 0.86, 0.38, 0.28, 0.16, 0.15 points. Range 0.15 to 1.36. "0.2 to 1.4" — lower bound wrong (0.15), upper "1.4" is 1.36 rounded ✓. So fix: "0.15 to 1.4" or "0.2 to 1.4" → "0.15 to 1.4 points". Minor but definite.
+
+Now compile the report. Objections ordered by seriousness:
+
+X2.1 — K1 world control: script injects 99 genotypes at counts 0/36/…/3564 (≈178,200 placements into 3,600 cells), not "100 of them … one per cell" as the plan and both reports state; departure unrecorded. Evidence: script line 117 `'u begin Inject random_%03d.org %d\n' % (i, i * 36)`; plan §4 K1 "100 of them injected into the world, one per cell"; S111/2 §2 "100 of them injected into a world made no offspring"; S111/3 §3 "100 of them put into the world". Fix: correct the three sentences (e.g. "99 of them, in thousands of copies, filled the grid") and add a departure note — or rerun K1 with one copy per cell.
+
+X2.2 — EQU single-genotype drop lower bound: smallest is 0.0015 (high seed 2: 0.2992→0.2977), next 0.0016 (high seed 1); "0.2 to 1.4 points" in S111/2 §§5, 6, 8 and S111/3 §6 should read "0.15 to 1.4 points". (Or "about 0.2 to 1.4" — but exact fix: 0.15.)
+
+X2.3 — count.dat/time.dat/tasks.dat column indices undocumented: the worlds script reads r[2] organisms, r[8] births, r[10] breed_true (count.dat), r[2] average generation (time.dat), r[1..9] tasks; the build notes document only num_breed_true's source line. Cannot be cross-examined from this folder; internal consistency supports them (K5 share 1.0; world fidelity 0.693/0.400/0.131 matches (1−μ)^L·0.9025 at the measured mean lengths 105/109/88; task counts ≤ organisms). Fix: add the runs' `#format` header lines for the three files to the build notes.
+
+X2.4 — C3 sentence in S111/2 §2: "The world's figure is Avida's own count at the 50 saved updates (1,000 to 50,000), for genomes that were no longer 100 long." — the last clause misstates: num_breed_true is length-agnostic; what is true is that the expectation column uses L=100 while the world's genomes average 105/109/88. Fix sentence: "…; the expected column uses the ancestor's 100 sites, while the genomes in the worlds by then averaged 105, 109 and 88 sites, which is why the world's figure sits slightly below the expected one at the low and default rates and above it at the high rate." Hmm wait — check: low world 0.693 < expected 0.703-0.710 ✓ below (longer genomes); default 0.400 < 0.425-0.438 ✓; high 0.131 > 0.120-0.130 — above, because high genomes shorter (88 < 100) ✓. Good, that explanation holds and is a nice consistency confirmation.
+
+Anything else? Should I check the summarise JSON vs S111/2 numbers more? I did spot checks. Also the "knockouts_leaving_copying_and_fitness" 85 ✓.
+
+Also checked: the "0.2 to 1.4" claim also implies all six ≥ 0.2 — two are below.
+
+Do I have any objection about the marletto "10%" threshold using world counts (inflated by INHERIT_MERIT) rather than test-processor shares? The plan says "each task performed by at least 10% of the organisms there" — ambiguous; results §5 flags the world-vs-test discrepancy openly and doesn't hide it. Borderline pairs? Check: any pair where world ≥10% but test-processor "as found" (uncapped, of covered) < 10%, or vice versa? e.g. high2 NAND as found 0.365 — well above. low2 AND world 25/3600=0.7% excluded; its test-processor share would be small too. No boundary case flips. Not an objection; mention in checked.
+
+One more: results §5 claim "AND passed in six runs" and "(Rows count run-task pairs where the task passed 10%; AND passed in six runs.)" ✓.
+
+Checked, no objection — list: ancestor letters vs default-heads.org and instruction letters vs instset-heads.cfg; C1/C2 (15 essential sites, instructions, 85 with ratio 1.0); C3 expectations (both bounds), sampled 723/436/124 of 1000, K2 knockout site (h-copy at site 93); robustness ancestor 0.812/0.176/0.750/0.573 and evolved means/ranges at 50,000; R2 verdicts per the plan's rule (implementation b.min > a.max); R3/M2 tables vs per-run saves; 54-of-54; K5 = 1.000; M1/C4/C5 vs JSON (3,566–3,600 at 1,000); tasks table and XOR 3 / EQU 6 / AND 9; EQU first seen 13,000–44,000; 69 run-task pairs; every mean/range in the §5 table recomputed from the Marletto table; the quoted unrolled loops match the dominant sequences exactly (low1 `zvvfcaxvvgab`, low2 `zvvvfcaxgab`); dominant abundance 5–44 in the EQU runs; departure 4a coverage 15–57%; alignment DP (global, +1/−1/−1, count-weighted); 1-based/0-based site handling; plan's rule implementation; S23 wording in Claude's own sentences (fitness flagged as Avida's word) — hmm, that's another agent's angle (words). I'll stick to numbers.
+
+Not reached: (1) Avida's source-line citations in the build notes (source not in folder); (2) whether count.dat/time.dat/tasks.dat column indices are right (see X2.3 — judged only by consistency); (3) the raw runs (exit codes, run times, spop files) — not in folder; (4) S111/2 json in full — spot-checked against the four tables (gathering logic read, a dozen values compared).
+
+Word budget fine. Write the report.

@@ -1,0 +1,668 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r4-merge-area-models",
+ "job": "merge_models",
+ "kind": "mechanical",
+ "purpose": "Round 4, integration (reading rule, rule 7; harness table: 'r4 merge of the area models'): three-way merge, file by file (git merge-file), of the three area copies' model/ against the program the round started from, 'results/S106 The written-in test taken out/model after S106/model/', by merge_models.py. Known answer, from the diffs of each copy against the base (integration notes, section 3), not from a run: 23 files; 9 changed: claims_b.py, claims_r3a3.py, claims_r4a3.py, corefile.py taken from area 3; claims_r4a2.py, core.py from area 2; claims_a.py and claims_s41.py merged clean (areas 1 and 3, hunks apart); one conflict, run.py, one hunk (area 2's and area 3's import lines, both after claims_s106's). The 14 other files are the base's. Every conflict goes to Opus (the integration, second part) whatever the checks give: which side, or what combination, is a judgement. merge_models.py writes only in the scratchpad (hcommon.guard_write), so the merged folder is {OUT}/merged/model/; Opus writes 'results/S107 Round 4 - maths after the reading/model after round 4/' from it once the conflict is resolved (model/ from the merge; the three case scripts from 'model after S106/', unchanged by every area: inputs below).",
+ "out_dir": "{TEST_ROOT}/{RUN}/r4-merge-area-models",
+ "inputs": [
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/__init__.py",
+   "md5": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/args.py",
+   "md5": "81ae45be0a7c5870c71bd5814448fd79"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/cases.py",
+   "md5": "0f0c8536c13222b9edb98cdc670af04a"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_a.py",
+   "md5": "c1e323dd533dd60babccfcec20c9b269"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_area1.py",
+   "md5": "c02c209514787cae74eadf08377be3e0"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_b.py",
+   "md5": "4d69c86f37e36a78b8222f9e5efcfe7e"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_r3a1.py",
+   "md5": "cc9bd7f880635e7a1a47a0e68d8a2d22"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_r3a2.py",
+   "md5": "f8d2c0ef244dbbe551857a2c08537742"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_r3a3.py",
+   "md5": "6a49482b69cb49598a0a03aa6ba021a8"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_s106.py",
+   "md5": "0a07401b7f1b84e3be05a46b82ff2afc"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/claims_s41.py",
+   "md5": "f0611d34990664a342390068b427f57b"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/core.py",
+   "md5": "80a1f3200320d35606787c6438fb4012"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/e9.py",
+   "md5": "c2369cfeec57eafafcd342eb1bb47d74"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/gen.py",
+   "md5": "f2a566de7a9d0f0ec0a1e6373165a55a"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/harness.py",
+   "md5": "eb667cf3612ff95beb4f545d9f4c6110"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/inventions_model.py",
+   "md5": "eb410a1316b0b09da791ee2294cc7680"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/phys.py",
+   "md5": "e4bc8b73537878d9ec025e8867873e8a"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/register.py",
+   "md5": "f2f673f8db57da85cf3d7b2b28da9002"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/report.py",
+   "md5": "122d2bea26cc87b69b1616faacb81fc2"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/model/run.py",
+   "md5": "1088045c37731cff5f18d6e906e19932"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/__init__.py",
+   "md5": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/args.py",
+   "md5": "81ae45be0a7c5870c71bd5814448fd79"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/cases.py",
+   "md5": "0f0c8536c13222b9edb98cdc670af04a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_a.py",
+   "md5": "d03631beabd5feb7846576c29d6fd2d8"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_area1.py",
+   "md5": "c02c209514787cae74eadf08377be3e0"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_b.py",
+   "md5": "4d69c86f37e36a78b8222f9e5efcfe7e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_r3a1.py",
+   "md5": "cc9bd7f880635e7a1a47a0e68d8a2d22"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_r3a2.py",
+   "md5": "f8d2c0ef244dbbe551857a2c08537742"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_r3a3.py",
+   "md5": "6a49482b69cb49598a0a03aa6ba021a8"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_s106.py",
+   "md5": "0a07401b7f1b84e3be05a46b82ff2afc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/claims_s41.py",
+   "md5": "4f19de5b346a28422153e384ca140f44"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/core.py",
+   "md5": "80a1f3200320d35606787c6438fb4012"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/e9.py",
+   "md5": "c2369cfeec57eafafcd342eb1bb47d74"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/gen.py",
+   "md5": "f2a566de7a9d0f0ec0a1e6373165a55a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/harness.py",
+   "md5": "eb667cf3612ff95beb4f545d9f4c6110"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/inventions_model.py",
+   "md5": "eb410a1316b0b09da791ee2294cc7680"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/phys.py",
+   "md5": "e4bc8b73537878d9ec025e8867873e8a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/register.py",
+   "md5": "f2f673f8db57da85cf3d7b2b28da9002"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/report.py",
+   "md5": "122d2bea26cc87b69b1616faacb81fc2"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/model/run.py",
+   "md5": "1088045c37731cff5f18d6e906e19932"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/__init__.py",
+   "md5": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/args.py",
+   "md5": "81ae45be0a7c5870c71bd5814448fd79"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/cases.py",
+   "md5": "0f0c8536c13222b9edb98cdc670af04a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_a.py",
+   "md5": "c1e323dd533dd60babccfcec20c9b269"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_area1.py",
+   "md5": "c02c209514787cae74eadf08377be3e0"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_b.py",
+   "md5": "4d69c86f37e36a78b8222f9e5efcfe7e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_r3a1.py",
+   "md5": "cc9bd7f880635e7a1a47a0e68d8a2d22"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_r3a2.py",
+   "md5": "f8d2c0ef244dbbe551857a2c08537742"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_r3a3.py",
+   "md5": "6a49482b69cb49598a0a03aa6ba021a8"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_r4a2.py",
+   "md5": "b9e0577a1bb01b22fede0502cc9e46c2"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_s106.py",
+   "md5": "0a07401b7f1b84e3be05a46b82ff2afc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/claims_s41.py",
+   "md5": "f0611d34990664a342390068b427f57b"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/core.py",
+   "md5": "6922c3bf89d36497050bfeec4bf29b60"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/e9.py",
+   "md5": "c2369cfeec57eafafcd342eb1bb47d74"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/gen.py",
+   "md5": "f2a566de7a9d0f0ec0a1e6373165a55a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/harness.py",
+   "md5": "eb667cf3612ff95beb4f545d9f4c6110"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/inventions_model.py",
+   "md5": "eb410a1316b0b09da791ee2294cc7680"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/phys.py",
+   "md5": "e4bc8b73537878d9ec025e8867873e8a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/register.py",
+   "md5": "f2f673f8db57da85cf3d7b2b28da9002"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/report.py",
+   "md5": "122d2bea26cc87b69b1616faacb81fc2"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/model/run.py",
+   "md5": "c44bc52e1c8400e4f0844b07b6793f0e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/__init__.py",
+   "md5": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/args.py",
+   "md5": "81ae45be0a7c5870c71bd5814448fd79"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/cases.py",
+   "md5": "0f0c8536c13222b9edb98cdc670af04a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_a.py",
+   "md5": "eca4152440cdca32f52fe82633f5bf2c"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_area1.py",
+   "md5": "c02c209514787cae74eadf08377be3e0"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_b.py",
+   "md5": "a070ae7e7ad34b4a19808ac8731ac1ff"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_r3a1.py",
+   "md5": "cc9bd7f880635e7a1a47a0e68d8a2d22"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_r3a2.py",
+   "md5": "f8d2c0ef244dbbe551857a2c08537742"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_r3a3.py",
+   "md5": "85d8b1e8783515c46df0afc54ea8b0b6"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_r4a3.py",
+   "md5": "1b848683769783629269c09343f8da2f"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_s106.py",
+   "md5": "0a07401b7f1b84e3be05a46b82ff2afc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/claims_s41.py",
+   "md5": "88a94439b4d19c275c8655cb9f076cc2"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/core.py",
+   "md5": "80a1f3200320d35606787c6438fb4012"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/corefile.py",
+   "md5": "94619363af03e6b8c34431f491cdfca6"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/e9.py",
+   "md5": "c2369cfeec57eafafcd342eb1bb47d74"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/gen.py",
+   "md5": "f2a566de7a9d0f0ec0a1e6373165a55a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/harness.py",
+   "md5": "eb667cf3612ff95beb4f545d9f4c6110"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/inventions_model.py",
+   "md5": "eb410a1316b0b09da791ee2294cc7680"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/phys.py",
+   "md5": "e4bc8b73537878d9ec025e8867873e8a"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/register.py",
+   "md5": "f2f673f8db57da85cf3d7b2b28da9002"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/report.py",
+   "md5": "122d2bea26cc87b69b1616faacb81fc2"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/model/run.py",
+   "md5": "3532569a1eccf6f88200472f8ed5ec91"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/s104_creative_transport.py",
+   "md5": "dd49e2b0bc0c72fde6c1b93977f73c8e"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/s104_external.py",
+   "md5": "2259687a6775b043d3e615de9c4711fc"
+  },
+  {
+   "path": "Semantics/results/S106 The written-in test taken out/model after S106/s106_cases.py",
+   "md5": "5b153417c62c3b17ab275c81d52adcf5"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/s104_creative_transport.py",
+   "md5": "dd49e2b0bc0c72fde6c1b93977f73c8e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/s104_external.py",
+   "md5": "2259687a6775b043d3e615de9c4711fc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 1 model/s106_cases.py",
+   "md5": "5b153417c62c3b17ab275c81d52adcf5"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/s104_creative_transport.py",
+   "md5": "dd49e2b0bc0c72fde6c1b93977f73c8e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/s104_external.py",
+   "md5": "2259687a6775b043d3e615de9c4711fc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 2 model/s106_cases.py",
+   "md5": "5b153417c62c3b17ab275c81d52adcf5"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/s104_creative_transport.py",
+   "md5": "dd49e2b0bc0c72fde6c1b93977f73c8e"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/s104_external.py",
+   "md5": "2259687a6775b043d3e615de9c4711fc"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/area 3 model/s106_cases.py",
+   "md5": "5b153417c62c3b17ab275c81d52adcf5"
+  },
+  {
+   "path": "Semantics/tools/sonnet_harness/merge_models.py",
+   "md5": "bbf9602a334527c6863eb94000849fe8"
+  },
+  {
+   "path": "Semantics/tools/sonnet_harness/hcommon.py",
+   "md5": "855c5e998cdfdd55035951f2507932ab"
+  },
+  {
+   "path": "Semantics/tools/sonnet_harness/md5_check.py",
+   "md5": "0033693824801a596cd99e584c00bbb8"
+  }
+ ],
+ "steps": [
+  {
+   "name": "git merge-file, file by file, of the three area copies against model after S106",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/merge_models.py",
+    "--base",
+    "{SEM}/results/S106 The written-in test taken out/model after S106/model",
+    "--area",
+    "A1={SEM}/results/S107 Round 4 - maths after the reading/area 1 model/model",
+    "--area",
+    "A2={SEM}/results/S107 Round 4 - maths after the reading/area 2 model/model",
+    "--area",
+    "A3={SEM}/results/S107 Round 4 - maths after the reading/area 3 model/model",
+    "--out",
+    "{OUT}/merged"
+   ],
+   "timeout_s": 300,
+   "save": "merge.json"
+  }
+ ],
+ "check_steps": [
+  {
+   "name": "the 20 files taken whole (14 from the base, 6 from one area) against their sources' md5s",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/md5_check.py",
+    "--expect",
+    "{OUT}/merged/model/__init__.py=d41d8cd98f00b204e9800998ecf8427e",
+    "--expect",
+    "{OUT}/merged/model/args.py=81ae45be0a7c5870c71bd5814448fd79",
+    "--expect",
+    "{OUT}/merged/model/cases.py=0f0c8536c13222b9edb98cdc670af04a",
+    "--expect",
+    "{OUT}/merged/model/claims_area1.py=c02c209514787cae74eadf08377be3e0",
+    "--expect",
+    "{OUT}/merged/model/claims_r3a1.py=cc9bd7f880635e7a1a47a0e68d8a2d22",
+    "--expect",
+    "{OUT}/merged/model/claims_r3a2.py=f8d2c0ef244dbbe551857a2c08537742",
+    "--expect",
+    "{OUT}/merged/model/claims_s106.py=0a07401b7f1b84e3be05a46b82ff2afc",
+    "--expect",
+    "{OUT}/merged/model/e9.py=c2369cfeec57eafafcd342eb1bb47d74",
+    "--expect",
+    "{OUT}/merged/model/gen.py=f2a566de7a9d0f0ec0a1e6373165a55a",
+    "--expect",
+    "{OUT}/merged/model/harness.py=eb667cf3612ff95beb4f545d9f4c6110",
+    "--expect",
+    "{OUT}/merged/model/inventions_model.py=eb410a1316b0b09da791ee2294cc7680",
+    "--expect",
+    "{OUT}/merged/model/phys.py=e4bc8b73537878d9ec025e8867873e8a",
+    "--expect",
+    "{OUT}/merged/model/register.py=f2f673f8db57da85cf3d7b2b28da9002",
+    "--expect",
+    "{OUT}/merged/model/report.py=122d2bea26cc87b69b1616faacb81fc2",
+    "--expect",
+    "{OUT}/merged/model/claims_b.py=a070ae7e7ad34b4a19808ac8731ac1ff",
+    "--expect",
+    "{OUT}/merged/model/claims_r3a3.py=85d8b1e8783515c46df0afc54ea8b0b6",
+    "--expect",
+    "{OUT}/merged/model/claims_r4a2.py=b9e0577a1bb01b22fede0502cc9e46c2",
+    "--expect",
+    "{OUT}/merged/model/claims_r4a3.py=1b848683769783629269c09343f8da2f",
+    "--expect",
+    "{OUT}/merged/model/core.py=6922c3bf89d36497050bfeec4bf29b60",
+    "--expect",
+    "{OUT}/merged/model/corefile.py=94619363af03e6b8c34431f491cdfca6"
+   ],
+   "timeout_s": 120,
+   "save": "md5.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "23 files: the base's 20 and the three new ones",
+   "file": "merge.json",
+   "path": "files",
+   "equals": 23
+  },
+  {
+   "name": "nine files changed by the areas",
+   "file": "merge.json",
+   "path": "changed",
+   "length_equals": 9
+  },
+  {
+   "name": "claims_a.py: merged clean (A1, A3)",
+   "file": "merge.json",
+   "path": "changed.0",
+   "equals": {
+    "file": "claims_a.py",
+    "in_base": true,
+    "changed_by": [
+     "A1",
+     "A3"
+    ],
+    "result": "merged clean",
+    "conflicts": 0,
+    "marker_lines": []
+   }
+  },
+  {
+   "name": "claims_b.py: taken (A3)",
+   "file": "merge.json",
+   "path": "changed.1",
+   "equals": {
+    "file": "claims_b.py",
+    "in_base": true,
+    "changed_by": [
+     "A3"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "claims_r3a3.py: taken (A3)",
+   "file": "merge.json",
+   "path": "changed.2",
+   "equals": {
+    "file": "claims_r3a3.py",
+    "in_base": true,
+    "changed_by": [
+     "A3"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "claims_r4a2.py: taken (A2)",
+   "file": "merge.json",
+   "path": "changed.3",
+   "equals": {
+    "file": "claims_r4a2.py",
+    "in_base": false,
+    "changed_by": [
+     "A2"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "claims_r4a3.py: taken (A3)",
+   "file": "merge.json",
+   "path": "changed.4",
+   "equals": {
+    "file": "claims_r4a3.py",
+    "in_base": false,
+    "changed_by": [
+     "A3"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "claims_s41.py: merged clean (A1, A3)",
+   "file": "merge.json",
+   "path": "changed.5",
+   "equals": {
+    "file": "claims_s41.py",
+    "in_base": true,
+    "changed_by": [
+     "A1",
+     "A3"
+    ],
+    "result": "merged clean",
+    "conflicts": 0,
+    "marker_lines": []
+   }
+  },
+  {
+   "name": "core.py: taken (A2)",
+   "file": "merge.json",
+   "path": "changed.6",
+   "equals": {
+    "file": "core.py",
+    "in_base": true,
+    "changed_by": [
+     "A2"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "corefile.py: taken (A3)",
+   "file": "merge.json",
+   "path": "changed.7",
+   "equals": {
+    "file": "corefile.py",
+    "in_base": false,
+    "changed_by": [
+     "A3"
+    ],
+    "result": "taken"
+   }
+  },
+  {
+   "name": "run.py is the ninth changed file",
+   "file": "merge.json",
+   "path": "changed.8.file",
+   "equals": "run.py"
+  },
+  {
+   "name": "one file in conflict",
+   "file": "merge.json",
+   "path": "conflicts",
+   "length_equals": 1
+  },
+  {
+   "name": "the conflict is in run.py",
+   "file": "merge.json",
+   "path": "conflicts.0.file",
+   "equals": "run.py"
+  },
+  {
+   "name": "run.py changed by areas 2 and 3",
+   "file": "merge.json",
+   "path": "conflicts.0.changed_by",
+   "equals": [
+    "A2",
+    "A3"
+   ]
+  },
+  {
+   "name": "one conflict hunk in run.py",
+   "file": "merge.json",
+   "path": "conflicts.0.conflicts",
+   "equals": 1
+  },
+  {
+   "name": "three marker lines in run.py",
+   "file": "merge.json",
+   "path": "conflicts.0.marker_lines",
+   "length_equals": 3
+  },
+  {
+   "name": "merge_models reports the conflict (ok false)",
+   "file": "merge.json",
+   "path": "ok",
+   "equals": false
+  },
+  {
+   "name": "every file taken whole has its source's md5",
+   "file": "md5.json",
+   "path": "ok",
+   "equals": true
+  },
+  {
+   "name": "twenty files checked by md5",
+   "file": "md5.json",
+   "path": "checked",
+   "equals": 20
+  }
+ ],
+ "on_fail": "escalate to Opus (the integration agent, second part; its notes: results/S107 Round 4 - maths after the reading/integration notes.md) with result.*.json, merge.json, md5.json and the merged folder; a difference from the known answer is Opus's to explain. When every check passes, the conflict in run.py still goes to Opus, which resolves it.",
+ "never": [
+  "resolve a conflict",
+  "edit a model file, an area copy or a merged file",
+  "write outside the out folder",
+  "copy the merged folder into Semantics/",
+  "open a key file",
+  "call GLM",
+  "commit",
+  "retry past this spec"
+ ]
+}

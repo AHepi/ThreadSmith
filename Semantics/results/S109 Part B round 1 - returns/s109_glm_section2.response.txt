@@ -1,0 +1,103 @@
+# Part B, round 1, section B2 — transports, fidelity, the account, routes, the exact constructions
+
+Baselines run (before every variant): `python3 -m model.run --claim FC21 --claim FC25 --claim FC27 --claim FC31`, `--claim FC22 --claim FC23.new2 --claim FC23.new3 --claim FC25.new2 --claim FC30.new1 --claim FC84.new1 --claim FC104.new1 --claim FC72 --claim FC40`, all `--scale 4`. Every claim named printed "HOLDS ON ALL MODELS TRIED" or "computed: as claimed"; result lines are quoted below where used. All "after" values are **not run**.
+
+## (a) The variants
+
+| id | free item(s) | kind | carry-over | old → new formal statement | old → new sentence | departs from |
+|---|---|---|---|---|---|---|
+| PB2.1 | `L189.s2` (changes with its formalization D5.7, FROZEN; and D12.7) | replace | **R2V2.7** (class a) | `Faithful_C(t) := F1_C ∧ F2_C` → `Faithful_C(t) := F1_C ∧ F2_C ∧ A_C`; `Viol := ¬(F1_ab ∧ F2eq_ab)` → `Viol := Viol⁺` (adds `¬A_ab`) | "faithful on C when it meets the component and global fidelity conditions of Part V" → "…the component, global and question fidelity conditions of Part V" | none (I49's wide extent; L221/L223 consequence, see edges) |
+| PB2.2 | `D5.5` (L241.s1) | weaken | – | `F2_C := F2eq_C ∧ Hom(τ)` → `F2_C := F2eq_C` | L241.s1: "π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)), τ(1)=1, τ(a₂a₁)=τ(a₂)τ(a₁)" → "π[Sol_D(a,b)] = Sol_E(τ(a),σ(b))" | none (I18's dropped choice) |
+| PB2.3 | `D5.4` (L233.s1 is FROZEN) | strengthen | – | `F1_C(ℰ) :⟺ ∀k ∈ Γ …` → `F1_C(ℰ) :⟺ ∀k ∈ J_E …` | none (L233–L235 FROZEN; the definition alone changes) | none |
+| PB2.4 | `D5.6` (L249.s1) | weaken | – | `A_C(ℰ) :⟺ ∀(a,b) ∈ C: Ans_E(τa,σb) = Ans_p(a,b), ⊥ = ⊥` → `A_C(ℰ) :⟺ ∀(a,b) ∈ Det_C: Ans_E(τa,σb) = Ans_p(a,b)` | L249.s1 unchanged in words; L253.s1: "The query Q is held fixed" → "The query Q is held fixed; where the target gives no answer, (A) asks nothing" | none registered; contradicts L369.s2 (blocks) |
+| PB2.5 | `D6.2` (NC0; L255's gloss) | strengthen | – | `NC0(ℰ) :⟺ always true` → `NC0(ℰ) :⟺ no background component of E that assigns an input carries Ans_p(a,b) at any (a,b) ∈ C` (I23's registered other choice (a)) | L255 gloss (free sentence gone from the text, D6.2's quote): "holds of every candidate" → "the boundary data of E carry nothing of the target's answer" | **S45** (a written-in answer, here in a boundary slot, would again stop a candidate being an explanation) |
+| PB2.6 | `D6.6` (L257.s1's second half) | weaken | – | `NonVacuous(ℰ) :⟺ Sol_D(1,b0) ≠ ∅ ∧ Stated(C,Σ)` → `NonVacuous(ℰ) :⟺ Sol_D(1,b0) ≠ ∅` | L257: "Sol_D(1,b0) ≠ ∅. The contract C is a stated subset … not silently" → "Sol_D(1,b0) ≠ ∅." (second sentence leaves (E), stays as content criticism can point at) | none (S45 precedent) |
+| PB2.7 | `D5.6.b2` reads `D6.3` | re-order a dependence (strengthen) | – | `A_C(ℰ)` → `A_C(ℰ) ∧ NC1(ℰ)` (D6.3 untouched) | L247.s1: "**Question fidelity.**" → "**Question fidelity.** The answer is not simply written in." | **S45** ("take the test out"), S44 (the one-part sign stays an explanation) |
+| PB2.8 | `L311.s2`, `D7.3` | weaken | – | `CB(B;W) :⟺ ∅ ≠ B ⊆ W ∧ W ∈ S ∧ W∖B ∉ S` → the same with `∧ |B| < ∞` | "(B) records the collective contribution." → "(B) records the contribution of a finite block." | none (contradicts L313.n3, blocks) |
+| PB2.9 | `D5.1` (L185.s1, L189.s1) | replace | – | `π: X_D ⇀ X_E, defined on Sol_D(a,b) at every translated pair [I16]` → `π: X_D → X_E total` | L189.s1: "π: X_D → X_E on the stated scope" (taken literally; partiality was the invention) | none |
+
+## (b) Meaning
+
+- **PB2.1**: no conjunct of (E) moves — (E) keeps (A) as its own conjunct (D6.7 FROZEN reads `A_C` either way). What moves is **Dec's** feed: `Rep_ℓ` (D12.5) and `Held_ℓ` read `Faithful_C`, so `Rep :⟺ ∃t[F1∧F2∧Sel∨Con]` → `∃t[F1∧F2∧A∧Sel∨Con]`; `T′` (Con's represented target) and Sel's exclusion harden likewise. Being an explanation, `Acc ∧ ¬Dec(t)`, keeps its shape; the class of transports with `¬Dec(t)` shrinks by exactly the transports that fail (A) somewhere on a contract a provenance reads.
+- **PB2.2**: (E)'s second conjunct: `F2_C = F2eq_C ∧ Hom(τ)` → `F2eq_C`. (F2) becomes pointwise; it no longer asks that τ respect composition or the identity.
+- **PB2.3**: (E)'s first conjunct: `∀k ∈ Γ` → `∀k ∈ J_E`. (F1) now reads the named background (L231.s2), not only the commitments offered as doing the work.
+- **PB2.4**: (E)'s third conjunct: `∀(a,b) ∈ C` → `∀(a,b) ∈ Det_C`. (A) stops holding E's silences to the target's: an answer where the target gives none is no longer a failure of (A).
+- **PB2.5**: Dependence (D6.5 FROZEN `= NC0 ∧ NC2`) unchanged in shape; its first conjunct changes from a vacuous truth to the boundary clause. Net: `Dependence = NC2 ∧ (no answer written into a boundary slot)`.
+- **PB2.6**: NonVacuous loses its second conjunct: `(E)` no longer reads the stated scope at all; the only non-relational conjunct of (E) goes (L265.n1 FROZEN keeps its point, now vacuously).
+- **PB2.7**: (E) unchanged as a formula; **what a conjunct reads** moves: (A) now reads D6.3, so `Acc ⇒ ¬Slot_C(ℰ,k)` for every k — the written-in test re-enters (E) through a conjunct, not through D6.7.
+- **PB2.8**: no part moves — (S), (B), (D) are read by no conjunct of (E), by Dec, or by (Suff)/(Nec) (Part A's map: D7.x nodes feed no part).
+- **PB2.9**: no conjunct's form moves; what (F1), (F2) read (a transport, D5.1) narrows at the type: `t` exists only with total π. Meaning moves while, on every case whose π is already total, no value does.
+
+## (c) Scope
+
+**PB2.1.** Enters: nothing at Acc-level. Leaves (as explanations, Acc unchanged): candidates whose transport was Sel but fails (A) on its own H ⊄ C — now `Dec(t)`, so `Acc ∧ Dec ⇒ ¬Expl` (D16.XV FROZEN) drops them. Owner's cases: sign — stays (its case computes Acc and Slot; on the reading its transport is constructed, Con reads Held, which now needs (A) on the content's contract — the sign's own case gives (A) there, so it stays on that reading); vane — stays (E = D, (A) holds on C, so Faithful wide holds); bridge — **on that reading**: if the transport holding the brief's organization at the output meets (A) on the content's contract, `Con` stands (FC84.new1 fixed point `{'o2':'Con'}`) and it stays; if it does not, `Con` fails and the bridge leaves the explanations; student's copy — stays out (Dec already, FC30.new1 (d): `Dec(t) True` under T′). Made-up: the creative-transport card's carrier-to-content transports get Rep harder where the carrier's answers drift off the content's. Claims expected to move: FC104.new1 (its (b) becomes the narrow/wide flip itself), FC12.new1 (Sel ∧ Con at no fixed point), FC98-family (Held-based cuts), FC79, FC31. Small case: FC104.new1 (b), run: "Sel True; Viol (narrow) False; Viol⁺ (wide) True at ('1','b1_45') ∈ H" — after PB2.1 that Sel case must either shrink H or turn Dec: **not run**. First case to move: FC104.new1 (b)'s.
+
+**PB2.2.** Enters: the reversed calculation under the τ′ that carries `set H := h` to a setting of L — FC27 (area 2), run: "F2eq at every pair of C1: True; conjuncts {'F1': True, 'F2eq': True, 'Hom': False, 'F2': False, 'A': True, 'NC2': True, 'Dep': True, 'NonVacuous': True}": Hom is the only failing conjunct, so after PB2.2 `Acc = True` — identification presented as production becomes an account on the production contract under that τ′, **not run**. Also enters: FC21 (d)'s τ(1) ≠ 1 candidate on a contract of relabelings. Leaves: none ((F2) only weakens). Owner's cases: sign stays; vane stays; bridge stays; student's copy stays out (Dec). Claims: FC27 (statement flips), FC21 (d), FC15, FC51 (I18-tagged), FC48. First case to move: FC27 area 2.
+
+**PB2.3.** Leaves: candidates with an unfaithful background component (J_E ∖ Γ), e.g. a mechanism whose commitments are faithful but whose boundary-fixing component disagrees with its counterpart off Γ. Enters: none. Owner's cases: sign stays (both parts active in ℰ_two; ℰ_one has one component, in Γ); vane stays (Γ = {c_y}, E = D); bridge — stays on the reading its background components have counterparts; student's copy stays out. Claims: FC25 (a) unchanged (E_tab's single component is active); FC25.new2 unchanged; the generated worlds at scale 4 lose every candidate whose λ omits a background component — the generators' `per_size` hypothesis counts drop on FC26, FC29, FC34. Small case: FC21 (b)'s witness candidate extended with an inactive component k1 whose relation is empty at (e,b0) while its counterpart's is full: before `Acc True`, after `F1 False` — **not run**. First case to move: a generated candidate with unfaithful background.
+
+**PB2.4.** Enters: candidates that determine an answer where the target gives ⊥ — e.g. a vane-candidate that answers "north" in still air (baseline ⊥). Leaves: none. Owner's cases: sign stays (answers determined); vane stays (M13: E = D gives ⊥ at baseline, (A) held already; its rivals now enter); bridge stays; student's copy stays out. Claims: FC21 (a)/(a2) likely still hold (relabelings keep answers equal, ⊥ included); FC26, FC46, FC48 read (A) — hypothesis counts rise; **FC20** and **FC23 (e)** (the lookup meets (E) where its answer varies) may gain ⊥-pair cases. Small case: M13 with `L_cy(1,b0) = {(0,1)}` (E answers 1 at baseline, target ⊥): before `A False ⇒ Acc False`, after `A True ⇒ Acc True` (NC2 witness stands at e) — **not run**. First case to move: a determined answer at a ⊥ pair.
+
+**PB2.5.** Leaves: candidates carrying the target's answer in a boundary-assigning background component — the "p because p" written into an input slot that round 3's NC1 boundary clause caught and S45 released. Enters: none. Owner's cases: sign stays (its pins sit in active components, not the background); vane stays; bridge stays; student's copy stays out. Claims: FC23's counts unchanged (Slot reads components); FC26, FC29, FC34 lose the boundary-written-in cases that re-enter at Acc level; FC108 (I23) flips. Small case: FC22 (b)'s M13 with an added background component fixing y := 1 at every pair: before `Acc True`, after `NC0 False ⇒ Acc False` — **not run**. First case to move: a boundary slot.
+
+**PB2.6.** Enters: candidates on silently narrowed contracts — where `(A×B) ∖ C ⊄ Excl(Σ)`. As Part A's V1.7 records, on every question the program builds the default scope already equals the formula, so **no computed case moves**; meaning moves while no case does. Owner's cases: all four stay. Claims: FC33 (NonVacuous's second conjunct is a condition on a statement) becomes about a non-conjunct; FC26, FC30, FC51 lose their Stated-failure cases. Small case: M13 with `Excl(Σ) = ∅` and C = {(1,b0),(e,b0)} over A×B = {1,e}×{b0}: before `NonVacuous False ⇒ Acc False`, after `Acc True` — **not run** (the program's default scope masks it; a hand case only).
+
+**PB2.7.** Leaves: every candidate with a slot — E_enc (FC25.new2 (b): "Det_C ≠ ∅ ⇒ Slot_C(E_enc, tab)", run; after PB2.7 `A False ⇒ Acc False`, **not run**), the one-part sign (FC23.new2 (b): "(E) after S106 True … round 3's (F,F,F,F)" — PB2.7 restores round 3's verdict on it), the pole's E_enc on C1 and C2 (FC25.new2 (c)), and the pole's forward candidate on C2 (FC23.new3 (d): "C2: pins 8, all by c_L" ⇒ NC1 False on the reading 'every'). Enters: none. Owner's cases: **two-part sign** — stays under 'every' ("slots under each reading {'every': []}", run), leaves under 'some'; **vane** — stays ("NC1 True", FC22 (b)); **bridge** — stays (no slot in its case); **student's copy** — stays out. Claims: FC23.new1 (h) ("(E) is the same under all four readings") flips; FC25.new2 (a), FC23 (e), FC26 flip. Departs from S45, S44 (the owner's one-part sign is "an explanation, just a bad one"). First case to move: E_enc.
+
+**PB2.8.** No candidate enters or leaves (E); what moves is the route apparatus: in the infinitary example no critical block survives (removing a finite block from an unbounded index set leaves it unbounded ⇒ still a route), so `CB = ∅` there and L311.s2's content is lost; `NoWork` (D7.6) becomes vacuous on infinite Γ. Claims: FC40 ("every critical block infinite, each d_n does no work by itself") flips to "no critical block"; FC39, FC41–FC43 (routes) move. Owner's cases: all four unaffected. First case to move: FC40's eventually-periodic families.
+
+**PB2.9.** Leaves: candidates whose π is partial off the solutions — every generated witness that exploits I16's partiality to satisfy F2eq cheaply. Enters: none. Owner's cases: all four stay (their π are total state maps). Claims: FC20, FC49 (I16-tagged); FC45/FC48 widen indirectly (with π total, "translates (a,b)" is decided by dom τ, dom σ alone, so D8.2's FROZEN conflict pairs grow). Small case: FC21 (b)'s witness with π undefined off Sol_D: before `Acc True`, after "no transport" — the candidate is not a candidate of p at all — **not run**. First case to move: a partial-π generated candidate.
+
+## (d) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| PB2.1 | changes with | D5.7 (FROZEN, formalizes L189.s2), D12.7 (Viol) | the carry-over rewrites the words D5.7/D12.7 formalize | yes (r2e2.14) |
+| PB2.1 | blocks | L221.n1, L223.s3 (FROZEN) | `Sel ∧ Viol⁺` at a pair of H breaks "surprise requires (a,b) ∉ H" | yes: FC104.new1 (b), run |
+| PB2.1 | moves | Dec (via Rep, Held, T′), Expl | fewer transports Sel/Con ⇒ more Dec | yes |
+| PB2.2 | blocks | L257.n3 (FROZEN) | a relabeling-only contract would admit a candidate meeting (F2), (A), Dependence (FC21 (d)'s τ(1)≠1 case) | yes: FC21 (d), run |
+| PB2.2 | constrains | L271.s1 (FROZEN) | (F2) must still fail the reversed calculation on the production contract — F2eq does that (FC27, run), so the constraint stands | yes |
+| PB2.2 | moves | (E)'s conjunct (F2); (Suff)/(Nec) with it | pointwise equation only | yes |
+| PB2.3 | constrains | L231.s2, L245.s4 (FROZEN) | background stays "named background"; (K) still reads signatures — (F1) may read more, not contradict | yes |
+| PB2.3 | moves | what (F1) reads (Γ → J_E) | — | yes |
+| PB2.4 | blocks | L369.s2 (FROZEN) | a determined y ≠ ⊥ at a ⊥ pair would no longer fail (A), against "by (A) … is not an account" | yes (reading of y ≠ Ans_p) |
+| PB2.4 | changes with | D6.4, D8.2 (FROZEN) keep `⊥ = ⊥` | Contrast and Conf keep ⊥; only (A) exempts it — the split is the variant's content | yes |
+| PB2.5 | constrains | D6.5 (FROZEN) | NC0 must remain a conjunct of Dependence; it is strengthened, not replaced | yes |
+| PB2.5 | moves | Dependence | NC0 substantive | yes |
+| PB2.6 | constrains | L257.n2, L265.n1 (FROZEN) | both stay true as text; L265.n1's "every conjunct but Stated" becomes vacuous, as after S45 for NC1 | yes |
+| PB2.6 | changes with | V1.7 (Part A, B1's carry-over on D3.5) | inverse directions on the same conjunct; if both were taken, Stated would be defined away and dropped | yes |
+| PB2.7 | blocks | L269.s2 (FROZEN), on the reading with S45 | E_enc "is an account when it meets the other conjuncts" — PB2.7 makes it fail (A) | yes: FC25.new2, run |
+| PB2.7 | changes with | D6.3 (FROZEN) | (A) reads it; the quantifier readings now move (E) again | yes |
+| PB2.7 | moves | what a conjunct of (E) reads; (Suff)/(Nec) | written-in test re-enters | yes |
+| PB2.8 | blocks | L313.n3 (FROZEN) | "a block of such commitments can still be critical" — no finite block can | yes: FC40, run |
+| PB2.8 | constrains | L311.s1 (FROZEN) | the infinitary example must keep its routes (it does; only CB empties) | yes |
+| PB2.9 | changes with | D8.2, D8.3 (B4), D12.5 (B3) | "pairs both translate" and (R)'s transport both re-read a total π | yes |
+| PB2.9 | constrains | L315.s4 (B4) | "claims (F1), (F2), (A) at every pair of C" — still quantified over C; outside C the claim's extent grows | yes |
+
+Unsettled: whether PB2.1's effect on the bridge turns on the held transport's (A) on the *content's* contract or on the preimage contract (D12.5's extent, I48) — the owner's answer on which history the bridge has would settle it.
+
+## (e) Free items bearing on explanation, not varied
+
+- `L185.s1` (t's tuple shape): nothing to vary without rewriting every conjunct's data; varied instead through D5.1's π (PB2.9).
+- `D5.2` (projection): pure notation; any change moves only spelling.
+- `D5.3` (candidate shape): frozen on all sides (D6.7 reads the tuple as it is).
+- `D6.1` (deletion's answer): reads D1.3 (FROZEN, B1); varying it would vary B1's item in disguise.
+- `L253.s1` (query fixed): formalized through D3.2 (B1, FROZEN here); its variant belongs to B1's question section.
+- `L245.s1`–`L245.s3` (the glosses of (F1), (F2)): their content moved with PB2.1/PB2.2; as sentences they only gloss.
+- `L265.s2` ("None inspects a label"): varied by nothing here; a variant would reintroduce kind-labels, against L11.s2–L11.s4 (FROZEN).
+- `D6.10` (tables): both E_tab and E_enc anchor FC25/FC25.new2 from both directions; PB2.7 moves their verdicts without touching the encoding.
+- `L347.s2`, `L307.s1`, `L329.s3` (each blocked by a Part A variant): they bear on nothing in the explanation definition; lifting their blocks is B1's and B4's variants' business, not a B2 change.
+
+## (f) Inventions the variants rest on
+
+- **PB2.1**: I49 (faithful extent) — takes the wide choice; other choices: narrow (as now), or wide only at L220.
+- **PB2.2**: I18 (Hom's range) — takes the dropped choice; others: Hom as now, Hom pointwise (D5.7 already notes it is never at a pair).
+- **PB2.3**: new, named **PB2-In1** — (F1)'s quantifier over Γ; other choices: Γ (as now), J_E, J_E ∖ (input assigners).
+- **PB2.4**: new, **PB2-In2** — (A)'s domain: C, Det_C, or Det_C ∪ {pairs where E is also ⊥} (as now, via ⊥ = ⊥).
+- **PB2.5**: I23 — takes registered choice (a); other: the heading gloss (as now).
+- **PB2.6**: I27 — takes "no conjunct"; others: as now, or Excl defined (V1.7).
+- **PB2.7**: I136's four readings now move (E) again — the invention is which quantifier Slot reads; not re-chosen here (default 'every').
+- **PB2.8**: I30/I31 (routes as set systems; infinitary routes as unbounded sets) — kept; the new choice is B's finiteness, **PB2-In3**: B unrestricted (as now) or finite.
+- **PB2.9**: I16 — takes total π; others: partial on solutions (as now), partial on a stated scope.
+
+END OF REPORT

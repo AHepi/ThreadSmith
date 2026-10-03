@@ -1,0 +1,2221 @@
+Let me carefully analyze this task. I need to:
+
+1. Try to refute the finding F1 about Derivation 2 ("Indistinguishable is identical")
+2. Judge the proposed repair
+
+Let me first understand the theory's Derivation 2 and the finding's claim.
+
+**Derivation 2 (lines 559-565):**
+- Claim: "Two candidates $\mathcal E,\mathcal E'$ for the same $p$ that both satisfy (F1), (F2), and (A) on $C$ are one account at grain $C$: their components are pairwise of one kind on $C$ and their answer profiles coincide."
+- Proof: "Immediate from Derivation 1 and (A). ∎"
+- Consequence: discussion of underdetermination
+
+**The finding's claim:**
+1. The claim has two halves: (a) components are pairwise of one kind; (b) answer profiles coincide.
+2. Half (b) follows from (A).
+3. Half (a) is false under stated assumptions because Derivation 1 relates each component to its own anchor in D, not to components of another candidate. Nothing supplies a pairing between components of two candidates.
+4. The finding provides counter-instances showing two candidates that satisfy (F1), (F2), (A) but whose components don't pair up as "one kind."
+
+Let me examine the counter-instances.
+
+**Counter-instance 1:**
+- Target D: ports x, y, z. Components j_x: x=u (u is boundary value), j_y: y=2x, j_z: z=y+1.
+- Edits: identity and do(x=c) which replaces j_x.
+- Contract C = {(1,b_0)} ∪ {(do(x=c),b_0): c ∈ ℝ}
+- Query Q reads z, so Ans_p(do(x=c),b_0) = 2c+1.
+- E₁ = D itself with identity transport. Components k_x, k_y, k_z.
+- E₂ has ports x,z and two components: m_x: x=u anchored to {j_x}; m_z: z=2x+1 anchored to subnetwork {j_y,j_z} with hidden port y projected away.
+
+Let me verify (F1) for E₂.
+
+(F1) says: For every active component k of E with anchor subnetwork λ(k) ⊆ D, and every (a,b) ∈ C:
+proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b))
+
+For m_z: λ(m_z) = {j_y, j_z}, V_{m_z} = {x, z}.
+Sol_{{j_y,j_z}}(a,b_0) is the set of valuations on {x,y,z}... wait, no. The subnetwork λ(k) has ports. Let me think about this.
+
+Actually, Sol_{λ(k)}(a,b) is the solution set of the subnetwork λ(k) under edit (a,b). The subnetwork λ(k) = {j_y, j_z} has footprint V_{j_y} ∪ V_{j_z} = {x,y} ∪ {y,z} = {x,y,z}. So Sol_{{j_y,j_z}}(a,b_0) is the set of valuations (x,y,z) satisfying j_y and j_z under the edit (a,b_0).
+
+Under do(x=c): this edit "replaces the component assigning x" — that's j_x, which is not in the subnetwork {j_y,j_z}. So the edit doesn't affect this subnetwork's constraints? Hmm, but wait. The edit do(x=c) sets port x to c. But if j_x is replaced, and j_x is not in the subnetwork, then within the subnetwork, x is just a free variable constrained by j_y and j_z.
+
+Actually wait, I need to think more carefully. The edit do(x=c) replaces the component that assigns x. In the full organization D, that's j_x. But within the subnetwork {j_y,j_z}, there's no component assigning x. So what does do(x=c) do to Sol_{{j_y,j_z}}?
+
+Hmm, this is the crux. Let me re-read the theory.
+
+Line 120: "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one."
+
+So do(x=c) replaces j_x with a component that sets x=c. In the subnetwork {j_y,j_z}, j_x is not present. So the edit has no effect on the subnetwork's solution set.
+
+Therefore Sol_{{j_y,j_z}}(do(x=c),b_0) = {(s, 2s, 2s+1): s ∈ ℝ} for any c (the edit doesn't affect this subnetwork).
+
+Then proj_{V_{m_z}}[Sol_{{j_y,j_z}}(do(x=c),b_0)] = proj_{{x,z}}{(s,2s,2s+1)} = {(s,2s+1): s ∈ ℝ}.
+
+And L_{m_z}(do(x=c), b_0) should be {(s,2s+1): s ∈ ℝ} — the component relation of m_z under the translated edit.
+
+Hmm wait, but does the translated edit τ(do(x=c)) affect m_z? m_z is a component of E₂ with relation z=2x+1. The edit τ(do(x=c)) should set port x in E₂... which replaces the component assigning x in E₂, which is m_x. So it doesn't affect m_z's relation.
+
+So L_{m_z}(τ(do(x=c)), σ(b_0)) = {(s,2s+1): s ∈ ℝ} (the full relation satisfying z=2x+1, since x is free in this component).
+
+Actually wait — L_k(a,b) is a subset of ∏_{v∈V_k} X_v. For m_z, V_{m_z} = {x,z}, so L_{m_z}(a,b) ⊆ ℝ². The relation z=2x+1 means L_{m_z} = {(s,2s+1): s ∈ ℝ} regardless of the edit (since the edit replaces m_x, not m_z).
+
+And proj_{V_{m_z}}[Sol_{{j_y,j_z}}] = {(s,2s+1): s ∈ ℝ}.
+
+So (F1) holds for m_z. ✓
+
+For m_x: λ(m_x) = {j_x}, V_{m_x} = {x}.Under do(x=c): j_x is replaced by a component setting x=c. So Sol_{{j_x}}(do(x=c),b_0) = {(c, ...)} — well, {j_x} has footprint {x}, so Sol_{{j_x}}(do(x=c),b_0) = {c} (as a subset of X_{x}).
+proj_{V_{m_x}} = {c}.
+L_{m_x}(do(x=c), b_0) = {c} (the component sets x=c after the edit).
+
+At baseline (1,b_0): Sol_{{j_x}}(1,b_0) = {u} = {0} at b_0. proj = {0}. L_{m_x}(1,b_0) = {0}. ✓
+
+So (F1) holds for E₂. ✓
+
+Now (F2): π[Sol_D(a,b)] = Sol_{E₂}(τ(a),σ(b)).
+
+Sol_D(do(x=c),b_0) = {(c, 2c, 2c+1)}.
+π(x,y,z) = (x,z), so π[Sol_D] = {(c, 2c+1)}.
+
+Sol_{E₂}(do(x=c),b_0): E₂ has components m_x and m_z. After the edit, m_x sets x=c, m_z says z=2x+1. So Sol_{E₂} = {(c, 2c+1)}. ✓
+
+At baseline: Sol_D(1,b_0) = {(0, 0, 1)}. π maps to {(0,1)}. Sol_{E₂}(1,b_0) = {(0,1)}. ✓
+
+τ(1)=1, τ(do(x=c₂)∘do(x=c₁)) = τ(do(x=c₂)) = do(x=c₂) (in E₂'s edits). And τ(do(x=c₂))∘τ(do(x=c₁)) = do(x=c₂)∘do(x=c₁) = do(x=c₂). ✓
+
+Wait, actually the composition of edits: do(x=c₂)∘do(x=c₁). If these are "replace the component assigning x", then applying do(x=c₁) then do(x=c₂) gives the same as just do(x=c₂). So τ preserves composition. ✓
+
+(A): Ans_E(τ(a),σ(b)) = Ans_p(a,b). For both candidates, Q reads z, and z = 2c+1 under do(x=c). ✓
+
+Now the finding says: E₁ has 3 components (k_x, k_y, k_z) and E₂ has 2 (m_x, m_z), so no bijection exists. Correct.
+
+But wait — the claim says "their components are pairwise of one kind on C." What does "pairwise of one kind" mean exactly?
+
+(K) defines: "Two components j,j' are of one kind on C when there is a bijection of their footprints under which sig_C(j) and sig_C(j') coincide."
+
+This is defined for two components of one organization D. But the finding notes this and proposes the cross-candidate reading.
+
+Now, "pairwise of one kind" in the claim could mean:
+(a) For every component k of E and every component k' of E', k and k' are of one kind (which is absurd — it would say all components are the same kind).
+(b) There exists a bijection φ from components of E to components of E' such that k and φ(k) are of one kind for each k.
+(c) Components can be paired up (some matching) such that paired components are of one kind.
+
+Reading (b) or (c) requires equal cardinality of component sets (or at least a matching). E₁ has 3, E₂ has 2, so no bijection exists.
+
+But wait — could "pairwise" just mean "the corresponding ones" in some undefined sense? The claim is ambiguous. The finding reads it as requiring a bijection, which seems the natural reading of "their components are pairwise of one kind."
+
+Actually, "pairwise of one kind" is a strange phrase. Let me think about what it could mean. If we say "these elements are pairwise of one kind," it typically means every pair is of one kind — i.e., there's one kind that all of them share. But that can't be right here because components in one organization can be different kinds.
+
+Alternatively, "their components are pairwise of one kind" could mean "for each pair (k, k') where k is a component of E and k' is a component of E', k and k' are of one kind" — but this would mean ALL components are the same kind, which is absurd.
+
+Most naturally, I think it means "their components can be paired up such that each pair is of one kind" — i.e., there's a bijection/matching. This is the reading the finding uses.
+
+Actually, another reading: "the components of E and E', taken pairwise (i.e., matching component-by-component in some ordering), are of one kind." This still requires a bijection.
+
+Hmm, but there's yet another possible reading: the claim might be trying to say that the *kinds* represented by the components are the same — i.e., the set of kinds of components of E equals the set of kinds of components of E'. But this is weaker and wouldn't support "are one account."
+
+Let me also consider: could "pairwise of one kind" mean that corresponding components (those with the same role/name) are of one kind? But there's no canonical correspondence given.
+
+I think the finding's reading is the most natural one, and the claim is at best ambiguous and at worst false.
+
+Now let me think about the defence arguments.
+
+**Defence (i): E₂ is inadmissible because (F1) or anchor rules forbid merged anchors.**
+
+Let me check. Line 204: "λ assigns each component of E a subnetwork of D with a port translation." A "subnetwork" can be multiple components of D — it says "subnetwork," not "subcomponent" or "single component." And (F1) explicitly mentions "projecting away its hidden ports," which only makes sense when the anchor has ports not in V_k. The skew-symmetric case in Part VII confirms this.
+
+Also, the theory says at line 120: "A deleted component imposes the full relation on its ports." This is about deletion, not about anchoring. But it shows that subnetworks with multiple components are within the framework.
+
+So the defence (i) seems refutable — merged anchors are allowed.
+
+**Defence (ii): "Pairwise of one kind" pairs only through shared anchors.**
+
+This is a possible reading but the finding argues against it well. The phrase "their components are pairwise of one kind" doesn't restrict to shared anchors, and no line states this restriction.
+
+But wait — is this reading perhaps what "Immediate from Derivation 1 and (A)" could prove? Let me think...
+
+Derivation 1 says: if a transport satisfies (F1) on C, then every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C.
+
+So from Derivation 1 alone, for E: each component k of E has the signature of λ(k). For E': each component k' of E' has the signature of λ'(k'). To get "k and k' are of one kind," we'd need λ(k) and λ'(k') to have the same signature. This would follow if λ(k) = λ'(k') (same anchor). But in general, different anchors can have different signatures.
+
+So the proof "Immediate from Derivation 1 and (A)" works only under the shared-anchor reading. The claim as written ("their components are pairwise of one kind") is broader than what the proof establishes.
+
+Now, is the shared-anchor reading plausible as the intended meaning? Let me look at the Consequence again: "Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction." And: "A claim that two such candidates 'really' differ is a claim that some admitted change separates them, and must supply it."
+
+This Consequence seems to say: if two candidates both satisfy (F1), (F2), (A), then they don't really differ unless some admitted change separates them. But the counter-instances show that two candidates CAN differ (in decomposition) while both satisfying the conditions — the difference is in how they cut D, not in what changes separate them.
+
+The title "Indistinguishable is identical" reinforces the stronger reading.
+
+Actually, let me reconsider. The Consequence says "A claim that two such candidates 'really' differ is a claim that some admitted change separates them, and must supply it." In the counter-instance, E₁ and E₂ do differ — they have different numbers of components. But is this a "real" difference that some admitted change would separate? The admitted changes are do(x=c) operations, and under all of them, both candidates give the same answer profile. So in one sense, no admitted change separates them at the level of answers. But they differ in internal structure.
+
+The theory says (line 23): "Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so." So E₁ and E₂ are different organizations. But are they "one account"?
+
+Hmm, the claim says "are one account at grain C." This is doing more work than just "have the same answer profile." It's asserting identity of accounts.
+
+I think the finding is correct that the claim as written is false. The two candidates in the counter-instance both satisfy (F1), (F2), (A) but are not "one account" in any reasonable sense — they have different internal decompositions.
+
+But wait, let me consider one more defence reading.
+
+**Could "their components are pairwise of one kind on C" mean something much weaker, like "for each component of one, there exists a component of the other of one kind"?**
+
+In counter-instance 1: k_x is of one kind with m_x (both set x=u). k_y (y=2x) — is it of one kind with any component of E₂? m_z has relation {(s,2s+1)}, k_y has {(s,2s)}. These are different relations, so not of one kind (under any footprint bijection, since both have 2-element footprints mapped to 2-element footprints, the relations must match). k_z has {(t, t+1)} where the footprint is {y,z}. m_z has footprint {x,z} and relation {(s,2s+1)}. Under a footprint bijection y→x, z→z: k_z's relation becomes {(s, s+1)} and m_z's is {(s, 2s+1)}. These don't match.
+
+So k_y and k_z each fail to be of one kind with any component of E₂. This means even the weak existential reading fails.
+
+Actually wait, k_y has footprint {x,y} and relation L_{k_y} = {(s, 2s): s ∈ ℝ}. m_z has footprint {x,z} and relation {(s, 2s+1)}. Under footprint bijection x→x, y→z: k_y's relation becomes {(s, 2s)} mapped to X_x × X_z = ℝ², and m_z's is {(s, 2s+1)}. These differ.
+
+Under x→z, y→x: k_y's relation {(s, 2s)} becomes {(2s, s)} = {(t, t/2)}, and m_z's is {(s, 2s+1)}. Different.
+
+So yes, k_y is not of one kind with m_z.
+
+What about k_y being of one kind with m_x? k_y has 2 ports, m_x has 1 port. No bijection of footprints exists. So no.
+
+So in counter-instance 1, components k_y and k_z of E₁ are not of one kind with any component of E₂. This definitively breaks "their components are pairwise of one kind" under any reasonable reading.
+
+Now let me think about whether the counter-instance breaks any stated assumption.
+
+The components of D: j_x: x=u where u is a boundary value. Is this properly a component? Let me check. A component j has a footprint V_j ⊆ V. j_x has footprint {x}. L_{j_x}(a,b) ⊆ X_x. At baseline, L_{j_x}(1,b_0) = {0} (u=0 at b_0). Under do(x=c), j_x is replaced, so we don't care about its relation.
+
+Actually wait — "An edit that sets a port replaces the component assigning that port." So do(x=c) replaces j_x. What replaces it with? A component that sets x=c. So the new component has L(a',b_0) = {c}.
+
+OK, this seems fine. The target D is a legitimate organization.
+
+The contract C = {(1,b_0)} ∪ {(do(x=c),b_0): c ∈ ℝ}. This contains the baseline (1,b_0) as required (line 155: "it contains the baseline (1,b_0)"). ✓
+
+Is C a "declared subset of the physically admitted edits"? Well, this is a mathematical example, so "physically admitted" is in the sense of the mathematical structure. The edits do(x=c) are admitted edits of D. ✓
+
+Non-vacuity: Sol_D(1,b_0) = {(0,0,1)} ≠ ∅. ✓
+
+Now let me check that E₁ and E₂ are legitimate candidates. An explanatory candidate is "an organization E, a transport t=(π,τ,σ,λ) from D to E, and an identified set Γ of active commitments in E."
+
+For E₁ = D with identity transport: this is legitimate. ✓
+
+For E₂: ports x,z; components m_x, m_z; the transport maps D to E₂. Is E₂ a legitimate organization? It has ports, components with relations, etc. Yes. ✓
+
+The anchor λ assigns each component of E a subnetwork of D. λ(m_x) = {j_x}, λ(m_z) = {j_y, j_z}. Both are subnetworks of D. ✓
+
+I don't see how the counter-instance breaks any stated assumption.
+
+Let me now think about whether the claim as written could be true of the counter-instance under some reading.
+
+The claim: "their components are pairwise of one kind on C and their answer profiles coincide."
+
+Answer profiles coincide: ✓ (both give 2c+1).
+
+Components pairwise of one kind: E₁ has 3 components, E₂ has 2. For "pairwise of one kind" to hold, every component of E₁ must be of one kind with... what?
+
+If it means "there's a bijection," impossible (3 ≠ 2).
+If it means "for each component of one, there's a component of the other of one kind": k_y (y=2x) fails — no component of E₂ has its signature.
+If it means "every pair (one from each) is of one kind": even more false — k_x and m_z are clearly not of one kind.
+
+So the claim is false of this counter-instance. The finding seems correct.
+
+Now, can I try to refute the finding in other ways?
+
+**Could the counter-instance be inadmissible because it violates non-circular dependence or non-vacuity?**
+
+Wait — the claim of Derivation 2 only requires (F1), (F2), and (A), not the full Account conditions. So non-circular dependence and non-vacuity don't need to hold. But let me check anyway.
+
+Non-circular dependence: "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way."
+
+For E₂ with Γ = {m_x, m_z}: can we remove m_z? Then z is undetermined (no constraint on z). The answer profile ceases to be determined. This edit do(x=c) replaces m_x (which is in Γ), but we need an edit that "removes or replaces a nonempty block of Γ while preserving the other boundary conditions." Hmm, do(x=c) replaces m_x but that doesn't "remove or replace" in the sense of the non-circular condition — it's an admitted edit that changes the input. We need something that removes a commitment.
+
+Actually, the non-circular condition is about the answer depending on the commitments, not on the target's answer being smuggled in. The condition is: there's some edit in C that removes/replaces a block of Γ and the answer changes. But the edits in C are do(x=c) operations, which replace j_x/m_x. Removing m_z is not one of these edits.
+
+Hmm wait, but non-circular dependence is stated as: "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ..." So the edit (a,b) must be in C. The edits in C are do(x=c) which replace j_x (in D) / m_x (in E₂). These are edits that "replace a nonempty block of Γ" (they replace m_x). Under such an edit, the answer profile changes (from 2u+1 to 2c+1). So non-circular dependence is satisfied?
+
+Actually wait, I need to re-read: "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way."
+
+Under do(x=c), m_x is replaced (by a component setting x=c). This replaces a block of Γ ({m_x}). The other boundary conditions are preserved (b_0). The answer profile changes (from 2·0+1=1 to 2c+1). So non-circular dependence is satisfied. ✓
+
+But this doesn't matter anyway since the claim only requires (F1), (F2), (A).
+
+**Could there be an issue with the subnetwork anchor?**
+
+Line 204: "λ assigns each component of E a subnetwork of D with a port translation." The finding's E₂ anchors m_z to {j_y, j_z}. This is a subnetwork of D (two components). Is there any restriction that a subnetwork must be connected? The theory says "subnetwork" — in graph theory, a subnetwork (subgraph) need not be connected. But {j_y, j_z} share port y, so they are connected anyway.
+
+What about the port translation? λ(k) has "a port translation" — this maps ports of the subnetwork to ports of k (or vice versa). For m_z: the subnetwork has ports {x,y,z}, and m_z has ports {x,z}. The port translation maps x→x, z→z (and y is hidden). This is exactly what "projecting away its hidden ports" in (F1) refers to.
+
+This all seems legitimate.
+
+**Let me also think about whether the finding misreads any sentence.**
+
+The finding's reading of "their components are pairwise of one kind on C": I've considered multiple readings and the claim is false under all of them for the counter-instance. The most charitable reading (shared anchors only) makes the claim trivially true but doesn't support the Consequence or the title.
+
+Let me think about the "pairwise" reading more carefully. "Two candidates... are one account... their components are pairwise of one kind on C." 
+
+Actually, could "pairwise" be modifying "of one kind" rather than "their components"? As in: "their components are, pairwise, of one kind" = "taken in pairs (one from each), their components are of one kind." This would mean: for every component k of E and every component k' of E', k and k' are of one kind. But this is absurd — it would mean all components across both candidates are the same kind.
+
+Alternatively: "their components are pairwise of one kind" = "their components can be arranged in pairs of one kind." This requires a matching/bijection.
+
+Or perhaps: "the components of one are pairwise of one kind with the components of the other" — meaning there's a correspondence such that corresponding pairs are of one kind.
+
+I think the finding's reading is correct. And the counter-instance works.
+
+Now let me think about the proposed repair.
+
+**Proposed repair:**
+
+Replace lines 559-565 with:
+
+"**2. Same anchors, one account**
+
+**Claim.** Let $\mathcal E,\mathcal E'$ be candidates for the same $p$ that both satisfy (F1), (F2) and (A) on $C$. (i) Their answer profiles coincide on $C$. (ii) If a bijection $\varphi$ of their active components satisfies $\lambda'(\varphi(k))=\lambda(k)$ for every $k$, up to port translation, then $k$ and $\varphi(k)$ are of one kind on $C$ for every $k$, and the two are one account on $C$."
+
+Proof: (i) By (A). (ii) By Derivation 1, k has the signature of λ(k), and φ(k) the signature of λ'(φ(k)) = λ(k); composing the two port translations gives a footprint bijection under which the two signatures, read on C, coincide.
+
+This seems correct. Let me verify:
+
+- (i) is clearly true: Ans_E(τ(a),σ(b)) = Ans_p(a,b) = Ans_{E'}(τ'(a),σ'(b)).
+
+- (ii) If λ'(φ(k)) = λ(k) (up to port translation), then by Derivation 1:
+  - k has the signature of λ(k) on C (through τ)
+  - φ(k) has the signature of λ'(φ(k)) = λ(k) on C (through τ')
+  - Since both have the signature of the same subnetwork λ(k), they have the same signature, hence are of one kind (under the appropriate footprint bijection composed from the port translations).
+
+Wait, but there's a subtlety. Derivation 1 says: "every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C." So the signature of k is read on τ[C], and the signature of λ(k) is read on C. Similarly for φ(k): its signature on τ'[C] equals the signature of λ'(φ(k)) on C.
+
+For k and φ(k) to be "of one kind on C" (in the cross-candidate sense), we need their signatures read on C through τ and τ' to coincide. But k's signature is naturally read on τ[C], and φ(k)'s on τ'[C]. The repair says "their signatures, read on C through τ and τ'." So we're reading both through the pre-image in C. This works: sig_C(k) through τ is {(a,b,L_k(τ(a),σ(b))):(a,b)∈C}, and sig_C(φ(k)) through τ' is {(a,b,L_{φ(k)}(τ'(a),σ'(b))):(a,b)∈C}. By Derivation 1 (and the fact that both anchors are λ(k)), these are equal (up to footprint bijection). ✓
+
+Actually, let me be more careful. Derivation 1 gives us:
+proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b)) [this is (F1)]
+and
+proj_{V_{φ(k)}}[Sol_{λ'(φ(k))}(a,b)] = L_{φ(k)}(τ'(a),σ'(b)) [this is (F1) for E']
+
+If λ'(φ(k)) = λ(k) (up to port translation), then Sol_{λ'(φ(k))}(a,b) and Sol_{λ(k)}(a,b) are related by the port translation. And proj gives us the component relations. The footprint bijection is the composition of the port translations with the identity (since the anchors are the same). This works.
+
+But wait — "λ'(φ(k)) = λ(k), up to port translation." What does this mean exactly? It means the same subnetwork of D, with possibly different port translations. So λ(k) = λ'(φ(k)) as subnetworks (same components of D), but the port translations from the subnetwork's ports to the component's ports might differ. Since φ(k) and k might have different port names, the port translations accommodate this.
+
+OK, the repair seems correct.
+
+Now, does the repair break anything?
+
+**Derivation 1:** The repair adds a sentence after (K) clarifying cross-candidate kind comparison. This doesn't affect Derivation 1, which is about components within one organization. ✓
+
+Actually, let me re-read the supporting edit: "After (K) (line 136), one sentence: 'A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense.'"
+
+Hmm, this extends (K) to cross-organization comparison. But (K) is defined for components of one organization D with one contract C. The extension is to components of different organizations (E and E'), read through different transports (τ and τ'). This is a new definition, not just a clarification.
+
+Does this break anything? Let me think...
+
+(K) is used in:
+- Part II to define kinds as equivalence classes
+- Part V (the "Why there is no anchoring condition" paragraph) which says "By (K), (F1) entails that every component of E has the signature of its anchor"
+- Derivation 1
+- The finding's discussionThe extension to cross-organization comparison is used in Derivations 1 and 2. Derivation 1 is about one organization (E), so the extension is only needed for Derivation 2. The supporting edit says "Derivations 1 and 2 use kinds in this sense" — but Derivation 1 doesn't actually need the cross-organization extension. However, the added sentence doesn't break Derivation 1; it just adds an unused (for Derivation 1) definition.
+
+Wait, actually Derivation 1 does compare signatures of components of E with signatures of subnetworks of D. The signature of a subnetwork is defined in the proof of Derivation 1 (line 555): sig_C(λ(k)) = {(a,b,proj_{V_k}Sol_{λ(k)}(a,b))}. This is comparing a component's signature with a subnetwork's signature. The added sentence is about comparing two components' signatures across organizations. These are different extensions of (K).
+
+Hmm, I think the supporting edit is slightly imprecise in saying "Derivations 1 and 2 use kinds in this sense." Derivation 1 uses an extension of (K) to subnetworks (within one organization's transport), while Derivation 2 (as repaired) uses the cross-organization extension. But this is a minor imprecision, not a breakage.
+
+**Derivation 8:** "Equivariance under genuine recoding. Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK). The result does not apply to coarsenings, changed boundaries, or lost event identities."
+
+The repair's note says "A coarsening is not a recoding (Derivation 8)." This is consistent with Derivation 8, which already excludes coarsenings. ✓
+
+Actually, in the repair's text: "Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8)."
+
+This references Derivation 8 correctly — it's saying that when two candidates have different decompositions (like E₁ and E₂ in the counter-instance), this is not a recoding but a coarsening or different cutting, so Derivation 8 doesn't apply. ✓
+
+**Derivation 9:** "Output descriptions do not determine accounts. If M₀,M₁ have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both."
+
+The repair references Derivation 9 to say that different anchor assignments give different candidates with one answer profile. This is consistent — Derivation 9 says outputs don't determine accounts, and the repair acknowledges that different decompositions are genuinely different. ✓
+
+Wait, but the original Derivation 2 seems to say that candidates with the same answer profile ARE one account, which would contradict Derivation 9! Let me check...
+
+Derivation 9 says: "If M₀,M₁ have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both." This means there can be two systems with the same outputs but different account claims — i.e., one is an account and the other is not, or they're different accounts. This is about physical systems M₀,M₁, not about mathematical candidates E,E'. But the spirit is the same: same outputs don't determine account identity.
+
+The original Derivation 2 seems to say that candidates with the same answer profile (and both satisfying F1, F2, A) are one account. But Derivation 9 says same outputs can hide different accounts. There's a tension here.
+
+Actually, Derivation 9 is about systems with the same input-output projection but different internal structure, where one might satisfy Account and the other not. Derivation 2 is about two candidates that BOTH satisfy (F1), (F2), (A). So they're not directly contradictory — Derivation 9 allows for cases where one candidate satisfies Account and the other doesn't despite same outputs (which is possible because (F1) and (F2) are about internal structure).
+
+But wait — if both satisfy (F1), (F2), (A), then both have correct internal structure (relative to D). The question is whether they're "one account." The original Derivation 2 says yes; the repair says only if they have the same anchors.
+
+I think the repair is more consistent with Derivation 9's spirit: internal structure matters, and different decompositions are genuinely different.
+
+**Derivation 10:** The repair replaces "the two persistence components are of one kind (Derivation 2)" with "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)."
+
+Let me think about this. In Derivation 10's scenario, S₁ has two persistence components, one for each thing. The claim is about identity: "component 1 is really thing 1" vs "component 1 is really thing 2."
+
+The finding notes that the literal claim ("the two persistence components are of one kind") fails (K) because the contract includes "displace a thing," under which one component's relation is replaced and the other's isn't.
+
+Wait, let me think about this more carefully. The persistence components in S₁: one carries position and velocity of thing 1 through occlusion, the other carries position and velocity of thing 2. Under "displace a thing" (say, displace thing 1), thing 1's continuity subnetwork changes but thing 2's doesn't. If persistence component 1 is anchored to thing 1's continuity subnetwork, then its signature changes under this edit. Persistence component 2's signature doesn't (it's anchored to thing 2's subnetwork). So they're not of one kind on a contract containing "displace a thing" — their signatures differ because one changes and the other doesn't.
+
+Hmm wait, but "displace a thing" — which thing? If the edit is "displace thing 1," then it affects thing 1's continuity. If the edit is "displace thing 2," it affects thing 2's. The contract presumably includes both.
+
+Under "displace thing 1": persistence component 1's relation is affected (it tracks thing 1), persistence component 2's is not. So sig(k₁) ≠ sig(k₂) at this edit.
+
+Unless... the edit is phrased as "displace a thing" meaning "displace some thing" (existentially), and the contract includes all such edits. Then at the edit "displace thing 1," the signatures differ.
+
+Actually, re-reading Derivation 10: "admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities." So the edits include "displace thing 1," "displace thing 2," etc. Under "displace thing 1," the two persistence components have different responses. So they're not of one kind on the full contract.
+
+But the claim says "On any contract containing it [the swap edit], the two persistence components are of one kind (Derivation 2)." If the contract also contains "displace a thing," then (K) would say they're NOT of one kind.
+
+Hmm, but wait. Let me think about what "displace a thing" does to the persistence components in S₁.
+
+Actually, S₁ is the simulation layer. Its components are persistence components. The transport t₁ goes from P to S₁. Under a displacement edit in P, the continuity subnetwork of thing 1 changes, and through the transport, the corresponding persistence component in S₁ changes.
+
+But what is the "edit" on S₁? The transport τ translates edits from P to S₁. Under "displace thing 1" in P, τ maps this to an edit on S₁. What edit? If the persistence component 1 is anchored to thing 1's continuity subnetwork, then the translated edit affects persistence component 1.
+
+Now, for two components of S₁ to be "of one kind on C," we compare their signatures. Under "displace thing 1": persistence component 1's relation changes (it now reflects the new position), persistence component 2's doesn't. So their signatures differ. Hence they're NOT of one kind on any contract containing "displace thing 1."
+
+But the claim says they ARE of one kind on any contract containing the swap edit. This seems to require that the contract contains the swap edit but NOT the displacement edits. But the text says "On any contract containing it, the two persistence components are of one kind" — "it" is the swap edit.
+
+Hmm, "on any contract containing it" — this means any contract that includes the swap edit. If such a contract also includes "displace thing 1," then the claim is false by (K). If the contract includes only the swap edit (and identity), then the claim might be true.
+
+But the sentence says "on ANY contract containing it" — so it includes contracts that also have displacement edits. And on those, (K) says the components are not of one kind.
+
+Wait, but maybe I'm wrong about the signatures. Let me think again.
+
+A persistence component in S₁ carries position and velocity of a thing through occlusion. Its relation L_k(a,b) gives the allowed values of its ports (position, velocity, maybe persistence flag) under edit (a,b).
+
+Under "displace thing 1": thing 1's position changes. Persistence component 1 (tracking thing 1) now has a different position value. Its relation L_{k_1}(a,b) changes (the position port takes a different value). Persistence component 2 (tracking thing 2) is unaffected — L_{k_2}(a,b) is the same.
+
+So sig(k₁) and sig(k₂) differ at this edit. By (K), they're not of one kind on any contract containing "displace thing 1."
+
+But wait — what if the edit "displace thing 1" is translated by τ to an edit on S₁ that affects BOTH persistence components symmetrically? Like, "change the position of persistence component 1" and "change the position of persistence component 2" are different edits on S₁?
+
+Hmm, the translated edit τ("displace thing 1") should be the edit on S₁ that corresponds to displacing thing 1. If persistence component 1 tracks thing 1, then this edit changes persistence component 1's position. It doesn't change persistence component 2's position.
+
+Actually, here's the key question: does the signature of a component change under an edit that is "outside" the component? (K) defines:
+
+sig_C(j) = {(a,b,L_j(a,b)) : (a,b) ∈ C}
+
+And L_j(a,b) is "the interpretation supplies" — it's the component relation under edit (a,b). If the edit (a,b) doesn't affect component j, then L_j(a,b) is the same as at baseline. If it does affect j, then L_j(a,b) might differ.
+
+Under "displace thing 1": L_{k_1} changes (it tracks thing 1's position), L_{k_2} doesn't. So sig(k₁) ≠ sig(k₂) at this edit.
+
+Unless "displace thing 1" somehow affects both components equally... but that doesn't make sense. Thing 1 and thing 2 are different things with different positions.
+
+So the original Derivation 10 sentence is indeed wrong under (K), as the finding notes. The repair's replacement is better.
+
+But wait — the finding says the intended content is "a claim about two transports: t₁... and a second transport that exchanges the two anchors." The repair says "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)."
+
+Under the repaired Derivation 2, "the two transports are one account" requires a bijection φ of active components satisfying λ'(φ(k)) = λ(k) for every k. If we exchange the anchors, then λ'(k₁) = λ(k₂) and λ'(k₂) = λ(k₁). The bijection φ would be the identity (k₁ ↔ k₁, k₂ ↔ k₂), but then λ'(k₁) = λ(k₂) ≠ λ(k₁). So the condition λ'(φ(k)) = λ(k) fails!
+
+Or if φ exchanges k₁ and k₂: φ(k₁) = k₂, φ(k₂) = k₁. Then λ'(φ(k₁)) = λ'(k₂) = λ(k₁). ✓ And λ'(φ(k₂)) = λ'(k₁) = λ(k₂). ✓
+
+So the bijection φ is the exchange of components, and the condition holds. ✓
+
+Under this φ, k₁ and φ(k₁) = k₂ are of one kind? Wait no — the repaired claim says "k and φ(k) are of one kind on C for every k." So k₁ and k₂ should be of one kind on C. But we just established that they're NOT of one kind on a contract containing "displace thing 1."
+
+Hmm, this is a problem. Let me re-read the repaired claim more carefully.
+
+"(ii) If a bijection φ of their active components satisfies λ'(φ(k))=λ(k) for every k, up to port translation, then k and φ(k) are of one kind on C for every k, and the two are one account on C."
+
+But here, E and E' are two candidates. The first is (S₁, t₁) and the second is (S₁, t₁') where t₁' has exchanged anchors. Both have the SAME organization S₁ but different transports.
+
+Wait, but the claim is about two candidates ℰ = (E, p, t, Γ) and ℰ' = (E', p, t', Γ'). If E = E' = S₁ (same organization) but t ≠ t' (different transports), then the components are the same! The bijection φ would be the identity, and λ'(φ(k)) = λ'(k) ≠ λ(k) (anchors are exchanged). So the condition λ'(φ(k)) = λ(k) is NOT satisfied with φ = identity.
+
+But with φ = exchange: φ(k₁) = k₂, and λ'(k₂) = λ(k₁) (since anchors are exchanged). So λ'(φ(k₁)) = λ(k₁). ✓
+
+Then "k and φ(k) are of one kind on C" means k₁ and k₂ are of one kind on C. But we said they're NOT of one kind on a contract with "displace thing 1."
+
+So the repaired Derivation 2 doesn't actually support the claim in the repaired Derivation 10! There's a problem.
+
+Wait, let me reconsider. When we say "k and φ(k) are of one kind," we're comparing components of E with components of E'. But here E = E' = S₁, so k₁ and k₂ are both components of S₁. And we compare their signatures using (K), which is defined for components of the same organization.
+
+But in the cross-organization reading (the supporting edit), "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection." Here τ and τ' are the edit translations of the two transports t and t'.
+
+For t₁: τ₁("displace thing 1") translates to some edit on S₁. For t₁': τ₁'("displace thing 1") translates to some (possibly different) edit on S₁.
+
+If t₁ anchors k₁ to thing 1's continuity and k₂ to thing 2's, then τ₁("displace thing 1") affects k₁'s relation.
+
+If t₁' anchors k₁ to thing 2's continuity and k₂ to thing 1's (exchanged), then τ₁'("displace thing 1") affects k₂'s relation (since k₂ is now anchored to thing 1).
+
+So when we compare k₁'s signature read through τ₁ with k₂'s signature read through τ₁':
+- At "displace thing 1": L_{k₁}(τ₁("displace thing 1"), ...) reflects thing 1's displacement. L_{k₂}(τ₁'("displace thing 1"), ...) also reflects thing 1's displacement (because k₂ is anchored to thing 1 in t₁'). So these are the same!
+
+Wait, that's interesting. Let me think more carefully.
+
+sig of k₁ through τ₁ at "displace thing 1": L_{k₁}(τ₁(a₁), σ₁(b)) where a₁ = "displace thing 1." This is the relation of persistence component 1 under the translated edit. Since k₁ tracks thing 1, and thing 1 is displaced, the relation reflects the new position.
+
+sig of k₂ through τ₁' at "displace thing 1": L_{k₂}(τ₁'(a₁), σ₁'(b)) where a₁ = "displace thing 1." Since k₂ is anchored to thing 1 in t₁', the translated edit τ₁'(a₁) affects k₂, and the relation reflects thing 1's new position.
+
+So the signatures match! Both reflect thing 1's displacement.
+
+At "displace thing 2": 
+- k₁ through τ₁: k₁ tracks thing 1, so thing 2's displacement doesn't affect it. L_{k₁} is unchanged.
+- k₂ through τ₁': k₂ tracks thing 1 (in t₁'), so thing 2's displacement doesn't affect it either. L_{k₂} is unchanged.
+
+Signatures match again!
+
+At "swap the two identities":
+- k₁ through τ₁: The swap exchanges thing 1 and thing 2's identities. k₁ (tracking thing 1) now... hmm, what does the swap do to the persistence components?Actually, the swap edit in P swaps the identities of the two things. In the sensory field (occupancy), the swap is invisible. Through the transport, what happens to the persistence components?
+
+In t₁: k₁ is anchored to thing 1's continuity subnetwork. The swap edit changes thing 1's continuity (it now has thing 2's trajectory and vice versa). So k₁'s relation changes.
+
+In t₁': k₂ is anchored to thing 1's continuity subnetwork (exchanged). The swap edit changes thing 1's continuity. So k₂'s relation changes.
+
+Do they change in the same way? Both are tracking "thing 1's continuity subnetwork" (one through t₁, the other through t₁'), and the swap affects thing 1's continuity. So yes, the changes match.
+
+OK so actually, the cross-organization signature comparison through different transports DOES make k₁ (via τ₁) and k₂ (via τ₁') have the same signature. The key is that we're reading signatures through different edit translations.
+
+This means the repaired Derivation 2 does support the claim in the repaired Derivation 10 — when we use the cross-organization reading of "of one kind" with signatures read through τ and τ'.
+
+But the original Derivation 10 says "the two persistence components are of one kind (Derivation 2)" without mentioning two transports. This is misleading at best.
+
+The repair changes this to "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)." This is more precise and correct.
+
+So the repair for Derivation 10 works. Good.
+
+But wait — there's still a subtlety. The repaired Derivation 2 says "k and φ(k) are of one kind on C for every k." In the Derivation 10 case, k₁ and φ(k₁) = k₂ are compared cross-organization (through τ₁ and τ₁'). The supporting edit after (K) says this comparison is valid. So the chain works.
+
+But I realize the repaired Derivation 2 says "the two are one account on C." In the Derivation 10 case, the two candidates are (S₁, t₁) and (S₁, t₁'). They have the same organization but different transports. Are they "one account"? They have the same components, same answer profiles, and their components match under the anchor-exchange bijection. So yes, under the repaired definition.
+
+This is exactly the point Derivation 10 wants to make: the two anchor assignments (persistence component 1 ↔ thing 1 vs. persistence component 1 ↔ thing 2) give the same account — identity at this grain is exhausted by trajectory.
+
+OK so the repair works for Derivation 10.
+
+Let me now systematically check the other items.
+
+**Part VI (Work, support, and interference):**
+
+Part VI defines S_{E,p}, CriticalBlock, Boundary, the finite monotone theorem, and examples. Does the repair affect any of this?
+
+The repair only changes Derivation 2 and adds a sentence after (K). Part VI doesn't reference Derivation 2. The finite monotone theorem is independent. ✓
+
+The "Redundant routes" example (line 324): Γ = {a,b}, S = {{a},{b},{a,b}}. This is about support sets within one candidate, not about comparing candidates. The repair's note about "redundant routes" is just referencing this as an example of different internal structures mattering. ✓
+
+**Worked cases of Part VII:**
+
+1. "Production and direction" (lines 334-340): The forward and reversed calculations. Does the repair affect this? The repair doesn't change (F1), (F2), (A), or the definition of Account. The production/direction analysis is about whether a transport is faithful, not about Derivation 2. ✓
+
+2. "Identification" (lines 342-348): About (I1), (I2), (I4). Not affected. ✓
+
+3. "Obstruction" (lines 350-352): About (O1). Not affected. ✓
+
+4. "Explanations that remove structure" (lines 354-358): About eliminative explanation. Not affected by the repair. ✓
+
+5. "Odd-order skew-symmetric matrices" (lines 360-366): Uses (F1), (F2), (A), non-circular dependence, non-vacuity. Not affected by the repair to Derivation 2. ✓
+
+6. "Constitutive rules" (lines 368-370): Uses (K) for signatures. The repair adds a sentence after (K) about cross-organization comparison, which doesn't affect the single-organization use here. ✓
+
+**"What (E) excludes" (lines 266-273):**
+
+"A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one."
+
+"A reversed calculation — identification presented as production — fails (F2) under the production contract."
+
+"'p because p' fails non-circular dependence."
+
+"An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity."
+
+None of these reference Derivation 2. Not affected. ✓
+
+**"What (E) does not exclude" (lines 275-279):**
+
+"A true mechanism guessed for bad reasons satisfies (E)."
+
+"A less elegant account satisfies (E) as fully as a more elegant one with the same fidelity."
+
+"A proof answering 'why does this follow under these rules?' satisfies (E)."
+
+Not affected. ✓
+
+**Derivation 1:**
+
+The repair adds a sentence after (K) that extends the notion of "of one kind" to cross-organization comparison. Does this affect Derivation 1?
+
+Derivation 1 (lines 551-555) is about one transport from D to E: "If a transport satisfies (F1) on C, then every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C."
+
+The proof compares sig_C(λ(k)) (a subnetwork of D) with sig_{τ[C]}(k) (a component of E). This is already a cross-object comparison (subnetwork vs. component). The added sentence is about cross-organization comparison of components. These are different.
+
+Does the added sentence change the meaning of "of one kind" in a way that affects Derivation 1? Derivation 1 doesn't use the phrase "of one kind" explicitly — it says "has the same signature." The Corollary says "A condition 'each component must anchor to a component of the same kind' adds nothing to (F1)." This uses "kind" in the original (K) sense (within one organization).
+
+But wait — the Corollary talks about anchoring "to a component of the same kind." The anchor is a subnetwork of D, and the comparison is between the component of E and the component of D (or subnetwork). The "same kind" here is between objects in different organizations (E and D), read through the transport. So this is already using a cross-organization notion of "same kind"!
+
+Hmm, but actually, (K) defines kinds for components of one organization. The comparison in the Corollary is between a component of E and a subnetwork of D — not two components of the same organization. So (K) doesn't directly apply. The notion of "same kind" here is informal, relying on the signature comparison established in Derivation 1.
+
+The added sentence formalizes cross-organization comparison. This would make the Corollary's use of "same kind" more precise. Does it break anything? No — it formalizes an already-suggested comparison. ✓
+
+Actually, wait. The supporting edit says "Derivations 1 and 2 use kinds in this sense." But Derivation 1 compares a component of E with a subnetwork of D. The added sentence compares a component of E with a component of E'. These are different comparisons. The sentence is slightly imprecise about which derivations use which extension.
+
+But this is a minor point. The substance is fine.
+
+**Now let me think about potential problems with the repair.**
+
+1. The repair narrows the Consequence significantly. The original Consequence says: "Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction." This is a strong philosophical claim — it says that if two candidates can't be distinguished by the contract, they're the same.
+
+The repair's Consequence says: "Where two faithful candidates differ only in which component carries which anchor, the contract does not contain the distinction." This is much narrower — it only covers anchor assignment differences.
+
+But the original Consequence also says: "A claim that two such candidates 'really' differ is a claim that some admitted change separates them, and must supply it." The repair keeps this but restricts it to anchor assignment differences.
+
+Is anything lost? The finding's "stated costs" say: "the slogan 'indistinguishable is identical' goes; the Consequence's reach narrows to anchor assignments; identity of differently decomposed candidates is left undefined."
+
+This is a real cost. The original Derivation 2 was trying to make a strong point about underdetermination: the semantics doesn't fail to decide between two candidates; it reports that they're the same. The repair weakens this to only cover anchor assignment swaps.
+
+But the strong claim is false (as the counter-instances show), so the cost is necessary.
+
+2. The repair introduces the notion of "one account on C" based on shared anchors. But what does "one account" mean? The original claim said candidates "are one account at grain C." The repair says "the two are one account on C" (under the shared-anchor condition). But "one account" is not formally defined in the theory. Account(ℰ) is a predicate (doesℰ satisfy the conditions?), not an equivalence relation on candidates.
+
+So "are one account" is informal. The repair doesn't formalize it further. Is this a problem? It was already informal in the original. The repair at least gives a sufficient condition for it (shared anchors). But it leaves the general case undefined.
+
+The finding acknowledges this cost: "identity of differently decomposed candidates is left undefined." This seems acceptable — it's better to leave something undefined than to define it incorrectly.
+
+3. The supporting edit after (K) extends "of one kind" to cross-organization comparison. But this extension is stated without formal definition. It says "when their signatures, read on C through τ and τ', coincide under a footprint bijection." This is clear enough, but it's an extension of (K) that changes the meaning of a defined term. Could this cause confusion?
+
+In (K), "of one kind on C" is defined for two components of one organization. The extension is for two components of different organizations. The sentence says "Derivations 1 and 2 use kinds in this sense" — but Derivation 1 uses a comparison between a component and a subnetwork, not between two components of different organizations. This is a minor imprecision.
+
+However, I don't think this causes any actual breakage. The term "of one kind" is used in:
+- (K) definition
+- Part II discussion of cause, measurement, rule
+- Part V "Why there is no anchoring condition"
+- Derivations 1, 2, 10
+
+In all uses except Derivation 2 (and 10's use of 2), the comparison is within one organization or between a component and its anchor. The extension is only needed for Derivation 2's repaired claim (and Derivation 10's repaired claim).
+
+4. One more thing to check: does the repair interact with Part VI's "Redundant routes" or "Interference" examples?
+
+The repair's note says: "Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes)."
+
+Part VI's "Redundant routes": Γ = {a,b}, S = {{a},{b},{a,b}}. Here a and b are commitments in one candidate, and the support sets show that both are contributory but neither is indispensable. Two systems with the same output table may differ in which routes are active.
+
+This is about support within one candidate, not about comparing two candidates. The reference to "redundant routes" is to illustrate that different internal structures matter — which is consistent with the repair's message that different decompositions are different candidates. ✓
+
+OK, I think I've done a thorough analysis. Let me also think about whether there are any issues I've missed.
+
+**The "typing point" in the finding:**
+
+The finding notes that (K) is defined for components of one organization under one contract. The cross-candidate comparison needs an extension. The finding proposes the reading: "k and k' are of one kind on C when, for some footprint bijection β, β[L_k(τ(a),σ(b))] = L_{k'}(τ'(a),σ'(b)) for every (a,b) ∈ C."
+
+This is a reasonable extension. The repair's supporting edit proposes a similar one. ✓
+
+**The finding's classification:**
+
+The finding describes the defect as a false claim (half (a) of Derivation 2's claim is false). It calls for "a recorded change of claim, not an erratum." This seems right — the claim is too broad and needs to be narrowed.
+
+**Summary of my analysis:**
+
+1. The counter-instance is valid. E₁ and E₂ both satisfy (F1), (F2), (A) but their components don't pair up as "of one kind."
+
+2. The theory's defence arguments don't save the claim:
+   - (i) Merged anchors are allowed (explicitly supported by the text)
+   - (ii) The "shared anchors only" reading is not stated and doesn't support the Consequence
+   - (iii) The "subnetworks" reading partially works but doesn't save the symmetric claim
+   - (iv) "At grain C" doesn't help
+
+3. The repair is correct and fixes the defect.
+
+4. The repair doesn't break any of the checked items (Derivations 1, 8, 9, 10; Part VI; Part VII; "What (E) excludes/does not exclude").
+
+5. Minor imprecision in the supporting edit about which derivations use the extended notion of "of one kind."
+
+6. The repair has stated costs (loss of slogan, narrowed Consequence, undefined identity for different decompositions) but these are necessary.
+
+Now let me think about whether I should uphold or partly uphold.
+
+The finding's main claims:
+- Half (a) of Derivation 2 is false: YES, this holds.
+- Half (b) is true: YES.
+- The counter-instances work: YES.
+- The defence arguments are refutable: YES.
+- The repair fixes the defect: YES.
+
+One thing I want to consider: is the finding's classification correct? It seems to present this as "false as stated" (the claim is false, not just imprecise). And it calls for a "recorded change of claim." This seems right.
+
+Actually, wait. Let me re-read the task: "UPHELD: the defect exists under the theory's stated assumptions, as the finding describes it, including the finding's classification of it (for example 'a drafting omission' or 'false as stated')."
+
+The finding doesn't explicitly classify it as "drafting omission" or "false as stated" — it just presents the defect and the repair. But the repair is described as "a recorded change of claim, not an erratum," suggesting the finding views this as requiring a change of claim (i.e., the claim is too broad / false as stated, not just a typo).
+
+Actually, looking more carefully at the finding, it says the proof's word "Immediate" "passes over exactly the step that fails" — suggesting the proof is wrong. And the claim "is false under the claim's stated assumptions." So the classification is "false as stated."
+
+I think I should UPHELD this. The defect exists, the counter-instances work, and the repair is sound.
+
+But wait — let me think harder about whether there are any problems.
+
+**Potential issue with counter-instance 1:** The finding says "Only the input components k_x and m_x pair." Let me verify this is true and relevant.
+
+k_x: footprint {x}, relation x=u. m_x: footprint {x}, relation x=u. Same signature on C (both set x to the boundary value at baseline, and both are replaced under do(x=c)). So k_x and m_x are of one kind. ✓
+
+k_y: footprint {x,y}, relation y=2x. No component of E₂ has footprint of size 2 except m_z (footprint {x,z}). m_z: relation z=2x+1. Under footprint bijection x→x, y→z: k_y's relation becomes {(s,2s)} on {x,z}, and m_z's is {(s,2s+1)}. These differ. Under x→z, y→x: k_y's becomes {(2s,s)} on {z,x} = {(t, t/2)} on {x,z} (reordered), and m_z's is {(s, 2s+1)}. Different. So k_y is not of one kind with m_z.
+
+k_z: footprint {y,z}, relation z=y+1. m_z: footprint {x,z}, relation z=2x+1. Under y→x, z→z: k_z's becomes {(s, s+1)} on {x,z}, and m_z's is {(s, 2s+1)}. Different. Under y→z, z→x: k_z's becomes {(s+1, s)} on {z,x} = {(t, t-1)} on {x,z}, and m_z's is {(s, 2s+1)}. Different. So k_z is not of one kind with m_z.
+
+Also, k_y (2 ports) can't match m_x (1 port). k_z (2 ports) can't match m_x (1 port).
+
+So indeed, only k_x and m_x pair. The other components of E₁ have no partner in E₂. ✓
+
+**Potential issue: does the transport from D to E₂ need τ and σ to be bijections?**
+
+The theory says (line 204): "π: X_D → X_E on the stated scope, τ translates edits, σ translates boundaries." There's no requirement that τ is a bijection. It just needs to satisfy τ(1)=1 and τ(a₂a₁)=τ(a₂)τ(a₁) (from (F2)).
+
+In counter-instance 1, τ is the identity on edits (mapping do(x=c) in D to do(x=c) in E₂). This is a valid edit translation. ✓
+
+**One more thought: is the phrase "at grain C" doing work?**
+
+The claim says "are one account at grain C." Could "grain C" mean something like "when you only look at what C can distinguish"? In that case, different decompositions that C can't distinguish would be "one account at grain C."
+
+But the theory distinguishes grain ℓ from contract C (line 523: "Grain ℓ, boundary β, continuity Ω, and the contract C are declared indices"). They're separate indices. And no definition equates "grain C" with a quotient of organizations by contract-indistinguishability.
+
+Even if we interpret "at grain C" charitably, the claim says "their components are pairwise of one kind on C." This is a claim about components, not just about the overall account. Even if we grant that the accounts are "the same at grain C," the component-level claim is false.
+
+But the finding already addresses this in defence reply (iv).
+
+**Could "one account at grain C" mean "equivalent as accounts"?** As in, they satisfy the same Account predicate and give the same answers? If so, both E₁ and E₂ satisfy Account (assuming non-circular dependence and non-vacuity hold) and give the same answers. So they'd be "equivalent as accounts" in this weak sense.
+
+But the claim goes further: "their components are pairwise of one kind on C." This is an additional structural claim, and it's this structural claim that's false.
+
+Hmm, actually, let me reconsider. What if "are one account at grain C" is meant to be defined as "their components are pairwise of one kind on C and their answer profiles coincide"? In other words, the two halves of the claim jointly define what "one account" means. In that case, the claim would be: "Two candidates that both satisfy (F1), (F2), (A) on C satisfy [definition of 'one account']."
+
+But this is just asserting that the definition is satisfied, which requires proving both halves. And half (a) is false. So the claim is still false.
+
+Unless "one account at grain C" is defined elsewhere... Let me search. I don't see a definition of "one account" anywhere in the theory. Account(ℰ) is defined in Part V as a predicate. "Are one account" seems to be an informal phrase meaning "are the same account" or "are indistinguishable as accounts."
+
+In any case, the structural claim about components is false, and the claim as a whole is at best misleading.
+
+**My conclusion:** F1 should be UPHELD.
+
+Wait, actually, let me reconsider one more time. The finding says:
+
+"Half (a) is false under the claim's stated assumptions."
+
+But what if "pairwise of one kind" is not making a claim about a bijection, but rather about an equivalence? Let me think about this differently.
+
+"Two candidates E, E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide."
+
+What if the colon means "in the sense that" or "meaning that"? As in: "are one account at grain C, meaning that their components are pairwise of one kind on C and their answer profiles coincide." This would make "one account" defined by these two conditions. And the claim would be that these two conditions follow from (F1), (F2), (A).
+
+In this reading, the claim is: "(F1) ∧ (F2) ∧ (A) → [components pairwise of one kind ∧ answer profiles coincide]." And the proof is "Immediate from Derivation 1 and (A)."
+
+But this is still asserting the same thing — that the components are pairwise of one kind — which is false. So the reading doesn't help.
+
+Or what if the colon is giving the consequence: "are one account at grain C. Consequently, their components are pairwise of one kind..." But "pairwise of one kind" is not a consequence of "one account" unless "one account" is defined to include it.
+
+No matter how I read it, the claim that "their components are pairwise of one kind on C" is doing work, and it's false.
+
+OK, I'm confident: F1: UPHELD.
+
+Now, for the repair assessment, let me also think about whether the repair is too weak or too strong.
+
+The repair's claim (ii): "If a bijection φ of their active components satisfies λ'(φ(k))=λ(k) for every k, up to port translation, then k and φ(k) are of one kind on C for every k, and the two are one account on C."
+
+Is the premise too strong? It requires exact anchor equality (λ'(φ(k)) = λ(k)). The finding notes: "The premise is 'the same subnetworks' rather than 'anchors of one kind' because the weaker premise would identify two redundant routes (Part VI, line 324) whenever C does not separate them."
+
+This is a good point. If we only required that λ(k) and λ'(φ(k)) are of one kind (have the same signature), then two candidates with redundant routes (different subnetworks with the same signature) would be identified as "one account," which the theory explicitly wants to avoid (line 23: "Two systems with identical outputs and different internal routes are different organizations here").
+
+But wait — the claim is about candidates (which include transports), not just organizations. Two candidates with the same organization but different anchor assignments would be identified by the repair if the anchors match under φ. But two candidates with different organizations (like E₁ and E₂) would not be identified, even if their components have matching signatures.
+
+Is this the right level of identification? I think so. The repair identifies candidates that differ only in how components are labeled/ordered (via the bijection φ) but have the same anchors. It does NOT identify candidates with different decompositions, which is correct.
+
+But there's a question: what about two candidates with the same decomposition but different component names? Like E has components {k₁, k₂} and E' has components {k₁', k₂'} with the same anchors and relations but different names. The bijection φ: k₁ ↔ k₁', k₂ ↔ k₂' satisfiesλ'(φ(kᵢ)) = λ(kᵢ). So they're "one account." ✓ This is correct — renaming components doesn't change the account.
+
+What about two candidates with the same organization but the roles of components swapped? E has k₁ anchored to λ₁ and k₂ anchored to λ₂. E' has k₁ anchored to λ₂ and k₂ anchored to λ₁ (same organization, different transport). The bijection φ: k₁ ↔ k₂, k₂ ↔ k₁ satisfies λ'(φ(k₁)) = λ'(k₂) = λ₁ = λ(k₁). ✓ And λ'(φ(k₂)) = λ'(k₁) = λ₂ = λ(k₂). ✓
+
+Then "k and φ(k) are of one kind on C" means k₁ and k₂ are of one kind (read through their respective transports). This is the Derivation 10 case. As I analyzed above, this works when signatures are read through the appropriate transports. ✓
+
+Is the repair too weak? It only identifies candidates with exactly matching anchors. What about candidates with anchors that are "the same subnetwork" but expressed differently (e.g., {j₁, j₂} vs {j₂, j₁})? The repair says "up to port translation," and since a subnetwork is a set of components, {j₁, j₂} = {j₂, j₁}. So this is fine. ✓
+
+What about candidates with anchors that are extensionally equal but intensionally different (e.g., one is {j₁, j₂} and the other is {j₁} ∪ {j₂})? Since these are the same set, the repair handles them. ✓
+
+I think the repair is at the right level of strength.
+
+One thing I want to flag: the repair's proof of (ii) says "By Derivation 1, k has the signature of λ(k), and φ(k) the signature of λ'(φ(k)) = λ(k); composing the two port translations gives a footprint bijection under which the two signatures, read on C, coincide."
+
+This is correct but slightly imprecise. Derivation 1 says k has the signature of λ(k) on τ[C], and φ(k) has the signature of λ'(φ(k)) on τ'[C]. Since λ'(φ(k)) = λ(k), both have the signature of λ(k). But the signatures are read on different edit sets (τ[C] and τ'[C]). To compare them "on C," we need to pull back through τ and τ'. This is what "read on C through τ and τ'" means in the supporting edit.
+
+The composition of port translations gives the footprint bijection: if λ(k) has a port translation π₁ to k's ports, and λ'(φ(k)) = λ(k) has a port translation π₂ to φ(k)'s ports, then π₂ ∘ π₁⁻¹ is a bijection from k's ports to φ(k)'s ports. Under this bijection, the signatures coincide. ✓
+
+Actually, "up to port translation" in the premise λ'(φ(k)) = λ(k) might mean that the port translations can differ. So λ(k) and λ'(φ(k)) are the same subnetwork but with different port translations to their respective components. The composition of these port translations (one inverted) gives the footprint bijection. ✓
+
+I think the repair is correct and complete.
+
+Let me now draft my report.
+
+Actually, one more consideration. Let me re-read the task requirements:
+
+"Try to refute it under the theory's stated assumptions, quoting the theory with line numbers for every assumption you use."
+
+I should quote the theory with line numbers. Let me collect the relevant line numbers.
+
+From the theory text (counting from line 1 as the title line):
+
+Line 1: "# Claude Fable Semantics"
+...
+
+Let me count more carefully. The theory text starts at the BEGIN THEORY TEXT marker. Let me count the lines.
+
+Line 1: # Claude Fable Semantics
+Line 2: (blank)
+Line 3: ## A structural class of explanatory creativity, with selected and constructed correspondence
+Line 4: (blank)
+Line 5: ---
+Line 6: (blank)
+Line 7: # Part 0 — Read this first
+...
+
+This is going to be tedious. Let me try to identify the key line numbers by counting.
+
+Actually, the finding references specific line numbers (e.g., "lines 559–565" for Derivation 2, "line 120" for the edit rule, etc.). I should use these as a guide and verify.
+
+Let me try to count to some key landmarks:
+
+Line 1: # Claude Fable Semantics
+Line 2: blank
+Line 3: ## A structural class...
+Line 4: blank
+Line 5: ---
+Line 6: blank
+Line 7: # Part 0 — Read this first
+Line 8: blank
+Line 9: ## What this document claims
+Line 10: blank
+Line 11: An explanation is a **question-relevant organization of dependencies**, held to a target by a **transport**...
+
+Hmm, actually each paragraph is one line in the markdown? No, in the raw text, each visual line is a line. Let me reconsider.
+
+Actually, in markdown, a paragraph is typically one line (no hard wraps). But in the source text provided, the lines might be wrapped. Let me look at the text more carefully.
+
+Looking at the text: "An explanation is a **question-relevant organization of dependencies**, held to a target by a **transport** that is checked only by **what changes when things are changed**." This is one continuous line in the source. Each paragraph appears to be one line.
+
+But display equations like:
+\[
+D=(V,(X_v)_{v\in V},J,B,A,L).
+\]
+are on separate lines.
+
+Let me try to count more carefully by looking at the structure.
+
+Actually, I think the key thing is to use the line numbers that the finding provides and verify them. The finding says:
+- Lines 559-565: Derivation 2
+- Line 561: the claim
+- Line 563: the proof
+- Line 565: the consequence
+- Lines 551-555: Derivation 1
+- Line 555: the proof of Derivation 1
+- Line 120: the edit rule
+- Lines 130-136: (K)
+- Lines 166-168: production question
+- Line 204: transport definition
+- Line 246: Γ identified
+- Line 248: (F1)
+- Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition"
+- Line 324: redundant routes
+- Line 356: skew-symmetric case
+- Line 523: declared indices
+- Line 543: Part XV defeat list
+- Line 609: Derivation 8
+- Line 617: "displace a thing"
+- Line 627: Derivation 10's use of Derivation 2
+
+Let me verify a few of these by counting.
+
+Actually, I think for the purposes of this report, I should use the line numbers as given (both by the finding and by my own counting where I can verify them). The instructions say "Line numbers count the lines of the theory text, with its title line as line 1."
+
+Let me try to count to some key points.
+
+Lines 1-6: Title and subtitle
+```
+1: # Claude Fable Semantics
+2: 
+3: ## A structural class of explanatory creativity, with selected and constructed correspondence
+4: 
+5: ---
+6: 
+```
+
+Lines 7-...: Part 0
+```
+7: # Part 0 — Read this first
+8: 
+9: ## What this document claims
+10: 
+11: An explanation is a **question-relevant organization of dependencies**...
+```
+
+Each paragraph is one line, each blank line is one line, each heading is one line, each display equation block takes3 lines (open \[, equation, close \]).
+
+Let me count through Part 0 more carefully.
+
+```
+7: # Part 0 — Read this first
+8: (blank)
+9: ## What this document claims
+10: (blank)
+11: An explanation is a **question-relevant organization of dependencies**, held to a target by a **transport** that is checked only by **what changes when things are changed**. ...
+12: (blank)
+13: Correspondence between a representation and what it represents is not a primitive of this semantics. ...
+14: (blank)
+15: Questions have provenance too. ...
+16: (blank)
+17: The **constitutive conjecture** is this: ...
+18: (blank)
+19: ## What this document does not claim
+20: (blank)
+21: It does not derive reference from uninterpreted matter. ...
+22: (blank)
+23: It does not say prediction is explanation. ...
+24: (blank)
+25: It does not supply an objective aesthetics...
+26: (blank)
+27: It does not prove that any human, machine...
+28: (blank)
+29: ## Grievances, anticipated
+30: (blank)
+31: **1. "Without declared kinds you cannot tell a cause from a correlation."**
+32: You can, and only this way. ...
+33: (blank)
+34: **2. "So this is operationalism..."
+35: A *kind* is what a level's admitted changes can distinguish. ...
+36: (blank)
+37: **3. "If correspondences are selected..."
+38: No. Selection produces a transport. ...
+39: (blank)
+40: **4. "Then everything is relative..."
+41: The physical theory fixes which changes are possible at all. ...
+42: (blank)
+43: **5. "This is teleosemantics..."
+44: It shares commitments with each...
+45: (blank)
+46: **6. "You have replaced explanation with evolution..."
+47: Selection appears once, at the bottom...
+48: (blank)
+49: **7. "Mathematics has no interventions..."
+50: An admitted change need not be a physical intervention. ...
+51: (blank)
+52: **8. "Where is aesthetics?"**
+53: In Part XI, as a declared normative relation. ...
+54: (blank)
+55: **9. "'Selected' is just as much a stipulation..."
+56: Selection is a physical history...
+57: (blank)
+58: **10. "Freezing the question for assessment..."
+59: It is having it both ways deliberately...
+60: (blank)
+61: **11. "Kinds obviously exist..."
+62: A rule and a cause differ in how they respond to changes...
+63: (blank)
+64: ## Where to attack this
+65: (blank)
+66: The load-bearing claims, in order of how much falls if they fail:
+67: (blank)
+68: **(A) Sufficiency.** ...
+69: (blank)
+70: **(B) Necessity.** ...
+71: (blank)
+72: **(C) Reinstatement of kinds.** ...
+73: (blank)
+74: **(D) Genesis.** ...
+75: (blank)
+76: **(E) Question-finding.** ...
+77: (blank)
+78: Anything else is a detail.
+79: (blank)
+80: ---
+81: (blank)
+82: # Part I — Commitments
+...
+```
+
+Hmm wait, but some of the paragraphs in the grievances have continuation lines. Let me look at the raw text again.
+
+For grievance 1:
+"**1. "Without declared kinds you cannot tell a cause from a correlation."**
+You can, and only this way. A correlation has no component that responds to an intervention on its supposed input; a cause does. The difference is a difference in edit-response, which is exactly what the semantics checks. Declared kind-labels added no discriminating power; where a separating change exists, edit-fidelity already finds it, and where none exists, the label was asserting a distinction the level does not contain."
+
+The first line is the bold heading, and the second is the text. So this takes 2 lines + blank = 3 lines.
+
+Let me reconsider: each grievance has the bold quote on one line and the response on the next line. So:
+
+```
+31: **1. "Without declared kinds..."**
+32: You can, and only this way. ...
+33: (blank)
+34: **2. "So this is operationalism..."**
+35: A *kind* is what a level's ...
+36: (blank)
+...
+```
+
+OK, my counting above seems right.
+
+But wait, I need to be more careful. Let me look at the actual text.
+
+Grievance 2:
+"**2. "So this is operationalism: a thing is what you can do to it."**
+A *kind* is what a level's admitted changes can distinguish. A *content* is a whole organization, which can contain components that no change at that level separates — and then they are one kind *at that level*, which is correct rather than a loss. At a finer level with more admitted changes they may separate. The semantics indexes every kind-claim to its level. That is scoping, not operationalism."
+
+This is 2 lines (heading + body). OK.
+
+But what about display math? Let me look at Part II.
+
+Part II starts with "## Organizations" and then has:
+"An organization is"
+\[
+D=(V,(X_v)_{v\in V},J,B,A,L).
+\]
+
+The display math is 3 lines (\[, equation, \]).
+
+Let me try to count to line 120 (the edit rule) to verify.
+
+Starting from Part I:
+
+```
+82: # Part I — Commitments
+83: (blank)
+84: **Explanatory realism.** Whether a transport...
+85: (blank)
+86: **Fallibility without falsehood-as-work.** ...
+87: (blank)
+88: **Conjecture, criticism, action.** ...
+89: (blank)
+90: **Recursive scrutiny with operative return.** ...
+91: (blank)
+92: **Substrate independence with physical obligations.** ...
+93: (blank)
+94: **Two provenances, not one.** ...
+95: (blank)
+96: ---
+97: (blank)
+98: # Part II — Organizations and their changes
+99: (blank)
+100: ## Organizations
+101: (blank)
+102: An organization is
+103: (blank)
+104: \[
+105: D=(V,(X_v)_{v\in V},J,B,A,L).
+106: \]
+107: (blank)
+108: \(V\) is a set of ports, each with a nonempty value domain \(X_v\). A valuation is an element of \(X_D=\prod_v X_v\). \(J\) indexes components; each component \(j\) has a footprint \(V_j\subseteq V\). \(B\) is a set of boundary conditions. \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\). For each \(j\), edit \(a\), and boundary \(b\), the interpretation supplies
+109: (blank)
+110: \[
+111: L_j(a,b)\subseteq\prod_{v\in V_j}X_v .
+112: \]
+113: (blank)
+114: The compatible valuations are
+115: (blank)
+116: \[
+117: \operatorname{Sol}_D(a,b)=\{z\in X_D:\forall j\in J,\ z|_{V_j}\in L_j(a,b)\}. \tag{O}
+118: \]
+119: (blank)
+120: A deleted component imposes the full relation on its ports. An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component.
+121: (blank)
+122: Values of ports may be paths, functions, fields, proofs, or histories. Cyclic constraints are admitted. Several solutions remain several.
+```
+
+So line 120 is indeed "A deleted component imposes the full relation on its ports. An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component."
+
+This matches the finding's reference to "line 120." ✓
+
+Now let me count to (K):
+
+```
+123: (blank)
+124: ## Roles are derived
+125: (blank)
+126: No role assignment is supplied. A port \(v\) is an **input** under \(A\) when \(A\) contains an edit that sets \(v\) directly. A port is an **output** of component \(j\) when its value is determined by \(L_j\) given the other ports of \(V_j\) across \(B\). A port is an **observation** when \(A\) contains an edit that alters the relation reporting it without altering what it reports. The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read.
+127: (blank)
+128: ## Kinds are edit-signatures
+129: (blank)
+130: Fix an organization \(D\) and a contract \(C\subseteq A\times B\) (Part III). The **signature** of component \(j\) on \(C\) is
+131: (blank)
+132: \[
+133: \operatorname{sig}_C(j)=\{(a,b,L_j(a,b)):(a,b)\in C\}. \tag{K}
+134: \]
+135: (blank)
+136: Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide. A kind is an equivalence class of components under this relation. Kinds are therefore relative to the contract; a coarser contract identifies more components.
+```
+
+So lines 130-136 cover the signature definition and the "of one kind" definition. The finding references "lines 130–136" for (K). ✓
+
+And line 136 is: "Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide. A kind is an equivalence class of components under this relation. Kinds are therefore relative to the contract; a coarser contract identifies more components."
+
+The supporting edit says to add a sentence "after (K) (line 136)." So after line 136. ✓
+
+Now let me count to line 204 (transport definition):
+
+```
+137: (blank)
+138: What ordinary language calls a cause, a measurement, a rule, or a constitutive status are families of signatures:
+139: (blank)
+140: - a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;
+141: - a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;
+142: - a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule.
+143: (blank)
+144: These are descriptions of patterns in (K), not additional data. The semantics never asks whether a component "is" a cause. It asks what its signature is.
+145: (blank)
+146: ---
+147: (blank)
+148: # Part III — Questions
+149: (blank)
+150: ## Contracts
+151: (blank)
+152: A question is
+153: (blank)
+154: \[
+155: p=(D,\ C,\ b_0,\ \mathcal Q,\ O_p,\ \rho_p).
+156: \]
+157: (blank)
+158: \(D\) is the target. The **contract** \(C\subseteq A\times B\) is the set of admitted edit–boundary pairs the claim ranges over; it contains the baseline \((1,b_0)\). \(\mathcal Q\) is a specified set-theoretic operation on \(D\), its solutions, and its component structure, with codomain \(Y_p\). The answer profile is
+159: (blank)
+160: \[
+161: \operatorname{Ans}_p(a,b)=\mathcal Q(D,a,b). \tag{Q}
+162: \]
+163: (blank)
+164: \(O_p\) is the set of obligations being addressed or protected. \(\rho_p\) is the **provenance** of the contract (below).
+165: (blank)
+166: ## The respect is the query
+167: (blank)
+168: What a question asks — production, identification, obstruction, rule-status, purpose-achievement — is fixed by the type of \(\mathcal Q\) and the shape of \(C\), not by a label. A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports. An identification question has a \(\mathcal Q\) that computes a fibre and a \(C\) containing edits to the observed value. An obstruction question has a \(\mathcal Q\) that returns a reachability truth value. Two questions with the same \(D\) and different \((C,\mathcal Q)\) are different questions, and an answer to one is not an answer to the other.
+```
+
+Hmm wait, the finding references "lines 166-168" for the production question. Let me check:
+
+Line 166: "## The respect is the query"
+Line 167: (blank)
+Line 168: "What a question asks — production, identification, obstruction..."
+
+The production question description is in line 168. The finding says "lines 166-168" which covers the heading and the paragraph. Close enough. ✓
+
+Let me continue counting to Part IV and line 204:
+
+```
+169: (blank)
+170: ## Contracts have provenance
+171: (blank)
+172: \(\rho_p\in\{\text{declared},\ \text{selected},\ \text{constructed}\}\), with the witness required by Part IV. ...
+173: (blank)
+174: ## A question can be wrong
+175: (blank)
+176: A question may fail to pick out its alleged target, ...
+177: (blank)
+178: ---
+179: (blank)
+180: # Part IV — Layers, transports, and provenance
+181: (blank)
+182: ## Occurrences and contents
+183: (blank)
+184: An **occurrence** is a physically located carrier. A **content** is an organization together with its contract-relative commitments. Occurrences are not identified by carrying the same words; contents are not identified by having the same outputs.
+185: (blank)
+186: ## The primitive layer and the simulation layer
+187: (blank)
+188: A modelled thinker has at least two organizations in play.
+189: (blank)
+190: The **primitive layer** \(P\) is an organization whose ports are persistent things with boundaries and identity, ...
+191: (blank)
+192: The **simulation layer** \(S\) is an organization over \(P\) ...
+193: (blank)
+194: Neither layer is presupposed to exist in any particular physical system. ...
+195: (blank)
+196: ## Transports
+197: (blank)
+198: A transport from an organization \(D\) to an organization \(E\) is
+199: (blank)
+200: \[
+201: t=(\pi,\tau,\sigma,\lambda)
+202: \]
+203: (blank)
+204: where \(\pi:X_D\to X_E\) on the stated scope, \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation. A transport is **faithful on \(C\)** when it satisfies the component and global fidelity conditions of Part V.
+```
+
+Line 204: "where \(\pi:X_D\to X_E\) on the stated scope, \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation."
+
+This matches the finding's reference to "line 204." ✓
+
+Let me continue to Part V and line 248 (F1):
+
+```
+205: (blank)
+206: ## Three provenances
+...
+```
+
+This section is long. Let me skip ahead and try to reach Part V.
+
+Actually, this is getting quite tedious. Let me just use the line numbers as given by the finding and verify a couple of key ones. I've verified lines 120, 130-136, 166-168, and 204. Let me trust the finding's other line numbers.
+
+Actually, wait. Let me try to verify line 248 (the (F1) equation) and line 260.
+
+Let me continue counting from205:
+
+```
+205: (blank)
+206: ## Three provenances
+207: (blank)
+208: A transport \(t\) between organizations of a physical system has exactly one of three provenances, determined by its history in the physical module:
+209: (blank)
+210: **Selected.** There is a population \(\mathcal T\) of candidate transports, ...
+211: (blank)
+212: **Constructed.** There is an episode (Part X) whose construction witness prepares \(t\), ...
+213: (blank)
+214: **Declared.** Neither of the above. The transport is entered into the model by its author. Write \(\operatorname{Dec}(t)\).
+215: (blank)
+216: A physical system may hold selected transports at the primitive layer and constructed transports at the simulation layer; ...
+217: (blank)
+218: ## Representation is derived
+219: (blank)
+220: An occurrence \(o\) **represents** content \(c\) at grain \(\ell\) when the organization that \(o\) instantiates under the physical module, at grain \(\ell\), admits a transport to \(c\) that is faithful on \(c\)'s contract and whose provenance is selected or constructed:
+221: (blank)
+222: \[
+223: \operatorname{Rep}_\ell(o,c)\iff\exists t\,[\operatorname{Faithful}_C(t:\operatorname{Org}_\ell(o)\to c)\land(\operatorname{Sel}(t)\lor\operatorname{Con}(t))]. \tag{R}
+224: \]
+225: (blank)
+226: The carrier–content relation is thus a fidelity fact with a history. ...
+227: (blank)
+228: The one thing (R) takes from outside is \(\operatorname{Org}_\ell(o)\): ...
+229: (blank)
+230: ## Expectation, surprise, violation
+231: (blank)
+232: Let \(t\) be selected on history \(H\) with contract \(C\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
+233: (blank)
+234: - the **expectation** is \(\operatorname{Ans}_S(\tau(a),\sigma(b))\);
+235: - a **violation** occurs when fidelity fails at \((a,b)\);
+236: - **surprise** is a violation at \((a,b)\notin H\).
+237: (blank)
+238: A system with no transport cannot be surprised. ...
+239: (blank)
+240: Two responses to a violation are distinguished. ...
+241: (blank)
+242: ---
+243: (blank)
+244: # Part V — Account
+245: (blank)
+246: An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies \(\operatorname{Account}(\mathcal E)\) exactly when the following four conditions hold, each a condition on supplied relations under the changes in \(C\).
+247: (blank)
+248: **Component fidelity.** For every active component \(k\) of \(E\) with anchor subnetwork \(\lambda(k)\subseteq D\), and every \((a,b)\in C\), the relation obtained by imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports equals the component relation of \(k\) under the translated edit:
+249: (blank)
+250: \[
+251: \operatorname{proj}_{V_k}\!\big[\operatorname{Sol}_{\lambda(k)}(a,b)\big]=L_k(\tau(a),\sigma(b)). \tag{F1}
+252: \]
+```
+
+Hmm, line 248 seems to be the "Component fidelity" description, and line 251 is the (F1) equation. The finding references "line 248" for (F1). Close enough — (F1) is introduced starting at line 248. ✓
+
+Line 246 is the definition of explanatory candidate. The finding references "line 246" for "the candidate identifies Γ." ✓
+
+Let me continue to line 260:
+
+```
+253: (blank)
+254: And the assembled organization agrees:
+255: (blank)
+256: \[
+257: \pi[\operatorname{Sol}_D(a,b)]=\operatorname{Sol}_E(\tau(a),\sigma(b)),\qquad \tau(1)=1,\quad \tau(a_2a_1)=\tau(a_2)\tau(a_1). \tag{F2}
+258: \]
+259: (blank)
+260: (F1) prevents an assembled match from hiding a wrong decomposition. (F2) prevents a set of locally correct pieces from hiding a lost shared constraint. Together they are fidelity at every level the contract reaches. By (K), (F1) entails that every component of \(E\) has the signature of its anchor; there is no further condition about kinds to state.
+```
+
+Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition. (F2) prevents a set of locally correct pieces from hiding a lost shared constraint. Together they are fidelity at every level the contract reaches. By (K), (F1) entails that every component of \(E\) has the signature of its anchor; there is no further condition about kinds to state."
+
+This matches the finding's reference to "line 260." ✓
+
+Let me continue a bit more to verify line 324 (redundant routes):
+
+```
+261: (blank)
+262: **Question fidelity.** For every \((a,b)\in C\),
+263: (blank)
+264: \[
+265: \operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b). \tag{A}
+266: \]
+267: (blank)
+268: The query \(\mathcal Q\) is held fixed; an account of a different query is not an account of this one.
+269: (blank)
+270: **Non-circular dependence.** The answer follows by evaluating \(E\) under its independent boundary conditions. ...
+271: (blank)
+272: **Non-vacuity.** \(\operatorname{Sol}_D(1,b_0)\neq\varnothing\). ...
+273: (blank)
+274: Thus
+275: (blank)
+276: \[
+277: \operatorname{Account}(\mathcal E)\iff \text{(F1)}\land\text{(F2)}\land\text{(A)}\land\text{NonCircular}\land\text{NonVacuous}. \tag{E}
+278: \]
+279: (blank)
+280: Every conjunct is a condition on how supplied relations behave under the changes in \(C\). None inspects a label.
+281: (blank)
+282: ## What (E) excludes
+283: (blank)
+284: A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one. A table that genuinely encodes an organization's response to every admitted change is not a table in that sense and is not excluded.
+285: (blank)
+286: A reversed calculation — identification presented as production — fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's.
+287: (blank)
+288: "\(p\) because \(p\)" fails non-circular dependence.
+289: (blank)
+290: An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract.
+291: (blank)
+292: ## What (E) does not exclude
+293: (blank)
+294: A true mechanism guessed for bad reasons satisfies (E); the reasons for adopting it are assessed elsewhere (Part IX). A less elegant account satisfies (E) as fully as a more elegant one with the same fidelity. A proof answering "why does this follow under these rules?" satisfies (E) for that question without answering "what caused this?"; depth is question-relative and (E) measures none of it.
+295: (blank)
+296: ## Why there is no anchoring condition
+297: (blank)
+298: A separate condition — "each component of \(E\) must be tied to a component of \(D\) *of the same kind*" — would be either redundant or unevaluable. ...
+299: (blank)
+300: ---
+301: (blank)
+302: # Part VI — Work, support, and interference
+303: (blank)
+304: Fix \(\mathcal E\) and a declared restriction operation. ...
+```
+
+OK, I'm seeing that Part VI starts around line 302. Let me continue to find line 324.
+
+```
+305: (blank)
+306: \[
+307: \mathsf S_{E,p}=\{W\subseteq\Gamma:\operatorname{Account}(E|W,p)\}. \tag{S}
+308: \]
+309: (blank)
+310: No upward closure and no minimal member are assumed. ...
+311: (blank)
+312: \[
+313: \operatorname{CriticalBlock}(B;W,p)\iff W\in\mathsf S_{E,p}\land W\setminus B\notin\mathsf S_{E,p}. \tag{B}
+314: \]
+315: (blank)
+316: A block may be critical while no singleton in it is. For a declared family \(\mathcal V\) of organization edits,
+317: (blank)
+318: \[
+319: \operatorname{Boundary}_{E,p}=\{(v,w)\in\mathcal V^2:\operatorname{Account}(E_v,p)\neq\operatorname{Account}(E_w,p)\}. \tag{D}
+320: \]
+321: (blank)
+322: **Finite monotone theorem.** If \(\Gamma\) is finite, ...
+323: (blank)
+324: **Redundant routes.** \(\Gamma=\{a,b\}\), ...
+```
+
+Line 324: "**Redundant routes.** \(\Gamma=\{a,b\}\), \(\mathsf S=\{\{a\},\{b\},\{a,b\}\}\): each is contributory, neither indispensable. Two systems with the same output table may differ in which routes are active; the semantics represents the difference."
+
+This matches the finding's reference to "line 324." ✓
+
+Now let me try to verify line 523 (declared indices) and line 543 (defeat list):
+
+Part VII starts around line 330-something. Part VIII around375-something. Part IX around 395-something. Part X around 435-something. Part XI around 465-something. Part XII around 495-something. Part XIII around 525-something...
+
+Actually, this is getting really hard to count precisely. Let me just trust the finding's line numbers for the later sections and focus on my analysis.
+
+But wait, the finding says "line 523" for "Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices." This is in Part XIV. Let me try to estimate.
+
+Part XII is about the physical module. Part XIII is about recursion and universality. Part XIV is about the class collected.
+
+Let me try to count from Part XII:
+
+```
+# Part XII — The physical module
+(blank)
+**Tasks.** ...
+(blank)
+**Retained realization.** ...
+(blank)
+\[
+\operatorname{RetReal}...
+\]
+(blank)
+Execution families...
+(blank)
+**Retention fixed point.** ...
+(blank)
+**Owned capability.** ...
+(blank)
+**Achievement.** ...
+(blank)
+**Grades.** ...
+(blank)
+**Selection in the physical module.** ...
+(blank)
+---
+(blank)
+# Part XIII — Recursion and universality
+(blank)
+**Scrutinizability.** ...
+(blank)
+**Recursive capacity.**
+(blank)
+\[
+...
+\]
+(blank)
+**Barriers.** ...
+(blank)
+**Universality.** ...
+(blank)
+\[
+...
+\]
+(blank)
+\[
+...
+\]
+(blank)
+\[
+...
+\]
+(blank)
+Recursion does not entail...
+(blank)
+---
+(blank)
+# Part XIV — The class collected
+(blank)
+**Primitives.** The semantics has two.
+(blank)
+1. The **physical module**...
+2. The **normative relation**...
+(blank)
+Everything else is derived. ...
+(blank)
+**Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. ...
+```
+
+This is really hard to count without seeing the actual line breaks. Let me just use the finding's line numbers.
+
+Actually, I realize I should just focus on writing the report and use the line numbers as given. The finding has clearly done the line counting, and I've verified several key line numbers match. Let me proceed.
+
+Let me also think about one more potential refutation: could the counter-instance violate the requirement that the transport be "from D to E"?
+
+Line 204: "A transport from an organization D to an organization E is t=(π,τ,σ,λ)."
+
+For E₂: π maps X_D = ℝ³ to X_{E₂} = ℝ² (by (x,y,z) → (x,z)). τ maps edits of D to edits of E₂. σ maps boundaries. λ maps components of E₂ to subnetworks of D.
+
+Is this a valid transport "from D to E₂"? The map π goes from D's valuations to E₂'s valuations. The direction is from D to E. ✓
+
+But wait — in Part V, "An explanatory candidate for question p is an organization E, a transport t=(π,τ,σ,λ) from D to E." And (F2) says "π[Sol_D(a,b)] = Sol_E(τ(a),σ(b))." So π maps from D to E, and the fidelity conditions ensure they agree.
+
+For E₂, π: ℝ³ → ℝ² maps (x,y,z) → (x,z). This is a projection (not injective). The theory doesn't require π to be injective or surjective. ✓
+
+Now, one more thing: the (F2) condition requires "τ(1)=1, τ(a₂a₁)=τ(a₂)τ(a₁)." For E₂, τ is the identity on edits (mapping do(x=c) in D to do(x=c) in E₂). Since the edits of E₂ are also do(x=c) (setting port x of E₂), and composition works the same way, this holds. ✓
+
+But wait — what are the edits of E₂? E₂ has ports x and z. The admitted edits of E₂ should include do(x=c) (setting port x). But what about setting port z? In D, the edits are do(x=c) — there's no do(z=...) because z is determined by the components. Similarly in E₂, z is determined by m_z (z=2x+1), so the edits should be do(x=c).
+
+But actually, the theory says A is "a set of admitted edits" for each organization. D's A includes do(x=c) operations. E₂'s A' should include the corresponding edits. Since τ maps D's edits to E₂'s edits, and τ is the identity, E₂'s edits include do(x=c). But E₂ could have other edits too (like do(z=...)), which would replace m_z. However, the contract C' = τ[C] only includes the do(x=c) edits, so these other edits don't matter.
+
+Actually, τ maps edits of D to edits of E₂. But the requirement is just that τ(1)=1 and τ(a₂a₁)=τ(a₂)τ(a₁) for edits in the scope. If C only includes do(x=c) and identity, then τ just needs to handle these.
+
+I think the counter-instance is valid.
+
+**Final check: does the finding's classification match?**
+
+The finding says the defect is that half (a) of the claim is false. It proposes a repair that narrows the claim. The repair is described as "a recorded change of claim, not an erratum." This is consistent with "false as stated" — the claim needs to be changed, not just corrected in a minor way.
+
+But the finding also says "the word 'Immediate' passes over exactly the step that fails" — this suggests the proof is wrong, not just the claim. The proof says "Immediate from Derivation 1 and (A)" but Derivation 1 doesn't establish what's claimed.
+
+So the defect is: the claim (half (a)) is false, and the proof is wrong (it doesn't establish the claim). The repair narrows the claim to what the proof can actually establish (plus adds the answer-profile part explicitly).
+
+I think "false as stated" is the right classification, and UPHELD is the right verdict.
+
+Hmm, but wait. Let me reconsider one thing. The task says:
+
+"UPHELD: the defect exists under the theory's stated assumptions, as the finding describes it, including the finding's classification of it (for example 'a drafting omission' or 'false as stated')."
+
+So I need to check: does the finding classify this as "false as stated"? Looking at the finding...
+
+The finding says: "Half (a) is false under the claim's stated assumptions." and "the word 'Immediate' passes over exactly the step that fails." This is describing the defect as a false claim (with a bad proof). The proposed repair is "a recorded change of claim, not an erratum" — confirming it's viewed as a substantive change, not a typo.
+
+So the classification is: the claim is false as stated. UPHELD.
+
+Actually, let me reconsider one more time. Could the finding be PARTLY UPHELD if some aspect of the finding is wrong?
+
+The finding makes several claims:
+1. Half (b) is true — yes.
+2. Half (a) is false — yes.
+3. Counter-instance 1 works — yes.
+4. Counter-instance 2 works — yes (equal component counts but no valid pairing).
+5. Defence arguments are refutable — yes.
+6. The repair fixes the defect — yes.
+7. The repair doesn't break anything — this is where I need to be careful.
+
+Wait, the finding claims the repair is good. But what if the repair breaks something? Then the finding would be partly wrong about the repair, but the defect itself would still be real. Would that make it PARTLY UPHELD?
+
+Hmm, the task says "Judge the proposed repair" as a separate task from "Try to refute [the finding]." The UPHELD/PARTLY UPHELD/REFUTED verdict is about the finding F1 (the defect), not about the repair. Let me re-read:
+
+"1. Try to refute it under the theory's stated assumptions...2. Judge the proposed repair."
+
+And the verdict options:
+- UPHELD: the defect exists...
+- PARTLY UPHELD: part of the finding holds and part does not...
+- REFUTED: the defect does not exist...
+
+So the verdict is about the finding (the defect). The repair judgment is a separate part of the report.
+
+But "part of the finding holds and part does not" — the finding includes both the defect analysis AND the repair assessment. If the repair assessment is partly wrong, does that make the finding partly upheld?
+
+I think the finding's primary claim is about the defect. The repair is a secondary contribution. If the defect is real and as described, UPHELD is right even if the repair has minor issues.
+
+But let me think if there are any significant issues with the repair...
+
+One thing I noticed: the repair's proof of (ii) says "By Derivation 1, k has the signature of λ(k), and φ(k) the signature of λ'(φ(k)) = λ(k); composing the two port translations gives a footprint bijection under which the two signatures, read on C, coincide."
+
+This proof relies on the cross-organization notion of "of one kind" (the supporting edit after (K)). But the supporting edit defines this notion, so the proof is valid given the supporting edit.
+
+However, there's a subtle issue: Derivation 1 says "every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C." The signature of k is naturally read on τ[C], not on C. For the cross-organization comparison, we need to read both signatures "on C through τ and τ'." But what does "the signature of λ(k) read on C" mean?
+
+Actually, λ(k) is a subnetwork of D. Its signature on C is defined analogously to (K): sig_C(λ(k)) = {(a,b, proj_{V_k} Sol_{λ(k)}(a,b)) : (a,b) ∈ C}. And Derivation 1's proof (line 555) shows this equals {(a,b, L_k(τ(a),σ(b))) : (a,b) ∈ C}, which is the signature of k read on C through τ.
+
+Similarly, the signature of φ(k) read on C through τ' is {(a,b, L_{φ(k)}(τ'(a),σ'(b))) : (a,b) ∈ C}.
+
+By Derivation 1 (for both candidates), these both equal the signature of λ(k) = λ'(φ(k)) on C. So they're equal.
+
+But wait — "equal up to footprint bijection." The footprints of k and φ(k) might be different sets of ports. The port translations from λ(k) to k's ports and from λ'(φ(k)) to φ(k)'s ports give the footprint bijection.
+
+OK, this all works. The proof is valid. ✓
+
+Let me think about whether the repair's supporting edit is precise enough. It says:
+
+"A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense."
+
+The phrase "read on C through τ and τ'" is a bit informal. A more precise definition would be:
+
+sig^τ_C(k) = {(a,b,L_k(τ(a),σ(b))) : (a,b) ∈ C}
+
+and similarly for sig^{τ'}_C(k'). Then "of one kind on C" means there's a footprint bijection β such that β[sig^τ_C(k)] = sig^{τ'}_C(k').
+
+But the supporting edit's phrasing is clear enough for a mathematical text. It's not a breakage.
+
+Also, the supporting edit says "Derivations 1 and 2 use kinds in this sense." But Derivation 1 uses a comparison between a component and a subnetwork (not two components of different organizations). So the sentence is slightly imprecise. But it doesn't cause any problems.
+
+OK here is another potential issue with the repair. The repaired claim says "the two are one account on C" when the shared-anchor condition holds. But "one account" is not formally defined. The original claim said "are one account at grain C." Is there a formal notion of account identity?
+
+In Part V, Account(ℰ) is a predicate (ℰ satisfies the four conditions). There's no formal definition of "ℰ and ℰ' are one account" or "ℰ = ℰ' as accounts." So "are one account" is informal in both the original and the repair.
+
+The repair at least gives a sufficient condition for "being one account" (shared anchors + bijection). The original tried to give a necessary and sufficient condition (satisfying F1, F2, A), but this was too broad.
+
+Is leaving "one account" informal a problem? I don't think so — the repair is clear about what it establishes (the component-level kind matching and answer profile coincidence) and what it doesn't (identity of differently decomposed candidates).
+
+OK, I think I've been thorough enough. Let me write the report.
+
+Wait, one more thing. Let me verify counter-instance 2 more carefully.
+
+**Counter-instance 2:**
+- D: x=u, y=x+1, z=y+1, w=z (components j_x, j_y, j_z, j_w).
+- Edits: do(x=c) and contract C = {(1,b_0)} ∪ {(do(x=c),b_0): c ∈ ℝ}.
+- Q reads w, so Ans_p(do(x=c),b_0) = c+3 (since w=z=y+1=x+2=c+2... wait).
+
+Let me compute: x=c, y=x+1=c+1, z=y+1=c+2, w=z=c+2. So Ans_p = c+2.
+
+Wait, the finding says Q reads w. Let me recompute. At baseline (u=0): x=0, y=1, z=2, w=2. So Ans_p(1,b_0) = 2. Under do(x=c): x=c, y=c+1, z=c+2, w=c+2. So Ans_p(do(x=c),b_0) = c+2.
+
+Hmm, w=z and z=y+1=(x+1)+1=x+2. So w=x+2=c+2. Yes.
+
+E_a cuts D as:
+- {x=u} anchored to {j_x}: component a_x: x=u.
+- {z=x+2} anchored to {j_y,j_z}: hidden port y. proj_{x,z} Sol_{{j_y,j_z}} = {(s, s+2)}.
+
+Wait, Sol_{{j_y,j_z}}: j_y says y=x+1, j_z says z=y+1. So z=x+2. proj_{x,z} gives {(s, s+2): s ∈ ℝ}. And the component relation for the merged component should be z=x+2, i.e., {(s, s+2): s ∈ ℝ} on ports {x,z}. ✓
+
+But wait, the finding says E_a has a component "z=x+2." Let me verify (F1) for this component.
+
+Under do(x=c): the edit replaces j_x (not in the anchor {j_y,j_z}). So Sol_{{j_y,j_z}}(do(x=c),b_0) = {(s, s+1, s+2): s ∈ ℝ}. proj_{x,z} = {(s, s+2): s ∈ ℝ}. And L_{merged}(τ(do(x=c)),σ(b_0)) = {(s, s+2): s ∈ ℝ} (the merged component's relation doesn't change under the edit since the edit replaces j_x/a_x). ✓
+
+- {w=z} anchored to {j_w}: component a_w: w=z. proj_{z,w} Sol_{{j_w}} = {(t,t): t ∈ ℝ}. And L_{a_w} = {(t,t): t ∈ ℝ}. ✓
+
+(F2): Sol_D(do(x=c),b_0) = {(c, c+1, c+2, c+2)}. π maps (x,y,z,w) → (x,z,w). π[Sol_D] = {(c, c+2, c+2)}. Sol_{E_a}(do(x=c),b_0): a_x sets x=c, merged says z=x+2=c+2, a_w says w=z=c+2. So Sol_{E_a} = {(c, c+2, c+2)}. ✓
+
+E_b cuts D as:
+- {x=u} anchored to {j_x}: component b_x: x=u.
+- {y=x+1} anchored to {j_y}: component b_y: y=x+1.
+- {w=y+1} anchored to {j_z,j_w}: hidden port z. j_z says z=y+1, j_w says w=z. So w=y+1. proj_{y,w} Sol_{{j_z,j_w}} = {(t, t+1): t ∈ ℝ}. And L_{merged'} = {(t, t+1): t ∈ ℝ} on ports {y,w}. ✓
+
+Under do(x=c): edit replaces j_x (not in anchor). Sol_{{j_z,j_w}} = {(s, s+1, s+1): (y,z,w) values}... wait.
+
+Sol_{{j_z,j_w}}: j_z says z=y+1, j_w says w=z. So w=z=y+1. proj_{y,w} = {(t, t+1): t ∈ ℝ}. ✓
+
+(F2): Sol_D(do(x=c),b_0) = {(c, c+1, c+2, c+2)}. π' maps (x,y,z,w) → (x,y,w). π'[Sol_D] = {(c, c+1, c+2)}. Sol_{E_b}(do(x=c),b_0): b_x sets x=c, b_y says y=x+1=c+1, merged' says w=y+1=c+2. So Sol_{E_b} = {(c, c+1, c+2)}. ✓
+
+(A): Both answer w = c+2. ✓
+
+Now, both E_a and E_b have 3 components. Can we find a bijection φ such that paired components are of one kind?
+
+E_a components: a_x (x=u, footprint {x}), merged (z=x+2, footprint {x,z}), a_w (w=z, footprint {z,w}).
+E_b components: b_x (x=u, footprint {x}), b_y (y=x+1, footprint {x,y}), merged' (w=y+1, footprint {y,w}).
+
+a_x and b_x: both have footprint {x} and relation x=u. Same signature. Of one kind. ✓
+
+merged and b_y: merged has footprint {x,z}, relation {(s,s+2)}. b_y has footprint {x,y}, relation {(s,s+1)}. Under footprint bijection x→x, z→y: merged becomes {(s,s+2)} on {x,y}, b_y is {(s,s+1)}. Different. Under x→y, z→x: merged becomes {(s+2,s)} on {y,x} = {(t,t-2)} on {x,y}, b_y is {(s,s+1)}. Different. Not of one kind.
+
+merged and merged': merged has footprint {x,z}, relation {(s,s+2)}. merged' has footprint {y,w}, relation {(t,t+1)}. Under x→y, z→w: merged becomes {(s,s+2)} on {y,w}, merged' is {(t,t+1)}. Different. Under x→w, z→y: merged becomes {(s+2,s)} on {w,y} = {(t,t-2)} on {y,w}, merged' is {(t,t+1)}. Different. Not of one kind.
+
+a_w and b_y: a_w has footprint {z,w}, relation {(t,t)}. b_y has footprint {x,y}, relation {(s,s+1)}. Under z→x, w→y: a_w becomes {(t,t)} on {x,y}, b_y is {(s,s+1)}. Different. Under z→y, w→x: a_w becomes {(t,t)} on {y,x} = {(t,t)} on {x,y}, b_y is {(s,s+1)}. Different. Not of one kind.
+
+a_w and merged': a_w has footprint {z,w}, relation {(t,t)}. merged' has footprint {y,w}, relation {(t,t+1)}. Under z→y, w→w: a_w becomes {(t,t)} on {y,w}, merged' is {(t,t+1)}. Different. Under z→w, w→y: a_w becomes {(t,t)} on {w,y} = {(t,t)} on {y,w}, merged' is {(t,t+1)}. Different. Not of one kind.
+
+So only a_x and b_x pair. The other components don't pair with anything. Therefore no bijection makes all pairs of one kind.
+
+And the finding says "Neither candidate is a coarsening of the other." E_a merges {j_y,j_z} and keeps {j_w}. E_b keeps {j_y} and merges {j_z,j_w}. These are different partitions of {j_y,j_j,j_w}, and neither refines the other. ✓
+
+So counter-instance 2 also works. ✓
+
+Actually, hmm, I realize I should double-check: is {j_y, j_z} a valid "subnetwork" of D? It contains two components that share port y. So it's connected. Is it a "subnetwork"? The theory says "λ assigns each component of E a subnetwork of D." A subnetwork should be a subset of the components (with their ports). {j_y, j_z} is a subset of J = {j_x, j_y, j_z}. ✓
+
+What about {j_z, j_w}? Similarly valid. ✓
+
+OK, everything checks out. Let me write the report now.
+
+Let me think about the structure:
+
+**F1** section:
+1. The counter-instances are valid (most serious point — this is the core of the finding)
+2. The theory's defence arguments fail (important for giving the defence full weight)
+3. The typing issue with (K) (the finding correctly identifies this)
+4. Assessment of the repair
+5. Minor points
+
+Actually, the task says "number the points, most serious first." Let me think about what's most serious.
+
+The most serious point is whether the finding's core claim (that half (a) of Derivation 2 is false) is correct. If I can't refute it, I should say so and explain why the steps hold.
+
+Then the repair assessment.
+
+Let me think about how to organize this...
+
+Actually, I think the most useful structure is:
+
+1. The counter-instance is valid and cannot be refuted (core finding upheld)
+2. Defence arguments are individually refutable (with analysis of each)
+3. The typing point is correct
+4. The repair is sound and does not break checked items
+5. Minor imprecision in the supporting edit
+
+And then the verdict.
+
+Let me now also think about what steps I tried to refute and why they held.
+
+**Steps I tried to refute:**
+
+a) "The counter-instance breaks a stated assumption": I checked that D, E₁, E₂ are valid organizations, the transport is valid, the contract is valid. No assumption is broken.
+
+b) "The claim as written is true of the counter-instance": I checked all readings of "pairwise of one kind" and none makes the claim true of the counter-instance (E₁ has 3 components, E₂ has 2; and even with equal counts in instance 2, no bijection works).
+
+c) "The finding misreads a sentence": I considered whether "pairwise of one kind" could mean something weaker, or "at grain C" could do more work, or the shared-anchor reading is intended. None of these saves the claim.
+
+**Steps where the finding's counter-instance might fail but a corrected one works:**
+
+I don't think any correction is needed — both counter-instances work as stated.
+
+Actually, wait. Let me think about one more potential refutation. The theory says (line 260): "By (K), (F1) entails that every component of E has the signature of its anchor; there is no further condition about kinds to state."
+
+Could this sentence be read as defining "the signature of an anchor" in a way that makes Derivation 2's claim true? If every component of E has the signature of its anchor, and every component of E' has the signature of its anchor, then two components are of one kind iff their anchors have the same signature. But this only gives us that components with the same-signature anchors are of one kind — it doesn't give us a pairing.
+
+In counter-instance 1: k_y's anchor is j_y (signature: {(s,2s)} on {x,y}), and k_z's anchor is j_z (signature: {(t,t+1)} on {y,z}). m_z's anchor is {j_y,j_z} (signature: {(s,2s+1)} on {x,z} after projection). The signatures are all different. So even with the anchor-based reading, the claim fails.
+
+But what if we consider the anchor of m_z to have the signature of the subnetwork {j_y,j_z}? The subnetwork has ports {x,y,z}, and its "signature" is {(a,b, Sol_{{j_y,j_z}}(a,b))}. This is different from any single component's signature. So m_z is not of one kind with k_y or k_z.
+
+But what if we compare m_z with the SUBNETWORK {k_y, k_z} of E₁? The subnetwork {k_y, k_z} has ports {x,y,z}, and Sol_{{k_y,k_z}} = {(s,2s,2s+1): s ∈ ℝ} = Sol_{{j_y,j_z}}. So they have the same "signature" (as subnetworks). This is defence argument (iii).
+
+The finding's reply to (iii) is that the claim is symmetric ("their components are pairwise of one kind") and the match runs one way only. But what if we interpret "components" loosely to include subnetworks?
+
+Hmm, but the claim says "their components" — components, not subnetworks. And (K) defines "of one kind" for components. So comparing a component with a subnetwork is not what (K) says.
+
+However, the proof of Derivation 1 does compare a component with a subnetwork. So the notion is used in the theory. But the claim of Derivation 2 specifically says "components."
+
+In counter-instance 2, the finding shows that the subnetwork reading also fails symmetrically: E_a's a_w (w=z, anchored to {j_w}) has no matching subnetwork in E_b. Let me verify.
+
+a_w: footprint {z,w}, relation {(t,t)}. Anchored to {j_w} (w=z).
+
+In E_b: components are b_x (x=u, footprint {x}), b_y (y=x+1, footprint {x,y}), merged' (w=y+1, footprint {y,w}).
+
+Subnetworks of E_b:
+- {b_x}: footprint {x}, relation x=u.
+- {b_y}: footprint {x,y}, relation y=x+1.
+- {merged'}: footprint {y,w}, relation w=y+1.
+- {b_x, b_y}: footprint {x,y}, solutions {(s,s+1)}.
+- {b_x, merged'}: footprint {x,y,w}, solutions {(s,t,t+1): t = anything?}... wait. b_x says x=u, merged' says w=y+1. So solutions are {(u, t, t+1): t ∈ ℝ} on ports {x,y,w}. proj_{z,w}... but z is not a port of this subnetwork. Hmm.
+
+Actually, when comparing a_w (footprint {z,w}) with a subnetwork of E_b, we need to project the subnetwork's solutions onto a_w's footprint (or rather, onto a corresponding footprint via a port bijection).
+
+Let me think about this differently. The finding says: "In instance 2 it fails in both directions: E_a's w=z has no partner subnetwork in E_b, and E_b's y=x+1 and w=y+1 have none in E_a."
+
+For a_w (w=z, footprint {z,w}, relation {(t,t)}): Can we find a subnetwork of E_b whose projected solution set matches {(t,t)} under some footprint bijection?
+
+Subnetwork {b_y, merged'}: footprint {x,y,w}, solutions satisfy y=x+1 and w=y+1, so w=x+2. proj_{y,w} = {(t,t+1)}. proj_{x,w} = {(s,s+2)}. proj_{x,y} = {(s,s+1)}.
+
+None of these projections gives {(t,t)}. What about proj_{w,w}? That doesn't make sense (same port twice).
+
+What if we use a non-identity footprint mapping? For instance, map z→y and w→w: then we need proj_{y,w} of some subnetwork to be {(t,t)}. But proj_{y,w} of {b_y, merged'} is {(t,t+1)}. Not {(t,t)}.
+
+What about proj_{x,y} of {b_x, b_y}: {(u, u+1)} = {(0,1)} at baseline (since x=u=0). Hmm, but this is a single point at baseline and a single point under do(x=c). Not {(t,t)}.
+
+Actually, proj_{x,y} of {b_x, b_y} under do(x=c): x=c, y=c+1. So {(c, c+1)}. This is a single point. Whereas a_w's relation is {(t,t): t ∈ ℝ} — a whole line. These don't match.
+
+So indeed, a_w has no matching subnetwork in E_b. ✓
+
+What about merged' (w=y+1, footprint {y,w}, relation {(t,t+1)}): Can we find a subnetwork of E_a whose projection matches?
+
+Subnetwork {merged, a_w}: footprint {x,z,w}, solutions satisfy z=x+2 and w=z, so w=x+2. proj_{z,w} = {(t,t)}. proj_{x,w} = {(s,s+2)}. proj_{x,z} = {(s,s+2)}.
+
+Under z→y, w→w: need proj to be {(t,t+1)}. proj_{z,w} of {merged, a_w} = {(t,t)}. Not {(t,t+1)}.
+
+Under z→w, w→y: need proj to be {(t,t+1)} on {w,y}. proj_{w,z} of {merged, a_w} = {(t,t)} on {w,z}. Mapping to {y,w}: {(t,t)} on {y,w}. Not {(t,t+1)}.
+
+Hmm, what about {a_x, merged}: footprint {x,z}, solutions x=u=0 (baseline) and z=x+2=2. So {(0,2)}. Under do(x=c): {(c,c+2)}. This is a single point at each edit, not a whole line. Not matching.
+
+What about just {merged}: footprint {x,z}, relation {(s,s+2)}. Under z→y, x→w: {(s,s+2)} becomes... the footprint map is z→y, x→w. So we read the relation as {(w_val, y_val)} where w_val = s, y_val = s+2. As a subset of X_w × X_y = ℝ², this is {(s, s+2)}. Under the map to {y,w}: {(s+2, s)} = {(t, t-2)} on {y,w}. Not {(t,t+1)}.
+
+Under x→y, z→w: {(s,s+2)} becomes {(s,s+2)} on {y,w}. Not {(t,t+1)}.
+
+So merged' has no matching subnetwork in E_a either. ✓
+
+And b_y (y=x+1, footprint {x,y}, relation {(s,s+1)}): Can we find a matching subnetwork in E_a?
+
+{a_x, merged}: footprint {x,z}, proj_{x,z} = {(s,s+2)} (since merged says z=x+2). Under x→x, z→y: {(s,s+2)} on {x,y}. Not {(s,s+1)}.
+
+{merged}: same as above. {(s,s+2)} on {x,z}. Under x→x, z→y: {(s,s+2)} on {x,y}. Not {(s,s+1)}.
+
+{a_x, merged, a_w}: footprint {x,z,w}, proj_{x,z,w} = {(s,s+2,s+2)}. proj_{x,y}... y is not a port. Under z→y: proj_{x,y} = {(s,s+2)}. Not {(s,s+1)}.
+
+Hmm, I can't find a match. The finding says b_y has no partner in E_a. ✓
+
+So counter-instance 2 works even under the subnetwork reading. ✓
+
+Great, I'm now very confident the finding is correct. Let me write the report.
+
+Actually, I want to consider one last thing. The finding says both counter-instances were "checked by an exact rational-arithmetic script at the baseline and at do(x=c) for six values of c, and by hand for all c." This is a detail about verification methodology. Should I comment on it?
+
+The hand verification for all c is what matters (the script is just a spot check). And I've verified the instances by hand above. So I don't need to comment on the script.
+
+One more thing: the finding says "The finding holds that Derivation 2 calls for the same treatment [as a previous revision of Derivation 3] and cannot be saved by rereading its words." This is a claim about the appropriate remedy (change of claim vs. reinterpretation). I agree — the claim is too broad and needs narrowing.
+
+Let me now write the report. I need to keep it under 3,000 words.
+
+Let me think about the structure one more time. The task says:
+
+"For the finding F1:
+1. Try to refute it... 
+2. Judge the proposed repair...
+
+Report format:
+- One section, headed F1.
+- Within it, number the points, most serious first.
+- Close with one line: F1: UPHELD / PARTLY UPHELD / REFUTED.
+- Under3,000 words.
+- End with END OF REPORT."
+
+So the points should cover both the refutation attempt and the repair judgment. Let me organize by importance.
+
+1. The counter-instances are valid (core claim upheld)
+2. Defence arguments refuted (giving defence full weight)
+3. Typing point is correct
+4. Repair assessment5. Any remaining minor points
+
+Let me draft this now.
+
+Hmm, actually one thought: is there a reading of the finding where it's PARTLY UPHELD? Let me think...
+
+The finding claims:
+(a) Half (b) of the claim is true [agreed]
+(b) Half (a) is false [agreed]
+(c) Counter-instance 1 works [agreed]
+(d) Counter-instance 2 works [agreed]
+(e) Defence (i) is refutable [agreed]
+(f) Defence (ii) is refutable [agreed]
+(g) Defence (iii) is refutable [agreed]
+(h) Defence (iv) is refutable [agreed]
+(i) Derivation 10's use is also defective [agreed]
+(j) The repair is sound [need to verify]
+(k) The repair doesn't break anything [need to verify]
+
+If (j) or (k) is wrong, would the finding be PARTLY UPHELD? The verdict says "the defect exists... as the finding describes it, including the finding's classification." The defect is the main claim. The repair is secondary.
+
+But "part of the finding holds and part does not" — if the repair analysis is wrong, part of the finding doesn't hold. Hmm.
+
+But I think the defect analysis is the "finding." The repair is offered as a remedy. If the defect is real and as described, UPHELD.
+
+Let me just make sure the repair is as sound as the finding claims.
+
+The repair:
+1. New claim with two parts: (i) answer profiles coincide, (ii) shared anchors → one kind + one account.
+2. Proof of (i) and (ii).
+3. Note about what doesn't follow without the premise.
+4. New Consequence.
+5. Supporting edit after (K).
+6. Derivation 10 edit.
+
+Let me check each:
+
+(i) Answer profiles coincide: True by (A). ✓
+
+(ii) Shared anchors → one kind: True by Derivation 1. ✓ And "one account": This is informal but seems right.
+
+Note about what doesn't follow: "candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8)." This correctly references the theory. ✓
+
+New Consequence: "Where two faithful candidates differ only in which component carries which anchor, the contract does not contain the distinction; a claim that one assignment is 'really' right is a claim that some admitted change separates them, and must supply it." This is the narrowed version. ✓
+
+Supporting edit: Defines cross-organization "of one kind." Slightly imprecise about "Derivations 1 and 2 use kinds in this sense" (Derivation 1 uses a different extension). Minor.
+
+Derivation 10 edit: Changes "the two persistence components are of one kind (Derivation 2)" to "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)." This is more precise and correct. ✓
+
+Does the repair break anything?
+
+Checked: Derivation 1 (not affected), Derivation 8 (consistent), Derivation 9 (consistent), Derivation 10 (improved), Part VI (not affected), Part VII worked cases (not affected), "What (E) excludes" (not affected), "What (E) does not exclude" (not affected). ✓
+
+What about Derivations 3-7? Let me think briefly.
+
+Derivation 3 (Selected transports are underdetermined): Not affected. ✓
+Derivation 4 (Surprise requires incomplete history): Not affected. ✓
+Derivation 5 (Question-finding is representable): Not affected. ✓
+Derivation 6 (Two primitives): Not affected. ✓
+Derivation 7 (Frozen assessment and moving question): Not affected. ✓
+
+What about Part V's "Why there is no anchoring condition"? This paragraph says (line 298): "A separate condition — 'each component of E must be tied to a component of D of the same kind' — would be either redundant or unevaluable. Where C contains a change separating two kinds, (F1) already fails for a component anchored to the wrong one. Where C contains no such change, the two are one kind on C by (K), and the condition would be asserting a distinction that C does not contain. There is no third case. Derivation 1 makes this exact."
+
+This paragraph relies on Derivation 1, not Derivation 2. The repair doesn't change Derivation 1. ✓
+
+But wait — the supporting edit says "Derivations 1 and 2 use kinds in this sense" (cross-organization sense). But the "Why there is no anchoring condition" paragraph also uses "of one kind" in a cross-organization sense (component of E and component of D). Should the supporting edit mention this paragraph too?
+
+This is a minor point. The paragraph's use of "of one kind" is informal and already supported by Derivation 1's signature comparison. The supporting edit doesn't need to cover it explicitly.
+
+OK, I'm satisfied the repair is sound and doesn't break anything. Let me finalize UPHELD.
+
+Wait, actually, one more thought. The finding says "A smaller alternative wording of the claim was also put forward." Should I evaluate this alternative?
+
+The alternative: "Two candidates ℰ,ℰ' for the same p that both satisfy (F1), (F2) and (A) on C have one answer profile on C; and a component of E and a component of E' anchored to one subnetwork of D, up to port translation, are of one kind on C, their signatures read through τ and τ'."
+
+This is more compact but achieves the same thing. It doesn't include the "one account" claim or the Consequence. It's essentially (i) and a weakened version of (ii) (without the bijection and "one account" conclusion).
+
+Is this alternative sufficient? It states:
+1. Answer profiles coincide.
+2. Components with the same anchor are of one kind.
+
+But it doesn't state: "the two are one account on C" or the Consequence about anchor assignments. So it's weaker. The main repair is more complete.
+
+I could comment on this but it's a minor point. Let me see if I have word budget.
+
+OK, I think my report should cover:
+1. Counter-instances valid (with my verification)
+2. Defence arguments refuted (with my analysis of each)
+3. Typing issue confirmed
+4. Repair sound, with minor imprecision in supporting edit
+5. (Optional) comment on alternative wording
+
+Let me write it now.
+
+Actually, let me reconsider once more whether there is any way to save the claim.
+
+What if "pairwise of one kind" means "for each kind that appears in E, the same kind appears in E', and vice versa"? In other words, the set of kinds is the same.
+
+In counter-instance 1: E₁ has components of kinds {kind(k_x), kind(k_y), kind(k_z)}. E₂ has components of kinds {kind(m_x), kind(m_z)}. We showed kind(k_x) = kind(m_x). But kind(k_y) and kind(k_z) don't appear in E₂, and kind(m_z) doesn't appear in E₁. So the sets of kinds differ. The claim would still be false.
+
+What if "pairwise" means "in their pairwise interactions" or something? No, that doesn't make sense in context.
+
+What if the claim is not about individual components but about the candidate as a whole? "Their components are pairwise of one kind" = "taken as a whole, their component-structures are of one kind." But "of one kind" is defined for components, not for whole structures.
+
+I can't find a reading that saves the claim. UPHELD.
+
+Now let me write the report. Target: under 3,000 words.
+
+Let me draft:
+
+---
+
+**F1**
+
+1. **The counter-instances are valid; I could not refute them.** ...
+
+2. **Defence arguments do not save the claim.** ...
+
+3. **The typing point stands.** ...
+
+4. **The proposed repair is sound and does not break the checked items.** ...
+
+5. **Minor imprecision in the supporting edit.** ...
+
+F1: UPHELD
+
+END OF REPORT
+
+---
+
+Let me flesh this out. Actually, I want to think about the ordering. What's "most serious"?
+
+The most serious question is whether the defect exists at all. The counter-instances are the core evidence. If they work, the defect is real.
+
+The second most serious question is whether the defence arguments are adequate. If any of them works, the defect might be refuted.
+
+The third is whether the repair is sound and non-breaking.
+
+The typing point is a detail that supports the finding.
+
+Minor points come last.
+
+Actually, I think the refutation attempts and their failure should come first (as point 1), then the counter-instances' validity (as point 2 or combined with 1), then the repair.
+
+Let me think about this differently. The task says:
+
+"1. Try to refute it... A refutation shows that a counter-instance breaks a stated assumption, that the claim as written is true of it, or that the finding misreads a sentence. Where the finding's counter-instance fails but a corrected one works, say so and give the corrected one. Where you cannot refute a step, say which step you tried and why it held."
+
+So I should organize by the steps of the finding and my refutation attempts.
+
+The finding's steps:
+a) Half (b) follows from (A) — I agree, no refutation attempted.
+b) Half (a) is false — I tried to refute this by:
+   i) Checking if the counter-instance breaks a stated assumption (it doesn't)
+   ii) Checking if the claim is true of the counter-instance under some reading (it isn't)
+   iii) Checking if the finding misreads a sentence (it doesn't)
+c) Counter-instance 1 works — verifiedd) Counter-instance 2 works — verified
+e) Defence arguments are refutable — I checked each
+f) Derivation 10's use is defective — verified
+g) The repair is sound — verified
+
+OK, let me just write the report now. I'll organize by importance and cover the key points.
+
+One question: the task says "quoting the theory with line numbers for every assumption you use." I need to quote the theory when I rely on its text. Let me make sure I do this.
+
+Key quotes I'll need:
+- Line 120: "An edit that sets a port replaces the component assigning that port"
+- Line 136: (K) definition of "of one kind"
+- Line 204: "λ assigns each component of E a subnetwork of D with a port translation"
+- Line 248-251: (F1) definition
+- Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition"
+- Line 561: the claim of Derivation 2
+- Line 563: the proof
+- Line 23: "Two systems with identical outputs and different internal routes are different organizations here"
+- Line 543: defeat list
+- Line 356: skew-symmetric caseLet me verify line 23. From my counting:
+```
+21: It does not derive reference from uninterpreted matter...
+22: (blank)
+23: It does not say prediction is explanation. Fidelity in this semantics is over **component structure under change**, not over outputs. Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so.
+```
+
+So line 23 says "Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so." ✓
+
+Now let me write the report.
+
+Hmm, but I realize I also need to think about how the defence arguments map to the finding's presentation. The finding lists four defence arguments (i)-(iv) plus "A precedent." Let me address each.
+
+For defence (ii), which is the strongest defence, I want to think more carefully. The defence says: "Pairwise of one kind pairs components only through shared anchors." On this reading, the claim is true and the proof works.
+
+The finding's reply: "the words say 'their components are pairwise of one kind', which names all their components; the conclusion 'one account at grain C' and the title 'Indistinguishable is identical' assert identity."
+
+This is a good reply but I want to think about whether there's a way to make the shared-anchor reading more plausible.
+
+"Two candidatesℰ, ℰ' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide."
+
+What if "their components" refers to "the components that they share" or "the components that correspond between them"? In English, "their components" most naturally means "the components of each of them" or "the components belonging to them." It doesn't naturally mean "the components they share."
+
+But mathematicians sometimes use loose language. Could "pairwise of one kind" be a shorthand for "for corresponding pairs, of one kind"? And "corresponding" is determined by shared anchors?
+
+This is possible but strained. And it makes the proof "Immediate from Derivation 1 and (A)" work: Derivation 1 gives each component the signature of its anchor, and shared anchors give the same signature, and (A) gives the answer profiles.
+
+But the consequence and title don't fit this reading. The consequence says "Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction." If the claim is only about shared-anchor components, then it says nothing about underdetermination in general — only about underdetermination of anchor assignments.
+
+And the title "Indistinguishable is identical" is a general claim about indistinguishability implying identity, which the shared-anchor reading doesn't support.
+
+So the shared-anchor reading is possible but doesn't fit the surrounding text. The natural reading (all components pair up) is what the text says and what the title/consequence support, and it's false.
+
+I think the finding correctly identifies this tension and resolves it in favor of the natural reading (which is false) and proposes a repair that adopts the shared-anchor reading (which is true but narrower).
+
+One more thought: is the finding's characterization "the word 'Immediate' passes over exactly the step that fails" correct? The proof says "Immediate from Derivation 1 and (A)." If the claim is the shared-anchor reading, then the proof IS immediate from Derivation 1 and (A). If the claim is the natural reading, then the proof FAILS because Derivation 1 doesn't establish cross-candidate pairing.
+
+So "Immediate" works for the shared-anchor reading but not for the natural reading. The finding says the proof passes over the failing step (cross-candidate pairing) — this is correct for the natural reading.
+
+But someone defending the shared-anchor reading would say the proof is indeed immediate and the claim is true. The disagreement is about what the claim says, not about whether the proof works.
+
+I think the finding handles this well in its reply to defence (ii). Let me make sure I give this defence its full weight in my report.
+
+OK, now I'm really going to write the report.
+
+Let me think about word count. I have about 3,000 words. Let me allocate:
+- Point 1 (counter-instances valid): ~600 words
+- Point 2 (defence arguments): ~800 words
+- Point 3 (typing point): ~300 words
+- Point 4 (repair assessment): ~800 words
+- Point 5 (minor points): ~200 words
+- Verdict: 1 wordTotal: ~2,700 words. Good.
+
+Actually, let me reconsider the structure. The task says "number the points, most serious first." Let me think about what's most serious from the perspective of "is the finding correct?"
+
+The most serious potential problem with the finding would be if the counter-instances don't work or if a defence argument succeeds. So:
+
+1. Counter-instances verified; no refutation succeeds (this is the core)
+2. Defence arguments fail (this is the hardest part to get right)
+3. Typing issue confirmed
+4. Repair assessment
+5. Remaining minor observations
+
+This seems right. Let me write.
+
+Actually, maybe I should combine the counter-instance verification and the defence arguments into one big point about the core claim being upheld, and then have the repair as the second point. But the task says "number the points, most serious first," which suggests multiple distinct points.
+
+Let me just write it and see.
+
+Let me draft now.
+
+---
+
+**F1**
+
+1. **The counter-instances are valid; every refutation attempt fails.** I tested the finding's central claim—that half (a) of Derivation 2's claim is false—by the three routes the task specifies.
+
+*Route 1: Does a counter-instance break a stated assumption?* No. Target $D$ in counter-instance 1 is a well-formed organization (Part II, lines 102–122). The contract $C$ contains the baseline $(1,b_0)$ (line 158: "it contains the baseline $(1,b_0)$"). $E_2$ is a well-formed organization with a valid transport: line 204 states "$\lambda$ assigns each component of $E$ a subnetwork of $D$ with a port translation," and $\lambda(m_z)=\{j_y,j_z\}$ is a subnetwork. The edit rule at line 120—"$\mathrm{do}(x{=}c)$ replaces the component assigning that port"—means the edit replaces $j_x$, which lies outside $m_z$'s anchor, so (F1) holds for $m_z$ because $\operatorname{proj}_{V_{m_z}}\operatorname{Sol}_{\{j_y,j_z\}}(a,b_0) = \{(s,2s+1):s\in\mathbb{R}\}$ at every pair in $C$. (F2) and (A) are verified by direct computation. Nothing is broken.
+
+*Route 2: Is the claim true of the counter-instance under some reading of "pairwise of one kind"?* No. $E_1$ has three components and $E_2$ has two, so no bijection exists. Under the weaker reading "each component of one is of one kind with some component of the other," $k_y$ (relation $\{(s,2s)\}$ on $\{x,y\}$) and $k_z$ (relation $\{(t,t+1)\}$ on $\{y,z\}$) match no component of $E_2$ under any footprint bijection: $m_z$'s relation $\{(s,2s+1)\}$ differs from both. Counter-instance 2 closes the loophole of equal component counts: $E_a$ and $E_b$ each have three components, but only $a_x$ and $b_x$ pair; every other pairing fails (K)'s signature comparison at every pair in $C$.
+
+*Route 3: Does the finding misread a sentence?* I tested the strongest alternative reading (defence (ii) below) and it cannot bear the weight of the claim's own conclusion and title.
+
+The step I could not refute: the finding's assertion that Derivation 1 "relates each component of one candidate to its own anchor in $D$, and to nothing else" (cf. line 555: "(F1) equates the third coordinates pointwise" between $\operatorname{sig}_C(\lambda(k))$ and $\operatorname{sig}_{\tau[C]}(k)$). This is exactly right: Derivation 1 is a statement about one transport.
+
+2. **Defence arguments do not save the claim.** I gave each its full weight.
+
+*(i) Merged anchors are inadmissible.* Refuted by the theory's own text. Line 204 permits any "subnetwork"; (F1) at lines 248–251 speaks of "projecting away its hidden ports," which exists precisely when anchors merge; and line 356 (skew-symmetric case) relies on "a determinant suborganization whose hidden ports project away." Line 260 says "(F1) prevents an assembled match from hiding a wrong decomposition"—$E_2$ passes (F1)$, so by the theory's own criterion its decomposition is sound.
+
+*(ii) "Pairwise of one kind" pairs only through shared anchors.* This is the strongest defence: on this reading the proof is indeed immediate from Derivation 1 (shared anchors yield equal signatures) and (A). But it cannot support the text around it. The words "their components are pairwise of one kind" name all components of both candidates. The conclusion "are one account" and the title "Indistinguishable is identical" assert identity, which the shared-anchor reading does not deliver: $E_1$ and $E_2$ would be "one account" despite having different internal decompositions, contradicting line 23 ("Two systems with identical outputs and different internal routes are different organizations here"). No line of the theory states the restriction.
+
+*(iii) (K) extends to subnetworks.* Derivation 1's proof (line 555) does compare a component's signature with a subnetwork's projected relation. Under this extension, $\{k_y,k_z\}$ of $E_1$ projected onto $\{x,z\}$ matches $m_z$. But the match is one-directional: $k_y$ and $k_z$, taken individually, have no partner in $E_2$. The claim says "their components," not "their subnetwork-blocks." And counter-instance 2 breaks the subnetwork reading in both directions: $E_a$'s $w=z$ has no matching subnetwork in $E_b$ (every projected relation of $E_b$'s subnetworks takes the form $\{(t,t+c)\}$ with $c\neq 0$ or is a single point, never $\{(t,t)\}$), and vice versa.
+
+*(iv) "At grain $C$"* does no work: grain $\ell$ and contract $C$ are separate declared indices (line 523: "Grain $\ell$, boundary $\beta$, continuity $\Omega$, and the contract $C$ are declared indices"), and no line merges components under a grain or contract.
+
+3. **The typing point is correct.** (K) at line 136 defines "of one kind on $C$" for "two components $j,j'$"—within one organization. Derivation 2 compares components of two different organizations. The finding's proposed reading (signatures compared through $\tau$ and $\tau'$) is the only one that typechecks and is consistent with how Derivation 1 already reads signatures ("up to the port translation"). No sentence of the theory states this convention.
+
+4. **The proposed repair is sound and does not break the checked items.**
+
+*Does it fix the defect?* Yes. Part (i) of the new claim (answer profiles coincide) is true by (A). Part (ii) is true: if $\lambda'(\varphi(k))=\lambda(k)$, then Derivation 1 gives $k$ the signature of $\lambda(k)$ (read through $\tau$) and $\varphi(k)$ the signature of the same subnetwork (read through $\tau'$); composing port translations yields the footprint bijection. The proof is valid.
+
+*Does it break anything?*
+
+- **Derivation 1**: Not affected. It compares components to anchors within one transport. The supporting edit after (K) extends "of one kind" to cross-organization use, which Derivation 1 does not require. (The edit's phrase "Derivations 1 and 2 use kinds in this sense" is slightly imprecise—Derivation 1 uses the component-vs-subnetwork extension, not the cross-organization one—but this causes no breakage.)
+- **Derivation 8** (equivariance under recoding): The repair's note "A coarsening is not a recoding (Derivation 8)" is consistent with line 609's exclusion of coarsenings.
+- **Derivation 9** (output descriptions do not determine accounts): The repair's acknowledgment that differently cut candidates are different candidates is exactly Derivation 9's point. The original claim was in tension with it; the repair resolves this.
+- **Derivation 10**: The original sentence "the two persistence components are of one kind (Derivation 2)" fails (K) on any contract containing "displace a thing" (line 617), since one persistence component's relation changes and the other's does not. The replacement—"exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)"—is correct: under the anchor-exchange bijection $\varphi$, $\lambda'(\varphi(k))=\lambda(k)$ holds, and the cross-organization signature comparison through $\tau_1$ and $\tau_1'$ makes the components match. ✓
+- **Part VI**: The finite monotone theorem, CriticalBlock, Boundary, and all examples concern support within one candidate and are untouched.
+- **Part VII worked cases**: Production/direction, identification, obstruction, eliminative explanation, skew-symmetric matrices, and constitutive rules use (F1), (F2), (A), (K), and non-circular/non-vacuity conditions—not Derivation 2. Untouched.
+- **"What (E) excludes" and "What (E) does not exclude"**: These paragraphs concern Account's four conditions, not Derivation 2. Untouched.
+
+*Costs*: The repair correctly notes that the slogan "indistinguishable is identical" goes, the Consequence narrows to anchor assignments, and identity of differently decomposed candidates is left undefined. These costs are necessary: the strong claim is false.
+
+The alternative compact wording is adequate for the claim alone but omits the Consequence and the "one account" conclusion. The full repair is preferable.
+
+5. **Derivation 10's original sentence is independently defective**, as the finding notes. Even setting aside Derivation 2, "the two persistence components are of one kind" fails (K) at line 136 on any contract containing a displacement edit that affects one component's relation and not the other's. The repair addresses this correctly.
+
+F1: UPHELD
+
+END OF REPORT
+
+---
+
+Let me count the words... This is roughly 1,000 words. I have room for more depth. Let me expand on the key points.
+
+Actually, let me reconsider the structure. The task says "number the points, most serious first." I have 5 points. Let me see if the ordering is right.
+
+Most serious: whether the defect exists (points 1-3).
+Next: whether the repair works (point 4).
+Minor: extra observations (point 5).
+
+This seems right. But maybe I should combine points 1-3 into fewer points and expand each.
+
+Actually, I think the current structure is fine. Let me expand each point with more detail and argument.
+
+Let me also think about what I might add:
+
+For point 1: I could go through the verification of (F1), (F2), (A) more explicitly. But the finding already does this and I've verified it. Maybe just note that I independently verified.
+
+For point 2: I could expand on why defence (ii) is the strongest and why it ultimately fails. The tension between the proof (which works under the shared-anchor reading) and the claim/consequence/title (which require the broader reading) is the crux.
+
+For point 4: I could check more derivations (3-7) and more of Part V.
+
+Let me revise and expand.
+
+Actually, I want to make sure I address one more thing: the task says "Where you cannot refute a step, say which step you tried and why it held." Let me be explicit about this.
+
+The key step I cannot refute is the finding's assertion that Derivation 1 doesn't establish cross-candidate pairing. I tried to find a way that Derivation 1 + (A) could give "pairwise of one kind" for two candidates' components, and I couldn't: Derivation 1 relates each component to its own anchor, and (A) is about answer profiles. The gap between these and the cross-candidate claim is real.
+
+Let me revise the report.
+
+One more thought on the repair: the repaired claim says "the two are one account on $C$." But "one account" is still informal. Should I flag this?
+
+The original claim also used "one account" informally. The repair at least gives a sufficient condition (shared anchors + bijection). It would be nice to formalize "one account" as an equivalence relation on candidates, but this is beyond the scope of the repair and the theory doesn't have such a notion.
+
+I'll mention this briefly.
+
+Also, I want to note that the repair's new Consequence is well-calibrated. It says: "Where two faithful candidates differ only in which component carries which anchor, the contract does not contain the distinction." This is exactly the right scope: anchor assignment swaps are invisible to the contract (both satisfy F1, F2, A with the same answers), and claiming one is "really" right requires a separating change. This preserves the useful philosophical content of the original Consequence while restricting it to what's provable.
+
+OK let me finalize.
+
+Actually, I realize there might be one more issue to check. The repair says "(ii) If a bijection $\varphi$ of their active components satisfies $\lambda'(\varphi(k))=\lambda(k)$ for every $k$, up to port translation, then $k$ and $\varphi(k)$ are of one kind on $C$ for every $k$, and the two are one account on $C$."
+
+Note: "$\lambda'(\varphi(k)) = \lambda(k)$, up to port translation." What does "up to port translation" modify? It could mean:
+(a) $\lambda'(\varphi(k))$ equals $\lambda(k)$ up to port translation (the subnetworks are the same but the port translations differ).
+(b) The equation $\lambda'(\varphi(k)) = \lambda(k)$ holds up to port translation of the components.
+
+I think (a) is intended: the subnetworks are the same (same components of D), but the port translations from the subnetwork to the component may differ (since k and φ(k) may have differently named ports). The "up to port translation" acknowledges this.
+
+Under (a), the proof works: composing the two port translations (from λ(k) to k's ports and from λ'(φ(k)) to φ(k)'s ports) gives a bijection between k's ports and φ(k)'s ports.
+
+Under (b), it's less clear. But (a) is the natural reading in context.
+
+This is fine. Let me finalize.
+
+Let me also think about whether the finding's Derivation 10 analysis is completely correct. It says:
+
+"Read literally, as a claim about two components inside $S_1$, it fails (K) itself: the contract includes 'displace a thing' (line 617), under which one persistence component's relation is replaced and the other's is not, and (K) compares signatures edit by edit."
+
+Wait, the finding says "one persistence component's relation is replaced." But "displace a thing" doesn't replace a component—it changes a boundary condition or a value. Let me re-read the theory.
+
+In Derivation 10 (line 617): "admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities."
+
+"Displace a thing" is an edit on the primitive layer P. It changes the position of a thing. In the simulation layer S₁, this translates (via τ) to an edit that changes the corresponding persistence component's position value.
+
+But does it "replace" the persistence component? No—the component's relation might stay the same (the relation "position = tracked thing's position" is the same), but the value changes.
+
+Hmm, actually, L_j(a,b) is the component relation under edit (a,b). If "displace thing 1" changes thing 1's position, then the persistence component tracking thing 1 has a different relation under this edit (its position port takes a different value).
+
+But wait, L_j(a,b) is a set of allowed valuations. If the component says "position = p" where p is the tracked thing's position, then under "displace thing 1," the tracked thing's position changes from p₀ to p₁, so L_j changes from {p₀} to {p₁}. Yes, the relation changes.
+
+For the other persistence component (tracking thing 2), its relation doesn't change under "displace thing 1." So L_{k_1}(a,b) ≠ L_{k_2}(a,b) at this edit (one has changed, the other hasn't). Their signatures differ at this edit.
+
+By (K), they're not of one kind on any contract containing "displace thing 1." ✓
+
+The finding says "one persistence component's relation is replaced." Strictly, the relation isn't "replaced" (that language is for edits that set a port, per line 120). But the relation does change. The finding's point stands: (K) compares signatures edit by edit, and the signatures differ at "displace thing 1."
+
+Actually, I realize the finding says "under which one persistence component's relation is replaced and the other's is not." The word "replaced" might be imprecise (it's the relation that changes, not the component being replaced). But the substance is correct: at the edit "displace thing 1," one component's relation changes and the other's doesn't, so their signatures differ.
+
+Hmm, but what exactly does "displace a thing" do at the level of S₁? The edit is on P, and τ translates it to an edit on S₁. What is τ("displace thing 1")?
+
+If persistence component 1 is anchored to thing 1's continuity subnetwork, then τ("displace thing 1") should be the edit that changes persistence component 1's position. This is not "replacing" the component—it's changing one of its port values (or changing its relation to reflect the new position).
+
+In the formalism: L_{k_1}(τ("displace thing 1"), σ(b)) gives the allowed valuations of k_1's ports under this edit. If k_1's relation is "position = thing 1's position, velocity = thing 1's velocity," then under "displace thing 1," thing 1's position changes, so k_1's relation now allows only the new position. This is different from the baseline relation.
+
+For k_2: "position = thing 2's position, velocity = thing 2's velocity." Under "displace thing 1," thing 2's position doesn't change, so k_2's relation is the same as baseline.
+
+So sig(k_1) and sig(k_2) differ at "displace thing 1": L_{k_1} changes, L_{k_2} doesn't. By (K), not of one kind.
+
+But actually, I need to be more careful. The signature includes (a, b, L_j(a,b)) for each (a,b) ∈ C. At (τ("displace thing 1"), σ(b_0)):
+- L_{k_1} is some relation R₁ (reflecting thing 1's new position)
+- L_{k_2} is some relation R₂ (same as baseline, reflecting thing 2's unchanged position)
+
+Since R₁ ≠ R₂ (they have different position values), sig(k_1) ≠ sig(k_2) at this edit. ✓
+
+So the finding's point about Derivation 10 is correct.
+
+But wait, the finding says "one persistence component's relation is replaced." Let me see if this could be literally true. "Displace a thing" is an admitted edit. Line 120: "An edit that sets a port replaces the component assigning that port." If "displace thing 1" is an edit that sets thing 1's position port, then it replaces the component assigning that port—which is thing 1's continuity component in P. In S₁, the translated edit would replace the corresponding component—which is persistence component 1. So in a sense, persistence component 1's relation IS replaced.
+
+But in S₁, the translated edit τ("displace thing 1") might not literally "replace" persistence component 1. It might just change its relation. The formalism says L_j(a,b) is the component relation under edit (a,b), and this can vary with (a,b) without the component being "replaced."
+
+Hmm, this is a subtlety. In P, "displace thing 1" replaces the continuity component. In S₁, the translated edit changes the persistence component's relation. Whether we call this "replacing" or "changing the relation" is a matter of description.
+
+But the key point is that L_{k_1} ≠ L_{k_2} at this edit. Whether the mechanism is "replacement" or "relation change" doesn't matter for (K). The finding's substance is correct even if the word "replaced" is slightly imprecise.
+
+OK, I think I've been thorough enough. Let me write the final report.
+
+Let me think about word count management. I'll aim for ~2,500 words.
+
+Let me draft the final version now.
+
+Hmm, let me reconsider one thing. The task says: "Citing the theory. Line numbers count the lines of the theory text, with its title line as line 1. Quote the theory's words whenever you rely on them."
+
+So I need to quote the theory's actual words (not paraphrase) whenever I rely on them. Let me make sure I do this.
+
+Key quotes:
+- Line 23: "Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so."
+- Line 120: "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one."
+- Line 136: "Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide."
+- Line 204: "\(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation"
+- Line 248: "(F1)" description about "projecting away its hidden ports"
+- Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition."
+- Line 356 (approximate): "a determinant suborganization whose hidden ports project away"
+- Line 523: "Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices."
+- Line 561 (the claim)
+- Line 563 (the proof)
+
+Let me make sure to use these quotes.
+
+OK here is my final draft. Let me write it carefully.
+
+Actually, for the "skew-symmetric case" quote, the finding references line 356. Let me check my line counting for Part VII.
+
+Part VII starts after Part VI. From my counting, Part VI started around line 302. Part VI content goes to about line 332 (the "Hard-to-vary" paragraph). Then:
+
+```
+333: (blank)
+334: ---
+335: (blank)
+336: # Part VII — Exact constructions
+337: (blank)
+338: ## Production and direction
+339: (blank)
+340: Stipulate \(H:=U_H,\ \theta:=U_\theta,\ L:=H\cot\theta\). ...
+```
+
+Hmm, this is getting imprecise. Let me just use the line number the finding gives (356) and quote the phrase.
+
+Actually, from the theory text, the skew-symmetric case says: "The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away."
+
+The finding quotes "a determinant suborganization whose hidden ports project away" at line 356. Let me use this.
+
+OK, let me write the report now. For real this time.
+
+Hmm, let me also think about a very last thing. In my verification of counter-instance 1, I need to be careful about what happens at the baseline for (F1) for m_z.
+
+At baseline (1, b_0): u = 0. Sol_D(1,b_0) = {(0, 0, 1)} (x=0, y=2·0=0, z=0+1=1). 
+
+For m_z (anchor {j_y, j_z}): Sol_{{j_y,j_z}}(1,b_0) is the set of valuations (x,y,z) satisfying y=2x and z=y+1. This is {(s, 2s, 2s+1): s ∈ ℝ}. proj_{x,z} = {(s, 2s+1): s ∈ ℝ}.
+
+L_{m_z}(1, b_0) = {(s, 2s+1): s ∈ ℝ} (the relation z=2x+1).
+
+(F1): proj_{V_{m_z}}[Sol_{{j_y,j_z}}(1,b_0)] = {(s, 2s+1): s ∈ ℝ} = L_{m_z}(1, b_0). ✓
+
+At do(x=c): Sol_{{j_y,j_z}}(do(x=c), b_0). The edit replaces j_x (not in the anchor). So the anchor's constraints are still y=2x and z=y+1. Sol = {(s, 2s, 2s+1): s ∈ ℝ}. proj_{x,z} = {(s, 2s+1): s ∈ ℝ}.
+
+L_{m_z}(τ(do(x=c)), σ(b_0)) = {(s, 2s+1): s ∈ ℝ} (the edit replaces m_x, not m_z).
+
+(F1): ✓
+
+Good. Everything checks out.
+
+Now, one thing I want to be careful about: the finding says "For $m_x$ both sides are $\{c\}$ under $\mathrm{do}(x{=}c)$ and $\{u\}$ at the baseline." Let me verify.
+
+For m_x (anchor {j_x}):At baseline: Sol_{{j_x}}(1,b_0) = {u} = {0}. proj_{V_{m_x}} = {0}. L_{m_x}(1,b_0) = {0} (the relation x=u with u=0). ✓
+
+Under do(x=c): Sol_{{j_x}}(do(x=c),b_0). The edit replaces j_x with a component setting x=c. So the new "j_x" has relation {c}. Sol_{{j_x'}}(do(x=c),b_0) = {c}. proj = {c}.
+
+L_{m_x}(τ(do(x=c)),σ(b_0)): The translated edit replaces m_x (the component assigning x in E₂) with a component setting x=c. So L_{m_x'}(...,...) = {c}.
+
+(F1): {c} = {c}. ✓
+
+But wait—does the edit "replace" m_x in E₂? The edit do(x=c) in D replaces j_x. The translated edit τ(do(x=c)) in E₂ should replace the component assigning x in E₂, which is m_x. So yes.
+
+And (F1) compares proj[Sol_{λ(k)}] with L_k(τ(a),σ(b)). For m_x: λ(m_x) = {j_x}. Under the edit, j_x is replaced. Sol_{{j_x'}}(do(x=c),b_0) = {c}. proj = {c}. And L_{m_x'}(τ(do(x=c)),σ(b_0)) = {c} (m_x is replaced by a component setting x=c). ✓
+
+Hmm, but there's a subtlety. (F1) says: "the relation obtained by imposing the constraints of λ(k) and projecting away its hidden ports equals the component relation of k under the translated edit."
+
+Under the edit do(x=c), λ(m_x) = {j_x} has its component replaced. The "constraints of λ(k)" under the edit are the constraints of the replaced component, which sets x=c. proj_{V_{m_x}} = {c}.
+
+The "component relation of k under the translated edit" is L_{m_x}(τ(do(x=c)),σ(b_0)). If the translated edit replaces m_x (with a component setting x=c in E₂), then L_{m_x} under this edit is... hmm, does L_{m_x}(a,b) refer to the relation of the ORIGINAL m_x or the REPLACED m_x?
+
+Looking at (F1): "the component relation of \(k\) under the translated edit." I think this means L_k evaluated at the translated edit, i.e., L_k(τ(a),σ(b)). If the edit replaces k, then L_k(τ(a),σ(b)) is the relation of the replacement.
+
+Actually, the theory defines L_j(a,b) as a function of (a,b). So L_{m_x}(τ(do(x=c)),σ(b_0)) is the value of this function at the translated edit. If the edit replaces m_x, then this value is the relation of the replacement (x=c).
+
+But wait—if the edit replaces m_x, then m_x is no longer a component of E₂. How can we talk about L_{m_x}(τ(a),σ(b))?
+
+Hmm, I think the formalism handles this by saying that L_j(a,b) is defined for every j and every (a,b), regardless of whether j is "active" at (a,b). If the edit replaces j, then L_j(a,b) is the relation of the replacement (or the full relation, if j is deleted).
+
+Actually, looking at (O): "Sol_D(a,b) = {z ∈ X_D: ∀j ∈ J, z|_{V_j} ∈ L_j(a,b)}." This sums over ALL j ∈ J. So L_j(a,b) is defined for every j and (a,b). If an edit replaces j, then L_j(a,b) is the replacement's relation.
+
+But then "A deleted component imposes the full relation on its ports" (line 120) means: if j is deleted at (a,b), then L_j(a,b) = ∏_{v∈V_j} X_v (the full relation, imposing no constraint).
+
+And "An edit that sets a port replaces the component assigning that port" means: if edit a sets port v (assigned by j), then L_j(a,b) is the relation of the replacement (which sets v to the specified value).
+
+OK, this is consistent. So for (F1) of m_x under do(x=c):
+- λ(m_x) = {j_x}. Sol_{{j_x}}(do(x=c),b_0) = {c} (since L_{j_x}(do(x=c),b_0) = {c}).
+- proj_{V_{m_x}}[Sol_{{j_x}}(do(x=c),b_0)] = {c}.
+- L_{m_x}(τ(do(x=c)),σ(b_0)) = {c} (since the translated edit replaces m_x with a component setting x=c).
+- (F1): {c} = {c}. ✓
+
+Everything is consistent.
+
+But here's an interesting question: what if the edit do(x=c) in D replaces j_x, but the translated edit τ(do(x=c)) in E₂ doesn't replace m_x? Then L_{m_x}(τ(do(x=c)),σ(b_0)) would be the original relation of m_x (z=2x+1... wait, m_x is x=u, not z=2x+1).
+
+Hmm, m_x has relation x=u (where u is the boundary value). Under do(x=c), if m_x is NOT replaced, then L_{m_x}(do(x=c),b_0) = {u} = {0}. But proj[Sol_{{j_x}}(do(x=c),b_0)] = {c}. So (F1) would give {c} = {0}, which fails (for c ≠ 0).
+
+So for (F1) to hold, the translated edit MUST replace m_x. This means τ(do(x=c)) must be an edit that sets port x in E₂, replacing the component assigning x (which is m_x). ✓
+
+This is indeed what τ does (it's the identity on edits). So everything is consistent.
+
+But this also means: the transport τ must correctly map "replace j_x" to "replace m_x." If τ mapped do(x=c) to some edit that doesn't affect m_x, (F1) would fail. The fact that (F1) holds tells us τ is correctly defined.
+
+OK, I think this level of detail is more than needed for the report. Let me just write it.
+
+Let me finalize the report structure:
+
+**F1**
+
+1. Counter-instances valid; all three refutation routes fail.
+2. Defence arguments fail (each addressed).
+3. Typing issue confirmed.
+4. Repair is sound and non-breaking.
+5. Brief notes on costs and minor imprecision.
+
+F1: UPHELD
+
+END OF REPORT
+
+Let me write this up now, keeping it under 3,000 words.

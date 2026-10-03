@@ -1,0 +1,107 @@
+==============================================================================
+CX1  A GOOD CORRECTION THAT LEAVES THE OLD MISTAKE REFITTABLE
+==============================================================================
+
+Family: sun x var[V]  |V|=16   E_good = (sun=id, var=early)
+  E_good passes (A) on J_after (holds f*)? True   on C_full? True
+  jobs = J_after + {}                                                         |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS}                                      |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/windy/early/sunS}                                     |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {wet/calm/early/sunS}                                      |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS}                |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS, wet/calm/early/sunS}                 |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/windy/early/sunS, wet/calm/early/sunS}                |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS} |Pres|=  1  mistake-reinstating=  0
+  jobs = J_after + BG_seed (the seed trial)                                   |Pres|=  1  mistake-reinstating=  0
+  jobs = C_full (the world's contract)                                        |Pres|=  1  mistake-reinstating=  0
+
+Family: sun x var[V+W]  |V|=64   E_good = (sun=id, var=early&dry|early&wet)
+  E_good passes (A) on J_after (holds f*)? True   on C_full? True
+  jobs = J_after + {}                                                         |Pres|=  4  mistake-reinstating=  2
+      e.g. (sun=id, var=early&wet)  gives E0's wrong S at {dry/calm/early/sunS, dry/windy/early/sunS}
+  jobs = J_after + {dry/calm/early/sunS}                                      |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + {dry/windy/early/sunS}                                     |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + {wet/calm/early/sunS}                                      |Pres|=  4  mistake-reinstating=  2
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS}                |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS, wet/calm/early/sunS}                 |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + {dry/windy/early/sunS, wet/calm/early/sunS}                |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS} |Pres|=  2  mistake-reinstating=  0
+  jobs = J_after + BG_seed (the seed trial)                                   |Pres|=  2  mistake-reinstating=  0
+  jobs = C_full (the world's contract)                                        |Pres|=  1  mistake-reinstating=  0
+
+Family: sun x var[V+W+Wi]  |V|=1024   E_good = (sun=id, var=early&dry&calm|early&dry&windy|early&wet&calm|early&wet&windy)
+  E_good passes (A) on J_after (holds f*)? True   on C_full? True
+  jobs = J_after + {}                                                         |Pres|= 64  mistake-reinstating= 56
+      e.g. (sun=id, var=early&wet&windy)  gives E0's wrong S at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS}
+  jobs = J_after + {dry/calm/early/sunS}                                      |Pres|= 32  mistake-reinstating= 24
+  jobs = J_after + {dry/windy/early/sunS}                                     |Pres|= 32  mistake-reinstating= 24
+  jobs = J_after + {wet/calm/early/sunS}                                      |Pres|= 32  mistake-reinstating= 24
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS}                |Pres|= 16  mistake-reinstating=  8
+  jobs = J_after + {dry/calm/early/sunS, wet/calm/early/sunS}                 |Pres|= 16  mistake-reinstating=  8
+  jobs = J_after + {dry/windy/early/sunS, wet/calm/early/sunS}                |Pres|= 16  mistake-reinstating=  8
+  jobs = J_after + {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS} |Pres|=  8  mistake-reinstating=  0
+  jobs = J_after + BG_seed (the seed trial)                                   |Pres|= 32  mistake-reinstating= 24
+  jobs = C_full (the world's contract)                                        |Pres|=  1  mistake-reinstating=  0
+
+  (check: in every family above no version in Pres(J_after) repeats E0's answer at f* itself)
+
+==============================================================================
+CX2  A BAD RESCUE THAT DOES NOT ENLARGE Pres: the record cannot tell wet from early
+==============================================================================
+swap(J_after) == J_after as a set? True ; truth kept on J_after under the swap? True
+swap(C_full truth) == truth? False  (the world is not symmetric)
+good reads     bad reads        |Pres_g|   |Pres_b| swap bijection |Pres_g|full |Pres_b|full
+V              W                       1          1           True            1            0
+V+Wi           W+Wi                    4          4           True            1            0
+V+Sun          W+Sun                   6          6           True            5            0
+V+W            W+V                     4          4           True            1            1
+V+W+Wi         W+V+Wi                 64         64           True            1            1
+
+Port-swap family (override fires on one literal): Pres(J_after) = ['(sun=id, cond=wet)', '(sun=id, cond=windy)', '(sun=id, cond=early)']
+  -> "windy would fit as well" and "wet would fit as well" hold of the GOOD rescue too.
+  with the seed trial BG_seed added: ['(sun=id, cond=early)']
+  with another wet spring BG_rain added: ['(sun=id, cond=windy)', '(sun=id, cond=early)']
+
+Do-nothing patch, single-exception family: |Pres(J_after)| = 1 (E_good with var[V]: 1; E0 before: 1)
+
+==============================================================================
+CX3  VERDICTS THAT FLIP WITH THE VARIATION FAMILY
+==============================================================================
+|Pres(J_after)| for E_good (rows: ports its variety component reads) vs E_bad (columns)
+            bad:W           bad:W+Wi        bad:W+Sun       bad:W+Wi+Sun    
+good:V      1:1 equal       1:4 bad easier  1:6 bad easier  1:96 bad easier 
+good:V+Wi   4:1 good easier 4:4 equal       4:6 bad easier  4:96 bad easier 
+good:V+Sun  6:1 good easier 6:4 good easier 6:6 equal       6:96 bad easier 
+good:V+W+Wi 64:1 good easier64:4 good easier64:6 good easier64:96 bad easier
+
+Do-nothing patch: single-exception family |Pres(J_after)|=1 ; any-predicate family |Pres(J_after)|=24576
+
+==============================================================================
+CX4  (H) NON-STRICT, AND IDLE PARTS IN THE COUNT
+==============================================================================
+E_good family sun x var[V]: Pres(J_after + BG_rain) vs Pres(J_after): equal (1 vs 1)
+  -> a genuinely new job (another wet spring) is added and nothing is excluded.
+Fully common family U: |Pres(C_full)| = 13, although only one answer profile survives:
+    (sun=id, var=early, rain=off, exc=off)
+    (sun=id, var=early, rain=off, exc=only@dry/calm/late/shadeS)
+    (sun=id, var=early, rain=off, exc=only@dry/calm/early/sunS)
+    (sun=id, var=early, rain=off, exc=only@dry/calm/early/shadeS)
+    (sun=id, var=early, rain=off, exc=only@dry/windy/late/shadeS)
+    (sun=id, var=early, rain=off, exc=only@dry/windy/early/sunS)
+    (sun=id, var=early, rain=off, exc=only@dry/windy/early/shadeS)
+    (sun=id, var=early, rain=off, exc=only@wet/calm/late/shadeS)
+    (sun=id, var=early, rain=off, exc=only@wet/calm/early/sunS)
+    (sun=id, var=early, rain=off, exc=only@wet/calm/early/shadeS)
+    (sun=id, var=early, rain=off, exc=only@wet/windy/late/shadeS)
+    (sun=id, var=early, rain=off, exc=only@wet/windy/early/sunS)
+    (sun=id, var=early, rain=off, exc=only@wet/windy/early/shadeS)
+  -> every surviving version gives the true answers; the count is inflated by idle
+     exceptions that fire where the answer is N anyway (counting versions is no warrant).
+
+==============================================================================
+CX5  LEAVE-ONE-OUT (history-free) vs LEAVE-THE-FAILURE-OUT, gardener
+==============================================================================
+  jobs J_after            E_good var[V]  passes (A) on the jobs? True   answers at f* fixed by the other jobs: ['N', 'S']
+  jobs J_after            E_bad rain[W]  passes (A) on the jobs? True   answers at f* fixed by the other jobs: ['N', 'S']
+  jobs J_after + BG_seed  E_good var[V]  passes (A) on the jobs? True   answers at f* fixed by the other jobs: ['N']
+  jobs J_after + BG_seed  E_bad rain[W]  passes (A) on the jobs? False  answers at f* fixed by the other jobs: []

@@ -1,0 +1,131 @@
+======================================================================================================================================================
+C. R2V3.1 (C8 under S108-3-I2's and I5's other choices): the pole's forward candidate; the trace's output uses 'Acc(ℰ′)'
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ℰ: δ_E = L, E's ports ('H', 'T', 'L'), Acc(ℰ) T
+  claim own          ℰ′: δ′ = L, Γ′ = ['c_H', 'c_T', 'c_L'], p′ = p_C1 (|C′| = 7); Acc(ℰ′) T
+      none: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      C8: V3.4, CT reads Prepares: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      R2V3.1: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+  claim widest       ℰ′: δ′ = L, Γ′ = ['c_H', 'c_T', 'c_L'], p′ = p_C1' (|C′| = 1296); Acc(ℰ′) T
+      none: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      C8: V3.4, CT reads Prepares: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      R2V3.1: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+  claim designation  ℰ′: δ′ = H, Γ′ = ['c_H', 'c_T', 'c_L'], p′ = p_C1 (|C′| = 7); Acc(ℰ′) F
+      none: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      C8: V3.4, CT reads Prepares: ExplUse F, Build F, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      R2V3.1: ExplUse F, Build F, chain Con F Dec T Account ∧ ¬Dec(t) F; tag Con F
+  claim gamma        ℰ′: δ′ = L, Γ′ = ['c_H', 'c_T'], p′ = p_C1 (|C′| = 7); Acc(ℰ′) T
+      none: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      C8: V3.4, CT reads Prepares: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      R2V3.1: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+  claim port         ℰ′: δ′ = H, Γ′ = ['c_H', 'c_T', 'c_L'], p′ = p_C1[H] (|C′| = 7); Acc(ℰ′) T
+      none: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      C8: V3.4, CT reads Prepares: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+      R2V3.1: ExplUse T, Build T, chain Con T Dec F Account ∧ ¬Dec(t) T; tag Con T
+======================================================================================================================================================
+C. R2V3.2 (D13.8's key: the formal core's 'new contract' → the variant's 'the change'; the program keys by the change, I174)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+the reply's case: q = [C′, C, C], one record, of ρ_C, at o3; cod t tagged at o1; the trace at o3
+   key contract none  Episode(o1…o3) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o3: Dec F | cut K: Dec T
+   key contract V3.5  Episode(o1…o3) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o3: Dec F | cut K: Dec T
+   key change   none  Episode(o1…o3) F | tag: Con F, Dec T | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec T | trace spanning o1…o3: Dec T | cut K: Dec T
+   key change   V3.5  Episode(o1…o3) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o3: Dec F | cut K: Dec T
+one contract entered twice: q = [C, C′, C, C′], records of ρ_C′ at o2, ρ_C at o3, none at o4 (the second C → C′)
+   key contract none  Episode(o1…o4) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o4: Dec F | cut K: Dec T
+   key contract V3.5  Episode(o1…o4) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o4: Dec F | cut K: Dec T
+   key change   none  Episode(o1…o4) F | tag: Con F, Dec T | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec T | trace spanning o1…o4: Dec T | cut K: Dec T
+   key change   V3.5  Episode(o1…o4) T | tag: Con T, Dec F | chain T′ (held at the output): Dec F | chain T′, not held at the output: Dec F | trace spanning o1…o4: Dec F | cut K: Dec T
+before (FC84.new1 (c), the program): unrecorded C → C′, S41 reading — o1 ≺ o2 an episode: F
+======================================================================================================================================================
+C. R2V3.3: (a) Held read as a tag at o1 before an unrecorded change, the record clause kept; (b) the trace's extent the whole subhistory
+------------------------------------------------------------------------------------------------------------------------------------------------------
+the pole's forward candidate on C1: Acc T, Faithful T
+  none:
+      (a) the reply's Hist (tag at o1, the trace at o2): Sel F Con F Dec T
+      T': chain, Held computed at o2, trace at o2: Dec F | (b) trace spanning o1…o2: Dec T | (a) as a chain, not held at o2 (the tag): Dec T
+      T: chain, Held computed at o2, trace at o2: Dec F | (b) trace spanning o1…o2: Dec T | (a) as a chain, not held at o2 (the tag): Dec T
+      K: chain, Held computed at o2, trace at o2: Dec T | (b) trace spanning o1…o2: Dec T | (a) as a chain, not held at o2 (the tag): Dec T
+      U: chain, Held computed at o2, trace at o2: Dec (False, True) | (b) trace spanning o1…o2: Dec (True,) | (a) as a chain, not held at o2 (the tag): Dec (True,)
+  V3.5:
+      (a) the reply's Hist (tag at o1, the trace at o2): Sel F Con T Dec F
+      T': chain, Held computed at o2, trace at o2: Dec F | (b) trace spanning o1…o2: Dec F | (a) as a chain, not held at o2 (the tag): Dec F
+      T: chain, Held computed at o2, trace at o2: Dec F | (b) trace spanning o1…o2: Dec F | (a) as a chain, not held at o2 (the tag): Dec F
+      K: chain, Held computed at o2, trace at o2: Dec T | (b) trace spanning o1…o2: Dec T | (a) as a chain, not held at o2 (the tag): Dec T
+      U: chain, Held computed at o2, trace at o2: Dec (False, True) | (b) trace spanning o1…o2: Dec (False, True) | (a) as a chain, not held at o2 (the tag): Dec (True,)
+======================================================================================================================================================
+C. R2V3.4 (D15.8's parts as ports with their bindings, R2-3-I4; the other choice, edits): the pole, t′ = t + k_x, stated construction t's own parts
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  components (none)                parts(t) ['c_H', 'c_L', 'c_T']
+      t′ idle     {'acc': True, 'dec': True, 'expl': False, 'under': 0}
+      t′ copy     {'acc': True, 'dec': True, 'expl': False, 'under': 0}
+      t′ deviate  {'acc': False, 'dec': True, 'expl': False, 'under': 0}
+      t on 'Sel-parts' (stated = ['c_H', 'c_T']): Sel F, Dec T, Account ∧ ¬Dec(t) F
+  ports (R2V3.4)                   parts(t) ["('H', 'id(H)', ('H',))", "('L', 'id(L)', ('L',))", "('T', 'id(T)', ('T',))"]
+      t′ idle     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ copy     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ deviate  {'acc': False, 'dec': False, 'expl': False, 'under': 1}
+      t on 'Sel-parts' (stated = ['c_H', 'c_T']): Sel F, Dec T, Account ∧ ¬Dec(t) F
+  edits                            parts(t) ["('1', '1')", "('set(H=1)', 'set(H=1)')", "('set(H=1,L=1)', 'set(H=1,L=1)')", "('set(H=1,L=1,T=30)', 'set(H=1,L=1,T=30)')", "('set(H=1,L=1,T=45)', 'set(H=1,L=1,T=45)')", "('set(H=1,L=1,T=60)', 'set(H=1,L=1,T=60)')"]
+      t′ idle     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ copy     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ deviate  {'acc': False, 'dec': False, 'expl': False, 'under': 1}
+      t on 'Sel-parts' (stated = ['c_H', 'c_T']): Sel T, Dec F, Account ∧ ¬Dec(t) T
+  V3.6 (round 1, clause deleted)   parts(t) ['c_H', 'c_L', 'c_T']
+      t′ idle     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ copy     {'acc': True, 'dec': False, 'expl': True, 'under': 0}
+      t′ deviate  {'acc': False, 'dec': False, 'expl': False, 'under': 1}
+      t on 'Sel-parts' (stated = ['c_H', 'c_T']): Sel T, Dec F, Account ∧ ¬Dec(t) T
+======================================================================================================================================================
+C. R2V3.5 (no construction stated ⇒ 𝒯 = ∅): the pole's forward candidate on provenance_of's 'Sel' history; the student's copy
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  none                     Sel T, Con F, Dec F, Account ∧ ¬Dec(t) T
+  R2V3.5                   Sel F, Con F, Dec T, Account ∧ ¬Dec(t) F
+  C10: V3.6 with R2V3.5    Sel T, Con F, Dec F, Account ∧ ¬Dec(t) T
+======================================================================================================================================================
+C. R2V3.7 (D11.3: ⪯_h the reflexive closure of ≺_h): o1 ≺ o2 ≺ o3, one contract, cod t tagged or held at o1, the trace at o3
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  none     tag model: Con T (contracts unstated), T (one contract stated)
+           chain held [1, 0, 1]: T' Dec F; T Dec F; K Dec T; U Dec (False, True)
+           chain held [1, 0, 0]: T' Dec F; T Dec F; K Dec T; U Dec (True,)
+           chain held [0, 1, 0]: T' Dec F; T Dec F; K Dec T; U Dec (True,)
+  R2V3.7   tag model: Con F (contracts unstated), F (one contract stated)
+           chain held [1, 0, 1]: T' Dec F; T Dec F; K Dec T; U Dec (False, True)
+           chain held [1, 0, 0]: T' Dec T; T Dec T; K Dec T; U Dec (True,)
+           chain held [0, 1, 0]: T' Dec F; T Dec F; K Dec T; U Dec (True,)
+======================================================================================================================================================
+D. Arguments: R2V3.8 (D9.2: every argument has a step) and R2V3.9 (D9.1 without 'Ans_p(a,b) = y')
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  none:
+      S27/S41 Q23 (FC72 (d)): j accepts ¬PM; ¬PM alone: usable T, rules out design ∧ PM T; |X_j(design ∧ PM)| over every argument of height ≤ 2 from ¬PM: 1
+      (Suff) by a premise alone: j accepts ψ = r ∧ (r → ¬Expl(ℰ)); arguments not using (E) ruling out Expl(ℰ): 2 (premise-alone among them: 1); the pole's constructed candidate in Def(L536): T
+      'p because p': j accepts p; p alone rules out ¬p: F (D9.7's block), usable T
+      a test's record rules out the answer y: X_j('Ans_p(a,b) = y') = 1; j accepting ¬(Ans = y) alone rules it out: F
+      FC68 (b): the argument from the test and each candidate's own answer rules out Acc of both: T
+      FC47.new1's case, Test_ab typed as the answer claim: at ξ the candidate whose answer differs ruled out T, so Solved T and Prob_j F
+  R2V3.8:
+      S27/S41 Q23 (FC72 (d)): j accepts ¬PM; ¬PM alone: usable F, rules out design ∧ PM T; |X_j(design ∧ PM)| over every argument of height ≤ 2 from ¬PM: 0
+      (Suff) by a premise alone: j accepts ψ = r ∧ (r → ¬Expl(ℰ)); arguments not using (E) ruling out Expl(ℰ): 1 (premise-alone among them: 0); the pole's constructed candidate in Def(L536): T
+      'p because p': j accepts p; p alone rules out ¬p: F (D9.7's block), usable F
+      a test's record rules out the answer y: X_j('Ans_p(a,b) = y') = 1; j accepting ¬(Ans = y) alone rules it out: F
+      FC68 (b): the argument from the test and each candidate's own answer rules out Acc of both: T
+      FC47.new1's case, Test_ab typed as the answer claim: at ξ the candidate whose answer differs ruled out T, so Solved T and Prob_j F
+  R2V3.9 (I8 kept):
+      S27/S41 Q23 (FC72 (d)): j accepts ¬PM; ¬PM alone: usable T, rules out design ∧ PM T; |X_j(design ∧ PM)| over every argument of height ≤ 2 from ¬PM: 1
+      (Suff) by a premise alone: j accepts ψ = r ∧ (r → ¬Expl(ℰ)); arguments not using (E) ruling out Expl(ℰ): 2 (premise-alone among them: 1); the pole's constructed candidate in Def(L536): T
+      'p because p': j accepts p; p alone rules out ¬p: F (D9.7's block), usable T
+      a test's record rules out the answer y: X_j('Ans_p(a,b) = y') = 0; j accepting ¬(Ans = y) alone rules it out: F
+      FC68 (b): the argument from the test and each candidate's own answer rules out Acc of both: F
+      FC47.new1's case, Test_ab typed as the answer claim: at ξ the candidate whose answer differs ruled out F, so Solved F and Prob_j T
+  R2V3.9 (I8 dropped):
+      S27/S41 Q23 (FC72 (d)): j accepts ¬PM; ¬PM alone: usable T, rules out design ∧ PM T; |X_j(design ∧ PM)| over every argument of height ≤ 2 from ¬PM: 1
+      (Suff) by a premise alone: j accepts ψ = r ∧ (r → ¬Expl(ℰ)); arguments not using (E) ruling out Expl(ℰ): 2 (premise-alone among them: 1); the pole's constructed candidate in Def(L536): T
+      'p because p': j accepts p; p alone rules out ¬p: F (D9.7's block), usable T
+      a test's record rules out the answer y: X_j('Ans_p(a,b) = y') = 0; j accepting ¬(Ans = y) alone rules it out: F
+      FC68 (b): the argument from the test and each candidate's own answer rules out Acc of both: F
+      FC47.new1's case, Test_ab typed as the answer claim: at ξ the candidate whose answer differs ruled out F, so Solved F and Prob_j T
+======================================================================================================================================================
+E. R2V3.10 (D15.5: Can := owned RetReal, the construction disjunct deleted): Deploy (D13.1) and CreateEx (D14.7) over Θ's values
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  none     of 64 valuations: Can 48, Deploy 24, CreateEx 3; D18.1's Can → ['(CT1)', 'Owned', 'Ω']
+  R2V3.10  of 64 valuations: Can 32, Deploy 16, CreateEx 2; D18.1's Can → ['(CT1)', 'Owned']
+  (E), Dec, Account ∧ ¬Dec(t): no definition of them reads Can (D18.1: Can's only readers are Deploy, Tol, Enable, UU); see A for the cases

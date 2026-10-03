@@ -1,0 +1,121 @@
+==============================================================================
+M2  THE SEASONS
+==============================================================================
+Truth: N,H1=summer, N,H2=winter, E,H1=none, E,H2=none, S,H1=winter, S,H2=summer
+J_greek = {N,H1, N,H2}   J_sailor = J_greek + {S,H1, S,H2}   J_world = all 6 pairs
+
+------------------------------------------------------------------------------
+(i) THE (A) TEST
+------------------------------------------------------------------------------
+  Tilt T* (t+1, sphere, direct)    on J_greek  (A)=True  
+  Tilt T* (t+1, sphere, direct)    on J_sailor (A)=True  
+  Tilt T* (t+1, sphere, direct)    on J_world  (A)=True  
+  Tilt with escape clause (flat)   on J_greek  (A)=True  
+  Tilt with escape clause (flat)   on J_sailor (A)=False fails at {S,H1, S,H2}
+  Tilt with escape clause (flat)   on J_world  (A)=False fails at {E,H1, E,H2, S,H1, S,H2}
+  Myth M0 (original)               on J_greek  (A)=True  
+  Myth M0 (original)               on J_sailor (A)=False fails at {S,H1, S,H2}
+  Myth M0 (original)               on J_world  (A)=False fails at {E,H1, E,H2, S,H1, S,H2}
+  Myth M1 (amended, d=S)           on J_greek  (A)=True  
+  Myth M1 (amended, d=S)           on J_sailor (A)=True  
+  Myth M1 (amended, d=S)           on J_world  (A)=False fails at {E,H1, E,H2}
+
+------------------------------------------------------------------------------
+(ii) Pres AND WHAT IT LEAVES OPEN AT UNSEEN PAIRS (spread = answers across Pres)
+------------------------------------------------------------------------------
+  tilt, law menus, no background jobs            |V|=   12  |Pres(J_greek )|=   4  spread {'S,H1': ['summer', 'winter'], 'E,H1': ['none', 'summer']}
+  tilt, law menus, no background jobs            |V|=   12  |Pres(J_sailor)|=   2  spread {'E,H1': ['none']}
+  tilt, law menus, no background jobs            |V|=   12  |Pres(J_world )|=   2  spread 
+  tilt, law menus + BG_heat, BG_elev             |V|=   12  |Pres(J_greek )|=   2  spread {'S,H1': ['summer', 'winter'], 'E,H1': ['none', 'summer']}
+  tilt, law menus + BG_heat, BG_elev             |V|=   12  |Pres(J_sailor)|=   1  spread {'E,H1': ['none']}
+  tilt, law menus + BG_heat, BG_elev             |V|=   12  |Pres(J_world )|=   1  spread 
+  tilt, sphere only (one law everywhere) + BG    |V|=    6  |Pres(J_greek )|=   1  spread {'S,H1': ['winter'], 'E,H1': ['none']}
+  tilt, sphere only (one law everywhere) + BG    |V|=    6  |Pres(J_sailor)|=   1  spread {'E,H1': ['none']}
+  tilt, sphere only (one law everywhere) + BG    |V|=    6  |Pres(J_world )|=   1  spread 
+  tilt, TABLE menus (all g, all h) + BG          |V|= 2187  |Pres(J_greek )|=  18  spread {'S,H1': ['none', 'summer', 'winter'], 'E,H1': ['none', 'summer', 'winter']}
+  tilt, TABLE menus (all g, all h) + BG          |V|= 2187  |Pres(J_sailor)|=   6  spread {'E,H1': ['none', 'summer', 'winter']}
+  tilt, TABLE menus (all g, all h) + BG          |V|= 2187  |Pres(J_world )|=   2  spread 
+  myth, original organization (d fixed none)     |V|=   36  |Pres(J_greek )|=   2  spread {'S,H1': ['summer'], 'E,H1': ['summer']}
+  myth, original organization (d fixed none)     |V|=   36  |Pres(J_sailor)|=   0  spread {'E,H1': []}
+  myth, original organization (d fixed none)     |V|=   36  |Pres(J_world )|=   0  spread 
+  myth, amended organization (d in none,S,E)     |V|=  108  |Pres(J_greek )|=   6  spread {'S,H1': ['summer', 'winter'], 'E,H1': ['summer', 'winter']}
+  myth, amended organization (d in none,S,E)     |V|=  108  |Pres(J_sailor)|=   2  spread {'E,H1': ['summer']}
+  myth, amended organization (d in none,S,E)     |V|=  108  |Pres(J_world )|=   0  spread 
+  myth amended, TABLE menu (grief reads state and place) |V|= 2916  |Pres(J_sailor)|=  18  spread {'E,H1': ['none', 'summer', 'winter']}
+
+------------------------------------------------------------------------------
+(ii)-(iv) THE MYTH'S RESCUE: naive (own families) and embedded (d switched to none)
+------------------------------------------------------------------------------
+  NAIVE own families: original on J_greek |Pres|=2 of 36 (0.0556); amended on J_sailor |Pres|=2 of 108 (0.0185)
+  NAIVE, table menu for the amended grief: amended on J_sailor |Pres|=18 of 2916  (original: 2)
+  EMBEDDED in the amended organization; Vers(M0) = d=none (36), Vers(M1) = all d (108):
+    |Pres_M0(J_greek)|=2  |Pres_M0(J_sailor)|=0  |Pres_M1(J_greek)|=6  |Pres_M1(J_sailor)|=2
+    M0 (d switched off) in Pres_M1(J_sailor)? False
+    (iii) Pres_M1(J_sailor) vs Pres_M1(J_greek) [(H)]: first STRICTLY INSIDE second
+          Pres_M0(J_greek) vs Pres_M1(J_greek) [old jobs]: first STRICTLY INSIDE second
+          Pres_M1(J_sailor) vs Pres_M0(J_greek): disjoint
+    (iv) |Pres_M1(J_sailor)| - |Pres_M0(J_greek)| = +0  -> the amendment does NOT enlarge Pres
+         |Pres_M1(J_sailor)| - |Pres_M1(J_greek)| = -4  (the same shrink a correction shows)
+    M(M0) = {E,H1, E,H2, S,H1, S,H2}
+    versions in Pres_M1(J_sailor) that keep M0's wrong answer somewhere in M(M0): 2 of 2 (at E)
+    spread of Pres_M1(J_greek) at the sailor's pairs: {'S,H1': ['summer', 'winter'], 'S,H2': ['summer', 'winter']}
+
+------------------------------------------------------------------------------
+THE TILT'S OWN CORRECTION (escape clause -> sphere): same organization, file 00 condition met
+------------------------------------------------------------------------------
+  tilt, law menus, no background jobs      |Pres(J_greek)|=4  |Pres(J_sailor)|=2  (H): first STRICTLY INSIDE second;  escape version in Pres(J_sailor)? False
+  tilt, law menus + BG_heat, BG_elev       |Pres(J_greek)|=2  |Pres(J_sailor)|=1  (H): first STRICTLY INSIDE second;  escape version in Pres(J_sailor)? False
+  M(escape version) = {E,H1, E,H2, S,H1, S,H2}
+  tilt, law menus, no background jobs      versions in Pres(J_sailor) giving the escape version's wrong answer somewhere: 0 of 2
+  tilt, law menus + BG_heat, BG_elev       versions in Pres(J_sailor) giving the escape version's wrong answer somewhere: 0 of 1
+  tilt, TABLE menus (all g, all h) + BG    versions in Pres(J_sailor) giving the escape version's wrong answer somewhere: 2 of 6
+
+------------------------------------------------------------------------------
+"NOWHERE TO GO" (Deutsch p.25): a hypothetical report that the south is IN phase with Greece
+------------------------------------------------------------------------------
+  tilt, law menus, no background jobs            |Pres(in-phase report)| =   2  e.g. (t+1, flat/escape, direct)
+  tilt, law menus + BG_heat, BG_elev             |Pres(in-phase report)| =   1  e.g. (t+1, flat/escape, direct)
+  tilt, sphere only (one law everywhere) + BG    |Pres(in-phase report)| =   0  -> nowhere to go
+  tilt, TABLE menus (all g, all h) + BG          |Pres(in-phase report)| =   6  e.g. (t+1, g+1+1+1, hs/w/n)
+  myth, original organization (d fixed none)     |Pres(in-phase report)| =   2  e.g. (sched:ha, u:home->summer,away->winter, d=none)
+  myth, amended organization (d in none,S,E)     |Pres(in-phase report)| =   4  e.g. (sched:ha, u:home->summer,away->winter, d=none)
+
+------------------------------------------------------------------------------
+TILT vs AMENDED MYTH on the jobs each now does
+------------------------------------------------------------------------------
+  tilt, law menus, no background jobs            |Pres(J_sailor)| = 2
+  tilt, law menus + BG_heat, BG_elev             |Pres(J_sailor)| = 1
+  tilt, sphere only (one law everywhere) + BG    |Pres(J_sailor)| = 1
+  myth, amended organization (d in none,S,E)     |Pres(J_sailor)| = 2
+      myth version in Pres: (sched:ha, u:home->summer,away->winter, d=S)
+      myth version in Pres: (sched:ah, u:home->winter,away->summer, d=S)
+      tilt version in Pres (T1): (t+1, sphere, direct)
+      tilt version in Pres (T1): (t-1, sphere, inverse)
+
+------------------------------------------------------------------------------
+HISTORY-FREE vs HISTORY-USING detection of a fitted part
+  LOO(x): is the answer at x fixed by Pres(F - {x})?  BLOCK: is it fixed by Pres(F - block)?
+------------------------------------------------------------------------------
+  amended myth (embedded family)   LOO at S,H1: answers ['winter']
+  amended myth (embedded family)   LOO at S,H2: answers ['summer']
+  amended myth (embedded family)   BLOCK (sailor's report left out): answers at S,H1 ['summer', 'winter'], at S,H2 ['summer', 'winter']
+  tilt T1 (no background)          LOO at S,H1: answers ['winter']
+  tilt T1 (no background)          LOO at S,H2: answers ['summer']
+  tilt T1 (no background)          BLOCK (sailor's report left out): answers at S,H1 ['summer', 'winter'], at S,H2 ['summer', 'winter']
+  tilt T2 (+BG)                    LOO at S,H1: answers ['winter']
+  tilt T2 (+BG)                    LOO at S,H2: answers ['summer']
+  tilt T2 (+BG)                    BLOCK (sailor's report left out): answers at S,H1 ['summer', 'winter'], at S,H2 ['summer', 'winter']
+  tilt T3 (sphere only, +BG)       LOO at S,H1: answers ['winter']
+  tilt T3 (sphere only, +BG)       LOO at S,H2: answers ['summer']
+  tilt T3 (sphere only, +BG)       BLOCK (sailor's report left out): answers at S,H1 ['winter'], at S,H2 ['summer']
+
+------------------------------------------------------------------------------
+NARROWING: "the myth only covers Greece" (after the report)
+------------------------------------------------------------------------------
+  Pres_M0(J_greek) after narrowing vs before the report: equal (|2| vs |2|);  vs Pres_M0(J_sailor): first STRICTLY CONTAINS second (0)
+
+------------------------------------------------------------------------------
+OPTION (b) consequences (pairs of J_world other than the sailor's where the change matters)
+------------------------------------------------------------------------------
+  myth amendment d: none -> S        consequences {} -> MARKED (absorbed)
+  tilt correction flat -> sphere     consequences {E,H1, E,H2} -> not marked

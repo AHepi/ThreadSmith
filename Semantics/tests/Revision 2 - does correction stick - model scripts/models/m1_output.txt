@@ -1,0 +1,165 @@
+==============================================================================
+M1  THE GARDENER
+==============================================================================
+Settings: 16 = W{dry,wet} x Wi{calm,windy} x V{late,early} x Sun{sunS,shadeS}
+Truth: N first iff V=early; otherwise the sunnier bed first.
+E0 = (sun=id): the sunnier bed ripens first.
+M(E0) = pairs where E0 is wrong = {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS, wet/windy/early/sunS}
+J_before (records + shading test) = {dry/calm/late/sunS, dry/calm/late/shadeS}
+f* (the failed sixth summer)      = wet/windy/early/sunS
+J_after = J_before + f*
+C_full = all 16 settings (every admitted change of the named variables)
+BG_seed = {dry/calm/early/sunS}  BG_rain = {wet/calm/late/sunS}
+
+------------------------------------------------------------------------------
+(i) THE (A) TEST AND NON-CIRCULAR DEPENDENCE, each candidate on its stated contract
+------------------------------------------------------------------------------
+E0 (before)                 on J_before                           (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E0 (after the failure)      on J_after                            (A)=False NonCirc=True   fails at {wet/windy/early/sunS}
+E_good                      on C_full                             (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E_good                      on J_after                            (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E_bad (wet->N)              on C_full                             (A)=False NonCirc=True   fails at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/late/sunS, wet/windy/late/sunS}
+E_bad (wet->N)              on J_after (analysis Sit.3)           (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E_patch (exception at f*)   on C_full                             (A)=False NonCirc=True   fails at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS}
+E_patch (exception at f*)   on J_after                            (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E_narrow = E0               on C_narrow (summers seen + shading)  (A)=True  NonCirc=True   x=dry/calm/late/shadeS, G=sun
+E_narrow_bare = E0          on C_narrow_bare (summers seen only)  (A)=True  NonCirc=False  no pair of C changes the answer
+
+------------------------------------------------------------------------------
+(ii)-(iv) NAIVE: each candidate in its OWN family (different organizations)
+------------------------------------------------------------------------------
+Stated menus: sun = all 4 maps {S,N}->{S,N}; an override reading ports P = all
+predicates on P (off included); the exception = fires at exactly one setting (or off).
+E0 before                    |V|=     4  |Pres|=    1  fraction=0.2500
+E0 after the failure         |V|=     4  |Pres|=    0  fraction=0.0000
+E_good  [var reads V]        |V|=    16  |Pres|=    1  fraction=0.0625
+E_bad   [rain reads W]       |V|=    16  |Pres|=    1  fraction=0.0625
+E_bad   [rain reads W,Wi]    |V|=    64  |Pres|=    4  fraction=0.0625
+E_patch [single exception]   |V|=    68  |Pres|=    1  fraction=0.0147
+E_narrow (E0 on C_narrow)    |V|=     4  |Pres|=    1  fraction=0.2500
+E_patch [any predicate, 4 ports] |V|=262144  |Pres|=24576  fraction=0.0938
+
+Naive subset test Pres_after <= Pres_before: the elements are tuples of different
+length (sun) vs (sun, override); as Python sets they are always disjoint:
+   E_good  [var reads V]        Pres_after & Pres_before = empty  -> "after is not inside before" for every rescue
+   E_bad   [rain reads W]       Pres_after & Pres_before = empty  -> "after is not inside before" for every rescue
+   E_bad   [rain reads W,Wi]    Pres_after & Pres_before = empty  -> "after is not inside before" for every rescue
+   E_patch [single exception]   Pres_after & Pres_before = empty  -> "after is not inside before" for every rescue
+Answer profiles as the only common currency (profile on C_full):
+   E_good  [var reads V]        profiles(after) inside profiles(before)? False
+   E_bad   [rain reads W]       profiles(after) inside profiles(before)? False
+   E_bad   [rain reads W,Wi]    profiles(after) inside profiles(before)? False
+   E_patch [single exception]   profiles(after) inside profiles(before)? False
+   (any rescue changes the answer at f*, so this is False for every rescue; restricted
+    to J_before every surviving profile equals the truth, so it is trivially "equal".)
+
+------------------------------------------------------------------------------
+(v) EMBEDDING  U = sun x var[V] x rain[W] x exc[single]   |U| = 1088
+    Vers(E) = points of U whose components absent from E are off.
+------------------------------------------------------------------------------
+E0: |Vers|=4  |Pres(J_before)|=1  |Pres(J_after)|=0  |Pres(C_narrow)|=1  |Pres(C_full)|=0
+
+E_good = (sun=id, var=early, rain=off, exc=off)   |Vers|=16
+  (ii)  |Pres(J_before)|=2  |Pres(J_after)|=1  |Pres(C_full)|=1
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 0
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_good(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_good(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_good(J_after)| - |Pres_E0(J_before)| = +0 ;  vs E_good on J_after: +0
+        does the candidate itself pass (A) on C_full? True
+
+E_bad = (sun=id, var=off, rain=wet, exc=off)   |Vers|=16
+  (ii)  |Pres(J_before)|=2  |Pres(J_after)|=1  |Pres(C_full)|=0
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 1
+           e.g. (sun=id, var=off, rain=wet, exc=off)  wrong as E0 at {dry/calm/early/sunS, dry/windy/early/sunS}
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_bad(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_bad(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_bad(J_after)| - |Pres_E0(J_before)| = +0 ;  vs E_good on J_after: +0
+        does the candidate itself pass (A) on C_full? False
+
+E_patch = (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)   |Vers|=68
+  (ii)  |Pres(J_before)|=17  |Pres(J_after)|=1  |Pres(C_full)|=0
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 1
+           e.g. (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)  wrong as E0 at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS}
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_patch(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_patch(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_patch(J_after)| - |Pres_E0(J_before)| = +0 ;  vs E_good on J_after: +0
+        does the candidate itself pass (A) on C_full? False
+
+Narrowing in U: E_narrow = E0 on C_narrow.  Pres_E0(C_narrow) vs Pres_E0(J_before): equal;
+   vs Pres_E0(J_after): first STRICTLY CONTAINS second (1 vs 0)
+
+------------------------------------------------------------------------------
+(v) EMBEDDING  U = sun x var[V] x rain[W,Wi] x exc[single]   |U| = 4352
+    Vers(E) = points of U whose components absent from E are off.
+------------------------------------------------------------------------------
+E0: |Vers|=4  |Pres(J_before)|=1  |Pres(J_after)|=0  |Pres(C_narrow)|=1  |Pres(C_full)|=0
+
+E_good = (sun=id, var=early, rain=off, exc=off)   |Vers|=16
+  (ii)  |Pres(J_before)|=2  |Pres(J_after)|=1  |Pres(C_full)|=1
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 0
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_good(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_good(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_good(J_after)| - |Pres_E0(J_before)| = +0 ;  vs E_good on J_after: +0
+        does the candidate itself pass (A) on C_full? True
+
+E_bad = (sun=id, var=off, rain=wet&calm|wet&windy, exc=off)   |Vers|=64
+  (ii)  |Pres(J_before)|=8  |Pres(J_after)|=4  |Pres(C_full)|=0
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 4
+           e.g. (sun=id, var=off, rain=wet&windy, exc=off)  wrong as E0 at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS}
+           e.g. (sun=id, var=off, rain=wet&calm|wet&windy, exc=off)  wrong as E0 at {dry/calm/early/sunS, dry/windy/early/sunS}
+           e.g. (sun=id, var=off, rain=dry&windy|wet&windy, exc=off)  wrong as E0 at {dry/calm/early/sunS, wet/calm/early/sunS}
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_bad(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_bad(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_bad(J_after)| - |Pres_E0(J_before)| = +3 ;  vs E_good on J_after: +3
+        does the candidate itself pass (A) on C_full? False
+
+E_patch = (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)   |Vers|=68
+  (ii)  |Pres(J_before)|=17  |Pres(J_after)|=1  |Pres(C_full)|=0
+        E0 (added component off) in Pres(J_before)? True   in Pres(J_after)? False
+        versions in Pres(J_after) that give E0's wrong answer at f*: 0
+        versions in Pres(J_after) that give E0's wrong answer somewhere in M(E0): 1
+           e.g. (sun=id, var=off, rain=off, exc=only@wet/windy/early/sunS)  wrong as E0 at {dry/calm/early/sunS, dry/windy/early/sunS, wet/calm/early/sunS}
+  (iii) Pres(J_after) vs Pres(J_before) [same family, more jobs, (H)]: first STRICTLY INSIDE second
+        Pres_E0(J_before) vs Pres_E_patch(J_before) [old jobs, before vs after family]: first STRICTLY INSIDE second
+        Pres_E_patch(J_after) vs Pres_E0(J_before) [after on new jobs vs before on old]: disjoint
+  (iv)  |Pres_E_patch(J_after)| - |Pres_E0(J_before)| = +0 ;  vs E_good on J_after: +0
+        does the candidate itself pass (A) on C_full? False
+
+Narrowing in U: E_narrow = E0 on C_narrow.  Pres_E0(C_narrow) vs Pres_E0(J_before): equal;
+   vs Pres_E0(J_after): first STRICTLY CONTAINS second (1 vs 0)
+
+------------------------------------------------------------------------------
+FULLY COMMON FAMILY: all of U free (Pres depends on the jobs only)
+------------------------------------------------------------------------------
+  |Pres(J_before (= C_narrow) )| =   68   members among named: E0, E_good, E_bad, E_patch
+  |Pres(J_after               )| =   52   members among named: E_good, E_bad, E_patch
+  |Pres(J_after + BG_seed     )| =   35   members among named: E_good
+  |Pres(J_after + BG_rain     )| =   17   members among named: E_good, E_patch
+  |Pres(C_full                )| =   13   members among named: E_good
+  Pres(J_after) vs Pres(J_before): first STRICTLY INSIDE second  (the narrowing moves back from the first to the second)
+
+------------------------------------------------------------------------------
+COMPARISON: what the record of option (b) marks (no consequence beyond the failed pair)
+------------------------------------------------------------------------------
+  E_good   on C_full   consequences: 3   -> not marked
+  E_good   on J_after  consequences: 0   -> MARKED (absorbed)
+  E_bad    on C_full   consequences: 3   -> not marked
+  E_bad    on J_after  consequences: 0   -> MARKED (absorbed)
+  E_patch  on C_full   consequences: 0   -> MARKED (absorbed)
+  E_patch  on J_after  consequences: 0   -> MARKED (absorbed)
+  E_narrow: the limit follows from no component -> MARKED (absorbed)

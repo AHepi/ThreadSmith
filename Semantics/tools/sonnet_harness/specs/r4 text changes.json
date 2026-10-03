@@ -1,0 +1,224 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r4-text-changes",
+ "job": "apply_text_changes",
+ "kind": "mechanical",
+ "purpose": "Round 4, integration (reading rule, rules 7 and 14; harness table 'r4 text changes' with 'r4 scans'): apply the integration's list 'text changes after round 4.json' (2 changes, kind formal: R4A2-T1 at L271, area 2's; R4INT-T1 at L536, the integration's, pair 7) to tests/106 (md5 c7af964c329ab7959243405d394e6574, never written) by apply_changes.py, writing the NEW file tests/107 The semantics, standing alone, after round 4.md (md5 6e9bd68fb1f98b52a3a02fc896cdc9bd); each change checked byte for byte and undone; the S95 and S96 scans, headings, defined terms and labelled formulas kept, and words outside formulas not grown (15,204 before and after); then an independent re-scan (text_scan.py) and the md5s.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r4-text-changes",
+ "inputs": [
+  {
+   "path": "Semantics/tests/106 The semantics, standing alone, without the written-in test.md",
+   "md5": "c7af964c329ab7959243405d394e6574"
+  },
+  {
+   "path": "Semantics/results/S107 Round 4 - maths after the reading/text changes after round 4.json",
+   "md5": "a05100798b237684fcf95b5704b4f7aa"
+  }
+ ],
+ "steps": [
+  {
+   "name": "apply the 2 changes of round 4 to tests/106, writing the new tests/107",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/apply_changes.py",
+    "--src",
+    "{SEM}/tests/106 The semantics, standing alone, without the written-in test.md",
+    "--src-md5",
+    "c7af964c329ab7959243405d394e6574",
+    "--changes",
+    "{SEM}/results/S107 Round 4 - maths after the reading/text changes after round 4.json",
+    "--out",
+    "{SEM}/tests/107 The semantics, standing alone, after round 4.md",
+    "--expect-md5",
+    "6e9bd68fb1f98b52a3a02fc896cdc9bd",
+    "--allow-new-in-sem"
+   ],
+   "timeout_s": 120,
+   "save": "step1.json"
+  }
+ ],
+ "check_steps": [
+  {
+   "name": "an independent scan of tests/106 against tests/107 (words, words outside formulas, S95 and S96 hits, headings, terms, tags)",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/text_scan.py",
+    "--before",
+    "{SEM}/tests/106 The semantics, standing alone, without the written-in test.md",
+    "--after",
+    "{SEM}/tests/107 The semantics, standing alone, after round 4.md"
+   ],
+   "timeout_s": 120,
+   "save": "scan.json"
+  },
+  {
+   "name": "md5 of the new text, of the source (unchanged) and of the list",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/md5_check.py",
+    "--expect",
+    "Semantics/tests/107 The semantics, standing alone, after round 4.md=6e9bd68fb1f98b52a3a02fc896cdc9bd",
+    "--expect",
+    "Semantics/tests/106 The semantics, standing alone, without the written-in test.md=c7af964c329ab7959243405d394e6574",
+    "--expect",
+    "Semantics/results/S107 Round 4 - maths after the reading/text changes after round 4.json=a05100798b237684fcf95b5704b4f7aa"
+   ],
+   "timeout_s": 60,
+   "save": "md5.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "applied: the new text has the md5 the integration computed",
+   "file": "step1.json",
+   "path": "md5_match",
+   "equals": true
+  },
+  {
+   "name": "applied: the applier's ok",
+   "file": "step1.json",
+   "path": "ok",
+   "equals": true
+  },
+  {
+   "name": "2 changes read",
+   "file": "step1.json",
+   "path": "changes_read",
+   "equals": 2
+  },
+  {
+   "name": "2 applied",
+   "file": "step1.json",
+   "path": "applied_count",
+   "equals": 2
+  },
+  {
+   "name": "none refused",
+   "file": "step1.json",
+   "path": "refused_count",
+   "equals": 0
+  },
+  {
+   "name": "none held",
+   "file": "step1.json",
+   "path": "held_count",
+   "equals": 0
+  },
+  {
+   "name": "first applied: R4A2-T1 at L271",
+   "file": "step1.json",
+   "path": "applied.0.id",
+   "equals": "R4A2-T1"
+  },
+  {
+   "name": "second applied: R4INT-T1 at L536",
+   "file": "step1.json",
+   "path": "applied.1.id",
+   "equals": "R4INT-T1"
+  },
+  {
+   "name": "each change and each undo checked byte for byte (2 changes, 2 lines)",
+   "file": "step1.json",
+   "path": "byte_checks_passed",
+   "equals": 4
+  },
+  {
+   "name": "2 lines differ",
+   "file": "step1.json",
+   "path": "lines_differing",
+   "equals": 2
+  },
+  {
+   "name": "the line count kept (632 newlines, as tests/106)",
+   "file": "step1.json",
+   "path": "after.lines_newline_count",
+   "equals": 632
+  },
+  {
+   "name": "words outside formulas before: 15,204",
+   "file": "step1.json",
+   "path": "before.words_outside_formulas",
+   "equals": 15204
+  },
+  {
+   "name": "words outside formulas after: 15,204 (not grown)",
+   "file": "step1.json",
+   "path": "after.words_outside_formulas",
+   "equals": 15204
+  },
+  {
+   "name": "words outside formulas not grown",
+   "file": "step1.json",
+   "path": "prose_not_grown",
+   "equals": true
+  },
+  {
+   "name": "no new S95 hit",
+   "file": "step1.json",
+   "path": "s95_new_total",
+   "equals": 0
+  },
+  {
+   "name": "no new word on decision S23's list",
+   "file": "step1.json",
+   "path": "s95_new_on_s23_list",
+   "equals": 0
+  },
+  {
+   "name": "no new S96 physical word",
+   "file": "step1.json",
+   "path": "s96_new_total",
+   "equals": 0
+  },
+  {
+   "name": "no heading, defined term or labelled formula lost",
+   "file": "step1.json",
+   "path": "marks_missing",
+   "empty": true
+  },
+  {
+   "name": "independent scan: ok (no new S23-list hit, no mark lost, words outside formulas not grown)",
+   "file": "scan.json",
+   "path": "ok",
+   "equals": true
+  },
+  {
+   "name": "independent scan: no new S95 hit",
+   "file": "scan.json",
+   "path": "s95_new_total",
+   "equals": 0
+  },
+  {
+   "name": "independent scan: no heading, term or tag lost",
+   "file": "scan.json",
+   "path": "marks_missing",
+   "empty": true
+  },
+  {
+   "name": "independent scan: words outside formulas delta 0",
+   "file": "scan.json",
+   "path": "words_outside_formulas_delta",
+   "equals": 0
+  },
+  {
+   "name": "all three md5s",
+   "file": "md5.json",
+   "path": "ok",
+   "equals": true
+  }
+ ],
+ "on_fail": "escalate to Opus (the integration agent; record: results/S107 Round 4 - maths after the reading/integration notes.md) with result.*.json, step1.json, scan.json and md5.json; a new S95 or S96 hit goes to Opus to rule on",
+ "never": [
+  "write any file under tests/ or results/ except the one new file tests/107 The semantics, standing alone, after round 4.md that the applier writes",
+  "write over any file",
+  "choose which changes to apply",
+  "edit a change",
+  "open a key file",
+  "call GLM",
+  "commit",
+  "retry past this spec"
+ ]
+}

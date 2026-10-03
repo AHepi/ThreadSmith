@@ -1,0 +1,1094 @@
+Let me analyze this task carefully. I need to audit three claimed defects (F1, F2, F3) in a formal semantics theory, testing each against the theory's own text, judging proposed repairs, and hunting for further counterexamples.
+
+Let me work through each finding.
+
+**F1: Derivation 2, "Indistinguishable is identical"**
+
+The claim (lines 559-565): Two candidates E, E' for the same p that both satisfy (F1), (F2), and (A) on C are one account at grain C: their components are pairwise of one kind on C and their answer profiles coincide.
+
+The finding says half (b) follows from (A), but half (a) is false because Derivation 1 relates each component to its own anchor in D, and nothing supplies a pairing between components of two candidates.
+
+Let me check the counter-instances.
+
+Counter-instance 1:
+- Target D: ports x, y, z. Components j_x: x=u (u=0 at b_0); j_y: y=2x; j_z: z=y+1.
+- Edits: identity and do(x=c) for each real c. do(x=c) replaces j_x.
+- Contract C = {(1,b_0)} ∪ {(do(x=c), b_0): c ∈ R}.
+- Q reads z, so Ans_p(do(x=c), b_0) = 2c+1.
+- E1 = D itself, identity transport. Components k_x, k_y, k_z.
+- E2: ports x, z; components m_x: x=u anchored to {j_x}; m_z: z=2x+1 anchored to {j_y, j_z} with hidden port y projected away.
+
+(F1) for E2: proj_{x,z} Sol_{j_y,j_z}(a, b_0). The anchor is {j_y, j_z}, which imposes y=2x and z=y+1, so z=2x+1, with y free. Projecting away y gives {(s, 2s+1): s ∈ R}. This equals L_{m_z} = {(s, 2s+1)}. Note do(x=c) replaces j_x, which is outside the anchor {j_y, j_z}, so the anchor's solution set is unchanged by the edit. Wait — but actually if do(x=c) sets x=c, then... hmm. Let me think about the structure.
+
+Actually in the organization D, the components are j_x: x=u, j_y: y=2x, j_z: z=y+1. Under edit do(x=c), j_x is replaced. What does the replacement do? "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one." So do(x=c) replaces j_x with a component that sets x=c. Then Sol_D(do(x=c), b_0) = {(x,y,z): x=c, y=2x, z=y+1} = {(c, 2c, 2c+1)}.
+
+For E2, the anchor of m_z is {j_y, j_z}. Sol_{j_y,j_z}(do(x=c), b_0) — the subnetwork {j_y, j_z} with constraints y=2x, z=y+1, on ports... the subnetwork's ports are {x, y, z} (union of footprints). Under do(x=c), does x get set? The edit do(x=c) replaces j_x, which is not in the subnetwork {j_y, j_z}. So within the subnetwork, x is free (not set by any component in the subnetwork). So Sol_{j_y,j_z}(do(x=c), b_0) = {(x,y,z): y=2x, z=y+1} = {(s, 2s, 2s+1): s ∈ R}. Projecting away hidden port y onto {x, z}: {(s, 2s+1): s ∈ R}. Yes, that matches L_{m_z}.
+
+Hmm wait, but there's a subtlety: the anchor subnetwork's solution under edit (a,b). The edit do(x=c) sets x in D. But the anchor subnetwork doesn't contain j_x. So the question is whether the edit's effect on x propagates. In (F1): proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a), σ(b)). Here Sol_{λ(k)}(a,b) is the solution set of the subnetwork λ(k) under edit (a,b). The subnetwork is a set of components; imposing do(x=c) — does it set x? If the subnetwork doesn't have a component assigning x, then x is a free port of the subnetwork. The edit do(x=c) replaces the component assigning x — but there is no such component in the subnetwork. Hmm.
+
+This is genuinely ambiguous in the theory. The finding asserts that do(x=c) "replaces j_x, which lies outside that anchor", so the anchor's solution set is unchanged. That's one reading. On another reading, an edit on D applies to D and the subnetwork inherits the edited components. Actually the notation Sol_{λ(k)}(a,b) suggests the subnetwork is itself an organization and (a,b) is applied to it. If (a,b) = (do(x=c), b_0) and the subnetwork has no component assigning x, then... the edit sets x directly (it's an edit that sets a port). The theory says "An edit that sets a port replaces the component assigning that port". In the subnetwork, no component assigns x, so the edit... adds a setting? Hmm.
+
+Actually, let's think about it more carefully. If we interpret Sol_{λ(k)}(a,b) as: take the subnetwork, apply edit a (which is an edit of D, translated appropriately). If a = do(x=c) and the subnetwork contains no component on x, then applying do(x=c) to the subnetwork would set x=c as a boundary-like condition, or would be inapplicable. 
+
+But regardless, let's check: if do(x=c) sets x=c in the subnetwork, then Sol_{j_y,j_z}(do(x=c), b_0) = {(c, 2c, 2c+1)}, and projecting away y gives {(c, 2c+1)}. And L_{m_z}(τ(a), σ(b)) with τ = identity: L_{m_z} under do(x=c)... in E2, m_z is the component z=2x+1 on ports {x, z}. Under do(x=c), does m_z change? do(x=c) sets x. In E2, is there a component assigning x? Yes, m_x: x=u. So do(x=c) replaces m_x, and m_z stays z=2x+1. So L_{m_z}(do(x=c), b_0) = {(c, 2c+1)}. So (F1) holds: {(c,2c+1)} = {(c,2c+1)}. Good, (F1) holds on either reading of the subnetwork edit.
+
+At the baseline (1, b_0): Sol_{j_y,j_z}(1, b_0) = {(s, 2s, 2s+1)}, project away y: {(s, 2s+1)}. L_{m_z}(1, b_0) = {(s, 2s+1)}. Holds.
+
+For m_x: anchor {j_x}, Sol_{j_x}(1, b_0) = {(u)} = {0} on port x... wait, j_x: x=u with u=0 at b_0. Sol_{j_x}(1,b_0) on port x = {0}. L_{m_x}(1, b_0) = {0}. Under do(x=c): Sol_{j_x}(do(x=c), b_0) — the edit replaces j_x, so the subnetwork {j_x} becomes a component setting x=c, giving {c}. L_{m_x}(do(x=c), b_0) = {c} (m_x replaced by setting x=c). Holds.
+
+(F2) for E2: π[Sol_D(do(x=c), b_0)] = π[{(c, 2c, 2c+1)}] = {(c, 2c+1)}. Sol_{E2}(do(x=c), b_0) = {(c, 2c+1)}. Holds. At baseline: π[{(0,0,1)}] = {(0,1)}, Sol_{E2}(1,b_0) = {(0,1)}. Holds. τ(1)=1, τ(do(x=c2)do(x=c1)) = τ(do(x=c2)) = do(x=c2) = do(x=c2)do(x=c1). Hmm, composition: do(x=c2)∘do(x=c1) = do(x=c2). And τ(do(x=c2))τ(do(x=c1)) = do(x=c2)∘do(x=c1) = do(x=c2). OK holds.
+
+(A): Both answer 2c+1. Holds.
+
+Now the components: E1 has k_x, k_y, k_z; E2 has m_x, m_z. Signatures on C:
+- sig_C(k_x) = {(1,b_0, {0}), (do(x=c),b_0, {c})} — the relation on port x.
+- sig_C(k_y): relation on {x,y}: y=2x, i.e., {(s, 2s)}. Under any edit in C (do(x=c) replaces j_x, not j_y), the relation stays {(s,2s)}. Wait, but under do(x=c), in D, x is set to c. Hmm, the component relation L_j(a,b) — for component j_y, L_{j_y}(do(x=c), b_0) is the relation on its footprint {x,y}. Is it {(s,2s)} or {(c, 2c)}? 
+
+The interpretation L_j(a,b) ⊆ ∏_{v∈V_j} X_v. For j_y: y=2x. Under edit do(x=c), the component j_y is unchanged (the edit replaces j_x). So L_{j_y}(do(x=c), b_0) = {(s, 2s): s ∈ R} — the component relation as a relation on its footprint, not restricted to the solution set. Actually hmm, this is a subtle point. L_j(a,b) is the relation the component imposes. For j_y, it imposes y=2x regardless of the edit (since the edit doesn't touch j_y). So L_{j_y}(a,b) = {(s,2s)} for all (a,b) ∈ C.
+
+- sig_C(k_z): L_{j_z}(a,b) = {(s, s+1)} on {y,z} for all (a,b).
+- sig_C(m_x): on {x}: {0} at baseline, {c} under do(x=c). Same as k_x. So k_x and m_x are of one kind.
+- sig_C(m_z): on {x,z}: {(s, 2s+1)} for all (a,b) ∈ C.
+
+So m_z's signature is {(s,2s+1)} on {x,z}, constant across C. k_y's is {(s,2s)} on {x,y}; k_z's is {(s,s+1)} on {y,z}. Under any footprint bijection, {(s,2s+1)} ≠ {(s,2s)} and ≠ {(s,s+1)}. So m_z pairs with neither k_y nor k_z. And the counts differ (3 vs 2), so no bijection exists anyway.
+
+So on the finding's reading, half (a) fails: the components are NOT pairwise of one kind. The claim as stated is false.
+
+Now, can the theory's defence refute this?
+
+Defence (ii): "Pairwise of one kind" pairs components only through shared anchors. On this reading, components anchored to the same subnetwork are of one kind, and components with different anchors are not paired at all. Then the claim is "true" in the instances... but wait, in counter-instance 1, E1 and E2 have different anchors ({j_y,j_z} vs {j_y}, {j_z}), so under this reading no pairing exists, and the claim "their components are pairwise of one kind" would be vacuously... no, it wouldn't be vacuously true; it would be undefined or false. Actually the defence says "the claim is then true in both instances" — hmm, that doesn't seem right either. If pairing is only via shared anchors, then k_y (anchored to {j_y}) and m_z (anchored to {j_y,j_z}) don't share an anchor, so they're not paired, and the statement "pairwise of one kind" doesn't apply. The claim would need to be read as "components paired by shared anchors are of one kind", which is a much weaker statement.
+
+Actually, the finding's reply to (ii) is good: the words say "their components are pairwise of one kind", which names all their components. And "one account at grain C" asserts identity. Under the shared-anchor reading, E1 and E2 would be "one account" although they're different organizations, against line 23: "Two systems with identical outputs and different internal routes are different organizations here."
+
+Hmm, but wait. Line 23 is about systems with identical outputs and different internal routes being different *organizations*. Derivation 2 is about *accounts*. Could two different organizations be one account? The claim says "are one account at grain C". Hmm, that's a stretch — the theory defines Account as a tuple (E, p, t, Γ). Two different tuples are two accounts. So "one account" is already loose language.
+
+Defence (iii): (K) applies to subnetworks as well as components. Derivation 1's proof takes the signature of a subnetwork projected onto a port set. So {k_y, k_z} of E1, projected onto {x,z}, is of one kind with m_z. The finding's reply: in instance 1 the match runs one way only. k_y and k_z, each taken alone, are of one kind with no component and no subnetwork of E2. And the claim is symmetric between the candidates. In instance 2 it fails in both directions.
+
+Hmm, wait. Let me check instance 2 carefully.
+
+Counter-instance 2:
+- D: x=u, y=x+1, z=y+1, w=z (components j_x, j_y, j_z, j_w). Edits do(x=c). Q reads w. Ans = c+2.
+- E_a: {x=u} (anchored {j_x}), {z=x+2} (anchored {j_y, j_z}), {w=z} (anchored {j_w}).
+- E_b: {x=u} (anchored {j_x}), {y=x+1} (anchored {j_y}), {w=y+1} (anchored {j_z, j_w}).
+
+Both have three components. Signatures:
+- E_a: k_x^a: x=u → {c} under do(x=c); z=x+2 → {(s, s+2)} on {x,z}; w=z → {(s,s)} on {z,w}.
+- E_b: k_x^b: x=u → {c}; y=x+1 → {(s,s+1)} on {x,y}; w=y+1 → {(s,s+1)} on {y,w}.
+
+Pairing: k_x^a ↔ k_x^b (same signature). z=x+2 component {(s,s+2)} vs E_b's components {(s,s+1)} (either one) — differ. w=z component {(s,s)} vs {(s,s+1)} — differ. So no bijection makes all pairs match. Only the input components pair. Correct.
+
+The finding notes pairing blocks with blocks (common coarsening {z=x+2, w=z} ↔ {y=x+1, w=y+1} on {x,w}) rescues both instances: the block {z=x+2, w=z} of E_a projected onto {x,w} is {(s, s+2)}; the block {y=x+1, w=y+1} of E_b projected onto {x,w} is {(s, s+2)}. They match! But the theory never defines such a notion, and Derivation 8 says the result doesn't apply to coarsenings.
+
+OK so the finding's counter-instances seem solid under the natural reading. Let me now think about whether the theory's stated assumptions rule them out.
+
+Key question: does (F1) as stated allow merged anchors? Line 204: "λ assigns each component of E a subnetwork of D with a port translation". Line 248: "the relation obtained by imposing the constraints of λ(k) and projecting away its hidden ports". "Hidden ports" exist only when anchors merge or when the subnetwork has ports not in V_k. Line 356: "every intermediate product is a determinant suborganization whose hidden ports project away". So yes, the theory explicitly uses anchors with hidden ports, and E2's anchor {j_y, j_z} with hidden port y is exactly that pattern. So E2 is admissible.
+
+Does (F1) or anything else forbid E2? Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition." E2 passes (F1), so its decomposition isn't "wrong". Nothing says only one decomposition can be right. So defence (i) fails.
+
+So F1's counter-instances stand. The claim of Derivation 2 as written is false: two candidates satisfying (F1), (F2), (A) on C need not have pairwise-kind components.
+
+But wait — is the finding's classification right? The finding says the defect is that half (a) is false under the claim's stated assumptions. The defence (ii) offers a reading (shared anchors) on which the claim is true. The finding's reply is that this reading isn't stated and contradicts the claim's own words and line 23.
+
+Hmm, let me think about whether there's a stronger defence the theory could make. 
+
+Actually, hold on. Let me reconsider. Maybe there's a defence based on the phrase "at grain C". The claim says "are one account at grain C". Grain ℓ is a declared index (line 523). Could "at grain C" mean that the comparison is at the grain of the contract, i.e., components not distinguishable by C are merged? The finding addresses this in point (iv): grain ℓ and contract C are separate declared indices (line 523), and no line says a grain or contract merges components or removes ports. (K) gives k_y, k_z, m_z different relations at every pair of C. So this defence fails.
+
+Another possible defence: maybe (A) plus (F2) forces the components to pair? No — (F2) is about solution sets, not component relations. The counter-instances satisfy (F2).
+
+Another thought: is E2 really a valid candidate organization? It has ports x, z and components m_x: x=u, m_z: z=2x+1. Its solution set Sol_{E2}(1,b_0) = {(0,1)}. Fine. It's an organization in the sense of (O). Yes.
+
+Hmm, one more thing: does the transport t = (π, τ, σ, λ) from D to E2 satisfy the definition? π: X_D → X_E, π(x,y,z) = (x,z). τ translates edits: identity. σ translates boundaries: identity. λ assigns each component of E2 a subnetwork of D with port translation. λ(m_x) = {j_x}, λ(m_z) = {j_y, j_z}. Yes, valid.
+
+So F1 is UPHELD as far as the counter-instances go. Now, is the finding's classification correct? The finding says the defect is that half (a) is false as stated (not a drafting omission). Actually the finding's point 3 says "Half (a) is false under the claim's stated assumptions" — so it's a false claim, not a drafting omission. And point 4 says Part XV's entry is triggered. And the proposed repair is a "recorded change of claim, not an erratum".
+
+Hmm, but let me double-check the finding's claim that Derivation 1 relates each component of one candidate to its own anchor and to nothing else. Derivation 1 (lines 551-555): "If a transport satisfies (F1) on C, then every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C, up to the port translation." Yes, this is per-transport, relating k to λ(k) within one candidate. It says nothing about cross-candidate pairing. Correct.
+
+Now the proof of Derivation 2 says "Immediate from Derivation 1 and (A)". (A) gives answer profiles coincide. Derivation 1 gives, for each candidate separately, that components match their anchors. To get cross-candidate pairing you'd need the anchors to match, which requires shared anchors or identical anchor structure. The counter-instances show this fails. So "Immediate" passes over the missing step. Correct.
+
+Now let me check the finding's claim about Derivation 10 (line 627): "On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+
+The two persistence components are both in S1. The contract includes "swap the two identities" and "displace a thing". Under "displace a thing", one persistence component's relation is replaced (the displaced thing's) and the other's is not. So by (K), comparing signatures edit by edit, they differ. So read literally as a claim about two components inside S1, it fails (K) itself.
+
+Wait, but hold on. Let's think. "displace a thing" — in the primitive layer P, the edit displaces one thing. In S1, the transport τ translates this edit. Under the transport t1, λ sends each persistence component to a thing's continuity subnetwork. So τ(displace thing 1) is an edit of S1 that... displaces the persistence component 1? Then L_{persistence1}(τ(displace thing 1)) differs from L_{persistence2}(τ(displace thing 1)). So their signatures differ on that edit. By (K), they are NOT of one kind on a contract containing "displace a thing". So the literal reading of line 627 is wrong.
+
+But the finding says the intended content is a claim about two transports: t1 and a second transport that exchanges the two anchors. That's the shared-anchor case where pairing exists. Hmm, wait: if we have two transports t1 and t1' where t1' = t1 with anchors of the two persistence components exchanged, then both satisfy (F1), (F2), (A) on C (assuming the contract is symmetric, e.g., includes the swap edit). By Derivation 2 (repaired), the persistence component paired with itself via the exchange is of one kind with... hmm.
+
+Actually, let me think about this differently. The finding's point is that line 627's intended claim is: exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (i.e., the contract doesn't distinguish the two anchor assignments). This is the shared-anchor/exchange case, which the repaired Derivation 2 handles.
+
+But actually, is even that right? Under a contract containing "displace a thing" (say displace thing 1), the transport t1 (persistence1 ↔ thing1) and t1' (persistence1 ↔ thing2) — do both satisfy (F1)? Under displace thing 1, thing 1 moves. In S1 under t1, persistence component 1's relation changes (it tracks thing 1). Under t1', persistence component 1's relation... τ'(displace thing 1) would need to be an edit of S1 that displaces persistence component 1? But t1' maps persistence1 to thing2's continuity subnetwork. So τ'(displace thing 1) — hmm, the edit translation τ' should make the square commute. If t1' anchors persistence1 to thing2, then displacing thing 1 should translate to displacing... nothing in S1? Or displacing persistence component 2 (which is anchored to thing 1)?
+
+This is getting complicated. Let me just say: the finding's analysis of Derivation 10 seems plausible — the literal reading fails (K), and the intended reading is about two transports. Actually, hold on, let me reconsider whether the literal reading really fails.
+
+"On any contract containing it, the two persistence components are of one kind (Derivation 2)." "It" = the swap edit. So: on any contract containing the swap edit, the two persistence components are of one kind. Hmm. But the contract in Derivation 10 also contains displacements and velocity changes (line 619-620: "admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities"). So the contract contains both "displace a thing" and "swap". Under "displace a thing", the two persistence components' signatures differ. So they're not of one kind. Unless... the swap edit somehow makes them the same? No, (K) requires signature coincidence across ALL (a,b) ∈ C.
+
+Hmm, wait. Unless "displace a thing" is interpreted generically — as an edit schema that displaces either thing, and the contract contains the schema. But (K) compares signatures as sets of (a, b, L_j(a,b)) triples. If "displace a thing" is a schema generating two edits (displace thing 1, displace thing 2), then C contains both, and the signatures differ.
+
+So yes, the literal reading of line 627 fails. The finding is right about that.
+
+Hmm, but actually wait. Let me reconsider. Maybe the intended meaning is: the two persistence components are of one kind *with respect to the swap edit* — i.e., swapping them is a symmetry. The finding's rewording captures this: "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account". Hmm, but that requires the contract to not distinguish them, which... under displacements, the two things are distinguishable (displacing thing 1 vs thing 2 are different edits with different effects). 
+
+Hmm, actually no. Let me re-read: "The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2). A claim that 'component 1 is really thing 1' is a claim that some admitted change distinguishes them, and on this contract none does."
+
+Wait — "on this contract none does". But displacements are in the contract! Displacing thing 1 distinguishes thing 1 from thing 2. Hmm. Unless... the point is that the swap edit plus the symmetry means that for any distinguishing change there's a matching one. Let me think.
+
+Actually, I think the intended point is subtler: the two persistence components are symmetric under the swap. If you swap which persistence component is anchored to which thing, you get an equally faithful transport. The "claim that component 1 is really thing 1" — the idea is that there's no fact of the matter about which persistence component represents which thing, because swapping them is a symmetry of the whole setup.
+
+But strictly, by (K), the two persistence components have different signatures on a contract containing "displace a thing" (one responds to displacing thing 1, the other to displacing thing 2). So they're not "of one kind" in the technical sense. The finding is right that the literal reading fails (K).
+
+Hmm, hold on, but is it really true that they have different signatures? Let's set it up. S1 has two persistence components p1, p2, each carrying position and velocity. The transport t1: λ(p1) = thing 1's continuity subnetwork, λ(p2) = thing 2's. τ translates "displace thing 1" to "displace p1" (set p1's position). Then L_{p1}(displace p1) ≠ L_{p1}(displace p2) — under "displace p1", p1's relation changes; under "displace p2" it doesn't. And L_{p2}(displace p1) ≠ L_{p2}(displace p2). So sig(p1) ≠ sig(p2) (they differ on the edit "displace thing 1" ↔ "displace p1"). So not of one kind. Confirmed: literal reading fails.
+
+But wait, maybe I should double check by considering: is "displace a thing" one edit or a schema? The text says "admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities". If "displace a thing" is a single edit that displaces... which thing? It must be a schema or a family. If it's a single edit that displaces "a thing" (nondeterministically?), that's odd. Most naturally it's a family: displace thing 1, displace thing 2. Then C contains both, and signatures differ.
+
+Alternatively, if "displace a thing" is a single edit parameterized by which thing, and the contract C contains the schema... The theory isn't precise here. But on any natural reading where the contract contains edits that affect thing 1 and thing 2 differently, the persistence components' signatures differ.
+
+OK so F1's analysis of Derivation 10 holds: literal reading fails (K); intended reading is about two transports.
+
+Hmm, but actually, does the intended reading work? "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)". For the repaired Derivation 2 to apply, we need a bijection φ of active components with λ'(φ(k)) = λ(k). Transport t1': λ'(p1) = thing 2's continuity subnetwork, λ'(p2) = thing 1's. Then φ = the swap: φ(p1) = p2, φ(p2) = p1. λ'(φ(p1)) = λ'(p2) = thing 1's = λ(p1). ✓. So the premise holds, and p1, p2 are of one kind on C. But wait — that contradicts what I just showed (sig(p1) ≠ sig(p2))!
+
+Hmm. Let me recheck. The repaired Derivation 2 (ii) says: if λ'(φ(k)) = λ(k) for every k, then k and φ(k) are of one kind on C. Proof: k has the signature of λ(k) (by Derivation 1, through τ), and φ(k) has the signature of λ'(φ(k)) = λ(k) (through τ'). So both have the signature of the same subnetwork λ(k), hence coincide.
+
+But this requires that both transports read signatures on the same C. sig_C(λ(k)) via τ for candidate 1, and sig_C(λ(k)) via τ' for candidate 2. If τ ≠ τ', the signatures of λ(k) on C are read through different translations. Hmm, Derivation 1 says: k has the same signature on τ[C] as λ(k) has on C. So for candidate 1: sig_{τ[C]}(p1) = sig_C(λ(p1)) = sig_C(thing 1's continuity subnetwork). For candidate 2: sig_{τ'[C]}(p2) = sig_C(λ'(p2)) = sig_C(thing 1's continuity subnetwork). So sig_{τ[C]}(p1) = sig_{τ'[C]}(p2). But these are signatures on different translated contracts (τ[C] vs τ'[C]). For p1 and p2 to be "of one kind on C" in the cross-candidate sense (the finding's proposed convention: signatures read on C through τ and τ'), we'd need to compare sig_{τ[C]}(p1) with sig_{τ'[C]}(p2)... but these live on different organizations. The finding's convention: "k and k' are of one kind on C when, for some footprint bijection β, β[L_k(τ(a),σ(b))] = L_{k'}(τ'(a),σ'(b)) for every (a,b) ∈ C". So compare L_{p1}(τ(a),σ(b)) with L_{p2}(τ'(a),σ'(b)).
+
+With t1: τ(displace thing 1) = displace p1. With t1': τ'(displace thing 1) = ? If λ'(p1) = thing 2's continuity subnetwork, then to satisfy (F1), τ'(displace thing 1) should be an edit of S1 that displaces... the component anchored to thing 1's subnetwork, which is p2. So τ'(displace thing 1) = displace p2. Then L_{p1}(τ(displace thing 1)) = L_{p1}(displace p1) [changed], and L_{p2}(τ'(displace thing 1)) = L_{p2}(displace p2) [changed]. Under the footprint bijection β = swap, β[L_{p1}(displace p1)] should equal L_{p2}(displace p2). Since the swap maps p1's ports to p2's ports and the displacement values correspond, yes, these match. 
+
+So under the repaired Derivation 2 with the exchange, p1 and p2 ARE of one kind in the cross-candidate sense, because the signature comparison goes through different translations τ and τ'. Interesting. So the finding's rewording of line 627 works with the repaired Derivation 2.
+
+But note: this means the two persistence components are "of one kind" only in the cross-candidate, cross-translation sense — not in the single-organization (K) sense. The literal reading of line 627 ("the two persistence components are of one kind") invokes (K) within S1, which fails. So the finding is right that line 627 needs rewording.
+
+Hmm, wait. Actually, hold on. Let me reconsider whether the literal reading might be defensible. In Derivation 10, the contract for S1... let me re-read.
+
+Line 625-627: "The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2). A claim that 'component 1 is really thing 1' is a claim that some admitted change distinguishes them, and on this contract none does. That is not a defect of S1; it is the correct report that identity, at this grain, is exhausted by trajectory."
+
+"on this contract none does" — no admitted change distinguishes them. But displacements do distinguish them! Unless... hmm. Unless the claim is about the swap contract specifically, i.e., a contract containing ONLY the swap (and maybe occlusion), not displacements. "On any contract containing it" — containing the swap. If the contract contains only the swap edit and the baseline, then the two persistence components' signatures: under swap, L_{p1}(swap) and L_{p2}(swap). If the swap edit in S1 swaps the two persistence components' values, then... hmm.
+
+Actually, I think there's a genuine tension here. If the contract contains displacements, the persistence components are distinguishable. If it contains only swaps, they might not be. The text says "On any contract containing it" — any contract containing the swap. A contract containing both swap and displacements would still distinguish them. So the literal claim is too broad, and false for contracts containing displacements.
+
+Hmm, unless "distinguishes them" means something weaker. Let me re-read: "A claim that 'component 1 is really thing 1' is a claim that some admitted change distinguishes them, and on this contract none does." The point is about which persistence component represents which thing. Under a displacement of thing 1, persistence component 1 (anchored to thing 1) responds. So the contract does distinguish "component 1 is thing 1" from "component 1 is thing 2" — displacing thing 1 changes component 1 in one assignment and component 2 in the other. So the claim "on this contract none does" seems false!
+
+Wait, but the swap edit: if you swap the two identities in P, and S1's persistence components are anchored to things, then... the swap is invisible in the sensory field. Hmm. The swap edit in P swaps the two things' identities. Under t1, τ(swap) is an edit of S1 that swaps the two persistence components. Then L_{p1}(swap) = the swapped relation. And sig(p1) on a contract containing swap: at baseline, L_{p1}(1) = thing 1's trajectory relation; at swap, L_{p1}(swap) = thing 2's trajectory relation (since swapping makes p1 carry thing 2's values? or does p1's relation become thing 2's?).
+
+This is getting deep. Let me step back. The key issue for the audit: does the finding's analysis hold? I think the core claim — that Derivation 2 as stated is false, with valid counter-instances — holds. The Derivation 10 analysis is secondary but the finding's points are plausible: the literal reading conflicts with (K) when the contract contains distinguishing edits, and the intended reading is about two transports.
+
+Actually, hmm, wait. Let me reconsider. Maybe the text means: the contract for the *assessment* of S1's account. In Derivation 10, the account is of re-emergence after occlusion. The contract would contain occlusions, displacements, velocity changes, and the swap. Under this contract, are the two persistence components of one kind? Under displacement of thing 1, they differ. So no.
+
+Unless "displace a thing" is interpreted as a single edit that displaces both things symmetrically? No, that's unnatural.
+
+OK. I'm fairly confident F1 is UPHELD. Let me also check the proposed repair.
+
+Proposed repair for F1: Replace lines 559-565 with "Same anchors, one account": (i) answer profiles coincide; (ii) if a bijection φ of active components satisfies λ'(φ(k)) = λ(k) for every k, up to port translation, then k and φ(k) are of one kind on C, and the two are one account on C. Plus supporting edits: a cross-candidate kind convention after (K), and rewording Derivation 10.
+
+Does the repair fix the defect? It makes the claim true (the proof works: (i) by (A); (ii) by Derivation 1 composed). The counter-instances no longer refute it because the premise of (ii) fails (no anchor-preserving bijection in instance 1 — different anchors; in instance 2 — anchors differ).
+
+Does it break anything? Let's check:
+- Derivation 1: unaffected.
+- Derivation 8 (equivariance under recoding): unaffected — it's about bijections preserving (E), (G), etc.
+- Derivation 9 (output descriptions don't determine accounts): unaffected.
+- Derivation 10: the reworded version works as I checked above.
+- Part VI (redundant routes, interference): the repair's note "candidates that anchor different subnetworks, or cut D at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes)" — consistent.
+- Part VII worked cases: the skew-symmetric case uses Derivation 1, not Derivation 2. Unaffected.
+- "What (E) excludes / does not exclude": unaffected.
+
+The repair's stated costs: slogan goes, consequence narrows, identity of differently decomposed candidates undefined. Reasonable.
+
+One concern: the repair says "the two are one account on C" under the premise. Is that consistent with line 23 ("Two systems with identical outputs and different internal routes are different organizations here")? The repair says they're "one account", not "one organization". Two candidates with the same anchors (up to permutation) and the same answer profile — are they one account? They're different tuples (E, p, t, Γ) if the port translations differ. Hmm, but the repair's premise λ'(φ(k)) = λ(k) "up to port translation" allows the port translations to differ. So the two candidates could differ in port translation. Calling them "one account" is still loose, but it's a stipulation within the repaired claim, and the consequence is scoped to "where two faithful candidates differ only in which component carries which anchor". OK, acceptable.
+
+Another concern: the finding notes the premise is "the same subnetworks" rather than "anchors of one kind" because the weaker premise would identify two redundant routes whenever C doesn't separate them. Good point — using "anchors of one kind" as the premise would be circular-ish or too weak.
+
+Also the supporting edit after (K): "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense." This is needed for the cross-candidate comparison to typecheck. Good.
+
+So F1: UPHELD, and the repair is sound (with maybe minor caveats).
+
+Actually wait, I should double-check one thing: the finding says "Half (a) is false under the claim's stated assumptions" — but is there any chance the theory's stated assumptions exclude E2? Let me re-examine (F1) for E2 once more, specifically whether the anchor {j_y, j_z} with hidden port y is legitimate.
+
+Line 248: "the relation obtained by imposing the constraints of λ(k) and projecting away its hidden ports equals the component relation of k under the translated edit". So the theory explicitly contemplates anchors with hidden ports. Line 356: "every intermediate product is a determinant suborganization whose hidden ports project away". So merged anchors are explicitly used. E2 is admissible. ✓.
+
+And does (F1) hold for E2? I verified above. ✓. And (F2), (A). ✓.
+
+So F1 is UPHELD.
+
+Hmm, one more check on the finding's point 5 (typing): "(K) defines 'of one kind on C' for two components of one organization under one contract." Let me re-read (K), lines 130-136: "Fix an organization D and a contract C ⊆ A×B. The signature of component j on C is sig_C(j) = {(a,b,L_j(a,b)) : (a,b) ∈ C}. Two components j, j' are of one kind on C when there is a bijection of their footprints under which sig_C(j) and sig_C(j') coincide." Yes — two components of one organization, one contract. Cross-organization comparison isn't defined. The finding is right that the cross-candidate comparison needs a convention, and none is stated.
+
+Although — Derivation 1 says "up to the port translation", which gestures at it. But Derivation 1 is within one transport. So the finding's point stands.
+
+**F2: (T2), approximate transport**
+
+Line 376: "Approximate transport. With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k. (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one."
+
+The finding says (T2) omits three hypotheses from the predecessor: (h1) e_0 = 0 (matching starts); (h2) the *represented* next-step map is L-Lipschitz; (h3) ε holds on a stated scope.
+
+Counterexample 2a (starting error): π = id, S(z) = 2z + 0.1, T(y) = 2y, ε = 0.1, L = 2, but the target's run starts at z_0 = 0 and the represented run at y_0 = -1, so e_0 = 1. Then e_n = 2^n + 0.1(2^n - 1)... let me verify. z_{n+1} = 2z_n + 0.1, z_0 = 0: z_1 = 0.1, z_2 = 0.3, z_3 = 0.7. y_{n+1} = 2y_n, y_0 = -1: y_1 = -2, y_2 = -4, y_3 = -8. e_n = |z_n - y_n|: e_0 = 1, e_1 = 2.1, e_2 = 4.3, e_3 = 8.7. Bound: ε Σ_{k<3} 2^k = 0.1 × 7 = 0.7. 8.7 > 0.7. ✓ Fails.
+
+But this requires the two runs to start at different points, which the theory never contemplates. The defence argues: the theory's e_n is d(πS^n z, T^n π z) — the n-step failure of the functional-transport square, from one state z. Then e_0 = d(πz, πz) = 0 automatically. On this reading, (T2) is true (given L = Lip(T) and ε bounding every step).
+
+The finding concedes (point 3): "On the theory's own reading, e_n = d(πS^n z, T^n π z), ... (T2) is true, provided L is the Lipschitz constant of the represented map T and ε bounds the discrepancy at every state reached." And point 4: "So the finding classifies the defect as a drafting omission, for which an erratum suffices."
+
+So the finding's own position is: (T2) is true on the theory's intended reading; the defect is that the reading isn't stated (e_n undefined, ε's scope unstated, whose Lipschitz constant unstated). Classification: drafting omission.
+
+Now, the counterexamples:
+- 2a requires unequal starts, which contradicts the theory's reading (e_0 = 0 by definition). So 2a only works on a reading the theory doesn't hold. The defence argues strongly that the theory's reading is the same-state one. The finding's reply: "None of the defence's readings is written in the theory. The symbol e_n is never defined."
+
+Hmm. So the question is whether the literal reading (two runs from different starts) is available. The finding offers counterexample 2a on that reading. Is it a legitimate counterexample "under the theory's stated assumptions"? The theory's stated assumptions for (T2) are: "one-step discrepancy ε" and "an L-Lipschitz next-step map". If e_n is undefined, then the claim "e_n ≤ ε Σ_{k<n} L^k" has no determinate truth value, strictly speaking. A claim with an undefined term isn't false; it's ill-posed. But Part XV lists "A counterexample to ... (T2) ... under their stated assumptions" as a defeater. If (T2)'s assumptions don't pin down e_n, then (T2) is not a well-stated theorem, and counterexamples exist on some admissible readings.
+
+The strongest defence point: "(T2)'s own instances fix the reading. With ε = 0, (T2) should give the exact result directly above it; on the two-run reading it says that two runs from different starts coincide forever, which is false even for identity maps." This is a good argument: (T2) with ε = 0 gives e_n ≤ 0, i.e., e_n = 0, which is the exact functional-transport result πS^n = T^nπ. That only makes sense from one state. On the two-run reading with unequal starts, ε = 0 would say the runs coincide, false. So the theory's reading must be the same-state one.
+
+Also: "At n = 0, (T2) reads e_0 ≤ 0, which is an identity on the same-state reading and false on the two-run reading for every system with unequal starts." Another good argument.
+
+And: "The theory has no free starting state for the explanation's run. Wherever it compares D with E, E is evaluated at the translated point: π (line 204), the expectation (line 234), (F2) (line 257), (A) (line 265), functional transport (line 366), relational transport (lines 368–374)." Strong.
+
+So on h1 (matching starts), the defence refutes the counterexample: the theory's reading has e_0 = 0 by construction.
+
+On h3 (where ε holds): counterexample 2c has discrepancy 0.1 at z_0 but larger later. The defence: "In a result about n steps, 'with one-step discrepancy ε' most naturally bounds each step's discrepancy, so 2c breaks a stated assumption." Hmm, "most naturally" — is it stated? Line 376 says "With one-step discrepancy ε". Does that mean the one-step discrepancy is ε at every state, or at the initial state? The predecessor says "suppose the discrepancy after one mapped step is at most ε" — "after one mapped step" suggests at a given state, and then the recurrence e_{n+1} ≤ Le_n + ε assumes the ε bound at each step. Actually the predecessor's recurrence e_{n+1} ≤ Le_n + ε requires ε at step n+1, i.e., at every step. So the predecessor also needs ε at every reached state. The predecessor says "on a stated scope" for the ε bound. So h3 is a real hypothesis that the theory omits. Counterexample 2c shows the omission matters: if ε bounds only the first step, the bound fails.
+
+Is 2c a legitimate counterexample under the theory's stated assumptions? The theory says "one-step discrepancy ε". If that's read as "the one-step discrepancy is ε" (at the relevant states), then... at which states? If at all states, 2c is excluded. If at the initial state only, 2c refutes. The reading is ambiguous. The predecessor's "on a stated scope" makes it explicit that the scope must be stated. So the theory's omission is real, and 2c shows a reading on which (T2) fails. But is that reading admissible? "With one-step discrepancy ε" — I'd say the most natural reading is that each one-step discrepancy is ≤ ε. Under that reading 2c is excluded. But the theory doesn't say "at every state", and the predecessor explicitly scoped it.
+
+Hmm, so on h3, I'd say the defect is a drafting omission (scope unstated), and 2c works only on a less natural reading. The finding itself classifies the whole thing as a drafting omission.
+
+On h2 (whose Lipschitz constant): counterexample 2b. S = id on R (1-Lipschitz), π(z) = (z,0) into R², T(a,b) = (a + 100b, b + 0.1). One-step discrepancy: d(π(Sz), T(πz)) = d((z,0), (z, 0.1)) = 0.1. ✓. T²πz = T(z, 0.1) = (z + 10, 0.2). e_2 = d((z,0), (z+10, 0.2)) = √(100 + 0.04) ≈ 10.002. If L = 1 (the target map's constant, or π's...), bound = 0.1(1+1) = 0.2. Fails. If L = Lip(T) ≈ 100.01 (actually let me compute Lip(T): T(a,b) = (a + 100b, b + 0.1). ‖T(a,b) - T(a',b')‖ = ‖(a-a' + 100(b-b'), b-b')‖ ≤ √(1 + 100²)|b-b'| + ... hmm, actually the Jacobian is [[1, 100],[0, 1]], whose operator norm is the largest singular value. The matrix is symmetric-ish; singular values of [[1,100],[0,1]]: M^T M = [[1, 100],[100, 10001]]. Eigenvalues: (10002 ± √(10002² - 4(10001 - 10000)))/2 = (10002 ± √(100040004 - 4))/2 = (10002 ± √100040000)/2. √100040000 ≈ 10001.9998. So λ_max ≈ (10002 + 10002)/2 = 10002, λ_min ≈ (10002 - 10002)/2 ≈ 0.0001. So Lip(T) ≈ √10002 ≈ 100.01. Then bound = 0.1 × (1 + 100.01) ≈ 10.101 > 10.002. ✓ Holds.
+
+So 2b shows: if L is the target map's Lipschitz constant (or anything less than Lip(T)), (T2) fails. The theory says "an L-Lipschitz next-step map" without saying which map. The defence concedes: "On 2b the defence concedes weakness. Nothing in the theory picks out the represented map T as the one that must be Lipschitz; the predecessor does, and the proof needs it. On the target-map reading, (T2) is false even from matching starts."
+
+So h2 is a genuine gap: the theory doesn't say whose Lipschitz constant, and on the wrong reading (T2) is false. The finding's counterexample 2b is legitimate under a reading the theory's text permits ("an L-Lipschitz next-step map" — the next-step map could be read as S, the target's, since the target is what has the "next-step"). Hmm, actually "next-step map" — in the functional-transport context, S_a is the target's step and T_a the represented one. "The represented next-step map is L-Lipschitz" (predecessor) vs "an L-Lipschitz next-step map" (theory). The theory's phrasing is genuinely ambiguous about which map.
+
+So: F2 is a drafting omission. The counterexamples: 2a refuted by the defence's reading (e_0 = 0 by the theory's construction, and the ε=0/n=0 arguments); 2b legitimate on a permitted reading; 2c legitimate on a permitted (though less natural) reading.
+
+The finding classifies F2 as a drafting omission and proposes an erratum restoring the predecessor's hypotheses. Is that the right classification and repair?
+
+The repair: "With one-step discrepancy d(πSz, Tπz) ≤ ε at every state z of the stated scope and an L-Lipschitz represented next-step map T, the discrepancy after n steps from one state, e_n = d(πS^n z, T^n π z) (so e_0 = 0), satisfies e_n ≤ ε Σ_{k<n} L^k." This fixes all three: defines e_n, fixes e_0 = 0, names T as the Lipschitz map, scopes ε. Good.
+
+Does the repair break anything? (T2) is cited nowhere else in the theory (the finding notes this). So no downstream breakage. The repair is sound.
+
+But wait — should F2 be UPHELD, PARTLY UPHELD, or REFUTED? The finding's classification is "drafting omission". The definition of UPHELD: "the defect exists under the theory's stated assumptions, as the finding describes it, including the finding's classification of it (for example 'a drafting omission' or 'false as stated')". So if the defect (as classified: drafting omission) exists, it's UPHELD.
+
+Does the defect exist? (T2) as written omits hypotheses that the proof needs and the predecessor states, and on readings the text permits, it's false. The symbol e_n is never defined. So yes, the defect exists: (T2) is not correctly stated as written; it needs the erratum. The counterexample 2b is legitimate under a permitted reading. So F2: UPHELD.
+
+Hmm, but let me reconsider 2a. The finding presents 2a as a counterexample on "a literal reading that leaves these open". If the theory's own reading (same-state) is forced by the ε=0 and n=0 arguments, then 2a isn't a counterexample under the theory's reading. But the finding acknowledges this (point 3 concedes (T2) is true on the theory's reading). So 2a is a counterexample only on a misreading. That weakens part of the finding. But 2b survives: even on the theory's own reading (same-state, e_0 = 0), if L is read as S's Lipschitz constant, (T2) is false. And the theory's text permits that reading ("an L-Lipschitz next-step map" — in the context "Functional transport. If π∘S_a = T_a∘π..." the maps S and T are both present; "next-step map" could be either).
+
+Hmm, is it really permitted? Let me think about what "next-step map" most naturally refers to. In dynamics, a "next-step map" is the map that gives the next state. Both S and T are next-step maps (of D and E respectively). The predecessor says "the represented next-step map" — i.e., T. The theory drops "represented". So the theory's phrase is ambiguous between S and T. On the S reading, (T2) is false (2b). So 2b is a genuine counterexample under a reading the theory's text permits. ✓.
+
+So F2: UPHELD (as a drafting omission). The finding's counterexample 2a is weak (refuted by the defence), 2b is strong, 2c is medium. The classification as drafting omission is correct. The repair is correct and breaks nothing.
+
+Actually, let me reconsider whether 2c is needed. The theory says "With one-step discrepancy ε". If we read this as "the one-step discrepancy is ε" (at every state, uniformly), then 2c is excluded. The predecessor's "on a stated scope" is about the scope of states, not "at the initial state only". So 2c attacks a straw man somewhat. But the theory does omit the scope. So h3 is a real omission but 2c's force is limited. I'll note this.
+
+So F2: UPHELD, with the caveat that 2a fails and 2c is weak, but 2b is decisive and the omission of e_n's definition and T's Lipschitz status is real.
+
+**F3: Non-circular dependence**
+
+The condition (line 270), three sentences S1, S2, S3. The finding raises (a) missing τ,σ in S3; (b) Γ never typed; four readings; verdict flips on R-τ-mech; S3 not an anti-circularity test; R-E alone breaks line 272.
+
+Let me work through.
+
+(a) Missing τ,σ: S3 says "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ". (a,b) ∈ C is an edit–boundary pair of D (since C ⊆ A×B of D). Γ is in E. A D-edit reaches E only through τ, σ. S3 names neither. The finding classifies this as a drafting slip filled by the text's conventions. Every other conjunct of Part V reads a pair from C on E as (τ(a), σ(b)): (F1) line 248 "L_k(τ(a),σ(b))", (F2) line 257 "Sol_E(τ(a),σ(b))", (A) line 265 "Ans_E(τ(a),σ(b))". So S3's omission is inconsistent with its siblings. And the skew-symmetric case (line 356) applies S3 via edits like "remove skewness" — which are edits of D (the target is the family of matrices; removing skewness is an edit on the target organization). Hmm, wait. Let me look at the skew-symmetric case.
+
+Line 352-358: "Question: why is every odd-order real skew-symmetric matrix singular? Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed. ... Non-circular dependence is witnessed by I_3 under removal of skewness and by [[0,1],[-1,0]] under removal of oddness."
+
+So the contract's edits are "remove skewness", "remove oddness" — these are edits on the target D (the organization of matrices). And E is the Leibniz expansion. The witness for S3: under "remove skewness", the answer profile changes (the family contains invertible matrices, e.g., I_3). So the edit (a,b) ∈ C is applied... to what? To D, and the answer profile is Ans_p(a,b) = Q(D,a,b). Hmm, S3 says the edit "removes or replaces a nonempty block of Γ" — Γ is in E. So "remove skewness" must translate to an edit of E that removes a block of Γ. τ(remove skewness) is an edit of E. So S3 must mean (τ(a), σ(b)) removes a block of Γ. The finding is right that the omission is a drafting slip filled by convention.
+
+Actually, hold on. Let me re-read S3: "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way."
+
+Parse: "There exists (a,b) ∈ C that [removes or replaces a nonempty block of Γ while preserving the other boundary conditions], [under which the answer profile changes or ceases to be determined in the claimed way]." So (a,b) removes a block of Γ, and under (a,b) the answer profile changes. Since (a,b) ∈ C is a D-edit, and Γ ⊂ E, the removal must be via τ. Or — alternatively — the answer profile Ans_p(a,b) is a function of D, and "removes a block of Γ" is about E's response. The cleanest reading: (τ(a), σ(b)) removes a block of Γ. The finding's R-τ-in/R-τ-mech capture this.
+
+So (a) is a drafting slip. The finding concedes this ("The finding itself concedes that the missing τ,σ is filled by the text's conventions; as a misfire of the condition, it does not stand"). So part (a) doesn't stand as a defect. Good.
+
+(b) Γ never typed. Three places pull three ways:
+- (F1) line 248: "every active component k of E with anchor subnetwork λ(k)" — and line 246 says Γ is "an identified set of active commitments in E". So are commitments = components? (F1) speaks of active components, suggesting commitments are components.
+- S3's "the other boundary conditions" — suggests the removed block consists of boundary conditions, i.e., commitments include boundary values.
+- Part VI line 304: "let E|W retain the commitments in W with the named background fixed" — "named background" vs "commitments in W" suggests input settings are background, not commitments.
+
+So Γ's membership is ambiguous: does it include input settings (boundary values) or only mechanism components?
+
+The finding's four readings:
+- R-τ-in: Γ holds components AND boundary values of E, including components assigning inputs. Interventions on inputs count as witnesses (since do(x=c) replaces the component assigning x).
+- R-τ-mech: Γ holds only the mechanism; input settings are the named background.
+- R-E: witness is an organization edit on E (as in Part VI), no requirement it's in C.
+- R-lit: pair evaluated on D as written.
+
+The finding's key substantive claim (point 4): on R-τ-mech, verdicts the theory needs flip.
+- Part VII production case: E = {H := U_H, θ := U_θ, L := H cot θ}, C holds interventions on H and θ. Γ = {L := H cot θ}. No C-edit removes or replaces that commitment (interventions on H, θ replace the input-assigning components, not the L component). So S3 fails on R-τ-mech. But line 286 (reversed-calculation paragraph) treats the forward organization as the production answer: "The forward organization is faithful under this contract." Hmm, line 286 says "faithful", and Part VII's production section says "The forward organization is faithful under this contract" — it claims fidelity, not Account. So no contradiction. The finding acknowledges this: "Part VII itself claims only 'faithful', so no sentence is contradicted outright."
+
+Hmm OK. So the production case doesn't produce a contradiction, just pressure.
+
+- O33 (freezer knobs): joint turns only. Fixed verdict: "The table is faithful... A form that could ask more has not asked more." On R-τ-in, a joint turn sets both knob ports, replacing the components that assign them, and compartment temperatures change, so S3 holds. On R-E, deleting the linkage changes the answer, so S3 holds. On R-τ-mech, no joint turn removes a mechanism component, so no witness, and line 272 makes the contract one on which no account can be claimed — against the fixed verdict.
+
+Hmm, wait. Is the fixed verdict really that the table *is an account*? "The table is faithful." Hmm, the fixed verdict says "faithful", not "an account". Hmm. But line 272 says a contract excluding every change under which the active commitments could matter "does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed". If the fixed verdict is only "faithful", then R-τ-mech is consistent with it. Hmm.
+
+Let me re-read the finding's framing of O33: "Fixed verdict: 'The table is faithful. Its columns could have carried single-knob rows, and none was added. A form that could ask more has not asked more.'" So the fixed verdict is that the table is faithful — i.e., it satisfies (F1), (F2), (A)? Or just fidelity? The finding says "On R-τ-mech, ... line 272 then makes Lea's contract 'not a contract on which an account can be claimed'. That runs against the fixed verdict."
+
+Hmm, does it? If the fixed verdict is "faithful" (fidelity), and R-τ-mech says no account can be claimed, is that a contradiction? Only if the fixed verdict implies account. "The table is faithful" — in the theory's vocabulary, faithful = satisfies (F1), (F2) (component and global fidelity). Account = faithful + question fidelity + non-circular + non-vacuous. So "faithful" ≠ "account". So the fixed verdict doesn't require Account. Hmm.
+
+But the finding's point is subtler: the fixed verdict's rationale ("A form that could ask more has not asked more") is about the contract being legitimately narrow — the table answers the joint-turn question faithfully, and the contract's narrowness is legitimate, not a silent exclusion. On R-τ-mech, line 272 would condemn the contract as one on which no account can be claimed, which is a different verdict from "the narrowness is legitimate". Hmm, but "not a contract on which an account can be claimed" is compatible with "the table is faithful on it". 
+
+Hmm, actually wait. Let me re-read line 272: "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to Q, does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+
+On R-τ-mech, O33's contract (joint turns only) excludes single-knob turns. Do single-knob turns matter to Q? Q is about joint turns. Single-knob turns don't matter to Q (the query is about joint turns). Hmm, so the contract doesn't exclude "every change under which the active commitments could matter to Q" — it excludes changes that don't matter to Q. So line 272 doesn't condemn it!
+
+Wait, let me re-read. "excluding every change under which the active commitments could matter to Q". The contract excludes single-knob turns. Under single-knob turns, do the active commitments matter to Q? Q reads the compartment temperatures under joint turns. Under a single-knob turn, the answer to Q... hmm, Q is defined on (D, a, b) for (a,b) ∈ C. If the single-knob turn isn't in C, Q isn't evaluated at it. "Could matter" — modal. The active commitments (the table's mechanism) could matter to Q under single-knob turns in the sense that if you asked the single-knob question, the mechanism would matter. Hmm.
+
+This is getting quite interpretive. Let me step back and think about what the finding is really driving at.
+
+The core issue: S3 requires a witnessing contrast in C that removes/replaces a block of Γ and changes the answer. On R-τ-mech (Γ = mechanism only), a contract of pure interventions on inputs has no edit that removes a mechanism component, so S3 fails — even for honest, non-circular accounts whose contract is intervention-based. That seems wrong: the theory's own production paradigm (Part VII) has a contract of interventions on inputs, and the mechanism (L := H cot θ) is never removed by a C-edit. So on R-τ-mech, the production account fails non-circular dependence. But the theory clearly intends the forward organization to be a good account of the production question.
+
+Hmm, but again, Part VII claims only "faithful". Hmm. But (E) is the theory's Account, and the production case is presented as the paradigm of a good account (vs. the reversed calculation which fails). Line 286: "A reversed calculation — identification presented as production — fails (F2) under the production contract". This is in "What (E) excludes". So (E) is meant to exclude the reversed calculation, and by implication include the forward organization. If the forward organization fails non-circular dependence on R-τ-mech, then (E) excludes both, and the production case's moral ("direction is derived from the admitted edits") is undermined — the forward organization would be no better than the reversed one under (E).
+
+Hmm, but actually, does the forward organization satisfy (A) etc.? Let me just check: is the forward organization meant to satisfy Account? Line 286-292 ("What (E) excludes") mentions the reversed calculation failing (F2). The implication is the forward one passes. And line 340: "The forward organization is faithful under this contract." Again "faithful". And line 342: "Direction is derived from the admitted edits; the nouns 'pole' and 'shadow' fix nothing."
+
+I think the finding's pressure is real but not a strict contradiction. Let me note that.
+
+Actually, hold on. Let me reconsider. On R-τ-in (Γ includes input-assigning components), the production case: C holds interventions on H and θ. do(H = c) replaces the component assigning H (which is in Γ). Under do(H = c), the answer profile changes (L = c cot θ). So S3 holds. ✓. Good, R-τ-in makes the production case work.
+
+On R-τ-mech, it fails. So R-τ-in is the reading the theory needs. The finding says: "R-τ-in is the only reading on which S3, line 272 and the theory's own worked cases all agree". Hmm, but then what's the defect? The defect is that Γ is never typed, so the theory doesn't *state* which reading, and Part VI's wording invites R-τ-mech.
+
+And the finding's point 4 shows R-τ-mech gives verdicts the theory doesn't want (production case, O5, O33). And point 6 shows R-E breaks line 272. And point 5 shows S3 isn't an anti-circularity test (S2 is).
+
+So F3's defect: S3 is ambiguously typed, and on two of the four readings it gives wrong verdicts. The classification: part (a) is a drafting slip (doesn't stand); part (b) is a genuine ambiguity requiring a change of claim.
+
+Now, is the finding right that on R-τ-in, O5 works? O5: Greta's bread dough. Narrowed scope: rooms warmer than 20°. Inside the scope, dough doubles in 2 hours. The commitment "yeast is slow in the cold" sets the limit. On R-τ-in, a production contract's intervention on an upstream port (leaving the yeast out) replaces the component assigning the yeast input, doubling fails, S3 holds. On R-τ-mech, no witness inside the narrowed scope (the yeast-slowness commitment can't be removed by an intervention), so line 272 condemns it — against the fixed verdict ("legitimate narrowing").
+
+Hmm, again, the fixed verdict is "legitimate narrowing", which is about the contract being OK, not necessarily Account. But the finding's point is that the theory should allow the narrowed account to be an account (that's what "legitimate narrowing" means — the restated rule with the yeast explanation is an account of why it fails in January). On R-τ-mech it isn't.
+
+OK. So F3: the ambiguity in Γ's typing is real, and R-τ-mech gives wrong verdicts. Is R-τ-in clearly the intended one? The defence says yes (line 120 shows interventions replace components; (F1)'s "active component k" makes components the natural members of Γ). The finding's reply: line 120 settles what an intervention does, not whether the replaced component is in Γ; the candidate "identifies" Γ (line 246); no sentence says input settings may be commitments; the worked Account uses removal edits, not input interventions, so the text shows no Account passing S3 through input interventions alone.
+
+Hmm, so the finding's position is: the text doesn't decide between R-τ-in and R-τ-mech, and they give different verdicts. That's a genuine defect (ambiguity in a load-bearing condition). 
+
+Now, is the finding's point 5 (S3 is not an anti-circularity test) a defect? "'p because p' meets S3 whenever the installed answer can be removed." Let me check. E = {p} where the component just asserts p. Γ = {p}. Under the edit that removes p from Γ (or intervenes on the answer port), the answer "ceases to be determined". So S3 holds. What excludes circularity is S2 ("The target's answer does not appear... as an unanalysed boundary input or as a component"). So the condition's name "Non-circular dependence" covers two tests: S2 (prohibition) and S3 (dependence). Is that a defect? It's a naming issue, not a mathematical error. The finding lists it as an observation supporting the repair (S2 unchanged). Not a strong standalone defect.
+
+Point 6: R-E alone breaks line 272. Under R-E (witness is any organization edit on E, not necessarily in C), a contract of baseline + relabelings: deleting a working block leaves the answer undetermined at the baseline, so S3 holds; but line 272 says a relabelings-only contract doesn't satisfy non-circular dependence. So the "(a,b) ∈ C" in S3 is load-bearing. This shows S3's witnessing contrast must stay in C. Good point — it constrains the repair.
+
+Now the proposed repairs.
+
+Option B (preferred): S3 becomes: "There exist (a,b) ∈ C and a nonempty block G ⊆ Γ such that the answer profile at (a,b) differs from its value at (1,b_0), or is not determined there in the claimed way, and in E|(Γ\G), with the named background fixed, that difference is lost or the answer ceases to be determined."
+
+Let me parse: there's a contrast (a,b) ∈ C where the answer differs from baseline (or is undetermined), AND removing block G from Γ loses that difference (i.e., in E|(Γ\G), the answer at (a,b) no longer differs, or isn't determined). So the block G is essential to the answer's sensitivity to (a,b). This is a dependence requirement: Γ must matter to the answer on C.
+
+Wait, but this changes the logical form substantially. Original S3: the edit (a,b) itself removes/replaces a block of Γ. Option B: the edit (a,b) changes the answer, and separately removing G loses that change. So the witnessing contrast (a,b) and the block removal are decoupled.
+
+Hmm. Let me check it against the cases:
+- Skew-symmetric: (a,b) = remove skewness. Answer profile changes (family contains I_3, invertible). G = the skewness commitment. In E|(Γ\G) (drop skewness), the answer at "remove skewness"... hmm, if you drop the skewness commitment from E, then under "remove skewness" the answer... The finding says "removing skewness changes the answer, and dropping the skewness commitment loses the change". OK.
+- O33: a joint turn changes the answer; removing the linkage or a knob's dependence loses the change. ✓.
+- Production: do(H=c) changes the answer (L = c cot θ); removing the L component loses the change. ✓. So Option B makes the production case pass without requiring input settings to be commitments! The contrast is the intervention (in C), and the block G is the mechanism component. 
+- O5: leaving the yeast out (intervention in C) changes the answer; removing the yeast-slowness commitment loses the change. ✓.
+
+So Option B fixes the R-τ-mech problem by decoupling: the contrast comes from C (interventions are fine), and the block G is what the dependence is tested on (mechanism components). And it keeps the contrast in C, so line 272 stays (a relabelings-only contract has no contrast that changes the answer, so S3 fails). ✓.
+
+And "'p because p'": E = {p}. Contrast: is there (a,b) ∈ C where the answer differs from baseline? If C contains an intervention on the answer port p... hmm. Under do(p = c), the answer is c, differing from baseline. In E|(Γ\G) where G = {p}, the answer is undetermined. So S3 holds. But S2 excludes it. Same as before. OK.
+
+Option B's stated costs: logical form changes (change of claim); E|W must be introduced before Part V; dependence order updated. 
+
+Does Option B break anything? Let me check:
+- Derivation 1, 8, 9, 10: don't touch non-circular dependence. Derivation 10 mentions... no. OK.
+- Part VI: uses E|W and (S). Option B introduces E|W earlier. The dependence order: non-circular dependence uses the restriction operation, not (S), so well-founded. ✓.
+- Part VII worked cases: production ✓ (as shown), identification ✓, obstruction ✓, skew-symmetric ✓, constitutive rules ✓.
+- "What (E) excludes": "'p because p' fails non-circular dependence" — via S2. ✓. "A table of observed answers... fails (F1)". ✓. Reversed calculation fails (F2). ✓. "An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract" — line 272. Under Option B, if no edit in C changes the answer, S3 fails too. ✓ consistent.
+- "What (E) does not exclude": "A true mechanism guessed for bad reasons satisfies (E)". ✓.
+
+Hmm, one concern with Option B: "the answer profile at (a,b) differs from its value at (1,b_0), or is not determined there in the claimed way, and in E|(Γ\G) ... that difference is lost or the answer ceases to be determined." The phrase "that difference is lost" — in E|(Γ\G), the answer at (a,b) equals the baseline value (or the difference disappears). But wait: if removing G makes the answer undetermined at (a,b), is that "the difference lost" or "ceases to be determined"? The wording covers both. OK.
+
+Another concern: Option B requires the answer at (a,b) to differ from baseline. But what about a contrast where the answer is *undetermined* at (a,b) in the full E? E.g., an intervention that breaks the mechanism. Then "is not determined there in the claimed way" covers it. And in E|(Γ\G) it's also undetermined — then "that difference is lost" fails and "ceases to be determined" also fails (it's still undetermined). Hmm. Edge case. But probably minor.
+
+Also: does Option B still exclude the case where Γ contains an idle addition? "A commitment that plays no part (an idle addition) can never witness." ✓ — removing it doesn't lose any difference.
+
+Option A (alternative): S3 becomes "There exists (a,b) ∈ C whose translation (τ(a),σ(b)) removes or replaces a nonempty block of Γ, with σ(b) keeping the rest of the baseline σ(b_0), under which the answer profile changes or ceases to be determined in the claimed way", plus typing Γ to include input-assigning components. Cost: input settings become commitments, so in Part VI they sit in every support and are reported critical in every support.
+
+Hmm, Option A's cost is significant: if input settings are commitments, then in Part VI's (S), every support contains the input settings, and (B) reports them critical in every support. That pollutes the support structure. The finding prefers B for this reason.
+
+Let me now judge: is Option B the right repair? I think it's substantially right. It decouples the contrast (from C) from the block (from Γ), which is exactly what's needed to make intervention-based contracts work while keeping the dependence requirement on the mechanism.
+
+One thing to check: does Option B handle the "removes or replaces" language? Original S3's "removes or replaces a nonempty block of Γ" was about the edit's effect on Γ. Option B's block removal is a restriction operation (E|W), not an edit effect. So the "removes or replaces" language goes. Is that OK? The predecessor's version: "There is at least one admitted contrast that removes or changes a nonempty block of active organizational commitments, while preserving the other declared boundary conditions, for which the answer profile changes or ceases to be determined in the claimed way." So the predecessor also had the contrast removing/changing the block. Option B departs from this. But the departure is deliberate (to fix the typing issue). 
+
+Hmm, wait. Actually, let me reconsider whether Option B is faithful to the *intent*. The intent of non-circular dependence: the answer must depend on the candidate's commitments, not be imported from the target. Option B tests: there's a real contrast in C where the answer changes, and the change is lost when you drop a block of Γ. That's a dependence-of-answer-on-commitments test. Good. It also keeps S2 as the anti-circularity test. I think Option B is sound.
+
+Does Option B break O33 or O5? The finding says it makes them come out right. Let me double check O5 on Option B. Narrowed contract: rooms warmer than 20°. The contrast: leaving the yeast out (intervention on the yeast input). Is that in C? The finding says "On R-τ-in, a production contract's intervention on an upstream port (line 168), such as leaving the yeast out, replaces the component assigning the yeast input and the doubling fails, so S3 holds." So C contains the yeast-removal intervention. Under Option B: (a,b) = yeast removal, answer differs (dough doesn't double), G = {yeast is slow in the cold}, E|(Γ\G) loses the change. Hmm — if you drop the "yeast slow in cold" commitment, does the dough double under yeast removal? If the account says doubling comes from yeast gas, and you drop that, then the answer is undetermined. So "ceases to be determined". ✓.
+
+Hmm, but wait: is "leaving the yeast out" physically admitted and in the narrowed contract? The narrowed contract is about room temperature. Leaving the yeast out is a different intervention. The finding assumes C contains it. If C (the narrowed contract) contains only temperature changes... then under Option B, is there a contrast? A temperature change within the narrowed scope (all > 20°) — the dough doubles in 2 hours regardless. So the answer doesn't change. Then S3 fails, and line 272 condemns. Hmm!
+
+Hmm, so does O5's narrowed contract contain the yeast-removal contrast? The fixed verdict says the narrowing is legitimate because "the limit follows from a part of her account" (the yeast being slow in the cold). For the account to be non-circular on the narrowed contract, there must be a contrast in C... The finding says "a production contract's intervention on an upstream port (line 168), such as leaving the yeast out". So the finding reads O5's contract as a production contract containing interventions on upstream ports (yeast, flour, etc.). Plausible: Greta's account is a production account of the doubling (what makes the dough rise), and the contract contains interventions on the ingredients. The narrowing is about the temperature scope. So C = {interventions on ingredients} × {rooms > 20°}. Then yeast removal is in C. ✓.
+
+OK, so on that reading Option B works for O5.
+
+Alright. Now, is F3 UPHELD, PARTLY UPHELD, or REFUTED? 
+
+Part (a) (missing τ,σ): the finding itself concedes it doesn't stand. Part (b) (Γ typing): genuine ambiguity, R-τ-mech gives wrong verdicts on the theory's own cases. So part of the finding holds (the ambiguity and its consequences) and part doesn't (the missing τ,σ). 
+
+Hmm, but the finding's headline is really (b) plus the four readings plus the verdict flips. The finding's proposed repair addresses (b). So: PARTLY UPHELD? Or UPHELD?
+
+The finding's main claim: "S3 has a typing ambiguity in Γ, and on readings the text permits, verdicts the theory needs flip." That holds. The (a) claim is explicitly conceded as not standing. Since the finding itself says (a) doesn't stand, and (a) is one of the two listed defects, I'd say PARTLY UPHELD: the Γ-typing ambiguity holds; the missing τ,σ doesn't.
+
+Hmm, but let me reconsider. Is the Γ-typing ambiguity really a *defect* under the theory's stated assumptions? Let me steelman the theory. 
+
+The theory's S1: "The answer follows by evaluating E under its independent boundary conditions." S2: prohibition. S3: existence of a contrast. Γ is "an identified set of active commitments in E" (line 246) — the candidate identifies Γ. So Γ is whatever the candidate offers as its commitments. The theory doesn't type Γ because it's candidate-supplied. Hmm. But then S3's "the other boundary conditions" implies the block consists of boundary conditions... 
+
+Actually, here's a thought: maybe the theory intends Γ to include both components and boundary values, and Part VI's "named background" is a separate declared thing (the background named for the restriction operation, which could include some boundary values not in Γ). Line 304: "let E|W retain the commitments in W with the named background fixed". So E|W keeps W ⊆ Γ and fixes the "named background". If Γ included all boundary values, the "named background" would be redundant or would be a subset of Γ held fixed. Hmm. Actually "with the named background fixed" suggests the background is NOT in W (it's fixed, while W varies). So background ≠ commitments. That supports R-τ-mech.
+
+But then the production case fails S3 on R-τ-mech... unless the production contract contains an edit that removes the L component. Does it? "Under A containing interventions on H and θ". Interventions on H, θ. No removal of L. So on R-τ-mech, S3 fails for the production case. And the theory clearly wants the forward organization to be the good account (it's the foil to the reversed calculation). So R-τ-mech is not viable. Hence the theory needs R-τ-in, but Part VI's wording suggests R-τ-mech. Genuine ambiguity. ✓ F3's (b) holds.
+
+So: F3 PARTLY UPHELD (the typing ambiguity and its consequences hold; the missing τ,σ is a drafting slip the finding itself concedes; and the "S3 is not an anti-circularity test" point is a naming observation, not a mathematical defect).
+
+Hmm, actually, wait. Let me reconsider whether the finding's claim 4 (verdict flips) is fully right, because the fixed verdicts say "faithful" not "account". Let me re-read the finding's claim: "On R-τ-mech, verdicts the theory needs flip." And for the production case it admits "Part VII itself claims only 'faithful', so no sentence is contradicted outright." For O33 and O5 it says the fixed verdict runs against R-τ-mech. But if the fixed verdicts are "faithful" / "legitimate narrowing", do they contradict "not a contract on which an account can be claimed"? 
+
+For O5: fixed verdict "This is a legitimate narrowing. The limit follows from a part of her account." If R-τ-mech says the narrowed contract admits no account, that contradicts "the limit follows from a part of her account" being an *account*. Hmm, "her account says why: the yeast..." — the word "account" is used. So the fixed verdict treats the yeast explanation as an account. R-τ-mech denies it's an account. Contradiction. ✓.
+
+For O33: fixed verdict "The table is faithful." Doesn't say account. So no strict contradiction. But the finding's point is that line 272 would condemn the contract, which is in tension with "A form that could ask more has not asked more" (the contract is legitimate). Weaker.
+
+OK. So F3's (b) holds with the strongest instance being the production case (Part VII) and O5. 
+
+Now let me also verify: on R-τ-in, does line 272 still make sense? Line 272: "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to Q, does not satisfy non-circular dependence". On R-τ-in, a relabelings-only contract: no edit changes the answer, so S3 fails. ✓. A contract excluding every change that matters: same. ✓. So line 272 is the gloss of S3 on R-τ-in too. ✓.
+
+And on R-τ-in, is the production case OK? do(H=c) replaces the H-assigning component (in Γ), answer changes. ✓.
+
+So R-τ-in is the viable reading, and the theory needs it stated. Option A states it. Option B sidesteps the typing by decoupling. Both work; B is preferred because A pollutes Part VI's supports.
+
+Hmm, let me reconsider Option B once more for a subtle issue. Option B: "There exist (a,b) ∈ C and a nonempty block G ⊆ Γ such that the answer profile at (a,b) differs from its value at (1,b_0), or is not determined there in the claimed way, and in E|(Γ\G), with the named background fixed, that difference is lost or the answer ceases to be determined."
+
+Wait, there's a subtlety: "the answer profile at (a,b)" — of what? Of E (i.e., Ans_E(τ(a),σ(b))) or of p (Ans_p(a,b))? By (A) they're equal when Account holds, but S3 is a conjunct of Account, so at the point of checking S3, (A) may be assumed to hold for the full E. I think it's Ans_E(τ(a),σ(b)), and the restriction E|(Γ\G) is then evaluated. Fine.
+
+Also: "in E|(Γ\G) ... that difference is lost" — i.e., Ans_{E|(Γ\G)}(τ(a),σ(b)) = Ans_{E|(Γ\G)}(1,b_0)? Or equals the baseline answer of the full E? The natural reading: removing G destroys the sensitivity. OK.
+
+One more: does Option B require (a,b) ≠ (1,b_0)? If (a,b) = (1,b_0), the answer can't differ from itself. So implicitly (a,b) ≠ baseline. Fine.
+
+Now, does Option B break Derivation 10 or anything? Derivation 10 doesn't use non-circular dependence directly... wait, it says "If it repairs the obligation... while protecting..., then (P) holds; and since the account is adequate on its contract and deployable, (EK) holds." "The account is adequate on its contract" — Account holds, including non-circular dependence. The occlusion account: contract contains displacements, velocity changes, occlusions, swap. Contrast: an occlusion changes the answer (re-emergence prediction). Block G = the persistence components. E|(Γ\G) loses the change. ✓. So Option B works for Derivation 10.
+
+Good. So Option B is sound.
+
+Now let me think about whether I'd repair differently. Option B is good. One refinement: state explicitly that the contrast (a,b) is in C (not τ[C]) — since S3 is about the target's contract — and that the answer profile compared is Ans_E(τ(a),σ(b)). Also keep S2 and S1. And add the typing note that Γ is the candidate's identified active commitments (components of E), with the "named background" being the boundary values not in Γ. Actually Option B's advantage is precisely that it doesn't need to type Γ as containing input settings. So the typing note should say: Γ is a set of components of E (the mechanism the candidate offers); boundary values are the named background. That's R-τ-mech for Γ's typing, but with the contrast coming from C. 
+
+Hmm interesting — so Option B adopts R-τ-mech's typing (Γ = mechanism) but R-τ-in's contrast source (interventions in C). That's the clean combination. Good.
+
+Let me also double check: with Γ = mechanism only, does Part VI's (S) still work? (S) = {W ⊆ Γ : Account(E|W, p)}. With Γ = mechanism components, supports are subsets of mechanism components. Input settings are background, fixed. That's clean — no pollution. ✓. And (B) critical blocks are mechanism blocks. ✓. And line 324's redundant routes {a}, {b}: mechanism components. ✓.
+
+So Option B + typing Γ as mechanism components is consistent with Part VI. 
+
+Now, the finding says Option B's cost: "The restriction E|W must be introduced before Part V." Yes. And the dependence order must note non-circular dependence uses the restriction operation. Fine.
+
+Alright, F3: PARTLY UPHELD.
+
+Hmm, wait. Let me reconsider. The finding's structure: (a) missing τ,σ — conceded, doesn't stand. (b) Γ typing — holds. Point 4 (verdict flips) — holds for production and O5, weak for O33. Point 5 (S3 not anti-circularity) — naming observation. Point 6 (R-E breaks line 272) — holds, constrains repair.
+
+So the finding is mostly upheld except (a). Is that "PARTLY UPHELD"? The definition: "part of the finding holds and part does not; say which part." Yes, PARTLY UPHELD.
+
+Hmm, but hold on. Let me reconsider whether (b) really holds, i.e., whether the theory's text genuinely fails to pin down Γ's typing. Let me re-read line 246: "an identified set Γ of active commitments in E". And (F1): "For every active component k of E with anchor subnetwork λ(k)..." — "active component" suggests Γ = active components. Hmm, actually (F1) says "every active component k of E" — where does "active" come from? Γ is "an identified set of active commitments". So "active component" = component in Γ? That would make Γ = components. Then S3's "the other boundary conditions" — hmm.
+
+If Γ = active components of E, then S3's "removes or replaces a nonempty block of Γ while preserving the other boundary conditions" — "the other boundary conditions" would be the boundary conditions other than those imposed by the removed block. If a block of Γ is a set of components, removing them removes the boundary conditions they impose... "preserving the other boundary conditions" = keeping the rest. So S3: the edit removes a block of components while keeping the other boundary conditions (those imposed by the remaining components). That reading makes Γ = components, and "boundary conditions" refers to the conditions, not to Γ's membership. Hmm! That's a coherent reading on which Γ = components (R-τ-mech-ish) but "boundary conditions" isn't about Γ's membership.
+
+But then the production case fails S3 (no C-edit removes the L component). Unless... hmm.
+
+Wait, unless the production contract's edits do remove the L component. "Under A containing interventions on H and θ" — interventions on H replace the H-assigning component. Does an intervention on H "remove or replace a nonempty block of Γ"? If Γ = {L := H cot θ}, no. So S3 fails. So on Γ = components, the production case fails S3. And the theory wants it to pass (it's the paradigm good account). So Γ = components (R-τ-mech) is not viable after all. The theory needs Γ to include input-assigning components (R-τ-in) or Option B's decoupling.
+
+Hmm, so actually the ambiguity is real and consequential. ✓ F3 (b) holds.
+
+But hmm, wait. Does the theory actually want the forward organization to satisfy Account, or just fidelity? Let me look again at Part VII's production section (lines 336-342). It's titled "Production and direction". It derives direction from admitted edits. It says "The forward organization is faithful under this contract. The reversed calculation H = L tan θ is not: intervening on H changes the target's L but not the calculation's H." So the point is about fidelity (F2), establishing direction. It doesn't explicitly claim Account for the forward organization. Hmm.
+
+But "What (E) excludes" (line 286): "A reversed calculation — identification presented as production — fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's." This is listed under what (E) excludes — implying (E) excludes the reversed calculation. For (E) to exclude it, (E)'s other conjuncts must be satisfiable by the forward organization (otherwise the exclusion is vacuous — everything fails). If the forward organization also fails non-circular dependence, then (E) excludes both, and the example is misleading. So the theory implicitly needs the forward organization to satisfy non-circular dependence. On R-τ-mech it doesn't. So R-τ-mech is not the intended reading. ✓.
+
+Also, the whole point of the production example is: the forward organization is a good account of the production question; the reversed calculation is not. (E) is supposed to capture that. So yes.
+
+OK so F3 (b) holds: the text doesn't state whether Γ includes input-assigning components, and the two readings give opposite verdicts on the theory's paradigm case.
+
+So F3: PARTLY UPHELD. Actually, hmm, let me think about whether to call it UPHELD. The finding's core is (b) + consequences. (a) is a minor sub-point that the finding itself withdraws. The classification... the finding doesn't give a single classification label for F3 the way it does for F1 ("false as stated") and F2 ("drafting omission"). For F3 it says (a) is a drafting slip and (b) is a genuine ambiguity requiring a change of claim. So the finding is: part drafting slip (withdrawn), part change-of-claim. Since part holds and part doesn't: PARTLY UPHELD. I'll go with that, being clear about which parts.
+
+Hmm, actually, let me reconsider once more. Is (a) really "not standing"? The finding says "The finding itself concedes that the missing τ,σ is filled by the text's conventions; as a misfire of the condition, it does not stand." Yes, the finding withdraws (a). So PARTLY UPHELD.
+
+Now, **Further counterexamples.**
+
+I need to hunt independently for counterexamples to Derivations 1–3, (T1) (including its composition sentence), (T2), or the four conditions of Account, under stated assumptions.
+
+Let me go through each.
+
+**Derivation 1**: "If a transport satisfies (F1) on C, then every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C, up to the port translation."
+
+Proof: sig_C(λ(k)) = {(a,b,proj_{V_k} Sol_{λ(k)}(a,b))} and sig_{τ[C]}(k) = {(τ(a),σ(b), L_k(τ(a),σ(b)))}. (F1) equates the third coordinates pointwise.
+
+Hmm, wait. There's a subtlety: sig_C(λ(k)) — λ(k) is a subnetwork of D, not a component. (K) defines signatures for components. So sig_C(λ(k)) is the signature of a subnetwork, which Derivation 1's proof defines as {(a,b,proj_{V_k}Sol_{λ(k)}(a,b))}. That's an extension of (K) to subnetworks, made in the proof itself. OK, that's fine (the proof states it).
+
+Is Derivation 1 true? (F1) says proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b)) for every (a,b) ∈ C. So the third coordinates match. And the first two: (a,b) vs (τ(a),σ(b)). The signature of k on τ[C] is indexed by (τ(a),σ(b)) for (a,b) ∈ C; the signature of λ(k) on C is indexed by (a,b). These are different index sets unless τ, σ are identities. "Up to the port translation" — and presumably up to the edit translation. The claim says "the same signature on τ[C] as its anchor λ(k) has on C, up to the port translation". So the signatures coincide after translating indices. Fine, (F1) gives exactly that. Derivation 1 is essentially a restatement of (F1). I don't see a counterexample.
+
+Hmm, one potential issue: (F1) is stated for (a,b) ∈ C, and sig_{τ[C]}(k) = {(τ(a),σ(b), L_k(τ(a),σ(b))) : (a,b) ∈ C}. If τ is not injective, τ[C] might be smaller than C's image, and two different (a,b) could map to the same (τ(a),σ(b)) with... no, the third coordinate is determined by (τ(a),σ(b)), so it's consistent. Fine.
+
+Another: does (F1) require the anchor's signature to be computed with Sol_{λ(k)}(a,b) where the edit a is applied to the subnetwork? If a sets a port not in the subnetwork's components... I discussed this in F1. The theory isn't fully precise, but no counterexample that breaks Derivation 1 under its stated assumptions suggests itself. Derivation 1 is basically (F1) reindexed. I'll report no counterexample found for Derivation 1, noting the subnetwork-edit subtlety.
+
+**Derivation 3**: "Let t be selected on a finite history H ⊊ C. For every (a,b) ∈ C∖H there exists a transport t', also surviving on H, with a different value at (a,b). Proof: The component relations L_j(a,b) are supplied independently for each (a,b). Survival on H constrains only {L_j(a,b) : (a,b) ∈ H}. Alter L_j(a,b) for one (a,b) ∉ H to any other admitted relation; the result survives on H and differs at (a,b)."
+
+Is this sound? The claim is about selected transports. Selection: population T of candidate transports, variation operator μ, finite history H ⊆ C, survival condition requiring fidelity on H. t survives. For (a,b) ∈ C∖H, we need t' that also survives on H but differs at (a,b).
+
+The proof alters L_j(a,b) for one (a,b) ∉ H. But: is t' in the population T? The survival condition requires fidelity on H; t' differs from t only at (a,b) ∉ H, so t' is faithful on H iff t is. But is t' ∈ T? The population T is a set of candidate transports; the proof assumes we can alter a component relation and stay in T (or at least that such a transport exists). Hmm. If T = {t} (a singleton population), then no t' in T differs. But then μ has nothing to vary... Actually, a singleton population with a variation operator is possible. Hmm.
+
+Also: "with a different value at (a,b)" — value of what? The transport's value: π, or the answer, or the component relations. The proof alters L_j(a,b), which is E's component relation under the translated edit. Hmm, but L_j is part of E's interpretation, not the transport t = (π,τ,σ,λ). So altering L_j(a,b) changes E, not t. Hmm. Actually, "the transport's value at (a,b)" would naturally be π(Sol_D(a,b)) or Ans_E(τ(a),σ(b)). Altering E's component relations changes that. But then t' = (π, τ, σ, λ) with a different E... The transport is between organizations; changing E's relations gives a different target organization, hence arguably a different transport.
+
+Hmm, this is a known kind of issue. The finding mentions "A precedent. A later revision of this theory met an overbroad Derivation 3 with a recorded change of claim, noting that the proof had already assumed the qualification." So the theory's Derivation 3 as stated here is the overbroad version, and a later revision fixed it. But my job is to audit this text. Is Derivation 3 counterexampleable under its stated assumptions?
+
+The stated assumptions: t selected on finite H ⊊ C. Population T, variation μ, history H, survival requiring fidelity on H. Nothing says the population is rich (e.g., contains transports differing at unseen points). The proof assumes "the component relations L_j(a,b) are supplied independently for each (a,b)" and that altering one gives a transport that survives. But:
+1. If T = {t}, no t' exists in T.
+2. Even if T is rich, the altered transport must be in T.
+3. If the survival condition includes more than fidelity on H (e.g., "and is the unique survivor" or "and has minimal description length"), t' might not survive.
+
+Hmm, the survival condition is stated as "requiring fidelity on H". So survival = fidelity on H (presumably among population members). t' faithful on H ⟺ t faithful on H (they differ only at (a,b) ∉ H). So t' survives iff t does, PROVIDED t' ∈ T.
+
+So the gap is: the proof doesn't establish t' ∈ T. Counterexample: let T = {t} where t is any transport faithful on H. μ any variation operator. H ⊊ C. The survivor is t. For (a,b) ∈ C∖H, is there t' ∈ T with a different value at (a,b)? No, T = {t}. So Derivation 3 fails.
+
+Hmm, but is a singleton population admissible? "There is a population T of candidate transports, a variation operator μ on T, a finite history H ⊆ C..., and a survival condition requiring fidelity on H. The transport t is a member of T that survived." A population of one is a population. A variation operator on a singleton is the identity. So yes, admissible under the stated assumptions.
+
+Hmm, but wait: is this a legitimate counterexample or a quibble? The finding's "precedent" note says a later revision met an overbroad Derivation 3 with a recorded change of claim, "noting that the proof had already assumed the qualification". So the intended qualification is probably something like "for a population rich enough to contain such variants" or "for a selected transport among a population with nontrivial variation". The overbroad version here is counterexampleable.
+
+Also, another angle: the proof alters L_j(a,b), which is E's interpretation, and says "the result survives on H and differs at (a,b)". But the transport t is (π,τ,σ,λ); altering E's relations doesn't alter t. So "t'" is a transport to a modified E. Is that "a transport" in the relevant sense? The population T is a population of transports; if transports are tuples (π,τ,σ,λ) between fixed organizations D and E, then altering E's relations isn't altering a transport at all — it's changing the target. So the proof's move is questionable.
+
+Hmm, but one could also vary π: define π'(z) = π(z) except... no, π's value at a state is fixed. To differ at (a,b), vary π on Sol_D(a,b). But then π' must still be a transport (with the same τ, σ, λ?). If we keep λ, τ, σ and change π only on Sol_D(a,b), does fidelity on H survive? (F2) for (a',b') ∈ H: π'[Sol_D(a',b')] = Sol_E(τ(a'),σ(b')). If Sol_D(a,b) ∩ Sol_D(a',b') = ∅ for (a,b) ≠ (a',b'), then π' still satisfies (F2) on H. But if the solution sets overlap, changing π on one breaks the other. Hmm. For edits that set ports, solution sets are typically disjoint. So varying π on Sol_D(a,b) works for disjointness. But again, must t' ∈ T.
+
+So I have a counterexample to Derivation 3 as stated: a singleton population. Let me make it concrete.
+
+Actually, let me reconsider whether this is within the spirit. The theory says in Part XV: "A non-fallible selected transport. A selection history H ⊊ C whose survivor is determined on C∖H. This refutes Derivation 3." So the theory itself defines the counterexample class: a survivor determined on C∖H. My singleton-population example: T = {t}, survivor t, and t is trivially "determined on C∖H" (it's the only member). So yes, this is exactly a counterexample to Derivation 3 under its stated assumptions. 
+
+Hmm, but is a singleton population physically sensible? "A population T of candidate transports" — in a physical system, a population of one is degenerate but not impossible. The theory says nothing requiring |T| ≥ 2. So the counterexample stands under the stated assumptions.
+
+Actually, wait. Let me reconsider. Does "variation operator μ on T" require |T| ≥ 2? A variation operator maps T → T (or generates new members). If μ: T → T and T = {t}, μ = id. "Variation" suggests change, but formally an operator on a singleton is the identity. Hmm, if we require μ to be nontrivial (μ(t) ≠ t), then T must have ≥ 2. But the theory doesn't state that. Even with |T| = 2, though: T = {t, t''} where t and t'' differ only on H... no wait, they must both be faithful on H to survive... hmm, actually only the survivor must be faithful on H. Let me make a 2-member counterexample: T = {t, t}, no. T = {t, t'} where t' is unfaithful on H. Then the survivor is t uniquely, and t is determined on C∖H. So even with |T| = 2 and nontrivial μ, the survivor can be unique and hence "determined". 
+
+Hmm, but "determined on C∖H" in Part XV means: the survivor's values on C∖H are determined by the selection history. If the population has only one faithful member, then yes. So the counterexample: any population where exactly one member is faithful on H. That's easy to arrange. So Derivation 3 as stated is false: it needs an assumption that the population contains multiple faithful-on-H members differing at unseen points.
+
+Wait, but actually, hold on. Let me re-read Derivation 3's claim once more: "For every (a,b) ∈ C∖H there exists a transport t', also surviving on H, with a different value at (a,b)." So it claims existence of a co-survivor differing at each unseen point. The proof constructs one by altering L_j(a,b). The gap: (1) is the altered thing a transport in T? (2) does it survive? (survival requires fidelity on H — OK if the alteration is only at (a,b) ∉ H) (3) does it differ? (OK).
+
+The critical gap is (1): t' must be a member of T (the population) for "also surviving on H" to make sense. The proof says "the result survives on H" — treating survival as a property of the transport's fidelity, not its membership. But survival is defined as being a member of T that satisfied the survival condition. If the altered transport isn't in T, it didn't "survive" in the selection sense.
+
+So: counterexample — a population T with a unique faithful member. Let me write it concretely.
+
+Concrete counterexample to Derivation 3:
+- D = E = a single port x with domain {0,1}, component x = u (u = 0 at b_0). Edits: 1, do(x=0), do(x=1). C = {(1,b_0), (do(x=0),b_0), (do(x=1),b_0)}. 
+- T = {t, t*} where t = identity transport, and t* is the transport with π*(z) = 1 - z (flips), τ* = identity... hmm, t* must be unfaithful on H. Let H = {(1,b_0)}. t is faithful on H (trivially). t*: π*(z) = 1-z; (F2) at (1,b_0): π*[Sol_D(1,b_0)] = π*[{0}] = {1}; Sol_E(1,b_0) = {0}. {1} ≠ {0}. Unfaithful. So t* doesn't survive. Survivor: t uniquely.
+- (do(x=0), b_0) ∈ C∖H. Is there t' ∈ T, surviving on H, differing at (do(x=0),b_0)? T's only faithful member is t. t itself doesn't differ from itself. So no. Derivation 3 fails.
+
+Great, that's a clean counterexample. And it matches Part XV's "A non-fallible selected transport... whose survivor is determined on C∖H."
+
+Hmm, but is this "under the stated assumptions"? Derivation 3's stated assumption: "t selected on a finite history H ⊊ C". Selection requires a population, variation operator, history, survival condition. My example satisfies all. So yes.
+
+But wait — is this too easy / is it the known issue the "precedent" refers to? The finding's precedent note says a later revision fixed an overbroad Derivation 3. So the theory as given here has the overbroad version, and my counterexample is valid. I should report it. But I should also note it's likely the known issue and the repair is to add the qualification (population richness / non-unique survivor).
+
+Actually, let me reconsider. Maybe there's a reading on which Derivation 3 is fine. "There exists a transport t', also surviving on H" — maybe "surviving on H" just means "faithful on H", not "a member of T that survived". On that reading, the constructed t' (faithful on H) counts, regardless of membership in T. Then Derivation 3 is about the existence of faithful-on-H transports differing at unseen points, which the proof establishes (modulo the altered thing being "a transport"). 
+
+Hmm. But "also surviving" most naturally means "also a survivor", i.e., a member of T that survived. And Part XV's counterexample class "A selection history H ⊊ C whose survivor is determined on C∖H" — "whose survivor is determined" suggests uniqueness of the survivor, which is about T's composition. So the theory's own defeat list reads Derivation 3 as claiming non-uniqueness of the survivor. And that requires population richness. So the overbroad reading is the theory's own.
+
+Also, the proof's alteration of L_j(a,b): is the result even a transport? Let me think. t = (π, τ, σ, λ) from D to E. The proof alters E's component relation L_j at (a,b). That changes E, so t is no longer a transport from D to E — it's a transport from D to E'. Unless we regard "a transport" as including its target organization. The theory defines "A transport from an organization D to an organization E is t = (π,τ,σ,λ)". So the target E is part of the typing. Changing E's relations changes the target. Whether the population T is a population of (transport, target) pairs or just maps is unstated. So there's a second gap: the proof's t' may not be a transport at all on a strict reading.
+
+So Derivation 3 has (at least) two gaps: (i) membership in T is not established; (ii) altering E's relations may not produce "a transport" in the strict sense. I'll report the singleton/unique-survivor counterexample as the main one.
+
+Hmm, let me also double check: does Derivation 3's claim maybe only need the existence of *some* transport (not necessarily in T) that's faithful on H and differs? If so, the proof works if we can construct such a transport. Let me see: given t faithful on H, and (a,b) ∈ C∖H, construct t' faithful on H differing at (a,b). Vary π on Sol_D(a,b) (assuming disjointness from H-solutions). Then t' = (π', τ, σ, λ) is a transport from D to E, faithful on H (since π' = π on H-solutions), differing at (a,b). That works! So on the "faithful on H, not necessarily in T" reading, Derivation 3 is provable (with the disjointness caveat). 
+
+Hmm, so the claim's truth depends on the reading. Part XV's phrasing ("whose survivor is determined on C∖H") suggests the in-T reading. On that reading it's false. On the faithful-on-H reading it's true. So it's ambiguous, and the ambiguity matters for Part XV's defeat condition.
+
+Hmm, OK. Let me think about how to present this. I'll report Derivation 3 as having a real gap under the survivor reading, with the concrete counterexample, and note the alternative reading on which it's true. This is a genuine finding.
+
+Hmm, wait, but actually, let me reconsider the disjointness caveat for the π-variation construction. If Sol_D(a,b) overlaps Sol_D(a',b') for some (a',b') ∈ H, then changing π on Sol_D(a,b) might break fidelity at (a',b'). When can solution sets overlap? Sol_D(a,b) and Sol_D(a',b') for different edits. E.g., if a and a' are both edits setting the same port to different values, solution sets are disjoint. If a sets port x and a' sets port y, and the components determine both, the solution sets are disjoint (different x values). If a is a relabeling and a' = 1... hmm, relabelings: Sol_D(relabel, b) might equal Sol_D(1,b) as sets of valuations (if the relabeling just renames ports). Then changing π on that set breaks fidelity at baseline. So the construction needs disjointness. For the counterexample direction (showing Derivation 3 can fail), I don't need this — the singleton population suffices. OK.
+
+**Derivation 2**: already covered by F1.
+
+**(T1) relational transport, including its composition sentence.**
+
+Line 368-374: "Relational transport. For R ⊆ Z_D × Z_E, forward preservation is zRy ∧ z →_a z' ⟹ ∃y'[y →_{τ(a)} y' ∧ z'Ry'], (T1) with the backward condition required for equivalence rather than one-sided abstraction. Composition of relations preserves both directions when intermediate scopes agree."
+
+Is (T1) true? It's a definition (forward preservation), so it's not the kind of thing with a counterexample. But the sentence "Composition of relations preserves both directions when intermediate scopes agree" — is that true?
+
+Let me think. Suppose R ⊆ Z_D × Z_E (forward and backward preserving, w.r.t. edits a of D and τ(a) of E), and S ⊆ Z_E × Z_F (forward and backward preserving, w.r.t. edits τ(a) of E and τ'(τ(a)) of F, or whatever the composed translation is). Is S∘R forward preserving? 
+
+Forward: z (S∘R) w and z →_a z'. Then ∃y [zRy ∧ y →_{τ(a)} y' ∧ z'Ry'] (forward preservation by R), and ∃w [ySw ∧ y' →_{τ'(τ(a))} w' ∧ y'Sw'] (forward preservation by S). So ∃w' [w → w' ∧ z' (S∘R) w']. ✓. Backward similarly. So composition preserves both directions. Seems fine, given the translations compose and scopes agree. I don't see a counterexample.
+
+Hmm, but there's a subtlety: "when intermediate scopes agree". The backward condition for equivalence: for the composition to be an equivalence, we need... Let me think about whether the composition of two equivalences (relations that are forward and backward preserving and also equivalence relations) is an equivalence. Composition of equivalence relations isn't generally an equivalence relation (it may not be transitive if they don't commute). Hmm! S∘R where R and S are equivalence relations: S∘R is an equivalence iff R and S commute (RS = SR). Otherwise S∘R may fail transitivity.
+
+Hmm, but (T1) is about preservation, not about being an equivalence relation. "with the backward condition required for equivalence rather than one-sided abstraction" — hmm, "equivalence" here might mean "equivalence" in the sense of the relation being an equivalence relation, or "equivalent" in the sense of the two directions matching. Let me re-read: "forward preservation is [condition], with the backward condition required for equivalence rather than one-sided abstraction."
+
+I read this as: forward preservation alone gives "one-sided abstraction" (a simulation); adding the backward condition gives "equivalence" (a bisimulation). So "equivalence" = bisimulation-like two-sided match. Not an equivalence relation per se.
+
+"Composition of relations preserves both directions when intermediate scopes agree." — the composition of two (forward+backward)-preserving relations is (forward+backward)-preserving. As I checked, yes. So no counterexample there.
+
+But: is the composition of two bisimulations a bisimulation? For labelled transition systems, the composition of two bisimulations is a bisimulation. Yes, that's standard. So fine.
+
+Hmm, what about "when intermediate scopes agree"? If the intermediate scopes don't agree, composition can fail. E.g., R relates D-states to E-states on a scope where edit a of D corresponds to τ(a) of E; S relates E-states to F-states on a scope where edit τ(a) of E corresponds to something else of F. If the scopes disagree, the composed preservation fails. The theory notes this. So no counterexample under the stated assumption.
+
+Let me look for something else. Maybe a counterexample where (T1)'s forward condition holds but the relation isn't a bisimulation because the backward condition as stated is too weak? The backward condition: y →_{τ(a)} y' ∧ zRy ⟹ ∃z' [z →_a z' ∧ z'Ry']. Hmm, the theory doesn't write it out, but presumably symmetric. If only the forward condition is stated and the backward is "required", the sentence is a definition plus a remark. No counterexample.
+
+OK, (T1) seems fine. Let me move on.
+
+**(T2)**: covered by F2. Additional independent counterexample? The finding's 2b is the strong one. I could add: even with everything fixed, if L < 1 the bound is ε(1-L^n)/(1-L) which is bounded — fine. If L ≥ 1 it grows. No issue. I think F2 covers (T2).
+
+**The four conditions of Account (F1), (F2), (A), non-circular, non-vacuous.**
+
+I need to look for: (i) cases where they give a verdict the theory's text says they give otherwise; (ii) a candidate meeting all four on a physically admitted contract with non-declared transport that plainly explains nothing (sufficiency failure); (iii) a genuine explanation no candidate meeting them can capture (necessity failure).
+
+Let me think about sufficiency failures (the most interesting).
+
+The theory's attack (A): "Produce a candidate that satisfies all four conditions of Account (Part V) on a physically admitted contract, with a non-declared transport, and that plainly explains nothing."
+
+Classic attempts: lookup tables, reversed calculations, conclusion-as-premise. The theory says they fail one of the four. Let me try to construct a sufficiency failure.
+
+Idea 1: The "answer-copy" or "oracle" candidate. E has a single component that just is the answer relation, with the contract containing an edit that sets the answer port. Hmm — this is the "p because p" case, excluded by S2 (non-circular). But wait: S2 says "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component". So an oracle component is excluded by S2. But S2 is prose, not formal. And S3 is the formal one. Hmm.
+
+Idea 2: A candidate whose mechanism is a lookup table over the contract's edits. Contract C = {(1,b_0)} ∪ {(do(x=c), b_0): c ∈ R}. E has a component that, for each edit, returns the right answer by table lookup. Does it pass (F1)? The table component's relation under do(x=c) is {(c, 2c+1)} — it responds to the edit. Hmm, but (F1) requires the anchor subnetwork's projected solution to equal the component relation. If the anchor is a subnetwork of D that genuinely computes 2c+1, then it's not a table — it's the real mechanism. If the anchor is a table in D... but D is the target; the anchor must be a subnetwork of D. So (F1) forces E's components to match D's subnetworks. So a pure table in E can't pass (F1) unless D itself is a table. Hmm. So (F1) is doing real work. 
+
+Idea 3: A candidate that passes all four but is vacuous. Non-vacuity: Sol_D(1,b_0) ≠ ∅, and the contract must not silently exclude changes. Hmm.
+
+Idea 4: Exploit the non-circular condition's weakness. Consider a candidate E that is a faithful copy of D (so (F1), (F2), (A) hold trivially with the identity transport), plus an extra idle component that does nothing. Γ = the extra component. Hmm, then non-circular requires a contrast that removes the block and changes the answer. If Γ is the idle component, removing it doesn't change the answer, so S3 fails. But the candidate could set Γ = the real components and keep the idle one out of Γ. Then it's fine.
+
+Idea 5: A candidate that explains nothing because its contract is trivially narrow but not "only relabelings". Line 272: "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to Q, does not satisfy non-circular dependence". So a contract with one non-relabeling edit that doesn't matter... Hmm, if the contract contains exactly one intervention that changes the answer, and the mechanism responds, S3 holds. Is that "explaining nothing"? The theory would say it's a scoped account of a narrow question. Not plainly explaining nothing.
+
+Idea 6: Reversed calculation variants. The theory says reversed calculation fails (F2) under the production contract. What if the contract is mixed?
+
+Idea 7: The "dormant/epicycle" candidate. E = D plus a component that is active but whose contribution is masked. Hmm.
+
+Let me think about (F2) more carefully. (F2): π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)), τ(1) = 1, τ(a₂a₁) = τ(a₂)τ(a₁). 
+
+Hmm, here's a thought: (F2) requires τ to be a homomorphism on compositions. But A is "closed under a partial associative composition with identity 1" (line 108). Partial! So a₂a₁ may be undefined. (F2) says τ(a₂a₁) = τ(a₂)τ(a₁) — presumably only when a₂a₁ is defined. Fine.
+
+Idea 8: A candidate where π is non-injective and hides a difference. (F2) is an equality of sets, so non-injectivity is fine as long as the sets match.
+
+Let me try a different angle: necessity failure (genuine explanation no candidate can capture). The theory flags eliminative explanation as the exposed case. Hmm, that's the theory's own concern. Hard to make a decisive counterexample.
+
+Let me try yet another angle: does (E) give a verdict the theory's text says otherwise? Consider "What (E) does not exclude" (line 294-298): "A true mechanism guessed for bad reasons satisfies (E)". Fine. "A less elegant account satisfies (E) as fully as a more elegant one". Fine. "A proof answering 'why does this follow under these rules?' satisfies (E) for that question without answering 'what caused this?'". Fine.
+
+Consider the finite monotone theorem (Part VI). Not one of the four conditions, but listed in Part XV. Let me check it.
+
+"Finite monotone theorem. If Γ is finite, S is upward closed, and Γ ∈ S, then the critical singletons are exactly ∪min S and the globally indispensable ones are exactly ∩min S."
+
+S = {W ⊆ Γ : Account(E|W, p)}. CriticalBlock(B;W,p) ⟺ W ∈ S ∧ W∖B ∉ S. A "critical singleton" would be B = {d} with W∖{d} ∉ S. 
+
+Claim: critical singletons = ∪min S. I.e., d is critical for some W ∈ S iff d ∈ some minimal support.
+
+Proof given: "A member of a minimal support is critical for it." (If U ∈ min S and d ∈ U, then U∖{d} ∉ S — wait, is that right? U is minimal in S, so no proper subset of U is in S. U∖{d} ⊂ U, so U∖{d} ∉ S. So d is critical for U. ✓.) "If d is critical for W, finiteness gives a minimal U ⊆ W; if d ∉ U, upward closure makes W∖{d} a support." Hmm: d critical for W means W ∈ S and W∖{d} ∉ S. Take minimal U ⊆ W with U ∈ S. If d ∉ U, then U ⊆ W∖{d}, and upward closure gives W∖{d} ∈ S — contradiction. So d ∈ U, hence d ∈ ∪min S. ✓. And "Deletion of d from Γ preserves support exactly when a minimal support omits d": Γ∖{d} ∈ S iff ∃U ∈ min S with d ∉ U, iff d ∉ ∩min S. Hmm, wait: Γ∖{d} ∈ S iff (by upward closure... hmm, Γ ∈ S is given). Γ∖{d} ∈ S iff ∃ minimal U ⊆ Γ∖{d} with U ∈ S, iff ∃U ∈ min S with d ∉ U, iff d ∉ ∩min S. ✓. So globally indispensable (∩min S) = those whose deletion loses support. ✓.
+
+The theorem seems fine. Upward closure is a hypothesis. Is S upward closed in general? S = {W : Account(E|W, p)}. Is Account monotone in W? Adding commitments to E... Account requires (F1), (F2), (A), non-circular, non-vacuous for E|W. Adding components could break (F1) or (F2). So S is not automatically upward closed — hence the hypothesis. The theorem is stated with the hypothesis. Fine. No counterexample under stated assumptions.
+
+Hmm, wait. Actually let me reconsider: is the theorem even needed... no, it's fine.
+
+Let me look at (I2): "It is identified on every attainable y exactly when f = f̄∘g for some f̄." (I1): "identified at y exactly when Z_y ≠ ∅ ∧ |f[Z_y]| = 1". (I2): identified on every attainable y ⟺ f factors through g. Proof: if f = f̄∘g then f is constant on each fibre g⁻¹(y), so |f[Z_y]| = 1 (if Z_y ≠ ∅). ✓. Conversely, if f is constant on each nonempty fibre, define f̄(y) = the unique value of f on Z_y; then f = f̄∘g. ✓. Fine. (Attainable y means Z_y ≠ ∅.) No counterexample.
+
+(I4): "For linear A and feature cᵀ, identification is ker A ⊆ ker cᵀ." Hmm: f = cᵀ (feature), g = A (measurement). Identification on every attainable y: f constant on fibres of g. ker A ⊆ ker cᵀ means cᵀ vanishes on ker A, i.e., cᵀ factors through A (by the fundamental theorem of homomorphisms), i.e., f = f̄∘g. ✓. Fine.
+
+(O1): "For allowed steps R and an invariant I with zRz' ⟹ I(z) = I(z'), no allowed path joins states of different invariant value." Trivially true. "Equal values do not establish reachability." ✓.
+
+(CT2): "F(C) = states whose executions all complete and return into C. F is monotone; C ⊆ F(C) is the invariant form; the union of post-fixed sets is the greatest fixed point." Monotone: if C ⊆ C', then F(C) ⊆ F(C')? F(C) = {z : all executions from z complete and return into C}. If C ⊆ C', returning into C implies returning into C', so F(C) ⊆ F(C'). ✓ monotone. "C ⊆ F(C) is the invariant form" — that's the definition of a post-fixed point (invariant). "the union of post-fixed sets is the greatest fixed point" — for a monotone F on a complete lattice, the union of post-fixed points is the greatest fixed point (Tarski). ✓. Hmm, "union of post-fixed sets" — post-fixed means C ⊆ F(C). The greatest fixed point = union of all post-fixed points (for monotone F on powerset). ✓. Fine.
+
+Hmm, one quibble: F(C) as defined is "states whose executions all complete and return into C". Is F(C) ⊇ C guaranteed? No — C ⊆ F(C) is the invariant condition, not automatic. Fine, that's what "C ⊆ F(C) is the invariant form" says. OK.
+
+So among the Part XV list: finite monotone theorem ✓, (I2) ✓, (O1) ✓, (T2) — has the F2 issue, (CT2) ✓, Derivation 1 ✓, Derivation 2 — F1 issue, Derivation 3 — the population gap.
+
+Now let me think harder about sufficiency failures for Account. Let me try to construct a candidate that meets all four but explains nothing.
+
+Attempt: "The faithful irrelevance." Let D be a target with a genuine mechanism, and let E be an exact copy of D (identity transport). Then (F1), (F2), (A) hold trivially. Γ = all components. Non-circular: some edit changes the answer and removing a block loses it — holds if D is genuine. Non-vacuity: holds. So Account holds. But E = D — is that "plainly explaining nothing"? The theory would say it's a trivial account (the target explains itself). Hmm, but the transport is the identity, which is... declared? If the identity transport is declared, it's excluded by the attack's requirement of non-declared transport. If selected/constructed, hmm. The theory doesn't say the identity transport can't be selected. But "plainly explains nothing" — a copy of the target isn't an explanation, but the theory's (E) would count it. Hmm, is that a sufficiency failure?
+
+Hmm, the theory might respond: an account where E = D and t = identity is not explanatory because... hmm, actually the theory doesn't require E ≠ D. Let me check. Part V: "An explanatory candidate for question p is an organization E, a transport t from D to E, and an identified set Γ of active commitments in E." No requirement E ≠ D or t non-trivial. So the identity candidate satisfies Account whenever D itself is "genuine". Is that a defect? The theory might say: it's a degenerate case, and the interest is in accounts where E differs. But strictly, (E) counts it. Hmm, but does it "plainly explain nothing"? An identity account is like saying "the target explains itself" — arguably explains nothing beyond restating. But the theory might accept it as a limiting case (the target is its own account at its own grain). Hmm. Weak.
+
+Let me try harder. 
+
+Attempt: "The irrelevant mechanism." Suppose the question is a production question about output z, and the contract contains interventions on input x. E contains the genuine mechanism from x to z, PLUS a second, parallel mechanism that also produces z from x but is never used (masked). Γ = the parallel mechanism. Hmm, (F1) requires each component of E to match its anchor. If both mechanisms are anchored to the same subnetwork, they both pass (F1). (F2): the assembled E must have the right solution set. If both mechanisms produce z from x, the solution set is the same. (A): answer is right. Non-circular: removing the parallel mechanism doesn't change the answer, so if Γ = the parallel mechanism, S3 fails. But if Γ = both, S3 holds via the genuine one. So Account holds with Γ including the idle mechanism. Is that "plainly explaining nothing"? No — it includes a genuine mechanism. Not a failure.
+
+Attempt: exploit (A) with a query that doesn't probe the mechanism. Suppose Q reads a port that is set by a boundary condition, not by the mechanism. Then any E with the right boundary passes (A). Hmm, but then non-circular: is there a contrast that changes the answer? If the answer is set by a boundary, changing the boundary changes it, and the "mechanism" doesn't matter. Then S3's witness would be... the block whose removal loses the change is the boundary-setting component. Hmm. If Γ includes it, S3 holds. So Account holds for a candidate whose "mechanism" is just the boundary value. But S2 says the answer must not appear as an unanalysed boundary input. So excluded by S2. OK, S2 does work here.
+
+Attempt: exploit the "declared grain" in S2. "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component". So at a coarser grain, the answer could appear as a component? Hmm. If the grain is coarse enough that the whole mechanism is one component, then the answer "appears as a component" — but so does every mechanism at a coarse grain. S2's "at the declared grain" is a scoping. Hmm, this is loose prose. Hard to build a formal counterexample.
+
+Attempt: a candidate that satisfies all four but whose transport is selected and whose mechanism is a coincidence. E.g., a "just-so story": E's mechanism is a spurious correlation that happens to be faithful on C. The theory anticipates this: "A true mechanism guessed for bad reasons satisfies (E); the reasons for adopting it are assessed elsewhere (Part IX)." So the theory bites the bullet — sufficiency failures from bad epistemic provenance are not counterexamples because (E) is not about reasons. Hmm. But attack (A) asks for a candidate that "plainly explains nothing" — a true mechanism guessed badly still explains (the theory says so). So that's not a failure.
+
+Attempt: a candidate whose mechanism is faithful but the question is mis-posed. Hmm, "A question can be wrong" (Part III). If p is a wrong question, an account of it still satisfies (E). The theory says "Its formulation is still an event." So (E) doesn't require the question to be right. Is that a defect? The theory would say: assessing the question is a separate question. OK.
+
+Let me try to find a case where (E) gives a verdict the theory's text says otherwise — i.e., (E) excludes something the text says it includes, or vice versa.
+
+Text says (E) excludes: lookup table (fails F1), reversed calculation (fails F2), "p because p" (fails non-circular), silently narrowed contract (fails non-vacuity).
+
+Text says (E) does not exclude: true mechanism guessed badly, less elegant account, proof for a different question.
+
+Hmm, let me examine the reversed-calculation claim under (F2) once more. Line 286: "A reversed calculation — identification presented as production — fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's."
+
+Setup (Part VII): H := U_H, θ := U_θ, L := H cot θ. Production contract: interventions on H and θ. Forward org: faithful. Reversed: H = L tan θ. Under do(H = c): the target's L changes (L = c cot θ), but the reversed calculation's H is set to c... wait. The reversed calculation E' has components H := L tan θ and θ := U_θ, L := U_L? Hmm. In the reversed calculation, L is the input and H, θ are... no. Let me re-read.
+
+Line 340-342: "Stipulate H := U_H, θ := U_θ, L := H cot θ. Under A containing interventions on H and θ, these ports are inputs and L is an output, by Part II. An intervention on L replaces its component and leaves H, θ unchanged. The forward organization is faithful under this contract. The reversed calculation H = L tan θ is not: intervening on H changes the target's L but not the calculation's H."
+
+So the reversed calculation is an organization E' where H := L tan θ (H is computed from L and θ). Under the production contract (interventions on H, θ): do(H = c) sets H = c in the target D, so the target's L = c cot θ changes. In E', do(H = c)... E' has H := L tan θ, so H is an output of E', not settable by intervention? Hmm, but the edit do(H=c) is in the contract, and τ(do(H=c)) is an edit of E'. If E' has a component assigning H (namely H := L tan θ), then do(H=c) replaces that component. So in E', after do(H=c), H = c (the component is replaced by a setting). Then... hmm, the claim is "intervening on H changes the target's L but not the calculation's H". 
+
+Hmm, I think the point is: in the reversed calculation E', the roles are reversed — L is treated as input and H as output. Under a contract with interventions on H (which the production contract has), the reversed calculation's H is an output (computed from L), so intervening on H doesn't propagate the way it should. Specifically, (F2): π[Sol_D(do(H=c), b_0)] should = Sol_{E'}(τ(do(H=c)), σ(b_0)). In D, do(H=c) gives L = c cot θ. In E', if τ(do(H=c)) = do(H=c) and E' computes H from L, then setting H = c in E' doesn't determine L (L is free), so Sol_{E'}(do(H=c), b_0) has L free — doesn't match. So (F2) fails. OK, plausible.
+
+Hmm, but actually, there's a subtlety: τ need not be the identity. The reversed calculation's transport could translate do(H=c) into an edit of E' that sets L appropriately. But then it wouldn't be "the reversed calculation". The theory's claim is about the natural transport. Hmm, this is a bit loose but I won't press it.
+
+Let me instead look for a genuinely new sufficiency counterexample. 
+
+Attempt: "The two-fibre fraud." Suppose the target D has an input x and output z, with z = x² (say). Contract: interventions on x. Q reads z. The genuine account E: z = x². Now consider E': z = x² for x ≥ 0 and z = x² for x < 0 — same thing. Hmm.
+
+Attempt: "The hidden constant." E has the mechanism plus a component that sets a constant that happens to equal the answer at baseline. Γ excludes it. Hmm, S2 only prohibits the answer appearing as a component — but if it's not in Γ, is it "active"? Hmm, S2 says "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component". This is about E, not Γ. So an oracle component in E violates S2 regardless of Γ. OK.
+
+Attempt: exploit that (F1) is per-component and (F2) is global, but neither requires the anchor subnetworks to be disjoint or to cover D. So E could have components anchored to overlapping subnetworks, or D could have subnetworks not anchored. That's fine.
+
+Attempt: a candidate with an empty Γ? Γ is "an identified set of active commitments" — could be empty? If Γ = ∅, then S3's "nonempty block of Γ" fails (no nonempty block exists), so non-circular dependence fails. So Γ = ∅ is excluded. OK.
+
+Attempt: exploit (A) — "The query Q is held fixed". What if Q is a constant query (returns the same for all (a,b))? Then (A) is satisfied by any E with the right constant answer. Non-circular: is there a contrast that changes the answer? No (Q is constant). So S3 fails, and line 272 kicks in. Hmm, so a constant query can't have an account. Is that right? A question whose answer doesn't depend on anything — the theory says no account can be claimed. Hmm, that seems harsh but internally consistent ("excluding every change under which the active commitments could matter to Q"). Actually for a constant Q, no change matters to Q, so line 272 condemns any contract. So constant questions can never be accounted for. Is that a defect? E.g., "why is 2+2 = 4?" — hmm, that's not constant in the relevant sense; the contract would contain edits to the axioms. OK, I guess.
+
+Let me try necessity failures instead. "An explanation without a faithful transport."
+
+The theory's own flagged case: eliminative explanation. Part VII gives a treatment: the rival's structure is anchored to a deleted subnetwork whose relation is full by (O). Hmm. Let me think about whether there's an explanation that can't be captured.
+
+Consider an explanation that works by *symmetry* or *invariance* rather than by a mechanism: "why does this system behave the same under exchange of particles 1 and 2?" — because the laws are symmetric. Hmm, the account E would be the laws, and the contract would contain the exchange edit. (F1): the laws' components respond to the exchange as the target does. Plausibly works.
+
+Consider an explanation by *renormalization* or *limit*: "why is the heat capacity ~ T³ at low T?" — an asymptotic argument. Approximate transport (T2) covers approximation. Hmm.
+
+Consider an explanation that is *non-constructive*: "there exists a solution because of a fixed-point theorem." The account E is the fixed-point theorem applied. Contract: edits to the function. (F1): the theorem's components respond. Plausibly fine.
+
+Consider an explanation whose target is *not* an organization — e.g., explaining a singular event with no reusable structure. Hmm, the theory would say the target is always an organization (that's the framework). A genuine explanation of a one-off event: "why did the bridge collapse?" — the target D is the bridge's organization. Fine.
+
+Hmm, necessity failures are hard to make decisive. Let me instead look for internal inconsistencies — places where the theory's text says (E) gives one verdict and the conditions give another.
+
+Let me look at the "Infinitary support" example (line 326): "Γ = {d_n : |x| ≤ 1/n}: every unbounded index set determines x = 0; no minimal support and no singleton witness exists." Hmm, this is in Part VI, illustrating (B). It's about supports, not Account directly. The finite monotone theorem doesn't apply (Γ infinite). OK.
+
+Let me reconsider: is there a case where (F1) holds, (F2) holds, but the theory's text says the candidate should fail? E.g., the "reversed calculation" is said to fail (F2). What if a reversed calculation passes (F2) under a clever transport? The theory says the reversed calculation "fails (F2) under the production contract". If someone exhibits a reversed calculation that passes all four under the production contract, that contradicts the text. Hmm. Let me think: the reversed calculation E' with H := L tan θ. Can we find a transport from D to E' satisfying (F1), (F2), (A) on the production contract (interventions on H, θ)?
+
+D: H := U_H, θ := U_θ, L := H cot θ. E': θ := U_θ, L := U_L, H := L tan θ. Contract C: interventions on H and θ. Q reads L (production). Ans_p(do(H=c), do(θ=d)) = c cot d.
+
+Transport t: π(H, θ, L) = ? E' has ports H, θ, L. π should map D-valuations to E'-valuations. π(H,θ,L) = (H, θ, H cot θ)? Then in E', H := L tan θ would give H = (H cot θ) tan θ = H. ✓ consistent. τ: translate edits. do(H=c) in D → ? in E'. If τ(do(H=c)) = do(L = c cot d)... but then it's not "the reversed calculation" — the transport is doing the work. Hmm, but the theory doesn't forbid τ from being nontrivial. Hmm. Actually wait: if τ(do(H=c)) = do(L = c·cot d), then τ depends on the boundary value of θ, which is fine (σ translates boundaries). Hmm, but is τ a function of the edit alone? τ: A_D → A_E. do(H=c) is an edit of D; τ(do(H=c)) must be a fixed edit of E'. If τ(do(H=c)) = do(L = c cot θ₀) where θ₀ is the baseline θ... but under do(θ=d), θ = d, and the answer is c cot d. Hmm, τ must be a homomorphism and work for all (a,b) ∈ C, including compositions.
+
+Let me check (F2): π[Sol_D(do(H=c), do(θ=d))] = π[{(c, d, c cot d)}] = {(c, d, c cot d)}. Sol_{E'}(τ(do(H=c)), σ(do(θ=d))). If τ(do(H=c)) = do(L = ?) — we need Sol_{E'} to be {(c, d, c cot d)}. In E', H := L tan θ, so H = L tan d. For H = c, L = c/tan d = c cot d. ✓. So if τ(do(H=c)) is an edit that sets... hmm, we need Sol_{E'}(τ(a), σ(b)) = {(c, d, c cot d)}. In E', given θ = d (from σ(do(θ=d)) = do(θ=d)), and the component H := L tan θ, the solutions are {(H, d, L) : H = L tan d} — a one-parameter family, not a singleton. To get a singleton, τ(do(H=c)) must set H = c: τ(do(H=c)) = do(H = c). Then Sol_{E'}(do(H=c), do(θ=d)): E' has H := L tan θ, but do(H=c) replaces that component with H = c. Then L is free (E' has L := U_L, an input). So solutions: {(c, d, L) : L arbitrary}. π[Sol_D] = {(c,d,c cot d)} ≠ {(c,d,L)}. (F2) fails. ✓ So the reversed calculation indeed fails (F2) with τ = identity-ish. Good, the text is right here.
+
+What if τ(do(H=c)) = do(L = c cot d)? But τ is a function of the edit do(H=c) alone; it can't depend on d (which comes from the boundary). Unless τ(do(H=c)) = "set L to c cot θ" — an edit parameterized by θ. Hmm, edits can be parameterized. If A_E' contains an edit do(L = c cot θ) (setting L as a function of θ), then τ(do(H=c)) = do(L = c cot θ). Then Sol_{E'}(do(L = c cot θ), do(θ=d)): L = c cot d, H = L tan d = c. Solutions: {(c, d, c cot d)}. ✓ (F2) holds! And (F1)? Components of E': θ := U_θ (input), L := U_L (input, but replaced by do(L = c cot θ)), H := L tan θ. Hmm, this is getting weird — the "reversed calculation" with a transport that sets L as a function of θ is really the forward calculation in disguise. The theory would say this isn't the reversed calculation anymore. Hmm. This is a stretch; I'll skip.
+
+OK let me think about a cleaner sufficiency failure. 
+
+Idea: "The faithful red herring." A candidate E that faithfully mirrors D on the contract C, but whose components are anchored to subnetworks of D that are *not* the ones doing the explanatory work, while the actual work is done by a part of D not represented in E's Γ. Hmm, but (F1) ties each E component to its anchor, and (A) ties the answer. If E's answer is right and its components match their anchors, then E does mirror the relevant part of D. Hmm.
+
+Idea: exploit the fact that (F1) and (F2) don't constrain components of D that aren't in any anchor. So E can silently *omit* parts of D. If the omitted part is causally relevant to the answer but its effect is captured by the anchors... hmm, if it's captured, then it's not omitted. If it's not captured, (A) fails. So no.
+
+Idea: exploit that Γ is candidate-identified. A candidate could identify a Γ that excludes its own mechanism and includes only... no, S3 requires a block of Γ whose removal loses the answer change. If Γ excludes the mechanism, S3 fails.
+
+Hmm. Let me try: a candidate with Γ = a single component that is a *conjunction* of the real mechanism and an idle conjunct, such that removing it loses the answer but it's really the idle part that's doing... no.
+
+Idea: non-vacuity's weakness. Non-vacuity: Sol_D(1,b_0) ≠ ∅ and the contract's exclusions are stated. Suppose the contract contains exactly one non-trivial edit, and the mechanism responds to it. Account holds. Is that "plainly explaining nothing"? The theory says it's a scoped account. Not a failure.
+
+Hmm, let me try the direction the theory itself flags as possibly inadequate: eliminative explanation. Part VII: "A question of the form 'why is there no X-effect?' has a target D in which the ports and components a rival account would need are absent, and a contract containing the edits that would introduce them. An account is faithful when introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged. The rival's supposed structure is anchored to a deleted subnetwork, whose relation is full by (O)."
+
+Hmm, "the rival's supposed structure is anchored to a deleted subnetwork, whose relation is full by (O)". So in E (the eliminative account), there's a component representing the rival's structure, anchored to a deleted subnetwork of D. A deleted component imposes the full relation (line 120). So the anchor's projected solution is the full relation, and the rival-structure component in E must have the full relation too (by F1). Hmm, so E's rival-structure component is inert (full relation). And introducing those components (via contract edits) changes the answer in E as in D. OK.
+
+Is there a problem? If the rival's structure is anchored to a deleted subnetwork, then by (F1) the rival-structure component has the full relation — it's inert. But then "introducing those components changes the answer in E as it does in D" — the contract edit introduces the components. Under that edit, the anchor is no longer deleted? Hmm. The edit is in C; it introduces the rival's components into D. So under edit a ∈ C, D has the rival's components; under 1, D doesn't. So D itself varies. And E mirrors. OK, this is a "modal" account: the target D under edit a has the structure. Hmm, this means D's organization depends on the edit — which is exactly what L_j(a,b) supplies. OK. Plausible, no counterexample.
+
+Let me try another angle: (R) representation. Line 220: Rep_ℓ(o,c) ⟺ ∃t [Faithful_C(t: Org_ℓ(o) → c) ∧ (Sel(t) ∨ Con(t))]. Hmm, "Faithful_C" — faithful on c's contract. So the transport is from the occurrence's organization to the content, faithful on the content's contract. Fine. No counterexample.
+
+Let me look at Derivation 4 (surprise requires incomplete history). "A system can be surprised only if it holds a transport selected on a history H strictly smaller than the contract C." Proof: surprise = violation at (a,b) ∉ H. If no transport, no expectation. If H = C, every occurring (a,b) ∈ H. ✓. Fine. Hmm, one subtlety: "the contract C of changes the world admits" — C is the contract of the transport. If the world admits changes outside C, those aren't violations (they're outside the contract). So surprise requires H ⊊ C. ✓. Fine.
+
+Derivation 5 (question-finding representable): "A contract C is an organization... Give it ports (the edits and their boundaries), components (the closure conditions), and admitted edits (add or remove a change; alter Q)." Hmm, is a contract really an organization in the sense of (O)? (O) requires a set of ports with value domains, components with footprints, boundary conditions, admitted edits closed under composition, and interpretations L_j(a,b). The construction is sketched, not rigorous, but plausible. Hmm. One issue: a contract is C ⊆ A×B plus Q. Its "admitted edits" would be operations on contracts. But then the resulting organization's contract (its own C') would be... a contract on contracts. Infinite regress? The theory uses this only to say contracts can be contents in (G). Hmm, it's a sketch. Not a counterexample to a stated theorem.
+
+Derivation 6 (two primitives): fine.
+
+Derivation 7 (frozen assessment and moving question): fine.
+
+Derivation 8 (equivariance): "Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK). Proof: Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them." Hmm — (G) includes New(s,c,h,e) ⟺ ¬∃d ∈ R_{<e}(s,h), d ≡_ℓ c. Under a bijection, the repertoire is transported, and nonexistence is preserved. ✓. (P) includes ProducedBy(Δ,ξ,ξ';O) — a physical claim; transported along a bijection of the physical module? "Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections" — if the physical module is also transported, fine. Hmm, (EK) includes Deploy which includes (CT1) retained realization — physical. If the bijection is on the physical system too, fine. The caveat "does not apply to coarsenings, changed boundaries, or lost event identities" handles the failures. OK, plausible. No counterexample.
+
+Derivation 9 (output descriptions): "If M₀, M₁ have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both. Proof: Equal inputs to a function give equal outputs." ✓. Trivially true.
+
+Derivation 10: covered.
+
+Hmm, let me go back and look for a sufficiency failure more aggressively, since that's the theory's attack (A) and the most interesting.
+
+Let me reconsider the "identity account" (E = D, t = identity). Actually, the theory's attack (A) requires "a non-declared transport". If the identity transport is selected or constructed, then the identity candidate meets all four with a non-declared transport. Does it "plainly explain nothing"? Hmm. The theory might say the identity transport is trivially faithful and hence uninformative, but (E) counts it. Actually, hold on — is there any requirement that the transport be non-trivial or that E differ from D? Let me search... Part V: no. Part IV: "A transport from an organization D to an organization E is t = (π,τ,σ,λ)". No non-triviality. So the identity account satisfies (E). 
+
+Is that a defect? Consider: "why does z = 2c+1 under do(x=c)?" The identity account E = D says: because j_y gives y=2x and j_z gives z=y+1. That IS an explanation (the mechanism is right there in D). So the identity account isn't "plainly explaining nothing" — it's the trivially correct account. Hmm. So not a sufficiency failure. The identity account explains because D's own organization is the mechanism.
+
+OK. Let me think about whether (E) admits a candidate that is *worse than nothing*. 
+
+Idea: "The doubled world." E = D ⊔ D (two disjoint copies of the mechanism), with π mapping to one copy and Γ including both. (F1): both copies match their anchors. (F2): solution set is the diagonal? Hmm, if E has two copies, Sol_E is a subset of the product... this needs care. Probably (F2) fails unless the copies are linked. Skip.
+
+Idea: exploit (F2)'s set-equality. π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)). If π is not injective, multiple D-states map to one E-state. Fine. If Sol_E is larger than π[Sol_D]... then (F2) fails. OK.
+
+Idea: a candidate whose mechanism is right but whose *identification of Γ* makes a non-explanatory block the witness. E.g., Γ = {idle component that happens to be necessary for solvability}. Hmm. Suppose E has the genuine mechanism plus a component that is needed for Sol_E to be nonempty (e.g., a domain constraint). Removing it makes the answer undetermined. So S3 holds with the witness being the domain constraint. Account holds. Is that a failure? The candidate's account is "because of the domain constraint" — but the genuine mechanism is also there. Hmm, the theory would say (E) doesn't assess which block is "the" explanation; Part VI's supports do that. So not a failure of (E) per se.
+
+Hmm, I'm not finding a clean sufficiency failure. Let me try one more: the "premise-hiding" candidate.
+
+"p because p" is excluded by S2. But what about "p because (p ∧ q)" where q is idle? E has a component asserting p ∧ q. The answer p is determined. S2: "The target's answer does not appear... as a component". The component asserts p ∧ q, which contains p. So S2 is violated. OK.
+
+What about "p because q → p" (a tautological wrapper)? The component is q → p. Under an edit setting q = true, p follows; under q = false, p is undetermined. Hmm. If the contract contains interventions on q, and the answer p changes... Let's see: D: q := U_q, p := q (so p = q). E: q := U_q, p := q (same). That's the identity. Not a fraud.
+
+Let me try: D: x := U_x, z := x (so z = x). Contract: interventions on x. Q reads z. Genuine account E: z := x. Fraud E': z := x ∨ (some always-true condition)? Hmm, if the condition is always true, z = x still. Not a fraud.
+
+Fraud E': z := x if x ≠ 37, and z := 42 if x = 37. Under do(x=37), the target's z = 37 but E' gives 42. (A) fails. So no.
+
+OK, sufficiency is hard to break — (F1)+(F2)+(A) are strong. The weak points are the prose conditions (S2, non-vacuity). Let me look at non-vacuity once more.
+
+Non-vacuity (line 272): "Sol_D(1,b_0) ≠ ∅. The contract C is a declared subset of the physically admitted edits, and every physically admitted edit excluded from C is excluded by a stated scope, not silently. A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to Q, does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+
+Hmm, "every physically admitted edit excluded from C is excluded by a stated scope, not silently" — this is a requirement on the *record*, not a formal condition. It can't be checked mathematically. So non-vacuity is partly prose. A candidate with a silently narrowed contract would pass the formal part (Sol_D ≠ ∅) and fail only the prose part. Hmm. So (E)'s non-vacuity is only as strong as the modeller's honesty. The theory acknowledges this ("Objectivity lives in the physics and in the fidelity facts; scope-honesty lives in the record"). So a sufficiency failure via silent narrowing is possible but the theory would say it's a failure of the record, not of (E). Hmm. Actually — this IS a real soft spot: (E) cannot detect a silently narrowed contract from within the formalism. The theory admits this. So it's not a new finding, but worth noting.
+
+Let me try to build a sufficiency failure using silent narrowing + a selected transport. Hmm, but the theory's attack (A) says "plainly explains nothing". A silently narrowed contract with a faithful mechanism on it — the theory would say it's an account of the narrow question. Hmm.
+
+OK, let me now think about (T1)'s composition sentence once more, and also look for issues in the finite monotone theorem's hypotheses vs. Part VI's examples.
+
+Part VI line 322-324 "Redundant routes": Γ = {a,b}, S = {{a},{b},{a,b}}. This S is upward closed and Γ ∈ S. Finite monotone theorem: critical singletons = ∪min S = {a} ∪ {b} = {a,b}; globally indispensable = ∩min S = {a} ∩ {b} = ∅. So both a and b are critical (each is critical for {a,b}: {a,b}∖{a} = {b} ∈ S, so a is critical for {a,b}; similarly b). ✓. And neither is indispensable. ✓. Consistent with "each is contributory, neither indispensable". ✓.
+
+Line 328 "Interference": Γ = {a,b}, S = {{a}}. Is S upward closed? Upward closure: if W ∈ S and W ⊆ W' ⊆ Γ then W' ∈ S. {a} ⊆ {a,b}, so {a,b} should be in S. But S = {{a}}. So S is NOT upward closed. So the finite monotone theorem doesn't apply (its hypothesis fails). The text says "the full candidate fails although a subset succeeds" — consistent with S not being upward closed. ✓. Good, the text is careful.
+
+Hmm, wait: but the finite monotone theorem is listed in Part XV as a defeater-target, and its hypotheses include upward closure. In the interference example, upward closure fails. So the theorem is correctly hedged. ✓.
+
+Let me check the infinitary example: Γ = {d_n : |x| ≤ 1/n}. Hmm, this is a family of conditions; every unbounded index set determines x = 0. S would be {W ⊆ Γ : W unbounded} ∪ maybe? Hmm, "every unbounded index set determines x = 0; no minimal support and no singleton witness exists." So S = {W : W is unbounded} (plus?). No minimal member (any unbounded set has a proper unbounded subset... hmm, actually an unbounded set of natural numbers has a proper unbounded subset, yes). So min S = ∅, ∪min S = ∅, no critical singletons. ✓ consistent. And Γ infinite, so the theorem doesn't apply. ✓.
+
+OK now let me also double-check (I2)'s statement in the theory vs. the proof. Theory line 350: "It is identified on every attainable y exactly when f = f̄∘g for some f̄. (I2)". ✓ as I checked.
+
+Alright. Let me also examine the "Hard-to-vary" claim (line 330-332): "For explanatory jobs F ⊆ F', Pres(F') ⊆ Pres(F), where Pres(F) = {v ∈ V : ∀f ∈ F, Account(E_v, f)}." If F ⊆ F', then satisfying Account for all f ∈ F' implies satisfying for all f ∈ F. So Pres(F') ⊆ Pres(F). ✓. Trivially true.
+
+Hmm, and (D): Boundary_{E,p} = {(v,w) ∈ V² : Account(E_v,p) ≠ Account(E_w,p)}. Fine, a definition.
+
+Let me look at Part IX's (K1), (K2), (K3) — not in Part XV's list, so skip.
+
+Let me reconsider Derivation 3 once more and also look for a counterexample to Derivation 1 that's independent of F1's issues.
+
+Derivation 1: "every active component k of E has the same signature on τ[C] as its anchor λ(k) has on C, up to the port translation." The proof computes sig_C(λ(k)) = {(a,b,proj_{V_k}Sol_{λ(k)}(a,b))}. Hmm — the signature of a subnetwork. (K) defines signatures for components. The proof extends to subnetworks. But there's a subtlety: the signature of k on τ[C] is {(τ(a),σ(b),L_k(τ(a),σ(b))) : (a,b) ∈ C}. For this to be "the same as" sig_C(λ(k)) "up to the port translation", we need the index sets to correspond: (a,b) ↔ (τ(a),σ(b)). If τ is not injective on C, then... the third coordinate L_k(τ(a),σ(b)) is a function of (τ(a),σ(b)), so it's well-defined. And sig_C(λ(k)) has third coordinate proj Sol_{λ(k)}(a,b), a function of (a,b). (F1) equates them for each (a,b). If τ(a₁,b₁) = τ(a₂,b₂) but the anchors' projections differ... then (F1) would force L_k(τ(a₁),σ(b₁)) = proj Sol_{λ(k)}(a₁,b₁) and = proj Sol_{λ(k)}(a₂,b₂), so the projections must be equal. So (F1) itself forces consistency. Fine, no counterexample.
+
+Hmm, what if σ is not injective? Same argument. OK.
+
+Now, let me reconsider: is there a counterexample to Derivation 1 where (F1) holds but the signatures differ? (F1) is exactly the pointwise equality of third coordinates. So no, Derivation 1 is a restatement. Unless the port translation matters: "up to the port translation" — the footprint bijection. sig_C(λ(k)) is a relation on the anchor's ports; sig_{τ[C]}(k) is a relation on V_k. λ(k) comes "with a port translation" (line 204). So the comparison uses the port translation. Fine.
+
+OK. So my "Further counterexamples" section will have:
+1. Derivation 3 (main): the unique-survivor / singleton-population counterexample, matching Part XV's own "non-fallible selected transport" class. Under the stated assumptions (t selected on finite H ⊊ C), the claim "there exists t', also surviving on H, with a different value at (a,b)" fails when the population has a unique faithful member. Also the proof's alteration of L_j(a,b) may not produce a member of T or even a transport in the strict sense.
+2. Maybe: a note on (F1)/(F2) and silent contract narrowing (non-vacuity is partly prose) — but that's the theory's own admission, so it's a soft spot not a counterexample.
+3. Maybe: an observation on Derivation 5's regress (contracts on contracts) — a sketch, not a theorem.
+
+Hmm, let me try to find one more solid thing. Let me re-examine (F2)'s composition condition and see if there's an issue with partial composition.
+
+Line 257: τ(1) = 1, τ(a₂a₁) = τ(a₂)τ(a₁). A is "closed under a partial associative composition with identity 1" (line 108). So a₂a₁ may be undefined. (F2) states the homomorphism condition without restricting to defined compositions. Strictly, τ(a₂a₁) = τ(a₂)τ(a₁) is only meaningful when both sides are defined. A charitable reading: whenever a₂a₁ is defined. Not a counterexample, just imprecision.
+
+Let me check whether τ must be injective/surjective. Not stated. If τ maps two different edits to the same edit, (F2) still can hold. Fine.
+
+Hmm, let me look at the expectation/surprise definitions (line 234-238): "the expectation is Ans_S(τ(a),σ(b))". Hmm, Ans_S is the answer profile of the simulation layer's question. OK.
+
+Let me reconsider the primitive layer / simulation layer definitions for a possible issue. Line 196-202: primitive layer P: ports are persistent things with boundaries and identity, components are continuity relations, admitted edits include displacement, occlusion, re-identification. Simulation layer S: organization over P whose components are dependencies among things and queries are predictions. Fine, descriptive.
+
+Let me look at (R) once more: Rep_ℓ(o,c) ⟺ ∃t[Faithful_C(t: Org_ℓ(o) → c) ∧ (Sel(t) ∨ Con(t))]. "A declared transport does not make an occurrence represent anything; it makes a modeller assert that it does." OK.
+
+Hmm, here's a thought: (R) requires the transport to be faithful on c's contract. But the transport is from Org_ℓ(o) to c. Faithfulness is defined "on C" — which contract? c's contract (since c is a content with contract-relative commitments). OK. And Org_ℓ(o) is given by the physical module. Fine.
+
+Let me try to find an issue with (K1) Bearing: Bearing(c,z,p) ⟺ Account(E_c, p_δ). "A criticism occurrence can exist when (K1) fails." OK.
+
+Hmm, what about Part XII's (CT1): "RetReal(π,T,C;χ) ⟺ ∀z ∈ C ∀i ∈ dom T ∀η ∈ Exec(π,z,i;χ), η completes with o ∈ T[i] and z' ∈ C." "Execution families are nonempty on legitimate inputs; deadlock is not vacuous success." OK — the nonempty requirement prevents vacuous truth. Good, the theory guards it. ✓.
+
+(CT3), (CT4): "Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ; Cap^∞ = ∩_{q,r} Cap^{q,r} ⊆ Poss_Θ. Finite-grade capability does not imply possibility at all grades." OK.
+
+Hmm, (CA): "CanAdv(ξ,p;χ,J_p,C_I): for each starting configuration in the independently specified J_p, every maximal execution completes with a history satisfying the achievement predicate and a continuing organization in C_I." OK.
+
+Let me now think about whether there's a counterexample in the Account conditions involving *cyclic* constraints. Line 122: "Cyclic constraints are admitted. Several solutions remain several." Hmm. With cyclic constraints, Sol_D(a,b) can be empty or have multiple solutions. (F2) is a set equality, so multiple solutions are fine. Hmm. Consider D with x = y, y = x (cyclic, vacuous). Sol = all (x,y) with x = y. Fine.
+
+Consider a cyclic constraint that makes Sol_D(a,b) empty for some (a,b) ∈ C. Then (F2) requires Sol_E(τ(a),σ(b)) = ∅ too. Fine.
+
+Hmm, what about (F1) with cyclic anchors? Sol_{λ(k)}(a,b) with a cyclic subnetwork. Projection still works. Fine.
+
+Let me try: does (F1) permit an anchor that is the *whole* D? λ(k) = D. Then proj_{V_k}[Sol_D(a,b)] = L_k(τ(a),σ(b)). So a single component of E can carry the entire target's solution. Then E could be a single "oracle" component whose relation is the full solution relation. Hmm! Is that a sufficiency failure? E has one component k with V_k = all ports, L_k = the full solution relation, anchored to all of D. (F1) holds trivially. (F2): π = identity, Sol_E = Sol_D. Holds. (A): holds. Non-circular: is there a contrast removing a block of Γ = {k} that changes the answer? Removing k imposes the full relation (line 120: "A deleted component imposes the full relation on its ports"), so the answer becomes undetermined. So S3 holds! And S2: "The target's answer does not appear... as a component". Hmm — k is a component whose relation IS the answer (the full solution relation). So S2 is violated. So excluded by S2. OK, S2 catches it.
+
+But hmm — S2 is prose. And note: ANY organization E with a component whose relation is the full solution relation would violate S2. But what if the grain is coarse and the whole mechanism is genuinely one component? Then S2 would exclude it too — which is wrong! E.g., a genuine mechanism that at the declared grain is a single component (like the ideal gas law PV = nRT as one component). S2 says the answer must not appear "as a component". But at a coarse grain, the law IS a component. Hmm. So S2 as written could exclude genuine coarse-grained laws.
+
+Hmm, this is interesting. Let me think. S2: "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named 'law' does not discharge this."
+
+The intent: the answer shouldn't be imported from the target without analysis. But if the candidate's mechanism is a single law-component that is anchored to a genuine subnetwork of D and passes (F1), then it's not "unanalysed" — it's analysed by (F1). Hmm. The phrase "unanalysed" is doing work. A component that passes (F1) is analysed (it matches a subnetwork of D). So S2's "as a component" must mean "as a component not anchored/analysed". Hmm, but S2 doesn't say that. 
+
+So there's an over-inclusiveness risk: S2 as written prohibits the answer appearing as a component, which would exclude any single-component account even if that component is (F1)-anchored. But the theory's worked example — the skew-symmetric case — has the Leibniz expansion as the account, with intermediate products as components. If the account were a single determinant component, S2 would exclude it? Hmm.
+
+This is a real tension but it's prose-level and the theory would resolve it via "unanalysed". I'll note it as a soft spot, maybe mention it. Actually, this connects to F3's point 5: the condition's name covers two tests. And the repair keeps S2 unchanged. I could note that S2's "as a component" is in tension with (F1)-anchored single-component accounts, and suggest clarifying "unanalysed" = "not anchored to a subnetwork of D under (F1)".
+
+Hmm, is that a "counterexample to the four conditions of Account"? The task says: "For the four conditions, a counterexample is a case where they give a verdict the theory's own text says they give otherwise". So: does the theory's text say a single-component (F1)-anchored account satisfies (E)? Hmm. The theory doesn't explicitly discuss single-component accounts. The skew-symmetric example is multi-component. Part VII's production case has three components. Hmm. So no explicit text conflict. I'll mention it as a soft spot rather than a counterexample.
+
+OK, let me also reconsider: is there a case where (F1) holds but the theory says it shouldn't? Line 260: "(F1) prevents an assembled match from hiding a wrong decomposition." And the lookup table: "A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one." Hmm — a table of observed answers: E has a component per observation? Under an intervention, the table's entries don't change (the relation isn't replaced). So (F1) fails. ✓. But a "table that genuinely encodes an organization's response to every admitted change is not a table in that sense and is not excluded." ✓. Consistent.
+
+Hmm, now let me reconsider the F1 counter-instance 1 once more from the "does (E) hold" angle, because if E2 satisfies all of (E), then by Derivation 2 (as written) E1 and E2 are "one account", which is the false claim. I've verified (F1), (F2), (A). Non-circular for E2: Γ = {m_x, m_z} (say). Is there (a,b) ∈ C removing a block of Γ that changes the answer? do(x=c) replaces m_x (the input-assigning component), and the answer changes (2c+1). So S3 holds on R-τ-in. On R-τ-mech (Γ = {m_z}), no C-edit removes m_z, so S3 fails. Hmm, interesting — so E2's status depends on the Γ typing too. But for F1's purposes, the claim is about (F1), (F2), (A) only, so it doesn't matter.
+
+OK. Now let me also verify the finding's claim about Derivation 2's use: "Its only use in the theory is in Derivation 10 (line 627)". Let me scan for other references to Derivation 2... Line 565 (consequence). Line 627. I don't see others. ✓.
+
+Now let me write up. Let me also double check the F1 repair's supporting edit and whether it's needed. The cross-candidate kind convention: "A component of E and a component of E' are of one kind on C when their signatures, read on C through τ and τ', coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense." Yes, needed for typechecking. ✓.
+
+And the Derivation 10 rewording: "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)". As I checked, the repaired Derivation 2 (ii) applies with φ = swap and λ'(φ(k)) = λ(k). ✓. But wait — does the second transport (with exchanged anchors) satisfy (F1), (F2), (A)? It should, by symmetry of the setup (the two things are symmetric under the swap edit). The text says "The swap edit is invisible in the sensory field and leaves every prediction unchanged." Hmm, and the contract contains the swap. Under the swap, the two things exchange. The exchanged-anchor transport is faithful. Plausible. ✓.
+
+Hmm, but hold on: is the exchange really faithful on a contract containing displacements? Let me re-examine. t1: λ(p1) = thing1's continuity, λ(p2) = thing2's. t1': λ'(p1) = thing2's continuity, λ'(p2) = thing1's. For t1' to satisfy (F1) on C (containing displacements of thing1 and thing2), we need: proj Sol_{λ'(p1)}(a,b) = L_{p1}(τ'(a), σ(b)). λ'(p1) = thing2's continuity subnetwork. Under "displace thing1", thing2's continuity subnetwork is unaffected (its relation is unchanged), so proj Sol = thing2's trajectory relation. And τ'(displace thing1) must be an edit of S1 that leaves p1's relation unchanged = "displace p2". Then L_{p1}(displace p2) = unchanged. ✓. So (F1) holds for t1'. Similarly for "displace thing2" → τ' = "displace p1". So yes, t1' is faithful. ✓. Great, the rewording works.
+
+Whereas the literal claim "the two persistence components are of one kind" (within S1, on C containing displacements) fails by (K): sig(p1) on τ[C] includes (displace p1, changed) and (displace p2, unchanged); sig(p2) includes (displace p1, unchanged) and (displace p2, changed). Under the identity footprint bijection, they differ. Under the swap bijection β: β[L_{p1}(displace p1)] = L_{p2}(displace p1) = unchanged ≠ changed. Hmm wait — β maps p1's ports to p2's ports. L_{p1}(displace p1) is the changed relation on p1's ports; β maps it to a relation on p2's ports. Is that equal to L_{p2}(displace p1) = unchanged? The changed relation on p1 (position set to c) maps under β to the relation "p2's position = c", but L_{p2}(displace p1) is "p2's position = its baseline value" (unchanged). So β[sig(p1)] ≠ sig(p2). So not of one kind. ✓ (as the finding says).
+
+Hmm, unless the swap edit is in C and... no, (K) requires coincidence across all of C. The displacement edits already break it. ✓.
+
+So the finding's Derivation 10 analysis is right. 
+
+Now let me reconsider the F1 repair once more for whether it breaks Derivation 9 or Part VI. Derivation 9: output descriptions don't determine accounts. Unaffected. Part VI redundant routes: the repair's note says candidates with different anchors are different candidates with one answer profile — consistent with redundant routes being distinguishable organizations. ✓.
+
+Alright, let me also consider: does the F1 repair's claim (ii) require the bijection φ to be between *active* components? "If a bijection φ of their active components satisfies λ'(φ(k)) = λ(k) for every k". Yes, active components. Fine.
+
+One more: the repair says "the two are one account on C". But (E) also includes non-circular and non-vacuous, which aren't mentioned. The claim is about candidates that "both satisfy (F1), (F2) and (A)" — not all of (E). So "one account" is asserted from (F1),(F2),(A) alone. Hmm, should the premise include non-circular and non-vacuous? For the "one account" conclusion, presumably yes, or at least the claim should say "one account as far as (F1), (F2), (A) are concerned". Minor. I'll note it.
+
+Now let me draft the report. I need to be careful about length (under ~6000 words) and format.
+
+Let me also reconsider the F2 verdict once more. The finding's classification: drafting omission. Counterexample 2a: needs unequal starts, which the theory's reading excludes (e_0 = 0 by the same-state reading, supported by the ε=0 and n=0 arguments and by the theory's state-matching conventions). So 2a is refuted. 2b: legitimate — the theory doesn't say whose Lipschitz constant, and on the target-map reading (T2) is false from matching starts. 2c: the theory doesn't scope ε; on the "only at the initial state" reading (T2) fails; but the natural reading bounds every step, so 2c is weak. And e_n is never defined. So: the defect (undefined e_n + unspecified Lipschitz map + unstated scope) is real, and 2b is a genuine counterexample on a permitted reading. Classification as drafting omission: correct. So F2: UPHELD.
+
+Hmm, wait. Should it be PARTLY UPHELD because 2a fails? The finding presents 2a, 2b, 2c as counterexamples on "a literal reading that leaves these open", and then concedes that on the theory's reading (T2) is true and classifies as drafting omission. The finding's own framing is: the literal reading permits counterexamples; the theory's reading makes it true; the defect is the omission. So the finding's claim is "the stated assumptions are insufficient to make (T2) true; an erratum is needed". That's upheld: (T2) as written is not adequately stated, and counterexamples exist on permitted readings. The 2a counterexample is on a permitted-but-not-intended reading. Since the finding acknowledges the intended reading and still classifies a defect, and the defect (missing hypotheses) is real, I'll say UPHELD, noting that 2a does not survive the defence's strongest argument (the ε=0/n=0 reductio) while 2b does.
+
+Hmm, let me be careful and fair. The strongest reading of the finding: "(T2) omits hypotheses the proof needs; on readings the text permits, it's false; the repair is an erratum." That's upheld. The specific counterexample 2a is refuted by the defence. So the finding is upheld in its main claim but one of its three counterexamples falls. Is that "UPHELD" or "PARTLY UPHELD"? The finding's classification (drafting omission) is the main claim, and it's right. The counterexamples are supporting evidence; 2b and (weakly) 2c stand, 2a falls. I'll call it UPHELD but explicitly note 2a is refuted. Hmm, or PARTLY UPHELD to be safe? 
+
+The instructions: UPHELD = "the defect exists under the theory's stated assumptions, as the finding describes it, including the finding's classification of it". The defect as described: a drafting omission (missing h1, h2, h3). Does that defect exist? Yes — e_n is undefined, the Lipschitz map is unspecified, ε's scope is unstated. And counterexample 2b shows a permitted reading on which (T2) is false. So the defect exists as described. UPHELD. I'll note the 2a weakness within.
+
+Now F3. The defect as described: (a) missing τ,σ (drafting slip, withdrawn by the finding); (b) Γ typing ambiguity with wrong verdicts on R-τ-mech. (b) is real. So part holds, part doesn't → PARTLY UPHELD.
+
+Let me now also decide on F1's verdict. The defect: Derivation 2's claim is false as stated (half (a) fails). Counter-instances 1 and 2 are valid. The defences fail (E2 admissible; shared-anchor reading unstated and contradicts the claim's words; subnetwork pairing fails symmetrically; grain doesn't merge). So UPHELD.
+
+Let me now write the report. I'll aim for concise, well-organized, quoting line numbers.
+
+Structure:
+- F1 section: numbered points, most serious first.
+  1. The counter-instances stand; defence (i) fails (merged anchors are explicitly used: lines 248, 356).
+  2. Defence (ii) (shared-anchor reading) is unstated and contradicts line 23 and the claim's own words.
+  3. Defence (iii) fails symmetrically (instance 2 both directions); block-pairing is undefined and Derivation 8 excludes coarsenings.
+  4. Defence (iv) fails: grain and contract are separate indices (line 523).
+  5. Derivation 10's literal reading fails (K); the intended two-transport reading works with the repair.
+  6. Repair judgment: sound; minor caveat ("one account" from (F1),(F2),(A) only).
+  Verdict: F1: UPHELD.
+
+- F2 section:
+  1. The omission is real: e_n never defined; Lipschitz map unspecified; ε's scope unstated. Part XV's "stated assumptions" language makes this count.
+  2. Counterexample 2b is decisive on a permitted reading (the target-map reading).
+  3. Counterexample 2a is refuted: the theory's same-state reading is forced by the ε=0 and n=0 reductions and by the state-matching conventions (lines 204, 234, 257, 265, 366, 368-374).
+  4. Counterexample 2c is weak (natural reading bounds every step) but the omitted scope is still a real gap.
+  5. Repair judgment: correct erratum; breaks nothing ((T2) is cited nowhere else).
+  Verdict: F2: UPHELD.
+
+- F3 section:
+  1. (a) missing τ,σ: withdrawn by the finding; doesn't stand.
+  2. (b) Γ typing ambiguity is real: (F1) line 248 vs S3's "other boundary conditions" vs Part VI line 304's "named background".
+  3. On R-τ-mech the paradigm production case (Part VII) fails S3, contradicting the intent of "What (E) excludes" (line 286).
+  4. O5 is the strongest external case; O33 is weaker (fixed verdict says "faithful", not "account").
+  5. Point 6 (R-E breaks line 272) is correct and constrains the repair.
+  6. Point 5 (S3 isn't the anti-circularity test; S2 is) is a naming observation; note S2's own over-inclusiveness risk w.r.t. (F1)-anchored single-component accounts.
+  7. Repair judgment: Option B is sound and preferred; it decouples contrast (from C) from block (from Γ), keeps line 272, and avoids Option A's pollution of Part VI supports. Note the need to type Γ as mechanism components and introduce E|W before Part V.
+  Verdict: F3: PARTLY UPHELD.
+
+- Further counterexamples:
+  1. Derivation 3: unique-survivor counterexample (singleton population). Concrete instance. Matches Part XV's own defeat class. Also the proof's alteration of L_j(a,b) doesn't establish membership in T. Repair: add a richness qualification.
+  2. Non-vacuity's prose component: silent narrowing is undetectable from within (E) — the theory admits this, so it's a soft spot, and it bounds attack (A)'s reach.
+  3. S2's over-inclusiveness: a single (F1)-anchored law-component "is" the answer as a component; "unanalysed" needs to mean "not (F1)-anchored". Soft spot.
+  4. Derivation 5's regress: contract-as-organization is a sketch; its own contract would be a contract on contracts. Not a counterexample to a stated theorem.
+  5. What I tried and didn't find: Derivation 1 (restatement of (F1)), (T1) and its composition sentence (standard bisimulation composition), (I2), (O1), (CT2), finite monotone theorem (hypotheses correctly hedged; the interference example deliberately violates upward closure), Derivations 4, 6, 7, 8, 9.
+
+Let me make sure I give the concrete Derivation 3 counterexample fully.
+
+Derivation 3 counterexample:
+- D = E: one port x with domain {0,1}; component j: x = u; boundary b_0 has u = 0. A = {1, do(x=0), do(x=1)}. C = {(1,b_0), (do(x=0),b_0), (do(x=1),b_0)}.
+- Population T = {t, t*}. t = identity transport (π = id, τ = id, σ = id, λ(j) = {j}). t* = the transport with π*(x) = 1 - x (and τ* = id, σ* = id, λ*(j) = {j}).
+- H = {(1,b_0)} ⊊ C. Survival condition: fidelity on H.
+- t is faithful on H: (F2) at (1,b_0): π[Sol_D(1,b_0)] = π[{0}] = {0} = Sol_E(1,b_0). ✓.
+- t* is not faithful on H: π*[{0}] = {1} ≠ {0} = Sol_E(1,b_0). ✗.
+- So the survivor set is {t}: t is the unique survivor.
+- Take (a,b) = (do(x=0), b_0) ∈ C∖H. Is there a transport t' ∈ T that survives on H and differs from t at (do(x=0),b_0)? The only survivor is t, which doesn't differ from itself. So no. Derivation 3's claim fails.
+- This matches Part XV's class "A selection history H ⊊ C whose survivor is determined on C∖H."
+
+And the proof's gap: it alters L_j(a,b) to produce t', but (i) the altered object is a transport to a modified E, not obviously a member of T; (ii) even if it were, "surviving" requires membership in T and satisfying the survival condition, and the proof only checks the latter.
+
+Also note: on the alternative reading where "also surviving on H" means merely "faithful on H" (not necessarily in T), the claim becomes provable by varying π on Sol_D(a,b) (when the H-solution sets are disjoint from it) — so the sentence is ambiguous between a true and a false reading, and Part XV's defeat condition reads it the false way.
+
+Hmm, let me double-check the π-variation construction for this example: vary π on Sol_D(do(x=0),b_0) = {0}. π'(0) = 1, π'(1) = 1... wait, need π' to still be a function. π: {0,1} → {0,1}. π = id. Define π'(0) = 1, π'(1) = 1. Then π' is a function. (F2) at (1,b_0): π'[Sol_D(1,b_0)] = π'[{0}] = {1}. Sol_E(1,b_0) = {0}. {1} ≠ {0}. Fails! Because Sol_D(1,b_0) = {0} = Sol_D(do(x=0),b_0) — the solution sets coincide (both are {0})! Ha. So in this example the solution sets aren't disjoint, and the π-variation doesn't work. Let me pick a different example for the positive construction, or just note the disjointness caveat.
+
+Hmm, actually in this example, do(x=0) sets x=0, and the baseline also has x=0 (u=0). So the solutions coincide. Let me change the baseline: b_0 has u = 1. Then Sol_D(1,b_0) = {1}, Sol_D(do(x=0),b_0) = {0}. Disjoint. Then π = id, π'(0) = 1, π'(1) = 1: (F2) at baseline: π'[{1}] = {1} = Sol_E(1,b_0) = {1}. ✓. And at (do(x=0),b_0): π'[{0}] = {1} ≠ {0} = Sol_E(do(x=0),b_0). So t' differs at (do(x=0),b_0) and is still faithful on H = {(1,b_0)}. So on the "faithful on H" reading, t' exists (though it's a weird non-injective map). OK. So the two readings genuinely diverge. Good, I can present both.
+
+Hmm, but for the counterexample I need the population reading to fail. With T = {t, t*} and t* unfaithful on H, the unique survivor is t, so no co-survivor exists. ✓ regardless of disjointness.
+
+OK good. Let me also sanity check: is t* really a "transport"? t* = (π*, τ*, σ*, λ*) with π*(x) = 1-x. It's a map from X_D to X_E. τ* = id, σ* = id, λ*(j) = {j}. It's a transport in the formal sense. It's unfaithful on H. Fine.
+
+Now let me write. I need to keep it under ~6000 words. Let me be efficient.
+
+Let me reconsider one thing about F1's defence (ii) to make sure I present it fairly. The defence: "'Pairwise of one kind' pairs components only through shared anchors." Under this reading, the claim becomes: components of E and E' anchored to the same subnetwork are of one kind. Is that even true? If λ(k) = λ'(k') = the same subnetwork S₀, then by Derivation 1, k has the signature of S₀ (read through τ) and k' has the signature of S₀ (read through τ'). If τ = τ' and σ = σ', these coincide. If τ ≠ τ', they're read through different translations — the finding's cross-candidate convention handles it. So yes, the shared-anchor reading is true. But it's much weaker than the claim's words, and it makes "one account" apply to candidates with different organizations (against line 23's spirit). And it's unstated. So the defence fails as a defence of the written claim, though it describes a true weaker statement. Good.
+
+Also I should note: the finding's smaller alternative wording is essentially the shared-anchor reading made explicit. The main repair (ii) is the cleaner version. Both are fine.
+
+One more check on the F1 repair: "If a bijection φ of their active components satisfies λ'(φ(k)) = λ(k) for every k, up to port translation, then k and φ(k) are of one kind on C for every k, and the two are one account on C." Note: this requires the anchors to be *equal* subnetworks, not just of one kind. The finding explains why (the weaker premise would identify redundant routes). Good.
+
+Hmm, one subtlety: λ'(φ(k)) = λ(k) "up to port translation" — λ assigns "a subnetwork of D with a port translation" (line 204). So equality up to port translation means the subnetworks are the same set of components with possibly different port translations. Fine.
+
+Now writing. Let me make sure every assumption I rely on is quoted with a line number.
+
+Key line numbers I'll cite:
+- Line 23: "Two systems with identical outputs and different internal routes are different organizations here"
+- Line 105: organization tuple
+- Line 108: A closed under partial associative composition with identity 1
+- Line 111: L_j(a,b)
+- Line 120: deleted component imposes full relation; edit that sets a port replaces the component assigning that port
+- Lines 130-136: (K)
+- Line 158: C ⊆ A×B
+- Line 166-168: production question
+- Line 204: λ assigns each component of E a subnetwork of D with a port translation
+- Line 234: expectation
+- Line 246: Γ identified set of active commitments
+- Line 248: (F1)
+- Line 257: (F2)
+- Line 260: (F1) prevents wrong decomposition
+- Line 265: (A)
+- Lines 270-272: non-circular dependence, non-vacuity
+- Line 286: reversed calculation fails (F2)
+- Line 294-298: What (E) does not exclude
+- Line 304: E|W with named background fixed
+- Line 313: (B)
+- Line 322-324: redundant routes
+- Line 328: interference
+- Line 336-342: production and direction
+- Line 350-352: (I2)
+- Line 356: skew-symmetric, hidden ports project away
+- Line 366: functional transport
+- Line 368-374: (T1)
+- Line 376: approximate transport (T2)
+- Line 523: grain ℓ, boundary β, continuity Ω, contract C are declared indices
+- Line 525: dependence order
+- Line 543: Part XV mathematical error
+- Lines 551-555: Derivation 1
+- Lines 559-565: Derivation 2
+- Lines 567-577: Derivation 3
+- Line 609: Derivation 8, "does not apply to coarsenings"
+- Line 617-627: Derivation 10
+- Line 220: (R)
+- Part IV selection definition (lines ~210-216)
+
+Let me find the exact line numbers for the selection definition. The theory text: Part IV "Three provenances": "Selected. There is a population T of candidate transports, a variation operator μ on T, a finite history H ⊆ C of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on H. The transport t is a member of T that survived." I'll estimate line ~212. Since I can't be sure of exact line numbers beyond what the findings cite, I'll cite the findings' line references where they exist and describe locations otherwise. Actually, the findings cite specific line numbers (e.g., line 543 for Part XV, line 551-555 for Derivation 1). Let me use the numbers given in the findings and the theory text structure. For the selection definition, I'll say "Part IV, 'Three provenances'". Hmm, the instructions say "Line numbers count the lines of the theory text, with its title line as line 1." I should be careful. Let me use line numbers that I can anchor from the findings' citations, and for others, cite by part/section name. Actually, let me just cite part and section for ones I'm unsure of, and line numbers for ones the findings give. Hmm, but the task says "Quote the theory's words whenever you rely on them" and "with line numbers". Let me do my best with the line numbers that are established by the findings' citations, and use section names otherwise. Actually, I can compute approximate line numbers by counting. That's risky. Let me use the findings' line numbers where they're given (they're reliable since the findings were built from the text), and for others cite the section heading.
+
+Hmm, the findings cite: line 120 (edit sets port), line 130-136 (K), line 158 (C), line 166-168 (production question), line 204 (λ), line 234 (expectation), line 246 (Γ), line 248 (F1), line 257 (F2), line 260, line 265 (A), line 270 (S1-S3), line 272 (non-vacuity), line 286, line 288, line 304 (E|W), line 313 (B), line 324 (redundant routes), line 326 (infinitary), line 338 (production), line 352, line 356 (skew-symmetric), line 366 (functional transport), line 368-374 (T1), line 376 (T2), line 523 (indices), line 525 (dependence order), line 543 (Part XV), line 551-555 (Der 1), line 559-565 (Der 2), line 563 (proof), line 565 (consequence), line 609 (Der 8), line 617 (displace a thing), line 627 (Der 10), line 105 (tuple), line 111 (L_j), line 23, line 286, line 336.
+
+I'll use those and add section references for others.
+
+Let me write the report now.
+
+Actually, one more consideration for F3: let me double check whether on R-τ-in, the "p because p" case is handled. E: single component asserting the answer. Γ = {that component}. S3: an edit removing it (or intervening on the answer port) changes/undetermines the answer. Holds. S2 excludes. ✓. And the repair keeps S2. ✓.
+
+And let me verify Option B against "What (E) excludes" line 288: "'p because p' fails non-circular dependence." Under Option B, does it? E = {p-asserting component}. Need (a,b) ∈ C with answer differing from baseline, and a block G whose removal loses it. If C contains an intervention on the answer port, the answer differs; removing the p-component makes it undetermined. So S3 holds under Option B — and the exclusion still comes from S2. So line 288's claim ("fails non-circular dependence") is still true (S2 is part of non-circular dependence). ✓. Good — the condition name covers S2 and S3, so "fails non-circular dependence" is satisfied by failing S2.
+
+OK, writing now. I'll be concise but thorough on the key points.
+
+Let me draft the Further Counterexamples section carefully with the concrete Derivation 3 instance.
+
+Also, I want to double-check one more potential independent counterexample: the finite monotone theorem's statement "the critical singletons are exactly ∪min S". Critical singletons: {d : ∃W ∈ S, W∖{d} ∉ S} — i.e., d critical for some support. ∪min S = {d : ∃U ∈ min S, d ∈ U}. I proved both directions. ✓. And "globally indispensable ones are exactly ∩min S" — globally indispensable = {d : ∀W ∈ S, d ∈ W}? Hmm, the theory says "Deletion of d from Γ preserves support exactly when a minimal support omits d." So d is globally indispensable ⟺ Γ∖{d} ∉ S ⟺ ∀U ∈ min S, d ∈ U ⟺ d ∈ ∩min S. ✓. But "globally indispensable" should mean "in every support", and ∩min S = ∩S (since every support contains a minimal one, and minimal supports are in S). ✓. Consistent.
+
+OK. One more: let me verify (I2) requires "attainable y". If y is unattainable (Z_y = ∅), identification at y is false by (I1). "identified on every attainable y ⟺ f = f̄∘g". If f = f̄∘g, then on each nonempty fibre f is constant. ✓. Conversely if f is constant on each nonempty fibre, define f̄ on the image of g. ✓. Fine.
+
+Alright, writing.
+
+One more consideration: the task says for the four conditions of Account, a counterexample includes "a candidate that meets all four on a physically admitted contract with a non-declared transport and plainly explains nothing". I tried and didn't find a decisive one. I should report what I tried. Let me be honest: (F1)+(F2)+(A) jointly force E to mirror D's subnetworks and answer profile, which is hard to fake; the soft spots are the prose conjuncts (S2's "unanalysed", non-vacuity's "stated scope"). I'll report this as "no decisive sufficiency failure found; the exposed soft spots are S2's 'unanalysed' and non-vacuity's record-dependence", with the single-component observation.
+
+Let me write it up now. I'll aim for ~4500-5500 words.
+
+Actually, let me reconsider the single-component / S2 point once more, because it might be a genuine "verdict the text says otherwise" case. 
+
+The theory's line 260: "(F1) prevents an assembled match from hiding a wrong decomposition." And line 286's lookup-table exclusion. And line 356's skew-symmetric account has multiple components. Hmm, is there text saying a single-component account satisfies (E)? Not explicitly. So no text conflict. It's a soft spot. OK.
+
+And the "identity account" (E = D, identity transport): the theory doesn't discuss it. Soft spot: (E) counts it, and if the identity transport is selected/constructed, it meets attack (A)'s conditions. Does it "plainly explain nothing"? Arguably it explains trivially. Weak. I'll mention it briefly as a boundary case the theory doesn't address, not a counterexample.
+
+Let me write.
+
+For line numbers I'm less sure about, I'll cite the part/section. Let me finalize.
+
+Let me count key quotes I'll use:
+- Line 559/561: Derivation 2 claim
+- Line 563: "Immediate from Derivation 1 and (A). ∎"
+- Line 565: consequence
+- Line 555: Derivation 1 proof
+- Line 248: (F1)
+- Line 204: λ
+- Line 356: "hidden ports project away"
+- Line 23: "Two systems with identical outputs..."
+- Line 130-136: (K)
+- Line 523: declared indices
+- Line 609: "does not apply to coarsenings"
+- Line 617: "displace a thing"
+- Line 627: Derivation 10 sentence
+- Line 376: (T2)
+- Line 366: functional transport
+- Line 270: S1-S3
+- Line 272: non-vacuity
+- Line 246: Γ
+- Line 304: E|W
+- Line 120: edit sets port
+- Line 286: reversed calculation
+- Line 322-324: redundant routes
+- Line 543: Part XV
+- Part IV "Three provenances" for selection
+- Part XV "A non-fallible selected transport"
+
+Writing now.

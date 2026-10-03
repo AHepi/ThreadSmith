@@ -1,0 +1,101 @@
+# Part B round 1, section B3: provenance, histories, representation, construction, repair and the physical module
+
+Baselines run (before every variant): `--claim FC30.new1 --claim FC12.new2 --claim FC77 --claim FC83` (all HOLD), `--claim FC98.new1 --claim FC104.new1 --claim FC84.new1` (all HOLD), `--claim FC78 --claim FC85` (HOLD). Result lines quoted below the blocks they belong to. All "after" results are **not run**.
+
+## (a) The variants
+
+| id | free item(s) [id] | kind | carry-over | old → new (formal) | old → new (sentence) | departs from |
+|---|---|---|---|---|---|---|
+| PB3.1 | `D12.4` | replace | R2V2.4 (class b) | prov per part (each component with its counterpart binding; transfer gives each part its value; a binding newly built gets Con) → parts := {t}; a holding reached by a copy of the carrier's whole content inherits prov(t, o) whole | none (its sentence L211.s4 is FROZEN, unchanged) | **S41 Q2** ("No, not if just declared") |
+| PB3.2 | `D12.5`, `L207.s1` | weaken | – | Rep_ℓ(o,c) :⟺ ∃t [Faithful_C(t: Org_ℓ(o)→E_c) ∧ (Sel(t;·) ∨ Con(t;·))] → Rep_ℓ(o,c) :⟺ ∃t [Faithful_C(t: Org_ℓ(o)→E_c)] (= Held_ℓ(o,c)) | L207: Rep ⟺ ∃t[Faithful_C ∧ (Sel ∨ Con)] → Rep ⟺ ∃t[Faithful_C] | none named (blocks FROZEN L211.s1, L211.s3; edge below) |
+| PB3.3 | `L195.s1`, `L195.s5` (changes with D12.1) | strengthen | – | Sel(t;𝒯,μ,H) adds conjunct C ∩ Occ(h(t)) ⊆ H (every pair of C that has occurred in h(t) lies in H) | "a survival condition requiring fidelity on H" → "a survival condition requiring fidelity on every pair of C that has occurred, H among them" | **S41 Q2** in part, on that reading; S44, S41 Q15 on a selection history |
+| PB3.4 | `L199.s1`, `L199.s3` (changes with D12.3) | re-order a dependence | – | Dec(t, o_t) :⟺ no parameters give Sel and none give Con, read on h(t, o_t) → read on h∪(t) := ∪{h(t, o) : o an occurrence at which t is held}; Sel, Con likewise | "**Declared.** Neither of the above." → "**Declared.** Neither of the above, on any history of t." | **S41 Q2** |
+| PB3.5 | `D11.5`, `L217.s2` (SC) | weaken | – | Occurs(a,b,ξ) a primitive read through Θ → Occurs(a,b,ξ) :⟺ a admitted at ξ ∧ b actual at ξ | "For an edit–boundary pair (a,b) ∈ C actually occurring:" → "For an edit–boundary pair (a,b) ∈ C admitted:" | **S41 Q2** in part (C7's direction) |
+| PB3.6 | `D11.1`, `L169.s1` | strengthen | – | Occ a set of physically located carriers, interpreted by Θ → Occ := the physically located carriers inside the declared boundary β of s | "An **occurrence** is a physically located carrier." → "…a physically located carrier inside the system's declared boundary." | **S41 Q2** in part, on that reading |
+| PB3.7 | `D13.4`, `L169.s3` | replace | – | d ≡_ℓ c :⟺ faithful transports both ways on C_c → d ≡_ℓ c :⟺ Ans_d(a,b) = Ans_c(a,b) ∀(a,b) ∈ C_c | "contents are not identified by having the same outputs" → "contents are identified by having the same outputs" | none |
+| PB3.8 | `L225.s1`, `L225.s4` (SC) | drop (s4) | – | no formal change (D12.8 FROZEN, unchanged) | "Only the second can be originative under Part X." dropped | none |
+
+## (b) Meaning
+
+In all eight, **Expl = Acc(ℰ) ∧ ¬Dec(t) and (E) itself are unchanged in form**, and (Suff)/(Nec) keep their D16.XV shapes; what moves is Dec, or what Dec's conjuncts read, or nothing.
+
+- **PB3.1.** Dec's inheritance rule moves: prov(t,o′) := prov(t,o) part by part → whole. Dec := ¬Sel ∧ ¬Con unchanged; D12.3's gloss "part by part (D12.4)" would read "whole" (constrains, below). (Suff)/(Nec) ranges move with Dec (FC30.new1 (b),(g)).
+- **PB3.2.** What Sel's exclusion reads moves: D12.1's ¬∃o ≺ o_t Rep(o, x) now bans every earlier *faithful holding* of t, H, surv, cod t (Rep = Held); (R) stops being "a fidelity relation with a history". Dec's form unchanged.
+- **PB3.3.** Sel's survival conjunct moves: surv's witness H must cover C ∩ Occ(h(t)); Dec := ¬Sel ∧ ¬Con unchanged in form, harder to escape.
+- **PB3.4.** Dec's history parameter moves: per holding (h(t, o_t)) → per transport (h∪(t)); "exactly one of three" (L193.s1) then needs a precedence rule Sel/Con (edge below).
+- **PB3.5.** What Sel's H-clause reads moves: "its pairs having occurred in h(t)" becomes admission × actual boundary; occurrence stops being Θ's primitive.
+- **PB3.6.** What every history is built from moves: Occ ⊆ β(s); h(t) shrinks to inside-boundary occurrences, so Sel's exclusion and Con's represented-target clause read less.
+- **PB3.7.** No part of the explanation definition moves: ≡_ℓ is read by New (D13.5) only, and New by (G), (EX). Meaning moves for *created* explanation (Origin's New conjunct), not for being one.
+- **PB3.8.** No part moves and no computed value moves: (G) reads Build (D13.3) only, so "only the second can be originative" is carried by the formalization, not the sentence; the drop is a meaning-only change (the text no longer claims it).
+
+## (c) Scope
+
+Notation: chain histories as the program builds them (`prov_fixed_points(n, held, trace, selc, rd="T′", i161=True)`; `rec_of` the record-of map). "Explanation" = Acc ∧ ¬Dec(t). Owner's cases: sign = FC23.new2, vane = FC22, bridge = FC84.new1, student's copy = FC30.new1.
+
+**PB3.1.** Enters: any holding reached by a whole-content copy of a holding with Sel or Con — first the student's copy (Acc(ℰ_fwd) True, run). Leaves: none. Sign/vane/bridge: stay. Claims: FC30.new1 (d),(f) move; FC12.new2, FC67, FC78 expected to hold. Small case SC1 (run before): `n=2, held=[1,1], trace=[1,0], selc=[0,1], H={(1,b1_45)}` → fixed points `[{'o1': 'Con'}]`, Dec(t) at o2 True. After (not run): `[{'o1': 'Con', 'o2': 'Con'}]`, Dec False → enters.
+
+**PB3.2.** Leaves: every candidate whose Sel was witnessed only because the earlier holding of cod t was itself declared (no Rep under the current (R)). Enters: none. Student's copy: stays Dec (no trace at o2; source's Rep blocks Sel either way). Sign/vane: stay on the tag histories; **on that reading** (an earlier faithful holding of the content in the history) they leave. Bridge: stays (Con via trace and Held, untouched). Claims: FC98, FC12.new1 move (Rep = Held; the fixed-point equation collapses to R = {o : held}); FC67, FC78, FC104.new1 expected to hold. SC2 (not run before or after; of the shape FC98 computes): `n=2, held=[1,1], trace=[0,0], selc=[0,1]` → before `[{'o1': 'Dec', 'o2': 'Sel'}]` (explanation); after Rep(o1, cod t) holds → `[{'o1': 'Dec', 'o2': 'Dec'}]` → leaves.
+
+**PB3.3.** Leaves: every selected candidate whose history met an occurring pair of C outside H — first any selection with an unmet encountered pair (the CT cases; the vane **on that reading** of a selection history). Enters: none. Student's copy: stays Dec. Bridge: stays (Con). Claims: FC81, FC95, FC102.new1, FC104.new1 (b) move (Sel false where the violated pair occurred); FC77 holds. SC3 (before, run as FC83's setup shows Sel with H selected): `n=1, held=[1], trace=[0], selc=[1], H={(1,b1_45)}`, with `(set(H=2), b1_45) ∈ C` occurring before o_t → before `[{'o1': 'Sel'}]`; after (not run): `[{'o1': 'Dec'}]` → leaves.
+
+**PB3.4.** Enters: every candidate whose transport has a Sel or Con witness on *any* holding's history — first the student's copy (source's Con at o1). Leaves: none (Sel and Con only grow). Sign/vane: stay (one-holding histories). Bridge: stays (Con, and stays one). Claims: FC30.new1 (d),(g), FC12.new2 move; FC78 moves ("exactly one" fails where Sel and Con hold on different histories — I53's registered other choice); FC83 (I161 read across histories). SC1 after (not run): Con via h∪ → Dec False → enters.
+
+**PB3.5.** Enters: the link no pair tried (FC30.new1 (e)): with admission as occurrence, H := any admitted faithful pair, nonempty, no encounter needed. Student's copy: stays Dec (earlier Rep blocks Sel). Sign/vane/bridge: stay. Claims: FC30.new1 (e), FC35, FC77 (second and third bullets), FC104.new1 (b) move. SC4 (before, run: FC30.new1 (e) "D12.1 with H ≠ ∅: Sel's conditions False; fixed points [{}]; Dec True"). After (not run): `H={(1,b1_45)}` admitted → `[{'o1': 'Sel'}]`, Dec False → enters.
+
+**PB3.6.** Enters, **on that reading** (the textbook's carrier outside β, one pair tried at the student's holding): the student's copy — o1 ∉ Occ, so h(t, o2) = {o2}, no Rep in it, Sel's conditions met. Leaves: none. Sign/vane/bridge: stay. Claims: FC30.new1 (d), FC12.new2, FC98, FC35 move. SC1 after, on that reading (not run): `held=[0,1]` at o1's place → `[{'o2': 'Sel'}]`, Dec False → enters.
+
+**PB3.7.** No candidate enters or leaves as an explanation (Dec unread). What moves is Origin/CreateEx: a content whose outputs on C_c some repertoire content shares, with no faithful transport between them, stops being New. Bridge: stays an explanation; its CreateEx, **on that reading** (a2, CreateEx, p_c the brief), can drop if the repertoire holds an output-identical content. Claims: FC85 (a) holds, (b) moves (output matching is symmetric); FC89 (untested), FC90.new1 move. SC5 (not run): d, c as FC85 (b)'s constructed pair with L_k(e,b0) equal in both → before d ≢_ℓ c (no faithful transport), New True; after d ≡_ℓ c, New False.
+
+**PB3.8.** No candidate moves; no claim's result moves (FC82, FC83 read D12.8, unchanged). Recorded as a meaning-only variant, per section 5.
+
+## (d) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| PB3.1 | blocks | L405's sentence (FROZEN) "the rest of the content keeps its inherited provenance" | parts := {t} cannot write "the rest keeps" | yes |
+| PB3.1 | constrains | D12.3 (FROZEN) | its gloss "part by part (D12.4)" would read "whole"; D12.3 formalizes L199.s1, free in PB3.4 only | yes |
+| PB3.1 | moves | Dec, Expl, (Suff), (Nec) ranges | inherited prov reaches whole-content copies | yes |
+| PB3.2 | blocks | L211.s3 (FROZEN) "A declared transport does not make an occurrence represent anything" | under Rep := Held it does | yes |
+| PB3.2 | blocks | L211.s1 (FROZEN) "a fidelity relation with a history" | the history clause is dropped | yes |
+| PB3.2 | changes with | D12.5 formalizes L207.s1 (free, varied) and L205.s1 (FROZEN: "whose provenance is selected or constructed") | L205.s1's words would lose their clause | yes |
+| PB3.2 | moves | what Sel's exclusion reads; Dec, Expl ranges | Sel harder, Con unchanged | yes |
+| PB3.3 | changes with | D12.1 (FROZEN) formalizes L195.s1 | the new conjunct rides the free words | yes |
+| PB3.3 | constrains | L223.s3 (FROZEN, surprise needs an incomplete history) | coherent only with occurrence read up to o_t; a wider reading (all of h) would block it | partly — the invention names the reading |
+| PB3.3 | moves | Sel (Dec), Expl, (Suff), (Nec) ranges | see (c) | yes |
+| PB3.4 | blocks | L193.s1 (FROZEN) "exactly one of three provenances" | Sel and Con can both hold on the union; needs a precedence rule (I53's other choice) | yes |
+| PB3.4 | changes with | D12.3 (FROZEN) formalizes L199.s1 | the union reading rides the free words | yes |
+| PB3.4 | moves | Dec's history parameter; Expl, (Suff), (Nec) ranges | see (c) | yes |
+| PB3.5 | changes with | D12.1's H-clause "its pairs having occurred in h(t)" | occurrence redefined upstream | yes |
+| PB3.5 | constrains | L223.s3 (FROZEN) "one of them must occur" | under admission-occurrence every admitted change occurs; surprise still needs (a,b) ∉ H | yes |
+| PB3.5 | moves | what Sel's H-clause reads; Dec, Expl ranges | see (c) | yes |
+| PB3.6 | changes with | D11.3 (FROZEN): O_h ⊆ Occ | Occ shrinks; D11.3's words stand | yes |
+| PB3.6 | constrains | D16.3 NQB (FROZEN; Rep relayed from outside β) | aligns with it rather than clashing; a variant pushing further (carriers relayed in also excluded) would need D16.3 re-read | yes |
+| PB3.6 | moves | what every history of Dec's conjuncts reads | see (c) | yes |
+| PB3.7 | blocks | L413.s1, L413.s2 (FROZEN) | "transports … faithful", "structural at the stated grain" — output equality is neither; D13.4 formalizes them | yes |
+| PB3.7 | changes with | D13.5 (New, free): no change needed; ≡_ℓ re-read | — | yes |
+| PB3.7 | moves | nothing in the explanation definition; Origin's New conjunct | see (b) | yes |
+| PB3.8 | constrains | D13.3, D13.6 (D13.6 free, unchanged; D13.3 FROZEN) | (G) reads Build only, so the dropped sentence has no formal counterpart | yes |
+| PB3.8 | moves | nothing | see (b) | yes |
+
+Unsettled: whether PB3.2's clash with L211.s3 should be classed blocks or "changes with" — L211.s3 formalizes no free item of this section, so blocks; the implementing agent may read it otherwise.
+
+## (e) Free items bearing on explanation, not varied
+
+- `L201.s2`, `L201.s3` (construction on selected material; selection beneath construction): content only; the provenance values are fixed by FROZEN D12.1/D12.2, so a variant here reduces to PB3.2–PB3.4.
+- `L219.s1` (prediction, SC): formalized by D12.7 (FROZEN); nothing in (E), Dec, Expl, (Suff), (Nec) reads Pred.
+- `L225.s3` (construction response): read by D12.8 (FROZEN) and (G) only; PB3.8 covers the pair it belongs to.
+- `L403.s2`, `L403.s3` (Deploy): Deploy is read by (EX) only; L403.s3 is where Part A's V3.4 and R2V3.1 were blocked (C8), and that axis is already computed and flagged — left to the implementing agent rather than re-varied here.
+- `L437.s1`, `L441.s4` (SC): (P)'s Δ and ProducedBy's attribution are read by (EX) only; no part of the explanation definition moves, and (EX) itself is outside section 4's target.
+- `D12.6`, `D13.1`, `D13.2`, `D13.5`, `D13.6`, `D13.7`, `D14.2`–`D14.6`, `D14.8`, `D15.3`, `D15.4`, `D15.6`, `D15.7`, and the remaining free sentences of Parts X–XII (L407–L479): none is upstream of (E), Dec, Expl, (Suff) or (Nec) in D18.1; varying them moves (G), (EX), (CT1)–(CT4), Deploy or Can only.
+
+## (f) Inventions the variants rest on (other choices)
+
+- **PB3.1**: I54's registered other choice, provenance per whole transport (others: per part, as now; a fourth value "inherited").
+- **PB3.3**: occurrence for the new conjunct read up to o_t (others: up to e; over all of h — which would block L223.s3).
+- **PB3.4**: h∪(t), the union over holdings (others: the last holding's history, as now; the earliest holding's).
+- **PB3.5**: occurrence := admission × actual boundary (others: Θ by hand, as now; the edit enacted).
+- **PB3.6**: "inside β" as the boundary of the system s under attribution (others: any location, as now; β plus carriers relayed in).
+- **PB3.7**: output equality on C_c (others: on C_d; on C_c ∪ C_d).
+- **PB3.2**, **PB3.8**: no new choice; PB3.2 drops I48's provenance clause outright.
+
+END OF REPORT

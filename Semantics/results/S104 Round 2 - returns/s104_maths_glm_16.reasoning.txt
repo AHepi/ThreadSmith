@@ -1,0 +1,195 @@
+This is part 16 of 17 of a long-running formalization project. I need to write a report with sections (a)-(e) analyzing the definitions, claims, counterexamples, inventions, unrecorded choices, round-1 matters, and attacking held claims.
+
+Let me work through the material.
+
+Section 3 definitions: §15 physical module (D15.1–D15.8), §16 recursion/universality (D16.1–D16.5).
+
+Claims: FC91 (CT1 ⟺ C⊆F(C) only with completion read into F — holds, plus a witness that the other reading is weaker), FC92 (CT2 monotone F, gfp — holds), FC93 (CT3, CT4 — holds; witness that Cap at one tolerance ≠ Poss), FC94 (recursion doesn't entail universality — not tested), FC110 (classes defined, no membership asserted — not tested).
+
+Inventions in full: I61, I62, I74, I75, I97, I98.
+
+Unrecorded choice: H16.
+
+NF entries: NF11, NF12, NF16, NF17.
+
+Round-1: change at L471, matter 10, matter 14.
+
+Now let me analyze each.
+
+**(a) Does each formal statement say what the sentence says?**
+
+D15.1 (L461): Task as relation between input and output attributes with resources/side effects stated [I61]. The text says "a specified input-to-output attribute transformation with explicit resources and side effects". A relation vs a transformation: a transformation suggests a function; relation allows multiple outputs. Possibility definition: "Possibility is the absence of a law-imposed limit, short of exact, on the tolerance to which a task can be performed and retained; it is not one trajectory that performed the task." The maths handles this in D15.7 (Poss_Θ = ∩ Admit). The "not one trajectory" part matches "with a realization, owned or not" — but note Poss is defined as intersection over all tolerances of Admit, i.e., absence of a law-imposed limit at every tolerance. That seems faithful. Actually "absence of a law-imposed limit" — Admit is "tasks physically achievable at tolerances" — the maths' Admit is realization-based (I62: a task with a realization is in Admit), whereas the text says "absence of a law-imposed limit" — that's modal: no law forbids it, not that it's realized. I62 chooses "Admit contains every realized task", which makes CT3 trivial. The text's reading is law-based: possibility is absence of a limit; realizability implies absence of a limit but the converse — a task could be unrealized yet not law-forbidden. Actually "short of exact" — no tolerance member exact, matches "none of them is exact". The direction: the text's Poss = no law-imposed limit; maths Poss_Θ = ∩ Admit^{q,r} where Admit = achievable (realized). These part company: achievable-at-every-tolerance vs no-law-forbids. This is I62's choice (a) alternative. Worth flagging: the maths writes achievability where the text writes absence of law-imposed limit. Which should stand? The text's words are the owner's; the maths is a conjecture. Actually is this a real parting? The text says possibility is absence of a law-imposed limit... on the tolerance to which a task can be performed and retained. So Poss(T) ⟺ for every tolerance short of exact, no law forbids performance at that tolerance. Admit^{q,r} in maths = tasks with a realization at (q,r). If "no law forbids" ≠ "there's a realization", the gulf matters: Poss on the law-reading is weaker to establish... Actually the difference: laws constrain; absence of a limit doesn't guarantee existence of a trajectory in a finite model? In finite deterministic settings they can differ. Flag under (a) for D15.7/I62.
+
+D15.2 (L466, CT1): RetReal quantifies over all executions. The formula at L466 as written matches. Fine.
+
+D15.3 (L471, CT2): the round-1 change rewrote the gfp clause; D15.3 matches the new wording. The "post-fixed sets" union — the new wording "the union of the sets D with D ⊆ F(D)" — post-fixed points. Note: for monotone F, union of post-fixed points is a post-fixed point, and it is the greatest fixed point. That's standard. FC92 holds by Knaster–Tarski, holds by construction essentially. Fine.
+
+D15.4 (L473): declared boundary β and continuity Ω. Fine, faithful.
+
+D15.5 (L475): Can requires owned RetReal or owned, physically admitted, finite construction. Faithful.
+
+D15.6 (L477, CA): CanAdv — "for each starting configuration in the independently specified J_p, every maximal execution completes with a history meeting the achievement predicate and a continuing organization in C_I." D15.6 matches. Note "independently specified" is left open (cf. NF11's 'independently characterized') — flag: the maths doesn't record the independence condition; it treats J_p as given. That's arguably a gap: could be a U-entry, but not found by checks. I can note under (a).
+
+D15.7 (L479): as above — the antitone reading. "q precedes q' when q' admits no performance q excludes" — maths: "q' excludes at least what q excludes" — equivalent (q' admits no performance q excludes ⟺ excl(q') ⊇ excl(q)). Fine. But Admit as "tasks physically achievable at tolerances (q,r)" — the text itself (L479 second quote) says "Admit^{q,r}_Θ is the set of tasks physically achievable at tolerances (q,r)". So the text itself defines Admit as achievable. Then I62's "Admit contains every realized task" is nearly analytic given the text. The law-limit reading applies to Poss, not to Admit. Hmm, but "physically achievable" — achievable = realizable in principle, not realized. I62 says "a task with a realization (owned or not) at (q,r) is in Admit". Achievable vs realized: realized implies achievable, but achievable doesn't imply realized. The maths closes the gap by fiat. That is the invention. Poss = ∩ Admit — text says Poss is absence of law-imposed limit short of exact; maths Poss = achievable at every tolerance. Achievable at every non-exact tolerance vs no law limit at every tolerance — these could differ if achievability requires construction. I'll flag under I62/(c).
+
+D15.8 (L481): population = transports the physics and the stated construction admit; parts(t) ⊆ parts of the stated construction. Faithful to "a transport that would need a part every member of the population is built without is not in it". Actually that sentence: a transport needing a part that every member of the population is built without — is not in it. That's circular in the text (population defined via itself); the maths makes it: parts(t) ⊆ parts of the stated construction. The text's sentence is self-referential; the maths breaks the circle by anchoring to "the stated construction". Flag: the text's L481 defines the population via a condition on members of the population itself — the maths' reading is a reasonable repair but is an unrecorded choice (an anchor). Should it be a U-entry? The checks found H16 only. I can raise it under (a) as a parting: the words as they stand define the population by a condition presupposing the population; either the text should say "the population is the set of transports the physics and the stated construction admit, and a transport that would need a part the stated construction is built without is not in it" — proposal. Let me re-read: "The population is the set of transports the physics and the stated construction admit; a transport that would need a part every member of the population is built without is not in it." Hmm — "every member of the population is built without" — maybe the intent: parts common to all members being absent? If every member is built without part x, and t needs x, then t ∉ population. That's a closure/coherence condition: population is a set P such that for all t ∈ P, parts(t) ∩ (⋂_{p∈P} missing(p)) = ∅... Actually it's a fixed-point characterization again: P satisfies: t ∈ P ⇒ no part of t is universally-missing-in-P. That's automatically true if t ∈ P (since t is built with parts(t)... unless missing). Hmm, if t needs part x, then t is built with x, so not every member is built without x. So the second clause is vacuous on members; it serves to exclude candidates: a candidate transport needing a universally-missing part is excluded. As a definition it's circular unless read as: P = {t : Θ admits t ∧ parts(t) ⊆ parts used by the stated construction}? "Built without" — every member of the population is built without part x = no member has x. So t ∉ P if parts(t) ⊄ ∪parts(P)... circular. The maths anchors to "the parts of the stated construction". This is a substantive invention not recorded as I — actually is it recorded? D15.8 says "𝒯 := {t : Θ admits t ∧ parts(t) ⊆ the parts of the stated construction}". No [Inn] marker there. So it's an unrecorded choice — the report's section 6 only lists H16, but I can flag it under (a)/(c) as a choice no register entry records. Wait — the rules say I should compare; under (a) I can say where they part company. I'll flag it as a new unrecorded choice (like a U/H entry) — but I shouldn't invent new IDs? I can note it descriptively. The task says section 6 lists unrecorded choices found by the two checks; I may report additional ones under (a). I'll do that.
+
+D16.1 (L487): Scr — "an owned, admitted continuation in which a description of d becomes a represented target, criticism can be directed at it, and the result can affect its operative use." D16.1 matches; H16 concerns "on an active route to d's operative use" — the added "active route" notion imports machinery not in the sentence. The sentence says "can affect its operative use" — a modal. The maths writes "a result on an active route to d's operative use" — that's a strengthening or a concretization using some route structure from elsewhere in the theory (maybe defined earlier in the text's formal core). If "active route" is defined elsewhere, fine; if not, it's an addition. H16 itself notes the inconsistency between D16.1 and I74's wording. Proposal: make them consistent, keeping the text's own wording "can affect its operative use" unless "active route" is already defined and the owner prefers the concrete reading. Under decision S23, avoid implying verification. "Can affect" is fine (possibility, not verification).
+
+D16.2 (L492, RC): the sentence quantifies over admitted target chains of length n for all n<ω and requires an owned enabling continuation. D16.2/I74: chain d1..dn each d(i+1) a description of di made a represented target, and the owned continuation meets Scr(dn). The text's L492 says "∃ an owned enabling continuation" — not "meeting Scr(dn)". I74 reads "enabling continuation" as one in which dn becomes a represented target, criticism directed, result can change operative use — i.e., Scr(dn). Is that what the text means by "enabling continuation"? The word "enabling" is used at L495 (Enable(s,T,χ)) differently. So there are two uses of "enabling": L492's continuation and L495's condition. I74 concretizes L492's as Scr(dn). Flag: the text doesn't say the enabling continuation is one that scrutinizes dn; the maths makes it so. Alternative reading: the continuation enables the next step of the chain (e.g., makes d(n+1) possible). Actually RC is about recursion — scrutinizing the scrutiny — so the natural reading is that for a chain of nested descriptions of length n, you can always scrutinize the top. The maths' reading seems the intended one; but the text could say it. Proposal under (c) for I74.
+
+D16.3 (L495, Enable): NF11 — 'non-question-begging' undefined. Enable also requires "in the sense of (CT1)" — the text says "an admitted, non-question-begging enabling condition for s and the task T, in the sense of (CT1)". The maths leaves non-question-begging undefined. Fine, noted.
+
+D16.4 (L500/503/506, U1–U3): 𝔈_Θ defined via Acc(c,p,t,Γ) and carrier instantiation [I75]; 𝔓^adv_Θ not defined (NF12). UU: ∀c∈𝔈_Θ ∃χ Enable(s,U_c,χ) ∧ Can(ξ0,U_c;χ). UC similarly with CanAdv. UECS = models with RC ∧ UU ∧ UC. Faithful to formulas as given in the text.
+
+D16.5 (L528, Classes): faithful; each is extension of formula; no axiom places a system in a class — matches L27.
+
+FC91: the claim is meta: RetReal ⟺ C⊆F(C) only under I61's reading of 'complete'. The witness shows the weaker reading. This "witness found" is not a counterexample to the text; it shows the reading choice matters — supports round-1 matter 10's ruling. Under (b): the witness tells only against invention choice I61(a); it supports reading 'complete' as CT1's completion, i.e., matter 10 is right, and the text at L471 could carry that explicitly.
+
+FC92: holds; CT2 is Knaster–Tarski — holds by construction really. Attack under (d): monotonicity of F — does F remain monotone if nonemptiness of Exec is not a standing assumption? F(X) = {z : ∀i ∀η∈Exec: completes ∧ o∈T[i] ∧ z'∈X}. Monotone in X regardless (universal quantification over executions, conjunct z'∈X — larger X only helps). Even if Exec empty for some (z,i), then z ∈ F(X) vacuously for all X — still monotone. And union of post-fixed points is post-fixed for monotone F on a complete lattice — Knaster–Tarski, holds on P(Z) always. But wait: does the union of post-fixed sets equal the greatest fixed point even with empty Exec? Yes — monotone operator on complete lattice; gfp = union of post-fixed points. So FC92 holds generally, not just on small models. The "12,000 models" result is weaker than the proof. Note: the round-1 change to L471 — "the greatest fixed point is the union of the sets D with D ⊆ F(D)" — is correct for monotone F. Actually a subtlety: for monotone F on a powerset, union of post-fixed points is post-fixed (standard proof), and it's the greatest post-fixed point which equals gfp. Holds.
+
+Attack on FC92 sentence (L471, CT2) by hand: any counterexample? If F were not monotone, the union of post-fixed sets need not be post-fixed. Does the text anywhere allow a non-monotone F? Under reading I61(a) ('complete' without output condition), still monotone in X. Monotonicity only uses the z'∈X conjunct. So no counterexample. Also FC91's part: with nonemptiness inside F (I61 other choice (b)), is RetReal ⟺ C⊆F(C)? F(X) excluding states with no executions: then C ⊆ F(C) would require every state in C to have nonempty Exec — which RetReal's standing assumption gives for z∈C, i∈dom T. Actually if nonemptiness is inside F, then C⊆F(C) is stronger than RetReal alone (adds nonemptiness), while RetReal as defined has nonemptiness as standing assumption — so under the standing assumption they'd still be equivalent. If the assumption is dropped, RetReal (universally quantified over empty Exec) is vacuously true while C⊆F(C) fails — a parting. Worth noting under (d): if Exec can be empty, RetReal is vacuous and (CT1) holds for a deadlock protocol — which L469 explicitly rules out ("deadlock is not a vacuous performance of the task"). So L469 already fixes I61's standing assumption — actually the text settles it! L469: "Execution families are nonempty on admitted inputs; deadlock is not a vacuous performance of the task." So I61's standing assumption is text-settled, at least for admitted inputs. I61 made it a "standing assumption" rather than part of F — the text supports it. Good point for (c): quote L469.
+
+FC93: CT3/CT4 hold "on all models tried" but under I62 they hold by definition (Admit contains every realized task; Cap ⊆ realized). So they hold by construction of I62 — the search is superfluous; I62 makes (CT3) analytic. The text states CT3 as a claim ("Then Cap ⊆ Admit") — if Admit is defined as achievable and Cap as owned realization, CT3 is analytic given owned realization ⊆ achievable. The other choice I62(a) would make CT3 an assumption. So: the text's L479 "Then" suggests inference; the maths makes it definitional. Is that a parting? The text defines Admit as achievable (quoted in I62's fills-in), and Cap as owned realization — so CT3 follows. Fine, but note achievability vs realized: I62 closes by "a task with a realization... is in Admit", which is the achievability→ direction... realized ⊆ achievable. Fine.
+
+Part (c): capability at one tolerance witness (T ∈ Cap^(0,0), T ∉ Poss) — this is the text's own claim ("Capability at a given tolerance does not imply possibility at every tolerance"), so the witness confirms, not refutes. Good.
+
+FC94: not tested. The report says a model would be "an assignment of free predicates, which shows only that no axiom links them (as FC110)". Under (d), should I try to construct a model of RC ∧ ¬UU by hand? The claim is the text's own (L509). A counterexample-model to "RC ⊨ UU" would just confirm the text's claim (recursion does not entail universality — a model of RC ∧ ¬UU supports it). FC94 is a "result the text states", so we want a witness, not a counterexample. The result "not tested" — I could supply by hand a model: take any structure where RC holds (e.g., a single aspect whose descriptions can be scrutinized at every depth — set Scr to hold of everything, with physically admitted continuations) but 𝔈_Θ contains a content c whose task U_c no χ enables (e.g., 𝔈_Θ infinite containing a task requiring an exact tolerance — but no exact member exists... or a task needing resources excluded by Θ). Since 𝔈_Θ is free (I75), ¬UU is consistent with RC. This is trivially a free-predicate assignment; the report's reason for not testing is exactly that it shows nothing beyond FC110. I can supply it briefly: an interpretation with RC true by making every continuation scrutinizing, and with 𝔈_Θ = {c} where Enable(s,U_c,χ) fails for all χ because Θ admits no carrier... wait, c ∈ 𝔈_Θ requires Θ admits a carrier instantiating c. Enable(s,U_c,χ) requires χ physically admitted and CT1-enabling. Set Θ so that holding c is admitted but no protocol at any tolerance realizes U_c at (q,r) for some (q,r) — then Can fails. So M ⊨ RC ∧ ¬UU. This supports L509. I'll give it compactly under (d), noting it's a free assignment confirming the sentence, not telling against it.
+
+FC110: syntactic, not tested — nothing to attack beyond noting it's about the formal core.
+
+**(b) Counterexamples.** The only marked parts: FC91's witness (the weaker reading), FC93's witness (capability at one tolerance ≠ Poss). Neither is a counterexample to the text; both support text claims or invention readings. FC91's witness tells against I61's other choice (a) — supports reading 'complete' as CT1's completion (round-1 matter 10). Change to text: matter 10's suggestion — write the reading into L471? Proposal: L471 first sentence: "F(C) = states whose executions all complete with an output in T[i] and return into C." Hmm — the current L471 says "executions all complete and return into C". Proposal: "\(F(C)\) = states whose executions all complete with \(o\in T[i]\) and return into \(C\)." That writes matter 10 into the text, removing dependence on reading.
+
+FC93 witness: supports the text's final sentence. No change needed.
+
+**(c) Inventions:**
+
+I61: text settles nonemptiness via L469 (quote). The 'complete' reading: the text does not settle whether 'complete' in L471 includes the output condition; matter 10 says it must. Proposal (above) writes it in — names I61/matter 10.
+
+I62: q' excludes at least what q excludes — text settles this: "q precedes q' when q' admits no performance q excludes" — equivalent. Quote it. The "Admit contains every realized task" — text nearly settles via "Admit is the set of tasks physically achievable at tolerances (q,r)"; realized ⇒ achievable is close to analytic but "achievable" could be read as law-permitted-not-yet-realized; realized implies achievable seems safe. The antitone requirement "directed preorder" — the text says directed preorder; the maths adds antitone in (q,r) of Admit, which follows from the exclusion reading? If q ≤ q' (q' stricter) then achievable at q' ⇒ achievable at q — plausible but not stated; the text's direction only speaks of what is admitted/excluded regarding performances, arguably settling antitone of the admission predicate. Mostly settled; note the residue: whether Poss (∩ Admit) equals "absence of a law-imposed limit" (L461) or "achievable at every tolerance" (L479-based). The two lines differ subtly: L461 defines possibility via law-limits; D15.7 via ∩ of achievable. A task could be unachievable yet not law-limited (no law forbids, but no construction exists — e.g., in a finite universe lacking a resource). Hmm, "achievable" vs "not law-forbidden": a law-imposed limit is what forbids; if nothing forbids, is it achievable? In constructor theory, possible = there's a possible constructor performing it; impossible = a law forbids. So achievability and absence-of-law-limit coincide in that framework. I'll note it briefly and propose nothing, or a small wording addition. Maybe better: leave open, note that the text's two phrasings (L461 law-limit; L479 achievable) should be linked — propose: at L479 or L461 a clause "a task is physically achievable at (q,r) when no law-imposed limit excludes performance and retention at those tolerances". That writes I62's link in. I'll propose a modest wording.
+
+I74: text does not settle what an "enabling continuation" is for (RC); I74 reads it as meeting Scr(dn). Proposal wording for L492 area: after L492 or at L487–492: "An enabling continuation for a target chain is an owned, physically admitted continuation in which the last description in the chain becomes a represented target, criticism can be directed at it, and the result can affect its operative use." Names I74. Also H16: unify D16.1's "active route" with the sentence; either drop "active route" or define it. Since H16 asks: text says "can affect its operative use" — does the text settle "active route"? No, "active route" is not in the sentence; if defined elsewhere in the text (formal core), D16.1 could rely on it, but H16 shows inconsistency between D16.1 and I74. Recommend: keep the sentence's wording; D16.1 should read "and the result can affect d's operative use", or if "route" machinery exists and is meant, the text should say "the result reaches an operative route to d's use". Careful: I don't have lines about "route"; say so.
+
+I75: 𝔈_Θ "the explanatory contents that some carrier can hold under the physical module" — maths: Acc(c,...) ∧ Θ admits a carrier instantiating c. "Can hold" vs "admits a carrier instantiating": matches. The extra choice: "contents that some carrier holds at present" — text says "can hold", so the maths' reading is settled by the words. Quote L497. The infinitude assumption (I75 "taken to be infinite where FC94 needs it") is not settled by the text — flag: the text should either not rely on infinitude or state it. FC94(b) relies on 𝔈_Θ infinite. Propose wording? "With 𝔈_Θ the explanatory contents that some carrier can hold under the physical module" — no cardinality. If the owner intends infinitude, add: "𝔈_Θ is not fixed to a finite bound." Or say it should stay open and FC94(b) should not lean on infinitude. I'll propose an optional sentence.
+
+I97, I98: program bounds, not text questions — stay open, no text change (they're search bounds). Say briefly.
+
+H16: as above.
+
+**(d) Attack held claims:**
+
+FC91 equivalence: try to break under I61 itself. The equivalence RetReal ⟺ C⊆F(C) is definitional given F's definition — holds by construction. Break it beyond bounds: nothing — it's syntactic identity. But attack the sentence-level: is C⊆F(C) the right "invariant form"? With the standing assumption (nonempty Exec) — if dom T = ∅? Then F(X) = Z for all X (vacuous), C⊆F(C) holds trivially, RetReal holds trivially. Consistent. If C = ∅: C⊆F(C) holds; RetReal vacuously — fine, though "retained realization" of ∅ is vacuous; the text's CT1 quantifies ∀z∈C so same. OK.
+
+Attack FC92 beyond: give a non-monotone trap? F's monotonicity is provable; note it holds by construction and the search adds nothing — recommend reclassifying as "holds by construction". Also: potential subtlety — the union of post-fixed points is the greatest fixed point only for monotone F; text asserts monotone, fine.
+
+Attack FC93: CT3, CT4 under I62 are analytic (Cap ⊆ realized ⊆ Admit; intersection of subsets ⊆ intersection). Holds by construction. Without I62 (choice a), CT3 is an assumption — could fail: an Admit family not containing some owned-realized task. Then CT3 counterexample exists trivially. So FC93's holding rests entirely on I62 — note the search result is again superfluous. The witness (c) T ∈ Cap^(0,0) ∧ T∉Poss: consistent with text's final sentence. Could a hand attack break CT4 without I62? Yes trivially. Fine.
+
+FC94/FC110: not tested; supply hand model for FC94(a) as above; for FC94(b): if 𝔈_Θ finite, a finite performance record could decide UU — so (b) rests on I75's infinitude assumption; the text doesn't fix cardinality. Flag.
+
+**(e) Round-1 matters:**
+
+Matter 10: yes — adopt proposal writing completion into L471 (fence). 
+Matter 14: L27 lacks pointer to Part XIV. Proposal: amend L27 to add "physical attributions are read through the physical module of Part XIV" or a pointer clause. Give exact wording: replace L27 with: "It does not decide whether any human, machine, institution or lineage belongs to the classes defined. It defines the classes; physical attributions among them are read through the physical module (Part XIV)." Careful — L27's second sentence "It defines the classes." Keep and extend.
+
+Round-1 change at L471 itself: the new wording is correct (union of post-fixed sets = gfp for monotone F). No further change needed beyond matter 10's proposal.
+
+Also D15.6/L477: "independently specified J_p" — the maths takes J_p as a parameter without independence condition; NF11 covers the neighbouring sentence's "independently characterized". The 'independent' in L477 is also undefined — mention under (a) as a parting: the maths drops "independently specified". Either define or accept as a typing declaration. Note it alongside NF11.
+
+Also L461's "it is not one trajectory that performed the task" — D15.1's gloss "Here physical possibility enters as the carrying out of a transformation" doesn't capture the anti-single-trajectory clause; D15.7's Poss = ∩Admit handles it via "realization, owned or not" (a set of executions). Actually "not one trajectory" means possibility isn't evidenced by one lucky run — that's captured by RetReal requiring all executions. OK.
+
+Word budget: under 3000. Let me write compactly.
+
+Structure:
+
+(a) entries: D15.1/L461, D15.7/L479, D15.8/L481, D16.2/L492, D16.3/L495 (brief), D16.6? no. D15.6/L477, D16.1/L487 (via H16), D16.5/L528 (fine). Then "nothing to add" line.
+
+(b) FC91 witness, FC93 witness.
+
+(c) I61, I62, I74, I75, I97, I98, H16.
+
+(d) FC91, FC92, FC93 attacks; FC94 hand model; FC110.
+
+(e) change at L471, matter 10, matter 14.
+
+Let me draft the proposals:
+
+Matter 10 / I61 proposal (L471):
+```
+L471 (replaces current line)
+**Retention fixed point.** \(F(C)\) = states whose executions all complete with \(o\in T[i]\) and return into \(C\). \(F\) is monotone; \(C\subseteq F(C)\) is the invariant form; the greatest fixed point is the union of the sets \(D\) with \(D\subseteq F(D)\). (CT2)
+```
+Names I61 and matter 10.
+
+I62 proposal (L479 or L461 link): Add at L479 end:
+```
+L479 (replaces current line)
+**Tolerances.** The tolerances of the physical module (Part XIV) form a directed preorder \(Q_\Theta\), in which \(q\) precedes \(q'\) when \(q'\) admits no performance \(q\) excludes, and none of them is exact; \(\mathsf{Admit}^{q,r}_\Theta\) is the set of tasks no law-imposed limit excludes at tolerances \((q,r)\);
+```
+Hmm, that changes Admit's definition from "physically achievable" to "not excluded". Risky. Maybe better: leave Admit, add clause "a task with a realization at (q,r), owned or not, is in Admit". Actually the text quotes in I62 include both L479 sentences. The current text L479 as given in §3 first quote ends with "and none of them is exact," — the second quote is from the same line presumably. The current line (assembled): "The tolerances ... none of them is exact; [Admit is the set of tasks physically achievable at tolerances (q,r);] Then Cap ⊆ Admit ...; Cap^∞ = ∩ Cap ⊆ Poss. (CT3, CT4) Capability at a given tolerance does not imply possibility at every tolerance." I'll propose inserting: "a task with a physically admitted realization at \((q,r)\), owned or not, is in \(\mathsf{Admit}^{q,r}_\Theta\);" — names I62.
+
+I74 proposal: add a sentence after L492 (as a new line L492a or extend L492). Since I must give whole sentence replacing a line, I could extend L492's displayed formula with prose after. Safer: propose a new sentence to stand with L492:
+```
+L492 (replaces current line)
+\forall n<\omega\ \forall\text{ admitted target chains of length }n,\ \exists\text{ an owned enabling continuation}. \tag{RC}
+An enabling continuation for a chain is an owned, physically admitted continuation in which the last description of the chain becomes a represented target, criticism can be directed at it, and the result can affect its operative use.
+```
+Names I74 and H16 (uses "can affect", not "active route").
+
+I75 proposal: infinitude — either stay open. I'll say: the text should not rely on 𝔈_Θ being infinite; if FC94's second clause is to hold, add:
+```
+L497 (replaces current line)
+With \(\mathfrak E_\Theta\) the explanatory contents that some carrier can hold under the physical module, taken without a fixed finite bound
+```
+Hmm, that writes an invention into the text (names I75's infinitude). Alternatively recommend keeping open and marking FC94(b) as resting on it. I'll propose the wording and say it writes I75's assumption in, or the claim should be marked.
+
+Matter 14 proposal:
+```
+L27 (replaces current line)
+It does not decide whether any human, machine, institution or lineage belongs to the classes defined. It defines the classes; physical attributions in them are read through the physical module of Part XIV.
+```
+
+D15.8/L481 parting: the second clause of L481 is circular as it stands; the maths anchors to "the parts of the stated construction" — an unrecorded choice. Propose:
+```
+L481 (replaces current line)
+The population is the set of transports the physics and the stated construction admit; a transport that would need a part the stated construction is built without is not in it.
+```
+Wait — original: "a part every member of the population is built without". Changing to "a part the stated construction is built without" anchors, matching D15.8. Say it records the choice D15.8 already made.
+
+D15.6/L477: "independently specified" dropped by maths — note alongside NF11; suggest it be listed with NF11's undefined terms rather than change text. No proposal needed, or minimal.
+
+H16: covered in I74 entry / (c). Also say D16.1 should adopt the sentence's wording; if "active route" is defined elsewhere (I can't verify here — say so), the text should say so; otherwise drop it.
+
+FC92 reclassification: recommend noting it holds by construction (Knaster–Tarski), search adds nothing.
+
+FC94 hand model under (d): 
+Model M: one aspect d; every description of d is a represented target with admitted criticism continuations at every depth — set RC true by making all continuations scrutinizing (free predicates assigned true). 𝔈_Θ = {c₀} with Acc(c₀,...) and a carrier instantiating c₀ admitted; task U_{c₀} has no enabling χ: let Θ admit no protocol whose executions complete with outputs in U_{c₀}[i] at retention tolerance 2 (e.g., every execution's final state leaves every constructor attribute at r=2). Then M ⊨ RC ∧ ¬UU, confirming L509(a). It rests on free assignment only — shows no axiom links RC to UU, as FC110 says; nothing beyond. Also (b): if 𝔈_Θ finite with k contents, a record of k enabled tasks decides UU — so (b) rests on I75's infinitude.
+
+Also FC91 attack: nothing — equivalence is definitional under I61; restate.
+
+Also attack FC92's text claim itself: any non-monotone reading? If 'complete' depended on X (e.g., "return into C" read as part of completion) — under I61(a) reading completion without output condition still independent of X. Monotone always. Fine.
+
+One more check for (a): D16.4 𝔓^adv_Θ not defined beyond name (NF12) — note that UC's domain open means U3's UECS is open; text should define or the maths must. Mention under NF12 in (a) briefly.
+
+Also check FC91's "Rests on: I61, I97" — fine.
+
+Word count: aim ~1800–2400 words. Write the report now.
+
+Section (a) entries:
+- D15.1 · L461: mostly fine; "transformation" vs relation — a transformation suggests single-valued; T as relation allows one input to many outputs; note as a residue of I61 the text doesn't settle (function vs relation). Brief.
+- D15.7 · L479: Poss defined as ∩Admit (achievable at every tolerance) vs L461's "absence of a law-imposed limit"; parting if a task is not law-excluded yet unrealized at some tolerance; recommend linking wording (proposal folds into I62 entry).
+- D15.8 · L481: circular second clause; proposal.
+- D15.6 · L477: "independently specified" dropped; note.
+- D16.1 · L487: see H16.
+- D16.2 · L492: "enabling continuation" unconstrained in text; see I74.
+- D16.4 · L503/506: 𝔓^adv_Θ undefined (NF12) — UC and UECS open until defined; text should define "coherently posed advanceable challenges" or accept openness.
+- D16.5 · L528: matches; nothing.
+
+(b): FC91 witness, FC93 witness.
+
+(c): I61, I62, I74, I75, I97, I98, H16.
+
+(d): FC91, FC92, FC93, FC94 (hand model), FC110.
+
+(e): L471 change, matter 10, matter 14.
+
+Write it.

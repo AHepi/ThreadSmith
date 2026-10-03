@@ -1,0 +1,740 @@
+We need to produce a report under ~3000 words, five sections (a)-(e), addressing the items. Let me carefully parse the material.
+
+This part (15 of 17) covers Part X (L401–L431) on understanding, construction, newness, origin and Part XI (L433–L457) on repair, created explanation and appraisal.
+
+Definitions: D13.1–D13.8, D14.1–D14.8. Claims: FC84–FC90. Inventions given in full: I55, I57, I58, I59, I60, I68, I96. Unrecorded choices: H06, H14, H15. NF07, NF09, NF10, NF19 (sentences not formalized) — those are in section 7 but section 10's report structure says sections (a) to (e) for definitions, claims, counterexamples, inventions, round-1. Hmm, section 7 (NF items) isn't explicitly in (a)-(e)... The task says (a) definitions & claims formalization; (b) counterexamples; (c) inventions & unrecorded choices; (d) attack claims that held; (e) round-1 matters and changes. NF items — "sentences the maths could not write in section 7" — not in (a)-(e) directly. But maybe I can note them briefly in (a) or skip. Actually the report instructions say "one entry per item you have something to say about". The task (a)-(e) doesn't include NF. I could add a short line in (a) about NF items since they concern whether the formal statement says what the sentence says. Hmm, but keep under 3000 words. Maybe mention briefly at end of (a) or (c). I think I can fold NF09/NF10/NF19/NF07 into (a) as "sentences the maths could not write" — arguably part of "where the maths and the words part company". I'll give brief entries; that seems reasonable and adds value. But word budget: ~3000 words total. Let's be economical.
+
+Let me work through each item.
+
+### (a) Do formal statements say what sentences say?
+
+**D13.1 Deploy (L403).** Text: "Deploy_{β,ℓ}(s,c,ξ;U) is met when s at ξ holds a representation of c, by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task U as a retained capability (Part XII)."
+
+Maths D13.1: some occurrence o of s at ξ has Rep_ℓ(o,c), Integrated(o,s,ξ), and Can_{Ω,β}(ξ,U;χ) holds for some χ with a realization that uses o.
+
+Divergences: The text requires the representation be "by (R) a faithful transport with selected or constructed provenance" — i.e. the provenance is Selected or Constructed (one of two/three provenances). The maths drops the provenance requirement entirely: Rep_ℓ(o,c) with no condition on how c got there. So a content held by an arbitrary route counts as deployable. Also "serving the declared use task U as a retained capability" is formalised as Can_{Ω,β}(ξ,U;χ) with a realization using o — that's capability, but "retained" is not captured (retained capability (Part XII)). Also "integrated into problem-directed activity" is left primitive (I55).
+
+Which should stand? The words: the text explicitly conditions deploy on provenance being (R) with selected or constructed provenance; the maths should carry it. Actually is that right? L403 says "holds a representation of c, by (R) a faithful transport with selected or constructed provenance". So Deploy requires the representation's provenance be Selected or Constructed. Note §3 of the theory (Part on provenance) has three provenances (R), (S), (C)? Actually "Exactly one of three provenances: one whole history" (I53). L195 Sel: history holds no represented target; L197 Con: history holds one. So (R) is presumably... hmm. Let's not over-claim. The maths drops the provenance clause. I should propose adding it: Rep_ℓ(o,c) witnessed by a faithful transport with selected or constructed provenance.
+
+Actually wait — is it plausible the maths considered Rep_ℓ to already encode a faithful transport? The notation "Rep_ℓ(o, c)" likely means occurrence o represents c at grain ℓ — which may already carry a faithful transport. The provenance restriction (selected or constructed) is the part that's dropped. I'll say: the formal statement omits the provenance clause; propose wording.
+
+Proposal wording: replace L403's... hmm, the rule says proposals give exact wording for changes to the *text*. But for (a), "where the words should change, give the new wording." So proposals can be text changes or maths changes. The format rule: "Give the exact wording for every proposal: the whole sentence as it would stand, between fence lines, with the line it replaces." That's about the text presumably. But for maths changes I can state the new formal clause in words/math. I'll present both: when words should change, fenced text; when maths should change, state the formal clause and note it's a change to the maths (not a text proposal). Probably fine.
+
+**D13.2 Repertoire.** R := {c : Deploy for some U with Nontrivial(U)}. Text: "The repertoire R_{β,ℓ}(s,ξ) is the set of contents deployable in some nontrivial use respect." The maths reads "nontrivial use respect" as Nontrivial(U) for a declared use task U. "Respect" ≠ "task" — a respect of use, e.g. a way of using. But roughly fine; flag as an invention already (I55). Also R_<e(s,h) := ∪_{ξ before e} — text L415 says "R_<e" presumably "the repertoire before e". Fine. Also the set is at a fixed β,ℓ — L415 doesn't repeat subscripts; fine.
+
+**D13.3 Build.** Text L405: "Build is met when an actual subhistory owned by s and delimited at e prepares a represented organization for explanatory use of c, contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers." Maths: some subhistory h' of h ending at e with Owned_β(h',s) has Prepares(h',c), BindingConstruction(h',c) and ¬TransferComposite(h'). Divergences: text says "prepares a represented organization for explanatory use of c" — the maths drops "for explanatory use" and "represented organization". Also "nontrivial binding construction relevant to that use" — maths says BindingConstruction(h',c) which per I56 encodes nontrivial + relevant. Also "delimited at e" — maths "ending at e". Fine-ish. Main gap: explanatory use condition dropped. Which should stand? The words — the text restricts Build to construction for explanatory use; but wait, is that right? Actually Build is used in Origin (G), and (G) is about explanatory origins. Hmm, but Build is also used in L197 Con ("There is an episode whose construction trace prepares t")? D12.2 Con. Hmm. Also "actual" subhistory: an actual subhistory of the actual history h — the maths says "some subhistory h' of h" — h is a history, presumably actual. Fine.
+
+But careful: text L405 says "prepares a represented organization for explanatory use of c" — actually it might parse as "prepares a represented organization [for explanatory use] of c". Ambiguous. I'd say the maths should carry "for explanatory use", else a construction aimed at building a bridge counts. Actually in the theory's own terms, "explanatory use" is a deployment question. Hmm, do we want to make Build narrower? The text says so. So words stand; maths should add an Aim/preparatory condition. But is "explanatory use" defined? No. Then propose wording change to the text? Perhaps better: the text should say what "explanatory use" means, or drop it. Given I56 already vague on 'prepares','nontrivial binding construction','content-preserving transfers', I should in (c) propose wording for those.
+
+Let me keep (a) focused: for each definition/claim, say where maths and words part company, which should stand, new wording where words should change.
+
+**D13.4 Matching (L413).** Text: "Write d≡_ℓ c when there are transports from d to c and from c to d, both faithful on c's contract at grain ℓ." Maths D13.4: t: E_d → E_c faithful on the preimage of C_c, and t': E_c → E_d faithful on C_c. Hmm — asymmetry: "both faithful on c's contract" means both transports are faithful on c's contract (i.e., on c's own contract, C_c). The maths reads the first as faithful on the preimage of C_c (the transport t: E_d→E_c being faithful on t^{-1}(C_c)) and the second on C_c. Actually for t': E_c → E_d to be "faithful on c's contract" it must be evaluated... hmm, transports into c need c's contract on c's own organization (I48, vague note). The text L413 says "both faithful on c's contract at grain ℓ". The maths makes it one-way: c fixed. And FC85 notes it's read with c fixed and not claimed symmetric. But the text as written defines a symmetric-looking relation d≡c with both directions of transport. The notation "d≡c" suggests symmetry, but both faithfulness conditions are on C_c only, so it is indeed not symmetric in general. So the maths is faithful here, and FC85(a) shows c≡c holds. But is there a divergence? The text says "both faithful on c's contract" — for the transport from c to d, "faithful on c's contract" means faithful on C_c (which lives in E_c, the domain of that transport). For the transport from d to c, "faithful on c's contract" — c's contract is on E_c = codomain; faithful there means faithful on the preimage? Hmm. The maths uses "faithful on the preimage of C_c" for t and "faithful on C_c" for t'. That is a reading, recorded as I48. Fine; but I should note the text's wording "faithful on c's contract" is ambiguous for the d→c direction and that the maths' reading (preimage) is the one that makes c≡ c hold via identity. Actually with identity both coincide. Which should stand? I could propose the text clarify:
+
+Proposed wording for L413: "Write d≡_ℓ c when there are transports from d to c and from c to d, both faithful on c's contract at grain ℓ: the first on the preimage of c's contract, the second on c's contract itself." That writes I48's reading into the text. Hmm but careful: is that a good idea? The owner says "if implementation forces invention, that needs to be recorded" — proposals are allowed. I think a clarification is warranted. But maybe better to note that the text's phrase is fine and the maths' reading is the natural one; the real issue is that≡ is not symmetric yet written with ≡, and (N) uses it in one direction. Perhaps propose that the text say the relation is read with c fixed. Hmm, L416 (N) uses d ≡_ℓ c with c the new content; that's fine.
+
+Actually the more interesting divergence: the maths says "It is read with c fixed (L413) and is not claimed symmetric (FC85)". The text writes "d≡c when there are transports from d to c and from c to d" — that's two transports, which is a kind of "two-way transportability" that reads symmetric but isn't due to c's contract. Since the notation suggests symmetry but the definition doesn't deliver it, the words should add a note. I'll propose minimal clarification.
+
+Hmm, but the report should be under 3000 words; I must be selective and deep. Let me prioritize items where there's real divergence:
+
+- D13.1 Deploy: provenance clause dropped, "retained capability" dropped, "nontrivial use respect" → Nontrivial(U). Real divergence: yes.
+- D13.3 Build: "for explanatory use", "represented organization" dropped. Real divergence: yes.
+- D13.4: preimage reading; symmetry notation. Moderate.
+- D13.5 New: straightforward. But note: New(s,c,h,e) uses R_<e(s,h) which is defined per β,ℓ; (N) as written at L416 has no β,ℓ subscripts, and≡_ℓ. Minor. Also New quantifies over d in repertoire "before e" — with h and e. Fine.
+- D13.6 Attempt: "c is used in h, up to e, to address p" — text L419 defines Attempt? Actually L419: "Attempt(s,c,p,h,e)" presumably defined earlier in the text (not given here). The maths says "a claim read through Θ" — a reading. Note that (G) requires Attempt ∧ New ∧ Build. Text L422 as given matches. But the ordering: "Origin ... := Attempt ∧ New ∧ Build" — the formula at L422 is exactly that. Good. Note: the text says (G) requires Build on c at e? Build_{β,ℓ}(s,c,h,e) with e being the same e as Origin's e. In D14.7, Origin(s,c,p_c,h,e_c) — fine.
+- D13.7 Ownership: Contrib primitive (H14).
+- D13.8 Episodes: H15; "An episode is a subhistory" vs L55 (H06). Big divergence: the text's front matter L55 defines episode as "a history in which contracts change, and every change carries a provenance record." D13.8 says "An episode is a subhistory." Which should stand? Given L35 says front matter states nothing the body does not state more exactly, and the body never defines episode... Actually the body at L429 defines "A complete critical episode contains...". Hmm. The divergence is real: if episode requires contract change + provenance record, then D12.2 Con, D13.8's episodes, and (EX) need contract changes. Which should stand? Reasoning: the body's use of "episode" (L405 "delimited at e", L429) is as a delimited subhistory; the front-matter sentence adds a requirement of contract change and provenance record which is not used anywhere in the body's definitions and would make CreativeCriticalEpisode (and thus CreateEx) require a contract change — a substantive condition the body never uses. Since L35 says the front matter states nothing the body does not state more exactly, and the body's more exact statement is at L429 (which lists the four parts of a complete critical episode and does not mention contract change), the body's reading should stand. But then the front matter is wrong/stale. Two options: (i) keep "episode is a delimited subhistory" and amend L55; (ii) keep L55 and add contract change to D13.8. Which should stand? I think the body should stand, and L55 should be amended... but careful: L55 is front matter; the rule "the front matter states nothing the body does not state more exactly" — if the body never defines episode at all, then the front-matter statement is the only statement. Hmm. So maybe the fix: define episode in the body at L429 as "a delimited subhistory" and amend L55 accordingly, or state that episode = subhistory delimited at e, and keep contract change only for episodes of provenance. Let me consider what serves the theory: the theory of explanation with episodes (critical episodes) — requiring every episode to contain a contract change would make creative episodes require contract change, and the worked cases (E1–E9) might not have them. Also the model's con(h) takes no episode. I'll propose the body's reading stand and give new wording for L55, and record that this is a change to the front matter.
+
+Wait: but is "episode" used at L197 (Con): "There is an episode (Part X) whose construction trace prepares t" — referring to Part X's definition. So Part X should define it. Part X's definitions here: D13.3 Build mentions "construction trace"; D13.8 defines Episodes. So the body (Part X, L429) is where episode is defined, and it defines "complete critical episode" and "creative critical episode", and the maths adds "An episode is a subhistory". So the divergence is between the front-matter L55 and Part X's silence + the maths' addition. Proposal: add to L429 an explicit definition.
+
+Proposed wording at L429: "Episodes. An episode is a subhistory delimited at an event. A complete critical episode contains..." That writes H06's choice into the text and amends L55. And propose amending L55 too: "An episode is a history in which contracts change..." Hmm, if we define episode as subhistory, then L55 must change:
+
+```
+L55 (replaces) | An episode is a subhistory delimited at an event; an episode of provenance is one in which contracts change, and every change carries a provenance record.
+```
+Hmm, that invents "episode of provenance". Alternatively simply: "An episode is a subhistory." Let me think about which is less invasive and most defensible. The front matter sentence at L55 defines "episode" for the whole text; the body's use (delimited at e; contains a difficulty, target, criticism, response) is compatible with either, except the contract-change requirement. Since no body definition uses contract change for episodes, and (EX) would otherwise need contract changes never mentioned in the worked case, the body's reading stands and L55 should be corrected. I'll propose:
+
+```
+L55 (replaces) | An episode is a subhistory; the episodes of a provenance record are those in which contracts change, and every change carries a provenance record.
+```
+Hmm — but this invents "episodes of a provenance record". Maybe simpler: keep L55 but add to L429 a sentence saying the episode there is a delimited subhistory and that contract change is not required. Risky: contradicts L55. Best: change L55 to match. I'll propose:
+
+```
+L55 (replaces) | An episode is a delimited subhistory of a history. The provenance records of a history are attached to the changes of contract it contains.
+```
+Hmm, that's a bigger rewrite and may remove content the front matter intends (that episodes carry provenance records). Actually maybe the front matter intends: an episode = a history segment where contracts change and each change has a provenance record — i.e., an "episode" in the sense of an event of transformation with provenance (R,S,C provenances). That's central to the theory's provenance story (L195/L197 Selected/Constructed). If we drop it, the provenance story loses "episode". Hmm! L197: "Constructed. There is an episode (Part X) whose construction trace prepares t". So the Constructed provenance is an episode with a construction trace preparing t. Under L55's reading, that episode would contain contract changes. Under D13.8's reading, any subhistory. The hand-set histories for FC78 state no contract change; the model's con(h) requires only a trace preparing t and a represented target. So the FC78-family results (Con ⇒ not Sel, etc.) were computed without contract change. Under L55's reading those results may not hold (H06 notes this, not computed).
+
+So which should stand? I think the safest, most defensible: the body's definitions (L195, L197, L405, L429) use "episode" as a delimited subhistory whose content is given by what it contains (a construction trace, a difficulty etc.); the contract-change clause of L55 is not used by any body definition and would add a hidden condition to (EX) and to Con. Since the text says the front matter states nothing the body does not state more exactly, and the body states the contents of episodes exactly at L429 without contract change, the body stands and L55 should be narrowed. But wait — L55's clause is *content* about provenance: every change carries a provenance record. Removing it loses a claim. Alternative: keep L55 for the front-matter's notion but distinguish names. Given the report should give exact wording, I'll propose:
+
+```
+L55 (replaces) | An episode is a delimited subhistory. In the provenance episodes the contracts change, and every change carries a provenance record.
+```
+Hmm "the provenance episodes" is vague. Maybe: "An episode is a delimited subhistory of a history. The episodes of a provenance are those in which contracts change, and every change carries a provenance record." That is decent: it separates the general notion (used in Part X) from the provenance notion. But then L197 "There is an episode (Part X) whose construction trace prepares t" — uses the general notion? It says "an episode (Part X)". Fine.
+
+Alternatively simply delete the definition of episode at L55 and define at L429. But the front matter presumably introduces terms. I'll go with the two-sentence version, noting it writes H06's choice into the text (a proposal that writes an invention into the text says so — H06 is an unrecorded choice, so say "writes the unrecorded choice H06 into the text").
+
+**D14.1 Aims.** Text L441: "The aims are declared inputs: O says what is to be repaired and P what is to be protected, each as a stated condition over stated occasions, and a protected condition is lost exactly when it fails on an occasion it covers. In (P), accordingly, r(ξ') says of a protected condition r that it was met on every occasion it covers from ξ to ξ', not only at ξ'."
+
+D14.1: aim = (cond, Occ). o(ξ): cond met at ξ. Left: r(ξ) := cond met at ξ if ξ ∈ Occ_r, holds otherwise. Right: r(ξ') := cond met at every ω ∈ Occ_r with ξ ≤ ω ≤ ξ'.
+
+Divergences: (1) The text says "a protected condition is lost exactly when it fails on an occasion it covers" — this is a definition of "lost" with no interval bound: failure on *any* occasion it covers, at any time. But (P)'s right side constrains only the interval [ξ, ξ']. FC86's "look" found the mismatch: a protected aim already failing at a covered ξ is "lost" by the words but (P) doesn't protect it (since r(ξ) on the left fails, so (P) says nothing). So the words and the formula disagree: "lost exactly when it fails on an occasion it covers" vs. (P)'s protection r(ξ) ⇒ r(ξ') read over [ξ,ξ'].
+
+Which should stand? The words as written say "lost exactly when it fails on an occasion it covers" — that includes failures before ξ and outside the repair interval, and it would make (P)'s protection impossible for any aim that ever failed. But also the text immediately adds "In (P), accordingly, r(ξ') says ... met on every occasion it covers from ξ to ξ'" — that qualifies it: within (P), the reading is over [ξ,ξ']. And the left side: the text says (P) is ∀r∈P [r(ξ) ⇒ r(ξ')]. What is r(ξ) on the left? The text doesn't say whether it's "met at ξ" or "met on every covered occasion up to ξ". The maths (I57) makes it: met at ξ if ξ covered, else holds vacuously. That is an invention. Alternative (b): r(ξ) also read over an interval (i.e., met on every covered occasion before ξ up to ξ).
+
+Consider FC86's look: a protected condition already failing at a covered ξ. Under I57, r(ξ) fails so (P) imposes nothing on r — so the repair can *cause* r to fail and (P) still holds? No — if r(ξ) fails then antecedent false, so no constraint: a repair may do anything to r, including keep it failing. But "lost" per L441 says r is lost because it failed on a covered occasion. So a repair could both "repair" and destroy a protected condition that was already failing and still satisfy (P). That's the divergence. Which should stand? The words: "a protected condition is lost exactly when it fails on an occasion it covers" — an unbounded reading would also say r was *already* lost at ξ, so the repair didn't lose it; that's coherent: the loss happened before. Actually "lost exactly when it fails on an occasion it covers" — if it failed at ξ (covered), it's lost as of ξ. Then (P) says r(ξ) ⇒ r(ξ'), where r(ξ) presumably "r is met at ξ" or "r is not lost at ξ". Under the "lost" reading, r(ξ) means "r is not lost by ξ", i.e. met on all covered occasions up to and including ξ. That's choice (b)! Under (b), r(ξ) on the left = cond met on every covered occasion ≤ ξ. Then an already-failing-at-ξ condition is not protected either (still r(ξ) fails). Hmm — same problem. Unless r(ξ) means met at ξ only. Hmm.
+
+Let's think: with (b), r(ξ) read over the past interval. A condition failing at ξ: r(ξ) fails; so (P) still imposes nothing. So the "already failing" case remains unprotected in both readings. So the real issue is the words' "lost exactly when it fails on an occasion it covers" makes "lost" a global property while (P) protects only conditions not lost at ξ and asks that they remain unlost throughξ'. Actually if we read r(ξ) as "not lost at ξ" (met on all covered occasions up to ξ), and r(ξ') as "not lost at ξ'" (met on all covered occasions in [ξ,ξ'] — since already not lost at ξ, this is equivalent to all covered occasions up to ξ'), then (P) says: any protected condition that was not lost at ξ is not lost at ξ'. And "lost exactly when it fails on a covered occasion" is then consistent, with "lost" evaluated as of the end. So the correct reading: r(ξ) := "r has not been lost by ξ" = met on every covered occasion up to ξ. That's option (b), and it makes L441's "lost exactly when it fails on an occasion it covers" hold literally: r(ξ') in (P) read as "met on every occasion it covers [up to ξ']" — note the text says "from ξ to ξ'" which restricts to the interval. Hmm, the text says "met on every occasion it covers from ξ to ξ', not only at ξ'". So it explicitly restricts to the interval. Then the "lost exactly when..." sentence is about the whole of a history, and (P)'s interval reading is narrower. So the text contains a genuine tension, which FC86's look exposed. Which should stand?
+
+Interpretation attempt: "a protected condition is lost exactly when it fails on an occasion it covers" is intended as the criterion of loss *for the repair's interval*: i.e., within the repair, a protected condition is lost iff it fails on a covered occasion between ξ and ξ'. The sentence is then elliptic, and the following sentence ("In (P), accordingly...") makes it precise: from ξ to ξ'. So the words should be narrowed: "a protected condition is lost exactly when it fails on an occasion it covers between ξ and ξ'". Then FC86's look case (already failing at ξ) is out of scope: (P) asks only about conditions met at ξ (or not lost at ξ). And the remaining question of what r(ξ) on the left means stays open (invention I57).
+
+So: propose text change at L441 narrowing "lost" to the interval, and note that this removes FC86's look divergence. Also note the left-hand reading r(ξ) remains unsettled — that's (c) for I57.
+
+But careful: the rule "Keep apart what the text forces and what a reader might take it to mean" and "Nothing is settled". Fine.
+
+**D14.2 Repair (P).** Text L438 formula matches. But note the text's (P) has ProducedBy(Δ,ξ,ξ';O) and D14.3 makes ProducedBy quantified over "some o ∈ O with ¬o(ξ) ∧ o(ξ')" — an invention (I57): which aim the route runs to. Text L441: "ProducedBy is met when an active route (Part IX) runs from Δ to the repair" — "the repair" = the repair of the aim repaired. The text says "it attributes the repair to each contribution whose active route ran to it in the history" — "it" = the repair. Since (P)'s first conjunct is ∃o∈O[¬o(ξ) ∧ o(ξ')], "the repair" is presumably the coming-to-be-met of that o. So the text plausibly does settle it: tie ProducedBy to the same o as the first conjunct (choice (a)). Hmm. But there may be several o repaired simultaneously. Text: "where two sufficient contributions both ran, the repair is attributed to both". The maths' invention says "it need not be the o of (P)'s first conjunct". Under the maths, ProducedBy could be satisfied by a route to a *different* aim's repair. Which should stand? I'd say the words: ProducedBy should run to the repair of the aim(s) that (P)'s first conjunct identifies; otherwise an unrelated route to a different aim's coming-to-be-met would count as producing *this* repair. So propose tie it (choice (a)). Actually, careful: (P) says ∃o [¬o(ξ) ∧ o(ξ')] — the repair might achieve several aims; the natural reading: ProducedBy must run to the repair, i.e., to the coming-to-be-met of the aim(s) whose repair is claimed. I'd propose the text state it exactly:
+
+```
+L441 (replaces ... ) | ProducedBy is met when an active route (Part IX) runs from Δ to the repair; it attributes the repair to each contribution whose active route ran to it in the history, and where two sufficient contributions both ran, the repair is attributed to both and the history supplies no division of the attribution that it does not contain.
+```
+We need to add: "the repair of an aim o is the occasion at which o's condition comes to be met; the route must run to the repair of an aim that (P) identifies." Hmm, the proposal must be the whole sentence as it would stand. I can propose:
+
+```
+L441 (replaces) | \(\operatorname{ProducedBy}\) is met when an active route (Part IX) runs from \(\Delta\) to the repair of an aim \(o\) with \(\neg o(\xi)\land o(\xi')\); it attributes the repair to each contribution whose active route ran to it in the history, and where two sufficient contributions both ran, the repair is attributed to both and the history supplies no division of the attribution that it does not contain.
+```
+This writes I57's choice (a) into the text. Good.
+
+**D14.3/D14.4:** "Losses outside P must be exposed." D14.4 introduces Aims* and X (I58). Text doesn't say what aims are considered. This is (c).
+
+**D14.5 Explanatory aims (L443, after round-1 change).** Text: "An explanatory aim requires a deployable account, or the correction of a use through one. With O_ex ⊆ O the explanatory aims,". The round-1 change moved "deployable" to attach to "account". Under old wording "to be deployable" could attach to the correction (a subhistory) — type mismatch. New wording: "an explanatory aim requires a deployable account, or the correction of a use through one" — now the second disjunct's object is "a correction of a use through [a deployable account]". Does the new wording still ask the second kind to involve a deployable account? "the correction of a use through one" — "one" refers to "a deployable account". So yes: the correction is through a deployable account. OK. But is the aim *requiring* the account deployable, or the aim's condition being that s possesses a deployable account? The maths reads L443 as a characterization of O_ex (o is explanatory when its condition is 's possesses a deployable account...' or 'the correction of a use through' a deployable account). Note the text says "An explanatory aim requires a deployable account, or the correction of a use through one" — this is a requirement on the aim (necessary condition), not a characterization of which aims are explanatory. The maths reads it as a characterization (iff). That's I59's invention and its choice (a) is "L443 as a necessary condition only". Which should stand? The words say "requires" — that's necessary. So the maths' reading as a characterization goes beyond; but (EX) then needs O_ex marked. Since (EX) quantifies ∃o∈O_ex, the text must say what O_ex is: "With O_ex ⊆ O the explanatory aims" — i.e., a declared subset. So the text does settle that O_ex is declared, and L443 gives a necessary condition on its members. The maths' characterization reading is a stronger claim not in the text. Recommend: keep "requires" as necessary; the declared marking stands. So proposal: none needed, but the maths should say "o ∈ O_ex requires ...", not "iff". But wait — if L443 is only necessary, then the maths' D14.5 is over-reading; I should record that the maths should be softened. Fine.
+
+Also type check: "An explanatory aim requires a deployable account" — an aim (cond, Occ) requires... an account? The aim's satisfaction requires a deployable account. Hmm, the round-1 change fixed the attachment, and FC89 says the new wording puts 'deployable' where Deploy's type allows it. But note: the second disjunct "the correction of a use through one" is a subhistory/Δ, not an account. (EX) then needs, for such an o, a c that is an account, deployable — the correction is *through* c. But (EX) as displayed doesn't say c is the account through which the correction runs; ProducesVia carries it (FC89 note). Real divergence: (EX) treats both kinds alike; the second kind is carried only by ProducesVia. So there may be a gap: an aim of the second kind is met by (EX) even if the account did not correct the use. Which should stand? The words: L443 says the aim requires "the correction of a use through one [a deployable account]" — so (EX) should require that the account c corrected a use. The maths notes this: "the second kind is carried only by ProducesVia (FC89)". ProducesVia requires the active route from Δ to the repair of o to contain the relevant binding of c — that's about the repair producing o via c's binding. Does that amount to "correction of a use through c"? Not exactly: it's about the route from Δ to the repair containing c's binding. Hmm, plausibly close. But no condition says a *use* was corrected. I'd flag: the words require the correction of a *use*; (EX) has no condition naming a use. Propose a clause? That would require defining "use". I'd say: leave open, but note the words can't be met exactly; the text should either say what "correction of a use" is or drop the second kind from L443's condition and let O_ex be declared. Hmm. Let me think about what change best removes the mismatch while staying in the owner's spirit. The owner: physical possibility only where info instantiated/transformed; "correction of a use" concerns a use task U (Deploy's U). Perhaps propose:
+
+```
+L443 (replaces) | An explanatory aim requires a deployable account, or the correction of a use through one. With \(O_{\mathrm{ex}}\subseteq O\) the explanatory aims,
+```
+→ keep, and add in (EX) a clause that c's binding is the one through which the use was corrected? That is ProducesVia. Hmm.
+
+I think the cleanest: say the words stand and the maths should carry "the correction of a use" as a condition on o's condition (an aim of the second kind has condition 'the use U is corrected through a deployable account'), and note that (EX)'s ProducesVia is the only place it can be tested; record as an open item and propose exact wording to define the second kind's condition:
+
+```
+L443 (replaces) | An explanatory aim requires a deployable account, or the correction of a use through one: its condition is that \(s\) possesses a deployable account of a stated question, or that a declared use is corrected through one. With \(O_{\mathrm{ex}}\subseteq O\) the explanatory aims,
+```
+This writes I59 into the text (as necessary-condition characterization of the aim's condition). Say so.
+
+**D14.6 Result / ProducesVia.** Text L453: "Result(Δ) is the set of contents at ξ' that Δ prepared." Maths: Result(Δ) := the contents at ξ' that h_Δ prepared (Prepares, D13.3). Divergence: "Δ prepared" vs "h_Δ prepared" — Δ is (h_Δ, content changes), fine. ProducesVia: text "an active route that runs from Δ to the repair of o contains the relevant binding of c" — maths: "some active route ... contains an occurrence instantiating the binding named in c's construction trace". The invention (I60): "the relevant binding of c" = binding named in c's construction trace. Choice (b): any occurrence that carries c. Which should stand? The text says "the relevant binding of c" — c is an account (a content/organization), so "the relevant binding of c" most plausibly means the binding by which c is constructed (its construction trace's binding) or the binding in c that is relevant to the repair. Ambiguous. Hmm. In (EX), c ∈ Result(Δ) and ProducesVia(Δ,c,o). "the relevant binding of c" — "relevant" to what? To the repair presumably. The maths' reading: the binding named in c's construction trace. But if c is an account (a content), does c have a construction trace? Build's trace identifies a binding. Under Origin, c was built (Build) — yes, c has a construction trace from its Build. So "the relevant binding of c" = the binding constructed in building c. That's plausible. But "relevant" suggests relevance to o/the repair. So maybe: the binding of c that is relevant to o. Proposal: clarify in the text:
+
+```
+L453 (replaces) | \(\operatorname{Result}(\Delta)\) is the set of contents at \(\xi'\) that \(\Delta\) prepared. \(\operatorname{ProducesVia}(\Delta,c,o;\xi,\xi')\) is met when an active route that runs from \(\Delta\) to the repair of \(o\) contains the relevant binding of \(c\).
+```
+→ add "the binding constructed in the construction trace of c (L405)".
+
+```
+L453 (replaces) | ... contains the binding of \(c\) named in its construction trace (L405).
+```
+Hmm, wording. Let me draft:
+
+```
+L453 (replaces) | \(\operatorname{Result}(\Delta)\) is the set of contents at \(\xi'\) that \(\Delta\) prepared. \(\operatorname{ProducesVia}(\Delta,c,o;\xi,\xi')\) is met when an active route that runs from \(\Delta\) to the repair of \(o\) contains an occurrence of the binding that \(c\)'s construction trace names (L405).
+```
+That writes I60 into the text. Good — say so.
+
+**D14.7 (EX).** The displayed formula at L447–L449. Note e_c ⪯_h e: "read in the partial order of D11.3 [I44]". And "Account((c,p_c,t_c,Γ_c)) evaluated on the contract of p_c fixed at e_c (L453)". Hmm, L453 is about Result/ProducesVia; the claim says "evaluated on the contract of p_c fixed at e_c (L453)" — maybe L453 has another sentence not given. Careful: "where you rely on a line not given here, say so". I might note that the cited L453 in D14.7's note is a line fragment I don't see stating the fixing of the contract; I rely only on what's given.
+
+Also (EX) requires "c ∈ Result(Δ)" — the account c is among contents Δ prepared at ξ'. And "Deploy(s,c,ξ';U_c)" — deploy at ξ'. Fine.
+
+Potential divergence: (EX) as displayed requires both "Origin(...)" (which requires Build and New at e_c) and c ∈ Result(Δ) — i.e., c was *prepared by the repair* Δ. But New(s,c,h,e_c) means c was not in the repertoire before e_c, and Build(s,c,h,e_c) means c was built in a subhistory ending at e_c. If Δ's repair happens at (ξ,ξ') and e_c ⪯_h e, is c built by Δ or by an earlier subhistory? (EX) requires both that c was constructed (Origin at e_c) and that c ∈ Result(Δ) (Δ prepared c at ξ'). These can coincide if Δ's subhistory is the Build subhistory. Not a contradiction. OK.
+
+Another: the text L447–449 displays (EX) but the sentence at L443 says "An explanatory aim requires a deployable account, or the correction of a use through one." Fine.
+
+**D14.8 Appraisal.** Text L455: "achievement R[a,k] ≠ ∅ ∧ R[a,k] ⊆ G[k] (AR); and N ⊆ Act × Occ × Rsn × V_A taken as a substantive input when aesthetic value is claimed". Maths types R ⊆ Act × Occ × Eff, G ⊆ Occ × Eff. Note the text's (AR) has R[a,k] and G[k] with indices a (act) and k (occasion?). The maths types say R ⊆ Act × Occ × Eff and G ⊆ Occ × Eff, so R[a,k] is a set of effects and G[k] a set of effects at occasion k. Fine — types are an invention-ish but recorded as "typed only". Divergence: the text says N is "taken as a substantive input when aesthetic value is claimed"; the maths says "No definition of this file uses 𝒩; where values are placed is the owner's question." Also "None is defined as another" (NF19). Probably fine; maybe nothing to add. Also note the text's indices a,k: what is k? An occasion or a kind? Not settled — the maths types k as Occ. I can flag: the text writes R[a,k] with k untyped; typing k as an occasion is a choice not recorded (an unrecorded choice?). Hmm — the maths says "𝓡 ⊆ Act × Occ × Eff, G ⊆ Occ × Eff" — so k: Occ and a: Act. The text's line455 says "R[a,k] ≠ ∅ ∧ R[a,k] ⊆ G[k] (AR)". Is k an occasion? Probably. But the text elsewhere might define. Not given here. I'll flag briefly that the typing of k as an occasion is not in the words given and should be recorded — that's an unrecorded choice (but it's not in section 6's list; I can raise it in (a) or (c)). I'll mention in (a) as a divergence: the maths types the indices, the text does not; record it.
+
+Also note Eff vs Rsn vs V_A: fine.
+
+### (b) Counterexamples
+
+Which items are counterexamples? Results: FC84 holds by construction; FC85 holds on all models tried (with (b) "no witness found" on random models and computed as claimed on constructed); FC86 holds on all models tried + a *look* that came out "look: as expected" — the look is not a counterexample ("as expected"). Wait: "and a *look* that came out *not as expected*" — the task's (b) covers parts marked counterexample found or computed: not as claimed, and a look that came out not as expected. Here the look came out "look: as expected" — so not covered? Hmm. But the look reveals a divergence between "lost" in L441 and (P). It says: "under I57 'lost' in L441 and (P)'s protection differ for an aim already failing at ξ". So there IS a divergence worth reporting in (b)? The instruction says (b) covers counterexamples and looks not as expected. The look came out as expected. So strictly, (b) has no items: no counterexample found in this part; all results are holds/not tested/computed as claimed. Then I should say in (b): no counterexample in this part; but the FC86 look exposes a divergence of the words (not a counterexample to (P) but a mismatch of "lost" and protection) — I can note it under (a) (D14.1) and mention in (b) that there is nothing to dispose of. Actually the report says "one entry per item you have something to say about... Items on which you have nothing to add are named together in one line at the end of the section." For (b) I'll say: no counterexamples were found in this part; the closest is FC86's look, which came out as expected and is not a counterexample, but it does show a divergence between L441's "lost" and (P) — handled in (a)/D14.1. Hmm, but should I handle it in (b) instead? The look result notes it. I'll give an entry in (b) for FC86's look anyway since it's the closest thing, saying it is not a counterexample to (P) but a divergence in wording, and give the exact wording change (the same as in (a)) — but the rules say give the exact wording for every proposal. To avoid duplication, I can put the proposal in (a) under D14.1 and cross-reference in (b). Better: put the proposal under (b) since it's the look item? The look is part of FC86's result. Hmm. I'll put it in (b) as `FC86 look · L441` with the wording, and in (a) D14.1 say the divergence is disposed of in (b). Actually simpler: handle in (a) D14.1 (definition vs words) with the proposal, and in (b) one line: "no counterexamples in this part; FC86's look came out as expected and is dealt with at D14.1". That keeps it clean. But the task explicitly asks in (b) to handle "a look that came out not as expected" — this one came out as expected, so no obligation. Fine, but I'll still comment.
+
+Also FC85 (b) "no witness found" for the constructed? No: (b) random: no witness found; constructed: computed as claimed. So no counterexample.
+
+FC84: holds by construction. FC87: holds by construction. FC88: computed as claimed. FC89, FC90: not tested.
+
+So (b) is short. Good — saves words.
+
+### (c) Inventions given in full (I55, I57, I58, I59, I60, I68, I96) and unrecorded choices (H06, H14, H15).
+
+**I55** (Deploy: 'integrated into problem-directed activity', 'nontrivial use respect'). Does the text settle? No — L403 gives the words but not definitions; also "retained capability (Part XII)" is cross-referenced (Part XII may define "retained capability" — not given here; say so). Proposal: give exact wording for the text. Something like:
+
+```
+L403 (replaces) | ... integrated into problem-directed activity ... 
+```
+Full sentence as it would stand. I need to write the whole L403 sentence. L403 is long: "\(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task \(U\) as a retained capability (Part XII). The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use respect."
+
+Proposal (writes I55 into the text, and adds the provenance clause that the maths dropped):
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity, serving the declared use task \(U\) as a retained capability (Part XII), and used by a realization of \(U\). The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use task \(U\).
+```
+Hmm — but I must be careful not to over-write. The inventions are things the text leaves open; the proposal should make the text carry the invention or say why it should stay open. For I55, the invention makes Integrated and Nontrivial primitives. A proposal could define them: "Integrated(o,s,ξ) when o lies on an active route from a represented problem to the result of U" (choice (a) recorded as alternative). Actually the recorded invention is the primitive; choice (a) is the alternative. The proposal should say: the text should carry the definition, e.g. "integrated into problem-directed activity" means "lies on an active route (Part IX) from a represented problem to the result of the use task". That writes choice (a) into the text. Hmm, but "Do not propose anything about what hard to vary covers" — fine. And decisions: nothing settled; proposals are fine.
+
+I think the best proposals are minimal clarifications of the vague words, phrased in the text's own vocabulary (active route, occurrence, realization, use task). Let me draft for I55:
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, the representation lying on an active route from a represented problem to the result of the declared use task \(U\) and serving that task as a retained capability (Part XII). The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some declared use task \(U\) that uses them.
+```
+Hmm, "nontrivial use respect" → "a declared use task U that uses them" — drops "nontrivial". Should keep nontrivial but define: "a use task U that is not met by every occurrence" or "whose realization requires the occurrence"? Definition of nontrivial: not satisfied vacuously. Maybe: "a nontrivial use task \(U\), that is, one whose realization uses the occurrence". That folds "nontrivial" into "uses them". Hmm.
+
+Let me be careful and moderate: propose that the text say what 'integrated' and 'nontrivial' mean, with exact wording; or say they should stay open because the physical module (Part XII) defines them. Actually the invention says "Integrated and Nontrivial(U) are primitive predicates read through the physical module" — i.e., Part XII (physical module) may define them. Since we don't have Part XII here, I should say: the text does not settle them here; they may be settled in Part XII ("retained capability (Part XII)" suggests the physical vocabulary is defined there), and if Part XII does not define them, the text should say. But the rule: "where you rely on a line not given here, say so." So I can say: L403's cross-reference to Part XII suggests that 'retained capability' is defined there; whether Part XII defines 'integrated' and 'nontrivial' cannot be checked from the lines given here. Then the proposal: either add the definitions at L403 or state that they are inputs of the physical module. I'll propose wording that makes them declared inputs:
+
+```
+L403 (replaces) | ... integrated into problem-directed activity ...
+```
+Hmm. Maybe better to say: leave open, but the text should carry one sentence saying that 'integrated' and 'nontrivial' are declared inputs of the physical module (Part XII), since otherwise Deploy's conditions are undefined. Proposal:
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task \(U\) as a retained capability (Part XII); "integrated" and "nontrivial" are declared inputs of that module. The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use respect.
+```
+That writes I55's invention (primitives read through the physical module) into the text. Good, and honest. I'll say it writes I55.
+
+**I57** (Repair aims reading; which aim ProducedBy runs to). Text doesn't settle: (1) r(ξ) on the left; (2) ProducedBy's aim. For (2) I argued the text nearly settles it — "runs from Δ to the repair", "attributes the repair to each contribution whose active route ran to it" — the repair is the repair of the aim (P) identifies. But since (P)'s first conjunct is existential, several aims may be repaired; the text doesn't say whether the route must run to all repaired aims or at least one. I proposed wording above (choice (a)). For (1): propose that the text say what r(ξ) on the left means. Since L441 says r(ξ') is "met on every occasion it covers from ξ to ξ'", the left r(ξ) is presumably "met at ξ if ξ is covered" (I57). Actually why would the left be anything else? Because the text only specifies the right. If the left were read over an interval (choice b), then a condition that failed before ξ but holds at ξ would not be protected. The words at L438: "∀r ∈ P [r(ξ) ⇒ r(ξ')]" with r(ξ) unspecified. I think the natural reading consistent with L441's "not only at ξ'" is: r(ξ) = met at ξ (if covered) — the invention. Proposal: state it:
+
+```
+L441 (replaces) | In (P), accordingly, \(r(\xi)\) says that \(r\) was met at \(\xi\) when \(\xi\) is an occasion it covers, and says nothing otherwise; \(r(\xi')\) says of a protected condition \(r\) that it was met on every occasion it covers from \(\xi\) to \(\xi'\), not only at \(\xi'\).
+```
+That writes I57's reading of the left into the text. And separately the "lost exactly when" narrowing:
+
+```
+L441 (replaces) | ... a protected condition is lost exactly when it fails on an occasion it covers from \(\xi\) to \(\xi'\).
+```
+Hmm — but careful: "a protected condition is lost exactly when it fails on an occasion it covers" is a general statement about loss, arguably a definition of "lost" in general (used elsewhere?). If it is used elsewhere (e.g., in Part XI repair narrative), narrowing it to the repair interval may damage other uses. Since we only have L438/L441, I'll propose the narrowing with the caveat: if "lost" is used outside (P) (lines not given here), the interval restriction should be added only to the (P) reading. Let me draft the combined proposal for the sentence at L441 as it would stand. L441 has two sentences given: "The aims are declared inputs: O says what is to be repaired and P what is to be protected, each as a stated condition over stated occasions, and a protected condition is lost exactly when it fails on an occasion it covers. In (P), accordingly, r(ξ') says of a protected condition r that it was met on every occasion it covers from ξ to ξ', not only at ξ'." Then later L441 also has ProducedBy and "Losses outside P must be exposed."
+
+So I'll give two or three proposals for L441, each showing the sentence as it would stand. The rule says "the whole sentence as it would stand, between fence lines, with the line it replaces." So each proposal = one fenced block with the replaced line reference and the new sentence(s). I'll do that.
+
+**I58** (losses outside P: Aims*, X). Text: "Losses outside P must be exposed." Doesn't say the universe of aims. The invention declares Aims* ⊇ O ∪ P and record X. Does the text settle? No. Proposal: state what is exposed and where:
+
+```
+L441 (replaces) | Losses outside \(P\) must be exposed: a repair claim names the aims \(O\) it repairs and the aims \(P\) it protects, and lists every aim outside \(P\) it names that was met at \(\xi\) and is not met at \(\xi'\).
+```
+Hmm: "must be exposed" — exposed in the claim. Under I58, Aims* ⊇ O ∪ P is the declared set. Simpler: "the claim must list every aim it names outside P that was met at ξ and is not met at ξ'". That writes I58's reading (Aims* = declared set of named aims; X = the list). Good; say it writes I58.
+
+**I59** (Explanatory aims). Covered above; proposal at L443 (writes I59 as necessary condition characterization of the aim's condition).
+
+**I60** (ProducesVia relevant binding). Proposal at L453 (writes I60).
+
+**I68** (Argument 10's two-layer episode encoding). Does the text settle? L620–L622 describe the object layer and S0. The invention picks N=6 cells, reflection at ends, window w shorter than the occlusion, etc. The text doesn't fix these. Should it? The worked case (E8/E9?) is an illustration; its exact parameters aren't essential. But FC102's counterexample rests on choice (b) (unbounded window) — that's in another part. Here: I68 is used by FC90 (not tested). Proposal: no change; the parameters are the worked case's own stipulations and should stay where they are (stipulate in the case) — but the text should say that the ends rule and the window are stipulated, since "continuity components" and "recent occupancy" are vague. I could propose minimal wording at L622: "S0 predicts occupancy at t+1 from the occupancy of the last w steps" — the text says "predicts occupancy from recent occupancy" — vague. Proposal:
+
+```
+L622 (replaces) | \(S_0\) predicts occupancy at \(t+1\) from the occupancy of the last \(w\) steps, \(w\) shorter than the occlusion in the criticism.
+```
+Hmm — "the occlusion in the criticism" references the case. Maybe just "with a fixed window w". I think a small clarification is worth it since the case's argument depends on w vs occlusion length. But careful: maybe the text intends the reader to stipulate. I'll propose it, noting it writes I68's choice (a fixed window shorter than the occlusion) into the text.
+
+Actually, hold on: is that right? The worked case's point: S0 predicts occupancy from recent occupancy; an occlusion makes a cell's occupancy reading empty; the "structural" failure... FC102 (another part) found a counterexample under an unbounded window. The text's argument presumably relies on the window being short. So clarifying helps. OK.
+
+**I96** (Aims on discrete time). The text says "each as a stated condition over stated occasions". Discrete vs continuous: the invention chooses discrete times. Does the text settle? "stated occasions" suggests a set of times/occasions; discrete-time modelling is the program's domain. No text change needed — it's a search-domain choice, not a claim about the text. But note: FC86's result holds only on 4 discrete times; a continuous-time reading may differ (interval occasions). I'll say: the text need not change; but the words "occasions" should be left as stated occasions, and the program's discretization is a search bound (I77/I96), not a claim. Maybe propose nothing. But then the (c) rule: "If not, give the exact wording the text should carry, or say why it should stay open." I'll say: should stay open — the text's "stated occasions" is already a declared input; time's structure is the physical module's (Part XII), not the semantics of repair.
+
+**H06** (episode). Proposal above (L55 / L429). It writes the unrecorded choice H06 into the text. Also note the effect on Con/FC78 family: under L55's reading those results were computed without a contract change; say the change removes that risk.
+
+**H14** (Contrib primitive). Text L427: "Contribution of content and ownership of a process are different attributions." The maths adds Contrib(h',w). Does the text settle? It distinguishes them but doesn't define contribution. Since no claim uses it, proposal: no change needed; the primitive can stay out of the maths (drop it) or be declared. I'd say: the text does not define "contribution of content" beyond the distinction; the maths should drop Contrib (nothing uses it) or carry it as a declared input. Propose nothing; or propose wording:
+
+```
+L427 (replaces) | Contribution of content and ownership of a process are different attributions; contribution is recorded as who supplied a content, and does not enter ownership.
+```
+That writes H14 into the text. Hmm — is it needed? H14 was added with no invention number and no claim depends. I'd say: no change; it can be dropped from the maths since no definition uses it. That's economical and honest. I'll say that in one or two lines.
+
+**H15** (four parts of a critical episode; "connected to its inquiry"). Text L429 gives: "a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response" and "A creative critical episode contains an instance of (G) connected to its inquiry." The maths reads "available" as "represented", "conjectural objection" as "a criticism (D9.10)", "content-sensitive response" as "a response that uses the criticism as a reason (D9.11)", "connected to its inquiry" as "(G)'s Attempt addresses the question the episode's difficulty poses" (marked not fixed). Does the text settle? No; these readings use D9.10/D9.11 (definitions not given here; I rely on the maths' naming). Proposal: give exact wording:
+
+```
+L429 (replaces) | **Episodes.** A complete critical episode contains a recognized difficulty, a target represented before its criticism, a conjectural objection (D9.10) of it, and a content-sensitive response that uses the objection as a reason (D9.11). A **recognized difficulty** is a failure of a claimed aim, or a conflict in which what the system holds meets a claimed aim only by failing a protected one (Part XI), when the system represents it. A creative critical episode contains an instance of (G) whose attempt addresses the question its difficulty poses.
+```
+Careful with "its difficulty" ambiguity: "(G) whose attempt addresses the question that the episode's difficulty poses". Fine.
+
+This writes H15's readings into the text. Note "not fixed by the text" — so say it writes H15.
+
+Also H15: "How s and Δ enter CreativeCriticalEpisode(s,Δ,h,e) is not said." Right — (EX) uses CreativeCriticalEpisode(s,Δ,h,e) with s and Δ; the definition at D13.8 writes CreativeCriticalEpisode(s, Δ, h, e) but never uses s or Δ in the body! That's a real gap: the displayed definition "CreativeCriticalEpisode(s, Δ, h, e) :⟺ a complete critical episode of h up to e that contains an instance of (G) 'connected to its inquiry'" — s and Δ unused. So (EX)'s requirement "CreativeCriticalEpisode(s,Δ,h,e)" is vacuous in s and Δ. That's a divergence between the words and the maths: L429 says "A creative critical episode contains an instance of (G) connected to its inquiry" — nothing about Δ. But (EX) passes Δ to it. Which should stand? The words (L429) don't tie the episode to Δ; (EX) presumably intends the episode in which the repair Δ occurs. So either (EX) should drop Δ from CreativeCriticalEpisode (or the episode is delimited by h up to e), or the definition should say the episode contains Δ. The natural fix: the creative critical episode is the episode in which Δ is the content-sensitive response. That's a substantive reading: Δ is the response to the difficulty. Hmm — is it? In (EX), Δ is the repair's contribution (a subhistory with content changes), and the episode contains a difficulty, target, criticism, response. Δ could be the response's contribution. I'd propose wording at L429: "A creative critical episode contains an instance of (G) connected to its inquiry, and Δ is the content of its response." Hmm, risky. Alternatively propose to fix (EX) to use CreativeCriticalEpisode(s,h,e) without Δ. But (EX) is at L447; its displayed form is the text's own. Changing the formula's signature is a text change too.
+
+Given the gap, the honest thing: say the words leave it open; propose that the text tie the episode's response to Δ:
+
+```
+L429 (replaces) | A creative critical episode contains an instance of (G) connected to its inquiry, and its content-sensitive response is the contribution \(\Delta\).
+```
+Hmm. But then Δ would have to be a response; Δ is "a subhistory together with the changes of content it makes" (L435) — a response can be that. Plausible. But maybe over-reach. Alternative: leave open and say the maths should not take s and Δ as parameters, and (EX) should read CreativeCriticalEpisode(s,h,e). But that's a change to (EX) at L447.
+
+I think the best is: say the text does not settle how Δ and s enter; recommend the minimal fix, i.e., that the episode is the one whose response Δ is. Provide the wording. Let me phrase it as a proposal:
+
+```
+L429 (replaces) | **Episodes.** A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response. A **recognized difficulty** is a failure of a claimed aim, or a conflict in which what the system holds meets a claimed aim only by failing a protected one (Part XI), when the system represents it. A creative critical episode contains an instance of (G) connected to its inquiry; its contribution \(\Delta\) is the content-sensitive response, and \(s\) is the system that holds the episode.
+```
+Hmm "its contribution Δ" — the parameter is Δ. Let me write: "in \(\operatorname{CreativeCriticalEpisode}(s,\Delta,h,e)\), \(\Delta\) is the contribution of its content-sensitive response and \(s\) is the system whose episode it is." That's a clean fix. Good.
+
+### (d) Attack claims that held
+
+Claims that held: FC84 (holds by construction), FC85 (holds on all models tried; constructed computed), FC86 (holds on all models tried; look as expected), FC87 (holds by construction), FC88 (computed as claimed). FC89/FC90 not tested (so no attack needed? "Attack the claims that held" — those five).
+
+**FC84: Every creative attribution requires construction.** Try to break: (i) CreateEx ⇒ Origin ⇒ Build: but wait — (EX) at L447–449 requires Origin(s,c,p_c,h,e_c) — yes. But is every "creative attribution" an instance of (G)? L47 says "every creative attribution requires it [construction]". The maths reasons: the creative-episode class (L528) needs an instance of (G), hence Build. But what about attributions of creativity that are not CreateEx — e.g. selecting (Sel)? The theory has three provenances (R), (S), (C)? L195/L197: Selected / Constructed. Hmm — L47 "Construction is a separate provenance with a separate trace, and every creative attribution requires it." So creative attribution = attribution of Constructed provenance? Then it's analytic. But a potential counterexample: an agent that *selects* a new explanation from an unlisted variation (S20: "a variation is a competitor... whether anyone can list all variations is beside the point") — a discovery by selection, not construction. Would the theory call that creative? If the text's "creative" = built, then no; but S20/S21 speak of "the creative agent" listing variations — i.e. creative agents vary candidates. Hmm, careful. Actually the owner's words: "Creativity is a process that may or may not lead to a metric" (S21) and "creative agents are always constrained". Not a definition. The counterexample to FC84 as a *claim about the text*: if "creative attribution" covers any attribution of explanatory creativity (e.g., a candidate explanation an agent adopts because it varies a rival — no construction of a binding), then L47's sentence is too strong. But FC84 says it "follows from the definitions as written", and L47 states it. A hand-attack: (EX) requires Origin which requires Build; but "creative attribution" in the theory might also include the attribution in CreativeCriticalEpisode where (G) appears — same. So within the text, the claim is analytic. Where can it break? If Build is read as requiring a *nontrivial binding construction*, then a creative episode where the new content is assembled by copying parts from two known contents (a composition of content-preserving transfers?) — the text's Build excludes "a composition of content-preserving transfers". So a recombination of known contents without new binding would not be Build, and thus (G) would fail and the episode wouldn't count as creative. Is that intended? The text says Build requires "a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers". So pure recombination is not construction. Then a creative act of recombining two known contents into a new one... but wait, would that content be "new"? Under (N), New requires no d ≡ c in the repertoire — a recombination could be new (not matching any prior content) while built only by transfers. Then Origin fails (no Build) and the attribution of creativity is denied. So FC84's "every creative attribution requires construction" is fine as a statement of the text, but the text may exclude genuine creativity (recombination). Hmm — but the task: "Try by hand to find a counterexample, to the claim or to the sentence it formalizes: under another reading, without an invention, or beyond the bounds searched. Give the model in full and say what it rests on."
+
+So for FC84 I can give a model: a system s atξ with contents A and B in its repertoire; a subhistory h' in which it copies A and B into one carrier with a new joint binding... wait that's a binding. Take: the subhistory copies A into a file and B into the same file (composition of content-preserving transfers), yielding content C = A∧B, which is new (no d ≡ C in the repertoire since no prior content had both), used to address problem p. Then Attempt ∧ New hold, Build fails (TransferComposite). So (G) fails and the episode is not a creative critical episode, though the agent produced a new explanatory content by assembling. This is a counterexample to the *sentence* L47 if "creative attribution" includes assembly by transfer. It rests on I56 (Build's exclusion of transfer composites) and on the reading of "nontrivial binding construction". Since I56 is an invention and the text's words "is not a composition of content-preserving transfers" do state the exclusion... hmm, the text itself states the exclusion at L405. So the counterexample tells against the text: L405 denies construction to a recombination of transferred contents, so a new content assembled by copying is not creative. Is that the text saying something it should not? Arguably the text intends Build to require genuinely constructive work (binding), and mere transfer composites are not construction. Whether recombination counts is a real question. I'd present the model and say: it does not break FC84 (which is analytic), but it shows the text excludes recombination from creative attribution; if the owner wants recombination included, L405 needs a clause; otherwise stand. Since decision S21 says "Whatever happens is always the choice of the person" and nothing must happen — I should not say what must be done. I'll say the words stand as written (they say what they say) and record the consequence.
+
+Hmm, but the report should be decisive where it can: "say where the maths and the words part company and which should stand". For FC84 the maths and words agree. The hand attack shows the sentence's scope.
+
+**FC85: a content matches itself; matching read one way.** Attack: the maths' (a) c ≡ c holds via identity transport — rests on I48/I81 (transports as port translations; identity allowed). If transports are required to be *proper* (non-identity) or to have a provenance (selected/constructed), then identity may not be a transport and c ≡ c fails — then New(s,c,h,e) could hold even when c ∈ R_<e! That would break the intent of (N): a content already deployable could be "new". Model: repertoire contains c; (N) asks whether some d ≡ c; with d = c we need transports c→c both ways; if the identity map is excluded from the transport space (I81's searched space may or may not include it), no d ≡ c and New holds. So FC85(a) rests on identity transports being available. Also: transports faithful on C_c — if faithfulness requires that the transport be defined on all of C_c's preimage and preserve it, identity qualifies. So the vulnerability: I48/I81's inclusion of identity. State the model: E = {p: {0,1}}, C = {{0,1}}... let me construct: one organization E_c with ports {p} values {0,1}; c's contract C_c = {p ↦ {0,1}}? Hmm. Simpler: E_c = ({p}, {0,1}), C_c = a condition on valuations, e.g. "p = 1". Transport t = identity: faithful on C_c. Then c ≡ c. If identity is not admitted, no transport E_c → E_c faithful on C_c exists in the searched space, so c ≢ c and New(c) can hold with c already in R_<e. Consequence: the text at L413 ("transports from d to c and from c to d") should say whether a transport may be the identity; propose wording? "a transport may be the identity" — that's about I48/I81 (transports). Since the text's word "transports" is defined in the earlier parts (not given here), I should say: the text's word "transports" (defined at lines not given here) must admit the identity; otherwise (N) misreads. I can propose a clause at L413:
+
+```
+L413 (replaces) | Write \(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) and from \(c\) to \(d\), both faithful on \(c\)'s contract at grain \(\ell\); the identity is a transport, so \(c\equiv_\ell c\).
+```
+Hmm, that's arguably redundant but explicit. Maybe better to leave and say the words already force it (a transport from c to c includes identity since a transport is a map; unless the text defines transport otherwise). I'll say: the text forces it if "transport" is a map; if the text's earlier definition excludes identity (not in the lines given here), that must be checked; no change proposed. Keep short.
+
+Also attack (b): matching read one way — the constructed computation shows d ≡ c while c ≢ d can hold. Fine. Also the deeper issue: (N) quantifies d ≡ c with c fixed and c's contract; but c's contract is fixed at e_c in (EX) (per D14.7's note). If c's contract is *not* fixed (a content's contract can change over time), then d ≡ c may vary and New may be history-relative in a way (N) doesn't say. Model: c's contract C_c at e includes a condition that no prior d transports into faithfully; later C_c is weakened; then d ≡ c holds at a later reading. So (N) is relative to the contract at e — the text doesn't say. That's a good hand attack: rests on I48 (contract of c) and on contracts being time-indexed. I'd say: (N) should say the matching is read on c's contract as fixed at e. Proposal at L416? The formula (N) is at L416; propose adding "at the contract c has at e" — but the formula is displayed math. The proposal format: "the whole sentence as it would stand". I can propose:
+
+```
+L416 (replaces) | \operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c. \tag{N}
+```
+→ same formula with a sentence after: "\(\equiv_\ell\) is read on \(c\)'s contract as it stands at \(e\)." Hmm, the formula is one line; I'd propose adding a sentence to the line after the formula. Let me phrase: "L416 (replaces) | [formula] \tag{N} The matching is read on c's contract as fixed at e." OK.
+
+**FC86: repair — protected aim failed in between is lost.** Attack: the result holds only under I57's readings. Under the alternative reading (b) (r(ξ) on the left read over an interval), a condition met at ξ but failed on a covered occasion before ξ: r(ξ) fails, so (P) imposes nothing — under (b) the claim "a protected aim failed in between is lost" still holds (it's about the interval). Under (a)-vs-(b), FC86's statement concerns the interval, so it's robust. But the look case: an aim failing at ξ and met at ξ' — is that "lost"? Words say lost exactly when it fails on a covered occasion (unbounded). So under the words, a condition failing at ξ is lost; but (P) can hold (r(ξ) fails ⇒ no constraint). So a repair can be "performed" while the protected condition was lost and stays lost... wait, if it fails at ξ and holds at ξ'? Then r(ξ') says met on every covered occasion in [ξ,ξ'] — but it failed at ξ which is in [ξ,ξ']! So r(ξ') fails. Then r(ξ) ⇒ r(ξ') is true (vacuously). So (P) holds while r was lost and remains lost at ξ' by the interval reading? Hmm: r(ξ') fails (since it failed at ξ ∈ [ξ,ξ']), so r is "lost" at ξ' too. So (P) holds but the repair leaves a protected condition lost — consistent with (P) since it was already lost. But wait: what if the repair *restores* r after ξ? E.g. r fails at ξ, holds at all coveredω in (ξ,ξ'] and at ξ'. Then r(ξ') by I57 = met at every ω ∈ Occ_r with ξ ≤ ω ≤ ξ' — includes ξ itself, so fails. Under the words "met on every occasion it covers from ξ to ξ'" — includes ξ. So restoring doesn't help. And what if the repair makes r fail at someω in (ξ,ξ'] but met at ξ and ξ'? Then (P) fails — FC86's claim. Good.
+
+Counterexample attack to the *sentence*: "a protected condition is lost exactly when it fails on an occasion it covers" — if a protected condition fails on an occasion it covers at some time far afterξ', is the repair responsible? No. So "lost" must be interval-bound; that's the wording fix. Also: "lost exactly when it fails on an occasion it covers" — consider a condition that is *never* met (fails at all covered occasions) but is not in P's protection... fine.
+
+Another attack: Occ_r may be empty. Then r(ξ') = met at every ω ∈ ∅ = vacuously true; and r(ξ) holds vacuously (ξ ∉ Occ_r). So a protected aim with no occasions is never lost, fine. And an aim o ∈ O with Occ_o = ∅: o(ξ) = cond met at ξ? Under D14.1, for o ∈ O: o(ξ) ⟺ cond met at ξ — regardless of Occ. So an O-aim with empty Occ is still evaluated at ξ and ξ'. Inconsistent with P's convention. So there's an asymmetry: O's aims are read pointwise at ξ and ξ' while P's are read over occasions. Text: "each as a stated condition over stated occasions" — so both O and P are conditions over occasions; but the maths reads O's pointwise at ξ, ξ'. Divergence! D14.1: "For o ∈ O: o(ξ) :⟺ cond met at ξ" — ignoring Occ. But the text says each aim is "a stated condition over stated occasions". So for O, o(ξ) should presumably be read over occasions too — or maybe O's aims are conditions that come to be met at ξ'. Hmm. The text's (P) first conjunct: ∃o ∈ O[¬o(ξ) ∧ o(ξ')]: "what is to be repaired" — the aim is not met at ξ and met at ξ'. If o is a condition over occasions, then o(ξ) should mean "met on the occasions it covers from ... to ξ"? The text doesn't say. The maths' invention reads O pointwise. Is that a divergence between maths and words? Yes: the words say "each as a stated condition over stated occasions" (both O and P), while the maths evaluates O only at ξ and ξ'. That's worth reporting in (a) (D14.1) and possibly as an attack on FC86/FC88: with O read over occasions, an aim met at ξ and ξ' but failing in between would count as ¬o(ξ)∧o(ξ')? No — read over an interval: o(ξ) = met at every covered occasion up to ξ... Then a repair of an aim that was never met could not be counted. Hmm.
+
+Let me construct a hand counterexample to FC88 or FC86 under the alternative O-reading. FC88: "Losses outside P are exposed in the claim, not in (P)" — computed as claimed under I58 and I57. Attack: the exposure set X is a declared record; if X is the whole history's record of losses, then "exposed" has no formal content. Also the choice "Aims* ⊇ O ∪ P" — losses in O are also outside P and must be exposed? If o ∈ O was met at ξ and not at ξ', the repair *caused* a loss of an aim it was supposed to repair... Actually o ∈ O: what is to be repaired; (P)'s first conjunct requires some o with ¬o(ξ)∧o(ξ'), but other O-aims could be met at ξ and lost at ξ' and must be exposed (they're in Aims*∖P). Fine, consistent.
+
+Attack FC88: a loss of an aim in P that was already failing at ξ (r(ξ) fails) is not in Aims*∖P (it's in P) and not required to be exposed — yet the words say "Losses outside P must be exposed", which is about outside P only. But what about losses of *protected* aims that were already failing? They're not losses caused by the repair. Fine. However: the look case (FC86) shows a protected condition failing at ξ can be *kept* failing or even *lost* differently... Let me not over-elaborate.
+
+Better FC88 attack: aims not in Aims* at all. If Aims* is declared, a repair claim can simply decline to name the aims it loses, so WellFormed holds vacuously. The words "Losses outside P must be exposed" presumably mean *all* losses of the system's aims outside P, not just named ones. Under I58 (choice (a) is "all aims the system holds, read through the physical module"), the exposure requirement would bind on all aims. So FC88's "holds" depends on the declared Aims*; with the other reading, the claim could not be checked without the physical module. So FC88 tells against the invention, not the text. Hand model: O = {o1}, P = {r1}, Aims* = O ∪ P = {o1, r1}, and the system also holds aim a2 which is met at ξ and lost at ξ'. X = ∅. WellFormed holds (nothing in Aims*∖P = {o1} lost — o1 was not met at ξ). Yet a2's loss is unexposed. So "losses outside P must be exposed" is violated in the words' sense but WellFormed holds. This is a counterexample to FC88's claim *as a formalization of the sentence*, not to (P). It rests on I58. Fix: either the words should say "every loss of an aim named in the claim outside P must be exposed", or the maths should quantify over the aims the system holds (choice (a)). Which should stand? I'd say the words (the sentence as written means all losses outside P) and propose wording to make the universe explicit... but making it "the aims the system holds" requires the physical module (read through the physical module) — the theory says physical possibility enters only where info instantiated/transformed; reading the system's held aims is about what it holds — arguably fine (holding is instantiation). Hmm, careful: decision S25 says physical possibility "has to do with instantiation and transformation of information and knowledge" — so reading what the system holds is legitimate there. But to keep it simple: propose that the text say the claim must expose every loss of an aim the system holds that is outside P; or, if that's too strong, state Aims* as a declared input. I'll propose:
+
+```
+L441 (replaces) | Losses outside \(P\) must be exposed: the repair claim lists every aim outside \(P\) that it names and that was met at \(\xi\) and is not met at \(\xi'\).
+```
+Hmm — that writes I58 (declared set). Or stronger:
+
+```
+L441 (replaces) | Losses outside \(P\) must be exposed: the repair claim lists every aim the system holds outside \(P\) that was met at \(\xi\) and is not met at \(\xi'\).
+```
+This writes I58's choice (a). Which is better? The words "Losses outside P must be exposed" read naturally as: whatever is lost outside P must appear in the claim. Unbounded. I'd go with the second, and note it needs the system's aims to be readable (physical module), and that Aims* as declared would weaken the sentence to a claim about what the claim names. Since the report must choose which stands: the words stand; propose the second wording. But careful — decision S21/S28: don't say what must happen to a candidate. Fine.
+
+Now FC87 attack: "Two sufficient contributions that both ran are both attributed." It holds by construction (no share function). Hand attack: the sentence says "the history supplies no division of the attribution that it does not contain" — meaning if the history does contain a division (e.g., a weighting), it may be used. The maths: "no share function is defined (a weighting is a declared input, L522)". Fine. But the vulnerability: "two sufficient contributions both ran" — the maths' ProducedBy attributes each Δ_i with an active route; but "sufficient" is stronger than "has a route": a contribution whose route ran but which is not sufficient (e.g., a route that would not have produced the repair alone) is attributed too under D14.3. Divergence: the words attribute to "each contribution whose active route ran to it" (from the earlier sentence) and then say "where two sufficient contributions both ran, the repair is attributed to both". The words: "it attributes the repair to each contribution whose active route ran to it in the history" — so all contributions with routes, not just sufficient ones. And "where two sufficient contributions both ran" adds that sufficiency doesn't divide. So D14.3 matches the first sentence. But "sufficient" is not defined — a gap. Note: if both contributions ran but neither is sufficient alone and jointly they are, the words' first sentence still attributes to both. Fine. So the counterexample is not there. Another attack: what if a contribution's route ran to the repair of a *different* aim (I57's freedom)? Then it is attributed to "the repair" though it didn't produce this one. That's the I57 point, covered in (a)/(c). Good — that's the hand attack for FC87: it rests on I57's unconstrained aim.
+
+Now FC84's hand model (recombination) and FC85's identity-transport model and FC88's unexposed-loss model — three hand attacks. Plus maybe FC86's attack: continuous time (I96) — a protected condition that fails at a dense set of covered occasions... hmm, in continuous time with occasions as intervals, "met on every occasion it covers from ξ to ξ'" = holds throughout the interval; then a condition that fails at a single instant between ξ and ξ' is lost. Fine. But a subtlety: in continuous time with Occ an interval, the left r(ξ) under I57 ("met at ξ if ξ ∈ Occ_r, else holds") — for an interval occasion, ξ is in Occ, so r(ξ) is met at ξ pointwise; the right is "met on every ω in Occ∩ [ξ,ξ']" = throughout. So r(ξ) pointwise vs right throughout: an inconsistency of grain between the two sides — a condition that fails at a point just after ξ (but holds at ξ) fails the right side. Fine, intended. But a condition that fails at a single point *before* ξ and holds at ξ: left holds, right requires only [ξ,ξ'], so fine. Under choice (b) (left read over an interval), it would be excluded. So the choice matters: a repair of an aim where the protected condition had a failure just before ξ and the repair causes a failure just after ξ'... hmm. Let me construct a hand counterexample to FC86's *sentence* under I57's left reading vs. words' "lost exactly when it fails on an occasion it covers": 
+
+Model (discrete, 4 times 0..3): Occ_r = {0,1,2,3}; r fails at time 0, holds at 1,2,3. Repair from ξ=1 to ξ'=3. Words: "a protected condition is lost exactly when it fails on an occasion it covers" — r failed at 0, so r is lost (as of time 0). (P): r(ξ=1) = met at 1 (holds) ⇒ r(ξ') = met on every covered occasion from 1 to 3 — holds at 1,2,3. So (P) holds and says r is not lost, but by the words r *was* lost at 0. So the words and (P) disagree about a condition with a failure before ξ. FC86's look covered "already failing at ξ"; this one is "failing before ξ but met at ξ" — a *different* hand case! FC86's look was: cond failing at ξ = 0 (covered), holding after. My case: failing at 0, repairξ=1. Under I57, r(ξ=1) holds (met at 1), r(ξ') holds (met at 1..3), so (P) protects it; but by L441's "lost exactly when it fails on an occasion it covers", r is lost (it failed at covered occasion 0). So the same divergence, new instance: this is a hand counterexample to the coherence of the sentence with (P), not to FC86's claim (which is about the interval). Good — I'll present this as the (d) attack on FC86, showing the words' unbounded "lost" and (P)'s interval reading disagree even for a condition met at ξ. It rests on I57 (left reading) and I96. And the fix is the wording narrowing at L441 (given in (a)/(b)). Good, that's a stronger case than the look's.
+
+Let me double check FC86's formal claim: "Under I57: a protected r met at ξ and at ξ' and failed on a covered occasion between them makes (P) fail; r is lost ⟺ it fails on a covered occasion in [ξ, ξ']." So the maths' "lost" is already interval-bound, whereas the words are not. So the divergence is confirmed. My hand model shows the words as written make (P) and "lost" disagree for a failure before ξ. 
+
+Now (e) round-1: the change at L443. Does the text need a change? The change fixed the attachment of "deployable" — before, "an explanatory aim requires an account, or the correction of a use through one, to be deployable" — ambiguous attachment ("to be deployable" could modify "an account" or the whole list or "the correction"). After: "An explanatory aim requires a deployable account, or the correction of a use through one." Now the second disjunct: "the correction of a use through one" where "one" = "a deployable account". OK. But now the grammar: "An explanatory aim requires a deployable account, or the correction of a use through one" — the requirement is disjunctive: requires [a deployable account] or [the correction of a use through one]. Reads fine. However: (EX) asks Deploy(s,c,ξ';U_c) for the account c, and c ∈ Result(Δ) — for the second kind, the correction is through c. But there's no clause that c corrected a *use*. And "the correction of a use" — whose use? s's use? I noted this. So the round-1 change should be followed by a further change to L443 to say what the two kinds are (I59's proposal). So (e): the change is right in the attachment (keep it), but it leaves the second kind's condition open; give the exact wording (the L443 proposal, which also writes I59). I'll present the proposal in (e) instead of (c)? The rule for (e): "For each, does the text need a change? Give the exact wording, or the reasons why none." So I'll give the L443 wording in (e), and in (c) for I59 I can reference it. To avoid duplication, put the fenced proposal in (e) and in (c) I59 say "see (e)". Hmm, but the report format: "with the exact wording of each proposal between fence lines" per entry. Duplicating a fenced block twice costs words. I'll put the full fence in (e) (since the change is at L443, the round-1 line) and in (c) I59 just say it's settled by that wording, cross-referencing. Acceptable.
+
+Now let me also handle D13.6 Attempt, D13.5 New, D13.7, D14.7, D14.8 briefly and NF items.
+
+**D13.5 New:** (N) at L416 — maths matches. Note "R_<e(s,h)" is per β,ℓ in D13.2 but (N) writes R_<e(s,h) — the β,ℓ are implicit. Fine. Also New uses h and e but the repertoire is at times before e in h. Fine.
+
+**D13.6 Attempt:** "c is used in h, up to e, to address p (L419; a claim read through Θ)". Not given here — say I rely on the maths' note. The words at L422 (G) require Attempt ∧ New ∧ Build. But note: does (G) require the Build to be of c for p? Text L405: Build "prepares a represented organization for explanatory use of c". Fine.
+
+**D13.7 Ownership:** text L427 "The subhistory in Build is owned by s when its processes run inside the system boundary and resource contract declared for s (Part XII)." Maths: every process of h' runs inside β and resource contract. Matches. H14's Contrib addition.
+
+**D14.7 (EX):** matches L447–449 except: (i) CreativeCriticalEpisode's unused s, Δ (H15); (ii) Account evaluated "on the contract of p_c fixed at e_c (L453)" — the note cites L453 but the quoted L453 text doesn't mention this; say I rely on it as a cross-reference not visible in the lines given. Actually the given L453 quote is about Result and ProducesVia. So D14.7's "(L453)" citation is odd — possibly the text at L453 has more (not quoted). I'll note it in one line: the text's words fixing the contract at e_c are not among the lines given here.
+
+**D14.8:** types invented; k typed as Occ. NF19 "None is defined as another" — fine.
+
+**NF items:** NF07 "Neither provenance is reducible to the other" — no formal content; but note: FC78's exclusivity (Sel ⇒ ¬Con etc.) is the formal part. Fine. NF09 "An inexplicit representation is not an absent one." — the formal part would be that Deploy/Rep does not require an explicit format; the maths drops format. Note: this matters for Deploy — a content held in a brain vs written. Fine, brief. NF10 "Closing an episode is a choice" — consistent with S21/S28; nothing formal; the maths outputs no choice — correct. NF19 — fine. I'll give one short paragraph at the end of (a) covering NF09 and NF10 (and note NF07/NF19 need no change). Actually to save words, one line: "NF07, NF09, NF10, NF19: no change; the maths' decision to output no choice at NF10 is right under S21/S28."
+
+Now let me think about whether the maths says what the words say for FC84's formal statement: "Origin ⇒ Build; CreateEx ⇒ Origin ⇒ Build" — the words at L47: "Construction is a separate provenance with a separate trace, and every creative attribution requires it." "Separate provenance" — the maths says Sel's history holds no represented target and Con's holds one (L195/L197) — that's exclusivity, from another part. Fine.
+
+Now, budget. Target ≤3000 words. Let me draft the report with tight prose.
+
+Structure:
+- (a): entries for D13.1, D13.3, D13.4, D13.8 (or H06 in c), D14.1, D14.3, D14.5, D14.6, D14.7, D14.8; plus a closing line listing the rest (D13.2, D13.5, D13.6, D13.7, D14.2, D14.4) as "nothing to add".
+- (b): one entry on FC86's look + note no counterexamples found.
+- (c): I55, I57, I58, I60, I68, I96, H06, H14, H15; I59 cross-ref to (e).
+- (d): FC84, FC85, FC86, FC87, FC88.
+- (e): L443 change.
+
+Let me write with the required headers: `D13.1 · L403`, `I55 · L403`, `H06`, `FC84 · L47`, `matter 1 · L443` (round-1 change at L443).
+
+Now the exact-wording proposals. Each fenced block must show "the whole sentence as it would stand, with the line it replaces". Let me write them carefully in the text's markup.
+
+**Proposal 1 (D13.1/I55) — L403.** New sentence as it would stand:
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task \(U\) as a retained capability (Part XII); "integrated", "retained" and "nontrivial" are declared inputs of that module. The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use respect.
+```
+Hmm — the last sentence keeps "nontrivial use respect". If I declare "nontrivial" an input of the module, then "nontrivial use respect" stays vague on "respect". Maybe change to "some nontrivial use task \(U\)". But "respect" vs "task": R is the set of contents deployable in *some* nontrivial use respect; the definition D13.2 uses U with Nontrivial(U). To align: "some nontrivial use task \(U\)". But that changes the text's word "respect" to "task". Which should stand? The maths quantifies over use tasks U; "respect" might mean a dimension of use. Since Deploy is parameterized by a use task U (L403), reading "use respect" as "use task U" is natural. I'll propose the wording change and say it writes I55's reading.
+
+So Proposal 1:
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task \(U\) as a retained capability (Part XII); "integrated", "retained" and "nontrivial" are declared inputs of that module. The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use task \(U\).
+```
+Also I should note the maths drops the provenance clause; the words stand; the maths must carry "by (R) a faithful transport with selected or constructed provenance". Where do I say that? In (a) for D13.1. And the proposal covers the text side; the maths change is: add to D13.1 the provenance clause. I can state: "the maths must add: and the transport witnessing Rep_ℓ(o,c) has selected or constructed provenance." Fine.
+
+**Proposal 2 (D13.3) — L405.** Words say "prepares a represented organization for explanatory use of c" and "a nontrivial binding construction relevant to that use". The maths drops "for explanatory use" and "represented organization". Which should stand? The words. But "explanatory use" is itself undefined; but note Build is used in (G) which is about explanatory origins, so the restriction may be redundant there but not in Con (L197 uses construction trace preparing t). Hmm — Con's "construction trace" is defined at L405 (the trace of Build). If Build requires explanatory use, then Con would also require the trace to prepare t for explanatory use. The text L197: "There is an episode (Part X) whose construction trace prepares t" — t is a target? (L197 is about the Constructed provenance.) OK.
+
+So proposal at L405 to make the condition explicit in the body: keep the words and require the maths to carry them. But the rule: proposals are for text changes ("the whole sentence as it would stand"). If the words stand and the maths should change, I don't need a text proposal; I say "the maths should say X". Good — that saves words. So for D13.3: no text proposal; say the maths must add a Prepares-with-explanatory-use condition and a representation clause. But careful: "which should stand, the maths or the words, with reasons why this and not that." I'll say the words stand because Build is the provenance of explanatory construction and (G) is an explanatory notion; and dropping "for explanatory use" would let a bridge-building subhistory supply a construction trace to an explanation's origin. Fine.
+
+**Proposal 3 (D13.4) — L413.** Clarify the preimage reading and the one-way reading. Proposal:
+
+```
+L413 (replaces) | Write \(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) and from \(c\) to \(d\), both faithful on \(c\)'s contract at grain \(\ell\): the first on the preimage of \(c\)'s contract, the second on \(c\)'s contract itself. The relation is read with \(c\) fixed and is not symmetric.
+```
+Hmm, "The relation is read with c fixed and is not symmetric" — but it's written d≡ c; the notation suggests symmetry. Maybe simpler: keep the sentence and add the clarification. It writes I48's reading. I think it's worth it. But is the non-symmetry claim right? d ≡_ℓ c vs c ≡_ℓ d: the latter is transports both ways faithful on d's contract. Different. So yes, not symmetric. The text's ≡ notation is then misleading. I'll flag and propose. Actually maybe better to propose renaming to avoid a false symmetry: "Write d ≡_ℓ c" → "Write d ≡_ℓ c" keep but say it is read one way. Fine.
+
+**Proposal 4 (D14.1) — L441** (two changes): (i) bound "lost" to the repair interval; (ii) state the left reading. Since they're in different sentences of L441, I can give one fenced block with the sentence(s) as they would stand. L441 sentence 1: "The aims are declared inputs: O says what is to be repaired and P what is to be protected, each as a stated condition over stated occasions, and a protected condition is lost exactly when it fails on an occasion it covers." Sentence 2: "In (P), accordingly, r(ξ') says of a protected condition r that it was met on every occasion it covers from ξ to ξ', not only at ξ'."
+
+New:
+
+```
+L441 (first two sentences, replacing) | The aims are declared inputs: \(O\) says what is to be repaired and \(P\) what is to be protected, each as a stated condition over stated occasions, and in a repair from \(\xi\) to \(\xi'\) a protected condition is lost exactly when it fails on an occasion it covers between \(\xi\) and \(\xi'\). In (P), accordingly, \(r(\xi)\) says that \(r\) was met at \(\xi\) when \(\xi\) is an occasion it covers and says nothing otherwise, and \(r(\xi')\) says of a protected condition \(r\) that it was met on every occasion it covers from \(\xi\) to \(\xi'\), not only at \(\xi'\).
+```
+That writes I57's left reading into the text. Good.
+
+Also note: O's aims read pointwise at ξ,ξ' though the text says each aim is a condition over occasions. Should I address? The words "each as a stated condition over stated occasions" applies to both O and P; the maths reads O pointwise. Divergence worth one sentence: the words as written make O's aims conditions over occasions too, so o(ξ) should be read over occasions; but (P)'s first conjunct then needs a reading. I could fold into the same proposal: "for o ∈ O, o(ξ) says the condition was met at ξ" — i.e. clarify. Let me add to the proposal: "for an aim \(o\) of \(O\), \(o(\xi)\) says that its condition was met at \(\xi\)." That writes I57's O-reading. So the proposal gets long but it's fine — it's one fenced block for L441's first two sentences.
+
+**Proposal 5 (D14.3) — L441** (ProducedBy sentence): tie to the aim (P) identifies (I57 choice (a)).
+
+**Proposal 6 (D14.4/I58) — L441** ("Losses outside P must be exposed."): define the universe.
+
+**Proposal 7 (D14.6/I60) — L453.**
+
+**Proposal 8 (D13.8/H15) — L429.**
+
+**Proposal 9 (H06) — L55.**
+
+**Proposal 10 (I68) — L622.**
+
+**Proposal 11 (e) — L443.**
+
+That's 11 proposals — each ~30-60 words fenced. ~500 words. Plus analysis. Should fit in 3000 if I'm terse.
+
+Let me reconsider: do I need proposals for everything? (c) says "If not, give the exact wording the text should carry, or say why it should stay open." So for I55, I57, I58, I60, I68, H06, H14, H15 I need either wording or a reason to stay open. I96: stay open (reason). I59: handled in (e). OK.
+
+Let me now write each entry concisely.
+
+Draft:
+
+---
+
+## (a)
+
+**D13.1 · L403.** Part company three ways. (1) The words require the representation to be "by (R) a faithful transport with selected or constructed provenance"; D13.1 requires only Rep_ℓ(o,c), so a content held by any route would be deployable. The words stand: L403 names the provenance, and the maths must add it (a clause: the transport witnessing Rep_ℓ(o,c) has selected or constructed provenance). (2) "serving the declared use task U as a retained capability" is made Can_{Ω,β}(ξ,U;χ) with a realization using o; "retained" is not carried (retained capability is Part XII's, a line not given here). (3) "integrated into problem-directed activity" and "nontrivial use respect" are primitives [I55]; the maths reads "use respect" as a use task U. Wording below (I55).
+
+**D13.3 · L405.** D13.3 drops "a represented organization" and "for explanatory use"; BindingConstruction(h',c) is asked to carry "nontrivial" and "relevant to that use" [I56]. The words stand: without "for explanatory use", a subhistory that builds a bridge supplies the construction trace of an explanation's origin, and (G) would then turn on what the building was for. The maths should carry Prepares(h', c) for explanatory use of c and a represented organization. No text change.
+
+**D13.4 · L413.** The words say "both faithful on c's contract"; for the transport from d to c that contract is on the codomain, so "faithful on c's contract" has to mean the preimage [I48]. The maths' reading is the one that makes c ≡ c hold. Two things the words should say: the preimage reading, and that the relation is read with c fixed and is not symmetric (the≡ sign promises a symmetry the definition does not deliver; FC85(b) shows the asymmetry is real). [proposal]
+
+**D13.5 · L416**, **D13.6 · L422**, **D13.7 · L427**: say what the sentences say. D13.6's "a claim read through Θ" is a reading of L419, a line not given here.
+
+**D14.1 · L438/L441.** Three divergences: (1) the words' "lost exactly when it fails on an occasion it covers" is unbounded; (P) reads r only over [ξ,ξ']; FC86's look and the hand case in (d) show the two disagree. (2) The left r(ξ) is not specified in the words [I57]. (3) The words say each aim of O and P is "a stated condition over stated occasions", but D14.1 reads O's aims pointwise at ξ and ξ', ignoring Occ. The words stand on (1) being about the repair; (2) and (3) are left open in the words and must be stated. [proposal]
+
+**D14.3 · L441.** D14.3 lets the route run to the repair of any o ∈ O with ¬o(ξ) ∧ o(ξ'); the words say "runs from Δ to the repair" and "attributes the repair to each contribution whose active route ran to it", where the repair is the one (P) is about. The words stand; [proposal].
+
+**D14.5 · L443.** The maths reads "requires" as a characterization ("o is explanatory when..."); the words say "requires", a necessary condition, and then declare O_ex as a subset. The words stand. The second kind is still unmatched: (EX) has no condition that names a use or a correction of one [I59]; the change proposed in (e) carries it.
+
+**D14.6 · L453.** "the relevant binding of c" is not defined [I60]; the maths takes it as the binding named in c's construction trace. "Result(Δ) is the set of contents at ξ' that Δ prepared" is met by "the contents at ξ' that h_Δ prepared". The words stand; [proposal at L453].
+
+**D14.7 · L447–449.** Matches the display. Two notes: CreativeCriticalEpisode(s,Δ,h,e) takes s and Δ that its definition does not use (H15, below); and "the contract of p_c fixed at e_c (L453)" is cited to L453, but the quoted words of L453 do not say it — I rely on the cross-reference only.
+
+**D14.8 · L455.** The maths types R ⊆ Act × Occ × Eff and G ⊆ Occ × Eff, so k is an occasion; the words write R[a,k] and G[k] without typing k. The typing is a choice no register entry records; the text should name it or leave it. Also NF19: right to give no relation among the three.
+
+**NF07, NF09, NF10, NF19.** No change. NF09's "An inexplicit representation is not an absent one" is the reason Deploy takes no format; NF10's "Closing an episode is a choice" matches S21 and S28: the definitions output no choice, correctly.
+
+Hmm, NF10 relates to decisions S21/S28; fine.
+
+## (b)
+
+No part of this group is marked counterexample found or computed: not as claimed, and the one look came out as expected. So nothing to dispose of. But the look shows a divergence: it is dealt with at D14.1 and the hand case in (d). Also FC85's "no witness found" for the random search is not a counterexample: the constructed computation shows the asymmetry exists.
+
+## (c)
+
+**I55 · L403.** Not settled... [proposal].
+
+**I57 · L441.** Not settled on either point... [proposals4 & 5, but they are given at D14.1/D14.3 in (a)]. Hmm — duplication problem. I gave the proposals in (a). In (c) I should say "settled by the wording given at D14.1/D14.3 (writes I57)". But the report format says proposals must appear fenced at the entry. To keep it clean: give the fenced wording once, at the (c) entry (since (c) is where inventions are addressed), and in (a) just describe the divergence and say "the wording is given at I57". Hmm. Which is better? The (a) task says "Where the words should change, give the new wording." So (a) requires wording too. Duplicating is costly but safe. Alternative: give the fenced block in (a) and in (c) reference it: "the exact wording is at D14.1 in (a), and it writes I57 into the text." That satisfies both: the wording is given in the report. I'll do that — cross-reference within the report is fine.
+
+So in (c): I55 gets the proposal (since (a) D13.1 says "wording below (I55)" — hmm, then I put I55's proposal in (c) and refer from (a)). Let me adopt: proposals live at their natural home; (a) gives proposals where the words should change (D13.4, D14.1, D14.3, D14.6, D14.5→(e)), (c) gives proposals for inventions not already covered (I55, I58, I68, H06, H15). Cross-references handle overlap. Good.
+
+**I58** [proposal]. **I59** — see (e). **I60** — see D14.6 in (a). **I68** [proposal]. **I96** — stay open (reason). **H06** [proposal at L55]. **H14** — no change needed; Contrib is unused; drop it or leave it as an unregistered primitive; say why no wording: the text's L427 already states the distinction and no definition uses the primitive. **H15** [proposal at L429].
+
+## (d)
+
+**FC84 · L47.** Hand model...**FC85 · L413.** Identity-transport attack + contract-at-e attack.
+**FC86 · L441.** Hand case with failure before ξ.
+**FC87 · L441.** Attack via I57's unbound aim; and "sufficient" undefined.
+**FC88 · L441.** Aims* attack (unexposed loss of an unnamed aim).
+
+## (e)
+
+**matter 1 · L443.** The change is right; keep it; but the second kind is still untyped... [proposal].
+
+Now write the hand models in full.
+
+**FC84 model.** Let s be a system at ξ with contents a (a condition on a cell) and b in R_{<e}(s,h). In h' (a subhistory of h ending at e, owned by s) s copies a and b into one file by two content-preserving transfers and addresses problem p with the resulting content c = a ∧ b. c is not ≡ to any d in R_<e (no prior content has both parts). Then Attempt(s,c,p,h,e) and New(s,c,h,e) hold; Build fails, since h' is a composition of content-preserving transfers [I56]. So (G) fails and no creative attribution follows, though the assembled content is new and used. This does not break FC84 (which is analytic on the definitions); it shows the sentence's reach: recombination by transfer is not construction. It rests on I56 and on the words "is not a composition of content-preserving transfers" at L405 — the words themselves, so the words say this; whether they should is the owner's question (I should not say what must happen). Hmm — the task says "say... which should stand" — for this one I say the words stand as written, since L405 states the exclusion, and record the consequence.
+
+Careful with S21: "Say nothing about what must happen to a candidate." This is about a candidate's fate — fine, I'm not saying what must happen; I note the text denies it the (G) label.
+
+**FC85 model.** E_c = one port p with values {0,1}; c's contract C_c = "p = 1". Transports are port translations [I81]. If the identity translation is admitted, c ≡_ℓ c, so c ∈ R_<e ⇒ ¬New — FC85(a). If the transport space is restricted to translations that change at least one port, there is no transport E_c → E_c faithful on C_c... wait, a translation p↦p is identity; a translation that flips values? p's values are translated to a codomain port; for a self-transport E_c→E_c the only port translations are the identity (or a permutation of values, which would not be faithful on "p = 1" unless the permutation preserves 1). Consider a translation t: p ↦ p' with p' a new port — not a self-map. So the only self-transport is identity. If identity is excluded, c ≢ c and New(s,c,h,e) can hold with c already in R_<e, and (N) then calls a known content new. So the words must admit identity among "transports"; whether they do is fixed at the lines defining transport (not given here). Second attack: contracts are time-indexed (D14.7 fixes p_c's contract at e_c); if C_c at e differs from C_c at e', d ≡ c can flip, and (N) as written does not say which contract it is read on. [Proposal at L416? ] I said I'd propose "the matching is read on c's contract as fixed at e". That's a text change at L416 (a formula line). Let me include it as a fenced proposal in (d)? The rules: "Give the exact wording for every proposal". I can put it in (d) FC85 entry. But proposals are usually in (a)/(c). Hmm — (d) asks for attacks; a proposal to fix is allowed there ("say what change to the text removes it" is (b) for counterexamples). For (d) it says give the model and say what it rests on. So maybe no proposal needed; just note the reading required. But if I propose wording, I must fence it. To save words, I'll note the requirement without proposing wording, or give one short fenced line. I'll give a short fenced proposal since it's cheap and useful:
+
+```
+L416 (replaces) | \operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c. \tag{N}
+```
+That's just the formula; the change would be adding a sentence. Format: "the whole sentence as it would stand, between fence lines, with the line it replaces." So:
+
+```
+L416 (replaces) | \operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c, \tag{N}
+```
+with \(\equiv_\ell\) read on \(c\)'s contract as it stands at \(e\).
+```
+Hmm, can't have trailing text after the formula easily. I'll write:
+
+```
+L416 (replaces) | \operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c, \tag{N} the matching read on \(c\)'s contract as it stands at \(e\).
+```
+OK, acceptable.
+
+Actually maybe simpler to fold into the L413 proposal in (a): add "The matching is read on c's contract as it stands at e." Then no separate proposal. Yes — do that. The L413 proposal gets one more clause. Good.
+
+**FC86 hand case.** Discrete times 0,1,2,3 [I96]; Occ_r = {0,1,2,3}; cond r fails at 0, holds at 1,2,3. Repair ξ=1, ξ'=3; P = {r}. Under I57: r(ξ)=r(1)=holds; r(ξ')=holds (met at 1,2,3); so (P) leaves r protected and unlost. Under L441's words: "a protected condition is lost exactly when it fails on an occasion it covers" — r failed at covered occasion 0, so r is lost. So the words make r lost while (P) is met. Not a counterexample to FC86's claim (which binds "lost" to [ξ,ξ']); a counterexample to the sentence as written. Rests on I57 (left reading) and I96. The wording at D14.1 removes it. Also note the look's case (already failing at ξ) has the same source.
+
+**FC87 hand attack.** Two contributions Δ1, Δ2 with routes to the repair of o1; the repair claimed is of o2 (another o ∈ O with ¬o2(ξ) ∧ o2(ξ')), and no route runs from either Δ to o2's coming-to-be-met. Under I57 (ProducedBy may run to any o), ProducedBy(Δ,ξ,ξ';O) holds via o1, so both are attributed to the repair of o2 although neither produced it. The words' "it attributes the repair to each contribution whose active route ran to it" — "it" is the repair — do not allow this. So FC87 as a sentence ("where two sufficient contributions both ran, the repair is attributed to both") is not broken, but the formal statement under I57 attributes the wrong repair. Rests on I57. Fixed by the L441 wording.
+
+**FC88 hand attack.** O={o1}, P={r1}, Aims*=O∪P; the system also holds a2, met at ξ and not at ξ'; X=∅. WellFormed holds (Aims*∖P = {o1}; o1 was not met at ξ... wait o1 is the aim to repair: ¬o1(ξ) ∧ o1(ξ'); so o1(ξ) is false, so o1 ∉ {r ∈ Aims*∖P : r(ξ) ∧ ¬r(ξ')}). So WellFormed holds, yet a2's loss is unexposed. So the formal claim "losses outside P are exposed" only covers aims in Aims*. The words say "Losses outside P must be exposed" with no universe. Rests on I58. Fix by the wording (either declare the universe as the aims the system holds, or say the claim names its aims). Which should stand: the words as they read naturally (all losses outside P); so propose the strong wording and note it needs the aims the system holds to be readable — that is instantiation (S25 allows it where knowledge is instantiated). Hmm, careful: reading "the aims the system holds" is about what is held — instantiated information. Fine.
+
+But wait: if I propose the strong wording at L441 in (c) for I58, then the (d) FC88 entry references it. Fine.
+
+Now, is the strong wording too strong? "Losses outside P must be exposed" — if the system holds infinitely many aims... the text says aims are declared inputs. Hmm. Alternative middle: "every loss outside P of an aim the system holds must be exposed in the claim". OK, I'll go with:
+
+```
+L441 (replaces) | Losses outside \(P\) must be exposed: the repair claim lists every aim the system holds outside \(P\) that was met at \(\xi\) and is not met at \(\xi'\).
+```
+This writes I58's choice (a) into the text and drops the declared Aims*. Good — say so.
+
+**FC85 (d)** — covered above.
+
+Now (e): matter1 · L443. The change: keep it (the old wording attached "to be deployable" to "the correction of a use through one", a subhistory, which Deploy cannot take). But the new wording leaves "the correction of a use through one" without a stated use and without a condition in (EX) that c corrected that use (FC89 notes the second kind is carried only by ProducesVia). Proposal:
+
+```
+L443 (replaces) | **Created explanation.** An explanatory aim requires a deployable account, or the correction of a use through one: its condition is that \(s\) possesses a deployable account of a stated question, or that a declared use of \(s\) is corrected through one. With \(O_{\mathrm{ex}}\subseteq O\) the explanatory aims,
+```
+This writes I59's reading (as a necessary condition on the aim's condition). Hmm — "its condition is that s possesses..." makes it a characterization of the aim's condition; the words "requires" is a necessary condition. My proposal says "requires ... : its condition is that..." which reads as: the requirement on an explanatory aim is that its condition be of one of the two forms. That is still a necessary condition on o's condition. Fine.
+
+Also should I note (EX) needs no change? Under the wording, an aim of the second kind has condition 'a declared use of s is corrected through one'; (EX) asks o(ξ') (the aim's condition met at ξ') and ProducesVia for the account c. Is that enough to show the use was corrected through c? ProducesVia says the route from Δ to the repair of o contains c's binding. Roughly "through one". I'd note that (EX) then needs nothing further, provided ProducesVia is read as in I60. OK.
+
+Word count check. Let me now write the final report tightly. I'll aim ~2,800 words.
+
+Let me write it.
+
+Also the report must end with exactly "END OF REPORT".
+
+Header format: `FC05 · L119`, `I93 · L119`, `H05`, `U4`, `matter 5 · L109`. So: `D13.1 · L403`, `I55 · L403`, `H06`, `FC84 · L47`, `matter 1 · L443`.
+
+Let me write the sections.
+
+I should double check the FC84 formal claim's dependency "Separate traces: Sel's history holds no represented target (L195), Con's holds one (L197)" — L195/L197 are quoted in H06 and I53 references. Fine.
+
+One more: in (a) for D13.2 — "nontrivial use respect" vs U; covered under D13.1/I55.
+
+Also D13.8's CreativeCriticalEpisode(s,Δ,h,e) with unused s,Δ — I'll put under D14.7/H15.
+
+Now, the (c) entries: for each invention, "Does the text in fact settle it? If it does, quote the words that do. If not, give the exact wording the text should carry, or say why it should stay open."
+
+I55: not settled (L403 gives only the vague words). [proposal].
+
+I57: not settled on the left reading of r(ξ), on which aim ProducedBy runs to, and (in D14.1's point 3) on how O's occasions are read. Wording at D14.1/D14.3 in (a); writes I57.
+
+I58: not settled ("Losses outside P must be exposed" names no universe). [proposal] — writes I58's choice (a).
+
+I59: not settled; wording in (e), writes I59.
+
+I60: not settled ("the relevant binding of c"); wording at D14.6 in (a), writes I60.
+
+I68: not settled (L620–L622 stipulate the layer but not the window or the ends); [proposal at L622], writes I68's fixed window. Hmm — does the text need it? The case's argument depends on w. But is this the *text's* content or a worked case's stipulation? A worked case is the text's content too (E1–E9). I'll propose the wording at L622 and note it writes I68's choice of a fixed window shorter than the occlusion; the other parameters (N=6, reflection at ends) stay open since no claim's truth depends on them here — but FC102's counterexample rests on choice (b) (unbounded window) per I68's note. So clarifying the window removes FC102's resting point. Good reason.
+
+I96: stay open — the text's "stated occasions" is a declared input; discrete time is the search's domain (I77/I96), not the text's claim; no wording.
+
+H06: not settled (body never defines episode; front matter L55 does). [proposal at L55]; writes H06.
+
+H14: not settled but unused; no wording — drop Contrib from the maths.
+
+H15: not settled. [proposal at L429]; writes H15.
+
+Good. Now let me write out. Keep prose tight.
+
+One more consideration for (a) D14.5: the maths reads "requires" as a characterization. Actually D14.5 says: "o ∈ O_ex when o's condition is that s possesses a deployable account of a stated question, or is L443's 'the correction of a use through' a deployable account". So yes, characterization. Words: "requires" = necessary. Which should stand? The words. And then the declared marking carries the rest. But note: if L443 is only necessary, then it does not tell which aims are explanatory, only which can be; (EX) then needs the marking. Fine, say that.
+
+Alright. Also for D14.8: mention the k typing as an unregistered choice. Actually should I propose wording? "give the exact wording the text should carry, or say why it should stay open" — that's (c) for inventions/unrecorded choices. The k typing isn't in the register; I could raise it in (a) as a divergence and say it should be recorded (or propose wording at L455). I'll say: the text should name the type; short proposal? To save words, I'll say it should stay open but be recorded, since L455 is one of the aesthetic lines whose values are the owner's question ("Where values are placed is the owner's question; do not propose to move them") — typing k is not moving values. Hmm. I'll add one sentence: record it as a choice; no wording needed since the formula is well-typed under it. Fine.
+
+Now write.
+
+Final word budget: let me draft and count roughly.
+
+I'll write it now in final form.
+
+Also: "Items on which you have nothing to add are named together in one line at the end of the section." So (a) ends with a line naming D13.2, D13.5, D13.6, D13.7, D14.2, D14.4 (and NF items if not given). I'm giving NF07/09/10/19 a line; fine.
+
+Let me write.
+
+---
+
+Draft final:
+
+# (a)
+
+**D13.1 · L403.** Three ways apart. (1) The words require the representation to be "by (R) a faithful transport with selected or constructed provenance"; D13.1 requires only Rep_ℓ(o,c). The words stand: L403 names the provenance, and D13.1 must add "the transport witnessing Rep_ℓ(o,c) has selected or constructed provenance"; otherwise a content carried by any route is deployable. (2) "serving the declared use task U as a retained capability" is made Can_{Ω,β}(ξ,U;χ) with a realization using o; "retained" is not carried (retained capability is Part XII's, a line not given here). (3) "integrated into problem-directed activity" and "nontrivial use respect" are primitives [I55], and "use respect" is read as a use task U. The words stand where they speak; wording at I55 below.
+
+**D13.3 · L405.** D13.3 drops "a represented organization" and "for explanatory use"; BindingConstruction(h',c) is left to carry "nontrivial" and "relevant to that use" [I56]. The words stand: without "for explanatory use", a subhistory that builds a bridge gives an explanation its construction trace, and (G) would turn on what the building was for. D13.3 should read Prepares(h', c) as preparing a represented organization for explanatory use of c. No text change.
+
+**D13.4 · L413.** "both faithful on c's contract" cannot be read the same way twice: for the transport from d to c, c's contract is on the codomain, so faithfulness must mean the preimage [I48]; for the transport from c to d it is on the domain. The maths' reading is the one that lets c ≡ c hold. The ≡ sign promises symmetry the definition does not deliver (FC85(b) shows the asymmetry is real), and (N) reads the relation with c fixed. The words should say so:
+
+[fenced]
+
+**D14.1 · L438, L441.** ... [fenced]
+
+**D14.3 · L441.** ... [fenced]
+
+**D14.5 · L443.** "requires" is a necessary condition; D14.5 reads it as a characterization. The words stand. Neither the words nor (EX) name the use whose correction the second kind is about; the change proposed in (e) carries it.
+
+**D14.6 · L453.** ... [fenced]
+
+**D14.7 · L447–L449.** Matches the display. Two notes: (i) CreativeCriticalEpisode(s,Δ,h,e) takes s and Δ, which its definition never uses (H15 below); (ii) "the contract of p_c fixed at e_c (L453)" is cited to L453, whose quoted words do not say it; I rely on that cross-reference only.
+
+**D14.8 · L455.** The maths types R ⊆ Act × Occ × Eff, G ⊆ Occ × Eff, so k is an occasion; the words write R[a,k] and G[k] without typing k. The typing is a choice no entry records; it should be recorded, since (AR) is empty unless k is typed. "None is defined as another" (NF19) is right to be left unformalized.
+
+Then the one-line "nothing to add": D13.2, D13.5, D13.6, D13.7, D14.2, D14.4 say what their sentences say; NF07, NF09, NF10 need no change (NF10's "Closing an episode is a choice" is right: no definition outputs a choice, as S21 and S28 require).
+
+# (b)
+
+Nothing in this group is marked counterexample found or computed: not as claimed, and FC86's one look came out as expected. So there is no counterexample to dispose of. The look's divergence (L441's "lost" against (P)) is a matter of wording, handled at D14.1 and attacked at FC86 in (d). FC85's "no witness found" on the generated families is not evidence against the asymmetry: the constructed computation shows d ≡ c with c ≢ d.
+
+# (c)
+
+**I55 · L403.** Not settled... [fenced]
+
+**I57 · L441.** Not settled on three points... The exact wording is at D14.1 and D14.3 in (a) and writes I57 into the text.
+
+**I58 · L441.** Not settled... [fenced]
+
+**I59 · L443.** Not settled; the wording at matter 1 in (e) writes I59 into the text.
+
+**I60 · L453.** Not settled; wording at D14.6 in (a), writes I60.
+
+**I68 · L622.** Not settled... [fenced]
+
+**I96.** Should stay open...
+
+**H06.** ... [fenced]
+
+**H14.** ... no wording: Contrib is used by no definition; drop it.
+
+**H15.** ... [fenced]
+
+# (d)
+
+**FC84 · L47.** [model]
+**FC85 · L413.** [model]
+**FC86 · L441.** [model]
+**FC87 · L441.** [model]
+**FC88 · L441.** [model]
+
+# (e)
+
+**matter 1 · L443.** [fenced]
+
+END OF REPORT
+
+Now let me write out the fenced proposals fully and check the wording obeys S23 (no verificationist words: "fits, supports, verifies, proves, true, established, authority, derived from, accepted" — avoid; also "accept/accepted" only tentatively). Avoid "settled" except quoting. Avoid "better/worse/true/more true". Careful: "the words stand" is fine. Avoid "reason to believe". Avoid "verifies". Avoid "proof". Also avoid "falsification". And "argument" means "reasons why this and not that" — I'm not using "argument" much. Note "Argument 10" in I68 is the text's own phrase (worked case). Fine.
+
+Also avoid saying "must" about candidate outcomes. Saying "the text should say" is fine — we're proposing wording, which the task asks for. But careful: "Nothing is settled, and a ruling out ... is a choice the person made" — fine.
+
+Also avoid proposing anything about hard to vary. Fine.
+
+Also: don't count/rank rivals — I mention "two/three divergences" which is fine (not rivals). Avoid "there are two choices and three more" style. Fine.
+
+Also decision S23 forbids "supports/verified/etc." Let me scrub: I used "rests on", "carries", "shows", "matches" — "matches" is a defined notion here (matching) — fine, but "matches the problem" was S21's phrase; I use "matches the display" — maybe say "follows the display". Use "as displayed". Avoid "fits".
+
+Let me write the proposals precisely.
+
+**Proposal at L413:**
+
+```
+L413 (replaces) | Write \(d\equiv_\ell c\) when there are transports from \(d\) to \(c\) and from \(c\) to \(d\), both faithful on \(c\)'s contract at grain \(\ell\): the first on the preimage of \(c\)'s contract, the second on \(c\)'s contract itself. The relation is read with \(c\) fixed and is not symmetric.
+```
+
+**Proposal at L441 (aims):**
+
+```
+L441 (first two sentences, replacing) | The aims are declared inputs: \(O\) says what is to be repaired and \(P\) what is to be protected, each as a stated condition over stated occasions; for \(o\in O\), \(o(\xi)\) says that its condition was met at \(\xi\), and in a repair from \(\xi\) to \(\xi'\) a protected condition is lost exactly when it fails on an occasion it covers between \(\xi\) and \(\xi'\). In (P), accordingly, \(r(\xi)\) says that \(r\) was met at \(\xi\) when \(\xi\) is an occasion it covers and says nothing otherwise, and \(r(\xi')\) says of a protected condition \(r\) that it was met on every occasion it covers from \(\xi\) to \(\xi'\), not only at \(\xi'\).
+```
+
+**Proposal at L441 (ProducedBy):**
+
+```
+L441 (replaces) | \(\operatorname{ProducedBy}\) is met when an active route (Part IX) runs from \(\Delta\) to the repair of an aim \(o\) with \(\neg o(\xi)\land o(\xi')\); it attributes the repair to each contribution whose active route ran to it in the history, and where two sufficient contributions both ran, the repair is attributed to both and the history supplies no division of the attribution that it does not contain.
+```
+
+**Proposal at L441 (losses):**
+
+```
+L441 (replaces) | Losses outside \(P\) must be exposed: the repair claim lists every aim the system holds outside \(P\) that was met at \(\xi\) and is not met at \(\xi'\).
+```
+
+**Proposal at L453:**
+
+```
+L453 (replaces) | \(\operatorname{Result}(\Delta)\) is the set of contents at \(\xi'\) that \(\Delta\) prepared. \(\operatorname{ProducesVia}(\Delta,c,o;\xi,\xi')\) is met when an active route that runs from \(\Delta\) to the repair of \(o\) contains an occurrence of the binding that \(c\)'s construction trace names (L405).
+```
+
+**Proposal at L403 (I55):**
+
+```
+L403 (replaces) | \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) is met when \(s\) at \(\xi\) holds a representation of \(c\), by (R) a faithful transport with selected or constructed provenance, integrated into problem-directed activity and serving the declared use task \(U\) as a retained capability (Part XII), where "integrated", "retained" and "nontrivial" are declared inputs of that module. The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use task \(U\).
+```
+
+**Proposal at L622 (I68):**
+
+```
+L622 (replaces) | \(S_0\) predicts occupancy at \(t+1\) from the occupancy of the last \(w\) steps, \(w\) fixed and shorter than the occlusion in the criticism.
+```
+Hmm, "in the criticism" — the case has an occlusion edit. Let me write: "from the occupancy of the last \(w\) steps, \(w\) fixed and shorter than any occlusion the criticism admits." OK.
+
+**Proposal at L55 (H06):**
+
+```
+L55 (replaces) | An episode is a delimited subhistory of a history. The provenance episodes are those in which contracts change, and every change carries a provenance record.
+```
+Hmm "The provenance episodes" — is that a term in the text? Not given. Maybe: "An episode is a delimited subhistory of a history; in the episodes of a provenance the contracts change, and every change carries a provenance record." Slightly better. Or: "An episode is a delimited subhistory of a history. Where the episode is one of provenance, contracts change in it, and every change carries a provenance record." I'll use:
+
+```
+L55 (replaces) | An episode is a delimited subhistory of a history. An episode of provenance is one in which contracts change, and every change carries a provenance record.
+```
+
+**Proposal at L429 (H15):**
+
+```
+L429 (replaces) | **Episodes.** A complete critical episode contains a recognized difficulty, a target represented before its criticism, a conjectural objection (D9.10) of it, and a content-sensitive response that uses the objection as a reason (D9.11). A **recognized difficulty** is a failure of a claimed aim, or a conflict in which what the system holds meets a claimed aim only by failing a protected one (Part XI), when the system represents it. A creative critical episode contains an instance of (G) whose attempt addresses the question the episode's difficulty poses; in \(\operatorname{CreativeCriticalEpisode}(s,\Delta,h,e)\), \(s\) is the system whose episode it is and \(\Delta\) is the contribution of its content-sensitive response.
+```
+
+**Proposal at L443 (e):**
+
+```
+L443 (replaces) | **Created explanation.** An explanatory aim requires a deployable account, or the correction of a use through one: its condition is that \(s\) possesses a deployable account of a stated question, or that a declared use of \(s\) is corrected through one. With \(O_{\mathrm{ex}}\subseteq O\) the explanatory aims,
+```
+
+Good. Now the (d) models in full, briefly.
+
+**FC84 model:** described above.
+
+**FC85 model:** one organization E_c = ({p}, {0,1}), c's contract C_c: p = 1; a history h with c in R_{<e}(s,h) at every time before e. If transports admit the identity translation, c ≡_ℓ c and New(s,c,h,e) fails, as FC85(a) says. If the transport space (I81) contains only translations that alter some port, the only self-translation of E_c is ruled out, no d ∈ R_<e has d ≡ c, and (N) returns New for a content already in the repertoire. So (a) holds only where identity is a transport; whether the text's "transports" (defined at lines not given here) admits it must be checked there. Second point: contracts are fixed at events (D14.7 fixes p_c's contract at e_c); if C_c is read at a later event, d ≡ c can change, and (N) does not say which contract it uses — carried by the L413 wording.
+
+**FC86 model:** as above.
+
+**FC87 model:** as above.
+
+**FC88 model:** as above.
+
+Now, check FC88's model details: O = {o1} with ¬o1(ξ) ∧ o1(ξ'); P = {r1} with r1(ξ) and r1(ξ'); Aims* = O ∪ P = {o1, r1}; the system also holds a2, met at ξ, not met at ξ'; X = ∅. Then Aims*∖P = {o1}; {r ∈ Aims*∖P : r(ξ) ∧ ¬r(ξ')} = ∅ ⊆ X. WellFormed holds. Yet a2 is lost outside P and unexposed. So the sentence "Losses outside P must be exposed" is not what WellFormed checks, unless Aims* is the aims the system holds. Rests on I58. Fixed by the L441 wording (losses). Good.
+
+Word count — I'll try to be terse in prose. Let me now produce the final answer.
+
+One more check on (a) D14.1 point 3: "The words say each aim is 'a stated condition over stated occasions' (both O and P)"; D14.1 reads O's aims at ξ, ξ' pointwise. Actually is that a divergence? "each as a stated condition over stated occasions" — for O, the condition is stated over occasions too; then o(ξ) should be a statement about occasions. Under D14.1, Occ is stored but unused for O. So yes. The words stand (an aim is a condition over occasions), and the reading of o(ξ) should be stated; my proposal states "o(ξ) says its condition was met at ξ" which makes Occ unused for O — that contradicts "over stated occasions". Hmm. Alternative: for o ∈ O, o(ξ) says the condition was met atξ, and o(ξ') says it was met at every covered occasion from ξ to ξ'? But then a repair of an aim met at ξ' but not in between would fail — that would strengthen (P) to require the repaired aim to hold throughout. Hmm. Which reading? The text: "O says what is to be repaired" — what is to be repaired is not met at ξ and met at ξ'. If the aim is a condition over occasions, "met at ξ'" could mean "met at the occasions it covers up to ξ'". Honestly, the text is open. My proposal writes I57's pointwise reading for O — but I should be careful: it does not match "over stated occasions" perfectly. Better: say the words leave the reading of o(ξ), o(ξ') open; propose the reading explicitly (writes I57), noting that under it Occ_r is unused for O and the words' "over stated occasions" then only constrains P. Or propose symmetry: for O also read over the interval on the right. Let me think about which is better for the theory: (P)'s first conjunct describes the repair: the aim was not met at ξ and is met at ξ'. If "met at ξ'" means "met on every occasion it covers from ξ to ξ'", then a repair that makes the aim hold only at the end and not in between is not a repair — a stronger, arguably more coherent reading (the aim is a condition over occasions). But it also makes repairs of intermittent conditions impossible. Since the text says each aim is a condition over stated occasions, the symmetric reading is better supported by the words. Hmm.
+
+But careful: FC86's claim and the look assume I57. If I propose a different reading, the maths changes. My job: "say where the maths and the words part company and which should stand". I'll say: the words say each aim is a condition over stated occasions, so both sides should be read over occasions; but then a repair must hold the aim on the occasions it covers from ξ to ξ'. Is that what the words want? L441's second sentence says r(ξ') is read over the interval "not only at ξ'" — that is stated only for protected conditions. For O, nothing. So the words do not fix it. I'll present the divergence and say the words' "each as a stated condition over stated occasions" should stand, and the reading of o(ξ) and o(ξ') should be stated; give the wording that writes I57's reading (pointwise at ξ, interval at ξ' only for P), but flag that the symmetric reading is the other option and the text should choose. Hmm, but the rule "Do not list, count, grade or rank rivals" — that's about rivals in general (probably rival candidates/versions). Listing alternative readings of a definition is normal here (the register itself records "other choices"). But the rule says don't list rivals and don't argue from how many. I think the "rivals" rule concerns competing candidates/explanations (S20 context). But to be safe, I'll avoid enumerating rivals and instead state one reading with the reason, noting briefly that the words do not fix it.
+
+Decision: propose the wording that writes I57's reading for the left of (P) and for O at ξ and ξ', keeping P's right side over the interval (as the words state explicitly). Reason: L441 states the interval reading only for protected conditions ("In (P), accordingly, r(ξ') says ..."), and its "not only at ξ'" phrase would be redundant if every aim were read over an interval; so the words' asymmetry (O pointwise, P over occasions) is what the text says. That's a decent reason. But then "each as a stated condition over stated occasions" — for O, the occasions are the stated ones... Hmm, the phrase could mean the condition is stated together with its occasions. Fine — my wording: "each as a stated condition over stated occasions" kept, and then "for o ∈ O, o(ξ) and o(ξ') say its condition was met at ξ and at ξ'". Under that, Occ_o is unused — awkward but consistent with the words' second sentence. I'll note the awkwardness: the occasions of an O-aim then do no work, and the text should say what they do (e.g. they delimit where the repair acts). To keep the report tight, I'll mention in one clause.
+
+OK, writing now. Keep it tight.
+
+Final answer below.

@@ -1,0 +1,939 @@
+Let me explore the sandbox first.
+
+Let me explore the file structure using Glob instead of Bash.
+
+The free set file is large (273.7KB). Let me read it in portions later. First, let me read the map's JSON, the section files, and other relevant material.
+
+Let me plan: my job is to cross-examine the map (part B/how explanation changes in meaning and scope.md and .json). For each variant: meaning, scope, edges' standings, Part A ids. Per part of the definition: completeness. Rule 10 gaps, and round 2 proposal.
+
+Let me look at the map JSON first.
+
+Now let me read the map builder files and the section B1-B4 "variants computed" files, at least the relevant parts, to check the map against them. Also, the whole-suite summary and the comparisons with Part A.
+
+First, let me check the arithmetic: §4 totals. Edges in JSON: let me count. In JSON "edges" (flattened) list:
+- PB1.1: 4 edges (moves computed, constrains computed, blocks claimed, changes-with claimed)
+- PB1.2: 3 (blocks claimed, constrains claimed, moves computed)
+- PB1.3: 3 (constrains claimed, moves computed, changes with claimed)
+- PB1.4: 2 (changes with computed, moves computed)
+- PB1.5: 2 (changes with claimed, constrains claimed)
+- PB1.6: 3 (moves computed, changes with computed, constrains claimed)
+- PB1.7: 2 (moves computed, constrains claimed)
+- PB1.8: 3 (changes with computed, blocks computed, changes with contradicted)
+- PB1.9: 2 (blocks computed, constrains claimed)
+- PB2.1: 4 (changes with computed, blocks computed, moves computed, blocks computed)
+- PB2.2: 3 (moves computed, blocks computed, blocks claimed)
+- PB2.3: 2 (moves computed, constrains claimed)
+- PB2.4: 4 (blocks claimed, changes with computed, moves computed, moves contradicted)
+- PB2.5: 2 (moves computed, constrains claimed)
+- PB2.6: 2 (moves computed, changes with computed)
+- PB2.7: 3 (changes with computed, blocks computed, moves computed)
+- PB2.8: 1 (blocks claimed)
+- PB2.9: 1 (changes with claimed)
+- PB3.1: 2 (moves computed, blocks claimed)
+- PB3.2: 2 (moves computed, blocks computed)
+- PB3.3: 3 (changes with computed, moves computed, constrains claimed)
+- PB3.4: 2 (moves computed, blocks computed)
+- PB3.5: 1 (changes with computed)
+- PB3.6: 2 (moves computed, constrains claimed)
+- PB3.7: 1 (blocks claimed)
+- PB3.8: 0
+- PB4.1: 2 (changes with computed, moves claimed)
+- PB4.2: 1 (changes with computed)
+- PB4.3: 1 (changes with claimed)
+- PB4.4: 2 (blocks computed, moves computed)
+- PB4.5: 1 (changes with computed)
+- PB4.6: 1 (changes with computed)
+- PB4.7: 1 (changes with computed)
+- PB4.8: 1 (blocks computed)
+
+Count: 4+3+3+2+2+3+2+3+2+4+3+2+4+2+2+3+1+1+2+2+3+2+1+2+1+0+2+1+1+2+1+1+1+1 = let me sum:
+PB1.1 4 (cum 4)
+PB1.2 3 (7)
+PB1.3 3 (10)
+PB1.4 2 (12)
+PB1.5 2 (14)
+PB1.6 3 (17)
+PB1.7 2 (19)
+PB1.8 3 (22)
+PB1.9 2 (24)
+PB2.1 4 (28)
+PB2.2 3 (31)
+PB2.3 2 (33)
+PB2.4 4 (37)
+PB2.5 2 (39)
+PB2.6 2 (41)
+PB2.7 3 (44)
+PB2.8 1 (45)
+PB2.9 1 (46)
+PB3.1 2 (48)
+PB3.2 2 (50)
+PB3.3 3 (53)
+PB3.4 2 (55)
+PB3.5 1 (56)
+PB3.6 2 (58)
+PB3.7 1 (59)
+PB3.8 0 (59)
+PB4.1 2 (61)
+PB4.2 1 (62)
+PB4.3 1 (63)
+PB4.4 2 (65)
+PB4.5 1 (66)
+PB4.6 1 (67)
+PB4.7 1 (68)
+PB4.8 1 (69)
+
+Total 69. ✓ matches "69 edges".
+
+Now standings: computed count. Let's tally:
+claimed only:
+PB1.1: 2 (blocks, changes with)
+PB1.2: 2
+PB1.3: 2
+PB1.4: 0
+PB1.5: 2
+PB1.6: 1
+PB1.7: 1
+PB1.8: 0
+PB1.9: 1
+PB2.1: 0
+PB2.2: 1
+PB2.3: 1
+PB2.4: 1
+PB2.5: 1
+PB2.6: 0
+PB2.7: 0
+PB2.8: 1
+PB2.9: 1
+PB3.1: 1
+PB3.2: 0
+PB3.3: 1
+PB3.4: 0
+PB3.5: 0
+PB3.6: 1
+PB3.7: 1
+PB3.8: 0
+PB4.1: 1
+PB4.2: 0
+PB4.3: 1
+PB4.4: 0
+PB4.5: 0
+PB4.6: 0
+PB4.7: 0
+PB4.8: 0
+Sum: 2+2+2+0+2+1+1+0+1+0+1+1+1+1+0+0+1+1+1+0+1+0+0+1+1+0+1+0+1+0+0+0+0+0 = 
+2,4,6,6,8,9,10,10,11,11,12,13,14,15,15,15,16,17,18,18,19,19,19,20,21,21,22,22,23,23,23,23,23,23
+= 23 claimed only. ✓
+
+contradicted: PB1.8 (1), PB2.4 (1) = 2 ✓
+computed = 69 − 23 − 2 = 44 ✓
+
+By kind:
+moves: PB1.1 computed, PB1.2 computed, PB1.3 computed, PB1.4 computed, PB1.8 contradicted, PB2.1 computed, PB2.2 computed, PB2.3 computed, PB2.4 computed (X:(A)), PB2.4 contradicted, PB2.5 computed, PB2.6 computed, PB2.7 computed, PB3.1 computed, PB3.2 computed, PB3.3 computed, PB3.4 computed, PB3.6 computed, PB4.1 claimed, PB4.4 computed. Count: 20 total moves edges: 19 computed + 1 claimed + 1 contradicted? 19+1+1=21. Let me count moves edges: computed ones: PB1.1, PB1.2, PB1.3, PB1.4, PB2.1, PB2.2, PB2.3, PB2.4(X:(A)), PB2.5, PB2.6, PB2.7, PB3.1, PB3.2, PB3.3, PB3.4, PB3.6, PB4.4 = 17 computed. Hmm, the table says moves: computed 19, contradicted 1, claimed only 1 → total 21. But I count 17 computed moves. Let me recount.
+
+Moves edges per variant:
+PB1.1 moves X:NonVacuous, X:(E) — computed (1)
+PB1.2 moves X:(E), X:Expl — computed (2)
+PB1.3 moves X:(E) — computed (3)
+PB1.4 moves "nothing in the definition; Arguments 1-2's claims" — computed (4)
+PB1.8 moves FC18... — contradicted (1 contrad)
+PB2.1 moves X:Dec, X:Expl — computed (5)
+PB2.2 moves X:(F2), X:(E) — computed (6)
+PB2.3 moves X:(F1), X:(E) — computed (7)
+PB2.4 moves X:(A) — computed (8)
+PB2.4 moves X:(E) reply — contradicted (2 contrad)
+PB2.5 moves X:Dependence, X:(E) — computed (9)
+PB2.6 moves X:NonVacuous — computed (10)
+PB2.7 moves X:(A), X:(E) — computed (11)
+PB3.1 moves X:Dec, X:Expl — computed (12)
+PB3.2 moves X:Dec, X:Expl — computed (13)
+PB3.3 moves X:Dec, X:Expl — computed (14)
+PB3.4 moves X:Dec, X:Expl — computed (15)
+PB3.6 moves X:Dec, X:Expl — computed (16)
+PB4.1 moves X:(Suff) — claimed only (1 claimed)
+PB4.4 moves X:(Suff), X:(Nec) — computed (17)
+
+So moves: computed 17, contradicted 2, claimed 1 → total 20. But the map's §4 table says moves: computed 19, contradicted 1, claimed only 1 (total 21). That's a discrepancy!
+
+Hmm wait, maybe I mis-tallied. Let me check the JSON totals block:
+
+"by_kind": {
+ "moves": {"computed": 19, "contradicted": 1, "claimed only": 1},
+ "constrains": {"computed": 1, "claimed only": 10},
+ "blocks": {"claimed only": 7, "computed": 10},
+ "changes with": {"claimed only": 5, "computed": 14, "contradicted": 1}
+}
+
+Sum by kind: moves 21, constrains 11, blocks 17, changes with 20 = 69. OK totals 69.
+
+My count by kind from the edge lists:
+- moves: 20 (17 computed, 2 contradicted, 1 claimed)
+- constrains: PB1.1 computed, PB1.2 claimed, PB1.3 claimed, PB1.5 claimed, PB1.6 claimed, PB1.7 claimed, PB1.9 claimed, PB2.3 claimed, PB2.5 claimed, PB3.3 claimed, PB3.6 claimed = 11 total; computed 1, claimed 10. ✓ matches.
+- blocks: PB1.1 claimed, PB1.2 claimed, PB1.8 computed, PB1.9 computed, PB2.1 computed ×2, PB2.2 computed + claimed, PB2.4 claimed, PB2.7 computed, PB2.8 claimed, PB3.1 claimed, PB3.2 computed, PB3.4 computed, PB3.7 claimed, PB4.4 computed, PB4.8 computed. Count: total = 1+1+1+1+2+2+1+1+1+1+1+1+1+1+1 = 17 ✓. Computed: PB1.8, PB1.9, PB2.1×2, PB2.2(1), PB2.7, PB3.2, PB3.4, PB4.4, PB4.8 = 10 ✓. Claimed: PB1.1, PB1.2, PB2.2(1), PB2.4, PB2.8, PB3.1, PB3.7 = 7 ✓.
+- changes with: PB1.1 claimed, PB1.4 computed, PB1.5 claimed, PB1.6 computed, PB1.8 computed + contradicted, PB1.9 claimed... wait PB1.9's constrains is claimed; its changes-with? PB1.9 has blocks computed and constrains claimed — no changes with. Let me recount changes with edges:
+PB1.1 changes with D0.2 — claimed (1)
+PB1.3 changes with E2,E4,E9 — claimed (2)
+PB1.4 changes with D4.3 — computed (1)
+PB1.5 changes with D3.4 — claimed (3)
+PB1.6 changes with D6.1, D7.1 — computed (2)
+PB1.8 changes with D4.4 — computed (3)
+PB1.8 changes with FC18 — contradicted (1)
+PB2.1 changes with D5.7, D12.7 — computed (4)
+PB2.2? no. PB2.4 changes with D6.4, D8.2 — computed (5)
+PB2.6 changes with PB1.1 — computed (6)
+PB2.7 changes with D6.3 — computed (7)
+PB2.9 changes with D8.2,D8.3,D12.5 — claimed (4)
+PB3.3 changes with D12.1 — computed (8)
+PB3.5 changes with D12.1 — computed (9)
+PB4.1 changes with D9.8 — computed (10)
+PB4.2 changes with D9.6 — computed (11)
+PB4.3 changes with D9.6 — claimed (5)
+PB4.5 changes with D9.10 — computed (12)
+PB4.6 changes with D11.4 — computed (13)
+PB4.7 changes with FC109 — computed (14)
+
+Changes with total = 19; computed 14 ✓, contradicted 1 ✓, claimed 5 ✓. Matches the table.
+
+So the table's moves row (19 computed, 1 contradicted, 1 claimed = 21) vs my count (17 computed, 2 contradicted, 1 claimed = 20). And the totals: 21+11+17+20 = 69 in the table; my count: 20+11+17+19 = 67. Hmm, that's 67 ≠ 69. Let me recount total edges from JSON edges list: I counted 69 earlier. Let me recount by kind: moves 20 + constrains 11 + blocks 17 + changes with 19 = 67. So I must have missed 2 edges somewhere. Let me recount per variant.
+
+Earlier I counted per variant edges; let me recount carefully from the JSON "edges" flattened list (lines 3257-3809). Count entries: I'll grep the JSON for occurrences of "variant": in edges list.
+
+Actually easier: count "kind" occurrences in the edges list. Let me do it by grep with counts.
+
+Also check claimed-only count 23: my kind tally: moves claimed 1, constrains claimed 10, blocks claimed 7, changes with claimed 5 = 23 ✓. computed: 17+1+10+14 = 42 ≠ 44. Contradicted: 2+1 = wait moves contradicted 2 + changes with 1 = 3? Earlier I counted only 2 contradicted (PB1.8 moves FC18, PB2.4 moves X:(E)). The JSON table says contradicted: moves 1, changes with 1 = 2 total. But PB1.8's contradicted edge is "changes with FC18... the reply's 'at risk'" — kind "changes with", not moves! Let me recheck. In PB1.8's edges (lines 641-646): kind "changes with", item "FC18 (Argument 1...)", standing "contradicted". Yes it's changes with. So contradicted: changes with ×2 (PB1.8, PB2.4's reply edge is "moves" kind). PB2.4's contradicted edge (line 1014): kind "moves". So contradicted total: 1 (PB1.8, changes with) + 1 (PB2.4, moves) = 2 ✓.
+
+So by kind: moves: contradicted 1 (PB2.4 reply), computed: PB1.1, PB1.2, PB1.3, PB1.4, PB2.1, PB2.2, PB2.3, PB2.4 X:(A), PB2.5, PB2.6, PB2.7, PB3.1, PB3.2, PB3.3, PB3.4, PB3.6, PB4.4 = 17. Hmm 17 ≠ 19.
+
+Total moves = 17 + 1 + 1 = 19. Then total edges = 19+11+17+19 = 66? But flat count said 69. There's an inconsistency; let me count the flattened edges list precisely. Lines 3257-3809 in JSON. Each edge object has fields: variant, kind, item, standing, part_A, why — 6 lines plus braces. Let me just count "variant": occurrences within edges.
+
+I'll do a Grep count of `"kind":` in the whole JSON — that includes edges inside variants too (duplicated). The variant-level edges and the flattened edges are duplicates. Total "kind" occurrences should be 2×69 + ... hmm each variant also has a "kind" field (replace/strengthen etc.). 34 variants → 34. So total = 34 + 2×(edges). Let me grep.
+
+Total "kind" = 172 = 34 (variant kind) + 2×69 = 172 ✓ (34+138=172). So edges = 69 total, standings 138/2 = 69 ✓. Good.
+
+Now standings counts: computed? Let me count each standing value in the flattened list only. The variant-level edges also have "standing". So standing counts = 2× the true counts. Let me count "standing": "computed" etc.
+
+Hmm — these grep counts include both the variant-level edges and the flattened edges list. So computed = 88/2 = 44 ✓, claimed only = 46/2 = 23 ✓, contradicted = 4/2 = 2 ✓. Total 69 ✓.
+
+But "kind": "moves" = 42 → 21 moves edges. That contradicts my manual count of 20. Wait — variant-level "kind" values are things like "replace", "strengthen", "weaken", "drop", "re-order a dependence" — none is "moves". So "moves" occurrences = variant edges + flattened = 2× (moves edges) = 42 → 21 moves edges. So I miscounted; there must be 21 moves edges. Let me find which I missed. Per variant "moves" edges:
+
+Let me grep with -n for '"kind": "moves"' to see line numbers.
+
+The variant-level edges (lines 46-3168) and the flattened edges (3260-3804). Let me count kinds from the flattened list (lines 3260+):
+
+moves: 3260, 3308, 3324, 3348, 3372, 3396, 3468, 3484, 3508, 3540, 3548, 3556, 3572, 3604, 3628, 3644, 3668, 3684, 3708, 3740, 3772 = 21 moves.
+constrains: 3268, 3300, 3316, 3364, 3388, 3404, 3444, 3516, 3564, 3676, 3716 = 11.
+blocks: 3276, 3292, 3420, 3436, 3460, 3476, 3492, 3500, 3524, 3596, 3612, 3636, 3652, 3692, 3724, 3764, 3804 = 17.
+changes with: 3284, 3332, 3340, 3356, 3380, 3428, 3532, 3580, 3588, 3620, 3700, 3748, 3756, 3788, 3796 = wait let me recount: 3284, 3332, 3340, 3356, 3380, 3428, 3532, 3580, 3588, 3620, 3700, 3748, 3756, 3788, 3796 = 15? Hmm. Total: 21+11+17+15 = 64 ≠ 69. I must have missed some. Lines 3260-3804 with entries every 8 lines: (3804-3260)/8 + 1 = 69 ✓. Let me carefully list all lines 3260..3804 step 8:
+
+3260 moves
+3268 constrains
+3276 blocks
+3284 changes with
+3292 blocks
+3300 constrains
+3308 moves
+3316 constrains
+3324 moves
+3332 changes with
+3340 changes with
+3348 moves
+3356 changes with
+3364 constrains
+3372 moves
+3380 changes with
+3388 constrains
+3396 moves
+3404 constrains
+3412 changes with
+3420 blocks
+3428 changes with
+3436 blocks
+3444 constrains
+3452 changes with
+3460 blocks
+3468 moves
+3476 blocks
+3484 moves
+3492 blocks
+3500 blocks
+3508 moves
+3516 constrains
+3524 blocks
+3532 changes with
+3540 moves
+3548 moves
+3556 moves
+3564 constrains
+3572 moves
+3580 changes with
+3588 changes with
+3596 blocks
+3604 moves
+3612 blocks
+3620 changes with
+3628 moves
+3636 blocks
+3644 moves
+3652 blocks
+3660 changes with
+3668 moves
+3676 constrains
+3684 moves
+3692 blocks
+3700 changes with
+3708 moves
+3716 constrains
+3724 blocks
+3732 changes with
+3740 moves
+3748 changes with
+3756 changes with
+3764 blocks
+3772 moves
+3780 changes with
+3788 changes with
+3796 changes with
+3804 blocks
+
+That's 69 entries. Count moves: 3260, 3308, 3324, 3348, 3372, 3396, 3468, 3484, 3508, 3540, 3548, 3556, 3572, 3604, 3628, 3644, 3668, 3684, 3708, 3740, 3772 = 21 moves.
+constrains: 3268, 3300, 3316, 3364, 3388, 3404, 3444, 3516, 3564, 3676, 3716 = 11.
+blocks: 3276, 3292, 3420, 3436, 3460, 3476, 3492, 3500, 3524, 3596, 3612, 3636, 3652, 3692, 3724, 3764, 3804 = 17.
+changes with: 3284, 3332, 3340, 3356, 3380, 3412, 3428, 3452, 3532, 3580, 3588, 3620, 3660, 3700, 3732, 3748, 3756, 3780, 3788, 3796 = 20.
+Total: 21+11+17+20 = 69 ✓.
+
+So moves = 21, and the map's table says moves: 19 computed + 1 contradicted + 1 claimed = 21 ✓ consistent. But earlier I counted the standing per moves edge. Let me get standings for the moves lines. From the flattened list, moves edges with their standings (standing appears 2 lines after kind):
+
+Line 3260 moves (PB1.1) computed
+3308 moves (PB1.2) computed
+3324 moves (PB1.3) computed
+3348 moves (PB1.4) computed
+3372 moves (PB1.6) computed
+3396 moves (PB1.7) computed
+3468 moves (PB2.1) computed
+3484 moves (PB2.2) computed
+3508 moves (PB2.3) computed
+3540 moves (PB2.4 X:(A)) computed
+3548 moves (PB2.4 reply) contradicted
+3556 moves (PB2.5) computed
+3572 moves (PB2.6) computed
+3604 moves (PB2.7) computed
+3628 moves (PB3.1) computed
+3644 moves (PB3.2) computed
+3668 moves (PB3.3) computed
+3684 moves (PB3.4) computed
+3708 moves (PB3.6) computed
+3740 moves (PB4.1) claimed only
+3772 moves (PB4.4) computed
+
+That's 21: computed 19, contradicted 1, claimed 1 ✓. I earlier missed PB1.6 and PB1.7 moves? No wait — earlier I forgot PB1.6's and PB1.7's moves edges in my manual tally. Indeed PB1.6 has moves edge "X:Dependence, X:(E)" and PB1.7 "X:(E) (its domain)". Yes I included those in the variant list but somehow dropped them. Fine — totals consistent. Good.
+
+So §4 totals check out. Also "Variants: 33 implemented and computed (18 moving scope, 5 meaning only, 10 neither), 1 flagged out". Check: 34 variants total. moving scope: from scope_moves: (E) 10 entries but PB1.2, PB2.7 counted once each... let's count distinct variants with scope moves: PB1.1, PB1.2, PB1.3, PB1.6, PB1.7, PB2.2, PB2.3, PB2.5, PB2.6, PB2.7 (10 in (E)); Dec: PB2.1, PB2.2, PB3.1, PB3.2, PB3.3, PB3.4, PB3.6 (7, PB2.2 already counted); X_j: PB4.2, PB4.4 (2). Distinct: PB1.1, PB1.2, PB1.3, PB1.6, PB1.7, PB2.2, PB2.3, PB2.5, PB2.6, PB2.7, PB2.1, PB3.1, PB3.2, PB3.3, PB3.4, PB3.6, PB4.2, PB4.4 = 18 ✓. meaning_only list: PB2.4, PB2.9, PB3.5, PB4.3, PB4.1 = 5 ✓. neither: PB1.4, PB1.5, PB1.8, PB1.9, PB2.8, PB3.7, PB4.5, PB4.6, PB4.7, PB4.8 = 10 ✓. 18+5+10 = 33 ✓, plus PB3.8 flagged out = 34 ✓.
+
+Wait — but "33 implemented and computed": PB1.5 has suite_runs [] (not run), PB2.8 [], PB2.9 [], PB4.3 []. The §0 text says "31 implemented as switches (PB2.8, PB2.9, PB4.3 with no code change, PB1.5 with no reader)". So 31 with code + 3 no code change... hmm: 34 − PB3.8 (flagged out) − PB2.8 − PB2.9 − PB4.3 (no code change) − PB1.5 (no reader) = 29? Wait 34 − 1 (PB3.8) = 33 "implemented and computed"; of those, PB2.8, PB2.9, PB4.3 had no code change (nothing to change in code), PB1.5 no reader. "31 implemented as switches" — hmm 33 computed minus PB2.8, PB2.9, PB4.3 with no code change = 30 with code change; PB1.5 "with no reader" (implemented in code, core.found(), but read by no claim). So 30 + PB1.5 = 31 implemented as switches ✓. OK consistent.
+
+Now the main work: verify the map's claims against the section files (B1–B4 variants computed .md/.json), the whole-suite summary, and Part A's map. Also check Part A ids cited: e1.51, e1.49, e1.48, r2e2.14, r2e1.30, r2e1.34, e1.00, e2.20, e2.21, e3.34b.
+
+Let me read the section files. They're probably large. Let me check sizes first via Glob... can't. Use Read with limits. Let me start with section B1.
+
+Section B1's data matches the map's rows for PB1.1–PB1.9. One check: map §1 PB1.2 claims list: "FC101, FC22, FC23, FC23.new1, FC23.new2, FC23.new3, FC23.new5, FC25.new2, FC26, FC27.new1, FC30.new1, FC34, FC42.new1, FC62, FC63, FC72.new2, FC90.new1, FC99" — 18 claims, matching "18 claims move". ✓
+
+PB1.2's scope row in map: "Θ strict: 36 cases and 813 generated leave (the sign and vane as edits or mixed)". Section says 36 of 49 leave, 813 of 999 ✓. Note "41 (0/36/5)" moved total (36 acc_out + 5 expl_only). The map says "36 cases ... leave" — consistent-ish (Acc out 36). Fine.
+
+PB1.6: map says "61 generated enter". Section: "61 generated candidates enter". Map's scope table in JSON says "Acc in 61, out 0". ✓ Map's §1 scope column says "61 generated enter" ✓.
+
+Now check map's per-part table (§2). For (E) meaning: lists D3.5 (PB1.1); D3.1 (PB1.2); D3.2 (PB1.3); L103.s1, D1.3 (PB1.6); L141.s2, D3.1 (PB1.7); D5.5, L241.s1 (PB2.2); D5.4 (PB2.3); D5.6, L249.s1 (PB2.4); D6.2 (PB2.5); D6.6 (PB2.6); D5.6 (PB2.7); D5.1 (PB2.9). That matches variants whose meaning moves (E). ✓ presumably.
+
+Now check the whole-suite summary file and the other section files B2-B4.
+
+B2 matches the map. One thing to check: map §1 PB2.7's scope says "20 to 28 cases, 855 to 946 generated leave (as C6)". Section says 'every': 20 cases leave; some: 28; some-exempt: 24; some-exempt-set: 25; generated 935/946/855/858. "20 to 28 cases" ✓ range; "855 to 946 generated" ✓.
+
+Hmm wait: 'every' row says 21 (0/20/1) moved; text says 20 cases leave. The "cases moved (Acc in/out/expl_only)" column counts 20 acc_out + 1 expl_only = 21. The narrative says "20 cases leave ... " consistent with acc_out. OK.
+
+Note in PB2.7 'every', "the two-part sign and the vane stay" — but the leave list includes "owner's vane, change as edit: E_enc on p" etc. (E_enc encodings). Hmm, the narrative says "the two-part sign and the vane stay" but then E_enc encodings of the vane leave. "the vane stay" presumably refers to the hand encodings (M13 etc.), with E_enc encodings leaving. This is the section file's wording, not the map's; not my target.
+
+Now B3 and B4 section files.
+
+B3 matches the map. Note PB3.3 map row says "every Sel-history case (44 cases, 999 generated) becomes declared". Hmm — "becomes declared"? PB3.3: no candidate is selected, so Dec fails... wait. "no candidate is selected: 44 of 49 cases lose Expl on that history". If Sel fails, then Dec (which requires being selected?) — what is Dec? "Declared" presumably means Dec holds (i.e., candidate is declared = selected/constructed?). Actually the map's Dec column: "every Sel-history case (44 cases, 999 generated) becomes declared". Hmm, but the section says "lose Expl". Expl := Account ∧ ¬Dec. If Sel fails... let me think about what Dec means. From S41: the student's copy is "declared" (Dec True) and therefore not an explanation ("No, not if just declared"). So Dec(t) true means the link was declared rather than worked out, so not an explanation. Under PB3.3, Sel requires C ∩ Occ(h) ⊆ H; with the hand-set history every pair of C occurred and H = {(1,b0)}, so Sel fails... then how does the case "become declared"?
+
+Hmm. Dec is presumably "declared" = the holding's content got its link some way: Sel (selection from variants?) or Con (construction) — from L193.s1: "exactly one of three" (Sel, Con, and declared?). If Sel fails, maybe the holding falls back to declared? In PB3.2's chains example: "output_not_to_dec: 10" — outputs become declared. In PB3.3's scope, expl_only lists 44 cases with Expl T→F (on Sel history) and "Acc unchanged". If Expl F because ¬Dec fails, i.e., Dec became true — declared. So "becomes declared" is consistent: losing Sel means the holding counts as declared (the third of three?). Actually L193.s1 "exactly one of three": Sel, Con, Dec presumably. If Sel fails and Con fails, then Dec holds. OK, consistent.
+
+Now check: the map says PB3.3 claims moved: "FC102.new1, FC12.new1, FC12.new2, FC30.new1, FC83" ✓ matches section.
+
+Now B4.
+
+B4 matches the map. But note discrepancies to examine:
+
+1. PB4.1's "claims that move" in map §1: "FC56, FC72, FC72.new1" ✓ (3 claims).
+
+2. PB4.4's claims in map §1: "FC23.new2, FC30.new1, FC47.new1, FC56, FC72, FC72.new1, FC72.new2" ✓ (7 claims).
+
+3. In map §1, PB4.4's row "kind: strengthen", free item L397.s13. ✓.
+
+Interesting: PB4.1's edges: "moves X:(Suff) claimed only". But the map's per-part table (§2) row "X_j" scope moves includes "PB4.4: X_j empty everywhere". And in §1's row for PB4.1: claims FC56, FC72, FC72.new1, edges 2/0/1 — wait, map §1 says PB4.1 edges "1 / 0 / 1"? Let me check: map §1 PB4.1 row: edges (computed/contradicted/claimed only) = "1 / 0 / 1"? Actually the map's table row for PB4.1 says "2 / 0 / 0"? Let me re-read: "| PB4.1 | L315.s7 | replace | ... | FC56, FC72, FC72.new1 | 1 / 0 / 1 |"? Looking at the md line 39: "| PB4.1 | L315.s7 | replace | none of the five parts (Out_j): ... | FC56 (a″)... |" hmm that's PB4.2. Line 39 is PB4.1: claims "FC56, FC72, FC72.new1", edges "1 / 0 / 1"? The md says:
+
+"| PB4.1 | L315.s7 | replace | ... | FC56, FC72, FC72.new1 | 1 / 0 / 1 |" — I need to verify. From the earlier read, line 39: "| PB4.1 | L315.s7 | replace | none of the five parts (Out_j): ℰ ruled out for j :⟺ X_j('Acc(ℰ)') ≠ ∅ → … ∃α ∈ X_j with Acc(ℰ) ∈ Uses(α) | meaning moves, scope unchanged on every case computed | FC56, FC72, FC72.new1 | 1 / 0 / 1 |"
+
+Yes edges 1/0/1: 1 computed (changes with D9.8), 1 claimed (moves X:(Suff)). ✓.
+
+Now let me verify the per-variant edges count column in map §1 matches the JSON:
+- PB1.1 "2 / 0 / 2" — JSON: 4 edges: 2 computed, 2 claimed ✓.
+- PB1.2 "1 / 0 / 2" ✓ (1 computed, 2 claimed).
+- PB1.3 "1 / 0 / 2" ✓.
+- PB1.4 "2 / 0 / 0" ✓.
+- PB1.5 "0 / 0 / 2" ✓.
+- PB1.6 "2 / 0 / 1" ✓.
+- PB1.7 "1 / 0 / 1" ✓.
+- PB1.8 "2 / 1 / 0" ✓.
+- PB1.9 "1 / 0 / 1" ✓.
+- PB2.1 "4 / 0 / 0" ✓.
+- PB2.2 "2 / 0 / 1" ✓.
+- PB2.3 "1 / 0 / 1" ✓.
+- PB2.4 "2 / 1 / 1" ✓.
+- PB2.5 "1 / 0 / 1" ✓.
+- PB2.6 "2 / 0 / 0" ✓.
+- PB2.7 "3 / 0 / 0" ✓.
+- PB2.8 "0 / 0 / 1" ✓.
+- PB2.9 "0 / 0 / 1" ✓.
+- PB3.1 "1 / 0 / 1" ✓.
+- PB3.2 "2 / 0 / 0" ✓.
+- PB3.3 "2 / 0 / 1" ✓.
+- PB3.4 "2 / 0 / 0" ✓.
+- PB3.5 "1 / 0 / 0" ✓.
+- PB3.6 "1 / 0 / 1" ✓.
+- PB3.7 "0 / 0 / 1" ✓.
+- PB3.8 "0 / 0 / 0" ✓.
+- PB4.1 "1 / 0 / 1" ✓.
+- PB4.2 "1 / 0 / 0" ✓.
+- PB4.3 "0 / 0 / 1" ✓.
+- PB4.4 "2 / 0 / 0" ✓.
+- PB4.5 "1 / 0 / 0" ✓.
+- PB4.6 "1 / 0 / 0" ✓.
+- PB4.7 "1 / 0 / 0" ✓.
+- PB4.8 "1 / 0 / 0" ✓.
+
+Sum of computed: 2+1+1+2+0+2+1+2+1+4+2+1+2+1+2+3+0+0+1+2+2+2+1+1+0+0+1+1+0+2+1+1+1+1 = let's add: PB1: 2+1+1+2+0+2+1+2+1 = 12; PB2: 4+2+1+2+1+2+3+0+0 = 15 (cum 27); PB3: 1+2+2+2+1+1+0+0 = 9 (cum 36); PB4: 1+1+0+2+1+1+1+1 = 8 (cum 44) ✓ 44 computed.
+Claimed: PB1: 0+2+2+0+2+1+1+0+1 = 9; PB2: 0+1+1+1+1+0+0+1+1 = 6 (15); PB3: 1+0+1+0+0+1+1+0 = 4 (19); PB4: 1+0+1+0+0+0+0+0 = 2 (21). Hmm 21 ≠ 23. Contradicted: PB1.8 1, PB2.4 1 = 2. 44+21+2 = 67 ≠ 69?? But per-variant edges sum: PB1: 4+3+3+2+2+3+2+3+2 = 24; PB2: 4+3+2+4+2+2+3+1+1 = 22 (46); PB3: 2+2+3+2+1+2+1+0 = 13 (59); PB4: 2+1+1+2+1+1+1+1 = 10 (69) ✓. So the per-variant tallies sum to 69. My claimed tally must be wrong. Recount claimed per variant from the map §1 column (x/y/z = computed/contradicted/claimed):
+PB1.1 2 claimed; PB1.2 2; PB1.3 2; PB1.4 0; PB1.5 2; PB1.6 1; PB1.7 1; PB1.8 0; PB1.9 1 → 11? 2+2+2+0+2+1+1+0+1 = 11. I previously said 9, miscalculated. PB2: 0+1+1+1+1+0+0+1+1 = 6 (17). PB3: 1+0+1+0+0+1+1+0 = 4 (21). PB4: 1+0+1+0+0+0+0+0 = 2 (23) ✓. Good, 23.
+
+Everything self-consistent so far.
+
+Now, next: check Part A map ids cited. Read Part A's map.
+
+Now I need to check the Part A ids that the Part B map cites:
+- e1.48, e1.49, e1.51 (from PB1.1, PB2.6)
+- r2e2.14 (PB2.1)
+- r2e1.30 (PB1.5)
+- r2e1.34 (PB1.4)
+- e1.00 (PB1.8)
+- e2.20, e2.21 (PB4.1)
+- e3.34b (PB4.6)
+
+From Part A map §3 and §6.2: e1.48–e1.51 are round-1 edges "ruled to Part B" (V1.7). The Part B map §3 last paragraph says: "Edges joining Part A's map: e1.48, e1.49, e1.51 (V1.7, now computed as PB1.1: e1.51 and e1.49 computed, e1.48 still claimed only); e2.20 (computed), e2.21 (still claimed only...); r2e2.14 (R2V2.7, computed as PB2.1); r2e1.30 (R2V1.4: no reader, claimed only); r2e1.34 (R2V1.7, computed as PB1.4); e1.00 (V1.1's block on D4.4: PB1.8 lifts it and FC17, FC18 hold); e3.34b (the neighbour of PB4.6)."
+
+I need to check Part A's map JSON for these edge ids and what they say, to confirm the citations are right (item, direction, standing). Let me look at Part A's json. It's presumably big. Let me grep for these ids.
+
+e1.48: from D0.2, blocks D3.5; L43.s4, L159.s1 ✓ (PB1.1's blocks edge item "L43.s4, L159.s1 (FROZEN)" with Part A id e1.48 ✓).
+e1.49: from D0.2, constrains D6.6 ✓ (PB1.1's constrains edge, Part A id e1.49 ✓).
+e1.51: from D0.2, moves X:NonVacuous ✓ (PB1.1's moves edge "X:NonVacuous, X:(E)" Part A id e1.51 ✓).
+e1.00: from D1.4 (V1.1), blocks D4.4 ✓ — PB1.8's "changes with D4.4, part_A e1.00". Hmm, e1.00 is a "blocks" edge from V1.1 (D1.4) to D4.4; PB1.8's edge is "changes with D4.4" — the Part B map says "e1.00 (V1.1's block on D4.4: PB1.8 lifts it and FC17, FC18 hold)". The section B1 file said PB1.8 carry: "– (lifts e1.00)". OK, the citation is to the same item D4.4. Reasonable.
+
+Now e2.20, e2.21, r2e1.30, r2e1.34, r2e2.14, e3.34b.
+
+Check the citations:
+
+1. PB2.1's edges cite Part A id r2e2.14. r2e2.14 is from R2V2.7 (Faithful with (A), Viol := Viol⁺) to L189.s2, D12.1, D12.7, L220.n1, FC104.new1, FC104. The Part B map says "r2e2.14 (R2V2.7, computed as PB2.1)". PB2.1 is L189.s2 — the same variant (class-a carry-over "R2V2.7 (a)" per section file). The map's edges for PB2.1: "changes with D5.7, D12.7 (FROZEN)" citing r2e2.14 and "blocks L221.n1, L223.s3 (FROZEN)" citing r2e2.14.
+
+Hmm — discrepancy: r2e2.14's "to" list includes L220.n1, but PB2.1's edge says "L221.n1". Is that a typo? Part A's edge names "L220.n1" (from the section 2 reply R2E17–R2E19, to_label "L189.s2 [FROZEN]; D12.1, D12.7, L220.n1, FC104.new1, FC104; Dec"). Part B's PB2.1 blocks edge item: "L221.n1, L223.s3 (FROZEN)". L221.n1 vs L220.n1 — could be a genuine distinct item (the text may have both L220.n1 and L221.n1). Need to check the text. Let me check the formal core/text for L220.n1 and L221.n1.
+
+2. PB1.5's edge "changes with D3.4 (FROZEN)" cites r2e1.30. But r2e1.30 is "blocks L155.s6" from R2V1.4. PB1.5's free item is L155.s6 (Found). The Part B map §3 says "r2e1.30 (R2V1.4: no reader, claimed only)". The citation in the PB1.5 edge: item "D3.4 (FROZEN)", Part A id r2e1.30. But r2e1.30's item is L155.s6, not D3.4. Hmm — is that a mismatch? The map's own note says "r2e1.30 (R2V1.4: no reader, claimed only)". PB1.5's edge "changes with D3.4 (FROZEN), why: Found's clause". Part A r2e1.30: variant R2V1.4, blocks L155.s6. So the Part A edge is about L155.s6 (Found's clause), while Part B's edge is about D3.4. The Part A id cited on an edge whose item is D3.4 seems wrong — the natural join is that PB1.5 = R2V1.4 = L155.s6 = r2e1.30. The Part B edge item should be L155.s6 (or the Part A id noted as the same variant). Is D3.4 the definition containing Found? In the gaps table §5, "L147.s1 (O_p), L147.s2 (ρ_p)" and "D3.4" relates to ρ_p recording: Part A R2V1.1 was "S108-1-I5: ρ_p recorded (D3.4, under V1.5's conjunct)". Hmm, D3.4 is about ρ_p (the question's recorded history). Found (L155.s6) requires ρ_p = constructed. So PB1.5's "changes with D3.4 (FROZEN): Found's clause" — D3.4 might be where ρ_p is defined. Not obviously an error, but the Part A id r2e1.30 belongs to L155.s6. Let me check what D3.4 is in the formal core. Also check whether r2e1.30 is the right id at all: the map's own §3 note says "r2e1.30 (R2V1.4: no reader, claimed only)" — consistent with PB1.5 implemented "yes (read by no claim)". So the citation is by variant, fine, but the edge's item differs from Part A's item. This might be worth flagging as minor: the edge cites Part A id r2e1.30 whose item is L155.s6 (the very item PB1.5 varies), while the edge's item says D3.4. Whether D3.4 is right: let me check the formal core.
+
+3. PB1.4's edge "changes with D4.3" cites r2e1.34. Let me check r2e1.34.
+
+4. e2.20: from D9.8, L315.s6, L315.s7, constrains D16.XV. PB4.1's edge "changes with D9.8 (FROZEN)" cites e2.20 ✓ (D9.8 appears). PB4.1 is L315.s7 (V2.8's part (a)). OK.
+
+5. e2.21: V2.8 moves X:(Suff) — PB4.1's "moves X:(Suff)" cites e2.21 ✓.
+
+6. e3.34b: V3.7 from D11.4 moves D9.11. PB4.6's edge "changes with D11.4 (FROZEN)" part_A e3.34b. Hmm — e3.34b's "from" is D11.4 and "to" is D9.11. PB4.6 varies L385.s1, D9.11 and its edge is "changes with D11.4". So the direction: PB4.6 (a variant of D9.11) changes with D11.4; Part A's e3.34b: D11.4 moves D9.11. Same relation, reversed direction convention. Fine — "the neighbour of PB4.6" as the map says.
+
+7. PB1.1's blocks edge item "L43.s4, L159.s1 (FROZEN)" vs e1.48's to-list [D3.5, L43.s4, L159.s1] ✓.
+
+Now check r2e1.34.
+
+r2e1.34: R2V1.7 blocks D4.2. PB1.4 is D4.2 (carry "R2V1.7 (b)"). The Part B map's PB1.4 edge "changes with D4.3" cites r2e1.34 — r2e1.34's item is D4.2 (the item varied). PB1.4's edge says "changes with D4.3, why: FC103.new1 (b): k1 and k2 no longer of one kind". Hmm, D4.3 vs D4.2. Let me check what D4.3 is. In the formal core, D4.1 signature, D4.2 ~_C, D4.3 ?, D4.4 kinds? PB1.9 free items: L113.s1, D4.1, D4.2, D4.3, D4.4 → kinds: classes of ~_C. So D4.3, D4.4 relate to kinds. PB1.4 changes ~_C (D4.2), and its edge "changes with D4.3" — plausibly D4.3 is the definition of kinds as classes of ~_C. The Part A id r2e1.34 is about D4.2 — the same variant. OK, the citation joins by variant R2V1.7/PB1.4. Whether "is the Part A id right" — the id r2e1.34 names the variant R2V1.7's block on D4.2, and PB1.4 is computed now. The map's §3 note says "r2e1.34 (R2V1.7, computed as PB1.4)". OK.
+
+Now L220.n1 and L221.n1 both exist as items. PB2.1's blocks edge: "L221.n1, L223.s3 (FROZEN)" citing r2e2.14. r2e2.14's to-list: L189.s2, D12.1, D12.7, L220.n1, FC104.new1, FC104 (line 26099). But wait, lines 26313-26316 show another edge with all of L220.n1, L221.n1, L223.s3 — let me look at that edge (around 26300).
+
+OK, so L221.n1 and L223.s3 are distinct real items. PB2.1's blocks edge item "L221.n1, L223.s3 (FROZEN)" — its own item, fine; the Part A id r2e2.14 names L220.n1 among others (R2V2.7's reach). The citation joins by variant. Acceptable; though one might quibble that r2e2.14's item set doesn't include L221.n1/L223.s3. But the Part B map's own §3 note says "r2e2.14 (R2V2.7, computed as PB2.1)" — the join is by variant, declared. Not an objection, or a very weak one.
+
+Now let me verify the map's claims about scope against run data where I can. The brief says: "The program at the sandbox's root is the program after round 4, to rerun any claim the map cites." I can run claims with switches off only. Useful checks:
+
+1. Run some claims cited as moving — actually with switches off I get the "off" values, which is the record after round 4. That doesn't verify the variant-on values. But I can verify baseline claims hold off, e.g., FC67, FC104.new1 hold off (PB2.1 says they move H→CEX under the variant). Off-run checks are of limited value but could catch misstatements of the off state. Not needed much.
+
+More productive checks:
+
+- Check the whole-suite summary file `part B/whole suite - summary.md` matches the map's claims-moved lists.
+- Check the comparisons with Part A summary for PB1.7's "C5 drops 80 generated more" and PB2.7 "Equal to Part A's C6 (V2.4) on all 17,329 cases".
+- Check the free set file to see whether §5's gaps list ("Free items bearing on the definition that no variant reached — the tabulation's §8") is complete, i.e., matches the tabulation's §8. And whether the per-part tables (§2) are complete and right: e.g., whether items listed as "meaning turned on" are right.
+- Check the builder data file s109b_data.py to see if the map faithfully derives from it.
+- Check the candidate list? No — that's job 4's. My job is the map.
+
+Also I should check rule 10 of the round's rule to know exactly what counts as a gap. Let me read the round's rule (part B/the rule for reading the replies.md) — actually the round's rule file is "the rule for reading the replies.md"? The files list says `part B/` holds "the round's rule" — which is "the rule for reading the replies.md". Let me read it, plus the tabulation (for §8) and the free set (huge, 273KB — read in parts).
+
+Now the map's job per rule 6, and rule 10 gaps. I must check §5 (gaps) against the tabulation's §8 ("the free items bearing on the explanation definition that no variant reached, and the carry-overs not taken up"). Let me read the tabulation file, focusing on §8 and §6 (flags).
+
+Now compare the map's §5 gaps table with the tabulation §8:
+
+Tabulation §8 not-reached:
+- B1: L87.s1, L91.s1–s6, L93.s1 (these are D1.1's sentences), L99.s1 (D1.2/(O)), L105.s2, L105.s3, L137.s1, L143.s1 (displays/glosses), L147.s1, L147.s2 (O_p, ρ_p), D1.1, D1.2, D3.7.
+- B2: L245.s1–s3, D5.2, D5.3, D6.1, D6.10.
+- B3: L169.s2.
+- B4: L315.s10, L315.s17, L389.s1, L397.s5.
+
+Map §5's "Free items bearing on the definition that no variant reached" table:
+- B1 | D1.1 and its sentences L87.s1, L91.s1–s6, L93.s1 — ✓
+- B1 | D1.2 ((O)), L99.s1 — ✓
+- B1 | L105.s2, L105.s3, L137.s1, L143.s1 — ✓ (displays)
+- B1 | L147.s1 (O_p), L147.s2 (ρ_p) — ✓
+- B1 | D3.7 — ✓
+- B2 | L245.s1–s3 — ✓
+- B2 | D5.2, D5.3 — ✓
+- B2 | D6.1 — ✓
+- B2 | D6.10 — ✓
+- B3 | L169.s2 — ✓
+- B4 | L315.s10, L315.s17 — ✓
+- B4 | L389.s1 (K2), L397.s5 (X_j) — ✓
+
+All covered. ✓ Complete against tabulation §8.
+
+Now the map's §5 proposal: round 2 needed for D1.1/D1.2 clauses (B1), L147.s1–s2 (B1), D5.2 and D6.1 (B2), L169.s2 (B3), and four claimed-only edges (e1.48, PB2.4's L369.s2, PB2.9's D8.2, PB2.2's L257.n3).
+
+Is the proposal what the gaps show? The map marks some items "yes" (a variant can reach), some "open", some "recorded". Items marked "yes": D1.1, D1.2; "open": L147.s1–s2, D5.2 (yes, statable), D6.1 (variant of D6.1 itself statable — open), L169.s2 (open). Items "recorded": L105.s2 etc., D3.7, L245.s1–s3, D5.3, D6.10, L315.s10/s17, L389.s1, L397.s5.
+
+Hmm — the proposal names "D5.2 and D6.1 (B2)" but in the table D5.2 is marked "**yes**" and D6.1 "**open**". OK both included. The proposal omits D1.2? It says "D1.1's and D1.2's clauses (B1)" ✓. Fine.
+
+One check: the map's §5 lists under "Edges on the definition's parts left claimed only that a variant could settle": e1.48, PB2.4's L369.s2, PB2.9's D8.2, PB2.2's L257.n3. But rule 10's third clause is "no edge on the definition's parts left claimed only that a variant inside the rule could settle". The map's total claimed-only edges on definition parts: are there others that a variant could settle? The map's claimed-only edges on definition parts (moves X:...):
+- PB4.1 moves X:(Suff) claimed only — "under S109-B4-I1 the defeat sets do not move; the other choice not computed". §5 addresses it in the class-a bullet: "e2.21 stays claimed only under S109-B4-I1's reading... the other choice... was Part A's V4.4, computed there." So not a gap. OK.
+
+Other claimed-only edges with X: items: PB1.1's "blocks L43.s4..." (e1.48) listed ✓. PB1.2's blocks/constrains (claimed only) — items L159.s3/L49.s4 (FROZEN sentences) and Θ (D0.1). Are these "edges on the definition's parts"? The item is not a definition part; the edge is from the variant to a FROZEN item. Rule 10 says "no edge on the definition's parts left claimed only that a variant could settle" — edges *on the definition's parts* = edges whose item is X:(E), X:Dec, etc.? Or edges from variants of the definition's parts? Reading: edges whose target is a part of the definition (X:(E) etc.) left claimed only. The claimed-only edges targeting X: parts: PB4.1's moves X:(Suff) (addressed), PB2.4's contradicted moves (no), PB1.8's contradicted (no). Any others? Let me scan: claimed-only edges and their items:
+- PB1.1 blocks L43.s4, L159.s1 — item is FROZEN sentences, not an X: part. But the map's §5 lists e1.48 as an edge "on the definition's parts left claimed only that a variant could settle". Hmm, e1.48's item is D3.5; L43.s4, L159.s1 — D3.5 is a free item (the one PB1.1 varies), not a definition part. But the map treats it as a gap anyway ("a text block, no run decides it" — actually says a variant could NOT settle it? "e1.48 (the stated-scope requirement at L43.s4, L159.s1: a text block, no run decides it)". Wait the §5 bullet: "**Edges on the definition's parts left claimed only that a variant could settle**: e1.48 (the stated-scope requirement at L43.s4, L159.s1: a text block, no run decides it); PB2.4's block of L369.s2 (a run could: ...); PB2.9's changes with D8.2 (...); PB2.2's block of L257.n3 (...runnable)."
+
+The heading says "that a variant could settle" but then e1.48's parenthetical says "no run decides it" — i.e., e1.48 is NOT settleable by a run. Including it under a heading "left claimed only that a variant could settle" is internally inconsistent, but the parentheticals clarify. Minor wording issue; the proposal includes "the four edges above" in round 2's aim, including e1.48 which by its own parenthetical no run can decide. Slight inconsistency but they say round 2 "aimed at those items only... and the four edges above". Since e1.48 cannot be settled by a run, proposing round 2 to reach it is odd but harmless? Could be an objection: minor.
+
+Actually re-reading rule 10: "no edge on the definition's parts is left claimed only that a variant inside the rule could settle." So for Part B to end, every edge on the definition's parts left claimed only must be one that no variant could settle. e1.48 is claimed only; can a variant settle it? The map says "a text block, no run decides it" — so no variant could settle it, so it is NOT a gap. But the map lists it under the heading "left claimed only that a variant could settle" — mislabeled. And the proposal then says round 2 aimed at "the four edges above" — including one that by the map's own words cannot be settled. This is a genuine (if minor) internal inconsistency in §5. Objection: heading misclassifies e1.48; fix: move e1.48 out of that list (it is not settleable, so not a gap under rule 10), and drop it from the round-2 aim, leaving three edges.
+
+Hmm wait, actually, maybe "a text block, no run decides it" means: the edge's fate is decided by the owner (a yes-or-no in Part C?), not a run. So it's claimed only and no variant could settle → not a gap. Yes.
+
+Now check §2 per-part tables for completeness and correctness.
+
+The definition parts: (E), Dec, Expl, (Suff), (Nec). The map's §2 has rows for (E), Dec, X_j (defeat sets of (Suff),(Nec) only), Expl (everything under (E) and Dec), (Suff),(Nec). The brief asks "Per part of the definition ((E), Dec, Expl, (Suff), (Nec)): are the free items its meaning and scope were found to turn on, and those varied without moving either, complete and right?"
+
+(E) meaning column: D3.5 (PB1.1); D3.1 (PB1.2); D3.2 (PB1.3); L103.s1,D1.3 (PB1.6); L141.s2,D3.1 (PB1.7); D5.5,L241.s1 (PB2.2); D5.4 (PB2.3); D5.6,L249.s1 (PB2.4); D6.2 (PB2.5); D6.6 (PB2.6); D5.6 (PB2.7); D5.1 (PB2.9). From the meaning tables of sections: PB1.1 (E):NonVacuous ✓; PB1.2 domain of (E) ✓; PB1.3 domain of (E) ✓; PB1.6 (E):Dependence ✓; PB1.7 domain of (E) ✓; PB2.2 (E):(F2) ✓; PB2.3 (E):(F1) ✓; PB2.4 (E):(A) ✓; PB2.5 (E):Dependence ✓; PB2.6 (E):NonVacuous ✓; PB2.7 (E):(A) ✓; PB2.9 (E): what (F1),(F2) read ✓. That's 12 variants. Any other variant whose meaning moves (E)? PB2.1's meaning: Dec and Expl — not (E). PB3.x: Dec. PB1.8, PB1.9, PB1.4, PB1.5: none. PB2.8: none. PB4.x: (Suff),(Nec) or none. So (E) meaning list complete ✓.
+
+(E) scope column: PB1.1, PB1.2, PB1.3, PB1.6, PB1.7, PB2.2, PB2.3, PB2.5, PB2.6, PB2.7 — 10 entries; missing PB2.4 and PB2.9 (meaning only) ✓ correct.
+
+Dec meaning: PB2.1, PB2.2, PB3.1–PB3.6 (8). Check PB3.5's meaning: Dec (Sel's H-clause) ✓. Dec scope: PB2.1, PB2.2, PB3.1, PB3.2, PB3.3, PB3.4, PB3.6 (7; PB3.5 scope unchanged) ✓.
+
+X_j meaning: PB4.2, PB4.3, PB4.4 ✓ (plus PB4.1's Out_j is "none of the five parts"). X_j scope: PB4.2, PB4.4 ✓.
+
+"Varied, meaning of a part moved, scope unchanged": PB2.4, PB2.9, PB3.5, PB4.3, PB4.1 — five ✓ (PB4.1's meaning: "none of the five parts (Out_j)" — hmm! PB4.1's meaning moves Out_j, which is not one of the five parts. The map's §2 sentence says "Varied, meaning of a part moved, scope unchanged on every case computed: ... PB4.1". But PB4.1's meaning part is "none of the five parts (Out_j)" — so no part of the definition moved in meaning; what moved is Out_j, outside the five parts. Including PB4.1 in a list of "meaning of a part moved" is arguably wrong: for the five parts, PB4.1 moved neither meaning nor scope. But the JSON's "meaning_only" also lists PB4.1. Hmm. Out_j is not one of (E), Dec, Expl, (Suff), (Nec). Actually wait — does Out_j feed (Suff)/(Nec)? X_j is the defeat sets; Out_j is "ruled out for j". The map's own §1 row for PB4.1 says "meaning moves, scope unchanged" — meaning of what? The variant's formal statement changed (Out_j's). The §2 list is titled "Varied, meaning of a part moved, scope unchanged on every case computed". If "a part" means a part of the explanation definition, PB4.1 doesn't belong. But it's a borderline framing: the meaning recorded is the changed formal statement of "each part that moves" — and PB4.1's §2 meaning entry says part = "none of the five parts (Out_j)". So the map itself records that no part moved; listing it under "meaning of a part moved" contradicts its own §1 row label. Minor objection perhaps. Similarly PB2.9's meaning part is "(E): what (F1), (F2) read (the transport)" — that is a part of (E) (what a conjunct reads), fine. PB4.3's meaning part is "(Suff), (Nec): X_j through Prem" — fine. PB3.5: Dec ✓.
+
+So possible objection X: §2's "meaning moved, scope unchanged" list includes PB4.1 although its meaning row says "none of the five parts (Out_j)"; fix: move PB4.1 to the "neither" list (as to the five parts) or reword.
+
+Hmm, but is that right? "meaning" per rule 5/6: "meaning (old → new statement of each part that moves)". For PB4.1, no part of the definition moves; the changed statement is of Out_j. The map counts it as "meaning only". I think it's a defensible classification (the formal statement that (Suff)/(Nec) read through changed) — actually Out_j is upstream of (Suff)/(Nec)? (Suff) and (Nec) are claims read through defeat sets X_j; Out_j is what rules candidates out for j — used by D10.1 Prob etc. Eh. It's borderline; the map is consistent in listing PB4.1's part as "none of the five parts (Out_j)". I'll raise as a minor.
+
+Next: check §1 table's "meaning" column values against section files' meaning tables — done, they match verbatim.
+
+Now verify scope claims in map §1 against section files — done above; they match.
+
+Now check the whole-suite summary and comparisons with Part A, to validate claims-moved lists and the "as C6"/"subset of C5" statements.
+
+Whole-suite summary matches the map's claims-moved lists for each variant ✓ (PB1.2's 18 claims — the summary line lists FC101, FC22, FC23 parts, FC23.new1..., FC99 = 18 entries; map lists 18 ✓).
+
+Comparisons with Part A: PB1.7 vs C5: "Acc differs on 80" and "dropped by C5 only: 80" → the map's "C5 drops 80 generated more" ✓. PB2.7 vs C6: 0 differs on all 17,329 ✓.
+
+One discrepancy to check: the whole-suite summary for PB2.5 lists two runs: PB2.5-bg-input and PB2.5-bg. The map's PB2.5 row lists claims "FC23.new1, FC62" (bg). ✓.
+
+Also PB3.4's summary note: "error: ['FC84.new1']" and H 126, CEX 8, NT 8 — the map records FC84.new1 H→NT and the TypeError (§6 Unsure) ✓.
+
+Now, remaining checks per my brief:
+
+1. "For each variant: is its meaning ... what the section file computes?" — done for all 34 (B1–B4 section files match map §1 meaning column).
+
+2. "Is its scope ... what the runs show?" — matches section files. But should I independently verify some numbers by running the program? The program at root is round-4 (all switches off). I can verify "off" values: e.g., claims that the map says move H→CEX should hold (H) in my off run. Let me spot-check a few: FC67 (PB2.1 says H→CEX, so off = H), FC104.new1, FC98, FC30.new1, FC56, FC72, FC85 (PB3.7 says "FC85 holds" — off holds), FC109, FC40? Let me run a handful to confirm off statuses match what the map implies. This is a weak check but catches gross errors.
+
+Actually more targeted: the map claims certain claims hold off and move on; if any claim is already CEX off, the map's "H→CEX" would be wrong. Let me check a sample: FC01 (PB1.6: H→CEX), FC05 (PB1.8/PB1.9: H→CEX), FC16, FC17, FC18 (PB1.8 says hold), FC21/FC96/FC109 (PB2.4), FC23.new2, FC47.new1, FC56, FC67, FC72, FC72.new1, FC72.new2, FC77, FC83, FC84.new1 (H off), FC98, FC98.new1, FC102.new1, FC12.new1, FC12.new2, FC104.new1, FC30.new1, FC74, FC76, FC85, FC101, FC22, FC34, FC63, FC90.new1, FC99, FC25.new2, FC26, FC27.new1, FC42.new1, FC80.new1, FC103.new1, FC04, FC23, FC23.new1/new3/new5.
+
+The record after round 4 says 133 H, 2 CEX, 7 NT. The 2 CEX are presumably FC21 and FC96 (PB2.4 says FC21 (a2), FC96 (i), FC109 fail — FC21 and FC96 might already be CEX off!). Hmm: PB2.4's claims_moved: FC21 H→CEX, FC96 H→CEX, FC109 H→CEX. But the record says only 2 claims have counterexamples after round 4. If FC21 and FC96 are already CEX off, then they can't be H→CEX. Let me check the formal claims file for their after-round-4 statuses.
+
+Let me grep the formal claims json for statuses.
+
+The json is per-claim structured but hard to navigate by grep. Easier: run the program on a few claims to see off statuses. Let me run the claims the map says move H→CEX for a sample of variants, plus FC21/FC96/FC109 which I suspect might already be CEX off.
+
+Off statuses: FC21 HOLDS, FC96 HOLDS, FC109 HOLDS, FC67 HOLDS, FC104.new1 HOLDS, FC85 HOLDS. So the map's H→CEX directions are consistent with off = H. Good. (PB2.4's "FC21 (a2), FC96 (i) and FC109 fail" — FC21 H→CEX etc., consistent with section/whole-suite record.)
+
+Note: FC104.new1 (b)'s off result says "Sel True; Viol (narrow) False; Viol⁺ (wide) True" — i.e., off (with narrow Viol) the claim holds; under PB2.1 (Viol := Viol⁺), Sel ∧ Viol⁺ at a pair of H → claim fails ✓ consistent with the map's PB2.1 row.
+
+Now, more checks per brief:
+
+(a) The map's §0: "34 variants: 31 implemented as switches (PB2.8, PB2.9, PB4.3 with no code change, PB1.5 with no reader)". Check arithmetic: 34 total; PB3.8 flagged out; PB4.4 flagged as written, computed as PB4.4′ (implemented as switch PB4.4'). So implemented as switches: 34 − PB3.8 − PB2.8 − PB2.9 − PB4.3 = 29, plus PB1.5 = 30? Hmm: "31 implemented as switches (PB2.8, PB2.9, PB4.3 with no code change, PB1.5 with no reader)". Reading: 31 implemented as switches; the exceptions listed are the other 3 (34 − 31 = 3). PB3.8 is separately said "flagged out (no formal statement)". So 34 − PB3.8 = 33; of those, PB2.8, PB2.9, PB4.3 have no code change; PB1.5 has a switch (core.found()) but read by no claim. 33 − 3 = 30 with code change... "31 implemented as switches" would be 33 − 2? Hmm: maybe PB2.8/PB2.9/PB4.3 are 3 with no code change, so switches = 30, not 31. Unless PB4.4 as-written flagged counts... Let me count switches in the section files §1 "switch" column:
+PB1.1 S109B_VARIANT=PB1.1 ✓
+PB1.2 ✓, PB1.3 ✓, PB1.4 ✓, PB1.5 core.found() (a function changed — "switch" listed as core.found(), arguably a code change with no env switch), PB1.6 ✓, PB1.7 ✓, PB1.8 ✓, PB1.9 ✓ → B1: 9 variants, 8 with S109B_VARIANT switch, PB1.5 without env switch.
+PB2.1–PB2.7 ✓ (7), PB2.8 none, PB2.9 none → 7 switches of 9.
+PB3.1–PB3.7 ✓ (7), PB3.8 none → 7 of 8.
+PB4.1 ✓, PB4.2 ✓, PB4.3 none, PB4.4′ ✓, PB4.5–PB4.8 ✓ (4) → 7 of 8.
+Total S109B_VARIANT switches: 8+7+7+7 = 29. Plus PB1.5's core.found() change = 30 code changes. Hmm "31 implemented as switches" ≠ 29 or 30.
+
+Count of variants "implemented and computed" = 33 (per §4). Of those, no code change: PB2.8, PB2.9, PB4.3 (3) → 30 with code changes. The §0 sentence says "31 implemented as switches (PB2.8, PB2.9, PB4.3 with no code change, PB1.5 with no reader)". If PB1.5 has a code change but no reader (no claim reads it), it's still implemented. So implemented with code = 30, of which PB1.5 read by none. "31 implemented as switches" is off by one, unless they count PB4.4 twice (as PB4.4′ two readings are one switch) or count PB1.2's two readings... Or maybe they count PB2.5 as one... Hmm.
+
+Alternatively "31 implemented as switches" might count: 33 computed − PB2.8 − PB2.9 = 31, with PB4.3 having "no code change" but still... no wait, they say PB4.3 with no code change among the three, so 33−3 = 30.
+
+Let me recount "computed": §4 says "33 implemented and computed". Variants: 34 − PB3.8 = 33 ✓. Of the 33: PB2.8 (no code), PB2.9 (no code), PB4.3 (no code) → 30 with code change ("implemented as switches" should be 30, or 29 env-switches + PB1.5's unguarded change). Either way "31" doesn't match: 30 code changes. Unless PB1.5's "core.found()" is not a switch and they count 29+PB1.5... 30. Hmm, 31 would need one more. Maybe they count PB4.4 as written flagged out AND PB4.4′ implemented → 34 − PB3.8 − PB4.4(as written) = 32 computed variants, minus... no.
+
+This is a minor arithmetic wobble in §0. Let me carefully recount: variants with a switch (env var): PB1.1, PB1.2, PB1.3, PB1.4, PB1.6, PB1.7, PB1.8, PB1.9 (8); PB2.1, PB2.2, PB2.3, PB2.4, PB2.5, PB2.6, PB2.7 (7); PB3.1–PB3.7 (7); PB4.1, PB4.2, PB4.4', PB4.5, PB4.6, PB4.7, PB4.8 (7). Total 29 env switches. Plus PB1.5 (code, no env switch) = 30 "implemented". So "31 implemented as switches" is wrong by 1 (or by 2 if only env switches count). And §4's "Variants: 33 implemented and computed" uses "implemented" for all 33 including the three with no code change — inconsistent with §0's "31 implemented as switches ... PB2.8, PB2.9, PB4.3 with no code change" (if those three are excluded from "implemented as switches", 33−3=30). So §0's "31" should read "30". Minor objection.
+
+Wait — maybe they count PB2.5's two readings as separate switches? No, one switch with readings. Or PB1.2's Θ readings? One switch. Hmm. Or maybe they count PB4.4 as PB4.4′ plus PB4.4 flagged... Actually maybe they counted: 34 − PB3.8 (flagged out) − PB2.8 − PB2.9 − PB4.3 (no code change) = 30... then +1 error. Or they counted 33 implemented (including no-code-change ones, since "nothing to change" counts as implemented trivially) and then said "as switches" loosely, subtracting only PB1.5 (no reader)? 33 − PB1.5 = 32. No.
+
+Let me not overthink: the count is ambiguous/wrong; I'll flag it as a minor numeric inconsistency: §0 says 31, §4 says 33 implemented and computed, and the section files show 29 env switches + PB1.5 (code only) + 3 with no code change = 33. Exact fix: "31" → "30" (29 S109B_VARIANT switches plus PB1.5's core.found()), or reword.
+
+Hmm wait, actually maybe PB4.4' counts as two switches? "S109B_VARIANT=PB4.4', S109B_HELD=all or no-records". One variant switch + one reading switch. Similarly PB1.2 has S109B_THETA, PB2.5 S109B_NC0, PB2.7 S105_SLOT_QUANTIFIER. If they counted "switches" as distinct env vars introduced: patch_B1: S109B_VARIANT, S109B_THETA; B2: S109B_VARIANT, S109B_NC0 (S105_SLOT_QUANTIFIER pre-existing); B3: S109B_VARIANT; B4: S109B_VARIANT, S109B_HELD. Not 31 either.
+
+OK. Next: check the builder data file quickly to confirm the map is generated from it (consistency), and check a couple of scope numbers in the section JSON files (e.g., PB1.2's "36 of 49 cases leave", acc_out has 36 entries? The JSON acc_out list — count: I saw 36 entries? Let me count from lines 114-150: entries from "E1 pole, forward organization, C1" to "owner's sign, change as mixed: one part". Lines 115–150 = 36 entries ✓. And expl_only 5 entries (lines 152-158) ✓ "41 (0/36/5)".
+
+Map §1 PB1.2 scope says "Θ strict: 36 cases and 813 generated leave (the sign and vane as edits or mixed)". ✓.
+
+Now check §0's numbers: "the text's worked cases (27)", "the made-up candidates (17,280 generated at scale 4, FC-E1-E5, CT1-CT8)", "the whole claim suite (142 claims)". Section files say scope covers 27 worked cases and 22 encodings, 17,280 candidates of which 999 meet (E). ✓. Also §0: "34 variants" ✓.
+
+Also §0 says "the owner's four cases (the two-part sign and the weathervane under the three readings of the owner's change, the student's copy FC30.new1 (d), the bridge FC84.new1 (a1), (a2))". Bridge is covered only in B3's scope (chains + bridge). B1/B2/B4's scope runs don't include the bridge. The map's §1 rows for B1/B2/B4 variants have "bridge": null. So the map honestly records that. But then §0's claim "Scope = ... computed off against on: ... the owner's four cases ..." overstates: for 26 of 34 variants the bridge and chains were not computed (bridge: null in B1, B2, B4 sections; chains null too). Hmm — B1/B2 scope tables say "the 27 worked cases and 22 encodings..., the student's copy (FC30.new1 (d)), the generated worlds, FC-E1-E5 and CT1-CT8" — no chains, no bridge. The map's §6 Unsure mentions Dec on worked/generated cases read on three hand-set histories. But does the map say anywhere that the bridge was computed only under B3? §6 says "only the chains, the student's copy and the bridge compute provenance from a history". §1's scope cells summarise per variant; e.g., PB2.1's scope_note says "The bridge's chain reads Held by hand: stays" — so B2 did compute the bridge for PB2.1? That was probably a hand check. For PB1.x, no bridge statement. Is this a gap in scope? The variants in B1 affect (E)'s domain — the bridge (FC84.new1) doesn't read (E)? Actually the bridge's Acc(c, p_c, ...) does read Acc. PB1.2's scope_note says nothing about the bridge. The reply predicted "bridge and student leave" under Θ strict. The computed scope says the student "moves: Dec [True] → [True]" (stays) but says nothing about the bridge under PB1.2. Hmm — the bridge's brief is a question? Under PB1.2 Θ strict, contracts holding non-identity edits name no question; the bridge's brief — is it an edit? Unknown. The map's §1 PB1.2 row scope says "Θ strict: 36 cases and 813 generated leave (the sign and vane as edits or mixed)" — no bridge statement. So for PB1.2 the owner's case "the bridge" was not computed, contrary to §0's blanket statement "Scope = ... the owner's four cases ... computed off against on". Also for PB2.7 etc.
+
+Is that an objection? The brief asks: "Is its scope (worked cases, the owner's four cases, ...) what the runs show?" The runs (B1/B2/B4 scope) did not include the bridge; the map's §0 asserts scope includes the owner's four cases per variant. The map's JSON records bridge: null for those variants — honest at the data level, but the map's §0 prose overstates. And rule 5 required each variant computed for scope "(2) the owner's own cases: ... the bridge (FC84.new1) and the student's copy (FC30.new1 (d))". So B1, B2 and B4's computation omitted the bridge (and chains) for their variants; the map doesn't list this as a gap or departure in §5 or §6 (except §6's partial note). Hmm, §6 Unsure says "Dec on the worked and generated cases is read on three hand-set histories (I90); only the chains, the student's copy and the bridge compute provenance from a history." That explains why B1/B2/B4 didn't run chains. But the bridge as an owner's case under variants that change (E) (e.g., PB1.2, which by the reply's own prediction moves the bridge) was not computed. The map's §5 gap analysis doesn't list "the owner's four cases not computed for the bridge under B1/B2/B4 variants" as a gap. Is it a gap rule 10 reaches? Rule 10 is about free items, carry-overs and claimed-only edges — not about cases. But the map's §0 claims scope computed for the owner's four cases, which is inaccurate for ~26 variants (bridge). I'd raise this as an objection (medium severity): the map's §0 says scope includes the bridge per variant; in fact the bridge was computed only in B3 (and by hand for PB2.1); the JSON records bridge: null elsewhere; the map should say so (fix: qualify §0, or record the bridge's status per variant as "not computed" in §1's scope cells).
+
+Let me double-check the B1/B2/B4 JSON scope entries: PB1.2's scope has "chains": null, "bridge": null ✓. And "owner" field covers sign/vane only; "student" field covers the student. So of the owner's four cases (sign, vane, bridge, student), three are in every scope run; the bridge only in B3. Also the weathervane: FC22 (b) "the program's vane" — covered by the 22 encodings. OK.
+
+Now, does the map anywhere acknowledge this? §1 rows: PB1.2's scope cell: "Θ strict: 36 cases and 813 generated leave (the sign and vane as edits or mixed)" — no bridge mention. §3? no. §6 Unsure: no explicit "bridge not computed under B1/B2/B4". Actually §6 line 184: "Dec on the worked and generated cases is read on three hand-set histories (I90); only the chains, the student's copy and the bridge compute provenance from a history." — implies the bridge is computed only where provenance is computed (B3). And PB4.x scope says "all stay (B4 reads neither (E) nor Dec)" — for B4 the bridge can't move, fine. For B1/B2 variants that move (E) (PB1.2, PB1.6? PB1.6 moves only generated; PB2.2, PB2.3, PB2.5, PB2.7), the bridge's Acc could move. E.g., PB2.7 'some' — the bridge's CreateEx reads Acc; under PB2.7 the two-part sign leaves; would the bridge's brief hold (E)? Part A's map noted "the bridge builds no candidate: no variant's effect on it as an explanation is computed (as after round 1); only its provenance and CreateEx". So Part A also never computed the bridge as an explanation. The Part B map's §0 sentence "the owner's four cases ... computed off against on" is inherited boilerplate that doesn't hold for the bridge in B1/B2/B4. I'll flag it.
+
+Severity: it's a misstatement of what was computed (scope), which is exactly my angle. The fix: qualify §0 ("the bridge only in section B3's runs; elsewhere not computed") and add to §6, or compute it.
+
+Next: check map §1's PB2.1 claims "FC104.new1, FC67" ✓; PB2.1 edges 4/0/0 ✓.
+
+Now verify per-variant "claims that move" column against whole-suite summary: all match (checked above row by row):
+- PB1.1 none ✓; PB1.2 18 ✓; PB1.3 none ✓; PB1.4 FC05, FC103.new1 ✓; PB1.5 not run ✓; PB1.6 FC01 ✓; PB1.7 FC25.new2 ✓; PB1.8 FC05 ✓; PB1.9 FC04, FC05, FC16 ✓; PB2.1 FC104.new1, FC67 ✓; PB2.2 FC27.new1, FC77 ✓; PB2.3 FC42.new1, FC80.new1 ✓; PB2.4 FC109, FC21, FC96 ✓; PB2.5 FC23.new1, FC62 (bg) ✓; PB2.6 none ✓; PB2.7 FC23, FC23.new1, FC23.new2, FC23.new5, FC25.new2, FC27.new1, FC72.new2 ✓; PB2.8 not run ✓; PB2.9 not run ✓; PB3.1 FC30.new1 ✓; PB3.2 FC98 ✓; PB3.3 FC102.new1, FC12.new1, FC12.new2, FC30.new1, FC83 ✓; PB3.4 FC12.new1, FC12.new2, FC30.new1, FC83, FC84.new1, FC98, FC98.new1 ✓; PB3.5 none ✓; PB3.6 FC30.new1 ✓; PB3.7 none ✓; PB4.1 FC56, FC72, FC72.new1 ✓; PB4.2 FC56 ✓; PB4.3 not run ✓; PB4.4 7 claims ✓; PB4.5 FC74, FC76 ✓; PB4.6 none ✓; PB4.7 none ✓; PB4.8 FC47.new1, FC72.new2 ✓.
+
+Note: whole-suite summary has no run for "PB1.2 Θ all" (only PB1.2-strict) — map's suite_runs lists "B1 PB1.2-strict" ✓ and the Θ-all reading's code path is the default's (nothing moves) — fine.
+
+Now check the builder and data files quickly.
+
+Interesting: the map is generated from the hand record s109b_data.py plus scope/suite data. Note the "scope (computed)" cell in §1 for variants in neither SCOPE_MOVES nor MEANING_ONLY nor FLAGGED_OUT says "no candidate moves (nothing in the definition reads it)". For PB1.4, PB1.5, PB1.8, PB1.9, PB2.8, PB3.7, PB4.5–PB4.8, this matches. OK.
+
+But wait: PB2.9 and PB4.1's §1 scope cell says "meaning moves, scope unchanged on every case computed" ✓ (they're in MEANING_ONLY). PB4.1's MEANING_ONLY membership despite its meaning part being "none of the five parts (Out_j)" — confirmed from the data. The §2 heading text "Varied, meaning of a part moved, scope unchanged" thus includes PB4.1 whose "part" is "none of the five parts". Objection stands (minor): PB4.1 belongs with "neither" as to the five parts, or the sentence should say "the changed statement of what (Suff)/(Nec) read".
+
+Also §4's "Variants: 33 implemented and computed" = len(allv) − 1 = 33 ✓.
+
+The §0 "31 implemented as switches" is hand-written in the builder (line 165). Count of variants with an actual switch/code: from V's impl fields: "yes" (PB1.1, PB1.3, PB1.4, PB1.6, PB1.7, PB1.8, PB1.9, PB2.1, PB2.2, PB2.4, PB2.6, PB2.7, PB3.2, PB3.3, PB3.5, PB3.7, PB4.2, PB4.5, PB4.6, PB4.7, PB4.8 = 21), "nearest reading" (PB1.2, PB2.3, PB2.5, PB3.1, PB3.4, PB3.6, PB4.1 = 7), "yes (read by no claim)" (PB1.5 = 1), "no code change" (PB2.8, PB2.9, PB4.3 = 3), "flagged out (no formal statement)" (PB3.8), "flagged out as written; computed as PB4.4′ on D9.8" (PB4.4). So implemented (code or reading) = 21+7+1 = 29 with code changes; +PB4.4 = 30 (PB4.4's switch exists: PB4.4′). Wait PB4.4 impl = "flagged out as written; computed as PB4.4′ on D9.8" with a switch. So code-change variants: 21 + 7 + 1 (PB1.5) + 1 (PB4.4′) = 30. So "31 implemented as switches" is wrong; should be 30 (or 29 if PB1.5's unguarded core.found() doesn't count as a switch — but §0 says "PB1.5 with no reader", implying PB1.5 IS among the 31). Under the most natural reading — 31 = switches including PB1.5, excluding the 3 no-code-change — the count should be 30. Off by one. Minor objection.
+
+Now, are the three class-a carry-overs computed? PB1.1 ✓, PB2.1 ✓, PB4.1 ✓. §5 says "all three computed" ✓ per rule 10.
+
+Now check e1.48–e1.51: Part A had four edges e1.48–e1.51 (blocks, constrains, independent of L317.s15, moves). Part B computed PB1.1 with edges citing e1.48 (blocks), e1.49 (constrains D6.6), e1.51 (moves). e1.50 ("independent of L317.s15") is not cited anywhere in the Part B map. The map's §3 "Edges joining Part A's map" lists e1.48, e1.49, e1.51 but not e1.50. Part A's e1.50: V1.7 independent of L317.s15 ("narrowing still makes a new question"), claimed only, ruled to Part B. Under rule 10, is e1.50 a gap? It's an edge of V1.7 (= PB1.1) that Part A ruled to Part B and Part B never computed or recorded. The map's §5 doesn't mention e1.50. Is e1.50 "an edge on the definition's parts"? Its item is L317.s15 (a FROZEN sentence about new questions), not a definition part. So under rule 10's letter ("no edge on the definition's parts left claimed only that a variant could settle"), e1.50 may not count. But the map's §3 "Edges joining Part A's map" purports to list the joins; e1.50 is a Part A edge of the very variant Part B computed (PB1.1), and it is left neither computed nor cited. The map says nothing about it. Is that an incompleteness? The brief asks: "where an edge joins Part A's map, is the Part A id right?" and "Are the gaps under rule 10 listed in full...". e1.50 (independent of L317.s15) is not on a definition part, so not a rule-10 gap; but §3's list of joins omits a Part A edge (e1.50) that belongs to a computed Part B variant. Could a variant settle it? "narrowing still makes a new question" — probably a text reading. The map's failure to mention e1.50 at all is a completeness gap in §3's summary sentence (which says "Edges joining Part A's map: e1.48, e1.49, e1.51 (V1.7...)"). It lists exactly the three that PB1.1's edges cite. e1.50 was ruled to Part B along with e1.48–e1.51 (Part A §6.2: "e1.48–e1.51 (V1.7, to Part B)"). So Part A handed four edges to Part B; Part B's map cites three and is silent on the fourth. Objection: e1.50 (V1.7 independent of L317.s15) is unaddressed — neither computed, nor recorded with why no variant reaches it, nor named in §5. Under rule 10, class-a carry-over edges should be computed or recorded. Actually rule 10 says "every class-a carry-over has been computed" — the carry-over V1.7 was computed (as PB1.1). The edges of Part A are separate. Hmm. But the round's rule 5/6 doesn't require taking up Part A's edges. Still, the map's §3 sentence "Edges joining Part A's map: e1.48, e1.49, e1.51 (V1.7, now computed as PB1.1...)" implies these are the V1.7 joins; e1.50 is also a V1.7 edge in Part A's map, and it is left out silently. I'd raise it as a completeness objection (minor-to-medium): fix = add e1.50 to the §3 list as "not computed, claimed only (L317.s15, a text reading; no variant in B1 reached it)" or record why.
+
+Let me double check Part A map §6.2: "e1.48–e1.51 (V1.7, to Part B)". Yes, four edges. And the round's rule carry-over table says "V1.7 ... edges e1.48 to e1.51". So Part B was handed e1.48–e1.51. The Part B map handles three. e1.50 = "independent of L317.s15". A run could potentially settle it? It says "the theory hangs together; L317.s15 is safe (narrowing still makes a new question)". Under PB1.1 (Excl := (A×B)∖C, Stated always true), is "narrowing still makes a new question" (L317.s15) affected? Possibly computable. At minimum it should be recorded. Objection stands.
+
+Next: check §2 row "(Suff), (Nec)" scope cell: "FC30.new1's defeat-set parts move with PB1.2, PB3.1, PB3.3, PB3.4, PB3.6". Check: FC30.new1 moved under PB1.2 ✓, PB3.1 ✓, PB3.3 ✓, PB3.4 ✓, PB3.6 ✓ — also under PB4.4 (but that's X_j's own, listed separately ✓). OK.
+
+But hold on — FC30.new1 also moved under PB4.4 (X_j) — covered by "and X_j's (PB4.2, PB4.4′)". Wait PB4.2's claims moved = FC56 only; FC30.new1 not under PB4.2. The cell says "X_j's (PB4.2, PB4.4′)" meaning scope moves of X_j come from PB4.2 and PB4.4′. Fine.
+
+Now the Dec scope cell for PB2.1: "FC104.new1 (b)'s selection becomes declared" — hmm, becomes declared? PB2.1: the selected transport "is no longer selected (Sel F): declared, so no explanation there". OK consistent.
+
+(E) scope cell PB2.7: "20 to 28 cases, 855 to 946 generated leave (as C6)" ✓ matches section (20/28/24/25 cases; 935/946/855/858 generated). Wait: 'every' = 20 cases, 935 generated. The map says "855 to 946" — range of generated ✓ (855, 858, 935, 946). And cases "20 to 28" ✓ (20, 24, 25, 28).
+
+Now §2 (E) meaning row lists "D5.6 (PB2.7)" and separately "D5.6, L249.s1 (PB2.4)" ✓ both are D5.6 variants.
+
+Now check the free set to confirm the free items of each variant are actually free (in the free set) and the FROZEN marks used in edges. E.g., PB1.1's blocks edge item "L43.s4, L159.s1 (FROZEN)" — the free set is Part A's frozen set inverted: free = 169 sentences + 69 definitions. L43.s4 marked FROZEN in Part B — plausible. Also e1.48's item list included D3.5 (free) and L43.s4, L159.s1.
+
+Let me spot check the free set file for a few items: D3.5, D3.1, L155.s6, L189.s2, L315.s7, L397.s13, D12.4, and the FROZEN claims: L43.s4, L159.s1, L119, D6.3, D12.1, D9.8, D9.6, D16.3, L193.s1, L211.s1/s3, L405, L413.s1/s2, L397.s10, D10.6, D11.4, D9.10, L313.n3, L369.s2, L257.n3, L271.s1, L231.s2/L245.s4, D6.5, L257/D6.9, D3.6, D3.3, D0.2, L159.s3/L49.s4, D0.1, L11.s2, L221.n1/L223.s3, L269.s2, D6.4/D8.2, D5.7/D12.7, L389? etc.
+
+The free set file is 273KB; let me grep for specific ids with their section/marks. The template marks each free item ⟨E Dec Expl Suff Nec⟩ etc. Grep for "L43.s4" etc.
+
+Important finding: several items the map's edges mark "(FROZEN)" are actually FREE in Part B:
+
+- Line 778: `L317.s15` | **B4** | — it's a free item (section B4)! Not FROZEN. But wait, the map's PB2.4 edge "blocks L369.s2 (B2)" — line 858: `L369.s2` | **B2** — free, and the map labels it "(B2)" not FROZEN ✓ good.
+- Line 157: `L369.s2` | sentence | – | – | – | (in some table of marks) — hmm, line 157 is in the template's marks table with "– – –" (bears on nothing). Line 858 in the free-set listing says B2. OK L369.s2 is free, B2. The map's PB2.4 edge says "blocks L369.s2 (B2)" ✓ correctly marked as free (B2's), and §5 lists it as a claimed-only edge a run could settle ✓.
+
+Now check items marked FROZEN in the map's edges against the free set:
+- L43.s4: FROZEN ✓ (line 431)
+- L159.s1: FROZEN ✓ (578)
+- L159.s3, L49.s4: FROZEN ✓ (580, 444)
+- L119: FROZEN ✓ (524-531)
+- L221.n1, L223.s3: FROZEN ✓ (652, 655)
+- L257.n3: FROZEN ✓ (684)
+- L269.s2: FROZEN ✓ (693)
+- L271.s1: FROZEN ✓ (695)
+- L313.n3: FROZEN ✓ (742)
+- L193.s1: FROZEN ✓ (619)
+- L211.s1, L211.s3: FROZEN ✓ (639, 641)
+- L405: FROZEN ✓ — PB3.1's edge quotes L405 'the rest of the content keeps its inherited provenance' → L405.s5 FROZEN ✓
+- L413.s1, L413.s2: FROZEN ✓ (930, 931)
+- L397.s10: FROZEN ✓ (893)
+- L317.s15: B4 (free!) — but is L317.s15 cited in any Part B edge? e1.50 concerns it, and the map doesn't cite it. OK.
+- L11.s2: FROZEN ✓ (372)
+
+Need to also check: D6.3, D12.1, D9.8, D9.6, D9.10, D11.4, D10.6, D16.3, D3.3, D3.6, D6.5, L257/D6.9, D6.4/D8.2, D5.7/D12.7, D0.2, Θ (D0.1), D6.1/D7.1, D4.4, D4.3, D3.4, L231.s2/L245.s4, D8.2/D8.3/D12.5, L257, D6.9. Let me grep the free set for these definition rows. Also check that the free items of each variant are free (D3.5, D3.1, D3.2, D4.2, L155.s6, L103.s1+D1.3, L141.s2, L115.s1+D4.1, L113.s1+D4.1–D4.4, L189.s2, D5.5+L241.s1, D5.4, D5.6+L249.s1, D6.2, D6.6, D5.1, L311.s2+D7.3, D12.4, D12.5+L207.s1, L195.s1+L195.s5, L199.s1+L199.s3, D11.5+L217.s2, D11.1+L169.s1, D13.4+L169.s3, L225.s4, L315.s7, D9.5, D9.3, L397.s13, L383.s1, L385.s1+D9.11, L546.s1, D10.1+L317.s1).
+
+Key facts:
+
+- D0.1 is free (B1, bears on nothing), D0.2 is FROZEN ✓ (map's PB1.1 edge "changes with D0.2 (FROZEN; I27)" ✓).
+- The variant free items are all in the free set ✓ (D3.1, D3.2, D3.5, D3.7, D4.1–D4.4, D5.1–D5.6, D6.1, D6.2, D6.6, D6.10, D7.1, D7.3, D11.1, D11.5, D12.4, D12.5, D13.4, D9.3, D9.5, D9.11, D10.1 all free).
+
+Now check the FROZEN marks on edge items in the map:
+- PB1.2 edge "constrains Θ (D0.1)" — D0.1 free, no FROZEN mark used ✓.
+- PB1.3 "constrains D3.3 (FROZEN)" — D3.3 not in the free list above (B1 free definitions listed: D1.1, D1.2, D1.3, D3.1, D3.2, D3.5, D3.7, D4.1, D4.2, D4.3, D4.4, D5.1, D5.2, D5.3, D5.4, D5.5, D5.6, D6.1, D6.2, D6.6, D7.1, D7.3, D11.1, D11.5, D12.4, D12.5, D13.4, D9.3, D9.5, D9.11, D10.1, D6.10). D3.3 is not free → FROZEN ✓.
+- PB1.6 "constrains D3.6 (FROZEN)" — D3.6 not in free list ✓.
+- PB1.7 "constrains L257, D6.9 (FROZEN)" — D6.9 not free ✓ (L257.n2/n3 FROZEN per lines 683-684 ✓).
+- PB2.1 "changes with D5.7, D12.7 (FROZEN)" — D5.7, D12.7 not in free list ✓. But note L245.s1–s3 (D5.7's sentences) are FREE (lines 125-127, B2). So D5.7 is FROZEN while its sentences L245.s1–s3 are free — consistent with §5's row "L245.s1–s3 | glosses of (F1), (F2)". OK.
+- PB2.3 "constrains L231.s2, L245.s4 (FROZEN)" — need to check. L245.s4? Not seen. Let me check.
+- PB2.4 "changes with D6.4, D8.2 (FROZEN)" ✓ (both not free).
+- PB2.5 "constrains D6.5 (FROZEN)" ✓.
+- PB2.7 "changes with D6.3 (FROZEN)" ✓; "blocks L269.s2 (FROZEN)" ✓.
+- PB2.9 "changes with D8.2, D8.3, D12.5" — D12.5 is FREE (B3)! The map's edge PB2.9 "changes with D8.2, D8.3, D12.5, claimed only" — no FROZEN mark, fine; it names a free item of B3 (a cross-section item; a B2 variant can't vary it, but an edge "changes with" is fine).
+- PB3.3 "changes with D12.1 (FROZEN)" ✓ (D12.1 not free).
+- PB3.6 "constrains D16.3 (FROZEN)" ✓ presumably.
+- PB4.1 "changes with D9.8 (FROZEN)" ✓.
+- PB4.2/PB4.3 "changes with D9.6 (FROZEN)" ✓.
+- PB4.5 "changes with D9.10 (FROZEN)" ✓.
+- PB4.6 "changes with D11.4 (FROZEN)" ✓.
+- PB4.8 "blocks D10.6 (FROZEN) as written" ✓.
+- PB1.1 "blocks L43.s4, L159.s1 (FROZEN)" ✓.
+- PB1.2 "blocks L159.s3, L49.s4 (FROZEN)" ✓.
+- PB1.8/PB1.9 "blocks L119 (FROZEN)" ✓.
+- PB1.9 "constrains L11.s2 (FROZEN)" ✓.
+- PB2.2 "blocks L271.s1 (FROZEN)" ✓, "blocks L257.n3 (FROZEN)" ✓.
+- PB2.8 "blocks L313.n3 (FROZEN)" ✓.
+- PB3.1 "blocks L405 (FROZEN)" ✓ (L405.s5).
+- PB3.2 "blocks L211.s3, L211.s1 (FROZEN)" ✓.
+- PB3.4 "blocks L193.s1 (FROZEN)" ✓.
+- PB3.7 "blocks L413.s1, L413.s2 (FROZEN)" ✓.
+- PB4.4 "blocks L397.s10 (FROZEN)" ✓.
+- PB2.1 "blocks L221.n1, L223.s3 (FROZEN)" ✓ (lines 652, 655).
+- PB1.4 "changes with D4.3" — D4.3 free ✓ no mark.
+- PB1.5 "changes with D3.4 (FROZEN)" — D3.4 not in free list ✓. But wait: is D3.4 the right item? Part A's r2e1.30 is on L155.s6 (R2V1.4). PB1.5 varies L155.s6 (free sentence, B1, bears on nothing per the template: line ~? L155.s6 not shown but free-set §2 lists... it's in the B1 free sentences). D3.4 formalizes L155.s6 (per line 104: "Found(p) requires ρ_p = constructed (D3.4; L155.s6)"). So the edge "changes with D3.4 (FROZEN): Found's clause" is right, and the Part A id r2e1.30 (whose item is L155.s6) joins by variant. Acceptable.
+
+Now, one more check on the map §2 "(Suff), (Nec)" meaning row: "everything under (E) and Dec (their antecedent), and X_j's items". And the X_j row lists PB4.2, PB4.3, PB4.4. What about PB4.1 (Out_j)? Out_j is what (Suff)/(Nec) read? The map classifies PB4.1's meaning as "none of the five parts (Out_j)". Hmm, is Out_j part of (Suff)/(Nec)'s reading? (Suff) and (Nec) are read through defeat sets X_j; Out_j is "ruled out for j", used in D10.1 Prob. The map's choice is defensible.
+
+Now §2's Dec meaning row includes PB2.2 (Dec through Faithful_H) ✓ and PB2.1 ✓.
+
+Now, the Expl row: "everything under (E) and Dec (Expl := Account ∧ ¬Dec(t))" ✓.
+
+Next check §1's PB1.2 row meaning: "domain of (E), Expl, (Suff), (Nec)" ✓ matches section.
+
+Now, check the map's §3 note about e2.20/e2.21: "e2.20 (computed), e2.21 (still claimed only: under S109-B4-I1 the defeat sets do not move)". Part A's e2.20 was "constrains D16.XV" claimed only; Part B's PB4.1 computed the D9.8 relation — the map says e2.20 computed now ✓ via PB4.1's "changes with D9.8" edge? Hmm, PB4.1's edge "changes with D9.8 (FROZEN)" has part_A e2.20 and standing computed. Part A's e2.20 is V2.8 constrains D16.XV. PB4.1's edge is about D9.8. e2.20's from-list includes D9.8, L315.s6, L315.s7 and target D16.XV. The join is loose but the map explains itself. Fine.
+
+Now check "e3.34b (the neighbour of PB4.6)" ✓ (Part A e3.34b: V3.7 from D11.4 moves D9.11; PB4.6 varies D9.11 and its edge "changes with D11.4" cites e3.34b — the reverse relation; the map calls it "the neighbour" ✓).
+
+Now r2e1.30: Part A's r2e1.30 is R2V1.4 blocks L155.s6, claimed only. The Part B map §3 note: "r2e1.30 (R2V1.4: no reader, claimed only)". But PB1.5's own edge citing r2e1.30 is "changes with D3.4 (FROZEN)" claimed only. Part A's edge kind is "blocks" on L155.s6. The Part B map says r2e1.30 stays claimed only. Under rule 10, is that a gap — "an edge on the definition's parts left claimed only that a variant could settle"? r2e1.30's item L155.s6 bears on nothing (template: L155.s6 is free with mark "–"). Not a definition part. Not listed in §5's edges bullet. Hmm — but the map's §3 sentence itself flags it. It's a Part A edge handed via class-b carry-over R2V1.4 = PB1.5 which WAS computed (implemented, read by no claim). The edge r2e1.30 (blocks L155.s6) could arguably now be settled? PB1.5 computed: nothing moves, no claim reads Found. Part A's r2e1.30: "R2V1.4 blocks L155.s6" — the block claim was that the variant is out of scope/flagged. Now computed: PB1.5 implemented. The map leaves r2e1.30 "claimed only" without explanation why it cannot be settled. Since L155.s6 bears on nothing (template mark –), it's not a rule-10 gap ("edges on the definition's parts"). OK — not required. But the map §3's parenthetical "no reader, claimed only" is a reason of sorts. Fine.
+
+Now the per-part completeness question: "are the free items its meaning and scope were found to turn on, and those varied without moving either, complete and right?"
+
+(E) meaning: 12 variants listed. But wait — should PB1.2's meaning list "domain of (E), Expl, (Suff), (Nec)" and the §2 (E) row includes D3.1 (PB1.2) ✓.
+
+Now, are there free items upstream of (E) that were varied and moved (E)'s meaning but are missing? All 34 variants are accounted. ✓.
+
+"Varied without moving either" (neither) list: PB1.4, PB1.5, PB1.8, PB1.9, PB2.8, PB3.7, PB4.5, PB4.6, PB4.7, PB4.8 — 10. Check each "moved neither meaning nor scope of any of the five parts":
+- PB1.4 (D4.2): meaning "none of the five parts" ✓ scope none ✓.
+- PB1.5: ✓.
+- PB1.8: ✓ (claims move only).
+- PB1.9: ✓.
+- PB2.8: ✓.
+- PB3.7 (D13.4): "none of the five parts (New, Origin)" ✓.
+- PB4.5, PB4.6, PB4.7, PB4.8: "none of the five parts" ✓.
+Complete and right ✓ (34 = 12 (E) + 8 Dec + 3 X_j + 5 meaning-only + 10 neither + ... wait: 12+8+3 = 23 with meaning of some part moving; but PB2.2 appears in both (E) and Dec lists (counted twice). Distinct variants moving a part's meaning: (E) 12 + Dec 8 − PB2.2 overlap = 19; + X_j 3 = 22; + meaning-only 5? No wait — meaning-only ones are PB2.4, PB2.9 (already in (E) list!), PB3.5 (in Dec list!), PB4.3, PB4.1 (PB4.3 in X_j list!). Hmm: MEANING_ONLY = variants whose meaning moved but scope didn't; they're already in LEVEL lists. So distinct: 19 + 3 = 22 meaning-movers + 10 neither + PB3.8 = 33? 22+10+1 = 33 ≠ 34. Missing one! Let me recount.
+
+LEVEL (E): PB1.1, PB1.2, PB1.3, PB1.6, PB1.7, PB2.2, PB2.3, PB2.4, PB2.5, PB2.6, PB2.7, PB2.9 = 12.
+LEVEL Dec: PB2.1, PB2.2, PB3.1, PB3.2, PB3.3, PB3.4, PB3.5, PB3.6 = 8 (PB2.2 already counted).
+Distinct meaning-movers so far: 12 + 7 = 19.
+X_j: PB4.2, PB4.3, PB4.4 = 3 → 22.
+NEITHER: 10 → 32.
+FLAGGED: PB3.8 → 33.
+Total 33, but there are 34 variants. Which one is missing? MEANING_ONLY = PB2.4, PB2.9, PB3.5, PB4.3, PB4.1 — PB4.1 is in MEANING_ONLY but NOT in any LEVEL list (its meaning part is "none of the five parts (Out_j)"). So PB4.1 is the 34th, sitting only in MEANING_ONLY. That's consistent with the builder: §1's scope cell for PB4.1 = "meaning moves, scope unchanged on every case computed". So all 34 accounted: 22 (meaning of a part) + PB4.1 (meaning, no part) + 10 neither + PB3.8 = 34 ✓. And §4's counts: moving scope 18, meaning only 5, neither 10 → 33. But of the 5 "meaning only", PB4.1's meaning is not of a part; of the 18 scope-movers, PB2.2 counted once. 18+5+10 = 33 ✓.
+
+OK. Now §2's claim in the "(Suff), (Nec)" scope cell: "FC30.new1's defeat-set parts move with PB1.2, PB3.1, PB3.3, PB3.4, PB3.6" — FC30.new1's parts move under those five. Also under PB2.7? PB2.7's claims moved: FC23, FC23.new1, FC23.new2, FC23.new5, FC25.new2, FC27.new1, FC72.new2 — no FC30.new1. OK.
+
+Now — a scope check I can run: nothing more.
+
+Now verify map §1 PB3.3's scope cell wording: "every Sel-history case (44 cases, 999 generated) becomes declared" — from scope_note: "no candidate is selected: 44 of 49 cases lose Expl on that history ... 999 of 999 generated". "becomes declared" — since Sel fails and Expl := Account ∧ ¬Dec, Dec becomes true (declared). Plausible ✓.
+
+Now the §5 gaps: also rule 10 requires "every free item upstream of (E), Dec, Expl, (Suff) or (Nec) varied and computed, or recorded with why no variant inside Part B's rule can reach it". The map's §5 table covers the tabulation §8's items. But are the reasons right? The map overrides two of the replies' reasons with "**yes**: a clause of D1.1 can be varied alone..." — the map's own reading. That's the map proposing round 2. Also "**open**" for L147.s1–s2, D6.1, L169.s2. And "recorded" for others. Is the map's treatment right? The proposal (round 2 needed) follows: gaps remain that round 2 could reach (D1.1, D1.2 clauses, L147.s1–s2, D5.2, D6.1, L169.s2, four edges). Given the table's own markings, this follows — except the e1.48 inconsistency noted.
+
+One more check on §5's B1 D1.1/D1.2 reasoning: the map says a variant of D1.1's clause alone can be computed "as PB1.6 varied D1.3 alone". Fine — a judgment.
+
+Also: does §5 miss any class-a carry-over or free item? Class-a: all three computed ✓. Free items: covered per tabulation §8 ✓. But — hold on. Tabulation §8 lists items "bearing on the explanation definition that no variant reached". Rule 10 requires "every free item upstream of (E), Dec, Expl, (Suff) or (Nec) ... varied and computed, or recorded with why no variant inside Part B's rule can reach it". The tabulation's §8 is restricted to items that BEAR on the definition (marks). Items not bearing (mark –) are not needed. ✓. But note: the marks are Claude's working reading (rule's Unsure admits "an item marked as not bearing may still move explanation through a reading the graph lacks"). Not my concern beyond noting.
+
+Now: does §5 list the "edges left claimed only that a variant could settle" completely? Claimed-only edges in the map: 23. Which of them could a variant settle and are on the definition's parts?
+- PB4.1 moves X:(Suff) claimed only — addressed (other choice = Part A's V4.4, computed).
+- PB2.4's block L369.s2 — listed ✓.
+- PB2.9 changes with D8.2/D8.3/D12.5 — listed ✓ (D8.2 named).
+- PB2.2's block L257.n3 — listed ✓.
+- e1.48 — listed (though mischaracterized).
+Others (PB1.1 blocks L43.s4..., PB1.2 blocks L159.s3..., constrains Θ, PB1.3 constrains D3.3, changes with E2/E4/E9, PB1.5's two, PB1.6 constrains D3.6, PB1.7 constrains L257/D6.9, PB1.9 constrains L11.s2, PB2.3 constrains L231.s2/L245.s4, PB2.5 constrains D6.5, PB2.8 blocks L313.n3, PB3.1 blocks L405, PB3.3 constrains L223.s3, PB3.6 constrains D16.3, PB3.7 blocks L413.s1/s2, PB4.3 changes with D9.6): these are edges to FROZEN items (not definition parts) or free items (E2/E4/E9 are FROZEN encodings? E2/E4/E9 marked FROZEN in PB1.3's edge ✓). Are any of them "on the definition's parts"? No — the definition's parts are X:(E), X:Dec, X:Expl, X:(Suff), X:(Nec). The only claimed-only edges whose item is an X: part: PB4.1's moves X:(Suff). So §5's list is complete-ish under that reading, though the map lists four extra edges under that heading (which are not on definition parts but could be settled by runs). The heading is broader than rule 10's letter; that's generous, fine, except e1.48's inclusion with "no run decides it".
+
+Hmm wait, actually re-reading the §5 bullet: "**Edges on the definition's parts left claimed only that a variant could settle**: e1.48 (...); PB2.4's block of L369.s2 (a run could: ...); PB2.9's changes with D8.2 (the program's π is total; a partial-π copy would be needed); PB2.2's block of L257.n3 (FC21 (d)'s relabeling case under PB2.2: runnable)." — PB2.9's edge: "a partial-π copy would be needed" — that's NOT a variant inside Part B's rule? It is: a variant of the free item D5.1 with partial π (the reply's own old reading I16). So it counts as reachable. e1.48: "a text block, no run decides it" → not reachable → shouldn't be in this list. So the list has 3 reachable + 1 unreachable misclassified under the heading. And then the Proposal says round 2 "aimed at those items only ... and the four edges above". Including e1.48 in round 2's aim contradicts its own parenthetical. Objection (minor, wording): fix by removing e1.48 from that list (or moving it to a "no variant can settle" note) and "the four edges" → "the three edges".
+
+Now the bridge/scope objection (§0 overstatement). Also let me double check whether B1/B2/B4 scope runs really omitted the bridge — from the builder: scope tables for B1/B2 have chains/bridge from r["chains"]/r["bridge"]; B1/B2's scope rows in JSON have chains: null, bridge: null. And the setup table text in section files: B1/B2/B4's scope line doesn't mention chains/bridge; only B3's adds "; every chain of 1 to 3 holdings (584) and the bridge's chains (FC84.new1 (a1), (a2))". Confirmed: the bridge (an owner's case per the rule's scope definition) was computed only under B3's variants (and PB2.1's by-hand note). The map's §0 asserts scope per variant includes "the owner's four cases (... the bridge FC84.new1 (a1), (a2))". For 25 of 34 variants (B1's 9, B2's 9 minus PB2.1's hand note, B4's 8 minus... B4 reads neither (E) nor Dec so bridge can't move — arguably covered by "all stay (B4 reads neither (E) nor Dec)") the bridge was not computed. For B1/B2 variants that move (E) (PB1.2, PB1.6?, PB1.7, PB2.2, PB2.3, PB2.5, PB2.7), the bridge's Acc could in principle move (the bridge's CreateEx reads Acc per Part A e1.38). The map nowhere records this as a departure or gap. I'll raise it as the most serious objection about scope fidelity: §0's scope claim is inaccurate; the map should say the bridge was computed only in B3 (and by hand for PB2.1), and §5 or §6 should record it.
+
+Let me confirm PB1.6's generated enters (Acc in 61) — the bridge candidate? Not relevant.
+
+Actually wait — is the bridge's own candidate an "account"? Part A: "the bridge (FC84.new1) builds no candidate: no variant's effect on it as an explanation is computed... only its provenance and CreateEx". So even in Part A the bridge as an explanation was never computed; the bridge "case" is about provenance/Con/Build/CreateEx. In B3, the bridge's chains were computed (fixed points, Con at output, build). For B1/B2 variants affecting (E), the bridge's Acc would matter for CreateEx. PB2.7 'some': does CreateEx move? Not computed. Hmm, Part A's map §6.3 already records "the bridge... no variant's effect on it as an explanation is computed (as after round 1); only its provenance and CreateEx". So Part B's §0 claim that scope includes the bridge per variant is stronger than even Part A claimed. Objection stands but moderate severity.
+
+Now, the "owner's four cases" in §0 says "the two-part sign and the weathervane under the three readings of the owner's change, the student's copy FC30.new1 (d), the bridge FC84.new1 (a1), (a2)" — and for B4 variants, "owner: all stay (B4 reads neither (E) nor Dec)" and student "stays" — those are justified. For B1/B2, sign/vane/student computed; bridge null. So the accurate statement: the bridge only in B3. OK.
+
+Next, check the map §6 Unsure line about FC84.new1 (d) TypeError ✓ matches summary note "error: ['FC84.new1']".
+
+Now let me double-check a couple of Part A id subtleties:
+1. PB1.8's edge "changes with D4.4, computed, part_A e1.00" — e1.00 is V1.1 (D1.4) blocks D4.4, standing computed. The map §3 says "e1.00 (V1.1's block on D4.4: PB1.8 lifts it and FC17, FC18 hold)". Hmm — e1.00 says V1.1 blocks D4.4 (i.e., D1.4's variant blocks D4.4's gloss...). PB1.8 "changes with D4.4" and "lifts e1.00". Citing e1.00 on a "changes with" edge whose content is "FC17, FC18 unchanged" — the semantics of the citation: the Part A edge e1.00's block is lifted. It's a join, declared. OK.
+
+2. r2e2.14's item set (L189.s2, D12.1, D12.7, L220.n1, FC104.new1, FC104) vs PB2.1's two edges citing r2e2.14 with items "D5.7, D12.7" and "L221.n1, L223.s3". D5.7 is not in r2e2.14's items (but is L189.s2's formalization, FROZEN). L221.n1/L223.s3 are not in r2e2.14's items (L220.n1 is; and r2e2.20 has L221.n1, L223.s3 under R2V2.10 Viol := Viol⁺ — hmm interesting: PB2.1 also sets Viol := Viol⁺, so the L221.n1/L223.s3 block is the same content as Part A's r2e2.20 (R2V2.10)! PB2.1 = Faithful with (A) + Viol := Viol⁺. Part A's r2e2.20 (R2V2.10: D12.7 Viol := Viol⁺) constrains L220.n1, L221.n1, L223.s2–s3, computed. So PB2.1's blocks edge on L221.n1, L223.s3 could have cited r2e2.20 as well; it cites r2e2.14 only. Not an error strictly.
+
+But is citing r2e2.14 on the "blocks L221.n1, L223.s3" edge right? r2e2.14 is "R2V2.7 blocks L189.s2 [FROZEN]; D12.1, D12.7, L220.n1, FC104.new1, FC104; Dec" — the items don't include L221.n1/L223.s3. The Part B map's citation is by variant (R2V2.7 = PB2.1). The §3 note says "r2e2.14 (R2V2.7, computed as PB2.1)" — join by variant, explicit. I think this is acceptable, though a stricter reading ("is the Part A id right?") might flag that r2e2.14's own to-list names L220.n1 (not L221.n1) and that Part A's r2e2.20 is the edge that actually named L221.n1 and L223.s3 for the same Viol⁺ content. I'll raise as a minor: PB2.1's blocks edge on L221.n1, L223.s3 should also (or instead) cite r2e2.20 (R2V2.10's constrains edge on L220.n1, L221.n1, L223.s2–s3, computed in Part A), since r2e2.14 names neither L221.n1 nor L223.s3.
+
+Hmm, but careful: is it the same content? PB2.1's block: "no Sel with Viol⁺ inside H" via FC104.new1 (b). Part A's r2e2.20: R2V2.10 constrains L220.n1, L221.n1, L223.s2–s3, "computed (L223's ground fails); contradicted as to Surp at a pair of H". Yes — the same ground (Viol⁺ at a pair of H). So the more precise Part A join for that edge is r2e2.20. Worth a minor objection.
+
+3. Check PB1.1's "constrains D6.6" edge (computed) vs Part A e1.49 (V1.7 constrains D6.6, claimed only). ✓ right id, and the map §3 says e1.49 now computed ✓.
+
+4. e2.20's Part A standing was claimed only; Part B's PB4.1 edge "changes with D9.8" computed, cites e2.20 — map §3 says "e2.20 (computed)" ✓.
+
+Now, another item: the map §1 row PB2.2's edges count "2 / 0 / 1" ✓ (3 edges).
+
+Let me also verify the map's PB1.2 "36 cases" claim vs "41 moved": §1 scope cell "36 cases and 813 generated leave" — 36 Acc-out; plus 5 Expl-only. Fine.
+
+Now, the "claims that move" for PB2.7 in §1 lists FC23 first: "FC23, FC23.new1, FC23.new2, FC23.new5, FC25.new2, FC27.new1, FC72.new2" (7) ✓ matches summary.
+
+Now check §2's X_j label: "X_j (the defeat sets of (Suff), (Nec) only)" — fine.
+
+Now the per-part §2 row for (E) scope includes PB2.5 with both readings ✓, PB1.2 "36 cases and 813 generated" ✓.
+
+One more completeness question for §2: the Dec scope row includes PB2.1 "FC104.new1 (b)'s selection becomes declared" — FC104.new1 (b) is a claim, not a candidate; the other Dec scope entries are candidates. Slight inconsistency but it's what was computed (no worked case moved; the moved thing is the claim's witness). Fine—actually it's the only Dec evidence for PB2.1.
+
+Now the last thing: verify some scope numbers directly against the section JSONs — already match the .md files which are built from the JSONs. The .md and .json agree (built by same script).
+
+Should I run any more claims? Maybe verify FC30.new1 and FC47.new1, FC56, FC72, FC74, FC76, FC98, FC102.new1, FC12.new1/new2, FC83, FC84.new1 hold off (so H→CEX directions make sense). The record says 133 H / 2 CEX / 7 NT. Which 2 are CEX? Possibly FC21? No — FC21 HOLDS (we ran it: "HOLDS ON ALL MODELS TRIED" overall status since parts (b),(d) have witnesses by design). Actually the top-level status for FC21 printed "HOLDS ON ALL MODELS TRIED" — hmm, that's the claim-level status. The 2 CEX claims are some others. FC84.new1's off status: the map says PB3.4 moves it H→NT. Let me spot-run FC30.new1, FC84.new1, FC72, FC56, FC98, FC12.new1.
+
+All off runs hold. The map's H→CEX directions are consistent.
+
+Interesting cross-checks from FC30.new1's (d) off output: "H = {(1,b1_45)}, T′: fixed points [{'o1': 'Con'}]; Dec(t) at o2 [True]" — matches the map's "student stays (Acc True, Dec at o2 [True])" off. And under PB3.1/PB3.4/PB3.6, Dec → False. Consistent.
+
+Also PB3.3's claims: FC30.new1 moves ✓; the map's PB3.3 owner row "Expl F/T/T → Acc T, Expl F/T/F" (third value = Sel history) ✓ plausible.
+
+Now, one more check on the map's §1 PB1.2 owner row: "sign two parts (edit): Acc T, Expl F/T/T → Acc F, Expl F/F/F" — with change as boundary both stay. ✓ consistent with section.
+
+Now let me look at the replies briefly to check whether the map's "contradicted" edges are justified and whether the map faithfully represents them — the two contradicted edges:
+1. PB1.8 "changes with FC18 (Argument 1: a same-kind condition adds nothing), the reply's 'at risk'" — contradicted because FC18 holds under PB1.8. The section says "FC17, FC18 hold (the reply's 'FC18 at risk' does not happen)" ✓.
+2. PB2.4 "moves X:(E): 'enter: candidates that determine an answer where the target gives ⊥' (the reply)" — contradicted, none enters; the reply's own case fails (F1),(F2) ✓.
+
+Standings justified per the files.
+
+Now — the brief also asks: "Is each edge's standing (computed, contradicted, claimed only) what its run shows, no more". Some edges marked "computed" rest on argument, not runs, strictly: e.g., PB2.8's "blocks L313.n3, claimed only, by argument from FC40" ✓ claimed only (correct). PB4.6's "changes with D11.4, computed, why: no claim moves" — is "no claim moves" a computation? The suite ran PB4.6 (whole-suite run B4 PB4.6, none moved) ✓. OK.
+
+PB3.5's "changes with D12.1 (FROZEN), computed, why: no case moves" — the scope ran PB3.5 ✓.
+
+PB2.6's "changes with PB1.1 (V1.7), computed, why: the same (E) on every case" — computed? It's a comparison argument from two runs; both were run. OK.
+
+PB1.4's "changes with D4.3, computed, why: FC103.new1 (b)" ✓ suite run.
+
+PB4.7's "changes with FC109, computed, why: holds" — the whole suite ran PB4.7 and FC109 held ✓. Hmm, the map's §1 PB4.7 claims column says "none" but scope_note says "FC109 holds with FC81, FC95, FC97-FC103 added" — the whole-suite summary lists "none" moved for PB4.7. Consistent (a claim that still holds with more claims is not "moved").
+
+Now, one subtle thing: PB4.7's edge kind "changes with" item "FC109" — "changes with FC109" computed "holds"? An edge that says "changes with" but the why is "holds" — i.e., the list changed and FC109 still holds. "Changes with FC109" is an odd edge (the variant extends L546's list and FC109's check extends with it). Not an objection.
+
+Now — the remaining significant item to verify: §2's "(E)" meaning list is described as "free items its meaning was found to turn on (variants)". It lists items like "L103.s1, D1.3 (PB1.6)" ✓.
+
+Now the "Expl" row in §2: fine.
+
+Another check from the brief: "the made-up candidates entering and leaving" — §1's scope cells give summary; JSON gives full lists; consistent.
+
+Also: "the claims that move" per variant in §1 — one more check: PB1.2's claims column lists "FC101, FC22, FC23, ..." — the whole-suite row lists 18 including FC101 first. ✓.
+
+Now — the objection about "31 implemented as switches". Let me recount carefully from section §1 "implemented" column:
+B1: PB1.1 yes; PB1.2 nearest reading; PB1.3 yes; PB1.4 yes; PB1.5 yes (read by no claim); PB1.6 yes; PB1.7 yes; PB1.8 yes; PB1.9 yes → all 9 implemented (8 with S109B_VARIANT switch; PB1.5 with core.found()).
+B2: PB2.1 yes; PB2.2 yes; PB2.3 nearest reading; PB2.4 yes; PB2.5 nearest reading; PB2.6 yes; PB2.7 yes; PB2.8 no code change; PB2.9 no code change → 7 implemented.
+B3: PB3.1 nearest reading; PB3.2 yes; PB3.3 yes; PB3.4 nearest reading; PB3.5 yes; PB3.6 nearest reading; PB3.7 yes; PB3.8 flagged out → 7.
+B4: PB4.1 nearest reading; PB4.2 yes; PB4.3 no code change; PB4.4 flagged as written/computed as PB4.4′; PB4.5 yes; PB4.6 yes; PB4.7 yes; PB4.8 yes → 7.
+Total implemented with code/switch: 9+7+7+7 = 30. So §0's "31 implemented as switches" is wrong: 30 (29 with an S109B_VARIANT switch; PB1.5 without a reader). Fix: "30 implemented as switches (PB1.5 with no reader)" and separately "PB2.8, PB2.9, PB4.3 with no code change" (computed trivially) → §4's 33 implemented and computed stands. Actually hmm: are PB2.8/PB2.9/PB4.3 "implemented"? §4 says 33 implemented and computed. Whatever — §0's 31 vs the files' 30 is a one-off count error. Worth a small objection.
+
+Now, the last big item: is the map's §5 proposal "what the gaps show"? The gaps marked "yes" (D1.1, D1.2, D5.2) and "open" (L147.s1–s2, D6.1, L169.s2) → round 2 proposed for: D1.1's and D1.2's clauses, L147.s1–s2, D5.2 and D6.1, L169.s2, and the four edges. That matches the table ✓ (all yes/open items are in the proposal). One inconsistency: e1.48 (no run decides it) included.
+
+Also: D5.2 marked "yes, a variant is statable" — included ✓.
+
+One more: in the B1 row for "L105.s2, L105.s3, L137.s1, L143.s1" the map says "recorded: displays and glosses whose formal content is D3.1 and D3.2, varied by PB1.2, PB1.3, PB1.7 — no separate variant". Hmm — per the template, L137.s1 and L143.s1 formalize D3.1 and D3.2 (lines 73, 75: L137.s1 | D3.1; L143.s1 | D3.2) ✓, and L105.s2/s3 → D1.1 (lines 60-61). Wait — L105.s2 and L105.s3 formalize D1.1, not D3.1/D3.2! The map's row groups all four (L105.s2, L105.s3, L137.s1, L143.s1) as "displays and glosses whose formal content is D3.1 and D3.2, varied by PB1.2, PB1.3, PB1.7". For L105.s2/L105.s3 the formal content is D1.1 (the organization tuple display), which was NOT varied (D1.1 is a gap). So the "recorded" reason is wrong for L105.s2 and L105.s3: their formal content is D1.1, which the same table's first row marks as a gap ("yes" reachable). This is an internal inconsistency in §5's table: L105.s2/s3 should follow D1.1 (gap), not be recorded as covered by PB1.2/PB1.3/PB1.7.
+
+Check template lines 60-61: "| `L105.s2` | sentence | (E), Dec, Expl, (Suff), (Nec) | D1.1 | – |" and L105.s3 | D1.1. Yes. So objection: §5's row "L105.s2, L105.s3, L137.s1, L143.s1 | ... displays and glosses whose formal content is D3.1 and D3.2, varied by PB1.2, PB1.3, PB1.7" is wrong as to L105.s2 and L105.s3 (their formal content is D1.1 per the template), so they are not recorded-with-reason; they belong with D1.1's gap. Exact fix: split the row — "L137.s1, L143.s1: displays of D3.1, D3.2 (varied by PB1.2, PB1.3, PB1.7)"; "L105.s2, L105.s3: displays of D1.1 — with D1.1 above (yes, reachable)". Medium-minor objection.
+
+Also check the map's B1 row "D1.1 and its sentences L87.s1, L91.s1–s6, L93.s1" — template says L87.s1, L91.s1–s6, L93.s1 all → D1.1 ✓, and L105.s2/s3 → D1.1 also — so the map's D1.1 row should have included L105.s2 and L105.s3 among D1.1's sentences. Indeed the tabulation §8's B1 not-reached list has "L87.s1, L91.s1–s6, L93.s1, L99.s1, L105.s2, L105.s3, L137.s1, L143.s1, ...". The map split them into rows; the L105 pair landed in the wrong row. Confirmed objection.
+
+Anything else in the B2 row: "L245.s1–s3 | glosses of (F1), (F2)" — template lines 125-127: L245.s1–s3 | D5.7. D5.7 is Faithful (Dec's feed), not (F1)/(F2) (which are D5.4/D5.5). Hmm: "glosses of (F1), (F2)"? L245.s1–s3 formalize D5.7 (Faithful). Are they glosses of (F1) and (F2)? The section B2 file's §(e) said "L245.s1–s3, glosses of (F1), (F2)" per the tabulation: "B2's items not varied (reply §(e)): ... L245.s1–s3 ...". The map's row says "the reply's reason: glosses of (F1), (F2)" and "recorded: their content moved with PB2.2, PB2.3". PB2.2 varied D5.5 ((F2)) and PB2.3 varied D5.4 ((F1)). So the map's record says L245.s1–s3's content (D5.7, F1∧F2) moved with PB2.2/PB2.3? D5.7 = Faithful_C := F1 ∧ F2 — its content is (F1) and (F2), so varying D5.4/D5.5 does move Faithful's content. That's coherent. ✓.
+
+B2 row "D6.1 | reads D1.3 (B1's) | recorded: moved with PB1.6 (FC-E1's restriction); a variant of D6.1 itself ... is statable — **open**" ✓ and included in the proposal ✓.
+
+B2 "D6.10 | E_tab and E_enc anchor FC25 | recorded: an encoding, not a definition of a part" — D6.10 is free with marks Expl/Suff/Nec (line 167). Recorded ✓.
+
+B3 "L169.s2 (a content) | not named by the reply | open" ✓ — tabulation §8 lists L169.s2 as B3's only not-reached ✓.
+
+B4 rows: "L315.s10, L315.s17 | FROZEN formalizations; S21 | recorded: L315.s17 cannot be varied without saying what must happen (S21); L315.s10's formalizations (D8.1–D8.6) are FROZEN beyond D8.4, D8.6, whose variants move the claim-conflict layer only". Hmm wait — L315.s10 and L315.s17 are free sentences (template lines 272-273: L315.s10 | (Suff), (Nec) | D9.8; L315.s17 | (Suff), (Nec) | D9.8). "L315.s17 cannot be varied without saying what must happen (S21)" — S21 forbids claims about what must happen to a candidate; that's a content constraint ✓ recorded reason. L315.s10's reason: formalizations FROZEN. OK recorded. But note: the reply's reason column says "FROZEN formalizations; S21" — and the map's reading "recorded". Whether the reason is *good* is for the settlement; the map proposes round 2 only for yes/open items. Fine.
+
+B4 "L389.s1 (K2), L397.s5 (X_j) | each conjunct varied at its own definitions | recorded" ✓.
+
+Now, one more possible gap the map might have missed: rule 10's first clause — "every free item upstream of (E), Dec, Expl, (Suff) or (Nec) varied and computed, or recorded with why no variant inside Part B's rule can reach it". Free items upstream include definitions like D7.1, D4.3, D0.1 (mark –, not bearing) — not needed. The tabulation §8 covers "bearing" items only, consistent with rule 10's "upstream ... in Part A's map". OK.
+
+Also — the four edges in §5's third bullet: is PB2.9's "changes with D8.2" edge settleable "inside Part B's rule"? It needs a partial-π copy — a variant of D5.1 (free, B2) with I16's reading. Yes, inside the rule ✓.
+
+Now let me double-check the PB2.4 "blocks L369.s2 (B2)" edge: standing claimed only, why "not computed". But wait: L369.s2 is a free B2 sentence ("By (A), a candidate for p whose answer at (a,b) is y ... is not an account of p..."). The reply's PB2.4 record says "blocks L369.s2" per the tabulation ("none (blocks L369.s2)"). The map's §5 says a run could settle it: "a candidate with a determined answer at a ⊥ pair that also meets (F1), (F2) — none exists on the cases computed". OK.
+
+One more possible check: map §1's PB2.4 row edges "2 / 1 / 1" — 4 edges: blocks (claimed), changes with (computed), moves X:(A) (computed), moves X:(E) reply (contradicted) = 2 computed, 1 contradicted, 1 claimed ✓.
+
+Now the brief also asks about "the owner's four cases" per variant being "what the runs show". I found the bridge gap. Also for B4 variants, owner/student "stays" justified by argument (B4 code reads neither (E) nor Dec) — the whole-suite runs confirm claims moved but scope of candidates wasn't run for B4 ("worlds: not run"). The map's §1 cells for PB4.x say "no candidate moves (nothing in the definition reads it)". Hmm — PB4.2 varies D9.5 which per the template bears on "Expl, (Suff), (Nec)" (line 325: D9.5 | Expl, (Suff), (Nec)). And the map's §2 X_j scope row includes PB4.2's scope move ("FC56 (a″)'s coarse-grain assessor's argument becomes usable") — but §1's PB4.2 scope cell says... let me check: PB4.2 is in SCOPE_MOVES["X_j"], so its §1 scope cell = "FC56 (a″)'s coarse-grain assessor's argument becomes usable" ✓ not the "no candidate moves" text. And PB4.1/PB4.3 in MEANING_ONLY get "meaning moves, scope unchanged on every case computed" ✓. PB4.4 in X_j scope moves ✓. PB4.5–PB4.8 get "no candidate moves (nothing in the definition reads it)" — but D9.10 (PB4.5's formalization) — PB4.5's free item is L383.s1 which bears nothing (line?); PB4.6 D9.11 mark – ; PB4.7 L546.s1 – ; PB4.8 D10.1 –. ✓ fine.
+
+Wait, actually there's a subtlety: the builder's §1 scope cell for variants in NEITHER prints "no candidate moves (nothing in the definition reads it)". For PB1.4/PB1.5/PB1.8/PB1.9/PB2.8/PB3.7/PB4.5-8 ✓. OK.
+
+Now assemble objections, most serious first:
+
+X3.1 — §0 scope claim overstates: the bridge (owner's case) computed only in B3's runs (and by hand for PB2.1); map §0 asserts scope per variant includes the bridge FC84.new1 (a1),(a2); JSON records bridge: null for all B1/B2/B4 variants. Evidence: section B1/B2/B4 §0 scope lines ("the 27 worked cases and 22 encodings ... FC-E1-E5 and CT1-CT8" — no bridge) vs B3's ("; every chain ... and the bridge's chains"); JSON "bridge": null. Fix: qualify §0 ("the bridge and the chains only in section B3's runs; PB2.1's by hand") and record the bridge's not-being-computed under the (E)-moving variants of B1/B2 in §5/§6 — or make the runs (B1/B2 copies, scope script with the bridge's chains added, under each variant's switch).
+
+X3.2 — §5's L105.s2/L105.s3 row wrong: their formal content is D1.1 (template lines 60–61), not D3.1/D3.2; so "recorded ... varied by PB1.2, PB1.3, PB1.7" does not cover them; they belong with the D1.1 gap (which the map itself marks reachable). Fix: move them to the D1.1 row.
+
+X3.3 — §5's third bullet misclassifies e1.48 under "edges ... that a variant could settle" while its own parenthetical says "no run decides it", and the proposal then includes it in round 2's aim ("the four edges above"). Fix: remove e1.48 from that list and "four" → "three".
+
+X3.4 — §0's count "31 implemented as switches" ≠ the files: 29 S109B_VARIANT switches + PB1.5 (core.found(), no reader) = 30 with code; PB2.8, PB2.9, PB4.3 no code change; §4 says 33 implemented and computed. Fix "31" → "30" (or reword).
+
+X3.5 — Part A's e1.50 (V1.7 independent of L317.s15, claimed only, one of the four edges e1.48–e1.51 Part A ruled to Part B) is silently absent from §3's join list and from §5; not computed, not recorded with why. Fix: add to §3 ("e1.50 not computed: L317.s15 a text reading, no run decides it" or compute) — a run in the B1 copy with S109B_VARIANT=PB1.1 over L317.s15's narrowing example would settle it.
+
+X3.6 — PB2.1's blocks edge on "L221.n1, L223.s3" cites Part A id r2e2.14, whose to-list names L220.n1 (not L221.n1/L223.s3); the Part A edge that named L221.n1 and L223.s3 for the same Viol⁺ content is r2e2.20 (R2V2.10). Fix: cite r2e2.20 as well (or instead).
+
+X3.7 — §2's list "Varied, meaning of a part moved, scope unchanged" includes PB4.1, whose meaning row itself says "none of the five parts (Out_j)". Fix: reword to "the changed statement of what (Suff)/(Nec) read moved" or move PB4.1 to a footnote.
+
+Anything else? Let me reconsider PB1.5's edge "constrains (QF) (L544)" — L544 is a sentence; FROZEN not marked; fine.
+
+Also check: the map's §1 PB3.2 scope cell "10 chain outputs become declared" — the JSON says "output_not_to_dec": 10 ✓.
+
+And PB3.4 "82 chain outputs ... stop being declared" — JSON: output_dec_to_not: 82 ✓ ("enter" in the meaning of "become explanations"?). The map says "the student's copy and 82 chain outputs stop being declared" ✓.
+
+One more: the map §1 PB3.3 claims list includes FC12.new1 and FC83 as parts-only moves — fine.
+
+Also should check: does §1's PB2.5 row list claims "FC23.new1, FC62" ✓.
+
+I think I have enough. Also verify there are no other Part A ids cited incorrectly: PB1.6's "changes with D6.1, D7.1 (restriction)" no part_A ✓.
+
+Also the §3 sentence "Edges joining Part A's map: e1.48, e1.49, e1.51 (V1.7, now computed as PB1.1: e1.51 and e1.49 computed, e1.48 still claimed only)". Check: PB1.1's moves edge (e1.51) computed ✓; constrains D6.6 (e1.49) computed ✓; blocks (e1.48) claimed only ✓. Good.
+
+One more check on X3.1's severity: is there maybe bridge coverage hidden in the B1/B2 scope JSON under "scripts" or the small-cases? The B1/B2 setup says scope covers "the 27 worked cases and 22 encodings of the owner's sign and vane, the student's copy, the generated worlds, FC-E1-E5 and CT1-CT8" — no bridge. Confirmed.
+
+Counter-consideration: rule 5 (implementation and computation) says each variant computed for scope "as above" where scope's definition (2) includes the bridge. So it's a rule departure too, unrecorded — strengthening X3.1.
+
+Now also double-check X3.4 arithmetic once more by counting "switch" column entries containing "S109B_VARIANT": B1: PB1.1, PB1.2, PB1.3, PB1.4, PB1.6, PB1.7, PB1.8, PB1.9 = 8. B2: PB2.1–PB2.7 = 7. B3: PB3.1–PB3.7 = 7. B4: PB4.1, PB4.2, PB4.4', PB4.5, PB4.6, PB4.7, PB4.8 = 7. Total 29. Plus PB1.5 = 30. Yes.
+
+Word count target ≤ ~3000. Write the report tersely.
+
+Also (b) checked-no-objection list and (c) not reached: I did not verify the raw scope-run outputs (scope tables.json not in sandbox — actually only the section .md/.json are here; the scope.json files are not in my sandbox). I couldn't check the replies' texts against the map's edges (I read the tabulation, not the four replies in part B/replies/). Should I quickly scan the replies for edge names to check the map faithfully carries them? The tabulation already lists "edges named" per variant, and the map's edges match the tabulation's edges named (spot check: PB1.1: blocks L43.s4/L159.s1; constrains D6.6; changes with D0.2; moves NonVacuous ✓ matches map's 4 edges. PB2.1: changes with D5.7, D12.7; blocks L221.n1, L223.s3; moves Dec, Expl — map has 4 edges incl. blocks FC67 (added by computation) ✓. PB2.2: blocks L257.n3; constrains L271.s1; moves (F2) — map: moves, blocks L271.s1 (computed), blocks L257.n3 (claimed) ✓. PB3.3: changes with D12.1; constrains L223.s3 (partly); moves Sel ✓. PB4.5: changes with D9.10... map has changes with D9.10 ✓ (constrains L383.s2 dropped — fine, computed edges added). PB4.6: changes with D9.11... map's edge item is D11.4 with e3.34b — hmm, the reply named "changes with D9.11, B3's response items"; the map's PB4.6 edge is "changes with D11.4 (FROZEN)". D9.11 is the varied item itself (free), so an edge "changes with D9.11" would be self-referential; the map resolved it to D11.4 (the FROZEN item whose reading e3.34b computed). Reasonable.
+
+I'll note replies themselves not read as "not reached" (the tabulation was checked against the map instead), and the raw scope/suite run outputs (not in this sandbox) — verified only through the section files, summary and comparisons.
+
+Also not reached: candidate list (job 4's), Part A candidate list cross-check.
+
+Let me now also double check X3.2: does the map's row maybe mean L105.s2/s3 as "displays" in the sense of D3.1? Template: L105.s2 | sentence | (E), Dec, ... | D1.1. So L105 formalizes D1.1. The tabulation §8 lists them under B1's not-reached. The map's row reason "displays of D3.1, D3.2" is factually wrong for L105.s2/s3. Solid.
+
+Also, one more possible check: §5's first bullet on class-a: "(e2.21 stays claimed only under S109-B4-I1's reading, which keeps the defeat sets as D16.XV has them; the other choice, the instance reading inside the defeat sets, was Part A's V4.4, computed there)." ✓ consistent with Part A (e2.21's round2_note).
+
+Write the report now.

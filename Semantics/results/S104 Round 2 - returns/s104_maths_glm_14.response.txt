@@ -1,0 +1,79 @@
+# Part 14 report
+
+## (a) Does each formal statement say what the sentence says?
+
+**D12.7 · L219–221.** Pred matches L219 exactly. Two departures:
+
+*Violation.* L220 says "a violation occurs when fidelity fails at (a,b)". Fidelity is the text's defined whole; its failure is failure of any of its clauses. D12.7's narrow Viol (F1 and the F2 equation only, I50) drops clauses the sentence includes. The words should stand; the maths should take its own other choice (b), the whole of (F2). This matters: FC81(d) is stated with the narrow Viol, and FC20 (another part) rests on I50 outright. If clarity is wanted in the text:
+> L220 | - a **violation** occurs when fidelity fails at \((a,b)\), in any of its clauses;
+
+*Surprise.* D12.7 adds Occurs(a,b,ξ), which L221 does not say; but L220's "occurs when fidelity fails" presupposes the pair is met, so the addition is faithful. The genuine departure is H07's: "Sel(t; 𝒯, μ, H) **for some** 𝒯, μ, H" against L217's "a transport … with contract C and, where t is selected, history H" and L193's "determined by its history" — t has one history, not an existential choice of one. The words should stand; the maths should bind H as the one history of t's selection. See (c) H07 for the redundancy this exposes.
+
+**D12.8 · L225.** Three departures, all one way: the definitions write less than the sentence.
+
+1. *No trigger.* L225 names "the two responses" to the violation and surprise of L220–L223; D12.8's SelResp and ConResp carry no Viol or Surp condition. H08 records that the program then computed FC82 and FC83 with no violation at all. The words should stand; the maths must take the violation as the responses' precondition.
+2. *Dangling modifier.* The text reads "(a new organization) or (a new transport with a construction trace)", attaching the trace only to the transport; D12.8 requires Con(t″) always. The maths is the better reading of the intent; the words should be repaired (wording under (b) FC82).
+3. *"New" relative to what.* The text says only "introduces a new organization or a new transport". D12.8 takes new relative to a repertoire; FC82's counterexample exploits that the population 𝒯 is not the repertoire. The text does not settle this; wording under (b).
+
+**D12.1 · L195.** Faithful to the sentence as written, including its list of what no member of the history represents — and that list is the source of this part's troubles: see (b) FC81.
+
+**D12.2 · L197.** Faithful as written; the sentence's availability clause ("available as a represented target") is what lets Sel and Con co-hold.
+
+**D13.3 · L405.** Faithful, given I56; note that L409's "a binding may be identified by its use" is not formalized even as a primitive — left open with I56.
+
+**FC80 · L572–L574.** Says what the argument says, with (b) reading "the population fixes it" as "that value is a function of (𝒯, H)" — a mathematical reading, and the right one; nothing here is settled for the world (S28), and the wording does not claim it.
+
+**FC81 · L580, L223.** Part (d) formalizes "a constructed one … is violated, and the failure is not surprise" as Con ∧ Viol ⇒ ¬Surp, which relies on Surp ⇒ Sel and on Sel excluding Con. The first is L221's own; the second is L193's "exactly one of three provenances" — which L195 then fails to deliver. The statement says what the sentence says only if the text's two lines agree; they do not, as it stands.
+
+**FC82 · L225.** The formal statement ("no transport is the result of both") matches the sentence. Note the sentence is claimed to "follow from the definitions as written"; the search shows it follows only under an exclusion L195 does not currently give.
+
+**FC83 · L225.** The formal statement is **stronger than the sentence**. It tests SelResp(t→t′) ⇒ ¬Origin on the whole history. The sentence says only the second *response* can be originative: that re-tuning within a population is never itself the originative doing. A history in which a selection response occurs and a separate construction episode is originative does not refute the sentence; it refutes the formalization's habit of attributing Origin to histories rather than to responses. The words should stand; the claim should be restated as "no originative episode is part of a selection response's own working of μ".
+
+Nothing to add: D12.6 · L175/L177.
+
+## (b) The counterexamples
+
+**FC81(d) · L223.** This tells against the **text**, through one gap. L193 fixes that a transport has "exactly one of three provenances, determined by its history"; L195's non-representation clause lists "t, H, or the survival condition" and omits the organization t carries to, which is exactly what L197's Con needs. So the text's own clauses let a transport be both selected and constructed, and then L223's "the failure is not surprise" fails, since surprise needs only Sel. The model is hand-built (I90) — it shows what the definitions allow, not what any physics does — but the allowance is the text's. Change, closing L193's promise at L195:
+> L195 | A transport **survives on \(H\)** when it is a member of \(\mathcal T\) that meets the survival condition on \(H\); fidelity on \(H\) without membership in \(\mathcal T\) is not survival. No member of the history represents \(t\), \(H\), the survival condition, or an organization \(t\) carries to.
+
+I flag the cost: a transport selected by trial and error whose target organization is itself held in a carrier (S26's first example) would then not be selected on that history. Whether that is a misclassification or the truth is FC78's question, in its own part; the wording above is the local closure of it, and FC81(d) holds under it.
+
+**FC82 · L225.** As first computed, this is a counterexample **only to the model**: t′ = t, no violation (H08) — not a response to anything. The second check's stronger case (violation, μ(t) = {t′}) stands, but against the text only through (i) the same L193/L195 gap and (ii) the unsettled "new relative to what". Rather than amend L195 here too, close (ii) at L225, which also serves FC83:
+> L225 | A **selection response** to a violation extends the history \(H\) of a selected transport and lets \(\mu\) act: the transport is re-tuned within the population, which already holds every transport \(\mu\) can return. A **construction response** to a violation introduces, with a construction trace, a new organization or a new transport — new relative to any population \(\mathcal T\) on which selection is running and to anything the system already holds. Only the second can be originative under Part X.
+
+This proposal writes two choices into the text: "new relative to any population on which selection is running" (invention: the repertoire/population split FC82 exploits) and the population's prior hold on μ's results (the choice FC83's Look names). Under it no transport is the result of both responses, and the sentence holds without touching L195.
+
+**FC83 · L225.** This is a counterexample **only to the claim's own formal statement** and to I90's hand-set conjuncts. In the model the originative doing is an owned construction episode sitting beside the selection response; nothing in the sentence is refuted, because the originativeness does not come from the re-tuning. It shows the definitions allow the two in one history — a fact about what the text has not tied together, not a fact against the sentence. Two changes: restate the claim as in (a); and, if the text is to make the sentence follow rather than merely assert it, adopt the L225 wording above, whose population clause gives the reason: a selection response returns a transport of the population, and no content the population did not already hold. I note the owner's own words cut both ways here: S20's "a variation is a competitor … two discovered variations" allows that a population holds variants whose content is discovered new; the wording above chooses the other side and says so.
+
+## (c) The inventions and the unrecorded choices
+
+**I50 · L220.** The text settles it: "when fidelity fails" means the defined whole fails. The narrow reading is the invention's own choice (a)/(b) list, and the wrong one. The maths should stand down to option (b); FC20 and FC81(d) should be re-run under it.
+
+**I52 · L195.** Not settled, and rightly open: "a survival condition requiring fidelity on H" states a lower bound, and S20 makes the strength of survival conditions a live question ("Good explanations make bad ones harder to fit"). Should stay open. The reading of "member of the history" as an occurrence is forced (H's members are pairs) and harmless.
+
+**I53 · L193.** The text settles the one-history reading: "determined by its history", singular. But I53's corollary — Con excludes Sel — is a hope until L195 is amended as in (b) FC81. The invention is right about the history and wrong to think the exclusion follows.
+
+**I56 · L405.** Not settled; "prepares", "nontrivial binding construction" and "content-preserving transfer" are Part X's words, left primitive here. Should stay open in this round; FC83's weight depends on them being set by hand (I90).
+
+**I90.** Not a text matter. Properly recorded; its caveat — a model so built shows what the definitions allow, not what any physics does — should travel with every counterexample above.
+
+**H07 · L217, L221.** The text settles the fixed H; the "for some" should go. The noted redundancy ("(a,b) ∉ H does no work") is an artifact of reading Faithful_H as a standing condition on t. L195 says H's pairs are "actually encountered": faithfulness on H is a fact about those occurrences. So read, a present failure at a pair of the same kind as one in H is coherent, is a violation, and is **not** surprise — the clause does its work, exactly as L221 draws the line and as S20 expects ("Once the explanation is rescued, the mistake shouldn't be able to creep back in"). No text change; the maths should adopt the historical reading.
+
+**H08 · L225.** The trigger: the text settles it (L225's responses are responses to L220–L223's violation); D12.8 must add it. Zero μ-steps: "re-tuned" leans to t′ ≠ t but does not settle it; the L225 wording above leaves it to μ ("which already holds every transport μ can return" permits μ returning t) — a choice written in, named as such.
+
+Nothing to add: I92 (given by title only).
+
+## (d) Attack the claims that held
+
+**FC80 · L572–L574.** Part (c) was not tested; here is the hand model. Ports u ∈ {1,2}, w ∈ {0,1}; boundary b0; an action law w = u − 1 binds the composite edit's parts, so no single-pair alteration is admitted (I02's opposite). Population 𝒯 = {t, t′}: both lawful, both mapping the composite at b0 to α, so both faithful on H = {the (u=1, w=0) pair}; t maps the (u=2, w=1) pair to α, t′ to β ≠ α; C adds that pair. Both survive on H and differ at a pair of C∖H: underdetermination stands without any free alteration. Argument 3's *route* needs I02; its *conclusion* does not, whenever the population can hold two lawful relations agreeing on H. Part (b): if no member of 𝒯 survives, the agreement is vacuous — but L217/L195 give a selected transport only if one survives, so in context the population does fix the value. Both branches rest on I71 (the "value" at a pair) and I52's narrow survival; a stronger survival condition shrinks the survivors and only makes agreement easier, so L574 is safe under the other choice too. I could not break the sentence.
+
+**FC81(a)–(c) · L580.** Attack on (a): let H contain an encountered pair outside C, so H ⊄ C, and let t be violated at a pair of C∖H; then Surp holds and "H strictly smaller than C" fails. The attack dies on the text's own words: L195 already writes "a finite history \(H\subseteq C\)" — the text settles H ⊆ C, and (a)–(c) hold by the text, not only by construction. I could not break them.
+
+## (e) Round 1
+
+**Matter 3 · L584.** The line itself is not given here; I rely on the quoted fragment. A defined term used in the everyday sense beside its definition invites equivocation in a text this tight. Change, within the fragment:
+> L584 | … the mark of a selected transport meeting a change outside its history …
+
+If the whole line is wanted, it belongs to the part that holds L584.
+
+END OF REPORT

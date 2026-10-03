@@ -1,0 +1,45 @@
+# S112 What the evolved sums are - the exact commands (log S112, decision S60)
+# Written 30 September 2026 by the one Opus 5.5 agent of log S112. All runs in the scratch space, each under `timeout`,
+# at most three heavy jobs at once (4 processors). Avida: the S111 build (2.14.0, commit 47f13dad), analysis mode only.
+# SCRATCH=/tmp/claude-0/-home-user-ThreadSmith/8d9323da-c0ec-57ec-91fd-8f99ca99320a/scratchpad
+# Every program comes from the S111 runs' saved populations: $SCRATCH/s111/runs/main_<rate>_seed<n>/data/detail-50000.spop
+
+# Before the plan was written (formats and speed only; nothing used as a result):
+#   one TRACE of low seed 2's most common genotype; two timing runs of the test processor.
+
+# 1. Avida's trace of every living genotype, read step by step (two first attempts were stopped by their exact process
+#    numbers, one to add the predictions for the environment tests, one to change the input numbers and add the
+#    reduced circuit form and the generality check; their partial output was set aside unread for results):
+cd $SCRATCH/s112 && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 3
+
+# ---- Resumed 30 September 2026 after a planned stop; from here on in the owner's Avida terms (decision S61). ----
+# The trace job of step 1 (process 3076) was found ended: its pool of workers had broken ("a process in the process
+# pool was terminated abruptly") while reading the second run (main_low_seed2); started again (process 4220), one
+# worker grew past 1.6 GB of memory within a minute, and it was stopped by its exact process numbers. Cause: the trace
+# reader wrote each circuit out as one nested expression, and in Avida programs whose parts are used many times over
+# that expression grows without bound. The reader was changed to keep each circuit as a table of distinct parts (identical
+# parts merged, as the plan asks), to work without recursion, to fold nand with ZERO to ONES in the reduced form, and
+# to give each part's logic id. Partial and first outputs set aside unread for results:
+#   $SCRATCH/s112/traces_third_attempt_broken/, $SCRATCH/s112/traces_first_complete_run_old_forms/
+# Instruction ablation, stage 1 (every single site of every distinct instruction sequence), started meanwhile:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py singles 2
+# Avida's trace of every distinct instruction sequence, read by the changed reader:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 1
+# The execution-environment tests (first try refused by Avida: its instruction-set file must list the three nop
+# instructions first, and the first shuffling put them anywhere; the shufflings now keep the nop meanings among the
+# letters a to c and shuffle the other 23 among d to z; nothing of the first try was kept, it wrote no output file):
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_test_what_the_sums_depend_on_in_the_environment.py 2
+# Instruction ablation, stage 2 (every pair of sites whose single ablation leaves program replication):
+cd /home/user/ThreadSmith && timeout 14400 python3 -B Semantics/tools/s112_find_minimal_removals.py pairs 2
+# Instruction ablation, stage 4 (every triple of the most common distinct instruction sequence of each run):
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py triples 2
+# The most common sequence of each run with each replication-required site ablated, traced by Avida (after the traces):
+cd /home/user/ThreadSmith && timeout 3600 python3 -B Semantics/tools/s112_find_minimal_removals.py without_copying 1
+# The last run's traces (main_high_seed3) went slowly with one worker (its programs write many outputs, each a route);
+# stopped by its exact process numbers before its time limit, the partial output set aside, and read again with three:
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_read_what_the_programs_compute_from_avidas_traces.py all 3
+# Instruction ablation, stage 3 (the irreducible-set search, for the program-task pairs no set of 1 or 2 sites stops):
+cd /home/user/ThreadSmith && timeout 7200 python3 -B Semantics/tools/s112_find_minimal_removals.py irreducible 2
+# (without_copying, above, run with 3 workers after the traces: python3 -B ... without_copying 3)
+# The summary written into the repository (results/... what had to be removed and what it is.json):
+cd /home/user/ThreadSmith && timeout 900 python3 -B Semantics/tools/s112_summarise_what_had_to_be_removed_and_what_it_is.py

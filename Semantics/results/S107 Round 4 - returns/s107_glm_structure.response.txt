@@ -1,0 +1,123 @@
+# Job 3 — the structure of the formal core
+
+All runs below are `python3 -m model.run --claim … --brief` from the sandbox folder; recorded results cited from `program printouts/whole suite now, scale 4, time cap 45.txt`.
+
+## (a) Dangling uses of removed notions
+
+| place | notion | condition or name only | fix |
+|---|---|---|---|
+| text L255, L257, L262, L275, L343, L520, L536 | "non-circular", NonCircular | name only — no line keeps it; L331's "it is circular" is D9.7's ground (FC60), kept deliberately | none |
+| text (whole, grep) | "unanalysed", "at the declared grain", "assumes its own answer", "restates" | gone; L397 keeps "has its conclusion among its premises, as in 'p because p'", which is D9.7's block, not the slot test | none |
+| `model/core.py` `noncircular`, `account(reading="r3")`, `NC1` | NC1 as conjunct | comparison only; `account` default "S106" reads no slot (core.py 790–819) | none |
+| D6.11, node Open | withdrawn | only historical marks (`formal core, now.md` 226, 716; claims json s106b); no claim, note or graph node points at it | none |
+| D6.3's quantifier (I136), exemption (I176) | bearing on (E) | reads Slot only; (E) same under all four readings (FC23.new1 (h), H) | none |
+| FC26, FC63 statements | "NC1" listed among conditions met | true statements (the candidates meet NC1), S106 column notes it | none |
+| FC31 (NT) | "the four conditions at L61"; L520's "three sources" | stale: L61 now writes Account(ℰ) ∧ ¬Dec(t); L520 now writes (E)'s five conjuncts | **S13** (proposal P5) |
+| D6.8, L231, L536 | "four conditions" vs five conjuncts | the four headings reading, kept by D6.8 | none |
+
+Nothing else dangles: no text line, claim, note or DEP node still reads NC1, the grain ℓ or the slot test as a condition of (E).
+
+## (b) Cycles and the dependence table
+
+The step's own edges are right (run: `--claim FC32` → "HOLDS ON ALL MODELS TRIED"; "Dependence: code ['(O)','(Q)','C','δ'], D18.1 ['(O)','(Q)','C','δ'] … Slot an ancestor of (E): False"). Two defects in the edge set itself:
+
+**S1 (run).** `FC14` and `FC32.new1` read the formal core by hard-coded paths (`formal core, after S106.md`, then round-3/round-2 result folders) that do not exist in the delivered layout (`maths/formal core, now.md`). Run: `--claim FC14` → "NOT TESTED … no formal core found at: …"; `--claim FC32.new1` → "NOT TESTED", `FileNotFoundError: …/S104 Round 2 …/formal core, after round 2.md`. Both are recorded H (printout 350, 1113–1117) from an environment where the file sat beside the model. The two claims that check the core's own structure are not reproducible as delivered. Fix: P7.
+
+**S2.** DEP and D18.1's note omit Con → Held and Build → Held. D12.2: "and Held(o', x) for some o' ⪯ o_t of h' (D18.1)"; D13.3: "Prepares(h', o, c) ∧ Held_ℓ(o, c) ∧ ExplUse(o, c)". But `DEP["Con"] = ["h","CT","Episode",("<","(R)")]`, `DEP["Build"] = […, "ExplUse", ("<","(R)")]`, and D18.1's note reads "Con → CT, Episode". The Held edge enters only through `dep_edges`' T/T′ substitution and vanishes under K, although the definitions name Held unconditionally (the staged (R) entries are the pre-r2b-R3 wording). No cycle either way (Held → Org, (F1), (F2) only). Fix: P2.
+
+Dependence table (corrected; `(<, x)` = staged):
+
+| node | edges | note |
+|---|---|---|
+| (E) | (F1), (F2), (A), Dep, NV | ✓ (FC32) |
+| Dep | (O), (Q), C, δ | ✓ (run FC32 (2)) |
+| Slot | (O), (Q), C, ℓ, δ, Cand | ✓ (ℓ via NC1's grain clause; Cand → Transport) |
+| Con | h, CT, Episode, **Held** | S2 |
+| Build | h, Owned, Prepares, BindingConstruction, TransferComposite, ExplUse, **Held** | S2 |
+| Sel | h, Θ, (F1), (F2), CT, 𝒯pop, surv, Occurs, (<, (R)) | ✓ (staged Rep at o ≺ o_t) |
+
+Cycles: under U, Live → (K2) → Live (closes below the step, D9.4/D9.6) and one through (R) (printout 1121: "(R) → Con → (R)"; with P2 it becomes (R) → Sel → (R), still a cycle, so FC98 (a) stands); under K, T, T′ none (printout 1121; FC98 (a′)). With S2's edges added no new cycle arises. Minor: D6.10 (E_tab, E_enc) is folded into node "(E)" (D_TO_NODE) though it defines no conjunct — a holder by I181, harmless (FC25 tests the conjuncts, not the node); no fix.
+
+## (c) Primitives left undefined
+
+| symbol | where used | listed / defined |
+|---|---|---|
+| Pin | D6.3 (S106b), FC23.new2, FC23.new3, `core.pin` | defined (D6.3) ✓ |
+| Det_C | D6.3, FC23.new3, FC25.new2 | defined (D6.3) ✓ |
+| NoBriefQuestion | FC84.new1, I191, `claims_s41.no_brief_question` | **defined nowhere in the core** (S5) |
+| the brief as a criticism's target z | I191, FC84.new1 | D9.10's z untyped; read through Θ (I90) (S5) |
+| Work(κ), "without loss", "operates on", "fails to capture", "not creative" | D16.XV (L540–L544) | noted "no definition" in D16.XV, absent from D0.2 (S6) |
+| subhistory | D11.3 (defined), D0.2 (primitive), `D0_2` sink | **both at once** (S4) |
+| Held, CT | D12.2, D13.3, D18.1 | defined (D18.1) ✓ |
+| 𝒱, parts, surv, Env, trans, UsesClaim, Desc, J_p, C_I, ImmAfter, 𝔓^adv, Event, q(o), Rec_h′ | §§7–16 | classed by D0.2 / D0_2_R3A3 ✓ (printout 1125) |
+
+## (d) Definitions no claim uses
+
+No claim's statement or the program uses: **D7.4** (Boundary), **D12.6** (Layers), **D14.8** (Appraisal, 𝒩 — by design, values), **D15.6** (CanAdv), **D16.1** (Scr), **D16.3** (Enable); D2.5's dir is reached by FC02's title only; D16.2/D16.4's RC, UU, UC, UECS are reached by FC110's statement. The text needs every one (L302, L175–L179, L455, L477, L487, L495, L109); testing them needs Θ, as FC97's not-tested part says of contents. No fix.
+
+## (e) Two definitions that conflict
+
+**S3.** Two definitions of Slot. D6.3's own clause: Slot_C(ℰ,k) :⟺ δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C: {w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)} — no translation conjunct. Pin (I184, FC23.new3 (a), `core.slot` under "every"): adds "t translates (a,b)", i.e. π defined on Sol_D(a,b). I16 leaves π's domain open, so on a candidate whose π is partial exactly off Sol_D(a,b) at a determined pair, D6.3's Slot holds and Pin fails; the core asserts their equivalence ("Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ Pin … at every (a,b) ∈ Det_C"). They coincide wherever π is total (I81; run: `--claim FC23.new3` → "HOLDS ON ALL MODELS TRIED … (a) … 6480 models"; the program's π is total, so the divergence is untestable there). Fix: P1.
+
+**S4.** "subhistory": a primitive read through Θ (D0.2, `D0_2`) and defined (D11.3: "a subhistory is a subset closed under the interpretation, with ≺ restricted"). Fix: P6.
+
+Examined and nothing against: D6.5's "Dependence ⟺ NC2" against D6.2's NC0 (I187 closed the other reading); D16.XV's Expl atom against FC30.new1 (c)'s exploratory Expl := Acc ∧ ¬Dec (a claim's look, not a core definition); D14.7 vs D16.4 on δ (both quantify it, I180/I183); D7.1's Acc arity against D6.7 (D7.1 gives δ_E; D7.4 does not — N1).
+
+## (f) Notation used two ways
+
+| item | witness | fix |
+|---|---|---|
+| δ: designation (D3.1 δ_D, I20) and defect (D9.10 δ, L377's own letter) | D9.10 uses both in one paragraph: "c = (z, δ, g, Conn, occ)" and "ℰ_c := (Conn, …, δ_c)"; δ_c can be misread as "the defect of c" | P9 |
+| κ: value maps κ_{k,v} (D5.1, I14) and kind-label κ(ℰ) (D16.XV (Elim)) | D5.1 vs D16.XV "a kind-label κ(ℰ) ≠ κ(ℰ')" | P8 |
+| Dependence: (E)'s conjunct (D6.5, L255, L262) and the "Dependence order" (L526's heading, D18.1's graph, FC31/FC32's "dependence order") | L262 vs L526 | none needed: L526's "(E) depends on those (D18.1)" and D18.1's own title keep them apart; both wordings are the text's own (I188 records the name's other choices) |
+| C: contract (D3.1) and constructor attribute / retention set (D15.2–D15.3) | D15.2's own note: "the letters of Part XII are local" | none needed (the note is the fix) |
+| program: `core.dep` (Dependence), `claims_b.DEP` (the graph), DEP node "Dep" | three spellings, three meanings; also `account(reading="r3")` | none needed (scopes disjoint) |
+| ⊥, primes and superscripts (NC1_q, Fid⁺, Viol⁺, X^ξ_j, RetReal^{q,r}) | D3.2's convention applied uniformly (D6.4, D8.2, D3.3, D6.9) | none |
+
+## (g) Proposals
+
+**P1 (maths, D6.3).** Beside the current clause, write:
+> Slot_C(ℰ, k) :⟺ δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C [t translates (a,b) ∧ {w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)}]
+
+so D6.3's Slot is exactly Pin at every pair of Det_C (FC23.new3 (a) as stated; `core.slot` under "every" already requires `cand.translates`). Inventions: none new (the two readings differ only over I16's open π domain; I184 unchanged).
+
+**P2 (maths + code).** Maths, D18.1's edge note: "Con → CT, Episode" → "Con → CT, Episode, Held"; "Build → ExplUse → (E)" → "Build → ExplUse, Held; ExplUse → (E)". Code, `model/claims_b.py` DEP:
+```python
+"Con": ["h", "CT", "Episode", "Held"],                       # S2: D12.2 reads Held outright
+"Build": ["h", "Owned", "Prepares", "BindingConstruction", "TransferComposite",
+          "ExplUse", "Held"],                                # S2: D13.3 reads Held_ℓ(o, c)
+```
+(Sel keeps its staged Rep use; `dep_edges` unchanged.) Not run; expected: FC32.new1 (b) "U: Live → (K2) → Live (through (R): (R) → Sel → (R)); K: None; T: None; T′: None"; FC98 (a), (a′) unchanged; no status changes.
+
+**P3 (maths, new definition beside D12.2).**
+> **D12.2.new NoBriefQuestion.** NoBriefQuestion(h′, C_b) :⟺ every o ∈ h′ has q(o) = C_b, and no occurrence of h′ is a criticism c = (z, δ, g, Conn, occ) (D9.10) with z = C_b **[I191]**; which occurrences are criticisms, and of what, is read through Θ (I90).
+
+Used by FC84.new1 (a1), (a2). Inventions: I191, already registered; no new choice.
+
+**P4 (maths, D7.4).** "each v ∈ 𝒱 declaring (E_v, t_v, Γ_v)" → "each v ∈ 𝒱 declaring (E_v, t_v, Γ_v, δ_v), δ_v the designation of Q in E_v (D5.3)". (N1; matches D7.1 and D16.4/D14.7.)
+
+**P5 (maths, FC31 restated).** Statement → "(E) has five conjuncts; Part V has four headed conditions: Component fidelity = (F1) ∧ (F2), Question fidelity = (A), Dependence, Non-vacuity. 'The four conditions' at L231 and L536 are the four headings (L61's phrase was replaced by Account(ℰ) ∧ ¬Dec(t) in round 3); L520 names (E)'s conjuncts, so it names a source for (A), and FC104's open extent is L630's alone." (N2.)
+
+**P6 (maths, D0.2).** (i) "Org_ℓ(h) and subhistory [I151]" → "Org_ℓ(h) [I151]; a subhistory is defined (D11.3)". (ii) append: "Work(κ) [L540]; 'without loss' and 'operates on' [L542]; 'fails to capture' and 'not creative' [L544]: used by D16.XV's shapes, defined nowhere". Code: `D0_2` drop `"subhistory"`; `D0_2_R3A3["subhistory"] = "defined (D11.3, I151)"`; optionally `DEP["Episode"]` drop `"subhistory"`. Not run; expected: FC32.new1 (c) "After area 3: none" unchanged, FC98 (b) unchanged.
+
+**P7 (code).** In `claims_r3a3.core_def_ids` and the `tries` list of `claims_a` (FC14), put the delivered core first:
+```python
+for alt in (os.path.join(HERE, "..", "maths", "formal core, now.md"),
+            os.path.join(HERE, "..", "..", "formal core, after S106.md"), ...):
+```
+Not run (nothing can be written here). Expected: FC14 → "HOLDS ON ALL MODELS TRIED … 118 definition lines; matching 'is a cause' / 'IsCause' / 'Cause(': 0"; FC32.new1 → "HOLDS ON ALL MODELS TRIED … 114 paragraphs read from the formal core; not mapped: none …", as in printout 350 and 1117.
+
+**P8 (maths, D16.XV (Elim)).** "a kind-label κ(ℰ) ≠ κ(ℰ')" → "a kind-label kl(ℰ) ≠ kl(ℰ′)" (κ stays D5.1's value map, I14).
+
+**P9 (maths, the designation's letter).** Rename δ_D/δ_E (I20) to ι_D/ι_E in D3.1, D3.2, D5.3, D6.3, D6.7's argument list, D7.4 (with P4), D14.7, D16.4 and D18.1's δ-edges (Dep, Slot), so that D9.10's δ (the alleged defect, L377's own letter) is the only δ. A rename only, no content; I20's other choice recorded.
+
+## (n) The points N1 to N6
+
+- **N1** — fix P4 (D7.4 names δ_v; D16.4 and D14.7 already quantify δ).
+- **N2** — fix P5 (FC31 restated; it is NT, so nothing is recomputed).
+- **N3** — none needed: it is S45's own consequence (Bearing reads Acc, D9.10's [S106] note, FC107 H); which questions a slot leaves open is parked (P8 of the register).
+- **N4** — none needed: (Suff)'s range holding slot candidates is what S44/S45 say ("it is an explanation … just not a good one"); "bad" is parked; S41 (Q2) is kept (FC23.new2 (f), H).
+- **N5** — none needed: the heading names D6.5 (I188, S40's formal-statement kind); the plain-word name the condition has lost was the removed test's own ("non-circular"), and the kinds of change allowed are D6.4's, quoted in full at L255.
+- **N6** — fix P3: NoBriefQuestion defined in the core with the criticism's target z typed to the contract, its Θ-reading (I90) kept as I191 states it.
+
+END OF REPORT

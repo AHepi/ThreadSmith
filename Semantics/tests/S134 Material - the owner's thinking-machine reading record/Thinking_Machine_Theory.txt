@@ -1,0 +1,156 @@
+A theory for creating a thinking machine
+An original engineering proposal informed by Steven Pinker’s How the Mind Works and Learnability and Cognition. Source reading by MiMo 2.6 Pro. 3 October 2026. No thinking machine has been implemented or tested in this research.
+
+The central proposal
+
+My proposal is to build a machine whose learned representations take part in its subsequent computations. It would construct models of objects, events and possible actions, run those models to anticipate consequences, compare their consequences with observations, and revise what it uses when the comparison fails. Different specialised processes would contribute different kinds of structure, while sharing enough representation to use one another’s results.
+
+The important unit of knowledge would be a reusable relationship together with its conditions of application. A name such as circle would point into that knowledge; the name alone would contribute little. A learned representation would count as useful when it enables a prediction, discrimination or action in a new situation, and when changing that representation changes the machine’s behaviour in an explainable way.
+
+This is a proposed route toward increasingly capable thinking. It is not a deduction that this particular architecture must produce a human mind. The books constrain the proposal, but they do not supply a completed general learning algorithm. Efficient discovery of useful representations remains its hardest unresolved problem.
+
+What the books contribute
+
+In How the Mind Works, Pinker explains computation through physical representations that both carry information and cause further changes. The operations must preserve relevant relationships in what the representations stand for. His account allows graded and approximate processing; it does not require every representation to be an exact, discrete symbol. The constituent operations can be mechanical even when their combined activity supports intelligent behaviour. His discussion of meaning draws on both causal contact with the world and the inferential role of a representation, while acknowledging philosophical disagreement. These claims appear on file pages 42 through 44 and 50 through 52.
+
+That gives the architecture a demanding standard: explain which state carries information, what physically changes it, and why the change is useful for the world being represented. Pinker’s kinship example illustrates reasoning with supplied rules. The checked passages do not explain how those rules are acquired. My model construction process is an additional proposal intended to address that missing step.
+
+Learnability and Cognition supplies a complementary problem. A learner must extend what it has encountered, yet avoid extensions that the evidence does not license. In the argument-structure learning setup discussed on file pages 26 through 31, positive examples can leave an excessively permissive rule intact. An unheard expression may simply never have had an opportunity to occur. The lesson I take for engineering is to record the scope of a rule and the kind of evidence that could challenge it. The book’s particular arguments about children and verb learning must retain their linguistic scope.
+
+The distinction between broad and narrow lexical rules sharpens this point. On file pages 209 through 215, Pinker distinguishes properties a possible form would have from the narrower conditions that license productive use of a form. This is not his theory of scientific conjecture or machine action. It inspires my separate treatment of constructing a candidate and relying on that candidate. A machine should be free to construct a possibility without immediately treating it as established knowledge.
+
+The book contains a concrete but conditional learning mechanism. On file pages 320 through 323, semantic structure hypothesis testing starts with candidate components of a verb meaning and removes components contradicted by situations in which the verb is used. It assumes an already available conceptual representation and a constrained inventory of expressible features. Pinker calls the account brute force and asks whether convergence can be fast enough. This supports a distinction in my design: revising a model inside an available representation is one operation; constructing a new usable representation is another. Success at the first does not establish success at the second.
+
+An earlier procedure described on file page 82 proposes a rule, restricts it by a distinguishing property, and replaces that restriction when counterexamples accumulate. The checks on file pages 91 and 92 show why this must not be presented as the book’s settled solution: Pinker questions the large, heterogeneous inventory of properties and says the rest of the book will revise this account. A practical construction process needs a defensible search space and matching procedure, not just the instruction to find the right property.
+
+The books also resist the idea that a wholly unspecified learner becomes competent through exposure alone. Perception depends on assumptions about the world, representations affect which inferences are available, and useful generalisation depends on the structure of a domain. This supports making our initial assumptions explicit and testing their adequacy. It does not identify a unique primitive vocabulary or prove that one particular implementation is necessary.
+
+Begin with a declared environment and declared starting machinery
+
+The first implementation should use a small visual environment with a movable sensor and objects whose outlines can be partly hidden. The machine would receive sensor readings, the sensor’s calibrated position, its own movements, and temporal information. It would not receive hidden object labels, shape definitions, or the environment’s internal description during recognition. A teaching phase could supply category names, but those teaching signals would be recorded separately from the observations available at evaluation.
+
+The starting operations would be ordinary executable operations: read a value, store a value, copy a value, compare values, perform elementary arithmetic, follow a reference, choose a branch, repeat a bounded operation, and invoke a stored procedure with new inputs. Records could refer to other records. The representation would distinguish an individual observation from a proposed object, an event from a general relationship, and an actual event from a simulated one.
+
+These are substantial design commitments. Sensor calibration, spatial coordinates, ordered events, record identity, composition rules and initial priorities are supplied capabilities. They must be listed openly. A completed circle detector presented as a primitive would place shape knowledge in the designer’s contribution. Generic arithmetic and record operations would leave much more to the learner, but could make discovery prohibitively expensive. The experiment must expose that trade-off rather than conceal it.
+
+I would make the first implementation non-neural so that the contribution of each constructed procedure can be inspected directly. This is a project choice. Pinker’s computational account does not require it, and his criticism of particular historical networks does not establish a limit on every neural implementation. MiMo would help us investigate and design the machine; it would not supply the experimental machine’s features, answers or learning updates.
+
+Construct representations that can be used in more than one way
+
+The observation process would write a record of what was sensed, where it was sensed, when it was sensed, and which movement preceded it. Initially this would be a record of measurements, not a declaration that the machine had already perceived a particular object. Programs operating on those records could construct further descriptions: a change across neighbouring samples, a relation among several locations, a recurring boundary pattern, or a candidate continuation behind an obstruction.
+
+The representation store would preserve links from each derived description to the observations and operations that produced it. Alternative interpretations could coexist. A dark boundary might belong to an object, a surface marking, or an obstruction; the machine would not resolve that ambiguity merely by assigning a confident label.
+
+Descriptions would carry a reference frame, so that a change in sensor position is not silently treated as a change in the object. Multiple representational formats could coexist: spatial arrays for measurements, constraints for possible relationships, and structured event records for inference. How the Mind Works describes a richer surface-and-boundary representation and changing reference frames on file pages 153 through 156. My proposed shared representation requires compatible references between formats, not one identical format for every process.
+
+Role binding would be explicit. A record of a circle pushing a square would distinguish the participant doing the pushing from the participant being pushed, and distinguish that event from another event involving the same participants. One event record could also appear inside a larger representation, such as a prediction about what would happen if that event occurred. Pinker’s discussion of roles, propositions and nested structures on file pages 74 through 79 motivates these requirements.
+
+The same representation should support several operations. A learned object relation could help recognition, guide a later observation, enter a prediction, and constrain a plan. That shared use is a stronger test of the representation than successful performance on a single fixed question. Individual identity would also need its own account: matching appearance alone would not justify merging two objects. The first one-object environment would simplify this problem; later experiments would have to test identity through overlap, movement and occlusion.
+
+Make the learning update executable
+
+The model construction process would assemble candidate procedures from the available operations and previously constructed procedures. A concrete initial implementation could enumerate short, well-formed constructions in a fixed order, rejecting combinations whose inputs and outputs cannot connect. Candidates would be evaluated on what they predict about observations or action outcomes, rather than on whether their names resemble useful concepts.
+
+When the current representation already expresses the relevant alternatives, revision can be simpler than constructing a new program. The machine can retain a set of possible relationships and remove or suspend a relationship when a sufficiently reliable observation conflicts with its prediction. This adapts the hypothesis-testing idea from Learnability and Cognition. I would retain a record of rejected alternatives and permit recovery when a measurement or background assumption is corrected, rather than permanently delete a possibility on the strength of one uncertain sensor reading.
+
+After a failed prediction, construction could concentrate on replacing a subexpression, changing a condition of application, or adding a relation that the earlier procedure could not express. Such changes would still come from the declared construction operations. Every revised candidate would be checked against retained relevant cases, including cases on which the earlier candidate already worked. A failure identifies a problem in the prediction process and its assumptions; it does not by itself prove which instruction or assumption should be changed.
+
+A second construction strategy would retain partial assignments and propagate constraints among them. If one interpretation makes a neighbouring interpretation impossible, that consequence can be applied before a complete model is assembled. Pinker describes mutually constraining stereo matches on file pages 138 and 139 of How the Mind Works, along with limitations of the particular model. A discrete, non-neural constraint procedure is my proposed alternative inspired by that account. It could avoid some exhaustive enumeration, but neither practical efficiency nor discovery of the constraints follows automatically. I would compare it with bounded program construction under the same observations and resource limits.
+
+A useful constructed procedure could become a reusable part of later constructions. When a sequence of operations works with different inputs, the machine could retain the sequence with those inputs left open. That would make a previously expensive construction available as a single callable operation. Its definition would remain inspectable. This changes the practical vocabulary of the machine without introducing an unexplained source of new computational powers.
+
+The general knowledge store would keep the candidate’s structure, what it predicts, its current scope, the observations bearing on it, and unresolved alternatives. Agreement with existing observations would mean compatibility with those observations. It would not establish universal correctness. An incorrect prediction in a carefully controlled noiseless task could exclude a candidate for that task; noisy observations would require explicit treatment of measurement error and possible failures in background assumptions.
+
+This makes a learning process concrete enough to implement, but does not make it efficient. Blind enumeration is unlikely to be a satisfactory route to broad thinking. The next version would need justified ways to direct construction: retrieve procedures implicated in the failed prediction, reuse relationships that worked in structurally similar situations, and use specialised knowledge to restrict irrelevant combinations. Each restriction would make some discoveries easier and might make others unreachable. That is an empirical trade-off to investigate.
+
+Give memory a causal role
+
+I would separate three responsibilities: working memory for the current problem, event memory for particular experiences, and general knowledge for reusable relationships. They could share one physical database. The proposal concerns what information must remain distinguishable and how operations access it, rather than a claim that three separate physical stores are necessary.
+
+Event memory would preserve participants, observations, actions, order and relevant durations. General knowledge would preserve relationships that can be used across episodes. Pinker discusses the distinction between memory for particular episodes and memory for generic knowledge on file page 76 of How the Mind Works, including the tension between their demands. The exact record format and revision procedures here are my engineering choices.
+
+Memory must be available to the computations that need it. A current observation could retrieve an earlier episode involving the same tracked object, compare the present relation with a past relation, or recover what happened before an interruption. A learned summary could accelerate these operations, but its relationship to the underlying episodes should remain testable.
+
+A decisive memory task gives two histories exactly the same final observation while requiring different answers. The machine must then retain some information from history somewhere in the decision process. That argument establishes a need for historical information in this task; it does not establish a need for one particular memory design.
+
+Temporal order needs a separate test. Observing the same spatial samples in a different order should leave a shape judgment unchanged when their positions are known. Seeing a circle enter an enclosure and then a square should change the answer to which object entered last when the order is reversed. Durations, movement counts and incidental cues should vary independently, so that a clock or fixed action sequence cannot substitute for the relevant memory.
+
+Use models to decide what to observe and what to do
+
+The prediction process would run candidate models on possible next observations and actions. Where two surviving models disagree about a reachable observation, the action selection process could choose that observation. For the first machine, a simple explicit policy could prefer a reachable disagreement, then use movement cost and a fixed ordering to resolve ties. This is a proposed search policy, not a mechanism established by either book.
+
+A current set of models can agree and still be wrong. If all candidates agree, the machine must not conclude that all possibilities have been covered. It could inspect a new location, attempt a new composition within its remaining budget, or report that its current models do not support a useful next distinction. An unresolved result would preserve uncertainty; too many unresolved results would also show lack of competence.
+
+Action selection would depend on declared goals and operating limits. Pinker argues that emotions participate in setting and coordinating goals, while means-and-ends reasoning does not independently supply the highest goals. The checked discussion is on file pages 217 through 220 of How the Mind Works. A first machine could implement functional priorities without claiming subjective feelings.
+
+My initial priorities would be concrete and limited: perform the selected task, preserve the ability to continue operating, and investigate an unresolved distinction when it matters for that task. These priorities would direct attention and action. They would not decide which proposition is true. A desired outcome should not count as evidence that the corresponding model is correct.
+
+Relevance remains a serious unresolved issue. Pinker’s robot examples on file pages 12 and 13 show why computing every consequence, or classifying every consequence as relevant or irrelevant, can itself defeat action. A practical machine must examine a bounded portion of its models and possibilities. The experiment should record what was considered, what was omitted, and whether the omission caused failure.
+
+A circle and square experiment that could matter
+
+The first target would be learning an inspectable distinction from partial observations, then reusing it across changes of size, location, orientation and order of viewing. The actual machine would have to construct the procedures used to make the distinction. The evaluator could know how the figures were generated, but that information would remain outside the machine’s input.
+
+A version supplied with complete circle and square definitions would make a useful control for whether the sensor and execution system can perform the task. It would not establish that the learner acquired those definitions. One MiMo reading proposed supplying those constraints directly; I have retained that as a control condition rather than the initial knowledge of the learning machine.
+
+Suppose the machine initially finds a distinction that works on its training examples but treats every smooth closed outline as a circle. An ellipse would expose that rule’s limited reach. The machine would need to construct a further relationship, or retain the classification as unresolved. Providing the missing geometric relationship by hand after the failure would be a designer’s repair and must be reported as such. This is an illustrative future failure, not an experiment that has been run.
+
+The evaluation should include rounded squares, other polygons, broken outlines, insufficient observations and noise within declared tolerances. A compulsory choice between circle and square would hide unsupported answers. Exact mathematical classification from arbitrary finite noisy samples is not the intended promise; the environment, available observations and acceptable tolerance must be specified.
+
+The memory version would reveal parts of a figure over time and end with the same uninformative view in different episodes. Selectively changing the relevant retained history should alter the answer. The order-sensitive version would use the first-versus-last event distinction described above. The active-observation version would arrange competing interpretations that predict different readings at an available sensor position, then test whether the machine chooses an informative observation.
+
+Fair comparisons would include a fixed classifier, a stored-history method and an otherwise similar machine with particular learned or remembered structures disabled. Data access and resources should be comparable. Internal removal tests must account for redundant routes: removing a learned summary may leave a slower route through remembered episodes. Learning should be paused during the relevant diagnostic, or reconstruction should be recorded, so that immediate relearning does not conceal the intervention.
+
+A successful result would establish particular abilities: grounded discrimination, useful retention of history, construction of a reusable procedure, or selection of an informative observation. It would not by itself establish a general thinking machine. The next task would require the same learned relationships to contribute to predicting an action’s effect and planning a new action sequence.
+
+How this could grow into broader thinking
+
+The proposed route to broader capability is reuse across different operations and domains. A perceptual process supplies a structured description to a planning process. A planning process constructs possible sequences of actions. A prediction process evaluates their consequences under the current models. Event memory records what happened when an action was executed. Model construction uses a discrepancy to build a revised account. Each connection must be implemented and tested.
+
+Analogy could become a method of proposing new constructions: map the participant roles and relations of a known situation onto a new one, transfer a procedure under that mapping, and test its consequences. The mapping would be a conjecture. Superficial similarity would not license transfer when the causal or structural relationships differ.
+
+Creativity would mean constructing a previously unavailable, useful combination or representation, with an inspectable account of how it changed what the machine could do. Combining stored parts can produce novelty, but a large combination space is not itself an explanation of useful creativity. The selection and construction mechanisms would have to discover productive combinations within the available time.
+
+A language process could eventually communicate the machine’s representations and acquire information through instruction. It should connect to the same knowledge used in perception and action. Natural language output alone would not establish that this integration had occurred. The earlier nonverbal tasks make it possible to inspect the underlying contribution before adding fluent description.
+
+New domains would probably require new or revised specialised assumptions. The proposal therefore permits a family of interacting processes, rather than assuming that success in geometry automatically solves social reasoning or language learning. Each extension should state what additional structure was supplied and what the unchanged machinery learned.
+
+What survives criticism, and what remains open
+
+The requirement that past information reach a history-dependent decision is tightly constrained by the task. The exact event-memory data structure is replaceable. Likewise, distinguishing participants in different roles is required by role-sensitive tasks, but one particular notation or physical implementation is not established. A rival that preserves the relevant distinctions and causal use should remain in consideration.
+
+Structured records, deterministic construction, explicit scope descriptions and a particular observation policy are proposed implementation choices. They are useful because they make the experiment inspectable, not because these books prove them uniquely correct. Specialised learning assumptions are motivated by the books, but the exact assumptions needed for each new environment remain to be discovered.
+
+The hardest unknown is efficient representation construction. The candidate procedure above specifies how to generate, execute, retain and revise programs. It does not demonstrate that useful concepts will be found before the search budget is exhausted. Giving this gap the name model construction process would not close it.
+
+Other risks interact with that gap. Strong restrictions can make search tractable while excluding the right model. Very flexible construction can create an impossible search burden. Aggressive generalisation can transfer useful knowledge and also apply it outside its scope. Conservative use can preserve reliability and also leave the machine unable to act. Memory compression can save resources while deleting a distinction needed later. These trade-offs need explicit tests, not a single overall score.
+
+The proposal would be weakened if each new task required the designer to provide its decisive concept, if fixed shortcuts explained the apparent transfer, if learned state had no demonstrated role, or if resource use grew beyond the declared limits. Always answering that the result is unresolved would also fail to demonstrate useful thinking. A clean performance on cases chosen by the same designer would need an additional attempt to break it with independently prepared cases.
+
+Neither source agreement nor success in the proposed experiments would establish consciousness. The immediate aim is a progressively stronger computational account of observable abilities, with the origin and use of knowledge exposed.
+
+The next construction I would make
+
+I would build one bounded non-neural machine for the controlled visual environment, with an explicit inventory of supplied operations and an auditable model construction process. I would give it partial observations and a small teaching set, then freeze the implementation before testing new transformations, ambiguous cases and history-dependent decisions.
+
+The decisive question would be whether the machine constructs a reusable relationship that improves a new prediction or action, within a fixed resource budget, without the designer supplying the missing relationship during evaluation. That result would justify expanding the environment and testing the same construction machinery again.
+
+This is the practical commitment of the theory: build knowledge as structure that the machine can execute, constrain its use by what it represents and what has been tested, retain the temporal distinctions that the task needs, and expose the mechanisms that create and revise that structure. The learning and search mechanisms, rather than the vocabulary used to describe them, determine whether the proposal succeeds.
+
+Reading method and source limits
+
+Both supplied documents were processed locally as page-labelled text. How the Mind Works contains 455 file pages in this copy; Learnability and Cognition contains 509. All page references in this report are ordinal pages in the supplied files, rather than the books’ printed page numbers.
+
+MiMo 2.6 Pro first read the extracted text in 117 short sections. Following the user’s revised instruction, three separate readers each reread both complete books in sections covering approximately thirty percent, thirty percent, thirty percent and ten percent of extracted text. Their jobs were implementable mechanisms; learning, generalisation and temporal memory; and independent criticism with alternative explanations. Every request stated the thinking-machine purpose. At most three requests ran concurrently.
+
+The larger sections of How the Mind Works cover file pages 1 through 117, 118 through 235, 236 through 361, and 362 through 455. The larger sections of Learnability and Cognition cover file pages 1 through 163, 164 through 318, 319 through 464, and 465 through 509. MiMo also reread ten focused sets of original passages for the main attributions. The separate findings were consolidated by MiMo before the final synthesis.
+
+The reading record retains the model responses, page ranges, request provenance and criticisms. These are several readings of the same sources, not independent empirical confirmations of the theory. Text extraction can omit information in figures or distort unusual notation. This report relies on claims supported by the surrounding prose; it does not claim independent interpretation of every figure. No machine performance experiments were conducted.
+
+The central source locations are How the Mind Works, file pages 12 through 13 and 20 through 22 for relevance and specialised assumptions; 42 through 44 and 50 through 52 for computation and meaning; 74 through 79 for structured thought and memory; and 217 through 220 for goals. In Learnability and Cognition, file pages 14 through 17 establish the retrospective preface’s scope; 23 and 26 through 31 address the learning problem; and 209 through 215 develop the distinctions used here as inspiration for constrained generalisation.
+
+Additional original-passage checks cover Learnability and Cognition, file pages 80 through 83 and 90 through 92 for the earlier learning account and its limitations; 312 through 316 and 320 through 323 for semantic hypothesis testing and its assumptions; and How the Mind Works, file pages 138 through 139 and 153 through 156 for perceptual constraints and reference frames. The working reader memoranda sometimes confuse printed and file-page numbering or make stronger claims than the checked passages support. The focused verifications and this final report take precedence over those working notes. Two initial consolidations exceeded their output limits; they are preserved as incomplete attempts and were replaced with completed concise syntheses.
+
+The preface to the new edition of Learnability and Cognition is retrospective and does not provide a comprehensive update of the research literature. The books are being used as intellectual starting points for an original engineering proposal, not as proof that the proposed architecture is a current scientific consensus.
+
+An optional final MiMo review of the separately authored theory was not run. Automatic approval review treated transmission of that generated draft as a separate disclosure requiring clearer permission. The completed book readings, source checks and role syntheses were available for the main assistant’s final assessment; no review of the finished draft by MiMo is claimed.

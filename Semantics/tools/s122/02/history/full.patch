@@ -1,0 +1,324 @@
+diff --git a/avida-core/source/main/cAvidaConfig.h b/avida-core/source/main/cAvidaConfig.h
+index 14c8b3e62..8ec3b31d2 100644
+--- a/avida-core/source/main/cAvidaConfig.h
++++ b/avida-core/source/main/cAvidaConfig.h
+@@ -304,6 +304,15 @@ public:
+   CONFIG_ADD_VAR(MIGRATION_FILE, cString, "-", "NxN file that describes connectivity weights between demes");   
+   
+   
++  // Anticipation settings leave the stock input path selected by default.
++  CONFIG_ADD_VAR(ANTICIPATE_MODE, int, -1, "-1=off, 0=random, 1=repeat, 2=increment, 3=repeat then increment");
++  CONFIG_ADD_VAR(ANTICIPATE_SWITCH, int, 25000, "First update using increment in mode 3");
++  CONFIG_ADD_VAR(ANTICIPATE_START, int, -1, "-1=random initial value; 1..65536=diagnostic initial value");
++
++  CONFIG_ADD_VAR(HISTORY_MODE, int, -1, "-1=off, 0=order, 1=interval, 2=sequence; ANTICIPATE_MODE must be off");
++  CONFIG_ADD_VAR(HISTORY_WINDOW, int, 2, "Inclusive read gap, 1..32");
++  CONFIG_ADD_VAR(HISTORY_CASE, int, -1, "-1=random pair; 0..9=diagnostic pair/orientation");
++
+   // -------- Mutation config options --------
+   CONFIG_ADD_GROUP(MUTATION_GROUP, "Mutation rates");  
+   CONFIG_ADD_VAR(COPY_MUT_PROB, double, 0.0075, "Substitution rate (per copy)");
+diff --git a/avida-core/source/main/cOrganism.cc b/avida-core/source/main/cOrganism.cc
+index 943176891..fe52d2519 100644
+--- a/avida-core/source/main/cOrganism.cc
++++ b/avida-core/source/main/cOrganism.cc
+@@ -41,6 +41,9 @@
+ #include "cStats.h"
+ #include "nHardware.h"
+ 
++// Numeric exhaustion is explicit: an incrementing stream never wraps into replay.
++#include <climits>
++#include <stdexcept>
+ #include <algorithm>
+ #include <iomanip>
+ #include <iterator>
+@@ -158,6 +161,10 @@ cOrganism::cOrganism(cWorld* world, cAvidaContext& ctx, const Genome& genome, in
+   , m_queued_display_data(NULL)
+   , m_display(false)
+   , m_lyse_display(false)
++  // Initializing disabled stream state consumes no random numbers.
++  , m_anticipate_next(0), m_anticipate_last(0), m_anticipate_rule(-1)
++  , m_anticipate_ready(false), m_anticipate_read(false)
++  , m_anticipate_attempted(false), m_anticipate_match(false)
+   , m_input_pointer(0)
+   , m_input_buf(world->GetEnvironment().GetInputSize())
+   , m_output_buf(world->GetEnvironment().GetOutputSize())
+@@ -365,6 +372,77 @@ int cOrganism::ReceiveValue()
+   return out_value;
+ }
+ 
++// The world produces one pending value; a committed value stays fixed until read.
++void cOrganism::PrepareAnticipation(cAvidaContext& ctx)
++{
++  const cAvidaConfig& cfg = m_world->GetConfig();
++  int rule = cfg.ANTICIPATE_MODE.Get();
++  if (rule == -1) return;
++  if (rule < 0 || rule > 3 || cfg.ANTICIPATE_SWITCH.Get() < 0 ||
++      (cfg.ANTICIPATE_START.Get() != -1 &&
++       (cfg.ANTICIPATE_START.Get() < 1 || cfg.ANTICIPATE_START.Get() > 65536)))
++    throw std::invalid_argument("Invalid ANTICIPATE setting");
++  if (rule == 3) rule = m_world->GetStats().GetUpdate() >= cfg.ANTICIPATE_SWITCH.Get() ? 2 : 1;
++  if (m_anticipate_ready && (m_anticipate_rule == rule || m_anticipate_attempted)) return;
++  if (!m_anticipate_read || rule == 0) {
++    int value = 0;
++    if (!m_anticipate_read && cfg.ANTICIPATE_START.Get() != -1)
++      value = cfg.ANTICIPATE_START.Get() - 1;
++    else for (int bit = 0; bit < 16; ++bit) value = 2 * value + (ctx.GetRandom().P(0.5) ? 1 : 0);
++    m_anticipate_next = value + 1;
++  } else {
++    if (rule == 2 && m_anticipate_last == INT_MAX)
++      throw std::overflow_error("ANTICIPATE increment stream exhausted");
++    m_anticipate_next = m_anticipate_last + (rule == 2 ? 1 : 0);
++  }
++  m_anticipate_rule = rule;
++  m_anticipate_ready = true;
++}
++
++// Sequential reads consume the exact pending number, without rewinding on division.
++int cOrganism::GetNextInput(int& in_input_pointer)
++{
++  const cAvidaConfig& cfg = m_world->GetConfig();
++  if (cfg.HISTORY_MODE.Get() != -1) {
++    if (cfg.ANTICIPATE_MODE.Get() != -1)
++      throw std::invalid_argument("HISTORY and ANTICIPATE are exclusive");
++    int choice = cfg.HISTORY_CASE.Get();
++    if (choice < -1 || choice > 9)
++      throw std::invalid_argument("Invalid HISTORY_CASE");
++    if (choice == -1) {
++      choice = 0;
++      if (m_history.NewPair())
++        choice = m_world->GetDefaultContext().GetRandom().GetUInt(10);
++    }
++    return m_history.Read(cfg.HISTORY_MODE.Get(), cfg.HISTORY_WINDOW.Get(), choice);
++  }
++  if (cfg.ANTICIPATE_MODE.Get() == -1)
++    return m_interface->GetInputAt(in_input_pointer);
++  PrepareAnticipation(m_world->GetDefaultContext());
++  m_anticipate_last = m_anticipate_next;
++  m_anticipate_read = true;
++  m_anticipate_ready = false;
++  m_anticipate_attempted = false;
++  return m_anticipate_last;
++}
++
++// Only the first output before a read is eligible; checking uses stored equality only.
++void cOrganism::BeginAnticipation(cAvidaContext& ctx, int value)
++{
++  m_anticipate_match = false;
++  m_history.Clear();
++  if (m_world->GetConfig().HISTORY_MODE.Get() != -1) {
++    if (m_world->GetConfig().ANTICIPATE_MODE.Get() != -1)
++      throw std::invalid_argument("HISTORY and ANTICIPATE are exclusive");
++    m_history.Respond(value);
++    return;
++  }
++  if (m_world->GetConfig().ANTICIPATE_MODE.Get() == -1) return;
++  PrepareAnticipation(ctx);
++  m_anticipate_match = m_anticipate_read && !m_anticipate_attempted && value == m_anticipate_next;
++  m_anticipate_attempted = true;
++}
++
+ void cOrganism::DoInput(const int value)
+ {
+   DoInput(m_input_buf, m_output_buf, value);
+@@ -384,23 +462,32 @@ void cOrganism::DoOutput(cAvidaContext& ctx, const bool on_divide, cContextPheno
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, const int value)
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   m_output_buf.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, m_input_buf, m_output_buf, false, false);
+   else doOutput(ctx, m_input_buf, m_output_buf, false, false);
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
++  m_history.Clear();
+ }
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, const int value, bool is_parasite, cContextPhenotype* context_phenotype) 
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   m_output_buf.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, m_input_buf, m_output_buf, false, (bool)is_parasite, context_phenotype); 
+   else doOutput(ctx, m_input_buf, m_output_buf, false, (bool)is_parasite, context_phenotype); 
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
++  m_history.Clear();
+ }
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, tBuffer<int>& input_buffer, tBuffer<int>& output_buffer, const int value)
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   output_buffer.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, input_buffer, output_buffer, false, false);
+   else doOutput(ctx, input_buffer, output_buffer, false, false);
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
++  m_history.Clear();
+ }
+ 
+ 
+diff --git a/avida-core/source/main/cOrganism.h b/avida-core/source/main/cOrganism.h
+index 63b7e42ea..681c3fd22 100644
+--- a/avida-core/source/main/cOrganism.h
++++ b/avida-core/source/main/cOrganism.h
+@@ -31,6 +31,7 @@
+ #include "cCPUMemory.h"
+ #include "cMutationRates.h"
+ #include "cPhenotype.h"
++#include "cHistoryTask.h"
+ #include "cOrgInterface.h"
+ #include "cOrgMessage.h"
+ #include "tBuffer.h"
+@@ -86,6 +87,12 @@ private:
+   Genome m_offspring_genome;              // Child genome, while under construction.
+ 
+   // Input and Output with the environment
++  // Private pending input and one-attempt state belong to this Avida program.
++  cHistoryTask m_history;
++  int m_anticipate_next, m_anticipate_last, m_anticipate_rule;
++  bool m_anticipate_ready, m_anticipate_read, m_anticipate_attempted, m_anticipate_match;
++  void PrepareAnticipation(cAvidaContext& ctx);
++  void BeginAnticipation(cAvidaContext& ctx, int value);
+   int m_input_pointer;
+   tBuffer<int> m_input_buf;
+   tBuffer<int> m_output_buf;
+@@ -246,8 +253,11 @@ public:
+   void Rotate(cAvidaContext& ctx, int direction) { m_interface->Rotate(ctx, direction); }
+ 
+   int GetInputAt(int i) { return m_interface->GetInputAt(i); }
+-  int GetNextInput() { return m_interface->GetInputAt(m_input_pointer); }
+-  int GetNextInput(int& in_input_pointer) { return m_interface->GetInputAt(in_input_pointer); }
++  // Both sequential read entry points consume the same private stream when enabled.
++  int GetNextInput() { return GetNextInput(m_input_pointer); }
++  int GetNextInput(int& in_input_pointer);
++  bool HistoryMatch(int mode) const { return m_history.Match(mode); }
++  bool AnticipationMatch() const { return m_anticipate_match; }
+   tBuffer<int>& GetInputBuf() { return m_input_buf; }
+   tBuffer<int>& GetOutputBuf() { return m_output_buf; }
+   void Die(cAvidaContext& ctx) { m_interface->Die(ctx); m_is_dead = true; } 
+diff --git a/avida-core/source/main/cTaskLib.cc b/avida-core/source/main/cTaskLib.cc
+index afde3d256..86bbcb034 100644
+--- a/avida-core/source/main/cTaskLib.cc
++++ b/avida-core/source/main/cTaskLib.cc
+@@ -84,6 +84,11 @@ cTaskEntry* cTaskLib::AddTask(const cString& name, const cString& info, cEnvReqs
+   // The following if blocks are grouped based on class of task.  Chaining too
+   // many if block causes problems block nesting depth in Visual Studio.net 2003.
+   
++  // Register the stream match without naming or evaluating a generating rule.
++  if (name == "hist_order") NewTask(name, "Order pair", &cTaskLib::Task_HistoryOrder);
++  if (name == "hist_interval") NewTask(name, "Interval pair", &cTaskLib::Task_HistoryInterval);
++  if (name == "hist_sequence") NewTask(name, "Sequence pair", &cTaskLib::Task_HistorySequence);
++  if (name == "anticipate") NewTask(name, "Next input match", &cTaskLib::Task_Anticipate);
+   if (name == "echo")      NewTask(name, "Echo", &cTaskLib::Task_Echo);
+   else if (name == "echo_dup")  NewTask(name, "Echo_dup",  &cTaskLib::Task_Echo);
+   else if (name == "add")  NewTask(name, "Add",  &cTaskLib::Task_Add);
+@@ -448,6 +453,25 @@ void cTaskLib::SetupTests(cTaskContext& ctx) const
+ }
+ 
+ 
++double cTaskLib::Task_HistoryOrder(cTaskContext& ctx) const
++{
++  return !ctx.GetOnDivide() && ctx.GetOrganism()->HistoryMatch(0) ? 1.0 : 0.0;
++}
++double cTaskLib::Task_HistoryInterval(cTaskContext& ctx) const
++{
++  return !ctx.GetOnDivide() && ctx.GetOrganism()->HistoryMatch(1) ? 1.0 : 0.0;
++}
++double cTaskLib::Task_HistorySequence(cTaskContext& ctx) const
++{
++  return !ctx.GetOnDivide() && ctx.GetOrganism()->HistoryMatch(2) ? 1.0 : 0.0;
++}
++
++// Division-only checks cannot claim prediction credit.
++double cTaskLib::Task_Anticipate(cTaskContext& ctx) const
++{
++  return !ctx.GetOnDivide() && ctx.GetOrganism()->AnticipationMatch() ? 1.0 : 0.0;
++}
++
+ double cTaskLib::Task_Echo(cTaskContext& ctx) const
+ {
+   const tBuffer<int>& input_buffer = ctx.GetInputBuffer();
+diff --git a/avida-core/source/main/cTaskLib.h b/avida-core/source/main/cTaskLib.h
+index 638a7abca..80d850a3e 100644
+--- a/avida-core/source/main/cTaskLib.h
++++ b/avida-core/source/main/cTaskLib.h
+@@ -93,6 +93,10 @@ private:
+   // performed.
+ 
+   // Basic Tasks
++  double Task_HistoryOrder(cTaskContext& ctx) const;
++  double Task_HistoryInterval(cTaskContext& ctx) const;
++  double Task_HistorySequence(cTaskContext& ctx) const;
++  double Task_Anticipate(cTaskContext& ctx) const; // Reuse ordinary reaction accounting.
+   double Task_Echo(cTaskContext& ctx) const;
+   double Task_Add(cTaskContext& ctx) const;
+   double Task_Add3(cTaskContext& ctx) const;
+diff --git a/avida-core/source/main/cHistoryTask.h b/avida-core/source/main/cHistoryTask.h
+new file mode 100644
+index 0000000..49e3ad8
+--- /dev/null
++++ b/avida-core/source/main/cHistoryTask.h
+@@ -0,0 +1,66 @@
++#ifndef cHistoryTask_h
++#define cHistoryTask_h
++
++#include <stdexcept>
++
++// Private checker state. No new instruction exposes it to the virtual machine.
++class cHistoryTask {
++  int mode, window, len, pos, pair_case, last, a_pos, stage;
++  bool ready, attempted, good, expected;
++  int pulse;
++public:
++  cHistoryTask() : mode(-1), window(2), len(0), pos(0), pair_case(0),
++    last(0), a_pos(-1), stage(0), ready(false), attempted(false),
++    good(true), expected(false), pulse(-1) {}
++  bool NewPair() const { return pos == 0 || pos == 2 * len; }
++  bool Match(int task) const { return pulse == task; }
++  void Clear() { pulse = -1; }
++  void Respond(int value, bool explicit_output = true) {
++    pulse = -1;
++    if (!ready || attempted) return;
++    attempted = true;
++    const int terminal = mode == 2 ? 3 : 2;
++    if (last == terminal && ((value == 1) != expected)) good = false;
++    if (pos == 2 * len) {
++      if (good && explicit_output) pulse = mode;
++      pos = 0;
++    }
++  }
++  int Read(int m, int w, int choice) {
++    if (m < 0 || m > 2 || w < 1 || w > 32 || choice < 0 || choice > 9)
++      throw std::invalid_argument("Invalid HISTORY setting");
++    // Skipping an output commits silence; it cannot itself trigger payment.
++    Respond(0, false);
++    if (pos == 0) {
++      mode = m; window = w; pair_case = choice;
++      len = mode == 0 ? 3 : mode == 1 ? window + 3 : 4;
++      good = true;
++    }
++    const int i = pos % len;
++    const bool positive = (pos / len) == (pair_case % 2);
++    if (i == 0) { a_pos = -1; stage = 0; }
++    last = 0;
++    if (mode == 0 && i < 2) last = positive ? i + 1 : 2 - i;
++    if (mode == 1) {
++      if (i == (positive ? 1 : 0)) last = 1;
++      if (i == window + 1) last = 2;
++    }
++    if (mode == 2 && i < 3) {
++      static const int sequences[6][3] = {
++        {1,2,3}, {1,3,2}, {2,1,3}, {2,3,1}, {3,1,2}, {3,2,1}
++      };
++      last = sequences[positive ? 0 : 1 + pair_case / 2][i];
++    }
++    expected = false;
++    if (last == 1) { a_pos = i; stage = 1; }
++    if (last == 2) {
++      expected = a_pos >= 0 && (mode != 1 || i - a_pos <= window);
++      stage = stage == 1 ? 2 : 0;
++    }
++    if (last == 3) { expected = stage == 2; stage = 0; }
++    ++pos;
++    ready = true; attempted = false;
++    return last;
++  }
++};
++#endif

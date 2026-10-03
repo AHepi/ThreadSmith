@@ -1,0 +1,29 @@
+====================================================================================================
+A3  THE COMPANION CLAUSE UNDER PART II DELETION
+====================================================================================================
+----------------------------------------------------------------------------------------------------
+(a) PURE ADDITION: E1 = E0 + B, E0 = "the sunnier bed first" kept unchanged
+----------------------------------------------------------------------------------------------------
+  B any relation on (V, Sun, first)                          relations tried=   256  E0+B answers north at f*: 0  Ans(E0+B) inside Ans(E0) everywhere: True
+  B any relation on (V, Sun, ovr, first), ovr a new port     relations tried= 65536  E0+B answers north at f*: 0  Ans(E0+B) inside Ans(E0) everywhere: not run (f* checked)
+  B reads W, Wi, V, Sun, ovr, first                          random relations= 3000  E0+B answers north at f*: 0
+  So a block added beside a component that already fixes a WRONG answer cannot rescue: the rescue
+  must change a component, and then E0 = E1|(Gamma1 - B) is false and the companion is silent.
+
+----------------------------------------------------------------------------------------------------
+(b) THE GARDENER'S RESCUE (a1, Emb-1): E1 = {sun': N if ovr else Sun, var: ovr = [V=early]}, B = {var}
+----------------------------------------------------------------------------------------------------
+  E1|(Gamma1 - B) answers equal E0's at every pair?  deletion: False   switch-off: True
+  e.g. at dry/calm/late/sunS: E0 ['S'], deletion ['N', 'S'], switch-off ['S']
+  (A)+NonCircular              restriction by deletion    B=var is  j_seen: CRITICAL;  j_eshade: CRITICAL;  j_fail: CRITICAL
+  (A)+NonCircular              restriction by switch-off  B=var is  j_seen: not critical;  j_eshade: not critical;  j_fail: CRITICAL
+  full (E), E1's transport     restriction by deletion    B=var is  j_seen: CRITICAL;  j_eshade: CRITICAL;  j_fail: CRITICAL
+  full (E), E1's transport     restriction by switch-off  B=var is  j_seen: not critical;  j_eshade: CRITICAL;  j_fail: CRITICAL
+
+----------------------------------------------------------------------------------------------------
+(c) WHERE THE COMPANION APPLIES: an E0 that was SILENT at f* (undetermined), not wrong
+----------------------------------------------------------------------------------------------------
+  E0' answers at f*: ['N', 'S'] (target ['N'])   E1' answers at f*: ['N']
+  E0' does j_seen: True  j_eshade: True  j_fail: False ;  E1' does j_fail: True
+  E1'|(Gamma - var) = E0' exactly (same ports, same components)? True
+  -> CriticalBlock(var; Gamma1, j_fail): True. The companion holds here, where E0 said nothing at f*.
