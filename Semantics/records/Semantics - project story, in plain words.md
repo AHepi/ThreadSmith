@@ -708,7 +708,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none; nothing built or run; the theory unchanged.
 - *Agents:* one Opus agent, beside the agent carrying your word on explanation into copies. Outside calls: none; one test call to a fresh Claude session. No Avida run; no experiment.
 
+**S133. The found rules, what they are good for, and the constructor experiment.** Your words, with the two uploads: "What are these first"; then: "The found rules. What can you do with them? I'm more interested in its use, if there is any. And the application of the experiment you conducted a couple of days ago. Remember the goal is to build something that can construct first."
+- *What was done:* one agent read your two uploads (they are your outside experiment's own report, which we could not run), set the three found rules against the theory, fed them by hand to a copy of the theory's program, said what they are good for toward a machine that constructs, said how the knock-out and the Avida environments apply, and wrote a new version of the experiment built on them, before anything is built.
+- *The answer:* by your word the found rules are evolved knowledge: the machine kept the first formula from a fixed menu that fitted the answers it was given, and worked none of them out (one fact in the report, whether its feedback only sorts or also steers, could change that). Their main use is as rules that can be made to fail, because in the theory working-out starts when something a system relies on stops working; on a small test world the motion rule is wrong in 12 of 72 cases once a wall bounces things back. The knock-out becomes the test of any built repair; nothing from the Avida environments should be used now. The new experiment: a fresh Claude session is handed a sealed box's exact rule sheet, one hidden part secretly follows a random rule, and it must notice, repair the sheet in its notebook, use the repair to open the door, and answer questions about moves it never tried. Recommended to run before the box from scratch.
+- *Failures:* a made-up record in the design check first let the old rule sheet count as the repair's target, which would have passed any subject; it was fixed. A label and a cost figure were corrected; the plain file was too long at first and was cut.
+- *The check:* none, following your word that GLM need not review.
+- *Your question:* yes or no to running this repair experiment first, starting with building it and a trial whose cost you see first.
+- *Moves left:* none; nothing built or run; the theory unchanged.
+- *Agents:* one Opus agent. Outside calls: none. No Avida run; a few seconds of computer time for the program.
+
 ## The next step
+
+**From S133 (file 133, the found rules and the constructor experiment):** your yes or no on running the repair experiment first: a fresh Claude session (Opus 5.5) handed a sealed box's rule sheet, with one hidden part secretly changed (about 9,000 calls, under three hours of computer time, after building and a trial whose cost you see first). Nothing is built or run before you say.
 
 **From S131 (file 131, explanation kept for what was worked out):** your word on writing the three decisions (the system's edge, being copied more counts as surviving, explanation kept for what was worked out) into the theory itself, a checker reading it first; and whether learning from a teacher's answers is an explanation or only knowledge. Nothing is run.
 
