@@ -735,7 +735,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* one next step proposed: take away the menu and give the machine only "one more" and "one fewer", so that it must build adding out of counting on.
 - *Agents:* one Opus agent. Outside calls: none. No Avida run; about one minute of computer time.
 
+**S136. What V5 is missing.** Your words, with the read-me and report of V5 continuation memory: "No. Get 2 Opus 5.5 agents to read through this and tell me what's missing."
+- *What was done:* two Opus agents read the two files separately, one against your aims (building something that constructs first; the ladder of general rules up to addition) and your own machine, one against the theory and the report's own evidence. I put their two lists together. Nothing was run; V5's code is on your computer.
+- *The answer:* V5 keeps every possibility apart and refuses to answer when it cannot be sure, but it works nothing out. When its laws stop fitting the world it notices, then stops for good; it never forms a new law, and it throws away the observations a new law would have to be checked against. Of your ladder, only displacement is there; objects are two things named for it, nothing ever goes out of sight, and there are no amounts and no addition.
+- *Failures:* one line of the plain file was wrong at first (it said three certified answers came after the world changed; only one did) and was corrected before it was saved.
+- *The check:* the two readers checked each other only through me; neither saw the other's file. Each removed its own mistaken items on a second reading (five and six).
+- *Your question:* none new; the one from file 134 stays open.
+- *Moves left:* one next step proposed: I write a brief your outside agent can follow to add the missing repair step to V5, with the tests written first.
+- *Agents:* two Opus agents, at the same time. Outside calls: none. No computer time.
+
 ## The next step
+
+**From S136 (file 136, what V5 is missing):** your yes or no on a brief for your outside agent to add the missing step to V5: when its laws fail, keep the observations, hold the failed law, work out which part is wrong, build a new law with a moment of change, check it against everything seen, and use it, with the tests written first. Nothing is run here.
 
 **From S135 (file 135, your machine):** your answer to file 134's question, now about a machine that exists: is the addition rule it worked out for itself, inside a menu of rules we wrote, worked out or only found? And your yes or no on the next step: take away the menu and give it only "one more" and "one fewer" (a small change, a few minutes of computer time). Nothing more is built before you say.
 
