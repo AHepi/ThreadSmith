@@ -753,6 +753,11 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* none here. Hand the brief to your outside agent unchanged, and bring back its plan and then its results; one agent reads them against the brief. Then the audit of your prove-it-wrong skill (S138).
 - *Agents:* one Opus agent. Outside calls: none. No computer time.
 
+**S138. Your prove-it-wrong skill: my opinion.** Your words: "And after that, can you audit the the following skill and refine"; then: "Oh no. That's too much. I just want to know what your opinion is on it. That's all."
+- *What was done:* two agents read the skill and wrote audits before you stopped it; I stopped the rest (no new version, no test round, no money spent) and gave you my opinion directly.
+- *The answer:* a sound idea and a carefully made skill, but too costly for what it adds, its own results summary surer than its grades, and, for your project, missing the question that now matters most: where something came from (handed in, found or built).
+- *Agents:* two Opus agents, then stopped. Outside calls: none.
+
 ## The next step
 
 **From S137 (file 137, the brief for your outside agent):** hand the brief to your outside coding agent unchanged, in the V5 workspace, and bring back its build plan (with the sealed tests' fingerprints), then its results. One agent reads them against the brief: what was built, found or handed in. Nothing is run here.
