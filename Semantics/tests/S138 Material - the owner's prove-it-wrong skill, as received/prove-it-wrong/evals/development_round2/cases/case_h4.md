@@ -1,0 +1,7 @@
+Using county-level employment data from 2019-2023, we examine the effect of a $15 minimum wage increase phased in across 14 counties on teen employment in the retail and food service sectors. Comparing treated counties to a set of 22 neighboring counties that did not raise their minimum wage, we find no statistically significant change in teen employment following the policy (coefficient: -0.4 percentage points, 95% CI: -1.8 to 1.0), consistent with a growing body of research suggesting minimum wage increases in this range do not meaningfully reduce employment.
+
+We estimate a standard difference-in-differences model with county and year fixed effects, clustering standard errors at the county level, and the point estimate is stable across several specifications, including the addition of state-level controls for overall economic growth. Pre-treatment employment trends in treated and comparison counties track closely in the two years prior to the policy change, which we present in an event-study figure. We also test robustness to alternative comparison groups and find similar null results.
+
+Based on this evidence, we conclude that the $15 minimum wage increase had no detectable negative effect on teen employment in the studied sectors, and recommend that policymakers in similar labor markets need not fear job losses from comparable increases.
+
+Task: before this claim is accepted, what must be questioned or tested?
