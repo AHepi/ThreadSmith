@@ -744,7 +744,18 @@ From the books, 25 new cases were written. Their answers were fixed by Claude su
 - *Moves left:* one next step proposed: I write a brief your outside agent can follow to add the missing repair step to V5, with the tests written first.
 - *Agents:* two Opus agents, at the same time. Outside calls: none. No computer time.
 
+**S137. A brief for your outside agent: add the repair step to V5.** Your words, after file 136, with the skill you uploaded: "Yes please do that then return downloadable inline."
+- *What was done:* one agent read the two V5 files again in full, the two readers' files, file 136 and how your own machine built addition, then wrote one brief for your outside coding agent: `plain words/137 Brief for the outside agent - add the repair step to V5.md`. It stands alone, uses V5's own words, defines every new word, and says each rule as something to do, since your agent follows positive instructions best. It is sent to you as a file.
+- *The answer:* the brief asks the agent to add, to V5, what comes after "my laws have failed": keep a separate journal of what was seen and pushed; hold the failed law as the thing to repair, with the rows it got right; work out, row by row, where it missed and which single part could be wrong; solve exactly for the new value, which may be a value none of the 648 laws has, including a moment of change; keep every repair that fits as a rival and say "undetermined" until one is left, choosing its own push to tell them apart; then use the repair, with every lifted refusal recorded. The kinds of change it may make are written by us and must be recorded as ours. The tests are written and sealed before any code: the hidden stop, the hidden kick, the excited mass, at least two hidden changes written by someone other than the builder, the zero-kick control, pairs that end the same but need different repairs, and save-and-restore. Beside them the controls your own machine had: the first fitting rule from a fixed list, keeping everything that fits, three different orders, the record without its failures, removing the repair with a pretend removal and a putting-back, and the right repair handed in directly. If the built repair answers exactly as keeping everything that fits does, the report must say so.
+- *Failures:* none found. Some choices need V5's code, so the brief asks the agent to write them in its plan before coding.
+- *The check:* none, following your word that GLM need not review. The brief was searched for negative instructions and reworded where one was found.
+- *Your question:* none new; the one from file 134 stays open.
+- *Moves left:* none here. Hand the brief to your outside agent unchanged, and bring back its plan and then its results; one agent reads them against the brief. Then the audit of your prove-it-wrong skill (S138).
+- *Agents:* one Opus agent. Outside calls: none. No computer time.
+
 ## The next step
+
+**From S137 (file 137, the brief for your outside agent):** hand the brief to your outside coding agent unchanged, in the V5 workspace, and bring back its build plan (with the sealed tests' fingerprints), then its results. One agent reads them against the brief: what was built, found or handed in. Nothing is run here.
 
 **From S136 (file 136, what V5 is missing):** your yes or no on a brief for your outside agent to add the missing step to V5: when its laws fail, keep the observations, hold the failed law, work out which part is wrong, build a new law with a moment of change, check it against everything seen, and use it, with the tests written first. Nothing is run here.
 
