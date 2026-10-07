@@ -1,0 +1,368 @@
+# The maths against the words, part 1 of 17: Organizations, setting edits and roles
+
+## 1. What you are asked to do
+
+**The text** is a theory of explanation: a formal semantics of what an explanation is and of explanatory creativity, 632 lines, which calls itself "the semantics". Its owner took the decisions in section 2, and asked for "exploring the math a bit more" since "words are vague", adding: "if implementation forces invention, that needs to be recorded" (S36).
+
+**The maths.** The text's definitions were written as mathematics beside the sentences they formalize (D0.1–D18.2; its worked cases encoded as E1–E9). The claims these let one state (FC01–FC110) were each put to a program that searched small finite models for a counterexample. Every choice the maths or the program made that the text does not fix was recorded as an **invention** (I01–I102), with the other choices that were possible. Two checks followed: one re-ran every counterexample and worked it by hand; the other read the maths against the text. They found further choices no entry records (U1–U6 and H01–H20). **Nothing invented is the text's own content.** A counterexample that rests on an invention tells against that way of writing the text, and against the text only where the text fixes what the invention fills in.
+
+**This part** covers Part II of the text on organizations and roles (L83–L110), with the pole of L325 as the claims about direction use it: the definitions in section 3; 3 claims (FC01, FC02, FC11) with their results in section 4; the inventions they rest on in section 5 (8 in full); the unrecorded choices in section 6; sentences the maths could not write in section 7; round-1 matters and changes in section 8. The whole is put to readers in 17 parts, each read on its own.
+
+**Your task, in one line:** say where the maths and the words part company and which should stand; whether each counterexample tells against the text or only against an invention, and what change to the text removes it; whether the text settles each invention, and if not what it should say; and try by hand to break the claims that held (section 9; the report, section 10). Try as hard as you can, against the texts given here alone. The maths is itself a conjecture about how the text can be written; so is the text.
+
+**The search.** Every port had a finite domain; the organizations searched had at most 3 ports of 2 or 3 values, 3 or 4 components, 2 boundaries and about 12 edits, in two generated families (I77, I78), tried smallest first. Statuses: *holds on all models tried* (and nothing beyond them); *counterexample found*; *witness found* or *no witness found* (for a claim that something exists); *computed: as claimed* or *not as claimed* (on an encoding of a worked case); *holds by construction* (so written in the program, not searched); *look* (a first reading, written before the search, of where a counterexample might lie, then computed); *not tested*, with the reason. The physical module was not computed: where a claim needs histories or provenance, they were set by hand (I90).
+
+**Who is who; citing.** "The owner" is the theory's owner; "Claude" is the drafters of the text and of the maths. Line numbers are those of the whole text, title as line 1. `> Lnnn | …` quotes line nnn exactly as it stands, formulas in the text's markup; " … " joins fragments of one line. The maths writes in its own notation. Quote the text exactly, with line numbers; where you rely on a line not given here, say so.
+
+## 2. The owner's words
+
+The theory's owner took the decisions below, in this order; the task in section 9 is set against them. Each is quoted from the project's record of decisions. Words inside quotation marks are the owner's, word for word, typos included, except where the connecting words say that a quoted phrase is Claude's (in S26 and S28). The few connecting words outside the quotation marks are the recorder's; where the record names internal files or logs there, a plain description stands in their place. The record's own reading of each decision is not given: the owner's words decide, and where section 9 is worded differently from them, the owner's words decide there too, and you should say so. Decisions on how the work is run are left out. In these words "Claude" is the drafters of the text and of the maths; "your agents" and "your explanation" in S27 are addressed to them.
+
+**S20** (24 and 25 September 2026). On whether the theory should grade explanations: "Well that depends entirely on how error correction is handled." Then: "A record is redundant. Once the explanation is rescued, the mistake shouldn't be able to creep back in. Good explanations make bad ones harder to fit by definition. So this is the next bit to check. But understand why before sending off workers" Then, on the set of versions: "That assumes that the set even matters or that the creative agent can even list them. As far as I'm aware, that's not possible, even in principle. A variation is a competitor. Whether anyone can list all variations that still fit is beside the point. If two discovered variations fit, that constitutes a problem. Please tell me if I'm misunderstanding something here. Because I think I am." (24 September 2026) And: "Ok. As long as this correct is logged somewhere, I won't have to correct it again" (25 September 2026)
+
+**S21** (25 September 2026). Answering choices the drafters had put to the owner: "In the case of non scientific theories: candidate explanations attempt to solve a problem. Both may appear to solve it. But choosing one, for whatever reason, means that the person doing the choosing sees no option but to choose the one that isn't ruled out by its best argument (note: “sees no option”, not “has no option”). Both may survive, which means no resolution has been reached. Therefore further investigation is required the conflict and potentially solve the problem. The problem may, for whatever reason, be ill posed. Therefore, whatever happens to the candidates is up to the person doing the choosing. Notice I never once claimed what must happen. Resolution is up to the person and the person's choice. If the person decides the problem is a low priority, then this whole process may be abandoned. If the person is told by its parents to “hurry up and clean your room”, this entire episode may never resolve, and fade into recesses of that person's history. Whatever happens is always the choice of the person. Choice is always important because there is no such thing as an infallible creative agent. Creative agents are always constrained in some way: not enough time, the crop needs harvesting, I need to recharge my electronic brain, whatever. They're all valid choices. Whether they're rational may or may not ever be opened and examined by the creative person/agent. The question of “does it need to match the problem”: yes, if resolution is the goal. But “matches the problem” is always tentative and may be wrong. The case for science is reality itself. It must match reality, but not by some fixed infallible metric. Creativity is a process that may or may not lead to a metric." and "I don't really understand the rest of the conflicts. But does the response above add anything?" (25 September 2026)
+
+**S23** (25 September 2026). Next step, in three paragraphs: "Next step. Get rid of all words that imply verificationism and see if the semantics still holds. Forbidden words and phrases." "Fits, supports, supported, verifies, verified, corroborates, corroborated, proves, proved, disproves, disproved, reason to believe, reason to reject. In fact, anything belief related at all must be scrubbed. Better than, worse than, true, not true, more true, established, authority, foundation, foundational, derived, derived from. Anything that could imply some sort of foundational truth or authority. Anything that could be interpreted as needing verification or falsification in any absolute sense. Anything that is accepted is always tentatively, and mean anywhere that "accept" or "accepted" is used." "Also, argument is short hand for: reasons why this and not that. Not reasons for this and not that. An argument is merely something that can be strung together into a coherent structure to decide why this and not another." (25 September 2026)
+
+**S25** (26 September 2026). Answering Claude's report that an earlier draft ties questions and conflict to physically admitted changes: "Oh dear. That's a pretty big hole. "Physically possible or impossible" has to do with instantiation and transformation of information and knowledge. It has nothing to do with explanation." (26 September 2026)
+
+**S26** (26 September 2026). After Claude said that physical possibility had leaked into the core of the theory: "Well not strictly nothing. But" Then, quoting Claude's sentence "Physical possibility comes in only when something is instantiated or transformed": "This is correct. But can you please list 5 examples of how this translates from explanation to physical so I can tell if you understand correctly." (26 September 2026)
+
+*What S27 answers.* Between S26 and S27 the drafters gave the owner the five examples asked for: holding an explanation in a carrier (ink, a brain, a file); copying or teaching it; testing between two rival explanations, where the test changes the thing explained; building from an explanation (a perpetual-motion machine, a bridge); and performing music. The examples are the drafters' words, not the owner's, and are not a decision. S27 is the owner's reply to them.
+
+**S27** (26 September 2026). Answering Claude's five examples (decision S26), headed "Two important footnotes so your agents aren't led astray": "Explanations can contradict each other at the level of explanation without ever having to be tested against reality. For example, if your explanation inadvertently describes something with the exact same properties as a perpetual motion machine, you don't have to compare your explanation directly to the world. If it can be shown that your explanation implies perpetual motion, then that's a conflict. Why perpetual motion is impossible carries its own explanation. But the entirety of that explanation need not do. "perpetual motion is impossible" is enough to trigger a conflict. It is not enough for a creative agent to do anything about it though." "What's more, the creative agent need not contain the entirety of why perpetual motion is impossible. It could just be the agent accepted it as a given, without any thought whatsoever, and then uses it to identify flaws with their own explanations. Creative entities can do creative work without ever containing the entire contents of a explanation it uses to find errors. It need not. But that property alone is a costly gamble for all creative agents. If this weren't possible, then error correction could become impossibly costly to perform. Of course, nothing is stopping one from designing a system that must contain the entire contents of other explanations before they do the work of error correction. It's also a detail that exists outside the process." (26 September 2026)
+
+**S28** (26 September 2026). Answering Claude's question whether the theory may keep that a candidate meets the requirements "settled by the world": "A theory is never settled. That's what "tentatively accepted" means. Unless you mean something else." Then, answering whether ruling out a rival by a claim taken as given is already doing something about it: "Also, yes. That "ruling out" is a choice that was made. Again, unless you mean something else." Then, after Claude explained that the thing explained is however it is and everything anyone accepts about it stays tentative: "1. That is correct." (26 September 2026)
+
+**S33** (27 September 2026). After reading a study of what seven sentences of the text depend on, in three paragraphs: "Hmm. This makes me think that moving "hard to vary" outside the system was a critical error on my part.  Like a car without fuel, something needs to actually drive the changes that do occur." "My silly mistake was confusing "preferred" with "use". The agent need not be aware, at all, that they use a method. Preference never enters the integration of "hard to vary"." "So before doing anything, can you return a summary of all the different ways it has been defined and used historically, including now." (27 September 2026)
+
+**S34** (27 September 2026). After decision S33: "I'm just a lowly human. As it happens, I'm using theories in the same way I stayed previously: taking some for granted to continuously rule available options. Even though I could probably unpack them again with enough work." Then, after reading a summary of every way hard to vary had been defined and used, in two paragraphs: "Hard to vary is not blind. Although variation may be blind, judging hard to vary is not." "I'm now realising hard to vary covers everything from logical contradictions to conflicts. That's hard. Because now I've got to figure out what it actually covers." Then, when Claude offered an agent to list every kind of ruling-out already in the theory: "No. Park it for now. Let's stick with the other mapping that took some time to develop. What would you recommend?" (27 September 2026)
+
+**S36** (27 September 2026). During the reading of the first review round: "So what are all the checks doing? Don't stop. But maybe exploring the math a bit more might help instead of words. Since words are vague" Then, after Claude agreed and proposed a maths round: "Unless you disagree" Then, after Claude said it did not disagree, with three caveats: "Also, if implementation forces invention, that needs to be recorded." (27 September 2026)
+
+## 3. The definitions, beside the sentences they formalize
+
+The maths' own sections are printed whole where this part's claims live in them; single definitions from other sections follow, each with the sentences before it. Under **Vague**, the maths names what the text leaves open there.
+
+Notation (from the maths' conventions). A condition holds or fails; ⊥ is the undetermined answer, not the value of a condition. P(X) is the set of subsets of X; ∏ the cartesian product; z|U restricts a valuation to the ports U; f[S] is the image of S; R* is the reflexive-transitive closure of a relation; ⇀ marks a partial map. D is a target, E a candidate's organization; a subscript or superscript names the organization where needed (A_E, B_E, J_E, L^E_k). A pair (a,b) is an edit a and a boundary b; x := (τ(a),σ(b)) and x0 := (1,σ(b0)). Definitions are numbered D§.n by the maths' sections (§1–§18), encodings of the text's worked cases E1–E9. **[Inn]** marks the place where an invention is used.
+
+### §1 Organizations (O)
+
+> L88 | D=(V,(X_v)_{v\in V},J,B,A,L).
+
+> L91 | \(V\) is a set of ports, each with a nonempty value domain \(X_v\). A valuation is an element of \(X_D=\prod_v X_v\). \(J\) indexes components; each component \(j\) has a footprint \(V_j\subseteq V\). \(B\) is a set of boundary conditions. \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\).
+
+> L94 | L_j(a,b)\subseteq\prod_{v\in V_j}X_v .
+
+**D1.1 Organization.** D = (V, (X_v)_{v∈V}, J, (V_j)_{j∈J}, B, A, ·, 1, L) with: V a set (ports), each X_v ≠ ∅; X_D := ∏_{v∈V} X_v (valuations); J a set (components), each with a footprint V_j ⊆ V; B a set (boundaries); A a set (admitted edits) with a partial composition · : A × A ⇀ A, Kleene-associative, with identity 1 ∈ A **[I01]**; L a function from J × A × B with L_j(a,b) ⊆ ∏_{v∈V_j} X_v. No law ties L_j(a2·a1, b) to L_j(a1,b) and L_j(a2,b) **[I02]**. V and J are the same under every edit **[I03]**.
+
+> L105 | Values of ports may be paths, functions, fields, mathematical structures or histories. Cyclic constraints are admitted. Several solutions remain several.
+
+The X_v are arbitrary sets; no order on J is assumed; nothing selects one solution.
+
+> L100 | \operatorname{Sol}_D(a,b)=\{z\in X_D:\forall j\in J,\ z|_{V_j}\in L_j(a,b)\}. \tag{O}
+
+**D1.2 Solutions (O).** Sol_D(a,b) := {z ∈ X_D : ∀j ∈ J, z|V_j ∈ L_j(a,b)} — the text's (O).
+
+> L103 | A deleted component imposes the full relation on its ports.
+
+> L339 | has a target \(D\) in which the ports and components a rival account would need are absent
+
+**D1.3 Deletion and absence.** j is deleted at (a,b) when L_j(a,b) = ∏_{v∈V_j} X_v. For G ⊆ J, D−G is D with L_j(a,b) := ∏_{v∈V_j} X_v for every j ∈ G and every (a,b). An absent component is a deleted one; an absent port is one on which every component imposes the full relation **[I03]**.
+
+**D1.4 Subnetwork.** A subnetwork is a set N ⊆ J (possibly empty), with V_N := ∪_{j∈N} V_j and Sol_N(a,b) := {z ∈ ∏_{v∈V_N} X_v : ∀j ∈ N, z|V_j ∈ L_j(a,b)}: the constraints of N alone, the rest of D ignored **[I14]**.
+
+### §2 Setting edits and roles
+
+> L103 | An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component.
+
+> L119 | An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it
+
+**D2.1 Setting edit; the assigning component.** An edit a sets port v through component j at b when L_j(a,b) = {w ∈ ∏_{V_j} X : w_v = x} for some x ∈ X_v and L_k(a,b) = L_k(1,b) for every k ≠ j **[I04]**. Set_v := the edits of A that, at every b, set v through some component. asg(v) := the component through which the edits of Set_v set v, when there is exactly one; undefined otherwise **[I04]**. 'A changed rule is a changed component': an edit that alters L_j is a change of j, and nothing else is added.
+
+> L109 | No role assignment is supplied. A port \(v\) is an **input** under \(A\) when \(A\) contains an edit that sets \(v\) directly.
+
+**D2.2 Input.** Input_A(v) :⟺ Set_v ≠ ∅.
+
+> L109 | A port is an **output** of component \(j\) when its value is determined by \(L_j\) given the other ports of \(V_j\) across \(B\).
+
+**D2.3 Output.** Out(v, j) :⟺ v ∈ V_j and, for every b ∈ B and all w, w' ∈ L_j(1,b), w|_{V_j∖{v}} = w'|_{V_j∖{v}} ⇒ w_v = w'_v **[I05]**.
+
+> L109 | A port is an **observation** when \(A\) contains an edit that alters the relation reporting it without altering what it reports, that is, when the component assigning it has a measurement's signature (below).
+
+**D2.4 Observation edits (two readings).** For a port o with j = asg(o) and a port m ∈ V_j ∖ {o} ('what it reports') **[I06]**:
+- reading R-i: a ∈ Obs(o,m) :⟺ L_j(a,b) ≠ L_j(1,b) for some b, and L_asg(m)(a,b) = L_asg(m)(1,b) for every b. (Setting edits of o are included.)
+- reading R-ii: the same, and a ∉ Set_o. (Only recalibrations of the reporting relation.)
+
+Obs := ∪_{o,m} Obs(o,m) in the reading used. Observation(o) :⟺ Obs(o,m) ≠ ∅ for some m. Every claim that turns on Obs is stated under both readings (FC07).
+
+> L109 | The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read.
+
+**D2.5 Direction.** dir(D) := (Input_A, asg): which ports A sets and which component each setting edit replaces. Output status (D2.3) does not use A (FC02).
+
+**Vague.** 'The component assigning that port' (L103, L109, L119) presupposes one assigning component per port; with a relational component (L325's L = H cot θ determines H given L and θ as well as L given H and θ), L109's 'output' does not single one out. D2.1 reads the assigning component off the setting edits, so that 'no role assignment is supplied' stays so [I04]. L109's observation has two readings, and its 'that is' clause equates a condition on A with a signature, which (K) builds on a contract C, not on A [I06]; the families of §4 differ between the readings on the pole's own contract (FC07).
+
+### Definitions from other sections that these claims use
+
+**D4.5 Change and invariance on a contract.** For a set 𝒳 of edits: Changes_C(j, 𝒳) :⟺ some (a,b) ∈ C with a ∈ 𝒳 has L_j(a,b) ≠ L_j(1,b); Inv_C(j, 𝒳) :⟺ every (a,b) ∈ C with a ∈ 𝒳 has L_j(a,b) = L_j(1,b) **[I09]**. 'Variable under' is Changes; invariance holds vacuously when C holds no edit of 𝒳.
+
+> L123 | - a **causal assignment** has a signature that changes under intervention on its output port and is invariant under observation edits;
+
+> L124 | - a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;
+
+> L125 | - a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule.
+
+> L347 | Its signature under (K) is invariant under interventions on \(Z\) and variable under edits to \(C_r\).
+
+**D4.6 Families.** For a component j, o_j is the port j assigns (asg(o_j) = j) **[I04]**. Alt_j := {a ∈ A : L_j(a,b) ≠ L_j(1,b) for some b}.
+- Causal_C(j) :⟺ Changes_C(j, Set_{o_j}) ∧ Inv_C(j, Obs). (L123 as it stands after round 1.)
+- Meas_C(j, m) :⟺ m ∈ V_j, asg(m) ≠ j, Inv_C(j, Set_m) ∧ Changes_C(j, MR_j), with MR_j := Alt_j under R-i and Alt_j ∖ Set_{o_j} under R-ii **[I06, I07]**.
+- Rule_C(j) :⟺ Inv_C(j, World_j) ∧ Changes_C(j, Alt_j ∖ Set_{o_j}), with World_j := ∪ {Set_v : asg(v) ≠ j} **[I08]**.
+- A constitutive status is Rule_C (L347; FC09).
+
+**E1 The pole and its shadow** **[I65]**.
+
+## 4. The claims, with their search results
+
+Each claim: its type, the inventions it uses, its sentences quoted, its formal statement, and its result, part by part; for a counterexample, what it shows and, where short, the model; then the second check's note, and every invention the result rests on (the claim's own and the program's).
+
+### FC01 · Solutions shrink as relations shrink; deletion never removes a solution
+
+*follows from the definitions as written.* Inventions it uses: I03.
+
+*(L100, quoted above.)*
+
+*(L103, quoted above.)*
+
+**Formal.** If L_j(a,b) ⊆ L'_j(a,b) for every j, then Sol_D(a,b) ⊆ Sol_D'(a,b). In particular Sol_{D−G}(a,b) ⊇ Sol_D(a,b), where D−G deletes the components of G (full relations).
+
+**Look** (a first reading of where a counterexample might lie, written before the search). Used by NC2's loss clause: for a query that is not monotone in Sol, a deletion can make an undetermined answer determined, a case NC2's wording does not name.
+
+**Result: HOLDS ON ALL MODELS TRIED.**
+
+- *(a) monotone; deletion keeps solutions* (for all): **holds on all models tried** (25,920 models).
+- *(look) deletion can make an undetermined answer determined* (there is): **witness found** (4 models).
+  Searched: there are D, (a,b), G with Ans_p(a,b) = ⊥ (Sol empty) and Ans on D−G determined
+  As the Look expects: at (1,b0) Sol_D is empty, so the port query answers ⊥; deleting {c0} gives the determined answer 0.
+
+**Rests on:** I03, I77, I78.
+
+### FC02 · Direction is read from the admitted edits; output status is not
+
+*a result the text states.* Inventions it uses: I04, I05, I65.
+
+*(L109, quoted above.)*
+
+> L325 | Under \(A\) containing interventions on \(H\) and \(\theta\), these ports are inputs and \(L\) is an output, by Part II.
+
+**Formal.** (a) Input(v) and asg(v) are functions of the setting edits in A (I04); two organizations with the same L and different A can differ in both. (b) Output(v,j) (I05) is a function of L_j(1,·) alone and does not depend on A. (c) In the pole encoding, c_L's relation L = H cot θ (θ in (0°,90°)) determines each of H, θ, L given the other two, so H and θ are outputs of c_L as well as L; the direction H,θ → L is carried by asg, not by output status.
+
+**Result: HOLDS ON ALL MODELS TRIED.**
+
+- *(a) Input and asg depend on A* (there is): **witness found** (2 models).
+  Searched: two organizations with the same L and different A differ in Input or asg
+  D and D' have the same relations and differ only in A (D' lacks the setting edits of p0 other than 1).
+- *(b) Output does not depend on A* (for all): **holds on all models tried** (10,239 models).
+- *(c) pole: c_L determines each of its ports* (computation): **computed: as claimed**.
+
+**Rests on:** I04, I05, I65, I77, I78, I80, I92.
+
+### FC11 · Roles are relative to A; families are relative to C
+
+*follows from the definitions as written.* Inventions it uses: I04, I09. Bears on round-1 matter 5 (section 8): L109 gives roles under A while (K) builds a signature on a contract C; what the round-1 change at L123 may have disturbed: L109.
+
+> L109 | A port \(v\) is an **input** under \(A\) when \(A\) contains an edit that sets \(v\) directly.
+
+> L113 | Fix an organization \(D\) and a contract \(C\subseteq A\times B\) (Part III).
+
+**Formal.** Input(v) quantifies over A; Causal_C(asg(v)) over C ⊆ A × B. There are D, C, v with Input(v) and ¬Causal_C(asg(v)) (C holds no setting edit of v). Conversely every family predicate uses edits of A only, so no family membership needs an edit A lacks.
+
+**Result: HOLDS ON ALL MODELS TRIED.**
+
+- *Input(v) without Causal_C(asg(v))* (computation): **computed: as claimed**.
+- *families use edits of A only* (by construction): **holds by construction**.
+
+**Rests on:** I04, I09, I80, I92.
+
+## 5. The inventions these rest on
+
+In full: each invention this part is the first of the parts to use. Then, for an invention given in full in another part that a counterexample here rests on, what was invented. Then the rest by title. I77 and I78, the bounds and families of the search, are described in section 1.
+
+### I01 · Composition of edits: a partial monoid with Kleene associativity
+
+Fills in for:
+
+> L91 | \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\).
+
+**Invented.** (A, ·, 1) is a partial binary operation on A: a2·a1 is either undefined or a member of A; a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal; 1·a = a·1 = a for every a. 'Closed' is read as: a composite, when defined, is in A.
+
+**Other choices.** (a) weak associativity: equal only when both sides happen to be defined. (b) a category: edits typed by source and target boundary, composable only when they match. (c) a total monoid (every composite defined).
+
+**Used by:** 1 other claim.
+
+### I02 · No law links a composite edit's relations to its parts' relations
+
+Fills in for:
+
+> L91 | For each \(j\), edit \(a\), and boundary \(b\), the interpretation supplies
+
+> L574 | The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\).
+
+**Invented.** L is an arbitrary function J × A × B → relations. Nothing ties L_j(a2·a1, b) to L_j(a1, b) and L_j(a2, b). The composition on A matters only through the homomorphism clause of (F2) and through Functional transport. (L574 fixes independence across pairs; it does not say whether composites are constrained, so the absence of any such law is the invention.)
+
+**Other choices.** (a) an action law: each edit acts on the assignment of relations, L(a2·a1) = a2·(a1·L). (b) edits as endomaps of the organization, with L read off the image.
+
+**Used by:** 1 other claim.
+
+### I03 · Ports and components are fixed; deletion and absence are the full relation
+
+Fills in for:
+
+*(L103, quoted above.)*
+
+*(L339, quoted above.)*
+
+**Invented.** An edit never adds or removes a member of V or J. A deleted or absent component is one whose relation under that edit and boundary is the full product of its ports' domains. An 'absent' port is one on which every component that could constrain it imposes the full relation.
+
+**Other choices.** (a) edits that change J and V (organizations as a varying family; then Sol_D(a,b) lives in different spaces for different edits). (b) absent ports removed from V, with query answers compared across different valuation spaces.
+
+**Used by:** claims of this part: FC01; 3 other claims. Counterexamples resting on it: FC25, FC63.
+
+### I04 · Setting a port: a surgical edit, and the assigning component read off the edits
+
+Fills in for:
+
+> L103 | An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one.
+
+*(L109, quoted above.)*
+
+*(L119, quoted above.)*
+
+**Invented.** An edit a sets port v at boundary b through component j when L_j(a,b) = {w : w_v = x} for some x in X_v (the other ports of V_j left free) and L_k(a,b) = L_k(1,b) for every k ≠ j. 'Directly' is this surgical form. The component assigning v, asg(v), is read off A: it is the component that the setting edits of v replace; where two different components are replaced by setting edits of v, asg(v) is undefined. No assignment map is supplied with D.
+
+**Other choices.** (a) a declared map asg: V ⇀ J supplied with the organization (it would be a supplied role assignment, which L109's first sentence denies). (b) asg(v) := the unique component of which v is an output in L109's second sense; this fails for relational components (a component L = H cot θ determines H given L and θ as well as L given H and θ). (c) a setting edit that adds a constraint beside the old one (L103 excludes it).
+
+**Used by:** claims of this part: FC02, FC11; 7 other claims. Counterexamples resting on it: FC25.
+
+### I05 · 'Output': at the identity edit, and 'determined' as at most one value
+
+Fills in for:
+
+*(L109, quoted above.)*
+
+**Invented.** v is an output of j when, for every b in B and all w, w' in L_j(1,b), w and w' agreeing off v implies w_v = w'_v. The relation is read at the identity edit; 'determined' means at most one value (a partial function), not exactly one.
+
+**Other choices.** (a) at every edit of A that does not replace j. (b) exactly one value for every admissible value of the other ports (a total function). (c) 'across B' read as 'for some b'.
+
+**Used by:** claims of this part: FC02.
+
+### I77 · Finite models and the bounds of the search
+
+Fills in for:
+
+> L91 | \(V\) is a set of ports, each with a nonempty value domain \(X_v\).
+
+> L105 | Values of ports may be paths, functions, fields, mathematical structures or histories.
+
+**Invented.** Every port has a finite domain; the searched organizations have at most 3 ports (domains of at most 2 or 3 values), at most 3 or 4 components, at most 2 boundaries and at most 2 generator edits (so at most about 12 edits after closure); relations are explicit finite sets of tuples; the hypothetical relations R of D8.1 are enumerated in full, so conflict is decided only on targets with at most 4096 assignments (footprints of at most 2 two-valued ports). Sizes are tried in ascending order, so the first counterexample found is the smallest found. A result 'holds on all models tried' says nothing beyond these bounds.
+
+**Other choices.** (a) symbolic (infinite) domains, with claims decided by deduction rather than by search. (b) larger bounds (more ports, values, components, edits), at more cost. (c) a different ordering of sizes (the 'smallest' counterexample is smallest in this ordering only).
+
+**Used by:** claims of this part: FC01, FC02; 50 other claims. Counterexamples resting on it: FC05, FC18, FC20, FC23, FC25, FC77.
+
+### I78 · Two families of generated organizations: surgical edits with override, and free edits
+
+Fills in for:
+
+*(L91, quoted above.)*
+
+*(L574, quoted above.)*
+
+**Invented.** G-surg: each port has a home component (footprint: the port and up to two others); edits are the closure under override of up to two generators, each the setting of a port to a value or an alternative relation of a component; composition is override (a total monoid), and L at an edit is the surgery applied (the home component of a set port gets the slice v = x, an altered component its alternative relation). This is an action law, I02's alternative, so on G-surg a composite's relations follow from its parts'. G-free: abstract edits 1, e1, e2 whose only defined composites are those with 1; relations drawn independently for every (j, a, b), as I02 has it. Every random search draws from one or both families and says which.
+
+**Other choices.** (a) one family only (either restricts the space: G-surg to action laws, G-free to edits that never compose). (b) edits with partial, non-trivial composition tables drawn at random (then Kleene associativity, I01, is needed as a further condition). (c) setting edits that add a constraint beside the old one (L103 excludes them).
+
+**Used by:** claims of this part: FC01, FC02; 46 other claims. Counterexamples resting on it: FC05, FC18, FC20, FC23, FC25, FC77.
+
+### I80 · The identity edit can be a setting edit
+
+Fills in for:
+
+*(L109, quoted above.)*
+
+**Invented.** D2.1 is applied as written, to every edit of A including 1: where some component's relation at (1, b) is already a slice v = x at every b (as c_H: H = u_H is in the pole), the identity edit sets v through that component, so v is an input even when A holds no other edit. The program reports this and keeps it, and can also run the other reading.
+
+**Other choices.** (a) exclude 1 from Set_v: an input needs an edit other than the identity. (b) require a setting edit to change the component it sets through.
+
+**Used by:** claims of this part: FC02, FC11; 4 other claims.
+
+Named by title only (given in full in another part): I06, Observation edits: two readings of 'the relation reporting it'; I07, 'The measured port' and 'the measuring relation'; I08, 'Interventions on the world' and 'the rule'; I09, 'Changes under', 'invariant under', 'variable under': compared with the identity edit at the same boundary; I14, Subnetworks, their solutions, and port translations with value maps; I65, The pole and its shadow, encoded; I92, The pole in exact arithmetic, with its grids, baseline, contracts and fibre query.
+
+## 6. Choices no register entry records
+
+Found by the two checks. U-entries come from the check that re-ran the program; H-entries from the check that read the maths against the text, in its wording.
+
+### H03 · A setting edit sets its port at every boundary (D2.1)
+
+*(L109, quoted above.)*
+
+- **Added.** "Set_v := the edits of A that, at every b, set v through some component". I04 speaks of setting "at boundary b". The quantifier over boundaries is not recorded.
+- **Other choice.** At some b, or at the boundaries of the contract in use.
+- **Depends on it.** Input, asg, and every family predicate. No result was computed under the other choice.
+
+### H04 · Direction defined as (Input_A, asg) (D2.5)
+
+*(L109, quoted above.)*
+
+- **Added.** The text says what direction is a consequence of, not what it is. D2.5 makes it the pair (which ports A sets, which component each setting edit replaces). It has no invention number.
+- **Depends on it.** FC02 (a) and (c) ("the direction H,θ → L is carried by asg, not by output status").
+
+## 7. Sentences of this group the maths could not write
+
+None beyond those named under the claims.
+
+## 8. Round 1: matters noted and changes made
+
+In the first review round, readers tried to vary sentences that had stood unchanged; the rulings changed four lines and recorded fourteen matters outside the sentences examined, left for later rounds.
+
+**The round-1 change at L123.** Before:
+
+> L123 (before round 1) | - a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;
+
+After, as the text now stands:
+
+> L123 | - a **causal assignment** has a signature that changes under intervention on its output port and is invariant under observation edits;
+
+**Round-1 matter 5.** L109 gives roles "under A" while (K) builds a signature on a contract C.
+
+## 9. The task
+
+For the definitions, claims, counterexamples and inventions of this part:
+
+**(a) Does each formal statement say what the sentence says?** For each definition in section 3 and each claim in section 4, compare the maths with the sentence or sentences it formalizes. Where they part company, say how, and which should stand, the maths or the words, with reasons why this and not that. Where the words should change, give the new wording.
+
+**(b) Each counterexample** (a part marked *counterexample found* or *computed: not as claimed*, and a *look* that came out *not as expected*). Is it a counterexample to the text, or only to an invention or to the claim's own wording? If it tells against the text, give the exact change to the text that removes it; or say that it shows the text saying something it should not, and what.
+
+**(c) Each invention given in full in section 5, and each unrecorded choice in section 6.** Does the text in fact settle it? If it does, quote the words that do. If not, give the exact wording the text should carry, or say why it should stay open. A proposal that writes an invention into the text says so, naming it.
+
+**(d) Attack the claims that held.** A claim that held on every model tried held only on those small models, under the inventions named. Try by hand to find a counterexample, to the claim or to the sentence it formalizes: under another reading, without an invention, or beyond the bounds searched. Give the model in full and say what it rests on.
+
+**(e) The round-1 matters and changes in section 8.** For each, does the text need a change? Give the exact wording, or the reasons why none.
+
+**Rules.**
+
+- Give the exact wording for every proposal: the whole sentence as it would stand, between fence lines, with the line it replaces.
+- Do not list, count, grade or rank rivals, and do not argue from how many there are (decision S20).
+- Say nothing about what must happen to a candidate (decision S21).
+- An argument here means reasons why this and not that (decision S23). A wording you propose obeys decision S23 and keeps to what the owner's words in section 2 say.
+- Physical possibility enters only where information or knowledge is instantiated or transformed, and as the content of a claim a candidate can conflict with (decisions S25–S27).
+- Nothing is settled, and a ruling out by a claim taken as given is a choice the person made (decision S28); nothing you find settles anything.
+- Do not propose anything about what hard to vary covers: the owner has parked that question (decisions S33, S34). The text's own 'easy to vary' (L317) is not that question.
+- Where values are placed is the owner's question; do not propose to move them.
+- Keep apart what the text forces and what a reader might take it to mean.
+
+## 10. The report
+
+- Five sections, (a) to (e), in that order. In each, one entry per item you have something to say about, headed by its id and line (for example `FC05 · L119`, `I93 · L119`, `H05`, `U4`, `matter 5 · L109`), with the exact wording of each proposal between fence lines. Items on which you have nothing to add are named together in one line at the end of the section.
+- Keep the whole report under about 3,000 words. Depth where an item needs it counts for more than equal space for all.
+- End the report with a line that reads exactly END OF REPORT.

@@ -1,0 +1,460 @@
+Let me start by reading the key files: the plan, the results (.md and .json), the exact commands, and then cross-check.
+
+Now read the JSON, the exact commands, and then check specific numbers.
+
+Now let me cross-check numbers between .md and .json, and check rules.
+
+Check key items:
+
+1. Section 0 "In short" claims: "the probe gives lower counts than S113 in five of the 12 paying runs". Paying environments: FIXED GRADED, GROWING LIST, COMMON TASKS PAY LESS, FIXED LARGE LIST — 4 env x 3 seeds = 12 runs. Compare probe common vs S113 common:
+- FG: 7/7, 8/8, 8/8 — equal (3)
+- GL: 51<65, 0<46, 55=55 — lower in 2
+- CTPL: 16=16, 7<9, 8=8 — lower in 1
+- FLL: 0<32, 24<41, 13=13 — lower in 2
+Total lower: 5. ✓ "in two it gives none common at 50,000 where S113 counted many: GROWING LIST seed 2 (0 against 46) and FIXED LARGE LIST seed 1 (0 against 32)" ✓.
+
+2. "Read on the two probe input sets that keep the world's order, the counts are S113's exactly (65 / 46 / 55, 32 / 41 / 13, 16 / 9 / 8, 7 / 8 / 8 common at 50,000)". From JSON added readings "common, large inputs in the world's order, at ... 50,000": GL: 65, 46, 55 ✓; FLL: 32, 41, 13 ✓; CTPL: 16, 9, 8 ✓; FG: 7, 8, 8 ✓. Good.
+
+But wait: this claims "S113's exactly" — S113 test processor column: GL 65/46/55 ✓, FLL 32/41/13 ✓, CTPL 16/9/8 ✓, FG 7/8/8 ✓. OK.
+
+3. B2.1 check: md says "FIXED LARGE LIST seed 1 (ever seen 69 to 72, present 64 to 42)". JSON: fixed_large_seed1 25000: ever_seen_all 69, present_all 64; 50000: ever_seen 72, present 42. ✓. "Elsewhere, where present fell (FIXED GRADED seed 1, 36 to 33), ever seen rose by fewer than 3". JSON fixed_graded_seed1: 25000 present_all 36, 50000 present_all 33 ✓; ever_seen 40→42, rise 2 ✓. Also check other runs where present fell: growing_seed2: present 35→35, no change. growing_seed3: 81→81... wait growing_seed3 present_all 25000=81, 50000=81, no change. growing_seed1: 84→85 rose. fixed_graded_seed2: 34→36. fixed_graded_seed3: 29→29. common seeds rose. fixed_large seed2: 56→74; seed3: 42→58. OK. equ/no_rewards: present rose slightly. So the md is right.
+
+Verdict B2.1: "For accumulation in every environment except FIXED LARGE LIST, where one seed counts against by the rule". Plan's rule: counts against = "turnover without accumulation ... counted per run, then per environment by three seeds". So the verdict structure per environment by three seeds. FLL has 1 of 3 runs with turnover. Hmm, "per environment by three seeds" — S113's three-seed rule: "more" only if every seed of one above every seed of the other. For a binary per-run flag, how to aggregate to environment? The plan says "counted per run, then per environment by three seeds". Ambiguous, but reporting "against in 1 of 18 runs" and "for in every environment except FLL where one seed counts against" seems consistent-ish. Note "for" is claimed for environments where 0 runs count against. Plan's counts-for: "ever seen and present both rise, or present stays within 1 of ever seen". Wait — the "counts for" condition is different: "ever seen and present both rise, or present stays within 1 of ever seen". Let me check: for FIXED GRADED seed 1: present fell 36→33, ever seen rose 40→42 (rise 2). Counts-for condition: ever seen AND present both rise? present fell. "present stays within 1 of ever seen" — present 33 vs ever seen 42? At 50,000, is present within 1 of ever seen? No, present 33, ever seen 42 — 9 apart. So FIXED GRADED seed 1 meets neither counts-for condition, and doesn't meet counts-against (ever seen rise 2 < 3). So it's neither for nor against. Yet the md says "**For accumulation** in every environment except FIXED LARGE LIST". Hmm. Let me check each run against the "counts for" rule more carefully.
+
+Counts for: "ever seen and present both rise, or present stays within 1 of ever seen". Interpretation: either (ever seen rises and present rises) or (present is within 1 of ever seen... at 50,000? or the rise of present within 1 of the rise of ever seen?). Ambiguous. Let's compute per run:
+
+FIXED GRADED:
+- seed1: ever_seen rise 2 (40→42), present change -3 (36→33). Neither rises both. present 33 vs ever seen 42: not within 1. So neither.
+- seed2: ever seen 44→51 rise 7; present 34→36 rise 2. Both rise ✓ for.
+- seed3: ever seen 42→47 rise 5; present 29→29 flat. "both rise"? present doesn't rise (change 0). present 29 vs ever 47 — not within 1. Neither? Hmm, but rise values: ever 5, present 0 — within 1? No.
+
+Hmm, the md text says: "Elsewhere, where present fell (FIXED GRADED seed 1, 36 to 33), ever seen rose by fewer than 3; in the other runs present stayed or rose". So the md reads B2.1 verdict as: counts-against = turnover rule; counts-for = absence of counts-against. That is, the md treats "for" as default when against doesn't occur. But the plan's counts-for has its own condition. Is that a verdict "reached by a rule other than the plan's"? The plan table gives both a counts-for and counts-against condition; a run can satisfy neither (unclear). The md says "**For accumulation** in every environment except FIXED LARGE LIST" — for FIXED GRADED seed 1 and seed 3 the counts-for condition fails by strict reading. Let me double-check seed 3: present_all at 25000 = 29, at 50000 = 29. "present stays within 1 of ever seen": present at 50,000 = 29, ever seen = 47. No. "ever seen and present both rise": present 0 change. Strictly, "rise" could include ≥0? Typically rise means increase. present_change = 0 in JSON. Hmm.
+
+Actually wait, maybe "present stays within 1 of ever seen" means the change? "present stays within 1 of ever seen" as they evolve? Like present at 50,000 within 1 of ever seen at 50,000? For seed1: 33 vs 42 — no. Hmm. Actually maybe interpretation: "present stays within 1 of ever seen" meaning present doesn't fall much relative — i.e., |present change − ever seen change| ≤ 1? seed1: |−3 − 2| = 5. no.
+
+Hmm, most runs: present is far below ever seen (e.g., growing seed1 present 85, ever seen 94 — within 9). So "present stays within 1 of ever seen" would almost never hold. That condition seems intended to catch: no turnover, everything ever seen is still present. Actually in S115's plan presumably "present stays within 1 of ever seen" means at the end the kept set ≈ ever-seen set. Only possible in small runs.
+
+Let me reconsider: maybe interpretation should be present at 50,000 ≥ present at 25,000 (no fall) means accumulation. The md's reading: for accumulation unless turnover-without-accumulation. This effectively uses only the counts-against side and calls everything else "for". Is this objectionable? The plan defines both directions; a run meeting neither should be "unclear" not "for". FIXED GRADED seed 1 (present fell 36→33, ever seen rose 2): strictly neither for nor against → unclear. The md reports "For accumulation in every environment except FIXED LARGE LIST". For FIXED GRADED, seed1 is neither. So the "for" verdict for FIXED GRADED overreaches the plan's rule. That's a genuine objection: verdict claimed where the plan's rule gives unclear (or at least where the counts-for condition is not met in all seeds).
+
+Let me check other environments for counts-for per seed:
+GROWING: seed1: ever 88→94 rise, present 84→85 rise ✓ for. seed2: ever 57→60 rise 3, present 35→35 flat. "both rise" fails (present 0); "present within 1 of ever seen" — 35 vs 60 no. Neither! Also note seed2 ever seen rise = 3 and present change = 0. Counts-against: "ever seen rises by 3 or more over 25,000 to 50,000 while present at 50,000 is below present at 25,000" — present equal, not below, so not against. So growing seed2 is neither for nor against by the plan's letter. But md says "For accumulation in every environment except FIXED LARGE LIST" including GROWING LIST. Hmm wait, but the md text in section 2.2 says: "in the other runs present stayed or rose (for example ... FIXED LARGE LIST seeds 2 and 3, 56 to 74 and 42 to 58)". So the md treats "present stayed" as for. Under the plan's counts-for ("ever seen and present both rise"), "present stayed" isn't "rise" unless we count ≥0. If we count non-fall as compatible, then seed1 FIXED GRADED is the only problematic one (present fell by 3 but ever seen rose by only 2 < 3, so not against; and not "for"). So at minimum FIXED GRADED seed 1 is neither. And by "counted per run, then per environment by three seeds", FIXED GRADED's environment verdict shouldn't be plain "For accumulation". The md does mention the seed-1 case in the text but still concludes "For accumulation in every environment except FIXED LARGE LIST". This is arguably an objection: the environment-level "for" for FIXED GRADED ignores that seed 1 meets neither the for nor against condition (a fall of present 36→33 without ever-seen rise ≥3 — by the plan this is not "for"). Actually wait — re-read counts-for: "ever seen and present both rise, OR present stays within 1 of ever seen". Hmm, maybe "present stays within 1 of ever seen" applies to the *rise*: ever seen rise 2, present... no.
+
+Alternatively "present stays within 1 of ever seen" could mean present_at_50000 ≥ ever_seen_at_25000? seed1: 33 vs 40 no.
+
+I'll raise this as an objection (moderate severity): B2.1 "for" claimed for FIXED GRADED where seed 1 meets neither the plan's for nor against condition; should read "for except FIXED GRADED seed 1, unclear" or similar. Actually let me be careful about severity—the md text does disclose the seed-1 numbers. The verdict sentence "For accumulation in every environment except FIXED LARGE LIST" is the overreach. I'll raise it.
+
+4. B2.2: md: "middle seed": FIXED GRADED 0.92, GROWING 0.987, CTPL 0.875, FLL 0.945; JSON ✓ (0.92, 0.987, 0.875, 0.945). "all at least 0.8: for". Plan: "continuous at least 80% of endpoint in the paying environments' middle seed" → counts for. ✓. And "Present after a sampled gap: 1 to 5 tasks per run" — JSON values: FG 4,1,2; equ 2,1,4; no_rewards same; GL 1,2,1; CTPL 5,3,3; FLL 3,3,2. Range 1–5 ✓. But md says "per run" — includes non-paying runs too (equ/no rewards 1–4), consistent.
+
+Plan's against: "gaps common: in any paying environment's middle seed, more than a fifth of the endpoint-kept tasks were missing at some save between" — not triggered. Note B2.2's middle-seed choice: which is the middle seed? For FIXED GRADED: sorted continuous_over_endpoint: 0.871, 0.92, 0.966 → middle 0.92 ✓. GL: 0.933, 0.987, 0.988 → 0.987 ✓. CTPL: 0.875, 0.875, 0.902 → 0.875 ✓. FLL: 0.927, 0.945, 0.95 → 0.945 ✓. OK.
+
+Hmm, but for ONE HARD/NO TASKS the md doesn't report; plan only specified paying environments' middle seed. Fine.
+
+5. B2.3: md "present at 50,000, NO TASK REWARDS 11 / 11 / 7" ✓ JSON. FIXED GRADED 13/11/14 ✓; GL 12/8/12 ✓; CTPL 14/14/11 ✓; FLL 8/15/11 ✓. "Common: NO TASK REWARDS 6 / 6 / 0, the paying environments 0 to 7" — JSON common: FG 7/6/7, GL 7/0/7, CTPL 7/7/2, FLL 0/7/7. Range 0–7 ✓. "Not separated from NO TASK REWARDS in any environment, by either count: against". Plan: counts against = "NO TASK REWARDS not below a paying environment by the three-seed rule". Check: present: NO 11/11/7 vs FG 13/11/14 — FG seed2 11 = 11, not all above → not separated ✓. vs GL 12/8/12: seed2 8 < 11 → not separated. CTPL 14/14/11: seed3 11=11 → not separated. FLL 8/15/11: seed1 8 < 11 → not separated. Common: NO 6/6/0 vs FG 7/6/7: seed2 equal → not separated; GL 7/0/7: seed2 0<6; CTPL 7/7/2: seed3 2>0 but seed3... NO seed3=0, CTPL seed3=2>0; seed1 7>6, seed2 7>6, seed3 2>0 — wait, all three CTPL seeds above all three NO seeds? CTPL common = 7/7/2; NO = 6/6/0. Min CTPL = 2, max NO = 6. 2 < 6, so not "every seed of one above every seed of the other" → not separated ✓. OK correct.
+
+Note: "against" here is verdict on the reading "the environment brings the never-rewarded capabilities" — counts against = they come with replication. Fine.
+
+Hmm — but is "against" correct per plan? Plan B2.3 counts-for: "paying environments above NO TASK REWARDS by the three-seed rule"; counts-against: "NO TASK REWARDS not below a paying environment by the three-seed rule". These aren't exhaustive either: an environment could be above NTR by the rule while another isn't. Here no environment is above, and NTR is not below any... Actually "NO TASK REWARDS not below a paying environment" — is NTR below some paying environment? For present: NO = 11/11/7; FLL = 8/15/11: is every FLL seed above every NO seed? 8 < 11 no. So NTR not below any paying environment → against ✓. Fine.
+
+6. B2.4 K table. md values vs JSON: FG 56.5/59.0/54.0 → JSON 56.521, 58.959, 54.037 ✓ (59.0 rounds from 58.959 ✓). 50,000: 60.8/63.5/72.8 → 60.756, 63.473, 72.828 ✓. Rises: 4.2/4.5/18.8 → 4.235, 4.514, 18.791 ✓. GL: 52.7/37.2/46.5 ✓ (52.715, 37.17, 46.482); 74.2/81.9/74.7 ✓ (74.232, 81.933, 74.749); rises 21.5/44.8/28.3 ✓ (21.517, 44.763, 28.267). CTPL: 59.7/72.0/55.8 → 59.696, 72.017, 55.833 ✓; 66.8/89.5/68.2 → 66.796, 89.461, 68.151 ✓; rises 7.1/17.4/12.3 ✓. FLL: 62.6/37.0/49.4 ✓ (62.633, 37.006, 49.431); 89.7/74.5/45.4 ✓ (89.708, 74.525, 45.427); rises 27.1/37.5/-4.0 ✓ (27.075, 37.519, -4.004). NTR: 45.5/45.9/46.8 ✓ (45.471, 45.865, 46.833); 36.2/34.5/22.9 ✓ (36.193, 34.531, 22.879); rises -9.3/-11.3/-24.0 ✓.
+
+"rise against NO TASK REWARDS: more" — check plan: "that rise larger than NO TASK REWARDS's in every seed". Hmm — comparing rise per seed: FG rises 4.2/4.5/18.8 vs NTR -9.3/-11.3/-24.0. "in every seed" — larger in every seed pairing? FG rise in every seed > NTR rise in every seed: min FG rise 4.2 > max NTR rise -9.3 ✓. FLL "more": rises 27.1/37.5/-4.0; min -4.0 > max NTR -9.3 ✓. OK.
+
+Verdict: "**For** in FIXED GRADED, GROWING LIST and COMMON TASKS PAY LESS." Plan counts-for: "K higher at 50,000 than at 5,000 in all three seeds of a paying environment, and that rise larger than NO TASK REWARDS's in every seed". FG, GL, CTPL: rose in all three ✓ and rise > NTR ✓ → for ✓. FLL: rose not in all three (seed3 -4.0) → neither for (doesn't meet for) nor against ("no rise in K anywhere" — no; FLL seed 3 fell but others rose). So FLL is neither → md doesn't claim for FLL, correct — table says "no" under rose-in-all-three. ✓. And the md states the limit. Fine.
+
+7. B2.5: md: "common counts equal or higher on large inputs in every paying run (GROWING seed 1: 51 small, 65 large)". JSON: FG equal; GL s1 51→65 higher, s2 0=0, s3 55=55; CTPL 16=16, 7→9, 8=8; FLL 0=0, 24→27, 13=13. ✓ "equal or higher in every paying run" ✓. "present counts on large inputs equal, higher, or one lower, except GROWING LIST seed 2 (27 small, 23 large, 15% lower)". JSON present: FG 20/20, 25/25, 15/15; GL 73/73, 27/23, 69→70; CTPL 42/42, 21→26, 23/23; FLL 34→38, 59→58, 47/47. So one lower: FLL seed2 59→58 (-1). GL seed2 -4 = 14.8% ≈15% ✓. "Against by the letter (one run more than 10% lower)" — plan: counts against "a paying run where logic_high is more than 10% below core" → yes GL seed2 → against, "a caution on S113's counts, not a verdict on the owner's question" ✓ as stated in plan. md says "Against by the letter (one run more than 10% lower), a caution on S113's counts" ✓.
+
+Wait — but does B2.5's against rule apply to present or common? Plan: "the two within 10% of the core count in every paying run" counts for; against: "a paying run where logic_high is more than 10% below core". "the core count" — ambiguous between common and present. The md applies it to both, finding GL seed2 present 15% lower. Fine.
+
+8. Section 2.1 last paragraph: "on the probe's core reading, GROWING LIST against FIXED LARGE LIST is not separated (51 / 0 / 55 against 0 / 24 / 13)". Three-seed rule: every seed of one above every seed of other: GL min 0, FLL max 24 → no. ✓. "nor GROWING against FIXED GRADED" (51/0/55 vs 7/8/8: GL seed2 0 < 8) ✓. "nor FIXED LARGE against FIXED GRADED" (0 < 8 seed1) ✓. "FIXED GRADED is above NO TASK REWARDS" (7/8/8 vs 0/0/0) ✓ JSON confirms. World-order reading: "GROWING is above FIXED LARGE and FIXED GRADED, and FIXED LARGE above FIXED GRADED, as S113 found (E4 and Xc5 by the test processor)". World-order common at 50,000: GL 65/46/55; FLL 32/41/13; FG 7/8/8. GL min 46 > FLL max 41 ✓ separated. FLL min 13 > FG max 8 ✓. ✓ matches JSON "B2 added reading, world-order..." entries.
+
+9. Section 2.1 present at 50,000 numbers: md "FIXED GRADED 20 / 25 / 15 against 22 / 31 / 23" ✓ JSON. GL 73/27/69 vs 74/65/72 ✓. CTPL 42/21/23 vs 42/27/23 ✓. FLL 34/59/47 vs 54/67/51 ✓. "the two others equal (3 / 2 / 0)" ✓.
+
+10. Section 2.1 explanation numbers: "GROWING LIST seed 2 at 50,000 (large inputs): in the world's order, 2,377 and 2,381 of 3,489 programs copy themselves and perform NOT; in the six other orders, 62 to 370." Population 3,489 ✓ matches JSON population. These detail numbers (2,377, 62–370, 26–169, 1,900–2,160, 137) are not in the JSON — no way to verify from folder. Hmm. The .md contains numbers not present in .json; the brief says "judge the numbers by their agreement with each other and with the scripts". These come presumably from probe raw output not included. Not an objection per se, but unverifiable. Maybe note in "not reached".
+
+Also section 0 says "2,377 of 3,489 programs copy themselves and perform NOT" — md section 2.1 says 2,377 AND 2,381 (two world-order sets). In short says 2,377. Consistent.
+
+Wait, but JSON growing_seed2 at 50000 population = 3,489 ✓.
+
+11. B3a: md table: reject all 0.88/0.77/0.84 → JSON 0.8769, 0.7672, 0.8386 ✓. discriminating 0.09/0.19/0.11 → 0.0889, 0.1914, 0.1056 ✓. accept all 0.03/0.04/0.06 → 0.0342, 0.0414, 0.0558 ✓. reputation row: 0.83/0.76/0.86 → 0.8267, 0.7642, 0.8567 ✓; disc 0.16/0.20/0.09 → 0.1622, 0.1992, 0.0919 ✓; accept all 0.01/0.04/0.05 → 0.0111, 0.0367, 0.0514 ✓. Founder at 1,000 then 5,000: scalar 0.049, 0.031 / 0.050, 0.059 / 0.029, 0.039 → JSON 0.0486,0.0306 / 0.0497,0.0586 / 0.0294,0.0394 ✓. Reputation: 0.044,0.029 / 0.050,0.052 / 0.061,0.019 → 0.0439,0.0292 / 0.05,0.0519 / 0.0614,0.0189 ✓.
+
+"At 1,000 the discriminating share was 0.16 to 0.25" — JSON discriminating at 1000: scalar 0.1839, 0.1736, 0.2469; rep 0.2319, 0.1617, 0.1614. Range 0.1614–0.2469 → 0.16 to 0.25 ✓. "3,600 programs, 401 to 447 distinct sequences in every bank" — JSON distinct: 423,427,439,437,409,401,432,428,428,420,447,420. Min 401, max 447 ✓. programs 3600 ✓.
+
+B3a.1 rule: "at 5,000, discriminating programs at least 10% in at least two of three seeds of a mechanism, and the most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's". Scalar: disc 0.0889 (<10%), 0.1914, 0.1056 → two of three ≥10% ✓. Most common at 5,000 = reject all ≠ founder's accept only 1 ✓. Reputation: 0.1622, 0.1992, 0.0919 → two ≥10% ✓. So "for by the letter" ✓. "Against did not occur (reject all never reached 90%)" ✓ (max 0.8769).
+
+B3a.2: "swapped and off arms showed zero cue contrast everywhere" ✓ JSON 0.0.
+
+12. B3b: kinds: A 14 programs, 93 instructions, all nine ✓ JSON. B 8 programs, 93 instructions, 8 tasks sans AND ✓. "29 viable sequences ranked before B" ✓. Shares: from 1%: 1.0/1.0/1.0 at 2000 ✓; at 500: 0.96, 0.95(33), 0.92(14) — md says "(0.96, 0.95, 0.92 at 500)" ✓. "from 10%, 50%, 90% and 99%: 1.0 in every placement (0.98 to 1.0 at 500)" — JSON at 500: 0.9944, 0.9878, 0.9842, 0.9961, 0.9994, 0.9931, 0.9928, 0.9975, 0.9894, 0.9972, 0.9997, 0.9936 → range 0.9842–0.9997 → "0.98 to 1.0" ✓. "No other sequence appeared" ✓ all 0. Verdict: "against, no growth from rare" — plan: against = "A's share falls from 1% in all three placements, or rises from 99% in all three". Hmm! From 1%, A's share at 2,000 is 1.0 — A ROSE from 1% in all three placements. The plan's against condition: "A's share falls from 1% in all three placements, OR rises from 99% in all three (then one kind wins from every start...)". Here A rose from 1% in all three AND rose from 99%... wait from 99% it's already 1.0 at 2,000, i.e., stays/rises to 1.0. From 99%, rising means going above 99%? At 500, 99% runs: 0.9972, 0.9997, 0.9936 — 0.9936 is slightly below 0.99? 0.9936 > 0.99. So from 99%, A's share rose (0.99 → 1.0) in all three placements. So the second disjunct of against holds: "rises from 99% in all three (then one kind wins from every start, and the resources do not hold this pair together)". Yes — A took the whole world from every start. So "against (no growth from rare)" is right by the plan's rule. ✓.
+
+Hmm, wait: careful. "A's share rises from 1%" — from 1% A rose to 1.0, meaning A grows when rare. Counts-for requires: "A's share rises from 1% and from 10% AND falls from 90% and from 99%, in all three placements". A rose everywhere, never fell from 90/99. So for fails. Against: "falls from 1% in all three" — no (rose); "or rises from 99% in all three" — yes (0.99→1.0). So against ✓. The md's parenthetical "no growth from rare" labels it via the first disjunct which didn't occur; the actual trigger is the second ("one kind wins from every start"). The md says "A took the whole world from every start, 1% to 99%, in all three placements, by update 1,500. **Against** (no growth from rare)." The label "no growth from rare" is the plan's shorthand for the whole against cell, but strictly it was the "rises from 99%" branch. Minor wording; the plan itself titles the row against as "no growth from rare". I'll not object, or maybe minor. Actually the plan's against column literally begins "**no growth from rare**: A's share falls from 1% in all three placements, or rises from 99% in all three". So "Against (no growth from rare)" is the plan's own label. Fine.
+
+Check "by update 1,500": JSON — 1% placements reach share 1.0 at 1000 or 1500 (placement 2 at 1000 = 0.9983, 1.0 at 1500; placement 3 0.9997 at 1000, 1.0 at 1500; placement 1 1.0 at 1000). All others 1.0 by 1000. So "by update 1,500" ✓.
+
+13. E: test processor common 41 at all six saves ✓ JSON. present 67/66/67/66/67/67 ✓. distinct sequences 3,221/3,210/3,220/3,227/3,211/3,204 ✓ (in .md table row "distinct sequences"). World count 41 at all 100 samples from 50,250 — JSON has 103 entries from 49,250; from 50,250 to 75,000 = 101 samples? (75,000−50,250)/250+1 = 101. Hmm, md says "41 common at all 100 samples from 50,250 to 75,000". Let me count: 50,250 to 75,000 inclusive step 250: (75000−50250)/250 = 99, +1 = 100. Yes 100 ✓. And "(and at 49,250 to 50,000)" — those are 49250, 49500, 49750, 50000 = 4 samples all 41 ✓. "its last new high stays S113's 48,250" — JSON "world count: last new high after 50,000": null, and "highest up to 50,000 ... 41". Hmm, md says "its last new high stays S113's 48,250" — meaning the last time the world count hit a new high was at update 48,250 (in S113's data). The JSON says highest up to 50,000 = 41 and no new high after. Consistent-ish; 48,250 is from S113. Need to check S113 results for that claim. Let me check S113 folder later.
+
+Verdict: "Levelled off by the plan's rule (count at 75,000 within 1 of 41, no new high of either count after 60,000)" ✓: 41 within 1 of 41 ✓, no new high ✓.
+
+Wait, plan E.1 against: "test-processor count at 75,000 within 1 of 41 AND no new high of either count after 60,000" ✓ both hold. ✓.
+
+Hmm — one thing: plan said "the test-processor count at every 5,000 (55,000 to 75,000, and 50,000 again as a check that the copy starts where S113 ended: it must give 41 common)". Done ✓.
+
+Also plan section 4 said "a 900-second limit per piece, exactly as S113 ran it" and commands note pieces 76–83 s each ✓. Seeds 2050–2074 ✓ JSON.
+
+14. CPU time: 3,003 + 4,217 + ≤1,040 + 1,966 + 19 + ~3,570 = 13,815 s ≈ 13,800 s = 3.83 h < 4 ✓. md says "about 13,800 s, 3.8 CPU-hours" ✓. Plan: "The whole job stays under about 4 CPU-hours" ✓.
+
+Hmm, but the continuation "1,966 s + 19 s". 3,003+4,217+1,040+1,966+19+3,570 = 13,815. "about 13,800" ✓.
+
+Competition ~3,570 s = 15 runs × 238 s ✓ (md section 9 says "about 238 s each"; 15×238=3,570 ✓).
+
+15. Departures: plan's departures listed in results section 6: (1) no save line (already in plan preamble actually — plan said none is added; results records it as departure from S115's task, fine); (2) two descriptive readings added; (3) 10 saves not 11 (plan already flagged in section 0 — "Departure from S115's plan already known"; recording again fine); (4) B chosen by second branch (plan allowed); (5) CPU. 
+
+What about the probe cost: plan estimated "about 1 CPU-hour"; results say "the probe took about 1.2 CPU-hours (planned about 1)". 4,217 s = 1.17 h ✓. Batch 3a: plan 0.8; actual 3,003 s = 0.83 ✓ within. K: plan 0.3; actual "at most about 1,040 s" = 0.29 ✓. Continuation: plan 0.6; actual 1,966+19 = 1,985 s = 0.55 ✓. Competition: plan 1.0; actual 1.0 ✓. Plan's contingency: "if the first run shows more than 1.5 CPU-hours in all, the 1% and 99% shares run with one placement only" — not triggered (3,570/15 ≈ 0.2h each... total 1.0). Fine.
+
+Departure check: anything else departed? The plan B2.1–B2.5... The md's section 2.1 "probe, large inputs in the world's order (2 sets)" column is a departure, recorded as departure #2 ✓ ("The second explains the difference from S113"). Also "logic tasks credited on at least one of the 8 small inputs" is in JSON as added but I don't see it in the md text... The md's departure #2 mentions both readings. In JSON "common, on at least one of the 8 small inputs, at 50,000" present. The md table doesn't show the "on any input" column... Actually md table column 3 is "probe core (8 small inputs, all 8)" and there's no "on any" column in the table; departure says both are marked in the .json as added. OK.
+
+16. "In short" bullet re B2.3: "present at 50,000 in 7 to 11 per seed under NO TASK REWARDS" ✓ (11/11/7). Hmm "7 to 11 per seed" fine.
+
+17. Check B2.4 md claim: "96 to 100 of the 100 viable except NO TASK REWARDS / ONE HARD TASK ONLY seed 3, 60 to 100". JSON viable values: FG 100/100 all; equ s1 100,100; s2 100,100; s3 99,66; GL 100s; CTPL s2 96,100 others 100; FLL s1 100,97 others 100. So range across all: 96–100 except equ/no_rewards seed3: 99 and 66. md says "60 to 100" for seed 3 — JSON says [99, 66] → 66 to 99, not 60 to 100. Hmm! md: "96 to 100 of the 100 viable except NO TASK REWARDS / ONE HARD TASK ONLY seed 3, 60 to 100". JSON: equ_only_seed3 viable [99, 66]. "60 to 100" vs actual 66–99. Discrepancy! Let me re-read md: "(96 to 100 of the 100 viable except NO TASK REWARDS / ONE HARD TASK ONLY seed 3, 60 to 100)". JSON gives 99 at 5,000 and 66 at 50,000. So the md's "60 to 100" doesn't match "99 and 66". Unless "60 to 100" refers to all ten saves, not just 5k and 50k — JSON only reports at 5,000 and 50,000 ([99, 66]). Perhaps intermediate saves range 60–100. The JSON doesn't contain per-save viable counts. The md says "60 to 100" which could be over all saves; the JSON only has endpoints. Can't verify, but no contradiction (99 and 66 both in [60,100]). Not an objection; unverifiable detail. Hmm, but strictly the md number 60 isn't in the .json. The brief asks "is every number in the .md the number in the .json" — this one (60) has no JSON counterpart. It may come from scratch summaries. Borderline; I could note it as a minor unverifiable number. The K viable counts across all saves aren't in JSON. I'll mention in "not reached" or as a minor objection. Given the instruction to judge by agreement, and 66 ∈ [60,100], no contradiction. I'll put under not-reached/unverifiable minor.
+
+18. Section 0 bullet 1: "in five of the 12 paying runs" ✓ verified. "GROWING LIST seed 2 (0 against S113's 46) and FIXED LARGE LIST seed 1 (0 against 32)" ✓.
+
+19. Section 0 bullet re B2.2: "of the tasks present at 25,000 and at 50,000, 87% to 99% were present at every save between in the paying environments' middle seeds". Middle seeds: 0.92, 0.987, 0.875, 0.945 → 87.5% to 98.7% → "87% to 99%" ✓ (rounding).
+
+20. Section 0 bullet B2.4: "rose ... in all three seeds of FIXED GRADED, GROWING LIST and COMMON TASKS PAY LESS, and fell in all three of NO TASK REWARDS" ✓.
+
+21. Section 8 (owner's question): check for S23-forbidden words in Claude's own sentences: scan for "support", "verify", "prove", "true", "better", "worse", "believe", "established", "authority", "foundation", "derived", "fit"... Let me grep. Also "for" verdicts — the plan's own framing, fine. Words like "learned", "capabilities". Check section 8 text: "What S113's program populations learned was kept" — fine. "the one run still rising at 50,000 rose no further" fine. "a program population can look capable in its own world and not beyond it" — fine. "What the environment pays for is what it adds." — that's a general claim from B2.3+B2.4; is it overreach? B2.3: never-rewarded arithmetic not separated from NTR → comes with replication. B2.4: K rose where tasks paid. "What the environment pays for is what it adds" — summarizing observation; arguably fine but it's a general sentence from specific comparisons. B2.3's against verdict supports "arithmetic nobody paid for came with replication, not the environment". Hmm "is what it adds" is a generalization; could flag as saying more than numbers? It's a summary of two readings. Borderline. Also "In the environments tried, learning filled part of the designer's list and then stopped." — supported by E (FLL seed 2 levelled) — but "the environments tried" generalizes: FIXED GRADED etc. didn't necessarily "stop"; e.g., growing lists kept adding? Actually growing list = designer adds tasks over time. "learning filled part of the designer's list and then stopped" — for fixed lists, they filled part of the 77; for growing? Hmm. The first bullet combines two observations. "and then stopped" is directly observed only in one run (the continuation). For other environments we only have 50,000 updates. Saying "In the environments tried, learning filled part of the designer's list and then stopped" reads one seed's levelling off as general. That's a potential objection: one seed read as a general finding. The sentence: "**What S113's program populations learned was kept**, and at a fixed list of 77 tasks the one run still rising at 50,000 rose no further in 25,000 more updates. In the environments tried, learning filled part of the designer's list and then stopped." The last sentence overgeneralizes — only FIXED LARGE LIST seed 2 was tested for stopping; other environments were not continued. I'd raise this as an objection (a difference in one seed read as a general finding). Severity moderate.
+
+Let me also check "plain words" file? The brief says my job is results against plan; plain-words file is job of... section 4 lists files to read: results .md and .json, plan, exact commands, S113 results. Plain words not in my list. Skip.
+
+22. Check B2.1 md claim details: "COMMON TASKS PAY LESS 54 to 56, 29 to 35, 30 to 34" — JSON present_all: s1 54→56 ✓, s2 29→35 ✓, s3 30→34 ✓. "FIXED LARGE LIST seeds 2 and 3, 56 to 74 and 42 to 58" ✓.
+
+Also "ever seen 69 to 72, present 64 to 42" ✓.
+
+23. Section 2.1: "probe core (157 tasks)" in section 1 table — "profiles core (157 tasks)". Plan says core profile; 157 tasks — from reply 01's script presumably. Can check scripts later if time.
+
+24. Check the "In short" claim: "the probe gives lower counts than S113 in five of the 12 paying runs" — but should it be "common" counts? It says "lower counts" — presumably common logic counts. Verified: 5 runs lower by common. ✓.
+
+25. "Read on the two probe input sets that keep the world's order, the counts are S113's exactly" — verified for common counts. ✓.
+
+26. Section 2.1 second paragraph numbers 2,377/2,381, 62–370, 26–169, ~1,900–2,160, 137 — not in JSON. Note as unverifiable.
+
+27. E table row "distinct sequences" — from JSON? JSON "E continuation" doesn't have distinct_sequences! Let me re-check... The E section in JSON has test processor common, present, "test processor common and replicating", world counts, pieces, verdict. No distinct sequences (3,221 etc.). So md numbers 3,221/3,210/3,220/3,227/3,211/3,204 are not in the JSON. And section 5 text "about 3,200 distinct instruction sequences kept being replaced". These aren't in the JSON. Hmm — brief: "is every number in the .md the number in the .json". These aren't. They presumably come from scratch (the one_snapshot output). Is that an objection? The .md says numbers come via gather script from summaries; the JSON is "the numbers" file. Six numbers absent from JSON. Also section 2.1's detailed order counts absent. I could raise one objection: numbers in the .md with no counterpart in the .json (distinct-sequences row in section 5; the input-order detail counts in 2.1; "60 to 100" in B2.4). The exact fix: add them to the .json (gather script) or mark their source. This is a real, checkable inconsistency with the stated provenance ("The numbers: results.json ... written by gather script from the summaries"). Moderate/minor.
+
+28. B3a md: "the founder's rule fell from all programs to 2% to 6%" (section 0) — at 5,000 founder shares: 0.0306–0.0586 → 3% to 6%, not 2%. Wait section 0 bullet: "'reject all' was the most common rule in every run (77% to 88%), and the founder's rule fell from all programs to 2% to 6%." Founder at 5,000: scalar 0.0306, 0.0586, 0.0394; rep 0.0292, 0.0519, 0.0189. Min 0.0189 → 1.9% ≈ 2%; max 0.0586 ≈ 6%. So 2% to 6% ✓ (0.0189 rounds to 2%). ✓. "reject all 77% to 88%": 0.7642–0.8769 → 76% to 88%. Hmm: 0.7642 rounds to 76%, not 77%. Section 3 table shows 0.76 for reputation seed 102. Section 0 says "77% to 88%". 0.7642 → 76.4%. So "77 to 88" is slightly off; should be "76 to 88". Minor number error! Check: reject all values: 0.8769, 0.7672, 0.8386, 0.8267, 0.7642, 0.8567. Min = 0.7642 = 76.4%. md says 77% to 88%. Off by ~1 point at the lower end. Small but it's a number error in .md vs .json. Objection (minor): fix "77%" → "76%".
+
+29. Section 0: "9% to 20% of programs still gave to some cues and not others" — disc at 5,000: 0.0889–0.1992 → 8.9% to 19.9% → "9% to 20%" ✓.
+
+30. Check B2.2 md: "present after a sampled gap ... 1 to 5 tasks per run" ✓.
+
+31. Check B2.3 md: "present at 50,000, NO TASK REWARDS 11 / 11 / 7; FIXED GRADED 13 / 11 / 14; GROWING LIST 12 / 8 / 12; COMMON TASKS PAY LESS 14 / 14 / 11; FIXED LARGE LIST 8 / 15 / 11" ✓ all match.
+
+32. Section 2.1: "Present at 50,000 ... the two others equal (3 / 2 / 0)" ✓.
+
+33. Departure 5 says probe "about 1.2 CPU-hours (planned about 1)". Plan estimated "about 1 CPU-hour" for the probe — fine.
+
+Now check S113 results for claims: "the run S113 found still rising: 28 at 40,000, 37 at 45,000, 41 at 50,000" (plan), results say 41 = S113. Also "its last new high stays S113's 48,250" and "as S113 found (E4 and Xc5 by the test processor)". Let me check S113 results file to verify 41 common at 50,000 for FLL seed 2, and last new high 48,250, and E4/Xc5. Also "COMMON TASKS PAY LESS seed 1 (the seed with the most tasks, 17 common)" — plan's claim; results section 4 says "no viable sequence had a task A lacks". S113 FLL seed2 present at 50,000 = 67 (md table) — JSON "S113 test processor present at 50,000" FLL = 54/67/51; seed 2 = 67 ✓ matches E table present 67 at 50,000 ✓. Good consistency check: continuation present at 50,000 = 67 = S113's test-processor present ✓.
+
+Also check common: S113 = 41 for FLL seed 2 ✓ matches E table 41.
+
+Let me look at S113 files to verify 48,250 and E4/Xc5 and CTPL seed1 17 common.
+
+Also check scripts to verify claim in section 4: "In the test CPU without resources, B copies itself slightly faster (545 against 577 instruction executions)" — not in JSON. Unverifiable from folder? Maybe in scripts output? No raw output. Note.
+
+Also "AND resource stayed between about 140 and 240 (full pay needs 400)" — not in JSON. Unverifiable. And "so AND still paid A about 2^(2 x 0.0025 x level) = 1.6 to 2.3 times" — arithmetic: 2^(2×0.0025×140) = 2^0.7 = 1.62; 2^(2×0.0025×240)=2^1.2=2.30 ✓ arithmetic consistent. But whether the formula 2^(2·0.0025·level) matches Avida's resource logic — from S111 build notes "Avida's rules". Could check. The md says "paid ... 1.6 to 2.3 times" — times what? "against B's 5% faster copying". B copies 545 vs 577 → B is 577/545 = 5.9% faster... "B's 5% faster copying" — 545 against 577: A takes 577, B takes 545; B is (577−545)/577 = 5.5% fewer executions → "5% faster" ok roughly. Fine.
+
+34. Check that B3b environment: plan says "every resource starting at the level S113's seed 1 had at update 50,000 (as S113's runner carries it)". Results don't state this explicitly in section 4 but it's in the plan; fine.
+
+35. Plan's B3b: "A in a share s of the 3,600 cells and B in the rest, cells chosen at random by a placement seed. s = 1%, 10%, 50%, 90%, 99%; placements 1, 2, 3 (Avida seed 116000 + 10 x placement + share index)". Results: 15 runs ✓.
+
+Hmm — check Avida seed formula: 116000 + 10×placement + share index. E.g., 1% p1: 116000+10+0=116010. Not verifiable from JSON (seeds not recorded per run). OK.
+
+36. Check "B2 probe per run and save" JSON present_arith/common_arith for B2.3 present: e.g., no_rewards 50000 present_arith 11/11/7 ✓.
+
+37. Section 2.2 B2.1 note: "(at 50,000 its programs hardly copy themselves on small inputs)" — from 2.1's 26–169 of 3,484 ✓ consistent.
+
+38. Now the three-seed rule in section 2.1: "FIXED GRADED is above NO TASK REWARDS" — FG 7/8/8 vs 0/0/0 ✓.
+
+39. Check "In short" B2.1: "Turnover without accumulation (B2.1) appeared in one run only, FIXED LARGE LIST seed 1" ✓.
+
+40. Check the claim in section 2.1 para: "S113's test processor used that order" — consistent with S113.
+
+41. Also check section 1 table: "Batch 2, probe | 18 runs x 10 saves ... | 4,217 s | 36 of 36 'exit 0 missing 0'" — 18 runs × 2 profiles = 36 ✓. commands say "both profiles 'exit 0 missing 0'" ✓.
+
+42. Section 9 "Unsure": good, covers one-draw inputs etc.
+
+Now check plan adherence for "logic_high ... summarised by an S116 script with the same rule, since the summariser reads core only" ✓.
+
+Plan: "The probe's counts are also set beside S113's own test-processor counts... differences are reported, not ruled on." Section 2.1 says "Both are reported; neither is ruled on" ✓.
+
+Now check the section 8 for forbidden words. Let me grep the results .md for S23 words: "support", "verif", "prove", "true", "better", "worse", "believe", "establish", "authority", "foundational", "derived", "fit(s)", "accept". "accept" appears in B3a: "accept all", "accept only 1" — these are pattern names from the banks (the founder's rule "accept only 1"), quoted terms, not Claude's own claims of acceptance. S23 concerns belief/verification words in Claude's own sentences. "accept all" is a descriptive pattern name — fine.
+
+Grep also for "shows", "shows" fine. Let me grep to be thorough.
+
+Also check plain-words file? Not my job.
+
+Let me also verify S113 claims: 41 common FLL seed2 at 50,000; last new high at 48,250; E4 and Xc5; CTPL seed1 17 common at 50,000. Let me grep S113.
+
+Also check "the seed with the most tasks, 17 common" — results section 4 doesn't mention 17; plan says 17. S113 check.
+
+Also verify scripts exist and match described behavior, e.g., s116_gather_the_results.py — but raw summaries absent; can check the script's computation of verdicts, e.g., B2.1 "turnover" rule implementation: ever_seen rise ≥3 AND present change <0. JSON fixed_graded_seed1: rise 2, change −3 → false ✓. equ seed1: rise 3, change +1 → false ✓.
+
+Wait, check equ_only/no_rewards seed1: ever_seen rise 3 (17→20), present change +1 → not turnover ✓.
+
+One more: md section 2.2 B2.1 says "turnover without accumulation ... in 1 of 18 runs" ✓ JSON.
+
+Now the B2.1 environment aggregation in md: "**For accumulation** in every environment except FIXED LARGE LIST, where one seed counts against by the rule". Also ONE HARD TASK ONLY and NO TASK REWARDS: ever seen rises 3 with present rise 1 — counts-for? "ever seen and present both rise" — both rise (3 and 1) ✓ for. OK for those. FIXED GRADED seed1: ever rise 2, present −3: neither. GROWING seed2: ever rise 3, present 0: present doesn't rise (0)... if "rise" means >0, neither; if ≥0, both "rise". Also GL seed3: ever rise 2, present 0: neither by strict >0. Hmm. GL seed3: present 81→81, ever 88→90. Counts-for fails strictly. So GROWING LIST verdict "for accumulation" also rests on reading present-change 0 as satisfying. The plan's "counts for" is genuinely ambiguous ("both rise, or present stays within 1 of ever seen"). Actually maybe "present stays within 1 of ever seen" intends: present at 50,000 stays within 1 of present at 25,000?? No, it says "of ever seen". Hmm: perhaps the intent is present ≈ ever seen (nothing lost). For GL seed1: present 85, ever 94 — 9 apart.
+
+Given ambiguity, the md's operationalization (for = no turnover) is a reading, and it discloses the numbers. But the verdict sentence claims "for" where the plan's counts-for condition is at best ambiguous. FIXED GRADED seed 1 is the clearest: present fell by 3 while ever seen rose by 2 — the plan's "for" ("both rise, or present within 1 of ever seen") is not met by any reading, and "against" (rise ≥3) is not met. That run is "unclear" under the plan. So environment FIXED GRADED: one seed unclear, two for → the md's blanket "for accumulation in every environment except FIXED LARGE LIST" overstates. Objection: fix sentence to note FIXED GRADED seed 1 meets neither condition (present fell 36→33 with ever seen up only 2), so FIXED GRADED is not unqualifiedly "for".
+
+Severity: moderate. The brief explicitly asks "is any verdict reached by a rule other than the plan's, or any 'for' claimed where the plan's rule gives 'unclear'".
+
+Now, also check the md's B2.2 statement: "all at least 0.8: for" — plan: counts for "continuous at least 80% of endpoint in the paying environments' middle seed" ✓ all four ≥0.8 ✓ for ✓.
+
+B2.5: plan counts-for: "the two within 10% of the core count in every paying run" — common counts: GL seed1 51 vs 65 — logic_high HIGHER by 28%. "within 10%"? Not within 10% (it's above by more). Strictly "within 10% of the core count" fails for GL seed1 common (65 vs 51 = +27%). The plan's for-condition is symmetric "within 10%", but higher is good for the reading ("S113's counts do not depend on small inputs" — higher on large inputs is not a dependence problem... actually it kind of is a difference). The md says "**Against by the letter** (one run more than 10% lower)". The against rule: "a paying run where logic_high is more than 10% below core". GL seed1 present: 73/73; common 51 vs 65 — logic_high above. So against triggered only by GL seed2 present (−15%). md ✓. The "for" wasn't claimed. Fine.
+
+Now check the continuation world-count claim "41 by Avida's world count at all 100 samples after 50,000" ✓.
+
+Also check "In short" bullet 5: "41 common capabilities by the test processor at every save from 50,000 to 75,000" — saves 50,55,...75 = 6 ✓.
+
+Now check the E.1 rule application: "levelled off" requires BOTH conditions ✓.
+
+Now let me look at S113 results for verification, and also grep results .md for forbidden words. Also check scripts folder listing for gather script sanity (e.g., how "middle seed" computed, B2.1 rule) — optional.
+
+Also check: plan said probe "Estimated cost: about 1 CPU-hour" and results departures note 1.2. Fine.
+
+Plan section 1 said "with a reward history for each run made from S113's own environment files and the GROWING LIST's recorded additions (never-rewarded tasks marked 'never')" — can't verify raw. OK.
+
+Also check that results report "what was not tested" ✓ section 7.
+
+Also plan's running rules: "at most three at once on 4 processors" — commands say three at once / "two at once" for probe and K — fine.
+
+One more check: results section 1 "Batch 3a ... 3,003 s (the suite's own timing)" ✓ JSON 3003.
+
+"Continuation 1,966 s + 19 s" — commands say 1,966 s piece time; +19 s test processor. JSON pieces sum: 77+76+82+78+76+78+79+79+76+79+77+80+82+77+78+75+78+80+79+76+80+78+81+82+83 = let me add: 77+76=153, +82=235, +78=313, +76=389, +78=467, +79=546, +79=625, +76=701, +79=780, +77=857, +80=937, +82=1019, +77=1096, +78=1174, +75=1249, +78=1327, +80=1407, +79=1486, +76=1562, +80=1642, +78=1720, +81=1801, +82=1883, +83=1966. ✓ 1,966 exactly.
+
+Also md says pieces 76 to 83 s each ✓.
+
+Now check S113 folder.
+
+Also verify "COMMON TASKS PAY LESS seed 1 (the seed with the most tasks, 17 common)" — need S113. But JSON S113 test processor common CTPL = 16/9/8 at 50,000. 17? The plan says 17 common — maybe at a different update or the max over time, or world count. S113's seed 1 common at 50,000 = 16 by test processor. Plan says "the seed with the most tasks, 17 common" — could be world count or max over saves. Not necessarily inconsistent. Check S113.
+
+Let me grep S113 results.
+
+Bash is refused (as the brief said — no commands). Use Glob/Read/Grep only.
+
+Interesting: S113's FLL at 50,000: Avida's count 32/41/0; test processor 32/41/13; seed 2 = 41 ✓ matches S116 (41). Present: 54/67/32 (Avida count) or 54/67/51 (test processor) — S116's JSON "S113 test processor present at 50,000" FLL = 54/67/51 ✓ matches test processor.
+
+Also E4: growing vs fixed large, common test processor 65/46/55 vs 32/41/13 → "more". S116 quotes "(E4 and Xc5 by the test processor)" — check Xc5.
+
+S113 confirms: CTPL seed 1 at 50,000 = 17 common (Avida's count) / 16 (test processor). Plan said "the seed with the most tasks, 17 common" — matches Avida's count 17/9/8. ✓. S116's B3b used S113's CTPL seed 1. S116's probe column says CTPL S113 test-processor common = 16/9/8 ✓ (line 140 shows 16/9/8 test processor... actually line 129 shows Avida's count 17/9/8, line 140 test processor 16/9/8). ✓ consistent.
+
+E4 confirmed: growing above fixed large, test processor 65/46/55 vs 32/41/13 → more ✓. Xc5 — check what Xc5 is. Grep in S113 settled file.
+
+Interesting findings in the gather script:
+
+1. B3a.1 "for" condition at line 185: `forr = sum(d >= 0.10 ...) >= 2 and any(t != 'accept only 1' or t != t1 ...)`. The plan says: "the most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's". The script implements `any(t != 'accept only 1' or t != t1)` — this is a disjunction where `t != 'accept only 1' or t != t1` is true for ANY t, t1 except when t == 'accept only 1' AND t == t1. Since t1 (most common at 1,000) is 'reject all' in all cases, the condition `t != t1` alone would suffice and `t != 'accept only 1'` covers founder. Actually plan: most common at 5,000 different from founder's OR from 1,000's. Script: t != founder OR t != t1 — that's the right structure (OR of the two differences), evaluated per seed and then any(). Plan reads "the most common pattern at 5,000 different from the founder's ('accept only 1') or from 1,000's" — ambiguous whether per-seed or any seed. Script uses any(). Fine-ish. Not an objection.
+
+But B3a.1 against: plan says "at 5,000, reject-all at least 90% AND discriminating under 5% in every seed of a mechanism". Script: `all(r >= 0.90 and d < 0.05 for r, d in zip(rej, disc))` ✓.
+
+2. E.1 against (line 232): plan: "test-processor count at 75,000 within 1 of 41 AND no new high of either count after 60,000". Script: `abs(tp['75000'] - 41) <= 1 and not tp_after60_new and (last_new_high is None or last_new_high <= 60000)`. 
+
+Wait — plan says "no new high of either count after 60,000" — the script checks world count last new high ≤ 60000 or None; a new high exactly AT 60,000+... Actually plan's E.1 against: "no new high of either count after 60,000". Script requires last_new_high <= 60000, meaning a new high at 60,000 itself is allowed?? No wait — last_new_high is computed only over updates > 50,000. If a new high occurred at, say, 60,250 it would be > 60,000 → e_against false. If at exactly 60,000? after50 includes 60,250+ (int(u) > 50000, includes 50,250...60,000 too). Fine, approximately right.
+
+Also note plan E.1 counts-for: "test-processor common count at 75,000 at least 44 AND a new high of the world count at or after 65,000". Script: `tp_counts['75000'] >= 44 and last_new_high is not None and last_new_high >= 65000` ✓.
+
+3. B2.2 verdict (line 87): `rows['verdict'] = 'for' if mid >= 0.8 else 'against'`. Plan's against for B2.2: "gaps common: in any paying environment's middle seed, more than a fifth of the endpoint-kept tasks were missing at some save between" — i.e., continuous < 80% → against ✓ consistent. OK.
+
+4. B2.5 verdict line 142: `'against (a caution...)' if worst else 'for'` ✓ plan.
+
+5. B2.1: the script computes turnover per run but no environment verdict; the .md's "For accumulation in every environment except FIXED LARGE LIST" is Claude's own aggregation, not the script's. As analyzed, FIXED GRADED seed 1 meets neither the plan's for nor against. Confirmed objection.
+
+Actually wait — re-examine the plan's B2.1 counts-for: "ever seen and present both rise, or present stays within 1 of ever seen". Hmm — could "present stays within 1 of ever seen" mean present_at_50000 ≥ ever_seen_at_50000 − 1? That would mean nothing was lost — a very strong condition. For FG seed1: present 33 vs ever 42 — fails. Both fail → neither for nor against → per plan should be "unclear" for that run. The .md asserts "For accumulation in every environment except FIXED LARGE LIST". So FIXED GRADED's blanket "for" is not what the plan's rule gives for seed 1. Also GROWING seed 2 (present flat, ever rise 3) and seed 3 (present flat, ever rise 2): "both rise" fails if flat ≠ rise; unclear. So GROWING LIST's blanket "for" is also not strictly given by the plan. Objection X3.1 or so.
+
+Severity ranking: I think the most serious is the B2.1 overreach since the brief explicitly asks about "'for' claimed where the plan's rule gives 'unclear'".
+
+6. Also line 207-211 B3b: `up_rare = all(x > 0.01...)` — for counts-for, plan requires "A's share rises from 1% and from 10% and falls from 90% and from 99%, in all three placements". Script: up_rare uses `> 0.01` and `> 0.10` (rise from 1%/10%), down_common `x < 0.90 and x < 0.99` (fall). Actually at 2,000 the shares are all 1.0, so both fail; against triggered via a_rises_common (all > 0.99). ✓.
+
+Hmm — one subtlety: "A's share rises from 99%" — a_rises_common checks share at 2,000 > 0.99, from a start of 0.99. 1.0 > 0.99 ✓. OK.
+
+7. Line 223: run_high uses S113's highest_common for fixed_large_seed2 with comment "# S113: 41, at 48,250" — so S113's highest world count common for seed 2 = 41, at update 48,250. md: "its last new high stays S113's 48,250" ✓ consistent.
+
+Now, remaining checks:
+
+- The continuation world count claim "41 at all 100 samples from 50,250" ✓.
+- md section 5: "Avida's world count: 41 common at all 100 samples from 50,250 to 75,000 (and at 49,250 to 50,000)" ✓ JSON has 49,250–50,000 = 4 values at 41.
+
+- Numbers in md not in JSON: (a) section 5 distinct sequences row (3,221 etc.); (b) section 2.1 order-dependence counts (2,377, 2,381, 62–370, 26–169, 1,900–2,160, 137); (c) B2.4 "60 to 100"; (d) section 4's test-CPU execution counts (545/577) and resource levels (140–240, 400). These come from scratch summaries not gathered into the JSON. The .md's own header says "The numbers: results.json ... written by gather script from the summaries" — implying the JSON holds the numbers. Objection: add these to the JSON or mark their source. Moderate/minor.
+
+- "77% to 88%" vs 0.7642 → 76%. Minor number error.
+
+- Section 8 generalization: "In the environments tried, learning filled part of the designer's list and then stopped." Overreach. Let me re-read: bullet 1: "**What S113's program populations learned was kept**, and at a fixed list of 77 tasks the one run still rising at 50,000 rose no further in 25,000 more updates. In the environments tried, learning filled part of the designer's list and then stopped."
+
+"at a fixed list of 77 tasks" — hmm, FLL rewards all 77; growing list eventually reached 77? The continuation was FLL seed 2. "In the environments tried, learning filled part of the designer's list and then stopped" — "stopped" directly tested only in FLL seed 2. For the other environments, was "stopped" observed? S113 found levelling off mostly ("Stopped rising mostly within the first quarter to half of the run" per Xd3 discussion). Actually S113's results do discuss levelling off (last new highs run to 48,250; most of the rise came early). So "learning filled part of the designer's list and then stopped" could rest on S113's own levelling-off findings across environments plus the continuation. But S113's Xd3 settlement says the claim "stopped rising early" was corrected; the last new highs run to 48,250 (i.e., near the end). Hmm, S113 findings: each environment's count levelled (last new high column: 33,000/48,250/28,000 etc.). So counts stopped rising in all runs at some point ≤ 50,000. The sentence is defensible from S113 + the extension. But "then stopped" for growing list? GROWING LIST adds tasks over time; count still rising? S113's growing last new highs? Line 17 table: FLL 33,000/48,250/28,000. I don't have growing's. It's a summary sentence; the evidence is S113's levelling plus one continuation. Borderline. I might raise as a lower objection: one continued seed generalised to "the environments tried ... stopped". Given the cross-examination asks "one pair or one seed read as a general finding" — this is exactly that pattern. But part is supported by S113's own last-new-high data (all runs' counts stopped rising before 50,000 except the one). Actually S113 said seed 2 FLL was "still rising" — i.e., its count was still rising at 50,000; the others had stopped. So "In the environments tried, learning filled part of the designer's list and then stopped" is a fair summary of S113's levelling + the continuation confirming the last one stopped. Hmm, but "filled part of the designer's list" — for FIXED GRADED the list is 9 tasks + others at 0 reward... the designer's list of 77; FG got 7-8 common of 77 — "part". OK. I think this sentence is defensible; but strictly "stopped" was measured within the runs' time; counts levelled but could resume. And for environments other than FLL seed 2, no continuation tested whether they'd resume. Eh. I'll raise as a minor objection or leave. Let me consider: the brief: "does any sentence say more than its numbers (a difference inside the seeds' spread read as a difference; one pair or one seed read as a general finding)". Section 8's sentence reads one seed's levelling (plus S113's within-50,000 levelling) as "the environments tried ... stopped". S113's own data show levelling in all environments (last new high well before 50,000 for most). I'll flag it as a minor point with an exact fix: restrict to "each run's count stopped rising within the 50,000 updates S113 ran, and the one run still rising rose no further in 25,000 more".
+
+Also section 8 bullet 3: "What the environment pays for is what it adds." — from B2.3 (never-rewarded arithmetic comes with replication) and B2.4 (K rose where paid). General claim; supported as observation? B2.3's evidence: never-rewarded arithmetic not separated from NTR. "What the environment pays for is what it adds" — the added capabilities beyond replication are the paid ones. Reasonable summary of B2.3 + probe results (paying environments have common logic; NTR has 0). Actually that's well supported: common logic 0 in NTR vs many in paying. Fine.
+
+Bullet 2: "a program population can look capable in its own world and not beyond it" — supported by 2.1. Fine.
+
+- Check S23 forbidden words in results .md Claude's own sentences. Let me grep: "support", "verif", "proven/proves", "true", "better", "worse", "believ", "establish", "authorit", "foundat", "deriv", "fit", "accept" (as belief), "rank". Let me grep the file.
+
+Also check "model" usage (S43: say "candidate" not "model" — that applies to what the theory judges; here no theory models discussed). Grep "model".
+
+Let me also check the md for "proved", "shows that" etc.
+
+The forbidden-word grep on the results .md only matched lines containing "prov" inside "improves"? Actually matches were for "proved"? Line 12 and 72 matched — probably "provides"? No — they match "prov\w" — "provides"? Line 12: "the number of instructions whose ablation lowers Avida fitness ... rose" — the word "improves"? No. Let me see: "under one fixed nine-task reward rose" — the match is probably "proves" — no. Search: "For, with a limit: under a reward that pays for tasks" — hmm. Maybe "provides"? Not present. Possibly "proof"? Let me not worry: likely matched "prov" in "...lowers Avida fitness..." no. Actually line 12 contains "proved"? No. Wait — "reply 05" no. Let me check: the pattern includes "model" — line 12 has no "model". "true"? no. Hmm "fit\w" — "fitness"! Yes, "\bfit\w*" with word boundary — "fitness" starts at word boundary "fit" + "ness". "Avida fitness" matches. OK — "fitness" is Avida's own term (Avida fitness), not the S23 issue. Fine. So no S23-forbidden words in Claude's own sentences (the matches are "fitness").
+
+S113's GROWING LIST last new high: 37,000/42,500/31,500 — so growing runs' counts levelled before 50,000 too. So section 8's "learning filled part of the designer's list and then stopped" — supported by S113's levelling-off data plus continuation. Though "filled part of the designer's list" for growing: 65/48/55 of 77 — part. OK, I'll downgrade that; but still note the "then stopped" is about counts within 50,000/75,000 updates — it's an observation about these runs. I think it's acceptable. Maybe drop the objection or keep it as minor. Actually careful: GROWING LIST seed 1 last new high 37,000; the growing list adds tasks only when a top-level task becomes common — by 50,000 all 77? "designer's list" = 77 tasks. Fine.
+
+Now let me double-check remaining items:
+
+- Section 0 bullet 3 "present at 50,000 in 7 to 11 per seed under NO TASK REWARDS" ✓.
+- Section 0 bullet 4 "K rose ... in all three seeds of FIXED GRADED, GROWING LIST and COMMON TASKS PAY LESS, and fell in all three of NO TASK REWARDS" ✓.
+- Section 0 bullet 2: "87% to 99%" ✓.
+- Section 3 header sentence: "the founder's rule fell from all programs to 2% to 6%" ✓ (0.0189–0.0586).
+
+Wait, section 0 bullet 6: "'reject all' was the most common rule in every run (77% to 88%)". Min reject-all at 5,000 = 0.7642 → 76%. Objection stands (minor).
+
+- Check B3a table in md: "at 5,000 the discriminating share was 0.16 to 0.25" — that's at 1,000. Values 0.1614–0.2469 ✓.
+
+- Check md section 3: "3,600 programs, 401 to 447 distinct sequences in every bank" ✓.
+
+- Check md B3a.1 "for by the letter ... discriminating at least 10% in two of three seeds of each mechanism; the most common rule differs from the founder's" ✓.
+
+- Check B3b section 4 first para: "A, the most common viable sequence (14 programs, 93 instructions)" ✓ JSON. "B (8 programs, 93 instructions) performs eight, all but AND (29 viable sequences were ranked before it)" ✓.
+
+- "In the test CPU without resources, B copies itself slightly faster (545 against 577 instruction executions)" — not in JSON; also "AND resource stayed between about 140 and 240 (full pay needs 400)" — not in JSON. These come from scratch. Include in the missing-from-JSON objection.
+
+- Check plan vs commands for departures: The plan said probe "Estimated cost: about 1 CPU-hour" — fine. Plan said continuation "Estimated cost: about 0.6 CPU-hours" — actual 0.55. OK.
+
+- Plan running rule: "at most three at once" — commands: 3a three at once ✓; continuation one + probe two = three ✓; K two + continuation one = three ✓; competition three ✓. OK.
+
+- Anything in the plan not done? Plan section 1: "every living distinct instruction sequence is run alone..." done. "Then reply 01's summariser with a reward history..." done. K: "the 100 most common distinct instruction sequences... loaded, recalculated, kept if viable, and ANALYZE_KNOCKOUTS... under one fixed reference environment: S113's FIXED GRADED environment (nine two-input tasks at their S111 rewards 1 to 5, the other 68 logic tasks listed at 0, no resources)". Reported K per save: "the mean weighted by programs, the median and the maximum over the viable sequences, and how many of the 100 were viable" — the plan promised median and maximum too; results report only weighted mean and viable count. Departure not recorded! The md/json report K weighted mean only (JSON has K_weighted_mean and viable). Plan: "Reported per save: the mean weighted by the programs, the median and the maximum over the viable sequences, and how many of the 100 were viable." The results omit median and max. That's an unrecorded departure from the plan (or missing reporting). Objection: either report median and max or record the departure. Check the K script to confirm they were computed. Let me grep the K script for median/max.
+
+- Plan B2: "The ordering of environments at 50,000 (common logic capabilities by the probe) is reported by the three-seed rule." Done ✓ (five pairs).
+
+- Plan B2.1 measure: "per run: ever seen, present, and kept continuously (logic plus arithmetic), 25,000 to 50,000" — kept continuously used in B2.2 ✓.
+
+- Plan section 2 (batch 3a) measures: "the share that gives to no cue ('reject all'), the share that discriminates, the share that gives to all, and the most common pattern" ✓ all reported.
+
+- Plan batch 3b: "Saved every 500 updates; the share of A counted from the saved populations" ✓ (saves at 500,1000,1500,2000).
+
+- Plan extension: "(i) Avida's world count (tasks.dat and count.dat at every 250 updates...)" ✓.
+
+Now check the K script for median/max and the probe script consistency (157 tasks core profile). Also verify B2.2 "middle seed" = median — plan says "middle seed" — script uses statistics.median of the three seeds' ratios ✓ fine.
+
+One more: plan B2.2 against rule: "in any paying environment's middle seed, more than a fifth of the endpoint-kept tasks were missing at some save between" — script verdict 'against' if mid < 0.8 ✓ equivalent.
+
+Let me look at the K script quickly.
+
+The K script computes K_median and K_max and writes them into k/summary.json — but the gather script only lifts K_weighted_mean and viable into results.json, and the .md reports only those. The plan promised "the mean weighted by the programs, the median and the maximum over the viable sequences, and how many of the 100 were viable". So median and max were computed but not reported in results; no departure recorded. Objection (moderate): report them or record the omission as a departure.
+
+Also note the probe script's retention recomputation etc. Fine.
+
+Now, verify "77% to 88%" issue once more: reject-all at 5,000 values: scalar 0.8769, 0.7672, 0.8386; reputation 0.8267, 0.7642, 0.8567. Min 0.7642 = 76.4%. md says "(77% to 88%)". Should be "76% to 88%". Confirmed.
+
+Now, the "60 to 100" viable: script k summary has viable per save presumably; gather only endpoints. JSON [99, 66] for seed 3. "60 to 100" plausible over all saves; not in JSON. Include in the numbers-not-in-json objection.
+
+Now B2.1 objection wording. Let me finalize. Also double check the md's exact B2.1 sentence: "**For accumulation** in every environment except FIXED LARGE LIST, where one seed counts against by the rule, for the reason given." Plan's for: "ever seen and present both rise, or present stays within 1 of ever seen". FIXED GRADED seed 1: ever seen +2, present −3 — neither. GROWING seed 2: ever +3, present 0; seed 3: ever +2, present 0 — "both rise" fails if a flat present is not a rise; at best ambiguous. So "for" in every environment overstates; per-run verdicts should mark these runs as neither for nor against (unclear). Fix: change sentence to e.g. "**For accumulation** in every environment except FIXED LARGE LIST (one seed counts against) and except the runs that meet neither rule's condition (FIXED GRADED seed 1: present fell 36→33 with ever seen up only 2)".
+
+Also should check: does the plan's B2.1 "counts against ... counted per run, then per environment by three seeds" mean an environment counts against only if all three seeds show turnover? FLL has 1 of 3 → by the three-seed rule the environment would not be "against" either. The md says FLL is excepted from "for" because one seed counts against — a per-run exception. Fine either way since it's disclosed; but strictly by three-seed aggregation FLL would be "not separated"/unclear. I'll fold into the same objection.
+
+Next: check numbers "In short" bullet 1 "in five of the 12 paying runs" ✓.
+
+Check "the probe's counts ... GROWING LIST seed 2 (0 against S113's 46)" ✓ and "FIXED LARGE LIST seed 1 (0 against 32)" ✓.
+
+Check md section 2.1 note "the first number's top byte 15, the second 51, the third 85" — from Avida's input constants? In Avida, inputs are 0x0ff... patterns. Fine, from S111 build notes presumably. Not checked.
+
+Check B2.5 md: "present counts on large inputs equal, higher, or one lower, except GROWING LIST seed 2 (27 small, 23 large, 15% lower)". (27−23)/27 = 14.8% ✓ >10% ✓.
+
+Check the "In short" B2.5 phrase: not in section 0. OK.
+
+Check E section: "the copy at 50,000 gives S113's 41 (the check)" ✓.
+
+Now also confirm the CPU total claim "about 13,800 s, 3.8 CPU-hours" — sum = 13,815 ✓, and 3.83 h ✓. Reported within the 4-CPU-hour limit ✓.
+
+Now "is every departure recorded": the K median/max omission is a departure not recorded. Anything else? Plan section 1 B2 said "Reported per save: the mean weighted by programs, the median and the maximum over the viable sequences, and how many of the 100 were viable" — also "how many of the 100 were viable" reported ✓ (at 5k and 50k). Median/max not. Yes.
+
+Also plan B2 said probe "on each run's 10 saved program populations: every living distinct instruction sequence" — fine.
+
+Plan section 1 K: "Estimated cost: about 0.3 CPU-hours" actual ≤0.29 ✓.
+
+Another possible departure: the plan's B3b said "if the first run shows more than 1.5 CPU-hours in all, the 1% and 99% shares run with one placement only and the rest is recorded as proposed" — not triggered. ✓.
+
+Also check the plan's statement "The whole job stays under about 4 CPU-hours; anything that would exceed it is recorded as proposed, not run." Actual 3.8 ✓.
+
+Now, numbers in md not in json — the strongest case: section 5's "distinct sequences" row (3,221...3,204) — the JSON E section lacks them. Actually wait — maybe they're in ext counts.json but gather didn't lift them. Whatever; the results .md's declared numbers file lacks them. Objection: add to .json via gather script or cite source. Same for 2,377/2,381/62–370/26–169/1,900–2,160/137, 545/577, 140–240/400, "60 to 100". Given raw output absent, these can't be checked at all. One combined objection.
+
+Also, check "the AND resource stayed between about 140 and 240 (full pay needs 400)" — plan said resources start at "the level S113's seed 1 had at update 50,000". S113 CTPL resources at 50,000... "full pay needs 400" — from S111 environment config (resource full 400?). Can check config from log S111. Let me quickly grep for "400" in runs/configuration from log S111 to sanity-check "full pay needs 400" and "2 x 0.0025".
+
+The environment uses resources with `:type=pow:frac=0.0025` and value scaled 0–1.0 (max=1.0). So the "level 140–240 out of 400" presumably maps to value = level/400 in [0,1], frac 0.0025. The md's formula "2^(2 x 0.0025 x level)" — Avida's resource-based reward: reward × resource^... Hmm. The md says "AND still paid A about 2^(2 x 0.0025 x level) = 1.6 to 2.3 times". With frac=0.0025 and exponent structure... plausible from Avida source (resource-based fitness multiplier often `pow(resource, frac)` or similar). level 140 of 400 → value 0.35; 2^(2×0.0025×140)=2^0.7=1.62 ✓ arithmetic. I'll accept; can't fully verify formula without Avida source. Fine — mention in not-reached if needed.
+
+Now also check the compete script briefly for whether resources started from S113's seed-1-at-50,000 levels and share counting — probably fine; the results agree internally.
+
+One more check: md section 2.1 table column header "probe, large inputs in the world's order (2 sets)" — and the text "the two `logic_high` input sets that keep the world's order" — the logic_high profile has 8 input sets, 2 keep world order. OK.
+
+Also check that md's B2.1 numbers "(ever seen 69 to 72, present 64 to 42)" ✓ JSON.
+
+Also "COMMON TASKS PAY LESS 54 to 56, 29 to 35, 30 to 34" ✓.
+
+Check md line: "Elsewhere, where present fell (FIXED GRADED seed 1, 36 to 33), ever seen rose by fewer than 3" — 40→42 ✓.
+
+Now check the md's statement in section 0 bullet 2: "of the tasks present at 25,000 and at 50,000, 87% to 99% were present at every save between in the paying environments' middle seeds" — B2.2's measure is share of endpoint (both-ends) tasks, not "present at 25,000 and 50,000"... "of the tasks present at 25,000 and at 50,000" = present at both ends = endpoint ✓. OK.
+
+Now double-check the JSON "present_at_both_ends" vs md B2.2 wording: "of the tasks present at 25,000, how many are present at 50,000 (endpoint)" — plan. Continuous_over_endpoint = every-save-between / both-ends ✓ matches plan "continuous at least 80% of endpoint".
+
+Now, one more potential issue: section 2.1 present-at-50,000 comparison says "the two others equal (3 / 2 / 0)" — ONE HARD and NO TASK ✓.
+
+Also check "probe core (157 tasks)" — the core profile lists 157 tasks (77 logic + arithmetic + fib etc.). From reply 01 script; fine.
+
+Now B3a: plan's measure mentions "which of cues 0, 1, 2 it gives to (from the active arm's grants in the three pairs)" — banks have patterns ✓.
+
+Also plan B3a: "its manifest must hash to fc37c313…" — commands confirm hash ✓.
+
+Now, the md's "In short" bullet 6 says "A took the whole world from every start, 1% to 99%, in all three placements, by update 1,500" ✓.
+
+Check "B, rare or common, was lost in every run" ✓.
+
+Also section 4 title verdict: "**B3b.1: against, no growth from rare**" ✓ by rule (second disjunct).
+
+Now assemble objections:
+
+X3.1 (most serious): B2.1 verdict overreach — "For accumulation in every environment except FIXED LARGE LIST" claims "for" where the plan's rule gives neither for nor against (FIXED GRADED seed 1: ever seen +2, present −3; GROWING seeds 2 and 3: present flat). Fix: reword.
+
+X3.2: K's median and maximum promised by the plan are not reported and the omission is not recorded as a departure (computed in k/summary.json, dropped by gather). Fix: add K_median/K_max at 5,000 and 50,000 to the .json/.md table or record departure.
+
+X3.3: Numbers in the .md with no counterpart in the .json (the file the .md names as "the numbers"): section 5 distinct-sequences row (3,221…3,204); section 2.1's order-dependence counts (2,377, 2,381, 62–370, 26–169, ~1,900–2,160, 137); B2.4's "60 to 100"; section 4's 545/577 executions, resource 140–240 and 400. Fix: gather them into the .json (they exist in scratch summaries) or state their source files.
+
+X3.4: "reject all ... (77% to 88%)" — min is 0.7642 (76%). Fix: "76% to 88%".
+
+Possibly X3.5: section 8 "In the environments tried, learning filled part of the designer's list and then stopped." — "stopped" tested by continuation only for FLL seed 2; for other environments it rests on S113's within-50,000 levelling (last new highs 28,000–48,250), which shows counts stopped rising in the runs' window, not that learning stopped. Minor; suggest rewording: "each run's count of common capabilities stopped rising within the updates run (and the one still rising at 50,000 rose no further in 25,000 more)". I'll include as minor.
+
+Anything else? Check the "for" verdict claims in section 0 (In short): "Capabilities were kept (B2.2)" ✓; "K rose where tasks were paid (B2.4)... For, with a limit" ✓; B3a "For by the letter" ✓; B3b Against ✓; E Levelled off ✓; B2.3 against ✓; B2.1 in short: "Turnover without accumulation (B2.1) appeared in one run only" — the short doesn't claim "for" for B2.1... it says "Capabilities were kept (B2.2)" and mentions B2.1 turnover in one run. Section 2.2 claims the "for". OK so the objection targets section 2.2 (line 56) and section 0 line 10? Section 0 line 10: "Turnover without accumulation (B2.1) appeared in one run only, FIXED LARGE LIST seed 1, and there it comes from the input dependence above." No verdict claimed there. Fine.
+
+Also check whether B2.2's against-branch "gaps common" per plan was checked against middle seed only — yes per plan.
+
+Check "is the CPU time reported and within the stated limit" ✓.
+
+"Is what was not tested said" ✓ section 7 and plan's own not-tested lists; the K median omission aside.
+
+One more: the plan's B2.3 measure includes "and ever seen, per environment" — ever seen for arithmetic? The md reports present and common only, not "ever seen". Plan: "never-rewarded arithmetic present and common at 50,000, and ever seen, per environment". The ever-seen arithmetic count is not reported in md/json (ever_seen_all covers logic+arith combined). Minor unrecorded omission — fold into X3.2? Separate small objection. I'll add it as part of X3.2 (plan items not reported: K median/max; B2.3 ever seen). Actually make X3.2 about both unreported plan measures.
+
+Also check B2.4's plan measure: "weighted mean K at 5,000 and at 50,000, per run" ✓ reported.
+
+Also plan B2.1 measure "kept continuously ... 25,000 to 50,000" reported in B2.2 ✓.
+
+Word-count check: keep terse.
+
+Checked-no-objection list: md↔json number agreement for tables in sections 0.1, 1, 2.1, 2.2 (B2.2, B2.3, B2.4, B2.5), 3, 4, 5; verdicts B2.2–B2.5, B3a.1–2, B3b.1, E.1 by plan rules; three-seed rule applications; departures 1–5 recorded; CPU total; consistency with S113 (41/48,250/E4/CTPL 17); S23 scan of section 8; S61 terms.
+
+Not reached: raw probe outputs (order-dependence counts 2,377 etc., resource levels 140–240, execution counts 545/577, viable 60–100 across saves) — not in folder; Avida source formula 2^(2×0.0025×level) not checkable; the placement-seed formula 116000+10p+i not recorded per run; reply scripts' internals (run unchanged per manifest hash, not re-audited here).
+
+Now write the report. Order objections most serious first:
+
+X3.1 B2.1 "for" overreach.
+X3.2 plan measures not reported without recorded departure (K median/max; B2.3 ever-seen arithmetic).
+X3.3 numbers in .md absent from .json.
+X3.4 77% vs 76%.
+X3.5 section 8 "then stopped" generalisation (minor).
+
+Maybe also: B2.1's aggregation "per environment by three seeds" ambiguity — folded into X3.1.
+
+Write it.

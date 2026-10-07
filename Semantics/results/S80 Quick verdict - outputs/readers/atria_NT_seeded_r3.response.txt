@@ -1,0 +1,53 @@
+Here is the audit of "Claude Fable Semantics," listing the defects found, ordered from most to least serious.
+
+**1. Part VI, "Finite monotone theorem"**
+(a) Part VI, Finite monotone theorem.
+(b) "the critical singletons are exactly $\bigcap\min\mathsf S$ and the globally indispensable ones are exactly $\bigcup\min\mathsf S$"
+(c) The two sets are swapped, and the claim contradicts the proof supplied for it. A singleton is critical for *some* support if and only if it belongs to $\bigcup\min\mathsf S$, and is globally indispensable if and only if it belongs to $\bigcap\min\mathsf S$. Counterexample: let $\mathsf S$ be the upward closure of $\{\{a,b\}, \{a,c\}\}$. The critical singletons are $\{a,b,c\} = \bigcup\min\mathsf S$, while $\bigcap\min\mathsf S = \{a\}$. The text's own proof correctly derives the $\bigcup$ characterization for critical singletons, so the theorem statement is simply backwards.
+
+**2. Part V, "Non-circular dependence"**
+(a) Part V, Non-circular dependence.
+(b) "There exists $(a,b)\in C$ that removes or replaces a nonempty block of $\Gamma$ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+(c) The final disjunct makes the condition nearly vacuous and self-defeating. If removing a block leaves the answer unchanged, the block was redundant, which does not witness non-circularity. Worse, for the paradigmatic circular case "$p$ because $p$", removing the assertion of $p$ makes the answer "cease to be determined," so it satisfies this condition. This directly contradicts the later claim in "What (E) excludes" that "'$p$ because $p$' fails non-circular dependence."
+
+**3. Part XVI, "Derivation 2"**
+(a) Part XVI, Derivation 2 (Indistinguishable is identical).
+(b) "Two candidates $\mathcal E,\mathcal E'$ for the same $p$ that both satisfy (F1), (F2), and (A) on $C$ are one account at grain $C$: their components are pairwise of one kind on $C$ and their answer profiles coincide."
+(c) The claim is false. Counterexample: let target $D$ have ports $u,v$ and components $j_1: u=v$ and $j_2: u=-v$, so $\operatorname{Sol}_D=\{(0,0)\}$. Let $E$ have component $k:u=v$ anchored to $j_1$, and $E'$ have $k':u=-v$ anchored to $j_2$. Both satisfy (F1), (F2), and (A) trivially, but $k$ and $k'$ have different signatures and are therefore not of one kind. (F1) only guarantees each component matches its own anchor, not that all anchors share a signature.
+
+**4. Part XVI, "Derivation 1"**
+(a) Part XVI, Derivation 1 (Kind preservation is a theorem, not a condition).
+(b) "By (K), $\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}$ and $\operatorname{sig}_{\tau[C]}(k)=\{(\tau(a),\sigma(b),L_k(\tau(a),\sigma(b)))\}$."
+(c) (K) defines the signature using the component relation $L_j(a,b)$, not the projection of the solution set. The proof silently substitutes $\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b)$ for $L_{\lambda(k)}(a,b)$, which is a different object (a relation on $V_k$ versus a relation on all subnetwork ports). This substitution is exactly what (F1) does *not* license, invalidating the proof.
+
+**5. Part XVI, "Derivation 3"**
+(a) Part XVI, Derivation 3 (Selected transports are underdetermined on unseen changes).
+(b) "Alter $L_{j}(a,b)$ for one $(a,b)\notin H$ to any other admitted relation; the result survives on $H$ and differs at $(a,b)$."
+(c) The proof constructs a rival transport $t'$ by altering the target organization, but never verifies that $t'$ belongs to the population $\mathcal T$ from which the original was selected. If $\mathcal T$ is not closed under such alterations (e.g., it contains only one transport), $t'$ cannot "survive" selection, and the survivor is trivially determined on $C\setminus H$. The theorem fails without an unstated assumption that $\mathcal T$ is rich enough to contain $t'$.
+
+**6. Part XVI, "Derivation 5"**
+(a) Part XVI, Derivation 5 (Question-finding is representable).
+(b) "Give it ports (the edits and their boundaries), components (the closure conditions), and admitted edits (add or remove a change; alter $\mathcal Q$). It is then a $D$ in the sense of (O)."
+(c) This is a type confusion. By (O), an organization's ports must have nonempty value domains, and admitted edits are operations that change valuations. A contract is a set of edit–boundary pairs. Making edits into ports requires assigning them value domains and defining edits that operate on edits, leading to a regress. The proof hand-waves this construction without showing it satisfies (O).
+
+**7. Part VII, "Production and direction"**
+(a) Part VII, Production and direction.
+(b) "The reversed calculation $H=L\tan\theta$ is not: intervening on $H$ changes the target's $L$ but not the calculation's $H$."
+(c) The statement is literally false. An intervention on $H$ sets $H$ directly, so the calculation's $H$ *does* change. The intended point is presumably that the calculation's $L$ does not change, or that $H$ is no longer determined by $L$; as written, the sentence contradicts the definition of an intervention given in Part II.
+
+**8. Part IV, "Expectation, surprise, violation"**
+(a) Part IV, Expectation, surprise, violation (cross-referencing Part XVI, Derivation 4).
+(b) "Surprise requires an incomplete selection history, which is to say it requires that the world admit changes the system's correspondence was never shaped against. This is derived, not assumed (Derivation 4)."
+(c) It is assumed, not derived. Part IV explicitly defines surprise as "a violation at $(a,b)\notin H$." Derivation 4's "proof" merely restates this definition, making the derivation circular.
+
+**9. Part XVI, "Derivation 10"**
+(a) Part XVI, Derivation 10 (A two-layer episode, in exact form).
+(b) "On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+(c) This is a mis-citation. Derivation 2 concerns two separate candidate *accounts* being one account; it says nothing about two components *within a single organization* being of one kind. The correct basis for the claim is the definition of kinds in (K) directly, via the footprint bijection induced by the swap.
+
+**10. Part VII, "Identification"**
+(a) Part VII, Identification.
+(b) "For the two balances $\begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}$, the kernel is spanned by $(1,-1,-1)$; the readings identify $b_B-b_A$ and not $x$."
+(c) The matrix is written over variables $x_1, x_2, x_3$, but the conclusion suddenly refers to $b_A$ and $b_B$, which are never defined anywhere in the document. This unexplained notation shift makes the claim unverifiable as written.
+
+END OF REPORT

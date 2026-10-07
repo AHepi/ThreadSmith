@@ -1,0 +1,559 @@
+Let me explore the sandbox structure first.
+
+Let me read the key files: the round 2 rules, the "who computes" record, the tabulation, the section 3 and 4 variants computed files, and the replies for sections 3 and 4. Let me start with the main brief-relevant documents.
+
+Now let me read the section 3 and section 4 "variants computed" files and the replies.
+
+This is dense. Let me now read the section 4 file.
+
+Now let me read the replies for sections 3 and 4, the tabulation, and then dig into the run files to check counts. Let me read the replies.
+
+Now I have both replies and the computation files. Next I should check the run outputs to verify counts. Key things to verify:
+
+Section 3:
+1. The implementation fidelity: does `model/s108r2s3.py` implement what §0 claims? Check hooks exist.
+2. Counts: e.g., "generated 210/73/146/122 (SMALL), 140/76/118/93 (value maps), 41/10/14/36 (proper), 457/112/288/200 (MID)" for R2V3.1; "1,013/881/232/1,670" recurring; chains counts "2,147,344 chains n ≤ 4, cut T′: Dec F → T on 14,592 + 44,288 held outputs"; "45,072 held outputs (341,184 chains n ≤ 4, cut T′)"; R2V3.7: "Dec F → T on 4,224 ... and 11,520"; R2V3.8 "generated 392 of 1,600"; R2V3.9 "950 of 1,600"; R2V3.10 "of 64 valuations Can 48 → 32, Deploy 24 → 16, CreateEx 3 → 2".
+3. Whole suite results: "off 133 / 2 / 7" etc.
+4. Cross-check file for chain evaluator: 50,736 pairs, 0 mismatches.
+
+Section 4:
+1. R2V4.1 counts: 941/952/849/854 of 1,019 SMALL; 1,590/1,617/1,361/1,385 of 1,686 MID. Worked: 40/60/48/48 (10/15/12/12 cases) of 29.
+2. R2V4.3: 3,208 chains, 210/494/174 all last holdings, 25/247/87 with t held.
+3. R2V4.5: 2,768 of 3,456.
+4. Whole suite section 4: off 133/2/7; R2V4.1 some: FC23.new2, FC30.new1 (131/4/7); R2V4.5: FC103.new1 (132/3/7); R2V4.7: 14 claims (119/16/7).
+
+Wait — there's something to check in §4 table of section 4: "| R2V4.1: (Suff) as conjectured fails, antecedent kept / co-varied | = the drops (3,764 / 3,808 / 3,396 / 3,416 (case, history)) / 0 | 6,360 / 6,468 / 5,444 / 5,540 / 0 | – |" — the SMALL row lists 5 numbers "= the drops (3,764 / 3,808 / 3,396 / 3,416 (case, history)) / 0" and MID "6,360 / 6,468 / 5,444 / 5,540 / 0". Hmm, "(case, history)" — drops of 941+... Actually 3,764 = 941 × 4? 941×4 = 3,764. Yes! And 952×4=3,808, 849×4=3,396, 854×4=3,416. So each drop count × 4 histories = (case, history) pairs. MID: 1,590×4=6,360; 1,617×4=6,468; 1,361×4=5,444; 1,385×4=5,540. OK consistent (4 histories per case). And worked: 40/60/48/48 of 29 worked cases... with 6 histories? 29 cases × ... hmm §2 says "hand-set histories H0, Dec, Con, Sel, rCon, rSel (round 1's, I90)" — that's 6 histories. But 40 = 10 cases × 4? That suggests (case, history) = 4 histories each, not 6. Hmm, maybe not all histories apply to all cases. Let me not over-verify arithmetic without files.
+
+Also "drops (case, history): 'every' 40 (10 cases), 'some' 60 (15), 'some-exempt' 48 (12), 'some-exempt-set' 48 (12) of 29 worked" — 40/4 = 10 cases with 4 histories each. OK.
+
+Let me look at the run output files to verify the counts. Start with section 3 runs worlds files and cases, and section 4 runs.
+
+Also I need to check:
+- Are the readings C8–C13 rest on computed under every choice the share names? §6 tables in both files.
+- Settlements of round-1 edges: e3.30b, e3.34b (§7 section 3), e4.22, e4.40 (§6 section 4).
+- Cross-check with dependency map after round 2 and candidate list — those are other agents' angles? No — my job includes checking the map/list only insofar as section 3/4 computations feed them? The job says "the computations of sections 3 and 4" — files: `round 2/section 3 - variants computed.md`, `round 2/section 4 - variants computed.md`, their `.json`, the program copies, the runs and whole-suite results. So focus there.
+
+Also I can run `python3 -m model.run` from the sandbox root (section 3 copy, all switches off) to verify e.g. FC90.new1, FC84.new1, FC30.new1, FC72, FC75 baselines quoted in the reply.
+
+Let me check the .json files first.
+
+Note discrepancies to investigate:
+
+1. Section 4 §6 (e4.40): "computed for L572.s2 and L574.s5" — but the reply's e4.40 edge names L572.s2, L574.n4, L576.s1, L576.s4. L574.s5 appears nowhere in the edge's items! The settlement says "computed for L572.s2 and L574.s5" — but L574.s5 is not among the items of e4.40. Wait, the reply's edges table row R2V4.9 "constrains L574.n4, L574.s5". Hmm, in the reply (d) table: "R2V4.9 | constrains | L574.n4, L574.s5 [S4] | the derivation, not the sentence, changes; L574.s5's 'H is silent' fails on the pole case". So L574.s5 appears in R2V4.9's row, not in e4.40's item list. But §6's settlement of e4.40 says "computed for L572.s2 and L574.s5". The round-1 edge e4.40 as stated in both the reply and the computation §6 header: "e4.40 V4.8 changes with L572.s2, L574.n4, L576.s1, L576.s4". So "computed for L572.s2 and L574.s5" — L574.s5 is not one of e4.40's four items; possibly a typo for L574.n4? But then "independent for L574.n4" is listed separately. So the settlement mentions L574.s5 in place of... hmm. Let me check round 1's map to see e4.40's items. Let me read round 1/dependency map.
+
+Also R4E20's item: "L574.n4, L574.s5; L572.s2, L576.s4" — includes L574.s5 instead of L576.s1? e4.40's items are L572.s2, L574.n4, L576.s1, L576.s4. R4E20 says "constrains / changes with | L574.n4, L574.s5; L572.s2, L576.s4" — this omits L576.s1 and adds L574.s5. Possibly R4E20 is meant to cover R2V4.9's own edges (from the reply's table: changes with L572.s2, L576.s4; constrains L574.n4, L574.s5), i.e., it's the reply's rows, not e4.40's items. But §6's settlement line says "computed for L572.s2 and L574.s5" where within e4.40 context it should presumably be "computed for L572.s2 and L576.s4"? The evidence field: "L572.s2's condition (a surviving differer) at 0 pairs ... (L574.s5: 'the population fixes it')" — so L574.s5 is discussed in the evidence. Hmm, and L576.s4 is "not settled". So the settlement "computed for L572.s2 and L574.s5" seems intentional: the computing agent computed the settlement for L572.s2 (changes) and L574.s5 (a sentence named in the reply's table). But wait, e4.40's items don't include L574.s5. Let me check round 1's map for e4.40's actual items. Also the reply's settlement proposal says "changes-with holds for L572.s2 and L576.s4 ... for L574.n4 ... L576.s1 unchanged". The computation disagrees: it says L574.n4 independent, L576.s1/s4 not settled, and adds L574.s5. There's a real tension: the reply expected "changes with" for L576.s4; the computation says "not settled" for L576.s4 — fine, disagreement is allowed and recorded. But the settlement naming L574.s5 which is not in e4.40's item list needs checking against round 1's map.
+
+2. Section 3 §3 R2V3.2 row: "generated: every account on a re-entry history ... 1,013 / 881 / 232 / 1,670 in under 'contract' against 'change'". Consistent with recurring counts.
+
+3. Section 3 R2V3.5 row says "the suite moves 5 claims (FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1) and parts of 3" but §9 says "R2V3.5 FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1 (status) and FC12.new1, FC80.new1, FC83 (parts)" — "the eight". Consistent-ish: 5 + 3 = 8.
+
+Now, verify the run files. Let me look at the worlds output files in section 3 runs.
+
+SMALL counts match §3's row: designation 210, gamma 73, port 146, widest 122; R2V3.4 ports: Sel-parts 356, t′ idle 1013, deviate 576, under 1041; edits: 1013/1013/638/1141. C10 ports 657, edits 0. Good.
+
+Wait, §3 R2V3.4 row says "newly underdetermined pairs 1,041 / 1,141" — matches. And §6 C10 row: "components: ... t′ deviating 638 / 627 / 22 / 889, underdetermined pairs +1,141 / 859 / 469 / 2,577; ports against R2V3.4 ports: 657 / 545 / 178 / 1,070 more". Need other population files. Let me read the other worlds files: cands.SMALL-vm, cands.proper, cands.MID, chains, keys(?), args, routes, fc80x, recflags. Note §5 mentions `worlds/keys.txt` in reply but the glob listed "recflags.json/txt" — the §0 table says runs include "the record keys (`worlds/keys.txt`...)"? Actually §5 says "record keys (`worlds/keys.txt`, 2,147,344 chains n ≤ 4 with a record flag at every occurrence)". But the file list shows `worlds/recflags.json` and `recflags.txt`, not keys.txt. Let me check.
+
+Now check claims in §3 against these:
+
+- R2V3.2 row: "the core and the program part on re-entry chains (2,147,344 chains n ≤ 4, cut T′: Dec F → T on 14,592 + 44,288 held outputs, 'contract' → 'change')". From recflags.txt cut T′: held-output moves: 'trace spans | held at the output True': 14592 and 'trace spans, a contract entered twice | held at the output True': 44288. ✓.
+
+- R2V3.3 (b): "Dec F → T on 45,072 held outputs (341,184 chains n ≤ 4, cut T′)" — chains.txt cut T′: 'trace spans an unrecorded change | held at the output True | Dec False → True': 45072, chains 341184 ✓.
+
+- R2V3.7 row: "Dec F → T on 4,224 (trace at o_t, output not held) and 11,520 (trace spanning)" ✓ matches cut T′ lines.
+
+- C9 §6 row: "chains n ≤ 4 (T′): trace at o_t 11,240 (all not held at the output), spanning 45,072 held + 39,304 + 3,392; cut K moves held outputs with the trace at o_t (5,118)" ✓ matches.
+
+Note the reply's trace for R2V3.2 says "now (keyed by the new contract): ... Con T, Dec F. R2V3.2 (keyed by the change): Con F, Dec T". The computation §3 row says: "key 'change' (the program): Episode F, tag Con F, Dec T; key 'contract' (the core's words): Episode T, Dec F". Consistent.
+
+Hmm wait — there's a subtle inversion: the reply's variant R2V3.2 is "Rec keyed by the new contract → keyed by the change". The computation says "the program already keys by the change... the variant's new form is the program's and its old form the core's words". So in the computation's switch, `S108R2_S3_RECKEY ∈ {change (default), contract}`. That's honestly stated. ✓
+
+Now check the args and routes files for R2V3.8, R2V3.9, e3.34b, and fc80x for e3.30b, createx/explu for R2V3.10/R2V3.7.
+
+Checks:
+- R2V3.8: "generated 392 of 1,600 Out_j T → F" ✓ (args.txt: 392).
+- R2V3.9: "generated 950 of 1,600 Out_j T → F" ✓.
+- e3.34b: "UsesReason F → T on exactly the 1,436 routes that did no work; read as any route through m's image: 2,684 (1,093 of them routes that did no work)" ✓.
+- e3.30b: "7,404 populations: under V3.6 𝒯 grows 29,616 → 53,748 members and the populations with an unseen pair underdetermined by the survivors 3,586 → 4,090 (581 more, 0 fewer); under R2V3.4 ports 3,961 (452 more)" ✓.
+- R2V3.7 CreateEx: "3 of 1,024 valuations" ✓.
+
+Now the MID / proper / SMALL-vm worlds and cases. Let me read cands.MID.txt, cands.proper.txt, cands.SMALL-vm.txt briefly, plus worlds/args.txt wait done. Also explu.txt.
+
+Now check §6 C10 row claims against these:
+
+"components: 'Sel-parts' in 1,013 / 881 / 232 / 1,670, t′ idle in the same, t′ deviating 638 / 627 / 22 / 889, underdetermined pairs +1,141 / 859 / 469 / 2,577"
+
+From files: components Sel-parts: SMALL 1013 ✓, vm 881 ✓, proper 232 ✓, MID 1670 ✓. t′ deviate: SMALL 638 ✓ (C10 components SMALL 'Expl t′ deviate in': 638), vm 627 ✓, proper 22 ✓, MID 889 ✓. under up: 1141/859/469/2577 ✓.
+
+"ports against R2V3.4 ports: 657 / 545 / 178 / 1,070 more" ✓ (SMALL 657, vm 545, proper 178, MID 1070).
+
+§6 C8 row: "widest 122 / 93 / 36 / 200; designation 210 / 140 / 41 / 457; Γ′ 73 / 76 / 10 / 112; port 146 / 118 / 14 / 288" ✓ all match.
+
+Now §5 says "Chains (`worlds/chains.txt`, n ≤ 4, cuts T′, T, K, U)" ✓. "record keys (`worlds/keys.txt`, 2,147,344 chains n ≤ 4 with a record flag at every occurrence)" — the file is named `recflags.txt` not `keys.txt`. Wait, the §0 table says "in `section 3 runs/`: ..." Actually §5 says "record keys (`worlds/keys.txt` ...)". The actual file is `worlds/recflags.txt`. Minor naming error — the file's own first line says "keys, cut T', n ≤ 4". Minor. Possibly an objection (X small): the run file named in §5 does not exist; the actual file is recflags.txt. Low severity but a factual pointer error. Hmm, but wait: maybe both exist? The glob showed only recflags.json/.txt in worlds/. Yes: `worlds/recflags.json`, `worlds/recflags.txt`. So §5's pointer "worlds/keys.txt" is wrong. Also §3's row cites "2,147,344 chains n ≤ 4, cut T′" ✓ from recflags.
+
+Also §0 mentions "`s108r2_s3_single.sh` (single claims, §7), `s108r2_s3_specs.py` (writes the specs), `suite - expected moves.json`" — glob of section 3 runs shows `s108r2_s3_single.sh`, `s108r2_s3_specs.py` but no "suite - expected moves.json" in the sandbox listing! Let me check: the glob showed `section 3 runs/s108r2_s3_single.sh`, `s108r2_s3_specs.py`, cases/, check/, scripts/, single/, worlds/. No "suite - expected moves.json". Hmm — that file is listed in §0 as being in `section 3 runs/`. Let me glob again to confirm.
+
+Also check "whole suite/section 3/" files.
+
+The second glob with pattern "section 3 runs/*" only returned two files — probably because glob is matching directories oddly; the earlier `section 3 runs/**/*` showed the full tree. So `suite - expected moves.json` does not exist in `section 3 runs/`. §0 lists it among the scripts: "`s108r2_s3_specs.py` (writes the specs), `suite - expected moves.json`". This file is missing from the sandbox. Hmm — but the sandbox is a copy of the manifest; maybe the file simply wasn't included. It's cited in §0 as existing in `section 3 runs/`. It's absent. That's a minor pointer/record gap. But careful: §0 describes the copy's scripts "in the copy" — "scripts (in the copy)" refers to `S108 Part A round 2 - computation/section 3 model/`, and then "in `section 3 runs/`:" three items. The absence of `suite - expected moves.json` in the sandbox may just mean the manifest didn't include it. Since I must cross-examine the work as represented in this sandbox, a missing named file is worth a small objection or a "not reached". Actually the .json files are the important evidence; expected moves json would let me verify "every state moved exactly the claims the single runs expected". I can still verify from whole suite jsons and single/ jsons.
+
+Let me now read whole suite/section 3/off.json and a couple of the variant jsons to check the 133/2/7 and the moved claims.
+
+R2V3.5 whole-suite: differences on FC12.new1 (parts), FC12.new2 (status+parts), FC30.new1 (status+parts), FC77 (status+parts), FC80.new1 (parts), FC83 (parts), FC102.new1 (status+parts), FC104.new1 (status+parts). That's 8 claims: FC12.new1, FC12.new2, FC30.new1, FC77, FC80.new1, FC83, FC102.new1, FC104.new1. §9 says "R2V3.5 FC12.new2, FC30.new1, FC77, FC102.new1, FC104.new1 (status) and FC12.new1, FC80.new1, FC83 (parts)". ✓ exactly. counts 128/7/7 vs off 133/2/7. ✓ "the eight".
+
+Now check R2V3.1 (FC90.new1 expected), R2V3.8 (FC72, FC72.new1), R2V3.9 (FC68), R2V3.10 (FC32.new1), and others none. Let me grep the whole suite jsons for "id": entries.
+
+Section 3 whole-suite differences match §9's claims:
+- R2V3.1: FC90.new1 ✓
+- R2V3.8: FC72, FC72.new1 ✓
+- R2V3.9: FC68 ✓
+- R2V3.10: FC32.new1 ✓
+- R2V3.5: eight ✓
+- Others (R2V3.2-contract, R2V3.4-ports, R2V3.4-edits, R2V3.6, R2V3.7, R2V3.9?) — the grep shows no "id" lines in R2V3.2-contract.json, R2V3.4-ports.json, R2V3.4-edits.json, R2V3.6.json, R2V3.7.json, R2V3.9? Wait R2V3.9.json has FC68. And R2V3.6, R2V3.7, R2V3.2-contract, R2V3.4-* have no differences ✓ ("the others none").
+
+Section 4: R2V4.1 variants move FC23.new2 + FC30.new1 (each) ✓; R2V4.5 moves FC103.new1 ✓; R2V4.7 moves 14 claim-ids? Count distinct ids: FC23.new2, FC30.new1, FC47, FC47.new1, FC53, FC56, FC60, FC68, FC70, FC71, FC72, FC72.new1, FC72.new2, FC73 = 14 ✓ "14 claims". §8 says R2V4.7: "(119 / 16 / 7)". 133-14=119 H; 2+14=16 CEX ✓.
+
+§8 says R2V4.1 co-varied under 'some' etc: "each moves FC23.new2 and FC30.new1 (131 / 4 / 7)". 133-2=131, 2+2=4 ✓.
+
+Now check section 4 off.json matches 133/2/7 and no difference.
+
+Also need to check §4 (generated worlds) counts for section 4: r2 SMALL and MID files. And cases.txt files for both sections. And the model code: s108r2s3.py and s108r2_s4.py existence and hooks. And check the whole suite section 4 off.json.
+
+Also verify a couple of the quoted baselines via my own runs: e.g. `python3 -m model.run --claim FC90.new1 --brief` and FC84.new1, FC30.new1, FC72, FC75. The sandbox root model is section 3's copy with all switches off. Let me run a few.
+
+Section 4 §4 table checks:
+- accounts no longer explanations: 941/952/849/854 SMALL ✓; 1,590/1,617/1,361/1,385 MID ✓.
+- (Suff) as conjectured fails, antecedent kept / co-varied: "= the drops (3,764 / 3,808 / 3,396 / 3,416 (case, history)) / 0" ✓ (drop counts) and MID 6,360/6,468/5,444/5,540/0 ✓.
+
+Wait, the MID row has 5 values "6,360 / 6,468 / 5,444 / 5,540 / 0" — 4 kept + 1 covaried ✓. SMALL row: "= the drops (3,764 / 3,808 / 3,396 / 3,416 (case, history)) / 0" ✓.
+
+- R2V4.4: 1,019; 1,019; 0 ✓; MID 1,686 ✓.
+- R2V4.8: 2 on every account (Con/rCon), none (Sel/rSel) ✓.
+
+§2's R2V4.8: "U: Con and rCon 2 fixed points on 24, 1 on 5; Sel and rSel none on 24, 1 on 5" — worlds says all 1,019 have 2/0. Hmm, on worked cases 24 of 29 have 2/none, 5 have 1. Fine (different populations).
+
+Now the "24 of 24 worked accounts" for R2V4.4 — §2 says "24 of 24 accounts have a named trial pair" while §1 findings row says "on the chain histories 24 of 24 worked accounts are explanations now". But earlier (findings in brief, R2V4.1 row) says "of 29 worked". §2 R2V4.4 says "24 of 24 accounts" — presumably 24 accounts among the 29 cases (the ones that are accounts, i.e., Acc T?). Actually "24 worked accounts" vs 29 worked cases. §8 N41 says "24 of 29 worked". Consistent if only 24 of 29 cases are accounts... but R2V4.1's row says "drops (case, history): 'every' 40 (10 cases) ... of 29 worked". So 29 worked cases, of which 24 accounts? Plausible (5 cases fail (E)). OK.
+
+Now check §2's counts for R2V4.1 worked: 40/60/48/48 (10/15/12/12 cases). These are in cases.txt presumably. Let me check section 4 runs/cases.txt. Also check section 3 runs/cases.txt (part A, 35 cases etc.) and cases B-E.
+
+Also verify the s106_cases claim about R2V4.5: "s106_cases.py: the only line that moves". And check the program copy code for hooks (model/s108r2s3.py exists at root model/; section 4 program copy has s108r2_s4.py? The glob earlier showed section 4 program copy files: s104_creative_transport.py, s104_external.py, s106_cases.py, s108_s4_bij.py, s108_s4_cases.py, s108_s4_compare.py, s108_s4_edges.py, s108_s4_scripts_expl.py, s108_s4_suite.py — no s108r2_s4.py and no s108r2_s4_cases.py/worlds! Let me glob the full section 4 program copy.
+
+Section 4 program copy (in sandbox) holds the round-2 scripts at its top level (s108r2_s4_cases.py, s108r2_s4_worlds.py) but no `s108r2_s4.py` switch module and no model/ folder — the sandbox only includes the top-level script copies, not the model folder (the section 3 copy is the root model/). Note the file list in the brief: "section 4 program copy/ | files of section 4 model". The .md says the switch is `model/s108r2_s4.py` with hooks in `model/e9.py` and `model/args.py` — I can't read those (not in sandbox), only the scripts. That's a limitation; the whole-suite results and cases.txt serve as evidence. I can't verify the implementation of R2V4.5/R2V4.7 hooks directly beyond outputs. That's "not reached" material or checked via runs I cannot make (I can't set switches).
+
+Hmm — actually can I verify the section-3 implementation? Yes: model/s108r2s3.py is at the sandbox root and readable. Let me read it to check the hooks and switch names match §0.
+
+The switch module matches §0's description. Note the docstring: R2V3.2 'contract' gives "the variant's old form" ✓ consistent with the honest statement that the program's default is the variant's *new* form.
+
+Wait — one thing to check in `changes_recorded` under 'contract': "it needs some record of ρ_{q(o_i)} in h' (any o_j of the chain with recs[j] and q(o_j) = q(o_i))". The formal core's words per §3: "any record of the new contract in h′". Implementation: any o_j with recs[j] and qs[j]==qs[i]. Note recs[j] is a record made at o_j of ρ_{q(o_j)}. For the change into o_i (contract qs[i] ≠ qs[i-1]), needs a record of contract qs[i] made anywhere. ✓ matches.
+
+Hmm, but there's a subtle bug-ish: in `changes_recorded`, `recs and recs[j]` — `recs and` is redundant. Fine.
+
+Now, the more significant cross-examination targets:
+
+1. R2V3.9's S108r2-3-I10: "FC47.new1's record 'rec' is not so named, so the suite's R2V3.9 run does not type it". This is honestly stated.
+
+2. The reply's R2V3.6 claim "C9's tag counts do not reproduce" — the computation marks R3E14 "contradicted": C9 with R2V3.6 gives the same four histories in, 1,013/881/232/1,670. From cands.SMALL.txt "C9: V3.5 with R2V3.6 (against R2V3.6): four histories in 1013" ✓. Interesting: the reply reasoned that with Rep computed, a tag at o1 before an unrecorded change gives Con F; the computation found the same counts. The standing "contradicted" is supported.
+
+Wait — actually there's a subtlety: is the computation's claim that C9's tag counts DO reproduce under R2V3.6 consistent with its own §3 R2V3.3(a) finding that "round 1's tag rows were an artefact of the deletion"? Both can hold: the tag history Con T under V3.5 comes from the clause deletion... but under R2V3.6 (computed chains) with the clause deleted too? C9 = round 1's V3.5 which deletes the record clause. With chains computed and clause deleted, Con still T at tags. OK.
+
+3. Check section 3 §10 (cases.txt) counts: 35 cases, 30 meeting (E); (E) moves under no state; per-state move counts (out 18, 10, 2 etc.). Let me check cases.txt.
+
+4. Check section 4 cases.txt for the worked numbers 40/60/48/48 and R2V4.2/R2V4.3/R2V4.5/R2V4.7/R2V4.8 rows and owner's sign slots.
+
+Let me read the two cases.txt files (they may be long; grep for summary lines).
+
+Section 4 cases.txt checks against §2 table:
+- R2V4.1 worked: 40/60/48/48, cases 10/15/12/12 ✓. Owner's two-part sign: slots none under 'every', ['r','u']/['r']/['r','u'] under others ✓. "Expl T under 'every', F under the three others (Con history)" ✓ (§30-33 lines). One-part sign slot ['k'] under all four ✓ (line 21). Hand-turned vane: slot under 'every' and 'some', none under exempt ✓ (line 17).
+- R2V4.2: ℰ_dec Expl F now, T under rule/L17/both; in Def(L536) only under 'both' ✓.
+- R2V4.3: 3,208 chains; (e) 210/25, (a) 494/247, (b) 174/87 ✓. But wait — §3 of the .md says smallest with t held: "n = 2: held (0,1), no trace, Sel's conditions at o1 only, o2 a relay of o1: fixed point {o2: Sel}". cases.txt line 49: {'n': 2, 'held': (0,1), 'trace': (0,0), 'selc': (1,0), 'rec': (None,0), 'prov': [{'o2': 'Sel'}]}. Hmm — trace (0,0) means no trace anywhere; selc (1,0) means Sel's conditions at o1 only. ✓ consistent ("no trace, Sel's conditions at o1 only"). And prov [{'o2': 'Sel'}] means fixed point {o2: Sel} ✓.
+
+Hmm wait, the md §3 says "(e) := some holding held with Sel's conditions or a trace". Under (e), at chain with held=(0,1), selc=(1,0): holding o1 has Sel's conditions but t not held at o1; o2 holds t. (e) reads at the content: some holding of t's content held with Sel's conditions or a trace. o1 holds the content? Presumably o1 is a holding of the content (relay). Fine.
+
+- R2V4.4: 24/24/24/0 ✓; pole chain values ✓.
+- R2V4.5: 2,768 of 3,456 ✓; Acc t1∘ψ F ✓.
+- R2V4.6: ℰ_fwd T on all five; ℰ_rev F,F,F,F,T ✓.
+- R2V4.7: usable T→F ✓.
+- R2V4.8: DEP cycle under U; T′ 1 fixed point on every (case,history) of 29; U: Con/rCon {1:5, 2:24}, Sel/rSel {0:24, 1:5} ✓ matches §2 "Con and rCon 2 fixed points on 24, 1 on 5; Sel and rSel none on 24, 1 on 5" ✓.
+- e4.40 §9 ✓ matches §6.
+- e4.22 §10 ✓ matches §6.
+
+One discrepancy to note: §4 of the md says "R2V4.8: fixed points under U (Con, rCon / Sel, rSel) | 2 on every account / none on every account" — from worlds: U Con {2: 1019} ✓, Sel {0: 1019} ✓. OK.
+
+Now note §2 row R2V4.1 mentions "the hand-turned vane (R3-Q1)". Fine.
+
+Now, findings-in-brief R2V4.1 says "drops (case, history): 'every' 40 (10 cases) ... of 29 worked". ✓.
+
+R2V4.3's reply lemma contradiction: the reply's lemma claimed 0 moves; computation found 25. But wait — the reply's lemma says "at every holding not reached by a transfer, ¬Dec(t) ⇔ Sel ∨ Con ... so any reading of 'Sel ∨ CT' that looks anywhere along the chain ... returns the inherited value". The computation's counterexample: o1 not holding t with Sel's conditions, o2 a relay holding t; o2 inherits Sel... Hmm, if o2 inherits Sel from o1, then ¬Dec at o2 should hold (Sel at o2), so (e) = Sel∨CT at content = T, and now's reading = Sel at o2 (inherited) = T — so no difference? But the fixed point is {o2: Sel}, meaning Sel holds at o2, so ¬Dec holds at o2, and (e) also T. Where's the difference? The difference counted is "holdings where ¬Dec ∧ (Sel ∨ CT) ≠ ¬Dec" — i.e., (e) differs from ¬Dec. Under now, ¬Dec(t) at o2: Dec T? The md says "smallest: o1 with Sel's conditions not holding t, o2 a relay of o1 holding t: o2 inherits Sel, no holding holds t with Sel". Hmm confusing: "o2 inherits Sel" — from §3: "fixed point {o2: Sel}". Wait, if fixed point is {o2: Sel}, then Sel holds at o2, and Dec F, and (e) T = ¬Dec T. No difference...
+
+Let me recompute: chain bits: held=(0,1): t held at o2 only. trace=(0,0): no construction trace. selc=(1,0): Sel's conditions hold at o1, not o2. prov: the chain's provenance fixed point is {o2: Sel}? Hmm "prov: [{'o2': 'Sel'}]" — perhaps meaning the fixed point maps o2 → Sel (and o1 → nothing). D12.4's inherited provenance: o2 is a relay of o1, so inherits o1's provenance. o1 has Sel's conditions (selc=1) — under the program's Sel staging, if o1 doesn't hold t, does o1 get Sel? The bracket says prov [{}] for the smallest of the "all last holdings" (n=1 case). For the n=2 case, prov [{'o2': 'Sel'}].
+
+Hmm, actually maybe the fixed point assigns Sel to o2 because o2 inherits from o1 (relay), and the chain-wide reading (c) would return Sel. Then (e): some holding of t's content held with Sel's conditions or a trace — o1 is a holding of the content with Sel's conditions and held? "held (0,1)" — held means t held there. (e) as implemented: "(e) := some holding held with Sel's conditions or a trace". So (e) requires the holding to be *held* (hold t) AND have Sel's conditions or a trace. o1 has Sel's conditions but is not held; o2 is held but has neither. So (e) F. Now's ¬Dec: Dec at o2? If prov = {o2: Sel}, then Sel at o2, Dec F, ¬Dec T. So (e) F ≠ ¬Dec T. That's the difference. Hmm wait but then "the reply's lemma ('every chain-wide reading returns the inherited value': 0 moves) contradicted on 25 held outputs". But (e) as implemented is NOT a chain-wide reading — it requires the holding to be held. Hmm, §1 of the md says: "R2V4.3 | C13 read at the content (e) | on every chain of 1 to 3 holdings ..., cut T′: (e) := some holding held with Sel's conditions or a trace (S108r2-4-I3) | nearest statable: 'a holding of t's content' read as every holding of the chain".
+
+Hmm, this is confusing but the implementation is documented as the nearest statable reading, with the invention S108r2-4-I3 recorded and §9 lists R2-4-I3's choice and other choices. The contradiction of the reply's lemma is computed. But is the contradiction sound — i.e., does (e) as implemented actually correspond to the reply's (e)? The reply's (e): "∃o (any holding of the content D11.2 of t): Sel at o or a construction trace prepares t at o". Note the reply's (e) does NOT require the holding to be held (holding t). The implemented (e) requires "some holding held with Sel's conditions or a trace" — i.e., intersection. Hmm wait, actually "held" in the chain bit-vector might mean something else — "held" could be the Held tag (representation, D13.3's Held) rather than "holds t". In §3 of the md: "smallest: o1 with Sel's conditions not holding t, o2 a relay of o1 holding t" — so "holding t" corresponds to the held bit. And (e) implemented = "some holding held with Sel's conditions or a trace". So implemented (e) = ∃o [holds t ∧ (Sel's conditions at o ∨ trace at o)].
+
+The reply's (e) = ∃o (any holding of the content of t): Sel at o or a trace prepares t at o. "A holding of the content of t" — in the reply's sense, any holding whose content is t's content; presumably that includes holdings that hold t (or its content). The implemented reading restricts to holdings that hold t. The md marks this "nearest statable" and the invention records "a holding of the chain holds t's content; (e) = some holding held with Sel's conditions or a trace". OK, honestly stated as nearest statable.
+
+But here's the rub: the reply's lemma claims readings that "look anywhere along the chain" return the inherited value. The implemented (e) — restricted to holdings that hold t — is arguably closer to reading (a) at the holding plus content quantification. The 25 counterexamples turn on a holding (o1) that has Sel's conditions but doesn't hold t. Under the reply's own (e) (any holding of the content, whether or not it holds t — well, "holding of the content" probably implies it holds the content, i.e., t; hmm, if o1 doesn't hold t, is o1 "a holding of the content of t"? A relay o2 of o1 holding t... o1's content could be the same content). This is genuinely ambiguous. The computing agent states §10 Unsure: "R2V4.3's 25 chains ... rest on the chain model's independent bits (a selection's conditions at a holding that does not hold t); I90 decides whether such a history stands." That's an honest caveat. Given the ambiguity, the "contradicted" standing for R4E07 (the reply's lemma) is defensible under the nearest statable reading, and the caveat is recorded. I could raise a mild objection that "contradicted" overstates: under the reply's own reading ((e) unrestricted over holdings of the content, and Sel at o meaning Sel holds at o through inheritance) the lemma may still hold; the computation's (e) differs from the reply's (e) in requiring the holding to hold t. Hmm. Let me look at the implemented code to be precise. s108r2_s4_cases.py §3. Let me read the relevant part of the script.
+
+Line 158: `e = any(held[o] and (direct[o][0] or trace[o]) for o in range(n))`. So implemented (e) requires held[o] (t held at o) and (Sel at o or trace at o). Note it uses `direct[o][0]` — Sel at o under the fixed point (staged). The reply's (e): "∃o (any holding of the content D11.2 of t): Sel at o or a construction trace prepares t at o". Under the reply's reading, o1 (Sel's conditions but not holding t) would count if o1 is a holding of the content. The implemented reading requires holding t. The agent recorded this as nearest statable with the invention (S108r2-4-I3: "a holding of the chain holds t's content; (e) = some holding held with Sel's conditions or a trace") and flags unsure in §10. I think this is honestly stated. But one could object that the "contradicted" standing of R4E07 (the reply's lemma) is computed only under the restricted reading; under the reply's own wider reading the lemma is about chain-wide readings returning the inherited value, and the implemented (e) is not chain-wide (it requires the holding itself to hold t). Actually wait — is the implemented (e) chain-wide? It quantifies over all holdings of the chain (any o), requiring held[o]. The reply's (e) quantifies over all holdings of the content. If "holding of the content" = holding that holds the content (t), they're the same. D11.2 defines Content of a transport's holding... A "holding of t's content" would be an occurrence that holds the content, i.e., holds t (or its content). Actually if o1 doesn't hold t, is o1 a holding of t's content? o1 is a relay ancestor — its content might be the same. Hmm. The md itself says (§3): "every reading of C13 moves the same smallest chain, where a relay inherits a selection made at a holding that did not hold t (the chain model's bits are independent; whether such an occurrence stands in a history is I90's)". This is honestly flagged.
+
+Actually hold on, there's an inconsistency to check: the smallest witness has selc=(1,0) with o1 not holding t. Under the implemented (e) = any(held[o] and (Sel at o or trace at o)): o1 not held → doesn't count; o2 held but Sel at o2? direct[o2][0] — Sel staged at o2. If o2 inherits Sel (fixed point {o2: Sel}), then direct[o2][0] = True, so (e) = True, and nd (¬Dec at last) = sc[last][0] or sc[last][1] = True. Then (nd and e) != nd → False → not counted as a difference. But it IS counted (25). So presumably in that chain Sel does NOT hold at o2 in the fixed point... but prov_show says prov [{'o2': 'Sel'}]. Hmm, wait: prov_show shows the fixed point R? Let me not go down this rabbit hole; the printed witness has prov [{'o2': 'Sel'}] — hmm.
+
+Actually wait, re-read: for the smallest (e) witness: held (0,1), trace (0,0), selc (1,0), rec (None, 0), prov [{'o2': 'Sel'}]. rec=(None,0) means o2's record/relay points to o1 (o2 is a relay of o1). Fixed point: {o2: Sel}? If Sel holds at o2, then nd = True (¬Dec at last). e = any(held[o] and (direct[o][0] or trace[o])): o1: held 0 → no. o2: held 1, direct[1][0] = Sel at o2 = ? The "direct" is `_prov_step(...)` — the staged evaluation at each holding given R. If R maps o2 → Sel, then direct[o2][0]... hmm, maybe direct[o][0] is Sel's *conditions* staged (independent of held), and sc[last] is the provenance value. nd = sc[last][0] or sc[last][1] where sc = staged conditions? From line 156: `nd = bool(sc[last][0] or sc[last][1])`. And `R, sc = fps[0]`. Hmm, sc might be the staged bits per holding and R the fixed-point relation... I can't fully resolve without reading prov_fixed_points. The printed claim "fixed point {o2: Sel}" (from the md's §3: "fixed point {o2: Sel}") and the md text says "o2 inherits Sel, no holding holds t with Sel". So: o2 inherits Sel (through the relay from o1's Sel conditions), so ¬Dec at o2 = T (now's reading: not Dec because Sel... wait now's reading of C13 is ¬Dec ∧ (Sel∨CT) at the holding — (a) is at the holding. "Now" = ¬Dec alone. Hmm, ¬Dec(t) means t is not declared — Dec F when Sel or Con holds at o2. Since o2 inherits Sel, Dec F, ¬Dec T. Now (e): needs some holding that holds t with Sel's conditions or a trace: o2 holds t but has neither Sel's conditions nor a trace at o2 directly (direct[o2][0] = Sel's conditions staged at o2 = False since selc=(1,0)); o1 has Sel's conditions but doesn't hold t. So (e) F ≠ ¬Dec T. Yes! That's the difference, consistent.
+
+So the implemented (e) uses `direct[o][0]` = Sel's *conditions* at o (local), not inherited Sel. The reply's (e) says "Sel at o" — Sel at o, which for a relay might be inherited Sel (o2 inherits Sel). Under the reply's reading, (e) = ∃o holding of content with Sel at o (inherited ok): o2 holds the content and Sel holds at o2 (inherited) → (e) T = ¬Dec T, no difference — the lemma holds! Under the implemented reading (Sel's conditions locally at a holding that holds t), (e) F. So the "contradiction" of the reply's lemma depends on reading "Sel at o" as "Sel's conditions staged at o" (local) rather than "Sel holds at o" (possibly inherited). Hmm. Which is right? The reply's (e) says "Sel at o or a construction trace prepares t at o". In the theory, Sel is a provenance value at an occurrence (D12.x); a relay inherits provenance, so "Sel at o2" would be true (the fixed point assigns Sel to o2). The implemented reading requires the *conditions* at the holding itself. So the implemented (e) is arguably a misreading of the reply's (e) — it is closer to (a) generalized over holdings that hold t.
+
+But the computing agent flagged exactly this in §1 ("nearest statable") and §10 Unsure, and S108r2-4-I3 records the choice with other choices. Still, the standing "contradicted" for R4E07 ("the reply's lemma") is computed under a reading that differs from the reply's in a way that matters for the very claim being contradicted: under the reply's own reading (Sel at o, inherited along relays — which is how the program's fixed points work and how D12.4 [FROZEN] inheritance works), (e) would return the inherited value and the lemma would stand. The md's §3 even says "(a) 494 / (b) 174" also move — those are round 1's readings, known to move. The lemma only claimed chain-wide readings ((c), (d), (e)) return the inherited value. If (e) is read chain-wide (inherited Sel counts), the lemma plausibly holds.
+
+So this is a genuine objection: R4E07's "contradicted" standing, and the findings row "the reply's lemma ... contradicted on 25 held outputs", rests on S108r2-4-I3's choice to read "Sel at o" as the locally staged conditions rather than the inherited provenance value; under the inherited reading (which the reply's (e) words suggest: "Sel ∨ CT read at the content ... (Sel ∨ CT)(t) :⟺ ∃o (any holding of the content D11.2 of t): Sel at o or a construction trace prepares t at o"), the 25 chains do not move. Hmm wait — but also "a construction trace prepares t at o": under (e) with trace, trace[o]. And under the reply's (e), a relay o2 of o1 where trace at o1 prepares t at o1... "prepares t at o" — for holdings that hold t.
+
+Hmm, actually let me reconsider: does the reply's (e) require o to hold t? "any holding of the content D11.2 of t" — D11.2 defines the Content of a holding/occurrence. A holding of the content = a holding whose content is Content(t)? Every holding in the chain model is a holding of a transport; the chain's holdings are holdings of t (relays of the same transport t). Actually in the chain model, all n holdings are holdings of t (the same candidate transport across a history). So "held" bit = whether t is held (Held tag?) hmm. In section 3's chain model, bits: held, trace, selc per occurrence. "held" there meant "held at the output" i.e., the Held tag (represented). In the section 4 chain generator, "held" per holding — the md §3 says "of them with t held at the last holding (as for a candidate meeting (E))". So held = t held at that occurrence. If all holdings of the chain are holdings of t's content anyway, then the reply's (e) would quantify over all o regardless of held, and (e) = ∃o (Sel at o or trace at o) — that's chain-wide, returns... in the smallest witness selc=(1,0): Sel's conditions at o1 → Sel at o1 (o1 not held, but Sel at o1 T) → (e) T = ¬Dec T, no difference. Lemma holds.
+
+So indeed, the 25 counterexamples exist only under the implemented restriction "held[o] and". The md does disclose this in §1 (nearest statable) and §10 (unsure). But the headline standing "contradicted" for R4E07 and the findings row "the reply's lemma ... contradicted on 25 held outputs" goes beyond what the run shows under the reply's own reading. Per my job: "Is each edge's standing what its run shows, no more?" — R4E07's standing should arguably be "computed under S108r2-4-I3's restriction; under the reply's own chain-wide reading the lemma is not contradicted (0 moves on these chains)". That's an objection. Severity: medium-high since it also feeds R4E06 ((e) departs from D12.4's inherited provenance on 25 held relays) and C13's drops at (e) 25, and the candidate list's C13 entry ("(e) 25"). Actually R4E06 and the C13 (e) counts are results under the stated reading — fine as computed readings, but the "contradicted" of the lemma is the problem.
+
+Hmm, wait. Let me double-check the reply's lemma more carefully: "Lemma: at every holding not reached by a transfer, ¬Dec(t) ⇔ Sel ∨ Con (round 1, chains: 0 exceptions in 39,926 holdings), and D12.4 [FROZEN] inherits provenance along every transfer; so any reading of 'Sel ∨ CT' that looks anywhere along the chain — (c) inherited, (d) the chain's origin (transitive), (e) the content — returns the inherited value and is equivalent to now's reading." The lemma's reasoning: at non-transfer holdings ¬Dec ⇔ Sel∨Con; inheritance makes chain-wide looks return the inherited value. The computation's counterexample: at o2 (a relay/transfer-reached), inherited value Sel → ¬Dec T; (e) implemented looks at holdings that hold t with local conditions — F. But is the implemented (e) "looking anywhere along the chain"? Yes it looks along the chain but requires local conditions. The reply's (e) as worded ("Sel at o") — if Sel at o means the inherited value, then (e) returns the inherited value. The computing agent's S108r2-4-I3 choice: "(e) = some holding held with Sel's conditions or a trace". "Sel's conditions" vs "Sel at o" — the reply says "Sel at o", and the program distinguishes Sel's conditions (staged bits) from Sel (provenance value). So the implemented reading substitutes "Sel's conditions" for "Sel". That's a real deviation. But is it "nearest statable"? The program can state "Sel at o" easily — the fixed point gives Sel at o! direct[o][0] seems to be staged conditions; but sc[last][0] or sc[last][1] gives the provenance (Sel/Con) at last. Actually `nd = bool(sc[last][0] or sc[last][1])` — ¬Dec at last = Sel or Con at last (inherited). So the program CAN evaluate "Sel at o" per holding via sc[o]. The implemented (e) could have been `any(sc[o][0] or trace[o] for o ...)` — hmm, but then does it require held? The reply's "(any holding of the content D11.2 of t)" — every holding of the chain holds the content? Not necessarily — the chain model's holdings all relate to t. So (e) = any(sc[o][0] or trace[o] for o in range(n)) which equals... at o1, sc[o1][0]: Sel at o1? The fixed point prov [{'o2': 'Sel'}] suggests only o2 has Sel (o1 isn't assigned? prov_show shows the fixed point R maybe as dict of assigned values). Hmm, if Sel at o1 is not assigned (Sel's conditions at o1 don't make Sel hold at o1 unless t held there?), then... The chain bits: selc=1 at o1 but held=0 at o1. Maybe Sel at a holding requires the holding to hold t (you can't select what isn't held?). Then "Sel at o" for o1 = F even under inherited reading, and (e) = Sel at o2 (inherited T) → wait o2's Sel is inherited from o1 through the relay... but if Sel at o1 is F (because o1 doesn't hold t), how does o2 inherit Sel? The fixed point says {o2: Sel}. So the program's Sel at o2 is T. Then reply's (e) = ∃o: Sel at o or trace at o = T (o2) = ¬Dec T. Lemma holds. Implemented (e) requires held[o] and local conditions/trace → F. Difference.
+
+OK so my objection stands: the 25 chains and the "contradicted" standing for R4E07 turn on S108r2-4-I3 reading "Sel at o" as "Sel's conditions locally at a holding that holds t"; under the reply's own wording the program's sc[o][0] would give (e) = the inherited value and 0 moves. The fix: re-mark R4E07 as "computed under S108r2-4-I3 only; under the reply's chain-wide reading not contradicted", or run the variant with (e) := any(sc[o][0] or trace[o]) — I can't run it (no switch; it's computed in the script). I should name the run: section 4 copy, s108r2_s4_cases.py §3 with e := any over holdings of (Sel at o (the fixed point's value) or trace at o), and what would settle it: if 0 of the 3,208 chains differ, the lemma stands and R4E07 reverts to "computed (0 moves)".
+
+Hmm, but wait — actually, I should be careful about (e) with trace: "a construction trace prepares t at o". In the smallest witness trace=(0,0), so trace doesn't matter there.
+
+Actually, hold on. Let me reconsider whether under the reply's (e), "any holding of the content of t" might mean holdings of t's content — where the content D11.2 is the content of the *transport* t... A holding of the content is where the content is held. If o1 doesn't hold t, o1 holds something else's content? In the chain model, each holding is a holding of the same candidate t (the chain is t's provenance chain). The "held" bit then can't mean "holds t" for all... but §3's caption says "of them with t held at the last holding (as for a candidate meeting (E) (Faithful ⇒ held))". So held = t held at that occurrence. A holding where t is not held — is it "a holding of the content of t"? Ambiguous. The computing agent's choice is defensible as *a* reading; the objection is that the "contradicted" verdict on the reply's lemma is stated unqualified, when it holds only under the agent's restricted reading and §3's own text admits the bits are independent and I90 decides. Given my job ("Is each edge's standing what its run shows, no more?"), I'll raise this as an objection (medium severity), asking the standing to be qualified or the alternative reading computed.
+
+Next: e4.22 settlement. §6: "contradicted" — the reply proposed e4.22 as "V4.3 constrains D18.2" (computed: D18.2 as written does not carry traces, so V4.3 is not φ-invariant — the constraint holds and forces D18.2.v1). The computation contradicts: D18.2 as written already preserves Θ's interpretation, which carries Prepares and Rec (D0.2), so h ↦ h′ is no D18.2 map; nothing specific to V4.3; D18.2.v1 adds what D18.2 already carries. This is an argument from D18.2's words plus the computed pair. Is this sound? I should check D18.2's statement in the formal core and D0.2. Let me grep the formal core.
+
+Also check the claim in §6 e4.40 about L574.s5 vs the edge's items. The round 1 map's e4.40 — let me read round 1's map for e4.40 and e4.22, e3.30b, e3.34b, to check the items named.
+
+So round 1's e4.40 items: L572.s2 [S4], L574.n4 [S4], L576.s1 [S4], L576.s4 [S4]. The computation §6 settlement says "computed for L572.s2 and L574.s5" — L574.s5 is NOT among e4.40's items. That's an error in §6 and in the .json's "standing_as_written": "computed for L572.s2 and L574.s5; independent for L574.n4; not settled for L576.s1, L576.s4". Also the json item for settles e4.40 correctly lists the four items. So the settlement line names L574.s5 where, given the evidence text (which discusses L574.s5's "the population fixes it" as computed: "the survivors agree at 2 (L574.s5: 'the population fixes it')"), it seems the agent computed a check relevant to L574.s5 — a sentence from the reply's R2V4.9 row, not part of e4.40. But then which of e4.40's four items were computed? L572.s2 computed (changes), L574.n4 independent, L576.s1 not settled, L576.s4 not settled. So of the four items of e4.40, only ONE is "computed" as changes-with; the settlement's summary "computed for L572.s2 and L574.s5" conflates the edge's items with the reply's R4E20 items. Given the edge e4.40's standing in the json is "computed" — is that more than the run shows? The settlement is partially computed (one of four items computed, one independent, two not settled). Marking the whole settlement "computed" while two of its four items are "not settled by computation" seems to overstate. Hmm, but "computed" here is the settlement's standing; the per-item outcomes are given. The md §6 marks it "**computed** for L572.s2 and L574.s5; **independent** for L574.n4; **not settled** for L576.s1, L576.s4". So within §6 it's honest per item; the .json's standing field says "computed". The map after round 2 — not my section, but the json standing "computed" vs md's mixed. Also note the md says "computed for L572.s2 and L574.s5" — L574.s5 isn't in the edge; the correct pairing may be that the agent computed the settlement for L572.s2 (changes-with holds) and for L574.s5 (a sentence the reply said fails: "L574.s5's 'H is silent' fails on the pole case"). Actually from cases.txt §9: "L574.s5's 'the population fixes it' (survivors agree) 2" — with 𝒯={t,t_ab,H} survivors agree at 2 pairs, so L574.s5's claim ("the population fixes it") holds at 2 — the reply expected it to fail ("L574.s5's 'H is silent' fails"). So the computation contradicts the reply as to L574.s5. Fine, but the objection remains: the settlement's summary names L574.s5 in the slot where e4.40's own items are being settled, and e4.40's overall standing "computed" in the json overstates (two items not settled, one independent). I'll raise this as an objection (moderate): the .json standing for "settles e4.40" should read as the md's per-item mix, not plain "computed"; and "computed for L572.s2 and L574.s5" should say which of e4.40's four items changed standing.
+
+Wait — actually, is it possible that "L574.s5" is intended and correct, i.e., the settlement computed for L572.s2 (an e4.40 item) and additionally for L574.s5 (from the reply's table)? The md says "**computed** for L572.s2 and L574.s5; **independent** for L574.n4; **not settled** for L576.s1, L576.s4" — the latter three are e4.40 items. So the sentence mixes: of e4.40's four items, L572.s2 computed-changes, L574.n4 independent, L576.s1/s4 not settled; and separately L574.s5 computed. But then of e4.40's four items, only L572.s2 is settled as "changes with"; the json's overall standing "computed" is too strong. Hmm, but rule 5(2) says the settlement is "computed, contradicted, or not settled by computation". A settlement partially computed... The md could have marked it "computed in part". The json says "computed". This is a genuine "standing is more than the run shows" issue but relatively minor since the md spells it out.
+
+Also R4E20's items: "L574.n4, L574.s5; L572.s2, L576.s4" — the reply's rows were "changes with L572.s2, L576.s4" and "constrains L574.n4, L574.s5" ✓ that matches the reply's own edge table (R2V4.9 rows). OK so R4E20 is the reply's rows, fine. But its standing "as e4.40 (§6)" — again mixing.
+
+Now check e4.22's soundness. The computation's settlement: "contradicted" — the reply's proposed settlement (e4.22 holds, D18.2 must list traces) is contradicted because D18.2 as written already preserves Θ's interpretation which carries Prepares and Rec. I need to check D18.2's words in the formal core and D0.2.
+
+D18.2: "A bijection φ of ports, values, components, edits ..., boundaries and occurrences (preserving ≺_h and Θ's interpretation), with Q, δ, Σ and every declared input carried along."
+
+"preserving ... Θ's interpretation" — does Θ's interpretation include Prepares and Rec? D0.2 lists the primitives read through Θ. Let me check D0.2.
+
+D0.2: "Prepares ... read through Θ" — yes, Prepares is a primitive "read through Θ" [I56]. Rec_h′ likewise [I165]. D18.2's φ preserves "Θ's interpretation". So the computation's e4.22 settlement argument: "D18.2 maps preserve ≺_h and Θ's interpretation, and D0.2 lists Prepares and Rec among Θ's primitives" — is a fair reading: a φ that must preserve Θ's interpretation must preserve Prepares and Rec, so h ↦ h′ (which changes the trace = Prepares) is no D18.2 map; hence the reply's claim that D18.2 as written allows φ is wrong, and e4.22's proposal ("D16.XV constrains D18.2", forcing D18.2.v1) is contradicted since D18.2 already carries it.
+
+Counter-consideration: "Θ's interpretation" could mean Θ's interpretation of the physical module (what organization an occurrence instantiates at a grain), not every primitive "read through Θ". D0.2 says these primitives are "read through Θ" — meaning they are claims about a history read through Θ, i.e., their extension is given by Θ's reading of the history. If φ preserves Θ's interpretation, then arguably it preserves what Θ says of occurrences, including Prepares/Rec. There's room for debate, but the computing agent's reading is defensible and stated as an argument ("settled by argument from D18.2's words and D0.2's list, with the pair computed; no φ was enumerated" — §10 Unsure). It's honestly flagged. I could note it as checked. The settlement standing "contradicted" — the reply proposed e4.22 holds; computation contradicts. But the computation itself notes "nothing is specific to V4.3 and D18.2.v1 adds what D18.2 already carries". OK.
+
+Hmm, but one more check on e4.22: the computed pair (§10 of cases.txt) shows Expl now T/F and V4.3(a) T/F on h/h′ — showing both definitions read the trace (so the *pair* is computed), and the further step is argument. The standing "contradicted" rests partly on argument, not purely computation. The md says this openly (§10 Unsure). Fine — but is "contradicted" the right standing when the decisive step is an argument about D18.2's words, not a run? Rule 5(2) standings: computed, contradicted, or not settled by computation. "Contradicted" presumably means the reply's proposal is contradicted. It's supported by the computed pair + textual argument. I'll accept, maybe note.
+
+Now section 3 checks remaining:
+- §10 cases.txt (part A): 35 cases, 30 meeting (E), (E) moves under no state; per-state counts (out 18/10/2; in 30; 7/30; 30; 0; 30; 0; etc.). Let me check the cases.txt tail.
+- cases B-E.txt consistency with §4 table.
+- The single claim runs: R2V3.1 FC90.new1 etc. — §9 says the single runs "expected" list; results match the whole-suite. Single runs jsons exist.
+- Verify some baselines by running the program myself: FC90.new1, FC84.new1, FC30.new1, FC72, FC75 (--brief). These baselines were quoted in the reply. Also FC23.new2/FC102.new1/FC103.new1/FC100/FC80/FC32.new1 are section 4 baselines — but my runnable model is section 3's copy; claims are shared? The root model/ is section 3's copy; running FC103.new1 there might differ from section 4's copy. Actually the copies differ (section 4 copy has s108r2_s4.py hooks in e9.py/args.py; with switches off they should print the same as round 4). The root copy with everything off = program after round 4, so FC103.new1 should hold there too. Let me run a few claims to verify quoted baselines.
+
+Let me first read section 3 runs/cases/cases.txt tail and cases B-E.
+
+The cases.txt is long. §10's summary table should be verifiable from totals lines. Let me grep for totals per state — pattern like "moves" summary lines.
+
+These match §10's table:
+- R2V3.4 ports: in 7 ✓; edits: in 30 ✓ ("edits: all 8" owner's).
+- R2V3.5: out 30 ✓.
+- R2V3.7: out 30 ✓.
+- R2V3.2: in 30 ✓.
+- C10 ports: 23 ✓ (§10 row "in 30 / 23 / 0 / 30 / 30 + 30").
+- C9 variants: four/two/three/four histories ✓ (key change: 4; contract: 2; with R2V3.7: 3; with R2V3.6: 4).
+- C8 Prepares: only Build moves, no Expl move ✓.
+
+Need R2V3.1 (ExplUse) row counts: out 18 (designation), 10 (port claim... wait §10 says "out 18 (the claim about another port, δ′), 10 (the claim on the question on another port), 2 (the widest contract)"). Line 56 omitted long line — the R2V3.1 totals. And owner's cases: the weathervane on δ′ and port claims; day-port sign; not the two-part/one-part sign. Let me check lines around 56 and the R2V3.1 sections for each claim type. Also §10's "35 cases, 30 meeting (E)" and "(E) moves under no state (0 of 35 × 26)".
+
+§10's R2V3.1 row: "out 18 (the claim about another port, δ′), 10 (the claim on the question on another port), 2 (the widest contract)" — hmm, the counts: 'Expl Con-explu designation out': 18, 'Expl Con-explu port out': 10, 'Expl Con-explu widest out': 2. So the md's parenthetical descriptions: "the claim about another port, δ′" for 18 — wait, 18 is designation (δ′), 10 is port. The md says "out 18 (the claim about another port, δ′), 10 (the claim on the question on another port)". Actually it should be: 18 = the designation claim (δ′ = H), 10 = the port claim. The md's parentheticals are garbled: "(the claim about another port, δ′)" vs "(the claim on the question on another port)". Designation δ′ is "the claim reading the designation"; port is "the question on the first other port of D". Minor wording confusion, counts right. Owner's cases: the weathervane (M13; as edit and boundary Γ={cP},{cW,cP}) on the δ′ and port claims — from lines 69-70, 81-85: M13 vane as edit (designation, port), vane as boundary Γ={cP} (designation, port), Γ={cW,cP} (designation only, since port F for ℰ′... line 85 only designation). md says "the weathervane (M13; as an edit and as a boundary, Γ = {cP}, {cW,cP}) on the δ′ and port claims" ✓ roughly. Day-port sign ✓ (line 86, 80). Not the two-part or one-part sign ✓ (absent). Good.
+
+Now check §4 table (cases B-E). Read the head of cases B-E.txt.
+
+These match §3 rows:
+
+- R2V3.2 §3 row: "on the reply's re-entry chain q = [C′, C, C] (one record, of ρ_C): key 'change' (the program): Episode F, tag Con F, Dec T; key 'contract' (the core's words): Episode T, Dec F". From lines 56/58: key contract none: Episode T, tag Con T, Dec F ✓; key change none: Episode F, tag Con F, Dec T ✓ (chain T′ held at output Dec F though — hmm, the row says "Dec T" — tag Dec T; chain held Dec F). The md's row compresses; the tag numbers are as quoted. OK.
+
+- R2V3.3 §3 row: "(a): the tag at o1, trace at o2: Dec T (off), Dec F under V3.5; as a chain not held at o2: Dec T under T′ and T; (b) the trace spanning o1…o_t across an unrecorded change: Dec F → T on 45,072 held outputs". From lines 71-81: none: (a) reply's Hist: Dec T... wait line 71: "(a) the reply's Hist (tag at o1, the trace at o2): Sel F Con F Dec T" — hmm under 'none'. Under V3.5: "Sel F Con T Dec F" (line 77). The md says "(a): the tag at o1, trace at o2: Dec T (off), Dec F under V3.5" ✓. And "as a chain not held at o2: Dec T under T′ and T" ✓ (lines 72-73 last column: (a) as a chain, not held at o2: Dec T; under V3.5: Dec F (line 78)). Hmm md says "Dec T under T′ and T" — for off. OK.
+
+Wait, there's a subtlety: under V3.5 (a) as a chain not held: Dec F. And md's R2V3.3 row says round 1's tag rows were an artefact of the deletion "as the reply says (tag at o1, clause kept: every Acc-T candidate declared, T′ and T)". Hmm — "tag at o1, clause kept: every Acc-T candidate declared" — from line 72: (a) as a chain, not held at o2 (the tag): Dec T — with clause kept under 'none'. ✓.
+
+- R2V3.4 §3 row: "the pole, t′ = t + an idle part, stated construction t's own: components (off) t′ Dec T; ports and edits: t′ in 𝒯, Dec F, an explanation; t on 'Sel-parts' (stated lacks c_L): Dec T under ports, F under edits". From lines 86-99: components t′ idle dec T ✓; ports t′ idle dec F expl T ✓; edits same ✓; t on Sel-parts: ports: Sel F Dec T (line 94), edits: Sel T Dec F (line 99) ✓. Wait the md says "t on 'Sel-parts' (stated lacks c_L): Dec T under ports, F under edits" ✓.
+
+Hmm wait, but the md's parenthetical in the generated row: "'Sel-parts' in 356 / 1,013 (SMALL)" — from cands SMALL: ports Sel-parts 356, edits 1013 ✓.
+
+- R2V3.5 row ✓ (lines 108-110).
+- R2V3.7: tag model Con T→F ✓.
+
+Now part D and E of cases B-E. Let me read the rest.
+
+Part D checks:
+- R2V3.8 §3 row: "a premise alone is no argument: X_j(design ∧ PM) 1 → 0 (FC72 (d)); (Suff) by a premise alone: with forms MP only, the pole's constructed candidate leaves Def(L536)". Lines 134, 136 ✓ (X_j 1→0; Def(L536) T→F under MP only; under MP/AndE stays T ✓ — the md says "with forms MP only" ✓).
+- R2V3.9: "X_j('Ans_p(a,b) = y') 1 → 0; FC68 (b) T → F; FC47.new1's case: Solved T → F, Prob_j F → T" ✓ lines 146-148. And "R2V3.9 with I8 kept and dropped: the same" ✓ (lines 141-156 identical).
+
+Wait — one point: §3 R2V3.9 row says "X_j('Ans_p(a,b) = y') 1 → 0" — from line 130 vs 146: "a test's record rules out the answer y: X_j('Ans_p(a,b) = y') = 1" → "= 0" ✓.
+
+Part E: "of 64 valuations Can 48 → 32, Deploy 24 → 16, CreateEx 3 → 2; D18.1's Can loses Ω" ✓ lines 160-161.
+
+Now the reply's baseline quotes vs my own runs. Let me run a few claims: FC90.new1, FC84.new1, FC72, FC75, FC30.new1 --brief. Also FC80 maybe. Run them.
+
+Baselines quoted in the reply verify:
+- FC90.new1 (c): "δ_E = L: (True, …); δ_E = H: (False, {'A': False})" ✓ exactly.
+- FC84.new1 (c): "change unrecorded, S41: o1 ≺ o2 an episode False; Con at o2 [True]" ✓.
+- FC84.new1 (a1): "Con at o2 [True]" ✓.
+- FC72 (d): "usable by j (who accepts ¬PM): True … Under round 2's reading (I88: an argument has a step) the premise alone is no argument: usable False" ✓ — interesting: FC72 (d) as committed already prints the I88 reading note.
+- FC75 (a): "no dependence along R on the declared contrasts" ✓.
+
+Also the reply quotes FC30.new1 (d) "Dec(t) at o2 [True]" — cases B-E confirms student Dec T. Fine.
+
+Now let me check the "explu.txt" (ExplUse per occurrence) file and "args" done. And check §5's claim about worlds files present: args.txt ✓, routes.txt ✓, fc80x.txt ✓, explu.txt ✓, createx.txt ✓, chains ✓, crosscheck ✓, keys→recflags (naming error), cands.* ✓.
+
+Now, checking section 3 §3's R2V3.1 row more carefully: "with CT reading Prepares (D12.2 as written): 0" ✓ (cases + worlds: C8 Prepares no Expl move).
+
+"FC90.new1 moves in the suite (its (a) case)" ✓ (whole suite R2V3.1 diff FC90.new1).
+
+§6 C8 flags row: "S41 Q2 comes only under ExplUse with a claim on a contract or question where Acc(ℰ′) fails; goes under Prepares". OK.
+
+Now, one important cross-check: §3's R2V3.2 claim "generated: every account on a re-entry history (tags, and chain T′ with the trace spanning) 1,013 / 881 / 232 / 1,670 in under 'contract' against 'change'" — hmm wait, that's inverted: R2V3.2's variant is the change-key (the program's). The row says accounts "in under 'contract' against 'change'" — i.e., under the core's words (old form), re-entry histories count as explanations, which the program's key excludes. From cands.SMALL: "R2V3.2 (key: new contract...) (against none): {'Expl Con-reentry (tags) in': 1013, ...}" ✓. OK.
+
+Now the section 3 §9's statement "The single-claim runs made before (`section 3 runs/single/`, the claims whose code reaches each switch) expected: ..." — the single/ dir has R2V3.1.json, R2V3.10.json, R2V3.2-contract.json, R2V3.4-edits, R2V3.4-ports, R2V3.5, R2V3.6, R2V3.7, R2V3.8, R2V3.9, off, off-args. Let me quickly check a couple: single/R2V3.1.json (FC90.new1 diff) and R2V3.8 (FC72, FC72.new1).
+
+Single runs match the whole-suite patterns: R2V3.7, R2V3.4-*, R2V3.2-contract, R2V3.6, off-args, off: no differences (claims_equal = all compared). Consistent with §9 "the others none".
+
+Wait — R2V3.2-contract single shows claims_equal 17 of 17 (no diffs). But the whole suite R2V3.2-contract.json also showed no diffs ✓. Hmm — interesting: the suite run of R2V3.2 used the 'contract' key (per S108r2-3-I12: "R2V3.2's run uses the formal core's key (the variant's old form), since its new form is the program's ('off')"). And no claims moved. OK.
+
+Now remaining items to verify:
+
+1. Section 3 §0: "default unchanged | every switch off: `s104_external.py`, `s104_creative_transport.py`, `s106_cases.py` print the committed md5s (86a67664…, d473944e…, 043aeb36…); round 1's `s108_s3_cases.py` prints round 1's `cases.txt` byte for byte (adfcf39c…)". The scripts/ dir has s104_*.none.txt and s106_cases.none.txt. Let me check those print md5s matching. Also the "round 1 cases under round2 copy.txt" in check/.
+
+2. The explu.txt content (for R2V3.1's ExplUse per occurrence?) — quick look.
+
+3. The tabulation — check its §7 flags for section 3/4 (e.g., R2V4.9 flagged as repeat+prose; sections' in-scope determinations). The computing file says R2V4.9 not implemented per tabulation §7. Let me check the tabulation to confirm.
+
+4. Section 4: R2V4.1 "in part a repeat (new: 'some' co-varied; the two exempt readings, a gap of the share)". Tabulation should flag parts. Also section 4's §5 C11/C12/C13 rows vs §2/§4 ✓ already.
+
+5. Check candidate list after round 2 for the C8/C16 claims (the md §10 mentions "the candidate list's C8 and C16") — but the candidate list is not my section per se; skip unless quick.
+
+6. The reply's section 3 claim for R2V3.5: "expected: 22 of 27 worked" vs computed 30 of 30 meeting (E) — the computation corrected it; fine.
+
+7. Section 3 §7 e3.30b settlement: the reply proposed "(a)/(a′)/(d′) recomputed" and stated construction := a member's parts; the computing agent used S108r2-3-I8 := "the base member's parts, each member with a twin carrying one more part deviating at one pair of C∖H". Hmm, the reply's e3.30b proposal: "FC80's generator extended to state a construction per population (stated := a member's parts), run under none and under R2V3.4". The settlement computed is the nearest reading; recorded as S108r2-3-I8 with other choices. ✓ honest.
+
+8. e3.34b: reply proposed "circuits of ≤ 4 occurrences each given a represented objection ob with role bindings, m: ports(ob) → ports(R) onto an active route, Rec = {id}, Chg = ∅" — wait the reply says S108-3-I6 in (f) table but the computing agent labels it S108r2-3-I7 with "ob with one role bound to i, Rec = {id}, Chg = ∅; 'an active route' read as any route through m's image (the words) and as R itself". Computed both readings ✓. The reply expected "UsesReason T under V3.7, F under none, on exactly those routes: the edge stands". Computation: "read as R itself: F → T on exactly the 1,436 routes that did no work; read as any route through m's image: 2,684 (1,093 of them routes that did no work)". So under one reading the reply's expectation holds exactly; under the other it's broader but still F→T on routes that did no work. Standing "computed" ✓. Note the edge is e3.34b "V3.7 → UsesReason (D9.11)" — "moves" kind. Computed ✓.
+
+9. Check §3's claim for R2V3.7 about CT8: "CT8's R1, R3: constructed → declared (D12.1 and with L201 and L411; T′ unchanged)" and §4: "s104_creative_transport.py moves only under R2V3.7". Check scripts/s104_creative_transport.R2V3.7.txt vs .none.txt quickly (grep for a difference marker).
+
+10. Check the check/ files: "cases CDE draft.txt" and "round1 cases under round2 copy.txt" — the latter supports "round 1's s108_s3_cases.py prints round 1's cases.txt byte for byte".
+
+Let me look at scripts/s104_creative_transport.none.txt and R2V3.7.txt heads, and the md5 lines.
+
+Hmm — under R2V3.7, the CT8 output (lines 36-46) appears identical to .none.txt. Where's the difference? §3/§4 claim "s104_creative_transport.py moves only under R2V3.7 (CT8's R1, R3: constructed → declared by exclusion under D12.1 as the case reads it; T′ unchanged)". But lines 36-37 in R2V3.7.txt read "D12.1: Sel no, Con no => neither (declared by exclusion)" and "T′ ... constructed" — same as none. Hmm wait, maybe the difference is further up or the R1/R3 lines differ somewhere else. Let me diff more carefully — compare none vs R2V3.7 whole files.
+
+I can't diff via bash. I'll read the full R2V3.7 file and the full none file and compare by eye — they're ~50 lines each. I read none lines 1-15 and grep lines; R2V3.7 lines 30-51 read. Let me read R2V3.7 lines 1-30 and none lines 15-51 to compare CT5-CT8 sections.
+
+Now compare with R2V3.7.txt: I read lines 30-51 of R2V3.7 — the CT8 block there shows R1: "D12.1: Sel no, Con no => neither (declared by exclusion)" and "T′ ... Sel no, Con yes => constructed". While the .none file's R1 is "D12.1: Sel no, Con yes => constructed" and T′ "Sel no, Con yes => constructed". So under R2V3.7, CT8's R1 D12.1 line changed from "constructed" to "neither (declared by exclusion)" ✓, and R3 similarly (line 42 of R2V3.7: "Sel no, Con no => neither") vs none line 42 "Sel no, Con yes => constructed" ✓. T′ unchanged ✓. This matches §3's row: "CT8's R1, R3: constructed → declared (D12.1 and with L201 and L411; T′ unchanged)". ✓ 
+
+Wait, I misread earlier: in my earlier grep output, "R2V3.7.txt" lines shown in the second grep result were actually from different files (the grep results labeled). Let me be sure: my first read of R2V3.7.txt lines 30-51 (the Read with offset 30) showed R1: D12.1 Sel no, Con no => neither. Yes ✓. Good — the move is there.
+
+Now the tabulation. Let me read the relevant sections (§2-§8 for sections 3 and 4) to check the computing agents' in-scope determinations, especially R2V4.9 flagged (repeat + prose) and R2V4.1/R2V4.2 "in part a repeat".
+
+The tabulation flags R2V4.9 as repeat+prose, and R2V4.1/R2V4.2 as "in part" repeats. The computing agent implemented R2V4.1 and R2V4.2 as round 1's V4.1/V4.2 "under the sub-choices the reply names" plus the new sub-choices — that's a defensible handling of an "in part" repeat (only the new parts computed anew). But wait: §1 findings row for R2V4.1 says the two exempt readings are new, 'some' co-varied is new. §4 says "Round 1's 'every' counts reproduce (941; 1,590)" ✓ so the repeat part wasn't recomputed as new. Fine.
+
+Now let me check the candidate list after round 2 briefly for C13's "(e) 25" and C8/C16 (owner's cases) — since §10 of section 3 says "the candidate list's C8 and C16". Quick check for consistency with the computed files (this is the map/list agent's work, but fed by these files; consistency check is cheap).
+
+C13's entry repeats the (e) 25 figure — consistent with the computed file. My objection about the (e) reading would propagate to the list, but the list is another agent's angle; I mention it in the objection as also affecting the list's C13 row.
+
+Now let me confirm the section-4 whole-suite §8 statement: "R2V4.1 co-varied under 'some', 'some-exempt', 'some-exempt-set': each moves FC23.new2 and FC30.new1 (131 / 4 / 7)". Check counts in one of the jsons (H=131? Let me grep "H": in R2V4.1-some.json).
+
+All whole-suite counts check out.
+
+Notable: R2V4.1's whole-suite run is only with 'some', 'some-exempt', 'some-exempt-set' co-varied — 'every' co-varied was round 1's (noted). Also R2V4.1 with (Suff) kept isn't run in the suite — only co-varied. §8 says "R2V4.1 with 'some', ... co-varied". The findings row for R2V4.1 says "(Suff) as conjectured fails on exactly the drops with its antecedent kept, on none co-varied" — computed on cases and worlds, not the suite. OK.
+
+Also note: the whole suite for section 4 does not include R2V4.2 (round 1's suite covered it — R4E05 cites "round 1's suite; the whole suite §8" — hmm, §8 doesn't run R2V4.2. R4E05's evidence "computed (round 1's suite; the whole suite §8)" — the whole suite §8 does not include a V4.2 run! It cites §8 but §8 has no R2V4.2 run. Minor: the evidence pointer is partly wrong (the round-1 suite is the support; §8 adds nothing for R2V4.2). Actually wait — R2V4.2's new content is the Q2-argument case, computed in cases.txt §2. R4E04's evidence is that. R4E05 (constrains FC30.new1, FC23.new2): round 1's suite under 'both' moved those claims; §8's R2V4.1 runs also move FC23.new2/FC30.new1 but under a different variant. So R4E05's "(the whole suite §8)" citation is misleading — no R2V4.2 whole-suite run exists in round 2. Minor pointer issue. Actually hold on — is it required? Rule 5: "the whole suite with the variant on is a harness job" for each variant a computing agent implements. R2V4.2 is implemented (as round 1's V4.2 with sub-choices; the new part is the argument case). Was a whole-suite run with R2V4.2-'both' on done in round 2? Round 1's suite had V4.2 runs presumably (R4E05 says "round 1's suite"). Since R2V4.2 = round 1's V4.2 with shape 'both' already computed in round 1's suite, a re-run would repeat. The computing agent says §4: "R2V4.2 is round 1's V4.2 (1,019 admitted, MID 1,686; not rerun)". Hmm — but is the new part (the Q2 argument as MP on r and r→¬Expl rather than a bare record) suite-relevant? The suite's FC30.new1 (a) uses the record argument; under R2-4-I2 the leaf r is "read as a reason" — cases.txt §2 notes "the leaf r is labelled 'record' by the program; R2-4-I2 reads it as a reason: the tree and every value are the same". So no suite difference expected. OK, defensible, and honestly stated ("not rerun").
+
+Similarly R2V4.3, R2V4.4, R2V4.6, R2V4.8, R2V4.10 have no whole-suite runs: R2V4.3/R2V4.4/R2V4.8 are script-computed (they read histories the suite doesn't build); R2V4.6 has no code; R2V4.10 is a case. §8 lists only the runs that could move. The rule says the whole suite with the variant on is a harness job for each implemented variant — but for variants implemented only in scripts (not program switches), the suite can't see them. Section 4's §0 says: "everything else of round 2 is in the scripts (the variants read no code the suite runs, or are round 1's switches)". For R2V4.8 = "cut U (the program's rd='U') in place of T′ on the worked and generated" — implemented as a script parameter, not a switch; the suite would need a switch. Hmm, is R2V4.8's suite run missing a gap? R4E18 cites "computed (§8)" for FC32.new1 (b), FC98 (c) — §8 doesn't contain an R2V4.8 run! Let me re-read §8: "Runs: off; R2V4.1 with 'some', 'some-exempt', 'some-exempt-set' co-varied; R2V4.5; R2V4.7." No R2V4.8. But R4E18's standing_as_written says "computed (§8)" and evidence "under U no unique provenance on any account". §8's runs don't include U. The evidence for "under U no unique provenance" is in cases.txt §8 (fixed points under U: 2 or 0 on every case) and worlds (U: 2/0 on every account). So R4E18's "(§8)" pointer is wrong — the support is §2/§4 (cases and worlds), not §8 the whole-suite addendum. That's a citation error in the .json and md ("computed (§8)"). The claim itself is computed. Minor objection (wrong pointer). Similarly R4E05's "(the whole suite §8)".
+
+Wait — maybe §8 in the .json refers to the md's §8? The md's §8 is the whole suite addendum. R4E18 "computed (§8)" — the md's §8 doesn't cover FC32.new1 (b)/FC98 (c). Hmm, unless... the off run shows FC32.new1 holds; under U the program's FC32.new1 (b) would fail but no run. So the pointer is wrong; the correct support is §2's R2V4.8 row and §4's worlds. Minor.
+
+Also for R2V4.8: rule 5's harness clause — "the whole suite with the variant on is a harness job" for every implemented variant. R2V4.8 is implemented (as a script reading rd='U'). The suite run with U on would need a program switch (the program has rd parameter? s108s3? In section 4's copy, "the program's rd='U'" suggests the core supports cut selection). No suite run was made with U. The md doesn't record this as a departure. Since the tabulation didn't flag R2V4.8 and it was implemented (in the scripts), the missing suite run is a gap vs the rule — but the agent's §0 says "the variants read no code the suite runs" — for R2V4.8 that's false-ish: the cut is read by the suite's code (FC32.new1, FC98 read provenance fixed points!). Actually R4E17/R4E18 concern FC32.new1 (b) and FC98 (c), which ARE suite claims. Under U (if switchable), FC32.new1 (b) would presumably fail and FC98 (c) change. So a suite run with U would move claims, and it wasn't made; instead the evidence is the script's fixed-point counts. Is U switchable in the program? In section 3's copy, cuts are script-level. The md's R2V4.8 row: "cut U (the program's `rd="U"`) in place of T′ on the worked and generated (candidate, history)" — rd is a parameter of the fixed-point function, not an env switch. So the suite cannot run it without new code. The honest statement would be "no suite run: the cut is a function parameter, not a switch" — the md instead says in §0 "everything else of round 2 is in the scripts (the variants read no code the suite runs...)" which is inaccurate for R2V4.8 since FC32.new1/FC98 in the suite do read fixed points (with T′ hardcoded?). Hmm — do they? FC32.new1 (b) is about DEP having no cycle under T′... the claim code presumably calls prov with rd="T'". So a U run would need a switch. The .md's claim "the variants read no code the suite runs" is wrong for R2V4.8 in the sense that suite claims read the same function the variant varies. But no *variant switch* exists. I'd call this a minor gap: R4E18's support is the script runs, the "(§8)" pointer is wrong, and the missing suite run under U is unrecorded as a departure. Combine into one minor objection.
+
+Now, one more important check: section 4's R2V4.1 exempt readings were "a gap of the share" — the brief's share for S4 names "S108-4-I1 with the quantifier (C11: V4.1)". The computing agent added the two exempt readings ("the share names them; the reply did not reach them"). §1 findings says "(new: 'some' co-varied; the two exempt readings, a gap of the share)". Good — computed under every choice the share names ✓ (quantifier × (Suff) shape).
+
+Section 4 §5: C11 row covers quantifier × Suff ✓; C12 row covers the three shapes ✓; C13 row covers (a),(b),(c),(e) and R2V4.4's histories ✓; C12/C13 under I90 ✓. The share for S4 also names "the hand-set histories (C12, C13)" ✓ covered by R2V4.4.
+
+Section 3 §6 covers: C8 (S108-3-I2 × S108-3-I5: own/widest/designation/Γ′/port ✓, Prepares/ExplUse ✓), C9 (key change/contract, extent at o_t/spanning, tag encoding, cut K, with R2V3.6 and R2V3.7 ✓), C10 (components/ports/edits × stated construction Θ/∅, with R2V3.6 ✓), C7 (hand-set histories with R2V3.6 ✓). The share names for S3: "S108-3-I2 and S108-3-I5 (C8: V3.4); the trace's extent, the tag encoding, cut K (C9: V3.5); S108-3-I4, S108-3-I3 (C10: V3.6); the hand-set histories (C9, C10)" — all covered ✓.
+
+Now the remaining checks on section 3's §0 claims:
+- "round 1's `s108_s3_cases.py` prints round 1's `cases.txt` byte for byte (adfcf39c…)" — check/round1 cases under round2 copy.txt exists; can't verify md5 without tools but the check file exists. Fine.
+
+- The crosscheck: "checked equal to claims_b.prov_fixed_points on every chain n ≤ 3 (records anywhere) × 3 cuts × 6 switch states: 50,736 pairs each, 0 mismatches". Hmm: 6 switch states listed in crosscheck.txt: none, V3.5, key contract, R2V3.7, V3.5+R2V3.7, V3.5+key contract ✓ 6 states, each 50,736 pairs, 0 mismatches ✓.
+
+Now potential issues in section 3 §3 R2V3.1 row: "generated (claim designation / Γ′ / port / widest) out 210 / 73 / 146 / 122 (SMALL), 140 / 76 / 118 / 93 (value maps), 41 / 10 / 14 / 36 (proper), 457 / 112 / 288 / 200 (MID)" ✓ all match.
+
+One thing: §3's R2V3.1 row says "the pole's forward candidate: out only where the claim's δ′ = H (Acc(ℰ′) F: ExplUse F, Build F, Con F, Dec T); own, widest, Γ′ and port claims keep it". From cases C (lines 40-51): designation: Acc(ℰ′) F → R2V3.1: Con F Dec T ✓; own/widest/gamma/port: Acc(ℰ′) T → unchanged ✓. But wait — "port" in cases C: "claim port ℰ′: δ′ = H, Γ′ = [...], p′ = p_C1[H]; Acc(ℰ′) T" — so the port claim here has δ′=H but a restricted question and Acc T. OK.
+
+Hmm — but in the generated worlds, port claims drop 146 — because there ℰ′ port has Acc F (the counts 'Acc T, Acc(ℰ′) F: port': 146). Consistent: the drop is exactly where Acc(ℰ′) F.
+
+Now the reply's R2V3.1 trace quote said "Case (pole; before, run, FC90.new1 (c)...) ℰ′ = same E, p, t, Γ, δ′=H Acc F (run)". ✓ verified by my run of FC90.new1 (c).
+
+Now the flags: §6 C8 flags: "S41 Q2 comes only under ExplUse with a claim on a contract or question where Acc(ℰ′) fails; goes under Prepares (D12.2 as written)". Wait — S41 Q2 is the student's declared formula question ("No, not if just declared"). C8's flag S41 Q2 — round 1's C8 flag. Hmm, in the reply: "C8's flag (S41 Q2) rests wholly on S108-3-I5's choice". The computing agent's §6 C8 row: "S41 Q2 comes only under ExplUse with a claim on a contract or question where Acc(ℰ′) fails; goes under Prepares". OK.
+
+Now the section 3 §3 R2V3.5 flag note: "Flag: S41 Q2 in reverse (the reply: 'it declares more, which Q2 permits')". Hmm — Q2 says a declared link is NOT an explanation ("No, not if just declared"). R2V3.5 makes selection-histories with no stated construction declare more — candidates become declared → not explanations → that agrees with Q2 rather than "in reverse"? The reply said "no flag (it declares more, which Q2 permits)". The computing agent writes "Flag: S41 Q2 in reverse". Hmm: R2V3.5 turns explanations into declared (drops them from being explanations), which matches Q2's spirit (declared → not explanation)... wait no. Q2: the student's declared copy is not an explanation. R2V3.5: every selected candidate on a no-construction history becomes declared → stops being an explanation. That's aligned with Q2, not in reverse. But hold on — the owner's cases (vane, signs) under R2V3.5 drop — they were selected/found by trial, and Q2's contrast is "found by trial or worked out" vs "just declared". R2V3.5 declares things that WERE found by trial (selection on H with no construction stated) — so it treats found-by-trial links as declared, which contradicts the intent of Q2's contrast (the vane found by trial should not become "just declared"). §10: "R2V3.5 drops the vane and both signs on a selection history (the candidate list's C8 and C16)". Hmm, and the candidate list says C16 "moves a found-by-trial link to declared, which is the opposite direction to C7, C12 and C21" and "C16's S41 Q2 flag reads the owner's question as contrasting 'found by trial' with 'simply declared'". OK so the flag direction is coherent. The computing agent's "S41 Q2 in reverse" is vague but the candidate list spells it out. Fine.
+
+Now, let me double-check one numeric claim in section 4 §4 table that looked odd: "| R2V4.1: (Suff) as conjectured fails, antecedent kept / co-varied | = the drops (3,764 / 3,808 / 3,396 / 3,416 (case, history)) / 0 | 6,360 / 6,468 / 5,444 / 5,540 / 0 | – |". The worlds json gives drop and suff_fail_kept = drop, suff_fail_cov = 0 ✓.
+
+And §2's R2V4.1 "(Suff) as conjectured failing there with its antecedent kept and holding co-varied" for the two-part sign ✓ (cases lines 30-33).
+
+Now check R2V4.5's §2 row: "E9: t1 Acc T; t1∘ψ (A) F, Acc F (`s106_cases.py`: the only line that moves; FC-E and CT unchanged)". The section 4 runs/scripts/ has s104_*.{none,R2V4.5,R2V4.7} and s106_cases.{none,R2V4.5,R2V4.7}. I'll trust; maybe quick grep for a difference between s106 none and R2V4.5.
+
+Also the reply's baseline "FC102.new1 HOLDS (t1: 0 of 3456 pairs fail F1/F2/A)" etc. — my root copy is section 3's; FC102.new1/FC103.new1/FC100 should be runnable. Let me run them to verify the quoted baselines (they're claims in the shared program).
+
+Baselines verify: FC102.new1 (0 of 3456 fail), FC103.new1 (0 separating pairs, Ans_p∘ψ = Ans_p), FC100 (12,960/12,960 in the reply — my run at scale 3 shows 9,720; the reply's baseline was presumably scale 4; fine, direction holds).
+
+Now let me check the s106_cases difference under R2V4.5 quickly.
+
+s106_cases under R2V4.5: line 49 differs (t1∘ψ (T,T,T,T)→(F,F,F,F)) — "the only line that moves" ✓ (R2V4.7's s106 line 49 unchanged).
+
+Now, one more check on section 4's findings row R2V4.5: "**t1∘ψ: Acc T → F** ((A) fails at 2,768 of 3,456 pairs); t1 T". ✓ from cases §5.
+
+And "L630.n3's Ans_p∘ψ = Ans_p and L630.s4's 'none separates' false of this question (2,768 separating pairs): computed" ✓.
+
+Now let me revisit the e4.40 settlement issue more carefully, and also check L572.s2/L574/L576 sentence wordings in the text to see whether the computed checks read them correctly. Quick grep of text lines L572, L574, L576.
+
+The formal core quotes L572 (a single sentence, apparently — the core's L572 line is one sentence; "L572.s2" suggests sub-sentence 2). The sentence L572: "For every (a,b) ∈ C∖H at which some t′∈𝒯, also surviving on H, has a different value from t, the value of t at (a,b) is underdetermined by H". Under V4.8 (Underdet without surv), with 𝒯={t,t_ab,H}: at the 2 unseen pairs, no surviving differer (t_ab,H fails on H) but Underdet-V4.8 T. So L572.s2's condition ("at which some t′ also surviving has a different value") is met at 0 pairs while the definition says underdetermined at 2 — they part. ✓ Computed. And "L574.s5's 'the population fixes it' (survivors agree) 2" — hmm, wait: with 𝒯 = {t, t_ab,H}, the only member other than t is t_ab,H which does not survive; "the survivors agree" at 2 pairs — survivors = {t} only, trivially agree. So L574.s5's step ("the population fixes it") holds at 2 while V4.8 calls them underdetermined. OK.
+
+So the e4.40 settlement: "changes-with holds for L572.s2" ✓ computed; L574.n4 independent ✓; L576.s1/s4 not settled ✓. The md's summary sentence names "L574.s5" — an item not of e4.40 (e4.40 = L572.s2, L574.n4, L576.s1, L576.s4). And the .json's standing for settles e4.40 = "computed". Objection: (i) the md's settlement line and the json misname/overstate — of e4.40's four items only L572.s2 is settled as changing; two are "not settled" and one "independent"; the json's plain "computed" overstates; (ii) L574.s5 belongs to R4E20 (the reply's own row), and its placement inside the e4.40 settlement invites reading it as one of e4.40's items. Fix: json standing_as_written should read "computed for L572.s2; independent for L574.n4; not settled for L576.s1, L576.s4 (and, outside e4.40's items, computed for L574.s5)".
+
+Hmm wait, actually let me reconsider — is it possible that the md means: "computed for L572.s2 and L574.s5" where L574.s5 IS one of the items the reply's R2V4.9 names (the reply's edges table row "R2V4.9 | constrains | L574.n4, L574.s5")? Yes. So the settlement of "R4E20 as e4.40" covers both. But e4.40's own four items include L576.s1 which the reply's R2V4.9 (d) table doesn't name (it names L576.s1 in (c) proposal: "L576.s1 unchanged"). OK. My objection stands about the .json "computed" standing overstating and the confusing naming.
+
+Now the more serious potential objection — R4E07/(e) as discussed. Let me also double check the "247/87" (a)/(b) counts vs round 1: round 1's e4.18 says "chains 2,692 holdings" for (a) — different population (round 1 counted holdings; here last holdings of chains n≤3). Not contradictory, different counting units; §3's table says "(a) at the holding (round 1) 494" — hmm, round 1 had 2,692 holdings for (a). Here 494 last holdings. The md marks "(a) at the holding (round 1)" — meaning the reading is round 1's, not the count. OK.
+
+Next: check section 4's R2V4.4 invention honesty: "S108r2-4-I1: a case has a named trial history where (1, b0) ∈ C and t is faithful there; o1 a selection on it, else declared; o2 a relay". The reply's R2V4.4 said "o1 := a source holding with Sel computed from the case's own named trial history (the pole's grids, E9's H0), else Dec". The computing agent's §9 lists the other choice: "the case's own trial histories (the pole's grids, E9's H0) as the reply names them: on every worked account both give a trial pair". So the agent used a uniform (1,b0) criterion instead of the case's own trial history, and checked both give the same. Fine, honestly recorded.
+
+But — an important subtlety for R2V4.4: §10 Unsure admits "with them every account has a trial pair, so the result 'every account is an explanation' is by construction of the history, as round 1's §6.3 warns". Honest.
+
+Now the R2V4.4 claim "the reply's second half contradicted as to the worked cases": the reply said "the rest (no grid: the signs, E_enc, 'p because p') stay Dec". The computation found 24 of 24 accounts have a named trial pair (by the (1,b0) criterion), so none "stays Dec". But under the agent's own I1 criterion ((1,b0) ∈ C and t faithful there), do the signs/E_enc really have a trial pair? §4 R2V4.4 worlds: "accounts with a named trial pair 1,019" — all. Hmm, "the case's own trial histories ... as the reply names them: on every worked account both give a trial pair" — so even under the reply's own criterion, every worked account has a trial pair? That's surprising for "the signs, E_enc, p because p" which the reply said have no grid. The claim "(1, b0) ∈ C and t is faithful there" — b0 is the baseline boundary; for the two-part sign, is the candidate faithful at (1,b0)? Apparently yes for all 24 accounts. Hmm, the reply's "no grid" cases were about cases (some of the 29 are not accounts — 29 cases, 24 accounts; the 5 non-accounts might be exactly E_tab etc.). The signs ARE accounts and faithful at the baseline pair. So the reply's "the rest stay Dec" claim was about cases without a named trial history — the computing agent computed that under either criterion all 24 accounts have one. This is a computed contradiction, fairly stated ("contradicted as to the worked cases"). OK.
+
+Now, section 3: the biggest remaining question — any objection? Candidates:
+
+(a) §5 names "worlds/keys.txt" but the file is worlds/recflags.txt. Minor pointer error.
+
+(b) §0 lists "suite - expected moves.json" in section 3 runs/ — absent from the sandbox. Since §9 relies on it ("every state moved exactly the claims the single runs expected"), and I verified the expectations against the whole-suite jsons independently, the missing file is a record gap only. Could be that the manifest didn't include it. I'll note it as minor.
+
+(c) §10's R2V3.1 row's parenthetical glosses are swapped/garbled: "out 18 (the claim about another port, δ′), 10 (the claim on the question on another port)". Actually 18 = designation claim (δ′ = H), 10 = port claim (the question on another port of D). The gloss "(the claim about another port, δ′)" for 18 wrongly attaches "port" to the designation claim. Minor wording.
+
+(d) Check §3's R2V3.2 row phrase: "generated: every account on a re-entry history (tags, and chain T′ with the trace spanning) 1,013 / 881 / 232 / 1,670 in under 'contract' against 'change'" ✓.
+
+(e) One numeric check on §3's R2V3.3 row: "(b) reproduces the second checker's e3.25c (45,072) with the clause kept" — round 1's map e3.25c says 45,072 ✓.
+
+(f) §7's e3.30b: "under R2V3.4 ports 3,961 (452 more)" ✓.
+
+Now the crosscheck on "checked equal to claims_b.prov_fixed_points ... 50,736 pairs each" — the md says "on every chain n ≤ 3 (records anywhere) × 3 cuts × 6 switch states: 50,736 pairs each". 50,736 (chain, cut) pairs — hmm, crosscheck.txt says "(chain, cut) pairs 50736". ✓.
+
+Now think about whether the R2V3.9 implementation matches the reply: the reply's variant drops 'Ans_p(a,b) = y' from D9.1's list. The computing agent's S108r2-3-I10: answer atoms named ans…/Ans…/E_ans…; "FC47.new1's record 'rec' is not so named, so the suite's R2V3.9 run does not type it". Hmm — FC47.new1's case in cases D: "Test_ab typed as the answer claim" — the script types it. But in the suite run, the record 'rec' isn't named as an answer atom so R2V3.9 doesn't drop it — meaning the suite run of R2V3.9 might understate moves (e.g., FC47.new1 in the suite would not move because its record leaf isn't typed as an answer). Whole suite R2V3.9 moved only FC68. Is FC47.new1 expected to move? In cases D, R2V3.9 changed "FC47.new1's case, Test_ab typed as the answer claim: Solved T → F". If the suite's FC47.new1 uses a leaf named 'rec', it wouldn't move. The md discloses this. Honest. OK.
+
+Now, are there any count errors I found? So far none in the numbers. The main objections:
+
+X2.1 (most serious): R4E07 / R2V4.3 (e) — the "contradicted" standing of the reply's lemma rests on S108r2-4-I3's restricted reading of "Sel at o" (Sel's conditions locally, at a holding that holds t); under the reply's own chain-wide reading the 25 chains would not move. The md states the reading but presents the contradiction unqualified; §3's headline and the .json say "contradicted" with no qualification; it propagates to R4E06 and the candidate list's C13 row ("(e): 25 held relays ... drop").
+
+Actually wait — I should double-check: does R4E06 also depend? R4E06: "(e) departs from D12.4's inherited provenance on 25 held relays" — yes, same 25. But R4E06's point ((e) departs from inherited provenance) is true under the implemented reading by construction. The standing "computed" is fine for the implemented reading since the reading is recorded. The problem is only the lemma-contradiction claim. Also note: the reply's lemma explicitly covered "(c) inherited, (d) the chain's origin (transitive), (e) the content" as chain-wide readings; the implemented (e) is NOT chain-wide in the relevant sense (it requires local conditions at a held holding). So calling the lemma "contradicted" is arguably a mis-implementation of what the lemma claims. The md does say "nearest statable" and unsure — but the .json standing is unqualified "contradicted". I'll raise it with the fix: qualify the standing, or compute (e) := ∃o (Sel at o ∨ trace at o) over the chain's holdings (the fixed point's inherited values) on the same 3,208 chains — run: section 4 copy, s108r2_s4_cases.py §3 with e := any(sc[o][0] or trace[o] for o in range(n)); if 0 differences, R4E07 reverts to "computed (0 moves)" and the lemma stands.
+
+Hmm, wait. Let me reconsider once more whether "Sel at o" in the reply means inherited-Sel or local conditions. The reply's (e): "(Sel ∨ CT)(t) :⟺ ∃o (any holding of the content D11.2 of t): Sel at o or a construction trace prepares t at o". Sel is a provenance predicate (Sel(t; 𝒯, μ, H) — actually Sel is a property of t given a history... In D12.1 Sel is defined for a transport relative to 𝒯, μ, H. "Sel at o" in the chain model means the occurrence's provenance is selection. The program's fixed point assigns provenance values per occurrence; a relay inherits. So "Sel at o" = the fixed point's value at o is Sel (inherited allowed). The implemented reading uses direct[o][0] — hmm, what is direct? `direct = _prov_step(...)`; then `e = any(held[o] and (direct[o][0] or trace[o]) ...)`. And `a = bool(direct[last][0] or trace[last])` — reading (a) "at the holding" = round 1's (a) which is "Sel ∨ CT at the holding" — if (a) used inherited values, then (a) would equal ¬Dec and move nothing, but round 1 computed (a) moves (2,692 holdings). So direct[o][0] must be the LOCAL staged Sel conditions (not inherited) — consistent with (a) being holding-local. So implemented (e) = "some held holding with local Sel conditions or a local trace". The reply's (e) with "Sel at o" as inherited provenance would differ. Yes, my objection is well-founded. Though there's genuine ambiguity ("Sel at o" could mean Sel's conditions obtained at o), the computing agent's own §3 admits the counterexample chains are exactly ones where "a relay inherits a selection made at a holding that did not hold t" — i.e., under the inherited reading Sel holds at o2 and (e) would be T, matching ¬Dec. So under the inherited reading the lemma holds on these very chains. The right fix: qualify R4E07's standing.
+
+X2.2: e4.40 settlement naming/standing (L574.s5 not an item of e4.40; .json standing "computed" overstates: two of four items not settled, one independent).
+
+X2.3: R4E18's "(§8)" and R4E05's "(the whole suite §8)" point to a whole-suite addendum that contains no run of R2V4.8 (or R2V4.2); the support is §2/§4 (script runs). Also §0's claim "everything else of round 2 is in the scripts (the variants read no code the suite runs …)" is inaccurate for R2V4.8: FC32.new1/FC98 in the suite read the fixed-point cut the variant varies; no suite run under U was made or recorded as a departure. Fix: correct the pointers to §2 R2V4.8 row and worlds; record the missing U suite run (or run it: section 4 copy with a switch forcing rd='U' in the provenance fixed points, whole suite — expected FC32.new1 (b) and FC98 (c) to move).
+
+X2.4: §5's "worlds/keys.txt" — actual file worlds/recflags.txt; §0's "suite - expected moves.json" absent from section 3 runs/. Minor pointer/record errors.
+
+X2.5: §10's R2V3.1 glosses swapped ("out 18 (the claim about another port, δ′), 10 (the claim on the question on another port)" — 18 is the designation claim, 10 the port claim). Minor.
+
+Anything else? Let me check the section 3 md's claim in §3 R2V3.6 row: "the reply's 'C9's tag counts do not reproduce' contradicted (C9 with R2V3.6: the same four histories in, 1,013 / 881 / 232 / 1,670)". But wait — the reply's argument was about the record clause KEPT (C9 as V3.5 deletes the clause... hmm, actually the reply said "The tag histories of C9 do not reproduce: with Rep computed, a tag at o1 before an unrecorded change gives Con F (as R2V3.3a), not Con T"). The computation's C9-with-R2V3.6 counts are under V3.5 (clause deleted). With the clause deleted, tags give Con T under both hand-set and computed chains. The reply's reasoning was that with Rep computed the record clause... hmm, but C9 IS V3.5 which deletes the record clause. So the reply's claim "C9's tag counts rest wholly on Θ by hand" was tested: with chains computed (R2V3.6) + V3.5, the same four histories move — so the counts do reproduce. ✓ The computation is right and the "contradicted" standing is supported by cands.*.txt lines "C9: V3.5 with R2V3.6 (against R2V3.6)". ✓.
+
+Hmm, but one wrinkle: is "C9: V3.5 with R2V3.6" run against baseline R2V3.6 (as stated "(against R2V3.6)") the right comparison for "C9's counts reproduce"? C9's counts against none were 1,013 per history (4 histories); with R2V3.6, against R2V3.6, 4 histories × 1,013. ✓ same.
+
+Also check §6's C9 row claim "cut K moves held outputs with the trace at o_t (5,118)" ✓ chains.txt cut K.
+
+Now, the settlements e3.30b/e3.34b soundness:
+- e3.30b: "V3.6 → Sel → Dec → FC80" — computed via fc80x ✓. Standing "computed" ✓. The direction: "more Sel, fewer Dec, wider underdetermination" — fc80x shows 𝒯 grows and underdetermined populations grow (581 more, 0 fewer) ✓.
+- e3.34b ✓ computed both readings of "an active route".
+
+The reply expected for e3.34b "UsesReason T under V3.7, F under none, on exactly those routes" — computed: under "R itself" exactly; under "any route" 2,684. The settlement row honestly gives both. ✓.
+
+Now, anything about the owner's words binding content? Check: R2V3.8 departs from S41 Q23 — flagged in §3 ("Departs from S41 Q23 ('Yes, it's an argument')") ✓ named. R2V4.1 departs from S44/S45 — §5 C11 row flags ✓. R2V4.7 departs from S28 — the reply named it; does the computing file name it? §1 R2V4.7 row: "nearest statable (S108r2-4-I2): nothing usable by any j..." — the flags column of §5 doesn't cover R2V4.7 (it's not a round-1 candidate). The findings row doesn't name S28. Hmm — rule 13: "A variant that explores what one of them would reject is computed like any other, and its entry in the list names the decision." The candidate list is the place for naming; R2V4.7 isn't a candidate (changes neither (E) nor explanations). The reply itself named S28. Not an objection for the computation file (the rule puts the naming in the list). Let me quickly check the list mentions it... The list §"not candidates" probably. Skip.
+
+Also S43 word check: "model" used for candidates? The files use "models" for generated structures ("models 17280") — that's the program's small structures, allowed. §5 section 3: "the candidates whose result differs, how many of each kind" fine.
+
+One more check — section 4 §2's R2V4.1 "the hand-turned vane (R3-Q1): slot under 'every' and 'some', none under the exempt readings" ✓ line 17.
+
+And §2's row "ℰ_two (Con history)..." ✓.
+
+Also verify §1 findings R2V4.1 "beyond 'every': 'some' adds the pole's forward candidate on C2 and C3, E5 (FC62's encoding), M5 and the owner's two-part sign; the exempt readings add E5, M5 and the two-part sign" ✓ lines 27-29.
+
+Now, the R2V4.2 owner-quote check: the reply reads Q2's answer as an argument: r := "the link was declared, not found by trial or worked out". S41 Q2's answer: "No, not if just declared" and Q23 (here "Q2 answer as argument") — actually the reply cites S23's argument definition. The computing agent implemented j = Assessor(MP; r, r → ¬Expl_dec) ✓ per R2-4-I2. Fine.
+
+Now — the biggest-picture check: "Are the readings C8–C13 rest on computed under every choice the share names?" Section 4's share names for C11: "S108-4-I1 with the quantifier (C11: V4.1)". Computed: 4 quantifier readings × Suff kept/covaried ✓ (cases + worlds; suite for 3 of 4 covaried; 'every' from round 1). C12: "S108-4-I2 (C12: V4.2)" — 3 shapes ✓ + the argument case ✓. C13: "S108-4-I3 (C13: V4.3)" — readings (a),(b),(c),(e) ✓ ((c) from round 1) + I90 via R2V4.4 ✓. Hand-set histories for C12, C13 ✓ (R2V4.4). Section 3: C8 ✓ (2 CT readings × 5 claims), C9 ✓ (key ×2, extent ×2, tag, cut K, with R2V3.6/R2V3.7), C10 ✓ (parts ×3, stated ×2, with R2V3.6), C7 ✓ (with R2V3.6). All under every choice named.
+
+One more: section 3's §6 C9 row says "every account in on 'Con-chg' tags, spanning chains and re-entry histories (1,013/881/232/1,670 each) under the key 'change'". ✓.
+
+Let me also spot-check the dependency map after round 2 for how it carries these (round-1 edges' standings changed by round 2 — but that's the map agent's job; my job says "each settlement of a round-1 edge (e3.30b, e3.34b, e4.22, e4.40) sound?" — done) and round 1's O1-O4 corrections carried — that's for section 2's review; not mine.
+
+Wait, actually the brief says round 1's review O1–O4 "are corrections the map after round 2 must carry" — that's listed under round 1 files but the job section 4 for me is the computations of sections 3 and 4. O1-O4 concern section 2's second computation. Not mine.
+
+One more possible check: section 3's §3 R2V3.7 row says "(EX): CreateEx T → F on 3 of 1,024 valuations (e_c two or more steps before e); UsesReason F → T on the 1,436 routes that did no work (e3.34b)" ✓ createx.txt/routes.txt.
+
+And §3's R2V3.10 row "of 64 valuations Can 48 → 32, Deploy 24 → 16, CreateEx 3 → 2" ✓ part E.
+
+Now the "0 moves" claims: R2V3.6 "0 on every generated candidate (chain T′ reproduces the hand-set Dec, 0 moves)" — cands: "R2V3.6 (against none): no move of Account ∧ ¬Dec(t)" ✓; §10 "R2V3.6 | 0 (5 Dec moves, all on candidates failing (E))" ✓ (cases: 'Dec Con (Acc F)': 5). R2V3.8/9/10: "no move" ✓ in cases and worlds. Section 4: R2V4.7 "0 on cases" for (E)/expl? §1 findings R2V4.7: (E) 0, being an explanation "–" hmm the findings table says "0 | ..." wait: "| R2V4.7 | yes | 0 | not defined...|" — the being-an-explanation column says the defeat sets empty; Expl itself? The reply said "being an explanation is not statable either" under the reply's own reading; the computing agent's nearest statable gives X_j empty → no defeats, but Expl itself (which doesn't read X_j... actually D16.XV's note reads X_j) — the computed effect: no defeat of (Suff)/(Nec); being an explanation per Acc ∧ ¬Dec unchanged (0). OK.
+
+Now assemble the report. Objections ordered by severity:
+
+X2.1 — R4E07/R2V4.3(e) "contradicted" overstates (medium-serious).
+X2.2 — e4.40 settlement: .json standing "computed" overstates; L574.s5 named among e4.40's items.
+X2.3 — R4E18 (and R4E05) cite "§8" for runs §8 does not contain; R2V4.8's missing whole-suite run under U unrecorded; §0's "the variants read no code the suite runs" inaccurate for R2V4.8.
+X2.4 — pointer errors: worlds/keys.txt → recflags.txt; "suite - expected moves.json" absent.
+X2.5 — §10 R2V3.1 glosses swapped.
+
+Should I also raise the R2V4.3 propagation to the candidate list C13 row? Mention within X2.1.
+
+Is there anything about section 3 more serious? Let me reconsider the R2V3.2 orientation once more. The reply's variant: "Rec keyed by the new contract → keyed by the change" (swap). The computation's honest finding: the program already keys by the change (I174), so the variant's new form = the program's default, old form = core's words. So "R2V3.2 on" = key 'contract' = the variant's OLD form. This is stated in §1, §2 (I12: "R2V3.2's run uses the formal core's key (the variant's old form), since its new form is the program's ('off')"). ✓ honest. Good — this is exactly the kind of thing to check ("is the nearest reading honestly stated?") and it is.
+
+Similarly R2V3.3: "yes, in the scripts" — no program function reads Held/tag — honest.
+
+One more check: §3's R2V3.1 row "(E) 0" and N32 "0 Acc moves in every population, case and state" — cands files show no 'Acc' moves listed ✓; cases A: "(E) moves under no state (0 of 35 × 26)" ✓ per §10.
+
+Also the claim in §10 "35 cases, 30 meeting (E) (27 of the written-in step's script, 8 of the owner's...)" — hmm 27 + 8 = 35 ✓.
+
+Also section 4 §2 "cases: 29 (round 1's 29 and the owner's signs where not already among them)". Fine.
+
+Let me also verify one number in §10 of section 3: "C10: V3.6 components / ports / edits / with R2V3.6 / against R2V3.5 | in 30 / 23 / 0 / 30 / 30 + 30". From cases: components 30 ✓, ports 23 ✓, edits 0 ✓, with R2V3.6 30 ✓, against R2V3.5: "Expl Sel in 30, Expl Sel-parts in 30" = 30+30 ✓.
+
+And "C7: V2.5, and with R2V3.6 | in 30 ('Sel (H = ∅)')" ✓.
+
+OK. One more thing to check: the section 3 §4 claim "FC-E1–E5 and CT1–CT8: `s104_external.py` prints the same under every state; `s104_creative_transport.py` moves only under R2V3.7" — verified CT move under R2V3.7 ✓; external same — spot-checked via grep (identical lines) ✓.
+
+Also the s106_cases for section 3: "no move under any state" — scripts/s106_cases.*.txt exist for all states; I'll trust given patterns.
+
+Now, about "Is it implemented as the reply wrote it, or is the nearest reading honestly stated?" — I verified R2V3.1–R2V3.10 table and inventions; R2V4.1–R2V4.10 table. One quibble: R2V4.1 implemented with S108_S4_V41_SUFF=covaried — the reply's variant was the pair (Slot 'some' ∧ Suff co-varied) — and the worked cases computed both kept and covaried ✓.
+
+Another quibble: section 4 R2V4.5's switch hooks in e9.py — unverifiable in sandbox (model folder not included for section 4). The evidence is cases/worlds/suite outputs which I checked. I'll put the direct code check under "not reached".
+
+Also the "who computes" record says computing agents are Opus 5.5 one per section; the files record departures under S56 (one agent for the whole reading; suite runs by the computing agent with run_claims.py rather than Sonnet worker+verifier). These departures are recorded in both files' headers/§9/§8 ✓ ("a departure from the rule's harness clause, recorded in the map's §0; S55, S56"). Honest. Though — is running the suite itself rather than through the harness a problem for me to flag? It's recorded as a departure with reasons (S56 cost). The rule says "A computing agent may not run the whole suite itself in place of the harness; where the harness cannot start, it runs the same script and records the departure". The files record it. Not an objection, but I could note it in checked (recorded departure).
+
+Word count target ~ under 3000. Write the report now.
+
+Objections table:
+
+X2.1 | `round 2/section 4 - variants computed.md` §3 (findings row R2V4.3) and `.json` R4E07 (also R4E06's evidence, and the candidate list's C13 row) | The "contradicted" verdict on the reply's lemma ("every chain-wide reading returns the inherited value") is computed only under S108r2-4-I3's restriction of (e) to holdings that hold t with locally staged Sel conditions (`s108r2_s4_cases.py` line: `e = any(held[o] and (direct[o][0] or trace[o]) for o in range(n))`); the reply's (e) says "Sel at o", and on the very 25 chains the program's fixed point has Sel at the relay (inherited, e.g. prov {'o2': 'Sel'}), under which (e) returns the inherited value and the lemma holds. Show: cases.txt §3 smallest (e) witness {'n': 2, 'held': (0,1), 'trace': (0,0), 'selc': (1,0), 'prov': [{'o2': 'Sel'}]} — Sel holds at o2, so an inherited reading of "Sel at o" gives (e) T = ¬Dec T, no move. Fix: qualify R4E07's standing to "computed under S108r2-4-I3 only; under the inherited reading not contradicted", and likewise the findings row and C13's "(e): 25"; or settle by a run: section 4 copy, `s108r2_s4_cases.py` §3 with `e := any(sc[o][0] or trace[o] for o in range(n))` over the same 3,208 chains — 0 differences restores the lemma, ≥1 confirms.
+
+X2.2 | §6 e4.40 row and `.json` "settles e4.40" | The settlement line reads "computed for L572.s2 and L574.s5", but L574.s5 is not one of e4.40's four items (round 1's map: L572.s2, L574.n4, L576.s1, L576.s4); and the json's standing "computed" overstates: of e4.40's own items one is computed (L572.s2), one independent (L574.n4), two not settled (L576.s1, L576.s4). Fix: standing_as_written := "computed for L572.s2; independent for L574.n4; not settled for L576.s1, L576.s4 (L574.s5, outside the edge's items, computed)".
+
+X2.3 | `.json` R4E18 ("computed (§8)"), R4E05 ("the whole suite §8"), and §0's "the variants read no code the suite runs" | §8's whole-suite addendum contains no R2V4.8 (or R2V4.2) run (files: whole suite/section 4/ = off, R2V4.1×3, R2V4.5, R2V4.7); R4E18's support is the script runs (§2 R2V4.8 row, worlds), and suite claims FC32.new1/FC98 do read the cut the variant varies, so "read no code the suite runs" is wrong for R2V4.8; the missing suite run under U is not recorded as a departure. Fix: re-point R4E18's evidence to §2/§4; record the missing U run, or make it: section 4 copy with the provenance cut forced to rd='U' (a switch or edit in the copy's fixed-point calls), whole suite — FC32.new1 (b) and FC98 (c) moving is the expected result.
+
+X2.4 | §5 and §0 of section 3's file | "worlds/keys.txt" does not exist (the run is worlds/recflags.txt, whose first line is "keys, cut T', n ≤ 4"); "suite - expected moves.json", listed in §0 as in section 3 runs/, is absent. Fix the two pointers (or include the file).
+
+X2.5 | §10, R2V3.1 row | The glosses are swapped: "out 18 (the claim about another port, δ′), 10 (the claim on the question on another port)" — 18 is the designation claim (δ′ = H), 10 the port claim (cases.txt: 'Expl Con-explu designation out': 18, 'port out': 10). Fix: "out 18 (the designation claim, δ′ = H), 10 (the claim on another port)".
+
+Checked, no objection: list ids — R2V3.1–R2V3.10 implementation and switch (model/s108r2s3.py), §3/§5/§6/§10 counts against worlds/cases/chains/recflags/args/routes/fc80x/createx/crosscheck files; R3E01–R3E22, N31–N33; settlements e3.30b, e3.34b, e3.37b (noted only); §7 single runs and §9 whole-suite (off 133/2/7; R2V3.1 FC90.new1; R2V3.5 eight claims; R2V3.8 FC72/FC72.new1; R2V3.9 FC68; R2V3.10 FC32.new1; others none); baselines FC90.new1, FC84.new1, FC72, FC75, FC102.new1, FC103.new1, FC100 (my runs); R2V4.1, R2V4.2, R2V4.4–R2V4.8, R2V4.10 rows against cases/worlds/suite; R4E01–R4E23, N41–N42 except R4E05/R4E07/R4E18; e4.22 settlement (pair computed; the D18.2/D0.2 argument is fairly read and flagged in §10); the recorded S56 departures.
+
+Not reached: section 4's model/ code (s108r2_s4.py, hooks in e9.py/args.py) — not in the sandbox; verified only through outputs. The dependency map after round 2's carriage of these results (another angle). The tabulation's in-scope rulings beyond sections 3–4 use. Whether the harness's digest checks passed (raw md5s unverifiable here).
+
+Also should I mention that I could not run R2V4.3's alternative — named in X2.1. Good.
+
+One more consideration on X2.1 severity vs X2.2: X2.1 affects a standing ("contradicted") that feeds the map; most serious. X2.3 next. Order: X2.1, X2.2, X2.3, X2.4, X2.5.
+
+Write final report, terse.

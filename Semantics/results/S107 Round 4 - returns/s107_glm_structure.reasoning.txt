@@ -1,0 +1,679 @@
+I've read the formal core. Now I need to do job 3: structure of the formal core. Let me look at key files: the step's inventions, the formal claims (relevant parts), model/core.py, model/claims_b.py DEP, and text lines that changed.
+
+Let me plan the findings for each section:
+
+(a) Dangling uses of removed notions: search for "NonCircular", "NC1", "non-circular", "slot", "grain", "Open", "D6.11" in core, claims, program, text.
+
+Let me grep.
+
+Let me search more specifically within the current files: `maths/formal claims, now.md`, `model/`, `text/the text under review, by line.md`, `the step/`.
+
+The program looks consistent. Now let me check the current text lines for dangling uses. Key lines changed by the step: L13, L255, L257, L262, L273, L275, L317, L343, L397, L520, L536. Let me read the current text around those lines, plus L61, L69, L49.
+
+Also I should look at the claims file for dangling uses of "NonCircular"/"the four conditions"/"grain". And D18.1's graph in the program (claims_b.py DEP), FC32/FC32.new1.
+
+Let me read the by-line text file at relevant lines.
+
+Now let me look at the text lines the step changed: L13 (revert), L255, L257, L262, L273, L275, L317, L343, L397, L520, L536. Let me read those.
+
+Good. L265 says "Every conjunct but Stated(C,Σ)... None inspects a label." Fine.
+
+Now check the claims file for dangling uses: "four conditions" (N2, FC31), "grain", "NonCircular" in claims now. Also D7.4 (N1). Let me grep the claims file.
+
+Now let me look at the rest of the claims (FC92-FC110, FC-E, CT) and also D18.1's DEP in claims_b.py. Also I need to check the step's inventions file I184-I191, and the step report's sections on dangling uses. Let me read the inventions file first (short), then the DEP in claims_b.py around line 2530.
+
+Now let me analyze the DEP graph for the structure job. Some observations already:
+
+**Section (b) cycles:**
+- D18.1 in the core says "the program's DEP: node 'NC' renamed 'Dep'..." — check that the edges in the core text ("Dependence → (O), (Q), C, δ") match DEP's "Dep": ["(O)", "(Q)", "C", "δ"]. Yes. But wait: Dependence is NC0 ∧ NC2. NC2 reads Sol/Ans of E at pairs — does NC2 read δ? NC2's Contrast reads Ans_E(x) which reads Q(E,...;δ_E). So δ yes. And NC0... fine. OK.
+- But note "Slot" edges: ["(O)", "(Q)", "C", "ℓ", "δ", "Cand"]. In the core, D18.1 [S106] says "Slot (D6.3) → (O), (Q), C, ℓ, δ, Cand". OK matches. Hmm, but does D6.3 read ℓ? NC1(ℰ) is "in E as given at grain ℓ". Slot_C doesn't read ℓ; NC1 does. Since D6.3 is folded into node "Slot" which holds both Slot and NC1, ℓ edge OK.
+
+- Cycle check: Build → ExplUse → (E); and (E) → ... does (E) reach Build? (E) → Dep, NV, F1, F2, A. No path to Build except... (S) → (E); Build doesn't reach (S). (R) → Sel, Con; Sel → CT; CT → Prepares (primitive); Con → CT, Episode. Build → ExplUse → (E) is an edge to (E), not from, so no cycle. OK.
+
+- FC32.new1 (b) says "U: a cycle through (R)" — check: (R) → Sel, Con; Sel → ("<", "(R)") staged, so no cycle under staging; Con → ("<", "(R)") staged. Without staging (U reading), cycle. Fine.
+
+- Now check the "Dep" node vs the core D6.5: Dependence :⟺ NC0 ∧ NC2. NC0 (D6.2) holds of every candidate and "σ(b) depends on b alone". Edges of Dep: (O), (Q), C, δ. Does Dep read Cand? Not needed.
+
+Potential mismatch: core D18.1 [S106] says "(E) → (F1), (F2), (A), Dependence, NV" — DEP matches.
+
+Now, a possible finding: the D_TO_NODE maps "D6.10" → "(E)" but D6.10 (Tables) defines E_tab and E_enc, which read (F1) and slot... E_enc is used by FC25, FC25.new2. Folding D6.10 into node "(E)" gives (E) no new edges. Is that a mismatch? D6.10's right-hand side uses (F1), Sol_D, proj, i.e., (O), (Q)... Hmm, E_tab/E_enc are encodings used by claims; the fold is a choice (I181). Also D_TO_NODE has no node for D6.3's Pin — it's inside Slot. And D6.11 withdrawn — no node. Good.
+
+Another: "D11.3": "h" — D11.3 defines History AND Org_ℓ(h), subhistory, ⪯_h. Node "h" is a TEXT_SINK ("h" in TEXT_SINKS). But D11.3 also defines subhistory, which is listed in D0_2 as a primitive ("subhistory" in D0_2 set) — wait, D0_2 includes "subhistory" as a primitive, but D11.3 says "a subhistory is a subset closed under the interpretation, with ≺ restricted [I151]" — i.e., subhistory is defined in D11.3. Yet D0_2 lists "subhistory" as a primitive sink, and D0.2 text in the core lists "Org_ℓ(h) and subhistory [I151]" as read-through-Θ primitives. Contradiction? Core D0.2 says: "read through Θ where it is a claim about a history (Occurs, Attempt, Prepares, BindingConstruction, TransferComposite, Integrated, UsesClaim, AtRest, Org_ℓ(h), MadeFrom, Rec, Chg, Rule)". So subhistory is listed as a primitive read through Θ, while D11.3 defines it as "a subset closed under the interpretation". That's a conflict: two definitions of one term — one a defined notion (D11.3), one a primitive (D0.2, D0_2 in program). This is a finding for section (e) or (f). Actually it's an internal inconsistency: D18.1 folds D11.3 into node "h" (a text sink), so the defined subhistory contributes no edges; but the Episode node has edge "subhistory" (Episode: ["h", "q(o)", "Rec_h'", "ImmAfter", "subhistory"]). So "subhistory" appears both as a sink (D0_2) and as defined in D11.3. Hmm — but is it truly defined? D11.3: "a subhistory is a subset closed under the interpretation, with ≺ restricted". That's a definition. So D0.2's listing of subhistory as a primitive is stale after round 3 added the definition. This is a genuine finding (e): two definitions of "subhistory" (primitive read through Θ vs defined in D11.3), or (c) undefined primitive listed wrongly. I'll report as (e)/(c).
+
+**Now section (c) primitives left undefined — the step's new ones:**
+- Pin: is it listed in D0.2? The core D0.2 was not changed by the step? Let me check: D0.2's list ends with "q(o), the contract operative at an occurrence, and Rec_h', a provenance record in h', both read through Θ [I165]". Pin is not listed. Det_C is defined in D6.3 ("Det_C := {(a,b) ∈ C : Ans_p(a,b) ≠ ⊥}") — defined, fine. NoBriefQuestion — used in FC84.new1 and I191, defined where? I191 gives the definition: "NoBriefQuestion(h'): the contract operative at every occurrence of h' is the brief, and no occurrence of h' is a criticism (D9.10) whose target z is the brief". But is it in the formal core? Let me grep the core for NoBriefQuestion... I didn't see it in the core (D12.2's note mentions "no criticism aimed at it, [I191]"). Let me check.
+
+Also "a criticism aimed at a brief" — the notion of the target z of a criticism being a contract (the brief). D9.10's criticism c = (z, δ, g, Conn, occ): z a target. Can z be a contract? The brief is a contract. Nothing in D9.10 types z. Probably fine, but "the brief" itself — in FC84.new1 the brief is the contract. Hmm.
+
+Let me grep the core for NoBriefQuestion, Det_C, Pin.
+
+**Section (d) definitions no claim uses:** Candidates: D6.9 (Relabeling) — used by FC21 and L257. D2.5 Direction (dir(D)) — used? FC02 is about Input/asg/Out; does any claim use dir(D)? Let me check. D16.XV's (Elim), (Prov), (QF) defeat conditions — Work(κ) has no definition; are these claims tested? They're NT maybe. Let me search for uses of each definition. This is a lot; I'll do targeted greps for a few suspicious ones: dir(, D2.5, Fid⁺, D16.6 CanAdv (used by UC), D14.8 Appraisal (no definition uses 𝒩), D12.6 Layers (used by?), D4.5 Changes/Inv (used by families), D1.4 subnetwork (used), D6.9 (used), D2.6 Slc_j (used), D8.new1 DiffRel (used by FC44), D13.2 Repertoire (used by New), D15.3 CT2 (FC91/92), D16.3 Enable (UU), D18.2 (FC100).
+
+Suspicious unused: D2.5 (dir), D12.6 (Layers), D16.XV's Uses(α)? used in FC30.new1. D14.8 Appraisal — 𝒩 typed only, "No definition of this file uses 𝒩" — that's by design (values). D15.6 CanAdv used by UC. D12.6 Layers: claims? Let me grep. Also "Held" is used. "Prepares" primitive.
+
+**Section (f) notation used two ways:**
+- Dependence: D6.5's conjunct name vs §18's "Dependence order" (L526 heading "Dependence order" and D18.1 "the dependence graph") and FC31/FC32's "dependence order". The text at L526 has "**Dependence order.**" while (E)'s conjunct is also "Dependence". Two uses of one word. Witness: L255 heading "Dependence" and L526 heading "Dependence order". Fix: text change? L526's heading is the text's own; can't rename without prose. Hmm — proposals can't add prose. Could replace a span by its formal statement or pointer. Maybe rename D18.1's "dependence graph" node name in the core (maths change): D18.1 uses "dependence graph" while D6.5 uses "Dependence". The clash is within the core's own notation. A maths proposal: rename §18's order to "the definition order" — but that's a gloss/new prose? A changed definition is allowed (form of 1). Renaming a defined term is a maths change. I could propose: D18.1 "The dependence graph" → keep, but note. Alternatively propose the text L526 pointer. Hmm, L526 already points to D18.1? "L526's pointer (D18.1)". Let me check L526.
+
+- Slot/Pin/NC1: D6.3 defines Slot_C, Pin, NC1. FC23.new3 (a): Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ Pin at every pair — consistent. But note NC1(ℰ) is "no k ∈ J_E and no boundary coordinate is a slot, in E as given at grain ℓ" — while Slot is now defined with Pin; but "likewise for a boundary coordinate of E whose value at σ(b) is Ans_p(a,b) [I79]" — boundary clause. OK.
+
+- Dep in the program: core.dep = Dependence (NC2), while D18.1's DEP is the graph. Within model, `dep` function vs `DEP` dict — different case, fine but note.
+
+- ⊥: D3.2's undetermined answer; also used in D3.3's obs. Fine, consistent.
+
+- δ: designation (D3.1 δ_D) vs alleged defect (D9.10 δ). Same letter, two uses — the criticism's δ (defect) vs the query's δ (designation). Both in the core; D9.10 "alleged defect δ" and D3.1 "designation δ_D". Genuine notation clash, e.g., in D9.10 ℰ_c includes δ_c which is a designation. Witness: D9.10's "δ" (defect) and "δ_c" (designation) in the same definition. Fix: maths — rename the defect to d or ζ? But the text L377 says "alleged defect \(\delta\)" — the text itself uses δ for defect and δ for designation (L31's "the designation δ"? Actually text L31 says "a query ... designation"? Let me check: the core quotes L31 and adds "the designation δ_D added [I20]" — so the designation is an invention, δ is the maths' letter; the text's own δ at L377 is the defect. So the clash is invented by the maths: δ_D/δ_E (I20) vs δ (defect, the text's own). Fix: maths change — rename designation to ε_D? That would touch many definitions. Simpler: note it and propose renaming the defect variable in D9.10 to "def" or the designation to "dsg". A maths proposal: "D3.1 ... with the designation dsg_D added" — one definition changed, and its uses. Hmm, proposals must be small. I could propose renaming the designation symbol throughout, listed as one changed definition with a note. Actually the smallest: in D9.10 rename the defect symbol to ζ. But the text quotes "alleged defect δ" at L377 — the core quotes it; changing the core's symbol away from the text's is a choice. Alternative: leave as (f) finding with a fix of renaming the designation (I20's letter) since it's an invention. I'll propose: D3.1: "δ_D" → "d_D" (designation), affecting D3.1, D3.2, D5.3, D6.3, D16.4 — that's several. Maybe simplest is one proposal that renames the defect in D9.10/D9.10's use to "δ_def"? Since the text's own word at L377 is δ for defect, and the designation is the invention, renaming the invention is the cleaner fix. I'll propose it as a maths change with the list of places.
+
+- C as a contract and as a set of pairs: D15.2 "Here C is a constructor attribute and π a protocol: the letters of Part XII are local" — noted already. Also E6 "Test fields GF(p)" uses C for contract. And D15.3's F(X). This is already flagged in the core ("the letters of Part XII are local"), so it's a known two-way use. Could still list as (f) with the core's own note as the witness; maybe no fix needed beyond the note. Actually the brief asks for findings; I can list it with "the core notes it; no further fix".
+
+- primes on changed definitions: D5.5's F2_C; D6.4's NC2; "Acc'" etc. Hmm "primes on changed definitions" example given in the brief. E.g., FC23.new1 uses NC1_q; RetReal^{q,r}; Fid⁺; Viol⁺; X^ξ_j. These are fine. What about D6.5 "Dependence" vs claims "Dependence (NC2)"? OK.
+
+- Another two-way: "Slot" the node vs slot() function; fine.
+
+- "Det_C" is defined in D6.3 — used in Pin. Is Det_C used elsewhere? FC23.new3. Fine.
+
+**Section (e) two definitions that conflict:**
+Candidates:
+1. subhistory: primitive (D0.2) vs defined (D11.3). 
+2. D6.3's Slot_C as now defined vs FC23.new3 (a)'s biconditional: Slot_C(ℰ,k) :⟺ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C: {w_δE ...} = {Ans_p(a,b)}. But D6.3's Slot_C also requires "t translates (a,b)"? Original Slot_C: δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C: {w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)}. Pin adds "(a,b) ∈ Det_C ∧ t translates (a,b) ∧ δ_E ∈ V_k ∧ ...". Note: Slot as originally defined doesn't require t translates (a,b) — implicitly since it evaluates L^E_k(τ(a),σ(b)), τ must be defined. Pin adds "t translates (a,b)" explicitly, which also requires π defined on Sol_D(a,b). FC23.new3 (a) claims Slot_C ⟺ Det_C ≠ ∅ ∧ Pin at every (a,b) ∈ Det_C. If Slot_C (D6.3's own clause) doesn't require translation but Pin does, then on a candidate where t fails to translate some pair of Det_C but the relation equality holds (vacuously?), they'd differ. Hmm, actually if τ(a) undefined, L^E_k(τ(a),σ(b)) is undefined, so Slot's clause can't hold. If π undefined on Sol_D(a,b) but τ,σ defined, Slot could hold while Pin fails. Is that possible? π is a partial map; D5.1 requires π defined at least on Sol_D(a,b) at every pair t translates. "t translates (a,b)" is defined as a ∈ dom τ, b ∈ dom σ, and π defined on Sol_D(a,b). So a pair can have τ(a), σ(b) defined but π not defined on Sol_D(a,b) — then Slot's clause is evaluable (L^E_k(τ(a),σ(b)) exists) and could equal {Ans_p(a,b)}, while Pin fails (t doesn't translate). So Slot_C (D6.3) and Pin-at-every-pair (FC23.new3 (a), I184) can differ: a component k whose relation at (τ(a),σ(b)) pins the answer at every pair of Det_C where π is not defined on Sol_D(a,b) is a Slot under D6.3 but not under Pin's reading. Wait — but D6.3's own ∀ clause: "{w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)}" — this is evaluable regardless of π. So yes, divergence possible. Also I184's own table says "Slot (D6.3, 'every') is Pin at every pair of Det_C" — asserted as equivalence, but Pin has the extra "t translates (a,b)" conjunct. This is a real finding: two definitions of Slot that differ (D6.3's Slot_C clause vs I184/FC23.new3's Pin-based reading). The fix: maths — add "t translates (a,b)" to Slot_C's clause in D6.3, or drop it from Pin. Which is better? Pin is at one pair; the translation condition is natural. Since D6.3's clause evaluates at (τ(a),σ(b)) anyway, adding the conjunct is harmless and makes the equivalence exact. Proposal: D6.3 Slot_C :⟺ δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C: (a,b) translated ∧ {...}. Hmm but also δ_E ∈ V_k is in both. And also FC23.new3 (a) says "Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ Pin(...) at every (a,b) ∈ Det_C" — no δ_E ∈ V_k separate since Pin has it. Fine.
+
+Let me verify with the program whether core.slot requires translation. Let me read model/core.py around lines 653-780.
+
+3. Another possible conflict: D6.5 says Dependence :⟺ NC0 ∧ NC2, and "NC0 holds of every candidate (D6.2), so Dependence(ℰ) ⟺ NC2(ℰ)". But D6.2 says NC0 "Holds of every candidate" — as a reading (I23), "under this reading it adds nothing". So NC0 is vacuous. Is NC0 a condition that could fail under another reading? It's registered. Not a conflict per se.
+
+4. D16.XV: "Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ)" vs FC30.new1 (c): "Expl := Acc ∧ ¬Dec meets both (Suff) and the owner's condition" — wait, that's odd: if Expl := Acc ∧ ¬Dec, then Acc ∧ Dec ⇒ ¬Expl holds. OK consistent.
+
+But here's a possible conflict: D16.XV says Expl is "an atom, no definition uses it", yet FC23.new2 (f) computes with Expl ruled out etc. Fine.
+
+5. Possible conflict between D16.XV (Suff) and L17/L536: FC30.new1 handles.
+
+6. Conflict between D12.2's Con and D13.8's Episode? No.
+
+7. Conflict: D7.4 (N1) — Acc(E_v, p) with v declaring (E_v, t_v, Γ_v): no designation δ_v, while D16.4 and D14.7 quantify δ. So Acc in D7.4 is a 4-argument use while D6.7 says Acc's arguments are the 11-tuple including δ_E. This is N1: a genuine mismatch — D7.4 uses Acc(E_v, p) with the candidate lacking δ_v. Fix: maths — D7.4: "each v ∈ 𝒱 declaring (E_v, t_v, Γ_v, δ_v)". That's a clean fix.
+
+Also does the program's Acc in routes need designation? core.Candidate includes δ. The boundary (D) claim FC? Let me check which claim tests D7.4. Search for "Boundary" in claims.
+
+**Section (a) dangling uses:**
+Search results so far: the text has no remaining "non-circular" except L331 "it is circular" (about an argument — kept, D9.7 ground, FC60) and L343? Let me check L343 and L317, L397 current text. The step changed L317, L343, L397. Let me read those lines. Also L255 heading now "Dependence". Also check L536 (Suff) — step deleted "; conclusion-as-premise fails non-circular dependence". Let me read L536, L397, L317, L343.
+
+Also check claims for "the four conditions" — FC31 names L61, L231, L536 as places with "the four conditions". N2 says FC31 still names "the four conditions" at L61 — but the third round replaced L61's span. Let me check current L61: from the read above, L61 now says "(Suff) sufficiency of Account(ℰ) ∧ ¬Dec(t) (D16.XV); (Nec) necessity (D16.XV); ..." — no "four conditions". And L231? L536? Let me check L231 and L536. L536 is the (Suff) line. Let me read them.
+
+Also D6.8 "The four conditions" — quotes L231 "meets Account(ℰ) exactly when the following four conditions are met". Does L231 still say "four conditions"? The step's text changes were on L255, L257, L262, L273, L317, L343, L397, L520, L536, and L13; not L231 or L269. L231's "the following four conditions" — after the step, Part V has four headings still (Component fidelity, Question fidelity, Dependence, Non-vacuity), so "four conditions" remains true. D6.8 updated. OK.
+
+N2: FC31 (not tested) still names "the four conditions" at L61 — but current L61 doesn't have that phrase (it was replaced in round 3). So FC31's statement is stale: it says "'The four conditions' at L61, L231 and L536 are the four headings". L61 no longer has the phrase. Fix: maths — restate FC31's statement to drop L61 (a changed claim). That's N2's fix.
+
+Let me now check current L317, L343, L397, L536, L231, L269.
+
+**Section (c) more:** Pin, NoBriefQuestion, Det_C: check D0.2 listing. D0.2's [S106] note? D0.2 paragraph wasn't marked [S106] in what I read — it ends with round-3 additions. The step's inventions file says "L522's list is not changed (new items would be prose, S40)"? Actually that was for round 2. Does D0.2 list Pin? No. Pin is defined (in D6.3's S106b note), so it's not a primitive — fine, defined notions need not be in D0.2. But NoBriefQuestion: defined only in I191 and claims_s41.no_brief_question — not in the formal core at all. FC84.new1's statement uses "NoBriefQuestion". So a claim uses a symbol no core definition defines. That's a genuine (c) finding: NoBriefQuestion used by FC84.new1, defined only in the inventions register and the program, not in the core. Fix: maths — add to D12.2's note or as a clause: define NoBriefQuestion in the core (as D12.2's clause). Since no new prose allowed but a new definition is allowed (form 1). Proposal: D12.2 addition: "NoBriefQuestion(h') :⟺ q(o) = (C_brief, Q_brief) at every o ∈ h' ∧ no occurrence of h' is a criticism (D9.10) with target the brief". Hmm "the brief" — the contract. Write: NoBriefQuestion(h', C_b) :⟺ ∀o ∈ h': q(o) = C_b ∧ ¬∃c = (z, δ, g, Conn, occ) in h' with z = C_b. And mark [I191].
+
+Also Det_C is defined in D6.3 — fine, but is Det_C listed anywhere as defined? It's inline. Fine.
+
+Also "Pin" — defined in D6.3's S106b note. It is a definition inside a mark; D18.1 folds D6.3 → Slot, and Pin is part of Slot node. But is Pin a separate node? The program has core.pin. The DEP's "Slot" node includes Pin. OK.
+
+- "a criticism aimed at a brief": D9.10's target z — untyped. The criticism's target in D9.10 is "a target" — could be anything. And "which occurrences are criticisms, and of what, is read through Θ (I90)". OK — I90 is an earlier invention. Fine.
+
+**Section (d) definitions no claim uses:** let me grep the claims file for various definition names. Let me check: dir (D2.5), Layers (D12.6), Appraisal (D14.8), DiffRel (D8.new1 — used in FC44? FC44 mentions "one counterpart and different relations" — DiffRel), (D) Boundary D7.4 — which claim? Let me grep.
+
+Let me also check the text for uses: D2.5's dir(D) formalizes L109's direction; text needs it? L109 "The direction of an organization is a consequence of which edits it admits" — the text keeps the sentence; D2.5 is its formalization, so the text needs it even if no claim uses it. D12.6 Layers formalizes L175/L177 — text needs. So for (d) I say: unused by claims but needed by text.
+
+Let me grep the claims for "Boundary", "dir(", "Layers", "Appraisal", "DiffRel", "Relabel", "CanAdv", "Fid".
+
+Also check whether FC-E1..E5 and CT claims use things.
+
+Let me run some greps.
+
+The grep for claims didn't show Boundary/Layers/etc except in line 35 (FC21), 111 (FC84.new1). So no claim uses: D7.4 Boundary, D2.5 dir, D12.6 Layers, D14.8 Appraisal, D8.new1 DiffRel (FC44's statement says "one counterpart and different relations" — it references I36; the claim uses the notion DiffRel implicitly? FC44: "Two commitments with one counterpart and different relations cannot both meet (F1)... Under I36" — the claim is about D8.new1's DiffRel implicitly. Hmm, borderline. Let me check the claims json or the program: claims_b fc44. Probably uses diff_rel. Let me grep model for diff_rel, boundary, layers, dir.
+
+Also the omitted long lines in the text grep: L13, L231, L269, L317, L329(?), L343, L397, L536. Wait the line numbers of the file: 18 = L13, 239 = L231?, 277 = L269, 328-330 = L317?, 356 = L343, 411-413 = L397, 553 = L536. Let me read those file lines directly.
+
+Findings in the text:
+
+1. **L397 (cont.)**: "Such an argument, as one against that claim, has its conclusion among its premises, as in "\(p\) because \(p\)", and does not rule that claim out for anyone." — this survives. It's about ruling out (D9.7's block), which the step kept. OK, not dangling. But note "read structurally (D9.7) and not by logical equivalence alone" — fine.
+
+2. **L536**: "A candidate meeting all four conditions of (E)" — wait, (E) has five conjuncts (D6.7: F1, F2, A, Dependence, NonVacuous) but four headings. L536 says "all four conditions of (E)" and "Part V says which of the four each classic attempt fails" and "fails none of the four". FC31 addresses exactly this: four headings, five conjuncts. Hmm, "the four conditions of (E)" — is that a dangling/incorrect use? It's the pre-existing four-headings reading, and D6.8 keeps it. Fine, FC31 covers it. But note: L536's "a table that encodes the response to every admitted change does not fail (F1); like any new attempt, it is a counterexample only if it fails none of the four and such an argument rules out the claim that it is an explanation." After S106, E_enc meets (E) (FC25.new2), and L536's sentence says it is a counterexample only if it fails none of the four AND such an argument rules out Expl. Actually that's consistent with S44/S45: it's an explanation unless ruled out... wait, (Suff) is the defeat condition: a candidate meeting all four with non-declared transport such that an argument not using (E) rules out the claim that it is an explanation — that DEFEATS the conjecture. So E_enc is a counterexample candidate only if an argument rules out that it's an explanation. Hmm — under S44/S45, E_enc IS an explanation (bad one), so no argument should rule out Expl... unless S41 Q2 (declared transport). E_enc's transport — is it declared? In FC25.new2 the encoding table's transport... The step's report presumably covers this. Not my job (job 1 covers dangling uses; job 4 text?). My job includes the text only for dangling uses of removed notions.
+
+Check: does L536 still say "conclusion-as-premise fails non-circular dependence"? The step deleted that (S106-T13). Current L536 shown above has no such phrase. Good.
+
+3. **L343**: "Dependence is met" — good, renamed.
+
+4. **L317**: "easy to vary (D10.4)" — fine.
+
+5. **L255 heading**: "**\(\operatorname{Dependence}\).**" — the heading is now the formula name. N5: "the heading is now the formula Dependence, the kinds of change allowed giving no plain-word name". Hmm, N5 says the heading is now the formula; the note says "the kinds of change allowed giving no plain-word name" — wait, that's about D6.4's Contrast being symmetric (Q15), so 'in the claimed way' deleted. The point N5: the heading "Dependence" no longer has a plain-word gloss. Propose nothing? A fix from my angle: none needed — the heading names D6.5's condition, which the text needs (formal statement in place of prose is allowed by S40). I'd say none needed, one line.
+
+Wait, re-read N5: "L255, I188 | the heading is now the formula Dependence, the kinds of change allowed giving no plain-word name". Hmm — actually I think this refers to the fact that "Dependence" as a heading has no plain-word content: L255's first sentence "The answer follows by evaluating E under its boundary conditions" is NC0, which adds nothing. So the heading names a formula whose plain content is only NC2. Propose: none needed, or a text change replacing the heading? Can't add prose. I'll say none needed with reason.
+
+Now, more checks for (a): grep the text for "unanalysed", "at the declared grain", "assumes its own answer", "restates", "slot".
+
+Line 285 and 407, 423, 647 omitted — these are grain-related. Line 285 = L269? Let me check what line 285 is. Actually the matches for "grain" include L205, L213, L413, L517, plus omitted long lines 36 (L26?), 285, 407, 423, 647. Not crucial.
+
+Text is clean of "unanalysed"/"declared grain"/"assumes its own answer" — good. So no dangling uses in the text itself, except possibly L536's "all four conditions of (E)" (four vs five conjuncts, already FC31's matter, pre-existing and consistent with D6.8's headings reading).
+
+Wait — L536 also says "Part V says which of the four each classic attempt fails: a table of observed answers fails (F1); a reversed calculation fails (F2) under the production contract." Fine.
+
+Now, check the claims file for dangling uses: I found FC26, FC63 statements still list NC1 as a conjunct ("meets (F1), (F2), (A), NC1, NC2 and non-vacuity") — those are claims about the pole/Leibniz candidate meeting round 3's (E) conditions including NC1; the "note" column says NC1 holds too, so the statements still hold. Fine — they're statements that NC1 holds, not that it's a conjunct. But FC26's statement "meets (F1), (F2), (A), NC1, NC2 and non-vacuity ... on C1" — that's just listing conditions; it's fine, though the claim name says "meets (E) on the production contract" — after S106, (E) no longer includes NC1; the statement still holds. OK.
+
+FC100: "NC1's answer slot and the stated scope carried along" — fine, content.
+
+Now let me look for claims/nodes in D18.1's graph "left pointing at nothing". The DEP graph: node "Resp" → "New" — D12.8 ConResp reads Con and New? Actually ConResp(→ t''; a,b) :⟺ Viol ∧ t'' or its codomain is new (D13.5 New) ∧ Con. Yes.
+
+Check DEP edges against actual definitions for the step's changes:
+- "Dep": ["(O)", "(Q)", "C", "δ"] — D6.5 Dependence = NC0 ∧ NC2. NC2 (D6.4) reads Ans_E (→ (Q), δ_E), Ans_{E−G} (D6.1: Q(E−G, y; δ_E)), C, pairs τ(a),σ(b) (Transport). Does NC2 read Transport? It evaluates at (τ(a),σ(b)) — that's a use of t. Hmm, but the candidate's own t and Γ are "the candidate's own data" per FC32 (1): "Every argument of Acc other than the candidate's own t and Γ ((O), (Q), C, δ, Σ) is an ancestor of (E)". So t and Γ are excluded from the graph by convention. OK, consistent.
+
+But wait: does Dep read δ? NC2's Contrast: Ans_E(x) ≠ Ans_E(x0) in Y_p ∪ {⊥}. Ans_E = Q(E,...;δ_E). Yes δ. Good.
+
+- "Slot": ["(O)", "(Q)", "C", "ℓ", "δ", "Cand"] — Slot reads τ(a),σ(b) (Cand's t?) — again candidate's own data. Slot reads ℓ? Only NC1's "in E as given at grain ℓ" — the node Slot holds D6.3 including NC1, so ℓ edge OK.
+
+Hmm, but there's a subtle issue: the core D18.1 [S106] says "Slot (D6.3) → (O), (Q), C, ℓ, δ, Cand, no longer an ancestor of (E)". Matches DEP. Good.
+
+- "(E)": ["(F1)", "(F2)", "(A)", "Dep", "NV"] matches.
+
+Now cycles: FC32.new1 (b) "U: a cycle through (R); K, T, T′: none". Let me verify: under U (unstaged), (R) → Sel → ("<", "(R)") becomes a real edge → cycle. Also Con → ("<", "(R)"). Also Build → ("<", "(R)"). OK.
+
+But is there any *unintended* cycle now? Consider "OutCand" → Out, (E); "DefeatConds" → (E), Dec, Out, Expl, Sel, Underdet. No cycle. "(S)" → (E); (S) not reachable from (E). "Conf" → (F1)... fine.
+
+One more: "ExplUse" → UsesClaim, (E), Cand. And Build → ExplUse → (E). And (R) → ... does (E) reach (R)? (E) → Dep → ... no. So no cycle through ExplUse. But wait: Build → ("<", "(R)") staged; under U, Build → (R) → Sel → ... → Build? Sel → CT → Prepares (primitive); Sel → Occurs (primitive); Sel doesn't reach Build. Con → CT, Episode; Episode → h, q(o), Rec_h', ImmAfter, subhistory — primitives. (R) → Sel, Con, Content. Under U: (R)→Con→? Con→Episode→(primitives). So cycle only (R)→Sel→(R) and (R)→Con→(R) and Build→(R)→...→? (R) doesn't reach Build (Build is reached by (G), CCE...). CCE → (G), Crit...; (G) → Build; (EX) → CCE. Does anything reach CCE from Build? No. So under U the cycle is only through (R) — consistent with FC32.new1 (b).
+
+Hmm wait, there's one more possible cycle: "ProducesVia" → ActRoute, CT. And Build → ... no.
+
+What about "Held" → Org, (F1), (F2); "Match" → (F1),(F2),Content; fine.
+
+Now a genuine check: does the DEP node list contain a node for D6.9 (Relabeling)? D_TO_NODE maps "D6.9" → "Dep". D6.9 Relabeling defines relabeling using Ans_p — fine under Dep. OK, folded.
+
+D6.10 → "(E)"?? D_TO_NODE maps "D6.10": "(E)". D6.10 defines E_tab and E_enc — encodings, not a conjunct of (E). Folding D6.10 into node "(E)" is odd: E_enc reads (F1) and Sol_D, i.e., (O), (Q), Transport, λ... The fold gives (E) no wrong edges (folding means the paragraph is represented by that node; edges are per-node, and E_tab/E_enc are constructions not conditions). It's a choice under I181; not obviously wrong. But one could argue D6.10 should fold into "(F1)" or be its own node since E_enc is used by FC25/FC25.new2 to test (E) — if E_enc is part of node (E), then a claim testing E_enc against (E) is testing a node against itself, harmless. I'll note it as a minor point maybe in (b) — actually it's a mismatch between D18.1's stated rule ("Nodes: the symbols defined in §§1–16") and the fold: D6.10 defines E_tab/E_enc which are not (E). Weak. Skip or mention briefly.
+
+Now let me check the program's core.py for slot/pin to verify the Slot/Pin divergence finding.
+
+Important: in the program, `slot` with q == "every" DOES require `cand.translates(a, b)` (line 704). So the program's Slot (under "every") includes the translation condition, matching Pin. But the core's D6.3 Slot_C clause as written does not include "t translates (a,b)". Actually wait — the core's D6.3 says "Slot_C(ℰ, k) :⟺ δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C: {w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)}". No translation conjunct. But the program requires translation. And Pin (I184) requires translation. So D6.3's Slot and the program's slot differ where τ(a), σ(b) are defined but π is not defined on Sol_D(a,b). Since the program's translates() presumably requires π defined on Sol. So the mismatch between core D6.3 and program slot: on such a candidate, core says Slot holds, program says not. Also FC23.new3 (a) asserts the equivalence with Pin which needs the translation conjunct.
+
+Also note: the "registered" reading in the program requires translation? It doesn't check translates at all (lines 690-696): iterates over p.C, uses E.L(k, cand.tau[a], cand.sigma[b]) — would KeyError if tau undefined. Not relevant.
+
+So finding (e): D6.3's Slot_C (core) vs Pin (I184) / program slot(): they differ exactly where a pair of Det_C has τ(a), σ(b) defined but π undefined on Sol_D(a,b). Fix: maths — add "t translates (a,b)" to Slot_C's clause (or state Slot via Pin). This also resolves FC23.new3 (a)'s biconditional.
+
+Actually wait — could it be that in the core, "{w_δE : w ∈ L^E_k(τ(a),σ(b))}" implicitly presupposes translation? No — translation is defined in D5.1 as a ∈ dom τ ∧ b ∈ dom σ ∧ π defined on Sol_D(a,b). The clause only needs dom τ, dom σ. So yes, divergence.
+
+Is there a model? I could construct one: D with a pair (a,b) where Sol_D(a,b) has some valuation on which π is undefined, τ(a), σ(b) defined, and E's component k pins the answer. Would the program's slot return False while core's Slot holds? Yes by code reading. I can propose code "not run" or reason it. Actually I could write a small model in the program's notation and mark "not run". But careful: I need to know the program's notation (core.Org etc.). Alternatively give the witness as a chain of definitions (the divergence condition) and propose the maths fix. I can also propose a code check. Let me keep it as a definitional witness with a maths fix; optionally include code.
+
+Next, let me verify the second-checker rulings file and step report briefly for anything about D6.3/Pin and the pin kept as clause of D6.3 — "the pin kept as a clause of D6.3" per the brief. So D6.3 now contains Pin's definition in the S106b note. Fine.
+
+Now (c): check whether D0.2 lists Pin, Det_C, NoBriefQuestion, and whether "the brief"/"aimed at" is read through Θ. Pin: defined in D6.3 (S106b note) — defined, not a primitive; D0.2 doesn't list it and need not. Det_C: defined in D6.3. NoBriefQuestion: NOT in the core — only in I191 and the program (claims_s41.no_brief_question). Used by FC84.new1. So finding: NoBriefQuestion is a symbol a claim uses and no definition of the core defines; it lives only in the inventions register. Fix: maths — add it as a clause of D12.2's note / a new definition D12.2. Hmm, "no new prose" but a new definition is form 1. But adding a definition to the core is allowed ("a changed or new definition").
+
+Also check: does the program's claims_s41 define no_brief_question? Let me look. And check what "the brief" is — presumably the contract. Let me read claims_s41.py.
+
+Also (c): "a criticism aimed at a brief" — D9.10's target z: untyped; a contract as target. Not listed. Read through Θ (I90)? I191 says "which occurrences are criticisms, and of what, is read through Θ (I90)". OK.
+
+Now (d) definitions no claim uses. Let me grep the model for uses of: roles/direction (D2.5), boundary (D7.4), layers (D12.6), appraisal (D14.8), diff_rel (D8.new1), relabeling (D6.9), Fid+ ... Let me grep model for "def fc" names referencing these. Easier: grep model for "boundary", "layer", "dir(", "relabel", "diff_rel", "appraisal".
+
+Confirmed: no_brief_question is defined only in the program + I191; not in the core. Finding for (c): NoBriefQuestion used by FC84.new1, defined nowhere in the core; the program's reading (`c[0].startswith(brief)`) is a string-prefix matching — an implementation detail (also a possible notation/typing issue: target z of a criticism is a string here, vs D9.10's z being any target). Also the fix: add a definition to the core.
+
+Also D7.4 Boundary: no claim uses it (no "Boundary" claim found). D2.5 dir: no use. D12.6 Layers: claims_r3a3 mentions "simulation layers built" for E9 — that's L620's layers, related. Let me check if any claim uses D12.6 (P and S typed). FC102 uses S0, t0 — the simulation layer. Hmm, E9 uses S0/S1 as organizations, not necessarily via D12.6. D14.8 Appraisal: 𝒩 typed only, no claim. D8.new1 DiffRel: FC44 — let me check claims for fc44 uses one_counterpart/diff_rel? The grep found no "diff_rel" in model. Let me grep "counterpart" in claims_b.
+
+FC44 uses the notion "one counterpart, different relations" — likely implements D8.new1's DiffRel inline. Let me look at claims_b.py fc44 briefly to see if it uses a helper named diff_rel or implements inline. Line 304-370: it implements "one counterpart (same subnetwork, translations, value maps) and different relations" — that's D8.new1's content, computed inline. So D8.new1 is used (by FC44), even if not by name. OK.
+
+So candidates for (d) definitions no claim uses:
+- D2.5 Direction (dir(D)): no claim, no program use (grep "direction" found none in claims_a besides). But text L109 needs it ("The direction of an organization is a consequence of which edits it admits"). So text needs it.
+- D7.4 Boundary (D): no claim. Text L302 needs it. Also N1 (missing δ_v).
+- D12.6 Layers: E9/FC102 use S0/S1 but not via D12.6's typing? claims_r3a3 builds E9's simulation layers. It probably implements L620's P and S. D12.6 is the typing; used implicitly. I'd say used.
+- D14.8 Appraisal: 𝒩 — no claim; the text needs it (L455, L518); by design no definition uses 𝒩.
+- D16.XV's (Elim)/(Prov)/(QF) defeat conditions: Work(κ) has no definition; claims? FC109 covers L546. Not tested (they're formal shapes). These are "definitions no claim uses" — the defeat conditions (Elim), (Prov) (ii)(iii), (QF) have no definition of Work, 'without loss', 'operates on', 'fails to capture', 'not creative'. These are undefined primitives — for (c). D16.XV itself notes "Work has no definition". So (c): Work, 'without loss', 'operates on', 'fails to capture', 'not creative' — used at L540, L542, L544, undefined, listed by the core as having no definition but are they in D0.2? No. They're text words the core quotes. Hmm — D16.XV says "Work has no definition" and "(ii) 'without loss' and (iii) 'operates on' have no definition" — so the core itself records them as undefined. These are pre-existing. I can mention in (c) briefly.
+
+Now let me check a few more things:
+
+1. N1: D7.4 — Acc(E_v, p) with (E_v, t_v, Γ_v) missing δ_v. Also note D7.1 (Restriction) writes "Acc(E|W, p) := Acc((E|W, p, t|W, W, δ_E))" — has δ_E. D7.4 lacks it. Fix: maths change D7.4.
+
+2. N3: D9.10 (K1), FC107 — "a criticism whose connection writes its defect in now has bearing where it meets the rest of (E)". The core's D9.10 S106 note says "Bearing reads Acc after S106: a criticism whose connection writes its defect in (a slot) has bearing when it meets the rest of (E) (FC107: E8's p_δ, its identity candidate a slot, meets (E) now)". This is a consequence of S45, noted. Fix needed? The point asks for a proposal from my angle or one line why none. Since S44/S45 say a written-in answer makes a criticism's connection no less bearing (it's an explanation, bad one), no fix needed — it follows from the owner's decision. One line.
+
+3. N4: D16.XV (Suff), L536 — candidates with a slot now fall in (Suff)'s range. L536's (Suff): "A candidate meeting all four conditions of (E) ... such that an argument not using (E) rules out the claim that it is an explanation of what its question asks." With slots now meeting (E), a slot candidate with non-declared transport where an argument rules out Expl would defeat the conjecture. But under S44/S45 such a candidate IS an explanation (a bad one), so an argument ruling out Expl would... hmm. The owner's words: "It is an explanation. Just not a good one." So an argument ruling out "it is an explanation" should fail — but the conjecture's defeat condition is exactly that. Is that a problem? The step noted "(Suff)'s range holds them, and S44, S45 hold them explanations, bad ones; S41 (Q2) kept". So nothing to fix: an argument ruling out Expl for a slot candidate would be an argument the theory must answer, as for any candidate. I'd say no fix needed (the step's note covers it), or note that "bad" is parked (P8). One line.
+
+4. N6: FC84.new1, I191 — the encoding of "a question about the brief occurred" as a criticism aimed at the brief, read through Θ. From my angle (structure): NoBriefQuestion is not in the core (finding above). The fix for N6 is the same as the (c) finding: define NoBriefQuestion in the core as a clause of D12.2, with the target-typing note.
+
+5. N2: FC31 stale naming L61. Fix: restate FC31 (drop L61, keep L231/L536), or actually check: does current L536 have "four conditions"? Yes ("all four conditions of (E)"). L231: "the following four conditions". L61: no longer. So fix FC31's statement: replace "'The four conditions' at L61, L231 and L536" with "'The four conditions' at L231 and L536". Also FC31's part about L520's three sources — current L520 writes the five conjuncts; check "L520's three sources cover the four headings exactly when 'fidelity under change' has the wide extent" — L520 now writes Account from (F1)∧(F2)∧(A)∧Dependence∧NonVacuous, so the three-sources sentence may have changed. Current L520 (read earlier): "Everything else is defined in terms of the two imports, the structural vocabulary of (O) and (Q), the declared indices and the declared inputs (below). Roles, from admitted edits... Account, from (F1)∧(F2)∧(A)∧Dependence∧NonVacuous (E)." Hmm, this lists sources per notion, not "three sources". FC31's third part says "L520's three sources cover the four headings exactly when 'fidelity under change' has the wide extent Fid⁺; with the narrow extent L189 defines, L520 names no source for (A)". After the step's L520 change (S106-T12), L520 now writes (E)'s conjuncts explicitly including (A), so it names a source for (A). So FC31's statement is stale on two counts: L61 and L520. Fix: restate FC31.
+
+Wait, actually, let me re-read FC31: "'The four conditions', five conjuncts, and L520's three sources | (E) has five conjuncts; Part V has four headed conditions... 'The four conditions' at L61, L231 and L536 are the four headings. L520's three sources cover the four headings exactly when 'fidelity under change' has the wide extent Fid⁺ (I49); with the narrow extent L189 defines, L520 names no source for (A)." Hmm — was L520 changed by round 3 (A3-L520.1) to write (E)'s five conjuncts? The core D5.7 says "L520's 'fidelity' is the narrow extent... L245, L247 and L520 (text 104) need no wide extent" and "[r2: L520 writes (E)'s five conjuncts (A3)]". But the current L520 shown above doesn't have "fidelity under change" — it lists "Account, from (F1)∧(F2)∧(A)∧Dependence∧NonVacuous (E)". So FC31's L520 part is stale since round 2/3 already? Actually the step changed L520 (S106-T12: Dependence). Anyway FC31 is NT and stale on L61 and L520. Fix: restate.
+
+6. N5: L255 heading. One line: none needed (the heading names D6.5; the plain-word name was the removed test's, I188's other choice (a) rejected).
+
+Now more on (b): "whether the step's edges (Dependence → (O), (Q), C, δ; the node Slot) are the edges the definitions actually have". Let me verify Dep's edges carefully. Dependence = NC0 ∧ NC2.
+- NC0 (D6.2): every answer computed by evaluating E at (τ(a),σ(b)), σ(b) depends on b alone. Reads: (Q) (Ans), Transport σ... but by convention candidate's own t excluded. OK.
+- NC2 (D6.4): Ans_E(x), Ans_E(x0) — (Q) and δ_E; (a,b) ∈ C — C; E−G deletion — (O). So {(O), (Q), C, δ}. ✓.
+
+Slot's edges: (O), (Q), C, ℓ, δ, Cand. Slot_C reads: δ_E ∈ V_k (Cand's data), Det_C (C, (Q)), L^E_k(τ(a),σ(b)) ((O), t), Ans_p ((Q), δ_D). And NC1 reads ℓ. And Pin reads "t translates (a,b)" — Transport. Hmm: Pin's conjunct "t translates (a,b)" is a use of the translation/π — is Transport an ancestor of Slot? "Cand" node includes Transport? D_TO_NODE: "D5.1": "Transport", "D5.3": "Cand". DEP: "Cand": ["(O)", "(Q)", "Transport", "δ"]. Slot's edge list includes "Cand" — and Cand → Transport. So Transport is an ancestor of Slot via Cand. OK consistent.
+
+Now, is there an edge problem: "Dep" doesn't include t (excluded by convention). Fine.
+
+Cycle analysis summary for (b):
+- The staged ("<", x) edges: Sel, Con, Build → (R). Under the staged reading no cycle; the definitions' actual reading: D12.1's Sel has ¬∃o ≺ o_t Rep(o,x) — staged use (earlier occurrences only), yes staged. D12.2's Con: Held(o', x) for some o' ⪯ o_t of h' — also staged (o' ⪯ o_t; note ⪯ includes o_t itself! "Held(o', x) for some o' ⪯ o_t" — o' can be o_t itself. Held is defined without provenance (D18.1's Held: ∃t faithful, no provenance) — Held does not read (R)/Sel/Con. So no cycle from Held. ✓. And Build's "Held_ℓ(o, c)" — again Held. And (R) → Sel, Con. So the (R)↔Sel/Con/Build loop is staged only through Rep (in Sel) — Sel's exclusion uses Rep at earlier occurrences (staged), and Rep → Sel, Con (unstaged!). Rep_ℓ(o,c) :⟺ ∃t faithful ∧ some parameters give Sel(t) or Con(t). So Rep → Sel → (staged Rep). The staging annotation is on Sel's edge to (R), not to Rep. Hmm: DEP has "Sel": [..., ("<", "(R)")] — but Sel's clause is ¬∃o ≺ o_t Rep(o, x) — a use of Rep at earlier occurrences, not of (R) at earlier occurrences. The DEP graph doesn't have an edge Sel → Rep at all! Wait: "Sel": ["h", "Θ", "(F1)", "(F2)", "CT", "𝒯pop", "surv", "Occurs", ("<", "(R)")]. There's no "Rep" edge. But D12.1's Sel reads Rep(o, x) (D12.5) in its exclusion clause. And (R) is the node holding Rep (D12.5 → "(R)" in D_TO_NODE). So the edge ("<", "(R)") covers the staged use of Rep — the node (R) holds Rep. OK, so Sel → (R) staged is right, and it represents Sel's use of Rep at earlier occurrences. Good. And Con's Held use: Held is its own node; Con's edges: ["h", "CT", "Episode", ("<", "(R)")] — where's Held? Con(t;h,e) :⟺ some episode h' has CT(h',t), and Held(o', x) for some o' ⪯ o_t. So Con reads Held — but "Held" is not in Con's edge list! Missing edge: Con → Held. Similarly Build reads Held_ℓ(o, c) — Build's edges: ["h", "Owned", "Prepares", "BindingConstruction", "TransferComposite", "ExplUse", ("<", "(R)")] — no "Held" edge! D13.3 Build :⟺ ... Held_ℓ(o, c) ∧ ExplUse(o,c)... So Build → Held is missing from DEP. Held → (F1), (F2), Org — no cycle, but the graph is incomplete: FC32.new1 (a) says "every definition paragraph of §§1–16 a node of DEP or folded into one" — that's about nodes, not edges. FC32 (2)/FC32.new1 (d) say "every dependence L526 states is a path". Hmm, does the missing Held edge break any claim? FC32's part (1): "Every argument of Acc other than t and Γ is an ancestor of (E)" — Held is not an argument. But structurally, the graph misses edges Con → Held and Build → Held (and D12.2's Con reads Held; D13.3's Build reads Held). Is that a real omission? Let me double check DEP: "Con": ["h", "CT", "Episode", ("<", "(R)")]. Yes, Held missing. "Build": [...] Held missing. Also "Scr" reads (R), Crit — fine. Also "Con" reads CT ✓.
+
+Is this deliberate? The [r3: A3; S2...] note says edges: "Con → CT, Episode". The T′ cut reads 'available as a represented target' as Held. Round 3 re-based Con to include Held (r2b R3). So DEP should have Con → Held. Since Held → (F1),(F2),Org only, adding it creates no cycle, but it changes FC32.new1's computations? FC32.new1 checks paths and cycles; adding an edge Con → Held wouldn't create a cycle. But the claim "every dependence L526 states is a path" wouldn't be affected. Still, the graph as it stands misstates the definitions' edges — a finding for (b): the step's/round-3's edge set is not the one the definitions have (Con and Build read Held, D12.2/D13.3). Fix: code — add "Held" to DEP's "Con" and "Build" entries (and re-run FC32/FC32.new1). Mark "not run" with expected output (H still, no new cycle since Held is not an ancestor of Con/Build... wait, is Held an ancestor of Con? Held → Org, (F1), (F2). No path to Con. And Build → Held, Held → ... no path back to Build. So no cycle.)
+
+Also check: does Episode read Crit? Episode: ["h", "q(o)", "Rec_h'", "ImmAfter", "subhistory"]. D13.8's Episode doesn't read Crit (CompleteCritical does, folded into CCE). ✓ FC32.new1 (f).
+
+Also "CCE" edges: ["Episode", "(R)", "Crit", "UsesReason", "(G)", "Attempt"] — D13.8's CompleteCritical reads Episode, Crit, UsesReason; CreativeCriticalEpisode reads (G), Conn (Attempt), and h_Δ ⊆ h'. ✓.
+
+Also, "(K1)" → (E), Crit, Qf: D9.10 Bearing = Acc(ℰ_c) ✓.
+
+Another check: "OutCand" → Out, (E) ✓ (D9.8).
+
+Another: "DefeatConds" → includes Sel, Underdet ✓.
+
+Also "Resp" → Sel, Surp, Con, New ✓ (D12.8: ConResp reads New (D13.5) and Con).
+
+Hmm wait: D12.8 SelResp reads Sel, Viol (→ (F1),(F2)), μ⁺; ConResp reads Viol, Con, New. ✓.
+
+Another possible missing edge: "Surp" → (F1),(F2),Sel,Occurs,(Q) ✓ (Viol reads F1, F2eq).
+
+"Test" → (Q), Arg, (K3) ✓.
+
+"Prob" → Riv, Riv_χ, OutCand, Accepted ✓.
+
+"Underdet" → surv, 𝒯pop, (O) ✓.
+
+"Match" → (F1), (F2), Content ✓.
+
+"New" → Repertoire, Match ✓.
+
+"Deploy" → (R), Can, Integrated ✓ (Can_{Ω,β}).
+
+"Can" → (CT1), Owned, Ω ✓.
+
+"𝔈" → (E), Θ ✓.
+
+"Classes" ✓.
+
+Missing: "Defects" → (Q),(O),Desc ✓. "ProvC" → h, Θ, CT ✓ (D3.4 selected reads survival in a physical history, constructed reads episode/trace). Hmm D3.4 also reads 𝒞, variation operator — declared inputs; fine.
+
+"Respects" ✓. "Families" ✓. "Kind" ✓.
+
+Missing node? "D6.10" folded to (E). Also is there a node for "Nontrivial"? It's in D0_2 (primitive). ✓.
+
+What about "Episodes"' "ImmAfter" — in D0_2_R3A3 as defined by area 1. But ImmAfter is defined in D13.8 itself ("o' immediately after o in h' :⟺ ..."). So ImmAfter is defined in D13.8 but classed in D0_2_R3A3 as "defined by area 1 (F9, the covering relation of ≺)". OK.
+
+Also "Event": D0_2_R3A3 says Event is "defined (D11.1)" — yet "Event" is also a node in DEP ("Event": ["h"]) and D_TO_NODE maps D11.1 → "Event". Fine, consistent: it's defined and a node. But then why is Event in D0_2_R3A3 (the set of sinks outside both lists)? It says "defined" in its classing, so it's just classed, fine. Hmm, but D0_2_R3A3 is described as "the sinks FC32.new1 finds outside both lists, each classed" — including Event classified as defined. But if Event is defined (D11.1) and is a node, it's not a sink. Minor.
+
+Now subhistory: D0_2 includes "subhistory" as a primitive; D11.3 defines it; Episode has edge "subhistory". So subhistory appears as a sink/primitive while D11.3 defines it, and D_TO_NODE maps D11.3 → "h". Conflict for (e): D0.2 lists subhistory as read through Θ; D11.3 defines it ("a subset closed under the interpretation, with ≺ restricted"). Two statuses for one symbol. Which is right? The definition in D11.3 is explicit. Fix: maths — D0.2: drop "subhistory" from the primitives list (a changed definition), or reclassify. Since D0.2's list is a definition (D0.2), changing it is form 1. Also update D0_2 in the program (code).
+
+Wait, also "Org_ℓ(h)" is read through Θ ✓ and "q(o)", "Rec_h'" read through Θ ✓ [I165].
+
+Also D0.2 lists "UsesClaim [I178]" ✓ and the program's D0_2 has "ExplUse" — but ExplUse is now defined (D13.3)! D0_2 (the program's dict) still includes "ExplUse" as a primitive: D0_2 = {..., "Attempt", "Qf", "ExplUse", "AtRest", ...}. But round 3 defined ExplUse in D13.3 (I178). The core's D0.2 says "UsesClaim [I178] (ExplUse is defined, D13.3)". So the core fixed it but the program's D0_2 dict still lists "ExplUse" as a primitive sink. Is that a dangling use? Let me check where D0_2 is used in the program — probably in fc98/fc32.new1 to class sinks. If "ExplUse" is in D0_2 and also a DEP node with edges ["UsesClaim", "(E)", "Cand"], then when classing sinks, ExplUse wouldn't be a sink (it has edges). The D0_2 set may be used to check that sinks are classed. Since ExplUse is a node with edges, its presence in D0_2 is harmless-ish but stale. Hmm, but wait — the DEP comment says "Sinks outside the text's lists (L526, L522) are D0.2's primitives (D0_2 below)". If ExplUse is in D0_2 but is no longer a sink (it's a node with edges), maybe fc32.new1 iterates over nodes with no edges and checks membership in TEXT_SINKS ∪ D0_2 ∪ ... Let me look at dep_edges and the fc98/fc32 code to see how D0_2 is used, to determine whether the stale "ExplUse" (and "subhistory") entries cause a wrong classification. Let me read claims_b.py around dep_edges and the fc32 claims.
+
+Similarly "subhistory" is in D0_2 and also possibly a sink in DEP (no node "subhistory" — it's only an edge target). So subhistory is treated as a primitive sink by the program, while the core defines it in D11.3. That's an inconsistency between core and program (the core's D0.2 doesn't list subhistory as a primitive? Let me re-check the core D0.2 text: "read through Θ where it is a claim about a history (Occurs, Attempt, Prepares, BindingConstruction, TransferComposite, Integrated, UsesClaim, AtRest, Org_ℓ(h), MadeFrom, Rec, Chg, Rule)" and "q(o), the contract operative at an occurrence, and Rec_h', a provenance record in h', both read through Θ [I165]". Hmm, where does the core D0.2 list subhistory? Earlier: "Attempt (read through Θ); Qf [I145]; UsesClaim [I178]...; AtRest [I149]; Org_ℓ(h) and subhistory [I151]". Yes — "Org_ℓ(h) and subhistory [I151]" are listed as read-through-Θ primitives in D0.2, while D11.3 (with [I151]) defines subhistory as "a subset closed under the interpretation, with ≺ restricted". So the core itself both lists subhistory as a primitive (D0.2) and defines it (D11.3). That's finding (e): two definitions/statuses of "subhistory". Actually is it a conflict? D11.3's definition "closed under the interpretation" arguably needs Θ's interpretation, so "read through Θ" is consistent-ish. But one place says stated-not-defined, the other defines it. The cleaner fix: D0.2 — reclassify subhistory as defined (D11.3), i.e., remove from the primitives list. I'll propose that as a maths change and code change (D0_2 set: remove "subhistory", add classing like ImmAfter).
+
+Hmm wait, but actually — is this from round 3 rather than the step? Yes, I151 is round 3. But my job is the core as it now stands; fine.
+
+Also "ExplUse" in the program's D0_2 is stale relative to the core (round 3's A3 S2(iii) defined ExplUse). Let me verify how D0_2 is used to decide severity. Let me read the fc98/fc32 code.
+
+Note line 2699: `sinks = ... - set(DEP) - TEXT_SINKS` — sinks are edge targets that are not nodes. "Held" IS a node, so Con/Build lacking Held edges isn't about sinks. The stale "ExplUse" in D0_2: since ExplUse is a node (set(DEP)), it's excluded from sinks anyway; D0_2 membership only matters for the "unl" list. So stale entries in D0_2 are harmless for the computation, but "subhistory" is an edge target that is not a node → it IS a sink, and it's in D0_2 so it's counted as "listed by D0.2 as a primitive", while the core's D11.3 defines it. So the program's classification of subhistory as a D0.2 primitive is consistent with the core's D0.2 but inconsistent with core D11.3. The conflict is inside the core itself (D0.2 vs D11.3). Good finding.
+
+Also note dep_edges: under reading "T"/"T′", Con and Build get edge "Held" — so under T and T′ the graph DOES have Con → Held and Build → Held (substituted). But under T′, Sel's (R) is staged, so Sel has no Held edge; and Con/Build have Held. So under T′ (the chosen cut), Con → Held and Build → Held edges EXIST in dep_edges' output but are absent from the base DEP dict. Interesting: the DEP dict itself (the "one edge set" that FC32 says matches the core and L526) lacks Held edges for Con/Build, while the T′ reading adds them via substitution. So the "one edge set" claim (FC32: "One edge set: this, the program's DEP and L526's pointer") is about the base DEP. Under the base DEP (unstaged? base DEP has ("<","(R)") staged edges for Sel/Con/Build, i.e., the K reading), Con and Build have no Held edge — but D12.2's Con reads Held(o',x) outright (not only as a reading of 'represented'): "Con(t; h, e) :⟺ some episode h' of h up to e has CT(h', t), and Held(o', x) for some o' ⪯ o_t of h'". That's an explicit, unstaged use of Held. So the base DEP is missing Con → Held and Build → Held as real edges (they shouldn't be substitutions only under T/T′). Under T′, the substitution happens to add them, so the T′ graph is right; but the base DEP (and the K reading) is wrong: under K, Con and Build lose the (R) edge and gain nothing, though Con/Build read Held unconditionally. Hmm wait — under K, "(R) inside Sel, Con, Build staged" — the reading K treats 'represented' as (R) staged. But Con's Held use is not a use of (R) at all; Held is separate. The dep_edges code conflates: the ("<","(R)") edge in Con's list represents... hmm, Con's [S106-era] definition reads Held directly. The DEP list for Con is ["h", "CT", "Episode", ("<", "(R)")] — the ("<","(R)") entry presumably represents Con's Held use (as 'represented target' read through (R) under U, staged under K, Held under T/T′). Under U, Con → (R); under K, nothing; under T/T′, Con → Held. But the actual definition says Con reads Held (period), so under every reading Con → Held, and under U additionally Con → ... no wait, Held is defined without provenance, so Con's Held use never reads (R). Actually re-reading D12.2: "Con(t; h, e) :⟺ some episode h' of h up to e (D13.8) has CT(h', t), and Held(o', x) for some o' ⪯ o_t of h' and x ∈ {t, cod t} (D18.1)". So Con reads Held directly. The DEP's staged (R) edge for Con is a leftover from before r2b R3 re-read 'available as a represented target' as Held. So the base edge set misstates Con's edges: it should be Con → [h, CT, Episode, Held] with no staged (R). Similarly Build reads Held_ℓ(o,c) directly: Build → [h, Owned, Prepares, BindingConstruction, TransferComposite, ExplUse, Held]. Under this correction, does a cycle appear? Held → Org, (F1), (F2) — no path back to Con/Build. So no cycle; FC32.new1's results unchanged. But Sel still has the staged Rep use (Sel's exclusion ¬∃o ≺ o_t Rep(o,x)) — Sel → (R) staged under T′/K, unstaged under U. That's right.
+
+So finding (b): the DEP edge set is not the one the definitions have: Con and Build read Held (D12.2, D13.3) unconditionally, but the base DEP carries their Held use as a staged (R) edge that the K reading drops entirely; FC32's "one edge set" and D18.1's note ("Con → CT, Episode") are wrong on this. Fix: code — DEP["Con"] = ["h", "CT", "Episode", "Held"], DEP["Build"] = [..., "Held"], removing the ("<","(R)") entries from both (Sel keeps its staged Rep use); dep_edges' substitution logic for Con/Build then becomes redundant; expected: FC32, FC32.new1 still H, no cycle under K, T, T′; under U still a cycle through (R) (via Sel). Mark "not run" (or I could actually run FC32/FC32.new1 now — but I can't change the program, so "not run").
+
+Wait — careful: under reading U ("as worded"), is Con's Held use a use of (R)? No: Held is its own defined notion (no provenance). Under U, Con reads Held, not (R). The old U-cycle through (R) came from Sel's Rep and Build/Con's 'represented'. With the correction, under U: Sel → (R) unstaged (cycle (R) → Sel → (R)? (R) → Sel yes! (R): ["(F1)", "(F2)", "Org", "Sel", "Con", "Content"]. So (R) → Sel → (R) staged; under U unstaged → cycle. Yes FC98 (a) cycle through (R) survives via Sel. Good.
+
+Also check: is there a D18.1 statement in the core matching? Core D18.1 [r3: A3; ...]: "Sel → (F1), (F2), CT, 𝒯pop, surv, Occurs, staged (R); Con → CT, Episode; Dec → Sel, Con, TransferComposite; Build → ExplUse → (E)". So the core's own D18.1 note also omits Con → Held and Build → Held. So both the core's D18.1 note and the program's DEP miss these edges. Good, one finding covering both, with a maths fix (D18.1 note) and code fix.
+
+Hmm, wait — maybe the omission is deliberate because Held is "part of (R)'s reading"? No, Held is defined separately (D18.1's own bullet). And under T′ the code adds Held. I'm fairly confident this is a genuine edge-set error, though benign for cycles.
+
+Let me also double-check FC32's claim (1): "Every argument of Acc other than the candidate's own t and Γ ((O), (Q), C, δ, Σ) is an ancestor of (E)". With the correction, still true.
+
+Now let me also check the (f) items more:
+- Dependence (D6.5 conjunct) vs "dependence order" (L526 heading, D18.1 "dependence graph") vs FC32's title "L526's dependence order". The text L526: let me check its heading. Let me read L526.
+
+Also check the text's L526 for the pointer (D18.1).
+
+- Another notation two-ways: "Slot" — D6.3's Slot_C vs the program's slot() ✓ consistent. "Pin" vs "pins" (plural, program) — pins presumably the set of pinning components. Fine.
+
+- "Det_C" — defined D6.3; also "Det" in D16.XV? No. OK.
+
+- δ as designation and defect (D3.1/D9.10) — confirmed clash; also D9.10 uses δ for defect and δ_c for ℰ_c's designation. Witness: D9.10 "c = (z, δ, g, Conn, occ)" and "ℰ_c := (Conn, Qf(z,δ,p), t_c, Γ_c, δ_c)". Fix: rename the designation (I20's letter) since the defect is the text's own (L377). Actually the text L377 uses δ for defect; the designation δ_D is the maths' addition (I20). So rename designation to, e.g., "ε"? But "ε" is used for discrepancy (E7, T2). Use "d_D"? "d" is used for commitments (L305: d ∈ Γ) and contents. Use "δ" with subscript only? Both use subscripts (δ_D, δ_c). The clash: D9.10's δ (defect) vs δ_c (designation) — in the same paragraph δ means defect while δ_c means designation. A reader could misread δ_c as "the defect of c". Fix: maths — in D9.10 rename the criticism's defect to "dfl"? Hmm. Simplest consistent fix: rename the designation symbol throughout from δ to "ε_D/ε_E"? ε is taken. Use "ι" (designation)? I'll propose: designation ι_D, ι_E (D3.1, D3.2, D5.3, D6.3, D7.4's fix, D14.7, D16.4, D18.1's δ edge). That's a big rename. Alternatively rename the defect in D9.10 to ζ (only D9.10 and D10.x? defect appears in D9.10, D16.XV? and L377 quotes). Since the core quotes the text's L377 with δ, renaming the core's own symbol for defect deviates from the text's letter; renaming the designation (an invention) doesn't. I'll propose the designation rename, listing the definitions touched, as one maths proposal.
+
+Hmm, but is it worth it? The brief explicitly lists this as an example to check ("δ as a designation and as a defect"). So report it with the fix.
+
+- C as contract and as set of pairs: D15.2's note covers Part XII's local letters. Also "C" in E6 "Contract: remove skewness" fine. And in D15.3, F(X) with C ⊆ F(C). Noted in core; I'll list with "the core notes it; no fix" or propose nothing. Also "C" as constructor attribute vs contract: noted.
+
+- Primes on changed definitions: e.g., "Acc" vs "account"; "Dep" in program = Dependence while "DEP" = graph. Also FC23.new1's "NC1_q". Also "Slot_QUANTIFIER". The program's `dep()` (Dependence) vs `DEP` (graph) vs `Dep` node — three uses of "dep" in the program with different meanings (function, dict, node name). Minor; list.
+
+- Another: "Dependence" in D18.1's dependence order (L526) vs D6.5 — the text itself at L526 has heading "Dependence order" — the text's own words, so the clash is in the text, not inventable away except by pointer. L526 currently: let me read it to see if it points to D18.1.
+
+Let me read L526 and L596 area.
+
+Also for (a): check the "grain ℓ as an argument of Acc" — D6.7 fixed; D18.1 fixed; FC30 restated. Any place still passing ℓ to Acc? D14.7? "(EX)" has ℓ in Origin? Origin_{β,ℓ} — that's Deploy/Build's ℓ, fine (not Acc's). D16.4's 𝔈_Θ quantifies δ ✓. D7.4's Acc(E_v, p) — missing δ (N1). Also D7.1's Acc(E|W, p) := Acc((E|W, p, t|W, W, δ_E)) ✓ has δ.
+
+Any other Acc uses: D8.3 note "A candidate offered for p is the claim Acc(ℰ) on p" ✓. D9.8 Out_j('Acc(ℰ)') ✓. D9.10 Bearing :⟺ Acc(ℰ_c) ✓. D13.3 ExplUse uses 'Acc(ℰ)' ✓. D16.4 ✓. D16.XV ✓.
+
+Now, the "four conditions" at L231 and L536 and D6.8 — fine.
+
+Let me read L526 and check for pointer.
+
+Note the step's report says D18.1's changes include "Slot (D6.3), Open (D6.11) nodes" — but Open was deleted by the second checker. The core D18.1 [S106b] says "node Open (D6.11) deleted with D6.11" ✓. The step report is a record, not the maths; fine.
+
+Now L526: "The order has no cycle and no endless descent." — with the U reading there IS a cycle (FC98 (a)); the text asserts no cycle. That's the text's own claim, tested by FC98/FC32. Not my finding per se, though "Dependence order" vs "Dependence" (conjunct) notation clash stands: L526's heading "Dependence order" and (E)'s conjunct "Dependence" (L255, L262). Both are the text's own words now (I188 chose "Dependence" for the conjunct). Two uses of "dependence" in the text: L255's condition and L526's order of definition. Is this a real ambiguity? D18.1 is "the dependence graph"; FC32's title "L520 (after round 1) against L526's dependence order". A reader could take L526's "(E) depends on those (D18.1)" as being about the conjunct Dependence. Minor but reportable under (f), with the fix: a text change at L526 replacing "Dependence order." heading? Can't add prose. Could replace the span "Dependence order." with a pointer? The heading is the text's own and renaming it would be new prose. Better fix: none needed in the text; in the core, D18.1 could be named "the definition order" — but that renames the core's own term, allowed as maths. Hmm, D18.1 is titled "The dependence graph". The clash is mostly harmless since D18.1's graph is about definition-dependence and D6.5's Dependence is a condition; but FC31/FC32 use "dependence order" for the graph. I'll report it and propose a maths rename of D18.1's graph to "the definition graph" — wait, but L526's heading is "Dependence order" and L526 points to (D18.1); renaming the core's term away from the text's heading is worse. Alternative: no fix; note that the conjunct's name (I188, an invention) creates the clash and the other choices (NC2, keep "Non-circular") also had issues. Actually the cleanest: since I188 chose the name, and the text now has "Dependence" as a conjunct name in (E) at L262 in math mode, the clash is within the text itself (L262 vs L526). Propose nothing (the text's own words at L526 predate; the conjunct name was forced by S40's formal-statement kind). One line: no fix, or optionally a pointer at L526 "(D18.1)" already disambiguates. I'll say: L526 already points to (D18.1); no fix.
+
+Now let me verify one more potential cycle/edge issue: the step's D18.1 note says "(E) → (F1), (F2), (A), Dependence, NV" — but wait, is "Dependence" a node name in DEP? The node is "Dep". Fine.
+
+Now, section (d): definitions no claim uses. Let me systematically check a handful by grepping the claims file for each definition's symbol. Definitions and their symbols:
+- D2.5 dir(D): no claim (FC02 is about Input/asg/Out, and mentions "Direction is read from the admitted edits" in its title — FC02's title: "Direction is read from the admitted edits; output status is not". So FC02 uses D2.5's content (dir = (Input_A, asg)). OK used.
+- D7.4 Boundary: no claim uses Boundary. Text L302 needs it. → unused by claims, needed by text.
+- D7.6 NoWork: FC40 (c), FC41 use NoWork ✓.
+- D8.new1: FC44 ✓ (inline).
+- D12.6 Layers: no claim directly; E9 builds P and S per L620 — claims_r3a3 K4. Uses? The typing D12.6 says "P and S are organizations typed as L175 and L177 say". FC102 uses S0 as an organization; D12.6 isn't tested. Text needs it (L175–L179). → unused, needed by text.
+- D14.8 Appraisal (AR), 𝒩: no claim (values; by design). Text needs (L455, L518).
+- D16.XV (Elim), (Prov), (QF): no claim tests them; they're formal shapes with undefined Work etc. Text needs them (L540–L546). Also they contain undefined primitives (report in (c)).
+- D12.9 Underdet: FC80 ✓.
+- D15.6 CanAdv: UC/(U2) — is UC tested? D16.4 "UU, UC, UECS as displayed" — claims? FC110 is about classes; UECS is a class. No claim tests UU/UC/CanAdv beyond statement. Hmm — CanAdv used in DEP; claims? Let me not overreach; I'll check quickly with a grep for "CanAdv|UU|UC|UECS" in claims.
+
+Also D6.9 Relabeling: FC21 ✓. D6.10: FC25 ✓. D4.5: families ✓. D4.4: FC17/FC18 ✓. D3.5: FC33/nonvacuous ✓. D3.6: FC106 ✓. D12.4: FC12.new2 ✓ (parts). D13.2 Repertoire: New ✓. D14.4: FC88 ✓. D14.6: (EX) ✓ / claims? FC90 lists conjuncts ✓. D15.7 Tol: FC93 ✓. D16.1 Scr: RC; claims? D16.2 RC: classes FC110 ✓. D16.3 Enable: UU ✓? D18.2: FC100 ✓. E1–E9 ✓.
+
+Let me grep claims for CanAdv/UU/UC/Scr/Enable/Layers/Boundary quickly. Earlier grep with pattern including "CanAdv" only matched nothing besides? The earlier grep pattern included CanAdv and matched only lines 35,40,44,111 — none with CanAdv. So no claim names CanAdv, UU, UC, Scr, Enable, Boundary, Layers, Appraisal, dir. But FC110 mentions classes (recursive, universal) — "each class of L528 ... is the extension of a formula" — syntactic, doesn't compute. So D15.6, D16.1–D16.3, D16.4's UU/UC/UECS, D7.4, D12.6, D14.8 are not used by any claim. Text needs: L477 (CanAdv), L487 (Scr), L492 (RC), L495 (Enable), L500/L503/L506 (UU/UC/UECS), L302 (Boundary), L175–177 (Layers), L455 (Appraisal). So: unused by claims, needed by text — report as a group, no fix (testing them needs Θ; note FC97's similar not_tested part).
+
+Hmm, but the job says "An unused definition is not thereby idle: say whether the text needs it." So one line for the group.
+
+Now (e) conflicts — I have:
+1. Slot_C (D6.3's own clause) vs Pin/FC23.new3 (a)/program slot: differ where τ(a),σ(b) defined but π undefined on Sol_D(a,b) at a pair of Det_C. Actually wait — also check: the program's slot under "every" requires cand.translates(a,b) for every det pair. The core D6.3 Slot_C doesn't. But hold on — is the core's Slot_C clause even well-defined when τ(a) undefined? If τ(a) undefined, L^E_k(τ(a),σ(b)) is undefined, so Slot_C would be... not evaluable. The divergence case needs τ(a), σ(b) defined but π undefined on Sol_D(a,b). Then Slot_C evaluable and can hold; Pin fails. So the two definitions of Slot (D6.3's clause vs I184's "Slot is Pin at every pair") conflict on such a model. Also note FC23.new3 (a) claims the biconditional holds — computed H on generated models; generated models probably always have translating candidates. So the conflict is real but untested. Witness model: need a candidate where some (a,b) ∈ Det_C has π undefined on Sol_D(a,b). In the program, π is typically total? gen.py constructs π... The claim "not run".
+
+Let me construct the witness concretely in the program's notation? That requires knowing Org/Question/Candidate constructors well. I've seen enough of core.py partially. Building a correct runnable snippet is risky but the brief wants Python in the program's notation marked "not run". I can write it schematically based on pole-like structures. Let me look at how a candidate is built in cases.py to write a plausible snippet. Actually, maybe simpler: express the witness abstractly (chain of definitions) and propose the maths fix (add "t translates (a,b)" to Slot_C). The brief says "the smallest witness (a chain of definitions, a model, or two quoted uses)". A chain of definitions suffices. But a code proposal would strengthen. Let me look at cases.py pole construction briefly to write a correct snippet.
+
+Actually, time is limited; I have ~10k words of reading done. Let me check how π partiality is represented: cand.translates(a,b) — let me read core.py's Candidate/Translation.
+
+Important: in the program, `translates(a, b)` = `a in self.tau and b in self.sigma` — π is total (I81: "π induced by port translations, total on X_D"). So in the program, "t translates (a,b)" = τ, σ defined only; π is always defined. So the program's Pin's "t translates (a,b)" conjunct is just dom τ ∧ dom σ. And the core D5.1's translation requires π defined on Sol_D(a,b), but under I81 π is total. So the divergence between D6.3's Slot_C and Pin: core-side, a pair with τ,σ defined but π undefined on Sol_D(a,b); program-side, can't happen (π total). So the conflict between D6.3's Slot clause and Pin/FC23.new3(a) exists in the core (two definitions of Slot differ on a candidate whose π is partial exactly off Sol_D(a,b)... wait, π undefined ON Sol_D(a,b) at that pair, but D5.1 requires π defined at least on Sol_D(a,b) at every pair t translates — if π is undefined on Sol_D(a,b) at (a,b), then t does NOT translate (a,b), yet τ(a), σ(b) can be defined. Then Slot_C's clause (which uses only τ(a), σ(b)) is evaluable and can hold. So yes: core-level divergence. But is Slot_C's clause even legitimate for a pair t doesn't translate? D6.3 quantifies over (a,b) ∈ Det_C ⊆ C. F1 etc. quantify over C too and use τ(a),σ(b); D5.4–D5.6 don't require translation either (they presuppose dom τ ⊇ C's edits, usually). Hmm — actually D5.4 (F1) says "for every k ∈ Γ and every (a,b) ∈ C: proj^λ... = L^E_k(τ(a),σ(b))" — also uses τ(a) without requiring translation. So the core generally presupposes τ, σ defined on C. The Pin definition adds "t translates (a,b)" which is stronger than τ,σ defined (adds π on Sol). So Slot (D6.3) and Pin-at-every-pair (I184, FC23.new3 (a)) differ only where π is partial on Sol at a C-pair. Under I81 (π total) they coincide — and the program's slot requires only dom τ,σ. So actually in the program, slot under "every" = τ,σ defined ∧ pin-values — exactly D6.3's Slot_C plus dom τ,σ. And D6.3's Slot_C implicitly needs τ(a),σ(b) defined to be evaluable. So the only difference is π-on-Sol, which the program can't represent.
+
+So the finding: two definitions of Slot that differ where π is partial on Sol_D(a,b) at a determined pair: D6.3's Slot_C (no translation conjunct) vs I184/FC23.new3 (a) (Pin, with "t translates (a,b)"). Since D0.2/I16 leaves π's domain open ("The domain of π ('on the stated scope') ... not fixed [I16]"), the divergence is live in the core. Fix: maths — D6.3 Slot_C: add "t translates (a,b)" to the ∀ clause (matching Pin and the program), or drop it from Pin. Which is better? The program's slot (every) requires translates. Pin's clause includes it. Making Slot_C include it unifies. Alternatively note that under I81 they coincide. The fix: add the conjunct to D6.3. Invention: none new (uses I16/I81's openness). Actually, one could argue the reverse: Pin should drop "t translates (a,b)" since the pin condition only needs the relation. But Pin is I184, settled by the second checker as "a clause of D6.3". Adding to Slot_C is the smaller unification. I'll propose that.
+
+Hmm wait, actually there's a subtlety: is this really a "conflict"? FC23.new3 (a) states the biconditional as a claim and it's H (computed on generated models, where π total). The core D6.3 says "Slot_C(ℰ,k) ⟺ Det_C ≠ ∅ ∧ Pin(ℰ,k;a,b) at every (a,b) ∈ Det_C (FC23.new3 (a))" — the core asserts the equivalence as part of D6.3's S106 note. So the core itself contains both Slot's original clause and the Pin-based biconditional, which are equivalent only under I81/total π. Since D5.1 allows partial π (I16), the two are two definitions of Slot that conflict on a model with partial π. Good — that's finding (e) with a chain-of-definitions witness, and a fix.
+
+Also I should double check: does "Pin" require "(a,b) ∈ Det_C"? Yes: "Pin(ℰ, k; a, b) :⟺ (a,b) ∈ Det_C ∧ t translates (a,b) ∧ δ_E ∈ V_k ∧ {w_δE...} = {Ans_p(a,b)}". And D6.3's Slot requires δ_E ∈ V_k separately. So Slot ⟺ Det ≠ ∅ ∧ ∀∈Det Pin — except translation. ✓.
+
+Now (a) again — "the quantifier of D6.3 as bearing on (E)": D6.3's note says "the quantifier (I136) and the exemption's extent (I176) now read Slot only, and (E) is the same under all four readings (FC23.new1 (h))". ✓ handled. "Is a claim, a note or a node of D18.1's graph left pointing at nothing?" — D6.11 withdrawn; check no claim references D6.11/Open anymore: claims file — grep "D6.11" in claims now.
+
+Let me grep "D6.11|Open" in the claims file and the program (claims_s106).
+
+D6.11 withdrawal is handled cleanly (only historical mentions). Good — the core line 226 is D6.3's note mentioning "was D6.11 (a), withdrawn with D6.11 (objection 1)" — historical, fine. Line 701/716 D18.1 and counts mention D6.11 historically. OK.
+
+Now let me quickly run a couple of claims to have "run" evidence where useful: FC32.new1 (graph) and FC23.new3 (Pin/Slot equivalence). Running FC23.new3 would confirm H on generated models (π total). Not strictly needed. Maybe run FC32.new1 to see the graph output (Held edges). Let me run both — quick.
+
+Very interesting! FC32.new1 crashes: it reads a file path `../../../S104 Round 2 - maths after the reading/formal core, after round 2.md` which doesn't exist in this sandbox. So FC32.new1 is effectively NOT TESTED in this environment — but the claims file says H! Wait, the "formal claims, now.md" says FC32.new1 H. The printout was made in the original environment where that file existed. In this sandbox, the file is absent, so the claim can't run. Hmm — is that a finding? The claim's code depends on a file outside the program (`formal core, after round 2.md`) that isn't part of the sandbox. From the structure job: FC32.new1 (a) checks the fold of definition paragraphs against "the formal core's own list of paragraphs" — it reads the round-2 core file, not the current core! Line 386: path = .../S104 Round 2 .../formal core, after round 2.md. So the claim compares D_TO_NODE against the ROUND-2 core's paragraph list, not the current core (after round 3 and the step). If the step or round 3 changed the set of definition paragraphs (they did: D6.11 added then withdrawn — net zero; but counts say "119 definition paragraphs (D6.11 new)" then "118" after withdrawal), the check would be stale. Actually more importantly: the claim as shipped reads a file that is not in the model folder and not in this sandbox — a structural defect: the claim's result (H) is not reproducible in the sandbox as delivered. That's a real finding for my job (the program's structure): FC32.new1 (a) checks D_TO_NODE against the round-2 core file by path, which (i) is absent here (the claim errors, "NOT TESTED" with a traceback), and (ii) even where present, is the round-2 list, not the current one.
+
+Let me look at claims_r3a3.py fc32_new1 code to confirm.
+
+Confirmed: `core_def_ids()` looks for the formal core at paths outside the sandbox (`formal core, after S106.md` beside the model folder, then the S105/S104 results folders). In this sandbox, the core is at `maths/formal core, now.md`, which none of the paths match — so FC32.new1 errors ("NOT TESTED", traceback). The claims file records FC32.new1 as H, but that result was computed in an environment where the round-3/S106 core file sat beside the model folder. In the delivered sandbox the claim cannot run: the very claim that checks D18.1's graph against the core reads the core by a path that no longer exists. Also it prefers "formal core, after S106.md" over "after round 3" over round 2 — never the current one; and if the after-S106 file existed it would be used, which is right for the step but stale for any later change. Structural finding (code): the claim's file dependency is outside the program, unmatched by the sandbox layout; the check of "every definition paragraph is a node" is therefore not reproducible here. Fix (code): point core_def_ids() at `maths/formal core, now.md` (or embed the paragraph list). Expected output: FC32.new1 H with "118 paragraphs read". Also note: reading the round-2 core as fallback would give 118 paragraphs too? Round 2's count: 118 definition paragraphs. After round 3: 118. After step: 119 then 118. D_TO_NODE has no D6.11 (withdrawn) — matches 118. But note the fallback would be the round-2 list which lacks... D6.11 was added and withdrawn; any paragraph added in round 3? No new paragraphs in round 3. So the round-2 list equals the current list in ids (D-numbered). Actually round 2 added D2.6, D8.new1, D16.XV — all present. So ids would coincide; the crash is the issue, plus the path design.
+
+Wait — but does the whole-suite printout in `program printouts/` show FC32.new1 H? Presumably yes (computed in the original environment). Let me check the printout to cite it. Let me grep the printouts folder for FC32.new1.
+
+Also this reveals the run infrastructure: "model after S106/" was a folder beside the core in the original project. Fine.
+
+Let me check the printout for FC32.new1 and also look at the whole-suite printout for anything about Held edges... not needed.
+
+Now, let me also verify my claim that Con/Build read Held in the core (yes, D12.2 and D13.3 quote Held) and that DEP lacks those edges (yes). Also check dep_ancestors("Con") under T′: dep_edges T′ adds Held to Con/Build. So under T′ the ancestors of Con include Held; under K they don't. FC32.new1 (d) uses reading T′ — so (d) is computed on the corrected-by-substitution graph. The base DEP is used in (a),(c),(e),(f) via dep_ancestors default reading="T'". Actually dep_ancestors default reading is "T'", so all uses go through dep_edges which adds Held for Con/Build under T′. So the missing base edges only matter for the "one edge set" claim (FC32) and for reading K. Under K, Con and Build have NO Held edge though they read Held — so FC98 (a')'s "K: no cycle" is right but the K graph misstates the definitions. And FC32 (2) says "D18.1's edges for Dependence ... are the classes of symbols the program's NC2, dep and nonvacuous read" — about Dep only.
+
+So the finding: the base edge set (DEP, D18.1's note) omits Con → Held and Build → Held, which D12.2 and D13.3 read outright; the T′ reading restores them by substitution, but the K reading drops them, and D18.1's own prose ("Con → CT, Episode") states the wrong edges. Fix: maths (D18.1 note) + code (DEP entries).
+
+Hmm, wait. Let me double-check D12.2 once more: "Con(t; h, e) :⟺ some episode h' of h up to e (D13.8; it need hold no change of contract [owner S41: Q6]) has CT(h', t), and Held(o', x) for some o' ⪯ o_t of h' and x ∈ {t, cod t} (D18.1)". Yes, Held is read. And D13.3 Build: "Prepares(h', o, c) ∧ Held_ℓ(o, c) ∧ ExplUse(o, c)". Yes.
+
+And DEP["Con"] = ["h", "CT", "Episode", ("<", "(R)")], DEP["Build"] = [..., "ExplUse", ("<", "(R)")]. So Held missing; the ("<","(R)") entry stands where Held should be. Under U, Con → (R): but Con reads Held, not (R) — under U the 'represented' reading would be (R)... but the definition says Held, period (the r2b R3 ruling fixed it as Held). So even under U, Con → (R) is wrong now; Con → Held under every reading. The dep_edges substitution logic (T/T′ replacing (R) by Held for Con/Build) is a fossil of the pre-R3 definition. So the base DEP is wrong for Con and Build under every reading. Good, crisp finding.
+
+Does this affect any computed result? FC98 (a) "cycle through (R)" — under U, with Con → (R) removed and Con → Held added, is there still a cycle through (R)? (R) → Sel (unstaged under U) → Sel's Rep use... Sel has ("<", "(R)") which under U becomes (R). So (R) → Sel → (R): cycle ✓. Also (R) → Con → Held (no cycle). So FC98 (a) unchanged. FC98 (a') K: no cycle ✓ (Held → Org,F1,F2 only). So no status changes. 
+
+Now let me also double check the "Slot" node's ℓ edge issue: D18.1 [S106] says Dependence loses ℓ "which only NC1 read". Slot keeps ℓ. But NC1 is defined in D6.3 ("in E as given at grain ℓ") — and the node Slot holds D6.3. ✓.
+
+Another check for (b): the brief says "the step's edges (Dependence → (O), (Q), C, δ; the node Slot) are the edges the definitions actually have". Dependence's edges: does NC2 read Sol (i.e., (O))? NC2 reads Ans_E and Ans_{E−G}; Ans_E = Q(E,...) — (Q). E−G deletion — (O) via D1.3/D6.1. Does NC2 read (O) directly? D6.1 defines deletion (D1.3) — (O). ✓. And C ✓, δ ✓ (Ans_E reads δ_E). What about δ_D? Ans_p(a,b) reads δ_D — covered by "δ". ✓. So the step's edges are right for Dependence. Good — confirm and say so.
+
+Now let me quickly check the printouts to cite the whole-suite results for FC32.new1 and check whether the printout shows the Held issue... Let me grep the printout file for "FC32.new1" section header and "paragraphs read".
+
+The printout shows "114 paragraphs read from the formal core" — but the core has 118 definition paragraphs. Hmm: 114 read. Why 114 vs 118? The regex matches `\*\*(D(\d+)\.(?:\d+|new\d+|XV))\b` — "D8.new1" matches. The count of D-numbered paragraphs in §§1–16 = ? The core's counts say "118 definition paragraphs" total including D0.1, D0.2, D18.1, D18.2 (§0 and §18 excluded: 1 ≤ § ≤ 16). D0.1, D0.2, D18.1, D18.2 = 4 → 118 − 4 = 114. ✓ consistent. Good, no issue there. And DEP has 83 nodes now.
+
+Also note (b): "U: Live → (K2) → Live (through (R): (R) → Con → (R))". Interesting — under U the found cycle is Live → (K2) → Live! Wait, the core D18.1 says "Of the two loops S101 read from the wording, K2 → Live → K2 closes below the step (D9.4, D9.6)." But the printout says under U the cycle is Live → (K2) → Live — i.e., the K2 loop does NOT close under U (as worded)! The core says it "closes below the step" — under the staged/below-step reading. But dep_cycle(False, "U")... wait, dep_cycle(False, rd) — the first arg is `staged`; False means reading used as given. fc32_new1 calls claims_b.dep_cycle(False, rd) for rd in U, K, T, T'. Under U, staged edges are kept, so Live → ("<", "(K2)") → (K2) → Live is a cycle. The core's D18.1 says "Of the two loops S101 read from the wording, K2 → Live → K2 closes below the step (D9.4, D9.6). The other, build → prov → rep, stays open here." Hmm — "closes below the step" means: the recursion is on height (Below(u)), so the definition is well founded — the loop in the graph is staged/below-the-step. The DEP encodes Live's use of (K2) as ("<", "(K2)") — a staged edge meaning "a use at a step strictly below". Under U ("as worded"), the staged edges are read as real, giving the Live cycle. The printout (b) says "U: Live → (K2) → Live" — and the claim's statement says "U (as worded): a cycle through (R)" — the found cycle under U is the Live one, but `cyc_r` separately confirms a cycle through (R): "(R) → Con → (R)". So under U there are (at least) two cycles. The core's D18.1 text says the K2 loop "closes below the step" — i.e., is not a genuine loop — but under the U reading the graph has it. This is consistent with the core's framing (U rejected). But note: the core says "Of the two loops S101 read from the wording, K2 → Live → K2 closes below the step (D9.4, D9.6)" — meaning the definitions as written (D9.4/D9.6 with Below) make it well founded, so the loop is only in the unstaged graph. Fine.
+
+But here's a subtle point for my (b) section: the printout's U cycle through (R) is "(R) → Con → (R)" — via Con's staged (R) edge! If my correction is applied (Con → Held instead of staged (R)), the U cycle through (R) would be "(R) → Sel → (R)" instead. Both exist, so the claim's result stands. I should note that in my proposal's expected output.
+
+Now — an important check on the correction: is it possible that the DEP's staged (R) edge on Con/Build is intended to represent Build's 'represented' reading choice, i.e., under U the definition of Con would read Rep instead of Held? No: the r2b ruling (R3) fixed Con's 'available as a represented target' := Held, and T′ is the cut. Under U ("as worded"), 'represented' would be read through (R)... hmm, actually the readings U/K/T/T′ are readings of "represented" in L197/L405. The definition D12.2 as it now stands says Held explicitly (not the word 'represented'). So under every reading Con reads Held. The staged (R) entries for Con/Build in DEP are stale from before the r2b ruling. I'm confident.
+
+Wait, actually let me reconsider: maybe the DEP's ("<", "(R)") for Con is meant as: Con's Held use, where Held itself... no, Held is a separate node with its own edges. If the intent were Con → Held, they'd write "Held" (as dep_edges does for T/T′). The comment in dep_edges says "'T' Sel, Con, Build use Held, not (R)" — that's the T reading where 'represented' is read as Held. So the DEP's staged (R) entries represent the 'represented target' uses. But D12.2's Held use is not the 'represented target' clause — wait, it IS: r2b R3 read "'available as a represented target' as Held". So Con's Held use is the 'represented target' clause, and under U it would be read as (R)! I.e., the readings U/K/T/T′ are readings of that clause: U = (R) as worded (unstaged), K = staged, T = Held, T′ = Held in Con/Build, staged in Sel. Hmm. So the DEP's staged (R) edge for Con represents Con's 'available as a represented target' clause, which under T′ is Held. But the formal definition D12.2 as written in the core says "Held(o', x)" — the core has already fixed the reading as Held in the definition itself, while the DEP keeps all four readings live. So there's a mismatch between the core's definition (Held, fixed by r2b R3 / I162) and the program's DEP (still parameterized by the reading, with the base/K dropping the edge entirely).
+
+Under K ("every ('<', x) edge staged (dropped)"), Con's 'represented target' clause is dropped — but the core's D12.2 has no such clause to drop; it has Held. So the K graph does not correspond to any reading of the core as written. The core's D18.1 mentions the cuts U, K, T, T′ as "Rejected, each on a computed case: U... K... T..." and T′ chosen. So the core keeps the four readings as alternatives, with T′ the one the definitions use. So the base DEP with staged edges is "the T′-ready" graph and D18.1's chosen reading is T′. Under T′, Con → Held ✓ (by substitution). So arguably the DEP is fine as the parameterized family, and D18.1's note "Con → CT, Episode" describes... the T′ edges would be "Con → h, CT, Episode, Held". The note omits Held. Hmm.
+
+OK so refined finding: D18.1's own note (and FC32's "one edge set") states Con's and Build's edges without Held, while under the chosen cut T′ both read Held (D12.2, D13.3; the program's dep_edges adds it by substitution). The base DEP entries for Con/Build carry the clause as a staged (R) edge that under K disappears entirely, though the core's definitions name Held unconditionally. So the "one edge set" (FC32: "One edge set: this, the program's DEP and L526's pointer") is not one: the core's D12.2/D13.3 read Held under every reading; the DEP reads it only under T/T′. Fix: code — put "Held" in DEP["Con"] and DEP["Build"] directly (keeping Sel's staged Rep use), and maths — D18.1's note: "Con → CT, Episode, Held; Build → …, Held". Expected: FC32.new1 (b) under U still a cycle through (R) (via Sel: (R) → Sel → (R)); K, T, T′ none; statuses unchanged. Wait — under U, Sel's staged edge becomes real: (R) → Sel → (R) cycle ✓. Good.
+
+Hmm, but careful: would adding Held to Con/Build create a cycle under U? Held → Org, (F1), (F2). (F1) → (O), (Q), (K). No path back. ✓ no cycle.
+
+Now I have enough for sections (a)–(f). Let me also quickly double-check a couple more (f) items and the text's L273 pointer line: "L273+ | (D6.3, FC23, FC24)." — an entire line replaced by a pointer. Fine.
+
+One more (a) check: the brief says check "the old slot test ('non-circular', NonCircular, 'assumes its own answer', 'restates', 'unanalysed', 'at the declared grain', the grain ℓ as an argument of Acc)". Text: no "unanalysed"/"at the declared grain" remain (grep showed none). "assumes its own answer": L397 (cont.) has "has its conclusion among its premises, as in 'p because p'" — the phrase "assumes its own answer" was deleted (S106-T10) ✓. Grep for "assumes" to be sure. Also "restates" — grep found nothing. The claims: FC26/FC63 statements mention NC1 as a condition the candidates meet — that's fine (they meet it). But is there any claim that still treats NC1 as a conjunct of (E)? FC23.new1 restated to Acc ∧ NC1_q explicitly ✓. FC27's look "NC1 fails too and is no longer a conjunct" ✓. FC60 note ✓. FC100 note ✓. FC107 note ✓. FC108 ✓. So (a) is mostly clean; the residual dangling items:
+- L231 "the following four conditions" + D6.8: fine (four headings).
+- The step report's own table says "Open" node (historical).
+- D6.10's E_enc: fine.
+- N2's FC31 stale L61.
+
+Also check: does any *text* line still say "non-circular dependence"? Grep found only L331 "it is circular" (an argument, kept) — good. And L343 now "Dependence is met" ✓.
+
+One more possible dangling: the core D6.9's quote at L257 (the quoted text "admits no candidate that meets non-circular dependence") — the core quotes round-2 text lines ("Quotations `> Lnnn` stay those of the round-2 file"). Current L257 writes Dependence. The core's D6.9 quote block still shows the old L257 with "non-circular dependence" — quotes are historical by design ("Quotations stay those of the round-2 file"). OK.
+
+Also §6's Vague note in the core: "NC1's 'unanalysed', 'at the declared grain' and 'structural' have no definition in (O) or (Q)" — still in Vague, now bearing on Slot only, and the [S106] note says so ✓.
+
+Now (c) primitives table:
+- Pin: defined (D6.3, S106b); used by FC23.new2/FC23.new3, core.pin ✓ — not a primitive; D0.2 need not list it. But is Pin listed anywhere as defined in the core's counts? Fine.
+- Det_C: defined D6.3 ✓.
+- NoBriefQuestion: used by FC84.new1 (and I191, claims_s41.no_brief_question); NOT defined in the core; not in D0.2. → finding + fix (new definition in core, D12.2's clause).
+- "the brief" / a criticism's target being a contract: D9.10's z untyped; read through Θ (I90) — noted by N6. The fix: with NoBriefQuestion's definition, type z.
+- Held: defined (D18.1) ✓ listed.
+- Also check: the step's inventions list "I184 Pin; I187-I191" — I187 (deleted word), I188 (name), I189 (sign), I190 (L13's phrase), I191 (NoBriefQuestion). All recorded ✓.
+
+Other primitives possibly undefined: "𝒱" (declared input, classed), "parts", "surv", "trans" — classed by D0_2_R3A3 and the core's D0.2 second paragraph ✓. "Work(κ)", "without loss", "operates on", "fails to capture", "not creative" (D16.XV) — used, never defined, NOT listed by D0.2 (the core notes "Work has no definition" but D0.2's list doesn't include them). → (c) finding: these are used by D16.XV's shapes and listed nowhere; the core itself says they have no definition. Are they "used and never defined"? Yes — (Elim)'s Work(κ), (Prov) (ii) 'without loss', (iii) 'operates on', (QF) 'fails to capture', 'not creative'. The core records this. Fix: D0.2 — add them to the list (a changed definition), or leave as the core's own note? Since D0.2 is the register of "primitives this formalization adds", and these are used by D16.XV, they belong there. But adding them to D0.2 is a change to a definition (allowed). Hmm, but they're the text's own words at L540–L544, not inventions. D0.2 is "Primitives this formalization adds. Beyond Φ, the formal core uses these symbols, which the text names or needs but neither defines nor lists" — so yes, Work etc. qualify. Fix: maths — D0.2 add: "Work(κ) [L540], 'without loss' and 'operates on' [L542], 'fails to capture' and 'not creative' [L544]". Wait — "no new prose" applies to text changes, but a definition's content is maths. Adding items to D0.2's list is a changed definition ✓.
+
+Also "κ(ℰ)" (kind-label) in (Elim) — D16.XV mentions "a kind-label κ(ℰ) ≠ κ(ℰ')" — κ is used as value maps in D5.1 (κ_{k,v})! Notation two ways: κ as a value map (D5.1) and κ(ℰ) as a kind-label (D16.XV (Elim)). Add to (f). Witness: D5.1 "value maps κ_{k,v}" and D16.XV "a kind-label κ(ℰ)". Fix: rename the kind-label, e.g. to "κ̃"? Or note. I'll list it in (f) with a small maths fix (rename (Elim)'s kind-label to λ(ℰ)? no, λ is the transport's component map!). Rename to "k(ℰ)"? k is a component. Use "κ_lab(ℰ)". Propose: D16.XV (Elim): κ(ℰ) → κlab(ℰ). Fine.
+
+Also (f): "C as a contract and as a set of pairs" — the core's D15.2 note covers Part XII's local letters (C a constructor attribute). Also E6's "Test fields GF(p)" — no C clash. Also D12.9's value_t. I'll list C with the core's own note as witness and say no further fix needed (the note is the fix).
+
+Also (f): "Dependence as (E)'s conjunct and 'dependence' in D18.1's dependence order and §18" — witness L255/L262 vs L526's heading "Dependence order" and D18.1 "the dependence graph"; FC31/FC32 use "dependence order" for the graph. Also FC32's title "L520 ... against L526's dependence order". Fix: none needed in the text (L526 points to (D18.1)); in the core, D18.1's name could be "the definition graph", but L526's own heading is "Dependence order" and the core follows the text. I'll propose a one-line: no fix (the pointer at L526 and D18.1's own title disambiguate); OR propose renaming D18.1's graph. I think listing with "no fix needed" is defensible but the brief expects a fix for each finding... "For each finding, the smallest witness ... and a fix". For notation findings I can give a fix where one exists and say none needed where the pointer already disambiguates. For the Dependence clash, the risk: a reader of L262's (E) and L526 could conflate. Minimal fix: none needed — L526 "(E) depends on those (D18.1)" already routes to the graph. I'll say that.
+
+- "Slot, Pin and NC1" (f): D6.3 defines Slot_C, Pin, NC1; the program has slot(), pin(), pins(), NC1(). Note: the core's D6.3's NC1 quantifies over "no k ∈ J_E and no boundary coordinate is a slot" while the program's NC1 checks only components (I79: boundary coordinates are components in the program — inventions_model I79 says "Boundary coordinates are components here"). Consistent, recorded as I79. Not a clash.
+
+- "Dep in the program": core.dep = Dependence; claims_b.DEP = the graph; DEP node "Dep". Three spellings. Minor; list, no fix (different scopes) or propose renaming claims_b.DEP to GRAPH. Eh — a code rename is a valid form-2 proposal but low value. I'll list with "no fix" reasoning? The brief says give a fix for each finding. For low-value ones I can give the smallest fix (a rename) or state why none is needed. I'll do that prudently.
+
+- "⊥": D3.2's undetermined answer; used in D6.4's contrast, D8.2, D3.3's obs, D6.9. Consistent everywhere (⊥ ≠ y, ⊥ = ⊥). But note D15.2/etc no ⊥. One use ✓. No finding.
+
+- "primes on changed definitions": e.g., "F2_C" vs "F2eq_C"; "Acc" vs "account"; the "r3" reading. Also "Dependence" vs "Dep" vs "dep". Also FC23.new1's "NC1_q". I'll mention the prime convention is consistent.
+
+Now (e) more candidates:
+1. Slot_C vs Pin (translation conjunct) — above.
+2. subhistory: primitive (D0.2, program D0_2) vs defined (D11.3). Two definitions of one term — (e)/(c).
+3. Any conflict between D6.5's "Dependence(ℰ) ⟺ NC2(ℰ)" and D6.2's NC0 being "a reading"? No.
+4. Conflict between D16.XV's (Suff) at L17/L536 — handled by FC30.new1, no conflict now.
+5. Conflict between D12.2's Con needing "some episode h' of h up to e has CT(h', t)" and CT's definition — no.
+6. D7.4's Acc(E_v, p) without δ — not a conflict but an arity mismatch (N1). Could be (e): D6.7 fixes Acc's arguments as the 11-tuple; D7.4 uses a 2-argument Acc. Two definitions of Acc's signature? I'll put it under (e) or (n) N1. N1 asks for a fix; give the maths fix.
+
+Also potential conflict: D6.3's Slot's "likewise for a boundary coordinate of E whose value at σ(b) is Ans_p(a,b)" vs program's I79 (boundary coordinates are components). Recorded ✓.
+
+Another: FC23.new2 (a) says "ℰ_two ... no slot under 'every'... meets (E) under every reading" — consistent with the owner's sign. ✓.
+
+Another possible (e): D16.4 𝔈_Θ := {c : Acc((c, p, t, Γ, δ))...} — five data with δ ✓ (I183). And D14.7 ✓. Only D7.4 lags (N1). Good.
+
+Now, definitions no claim uses (d) — final list: D7.4 (Boundary), D12.6 (Layers), D14.8 (Appraisal/𝒩 — by design), D15.6 (CanAdv), D16.1 (Scr), D16.2 (RC — used in Classes/FC110 statement), D16.3 (Enable), D16.4's UU/UC/UECS (used in Classes), D2.5's dir (used by FC02's title/content). Hmm, D16.2 RC: FC110 mentions the recursive class ✓ statement-level. Let me be careful: "whether any claim's statement or the program uses it". FC110's statement names the classes (recursive, universal) → uses RC and UECS extensions. D16.1 Scr: used by RC's definition (D16.2) — so used by a definition, but by a claim? No claim. But RC is used by FC110. Scr is needed for RC. OK. The genuinely claim-unused and only-text-needed: D7.4 (Boundary), D12.6 (Layers), D14.8 (Appraisal), D15.6 (CanAdv — used by UC which is used by UECS in FC110's class... indirectly), D16.3 (Enable — used by UU/UC → UECS → FC110 indirectly). Hmm, indirect use via definitions that FC110 mentions. I'd group: directly unused by any claim: D7.4, D12.6, D14.8, D2.5 (dir — though FC02's title), D16.1–D16.3, D15.6; all needed by the text (L302, L175–179, L455, L109, L487, L492, L495, L477); no fix — testing them needs Θ (as FC97's not_tested part says for contents).
+
+Now the proposals list (g):
+1. **S-proposal (maths)**: D6.3 — add "t translates (a,b)" to Slot_C's ∀ clause (unifying Slot and Pin; FC23.new3 (a) exact). 
+2. **S (maths)**: D0.2 — reclassify subhistory as defined (D11.3), removing it from the read-through-Θ primitives; + code: D0_2 remove "subhistory", add to D0_2_R3A3 classing "defined (D11.3, I151)". Expected FC98 (b)/FC32.new1 (c) unchanged (subhistory remains a sink of Episode's edge; classed). Wait — if subhistory is defined in D11.3, should it be a node? D_TO_NODE maps D11.3 → "h". So the edge Episode → subhistory targets a non-node; if subhistory is defined (in D11.3, folded into "h"), the edge is redundant but harmless. Cleanest: drop "subhistory" from Episode's edge list (it's part of "h"'s node). Either way. I'll propose: DEP["Episode"] drop "subhistory" and D0_2 drop it; core D0.2 move subhistory out of the primitives list.
+3. **S (maths + code)**: D18.1's edge note and DEP: Con → Held, Build → Held (the definitions read Held unconditionally, D12.2, D13.3); remove the staged (R) entries from Con and Build (Sel keeps its staged Rep use). Expected: FC32.new1 (b): U cycle through (R) via Sel ((R) → Sel → (R)); K, T, T′ none; all statuses unchanged. Not run.
+4. **S (maths)**: new definition in the core for NoBriefQuestion (I191), as a clause of D12.2 or a new D12.2′ — form: "D12.2.new NoBriefQuestion(h', C_b) :⟺ ∀o ∈ h' q(o) = C_b ∧ ¬∃c = (z, δ, g, Conn, occ) of h' (D9.10) with z = C_b [I191]". Used by FC84.new1.
+5. **S (maths)**: D7.4 — add δ_v (N1's fix).
+6. **S (maths)**: FC31 restated (N2's fix): drop L61, re-base the L520 part on the current L520.
+7. **S (maths)**: D0.2 — add D16.XV's undefined words (Work, 'without loss', 'operates on', 'fails to capture', 'not creative') to the primitives list. Hmm — is this worth a proposal? It's a genuine (c) finding: used, never defined, not listed. The core notes them but D0.2's list omits them. Modest proposal.
+8. **S (maths)**: rename the designation symbol δ → something, resolving δ's two uses. Big touch. Alternatively rename (Elim)'s kind-label κ → κlab (small).
+9. **S (code)**: FC32.new1's core_def_ids() path — point at `maths/formal core, now.md`; in this sandbox the claim errors (I ran it: NOT TESTED, FileNotFoundError). That's a strong finding with a run. Fix: code change; expected "FC32.new1 HOLDS... 114 paragraphs read from the formal core". Note: the file name in the sandbox is "formal core, now.md"; the original names differ. The fix: search the maths folder. Provide the snippet.
+
+Also: is the whole-suite printout consistent with FC32.new1 H? Yes (line 1113) — computed where the file existed.
+
+Let me also double check whether other claims read external files (the same core_def_ids is used by FC98? No — fc98 doesn't. Line 350 of the printout: "read formal core, after S106.md: 118 definition lines; matching 'is a cause'..." — that's FC14 (syntactic claim about 'is a cause'). FC14 reads the core file too! In this sandbox FC14 would also crash. Let me check: claims_a.fc14 reads the core? Line 1265 in claims_a: "NonCircular and NonVacuous are the classes of symbols core's NC1, NC2 and nonvacuous read (a scan)" — that's FC14's part (c). Let me verify FC14 reads a file and test-run it.
+
+Two claims read the core by path: claims_r3a3.core_def_ids (FC32.new1) and claims_a (FC14, around line 525-535). Both look for "formal core, after S106.md" etc., never "formal core, now.md" (the sandbox's name). Let me test FC14.
+
+Confirmed: FC14 is NOT TESTED in this sandbox (no crash — graceful "not tested"), and FC32.new1 crashes. Both read the core by hardcoded paths that don't match the sandbox layout (`maths/formal core, now.md`). The claims table records FC14 as H (presumably; let me confirm FC14's status in the claims table — from the earlier read, FC14 | ... | H | H. Yes line 28: FC14 H H). So two claims whose recorded status (H) depends on a file lookup that fails in the delivered state. FC32.new1's is worse (traceback → "NOT TESTED" recorded by the runner, but the claims file says H).
+
+This is a solid structural finding for job 3 section (c)/(d) — actually it belongs in... it's about the program's structure: claims that verify the core's structure depend on an external path. I'll report as a finding in section (b)/(d) area — I'll put it in (b) (cycles/graph) since FC32.new1 is the graph claim, and mention FC14. Fix: code.
+
+Now let me also sanity-run FC32 and FC23 to have some "run" evidence for the dangling-uses section. FC32 (the claim about edges) — quick run.
+
+Actually, time to start writing. Let me run FC32 quickly.
+
+FC32 confirms the step's edges are right for Dep and NV, and Slot is not an ancestor of (E). Good — I can cite this run in (b) as "the step's Dependence edges are the ones the definitions have (run: FC32)".
+
+Now let me write the report. Structure per section 7:
+
+(a) dangling uses table.
+(b) cycles + dependence table.
+(c) undefined primitives table.
+(d) definitions no claim uses.
+(e) conflicts.
+(f) notation two ways.
+(g) proposals.
+(n) N1–N6.
+
+Let me consolidate findings with ids S1, S2, ...
+
+Findings:
+
+**S1 (a/c, run)**: FC14 and FC32.new1 read the formal core by hardcoded paths ("formal core, after S106.md", …) that no longer exist; in the sandbox as delivered FC14 returns "not tested" (run: command, result line) and FC32.new1 raises FileNotFoundError (run). Both are recorded H in `formal claims, now.md` (their printouts were made where the file existed). The two claims that check the core's own structure (no 'is a cause' predicate; every paragraph a node) are not reproducible as delivered. Fix: code (S-g).
+
+**S2 (b)**: DEP/D18.1 omit Con → Held and Build → Held. D12.2 and D13.3 read Held unconditionally (quoted), but DEP["Con"] = ["h","CT","Episode",("<","(R)")] and DEP["Build"] = [..., "ExplUse", ("<","(R)")]; the Held edge appears only under the T/T′ substitutions in dep_edges, and under K it disappears entirely. D18.1's note says "Con → CT, Episode". Witness: D12.2 "and Held(o', x) for some o' ⪯ o_t of h' (D18.1)"; D13.3 "Held_ℓ(o, c)". No cycle either way (Held → Org, (F1), (F2) only). Fix: maths + code.
+
+**S3 (e)**: two definitions of Slot that differ: D6.3's own clause vs Pin (I184)/FC23.new3 (a)/the program's slot(). Pin carries "t translates (a,b)"; D6.3's Slot clause evaluates L^E_k(τ(a),σ(b)) without requiring translation (π defined on Sol_D(a,b), I16 leaves π's domain open). They coincide wherever π is total on Sol at C's pairs (I81; FC23.new3 (a) H, run: 6480 models) and differ where π is partial there. Fix: maths — add "t translates (a,b)" to D6.3's ∀ clause.
+
+**S4 (c/e)**: subhistory both a primitive (D0.2: "Org_ℓ(h) and subhistory [I151]" read through Θ; program D0_2) and defined (D11.3: "a subhistory is a subset closed under the interpretation, with ≺ restricted"). Fix: D0.2 reclassify; code D0_2.
+
+**S5 (c)**: NoBriefQuestion used by FC84.new1, defined nowhere in the core (only I191 and claims_s41.no_brief_question, where the target z is matched by a string prefix). Also "the brief" as a criticism's target: D9.10's z untyped. Fix: maths — a definition in the core (D12.2's clause), typing z.
+
+**S6 (c)**: D16.XV's Work(κ), 'without loss', 'operates on', 'fails to capture', 'not creative' — used, never defined, not listed by D0.2 (the core notes "Work has no definition"). Fix: D0.2 add them.
+
+**S7 (d)**: definitions no claim uses: D7.4, D12.6, D14.8, D15.6, D16.1–D16.3, D2.5's dir — all needed by the text (lines); testing needs Θ. No fix.
+
+**S8 (f)**: δ two ways: designation (D3.1 δ_D, I20) and defect (D9.10 δ, the text's own L377); D9.10 uses both in one paragraph (δ the defect, δ_c ℰ_c's designation). Fix: rename the designation (the invention) — maths, one rename across D3.1, D3.2, D5.3, D6.3, D6.7's argument list, D7.4, D14.7, D16.4, D18.1's edge. Hmm — that's a lot of places; is it the "smallest" fix? Alternative: rename the defect in D9.10 only (one definition) to ζ. But L377 quotes δ for defect... The core's own symbol need not match the quoted text's letter. Renaming the defect in D9.10 (and its uses: D9.10's p_δ = Qf(z, δ, p), and D16.XV? no) is the smallest. But deviating from the text's letter is a cost. I'll propose renaming the designation instead, but note it touches 9 definitions — or actually propose the smaller: in D9.10 write the defect as δ^c... no, subscripts don't help. OK: propose the designation rename δ → ε? ε is used for discrepancy in E7 (I61? no, E7's ε). Use "dsg". I'll propose: δ_D/δ_E → d_D/d_E... but "d" is a commitment/content letter. Use "ι". Propose ι_D, ι_E. List the definitions touched. Mark as one maths proposal.
+
+**S9 (f)**: κ two ways: value maps κ_{k,v} (D5.1, I14) and kind-label κ(ℰ) (D16.XV (Elim)). Fix: rename (Elim)'s label.
+
+**S10 (f)**: "Dependence" the conjunct (D6.5, L255, L262) vs "Dependence order" (L526's heading) / D18.1's dependence graph / FC31–FC32's "dependence order". No fix: L526's "(E) depends on those (D18.1)" and D18.1's own title keep them apart; both are the text's own words. (I188's other choices recorded.)
+
+**S11 (f)**: program: `core.dep` (Dependence), `claims_b.DEP` (the graph), DEP node "Dep" — three spellings of "dep" with three meanings; plus account readings "S106"/"r3". No fix needed (scopes disjoint), or optionally rename DEP → GRAPH. I'll say no fix.
+
+**S12 (f)**: C two ways — contract (D3.1) and constructor attribute (D15.2, "the letters of Part XII are local"); also D15.3's F and C ⊆ F(C). The core's own note covers it; no fix.
+
+Wait, the brief's example list also had "primes on changed definitions" — e.g., NC1_q, Fid⁺, Viol⁺, X^ξ_j, RetReal^{q,r}, Acc with reading "r3". These are consistent (superscripts mark variants). I'll note examined, nothing against.
+
+**S13 (a)**: N2 — FC31 stale: names "the four conditions" at L61 (replaced in round 3 by Account(ℰ) ∧ ¬Dec(t)) and its L520 part is pre-S106 (L520 now writes (E)'s five conjuncts, so it names a source for (A)). Fix: restate FC31.
+
+Also (a) checks done: text has no remaining "non-circular"/"unanalysed"/"at the declared grain"/"assumes its own answer"/"restates"; NC1 in the program is computed as content, account(reading="r3") kept only for comparison; D6.11/Open only in historical marks; the quantifier reads Slot only (FC23.new1 (h)); no claim or graph node points at nothing (Slot node has edges, not an ancestor of (E) — run FC32). One residual: FC26 and FC63's statements still list "NC1" among the conditions met — true statements (the candidates meet NC1), noted in the claims' S106 column; not dangling.
+
+Hmm, one more possible (a) item: D6.8's quote "> L231 | meets Account(ℰ) exactly when the following four conditions are met" — L231 still says "four conditions" while (E) has five conjuncts; D6.8 handles it (four headings). Fine.
+
+And the core's §6 Vague still discusses NC1's undefined words — bearing on Slot only, noted ✓.
+
+(b) dependence table: I'll give the corrected edge table for the §6/§12/§13 nodes and the cycle analysis: 
+- Cycles under U: Live → (K2) → Live (closes below the step per D9.4/D9.6, i.e., the staged reading) and (R) → Con → (R) (with S2's fix: (R) → Sel → (R)).
+- Under K, T, T′: none (run/cited: printout line 1121; FC98 (a')).
+- The step's edges Dep → (O), (Q), C, δ are right (run: FC32 (2)); Slot's edges right; (E)'s edges right.
+
+(c) table: symbols: Pin (defined D6.3 ✓ used), Det_C (defined ✓), NoBriefQuestion (used, NOT defined — S5), "the brief"/criticism target typing (S5), Work/'without loss'/'operates on'/'fails to capture'/'not creative' (S6), subhistory (both — S4), plus check others listed by D0.2 ✓ (Offered, Off, Allow_χ, Applies, MadeFrom, …). Also "𝔓^adv_Θ" noted. Also Held/CT defined ✓.
+
+(d): as S7.
+
+(e): S3 (Slot/Pin), S4 (subhistory), and check D16.XV vs FC30.new1 (c): "Expl := Acc ∧ ¬Dec meets both (Suff) and the owner's condition" — that's a claim's exploratory definition, not a core definition; fine. Also two definitions of Expl? D16.XV says Expl is an atom; FC30.new1 (c) tries Expl := Acc ∧ ¬Dec as a look. Not a conflict in the core. State examined.
+
+Also one more potential (e): D6.5 says "Dependence(ℰ) :⟺ NC0 ∧ NC2 ... so Dependence(ℰ) ⟺ NC2(ℰ)" while D6.2 says NC0 "Holds of every candidate" — under I23's registered other reading (a) NC0 would be the boundary written-in test (closed by I187). Consistent. Examined, nothing against.
+
+(f): S8, S9, S10, S11, S12 + primes note.
+
+(g) proposals: enumerate with forms.
+
+(n) N1–N6:
+- N1: fix = D7.4 with δ_v (maths; same as S7's D7.4 line — actually N1's fix is the D7.4 change).
+- N2: fix = FC31 restated (S13).
+- N3: one line — no fix: it is S45's own consequence (a written-in defect does not stop Bearing); the criticism's target and the slot are content criticism can point at (D6.3); building on "which questions it leaves open" is parked (P8).
+- N4: one line — no fix: (Suff)'s range holding slot candidates is what S44/S45 say (an explanation, a bad one); "bad" is P8; S41 (Q2) kept (FC23.new2 (f)).
+- N5: one line — none needed: the heading names D6.5 (I188); a plain-word name for the condition was the removed test's ("non-circular"), and S40's kinds allow the formal name; the kinds of change allowed are D6.4's, quoted at L255.
+- N6: fix = the NoBriefQuestion definition (S5), with z typed; which occurrences are criticisms read through Θ (I90) stays.
+
+Proposals in detail:
+
+**P1 (maths, D6.3)**: 
+> **D6.3 NC1 (no answer slot).** … Slot_C(ℰ, k) :⟺ δ_E ∈ V_k ∧ Det_C ≠ ∅ ∧ ∀(a,b) ∈ Det_C [t translates (a,b) ∧ {w_δE : w ∈ L^E_k(τ(a),σ(b))} = {Ans_p(a,b)}]
+beside the current clause (no translation conjunct). Makes D6.3's Slot exactly Pin at every pair of Det_C (FC23.new3 (a) as stated; the program's slot under "every" already requires cand.translates). Inventions: none new (I16's open π domain is what the two readings differ on; I184 unchanged).
+
+**P2 (maths, D18.1 note + code)**:
+maths: D18.1's [r3/S106] note "Con → CT, Episode" → "Con → CT, Episode, Held"; "Build → ExplUse → (E)" → "Build → ExplUse, Held → (E)"... careful: Build → Held and Build → ExplUse → (E). Write: "Con → CT, Episode, Held; Build → ExplUse, Held".
+code:
+```python
+# claims_b.py, DEP (S-finding): D12.2's Con and D13.3's Build read Held unconditionally (D18.1's Held, no provenance);
+# the staged ("<", "(R)") entries were the pre-r2b-R3 wording. Sel keeps its staged Rep use (D12.1's ¬∃o ≺ o_t Rep(o,x)).
+"Con": ["h", "CT", "Episode", "Held"],
+"Build": ["h", "Owned", "Prepares", "BindingConstruction", "TransferComposite", "ExplUse", "Held", ("<", "(R)")],
+```
+Wait — should Build keep the staged (R)? Build's D13.3 reads Held_ℓ(o,c) — that's the Held use. Does Build read (R) anywhere else? No. So Build's staged (R) entry should be removed, replaced by Held. And dep_edges' substitution for Con/Build becomes a no-op. But careful: DEP_EXPLUSE_PRIMITIVE = dict(DEP, ExplUse=[]) unaffected. And dep_edges' logic `if y == "(R)" and staged and n in ("Sel","Con","Build")` — with Con/Build no longer having staged (R), only Sel's remains; under T/T′ it would append "Held" to Sel — wait, the logic: for Sel under T or T′... reading T: Sel, Con, Build use Held; T′: Sel staged. So under T, Sel's Rep use is read as Held — that's the T reading (Sel's exclusion uses Held instead of Rep). Keep the logic as is for Sel. With Con/Build fixed in DEP, under T the substitution would no longer apply to them (they have no staged (R) left) — but they already have Held, so T's intent (Con/Build use Held) holds. Under T, Sel → Held (substituted). Fine. So the code fix is: change those two DEP entries; leave dep_edges alone. Expected output: FC32.new1 (b): "U: Live → (K2) → Live (through (R): (R) → Sel → (R)); K: None; T: None; T′: None"; FC98 (a) cycle through (R) still found; statuses unchanged. Not run.
+
+**P3 (maths, new definition)**: add to §12, beside D12.2:
+> **D12.2.new NoBriefQuestion.** NoBriefQuestion(h′, C_b) :⟺ every o ∈ h′ has q(o) = C_b ∧ no occurrence of h′ is a criticism c = (z, δ, g, Conn, occ) (D9.10) with z = C_b **[I191]**; which occurrences are criticisms, and of what, is read through Θ (I90).
+Used by FC84.new1 (a1), (a2). Inventions: I191 (already registered), no new one.
+
+**P4 (maths, D7.4)**: 
+> **D7.4 Boundary (D).** For a declared family 𝒱 of organization edits: Boundary := {(v,w) ∈ 𝒱² : Acc(E_v, p) ≠ Acc(E_w, p)}, each v ∈ 𝒱 declaring (E_v, t_v, Γ_v, δ_v), δ_v the designation of Q in E_v (D5.3), t_v the transport the operation carries t to and Γ_v the commitments it leaves (L231).
+(N1's fix; matches D7.1's Acc((E|W, p, t|W, W, δ_E)) and D16.4/D14.7's quantified δ.)
+
+**P5 (maths, FC31 restated)**: 
+> | FC31 | 'The four conditions', five conjuncts | (E) has five conjuncts; Part V has four headed conditions: Component fidelity = (F1) ∧ (F2), Question fidelity = (A), Dependence, Non-vacuity. 'The four conditions' at L231 and L536 are the four headings (L61's phrase was replaced by Account(ℰ) ∧ ¬Dec(t) in round 3); L520 names (E)'s conjuncts, so it names a source for (A) (FC104's open question is L630's alone). |
+(N2's fix.)
+
+**P6 (maths, D0.2)**: two changes: (i) move subhistory out of the read-through-Θ primitives ("a subhistory is defined, D11.3 [I151]"); (ii) add D16.XV's words: "Work(κ) [L540]; 'without loss' and 'operates on' [L542]; 'fails to capture' and 'not creative' [L544] — used by D16.XV's shapes, defined nowhere". Code: D0_2 remove "subhistory"; D0_2_R3A3 add "subhistory": "defined (D11.3, I151)"; optionally DEP["Episode"] drop "subhistory". Expected: FC32.new1 (c) unchanged ("none" unlisted after area 3); FC98 (b) unchanged. Not run.
+
+**P7 (code, core_def_ids / claims_a's tries)**: point both at the sandbox's core:
+```python
+# claims_r3a3.core_def_ids and claims_a's fc14 path list: the core as it now stands is maths/formal core, now.md
+tries = [os.path.join(here, "..", "maths", "formal core, now.md")] + tries
+```
+Expected: FC14 H ("118 definition lines; matching 'is a cause' / 'IsCause' / 'Cause(': 0"), FC32.new1 H ("114 paragraphs read from the formal core; not mapped: none …"). Not run (cannot write).
+
+Hmm — the printout line 350 said "read formal core, after S106.md: 118 definition lines" for FC14 — FC14 counts all D-lines including §0/§18? It says 118 definition lines; FC32.new1 says 114 paragraphs (§§1–16). OK.
+
+**P8 (maths, D16.XV (Elim))**: rename the kind-label: "a kind-label κ(ℰ) ≠ κ(ℰ')" → "a kind-label kl(ℰ) ≠ kl(ℰ')" (κ is D5.1's value map, I14). Small.
+
+**P9 (maths, the designation's letter)**: rename δ_D/δ_E (I20) to ι_D/ι_E in D3.1, D3.2, D5.3, D6.3, D6.7 (arguments), D7.4, D14.7, D16.4, D18.1 (Slot's and Dep's δ edge → ι), so that D9.10's δ (the defect, L377's own letter) is the only δ. Hmm — is this worth it? It touches the DEP node names ("δ" sink). I'll propose it but note it is a rename only, no content; inventions: I20's letter, other choice recorded.
+
+Actually — wait. Is the δ clash really harmful? In D9.10, "p_δ := Qf(z, δ, p)" uses δ as the defect, and "ℰ_c := (Conn, Qf(z,δ,p), t_c, Γ_c, δ_c)" — δ_c is ℰ_c's designation. So within one definition δ is a defect and δ_c a designation. A reader could read δ_c as "the defect of the criticism c". That's a genuine misreading risk. Also D16.XV's (Nec) etc. Fine, propose.
+
+Should I propose the Slot translation fix as also updating I184? No — I184 unchanged; the fix is to D6.3's Slot clause.
+
+One more check on P1: does adding "t translates (a,b)" to Slot change any computed value? In the program π is total, translates = dom τ ∧ dom σ, and slot already requires it — so no change. In the core, it changes Slot on partial-π candidates only. And NC1 reads Slot. Fine.
+
+Also, for section (a) I should present the table of places checked. And for (b) the dependence table.
+
+Also should I mention D6.10 folded into node "(E)" (D_TO_NODE)? E_tab/E_enc are encodings of worked cases, not conjuncts; folding them into (E) makes FC25's test of E_enc against (E) a node tested against a construction folded into itself — harmless but the fold misdescribes: D6.10 defines no condition of (E). Minor; I'll put one line in (b) or (d): D6.10 (E_tab, E_enc) is folded into node "(E)" though it defines no conjunct of (E); its content is (F1)-relative; no fix needed (the fold is a holder, I181, and FC25 computes E_enc against the conjuncts, not the node). Actually a cleaner statement: the fold is by I181's convention "every paragraph a node or folded into one"; D6.10's fold into (E) is the one fold that places a construction inside the condition it is tested against; harmless since edges are per-node. One line, no fix.
+
+Also (b): the brief asks "every cycle; whether the step's edges ... are the edges the definitions actually have". Step's edges: Dependence → (O), (Q), C, δ ✓ (run FC32); node Slot ✓ edges (O),(Q),C,ℓ,δ,Cand ✓ (ℓ via NC1's grain clause, Cand via δ_E ∈ V_k and τ,σ). But note: Slot's "Cand" edge — Cand is the candidate tuple; Slot reads δ_E ∈ V_k (E's data) and t's τ,σ — Cand → Transport ✓. OK.
+
+One more: does the "Dep" node need "Transport"? By convention (FC32 (1)) t and Γ are excluded. ✓ consistent.
+
+Now, also verify there's no cycle introduced by the Slot node: Slot → Cand → Transport → (O); no path back. ✓.
+
+Let me also double-check the claim in S2 that D18.1's note omits Held for Con: core D18.1 [r3: A3]: "Sel → (F1), (F2), CT, 𝒯pop, surv, Occurs, staged (R); Con → CT, Episode; Dec → Sel, Con, TransferComposite; Build → ExplUse → (E)". Yes, Con's list omits Held, Build's omits Held. ✓.
+
+Also, does the core D18.1 anywhere state the T′ reading's edges? The T′ bullet defines the cut. The [S106] note lists Dep/Slot/(E) edges. So the core's edge statements for Con/Build are the r3 ones, stale after r2b R3/r3 B1 re-based Con onto Held... actually r2b R3 already read 'available as a represented target' as Held; round 3's B1/B2 kept it. So the r3 note's "Con → CT, Episode" was already missing Held then. Fine — a pre-existing error the step inherited; still a finding now.
+
+Word budget: ~3000 words. Let me write tersely.
+
+For (c) table rows: symbol | where used | listed by the text or not. "Listed by the text" — D0.2 is the core's list; the text's lists are L31 (imports), L522 (declared inputs), L526 (sinks). So column: listed by D0.2 / by no list / defined elsewhere.
+
+Rows:
+- Pin | D6.3 (S106b), FC23.new2, FC23.new3, core.pin | defined (D6.3), not a primitive — no entry needed ✓
+- Det_C | D6.3, FC23.new3, FC25.new2 | defined (D6.3) ✓
+- NoBriefQuestion | FC84.new1, I191, claims_s41 | defined NOWHERE (S5) ✗
+- the brief as a criticism's target (z) | I191, FC84.new1 | D9.10's z untyped; read through Θ (I90) — partial
+- Work(κ), 'without loss', 'operates on', 'fails to capture', 'not creative' | D16.XV | noted "no definition" in D16.XV, not in D0.2 ✗ (S6)
+- subhistory | D11.3 (defined), D0.2 (primitive), DEP sink | both ✗ (S4)
+- Held, CT | D18.1, D12.2 | defined ✓
+- 𝔓^adv_Θ, surv, Env, trans, UsesClaim, parts, Desc, 𝒱, J_p, C_I, ImmAfter, Event | classed by D0.2/D0_2_R3A3 ✓ (run/cited: printout line 1125)
+- q(o), Rec_h' | D13.8 | read through Θ, listed [I165] ✓
+
+OK. Now write the report. Keep it terse. Also include the "items examined and found nothing against" lines at the end of each section.
+
+For run citations:
+- `python3 -m model.run --claim FC23.new3 --brief` → "FC23.new3 HOLDS ON ALL MODELS TRIED … (a) … 6480 models".
+- `--claim FC32 --brief` → H, Dep edges ['(O)','(Q)','C','δ'], "Slot an ancestor of (E): False".
+- `--claim FC32.new1 --brief` → NOT TESTED, FileNotFoundError.
+- `--claim FC14 --brief` → NOT TESTED, "no formal core found at: …".
+
+Also mention the whole-suite printout lines 1113–1129 as the recorded results.
+
+Now write.

@@ -1,0 +1,396 @@
+Let me read the files.
+
+Now let me read the JSON, the plan, the owner's Avida terms, the rule for reading, and plain words 111 for style.
+
+Now let me check the plain words file against the results carefully. Key checks:
+
+1. Plain words says "98 in 100" — results say 98.0% of program-task pairs, 98.6% by Avida program. OK. Plain words says "In almost every Avida program (98 in 100)". Hmm — the 98.0% figure is over program-task pairs, not programs. "in almost every Avida program (98 in 100)" — the results say 98.0% of pairs, 98.6% counted by Avida program. So "98 in 100" for programs is roughly fine but slightly imprecise; results give by-Avida-program percentages per task 95.5% to 100%. Actually "by Avida programs" column per task: NOT 95.5%, NAND 97.2%, AND 99.9%, ORN 98.4%, OR 100%, ANDN 99.1%, NOR 100%, XOR 100%, EQU 100%. So per program by task varies 95.5–100%. The overall 98.6% by programs. "In almost every Avida program (98 in 100), taking out one single instruction was enough to stop a given sum" — hmm, per given sum in a given program. This is roughly supported by 98.0% of pairs. Minor.
+
+2. "about 5 for the simplest sum (NOT), about 22 for EQU, about 27 for XOR" — results: NOT mean 5.2, EQU 21.9, XOR 27.0. "about 22 for EQU" — 21.9 ≈ 22, fine. Plain words section 3 lists: "about 5 for NOT and NAND, 7 for ORN, 10 for ANDN, 13 for AND and OR, 16 for NOR, 22 for EQU, 27 for XOR" — matches means 5.2, 5.3, 7.1, 10.3, 12.7(AND)~13, 13.0(OR), 15.8~16, 21.9~22, 27.0. OK.
+
+3. Section 3 example: "The most common program doing NOT in one of the nine runs has 110 instructions and is carried by 44 Avida programs" — matches results 2.1: low seed 2's most common NOT sequence, 44 programs, 110 instructions. Plain words doesn't name the run — fine.
+
+Instruction positions: plain words says "instruction 11 reads a number in; instruction 12 puts it on a pile; instruction 16 takes it off into the second storage place... instruction 20, the nand... instruction 21 moves the result... instruction 26 hands it out." Matches results.
+
+"Removing each of the 110 instructions in turn... five of them stop NOT... the pile instruction at 12, the marker at 15, the nand at 20, the move at 21, and the marker at 27" — results say required: site 12 push, 15 nop-C, 20 nand, 21 swap, 27 nop-C. Matches.
+
+"Two instructions on the path do not stop it when removed: the read at 11... and the hand-out at 26 (the answer stays where it is, and a later hand-out instruction, at 34, hands out a NOT made another way)." Matches results.
+
+4. "23,332 of them, carried by 32,193 Avida programs; every single instruction of each removed in turn (2.3 million runs of Avida), and every pair of instructions in every program that copies itself and does a sum (52 million runs)." Results: 2,330,137 and 52,428,814. OK.
+
+5. "They are the same few kinds everywhere: the read-and-hand-out instruction (a quarter to two fifths of them)" — results by-kind table IO: 24% (ANDN) to 40% (ORN). "a quarter to two fifths" = 24%–40%... a quarter is 25%, ANDN is 24%. Slight rounding; "a quarter to two fifths" for 24–40% — close enough? 24% is slightly less than a quarter. Minor.
+
+"nand (about a fifth)" — 16% to 22%. "about a fifth" OK. "the markers (about a fifth to a quarter)" — nop-C 16–23%, nop-A 3–7%... hmm. "Markers" combined: nop-C + nop-A ranges: NOT 18+3=21, NAND 23+4=27, AND 16+4=20, ORN 17+3=20, OR 20+7=27, ANDN 20+3=23, NOR 18+6=24, XOR 21+5=26, EQU 20+5=25. So 20–27%, "about a fifth to a quarter" OK.
+
+"for some sums also add, subtract, add one, take one away" — matches.
+
+6. "About one in six of them is not on the path from the numbers to the answer at all." Results: 17% of required sites lie outside the credited route. "About one in six" = 16.7% vs 17%. OK, though "one in six" vs 17% — fine.
+
+"An example: in the most common EQU program of another run, removing an unused read at instruction 45 made the reads at 47, 53 and 66 receive the third, second and first numbers instead of the first, third and second" — results 2.1: low seed 3's most common EQU, IO at 45 rotation; ablating 45: reads at 47, 53, 66 get C, B, A instead of A, C, B. Plain words: "the third, second and first numbers instead of the first, third and second" — C is the third, B second, A first. A, C, B = first, third, second. Matches. "another run" — the NOT example was low seed 2, EQU is low seed 3 — a different run. OK.
+
+7. "In the other 2 in 100, no single removal stopped the sum, because the program did it in two places; there, a pair of instructions had to go together, one from each place. Two programs needed three." Results: 1,573 needed a pair; two needed a set of three. "Two programs needed three" — results say "two needed a set of three" (program-task pairs). Actually results section 5 says "In two NOT programs the irreducible-set search found sets of size 3". OK.
+
+Wait — plain words says "In the other 2 in 100, no single removal stopped the sum, because the program did it in two places; there, a pair of instructions had to go together, one from each place." But of the 1,664 pairs not stopped by single site, 1,646 have more than one route; but also 89+2... Actually 1,664 program-task pairs with no single-site stop; 1,573 needed a pair, 89 none found, 2 needed three. Plain words then: "**89 program-and-sum pairs** (NOT and ORN only, 95 Avida programs, in two runs) could not be stopped this way at all". Matches results.
+
+But there's a subtlety: plain words says "because the program did it in two places" — for all 1,573? Results say 1,646 of 1,664 have more than one route (minimal pair takes out one site of each route, "or of the rotation and one route"). So "one from each place" is an overgeneralization — 18 of 1,664 didn't have two routes. Minor but it's a "nothing stronger than results" issue. Actually 1,664 minus 1,646 = 18 pairs that lack a second route. Plain words claims universally "because the program did it in two places". Slight overstatement. Worth an objection (minor).
+
+8. Section 4 example EQU: "the most common EQU program of one run (108 instructions, 28 Avida programs)". Matches low seed 3. Steps: results 3.1 EQU worked example. Plain words steps:
+1. combine B and A with nand; put on pile — 43 nand, 44 push. ✓
+2. "read C and A, and with one nand, one addition, one 'add one' and one subtraction, turn them into not A (C goes in and cancels out)" — results: not A by arithmetic (57 nand, 60 add, 63 inc, 65 sub), B read at 66... wait. Results NOR/EQU: "57 nand, 60 add, 63 inc, 65 sub: BX := nand(C,A) − (A and not C) = not A". Inputs: 47 IO reads A into CX, 53 IO reads C into BX. So reads of A and C, then nand, add, inc, sub. Plain words: "read C and A, and with one nand, one addition, one 'add one' and one subtraction, turn them into not A (C goes in and cancels out)". ✓. "one nand" — yes 57.
+3. "read B; two nand steps turn 'not A' and B into A or B" — 66 read B; 75, 78 nand. ✓
+4. "take 'not both A and B' off the pile; one last nand of it with 'A or B' gives A equals B" — 90 pop, 91 nand. ✓
+5. hand it out — 92 IO. ✓
+
+But wait — required instructions list in results 2.1 for EQU includes nand at 43, 75, 78, 91 (four nands), add 60, inc 63, sub 65... and plain words step 2 says "one nand" — total nands in the example: 43 (step 1), 57 (step 2), 75, 78 (step 3), 91 (step 4) = 5 nands. Plain words describes them across steps. Fine.
+
+"a fixed wiring diagram of five kinds of step" — kinds: nand, add, inc, sub, plus reads/writes? "five kinds of step" — nand, add, add-one, subtract, and...? Reads (IO)? Steps in the example: read, nand, add, inc, sub, push/pop, hand-out. Hmm, "five kinds of step" — arithmetic kinds: nand, add, inc, sub = 4; plus read/write IO = 5? Ambiguous but plausible. Not a strong objection.
+
+9. Section 4 bullets:
+- NOT: "63 in 100 of the NOT programs" — results: 63%. ✓ NAND 82 ✓ ORN 69 ✓ EQU "four circuits cover 81 in 100 of the EQU programs, each of five to eight steps" — results §0: "of EQU, a five- to eight-step circuit (four circuits cover 81%)". Hmm — results say four circuits cover 81%, and circuits are five-to-eight-step? §0 says "of EQU, a five- to eight-step circuit (four circuits cover 81% of the EQU programs)". The table in §3 shows EQU circuits 25%, 23%, 17% = 65% for top three, all in specific runs. Plain words "each of five to eight steps" — matches §0's reading. OK.
+- "each run's program ancestry (its line of parent and descendant programs) found its own" — results: "The most common circuits of AND, OR, NOR, XOR and EQU are each confined to one to seven runs". Plain words says "each run's program ancestry found its own" for "the harder sums" — this says every run found its own circuits, but results say confined to one to seven runs, i.e., some circuits span up to seven runs. "found its own" overstates independence. Hmm — "each run's ancestry found its own" — for XOR top circuits confined to 1 run each; EQU 1–3 runs. But "one to seven runs" for AND/OR/NOR/XOR/EQU — e.g., the AND circuit 15% in 5 runs. So "each run found its own" is stronger than the results. Objection (minor).
+
+Actually let me reread plain words: "For the harder sums the circuits are longer, and each run's program ancestry (its line of parent and descendant programs) found its own; EQU: four circuits cover 81 in 100". Results: "each run's program ancestry settled on its own circuits" — the results say exactly that! §3 Sharing: "The most common circuits of AND, OR, NOR, XOR and EQU are each confined to one to seven runs: each run's program ancestry settled on its own circuits." OK so plain words matches results. Fine — the other cross-examiners can contest the results file; my job is plain words vs results.
+
+- "One circuit, many programs. The most common NOT circuit is carried by 13,520 Avida programs with 7,925 different instruction sequences, and the instructions on its path are written in 347 different ways." ✓ matches.
+- "Some circuits use addition and subtraction... 'not both A and C, plus A, plus one' is always 'A and not C'" — results: `inc(add(nand(x0,x1),x0))` = "not (x0 and x1), plus x0, plus 1: x0 and not x1". ✓ "Checked on all eight combinations of three digits, every circuit that could be checked this way gives its sum, except one." Results table: ANDN 139/1/35 — one not accepted. All others 0 not accepted. ✓ "every circuit that could be checked this way" — those not "not computable". ✓
+- "The smallest possible circuits are there. For seven of the nine sums, the smallest circuit found uses as few steps as the smallest possible with nand alone (NOT 1, NAND 1, AND 2, ORN 2, OR 3, ANDN 3, EQU 5); for NOR one uses fewer, by using a subtraction; for XOR the smallest found has 5 steps, one more than possible."
+
+Results table: smallest possible with nand alone: NOT 1, NAND 1, AND 2, ORN 2, OR 3, ANDN 3, NOR 4, XOR 4, EQU 5. Smallest reduced circuit found: NOR 3 (with sub), XOR 5. Smallest nand-only circuit found: all equal to the possible except... NOR 4, XOR 5. So "for seven of the nine sums, the smallest circuit found uses as few steps as the smallest possible with nand alone (NOT 1 ... EQU 5)" — that's 7 sums listed: NOT, NAND, AND, ORN, OR, ANDN, EQU. ✓. NOR: 3 < 4 with sub ✓. XOR: 5 vs 4, "one more than possible" ✓.
+
+Hmm but "smallest possible with nand alone" — where does the claim that 4 is smallest possible for XOR with nand come from? That's in the results. Fine, plain words matches results.
+
+- "There are many circuits in all: from 35 (XOR) to 409 (OR) different ones per sum over all nine runs" — results table: distinct reduced circuits XOR 35, OR 409. ✓. But wait §0 of results says "each task has from 35 (XOR) to 409 (OR) distinct circuits (identity steps removed)". ✓.
+
+10. Section 5:
+- "Make the letter for nand mean nor... 98 in 100 programs still copy themselves" — results: "98% to 99% of the programs still replicate". ✓ "of the NAND programs, 97 in 100 now do NOR instead" — results: "NAND programs perform NOR: 97%" ✓. "only 2 in 100 of the OR programs still do OR" — results table: OR under nor = 2% ✓. "that was right for 99 in 100" — 99.1% ✓. "Make it mean and: almost all sums vanish except AND (73 in 100 remain) and some NOT and ANDN." Results table and-row: NOT 18%, NAND 1%, AND 73%, ORN 0%, OR 0%, ANDN 20%, NOR 0%, XOR 0%, EQU 0%. Plain words "some NOT and ANDN" — 18% and 20%. OK. But NAND 1% — "almost all sums vanish except AND... and some NOT and ANDN" — NAND 1% is vanishing. Fine.
+
+- "Remove the input and output channel... no program does any sum, though 83 to 89 in 100 still copy themselves." ✓ (83%–89%).
+
+- "Hand in other numbers. Numbers of the kind Avida hands out in its runs: 99 to 100 in 100 still do each sum." Results table: "other inputs of the world's kind, 3 triples" 99–100%. ✓ "Completely random numbers: 66 to 90 in 100." Results: random 32-bit inputs 66%–90%. ✓ "Some programs' other instructions compare the numbers handed in and take a different path when they change, and a few circuits give the right answer only for some numbers." Matches results.
+
+- "Change all the meanings. Give the 26 letters the 26 meanings in another order: no program copies itself or does anything." Results: "no program replicates or performs anything" ✓. But note the shuffle constraint (nops first) is a departure said in results §6 and plain words §6 mentions "Avida would not accept a reshuffled instruction set with its markers anywhere, so the markers were kept in front" ✓. Hmm, "Give the 26 letters the 26 meanings in another order" — with the constraint. Plain words §6 covers it. Also "a few letters keep their meaning by chance" is not mentioned in plain words — minor omission, arguably fine since §6 mentions markers kept in front. Not required.
+
+Also plain words section 5 omits "the fixed inputs in another order" row (98–99%). Omission, not misstatement. Not required to include everything.
+
+11. Section 6 tested/not tested/unsure — largely mirrors results §7. Plain words "Tested" includes "every three together in the nine most common programs" ✓; "each circuit's answer checked against Avida's own check, on the three fixed numbers, on all eight combinations of digits, and on 200 other sets of numbers" ✓; "four kinds of change to Avida" ✓ (nand→nor, nand→and, IO→nop, meanings shuffled... that's plus inputs = 6 changes? Results §7 says "four kinds of change to the Avida execution environment". Table has: nand→nor, nand→and, IO→nop, inputs (three kinds), shuffle = arguably four kinds (logic meaning, IO, inputs, whole set). Plain words matches results' "four kinds". ✓
+
+"Changed from the plan": three items match results §6 items 1–3. ✓ "some programs that split off an inexact copy are still credited with sums by Avida, which the plan had not expected; they are counted separately" ✓.
+
+"Not tested": "removing an instruction by cutting it out... all sets of three or more in every program; the programs inside the full program population, with neighbours, rather than alone." Results not-tested also includes "whether the circuits found are the only ones a program could execute on other inputs (the traces follow one run, on the fixed inputs)". Plain words §6 Unsure includes "one step-by-step record per program, on one set of numbers" — covers that. OK.
+
+"Unsure": "the same circuit counts two circuits as different if they reach the same answer through different additions and subtractions" ✓; "the job of an instruction that is off the path... checked by removal only in three cases" ✓ (three reruns); "one step-by-step record per program, on one set of numbers" ✓.
+
+Hmm — plain words Unsure omits the hash-collision point; fine, too technical.
+
+12. Now the header note: "It uses your Avida terms (the list you gave, kept in "Semantics/records/Semantics - Avida terms, given by the owner.md")". Check the actual path — the file in this folder is `S112/the owner's Avida terms.md`; results file references `records/Semantics - Avida terms, given by the owner.md`. Plain words references "Semantics/records/..." — that's the project record path, presumably fine (paths in this sandbox are copies). Not objectionable from my angle (paths belong to another examiner maybe). Also results-file reference: "Semantics/results/S112 What the evolved sums are - what had to be removed and what it is.md" — the actual file name in the folder is "S112/2 what had to be removed and what it is.md". These are sandbox copies; the original names presumably differ. I can't verify original paths. Skip.
+
+13. Terminology check (S61): "Avida program" ✓, "instruction sequence" ✓. Check for forbidden biological words: "population" — glossary says prefer "program population". Plain words: "carried by 44 Avida programs in its population" — uses "its population" — should be "program population". Minor. Also "in two runs" etc. Any "organism", "genome", "gene", "mutation"? Search: plain words uses "program population"? Line 33: "carried by 44 Avida programs in its population". Line 37: "23,332 of them, carried by 32,193 Avida programs". Glossary: population → "program population". "its population" refers to the run's population — mildly off-term. Minor.
+
+"ancestry (its line of parent and descendant programs)" — glossary: lineage → program ancestry. ✓ used.
+
+"replication" — glossary: reproduction → program replication. Plain words uses "copies itself", "copying" — plain. OK.
+
+14. S23 forbidden words in Claude's own sentences: check for "true", "established", "proves", "supports", "verified", "believe", "derived", "foundation"... Search plain words: "true" — I don't see it. "exact/exactly" fine. "The arithmetic steps are exact" — in results. Plain words: "These are exact" (§4) — "exact" isn't forbidden. "always" — "is always 'A and not C'" — descriptive mathematical claim, fine. Check "proves"... none. "right for 99 in 100" — "right" is fine (matches "prediction matches"). "corrected" fine.
+
+Hmm, "the answer came out as a different sum" — fine.
+
+15. "Nothing settled" (S28): plain words doesn't settle. ✓ "Nothing chosen for the owner" (S21): §7 "Which way to take it is yours to choose" ✓, "the next step I propose" ✓.
+
+16. Marked as written before GLM check ✓ (header note).
+
+17. Ends with one next step ✓.
+
+18. Concrete example before each general point: §1 gives answers directly (that's the required "starts with the direct answer"), then "The rest of this page explains each of these, with examples." §2 is words with examples. §3 example first ✓. §4 example first ✓. §5 — "Each of these was tested by..." with bullets; is there a concrete example before the general point? The bullets themselves give concrete numbers (97 in 100 NAND programs now do NOR). The general point in §5's last paragraph ("the circuit is a circuit only relative to Avida") comes after concrete bullets. OK.
+
+§1 has no concrete example before its general points — but the brief requires it starts with the direct answer, which takes precedence. Hmm, "a concrete example before each general point" — §1's statements are the direct answers. Probably acceptable; the examples come in §3/§4. I could raise as minor. Probably not.
+
+19. Technical words explained before first use, one plain sentence:
+- "instruction" — §2 ✓.
+- "sum" — defined §2 ✓. But "sum" is used in §1 before §2 defines it. §1: "the small sums", "stop a given sum". Hmm — §1 is the direct answer, uses "sum" before §2 defines it. The brief says "every unavoidable technical word explained in one plain sentence before its first use". "Sum" first used in §1 line 9-11 without definition. But §1 immediately gives context ("the Avida programs that could do the small sums"). Strictly, the definition comes after first use. Is "sum" technical? It's the project's plain word for logic task. Minor objection perhaps. Actually the brief requires the file start with the direct answer, and defining words first would conflict; §2 titled "The words used". Given the tension, an objection is weak. I might note it as minor.
+
+- "circuit" — first used §1 line 13: "small fixed wiring diagram, called here a circuit" — defined in place ✓.
+- "instruction sequence" — used §1? "The same circuit turns up in thousands of programs" — §1 line 13 doesn't use it. §2 defines ✓.
+- "register"/"storage place" — §2: "three storage places (Avida calls them registers)" ✓.
+- "stack"/"pile" — §2: "two piles of numbers (stacks)" ✓. §3 uses "pile" ✓ consistent.
+- "marker" — §2 ✓; §1 line 11 uses "small markers" before defined. Same issue as "sum". §1 uses: instruction, sum, markers, "read a number" instruction... The header/§1 inevitably uses terms before §2. Given the owner asked two questions using these notions and §1 paraphrases them, this may be acceptable. But strictly the brief says explained before first use. Hmm. §1 is meant to be the direct answer readable first; I'll raise one minor objection covering "sum"/"marker" first used in §1 before §2 definitions — with fix: add a one-line parenthesis in §1 at first use, e.g. "the small sums (Avida's nine small logic tasks, defined below)". Actually is that needed? The brief: "every unavoidable technical word explained in one plain sentence before its first use". I'll list it as a minor objection with exact fix.
+
+- "nand" — §1 line 11 "the one instruction that combines numbers" — defined in §2 line 25 properly. §1 mentions "nand"? No — §1 says "the one instruction that combines numbers". §3 uses `nand` in backticks; §2 defined it ✓ (§2 before §3).
+- "ablation" — §2 line 29: "researchers call this instruction ablation; you listed it" ✓.
+- "test processor"? Plain words says "Avida hands a program three fixed numbers when it tests it alone" — plain. ✓
+- "update 50,000"? Not used. "run" — used ("one of the nine runs", "another run") — is "run" explained? §3 line 37: "every distinct instruction sequence alive at the end of the nine runs" — "run" not defined anywhere. An owner non-programmer — "run" is everyday enough ("nine runs" of the experiment). Fine.
+- "population" — "its population" line 33. Everyday enough-ish.
+- "circuit" — consistent.
+- "identity"? not used.
+- "logic task" — §2: "A sum here is one of Avida's nine small logic tasks" ✓.
+
+20. Codes: "no codes" — plain words uses `nand` in backticks — that's an instruction name, unavoidable, and §2 explains it. Site numbers like "instruction 12" — numbers, fine. "0x..." hex — not used in plain words ✓. Good.
+
+21. Now numbers again, line by line:
+
+§1 line 11: "In almost every Avida program (98 in 100), taking out one single instruction was enough to stop a given sum while the program went on copying itself." Results: 98.0% of program-task pairs; 98.6% by programs. "a given sum" — per pair. Saying "in almost every Avida program (98 in 100)" reads as: for 98 in 100 programs, one instruction enough — but it's per program-task pair. If a program does multiple sums, per-program fraction differs. The results' own by-program figures per task range 95.5%–100%. The plain-words phrasing conflates pair-level with program-level. Is this "rounding that changes a comparison"? It's a unit mismatch. 98.6% by program overall (results §0 says "98.0% of the program-task pairs (98.6% counted by Avida program)"). So "98 in 100" per program is supported by 98.6%. Actually fine.
+
+§1: "Each program has a handful of such instructions for each sum: about 5 for the simplest sum (NOT), about 22 for EQU, about 27 for XOR." ✓.
+
+"In the other 2 in 100, a second copy of the sum inside the same program meant two instructions had to go together." — Overgeneralization as noted (1,646 of 1,664 had second route; also 89 couldn't be stopped at all and 2 needed three — but §3 covers those). Also "a second copy of the sum" — results say "the task has a second route"; route ≠ full second copy necessarily, but results §2 says "almost always the task has a second route that one ablation leaves standing". Plain words "a second copy of the sum inside the same program" ≈ second route. And §3 line 42 says "because the program did it in two places; there, a pair of instructions had to go together, one from each place" — results: "a minimal pair then takes out one site of each route (or of the rotation and one route)" — the "or of the rotation" case contradicts "one from each place" universally. Minor overstatement. Objection X4.x minor.
+
+§1 line 13: "For the sum NOT, most programs (63 in 100) do it with one step." Results: most common reduced circuit `nand(x0,x0)` = 63% of programs. ✓ "For EQU, the hardest sum, most do it with five to eight steps." Results: four circuits covering 81% are five- to eight-step. "most do it with five to eight steps" — 81% is most ✓. Is EQU "the hardest"? Results §0 calls it... results don't call EQU hardest; plain words §2 line 21 calls EQU "the hardest". Results call XOR needing most required instructions (27) and most possible nand steps for XOR is 4 vs EQU 5. S111 presumably called EQU hardest (it's Avida's most rewarded task). "Hardest" is a plain-words characterization not in S112 results. Hmm — is it "nothing stronger than the results"? "Hardest" isn't a measurement in the results. EQU gives the most reward in Avida (standard). I can't check S111 config here — actually I can check runs/configuration for reward values. Let me check the config file for task rewards. If EQU has the highest reward, "hardest" is defensible as everyday. Let me check.
+
+Also §1 line 13: "The same circuit turns up in thousands of programs written with different instructions." Results: top NOT circuit in 13,520 programs, 347 route strings ✓.
+
+"change what one of Avida's instructions means, and the same programs do different sums, or none" ✓ supported (nand→nor/and rows).
+
+§2 line 21: "The simplest, NOT, is a number that has a 1 wherever the number handed in has a 0..." ✓. "The hardest, EQU, marks, place by place, where two numbers agree." ✓ definitionally.
+
+§2 line 25: "Avida has one instruction that combines numbers: it is called nand, and it gives, place by place, a 1 unless both numbers have a 1 there." ✓. "Every one of the nine sums can be built out of it" ✓ (NAND functional completeness; results show smallest nand-only circuits for all nine).
+
+§2 line 27: "Avida hands a program three fixed numbers when it tests it alone. They are handed out in turn: the first 'read a number' instruction gets the first number, the next gets the second, then the third, then the first again." ✓ matches rotation.
+
+§3 line 33: "instruction 16 takes it off into the second storage place, so the same number now sits in two places" — results: 16 pop+nop-C puts B into CX. "second storage place" — CX is the third register (AX, BX, CX)! Results say site 11 reads B into BX, site 16 puts into CX. So plain words "the second storage place" is wrong-ish: BX is the second, CX the third. Plain words earlier: "instruction 11 reads a number in" (into BX, unstated), then 16 puts it "into the second storage place". Hmm, if counting places the number has been: first BX, second CX — "the second storage place [the number is in]"? Ambiguous but reads as CX = second storage place. Actually from the number's perspective: it sat in BX (first place) and now CX (second place it occupies). "so the same number now sits in two places" supports that reading. OK, not an objection.
+
+§3 line 35: five required ✓. "the read at 11 (another read supplies a number instead, and NOT of any number is still NOT)" ✓. "the hand-out at 26 (the answer stays where it is, and a later hand-out instruction, at 34, hands out a NOT made another way)" ✓.
+
+§3 line 37: "23,332 of them, carried by 32,193 Avida programs" ✓; "(2.3 million runs of Avida)" — 2,330,137 ✓; "52 million runs" — 52,428,814 ✓. "every pair of instructions in every program that copies itself and does a sum" ✓ matches "every pair of sites whose single ablation leaves replication... in every replicating sequence that performs a task". Hmm — "every pair of instructions in every program that copies itself and does a sum" vs results "every pair of sites whose single ablation leaves replication" — pairs restricted to sites whose single ablation leaves replication. Plain words omits that restriction, implying all pairs. Minor: it says slightly more than done. Results §2: "every pair of sites whose single ablation leaves replication was ablated". Plain words overstates scope. But then, pairs where a single ablation kills replication obviously can't be tested while replicating — the plain-words simplification is nearly harmless but strictly claims more testing than done, in the "Tested" direction. Worth a small objection? It's in the sentence describing what was done. I'll note it as minor.
+
+§3 line 39: "For 98 in 100 program-and-sum pairs, one instruction was enough." ✓ exactly matches 98.0% of pairs. Good — so §3 uses the correct unit; §1's "in almost every Avida program (98 in 100)" — supported by 98.6% by program. OK.
+
+"The number of such instructions per program: about 5 for NOT and NAND, 7 for ORN, 10 for ANDN, 13 for AND and OR, 16 for NOR, 22 for EQU, 27 for XOR." ✓ means.
+
+§3 line 40: "the read-and-hand-out instruction (a quarter to two fifths of them)" — IO share 24–40%. "a quarter to two fifths": 24% < 25%. Trivial. "`nand` (about a fifth)" — 16–22%, about a fifth ✓ loosely. "the markers (about a fifth to a quarter)" — 20–27% ✓. "and the move instructions; for some sums also add, subtract, add one, take one away" — swap 6–11%, plus push/pop. OK.
+
+§3 line 41: "About one in six of them is not on the path" — 17% ✓. "Most of these are extra reads" — results: roles outside routes: "IO outside the routes (1% to 11%)" plus control, stack switches, choices. Is "most of these are extra reads" supported? Results §2 by-role: IO outside routes 1–11% of required sites; required sites outside route = 17%. So IO outside routes up to 11/17 ≈ 65% at most, could be ~6% at min. Results don't state what fraction of the 17% are extra IO reads. Plain words asserts "Most of these are extra reads" — not directly in results. Hmm. Results §0: "extra IO reads that are not on the path at all but set which input number the later reads receive" — listed as a role. The by-role percentages: IO outside routes 1–11%, vs control 1–6%, outside-route register choices 2–9%, stack switches? Not separately given. So for some tasks, most of the outside-route sites might be register choices of outside instructions (2–9%) rather than IO. "Most of these are extra reads" is not established by the results for all tasks. Objection (minor): plain words states more than results show. Fix: "Many of these are extra reads" or give the range. Actually let me reconsider: roles outside route: IO outside routes (1–11%), control (1–6%), stack switches (part of movers?), register choices of instructions outside the route (2–9%). For NOT: IO outside =? Not given per task. So indeed unsupported as "most". I'll raise it.
+
+§3 line 43: "89 program-and-sum pairs (NOT and ORN only, 95 Avida programs, in two runs) could not be stopped this way at all: every instruction of their sum is also one of the instructions they need to copy themselves, so removing any of them stops the copying too." Results §5: NOT 45, ORN 44; 95 programs, all in two runs ✓. Reason: "their task's instructions... are all also required for replication" ✓.
+
+§4 line 59: "Avida's step-by-step record of every one of the 23,332 instruction sequences was followed and checked, number by number, against what Avida itself recorded, with no difference anywhere." ✓ (0 differing steps). "For each sum, the circuit of every program was written down in one standard way, so that programs doing the same circuit are counted together however their instructions are written." ✓ canonical form.
+
+§4 line 61: "NOT: one nand of a number with itself, 63 in 100 of the NOT programs. NAND: one nand of two numbers, 82 in 100. ORN: two nand steps, 69 in 100." ✓✓✓. "EQU: four circuits cover 81 in 100 of the EQU programs, each of five to eight steps." ✓ per §0.
+
+§4 line 62: "The most common NOT circuit is carried by 13,520 Avida programs with 7,925 different instruction sequences, and the instructions on its path are written in 347 different ways." ✓.
+
+§4 line 63: "for example 'not both A and C, plus A, plus one' is always 'A and not C', for any numbers." Results: `inc(add(nand(x0,x1),x0))`... "not (x0 and x1), plus x0, plus 1: x0 and not x1". Plain words says "not both A and C, plus A, plus one = A and not C" ✓ (with x0=A, x1=C). "Checked on all eight combinations of three digits, every circuit that could be checked this way gives its sum, except one." ✓.
+
+§4 line 64: smallest circuits ✓ as checked above.
+
+§4 line 65: "from 35 (XOR) to 409 (OR)" ✓.
+
+§4 line 67: direct answer ✓.
+
+§5 line 73: "98 in 100 programs still copy themselves" — results: 98–99% ✓. "of the NAND programs, 97 in 100 now do NOR instead" ✓. "only 2 in 100 of the OR programs still do OR" ✓. "What each program then does was said beforehand from its own circuit, and that was right for 99 in 100." — 99.1% ✓. "Make it mean and: almost all sums vanish except AND (73 in 100 remain) and some NOT and ANDN." ✓ (18%, 20%).
+
+§5 line 74: "no program does any sum, though 83 to 89 in 100 still copy themselves" ✓.
+
+§5 line 75: "99 to 100 in 100 still do each sum" — table 99–100% ✓. "Completely random numbers: 66 to 90 in 100" ✓. 
+
+§5 line 76: "Give the 26 letters the 26 meanings in another order: no program copies itself or does anything." — with the nop-first caveat in §6 ✓. Hmm "the 26 letters the 26 meanings in another order" — a few letters keep meaning by chance (2–4 per shuffling) — unstated; §6 says markers kept in front. "in another order" slightly overstates (some letters unchanged by chance). Very minor; probably skip or fold into a minor.
+
+§6: matches as noted. One thing: plain words Tested says "each circuit's answer checked against Avida's own check, on the three fixed numbers, on all eight combinations of digits, and on 200 other sets of numbers" — results: the 200-triple check was on "credited circuit" per sequence; the eight-combinations check on reduced circuits. Plain words "each circuit's answer checked... on 200 other sets of numbers" — results table last column: "credited circuit gives the task for 200 other input triples of the world's kind (sequences)" — so the 200-triple check was per credited circuit of each sequence, i.e., "each program's circuit" — plain words says "each circuit's answer" — close enough. And note results: for 98.6–99.6% of sequences it gives the task for all 200 — i.e., NOT all. Plain words §6 says "each circuit's answer checked against Avida's own check... on 200 other sets of numbers" — checked, yes; and §4 line 63 mentions "a few circuits give the right answer only for some numbers" (§5 line 75). So fine.
+
+§6 unsure "checked by removal only in three cases" ✓.
+
+Now §7: "take one program and cut it down, removal by removal, to the smallest instruction sequence that still copies itself and still does one sum (you listed this as a minimal instruction sequence)" — glossary: minimal instruction sequence = "The smallest tested Avida program that retains the specified computational behavior" ✓ term used correctly. One next step ✓.
+
+Now header note: "It uses your Avida terms... and none of the words you asked to be removed, except inside quotations." Are there quotations in the plain words? Yes: quoted phrases like "not both A and B", 'not A'. Those are logic expressions, fine. Any forbidden words inside non-quotation text? Scan: "supports" no, "prove" no, "true" — "the right answer" — fine. "established" no. "derived" no. "authority" no. "better/worse" no. "foundation" no. "accept"/"accepted" — S23: "mean anywhere that 'accept' or 'accepted' is used" — i.e., acceptance must be tentative. Does plain words use "accept"/"accepted"? "hands back certain combinations", "Avida's own check" — I don't see "accepted" in plain words. Let me grep to be sure. Also check "believe". Let me grep the plain words for a list of forbidden words.
+
+Also check "verified" — no. OK, run a grep.
+
+Also check the "one word for each thing throughout": "pile" vs "stack" — §2: "two piles of numbers (stacks)" then §3 uses "pile" consistently ✓. "storage place" used consistently; "registers" mentioned once as Avida's name ✓. "marker" consistent. "hand-out"/"hands out" vs "read-and-hand-out instruction" — IO is one instruction doing both; §2 line 25... §2 doesn't define IO as read-and-hand-out; §3 line 40 first uses "the read-and-hand-out instruction" — is it explained? §3 example mentions "instruction 11 reads a number in" and "instruction 26 hands it out" — both are the same instruction (IO). Plain words §2 line 27: "the first 'read a number' instruction gets the first number" — implies reads. The fact that one single instruction both reads and writes is stated in §3 line 40 ("the read-and-hand-out instruction") without prior explanation that they're the same instruction. A non-programmer owner might be confused: §3 example says "instruction 11 reads a number in" and "instruction 26 hands it out" and later "the read-and-hand-out instruction (a quarter to two fifths)". Is it clear that reading in and handing out are the same instruction? Not explicitly. Minor clarity objection — brief says "one word for each thing throughout" and "every unavoidable technical word explained". "The read-and-hand-out instruction" appears without a plain sentence explaining that Avida has one instruction that does both (results §0: "IO (the instruction that writes a number out and reads the next number in)"). Fix: add in §2 one sentence: "Avida has one instruction that both hands a number out and reads the next number in; below it is called the read-and-hand-out instruction." That's a genuine minor objection.
+
+Also "circuit" — "five kinds of step" — check §4 line 57: "That is a circuit: a fixed wiring diagram of five kinds of step". In the EQU example the step kinds: read (IO), nand, add, add-one (inc), subtract, put on pile/take off (push/pop), hand out. That's more than five kinds. What are the "five kinds"? Maybe: nand, add, inc, sub + IO = 5? Or gates/arithmetic counted as "combining steps"? The results don't say "five kinds of step". Results §0: "a small fixed circuit of the instruction set's operations... a few nand steps, sometimes with add, sub, inc, dec". So "five kinds of step" is a plain-words invention: nand, add, sub, inc, dec = five! That works: "five kinds of step" = the five operation kinds (nand, add, subtract, add-one, take-one-away). Hmm, plus reads and moves which are called "wiring". §4 line 57: "That is a circuit: a fixed wiring diagram of five kinds of step, from the numbers handed in to the number handed out." Since reads/moves are wiring, the five kinds = nand, add, inc, sub... that's four in this example (no dec). EQU example uses nand, add, inc, sub = 4 kinds. With dec it'd be five across all circuits. In this example four. Ambiguous/imprecise. Minor — could flag: "five kinds of step" doesn't match the example (four kinds there: nand, addition, add-one, subtraction) nor the results. Fix: "a fixed wiring diagram of a few kinds of step". Worth a small objection.
+
+Now check the mark "written before the GLM check" ✓ header.
+
+Check "starts with the direct answer to the owner's two questions" — §1 headed "Your two questions, answered directly" ✓, but there's the note first (fine, it's a note). ✓
+
+Check "no codes": instruction names in backticks (`nand`) — arguably a code but unavoidable; explained. Site numbers — plain. "logic id 139" not in plain words ✓.
+
+Check style against plain words 111 — style only; let me read it briefly.
+
+Also check "nothing stronger than the results": §1 line 11 "taking out one single instruction was enough to stop a given sum while the program went on copying itself" — for 98%; then "In the other 2 in 100, a second copy..." — but of the other 2%, 89 pairs couldn't be stopped at all and 2 needed three — §1 lumps all 2% as "two instructions had to go together", which is wrong for the 89 and the 2. §1 is the direct answer and it says something stronger/simpler than results. §3 corrects it. Objection: §1's "In the other 2 in 100, a second copy of the sum inside the same program meant two instructions had to go together" misstates the residual 2%: 89 pairs could not be stopped at all while copying, and two needed three instructions. Fix sentence: "In the other 2 in 100, the sum was done in two places, so two instructions had to go together — except for a small number (89 cases) that could not be stopped this way at all, described in section 3." That's a genuine objection (medium).
+
+Also §1 "and, surprisingly, some extra 'read a number' instructions whose only job is to make sure the right number arrives at the right moment" — "whose only job" — results: role read from trace, tested by removal in only three cases (§6 unsure). "whose only job is" states certainty where results are unsure. Minor: softening to "whose job, as far as the records show, is...". Also "surprisingly" — editorial, fine.
+
+Also §1: "the instruction that reads a number in, the one instruction that combines numbers, the instruction that writes the answer out" — "the instruction that reads a number in" and "the instruction that writes the answer out" are the same instruction (IO) — §1 implies three distinct instructions. Given §3 reveals they're one, §1's "same few kinds" listing is slightly misleading. Fold into the IO objection.
+
+Now the "2 in 100" program vs pair unit in §1 — 98.0% pairs / 98.6% programs — fine.
+
+Another check: §1 line 11 "Each program has a handful of such instructions for each sum" — but results range 0–38 and some programs have 0 (stopped only by pairs). "handful" fine as average.
+
+Check §3 line 37: "every distinct instruction sequence alive at the end of the nine runs" — results: "alive at update 50,000" ✓.
+
+§4 line 59: "with no difference anywhere" ✓ 0 steps.
+
+§5 line 71: "Before each run, the step-by-step records were used to say what should happen." ✓ predictions made before.
+
+Now, does plain words say what was tested/not tested/unsure — ✓ §6.
+
+Check "marked as written before the GLM check" ✓.
+
+Check glossary term "task performance" — plain words uses "does a sum", "stops a sum" — plain equivalents, fine. The brief says "the owner's Avida terms used (S61)" — the glossary maps "trait" → task performance etc. Plain words avoids the ambiguous words entirely, which satisfies the glossary's purpose. One slip: "population" used as "its population" (line 33) and "program population"? Line 92: none. Line 33: "carried by 44 Avida programs in its population" — glossary: prefer "program population". Also line 37 "32,193 Avida programs" fine. Minor terminology nit.
+
+Also check "gene"/"genome"/"organism"/"mutation" absent — yes absent I believe. Grep to confirm.
+
+Let me also check the results file numbers I rely on: 98.6% by program — §0 says "(98.6% counted by Avida program)". ✓.
+
+Check plain words line 11: "about 5 for the simplest sum (NOT)" — NAND also 5.3; "simplest" NOT — fine, NOT is simplest (1 step).
+
+Now grep for forbidden words in plain words to be thorough. Also check "correct/corrected" usage fine. "sure"? "Unsure" heading fine.
+
+Also S23 forbids "true", "not true", "more true", "established", "authority", "foundation(al)", "derived (from)", "better than, worse than", belief words, verification words. Search: "worse" no. Let me grep.
+
+Also check the note's claim "and none of the words you asked to be removed, except inside quotations" — must verify true. Grep.
+
+Also: "no codes" — the note references file paths like "Semantics/results/S112 What the evolved sums are - ... .md" — that's a path/code-ish but it's a reference; plain words 111 style may do similar. Check style file.
+
+Let me read the plan quickly too? My job is plain words vs results, not plan. But §6 "Changed from the plan" claims should match results §6 — they do.
+
+Let me grep for forbidden words and check style file.
+
+Right — no commands. The grep matched line 84 only. Line 84 is the "Changed from the plan" paragraph — it matched something like "accept" (in "Avida would not accept a reshuffled instruction set"). Let me see which word. Line 84: "...Avida would not accept a reshuffled instruction set with its markers anywhere..." — "accept" used about Avida the program rejecting a config, not about tentative acceptance of explanations. S23 targets acceptance of claims; "Avida would not accept a file" is a program behavior, not epistemic acceptance. But strictly, the note claims "none of the words you asked to be removed, except inside quotations" — and S23 says "Anything that is accepted is always tentatively, and mean anywhere that 'accept' or 'accepted' is used". Hmm, S23's rule: wherever accept is used it must mean tentatively. Here it's Avida refusing an input file — a different sense entirely (machine validation). The claim in the note ("none of the words you asked to be removed") is slightly inaccurate since "accept" appears. Is this an objection? It's pedantic but the note makes a factual claim about the file's own text. A careful cross-examiner could flag it as a trivial fix: "Avida would not take a reshuffled instruction set" or "refused". I'll include as a very minor objection.
+
+Let me get line 84 exact text to confirm which word matched. From my read: line 84 = "**Changed from the plan, and said so in the record:** the first way of writing the circuits down grew too large... Avida would not accept a reshuffled instruction set with its markers anywhere..." — "accept" matched. Yes.
+
+Also check the whole file for "verify" style words in other lines — only line 84 matched, good.
+
+Now let me check the style file (plain words 111) briefly, and confirm the "the hardest" EQU claim against config. Let me look at the configuration and the S111 notes for whether EQU is called hardest / rewards. Also check the JSON for a couple of the key numbers (63%, 347, 13520, 7925, 98.0%, 89 pairs, 95 programs) — though the .md results already carry them and I verified md↔plain-words. My job is plain words vs results (md + json). I could spot-check the json for one or two headline numbers to be safe. Let me grep the json for a few values.
+
+Style file uses "digital organisms" (written before S61, allowed since glossary applies from S112 on). Fine.
+
+Interesting: plain words 111 says "the hardest, EQU" — so "hardest" for EQU has precedent and matches the earlier plain-words and Avida convention. Also, glossary applies from S112; plain words 3 avoids those words. ✓
+
+Now check a few more json values for headline numbers used in plain words: 63% NOT circuit share, 13,520 programs, 7,925 sequences, 347 route strings, 98.0% single-site fraction, 89 unstopped pairs, 95 programs. Let me grep the json.
+
+The json is large; spot-checks confirm key values (7925, 13520, nand(x0,x0)). Let me check the json's summary section for the overall fractions (98.0%, 98.6%, 89 unstopped, 1573 pairs, 2 triples) and the 63% figure, plus environment test numbers (97% NOR, 2% OR, 73% AND, 83–89% replicate, prediction 99.1%).
+
+I've spot-checked enough json to trust it matches the .md. Note an interesting detail: NOT's required_instruction_roles (weighted by programs): register or head choice outside routes 8,682 vs IO outside routes 5,919. So for NOT, more of the outside-route required sites are outside-route register choices than extra IO reads. And overall (across tasks)? The md §2 says IO outside routes 1%–11%, control 1–6%, outside-route choices 2–9%. Plain words says "About one in six of them is not on the path... Most of these are extra reads". From NOT's weighted roles: outside-route total = 8682+5919+4912+510+391+180+... ≈ let me approximate: 8682 + 5919 + 4912 + 510 + 391 + 180 + 72(?) + 129? Actually "operation outside" 129, "mover outside" 114, "stack switch outside" 72, "other executed" 54, "not executed" 3, "label read" 391(?) — hmm, "label read by a control instruction" might be inside. Anyway: NOT outside-route ≈ 8682+5919+4912+510+391+180+129+114+72+54+3 ≈ 20,966. Extra IO reads 5,919 = 28% of the outside-route sites — NOT most! So "Most of these are extra reads" is contradicted by the json for NOT (results md doesn't give per-task outside-route composition, but the json does). My job is plain words vs results (md and json). The json shows for NOT that extra reads are well under half of the off-path required instructions. So the plain-words claim "Most of these are extra reads" is not supported — and for NOT it's contradicted. Good, solid objection.
+
+Let me check one or two other tasks quickly to be fair (EQU, XOR). But NOT alone suffices since the sentence is general ("About one in six of them is not on the path at all. Most of these are extra reads"). Let me check EQU's role block around line 6366+... EQU section near line 6391? Actually tasks in order NOT NAND AND ORN OR ANDN NOR XOR EQU; EQU near line 6391. Let me read EQU's roles.
+
+This is EQU's block. Outside-route roles for EQU (weighted): IO outside routes 19,850; register/head choice outside 17,926; stack switch outside 5,546; control 3,621; label read 2,101 (probably outside?); etc. Outside-route total for EQU ≈ 19,850+17,926+5,546+3,621+2,101+493+478+28 ≈ 50,043. Extra IO reads 19,850 = ~40% — still not "most". So "Most of these are extra reads" is unsupported for both NOT (28%) and EQU (40%). Objection confirmed: the largest single kind but not most. Fix: "The largest single kind of these is extra reads" or "Many of these are extra reads".
+
+Hmm wait — for plain words: "About one in six of them is not on the path from the numbers to the answer at all. Most of these are extra reads". Note also plain words says these off-path ones are "extra reads" whose removal "shifts every later read by one". The md says the 17% are "the IO reads that set the rotation, stack switches, control instructions and register choices of instructions outside the route". So md itself lists several kinds without saying IO is most. Plain words says "Most of these are extra reads" — not in md, contradicted by json. Good.
+
+Now, other checks:
+
+- "every pair of instructions in every program that copies itself and does a sum (52 million runs)" — md: "every pair of sites whose single ablation leaves replication was ablated in every replicating sequence that performs a task". Plain words overstates: not every pair, only pairs whose single ablation leaves replication. Fix: "every pair that could be tried without stopping the copying first".
+
+- §1 "In the other 2 in 100, a second copy of the sum inside the same program meant two instructions had to go together." — leaves out the 89 unstopped and 2 triples; §3 covers them. Since §1 is the direct answer, misdescribing the residual 2% is a real objection (medium). Also "a second copy... one from each place" for pairs: md says "or of the rotation and one route" — so not always one from each place.
+
+- "whose only job is to make sure the right number arrives at the right moment" (§1) — "only job" too strong given results mark the role of off-path sites as read-from-trace, tested by removal in three cases only (md §7 Unsure). Minor objection: soften to "whose job, as far as Avida's own records show, is...". Actually, "make sure the right number arrives at the right moment" — the mechanism is that removing it shifts the rotation. Their role is setting which number later reads get — md states that as read from trace. Hmm, the md states it confidently too ("extra IO reads that are not on the path at all but set which input number the later reads receive"). The "unsure" is about the role of a required site outside the route "read from what it was executed as, not tested one by one (three reruns only)". So the role assignment is flagged unsure in the results; plain words §1 states it flatly, though §6 flags it. Borderline — I'll fold it into a minor objection or mention alongside.
+
+- §3 line 40: "the read-and-hand-out instruction (a quarter to two fifths of them)" — IO share ranges 24%–40% by kind table. 24% is slightly below a quarter. Very minor; "a quarter to two fifths" vs 24–40%. I'll skip or mention as trivial. Probably skip — rounding "about a quarter". Actually the requirement is "no rounding that changes a comparison" — 24% → "a quarter" changes nothing material. Skip.
+
+- "five kinds of step" — check against example: steps named in the EQU example: nand, addition, "add one", subtraction (4 kinds of combining) + reads/hand-out + pile. Md §0: "a few nand steps, sometimes with add, sub, inc, dec steps". "Five kinds" isn't in the results; and in the example given there are four arithmetic kinds. If "five kinds" means nand+add+inc+sub+IO... unclear. Minor objection: change to "a few kinds of step" or say "nand and at most four kinds of arithmetic". I'll include as minor.
+
+- §2: "Avida has one instruction that combines numbers: it is called nand" — "combines numbers" also loosely covers add/sub/inc/dec mentioned next sentence ("Avida also has instructions that add..."). Fine.
+
+- §2 line 23: "An instruction such as 'combine' acts on the storage places; a small marker instruction placed right after it can say which storage place it uses." ✓ matches nop behavior.
+
+- §2 line 21: "the simulated computer hands a program numbers, and the program earns a reward if it hands back certain combinations of them" — ✓.
+
+- "nothing that copies itself ran on a real one" ✓ style consistent with 111.
+
+- Check §3 line 33: "instruction 12 puts it on a pile" — push ✓. "instruction 16 takes it off into the second storage place" — pop into CX; "second storage place" ambiguous as discussed; skip.
+
+- Check "about 5 for the simplest sum (NOT)" — NAND is equally ~5 but simplest is NOT (1 step) — fine.
+
+- §4 line 61: "each run's program ancestry (its line of parent and descendant programs) found its own" — md says "each run's program ancestry settled on its own circuits" for the most common circuits of AND, OR, NOR, XOR, EQU confined to one to seven runs. Matches md. OK.
+
+- §4 line 63: "'not both A and C, plus A, plus one' is always 'A and not C'" — md gives nand(x,y)+x+1 = x and not y ✓.
+
+- §4 line 63 "Checked on all eight combinations of three digits, every circuit that could be checked this way gives its sum, except one." ✓.
+
+- §5: "Make it mean and: almost all sums vanish except AND (73 in 100 remain) and some NOT and ANDN." — table: NOT 18%, NAND 1%, AND 73%, ANDN 20%, rest 0. ✓.
+
+- §5 "Numbers of the kind Avida hands out in its runs: 99 to 100 in 100 still do each sum." ✓.
+
+- §5 "Change all the meanings... no program copies itself or does anything." ✓ md. But note "the 26 letters the 26 meanings in another order" — shufflings keep 3 nop meanings among a–c and shuffle 23, and 2–4 letters keep meaning by chance. §6 says markers kept in front but not the chance-retention. "in another order" implies all changed. Very minor; probably mention in one line as a nit or skip. I'll fold it into a minor objection list.
+
+Now terminology/word checks:
+
+- Glossary "population" → "program population": line 33 "in its population". Also §7? no. One occurrence. Minor.
+
+- First-use definitions before §1: "sum", "markers", "instruction" used in §1 before §2. §1 is required to be the direct answer. The brief asks both. I'll raise as minor: add a parenthetical plain gloss at first use in §1, e.g. "the small sums (Avida's nine little logic tasks; section 2 says what each one is)" and "the small markers (little instructions that say which of a program's storage places another instruction uses)". Actually §1 line 11 "the small markers that say which storage place each of these uses" — it does gloss inline! "the small markers that say which storage place each of these uses" — that's a plain explanation at first use. And "storage place" is used without definition in §1 — everyday enough. "sum" — §1 line 9 "the small sums" in the question restatement, and line 11 "stop a given sum". Not glossed until §2. But §1 line 9 restates the owner's own question ("could do the small sums") — the owner's words. Borderline. I'll drop this objection — the inline glosses are mostly present ("the instruction that reads a number in, the one instruction that combines numbers, the instruction that writes the answer out" are self-explaining). But note: §1 implies read-in and write-out are different instructions; they are the same instruction (IO). §3 line 40 then says "the read-and-hand-out instruction" without ever saying that the read at 11 and the hand-out at 26 in the example are the same instruction. For a non-programmer this is a genuine clarity gap and "one word for each thing": the same thing is called "the instruction that reads a number in" + "the instruction that writes the answer out" in §1 (presented as two kinds) and "the read-and-hand-out instruction" in §3. Objection: state once in §2 that one single Avida instruction both hands a number out and reads the next one in. Medium-minor.
+
+- "no codes": `nand` in code font — fine, it's an instruction name, explained. Plain words 111 style uses bold, similar. OK.
+
+- Check §1 line 13: "and it is that circuit only in Avida: change what one of Avida's instructions means, and the same programs do different sums, or none." ✓.
+
+- Check §6 line 82 "four kinds of change to Avida" — md: "four kinds of change to the Avida execution environment" — but table has 7 rows of changes (nor, and, IO-nop, world-kind inputs, random inputs, other order, shuffles). "Four kinds": logic-letter meaning, IO, inputs, whole set. Plain words copies md. Consistent. ✓
+
+- §6 "Not tested" adds nothing beyond md except drops "whether the circuits found are the only ones a program could execute on other inputs" — covered by Unsure "one step-by-step record per program, on one set of numbers". OK.
+
+- Marked before GLM check ✓; ends with one next step ✓; nothing settled ✓ (no "settles"); nothing chosen ✓ ("Which way to take it is yours to choose"); no ranking ✓ (no better/worse); "model" not used ✓ (candidate/explanation not needed here).
+
+- Header note claims "none of the words you asked to be removed, except inside quotations" — "accept" appears at line 84 ("Avida would not accept a reshuffled instruction set") — machine sense, but the claim is strictly inaccurate and S23 says "mean anywhere that 'accept' or 'accepted' is used". Minor: reword to "Avida refused a reshuffled instruction set with its markers anywhere". I'll include as a nit-level objection.
+
+Also check numbers 63% vs json "0.63"/"0.635" — those were generality fractions, not the share. The share 63% is in md table (NOT top circuit 63%, 7,925 sequences, 347 route strings) — consistent with json lines 320-331 (nested nand(x0,x0), sequences 7925, programs 13520). ✓
+
+Also §1 line 11: "Each program has a handful of such instructions for each sum: about 5 for the simplest sum (NOT), about 22 for EQU, about 27 for XOR." ✓ (5.21, 21.9, 27.0).
+
+Check §3 line 39 numbers again ✓.
+
+§3 line 42: "Two programs needed three." md: "two needed a set of three" (program-task pairs), §5: "In two NOT programs... sets of size 3". ✓.
+
+§3 line 43: 89 pairs, 95 programs, NOT and ORN only, two runs ✓.
+
+One more: §1 line 11 "In almost every Avida program (98 in 100)" — md gives 98.0% pairs, 98.6% by programs. "in almost every Avida program (98 in 100), taking out one single instruction was enough to stop a given sum" — for a program doing several sums, the per-pair figure applies. The 98.6% by program is overall. Acceptable rounding; skip.
+
+Also §3 line 37: "every single instruction of each removed in turn (2.3 million runs of Avida)" — 2,330,137 ✓.
+
+Also check §4 line 59: "Avida's step-by-step record of every one of the 23,332 instruction sequences was followed and checked... with no difference anywhere." ✓ md "Steps where the replay's number differs from Avida's trace: 0, in all 23,332 sequences".
+
+§4 line 57: "What the removals found in section 3 is this circuit's instructions, plus the moves, markers and reads that wire it together." ✓ consistent with md §2 (required = route + wiring).
+
+Now also the "one in six" vs 17%: md "the other 17%". "About one in six" = 16.7% ✓.
+
+Environment: §5 "83 to 89 in 100 still copy themselves" ✓.
+
+"the prediction... right for 99 in 100" — 99.1% for nor ✓; plain words mentions only under nor; md also 99.4% for and. Fine.
+
+Now ordering objections by seriousness:
+
+X4.1 (medium): §3 "Most of these are extra reads" — contradicted by json (NOT: 5,919 of ~21,000 off-path weighted; EQU: 19,850 of ~50,000). Not the most even; the largest single kind at best. Fix: "The largest single kind of these is extra reads: ..." 
+
+X4.2 (medium): §1 residual misdescription: "In the other 2 in 100, a second copy of the sum inside the same program meant two instructions had to go together." — 89 pairs (with 95 programs) could not be stopped at all, two needed three. §3 has it; §1 as the direct answer states something untrue of ~6% of the residual. Fix: append "...and a small number could not be stopped this way at all (section 3)."
+
+X4.3 (minor): §3 "every pair of instructions in every program that copies itself and does a sum (52 million runs)" overstates — pairs whose single ablation leaves replication only. Fix wording.
+
+X4.4 (minor): §3 "there, a pair of instructions had to go together, one from each place" — md: "one site of each route (or of the rotation and one route)". Fix: "one from each place, or one such read and one from the single place".
+
+X4.5 (minor): read-in and hand-out presented as two instructions (§1, §3 example) but are one instruction (IO); "the read-and-hand-out instruction" first used §3 without that ever being said. Fix: one sentence in §2.
+
+X4.6 (minor): §4 "a fixed wiring diagram of five kinds of step" — not in results; the example uses four combining kinds (nand, add, add-one, subtract); md says "a few nand steps, sometimes with add, sub, inc, dec". Fix: "of a few kinds of step".
+
+X4.7 (minor): §5 "Give the 26 letters the 26 meanings in another order" — 2–4 letters keep their meaning by chance per shuffling (md §6.2); §6 notes markers kept in front but not chance retention. Fix: "in another order (a few letters keep theirs by chance)".
+
+X4.8 (nit): header claim "none of the words you asked to be removed, except inside quotations" vs "Avida would not accept" (§6) — S23 covers "accept" everywhere; machine sense, but either reword to "refused"/"would not take" or drop the absolute claim. 
+
+X4.9 (nit): "its population" (§3 example) — glossary prefers "program population".
+
+Also should I check §2 "you listed it" for ablation and minimal instruction sequence — glossary lists "knockout → instruction ablation" and "minimal genome → minimal instruction sequence" — "you listed it" refers to the owner's glossary ✓ good.
+
+Also §2 line 19: "you asked that each be called an Avida program, and its list an instruction sequence" ✓ S61.
+
+One more check: §1 line 11 "while the program went on copying itself" — part of definition ✓ matches "replication goes on".
+
+§1 line 13: "For the sum NOT, most programs (63 in 100) do it with one step." — "one step": circuit nand(x0,x0) is one nand ✓.
+
+"For EQU, the hardest sum, most do it with five to eight steps." — 81% ✓ "most" ok.
+
+Also §1 "The same circuit turns up in thousands of programs written with different instructions." ✓.
+
+Anything about "nothing stronger": §1 "taking out one single instruction was enough to stop a given sum while the program went on copying itself" for 98 in 100 — fine.
+
+§3 line 35: "Removing each of the 110 instructions in turn, and running the program again each time: five of them stop NOT while the program still copies itself" ✓ md.
+
+Also check §3 line 41's example numbers: "removing an unused read at instruction 45 made the reads at 47, 53 and 66 receive the third, second and first numbers instead of the first, third and second, and the answer came out as a different sum." md: "get C, B, A instead of A, C, B, and the output at 92 becomes another function (logic id 139), not EQU." A=first, B=second, C=third ✓. "the answer came out as a different sum" — "another function... not EQU" — plain words says "a different sum"; md says "another function (logic id 139)" — logic id 139 may not be one of the nine sums. Saying "a different sum" could imply another of the nine tasks. Minor? "the answer came out as a different sum" — if logic id 139 isn't one of the nine, calling it "a different sum" is loose. Can't verify what 139 is; md deliberately says "another function". I'll flag as a nit: change to "the answer came out as a different function, no longer EQU" — hmm "function" is technical. "the answer came out wrong" / "the answer was no longer EQU". I'll fold into a nit.
+
+Also §6 "unsure" includes everything material? md Unsure also has hash-collision — omitted, fine (too technical, and it's a technical caveat; not needed for owner). Acceptable.
+
+Also: does plain words anywhere choose for the owner or rank? "surprisingly" — fine. "the next step I propose" ✓.
+
+Not reached: nothing major — maybe say I did not verify the .json's deep per-task values beyond spot checks; and didn't check the plan/scripts/config (other examiners). Also didn't check file paths referenced in the header note.
+
+Checked, no objection: §1 numbers (98/63/5/22/27, 13,520 etc.), §2 definitions, §3 example sites and required five, totals 23,332/32,193/2.3M/52M/89 pairs/95 programs/2 triples, per-task means, §4 circuits (63/82/69/81%, 35–409, smallest circuits, arithmetic identities, eight-combination check), §5 environment numbers (nor 97/2/99, and 73, IO 0 tasks 83–89, inputs 99–100 and 66–90, shuffle 0), §6 lists vs md §6/§7, header mark before GLM check, one next step, S23 words (except line 84), no settling/choosing/ranking, no "model", style consistent with plain words 111.
+
+Word the report tersely.

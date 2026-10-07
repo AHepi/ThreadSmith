@@ -1,0 +1,100 @@
+### (a) Formal statements vs sentences
+
+**D1.1 · L91.** The text says “closed under a partial associative composition with identity 1”. The maths (I01) fixes Kleene (strong) associativity. The text does not settle the strength of associativity. The maths’s choice stands because with weak associativity a composite could be defined under one parenthesization and not the other, leaving the edit ambiguous. The text should carry the same.
+```
+Replace in L91 the sentence "A is a set of admitted edits, closed under a partial associative composition with identity 1." with:
+A is a set of admitted edits, closed under a partial composition · : A × A ⇀ A that is strongly associative: a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal; and with identity 1 such that 1·a = a·1 = a for every a.
+```
+
+**D1.3 · L103, L339.** The text’s “A deleted component imposes the full relation on its ports” matches the maths. Absence is interpreted as deletion; the text’s “absent” is not defined. The maths’s reading is consistent. The text should define absence.
+```
+Add after L339:
+A component is absent in D when it is deleted; a port is absent when every component that includes it imposes the full relation on its ports.
+```
+
+**D1.4.** No counterpart in the given text. Since no claim of this part uses D1.4, no change is needed.
+
+**D2.1 · L103, L109, L119.** The text’s “sets a port directly” is not defined. The maths (I04) makes it surgical: the relation becomes exactly the slice w_v = x and others unchanged. This captures “replaces the component assigning that port” and “does not add an equation beside an incompatible one”. The text should adopt it.
+```
+Replace L103 with:
+An edit a sets port v at boundary b through component j when L_j(a,b) = {w ∈ ∏_{v∈V_j} X : w_v = x} for some x ∈ X_v, and L_k(a,b) = L_k(1,b) for every k ≠ j. Such an edit replaces the component assigning that port and does not add an equation beside an incompatible one. A changed rule is a changed component.
+```
+Also, the assigning component asg(v) is read off A; the text should say so.
+```
+Add after L109:
+The component assigning v, asg(v), is the component through which the edits of Set_v set v, when there is exactly one; otherwise it is undefined.
+```
+
+**D2.3 · L109.** The text’s output definition is ambiguous over edits and boundaries. The maths (I05) reads it at the identity edit and “across B” as for every boundary. This is a natural reading of “across B”. The text should settle it.
+```
+Replace in L109 the sentence "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." with:
+A port v is an output of component j when, at the identity edit and for every boundary b ∈ B, and all w, w' ∈ L_j(1,b), if w and w' agree on V_j ∖ {v} then w_v = w'_v.
+```
+
+**D2.4 · L109.** The text equates observation edits with a measurement’s signature (“that is”). The maths separates them and gives two readings. The equivalence does not hold. The text should define observation edits directly.
+```
+Replace in L109 the sentence "A port is an observation when A contains an edit that alters the relation reporting it without altering what it reports, that is, when the component assigning it has a measurement's signature (below)." with:
+A port o is an observation when there exists a port m ∈ V_{asg(o)} ∖ {o} and an edit a ∈ A such that L_{asg(o)}(a,b) ≠ L_{asg(o)}(1,b) for some b, and L_{asg(m)}(a,b) = L_{asg(m)}(1,b) for every b. Whether setting edits of o are included is left open; both readings are considered where relevant.
+```
+
+**D2.5 · L109.** The text says direction is a consequence of admitted edits. The maths makes it the pair (Input_A, asg). This is one way to capture the consequence, but the text does not define direction as a pair. Since FC02 uses asg, we keep the formal statement as a working definition. No change to the text is required; the sentence remains a comment.
+
+**FC01 · L100, L103.** The formal statement matches the text’s (O) and deletion sentence.
+
+**FC02 · L109, L325.** The formal statement matches the text given the inventions.
+
+**FC11 · L109, L113.** The formal statement matches the text.
+
+Items with nothing to add: D1.2, D2.2.
+
+### (b) Counterexamples
+
+No part of this section is marked *counterexample found* or *computed: not as claimed*. The look for FC01 found a witness that deletion can make an undetermined answer determined; this does not contradict FC01 but shows a property not claimed. So no counterexample to the text.
+
+### (c) Inventions and unrecorded choices
+
+**I01 · L91.** Not settled; the text’s “partial associative” is ambiguous. Proposed wording under (a) settles strong associativity.
+
+**I02 · L574.** Settled by the text: “The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\).” That means no law ties composites to parts.
+
+**I03 · L103, L339.** Partially settled: deletion is settled (“full relation”); fixedness of V and J is not explicit. Proposed wording under (a) adds invariance of V and J.
+
+**I04 · L103, L109, L119.** Not settled; “sets a port directly” is undefined. Proposed wording under (a) defines it surgically.
+
+**I05 · L109.** Not settled; which edit and “across B” ambiguous. Proposed wording under (a) specifies identity edit and every boundary.
+
+**I77 · L91, L105.** Not settled; the text allows arbitrary domains. Should stay open; the search’s finiteness is an implementation choice.
+
+**I78 · L91, L574.** Not settled; the text does not specify how to generate organizations. Should stay open.
+
+**I80 · L109.** Not settled; whether the identity edit can set a port is open. Proposed wording:
+```
+Add after the definition of Set_v:
+The identity edit 1 may belong to Set_v if for every b, L_{asg(v)}(1,b) is a slice w_v = x; in that case v is an input.
+```
+
+**H03.** Not settled; the quantifier over boundaries is unrecorded. Proposed wording under (a) includes “at every boundary b” in the setting edit definition.
+
+**H04 · L109.** The text says direction is a consequence, not a pair. The formal statement (Input_A, asg) is an invention. Since the claim FC02 can be stated without defining dir, no change is required; the sentence remains as is.
+
+### (d) Attacks on claims that held
+
+**FC01.** Attempt: suppose deletion could remove ports or components. Then Sol_{D-G} would live in a different space. But the text forces I03 (“full relation”), so this is not a counterexample to the text. The monotonicity holds mathematically under the definitions.
+
+**FC02.** Attempt: consider output defined across all edits, not just identity. Model: one component j with ports v,w; X_v = X_w = {0,1}. Let L_j(1,b) = {(0,0), (0,1)} (v determined to 0). Let A contain an edit e that changes L_j(e,b) to {(0,0), (1,0)} (v undetermined given w=0). If output requires determination at every edit in A, then v is an output when A = {1} but not when A contains e. Thus output would depend on A, contradicting FC02(b). However, the text says “across B”, not “across A”, so this reading is not forced. The counterexample is against invention I05 (identity edit) if we chose all‑edits. The text should settle the reading; proposed wording under (a) does so.
+
+**FC11.** Attempt: take a contract C not a subset of A × B. But the text fixes C ⊆ A × B. Or let asg(v) undefined; then Causal_C(asg(v)) is undefined, but the claim only requires existence of some D,C,v where it does not hold. No counterexample found.
+
+### (e) Round‑1 matters and changes
+
+**Round‑1 change at L123.** The removal of “and under replacement of the component” matches the definition in D4.6. No further change needed.
+
+**Matter 5 · L109.** L109 gives roles under A while (K) builds signatures on a contract C. The text should clarify that these are separate. Proposed wording:
+```
+Add after L113:
+Roles (input, output, observation) are defined under A; signatures (causal assignment, measurement, rule) are defined under a contract C ⊆ A × B.
+```
+
+Items with nothing to add: none.
+
+END OF REPORT

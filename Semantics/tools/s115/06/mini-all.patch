@@ -1,0 +1,272 @@
+# NOTE (S115, added by Claude): Astra's combined source patch (S115-mini-v1: MiniB1, MiniB2, MiniB3, MiniC). git apply skips these lines.
+# Copied unchanged from GPT 6 Astra's reply 06 (tests/S115 Returns from GPT 6 Astra/06 Return - independent review of the first reply.md); only these note lines were added.
+diff --git a/avida-core/source/actions/EnvironmentActions.cc b/avida-core/source/actions/EnvironmentActions.cc
+index b57b66f18..4caf519d5 100644
+--- a/avida-core/source/actions/EnvironmentActions.cc
++++ b/avida-core/source/actions/EnvironmentActions.cc
+@@ -36,6 +36,7 @@
+ #include "cStats.h"
+ #include "cUserFeedback.h"
+ #include "cWorld.h"
++#include "S115Mini.h"
+ 
+ class cActionInjectResource : public cAction
+ {
+@@ -1703,6 +1704,10 @@ public:
+ 
+ void RegisterEnvironmentActions(cActionLibrary* action_lib)
+ {
++  action_lib->Register<cActionMiniB1>("MiniB1");
++  action_lib->Register<cActionMiniB2>("MiniB2");
++  action_lib->Register<cActionMiniB3>("MiniB3");
++  action_lib->Register<cActionMiniC>("MiniC");
+   action_lib->Register<cActionSetFracDemeTreatable>("SetFracDemeTreatable");
+   action_lib->Register<cActionDelayedDemeEvent>("DelayedDemeEvent");
+   action_lib->Register<cActionDelayedDemeEventsPerSlots>("DelayedDemeEventsPerSlots");
+diff --git a/avida-core/source/cpu/cTestCPU.cc b/avida-core/source/cpu/cTestCPU.cc
+index 0c317e394..5d3c8bff2 100644
+--- a/avida-core/source/cpu/cTestCPU.cc
++++ b/avida-core/source/cpu/cTestCPU.cc
+@@ -21,6 +21,9 @@
+  */
+ 
+ #include "cTestCPU.h"
++#include <functional>
++extern int s115_budget;
++extern std::function<bool(cOrganism&, Apto::Array<int>&)> s115_step;
+ 
+ #include "avida/output/File.h"
+ 
+@@ -151,6 +154,7 @@ bool cTestCPU::ProcessGestation(cAvidaContext& ctx, cCPUTestInfo& test_info, int
+   ConstInstructionSequencePtr seq;
+   seq.DynamicCastFrom(organism.UnitGenome().Representation());
+   int time_allocated = m_world->GetConfig().TEST_CPU_TIME_MOD.Get() * seq->GetSize();
++  if (s115_budget > 0) time_allocated = s115_budget;
+   time_allocated += m_res_cpu_cycle_offset; // If the resource offset has us starting at a different time, adjust @JEB
+ 
+   // Prepare the inputs...
+@@ -175,6 +179,7 @@ bool cTestCPU::ProcessGestation(cAvidaContext& ctx, cCPUTestInfo& test_info, int
+     UpdateResources(ctx, time_used);
+     
+     organism.GetHardware().SingleProcess(ctx);
++    if (s115_step && !s115_step(organism, input_array)) break;
+   }
+   
+   organism.GetHardware().SetTrace(HardwareTracerPtr(NULL));
+diff --git a/avida-core/source/main/cEnvironment.cc b/avida-core/source/main/cEnvironment.cc
+index 6ecb24642..9b4396998 100644
+--- a/avida-core/source/main/cEnvironment.cc
++++ b/avida-core/source/main/cEnvironment.cc
+@@ -20,6 +20,7 @@
+  */
+ 
+ #include "cEnvironment.h"
++extern bool s115_active;
+ 
+ #include "avida/Avida.h"
+ 
+@@ -1318,6 +1319,7 @@ bool cEnvironment::TestOutput(cAvidaContext& ctx, cReactionResult& result,
+                               const Apto::Array<double>& rbins_count,
+                               bool is_parasite, cContextPhenotype* context_phenotype) const
+ {
++  if (s115_active) return false;
+   //flag to skip processing of parasite tasks
+   bool skipProcessing = false;
+   
+diff --git a/avida-core/source/actions/S115Mini.h b/avida-core/source/actions/S115Mini.h
+new file mode 100644
+--- /dev/null
++++ b/avida-core/source/actions/S115Mini.h
+@@ -0,0 +1,192 @@
++// S115-mini-v1: continuous, finite, reduced-scope experiments.
++#include "cTestCPU.h"
++#include "cCPUTestInfo.h"
++#include <functional>
++#include <fstream>
++#include <map>
++#include <string>
++#include <vector>
++#include <cstdint>
++
++bool s115_active=false;
++int s115_budget=0;
++std::function<bool(cOrganism&, Apto::Array<int>&)> s115_step;
++
++class cActionMiniB1 : public cAction {
++public:
++  cActionMiniB1(cWorld* w, const cString& a, Feedback&) : cAction(w,a) {}
++  static const cString GetDescription() { return "No arguments"; }
++  void Process(cAvidaContext&) {
++    std::map<uint32_t,int> n;
++    cPopulation& p=m_world->GetPopulation();
++    for (int i=0;i<p.GetSize();++i) if (p.GetCell(i).IsOccupied()) {
++      const tBuffer<int>& b=p.GetCell(i).GetOrganism()->GetOutputBuf();
++      if (b.GetNumStored()) ++n[uint32_t(b[0])];
++    }
++    int count=0; uint32_t modal=0;
++    for (const auto& z:n) if (z.second>count) { count=z.second; modal=z.first; }
++    int target=m_world->GetEnvironment().GetTask(0).GetArguments().GetInt(0);
++    if (count) {
++      uint32_t v=~modal;
++      target=v<=0x7fffffffU ? int(v) : int(int64_t(v)-4294967296LL);
++      m_world->GetEnvironment().GetTask(0).GetArguments().SetInt(0,target);
++    }
++    std::ofstream log("mini-b1.log",std::ios::app);
++    log<<m_world->GetStats().GetUpdate()<<' '<<n.size()<<' '<<count<<' '<<modal<<' '<<target<<'\n';
++  }
++};
++
++class MiniBase : public cAction {
++protected:
++  typedef std::vector<cOrganism*> Group;
++  typedef std::pair<bool,int> Answer;
++  std::map<std::string,double> q[3];
++  Apto::RNG::AvidaRNG rng;
++  std::ofstream log;
++  std::string Key(cOrganism* o) { return (const char*)o->GetGenome().Representation()->AsString(); }
++  Apto::Array<int> Packet() {
++    Apto::Array<int> a(3);
++    for (int i=0;i<3;++i) a[i]=rng.GetUInt(2147483647);
++    return a;
++  }
++  void Run(cOrganism* source, Apto::Array<int> a, int reads,
++           std::function<bool(int,cOrganism&,Apto::Array<int>&)> output) {
++    cAvidaContext ctx(&m_world->GetDriver(),rng); s115_active=true;
++    cTestCPU cpu(ctx,m_world); cCPUTestInfo info(1);
++    info.UseManualInputs(a); s115_budget=2000;
++    int prior_reads=0, seen=0, used=0;
++    log<<"E "<<Key(source)<<' '<<reads;
++    for (int i=0;i<a.GetSize();++i) log<<' '<<a[i];
++    log<<'\n';
++    s115_step=[&](cOrganism& o,Apto::Array<int>& inputs) {
++      ++used; int total=o.GetOutputBuf().GetTotal();
++      if (total>seen && prior_reads>=reads) {
++        int value=o.GetOutputBuf()[0]; log<<"O "<<used<<' '<<value<<'\n';
++        if (!output(value,o,inputs)) return false;
++      }
++      seen=total; prior_reads=o.GetInputBuf().GetTotal(); return true;
++    };
++    cpu.TestGenome(ctx,info,source->GetGenome());
++    s115_step={}; s115_budget=0; s115_active=false;
++    log<<"Z "<<used<<' '<<info.GetTestPhenotype().GetNumDivides()<<'\n';
++  }
++  Answer Out(cOrganism* o,Apto::Array<int> a) {
++    Answer result(false,0);
++    Run(o,a,a.GetSize(),[&](int v,cOrganism&,Apto::Array<int>&) { result=Answer(true,v); return false; });
++    return result;
++  }
++  virtual void Score(Group* r)=0;
++public:
++  MiniBase(cWorld* w,const cString& a) : cAction(w,a),
++    rng(w->GetConfig().RANDOM_SEED.Get()+10000019),log("mini.log") {}
++  static const cString GetDescription() { return "No arguments; invoke every update"; }
++  void Process(cAvidaContext& ctx) {
++    cPopulation& p=m_world->GetPopulation(); int u=m_world->GetStats().GetUpdate();
++    if (u%100==0) {
++      Group r[3]; for (auto& scores:q) scores.clear(); log<<"U "<<u<<'\n';
++      for (int i=0;i<p.GetSize();++i) if (p.GetCell(i).IsOccupied()) {
++        int d=p.GetCell(i).GetDemeID(); cOrganism* o=p.GetCell(i).GetOrganism();
++        r[d].push_back(o); log<<"S "<<i<<' '<<d<<' '<<Key(o)<<'\n';
++      }
++      Score(r); log.flush();
++    }
++    for (int i=0;i<p.GetSize();++i) if (p.GetCell(i).IsOccupied()) {
++      int d=p.GetCell(i).GetDemeID(); std::string key=Key(p.GetCell(i).GetOrganism());
++      auto it=q[d].find(key); double credit=it==q[d].end()?0:it->second;
++      p.UpdateMerit(ctx,i,100*pow(2.0,credit));
++      cPhenotype& phenotype=p.GetCell(i).GetOrganism()->GetPhenotype();
++      if (!phenotype.GetGestationTime()) phenotype.SetLifeFitness(0);
++    }
++  }
++};
++
++class cActionMiniB2 : public MiniBase {
++  void Score(Group* r) {
++    if (r[0].empty() || r[1].empty()) { log<<"EMPTY\n"; return; }
++    cOrganism* supplier=r[0][rng.GetUInt(r[0].size())];
++    Apto::Array<int> a=Packet(), b=Packet(); Answer x=Out(supplier,a), y=Out(supplier,b);
++    log<<"BANK "<<Key(supplier)<<'\n';
++    if (!x.first || !y.first || x.second==y.second) { log<<"INVALID\n"; return; }
++    int matches=0;
++    for (auto o:r[1]) {
++      bool ok=Out(o,a)==x && Out(o,b)==y; matches+=ok; q[1][Key(o)]=ok;
++      log<<"Q 1 "<<Key(o)<<' '<<ok<<'\n';
++    }
++    double p=double(matches)/r[1].size();
++    q[0][Key(supplier)]=(p>0 && p<1)?1-p:0;
++    log<<"Q 0 "<<Key(supplier)<<' '<<q[0][Key(supplier)]<<'\n';
++  }
++public:
++  cActionMiniB2(cWorld* w,const cString& a,Feedback&) : MiniBase(w,a) {}
++};
++
++class cActionMiniB3 : public MiniBase {
++  void Score(Group* r) {
++    if (r[0].empty() || r[1].empty()) { log<<"EMPTY\n"; return; }
++    cOrganism* constructor=r[0][rng.GetUInt(r[0].size())]; Answer z=Out(constructor,Packet());
++    if (!z.first) { log<<"INVALID\n"; return; }
++    unsigned graph=unsigned(z.second)&65535U&~0x8421U, reached=1;
++    for (int k=0;k<4;++k) for (int i=0;i<4;++i) if (reached&(1U<<i)) reached|=(graph>>(4*i))&15U;
++    log<<"GRAPH "<<Key(constructor)<<' '<<graph<<'\n';
++    if (!(reached&8)) { log<<"UNREACHABLE\n"; return; }
++    int successes=0;
++    for (auto o:r[1]) {
++      int node=0,moves=0; bool success=false; Apto::Array<int> a(3);
++      a[0]=0; a[1]=graph&15; a[2]=3;
++      Run(o,a,3,[&](int v,cOrganism& program,Apto::Array<int>& inputs) {
++        ++moves; if (v<0 || v>3 || !(graph&(1U<<(4*node+v)))) return false;
++        node=v; log<<"MOVE "<<node<<'\n';
++        if (node==3) { success=true; return false; }
++        if (moves==8) return false;
++        inputs[0]=node; inputs[1]=(graph>>(4*node))&15; inputs[2]=3;
++        program.ResetInput(); return true;
++      });
++      successes+=success; q[1][Key(o)]=success; log<<"Q 1 "<<Key(o)<<' '<<success<<'\n';
++    }
++    double p=double(successes)/r[1].size();
++    q[0][Key(constructor)]=(p>0 && p<1)?1-p:0;
++    log<<"Q 0 "<<Key(constructor)<<' '<<q[0][Key(constructor)]<<'\n';
++  }
++public:
++  cActionMiniB3(cWorld* w,const cString& a,Feedback&) : MiniBase(w,a) {}
++};
++
++class cActionMiniC : public MiniBase {
++  void Score(Group* r) {
++    if (r[0].empty() || r[1].size()<2 || r[2].empty()) { log<<"EMPTY\n"; return; }
++    cOrganism* supplier=r[0][rng.GetUInt(r[0].size())];
++    unsigned ai=rng.GetUInt(r[1].size()), bi=rng.GetUInt(r[1].size()-1);
++    if (bi>=ai) ++bi;
++    cOrganism* candidate[2]={r[1][ai],r[1][bi]};
++    Apto::Array<int> public_data(6); int audit[2]={0,0}, first=0; bool constant=true;
++    for (int k=0;k<4;++k) {
++      Apto::Array<int> a=Packet(); Answer expected=Out(supplier,a);
++      Answer result[2]={Out(candidate[0],a),Out(candidate[1],a)};
++      if (!expected.first || (k<2 && (!result[0].first || !result[1].first))) { log<<"INVALID\n"; return; }
++      if (k==0) first=expected.second;
++      if (k==1) constant=first==expected.second;
++      for (int j=0;j<2;++j) {
++        if (k<2) public_data[3*k+j+1]=result[j].second;
++        else audit[j]+=result[j]==expected;
++      }
++      if (k<2) public_data[3*k]=expected.second;
++    }
++    if (constant) { log<<"CONSTANT\n"; return; }
++    log<<"PAIR "<<Key(supplier)<<' '<<Key(candidate[0])<<' '<<Key(candidate[1])<<' '<<audit[0]<<' '<<audit[1]<<'\n';
++    int wins[2]={0,0};
++    for (auto assessor:r[2]) {
++      Answer choice=Out(assessor,public_data); double credit=0;
++      if (choice.first && (choice.second==0 || choice.second==1)) {
++        int j=choice.second; ++wins[j];
++        credit=audit[0]==audit[1]?0.5:double(audit[j]>audit[1-j]);
++      }
++      q[2][Key(assessor)]=credit; log<<"Q 2 "<<Key(assessor)<<' '<<credit<<'\n';
++    }
++    for (int j=0;j<2;++j) q[1][Key(candidate[j])]+=double(wins[j])/r[2].size();
++    if (Key(candidate[0])==Key(candidate[1])) q[1][Key(candidate[0])]*=0.5;
++    log<<"WINS "<<wins[0]<<' '<<wins[1]<<'\n';
++    // Supplier selection is omitted in this miniature; its cohort evolves by replication.
++  }
++public:
++  cActionMiniC(cWorld* w,const cString& a,Feedback&) : MiniBase(w,a) {}
++};

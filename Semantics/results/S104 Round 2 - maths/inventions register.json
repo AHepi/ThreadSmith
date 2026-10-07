@@ -1,0 +1,5584 @@
+{
+ "about": {
+  "log": "S104",
+  "round": "review round 2 (maths)",
+  "date": "27 September 2026",
+  "decision": "S36",
+  "text_under_review": "tests/103 The semantics, standing alone, after round 1.md",
+  "md5": "f31ebb1f050783f1a84f6136cec20fcd",
+  "rule": "if implementation forces invention, that needs to be recorded (decision S36)",
+  "note": "Every entry is a choice the text leaves open. Nothing here is the text's own content. I01-I76 were made by the formal core and the claims; I77-I102 were forced by the program model/ that searched the claims on finite models (S104 round 2). Each entry lists the results of that search which depend on it (search results.md)."
+ },
+ "inventions": [
+  {
+   "id": "I01",
+   "title": "Composition of edits: a partial monoid with Kleene associativity",
+   "fills_in_for": [
+    {
+     "line": 91,
+     "quote": "\\(A\\) is a set of admitted edits, closed under a partial associative composition with identity \\(1\\)."
+    }
+   ],
+   "invented": "(A, ·, 1) is a partial binary operation on A: a2·a1 is either undefined or a member of A; a3·(a2·a1) is defined exactly when (a3·a2)·a1 is, and then they are equal; 1·a = a·1 = a for every a. 'Closed' is read as: a composite, when defined, is in A.",
+   "other_choices": [
+    "weak associativity: equal only when both sides happen to be defined",
+    "a category: edits typed by source and target boundary, composable only when they match",
+    "a total monoid (every composite defined)"
+   ],
+   "formal_core_sections": [
+    "§1"
+   ],
+   "claims": [
+    "FC97"
+   ],
+   "results": [
+    {
+     "claim": "FC97",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I02",
+   "title": "No law links a composite edit's relations to its parts' relations",
+   "fills_in_for": [
+    {
+     "line": 91,
+     "quote": "For each \\(j\\), edit \\(a\\), and boundary \\(b\\), the interpretation supplies"
+    },
+    {
+     "line": 574,
+     "quote": "The component relations \\(L_j(a,b)\\) are supplied independently for each \\((a,b)\\)."
+    }
+   ],
+   "invented": "L is an arbitrary function J × A × B → relations. Nothing ties L_j(a2·a1, b) to L_j(a1, b) and L_j(a2, b). The composition on A matters only through the homomorphism clause of (F2) and through Functional transport. (L574 fixes independence across pairs; it does not say whether composites are constrained, so the absence of any such law is the invention.)",
+   "other_choices": [
+    "an action law: each edit acts on the assignment of relations, L(a2·a1) = a2·(a1·L)",
+    "edits as endomaps of the organization, with L read off the image"
+   ],
+   "formal_core_sections": [
+    "§1"
+   ],
+   "claims": [
+    "FC80"
+   ],
+   "results": [
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I03",
+   "title": "Ports and components are fixed; deletion and absence are the full relation",
+   "fills_in_for": [
+    {
+     "line": 103,
+     "quote": "A deleted component imposes the full relation on its ports."
+    },
+    {
+     "line": 339,
+     "quote": "has a target \\(D\\) in which the ports and components a rival account would need are absent"
+    }
+   ],
+   "invented": "An edit never adds or removes a member of V or J. A deleted or absent component is one whose relation under that edit and boundary is the full product of its ports' domains. An 'absent' port is one on which every component that could constrain it imposes the full relation.",
+   "other_choices": [
+    "edits that change J and V (organizations as a varying family; then Sol_D(a,b) lives in different spaces for different edits)",
+    "absent ports removed from V, with query answers compared across different valuation spaces"
+   ],
+   "formal_core_sections": [
+    "§1",
+    "§17"
+   ],
+   "claims": [
+    "FC01",
+    "FC25",
+    "FC62",
+    "FC63"
+   ],
+   "results": [
+    {
+     "claim": "FC01",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    },
+    {
+     "claim": "FC62",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I04",
+   "title": "Setting a port: a surgical edit, and the assigning component read off the edits",
+   "fills_in_for": [
+    {
+     "line": 103,
+     "quote": "An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one."
+    },
+    {
+     "line": 109,
+     "quote": "No role assignment is supplied. A port \\(v\\) is an **input** under \\(A\\) when \\(A\\) contains an edit that sets \\(v\\) directly."
+    },
+    {
+     "line": 119,
+     "quote": "An edit that sets a port replaces only the component that assigns the port (above), not the relations of the components that read it"
+    }
+   ],
+   "invented": "An edit a sets port v at boundary b through component j when L_j(a,b) = {w : w_v = x} for some x in X_v (the other ports of V_j left free) and L_k(a,b) = L_k(1,b) for every k ≠ j. 'Directly' is this surgical form. The component assigning v, asg(v), is read off A: it is the component that the setting edits of v replace; where two different components are replaced by setting edits of v, asg(v) is undefined. No assignment map is supplied with D.",
+   "other_choices": [
+    "(a) a declared map asg: V ⇀ J supplied with the organization (it would be a supplied role assignment, which L109's first sentence denies)",
+    "(b) asg(v) := the unique component of which v is an output in L109's second sense; this fails for relational components (a component L = H cot θ determines H given L and θ as well as L given H and θ)",
+    "(c) a setting edit that adds a constraint beside the old one (L103 excludes it)"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§4"
+   ],
+   "claims": [
+    "FC02",
+    "FC06",
+    "FC07",
+    "FC08",
+    "FC11",
+    "FC13",
+    "FC25",
+    "FC26",
+    "FC27"
+   ],
+   "results": [
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC08",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC11",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC27",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I05",
+   "title": "'Output': at the identity edit, and 'determined' as at most one value",
+   "fills_in_for": [
+    {
+     "line": 109,
+     "quote": "A port is an **output** of component \\(j\\) when its value is determined by \\(L_j\\) given the other ports of \\(V_j\\) across \\(B\\)."
+    }
+   ],
+   "invented": "v is an output of j when, for every b in B and all w, w' in L_j(1,b), w and w' agreeing off v implies w_v = w'_v. The relation is read at the identity edit; 'determined' means at most one value (a partial function), not exactly one.",
+   "other_choices": [
+    "at every edit of A that does not replace j",
+    "exactly one value for every admissible value of the other ports (a total function)",
+    "'across B' read as 'for some b'"
+   ],
+   "formal_core_sections": [
+    "§2"
+   ],
+   "claims": [
+    "FC02"
+   ],
+   "results": [
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I06",
+   "title": "Observation edits: two readings of 'the relation reporting it'",
+   "fills_in_for": [
+    {
+     "line": 109,
+     "quote": "A port is an **observation** when \\(A\\) contains an edit that alters the relation reporting it without altering what it reports, that is, when the component assigning it has a measurement's signature (below)."
+    },
+    {
+     "line": 127,
+     "quote": "In particular, a part that reads or reports another part has a measurement's signature: change only the reading and the part it reports stays as it was; change the part and the reading follows."
+    }
+   ],
+   "invented": "The observed port is the reading o (the port the reporting component assigns), and 'what it reports' is a port m read by that component, compared at the level of relations: the edit leaves L_asg(m) as it was. Two readings of which edits count are both carried, since the text does not decide between them. Reading R-i: any edit that alters asg(o) and leaves asg(m) as it was, including an edit that sets o (the reading the round-1 critical review uses: 'an intervention on the reading is, by L109, an observation edit for the measured port'; it also matches L127's 'a part that reads … another part has a measurement's signature'). Reading R-ii: only an edit that alters asg(o) without setting o (a recalibration of the reporting relation). Where a program has to choose one, it runs both and reports both.",
+   "other_choices": [
+    "'the relation reporting it' read with the port as the thing reported (then the 'that is' clause, which speaks of the component assigning the port, no longer matches)",
+    "'what it reports' compared at the level of solutions: the projection of Sol on m unchanged",
+    "a declared measured port for each observation (a supplied role, against L109's first sentence)"
+   ],
+   "formal_core_sections": [
+    "§2",
+    "§4"
+   ],
+   "claims": [
+    "FC07",
+    "FC08",
+    "FC13"
+   ],
+   "results": [
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC08",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I07",
+   "title": "'The measured port' and 'the measuring relation'",
+   "fills_in_for": [
+    {
+     "line": 124,
+     "quote": "- a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;"
+    }
+   ],
+   "invented": "Measurement is a relation between a component j and a port m: m is in V_j and is not assigned by j; 'the measuring relation' is L_j itself; 'edits to the measuring relation' are, under R-i, edits that alter L_j, and under R-ii, edits that alter L_j without setting j's output. A component with several read ports is a measurement of each separately.",
+   "other_choices": [
+    "the measured port declared with the component",
+    "the measuring relation as a separate component reading m"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC06",
+    "FC07",
+    "FC08"
+   ],
+   "results": [
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC08",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I08",
+   "title": "'Interventions on the world' and 'the rule'",
+   "fills_in_for": [
+    {
+     "line": 125,
+     "quote": "- a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule."
+    }
+   ],
+   "invented": "'The rule' is the component j itself; 'edits to the rule' are edits that alter L_j without setting j's output; 'interventions on the world' are setting edits of every port that j does not assign.",
+   "other_choices": [
+    "'the world' as the ports j reads only",
+    "'the rule' as a port whose value j reads (a rule carried as data, as the relation C_r of L347 might be read)"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC09",
+    "FC10",
+    "FC13"
+   ],
+   "results": [
+    {
+     "claim": "FC09",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC10",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I09",
+   "title": "'Changes under', 'invariant under', 'variable under': compared with the identity edit at the same boundary",
+   "fills_in_for": [
+    {
+     "line": 123,
+     "quote": "- a **causal assignment** has a signature that changes under intervention on its output port and is invariant under observation edits;"
+    }
+   ],
+   "invented": "For a class 𝒳 of edits: j's signature changes (is variable) under 𝒳 on C when some (a,b) in C with a in 𝒳 has L_j(a,b) ≠ L_j(1,b); it is invariant under 𝒳 on C when every (a,b) in C with a in 𝒳 has L_j(a,b) = L_j(1,b). The comparison is with the identity edit at the same boundary, whether or not (1,b) is in C. Invariance is met vacuously when C holds no edit of 𝒳.",
+   "other_choices": [
+    "compare with the baseline pair (1,b0) instead of (1,b)",
+    "compare only pairs that are both in C",
+    "'changes under intervention' read universally (every such intervention changes it)"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC06",
+    "FC07",
+    "FC10",
+    "FC11",
+    "FC12",
+    "FC13"
+   ],
+   "results": [
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC10",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC11",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC12",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I10",
+   "title": "Kinds: a footprint bijection between equal value domains, relations compared as sets",
+   "fills_in_for": [
+    {
+     "line": 119,
+     "quote": "Two components \\(j,j'\\) are **of one kind on \\(C\\)** when there is a bijection of their footprints under which \\(\\operatorname{sig}_C(j)\\) and \\(\\operatorname{sig}_C(j')\\) coincide."
+    }
+   ],
+   "invented": "j and j' are of one kind on C when some bijection β: V_j → V_j' with X_v = X_β(v) for every v gives L_j'(a,b) = β_*(L_j(a,b)) for every (a,b) in C, where β_* renames coordinates. Values are compared as elements.",
+   "other_choices": [
+    "allow a value bijection for each port as well (kinds up to recoding of values; far coarser)",
+    "require β to be the identity on the ports the two components share"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC03",
+    "FC04",
+    "FC05",
+    "FC16",
+    "FC18",
+    "FC96",
+    "FC103",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC03",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC04",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC05",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(ii) reading (ii): any bijection"
+     ]
+    },
+    {
+     "claim": "FC16",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC103",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I11",
+   "title": "'Coarser' and 'finer' contracts: fewer and more pairs",
+   "fills_in_for": [
+    {
+     "line": 119,
+     "quote": "Kinds are therefore relative to the contract; a coarser contract identifies more components, and two components of one kind on \\(C\\) may separate on a finer contract."
+    },
+    {
+     "line": 317,
+     "quote": "A finer contract that contains a change at which two rivals conflict makes a new question (Part III)"
+    }
+   ],
+   "invented": "C' is coarser than C when C' ⊆ C, finer when C' ⊇ C (both on the same target, with the same baseline).",
+   "other_choices": [
+    "coarser as the image of C under a quotient of edits or boundaries (a coarser grain)",
+    "coarser as fewer distinguishable pairs, however many pairs it has"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC04",
+    "FC50"
+   ],
+   "results": [
+    {
+     "claim": "FC04",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I12",
+   "title": "Reading a candidate's component on C through the transport; τ[C]",
+   "fills_in_for": [
+    {
+     "line": 119,
+     "quote": "A component of \\(E\\) and a component of \\(E'\\) are of one kind on \\(C\\) when their signatures, read on \\(C\\) through \\(\\tau\\) and \\(\\tau'\\), coincide under a footprint bijection"
+    },
+    {
+     "line": 554,
+     "quote": "no active component \\(k\\) of \\(E\\) has a signature on \\(\\tau[C]\\) that differs from the one its counterpart \\(\\lambda(k)\\) has on \\(C\\), up to the port translation."
+    }
+   ],
+   "invented": "The signature of k in E read on C through t = (π,τ,σ,λ) is the function on C sending (a,b) to L_k(τ(a),σ(b)); boundaries are translated by σ although L119 names only τ. τ[C] := {(τ(a),σ(b)) : (a,b) in C}. Signatures on C and on τ[C] are compared as functions on C.",
+   "other_choices": [
+    "read through τ only, with E's boundary held at σ(b0)",
+    "τ[C] as a set of edits only",
+    "compare the two signatures as sets of triples, which needs τ×σ injective on C"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC15",
+    "FC16",
+    "FC17",
+    "FC29",
+    "FC96",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC15",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC16",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC29",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I13",
+   "title": "(K) extended from components to subnetworks",
+   "fills_in_for": [
+    {
+     "line": 556,
+     "quote": "By (K), \\(\\operatorname{sig}_C(\\lambda(k))=\\{(a,b,\\operatorname{proj}^{\\lambda}_{V_k}\\operatorname{Sol}_{\\lambda(k)}(a,b))\\}\\)"
+    }
+   ],
+   "invented": "(K) is stated for a component. For a subnetwork N of D with a port translation θ into it, sig_C(N,θ) := {(a,b, proj^θ Sol_N(a,b)) : (a,b) in C} is taken as a definition (an extension of (K)), not as something (K) already gives.",
+   "other_choices": [
+    "treat a subnetwork as one composite component whose relation is the projected relation (then (K) applies as written)",
+    "leave Argument 1's 'By (K)' without a definition to rest on"
+   ],
+   "formal_core_sections": [
+    "§4"
+   ],
+   "claims": [
+    "FC17",
+    "FC18",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I14",
+   "title": "Subnetworks, their solutions, and port translations with value maps",
+   "fills_in_for": [
+    {
+     "line": 189,
+     "quote": "\\(\\lambda\\) assigns each component of \\(E\\) a subnetwork of \\(D\\) with a port translation."
+    },
+    {
+     "line": 233,
+     "quote": "the relation obtained by imposing the constraints of \\(\\lambda(k)\\), projecting away its hidden ports and carrying what remains to \\(V_k\\) by the port translation of \\(\\lambda\\)"
+    }
+   ],
+   "invented": "A subnetwork N is a subset of J_D (possibly empty); V_N is the union of its footprints; Sol_N(a,b) = {z in ∏_{V_N} X_v : z|V_j ∈ L_j(a,b) for every j in N}: the constraints of N alone, the rest of D ignored. A port translation for k is an injective map θ_k: V_k → V_N with a value map κ_v: X^D_θk(v) → X^E_v for each v (the identity where the domains agree). Hidden ports are V_N minus the image of θ_k. proj^λ_Vk(S) = {(κ_v(z_θk(v)))_{v in V_k} : z in S}.",
+   "other_choices": [
+    "Sol of λ(k) in the context of the whole of D (the projection of Sol_D)",
+    "a port translation as a map from V_N to V_k (several D ports to one E port)",
+    "a subnetwork as a set of ports rather than of components"
+   ],
+   "formal_core_sections": [
+    "§1",
+    "§5"
+   ],
+   "claims": [
+    "FC17",
+    "FC18",
+    "FC19",
+    "FC25",
+    "FC44",
+    "FC62",
+    "FC96",
+    "FC103",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    },
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC62",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC103",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I15",
+   "title": "'Active component' means a member of Γ",
+   "fills_in_for": [
+    {
+     "line": 233,
+     "quote": "**Component fidelity.** For every active component \\(k\\) of \\(E\\) with counterpart subnetwork \\(\\lambda(k)\\subseteq D\\)"
+    }
+   ],
+   "invented": "The active components of a candidate are exactly its commitments Γ; (F1) is required of these only.",
+   "other_choices": [
+    "every component of E",
+    "every component with a counterpart assigned by λ (L189 has λ assign one to every component)"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "claims": [
+    "FC17",
+    "FC19"
+   ],
+   "results": [
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I16",
+   "title": "The domain of π: 'on the stated scope'",
+   "fills_in_for": [
+    {
+     "line": 189,
+     "quote": "where \\(\\pi:X_D\\to X_E\\) on the stated scope"
+    }
+   ],
+   "invented": "π is a map defined at least on the union of Sol_D(a,b) over the pairs (a,b) the transport translates; elsewhere it may be undefined.",
+   "other_choices": [
+    "π total on X_D",
+    "π a relation (several images per valuation)"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "claims": [
+    "FC20",
+    "FC49"
+   ],
+   "results": [
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I17",
+   "title": "Partial τ and σ; which pairs a transport 'translates'",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "they conflict at some admitted edit–boundary pair of the target that both their transports translate, in \\(C\\) or outside it."
+    }
+   ],
+   "invented": "τ: A_D ⇀ A_E and σ: B_D ⇀ B_E are partial maps; t translates (a,b) when a is in dom τ, b is in dom σ and π is defined on Sol_D(a,b).",
+   "other_choices": [
+    "τ and σ total (then every admitted pair is translated)",
+    "'translate' read as 'is in C'"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "claims": [
+    "FC45",
+    "FC49"
+   ],
+   "results": [
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I18",
+   "title": "The homomorphism clause of (F2): its range, and that it is not pointwise",
+   "fills_in_for": [
+    {
+     "line": 242,
+     "quote": "\\tau(1)=1,\\quad \\tau(a_2a_1)=\\tau(a_2)\\tau(a_1)."
+    }
+   ],
+   "invented": "τ(1) = 1, and for all a1, a2 in dom τ with a2·a1 defined in A_D, τ(a2)·τ(a1) is defined in A_E and equals τ(a2·a1). The clause is a condition on τ as a whole, not at a pair; '(F2) at a pair' means only the valuation equation there.",
+   "other_choices": [
+    "only for edits occurring in C, and composites that are in C",
+    "only when both composites are defined",
+    "the clause counted at each pair (then (F2) at a pair depends on edits outside it)"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "claims": [
+    "FC15",
+    "FC51"
+   ],
+   "results": [
+    {
+     "claim": "FC15",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I19",
+   "title": "Meeting (F1), (F2) and (A) at one pair under hypothetical relations of the target",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "when their answers there differ, or when each of them could meet (F1), (F2) and (A) there under some relations of the target's components at that pair, each a relation on the component's footprint (Part II), and no such relations let both"
+    }
+   ],
+   "invented": "For a pair (a,b) and an assignment R = (R_j)_{j in J_D}, R_j ⊆ ∏_{V_j} X_v: D^R is D with its relations at (a,b) replaced by R; Meets_ab(ℰ,R) is (F1) at (a,b) for every k in Γ with Sol_λ(k) computed from R, the valuation equation of (F2) with Sol_D^R, and (A) with the target's answer computed by the query on D^R. The homomorphism clause is left out at a pair (I18). R ranges over every assignment of relations on the footprints.",
+   "other_choices": [
+    "include the homomorphism clause",
+    "R ranging only over assignments some physics admits (L315 excludes it: 'it does not turn on what any physics admits')",
+    "R ranging over the relations the target has at other admitted pairs"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "claims": [
+    "FC44",
+    "FC45",
+    "FC46",
+    "FC47",
+    "FC52",
+    "FC54"
+   ],
+   "results": [
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC52",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I20",
+   "title": "How the fixed query is applied to a candidate's organization",
+   "fills_in_for": [
+    {
+     "line": 141,
+     "quote": "\\(\\mathcal Q\\) is a specified set-theoretic operation on \\(D\\), its solutions and its component structure, with codomain \\(Y_p\\)."
+    },
+    {
+     "line": 253,
+     "quote": "The query \\(\\mathcal Q\\) is held fixed; an account of a different query is not an account of this one."
+    }
+   ],
+   "invented": "Q is an operation on any evaluated organization (O, a, b), taking Sol_O(a,b), the relations (L_j(a,b))_j and a designation δ_O of the ports and components it reads; its values lie in Y_p. For the target, δ_D is part of the question. For a candidate, δ_E is supplied with the transport: by default, the ports of E whose translations are the ports Q reads in D. Ans_E(a',b') := Q(E, a', b'; δ_E).",
+   "other_choices": [
+    "(a) Ans_E supplied as part of the candidate (then 'held fixed' constrains only a label)",
+    "(b) a shared space of port names, Q reading by name",
+    "(c) Ans_E computed from the π-preimage of Sol_E"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§3",
+    "§5"
+   ],
+   "claims": [
+    "FC20",
+    "FC26",
+    "FC28",
+    "FC30",
+    "FC32",
+    "FC45",
+    "FC68",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC28",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC30",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC32",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I21",
+   "title": "Undetermined answers: a value ⊥",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "the answers of \\(E\\) with \\(G\\) deleted are determined and equal, or an answer that \\(E\\) determines at one of these points is not determined there once \\(G\\) is deleted."
+    }
+   ],
+   "invented": "Q returns an element of Y_p or ⊥ ('not determined'); for a query reading a port, the answer is determined when the port's projection of Sol is a single value, and is ⊥ when it is empty or has several. Two ⊥ answers count as equal where answers are compared (conflict, (A)).",
+   "other_choices": [
+    "Q returns the set of possible values, 'determined' meaning a singleton",
+    "⊥ split into 'none' and 'several'",
+    "two ⊥ answers counted as different"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§3",
+    "§5",
+    "§6"
+   ],
+   "claims": [
+    "FC20",
+    "FC21",
+    "FC22",
+    "FC23",
+    "FC26",
+    "FC46",
+    "FC48"
+   ],
+   "results": [
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC22",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC48",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I22",
+   "title": "'Not determined … in the claimed way'",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "or is not determined at \\((\\tau(a),\\sigma(b))\\) in the claimed way"
+    }
+   ],
+   "invented": "'Differs' is read for two determined answers that are unequal. The second disjunct is a contrast of determinacy: Ans_E(τ(a),σ(b)) = ⊥ while Ans_E(1,σ(b0)) ≠ ⊥, where (A) makes the target's answer at (a,b) ⊥ as well; 'in the claimed way' is read as the candidate's answer there being ⊥, as the target's is.",
+   "other_choices": [
+    "a declared input saying in what way the answer is claimed to be undetermined (for example, which values remain)",
+    "drop the clause: the contrast is 'differs' only"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC21",
+    "FC22",
+    "FC23"
+   ],
+   "results": [
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC22",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I23",
+   "title": "The first sentence of non-circular dependence, read as a heading gloss",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "**Non-circular dependence.** The answer follows by evaluating \\(E\\) under its independent boundary conditions."
+    }
+   ],
+   "invented": "The sentence adds no condition of its own: every answer in the formal core is computed by evaluating E at (τ(a),σ(b)), and σ(b) is fixed by b alone ('independent'). It is recorded as NC0 and is met by every candidate.",
+   "other_choices": [
+    "a condition that E's boundary data carry nothing of the target's answer beyond σ(b) (formally automatic here, since σ is a function of b)",
+    "a condition on how E's answer is computed (by propagation, not lookup), which would need a notion of computation the text does not give"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC108"
+   ],
+   "results": [
+    {
+     "claim": "FC108",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I24",
+   "title": "NC1: the target's answer as an unanalysed boundary input or component, read structurally",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named \"law\" does not discharge this. Identity of that assertion with the target's answer is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical statements."
+    }
+   ],
+   "invented": "NC1 fails when E has a single component k (or a boundary coordinate) such that, for every (a,b) in C, L_k(τ(a),σ(b)) (or the boundary value at σ(b)) is exactly the relation that fixes E's designated answer ports to the target's answer Ans_p(a,b) and constrains nothing else: an 'answer slot'. 'Structural at the grain' = equality of relations of one component of E as given, not equality up to logical equivalence of statements.",
+   "other_choices": [
+    "(a) leave NC1 out: non-circular dependence is the final sentence (NC2) alone",
+    "(b) any single component whose relation by itself fixes the answer (semantic entailment)",
+    "(c) syntactic identity of written assertions (needs a syntax of relations that (O) does not give)"
+   ],
+   "formal_core_sections": [
+    "§6",
+    "§9"
+   ],
+   "claims": [
+    "FC23",
+    "FC24",
+    "FC26",
+    "FC33",
+    "FC34",
+    "FC51",
+    "FC60"
+   ],
+   "results": [
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC60",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I25",
+   "title": "Non-circular dependence is the conjunction of its sentences",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "There exist \\((a,b)\\in C\\) and a nonempty block \\(G\\subseteq\\Gamma\\) such that"
+    }
+   ],
+   "invented": "NonCircular(ℰ) := NC0 ∧ NC1 ∧ NC2, where NC2 is the existential final sentence. The earlier sentences are conditions, not commentary on NC2.",
+   "other_choices": [
+    "NC2 alone is the condition; the earlier sentences explain it",
+    "NC1 alone is the condition; NC2 illustrates it"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC23"
+   ],
+   "results": [
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I26",
+   "title": "'Relabelings'",
+   "fills_in_for": [
+    {
+     "line": 257,
+     "quote": "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \\(\\mathcal Q\\), admits no candidate that meets non-circular dependence"
+    }
+   ],
+   "invented": "An edit a is a relabeling for p when, at every b with (a,b) in C, the target's answer is determined and equal to its answer at the baseline: Ans_p(a,b) = Ans_p(1,b0) ≠ ⊥.",
+   "other_choices": [
+    "an edit that acts on D as an automorphism (renaming ports or values)",
+    "an edit that changes no relation of D at all"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC21"
+   ],
+   "results": [
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I27",
+   "title": "The stated scope: a declared statement over pairs",
+   "fills_in_for": [
+    {
+     "line": 257,
+     "quote": "The contract \\(C\\) is a stated subset of the edits the target admits, and every edit the target admits that is excluded from \\(C\\) is excluded by a stated scope, not silently."
+    }
+   ],
+   "invented": "A scope statement Σ is a declared input naming a set Excl(Σ) ⊆ A_D × B_D; the clause holds when (A_D × B_D) \\ C ⊆ Excl(Σ). Pairs, not edits, are what C excludes. Every a in A_D counts as an edit the target admits.",
+   "other_choices": [
+    "edits rather than pairs: every a with no pair in C is named in Σ",
+    "Σ as a yes/no flag ('the scope is stated')"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§3",
+    "§6"
+   ],
+   "claims": [
+    "FC26",
+    "FC30",
+    "FC32",
+    "FC33",
+    "FC34",
+    "FC51",
+    "FC63"
+   ],
+   "results": [
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC30",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC32",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I28",
+   "title": "The grain as a label on the organizations compared",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "The target's answer does not appear, at the declared grain"
+    }
+   ],
+   "invented": "The grain ℓ is carried as an index on each organization (E at grain ℓ is a given organization); NC1 and ≡_ℓ are evaluated on the organizations as given at that index. No map between grains is defined.",
+   "other_choices": [
+    "a grain as a quotient map from a finer organization to a coarser one (components of the coarse one as unions of fine ones)"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC30",
+    "FC32",
+    "FC33"
+   ],
+   "results": [
+    {
+     "claim": "FC30",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC32",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I29",
+   "title": "The restriction operation (E restricted to W): deletion",
+   "fills_in_for": [
+    {
+     "line": 287,
+     "quote": "Fix \\(\\mathcal E\\) and a declared restriction operation. For \\(W\\subseteq\\Gamma\\), let \\(E|W\\) retain the commitments in \\(W\\) with the named background fixed; the commitments of \\(E|W\\) are \\(W\\)."
+    }
+   ],
+   "invented": "E|W is E with every component of Γ \\ W deleted (full relation at every edit and boundary, as L103 gives for deletion), the background untouched, J_E and V_E unchanged; the transport is t with λ restricted to W; the commitments are W.",
+   "other_choices": [
+    "remove Γ \\ W from J_E (their ports then free, or removed)",
+    "some other declared operation: the text names the operation as declared, and it is not among the declared inputs of L522"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§7"
+   ],
+   "claims": [
+    "FC41",
+    "FC98",
+    "FC101"
+   ],
+   "results": [
+    {
+     "claim": "FC41",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC101",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I30",
+   "title": "The worked examples of routes are set systems",
+   "fills_in_for": [
+    {
+     "line": 307,
+     "quote": "**Redundant routes.** \\(\\Gamma=\\{a,b\\}\\), \\(\\mathsf S=\\{\\{a\\},\\{b\\},\\{a,b\\}\\}\\)"
+    }
+   ],
+   "invented": "The examples of L305–L313 are read as statements about families S ⊆ P(Γ), not about a particular question and candidate; where a test needs a candidate that realizes one, the realization is a further invention, recorded with the test.",
+   "other_choices": [
+    "realize each example by a concrete target, question and candidate before reading it"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "claims": [
+    "FC38",
+    "FC39",
+    "FC40",
+    "FC42"
+   ],
+   "results": [
+    {
+     "claim": "FC38",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC39",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC40",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC42",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I31",
+   "title": "The routes of the infinitary example",
+   "fills_in_for": [
+    {
+     "line": 311,
+     "quote": "every set of indices unbounded in \\(\\mathbb N\\) determines \\(x=0\\); no minimal route, and no route of one commitment, exists."
+    }
+   ],
+   "invented": "The routes are exactly the sets W whose index set {n : d_n ∈ W} is unbounded; a bounded set leaves x anywhere in [-1/max, 1/max] and is not a route; the empty set is not a route. (The question is read as 'is x determined to be 0?'.)",
+   "other_choices": [
+    "the text does not say that bounded sets are not routes; another question (for example 'is |x| ≤ 1/N for a stated N?') gives another route family"
+   ],
+   "formal_core_sections": [
+    "§7"
+   ],
+   "claims": [
+    "FC40"
+   ],
+   "results": [
+    {
+     "claim": "FC40",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I32",
+   "title": "A table of observed answers: its counterpart and its relation",
+   "fills_in_for": [
+    {
+     "line": 269,
+     "quote": "A **table of observed answers** has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one."
+    }
+   ],
+   "invented": "The table is a candidate with one active component k whose counterpart is the whole of D (all of J_D, projected onto k's ports) and whose relation is the same under every edit: the relation D gives at the baseline. 'An intervention' is a setting edit (I04).",
+   "other_choices": [
+    "the table's counterpart is only the subnetwork around the answer port",
+    "a table keyed by edits (then it is the other kind L269 names, which encodes the response)"
+   ],
+   "formal_core_sections": [
+    "§6"
+   ],
+   "claims": [
+    "FC25"
+   ],
+   "results": [
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I33",
+   "title": "The offer of one candidate in place of another: a primitive",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "Two explanatory candidates for one question \\(p\\) are **rivals** when one of them has been offered as an answer to \\(p\\) in place of the other"
+    }
+   ],
+   "invented": "Offered(ℰ, ℰ', p) is a primitive relation (a record of offers), not defined in the formal core; rivals are symmetric (either one offered in place of the other).",
+   "other_choices": [
+    "offers as events in histories, read through the physical module",
+    "offers as a declared input (L522 does not list them)"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§8"
+   ],
+   "claims": [
+    "FC43",
+    "FC49",
+    "FC50",
+    "FC54",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I34",
+   "title": "A claim χ as a set of allowed behaviours at a pair, and the premise that it speaks of the target",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "A candidate **conflicts with** a claim \\(\\chi\\) at an admitted pair of the target that its transport translates, in \\(C\\) or outside it, when \\(\\chi\\) excludes what the candidate's organization and transport give there: its answer, or every relation of the target's components under which it could meet (F1), (F2) and (A) there."
+    },
+    {
+     "line": 315,
+     "quote": "Either way the argument needs the premise that \\(\\chi\\) speaks of the target under that pair's edit."
+    }
+   ],
+   "invented": "At each pair, χ is modelled as a set Allow_χ(a,b) of assignments R of relations to the target's components (the behaviours χ allows). 'χ excludes its answer' := every R whose query answer is Ans_E(τ(a),σ(b)) lies outside Allow_χ(a,b). 'χ excludes every relation under which it could meet' := every R with Meets_ab(ℰ,R) lies outside Allow_χ(a,b). The premise that χ speaks of the target under the pair's edit is a separate yes/no input Applies(χ,a,b).",
+   "other_choices": [
+    "χ as a sentence of a language with its own semantics, related to behaviours by a declared reading",
+    "χ as constraining answers only (then the second disjunct cannot be expressed)"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§8"
+   ],
+   "claims": [
+    "FC52",
+    "FC53",
+    "FC54",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC52",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I35",
+   "title": "Conflict given χ: no requirement that each candidate can meet under χ",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "Two candidates that some relations of the target's components would let both meet (F1), (F2) and (A) at a pair, when \\(\\chi\\) excludes every such relation, conflict there given \\(\\chi\\)"
+    }
+   ],
+   "invented": "ConflictGiven_χ(ℰ,ℰ';a,b) := some R lets both meet at (a,b), and every such R lies outside Allow_χ(a,b). Nothing is required of what each can meet under χ alone.",
+   "other_choices": [
+    "the second disjunct of plain conflict with R restricted to Allow_χ: each can meet under some allowed R, and no allowed R lets both"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "claims": [
+    "FC54"
+   ],
+   "results": [
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I36",
+   "title": "'Two of their active components with one counterpart'",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "as none do when two of their active components with one counterpart have different relations there."
+    }
+   ],
+   "invented": "k in Γ and k' in Γ' have one counterpart when λ(k) = λ'(k') as subnetworks, their port translations have the same image, and θ'^-1∘θ is a bijection V_k → V_k' with matching value maps; 'different relations there' means L_k'(τ'(a),σ'(b)) ≠ β_*(L_k(τ(a),σ(b))) under that bijection β.",
+   "other_choices": [
+    "one counterpart = the same subnetwork, whatever the port translations (then the clause can fail: the translations can carry one projected relation to two different relations)"
+   ],
+   "formal_core_sections": [
+    "§8"
+   ],
+   "claims": [
+    "FC44"
+   ],
+   "results": [
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I37",
+   "title": "'Easy to vary' is relative to an assessor",
+   "fills_in_for": [
+    {
+     "line": 317,
+     "quote": "A candidate is **easy to vary**, in the sense used here, when it and a rival pose a problem of the second kind"
+    }
+   ],
+   "invented": "ETV_j(ℰ) := for some ℰ', Problem_j(ℰ,ℰ';p) holds and is of the second kind. It inherits the assessor from 'problem'. (What hard to vary covers is parked by decisions S33–S34; this formalization touches only the text's 'easy to vary' and adds nothing about it.)",
+   "other_choices": [
+    "assessor-free: some rival conflicts with it only outside C, ruled out or not",
+    "for some assessor"
+   ],
+   "formal_core_sections": [
+    "§10"
+   ],
+   "claims": [
+    "FC43"
+   ],
+   "results": [
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I38",
+   "title": "Claims, their denials, and 'inconsistent with its conclusion'",
+   "fills_in_for": [
+    {
+     "line": 397,
+     "quote": "An argument is usable by \\(j\\) when each of its steps is (K2), and it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)."
+    }
+   ],
+   "invented": "Claims are sentences of a first-order language with classical ¬ and ∧; 'inconsistent with' is classical inconsistency of {φ, conclusion}. Inference forms themselves are arbitrary (an admitted form need not be classically sound); only the ruling-out relation uses classical consistency.",
+   "other_choices": [
+    "inconsistency relative to j's own admitted forms",
+    "claims as sets of situations, inconsistency as disjointness"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "claims": [
+    "FC47",
+    "FC53",
+    "FC56",
+    "FC68",
+    "FC71",
+    "FC72",
+    "FC73"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC71",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC72",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC73",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I39",
+   "title": "'Among its premises', read structurally; records made from a claim",
+   "fills_in_for": [
+    {
+     "line": 397,
+     "quote": "An argument does not rule out a claim when the claim's denial is among its premises, alone or joined to other claims by \"and\", read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone; nor does an argument whose record leaf was made from a claim rule out that claim's denial."
+    }
+   ],
+   "invented": "¬φ is among the premises when some leaf, flattened as a conjunction, has ¬φ as a conjunct, up to renaming of bound variables and the order of conjuncts. 'Made from a claim' is a primitive relation MadeFrom(leaf, ψ) on record leaves.",
+   "other_choices": [
+    "up to a declared set of structural rewrites",
+    "logical equivalence (the text excludes it)"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§9"
+   ],
+   "claims": [
+    "FC60",
+    "FC72",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC60",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC72",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I40",
+   "title": "Live through a step: a step below, and essential premises",
+   "fills_in_for": [
+    {
+     "line": 387,
+     "quote": "**Usability.** For argument step \\(u\\) with essential premises \\(\\operatorname{Prem}(u)\\), the premises its inference form uses:"
+    },
+    {
+     "line": 393,
+     "quote": "\\(d\\) is the conclusion of a step of the same argument as \\(u\\) that is usable by \\(j\\)"
+    }
+   ],
+   "invented": "An argument is a finite tree; Prem(u) is the set of u's children that its form uses. The step whose conclusion makes d live lies in the subtree below u, so Usable is defined by recursion on height and is well founded.",
+   "other_choices": [
+    "any step of the argument, the definition read as a least fixed point",
+    "arguments as finite acyclic graphs, one node shared by several steps"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "claims": [
+    "FC47",
+    "FC53",
+    "FC56",
+    "FC68",
+    "FC69",
+    "FC70"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC69",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC70",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I41",
+   "title": "Tentative acceptance over time; withdrawal",
+   "fills_in_for": [
+    {
+     "line": 393,
+     "quote": "or a premise \\(j\\) tentatively accepts, having taken it up, for whatever reason, and not withdrawn it"
+    }
+   ],
+   "invented": "Accepted_j(ξ) is the set of claims j has taken up before ξ and not withdrawn before ξ; Live, Usable and ruled out are evaluated at a time ξ. Accepted_j is a declared input (L522).",
+   "other_choices": [
+    "untimed sets (one assessor state)"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "claims": [
+    "FC56",
+    "FC68",
+    "FC70"
+   ],
+   "results": [
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC70",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I42",
+   "title": "Scope_j: within the declared contract, grain and boundary",
+   "fills_in_for": [
+    {
+     "line": 393,
+     "quote": "\\(\\operatorname{Scope}_j(u)\\): \\(u\\) is applied within the contract, grain and boundary \\(j\\) has declared for it"
+    }
+   ],
+   "invented": "Each step u carries an index (C_u, ℓ_u, β_u); j declares (C_j(u), ℓ_j(u), β_j(u)); Scope_j(u) holds when C_u ⊆ C_j(u), ℓ_u = ℓ_j(u) and β_u = β_j(u).",
+   "other_choices": [
+    "equality of contracts",
+    "steps without an index, Scope_j vacuous for them"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "claims": [
+    "FC47"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I43",
+   "title": "(K3): what it adds and what 'nothing narrower' says",
+   "fills_in_for": [
+    {
+     "line": 395,
+     "quote": "For \\(T\\land B\\land I\\Rightarrow O\\), an argument usable by \\(j\\) that rules out \\(O\\) rules out \\(T\\land B\\land I\\) together for \\(j\\), and nothing narrower. (K3)"
+    }
+   ],
+   "invented": "(i) If j has a usable argument concluding ¬O, the conditional T∧B∧I ⇒ O is live for j and j admits modus tollens, the argument extended by one step rules out T∧B∧I for j. (ii) 'Nothing narrower': from those premises alone no argument rules out T, B or I by itself, since classically ¬O, T∧B∧I ⇒ O and T have a common model.",
+   "other_choices": [
+    "(K3) as a restriction on j's admitted forms (j admits no form that concludes ¬T from them)",
+    "(K3) as a definition of what a test rules out, not a consequence of (K2)"
+   ],
+   "formal_core_sections": [
+    "§9"
+   ],
+   "claims": [
+    "FC47",
+    "FC71"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC71",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I44",
+   "title": "Causal precedence in a history is transitive",
+   "fills_in_for": [
+    {
+     "line": 375,
+     "quote": "A history \\(h\\) is a set of occurrences with an acyclic causal precedence \\(\\prec_h\\) (write \\(\\preceq_h\\) for its reflexive closure)"
+    }
+   ],
+   "invented": "≺_h is a strict partial order (irreflexive and transitive), so ⪯_h is a partial order.",
+   "other_choices": [
+    "≺_h any acyclic relation and ⪯_h its reflexive closure only (then ⪯_h need not be transitive)",
+    "⪯_h the reflexive-transitive closure of an acyclic ≺_h"
+   ],
+   "formal_core_sections": [
+    "§11",
+    "§14"
+   ],
+   "claims": [
+    "FC75",
+    "FC90"
+   ],
+   "results": [
+    {
+     "claim": "FC75",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC90",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I45",
+   "title": "'Event' is a set of occurrences",
+   "fills_in_for": [
+    {
+     "line": 169,
+     "quote": "An **occurrence** is a physically located carrier."
+    },
+    {
+     "line": 161,
+     "quote": "Its formulation is still an event."
+    },
+    {
+     "line": 397,
+     "quote": "A record leaf is a reference to an event with an interpreted claim."
+    }
+   ],
+   "invented": "An event is a nonempty set of occurrences of a history; a record leaf refers to one; an assessment and a formulation are events. 'Event' adds no sort beyond occurrences.",
+   "other_choices": [
+    "events as a separate primitive sort",
+    "events as occurrences of edit–boundary pairs only"
+   ],
+   "formal_core_sections": [
+    "§11"
+   ],
+   "claims": [
+    "FC74",
+    "FC100",
+    "FC105"
+   ],
+   "results": [
+    {
+     "claim": "FC74",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC100",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC105",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I46",
+   "title": "Active route: 'represented input', 'operative result', 'applicable relations', 'declared contrasts'",
+   "fills_in_for": [
+    {
+     "line": 375,
+     "quote": "An **active route** is a connected subnetwork of actual occurrences joining a represented input to an operative result, whose components meet the applicable relations and which has nonconstant dependence on the represented distinction under the declared contrasts."
+    }
+   ],
+   "invented": "Given the organization Org_ℓ(h) that the physical module assigns to the history h: an active route for a result occurrence r is a set R of occurrences of h, connected by the instantiated connections, containing an input occurrence i whose port carries a represented distinction and the result occurrence r (the 'operative result' is a designated result occurrence); every occurrence of R lies on a ≺_h-chain from i to r inside R; each occurrence of R meets the relation Org_ℓ(h) gives it ('the applicable relations'); and for a declared set K of pairs of values of i's port, setting i's port to the two values of some pair in K gives different values at r in Org_ℓ(h).",
+   "other_choices": [
+    "'operative result' = a result that later changes how the system proceeds (L73's operative return)",
+    "dependence read on the actual history only, without setting i's port",
+    "'connected' read without direction"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§11"
+   ],
+   "claims": [
+    "FC75",
+    "FC87",
+    "FC98",
+    "FC101"
+   ],
+   "results": [
+    {
+     "claim": "FC75",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC87",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC101",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I47",
+   "title": "Reason use: 'structural map', 'role bindings', 'the same transition', 'operative deliberative rule'",
+   "fills_in_for": [
+    {
+     "line": 385,
+     "quote": "**Reason use.** A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route."
+    }
+   ],
+   "invented": "The represented objection ob is a content with role bindings (a map from role names to its ports); a structural map m sends ob's ports to ports of the response suborganization R, preserving role names; Rec is a declared set of content-preserving recodings and Chg a declared set of content changes of ob; m(ρ·ob) induces the same state change of R as m(ob) for ρ in Rec; m(γ·ob) = Rule(γ)(m(ob)) for γ in Chg, with Rule a declared map ('the operative deliberative rule'); some image port of m lies on an active route (I46).",
+   "other_choices": [
+    "the deliberative rule as a component of the system's organization, picked out by its signature",
+    "the structural map as a transport (π,τ,σ,λ), making reason use a fidelity condition"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§9"
+   ],
+   "claims": [
+    "FC76",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC76",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I48",
+   "title": "Contents, 'c's contract', and transports into a content",
+   "fills_in_for": [
+    {
+     "line": 169,
+     "quote": "A **content** is an organization together with its contract-relative commitments."
+    },
+    {
+     "line": 205,
+     "quote": "faithful on \\(c\\)'s contract, whose provenance is selected or constructed"
+    },
+    {
+     "line": 413,
+     "quote": "both faithful on \\(c\\)'s contract at grain \\(\\ell\\)."
+    }
+   ],
+   "invented": "A content is c = (E_c, C_c, Γ_c) with C_c ⊆ A_Ec × B_Ec a contract on c's own organization (for the organization of a candidate for p: C_c := τ[C_p]). A transport t: X → E_c is faithful on c's contract when it meets (F1) and (F2) on the preimage {(a,b) ∈ A_X × B_X : (τ(a),σ(b)) ∈ C_c}, with Γ_c as the active components; a transport from c is faithful on C_c directly.",
+   "other_choices": [
+    "a separately declared contract on the carrier's organization",
+    "faithfulness on C_c read through a declared inverse of τ"
+   ],
+   "formal_core_sections": [
+    "§11",
+    "§12",
+    "§13"
+   ],
+   "claims": [
+    "FC77",
+    "FC85",
+    "FC95",
+    "FC97"
+   ],
+   "results": [
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC85",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC95",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC97",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I49",
+   "title": "'Faithful' and 'fidelity': the narrow extent by default, the wide one where a line asks for it",
+   "fills_in_for": [
+    {
+     "line": 189,
+     "quote": "A transport is **faithful on \\(C\\)** when it meets the component and global fidelity conditions of Part V."
+    },
+    {
+     "line": 247,
+     "quote": "**Question fidelity.**"
+    },
+    {
+     "line": 520,
+     "quote": "Account, from fidelity under change, non-circular dependence and non-vacuity (E)."
+    },
+    {
+     "line": 630,
+     "quote": "so the exchange carries the fidelity and the answers of \\(t_1\\) over to the second transport"
+    }
+   ],
+   "invented": "Faithful_C(t) := (F1) ∧ (F2) on C (the narrow extent L189 defines). Fid⁺_C(t) := (F1) ∧ (F2) ∧ (A) on C (the wide extent, used where a line names (A) as fidelity: L247's heading, L520). Each use of the word is assigned one extent in FC104.",
+   "other_choices": [
+    "wide everywhere (then L630's 'the fidelity and the answers' says one thing twice)",
+    "narrow everywhere (then L520 names no source for (A) and L247's heading is a name only)"
+   ],
+   "formal_core_sections": [
+    "§5"
+   ],
+   "claims": [
+    "FC20",
+    "FC31",
+    "FC79",
+    "FC104"
+   ],
+   "results": [
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC31",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC79",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC104",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I50",
+   "title": "A violation at a pair: which conditions fail",
+   "fills_in_for": [
+    {
+     "line": 220,
+     "quote": "- a **violation** occurs when fidelity fails at \\((a,b)\\);"
+    }
+   ],
+   "invented": "Violation(t;a,b) := not [(F1) at (a,b) and the valuation equation of (F2) at (a,b)] (narrow). Violation⁺ adds (A) at (a,b). Both are carried; FC20 asks when they coincide.",
+   "other_choices": [
+    "only (A) at (a,b) (a failed prediction)",
+    "the whole of (F2), homomorphism clause included"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC20",
+    "FC81",
+    "FC104"
+   ],
+   "results": [
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC104",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I51",
+   "title": "'Prediction' for a transport not said to reach the simulation layer",
+   "fills_in_for": [
+    {
+     "line": 151,
+     "quote": "A measure that identifies an outcome, together with a prediction of the outcome from it through a transport faithful on the contract, answers the identification question"
+    }
+   ],
+   "invented": "Pred_t(a,b) := Ans_E(τ(a),σ(b)) for any transport t: D → E, extending L219's definition, which is for transports to S.",
+   "other_choices": [
+    "L151's 'prediction' in the everyday sense, not the defined term"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC35"
+   ],
+   "results": [
+    {
+     "claim": "FC35",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I52",
+   "title": "Selection: the parameters witnessed in a physical history",
+   "fills_in_for": [
+    {
+     "line": 195,
+     "quote": "There is a population \\(\\mathcal T\\) of candidate transports, a variation operator \\(\\mu\\) on \\(\\mathcal T\\), a finite history \\(H\\subseteq C\\) of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on \\(H\\)."
+    },
+    {
+     "line": 195,
+     "quote": "No member of the history represents \\(t\\), \\(H\\), or the survival condition."
+    }
+   ],
+   "invented": "μ: 𝒯 → P(𝒯); the survival condition is Faithful_H (narrow). Sel(t;𝒯,μ,H) also requires a physical selection history h_sel in which the pairs of H occur and the members of 𝒯 are admitted by the physics (L481), and in which no occurrence represents (R) t, H or the survival condition. 'Member of the history' is read as an occurrence of h_sel, since the members of H are pairs and cannot represent.",
+   "other_choices": [
+    "a purely formal Sel with no physical witness (then 𝒯 = {t}, μ the identity and H = ∅ make every transport 'selected': FC77)",
+    "H required to be nonempty"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC77",
+    "FC78",
+    "FC79",
+    "FC80",
+    "FC81",
+    "FC82",
+    "FC83",
+    "FC95",
+    "FC102"
+   ],
+   "results": [
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    },
+    {
+     "claim": "FC79",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC82",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "no common result"
+     ]
+    },
+    {
+     "claim": "FC83",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "only construction is originative"
+     ]
+    },
+    {
+     "claim": "FC95",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC102",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) second half: a window longer than the occlusion"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I53",
+   "title": "'Exactly one of three provenances': one whole history",
+   "fills_in_for": [
+    {
+     "line": 193,
+     "quote": "A transport \\(t\\) whose domain is an organization of a physical system has exactly one of three provenances, determined by its history in the physical module:"
+    },
+    {
+     "line": 201,
+     "quote": "Neither provenance is reducible to the other: a selected transport has no represented target and no criticism in its history; a constructed one has both."
+    }
+   ],
+   "invented": "Sel and Con are evaluated on one history: the whole physical history of t up to the attribution. Con then excludes Sel (Con puts a represented target in that history; Sel has none).",
+   "other_choices": [
+    "Sel and Con evaluated on different parts of the history (then both can hold, as L201's 'Construction may operate on selected material' allows, and 'exactly one' needs a rule of precedence)"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC78",
+    "FC81",
+    "FC82",
+    "FC84"
+   ],
+   "results": [
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC82",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "no common result"
+     ]
+    },
+    {
+     "claim": "FC84",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I54",
+   "title": "Inherited provenance: a rule of carrying over, per part",
+   "fills_in_for": [
+    {
+     "line": 211,
+     "quote": "A carrier keeps its provenance when present access to it is lost, and a later record made from the carrier carries that provenance, not a second, independent one."
+    },
+    {
+     "line": 405,
+     "quote": "A small binding newly prepared inside received content is construction of that binding, and the rest of the content keeps its inherited provenance."
+    },
+    {
+     "line": 409,
+     "quote": "Use does not by itself construct: received content used as it was received keeps its inherited provenance."
+    }
+   ],
+   "invented": "Provenance is assigned to each part of a transport (each component with its counterpart binding). A content-preserving transfer (relay, record) from carrier o to carrier o' gives each part at o' the provenance it had at o; a binding newly built gets Con; 'inherited' is not a fourth value but the rule by which Sel, Con and Dec carry over.",
+   "other_choices": [
+    "'inherited' as a fourth provenance value",
+    "provenance per whole transport only (then L405's 'the rest of the content keeps' cannot be written)"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC67",
+    "FC78"
+   ],
+   "results": [
+    {
+     "claim": "FC67",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I55",
+   "title": "Deploy: 'integrated into problem-directed activity', 'nontrivial use respect'",
+   "fills_in_for": [
+    {
+     "line": 403,
+     "quote": "integrated into problem-directed activity and serving the declared use task \\(U\\) as a retained capability (Part XII). The repertoire \\(R_{\\beta,\\ell}(s,\\xi)\\) is the set of contents deployable in some nontrivial use respect."
+    }
+   ],
+   "invented": "Deploy_βℓ(s,c,ξ;U) := for some occurrence o of s at ξ, Rep_ℓ(o,c), Integrated(o,s,ξ) and, for some χ, Can_Ωβ(ξ,U;χ) with a realization that uses o. Integrated and Nontrivial(U) are primitive predicates read through the physical module.",
+   "other_choices": [
+    "Integrated defined through active routes (o lies on an active route to a problem's result)"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§13"
+   ],
+   "claims": [
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I56",
+   "title": "Build: 'prepares', 'nontrivial binding construction', 'content-preserving transfer'",
+   "fills_in_for": [
+    {
+     "line": 405,
+     "quote": "**Construction.** \\(\\operatorname{Build}_{\\beta,\\ell}(s,c,h,e)\\) is met when an actual subhistory owned by \\(s\\) and delimited at \\(e\\) prepares a represented organization for explanatory use of \\(c\\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers."
+    }
+   ],
+   "invented": "Build := for some subhistory h' of h ending at e and owned by s, Prepares(h',c), BindingConstruction(h',c) and not TransferComposite(h'), with the three as primitive predicates read through the physical module.",
+   "other_choices": [
+    "Build defined through Con (a construction trace)",
+    "BindingConstruction defined through reason use (L409)"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§13",
+    "§18"
+   ],
+   "claims": [
+    "FC83",
+    "FC84",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC82",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "no common result"
+     ]
+    },
+    {
+     "claim": "FC83",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "only construction is originative"
+     ]
+    },
+    {
+     "claim": "FC84",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I57",
+   "title": "Repair: how the aims are read at ξ and over [ξ, ξ']; which aim ProducedBy runs to",
+   "fills_in_for": [
+    {
+     "line": 441,
+     "quote": "In (P), accordingly, \\(r(\\xi')\\) says of a protected condition \\(r\\) that it was met on every occasion it covers from \\(\\xi\\) to \\(\\xi'\\), not only at \\(\\xi'\\)."
+    },
+    {
+     "line": 441,
+     "quote": "\\(\\operatorname{ProducedBy}\\) is met when an active route (Part IX) runs from \\(\\Delta\\) to the repair"
+    }
+   ],
+   "invented": "An aim is (cond, Occ) with Occ a set of times. o(ξ) for o in O: cond met at ξ. On the left of (P), r(ξ) := cond met at ξ if ξ ∈ Occ_r, and holds otherwise; on the right, r(ξ') := cond met at every ω ∈ Occ_r with ξ ≤ ω ≤ ξ'. ProducedBy(Δ,ξ,ξ';O) := some o in O with ¬o(ξ) ∧ o(ξ') has an active route from an occurrence of Δ to the occurrence at which its cond comes to be met; it need not be the o of (P)'s first conjunct.",
+   "other_choices": [
+    "tie ProducedBy to the same o as the first conjunct",
+    "r(ξ) on the left also read over an interval"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "claims": [
+    "FC86",
+    "FC87",
+    "FC88",
+    "FC90"
+   ],
+   "results": [
+    {
+     "claim": "FC86",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC87",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC88",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC90",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I58",
+   "title": "'Losses outside P': the aims considered, and 'exposed'",
+   "fills_in_for": [
+    {
+     "line": 441,
+     "quote": "Losses outside \\(P\\) must be exposed."
+    }
+   ],
+   "invented": "A repair claim carries a declared set Aims* ⊇ O ∪ P of aims under consideration and an exposure record X; the claim is well formed when {r ∈ Aims* \\ P : r(ξ) ∧ ¬r(ξ')} ⊆ X. Aims* is a declared input that L522 does not list.",
+   "other_choices": [
+    "all aims the system holds, read through the physical module",
+    "exposure as a statement in the record, not a set"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§14"
+   ],
+   "claims": [
+    "FC88",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC88",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I59",
+   "title": "Explanatory aims: L443 read as a characterization of O_ex",
+   "fills_in_for": [
+    {
+     "line": 443,
+     "quote": "**Created explanation.** An explanatory aim requires a deployable account, or the correction of a use through one."
+    }
+   ],
+   "invented": "O_ex ⊆ O is a declared marking of aims; L443 is read as: o is explanatory when its condition is 's possesses a deployable account of a stated question' or is L443's 'the correction of a use through' a deployable account. (EX) imposes the same conditions on both kinds.",
+   "other_choices": [
+    "L443 as a necessary condition only",
+    "O_ex defined by (EX)'s own conditions"
+   ],
+   "formal_core_sections": [
+    "§0",
+    "§14"
+   ],
+   "claims": [
+    "FC89",
+    "FC90",
+    "FC98"
+   ],
+   "results": [
+    {
+     "claim": "FC89",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC90",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC98",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I60",
+   "title": "ProducesVia: 'the relevant binding of c'",
+   "fills_in_for": [
+    {
+     "line": 453,
+     "quote": "\\(\\operatorname{ProducesVia}(\\Delta,c,o;\\xi,\\xi')\\) is met when an active route that runs from \\(\\Delta\\) to the repair of \\(o\\) contains the relevant binding of \\(c\\)."
+    }
+   ],
+   "invented": "The relevant binding of c is the binding named in c's construction trace (Build's binding construction); 'contains' means some occurrence of the route instantiates it.",
+   "other_choices": [
+    "any occurrence that carries c"
+   ],
+   "formal_core_sections": [
+    "§14"
+   ],
+   "claims": [
+    "FC89",
+    "FC90"
+   ],
+   "results": [
+    {
+     "claim": "FC89",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC90",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I61",
+   "title": "Tasks and executions; 'complete' in F read as (CT1)'s completion",
+   "fills_in_for": [
+    {
+     "line": 461,
+     "quote": "a task a specified input-to-output attribute transformation with explicit resources and side effects."
+    },
+    {
+     "line": 469,
+     "quote": "Execution families are nonempty on admitted inputs; deadlock is not a vacuous performance of the task."
+    },
+    {
+     "line": 471,
+     "quote": "\\(F(C)\\) = states whose executions all complete and return into \\(C\\)."
+    }
+   ],
+   "invented": "A task T is a relation between inputs and outputs, with dom T and T[i]. Exec(π,z,i;χ) is a set of executions, each with a completion flag, an output o and a final constructor state z'. F(X) := {z : for every i in dom T and every η in Exec(π,z,i;χ), η completes with o in T[i] and z' in X}: 'complete' is read as (CT1)'s 'completes with o ∈ T[i]'. Nonemptiness of Exec (L469) is a standing assumption for z in C and i in dom T, not part of F.",
+   "other_choices": [
+    "'complete' without the output condition (then C ⊆ F(C) is weaker than (CT1))",
+    "nonemptiness inside F (F(X) then leaves out states with no executions)"
+   ],
+   "formal_core_sections": [
+    "§15"
+   ],
+   "claims": [
+    "FC91",
+    "FC92",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC91",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC92",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I62",
+   "title": "Tolerances: stricter tolerances admit fewer tasks; Admit contains every realized task",
+   "fills_in_for": [
+    {
+     "line": 479,
+     "quote": "form a directed preorder \\(Q_\\Theta\\), in which \\(q\\) precedes \\(q'\\) when \\(q'\\) admits no performance \\(q\\) excludes, and none of them is exact;"
+    },
+    {
+     "line": 479,
+     "quote": "\\(\\mathsf{Admit}^{q,r}_\\Theta\\) is the set of tasks physically achievable at tolerances \\((q,r)\\);"
+    }
+   ],
+   "invented": "q precedes q' when q' excludes at least what q excludes (q' is at least as strict). Admit^{q,r} is antitone in (q,r). A task with a realization, owned or not, at (q,r) is in Admit^{q,r} (so (CT3) follows from the definitions).",
+   "other_choices": [
+    "Admit given by the physical module with no stated link to realizations (then (CT3) is an assumption)"
+   ],
+   "formal_core_sections": [
+    "§15"
+   ],
+   "claims": [
+    "FC93"
+   ],
+   "results": [
+    {
+     "claim": "FC93",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I63",
+   "title": "A tag such as (I2) names the sentence before it",
+   "fills_in_for": [
+    {
+     "line": 329,
+     "quote": "The feature is identified at \\(y\\) exactly when \\(Z_y\\neq\\varnothing\\land|f[Z_y]|=1\\). (I1)"
+    },
+    {
+     "line": 335,
+     "quote": "no allowed path joins states of different invariant value. (O1)"
+    },
+    {
+     "line": 471,
+     "quote": "the greatest fixed point is the union of the sets \\(D\\) with \\(D\\subseteq F(D)\\). (CT2)"
+    }
+   ],
+   "invented": "Each parenthesized tag names the sentence it follows, as it can only do at L395 and L471 (nothing follows the tag there). So (I1) is the definition of identification at y, (I2) the factorization claim, (I3) the kernel criterion, and (O1) the invariance claim.",
+   "other_choices": [
+    "a tag names the sentence after it (then (I2) is the kernel criterion and (O1) is 'Equal values do not suffice for reachability')"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC57",
+    "FC58",
+    "FC61",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC57",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC58",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC61",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I64",
+   "title": "Identification: 'attainable', and the admitted states in the linear case",
+   "fills_in_for": [
+    {
+     "line": 329,
+     "quote": "It is identified on every attainable \\(y\\) exactly when \\(f=\\bar f\\circ g\\) for some \\(\\bar f\\)."
+    },
+    {
+     "line": 329,
+     "quote": "For linear \\(g\\) and linear feature \\(c^\\top\\), identification is \\(\\ker g\\subseteq\\ker c^\\top\\)."
+    }
+   ],
+   "invented": "y is attainable when y ∈ g[Z]. In the linear case Z is the whole space ℝ^n and 'identification' is identification at every attainable y.",
+   "other_choices": [
+    "Z a proper subset (a cone or box of admitted states; then the kernel criterion can fail)",
+    "identification at one given y"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC57",
+    "FC58",
+    "FC59",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC57",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC58",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC59",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I65",
+   "title": "The pole and its shadow, encoded",
+   "fills_in_for": [
+    {
+     "line": 325,
+     "quote": "Stipulate \\(H:=U_H,\\ \\theta:=U_\\theta,\\ L:=H\\cot\\theta\\)"
+    },
+    {
+     "line": 325,
+     "quote": "It is faithful under the identification contract, whose edits alter the observed \\(L\\)."
+    }
+   ],
+   "invented": "Ports H, θ, L; the exogenous values u_H, u_θ carried by the boundary b = (u_H, u_θ); components c_H (footprint {H}, relation H = u_H), c_θ (θ = u_θ), c_L (footprint {H, θ, L}, relation L = H cot θ); edits: set H to h, set θ to φ, set L to l, each replacing its component (I04), and their composites. For tests, finite grids (H in {1,2,3}, θ in {30°,45°,60°}). The production question: Q reads L. The identification contract: boundaries varying u_H so that different values of L are observed, and Q returning the fibre {H : H cot θ = observed L}; 'edits that alter the observed L' are read as these boundary changes.",
+   "other_choices": [
+    "u_H and u_θ as ports",
+    "the identification contract with edits to a measuring component that reads L",
+    "real values handled symbolically"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC02",
+    "FC07",
+    "FC26",
+    "FC27",
+    "FC28",
+    "FC99"
+   ],
+   "results": [
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC27",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC28",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC99",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I66",
+   "title": "The odd-order skew-symmetric case, encoded",
+   "fills_in_for": [
+    {
+     "line": 343,
+     "quote": "Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed."
+    }
+   ],
+   "invented": "Ports: the order n, the matrix entries, det, inv; components: skew (Mᵀ = −M), odd (n odd), determinant (Leibniz sum), invertibility (inv ⟺ det ≠ 0); edits: delete skew, delete odd, delete both; Q: 'does the family contain an invertible matrix?'. For tests: n in {1,2,3}, entries in GF(p) for an odd prime p (the statement also holds there, since 2 is invertible) or small integer ranges with exact determinants. The Leibniz candidate: one component per permutation term and a sum component.",
+   "other_choices": [
+    "real entries handled symbolically",
+    "entries in GF(2), where the statement fails (a different field arithmetic, which the contract holds fixed)"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC63"
+   ],
+   "results": [
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I67",
+   "title": "A contract as an organization (Argument 5), encoded",
+   "fills_in_for": [
+    {
+     "line": 590,
+     "quote": "Give it ports (the edits and their boundaries), components (the closure conditions, each with the relation it imposes on its ports, as (O) requires), and admitted edits (add or remove a change; alter \\(\\mathcal Q\\))."
+    }
+   ],
+   "invented": "One port m_(a,b) with domain {0,1} for each (a,b) in A × B (membership in C) and one port q whose domain is a declared set of queries; components: the baseline condition (m_(1,b0) = 1) and whatever closure conditions the question declares (for example m_(a1,b) ∧ m_(a2,b) → m_(a2·a1,b)); edits: set a membership port, set q, and composites.",
+   "other_choices": [
+    "ports for edits only, boundaries fixed",
+    "no closure conditions beyond the baseline (the text names 'the closure conditions' without saying which)"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC97"
+   ],
+   "results": [
+    {
+     "claim": "FC97",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I68",
+   "title": "Argument 10's two-layer episode, encoded; 'recent occupancy'",
+   "fills_in_for": [
+    {
+     "line": 620,
+     "quote": "Stipulate an object layer \\(P\\): a line of cells; two things, each with a position and a velocity; continuity components; admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities."
+    },
+    {
+     "line": 622,
+     "quote": "\\(S_0\\) predicts occupancy from recent occupancy."
+    }
+   ],
+   "invented": "A line of N cells (N = 6 for tests), two things with position in {0..N−1} and velocity in {−1,0,1}, time steps 0..K; continuity: pos(t+1) = pos(t) + vel(t), with a stated rule at the ends (reflection); occluding cell c makes the occupancy reading of c empty; swap exchanges the two things' positions and velocities. S0 predicts occupancy at t+1 from the occupancy of the last w steps, with the window w shorter than the occlusion.",
+   "other_choices": [
+    "continuous positions",
+    "an unbounded window (then an occupancy predictor could extrapolate through an occlusion, and the 'structural' failure can fail: FC102)",
+    "stopping at the ends instead of reflecting"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC90",
+    "FC102",
+    "FC103"
+   ],
+   "results": [
+    {
+     "claim": "FC90",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC102",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) second half: a window longer than the occlusion"
+     ]
+    },
+    {
+     "claim": "FC103",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I69",
+   "title": "'Built alike': the exchange is an automorphism",
+   "fills_in_for": [
+    {
+     "line": 630,
+     "quote": "The two things are built alike in \\(P\\), and their persistence components alike in \\(S_1\\)"
+    }
+   ],
+   "invented": "The exchange ψ of the two things is a bijection of P's ports, components, edits and boundaries that preserves L, maps C onto C and leaves the query's answers unchanged; the same holds in S1 for the exchange of the persistence components.",
+   "other_choices": [
+    "an isomorphism between the two things' subnetworks only"
+   ],
+   "formal_core_sections": [
+    "§17"
+   ],
+   "claims": [
+    "FC103"
+   ],
+   "results": [
+    {
+     "claim": "FC103",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I70",
+   "title": "A structure-preserving bijection of all the data (Argument 8)",
+   "fills_in_for": [
+    {
+     "line": 612,
+     "quote": "Transporting all carriers, relations, transports, histories, contracts and declared inputs along structure-preserving bijections preserves (E), (G), (P), (EX)."
+    }
+   ],
+   "invented": "Bijections of ports, values, components, edits (a partial-monoid isomorphism), boundaries and occurrences (preserving ≺_h and the physical module's interpretation), with the query, its designation and every declared input carried along (Q^φ(φ·O, φa, φb) = Q(O,a,b)).",
+   "other_choices": [
+    "the physical module not transported (then (G) and (EX) need it to commute with the bijection)"
+   ],
+   "formal_core_sections": [
+    "§18"
+   ],
+   "claims": [
+    "FC33",
+    "FC45",
+    "FC67",
+    "FC100"
+   ],
+   "results": [
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC67",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC100",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I71",
+   "title": "The 'value' of a transport at a pair (Argument 3)",
+   "fills_in_for": [
+    {
+     "line": 572,
+     "quote": "at which some \\(t'\\in\\mathcal T\\), also surviving on \\(H\\), has a different value from \\(t\\)"
+    }
+   ],
+   "invented": "value_t(a,b) := (τ(a), σ(b), (L^E_k(τ(a),σ(b)))_{k in J_E}): the translated pair and the relations the transport's organization has there. Members of 𝒯 share the codomain's ports and components and differ in relations; Argument 3's 'L_j(a,b) altered' is read as L^E_j(τ(a),σ(b)) altered.",
+   "other_choices": [
+    "the prediction Ans_E(τ(a),σ(b)) only",
+    "the π-image of Sol_D(a,b)"
+   ],
+   "formal_core_sections": [
+    "§12"
+   ],
+   "claims": [
+    "FC80",
+    "FC109"
+   ],
+   "results": [
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC109",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I72",
+   "title": "Respects as sufficient conditions; 'upstream'",
+   "fills_in_for": [
+    {
+     "line": 151,
+     "quote": "A production question has a \\(\\mathcal Q\\) that reads an output port and a \\(C\\) containing interventions on upstream ports."
+    }
+   ],
+   "invented": "The three sentences are sufficient conditions naming a respect, not definitions: production when Q reads an output port w and C contains a setting edit of a port upstream of w (v upstream of w: a chain of components, each reading the output of the one before, from v to w); identification when Q computes a fibre g^-1(y) and C contains edits to the observed value; obstruction when Y_p = {reachable, unreachable}. The respects need not exclude one another.",
+   "other_choices": [
+    "necessary conditions (every production question has such Q and C)",
+    "a function from (type of Q, shape of C) to one respect"
+   ],
+   "formal_core_sections": [
+    "§3"
+   ],
+   "claims": [
+    "FC36"
+   ],
+   "results": [
+    {
+     "claim": "FC36",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I73",
+   "title": "'An answer to one is not an answer to the other': the narrow reading",
+   "fills_in_for": [
+    {
+     "line": 151,
+     "quote": "Two questions with the same \\(D\\) and different \\((C,\\mathcal Q)\\) are different questions, and an answer to one is not an answer to the other."
+    }
+   ],
+   "invented": "Narrow reading: meeting (E) on one does not by itself give (E) on the other. The wide reading (no candidate meets (E) on both) is carried as a claim to test (FC34).",
+   "other_choices": [
+    "the wide reading",
+    "'answer' as the answer profile Ans_p (different profiles)"
+   ],
+   "formal_core_sections": [
+    "§3"
+   ],
+   "claims": [
+    "FC34"
+   ],
+   "results": [
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I74",
+   "title": "Recursive capacity: target chains and enabling continuations",
+   "fills_in_for": [
+    {
+     "line": 492,
+     "quote": "\\forall n<\\omega\\ \\forall\\text{ admitted target chains of length }n,\\ \\exists\\text{ an owned enabling continuation}."
+    }
+   ],
+   "invented": "A target chain of length n is a sequence d1, …, dn of aspects of the system's practice, each d(i+1) a description of di made a represented target, each step admitted by the physical module; an owned enabling continuation is an owned continuation in which dn becomes a represented target, criticism is directed at it and the result can change its operative use (L487).",
+   "other_choices": [
+    "chains of scrutiny of one aspect repeated n times"
+   ],
+   "formal_core_sections": [
+    "§16"
+   ],
+   "claims": [
+    "FC94",
+    "FC110"
+   ],
+   "results": [
+    {
+     "claim": "FC94",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC110",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I75",
+   "title": "The explanatory contents 𝔈_Θ",
+   "fills_in_for": [
+    {
+     "line": 497,
+     "quote": "With \\(\\mathfrak E_\\Theta\\) the explanatory contents that some carrier can hold under the physical module"
+    }
+   ],
+   "invented": "𝔈_Θ := {c : for some p, t, Γ, Account((c,p,t,Γ)), and the physical module admits some carrier instantiating c}. It is taken to be infinite where FC94 needs it.",
+   "other_choices": [
+    "contents that some carrier holds at present"
+   ],
+   "formal_core_sections": [
+    "§16"
+   ],
+   "claims": [
+    "FC94",
+    "FC110"
+   ],
+   "results": [
+    {
+     "claim": "FC94",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC110",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I76",
+   "title": "The three defects of a question, formally",
+   "fills_in_for": [
+    {
+     "line": 161,
+     "quote": "A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements."
+    }
+   ],
+   "invented": "A question is taken with a description Desc it answers to. 'Fails to pick out its alleged target': no organization satisfies Desc, or several do. 'Incompatible baseline': Sol_D(1,b0) = ∅, or b0 ∉ B. 'Incompatible requirements': the conditions Desc places on (C, Q) have no joint instance.",
+   "other_choices": [
+    "the question as the tuple p alone (then the first defect cannot be written, since D is given in p)"
+   ],
+   "formal_core_sections": [
+    "§3",
+    "§9"
+   ],
+   "claims": [
+    "FC106",
+    "FC107"
+   ],
+   "results": [
+    {
+     "claim": "FC106",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC107",
+     "status": "NOT TESTED",
+     "counterexample_parts": []
+    }
+   ],
+   "source": "formal core and claims"
+  },
+  {
+   "id": "I77",
+   "title": "Finite models and the bounds of the search",
+   "fills_in_for": [
+    {
+     "line": 91,
+     "quote": "\\(V\\) is a set of ports, each with a nonempty value domain \\(X_v\\)."
+    },
+    {
+     "line": 105,
+     "quote": "Values of ports may be paths, functions, fields, mathematical structures or histories."
+    }
+   ],
+   "invented": "Every port has a finite domain; the searched organizations have at most 3 ports (domains of at most 2 or 3 values), at most 3 or 4 components, at most 2 boundaries and at most 2 generator edits (so at most about 12 edits after closure); relations are explicit finite sets of tuples; the hypothetical relations R of D8.1 are enumerated in full, so conflict is decided only on targets with at most 4096 assignments (footprints of at most 2 two-valued ports). Sizes are tried in ascending order, so the first counterexample found is the smallest found. A result 'holds on all models tried' says nothing beyond these bounds.",
+   "other_choices": [
+    "symbolic (infinite) domains, with claims decided by derivation rather than by search",
+    "larger bounds (more ports, values, components, edits), at more cost",
+    "a different ordering of sizes (the 'smallest' counterexample is smallest in this ordering only)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/gen.py (Size, sizes)",
+    "model/core.py (all_R)",
+    "model/claims_a.py, model/claims_b.py (the sizes of each search)"
+   ],
+   "claims": [
+    "FC01",
+    "FC02",
+    "FC03",
+    "FC04",
+    "FC05",
+    "FC06",
+    "FC08",
+    "FC10",
+    "FC12",
+    "FC13",
+    "FC15",
+    "FC16",
+    "FC17",
+    "FC18",
+    "FC19",
+    "FC20",
+    "FC21",
+    "FC22",
+    "FC23",
+    "FC24",
+    "FC25",
+    "FC29",
+    "FC33",
+    "FC34",
+    "FC37",
+    "FC41",
+    "FC43",
+    "FC44",
+    "FC45",
+    "FC46",
+    "FC47",
+    "FC48",
+    "FC49",
+    "FC50",
+    "FC51",
+    "FC52",
+    "FC54",
+    "FC57",
+    "FC58",
+    "FC61",
+    "FC64",
+    "FC65",
+    "FC66",
+    "FC67",
+    "FC68",
+    "FC74",
+    "FC77",
+    "FC80",
+    "FC85",
+    "FC96",
+    "FC100",
+    "FC106"
+   ],
+   "results": [
+    {
+     "claim": "FC01",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC03",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC04",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC05",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(ii) reading (ii): any bijection"
+     ]
+    },
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC08",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC10",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC12",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC15",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC16",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC22",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    },
+    {
+     "claim": "FC29",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC37",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC41",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC48",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC52",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC57",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC58",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC61",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC64",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC65",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC66",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC67",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC74",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC85",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC100",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC106",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I78",
+   "title": "Two families of generated organizations: surgical edits with override, and free edits",
+   "fills_in_for": [
+    {
+     "line": 91,
+     "quote": "\\(A\\) is a set of admitted edits, closed under a partial associative composition with identity \\(1\\)."
+    },
+    {
+     "line": 574,
+     "quote": "The component relations \\(L_j(a,b)\\) are supplied independently for each \\((a,b)\\)."
+    }
+   ],
+   "invented": "G-surg: each port has a home component (footprint: the port and up to two others); edits are the closure under override of up to two generators, each the setting of a port to a value or an alternative relation of a component; composition is override (a total monoid), and L at an edit is the surgery applied (the home component of a set port gets the slice v = x, an altered component its alternative relation). This is an action law, I02's alternative, so on G-surg a composite's relations follow from its parts'. G-free: abstract edits 1, e1, e2 whose only defined composites are those with 1; relations drawn independently for every (j, a, b), as I02 has it. Every random search draws from one or both families and says which.",
+   "other_choices": [
+    "one family only (either restricts the space: G-surg to action laws, G-free to edits that never compose)",
+    "edits with partial, non-trivial composition tables drawn at random (then Kleene associativity, I01, is needed as a further condition)",
+    "setting edits that add a constraint beside the old one (L103 excludes them)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/gen.py (gen_surg, gen_free)"
+   ],
+   "claims": [
+    "FC01",
+    "FC02",
+    "FC03",
+    "FC04",
+    "FC05",
+    "FC06",
+    "FC08",
+    "FC09",
+    "FC10",
+    "FC12",
+    "FC13",
+    "FC15",
+    "FC16",
+    "FC17",
+    "FC18",
+    "FC19",
+    "FC20",
+    "FC21",
+    "FC22",
+    "FC23",
+    "FC24",
+    "FC25",
+    "FC29",
+    "FC33",
+    "FC34",
+    "FC37",
+    "FC43",
+    "FC44",
+    "FC45",
+    "FC46",
+    "FC47",
+    "FC48",
+    "FC49",
+    "FC50",
+    "FC51",
+    "FC52",
+    "FC54",
+    "FC62",
+    "FC67",
+    "FC68",
+    "FC74",
+    "FC77",
+    "FC80",
+    "FC85",
+    "FC96",
+    "FC100",
+    "FC101",
+    "FC106"
+   ],
+   "results": [
+    {
+     "claim": "FC01",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC03",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC04",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC05",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(ii) reading (ii): any bijection"
+     ]
+    },
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC08",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC09",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC10",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC12",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC13",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC15",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC16",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC22",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) with a port of D in no footprint"
+     ]
+    },
+    {
+     "claim": "FC29",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC37",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC48",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC52",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC62",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC67",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC74",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC85",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC100",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC101",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC106",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I79",
+   "title": "Boundary inputs and exogenous values are carried by components",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component"
+    },
+    {
+     "line": 325,
+     "quote": "where \\(U_H\\) and \\(U_\\theta\\) are exogenous values setting the pole's height \\(H\\) and the sun's elevation \\(\\theta\\)"
+    }
+   ],
+   "invented": "A boundary b is a label; what it fixes enters through the relations L_j(a, b) of components (in the pole, c_H: H = u_H and c_θ: θ = u_θ). There are no separate boundary coordinates, so NC1's 'unanalysed boundary input' is checked by the same answer-slot test as a component.",
+   "other_choices": [
+    "boundaries as valuations of designated boundary ports, with NC1 checking each boundary coordinate separately (D6.3's second clause)",
+    "u_H and u_θ as ports (one of I65's other choices)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (slot, NC1)",
+    "model/cases.py (pole)"
+   ],
+   "claims": [
+    "FC23",
+    "FC24",
+    "FC26",
+    "FC34",
+    "FC62"
+   ],
+   "results": [
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC62",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I80",
+   "title": "The identity edit can be a setting edit",
+   "fills_in_for": [
+    {
+     "line": 109,
+     "quote": "A port \\(v\\) is an **input** under \\(A\\) when \\(A\\) contains an edit that sets \\(v\\) directly."
+    }
+   ],
+   "invented": "D2.1 is applied as written, to every edit of A including 1: where some component's relation at (1, b) is already a slice v = x at every b (as c_H: H = u_H is in the pole), the identity edit sets v through that component, so v is an input even when A holds no other edit. The program reports this and keeps it; Roles(exclude_identity=True) gives the other reading.",
+   "other_choices": [
+    "exclude 1 from Set_v: an input needs an edit other than the identity",
+    "require a setting edit to change the component it sets through"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (Roles, sets_through)"
+   ],
+   "claims": [
+    "FC02",
+    "FC06",
+    "FC07",
+    "FC11",
+    "FC12",
+    "FC25"
+   ],
+   "results": [
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC11",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC12",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I81",
+   "title": "Transports as port translations; derived ports; generated candidates; the transport space searched for ≡",
+   "fills_in_for": [
+    {
+     "line": 189,
+     "quote": "\\(\\lambda\\) assigns each component of \\(E\\) a subnetwork of \\(D\\) with a port translation."
+    },
+    {
+     "line": 343,
+     "quote": "every intermediate product is a determinant suborganization whose hidden ports project away"
+    },
+    {
+     "line": 413,
+     "quote": "Write \\(d\\equiv_\\ell c\\) when there are transports from \\(d\\) to \\(c\\) and from \\(c\\) to \\(d\\)"
+    }
+   ],
+   "invented": "π is induced by port translations: each port of E reads a tuple of D's ports through a value map (I14's case is one port and a map κ; several ports, a 'derived port', are used only for the term ports of the Leibniz candidate, FC63); π is then total. τ and σ are finite maps. Generated candidates: E's ports a subset of D's (optionally recoded by value maps), its components the projections of groups of D's components at each pair (an encoding candidate, I32's E_enc), τ and σ the identity or random, with background components and one perturbed relation at random; also random organizations with random τ, σ, λ (λ(k) chosen to cover k's footprint), and lookups (FC23). For ≡ (FC85) the transports searched are π and λ the identity on shared names with τ and σ every map, so 'no transport exists' is shown only over that space.",
+   "other_choices": [
+    "π an arbitrary partial map X_D ⇀ X_E (I16), searched directly",
+    "port translations as maps from V_N to V_k (several D ports to one E port without a function)",
+    "the whole transport space for ≡ (feasible only for the smallest organizations)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (Translation, Candidate, proj_lam)",
+    "model/gen.py (gen_candidate, gen_random_candidate, gen_lookup)",
+    "model/claims_b.py (FC63, FC85)"
+   ],
+   "claims": [
+    "FC15",
+    "FC16",
+    "FC17",
+    "FC18",
+    "FC19",
+    "FC20",
+    "FC21",
+    "FC22",
+    "FC23",
+    "FC24",
+    "FC29",
+    "FC33",
+    "FC34",
+    "FC37",
+    "FC43",
+    "FC44",
+    "FC45",
+    "FC46",
+    "FC47",
+    "FC48",
+    "FC49",
+    "FC50",
+    "FC51",
+    "FC52",
+    "FC54",
+    "FC63",
+    "FC67",
+    "FC68",
+    "FC74",
+    "FC77",
+    "FC80",
+    "FC85",
+    "FC96",
+    "FC100",
+    "FC106"
+   ],
+   "results": [
+    {
+     "claim": "FC15",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC16",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC17",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    },
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC20",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "any value map κ"
+     ]
+    },
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC22",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC29",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC33",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC37",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC45",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC48",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC52",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC54",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    },
+    {
+     "claim": "FC67",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC74",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC80",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC85",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC96",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC100",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC106",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I82",
+   "title": "Queries in the program; NC1 only for a query that reads a port",
+   "fills_in_for": [
+    {
+     "line": 141,
+     "quote": "\\(\\mathcal Q\\) is a specified set-theoretic operation on \\(D\\), its solutions and its component structure, with codomain \\(Y_p\\)."
+    }
+   ],
+   "invented": "Random searches use the port-reading query Q_w with the designation δ_E of E's copy of the port (I20's default); the worked cases use queries written as functions of Sol (the fibre query of the pole, the 'contains an invertible matrix' query of E6). NC1's answer slot is defined for a port-reading query only; for any other query no component is a slot.",
+   "other_choices": [
+    "answer slots for every query (a component whose relation fixes the query's value directly), which needs a notion of 'fixing a query value' the text does not give"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (PortQuery, FnQuery, slot)",
+    "model/cases.py (fibre_query)",
+    "model/claims_b.py (FC63)"
+   ],
+   "claims": [
+    "FC23",
+    "FC63"
+   ],
+   "results": [
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "I83",
+   "title": "An answer slot needs a determined target answer at every pair",
+   "fills_in_for": [
+    {
+     "line": 255,
+     "quote": "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component"
+    }
+   ],
+   "invented": "Where Ans_p(a, b) = ⊥ at some pair of C, no component is an answer slot on C (there is no answer to appear); the lookup candidate's relation at such a pair is the full relation.",
+   "other_choices": [
+    "a slot at a ⊥ pair is the full relation (or the empty one), so a lookup can still be a slot",
+    "the slot condition asked only at the pairs where Ans_p is determined"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (slot)",
+    "model/gen.py (gen_lookup)"
+   ],
+   "claims": [
+    "FC23",
+    "FC24"
+   ],
+   "results": [
+    {
+     "claim": "FC23",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) as stated"
+     ]
+    },
+    {
+     "claim": "FC24",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I84",
+   "title": "The homomorphism clause when a composite lies outside τ's domain",
+   "fills_in_for": [
+    {
+     "line": 242,
+     "quote": "\\pi[\\operatorname{Sol}_D(a,b)]=\\operatorname{Sol}_E(\\tau(a),\\sigma(b)),\\qquad \\tau(1)=1,\\quad \\tau(a_2a_1)=\\tau(a_2)\\tau(a_1). \\tag{F2}"
+    }
+   ],
+   "invented": "Where a2·a1 is defined in D and not in dom τ, the clause fails (τ(a2·a1) has no value to equal τ(a2)·τ(a1)).",
+   "other_choices": [
+    "the clause asks nothing of such a pair",
+    "Kleene equality: both sides undefined counts as equal"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (hom)"
+   ],
+   "claims": [],
+   "results": []
+  },
+  {
+   "id": "I85",
+   "title": "The default scope statement states every excluded pair",
+   "fills_in_for": [
+    {
+     "line": 257,
+     "quote": "every edit the target admits that is excluded from \\(C\\) is excluded by a stated scope, not silently."
+    }
+   ],
+   "invented": "Unless a test varies it, each question's scope statement names every pair of A × B outside C, so the scope clause of non-vacuity holds, and a narrowed or widened question gets a statement of its own.",
+   "other_choices": [
+    "a scope statement drawn at random (then non-vacuity fails for reasons unrelated to the claim tested)",
+    "one statement for all questions on one target"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (Question)"
+   ],
+   "claims": [
+    "FC21",
+    "FC26",
+    "FC34",
+    "FC46",
+    "FC51"
+   ],
+   "results": [
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC46",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC51",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I86",
+   "title": "Every pair of candidates examined counts as offered one in place of the other",
+   "fills_in_for": [
+    {
+     "line": 315,
+     "quote": "Two explanatory candidates for one question \\(p\\) are **rivals** when one of them has been offered as an answer to \\(p\\) in place of the other"
+    }
+   ],
+   "invented": "The primitive Offered (I33) is taken to hold, both ways, of every pair of candidates a test examines; rivals are then the pairs that conflict somewhere both translate.",
+   "other_choices": [
+    "Offered drawn at random (it would test nothing about conflict)",
+    "Offered held of no pair (then there are no rivals)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (rivals)",
+    "model/claims_b.py (FC43, FC49, FC50)"
+   ],
+   "claims": [
+    "FC43",
+    "FC49",
+    "FC50"
+   ],
+   "results": [
+    {
+     "claim": "FC43",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC49",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC50",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I87",
+   "title": "Claims as propositional formulas, read structurally",
+   "fills_in_for": [
+    {
+     "line": 397,
+     "quote": "it rules out a claim when the claim is inconsistent with its conclusion and the claim's denial is not among its premises (below)."
+    },
+    {
+     "line": 397,
+     "quote": "read structurally as non-circular dependence reads identity (Part V) and not by logical equivalence alone"
+    }
+   ],
+   "invented": "Claims are propositional formulas (atoms, ¬, ∧, →), a restriction of I38's first-order language; 'inconsistent with' is truth-table inconsistency; 'among its premises, read structurally' is: after removing double negations and flattening and sorting conjunctions, ¬φ is a conjunct of a leaf; the denial of ψ is ¬ψ with a double negation removed. Facts about the models (that a candidate meets a condition at a pair, that χ speaks of the target) enter the arguments as atoms and conditionals.",
+   "other_choices": [
+    "first-order claims (I38) with a structural reading up to renaming of bound variables",
+    "the denial of ψ read without removing double negations (then 'made from ¬χ' does not block χ)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/args.py (canon, conjuncts, denial, incons, rules_out)"
+   ],
+   "claims": [
+    "FC47",
+    "FC53",
+    "FC56",
+    "FC60",
+    "FC68",
+    "FC69",
+    "FC70",
+    "FC71",
+    "FC72",
+    "FC73"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC60",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC69",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC70",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC71",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC72",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC73",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I88",
+   "title": "X_j ranges over a finite set of arguments; an argument has a step",
+   "fills_in_for": [
+    {
+     "line": 397,
+     "quote": "An argument is an argument tree: argument steps whose leaves are premises, which are record leaves or stated assumptions and definitions."
+    }
+   ],
+   "invented": "X_j(ψ) is computed over a finite set of arguments: those a test builds, or every tree of height at most 2 or 3 over the given premises with the admitted forms. An argument with no step (a bare leaf) is no argument. So 'no argument rules it out' is shown only over that set.",
+   "other_choices": [
+    "every argument over the premises (infinite; decidable only by a search over derivations)",
+    "a bare premise counts as an argument"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/args.py (X, enumerate_args, usable)"
+   ],
+   "claims": [
+    "FC47",
+    "FC53",
+    "FC56",
+    "FC71"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC71",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I89",
+   "title": "The inference forms: MP, MT, AND-introduction, AND-elimination and a free form",
+   "fills_in_for": [
+    {
+     "line": 387,
+     "quote": "For argument step \\(u\\) with essential premises \\(\\operatorname{Prem}(u)\\), the premises its inference form uses:"
+    },
+    {
+     "line": 393,
+     "quote": "\\(\\operatorname{Form}_j(u)\\): the inference form of \\(u\\) is one \\(j\\) admits."
+    }
+   ],
+   "invented": "Five forms: modus ponens, modus tollens, ∧-introduction, ∧-elimination, and a 'free' form (any premises, any conclusion; an admitted form need not be sound, I38). A step counts only where it instantiates its form; every premise of a step is essential.",
+   "other_choices": [
+    "forms declared by each assessor as arbitrary relations between premise sets and conclusions",
+    "essential premises a proper subset of a step's children"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/args.py (form_ok, Step)"
+   ],
+   "claims": [
+    "FC47",
+    "FC53",
+    "FC56",
+    "FC60",
+    "FC68",
+    "FC69",
+    "FC70",
+    "FC71",
+    "FC72",
+    "FC73"
+   ],
+   "results": [
+    {
+     "claim": "FC47",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC56",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC60",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC68",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC69",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC70",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC71",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC72",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC73",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I90",
+   "title": "The physical module supplied by hand: histories and provenance as free predicates",
+   "fills_in_for": [
+    {
+     "line": 31,
+     "quote": "the **physical module** \\(\\Theta\\), which says what organization a physical occurrence instantiates at a grain"
+    },
+    {
+     "line": 195,
+     "quote": "No member of the history represents \\(t\\), \\(H\\), or the survival condition."
+    },
+    {
+     "line": 197,
+     "quote": "There is an episode (Part X) whose construction trace prepares \\(t\\), and in which \\(t\\), or the organization it carries to, is available as a represented target."
+    },
+    {
+     "line": 405,
+     "quote": "prepares a represented organization for explanatory use of \\(c\\)"
+    }
+   ],
+   "invented": "Where the formal core reads something through Θ (which occurrences represent what, which pairs occur, whether the physics admits a population, Prepares, BindingConstruction, TransferComposite, Attempt, Integrated), the program sets it by hand as a finite relation. 'The organization it carries to is a represented target' is an occurrence representing t's codomain. Transports and their fidelity are computed; the rest is stipulated. A model built so shows what the definitions allow, not what any physics does.",
+   "other_choices": [
+    "a toy physics from which these relations are computed (e.g. occurrences as small organizations with Rep computed by (R)), which meets the build → prov → rep loop of FC98",
+    "leaving every claim that needs Θ untested"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_b.py (Hist, sel, con; FC76-FC83, FC95)",
+    "model/phys.py"
+   ],
+   "claims": [
+    "FC53",
+    "FC76",
+    "FC77",
+    "FC78",
+    "FC81",
+    "FC82",
+    "FC83",
+    "FC95"
+   ],
+   "results": [
+    {
+     "claim": "FC53",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC76",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC77",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "with H = ∅ and an empty selection history"
+     ]
+    },
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC82",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "no common result"
+     ]
+    },
+    {
+     "claim": "FC83",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "only construction is originative"
+     ]
+    },
+    {
+     "claim": "FC95",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I91",
+   "title": "The infinitary routes on eventually periodic index sets",
+   "fills_in_for": [
+    {
+     "line": 311,
+     "quote": "\\(\\Gamma=\\{d_n:n\\in\\mathbb N\\}\\), \\(d_n\\) the constraint \\(|x|\\le 1/n\\): every set of indices unbounded in \\(\\mathbb N\\) determines \\(x=0\\)"
+    }
+   ],
+   "invented": "Sets of commitments are represented by eventually periodic subsets of ℕ, F ∪ {n ≥ N : n mod m ∈ R}; unbounded exactly when R is nonempty. The clauses of FC40 are tested on these sets only.",
+   "other_choices": [
+    "arbitrary subsets of ℕ (not finitely representable)",
+    "a finite truncation of Γ (which changes the claim: every finite family has minimal routes)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_b.py (EP, FC40)"
+   ],
+   "claims": [
+    "FC40"
+   ],
+   "results": [
+    {
+     "claim": "FC40",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I92",
+   "title": "The pole in exact arithmetic, with its grids, baseline, contracts and fibre query",
+   "fills_in_for": [
+    {
+     "line": 325,
+     "quote": "Stipulate \\(H:=U_H,\\ \\theta:=U_\\theta,\\ L:=H\\cot\\theta\\)"
+    },
+    {
+     "line": 325,
+     "quote": "It is faithful under the identification contract, whose edits alter the observed"
+    }
+   ],
+   "invented": "Values of L are exact numbers r + s√3 (cot 30° = √3, cot 45° = 1, cot 60° = √3/3); X_L is the set of values H cot θ on the grid H ∈ {1,2,3}, θ ∈ {30°,45°,60°}; boundaries are the nine pairs (u_H, u_θ); b0 = (1, 45°); C1 holds the single settings of H and θ at b0, C2 adds the single settings of L, C2* adds the composites that set L with H or θ. The fibre query returns {H ∈ X_H : H cot θ = L} for the single value of (θ, L) in Sol, ⊥ when that value is not single. E_rev's components are c'_L (L = u_H cot u_θ, from the boundary), c'_θ and c'_H (H = L tan θ), with λ as in model/cases.py.",
+   "other_choices": [
+    "real values handled symbolically",
+    "C1 over every boundary rather than b0 only",
+    "the fibre query read as every H when L is set (the Look of FC28)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/cases.py (Q3, pole, pole_rev, fibre_query)",
+    "model/claims_a.py (FC07, FC26-FC28)",
+    "model/claims_b.py (FC78-FC83, FC95, FC99)"
+   ],
+   "claims": [
+    "FC02",
+    "FC07",
+    "FC11",
+    "FC26",
+    "FC27",
+    "FC28",
+    "FC78",
+    "FC81",
+    "FC82",
+    "FC83",
+    "FC95",
+    "FC99"
+   ],
+   "results": [
+    {
+     "claim": "FC02",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC11",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC26",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC27",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC28",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC78",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "exactly one provenance under I53"
+     ]
+    },
+    {
+     "claim": "FC81",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(d) Con(t) ∧ Viol ⇒ ¬Surp (under I53)"
+     ]
+    },
+    {
+     "claim": "FC82",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "no common result"
+     ]
+    },
+    {
+     "claim": "FC83",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "only construction is originative"
+     ]
+    },
+    {
+     "claim": "FC95",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC99",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I93",
+   "title": "'The two relations stay equal': under which footprint bijection",
+   "fills_in_for": [
+    {
+     "line": 119,
+     "quote": "an edit under which the two relations stay equal does not separate the components."
+    }
+   ],
+   "invented": "Two readings are tested: (i) equal under a bijection that witnesses j ~_C j'; (ii) equal under some footprint bijection. The sentence holds under (i) and fails under (ii) (FC05).",
+   "other_choices": [
+    "equal as sets of tuples with the footprints identified by position"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_a.py (FC05)"
+   ],
+   "claims": [
+    "FC05"
+   ],
+   "results": [
+    {
+     "claim": "FC05",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(ii) reading (ii): any bijection"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "I94",
+   "title": "The counterpart's signature 'read on C directly … up to the port translation': untranslated",
+   "fills_in_for": [
+    {
+     "line": 119,
+     "quote": "Argument 1 makes the like comparison between an active component \\(k\\) of \\(E\\), read on \\(C\\) through \\(\\tau\\), and its counterpart \\(\\lambda(k)\\), read on \\(C\\) directly with its hidden ports projected away, up to the port translation."
+    }
+   ],
+   "invented": "Besides D4.4's reading (the counterpart's projection carried to V_k by λ, value maps included), the program tests an untranslated reading: the counterpart's projection on its own ports θ_k[V_k] with D's domains, compared with k's signature under a footprint bijection between equal domains (I10).",
+   "other_choices": [
+    "D4.4's reading only",
+    "'up to the port translation' as 'up to a port bijection and a value bijection' (I10's alternative)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_a.py (FC18)"
+   ],
+   "claims": [
+    "FC18"
+   ],
+   "results": [
+    {
+     "claim": "FC18",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "untranslated reading (I94)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "I95",
+   "title": "Toy histories for active routes",
+   "fills_in_for": [
+    {
+     "line": 375,
+     "quote": "An **active route** is a connected subnetwork of actual occurrences joining a represented input to an operative result"
+    }
+   ],
+   "invented": "A history is a finite directed acyclic circuit of occurrences, each with its value computed from its parents; ≺ is reachability; the instantiated connections are the edges; 'connected' is weak connectivity by edges inside R; 'setting i's port' is an intervention on i's value with every later value recomputed; the declared contrasts are a given list of value pairs.",
+   "other_choices": [
+    "occurrences with time stamps and persistence made explicit (then 'at rest when the result occurred' could be written)",
+    "connectivity along directed chains only"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/phys.py (Circuit, act_route)",
+    "model/claims_b.py (FC75, FC76)"
+   ],
+   "claims": [
+    "FC75",
+    "FC76"
+   ],
+   "results": [
+    {
+     "claim": "FC75",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC76",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I96",
+   "title": "Aims on discrete time",
+   "fills_in_for": [
+    {
+     "line": 441,
+     "quote": "each as a stated condition over stated occasions"
+    }
+   ],
+   "invented": "Times are 0..3; a condition is a sequence of truth values; occasions are a set of times; the repair's ξ ≤ ξ'; Aims* and the exposure record (I58) are finite lists.",
+   "other_choices": [
+    "continuous time with occasions as intervals"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/phys.py (r_left, r_right, repair)",
+    "model/claims_b.py (FC86, FC88)"
+   ],
+   "claims": [
+    "FC86",
+    "FC88"
+   ],
+   "results": [
+    {
+     "claim": "FC86",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC88",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I97",
+   "title": "Tasks and executions on finite state sets",
+   "fills_in_for": [
+    {
+     "line": 466,
+     "quote": "\\operatorname{RetReal}(\\pi,T,C;\\chi)\\iff\\forall z\\in C\\ \\forall i\\in\\operatorname{dom}T\\ \\forall\\eta\\in\\operatorname{Exec}(\\pi,z,i;\\chi),\\ \\eta\\text{ completes with }o\\in T[i]\\text{ and }z'\\in C. \\tag{CT1}"
+    }
+   ],
+   "invented": "At most 4 constructor states, 2 inputs, 3 outputs; each (state, input) has one or two executions, each a triple (completes, output, final state) drawn at random; Exec is nonempty everywhere (L469's standing assumption).",
+   "other_choices": [
+    "executions as infinite traces (with 'completes' a property of the trace)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/phys.py (F_op, ret_real, gfp)",
+    "model/claims_b.py (FC91, FC92)"
+   ],
+   "claims": [
+    "FC91",
+    "FC92"
+   ],
+   "results": [
+    {
+     "claim": "FC91",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC92",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I98",
+   "title": "Tolerances as a 3 × 3 grid of performance and retention",
+   "fills_in_for": [
+    {
+     "line": 479,
+     "quote": "The tolerances of the physical module (Part XIV) form a directed preorder \\(Q_\\Theta\\)"
+    }
+   ],
+   "invented": "Performance and retention tolerances are each 0 < 1 < 2 (stricter is larger); Admit and the realized tasks are random antitone families of four tasks; Cap is a random subset of the realized tasks.",
+   "other_choices": [
+    "a preorder that is not a product of chains",
+    "tolerances with no exact member, approached as a limit"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_b.py (FC93)"
+   ],
+   "claims": [
+    "FC93"
+   ],
+   "results": [
+    {
+     "claim": "FC93",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I99",
+   "title": "The odd-order skew-symmetric case in GF(3), and the Leibniz candidate's sum component",
+   "fills_in_for": [
+    {
+     "line": 343,
+     "quote": "Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed."
+    },
+    {
+     "line": 343,
+     "quote": "The full Leibniz expansion with skewness substituted meets (F1) and (F2)"
+    }
+   ],
+   "invented": "n ∈ {1,2,3}, entries in GF(3), the matrix one port; components order, skew, odd, det, inv; edits remove skew, remove oddness, both; the edits to field arithmetic and to the determinant–invertibility link are not edits of this encoding. The Leibniz candidate has one term port and term component per permutation of three (for order 2 the permutations fixing the third index, for order 1 the identity; other terms 0) and one sum component; two relations of the sum component are tested: every tuple of term values with its sum, and only the tuples some matrix gives. Order-5 and GF(5), GF(7) cases enter only the check that odd skew matrices are singular.",
+   "other_choices": [
+    "real entries handled symbolically",
+    "D given term ports of its own (then the candidate is D itself)",
+    "a sum component whose footprint includes the matrix"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_b.py (e6_org, e6_parts, term, FC63)"
+   ],
+   "claims": [
+    "FC63"
+   ],
+   "results": [
+    {
+     "claim": "FC63",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(c-i) the Leibniz candidate, sum over every tuple of term values"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "I100",
+   "title": "The two-layer episode's object layer: cells, occlusion and windows",
+   "fills_in_for": [
+    {
+     "line": 620,
+     "quote": "Stipulate an object layer \\(P\\): a line of cells; two things, each with a position and a velocity; continuity components; admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities."
+    },
+    {
+     "line": 622,
+     "quote": "\\(S_0\\) predicts occupancy from recent occupancy."
+    }
+   ],
+   "invented": "Six cells, velocities −1, 0, 1, reflection at the ends, ten steps; the occlusion hides the interior cells 1..4 from step 3 for L steps (a run of occluded cells, not one cell); readings are occupancy without identity (L620's sensory field); a window-w predictor is any function of the last w readings; one thing and two things are both tried.",
+   "other_choices": [
+    "a single occluded cell (the Look of FC102)",
+    "stopping at the ends",
+    "readings that carry identity"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_b.py (FC102, FC103)"
+   ],
+   "claims": [
+    "FC102",
+    "FC103"
+   ],
+   "results": [
+    {
+     "claim": "FC102",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": [
+      "(b) second half: a window longer than the occlusion"
+     ]
+    },
+    {
+     "claim": "FC103",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I101",
+   "title": "Which models count as witnesses: the proper-model filter",
+   "fills_in_for": [
+    {
+     "line": 91,
+     "quote": "\\(V\\) is a set of ports, each with a nonempty value domain \\(X_v\\)."
+    }
+   ],
+   "invented": "Existence searches whose smallest witnesses would otherwise be degenerate count only proper models: every domain has two values or more, every port lies in some footprint, Sol_D(1, b) is nonempty at every boundary, and Γ is nonempty. The filter is named with each search that uses it; universal searches use no filter (a degenerate counterexample is still a counterexample).",
+   "other_choices": [
+    "no filter (smallest witnesses with one-valued domains or empty relations)",
+    "a stronger filter (e.g. every component constraining something)"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/claims_a.py (proper_D)"
+   ],
+   "claims": [
+    "FC19",
+    "FC21",
+    "FC25",
+    "FC34",
+    "FC44"
+   ],
+   "results": [
+    {
+     "claim": "FC19",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC21",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC25",
+     "status": "COUNTEREXAMPLE FOUND",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC34",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC44",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  },
+  {
+   "id": "I102",
+   "title": "A component assigning several ports, or a port assigned by none",
+   "fills_in_for": [
+    {
+     "line": 109,
+     "quote": "that is, when the component assigning it has a measurement's signature (below)."
+    },
+    {
+     "line": 123,
+     "quote": "- a **causal assignment** has a signature that changes under intervention on its output port and is invariant under observation edits;"
+    }
+   ],
+   "invented": "Where j assigns several ports (asg(v) = j for more than one v), 'intervention on its output port' is the union of their setting edits; where asg(m) is undefined, a pair (o, m) yields no observation edits, and m counts among the ports j does not assign (so its settings are interventions on the world for every j).",
+   "other_choices": [
+    "a component assigning several ports has no causal signature",
+    "asg(m) undefined makes every edit that leaves m's readers an observation edit"
+   ],
+   "formal_core_sections": [],
+   "source": "the program model/ (S104 round 2 search)",
+   "code": [
+    "model/core.py (Roles.outputs_of, Roles.obs, Roles.world)"
+   ],
+   "claims": [
+    "FC06",
+    "FC07"
+   ],
+   "results": [
+    {
+     "claim": "FC06",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    },
+    {
+     "claim": "FC07",
+     "status": "HOLDS ON ALL MODELS TRIED",
+     "counterexample_parts": []
+    }
+   ]
+  }
+ ]
+}

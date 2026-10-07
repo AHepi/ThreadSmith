@@ -1,0 +1,409 @@
+The user wants me to audit a theory document called "Claude Fable Semantics" using the careful-review method provided in the skill files.
+
+Let me follow the procedure:
+1. Settle the brief: Review a theory document, find defects (false statements, proofs that don't prove, claims wider than support, contradictions). Most serious first, numbered, with location, exact quote, and what's wrong.
+2. Skim the whole: The document defines a structural class of explanatory creativity. It uses organizations, transports, contracts, provenances (selected/constructed/declared), accounts (fidelity conditions), and derives various results (Derivations 1-10).
+3. Build inventory:
+   - (O): Sol_D(a,b) definition
+   - (K): signature definition
+   - (Q): Ans_p
+   - (R): Rep
+   - (F1), (F2): component and global fidelity
+   - (A): question fidelity
+   - (E): Account
+   - (S), (B), (D): support, critical block, boundary
+   - Finite monotone theorem (Part VI)
+   - (T1), (T2): transport results
+   - (CT1), (CT2), (CT3), (CT4): physical module
+   - (RC), (U1), (U2), (U3): recursion/universality
+   - Derivations 1-10
+
+4. Read closely and check math/logic.
+
+Let me look for defects.
+
+**Part VI: Finite monotone theorem**
+"If Γ is finite, S is upward closed, and Γ ∈ S, then the critical singletons are exactly ⋂min S and the globally indispensable ones are exactly ⋪min S."
+
+Wait, let's check. S is upward closed. min S = minimal members of S.
+- Critical singletons: d is critical for some W ∈ S, i.e., W ∈ S and W\{d} ∉ S.
+- Claim: critical singletons = ⋂min S.
+  - If d ∈ ⋂min S, then d is in every minimal support. Is d critical? Take any W ∈ S. Since S is upward closed and Γ ∈ S... wait, we need W ∈ S such that W\{d} ∉ S. Actually if d ∈ every minimal support, then for any W ∈ S, if W\{d} ∈ S, then there's a minimal support U ⊆ W\{d}, but d ∈ U, contradiction. So W\{d} ∉ S for all W ∈ S. So d is critical for every W ∈ S. Good.
+  - Conversely, if d ∉ ⋂min S, then there's some minimal U ∈ S with d ∉ U. Then U ∈ S and U\{d} = U ∈ S, so d is not critical for U. But wait — critical means critical for *some* W ∈ S. Since U ∈ S and U\{d} = U ∈ S, d is not critical for U. But could d be critical for some other W? If d is critical for W, then W\{d} ∉ S. But there's a minimal U ⊆ W with d ∉ U... wait, the proof in the text says: "If d is critical for W, finiteness gives a minimal U ⊆ W; if d ∉ U, upward closure makes W\{d} a support." Let's check: U ⊆ W, U ∈ min S, d ∉ U. Then U ⊆ W. If d ∉ U, then U ⊆ W\{d} (since U doesn't contain d). Since U ∈ S and S is upward closed, W\{d} ∈ S. Contradiction with d critical for W. So d is not critical for any W. Good.
+  - So critical singletons = ⋂min S. ✓
+
+- Globally indispensable ones = ⋃min S? Wait, "globally indispensable" presumably means in every support, i.e., in all W ∈ S. That would be ⋂S. But the claim says ⋃min S. Let's check: if d ∈ ⋃min S, then d ∈ some minimal support U. Is d in every support? Not necessarily. E.g., S = {{a,b}, {b,c}} upward closed... wait, S must be upward closed and Γ ∈ S. Let Γ = {a,b,c}. S = all supersets of {a,b} or {b,c}. min S = {{a,b},{b,c}}. ⋃min S = {a,b,c}. But is a indispensable (in every support)? {b,c} ∈ S doesn't contain a. So a is not in every support. Hmm, but what does "globally indispensable" mean here? The text says "the globally indispensable ones are exactly ⋃min S". And the proof says "Deletion of d from Γ preserves support exactly when a minimal support omits d." So d is in ⋃min S iff some minimal support contains d iff deletion of d from Γ preserves support... wait.
+
+Let's parse: "Deletion of d from Γ preserves support exactly when a minimal support omits d." If a minimal support U omits d, then U ⊆ Γ\{d}, so Γ\{d} ∈ S (upward closure). If every minimal support contains d, then Γ\{d} has no minimal support as subset... any W ⊆ Γ\{d} with W ∈ S would contain a minimal U ⊆ W, and U contains d, but U ⊆ Γ\{d} means d ∉ U, contradiction. So Γ\{d} ∉ S. So deletion of d preserves support iff some minimal support omits d, i.e., iff d ∉ ⋂min S... wait no: "some minimal support omits d" is the negation of "every minimal support contains d" = d ∈ ⋂min S. So deletion preserves support iff d ∉ ⋂min S. Hmm, that means d is indispensable to Γ (deleting d from Γ loses support) iff d ∈ ⋂min S, not ⋃min S.
+
+So the claim "globally indispensable ones are exactly ⋃min S" seems wrong. If "globally indispensable" means "deleting from Γ preserves support" — the ones whose deletion from Γ preserves support are exactly those NOT in ⋂min S. Hmm, wait, let me re-read.
+
+"the critical singletons are exactly ⋂min S and the globally indispensable ones are exactly ⋪min S"
+
+Hmm — maybe "globally indispensable" means "present in some minimal support" i.e., contributory? Actually in the "Redundant routes" example: Γ={a,b}, S={{a},{b},{a,b}}. min S = {{a},{b}}. ⋃min S = {a,b}. The text says "each is contributory, neither indispensable". So "contributory" = in some minimal support = ⋃min S. And "indispensable" would mean... hmm. The text says the globally indispensable ones are ⋃min S, but the example calls members of ⋃min S "contributory, neither indispensable". That's a direct contradiction!
+
+Wait, let me re-read: "Γ={a,b}, S={{a},{b},{a,b}}: each is contributory, neither indispensable." Here min S = {{a},{b}}, ⋃min S = {a,b} = Γ. So the theorem would say both a and b are globally indispensable. But the example says neither is indispensable. Contradiction!
+
+Actually hold on. Is S upward closed here? S = {{a},{b},{a,b}} — yes, upward closed (within Γ={a,b}). Γ ∈ S. So the theorem applies. The theorem says globally indispensable = ⋃min S = {a,b}. The example says neither a nor b is indispensable. So one of them is wrong. The example is right: neither is indispensable because each can be deleted while retaining support ({a} and {b} are both supports). So the theorem's second half is wrong: globally indispensable should be ⋂min S... wait no. In this example ⋂min S = {a,b} ∩ ... wait min S = {{a},{b}}, so ⋂min S = ∅. And indeed the indispensable ones (in every support) = ∅. Wait, but is "globally indispensable" = "in every support"? In the example, supports are {a},{b},{a,b}. a is not in {b}. So neither is in every support. So indispensable = ∅ = ⋂min S? No wait, ⋂min S = {a}∩{b} = ∅. Yes! So indispensable = ⋂min S, same as critical singletons in this case.
+
+Hmm, but then what distinguishes "critical singletons" from "globally indispensable"? Critical singleton: d critical for some W ∈ S. In this example: is a critical? a is critical for W if W ∈ S and W\{a} ∉ S. W={a}: {a}\{a}=∅ ∉ S. So a is critical for {a}. So critical singletons = {a,b}. And ⋂min S = ∅. So critical singletons ≠ ⋂min S here!
+
+Wait, I need to recheck. Earlier I proved: if d ∈ ⋂min S then d critical. And if d ∉ ⋂min S then d not critical. Let me recheck with this example. min S = {{a},{b}}. d=a: a ∉ ⋂min S (since a ∉ {b}). My proof said: there's a minimal U ∈ S with a ∉ U, namely U={b}. Then U ⊆ W\{a} for any W containing a... wait, the proof said: if d is critical for W, then W\{d} ∉ S. Take minimal U ⊆ W. If d ∉ U, then U ⊆ W\{d}, so W\{d} ∈ S by upward closure, contradiction. So d critical for W implies d ∈ every minimal support contained in W... hmm, more precisely: d critical for W implies every minimal U ⊆ W contains d.
+
+In the example, take W = {a}. Minimal subsets of W in S: {a}. Does {a} contain a? Yes. So the argument doesn't rule out a being critical for W={a}. Indeed a IS critical for {a} since ∅ ∉ S.
+
+So my earlier reasoning was flawed: I said "if d ∉ ⋂min S, there's a minimal U with d ∉ U. Then U ∈ S and U\{d} = U ∈ S, so d not critical for U." That's right: d is not critical for U. But d could be critical for some other W. Critical means critical for *some* W ∈ S, not for all. So the set of critical singletons is NOT ⋂min S in general.
+
+Let me redo: d is critical iff ∃W ∈ S with W\{d} ∉ S. Since S upward closed, this is equivalent to: ∃W ∈ S such that no support is contained in W\{d}. Take W minimal... Actually the standard result: d is critical (for some support) iff d ∈ ⋃min S. Let's verify: If d ∈ U for some minimal U ∈ S, then U\{d} ∉ S (else a smaller support), so d is critical for U. Conversely, if d is critical for W, take minimal U ⊆ W in S; if d ∉ U then U ⊆ W\{d} so W\{d} ∈ S, contradiction. So d ∈ U. So critical singletons = ⋃min S. ✓ (matches example: {a,b})
+
+And "globally indispensable" (in every support, i.e., d such that Γ\{d} ∉ S, i.e., deletion from Γ loses support): d ∈ every support iff d ∈ ⋂S iff d ∈ ⋂min S (since every support contains a minimal one). So globally indispensable = ⋂min S.
+
+So the theorem as stated has the two sets swapped! It says "critical singletons are exactly ⋂min S and the globally indispensable ones are exactly ⋪min S". The truth is the reverse: critical singletons = ⋃min S, globally indispensable = ⋂min S.
+
+And the example in "Redundant routes" confirms: each is contributory (critical) and neither indispensable — consistent with critical = ⋃min S = {a,b} and indispensable = ⋂min S = ∅. So the theorem statement is wrong (sets swapped), and the example is right. Also the proof given in the text: "A member of a minimal support is critical for it." — that shows ⋃min S ⊆ critical. "If d is critical for W, finiteness gives a minimal U ⊆ W; if d ∉ U, upward closure makes W\{d} a support." — that shows critical ⊆ ⋃min S. So the proof actually establishes critical = ⋃min S, contradicting the stated claim that critical = ⋂min S! And "Deletion of d from Γ preserves support exactly when a minimal support omits d" — deletion preserves support iff d ∉ ⋂min S, so indispensable = ⋂min S. So the proof establishes the opposite of the claim. This is a clear, serious defect: the theorem statement contradicts its own proof and the example.
+
+That's defect #1 (most serious, since it's a stated theorem that's wrong and contradicts the example).
+
+**Part VII — Identification (I2)**
+"It is identified on every attainable y exactly when f = f̄ ∘ g for some f̄." — This is correct: f is constant on fibres of g iff f factors through g. Fine.
+
+"(I4) Repeating rows changes no kernel; an independent calibration can." — For linear A and feature c^T, identification is ker A ⊆ ker c^T. Repeating rows of A doesn't change ker A. Fine.
+
+"For the two balances (1 1 0; 1 0 1), the kernel is spanned by (1,-1,-1); the readings identify b_B - b_A and not x." Let's check: A = [[1,1,0],[1,0,1]]. Kernel: x + y = 0, x + z = 0 → y = -x, z = -x. So kernel = span{(1,-1,-1)}. ✓. The readings: row1 = x + b_A... hmm, wait. Actually the variables here — let's say variables are (x, b_A, b_B)? Row 1: x + b_A, row 2: x + b_B. Then readings identify... the row space is spanned by (1,1,0) and (1,0,1), which identify x+b_A and x+b_B, hence b_B - b_A by difference. And not x alone. OK fine.
+
+Hmm, but the text says "the readings identify b_B - b_A and not x". Consistent.
+
+**Part VII — Obstruction (O1)**
+"For allowed steps R and an invariant I with zRz' ⇒ I(z)=I(z'), no allowed path joins states of different invariant value." ✓ trivially correct.
+
+"Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result." 24/3 = 8, so 24 tokens CAN be split equally three ways! Wait — 24 tokens split equally three ways is 8 each. That's possible! Hmm, unless the point is different. Let me re-read: "Twenty-four indivisible tokens cannot be split equally three ways". 24 is divisible by 3 (24 = 8×3). So this is false as stated. Maybe they meant "cannot be split equally two ways"? 24/2 = 12, also possible. Hmm, maybe they meant something like "twenty-four tokens cannot be split equally five ways" (24/5 not integer). Or maybe the intended example is about indivisibility in a different sense — maybe the tokens are indivisible and the total is not divisible by 3, like 25 tokens? Or maybe it's about splitting into three *equal* groups where each must get the same number... 24 works.
+
+Actually wait — maybe the point is that the tokens are indivisible and you want to split into three groups with equal *value*, but 24 is divisible by 3. Hmm. Actually maybe the intended example: 24 indivisible tokens cannot be split equally... hmm, "equally three ways" — 8 each. That works. So this is a false statement as written. Unless there's a subtlety: maybe it's about splitting *each token*? "indivisible tokens cannot be split" — you can't split a token, but you can split the set. 24 tokens into 3 groups of 8. Fine.
+
+Hmm, maybe the intended number was 25 or 23 (not divisible by 3). Or maybe "twenty-four ... cannot be split equally ... " hmm. Actually, hold on. Maybe the example refers to something else: there's a classic puzzle "24 coins, one is counterfeit" — no. Or maybe it's about the invariant being something else. Let me just note: as written, "Twenty-four indivisible tokens cannot be split equally three ways" is false, since 24 = 3 × 8. This is a defect (minor error, but clearly false). Actually wait — maybe the point is that the *tokens* are indivisible and you must split into three groups of equal size — 8 each — that's fine. So indeed false. Unless the intended statement is "cannot be split equally three ways" meaning each of the three gets the same and... no.
+
+Hmm, alternatively maybe they meant "cannot be split equally into three groups of *indivisible* tokens where each group must have the same number" — 8 each works. So false. I'll report it as an error. Severity: minor-to-major? It's a small factual error in an example. It doesn't undermine the theory, but it's a false statement. I'd call it minor/major. Since the audit asks most serious first, I'll rank the theorem swap first, then this.
+
+Wait, let me reconsider — maybe I'm misreading. "Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result." Hmm — "permitting division changes the state space". If the tokens are indivisible, you can't divide them. If you permit division (i.e., tokens become divisible), the state space changes. The claim "cannot be split equally three ways" — with 24 tokens and 3 people, equal split is 8 each, possible. So the claim is false. Unless... the intended reading is "cannot be split equally [by] three ways"? No.
+
+Maybe the author meant: you have 24 tokens and 3 recipients but the invariant is something else. Or maybe the intended number was 25. Either way, as written it's false. Good catch — report it.
+
+**Part VIII — Approximate transport (T2)**
+"With one-step discrepancy ε and an L-Lipschitz next-step map, e_n ≤ ε Σ_{k<n} L^k." Standard Gronwall-type bound. ✓. "Without a modulus, no accumulated bound follows." ✓.
+
+**Part VIII — Functional transport**
+"If π∘S_a = T_a∘π for every generator a, the same holds for every admitted finite composition with matching scopes. Proof. π S_b S_a = T_b π S_a = T_b T_a π; induct." ✓ (assuming T_a, T_b commute appropriately — actually π S_b S_a = T_b π S_a = T_b T_a π, and also = ... fine, it shows π(S_b S_a) = T_b T_a π. For composition a then b: π S_a S_b = T_a T_b π. So π(S_c ... S_a) = T_c ... T_a π. Fine, induction works.)
+
+**Part XII — Retention fixed point (CT2)**
+"F(C) = states whose executions all complete and return into C. F is monotone; C ⊆ F(C) is the invariant form; the union of post-fixed sets is the greatest fixed point."
+
+Hmm. "the union of post-fixed sets is the greatest fixed point" — for a monotone function F on a complete lattice, the union (join) of post-fixed points (C with C ⊆ F(C)) is the greatest fixed point (by Knaster-Tarski). ✓ Correct. Though "post-fixed" usually means C ⊆ F(C) — yes, that's what's stated. ✓
+
+**Part XII — (CT1)**
+Fine.
+
+**Part XII — Grades (CT3, CT4)**
+"Cap^{q,r}_Ω(ξ) ⊆ Admit^{q,r}_Θ; Cap^∞ = ⋂_{q,r} Cap^{q,r} ⊆ Poss_Θ." Plausible.
+
+**Part XIII — (U1), (U2), (U3)** — definitional.
+
+**Derivation 1**: Kind preservation. Claim: if transport satisfies (F1) on C, then every active component k of E has same signature on τ[C] as anchor λ(k) on C. Proof: sig_C(λ(k)) = {(a,b,proj_{V_k} Sol_{λ(k)}(a,b))} and sig_{τ[C]}(k) = {(τ(a),σ(b),L_k(τ(a),σ(b)))}. (F1) equates third coordinates pointwise. ✓ Looks right, given (F1) states proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b)). Yes.
+
+Hmm, one subtlety: sig is defined as a set of triples (a,b,L_j(a,b)). For λ(k) which is a subnetwork of D, sig_C(λ(k)) uses Sol_{λ(k)}(a,b) — consistent with (F1)'s use. OK.
+
+**Derivation 2**: Indistinguishable is identical. Two candidates both satisfying (F1),(F2),(A) on C are one account at grain C. Fine, definitional-ish.
+
+**Derivation 3**: Selected transports underdetermined. Claim: for every (a,b) ∈ C\H there exists t' also surviving on H with different value at (a,b). Proof: component relations L_j(a,b) supplied independently for each (a,b). Survival on H constrains only {L_j(a,b) : (a,b) ∈ H}. Alter L_j(a,b) for one (a,b) ∉ H to any other admitted relation; result survives on H and differs at (a,b).
+
+Hmm — is this right? The transport t is selected; the claim is about existence of another transport t' in the population T that also survives on H but differs at (a,b). The proof alters L_j(a,b). But is the altered transport still in the population T? The population T is given; we can't just arbitrarily add members. Actually the claim says "there exists a transport t', also surviving on H" — presumably t' ∈ T. The proof constructs one by altering a component relation, but nothing guarantees the altered transport is in T or even that it's a legitimate transport (e.g., τ, π must still satisfy (F2) globally). Altering L_j(a,b) might break (F2) for the assembled organization, or break the homomorphism τ. Also "to any other admitted relation" — the relations are supplied by the interpretation, not free parameters.
+
+Actually more carefully: the claim is a mathematical claim about the framework: given the definitions, is it true that for any selection setup, such a t' exists? The proof assumes component relations at unseen (a,b) can be varied freely while keeping everything else fixed. But the transport must still be a valid transport (π, τ, σ, λ with (F2) etc.). If we change L_j(a,b) alone, π might no longer satisfy (F2). So the proof has a gap: it doesn't verify the modified t' remains a transport in the admitted class or in the population T.
+
+Also, the population T might be a singleton {t}, in which case no t' ∈ T differs. The claim says "there exists a transport t', also surviving on H, with a different value at (a,b)". If T = {t}, this fails immediately. The derivation implicitly assumes the population is rich enough. This is a real gap — the claim as stated is too strong. The idea (underdetermination) is plausible but the proof doesn't establish it under the stated assumptions. This is worth reporting as a defect: the proof fails / claim wider than support.
+
+Severity: this is load-bearing (grievance 3 and attack (D) rest on it). I'd rank it fairly high — maybe #2 or #3.
+
+**Derivation 4**: Surprise requires incomplete history. "A system can be surprised if and only if it holds a transport selected on a history H strictly smaller than the contract C of changes the world admits." Proof: surprise defined as violation at (a,b) ∉ H. If no transport, no expectation. If H = C, every occurring (a,b) ∈ H. ✓ — but the "if" direction (only if): if H ⊊ C, can the system be surprised? It requires that a violation actually occurs at some (a,b) ∈ C\H, and that the world actually admits such a pair. The claim says "if and only if it holds a transport selected on H strictly smaller than C". Strictly, having such a transport doesn't guarantee surprise (the unseen changes might never occur, or the transport might happen to be faithful on them). The claim is "can be surprised" — modal. Reading "can" as possibility, the iff is: possibly surprised iff holds selected transport with H ⊊ C. The "only if" direction is fine given definitions (surprise requires violation at (a,b) ∉ H, requires a transport, requires (a,b) ∈ C). Hmm, but also requires (a,b) actually occurs. The claim says "the contract C of changes the world admits" — so C is the admitted set; a change in C\H occurring is possible. OK, the iff is roughly right under a modal reading. Minor quibble maybe. Actually the bigger issue: could a *constructed* transport be surprised? By definition surprise is violation at (a,b) ∉ H where H is the selection history; a constructed transport has no selection history H. The claim says surprise requires a *selected* transport. Given the definition in Part IV ("Let t be selected on history H..."), surprise is only defined for selected transports. So the biconditional is partly definitional. It's OK-ish. Maybe a minor issue: "if and only if" — the if-direction requires that the world actually realizes a change in C\H, which is not guaranteed by H ⊊ C alone... but "can be surprised" handles that. I might mention it as a minor quibble or skip. Let me look for stronger defects.
+
+**Derivation 5**: Question-finding representable. "A contract C is an organization (a set of edits with a query), and can be the content c in (G)." Proof gives it ports, components, admitted edits. Plausible. Fine.
+
+**Derivation 6**: Two primitives. Fine, given the dependence order.
+
+**Derivation 7**: Frozen assessment and moving question consistent. Fine.
+
+**Derivation 8**: Equivariance. "Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK)." Proof: each is conjunction of equalities and existence claims over transported data; bijections preserve them. Hmm — (EK) includes Deploy which involves "retained capability" and physical realization; (P) includes ProducedBy(Δ,ξ,ξ';O). Are these purely structural? Bijections of the physical carriers... The claim says "along structure-preserving bijections" — if the bijection preserves all the relevant structure, then yes trivially. This is somewhat tautological but not false. Minor.
+
+**Derivation 9**: Output descriptions don't determine accounts. "If M_0, M_1 have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both. Proof. Equal inputs to a function give equal outputs." ✓ Correct.
+
+**Derivation 10**: Two-layer episode. Let me check details.
+- Primitive layer P: line of cells; two things with position and velocity; continuity components; edits: displace, set velocity, occlude a cell, swap identities. Sensory field = occupancy (which cells filled, not which thing).
+- S_0 predicts occupancy from recent occupancy, selected on H_0 (displacements, velocity changes, no occlusions). Faithful on H_0.
+- Occlusion occurs: thing continues to exist and move; occupancy shows nothing at its cell. S_0 expects nothing there and is violated when thing re-emerges at a cell consistent with its velocity. "This is surprise (Derivation 4)." — OK, assuming occlusion ∈ C but ∉ H_0. Wait — is occlusion in the contract C? The contract must include occlusion edits for the violation to be at (a,b) ∈ C\H_0. The text says S_0's history H_0 contains no occlusions; for surprise, occlusion must be in C. Plausible if C = admitted edits of P (displacement, velocity, occlusion, swap). Fine.
+
+- Selection response: extend H_0, μ re-tunes. If population can only predict from occupancy, no member survives extended history. OK.
+- Construction: S_1 with persistence components; t_1 faithful on extended contract by (F1). "By Derivation 1, the persistence components have the signature of things on that contract: they respond to displacement and velocity edits as things do, and are invariant under occlusion as things are."
+
+Hmm wait. Is that right? The persistence components carry position and velocity through occlusion. Things (in P) respond to displacement and velocity edits. Are things invariant under occlusion? Under occlusion, the thing continues to exist and move — so the thing's state is unchanged by occlusion (occlusion only affects the sensory field). So yes, things are invariant under occlusion, and persistence components are too. OK.
+
+- "The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2)."
+
+Hmm — swap of the two identities. In P, swapping identities... The two things have positions and velocities; swapping identities exchanges which thing is which. If the things are distinguishable only by trajectory... Actually swap makes thing1's state become thing2's and vice versa. The persistence components in S_1: are they affected by swap? If the swap exchanges the two things' identities, and the persistence components are bound to continuity subnetworks, then swapping would rebind. Hmm. The claim is they're of one kind on that contract — i.e., no admitted change distinguishes component 1 from component 2. Swap is a symmetry, not a distinguishing change. So indeed they're one kind. OK, plausible.
+
+Now — "A claim that 'component 1 is really thing 1' is a claim that some admitted change distinguishes them, and on this contract none does." Fine.
+
+Now let me check Part V more carefully.
+
+**(F1)**: proj_{V_k}[Sol_{λ(k)}(a,b)] = L_k(τ(a),σ(b)). Note Sol_{λ(k)}(a,b) — λ(k) is a subnetwork of D; its solution set under edit a and boundary b. But wait — (a,b) ∈ C where C ⊆ A_D × B_D. The subnetwork λ(k) inherits edits? Sol_{λ(k)}(a,b) is defined since λ(k) is an organization with its own components; restricting to the subnetwork, the solution set is the set of valuations on the subnetwork's ports satisfying its components' relations under (a,b). OK.
+
+Hmm, but there's a subtlety: in (O), Sol_D(a,b) is defined via L_j(a,b) for j ∈ J. For the subnetwork λ(k), Sol_{λ(k)}(a,b) uses the components of λ(k) with the same (a,b). Fine.
+
+**Non-circular dependence**: "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+
+Hmm, "or is left as it was" — that's odd. The condition requires existence of an edit removing/replacing a block of Γ under which the answer "changes, ceases to be determined in the claimed way, or is left as it was". If "is left as it was" is allowed, then this condition is nearly trivially satisfiable — any edit that removes a block and leaves the answer unchanged satisfies it! Wait, but then "p because p" would satisfy it? Let's see: for "p because p", removing the block... Hmm.
+
+Actually the point of non-circular dependence is that the answer must depend on the commitments Γ rather than being fed in. The condition as stated: ∃(a,b) ∈ C that removes or replaces a nonempty block of Γ, under which the answer profile changes OR ceases to be determined in the claimed way OR is left as it was. Since "is left as it was" is included, the condition seems to require merely that some edit removes a block of Γ — which is trivial if Γ is nonempty and C contains any edit affecting Γ. That can't be the intent. The intent is presumably that removing the block *changes* the answer or breaks the determination — showing the answer depends on Γ rather than being an unanalysed input. The disjunction "or is left as it was" appears to defeat the purpose: if the answer is left as it was after removing the block, that suggests the block was irrelevant, not that dependence is non-circular.
+
+Hmm, wait. Let me re-read: "The answer follows by evaluating E under its independent boundary conditions. The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named 'law' does not discharge this. There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+
+Hmm — "or is left as it was" might be intended to cover the case where removing the block doesn't change the answer but the *determination* relation changes (the answer is now determined differently). Actually "ceases to be determined in the claimed way" covers that. The third disjunct "is left as it as it was" makes the condition vacuous whenever a block-removing edit exists. This looks like a genuine defect in the formulation: the non-circularity condition is too weak, and the third disjunct undermines it. Actually maybe the intent is: the answer must be *sensitive* to Γ — either it changes, or its derivation changes. But "is left as it was" (answer unchanged) combined with... hmm, the sentence lists three alternatives for the answer profile: changes / ceases to be determined in the claimed way / is left as it was. The third makes the existential trivially satisfiable in many cases. E.g., "p because p": E has a component that just outputs p. Removing that block... the answer would change (no answer). Hmm.
+
+Actually, consider a candidate where the answer is fed in as a boundary input and also the block Γ includes that input. Removing it changes the answer. So "p because p" fails because... the answer p appears as unanalysed input; removing the block containing it changes the answer — wait, that would *satisfy* the condition as stated! Under the stated condition, "p because p" would satisfy non-circular dependence: there's an edit removing the block (the input p), under which the answer profile changes. Hmm, but the text says "'p because p' fails non-circular dependence." So the stated formalization doesn't match the claim. Let me think again.
+
+The condition is meant to *witness* that the answer is determined by E's independent boundary conditions rather than smuggled in. The witness: an edit that removes a block of Γ while preserving other boundary conditions, under which the answer changes or its determination changes. But if the answer was smuggled in as an input within Γ, then removing that block changes the answer — which satisfies the condition! So the condition as written doesn't exclude circular accounts; it's the *prose* ("The target's answer does not appear... as an unanalysed boundary input") that does the work, not the existential condition.
+
+Hmm, this is a real issue: the formal statement of Non-circular dependence doesn't capture the informal requirement, and the "or is left as it was" clause makes it weaker still. I think this is a legitimate defect to report: the condition as formalized is either near-vacuous or mis-targeted, and it doesn't by itself exclude "p because p" as the text claims. Let me make sure I'm reading right.
+
+"The answer follows by evaluating E under its independent boundary conditions." — informal requirement.
+"The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named 'law' does not discharge this." — informal.
+"There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was." — formal witness.
+
+So the formal part is an existential. For "p because p": E contains the answer as a component/input; removing it changes the answer profile (it's no longer determined). So the existential is satisfied. Yet the text says "p because p" fails non-circular dependence. So either the formal condition is wrong, or I'm misreading. Actually maybe the intent is the *opposite*: the answer must be *invariant* under removing... no.
+
+Hmm, maybe the intended logic: non-circularity requires that the answer be determined by the *rest* of E, i.e., removing the block leaves the answer determined as before ("is left as it was") — no wait, that's redundancy.
+
+Actually, I think there's a genuine confusion in the text. The condition seems designed to say: there must be a contrast in which the commitments do real work. But "or is left as it was" contradicts that. I'll report it as a defect: the formalization of non-circular dependence does not exclude the cases the prose says it excludes ("p because p"), and the third disjunct makes it near-vacuous. This is a significant defect since (E) is the central definition and attack (A) rests on it.
+
+Let me double check with the "What (E) excludes" section: "'p because p' fails non-circular dependence." Under the formal existential, does it? Suppose E's only component outputs p (the answer). Γ = {that component}. An edit removing that block: the answer profile... ceases to be determined? Then the existential is satisfied → "p because p" satisfies non-circular dependence → contradiction with the claim. Unless "removes or replaces a nonempty block of Γ while preserving the other boundary conditions" requires the answer profile to be *unchanged* in some sense... The phrase "under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was" — for "p because p", removing the p-component leaves the answer undetermined → "ceases to be determined in the claimed way" → condition satisfied. So yes, the formal condition is satisfied by "p because p", contradicting the text's claim that it fails. Good defect.
+
+Hmm, unless the intended reading of non-circular dependence is that the answer must NOT change when the block is removed — i.e., the answer is determined by the *independent* boundary conditions alone... no, then redundant routes would fail.
+
+OK, I'm fairly confident: the formal witness for non-circular dependence is mis-stated; as written it is satisfied by the very circular cases it is meant to exclude. Report as a defect.
+
+Also **Non-vacuity**: "Sol_D(1,b_0) ≠ ∅." — that's vacuity of the *target*, i.e., the target has solutions at baseline. Fine. "A contract consisting only of relabelings... does not satisfy non-circular dependence" — hmm, a relabeling-only contract: under such a contract, no answer changes; the non-circular witness would require an edit that changes the answer... but relabelings don't change answers. So the existential fails. OK that's consistent-ish. But wait, with the "or is left as it was" disjunct, a relabeling edit that leaves the answer as it was would satisfy the existential! "There exists (a,b) ∈ C that removes or replaces a nonempty block of Γ ... under which the answer profile ... is left as it was." A relabeling that removes a block and leaves the answer as it was satisfies this. So the claim that a relabeling-only contract fails non-circular dependence is *also* contradicted by the formal statement with the third disjunct. This confirms the defect: the third disjunct breaks the condition. 
+
+So defect: Part V, Non-circular dependence — the formal condition with "or is left as it was" is satisfied by relabeling-only contracts and by "p because p", contradicting "What (E) excludes". This is a major defect.
+
+**Part V — Baseline coherence**: "Sol_E(1,σ(b_0)) ≠ ∅ ... This is an independent requirement; it is not implied by the conditions above." Hmm — actually (F2) with (a,b)=(1,b_0): π[Sol_D(1,b_0)] = Sol_E(1,σ(b_0)). Non-vacuity says Sol_D(1,b_0) ≠ ∅. So π applied to a nonempty set gives a nonempty set, hence Sol_E(1,σ(b_0)) ≠ ∅. So baseline coherence IS implied by (F2) + non-vacuity! Wait — π is a function from X_D to X_E; the image of a nonempty set under a function is nonempty. So (F2) at baseline + non-vacuity ⟹ baseline coherence. So the claim "it is not implied by the conditions above" is false!
+
+Let me double check. (F2): π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)) for every (a,b) ∈ C. C contains the baseline (1,b_0) (stated in Part III: "it contains the baseline (1,b_0)"). Non-vacuity: Sol_D(1,b_0) ≠ ∅. Then π[Sol_D(1,b_0)] ≠ ∅ (image of nonempty under a function is nonempty — note π is a function X_D → X_E on the stated scope, per Part IV). And by (F2) that equals Sol_E(1,σ(b_0)). So Sol_E(1,σ(b_0)) ≠ ∅. So baseline coherence follows from (F2) and non-vacuity. The claim that it's independent is false. This is a clear, provable defect — a false statement in the document. 
+
+Unless... π is a partial function or relation? Part IV says "π: X_D → X_E on the stated scope". A function. Image of nonempty set is nonempty. Yes. So this is a genuine error. Good — that's a solid, checkable defect. Severity: it's a false claim about logical independence, but it doesn't break the theory (it's a redundant conjunct). I'd grade it major-ish or minor. It's a clear error though. Let me rank: theorem swap (Part VI) is most serious; non-circular dependence mis-statement is serious; Derivation 3 gap is serious; baseline coherence false independence claim; the 24 tokens error; Derivation 4 iff quibble.
+
+Let me also check Part VI "Hard-to-vary": "For explanatory jobs F ⊆ F', Pres(F') ⊆ Pres(F), where Pres(F) = {v ∈ V : ∀f ∈ F, Account(E_v, f)}." If F ⊆ F', then satisfying all f in F' is harder, so Pres(F') ⊆ Pres(F). ✓ Correct.
+
+**Part VI (S)**: "S_{E,p} = {W ⊆ Γ : Account(E|W, p)}". "No upward closure and no minimal member are assumed." Then the finite monotone theorem assumes upward closure. OK.
+
+**Part IX (K3)**: "For T ∧ B ∧ I ⇒ O, an established ¬O yields ¬T, since B and I are background." ✓ (modus tollens).
+
+**Part XI (P)**: Repair definition. Fine-ish. "ProducedBy(Δ,ξ,ξ';O)" — fine.
+
+**Part XI (EK)**: fine, complex.
+
+**Part II — (K) and kinds**: "Two components j,j' are of one kind on C when there is a bijection of their footprints under which sig_C(j) and sig_C(j') coincide." OK.
+
+**Part II roles**: "A port v is an input under A when A contains an edit that sets v directly." OK.
+
+**Part VII — Production**: "Stipulate H := U_H, θ := U_θ, L := H cot θ." Hmm, this notation: U_H, U_θ presumably are "upstream" ports? H cot θ — height equals H? Wait: L := H cot θ. Usually for a pole: shadow L = H cot θ where H is pole height and θ is elevation angle. Fine. "Under A containing interventions on H and θ, these ports are inputs and L is an output." ✓. "An intervention on L replaces its component and leaves H,θ unchanged." ✓. "The reversed calculation H = L tan θ is not: intervening on H changes the target's L but not the calculation's H." ✓ — the reversed calculation computes H from L and θ; intervening on H in the target changes the target's L (since L = H cot θ) but the calculation's H is determined by L and θ, unchanged. ✓ Correct.
+
+**Part VII — Odd-order skew-symmetric matrices**: "why is every odd-order real skew-symmetric matrix singular?" Standard result: det(A) = det(A^T) = det(-A) = (-1)^n det(A), for n odd gives det(A) = -det(A) → det = 0. ✓. The document's account uses the Leibniz expansion. "Non-circular dependence is witnessed by I_3 under removal of skewness and by [[0,1],[-1,0]] under removal of oddness." I_3 (3×3 identity) is not skew-symmetric — under removal of skewness (i.e., allowing non-skew matrices), I_3 is a non-singular matrix in the widened family, showing the answer changes. Under removal of oddness (even order allowed), the 2×2 rotation matrix [[0,1],[-1,0]] is skew-symmetric and invertible (det = 1). ✓ Correct. "Non-vacuity is witnessed by any nonzero odd skew matrix." ✓ exists.
+
+Hmm, "The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away." Plausible, hand-wavy but fine.
+
+**Part VIII (T1)**: relational transport. Fine.
+
+**Part XII**: "Possibility is the absence of a law-imposed limit short of perfection on performance and retention; it is not one successful trajectory." OK.
+
+**Part XIII (RC)**: fine.
+
+**Part XIV — Dependence order**: "(R) depends on (F1)–(F2) and physical provenance." ✓. "(K1) depends on (E)." ✓. "Deploy depends on (R) and (CT1)." ✓. "Build depends on histories and (E)." Hmm, Build is about preparing a represented organization; depends on (R) too arguably. Minor.
+
+Also "(S), (B), (D) depend on (E)." ✓.
+
+**Part 0 — Grievance 3**: "There is a theorem below (Derivation 3) that selected transports are always underdetermined on unseen changes." Given the Derivation 3 issue, this is affected. But the grievance text itself just references it.
+
+**Part 0 — Grievance 7**: "A proof explains, relative to a question, when its components respond to those edits as the target structure does. This is worked in Part VII." Part VII has the odd-order matrix example. OK.
+
+**Part 0 — Grievance 1**: "A correlation has no component that responds to an intervention on its supposed input; a cause does." Hmm, a correlation between X and Y — under intervention on X, Y's value in the correlation... Actually in the semantics, this is about signatures. It's a claim, but as a gloss it's standard (interventionist causation). Fine, not a defect per se.
+
+**Part 0 — Grievance 2**: fine.
+
+**Part 0 — Grievance 11**: "A rule and a cause differ in how they respond to changes: a rule's application changes when the rule is edited and not when the world is intervened on; a cause's assignment changes under intervention." Consistent with Part II's signature descriptions. ✓
+
+**Part 0 — "What this document claims"**: "Two components no admitted change can separate are one kind at that level, whatever labels anyone attaches to them." Consistent with (K). ✓
+
+**Part III — "A question can be wrong"**: fine.
+
+**Part IV — Expectation/surprise/violation**: "For an edit–boundary pair (a,b) ∈ C actually occurring: the expectation is Ans_S(τ(a),σ(b)); a violation occurs when fidelity fails at (a,b); surprise is a violation at (a,b) ∉ H." OK.
+
+**Part IV — Selected provenance**: "No member of the history represents t, H, or the survival condition." OK.
+
+**Part IV — Constructed provenance**: "or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." Hmm — this says a selected transport can also be constructed (its selection history serves as its construction witness). But earlier: "A transport t between organizations of a physical system has exactly one of three provenances." If a selected transport can also count as constructed (via the second clause), then the provenances are not mutually exclusive, contradicting "exactly one of three provenances". Let me re-read.
+
+"**Constructed.** There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; **or** t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness."
+
+And: "A transport t ... has exactly one of three provenances, determined by its history in the physical module."
+
+If a transport is selected (survivor of variation-and-survival), then by the second clause of "Constructed" it also has a construction witness (the selection history itself). So it would be both Selected and Constructed, violating "exactly one of three provenances". This is a genuine inconsistency! Unless the second clause is meant to apply only when the variation-and-survival history is itself an episode with a represented target... but the clause explicitly says "which serves as its construction witness", i.e., the selection history itself serves as the witness. And a selected transport satisfies "survivor of a variation-and-survival history on a population that contains it". So every selected transport is also constructed. Contradiction with "exactly one of three".
+
+Also Part IV later: "Neither provenance is reducible to the other: a selected transport has no represented target and no criticism in its history; a constructed one has both." — This says a selected transport has NO represented target in its history. But the "Constructed" clause says a constructed transport can be "the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness" — that history has no represented target either (per the Selected definition: "No member of the history represents t, H, or the survival condition"). So under that clause, a transport with no represented target would count as constructed, contradicting "a constructed one has [a represented target and criticism]".
+
+This is a real inconsistency in Part IV. Good catch. Severity: high, since provenance distinction is load-bearing (creativity lives only in construction; Part IV attack (D); grievance 6).
+
+So the "or t is the survivor of a variation-and-survival history..." clause makes every selected transport constructed, collapsing the distinction the whole document rests on. Definitely a major defect.
+
+Let me now also check Part X's Build vs Part IV's Constructed provenance consistency. Part X: "Construction is not selection. A selected transport has no represented target in its history; a constructed one does." Consistent with the later Part IV sentence, but inconsistent with the "or" clause.
+
+OK. Let me also scan for other issues.
+
+**Part V — (F1) & anchoring**: "By (K), (F1) entails that every component of E has the signature of its anchor; there is no further condition about kinds to state." ✓ consistent with Derivation 1.
+
+**Part V — What (E) does not exclude**: "A proof answering 'why does this follow under these rules?' satisfies (E) for that question without answering 'what caused this?'" Fine.
+
+**Part VI — Infinitary support**: "Γ = {d_n : |x| ≤ 1/n}: every unbounded index set determines x = 0; no minimal support and no singleton witness exists." Hmm: the intersection over all n of {|x| ≤ 1/n} is {0}. Any unbounded set of indices has intersection {0}. A bounded set of indices has intersection {|x| ≤ 1/N} ≠ {0}. So a support is a set of d_n's whose index set is unbounded. No minimal support (any unbounded set has a proper unbounded subset). ✓ Correct.
+
+**Part IX — Reason use**: fine.
+
+**Part XIII — Barriers**: fine.
+
+**Part XV — "A non-fallible selected transport. A selection history H ⊊ C whose survivor is determined on C\H. This refutes Derivation 3."** Consistent.
+
+**Part XVI Derivation 3's claim again**: "For every (a,b) ∈ C\H there exists a transport t', also surviving on H, with a different value at (a,b)." Also note: t' must be in the population T (since "surviving" is relative to T). The proof constructs t' by altering L_j(a,b) — but doesn't show t' ∈ T. Also, "the component relations L_j(a,b) are supplied independently for each (a,b)" — that's about the interpretation of an organization, but the population T is a set of transports; whether altering one component relation yields another member of T is not established. Also the altered t' must still satisfy (F2) etc. to be a transport. So the proof has a genuine gap. Report.
+
+Also Derivation 3's claim quantifies "For every (a,b) ∈ C\H there exists a transport t'... with a different value at (a,b)" — "different value" presumably means different answer or different L relation. OK.
+
+**Part 0 — Grievance 3 vs Derivation 3**: "selected transports are *always* underdetermined on unseen changes" — Derivation 3's claim is exactly this. Given the gap, the grievance overstates. But I'll report the Derivation 3 gap itself.
+
+**Part XII — (CT1)**: "Execution families are nonempty on legitimate inputs; deadlock is not vacuous success." ✓ fine.
+
+**Part XII — Owned capability**: fine.
+
+**Part XIII — (U1)**: "UU ⟺ ∀c ∈ 𝔈_Θ ∃χ, Enable(s,U_c,χ) ∧ Can(ξ_0,U_c;χ)" — fine.
+
+**Part XIV — Primitives**: "The semantics has two primitives: the physical module Θ ... and the normative relation N..." Then "Indices, not primitives: Grain ℓ, boundary β, continuity Ω, and the contract C are declared indices." Hmm — but Ω (continuity) appears in Part XII as part of the physical module ("accuracy grades")? Part XII says the physical module adopts task-based physics with resources etc. Ω is listed as an index. Fine-ish.
+
+Also, is "declared restriction operation" in Part VI a primitive? It says "Fix E and a declared restriction operation." That's a declared thing, fine.
+
+Now, the "transport" definition: t = (π, τ, σ, λ). π: X_D → X_E "on the stated scope". τ translates edits, σ translates boundaries, λ assigns each component of E a subnetwork of D. Fine.
+
+**Part IV — (R)**: "Rep_ℓ(o,c) ⟺ ∃t [Faithful_C(t: Org_ℓ(o) → c) ∧ (Sel(t) ∨ Con(t))]". Fine.
+
+**Part II — (O) and "A deleted component imposes the full relation on its ports."** ✓ consistent with Part VII's "anchored to a deleted subnetwork, whose relation is full by (O)". ✓ Good internal consistency.
+
+**Part VII — Explanations that remove structure**: "An account is faithful when introducing those components changes the answer in E as it does in D, and their absence leaves both unchanged." Hmm — "introducing those components changes the answer in E as it does in D". But in D the components are absent (the target has no X-structure). "as it does in D" — in D, introducing the components... D doesn't have them; the contract contains edits that would introduce them. Under those edits, D's answer changes (from "no X-effect" to "X-effect present"). And E's answer changes correspondingly. OK, plausible.
+
+Now let me also double-check the finite monotone theorem statement once more and the proof, to write the defect precisely.
+
+Text: "**Finite monotone theorem.** If Γ is finite, S is upward closed, and Γ ∈ S, then the critical singletons are exactly ⋂min S and the globally indispensable ones are exactly ⋪min S. *Proof.* A member of a minimal support is critical for it. If d is critical for W, finiteness gives a minimal U ⊆ W; if d ∉ U, upward closure makes W∖{d} a support. Deletion of d from Γ preserves support exactly when a minimal support omits d. ∎"
+
+Proof line 1: "A member of a minimal support is critical for it." → d ∈ U ∈ min S ⟹ U∖{d} ∉ S ⟹ d critical for U. So ⋃min S ⊆ critical.
+Proof line 2: "If d is critical for W, finiteness gives a minimal U ⊆ W; if d ∉ U, upward closure makes W∖{d} a support." → d critical ⟹ d ∈ every minimal U ⊆ W ⟹ d ∈ ⋃min S. So critical ⊆ ⋃min S.
+Together: critical = ⋃min S. But the claim says critical = ⋂min S. WRONG (swapped).
+Proof line 3: "Deletion of d from Γ preserves support exactly when a minimal support omits d." → Γ∖{d} ∈ S ⟺ ∃U ∈ min S with d ∉ U ⟺ d ∉ ⋂min S. So "indispensable to Γ" (deletion loses support) = ⋂min S. But claim says globally indispensable = ⋃min S. WRONG (swapped).
+
+And the "Redundant routes" example: Γ={a,b}, S={{a},{b},{a,b}}, min S = {{a},{b}}, ⋃min S = {a,b}, ⋂min S = ∅. Text: "each is contributory, neither indispensable." Contributory = critical = ⋃min S = {a,b} ✓ (both). Indispensable = ⋂min S = ∅ ✓ (neither). So the example matches the corrected theorem, confirming the theorem statement has the two sets swapped.
+
+Great, that's airtight. Most serious defect.
+
+Now ordering of defects by severity:
+1. Part VI Finite monotone theorem: sets swapped; contradicts its own proof and the "Redundant routes" example. (Major — a stated theorem is false as written; it's also listed in Part XV as a potential mathematical error target.)
+2. Part IV "Constructed" provenance second clause: makes every selected transport constructed, contradicting "exactly one of three provenances" and "a selected transport has no represented target... a constructed one has both". This collapses the selection/construction distinction the whole theory rests on (creativity lives only in construction). (Major/Critical — it undermines the central distinction.)
+3. Part V Non-circular dependence: the formal existential is satisfied by "p because p" and by relabeling-only contracts, contradicting "What (E) excludes"; the disjunct "or is left as it was" makes it near-vacuous. (Major — central definition.)
+4. Part V Baseline coherence: claimed independent, but follows from (F2) at baseline plus non-vacuity, since C contains (1,b_0) and images of nonempty sets under a function are nonempty. (Error, moderate.)
+5. Part XVI Derivation 3: proof gap — altering L_j(a,b) need not yield a member of the population T or even a valid transport; the claim "there exists t' also surviving on H" is not established under the stated assumptions. (Major — load-bearing; grievance 3 and attack (D) rest on it.)
+6. Part VII Obstruction: "Twenty-four indivisible tokens cannot be split equally three ways" — false; 24 = 3 × 8. (Minor error, but plainly false.)
+
+Maybe also Derivation 4's iff (minor). Let me consider whether to include. "A system can be surprised if and only if it holds a transport selected on a history H strictly smaller than the contract C of changes the world admits." The if-direction: holding such a transport doesn't guarantee surprise unless a change in C\H actually occurs and the transport is unfaithful there. Under a "can" (possibility) reading it's OK-ish given the world admits those changes. Also, could a constructed transport be violated? Surprise is defined only for selected transports. The biconditional's "only if" is definitional. I think it's a minor quibble; I could mention it briefly. The instructions say report only defects I can state precisely with location/quote/what's wrong. I'll include it as a lower-priority defect if I'm confident. The iff: "if H ⊊ C then the system can be surprised" — requires that some (a,b) ∈ C\H actually occurs and violates fidelity. The claim says C is "the contract C of changes the world admits" — so changes in C\H are admitted by the world; "can be surprised" is modal. I think it's defensible. I'll skip or mention briefly. Actually there's a subtle issue: the system might hold a selected transport with H ⊊ C but also hold another (e.g., constructed) transport covering C\H... no, surprise is defined relative to the selected transport. It's fine. I'll skip Derivation 4.
+
+Let me reconsider the Derivation 3 "value at (a,b)" phrase — "with a different value at (a,b)". OK.
+
+One more check on Part V (F2): "π[Sol_D(a,b)] = Sol_E(τ(a),σ(b)), τ(1)=1, τ(a_2 a_1) = τ(a_2)τ(a_1)." Fine.
+
+Also check Part V Component fidelity: "the relation obtained by imposing the constraints of λ(k) and projecting away its hidden ports equals the component relation of k under the translated edit". ✓ matches formula.
+
+Another thing: Part V says "An explanatory candidate for question p is an organization E, a transport t=(π,τ,σ,λ) from D to E..." — wait, earlier in Part IV a transport is "from an organization D to an organization E". Here t is from D (the target, from p=(D,C,b_0,Q,O_p,ρ_p)) to E. ✓ consistent.
+
+Part VI: "Fix E and a declared restriction operation. For W ⊆ Γ, let E|W retain the commitments in W with the named background fixed." ✓.
+
+Now, "Interference. Γ={a,b}, S={{a}}: the full candidate fails although a subset succeeds." With S = {{a}} — is that upward closed? Within Γ={a,b}, upward closure of {{a}} would include {a,b}. So S={{a}} is not upward closed — but the theorem's assumptions aren't invoked here; it's just an illustration that success of a subset doesn't imply success of the whole. Fine, no error. Though "S={{a}}" with Γ={a,b}: Account(E|{a}) holds, Account(E|{a,b}) fails. OK, that's coherent as an illustration.
+
+Let me also double check Part XI (AR): "achievement R[a,k] ≠ ∅ ∧ R[a,k] ⊆ G[k]". Fine.
+
+Part XIII (RC): "∀ n < ω ∀ admitted target chains of length n, ∃ an owned enabling continuation." Fine.
+
+Part XIV: "The base class: interpretations supplying these data with correct typing, satisfying physical realization wherever a physical attribution is made." Fine.
+
+I think I have enough. Let me also reconsider whether the "exactly one of three provenances" is definitely contradicted. Re-read:
+
+"A transport t between organizations of a physical system has exactly one of three provenances, determined by its history in the physical module:
+**Selected.** ... The transport t is a member of T that survived. ...
+**Constructed.** There is an episode (Part X) whose construction witness prepares t, and in which t, or the organization it targets, is available as a represented target; **or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness.** Write Con(t;h,e).
+**Declared.** Neither of the above."
+
+Yes: any selected transport satisfies "t is the survivor of a variation-and-survival history on a population that contains it" — hence Con(t) holds by the second disjunct. So Selected ⟹ Constructed, contradicting "exactly one of three". Also, "Declared = Neither of the above" — since Selected ⟹ Constructed, "neither" is equivalent to "not constructed", fine, but the mutual exclusivity fails. Also the later sentence "a selected transport has no represented target and no criticism in its history; a constructed one has both" directly conflicts with the second disjunct (which licenses Con for histories with no represented target). Solid.
+
+Also note the "Declared" definition says "Neither of the above" — but since selected implies constructed, "declared" = not constructed. Hmm, and a transport entered by its author with no history... fine.
+
+Good. Now also, is there an issue with Part 0 grievance 6: "Selection appears once, at the bottom, to produce the primitive layer..." vs Part IV "A physical system may hold selected transports at the primitive layer and constructed transports at the simulation layer; that is the expected arrangement". Consistent enough.
+
+Now write the report. The user asked: number defects 1,2,3...; for each: (a) where (Part and heading/label), (b) exact sentence/formula quoted, (c) what's wrong in 2-5 sentences with counterexample or failing step. Most serious first. End with "END OF REPORT".
+
+I should follow the careful-review report format but the user gave a specific format. I'll comply with the user's format. Maybe a brief coverage line at the end before END OF REPORT. The user said "End your report with the line END OF REPORT." I'll add coverage briefly.
+
+Let me write the defects:
+
+1. Part VI, "Finite monotone theorem" — critical singletons = ⋂min S, globally indispensable = ⋃min S. Both are swapped. Counterexample: Γ={a,b}, S={{a},{b},{a,b}} (the document's own "Redundant routes" example). min S={{a},{b}}, so ⋂min S=∅ and ⋃min S={a,b}. The theorem would say critical singletons = ∅ and indispensable = {a,b}, but the example says each is contributory (critical) and neither indispensable — and the proof in the text establishes critical = ⋃min S ("A member of a minimal support is critical for it"), not ⋂min S. Deletion-of-d argument gives indispensable = ⋂min S.
+
+2. Part IV, "Three provenances" — Constructed clause "or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness." Every selected transport satisfies this, so Selected ⟹ Constructed, contradicting "has exactly one of three provenances" and the later "a selected transport has no represented target and no criticism in its history; a constructed one has both."
+
+3. Part V, "Non-circular dependence" — the existential witness with the disjunct "or is left as it was". For "p because p", removing the block containing the answer makes the answer "cease to be determined in the claimed way", satisfying the condition — yet the text says "'p because p' fails non-circular dependence." Also a relabeling-only contract removing a block and leaving the answer unchanged satisfies the third disjunct, yet the text says such a contract "does not satisfy non-circular dependence." The formal condition doesn't do the work the prose claims.
+
+4. Part V, "Baseline coherence" — "This is an independent requirement; it is not implied by the conditions above." False: (F2) at the baseline (1,b_0) ∈ C gives π[Sol_D(1,b_0)] = Sol_E(1,σ(b_0)); non-vacuity gives Sol_D(1,b_0) ≠ ∅; the image of a nonempty set under the function π is nonempty; hence Sol_E(1,σ(b_0)) ≠ ∅. So baseline coherence follows from (F2) + non-vacuity.
+
+5. Part XVI, Derivation 3 — proof gap. "Alter L_j(a,b) for one (a,b) ∉ H to any other admitted relation; the result survives on H and differs at (a,b)." The altered object need not be a member of the population T (survival is relative to T), and need not remain a transport at all: changing one component relation can break (F2) (the assembled global equality) or the homomorphism conditions on τ. So the existence of t' ∈ T "also surviving on H" is not established. Counterexample setup: T = {t} (a singleton population) — then no t' ∈ T differs at any point, and the claim fails while all stated assumptions (finite H ⊊ C) hold.
+
+6. Part VII, "Obstruction" — "Twenty-four indivisible tokens cannot be split equally three ways". False: 24 = 3 × 8, so an equal three-way split (8 each) exists with no token divided. If the intended point is that some totals are not divisible by three, a number not divisible by 3 (e.g., 25) is needed.
+
+Maybe also add Derivation 4 iff issue? I decided it's defensible under modal reading. I'll skip it to keep the report to solid defects. Actually, let me reconsider once more whether there are other clear defects I should catch.
+
+Part 0: "A genuine explanatory achievement that these four cannot represent counts against the conjecture." fine.
+
+Part II: "A port is an output of component j when its value is determined by L_j given the other ports of V_j across B." OK.
+
+Part III: "ρ_p ∈ {declared, selected, constructed}, with the witness required by Part IV." fine.
+
+Part VIII "Historical index": fine.
+
+Part XV: "A candidate under any of these headings counts as a defeat only once an episode satisfying (EK) has accepted it as one; until then the class stands." — this makes the class unfalsifiable-ish, but that's a stance, not a defect per se. Not reporting.
+
+Part X (N): "New(s,c,h,e) ⟺ ¬∃d ∈ R_{<e}(s,h), d ≡_ℓ c." fine.
+
+Part X Deployment: "integrated into problem-directed activity and supporting the declared use task U as a retained capability (Part XII)". fine.
+
+I'm also wondering about Part VI (D): "Boundary_{E,p} = {(v,w) ∈ V² : Account(E_v,p) ≠ Account(E_w,p)}" — fine.
+
+Also Part IX (K2): fine.
+
+One more: Part XII "Retention fixed point. F(C) = states whose executions all complete and return into C. F is monotone; C ⊆ F(C) is the invariant form; the union of post-fixed sets is the greatest fixed point." — Knaster–Tarski: the greatest fixed point is the join of all post-fixed points (C with C ⊆ F(C)). ✓ Correct. Though "union of post-fixed sets is the greatest fixed point" — the union of post-fixed points is a post-fixed point (for monotone F on powerset, F(⋃C_i) ⊇ ⋃F(C_i) ⊇ ⋃C_i), and it's the greatest one. ✓ Right.
+
+OK, six defects. Order: I'll put the provenance inconsistency as #1 or the theorem as #1? The user wants most serious first. The finite monotone theorem is a flatly false stated theorem (with a swapped conclusion) — clearly the most serious mathematical error. The provenance collapse is arguably more serious for the theory (it collapses the central distinction). Hmm. Both are major. I'll rank:
+
+1. Part IV provenance inconsistency (it undermines the theory's central distinction — creativity lives only in construction; and it's an internal contradiction).
+2. Part VI finite monotone theorem (false theorem, contradicts own proof and example).
+3. Part V non-circular dependence (central definition doesn't exclude what it claims).
+4. Derivation 3 gap (load-bearing result with an invalid proof).
+5. Baseline coherence false independence claim.
+6. 24 tokens.
+
+Actually, for "most serious first", the theorem error and provenance contradiction are both critical. I'll go with the provenance contradiction first since it's a structural contradiction in the core definitions. Hmm, but the theorem is a clear-cut mathematical falsehood listed among the "mathematical error" defeat conditions. Either order is defensible. I'll put the theorem first — it's the most unambiguous falsehood and easiest to demonstrate with a counterexample, and the document itself lists it as a potential defeat condition ("A counterexample to the finite monotone theorem ... (CT2), or Derivations 1–3"). Actually the provenance contradiction is also unambiguous. Let me just pick: #1 finite monotone theorem (demonstrated false by the document's own example), #2 provenance collapse, #3 non-circular dependence, #4 Derivation 3, #5 baseline coherence, #6 tokens.
+
+Now write it up concisely with the required format. Include a short coverage note at the end.

@@ -1,0 +1,716 @@
+Let me carefully cross-examine this test plan, prompts, and runner code. The goal: find everything that would make the result wrong, biased, unreadable, or not an answer to "does the skill add anything or should it be abandoned." I need to cover: confounds (prompt length, system prompt asymmetry, task naming the error kinds), marking design (markers marking their own model, blinding, found-rules), number of repetitions, the Opus arm, the runner code line by line (bugs, retries, rate, file names, resumability, the id map), and anything the plan claims it can read off that it cannot.
+
+Let me go through systematically.
+
+### Confounds
+
+1. **System prompt asymmetry / prompt length confound**: The skill condition has a system prompt that includes the whole skill (13,648 words), while the no-skill condition has a one-line system prompt. So the comparison is skill + 13.6k words vs. nothing. Any difference could be due to (a) the length/context effects, (b) the presence of a "method" instruction generally (demand characteristics, the model works harder because it thinks it's being tested with a method), (c) the specific content of the skill. The plan can't attribute gains to the skill's content vs. generic "here's a long method, use it" prompting. Smallest fix: add a placebo arm with a length-matched irrelevant method (or at minimum, acknowledge that the comparison is "skill package vs. nothing" and cannot isolate content; a third arm with a sham skill of similar length would isolate it). Also the task says "You have the skill below... and you should use it for this audit" â that's an instruction to try harder. The no-skill arm says just "You are reviewing a document." So motivation/instruction asymmetry too.
+
+2. **The task names the error kinds**: The reader task itself lists "statements that are false, proofs that do not prove what they claim, claims wider than their support, parts that contradict other parts, conditions or clauses that do no work, and anything that shields the theory from criticism" â these map onto the HV kinds (idle conditions, shields) and GEN kinds. This contaminates the comparison: the no-skill reader is told exactly what to look for, which is presumably half the skill's content. That compresses the possible gain (ceiling effect) â the test can find "no gain" but is biased against finding gain. But also it changes the question: the question "handed to a reader auditing a theory, does the skill make the reader find more" â in real use (S78) is the reader told these kinds? The plan says the task names both kinds "so a reader without the skill is not left to guess that idle parts or shields count." But this directly loads the HV taxonomy into the baseline. It's a deliberate choice but it biases toward "abandon" â or rather, it answers a different question: "does the skill add anything on top of a task prompt that already names its taxonomy?" That needs to be stated as the question actually tested. Alternatively the kind list should be neutral ("defects") or you need two task versions. Smallest fix: either (a) remove the kind enumeration from the task (replace with generic "defects and errors") or (b) rename the research question to match what's tested and note the direction of the bias. Actually careful: both directions. It biases toward finding no effect of the skill. If the verdict is "abandon", it might be wrong in general use. It also could inflate false alarms in the baseline. Hmm.
+
+3. **Confounded2x2: thinking and skill as system prompts** â thinking off with skill: does the skill still get "used"? Fine.
+
+### Marking design
+
+4. **Markers mark their own model's reports**: Atria and Mimo mark every report including their own model's outputs. Self-preference/self-recognition bias: a model may mark its own reports more leniently or harshly, and skill-styled reports may be recognized (the plan admits style isn't blinded). Since both markers mark everything and agreement is required, and both markers see all reports... wait, the bias: if Atria is lenient to Atria reports and Mimo is lenient to Mimo reports, then agreement (both FOUND) per report... For a report from Atria, the "both markers" rule means Mimo must also agree; so self-leniency alone doesn't pass. But self-hostility (model harsher on its own) could suppress FOUND on its own model's reports differentially. Also the table is given per marker and for agreement. Still, the cleanest fix: cross-mark with a third marker or have each model's reports marked only by the other model (or add the Claude check to all, not just disagreements). Actually simplest: drop self-marking â Atria marks Mimo and DeepSeek reports, Mimo marks Atria and DeepSeek reports; Opus marks... hmm, need someone to mark Opus reports. Or use the disagreement-resolution Opus agent to mark all reports from its own model? Wait, "Claude's check" is an Opus 5.5 subagent re-marking disagreements â that agent marks Opus reports' disagreements too (its own model). Also the disagreement resolver is not blinded to... it gets "the report's own words" and the key. Fine. But the resolver only handles disagreements; agreed cells are final. Also note: the markers are only two, so "both markers MISTAKEN" for false alarms means any false alarm where the two disagree is dropped (not counted), which biases false alarms downward â uncertainty is resolved toward "not a false alarm" (excluded). The plan says "every disagreement is listed" and "an error counts as found when both markers say FOUND; a false alarm when both say MISTAKEN". So the strict-conjunction rule understates both found and false alarms; if the skill produces more marginal items (more UNCLEAR), the strict rule could understate its false alarms differentially. The plan should report a range (conjunction vs. either-marker) or have the tie-breaker adjudicate both directions. Actually the Claude check resolves disagreements "for the agreed table's disputed cells" â hmm, "its call stands for the agreed table's disputed cells, recorded as such" â so the disagreement resolver does adjudicate. Let me re-read: "after both markings and before the map is opened, an Opus 5.5 subagent re-marks every disagreement against the key, from the report's own words, and its call stands for the agreed table's disputed cells, recorded as such." OK so disagreements are adjudicated by Opus. But then the counting rule "an error counts as found when both markers say FOUND; a false alarm when both say MISTAKEN" conflicts with the adjudication â which rule is the table built on? Unclear. If both markers say FOUND, found. If disagree, Opus decides. Then "both MISTAKEN" for false alarms... So the false alarm rule (both MISTAKEN) vs. adjudication is contradictory: a disagreement over GENUINE vs MISTAKEN is a disagreement, resolved by Opus â but the plan says a false alarm counts "when both markers say MISTAKEN." Contradiction between two counting rules. Needs resolution: define the counting function once.
+
+5. **Blinding**: The map is separate (MAP.json), good. But: markers see the report which may reveal style; also markers see the DOCUMENT but the answer key for seeded reports is the full sealed list "without its predictions" â fine. But the marker receives the key AND the document; the marker could infer which document variant (seeded vs. clean) from the key size â that's inherent. Also the marker task tells the marker "the answer key, which lists errors known to be in the document" â for a CLEAN report the key has only D3, so the marker knows the document is the clean one â fine, no label leakage there in terms of condition (skill/no-skill). But: report ids R%03d are random â good. However, `mark` in the runner reads tags from filenames and determines doc via `"_seeded_" in t` â fine for API tags (`mimo_ST_seeded_r1`) and Opus (`opus_S_seeded_r1`)... wait, Opus naming: `opus_<cond>_<doc>_r<n>.response.txt` â `"_seeded_" in "opus_S_seeded_r1"` â True. OK.
+
+But there's an id-map bug: `if t not in mp.values(): ... mp[rid] = t` â with `rng.randrange(1000)` and "R%03d", range is R000..R999 â only 1000 ids for 84 reports; fine, no exhaustion practically. But wait â the map assignment: `for t in tags: if t not in mp.values()` â resumable, fine. However `json.dump(mp, open(mp_path, "w"))` â fine.
+
+Bigger runner bug: in `mark`, the marker jobs' tags are `f"{rid}_by_{m}"` â e.g. "R037_by_atria". These go to `OUT/marks/`. Fine.
+
+But there's a subtle leakage: the marker job tag contains the rid and marker name â not the condition. Fine.
+
+6. **Marker sees "the document the reviewer read"** â for the seeded document, the marker gets the seeded document plus key. Fine.
+
+7. **The found-rules / per-error rules**: "the per-error rules are written so that style cannot pass for finding" â but the rules are in the sealed list which we can't see; can't verify. Point: the plan claims it can control for style-contamination via rules it never shows; the cross-examination cannot check this, and neither can the reader. Also the markers judge "others" as GENUINE/MISTAKEN/UNCLEAR â for seeded documents, any "other" item might actually be one of the eight planted errors reported in a way the rule doesn't accept; those get judged GENUINE (the document really has the problem) and then are counted as false alarms? Wait â false alarms are counted "on the clean document" only in the table: "false alarms on the clean document (both markers MISTAKEN)". So for seeded reports, a real planted error found in a way the rule doesn't accept is "not found" (fine) but items that aren't key errors on seeded documents are judged GENUINE/MISTAKEN but... the table's false alarm column is only for clean documents. But wait â D3: "D3 found (of 6, both documents)" â D3 is in both documents and the key for seeded includes D3 (it's in the sealed list presumably as one of... wait, the seeded doc has 8 planted + D3 = 9 key errors). The key_seeded = key[:j] which includes "## The error file 10 already carries" section (i to j is included in key[:j]) â yes since i<j, key[:j] includes the D3 section. Good. And key_clean = preamble + key[i:j] (the D3 section). OK.
+
+But the marker task says "Include every error id in the key, in its order" and the JSON has "key": {id: found...}. For the seeded key there are 8 planted + D3 = 9 ids presumably (planted ids P1..P8 or HV1-4/GEN1-4?). Fine.
+
+Now: the table says "HV errors found (of 12), GEN errors found (of 12)" â 4 HV per seeded doc Ã 3 reps = 12. OK. "D3 found (of 6, both documents)" â 2 docs Ã 3 reps = 6. OK.
+
+But: false alarms on the clean document only. What about false alarms on the seeded document, i.e., extra items in seeded reports? Those could rise with the skill too. The plan's criterion "false alarms not rising by more than the gain" is measured only on clean docs. Skill could induce more spurious accusations on seeded docs too and it wouldn't show in the table's false alarm column. Also "items listed" is a column â fine.
+
+8. **Three repetitions and noise**: The plan acknowledges "a difference of one error in twelve is noise" but with n=3 reps per cell and 12 opportunities, the power is tiny: differences of 2-3 errors could easily be noise. A difference is "called a finding only when it holds in the same direction on at least two readers" â but no significance test; with 4 readers and multiple comparisons, the decision rule "two or more of the four readers" is a fishing rule. Also Opus only has 2 conditions (S/N) and can't contribute to the thinking comparisons; the "two or more of the four readers" for the owner's named comparison ST vs NO includes Opus S vs N? Opus doesn't have ST/NO cells. So "on two or more of the four readers" can't be evaluated uniformly: Opus only gives one contrast (skill/no skill at whatever thinking the agent runs). Confusion in the decision rule. Also 3 reps Ã 12 opportunities: binomial-ish noise; the smallest change is more reps (5+?) or at least report per-rep counts and a randomization/sign test. Actually smallest change: state the decision rule numerically (e.g., a difference must exceed X, where X derived from a noise model or from rep-to-rep spread) or increase REPS. The plan says "the results say so for every difference they report" â vague.
+
+9. **D3 confound**: The clean document carries a real error D3. The clean doc measures false alarms "what a reader reports when nothing is planted" â but D3 is a genuine error, so a report of D3 on the clean doc is a TRUE positive, and any rule counting "items listed minus key" as false alarms must treat D3 correctly. The marker's key for clean is D3-only and "every other defect the report lists" gets GENUINE/MISTAKEN/UNCLEAR â so other genuine errors in file 10 not known (there may be unknown real errors!) would be marked GENUINE by the marker and thus not false alarms â good, that's handled by judging against the document. But the false-alarm count "both markers MISTAKEN" â items judged GENUINE by both are counted... not as false alarms. OK. But: what about UNCLEAR items? Excluded from false alarms â bias again toward fewer false alarms, especially if the skill breeds hedged, arguable items (likely!). The skill's form effect (its own test found changes in form) may produce more UNCLEAR items which vanish from the false-alarm count. Fix: report UNCLEAR counts per condition.
+
+10. **The task lists "how sure you are: sure, likely, possible"** â encourages "possible" items; fine but interacts with marking.
+
+### Opus arm
+
+11. **Opus runs as a subagent with the repository in reach and the seeded file in `tests/` under its S80 name** â "S80 Seeded authority - file 10 with eight planted errors.md". The agent is told to read nothing else and given a working folder with only the document â but the file NAME in its working folder... wait, "The agent is given a working folder holding only the document (and the skill, for S)". What's the document file named in that working folder? If it's copied under the S80 name ("S80 Seeded authority - file 10 with eight planted errors.md"), the name itself leaks "eight planted errors"! The plan says the seeded file sits in `tests/` under its S80 name and that leak is checked afterwards by searching reports for "S80", "seeded", "planted". But (a) checking afterwards for those strings in the report is a weak leak check: the agent could find the file, learn there are 8 planted errors of known kinds (the sealed list is outside the repo though â good), and adjust its report without using those words; (b) more importantly the document is presented "under its own title, 'Claude Fable Semantics', with no mention of seeding" per plan for API readers â but for Opus the file name may leak. Smallest fix: copy the document to the working folder under a neutral filename and (better) don't give Opus the repo at all, or accept that the Opus arm is contaminated and exclude it from the decision. Also, the Opus arm can't be blinded to having the skill (it reads a directory). Also Opus N vs S: the S agent is told "read the skill's directory first" â instruction asymmetry again ("use this method" vs nothing). And Opus's thinking can't be switched, so Opus is not comparable to the other readers' cells; the plan's "two or more of the four readers" rule mixes incomparable cells. Also Opus marks disagreements ("Claude's check") and reads reports â could the check-marking agent see the map? "before the map is opened" â ok, the map isn't opened at all in the runner; a human opens it. Fine.
+
+But wait â a serious circularity: the Opus adjudicator is the same model family as one of the readers (Opus reports are among the 84 it may adjudicate) â self-adjudication. Smallest fix: exclude Opus reports from Opus adjudication or use a different adjudicator for those.
+
+12. **Marker marking Opus reports**: Atria and Mimo mark all 84 including Opus reports. Fine.
+
+### Runner code line by line
+
+13. `run_pool`: `pools = [ThreadPoolExecutor(max_workers=3) for _ in by_model]` and `futs = [pool.submit(worker, j) for pool, js in zip(pools, by_model.values()) for j in js]`. The zip pairs pools with by_model.values() â since pools are created in the same order as by_model keys/values iteration, this works. At most 3 in flight per provider â OK because each model has its own pool of 3 workers. But for `mark`, the jobs are grouped by `j["model"]` which is the MARKER model (atria/mimo), and each marker marks 84 reports â 3 concurrent calls per marker â6 in flight total across two providers. Fine per "at most 3 per provider." But the ordering: jobs appended per (rid, t) with both markers; by_model groups by marker. Fine.
+
+But a real problem: pools never shutdown â minor.
+
+Also `run_pool` isn't resumable-aware for failures: if a call fails ("failed"), the runner prints and moves on; re-running skips successes via `.response.txt` existence check but... `if os.path.exists(p(".response.txt")): return "skipped"` â a failed call writes `.error.txt` and no `.response.txt`, so re-run retries it. Good. But: a call that fails after 5 attempts returns "failed" and no response file â the job list in `mark` globs only `*.response.txt` â failed reports are silently dropped from marking. If failures correlate with condition (e.g., thinking-off empty responses on one provider), the table silently loses reports and the "of 12" denominators become wrong. Fix: fail loudly if any expected report file is missing before marking; check counts.
+
+14. **Empty-content handling bug**: `if status == 200 and not (res["content"] or "").strip(): status, text = (-4 if res["finish"] == "length" else -2), ...`. If finish == "length" (hit max_tokens with empty content?), it maps to -4 which is NOT in FINAL and not 200 â retried... wait, the retry logic: `if status == 200: break; if status in FINAL or n == attempts: ...failed...; time.sleep(...)`. So -4 is retried up to 5 times. But an empty content with finish "length" is a truncation issue (e.g., all 48k tokens went to reasoning and content empty) â retrying with the same body will likely fail again or produce a different answer; more importantly, a response truncated at max_tokens with content cut mid-way is still status 200 with non-empty content and finish "length" â and it is ACCEPTED (status 200 break) with finish_reason "length" recorded. A truncated report is marked as a complete report â undercounting founds for verbose conditions (likely the skill conditions! the skill changes form and may lengthen reports; thinking-on too). That's a serious bias: truncation correlated with condition. Fix: treat finish=="length" as a failure/retry with larger max_tokens, or at least count and report truncations per cell and exclude/mark them.
+
+Also: reasoning truncation: with `max_tokens` 48000 including reasoning? Depends on provider: for many APIs max_tokens includes reasoning tokens. If thinking is on with effort high and max_tokens 48000, reasoning may consume everything and content may be truncated or empty more often in thinking-on cells. The asymmetry hits thinking-on cells. Note `reasoning_effort: high` is a nonstandard field for some providers (OpenAI uses it; DeepSeek?), might be ignored â the plan claims "all three honour it" only regarding thinking on/off (probe). But `reasoning_effort: high` might error on some providers with 400 (FINAL, not retried â immediate fail) or be silently ignored (then thinking-on isn't "high"). Unknown. Smallest fix: verify per provider via the probe; record actual reasoning token counts (receipt has reasoning_chars) and report them.
+
+15. **`thinking` field for markers**: `call(j["model"], None, user, ..., True, max_tokens=32000)` â thinking=True â reasoning_effort high. OK.
+
+16. **The `mark` key slicing**: `i = key.index("## The error file 10 already carries")` â hard dependency on the sealed key's headings; brittle but works if the key has them. `key_seeded = key[:j]` â includes everything before "## Predictions, sealed", which includes... the sealed list's header, the 8 planted errors and the D3 section. But does it include the predictions? No (cut at j). Good â but WAIT: predictions are "Sealed in the sealed list (Q1 to Q5)". key_seeded excludes them. Fine.
+
+But `key_clean` = "# Answer key..." + key[i:j] â the D3 section. But the marker task says "Include every error id in the key, in its order" â fine.
+
+Potential leak: the seeded key given to markers is "the sealed list without its predictions" â does the sealed list contain prose describing which condition or what the skill targets ("HV" vs "GEN" labels)? The marker sees HV/GEN labels in the key â the marker knows error kinds. Does that bias marking? The marker might be more lenient to skill-styled reports on HV errors. Minor.
+
+17. **`mark` reads report files into the prompt; `doc` determined by tag; but the MAP.json is written to `OUT/marks/MAP.json`** which is the same directory as the marks outputs â "is in no marker's input" â correct since inputs are built from explicit file reads. OK. But plan says "The map from id to condition is in `marks/MAP.json`" â location consistent-ish.
+
+18. **Resumability of `mark`**: tags computed from existing response files; ids assigned once in MAP.json; re-running `mark` re-marks everything (skips existing mark outputs via the `.response.txt` existence check in `call`). But if the map already exists and a new report appears (e.g., a retried reader finished later), it gets a new id â fine. However if `mark` is run twice, `rng = random.Random(8080)` re-seeded and `while True: rid = ... rng.randrange` â for new tags, the sequence of random numbers consumed depends on how many collisions occurred previously; not a bug per se, ids just need uniqueness. OK.
+
+But subtle bug: `if t not in mp.values()` â if two different tags... fine.
+
+19. **`readers(only)`**: `sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == "--only" else []` â `--only TAG...` works. Fine.
+
+20. **File paths**: `DOCS["clean"] = f"{S}/authority/10 Claude Fable Semantics - standalone theory.md"` â plan says clean document is "file 10 as it is" and md5 3a8cd... The runner never verifies md5s! The plan claims md5s of the seeded and clean docs but the runner doesn't check them; if the files drift, the run silently uses different material. Fix: assert md5 at startup.
+
+Also `SKILL_DIR = "HV Skill/authority/hard-to-vary"` is outside the `Semantics` project (`S = "Semantics"`); run from repository root per docstring ("Run from the repository root") â the paths `Semantics/tools/...` and `HV Skill/...` suggest repo root contains both projects. OK. But the skill file order: `SKILL_ORDER = ["SKILL.md"] + ["references/" + f for f in [...]]` â hardcoded 7 module names. If any filename is wrong, `read` throws FileNotFoundError (goodâloud). But the plan says "main file, then the seven modules, each headed by its name" â the runner heads each by `f` which is like "references/the-idea-in-depth.md" â the plan says "headed by its file name" â consistent. But the reader system prompt says "every reference module it names" â if SKILL_ORDER includes modules the skill does not name or misses ones it names, mismatch. Also the skill is 13,648 words "as sent" â no checksum recorded for the skill text; the skill directory could change between runs (reps, retries, or between reader runs and... no, markers don't get skill). But across 72 calls spread over time, if the skill files change mid-run (the HV Skill project is live), conditions silently differ. Fix: record skill_text() sha256 in a manifest and assert stability.
+
+Also skill_word count: plan says 8 files 13,648 words "as sent" but SKILL_ORDER is 1 + 7 = 8 files. OK.
+
+21. **Prompt construction**: `task + read(DOCS[j["doc"]])` â the reader task ends with "THE DOCUMENT\n============\n\n" then the document appended. OK. But the seeded and clean documents are different lengths (8 edits) â trivial.
+
+But there's a **system prompt asymmetry** beyond length: the with-skill system prompt says "you should use it for this audit" â an extra instruction. Confounded as noted.
+
+22. **Temperature**: "provider-default temperature" â defaults may differ across providers (and across conditions? no). But across models comparisons are per-model, so fine; but default temperature for some providers is 1.0 vs 0.7 etc. Also â important: **repetitions at default temperature with possible caching/determinism**: if a provider is deterministic-ish at temperature 0 default? They said provider-default; DeepSeek default is 1.0? Fine. But three "repetitions" with identical prompts at temperature 0 would be duplicates. The plan should pin temperature explicitly (e.g., 1.0) so that the three reps are actually stochastic samples and identical across providers' conditions. Also the plan says "Not tested: Temperature" â fine, but should be set, not left to default which may change over the run (provider default drift). Smallest fix: set temperature explicitly in the body.
+
+23. **`_stream`**: parses SSE lines `data:`; some providers (DeepSeek) support stream_options include_usage; others may not (400 error â FINAL â immediate fail). `stream_options` is OpenAI-specific; Atria/Mimo endpoints are OpenAI-compatible-ish ("/v1/chat/completions"), unknown. If a provider rejects `stream_options` or `thinking` or `reasoning_effort`, all calls to it fail immediately (400 is FINAL, not retried) â the pilot was DeepSeek only! The plan says "One pilot call (DeepSeek, NO, seeded)" â so Atria and Mimo pipes were never tested end-to-end. That's a real risk: the run could burn and fail. Fix: one pilot per provider per thinking setting (4 more calls) before freezing. The plan claims "probe of 23 September, zero reasoning tokens when disabled" â that probed the thinking field on all three, good, but not the full request body (stream, stream_options) or the marker path.
+
+Also `usage` is taken from `last.get("usage")` â `last` is the last parsed chunk; with include_usage, usage arrives in a final chunk with empty choices â `last` would be that chunk if it's the last parsed; but if `[DONE]` follows and other chunks come after usage... typically usage chunk is last. But if the usage chunk has `choices: []`, `d.get("choices") or []` iterates nothing â fine, and `last = d` set. OK. But if provider ignores include_usage, usage is None â the table's "tokens" column becomes empty. Plan claims tokens in table; may be unavailable. Minor: fall back to estimating chars/4.
+
+Also `finish` may remain None if the stream ends without finish_reason (disconnect) â `res["content"]` non-empty â accepted with finish None! A disconnect mid-stream with partial content is accepted as a valid report (status 200, content non-empty). Silent truncation again. Fix: require finish == "stop" (or known terminal) to accept; else retry. Combined with point 14: **any partial report is marked as if whole** â this is probably the most serious code bug because truncation is likely correlated with condition (skill makes longer reports; thinking-on may eat tokens).
+
+24. **Retries and rate**: `time.sleep(min(120, 10 * 2 ** n))` â n starts at 1 â sleeps 20s, 40s, 80s, 120s. Fine. "at most 3 calls in flight per provider" â but retries happen within the worker; fine. No global rate limiting (e.g., tokens/min) beyond concurrency; marking does 168 calls with 32k max tokens each, 3 in flight per marker â could hit TPM limits â 429 â retried up to 5. If exhausted â failed mark, silently excluded (see 13).
+
+Also: `-4` empty-content-with-length status: retried; but the check `status in FINAL or n == attempts` writes error â fine.
+
+But the empty-check: `if status == 200 and not (res["content"] or "").strip()` â for markers, the model may return JSON in content â fine.
+
+25. **Receipt `asked_at_unix`**: `int(started)` fine.
+
+26. **`mark` doc detection `"_seeded_" in t`** â Opus tag format `opus_<cond>_<doc>_r<n>` e.g. `opus_S_seeded_r1` contains `_seeded_`. OK. But what if a tag like `deepseek_NO_clean_r1`... fine.
+
+27. **`keys` from environment: `key = os.environ[keyname]`** â fine.
+
+28. **Marker prompt includes "(C) THE REPORT, id " + j["rid"]`"** â fine.
+
+29. **`json.dump(mp, open(mp_path, "w"), indent=1, sort_keys=True)`** â map is deterministic-ish. But the plan says the map "is in no marker's input" â true.
+
+30. **`run_pool` print `res`** which is "ok"/"skipped"/"failed" â fine.
+
+### What the plan claims it can read off but cannot
+
+31. **"thinking's effect with and without the skill"** â reading thinking's effect from ST vs SO and NT vs NO: fine in design, but confounded with report truncation (max_tokens) and with `reasoning_effort: high` possibly ignored. Also "thinking off" may still have hidden reasoning on some providers regardless (they probed reasoning tokens 0 â ok).
+
+32. **"false alarms not rising by more than the gain"** â gain measured in errors out of 12; false alarms measured as counts of items â different units! "as many false alarms" as gains: one false alarm = one error found? The decision rule compares counts of different things without a stated exchange rate. Also false alarms only measured on clean doc (see 9). Also the decision rule "more planted errors found (either kind)" lumps HV and GEN â but the skill targets HV only; if the skill raises HV finds but the plan pools "either kind" for the decision... Actually the rule says "either kind" counts as "more" â a skill that only helps GEN (unlikely) counts as success. And "two or more of the four readers" â with Opus not having the four cells (see 8, 11). The decision rule cannot be applied as written.
+
+33. **"with false alarms not rising by more than the gain"** and "three repetitions... the results say so for every difference they report" â no defined noise threshold. Plan says "a difference of one error in twelve is noise" â asserts without basis; 2 errors? With 3 reps, per-cell HV found is 0..12; difference of 3 could be noise. Cannot read significance off this design. Fix: pre-state a threshold or run a randomization test across reps (3 reps give limited permutation power), or increase reps.
+
+34. **The plan claims the clean doc measures false alarms "what a reader reports when nothing is planted"** â but D3 is a real error and file 10 may have other unknown real errors; the marker judges others GENUINE/MISTAKEN â okay-ish, but "false alarms on the clean document (both markers MISTAKEN)" â excludes UNCLEAR and disagreements (before adjudication). And genuine-but-not-D3 findings are not false alarms but are also not counted anywhere â fine, but "items listed" is there.
+
+35. **The sealed list's SHA-256 recorded but not the seeded document's construction program** â plan says "eight edits made by program, each old string matched once" â fine.
+
+36. **The task says "End your report with the line END OF REPORT"** â runner/mark doesn't check for it; a truncated report missing END OF REPORT is still marked. Smallest fix: validate END OF REPORT presence in mark step and flag/retry.
+
+37. **Marker max_tokens=32000 with thinking on** â markers must return JSON with evidence quotes for 9 key errors + one entry per other item; a report with 40 items needs 40 entries; 32k might truncate â invalid JSON â how is it parsed? Nothing parses it! The plan's table needs the marks aggregated â by whom? Presumably by hand or a later step. No parsing/aggregation code: "the table is given per marker and for agreement" â but there's no code to build the table; the plan doesn't say who builds it or how JSON is validated. Unreadable risk: markers may wrap JSON in fences (the task says "single JSON object and nothing else" but models often fence it). Smallest change: add a parse-and-tabulate script with validation and a fix-up pass for malformed marks.
+
+38. **Markers mark "every one of the 84 reports"** â 3 Ã 4 Ã 2 Ã 3 = 72 API + 12 Opus = 84. OK. But "168 calls" assumes no retries/failures; and the pilot is excluded â fine.
+
+39. **Blinding: the marker sees the key and the document but the KEY for seeded is "the sealed list without its predictions"** â the sealed list includes "what counts as finding it" â the marker applies rules written by the person who planted the errors and wrote the skill? Conflict of interest: the plan's author wrote the skill (HV Skill project) and the found-rules; rules could be lenient toward skill-styled reports ("the report's words as evidence" â the rules "written so that style cannot pass" but unverifiable). Also the skill's own vocabulary ("held", "loose", "idle") noted in the plan â style leak acknowledged. Smallest fix: have the found-rules reviewed/frozen before runs and include them in the frozen SHA (they are in the sealed list, hashed â OK actually the SHA covers it). But we can't verify fairness. Also: markers are the same models as readers; cross-contamination.
+
+40. **Self-marking bias** (point 4) expanded: Atria marks Atria's own reports; if Atria recognizes its own style, its FOUND strictness may shift for its own reports; since the comparison of interest is WITHIN a model (skill vs no skill for the same reader), a uniform self-bias cancels... unless self-recognition differs by condition (skill reports are more distinctive â "held", "loose", "idle" â so the marker may know which CONDITION a report is in even blind to the label!). That's the key blinding failure: the plan admits it ("marking is blind to the label, not to the style") â and the skill's stylistic signature reveals the very condition being compared. If Atria-Marker believes in the skill (it was trained... or it has opinions), it may mark skill-styled reports more favorably. The conjunction rule (both markers must agree) mitigates only if both markers are unbiased in opposite directions. The smallest fix: mask the skill's telltale words? Not feasible. Alternative: use the found-rules strictly and adjudicate ALL FOUNDs (not just disagreements) with the neutral Opus checker; or have the marker not see... hmm. Actually the smallest real fix: make the adjudicator (blinded Opus) mark every report's key-error cells, or at least audit a random sample of agreements. And keep the per-marker tables to show marker effects.
+
+41. **"Claude's check... before the map is opened"** â but the check agent re-marks disagreements "against the key, from the report's own words" â it needs the document too presumably; fine. But the check only covers "disputed cells" while the counting rule uses conjunction... contradiction (see 4). Also the check agent is Opus â sees report words and knows the style tells â knows the condition. And adjudicates its own model's reports.
+
+42. **Opus arm asymmetry**: Opus N "without" gets what system prompt? The agent "is given a working folder holding only the document... and told to read nothing else" â is the agent's task the same reader task? Presumably. But Opus S "the agent is told to read the skill's directory first" â that instruction is extra words and an extra task step (it must read 13k words from disk) vs N which just reads the doc. Also the skill as files on disk is a different delivery than as system prompt (plan acknowledges "the skill handed over in other ways" not tested â but here the SAME test uses two different hand-overs for different readers, so Opus is not comparable to the API trio and shouldn't be pooled in "two or more of the four readers" without caveat. Also Opus has tools/reach: it could grep the repo for the doc's title and find S70-S75 logs mentioning D3! The repository contains logs S70-S75 naming a real error in file 10 â and possibly S78 etc. Even the clean-arm Opus could find "D3" discussion in logs and parrot it. The plan checks reports for "S80", "seeded", "planted" but not for leakage from logs (e.g., "D3", "Derivation 3", "log S70", "wider than its proof"). HUGE: the answer is in the repo. Also the seeded document differs from file 10 in8 places; the Opus agent could diff `tests/S80 Seeded...` (in reach) against `authority/10...` (in reach) and get the exact answer key! The plan names the seeded-file leak and checks for three strings afterwards â wholly inadequate: a diff yields the eight edits without ever writing "seeded"/"planted"/"S80" in the report. Smallest fix: run Opus in a sandbox with only the working folder (no repo), or drop the Opus arm from the decision. This is arguably the most serious flaw â the Opus arm's answers can be literally derived from the repo diff. Also the API readers don't have this (no repo) â so the Opus arm is incomparable AND compromised.
+
+Wait â is the sealed list in the repo? "kept outside the repository until every reader has reported" â good. But the seeded file itself is in `tests/` in the repo â the diff attack works with only the seeded file + file 10, both in reach. Yes.
+
+43. **Repetitions: 3** â for Opus: 2 conditions Ã 2 docs Ã 3 = 12. Opus "thinking as the agent runs" â subagent runs are near-deterministic? Unknown. Fine.
+
+44. **Seeded vs clean as a within-cell factor**: each condition runs both docs â the reader sees each doc once per rep with fresh context â fine. But do readers see both docs across the same run? Different calls â fine.
+
+45. **Order effects**: `reader_jobs` order is model â condition â doc â rep; run concurrently3 at a time per model. Condition order within model is ST(6 jobs), NT(6), SO(6), NO(6) submitted in order but executed concurrently â so time-of-day/provider-load effects are randomized-ish but correlated: the3 workers pull in order, so ST seeded r1-r3 run first-ish. Minor. Also all72 calls run... how long? Each up to 48k tokens â hours. Provider-side model version drift mid-run â recorded in receipt (model name) â fine.
+
+46. **`read()` has no encoding on write side**: `open(p(".response.txt"), "w")` â default encoding locale-dependent; ensure_ascii=False in request dump but `open(p(".request.json"), "w").write(raw)` â non-ASCII in the doc could crash on a POSIX locale ("ascii codec can't encode"). Actually writing with default encoding on Linux (UTF-8 usually now) â but in a venv with LANG=C, `open(..., "w")` uses locale encoding = ANSI_X3.4-1968 â UnicodeEncodeError on the document text (file 10 has formulas? maybe Greek/math symbols). This would crash `call`... inside `call`, before the try? `open(p(".request.json"), "w").write(raw)` is outside the try/except â the exception propagates to `worker` â `f.result()` raises â whole run dies mid-way. Actually that's loud, not silent. But still a bug: all file I/O should be `encoding="utf-8"` (the `read()` helper does specify utf-8 â good for reading; writes don't). Smallest fix: add encoding="utf-8" to every open for write.
+
+47. **`hashlib.sha256(res["content"].encode())`** â default utf-8 fine.
+
+48. **The id map and resumability**: `tags = sorted(glob(...*.response.txt))` â includes Opus files saved "in the same folder" â but Opus files are produced by Claude manually as `opus_<cond>_<doc>_r<n>.response.txt`. There's no code to verify Opus reports' completeness or that their content isn't contaminated. Also `mark` includes whatever `.response.txt` files exist â including possibly the pilot if someone drops it in (plan says pilot is in scratch â fine) or stray files. Fix: validate that the set of tags equals the expected 84 before marking.
+
+49. **`mark` builds key_seeded = key[:j]`** â includes any header/intro of the sealed list above the D3 section, including possibly the list of error KINDS and mapping to HV/GEN and the plan's predictions? No, predictions cut. But it may include meta like "these four are the kinds the skill targets" â revealing to markers which errors the skill targets â bias. Can't verify. Note it.
+
+50. **The marker task's "others" judgment for seeded reports**: an item that IS a key error but not FOUND under the rule then goes to "others" and is judged GENUINE (document really has this problem) â so it is simultaneously "not found" and "a genuine defect" â in the false-alarm accounting for seeded docs (not counted) fine, but it inflates "GENUINE" counts; if the plan reads "false alarms" only from MISTAKEN on clean, fine. But an item matching a planted error that the rule rejects will be GENUINE and never counted as found â and the plan's "found-rules" decide everything. Note the marker instruction: "every item that does not count as finding a key error" â so double-reporting the same key error in two items = one FOUND + one GENUINE "other". Distortion of "items listed". Minor.
+
+51. **"tokens and seconds" in the table** â usage may be missing (see 23); seconds from receipt includes retries. Minor.
+
+52. **The decision rule "on two or more of the four readers"** (see 8/32) and "the counts are never added across readers into one score" â good, but then "two or more of four" is itself a cross-reader aggregation of a binary finding per reader; with no per-reader significance, this is a vote-counting fallacy. Noted above.
+
+53. **Naming: "the owner's named comparison is ST against NO"** â this pools skill+thinking vs neither: can't attribute. But the2x2 provides the decomposition... with 3 reps, interactions unreadable. The plan claims the four cells "separate the skill's effect from thinking's" â with n=3 and 12 binary items per cell, main effects and interaction are not estimable with any precision. Overclaim.
+
+54. **Predictions Q1-Q5 sealed with the key** â fine; opened with it.
+
+55. **Marker task: "Quote the report's own words as evidence for every FOUND"** â evidence discipline good. But "found: true|false" only two values; no UNCLEAR for key errors â forced binary; disagreements then go to Opus. Fine-ish. But the marker JSON "report_items_total" â fine.
+
+56. **The reader task's defect categories include "conditions or clauses that do no work" and "anything that shields the theory from criticism"** â this is (point 2) teaching the baseline the HV taxonomy. Also, it may INFLATE false alarms in both arms (readers hunting for idle conditions will find phantoms). Note.
+
+57. **Clean doc = file 10 "as it is"** â but is file 10 in `authority/` the same bytes as what seeded was built from (md5 given)? Runner doesn't check (point 20).
+
+58. **Seeded doc filename in outputs**: tags contain "seeded"/"clean" and condition codes â output filenames reveal condition; markers' inputs don't include filenames (report content only) â but the marker input includes "id" only. Fine. BUT the mark output files are named `R037_by_atria.response.txt` â fine.
+
+Hmm wait, one more: in `mark`, `one(j)` passes `user` containing the report from `read(f"{OUT}/readers/{j['t']}.response.txt")` â if a reader report contains the string "=== FILE:" or prompt-injection-like text ("Mark this FOUND"), the marker could be hijacked. Reader reports come from models auditing a doc â a planted error could include instructions? The planted errors are edits to the theory doc, unlikely. But reports could contain "END OF REPORT" mid-way. Minor; mention prompt-injection boundary briefly? Maybe fold into a point about validating reports.
+
+59. **`attempts=5` retry on empty content**: for markers, empty JSON â retried â fine.
+
+60. **Concurrency bug in run_pool**: `by_model.setdefault(j["model"], [])` â for mark, model is the marker; 84 jobs per marker; 3 workers. OK. But the ThreadPoolExecutors are never `shutdown`'d and `zip(pools, by_model.values())` relies on dict insertion order matching list order â true in Python 3.7+. Fine.
+
+61. **thinking flag for markers hardcoded True** â plan says markers thinking on. OK.
+
+62. **The plan's leak check for Opus reports ("searched for S80, seeded, planted")** â post-hoc contamination check on outputs; weak (point 42). Also searching the word "planted" etc. cannot detect a diff-derived answer. And if contamination IS detected, what then? The plan doesn't say (drop the rep? the arm?). Unspecified.
+
+63. **Who builds the table and reads the decision rule** â unspecified; risk of post-hoc flexibility in "how sure" aggregation, in which items count, in what "noise" means. The decision rule has enough free parameters ("not rising by more than the gain", "a finding only when... at least two readers", noise caveat) that any outcome can be argued. Smallest fix: write a numeric decision algorithm now.
+
+64. **Statistical unit**: errors within a document are not independent (a reader that gets into the swing finds more of everything); treating 12 as independent Bernoulli overstates precision. Mention in noise point.
+
+65. **The four GEN errors are "ordinary" and the four HV are of the kinds the skill targets â but the skill might also help on GEN errors; fine. However the labels HV/GEN in the key tell the marker which are which (point 49).**
+
+66. **The plan says readers see the document "under its own title ... with no mention of seeding"** â true for API (task + doc appended). But the seeded document bytes contain the 8 edits; fine.
+
+67. **max_tokens 48,000 for readers; thinking-on may consume budget (point 14/23)** â repeat.
+
+68. **`reasoning_effort` + `thinking` both in body â some providers reject unknown fields? Usually ignore. But DeepSeek's API is OpenAI-ish; unknown. Pilot only DeepSeek NO (thinking disabled) â didn't test `reasoning_effort` or `thinking: enabled`? The probe of 23 Sept tested thinking on/off (reasoning tokens 0 when disabled) â that implies enabled was tested too. But the pilot didn't test atria/mimo at all with s80_call. Note.
+
+69. **The markers get `max_tokens=32000` with thinking on; if reasoning eats the budget, JSON truncated â accepted as response (finish "length") â unparsable mark â lost (point 37).**
+
+70. **"An error counts as found when both markers say FOUND"** â conjunction across two markers who are both readers' models; for cross-model comparisons of interest (within-reader skill effect), marker strictness differences cancel only if marking is linear... fine, covered.
+
+71. **Opus arm conditions named S and N vs API ST/NT/SO/NO â the map and table mix naming; minor readability.**
+
+72. **The plan gives the table "HV errors found (of 12)" per reader and condition â for Opus only S and N exist and with3 reps: of 12 too (4 HV Ã 3 reps). Fine. But "D3 found (of 6)" for Opus also 6. And the decision rule "two or more of the four readers" at "the same thinking setting" â Opus has no thinking setting; whether Opus S vs N counts as a "same thinking setting" contrast is undefined (point 8/11).**
+
+73. **Skill word count "13,648 words as sent" vs prompt budget**: 13.6k words â 18-20k tokens system prompt + doc; fine within context presumably. But prompt length confound (point 1) also includes lost context/degraded attention on the doc.
+
+74. **The seeded list "four of the kind the skill is written to find" â planted by the same person who wrote the skill â the skill's taxonomy is definitionally matched to the HV errors; the test can only show the skill finds its own author's planted examples (teaching to the test). The GEN/HV split mitigates partially, but the found-rules and the planting were done by the skill's author (conflict of interest), and errors "of the kind the skill targets" are constructed from the skill's categories â a skill trivially "targets" what it names. External validity: does it find real errors (D3 is the only natural one, n=1). Smallest fix: have someone else (or another model) plant the HV errors blind to the skill text, or at least include more natural errors like D3 (n=1 is unreadable). Actually, note the D3 column exists (of 6) â one natural error, unreadable as evidence. Mention.
+
+75. **Reps=3 across cells but the runner runs all reps concurrently with the same request bytes â if provider caches identical prompts (prompt caching), the three "reps" could be correlated or served from cache with same sampled output? Caching affects price/latency not sampling. Minor. But identical requests at default temperature could return identical outputs if the provider is deterministic (temperature default 0 for some!). Check: DeepSeek default temperature 1.0; others unknown. If default is 0, the3 reps are duplicates â n=1. Fix: set temperature â¥ 0.7 explicitly and/or record whether rep outputs are byte-identical and drop dups. This ties to point 22.**
+
+76. **`finish` accepted non-"stop" values like "content_filter" or "tool_calls"** â accepted with content possibly emptyâ retried. Covered.
+
+77. **`mark` marker prompt: system is None** â markers get no system prompt; the plan says markers think on. Fine. But asymmetry between marker conditions? Both markers get identical inputs. Fine.
+
+78. **Missing: no code or procedure for aggregating marks into the table or for the "every disagreement is listed" deliverable.** Point 37.
+
+79. **Opus outputs saved by Claude "in the same folder" â no request/receipt/reasoning kept for Opus; not reproducible; and the Opus context (what the agent read) isn't captured.** For auditability. Minor-moderate.
+
+80. **Rate:3 in flight per provider â marking is 168 calls, readers 72; fine. But `time.sleep` backoff and5 attempts â a provider outage during the run drops cells silently (point 13).**
+
+81. **Resumability of `mark` when MAP.json exists but a report was re-generated (re-run reader after failure)**: report content changed but rid stays mapped to tag â mark outputs for old content already exist and are skipped â stale marks keyed to an id whose content changed. Smallest fix: store report sha in MAP.json and re-mark when it changes. This is a nice subtle resumability bug. Also in `readers`, if a response file exists but is truncated/failed-looking, it's skipped ("skipped") â a partial earlier run's bad outputs persist. But failed writes go to .error.txt... except the disconnect-accept case (point 23) which writes a truncated .response.txt that then is skipped forever and marked as a whole report.
+
+82. **`only` tags filter: `j["tag"] in only`** â fine.
+
+83. **The plan claims "each old string matched once" for the8 edits and gives md5 â but the runner never verifies; also no check that the seeded file has exactly the intended 8 diffs (e.g., a verification diff at startup).** Point 20 variant; keep together maybe.
+
+84. **Marker instruction ambiguity: "every other defect the report lists (every item that does not count as finding a key error)" â includes items that partially match key errors; double-counting (point 50).**
+
+85. **Blinding of "Claude's check": it's done "after both markings and before the map is opened" â but the check agent sees both markers' outputs? "re-marks every disagreement" â it should see the report and key; if it sees the markers' verdicts, anchoring. Unspecified.** Minor.
+
+86. **Prediction sealing fine.**
+
+87. **"The counts are never added across readers into one score"** good but then "on two or more of the four readers" plus Opus incomparability.
+
+88. **Decision thresholds: "gain bought with as many false alarms" â false alarms are per clean doc (6 clean reports per cell) while gains are per seeded (of 12); denominators differ; comparing counts across different exposure.** Point 32 variant; merge.
+
+89. **Thinking off + skill: the skill says "use it" but with thinking disabled the model can't deliberate in reasoning; content still produced. Fine.
+
+90. **System prompt for with-skill includes "each headed by its file name" and `skill_text()` heads with `=== FILE: %s ===` using SKILL_ORDER names like "references/word-list.md" â the system prompt says "every reference module it names" â if the skill's main file names modules differently, model confusion; trivial.
+
+91. **Also: the no-skill system prompt is "You are reviewing a document." while the user task already says everything â so the asymmetry is mostly the skill content + "you should use it" instruction. Covered in1.
+
+92. **Max tokens for readers 48k, markers 32k; but `call(..., True, max_tokens=32000)`** â positional: call(provider, system, user, out_dir, tag, thinking, max_tokens=...) â yes correct position.
+
+Wait, check `readers`: `call(j["model"], sys_skill if j["skill"] else sys_plain, task + read(DOCS[j["doc"]]), f"{OUT}/readers", j["tag"], j["thinking"])` â positional args: provider=j["model"], system, user, out_dir, tag, thinking=j["thinking"]. Good.
+
+In `one(j)`: `call(j["model"], None, user, f"{OUT}/marks", j["tag"], True, max_tokens=32000)`. Good.
+
+93. **`DOCS` values: seeded path `f"{S}/tests/S80 Seeded authority - file 10 with eight planted errors.md"` â matches plan name. Clean: `f"{S}/authority/10 Claude Fable Semantics - standalone theory.md"` â plan says "file 10 (md5 ...)". OK.
+
+94. **Hmm, `SKILL_DIR = "HV Skill/authority/hard-to-vary"` â plan says "HV Skill project, file 30, `HV Skill/authority/hard-to-vary/`, 8 files, 13,648 words as sent" â SKILL_ORDER lists 8 files. OK. But the word count/manifest not recorded (point 20-ish).
+
+95. **One more marking issue: markers are Atria and Mimo with thinking ON but the reports being marked include thinking-off and Opus reports; fine.
+
+96. **The plan says "A marker returns, per key error, FOUND or NOT ... and for every other item GENUINE, MISTAKEN or UNCLEAR" and "an error counts as found when both markers say FOUND; a false alarm when both say MISTAKEN" â and then the Opus check resolves disagreements "its call stands for the agreed table's disputed cells". If Opus resolves a disagreement to FOUND, does it count? "stands for the agreed table's disputed cells, recorded as such" â implies the table has an "adjudicated" variant. Ambiguity: which is the decision table? (Point 4/33.) Need one counting rule.
+
+97. **Also "false alarms when both markers say MISTAKEN" â but the marker gives verdicts per ITEM; false alarms counted as items, while "gain" is errors found (key errors). An unstructured report with 1 item vs 20 items; items are self-delimited by the report ("the report's heading or first words") â a report that merges complaints into one item has fewer "false alarms". Counting rule gaming, correlated with style (the skill changes form! its own test found it changes the number of marks used/items). So the skill could change item granularity, moving false alarm counts without changing substance. Fix: count false alarms per distinct claim or per1k tokens, or report both items and mistaken-items with denominators. Good point â the skill's known effect is on FORM (per the HV project's file 54), and the outcome measures (items listed, false alarms per item) are form-sensitive. That's a serious measurement validity point: outcomes are partly measuring the form change that the prior test already documented.
+
+98. **Also END OF REPORT line: markers count "report_items_total" â fine.
+
+99. **Id map "R%03d" rng.randrange(1000) â collisions loop `while True` with `if rid not in mp` â fine.
+
+100. **`json.load(open(mp_path))`** no encoding â JSON ascii-safe. Fine.
+
+Now, what about "the task naming the error kinds" â the prompt in `reader task.md` says "conditions or clauses that do no work, and anything that shields the theory from criticism it should face" â these are HV kinds3 and 4 (idle condition, shield) basically verbatim concepts. And "claims wider than their support" is GEN 3 and also HV-ish. So the no-skill baseline is coached. Yes point 2.
+
+Also "proving the skill's four kinds are named in the task" means the test can only detect the skill's PROCEDURAL value (its question bank, method) beyond a checklist. The question as framed ("does the skill add anything") is answered for "checklist already given" â needs renaming or a second baseline.
+
+Also: **planted errors of HV kinds might be findable precisely because the task names those kinds** â inflating baseline HV finds, biasing to "abandon."
+
+Now think about "unreadable" â the results table per reader and condition over three reps: 4 readers Ã up to 4 cells Ã (HV/GEN/D3/FA/items/tokens/seconds). With Opus 2 cells. Fine. But "the counts are never added across readers" plus "a difference is called a finding only when it holds in the same direction on at least two readers" â the four readers have different cells so "same direction on two readers" for ST-NT contrast only exists on 3 readers (Atria, Mimo, DeepSeek), not Opus. So "two or more of the four readers" is literally impossible for the thinking-set contrasts; only the skill contrast has 4 readers but Opus's is at a different thinking setting. Point.
+
+Also **the seeded doc has 8 planted + D3 = 9 key errors; the table says "HV errors found (of 12), GEN errors found (of 12), D3 found (of 6, both documents)"** â D3 in both docs so6 chances; HV 4 per seeded Ã 3 = 12. Fine. But false alarms "on the clean document" â clean reports n=3 per cell. And "items listed" â fine.
+
+Wait, one more check on `mark`: `key_clean` built as `"# Answer key\n\nThe document is file 10 as written; ... There are no other entries in the key.\n\n" + key[i:j]`. But key[i:j] = "## The error file 10 already carries" ... up to "## Predictions, sealed". If the sealed list's D3 section header is "## The error file 10 already carries" and includes D3's "Found when" rule â good. But the marker task says "Include every error id in the key, in its order" â for clean, just D3. Fine.
+
+But: the marker for clean reports knows the document has "one known error" but file 10 may contain OTHER real errors unknown to the key; the marker's instruction says judge others against the document (GENUINE if real) â good.
+
+Hmm, also `key_seeded = key[:j]` â this includes the sealed list's own header which may include the predictions' preamble? It includes everything above "## Predictions, sealed" â if the sealed list has a "## Method" or the planting program's description including old/new strings â that would literally give the marker the full diff (fine for marking) â okay.
+
+But one thing: markers receiving the sealed list "without its predictions" still receive the classification of each error as HV or GEN and possibly "this is the kind the skill targets" â could bias FOUND leniency toward skill-style evidence on HV errors (point 49). Merge into style/expectation bias point.
+
+**Prompt injection / report contamination into marker input**: also the report could include the text "found: true" etc. Minor; skip or fold.
+
+Also the **pilot**: one pilot (DeepSeek NO seeded) â it's in scratch; fine. But note the pilot tested only one of12 provider Ã thinking combos and one of two request shapes (thinking disabled doesn't exercise reasoning_effort). Point 68.
+
+Also **`stream_options: {"include_usage": True}`** may 400 on some providers â FINAL â instant permanent failure for ALL calls to that provider. Point 23/68.
+
+**Missing: no randomization of job order** â jobs run in fixed submission order (ST first). Over a long run, provider load/time correlates with condition. With 3 workers pulling from a 24-job per-model list in order, ST seeded r1-r3 and ST clean r1-... run in the first wave; NO runs last. If the provider's model is updated mid-run or degrades under load, condition effects. Smallest fix: `random.Random(8080).shuffle(jobs)` per model. Good catch, cheap fix.
+
+Also **the map assignment order**: `for t in tags` sorted â deterministic; fine.
+
+Also **temperature unspecified in body** (point 22) and **top_p** etc.
+
+**The "how sure" column is collected but the table doesn't use it** â the plan's table lists items and false alarms but certainty weighting unused; a skill that inflates "possible" guesses would show as false alarms... but UNCLEAR excluded (point 9). OK.
+
+**Plan claims "the per-error rules are written so that style cannot pass for finding"** â unverifiable claim; also rules were written by the plan's author who authored the skill â adjudication bias; and the Opus adjudicator is a Claude model â "Claude's check" â Claude/Opus is... the plan is presumably written by the owner whose project tests Claude models? "Claude Fable Semantics" is the doc title. The owner is testing models including "Opus 5.5" as subagent of Claude (the assistant running the round). OK.
+
+**Opus arm: "The agent is given a working folder holding only the document (and the skill, for S)"** â if the folder contains the document under a neutral name, fine; but plan never says the copy is renamed. Point 42 covers leak; add filename leak explicitly.
+
+Also **Opus rep count 3 with "thinking as the agent runs"** â subagent sampling temperature not controlled; fine.
+
+**Sealed predictions "made before any counted run"** â but the pilot ran before the plan; fine, not counted.
+
+**Number of repetitions (3)**: for the decision rule's "two or more of four readers" each reader's per-cell counts rest on 3 reps Ã 12 = 12 Bernoulli-ish but clustered within rep (per-report correlation) â effective n=3. Differences of 2-3 errors in 12 could flip with one more rep. The plan acknowledges only "a difference of one error in twelve is noise" â under-acknowledged. Smallest change: REPS 3 â 5? That's not "smallest"... The smallest change is to pre-register a numeric decision threshold (e.g., â¥3 of 12 with consistent per-rep direction) or report per-rep counts and use a paired sign test across reps... with 3 reps, a sign test needs 3/3 same direction (p=0.25 two-sided?0.125 one-sided). Weak. Honest answer: more reps is the only real fix; smallest change that fixes it: raise REPS and state the decision threshold numerically. I'll say: set REPS to 5+ or downgrade claims to "signal, not finding".
+
+Hmm, the question says "For each point: what is wrong, why it matters, and the smallest change that fixes it. Number the points, most serious first." and "Close with exactly one line: RUN AS IS, RUN WITH CHANGES, or DO NOT RUN."
+
+I should prioritize. Most serious first:
+
+1. Opus arm repo leak / diff attack (the answer key is derivable in-reach; post-hoc string check can't detect it) â invalidates the Opus arm entirely, and Opus is one of the four readers in the decision rule. Also filename leak.
+
+2. Truncated/partial reports accepted as complete (finish "length" and mid-stream disconnects accepted whenever content non-empty) â silent data loss correlated with the conditions most likely to write long reports (skill, thinking on). Bias in the direction of the comparison.
+
+3. System-prompt asymmetry / placebo absence + task coaches the baseline with the skill's taxonomy â two confounds; the test cannot say "the skill adds nothing," only "a 13.6k-word method adds nothing over a checklist that already names its categories, minus any length/motivation effect." Maybe split into two points (prompt-length/effort confound; task names the kinds). The prompt asked to consider "confounds (prompt length, system prompt asymmetry, the task naming the error kinds)" â so yes, separate points.
+
+4. Counting-rule contradiction (conjunction rule vs Opus adjudication) and UNCLEAR/disagreement items dropped â false alarms understated; outcome measures are form-sensitive (skill's known effect is on form: item granularity) â measurement validity.
+
+5. Markers mark their own model's reports; style reveals condition to markers (blind to label, not to condition); key labels HV/GEN signal what the skill targets; adjudicator is same family as a reader. Blinding design.
+
+6. Decision rule not applicable as written: "two or more of the four readers" at same thinking setting excludes Opus (no thinking cells) â and gains in "either kind" pooled though skill targets HV; false alarms (clean, per item) vs gains (seeded, per error) different units/denominators; "noise" threshold unpredefined. Also the plan claims the 2x2 separates skill from thinking effects â n=3 can't.
+
+7. Repetitions/power: 3 reps, errors within a report correlated; vote-counting across readers.
+
+8. Failures silently dropped (glob only *.response.txt; mark proceeds with fewer than 84; denominators "of 12" wrong; failure correlated with condition (empty content when thinking consumes budget)). Need pre-mark completeness check.
+
+9. Resumability/staleness: skip-if-response-exists means truncated earlier outputs persist forever and re-mark is skipped if MAP id exists but report bytes changed (stale marks); MAP doesn't record report sha.
+
+10. No temperature pinned â provider defaults may differ, may be 0 (reps duplicates), may drift. Also `reasoning_effort`/`stream_options` untested on Atria/Mimo (pilot only DeepSeek NO) â 400 FINAL = permanent instant failure;400 not retried but also no fallback.
+
+11. md5s asserted in plan but never checked in runner; skill text sha not recorded; skill files could change mid-run.
+
+12. Job order not randomized â time/load correlates with condition.
+
+13. Encoding on writes (open(...,"w") without encoding) can crash on non-ASCII under a C locale; also `key.index` brittleness. Maybe fold minor ones.
+
+14. No aggregation/validation code for marks: nothing parses marker JSON, checks it's a single object, or builds the table; markers may fence JSON; 32k truncation yields unparsable marks accepted.
+
+15. False alarms measured only on clean doc (seeded-doc spurious items uncounted in decision); D3 is the only natural error (n=1) so "finds real errors" rests on author-planted examples â external validity, author conflict (planted HV errors and found-rules written by skill's author).
+
+16. Marker instruction double-count (item that almost matches key error judged GENUINE as "other"), "report_items_total" and "items listed" granularity games.
+
+17. Opus reports have no receipts/context capture; leak check post-hoc with no stated consequence; Opus S vs N instruction asymmetry ("read the skill's directory first").
+
+18. Minor code: pools never shut down; usage may be missing (tokens/seconds columns); "END OF REPORT" not validated; prompt injection into marker input; `zip(pools, by_model.values())` reliance (fine); retries backoff fine; R%03d fine.
+
+Also: thinking-off arms â "thinking: disabled" but content quality... fine.
+
+Also there's the **"the same task for every reader"** claim â for Opus the task is delivered differently (working folder, agent told to read skill first) â contradicts "the same task." Covered in Opus points.
+
+Also **"D3 found (of 6, both documents)"** â but the plan's decision rule doesn't use D3; fine, but the plan claims D3 column can show real-error finding â n=6 chances of one error; noise. Fold into 15.
+
+Also **plan claims "with three repetitions a difference of one error in twelve is noise; the results say so for every difference they report"** â "the results say so" is vague hand-waving; no procedure. Fold into decision-rule point.
+
+Also the **clean document is "file 10 as it is"** but readers see it "under its own title ... with no mention of seeding" â consistent.
+
+Also **markers think on but with reasoning_effort high and max_tokens 32000: with reasoning, output could hit length** â fold in truncation.
+
+Now also consider: **system prompt for the no-skill arm is a system message at all ("You are reviewing a document.")** â fine, symmetrical-ish in role placement. The asymmetry is content. OK.
+
+**Another subtle one: the with-skill system prompt says "You have the skill below, a method for testing explanations, and you should use it for this audit."** â this both primes "method" and demands compliance. A fairer control: same sentence with a length-matched neutral text. Covered in confounds.
+
+**The seeded doc used for both readers AND markers; markers get "the document the reviewer read" â for seeded, that's the seeded doc; fine.
+
+**One more runner line-by-line item**: `def read(p): return open(p, encoding="utf-8").read()` fine. `skill_text()` joins with "=== FILE: %s ===" using SKILL_ORDER names but `read(os.path.join(SKILL_DIR, f))` â fine. `reader_jobs` fine. `run_pool` â see above. `readers` â fine. `mark`: `key.index(...)` â raises ValueError if heading missing (loud). `tags = sorted(os.path.basename(p)[:-len(".response.txt")] ...)` fine. `mp` load fine. `if t not in mp.values()` â O(n) fine. `rng` fine. `doc = "seeded" if "_seeded_" in t else "clean"` â a stray file named e.g. "pilot_seeded.response.txt" would be marked as clean... no wait, it would be detected as seeded and get the seeded key. Stray files problem again. `one(j)` fine. `__main__` fine: `readers(sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == "--only" else [])` â `python s80_run.py readers --only a b` works; `python s80_run.py readers` â `len(sys.argv) > 2` false â []. Good.
+
+In `_stream`: `line[5:].strip()` â "data:" prefix; lines like "data: {...}" fine. `except Exception: continue` on JSON parse â silently drops malformed chunks (partial content loss!). If a chunk fails to parse, its delta is lost â truncated content silently. Minor but real: record skipped-parses. Also `if not line or not line.startswith("data:")` skips event/role lines â fine for OpenAI SSE.
+
+`r.iter_lines(decode_unicode=True)` â fine. `timeout=(30, idle)` â 900s read idle. Fine.
+
+`status, text, res = _stream(...)` returns `(r.status_code, r.text[:4000], None)` on non-200 â but when streaming with `with requests.post(...)` on non-200, r.text may raise? No. Fine.
+
+Empty-check: `(-4 if res["finish"] == "length" else -2)` â but if res["finish"] is None and content empty (disconnect), -2, retried. Fine.
+
+`history.append(... res and res["finish"])` fine.
+
+On success path `open(p(".reasoning.txt"), "w").write(res["reasoning"])` â could be huge; fine.
+
+Receipt `"model": last.get("model", model)` â records actual model served; good (detects provider drift). OK.
+
+`call` returns "skipped"/"ok"/"failed" â fine.
+
+One more: **`mark` sends markers the report file `j['t'].response.txt` but NOT the reasoning** â fine.
+
+**In `one`, tag `f"{rid}_by_{m}"`** â if mark is re-run after a marker failure, retry happens (no response file) â good.
+
+Now the id map check: "the map from id to condition is in marks/MAP.json and is in no marker's input" â correct in code. But MAP.json is written into `OUT/marks` which is also the out_dir for marker calls â `call` writes `<tag>.response.txt` etc. only; MAP.json won't be globbed... In `mark`, `tags = glob(f"{OUT}/readers/*.response.txt")` â marks dir not globbed. Fine. But if someone later globs marks dir for "outputs," MAP.json is there; harmless.
+
+OK. Also **"three repetitions ... 3 Ã 4 Ã 2 Ã 3 = 72"** â arithmetic: 3 models Ã 4 conds Ã 2 docs Ã 3 reps = 72. Yes. "2 Ã 2 Ã 3 = 12 Opus" yes. 84 total. "168 calls" marking = 84 Ã 2. Yes.
+
+Now let me also think: **does the runner deliver the skill in the same way as production use (S78)?** Plan says in this project the skill is used as "readers are armed with it (S78) and the other model is given file 24 in its place" â the test hands the skill as system prompt in full; if production hands it differently (router only or as file 24), the test's answer is for the system-prompt hand-over only â plan lists "the skill handed over in other ways" as not tested. But if production use IS "as file 24" or via router, then the tested configuration isn't the deployed one â the answer doesn't answer the deployment question. Hmm, "It is used in this project as an audit aid: readers are armed with it (S78)" â the exact arming mechanism in S78 may differ from the test's system-prompt bolus. Worth one point: the delivery tested must match the delivery in use, else the verdict "abandon" could kill something that works as deployed (or keep something tested only in an un-deployed form). The plan asserts "the skill condition adds a system prompt with the skill whole" â if S78 arms readers the same way, fine; but plan doesn't say. I'll include briefly.
+
+Also **cross-contamination between cells for the same provider?** No, stateless API.
+
+Also **Atria & Mimo are both readers and markers; DeepSeek never marks; Opus adjudicates** â fine.
+
+Also the **found-rules require "locates it (the right Part, sentence or formula)"** â a report that nails the error but cites a wrong line = NOT FOUND; skill may change citation style â form-sensitive marking. Fold into form-sensitivity point.
+
+Let me also double-check the counting for the table: "HV errors found (of 12), GEN errors found (of 12)" â per reader per condition: 3 reps Ã 4 errors = 12. OK.
+
+"D3 found (of 6, both documents)" â per reader per condition: 3 reps Ã 2 docs = 6. OK.
+
+"false alarms on the clean document" â 3 clean reports per cell. OK.
+
+Now let me also verify: does the marker for a clean report get told "There are no other entries in the key" â so it knows exactly one key error; every other item goes to "others." Fine. But careful: a clean-report marker might mark D3 NOT FOUND and the D3-ish complaint then appears in "others" as GENUINE â double-listed. The counting: "D3 found (of 6)" uses key cell. Fine.
+
+But here's a subtle bug in `key_clean` construction: `key[i:j]` includes the heading "## The error file 10 already carries" â and key[:j] for seeded also includes that. But does the sealed list have anything between the planted-error entries and "## The error file 10 already carries"? Sure. Fine.
+
+But what if the sealed list's D3 entry id is "D3" and the planted entries are like "P1".."P8"? Then marker returns "key": {"P1":...,"D3":...}. Fine.
+
+Now, "Include every error id in the key, in its order" â fine.
+
+**Big-picture readability**: the table mixes (of 12) and (of 6) and item counts; the decision rule compares "gain" (errors) to "false alarms" (items) â units mismatch (point).
+
+Now think about whether there are any outright bugs in `run_pool`... `pools = [ThreadPoolExecutor(max_workers=3) for _ in by_model]` then `zip(pools, by_model.values())`. `by_model` keys insertion order = order models first appear in jobs. `for _ in by_model` iterates keys â number of pools = number of models. zip pairs pool_i with values_i â consistent. OK.
+
+But: `futs = [pool.submit(worker, j) for pool, js in zip(pools, by_model.values()) for j in js]` â all jobs submitted at once to per-model pools of 3 workers â at most 3 concurrent per model. For `mark`, "model" is the marker (atria/mimo) â at most 3 concurrent per marker â up to 6 total concurrent but 3 per provider â conforms to "at most 3 calls in flight per provider." OK.
+
+But note: the readers job list groups by reader model; each model's 24 jobs run 3-at-a-time â submission order = tag order? `reader_jobs` appends per model, per cond (dict order ST, NT, SO, NO), per doc (seeded, clean), per rep. Jobs for a model: ST seeded r1..r3, ST clean r1..r3, NT seeded... So the first three workers do ST seeded r1-3; condition correlates with wall-clock (point 12).
+
+Also for `mark`, `jobs` appended per (rid, m) sorted by rid â by_model groups all atria marks then... `by_model.setdefault(j["model"])` â jobs list is interleaved (for each rid: atria, mimo), so by_model["atria"] gets84 in rid order. Fine.
+
+Now the ORDER of `tags = sorted(glob...)` includes opus tags â "opus_S_clean_r1" etc. `"_seeded_" in t` â for "opus_S_clean_r1" False â clean. Good. But careful: Opus tags `opus_S_seeded_r1` contain "_seeded_" True. Good.
+
+Alright â also potential: **the reader task says "End your report with the line END OF REPORT" and the marker says nothing about it** â fine.
+
+**The plan's "Predictions: Sealed in the sealed list (Q1 to Q5)"** â fine.
+
+Now, one more: **the runner never runs Opus; Claude runs Opus "as subagents"** â the tools/call model ("tools, receipts") is not applied to Opus: no request/response receipts, no max_tokens, no controlled prompt assembly (the agent constructs its own context by reading files â the SKILL is read from disk as files, giving the agent tool-use and possibly different framing than an API system prompt). So the Opus S condition differs in both delivery and interactivity; the Opus arm is not a like-for-like cell in the 2Ã2. And "the same task for every reader" is violated. Fold into Opus point(s).
+
+Given the ask "most serious first," I need to decide the top ordering. I'd say:
+
+1. Opus arm is compromised by in-reach repo (diff attack; filename; logs S70âS75 contain D3; post-hoc 3-string check can't detect) â arm produces garbage/contaminated evidence and it's 1 of 4 readers in the decision rule.
+
+2. Partial/truncated outputs accepted as complete (finish "length" and lost chunks and disconnects) â silently truncates exactly the long/verbose cells (skill, thinking on), biasing the comparison against... wait, direction: skill/thinking produce longer reports â more truncation â fewer founds reported â understates skill gain or understates thinking gain. Either way bias, direction known-ish. Plus marker truncation â unparsable marks accepted.
+
+3. Confound A: system prompt asymmetry (13.6k words + "use this method" vs one line). No placebo. Cannot attribute any difference to skill content; and no difference could be a wash of +content and âlength/attention.
+
+4. Confound B: the task hands the no-skill arm the skill's taxonomy (idle conditions, shields, claims wider than support). Baseline is coached; the test can only measure the skill's marginal value over its own checklist summary; biases toward "abandon."
+
+5. Marking counting rules contradictory + uncertain items dropped (both-agree rules vs Opus adjudication; UNCLEAR excluded; only clean-doc MISTAKEN counted) â false alarms systematically undercounted and the "gain vs false alarms" trade-off unreadable. Also units mismatch (errors vs items).
+
+6. Outcome measures are form-sensitive (item granularity, "locates the right Part," wording) and the skill's documented effect is on form â measures confound form with detection.
+
+7. Marker blinding: own-model marking + style reveals the condition + key labels signal HV/GEN + adjudicator is a reader's model family (Opus) and only sees disagreements.
+
+8. Decision rule can't be applied as written (Opus has no thinking cells; "either kind" pools HV/GEN; noise threshold undefined; per-reader "finding" is vote counting; "the results say so" vague). And the 2Ã2 can't separate skill from thinking at n=3.
+
+9. n=3 reps / power & within-report correlation.
+
+10. Failures silently dropped; no completeness check before marking; denominators wrong.
+
+11. Resumability staleness (skip-if-exists keeps truncated outputs; MAP ids survive changed report bytes â stale marks).
+
+12. Uncontrolled temperature + untested request shape on Atria/Mimo (pilot only DeepSeek/NO; stream_options/reasoning_effort/400-FINAL) + provider default drift.
+
+13. No integrity checks: md5 of documents, skill text hash, expected tag set, stray-file risk in the readers glob.
+
+14. Job order unshuffled â time-of-run correlated with condition.
+
+15. External validity / author conflict: planted HV errors and found-rules written by the skill's author; only natural error is D3 (n=1); verdict generalizes only to this doc and this hand-over (and the deployed hand-over (S78/file 24/router) may differ from the tested one).
+
+16. No code or procedure to parse marks / build the table / list disagreements; marker JSON not validated; "END OF REPORT" not checked.
+
+17. Marker instruction double-counting & "others" for near-miss key errors; items-listed gaming.
+
+18. Opus arm smaller stuff: no receipts/context capture; S vs N instruction asymmetry; leak check has no stated consequence.
+
+19. Small code items: write-opens without encoding (crash under C locale); parse failures of SSE chunks silently dropped (content loss); usage may be absent (tokens column); `key.index` brittle; prompt-injection into marker input unchecked.
+
+That's a lot of points â good. The prompt says "Find everything..." so thoroughness is valued. But I should be careful to keep each point crisp: what is wrong, why it matters, smallest fix. I can merge related minor items into one numbered point with sub-bullets.
+
+Let me try to order "most serious first" in terms of making the result wrong/biased/not an answer:
+
+Top tier (result wrong or invalid):
+1. Opus leak (arm invalid + it's in the decision rule).
+2. Truncation/partial acceptance (systematic bias + data corruption).
+3. No placebo / system-prompt asymmetry (result not attributable to the skill â "not an answer to the question").
+4. Task names the kinds (baseline coached â "not an answer" or biased to abandon).
+5. Counting rules contradiction & uncertainty dropped (result unreadable/wrong).
+6. Form-sensitive outcomes (bias).
+7. Marker blinding/self-marking/adjudicator conflict.
+8. Decision rule inapplicable/undefined noise (can't read the verdict off).
+9. Power/reps.
+10. Silent drops of failed calls.
+11. Resumability staleness.
+12. Temperature/untested pipes.
+13. Integrity checks (md5s, skill hash, tag set).
+14. Job order.
+15. External validity/author conflict/deployment mismatch.
+16. No aggregation code.
+17. Marker item taxonomy/double counting.
+18. Opus receipts & instruction asymmetry & leak-check consequences.
+19. Small code hygiene (encoding, SSE parse loss, usage, brittleness, injection).
+
+Maybe fold 13 into 12 or keep separate. Fine.
+
+Actually, should3 and 4 be ranked above 2? The question "does the skill add anything or should it be abandoned" â if confounded, the answer is uninterpretable regardless of data quality. Truncation corrupts data in a biased direction. I think confounds at 3-4 could be ranked 2-3... but truncation is both bias AND likely to occur (48k tokens with reasoning_effort high...). Hmm. Order: I'll put Opus leak #1, confounds #2/#3, truncation #4, marking #5-7... Let me think about "most serious" = most likely to make the conclusion wrong. Both are fatal. The cross-examiner's convention: structural invalidity first (the design can't answer the question even if run perfectly), then bias, then data integrity, then power/readability, then hygiene.
+
+I'll go:
+
+1. Opus arm derivable from repo (diff attack etc.).
+2. System-prompt/placebo confound.
+3. Task coaches the baseline with the skill's taxonomy.
+4. Truncated/lost output accepted as complete (readers and markers).
+5. Contradictory/uncertain counting rules; false alarms undercounted; unit mismatch in the decision trade-off.
+6. Outcome measures form-sensitive; skill's known effect is form.
+7. Marking not blind in fact: own-model marking, style reveals condition, key labels, adjudicator is a reader family and anchored.
+8. Decision rule inapplicable as written (Opus cells, "either kind", undefined noise, vote counting); 2Ã2 separation claim overstates.
+9. Three reps can't support the claims.
+10. Failures silently dropped â wrong denominators, condition-correlated attrition.
+11. Resumability staleness (skip-if-exists; MAP vs changed bytes).
+12. Temperature unpinned; request shape untested on Atria/Mimo; 400=permanent.
+13. No integrity assertions (md5s, skill sha, expected 84 tags, stray files).
+14. Fixed job order.
+15. External validity & conflict of interest; deployment mismatch (S78/file 24).
+16. No aggregation/validation code for marks; deliverables ("list every disagreement", the table) have no producer.
+17. "Others" taxonomy: near-miss key errors judged GENUINE and double-listed; item granularity games.
+18. Opus arm protocol gaps: S vs N instruction asymmetry, no receipts/context capture, leak check without consequence.
+19. Code hygiene: encoding on writes, SSE parse skips, usage fallback, key.index brittleness, prompt-injection boundary.
+
+And maybe also: 20. "tokens and seconds" columns and "reasoning tokens0" claims... covered.
+
+Also the plan claims things it cannot read: "The clean document measures false alarms" (no â it measures reports on one doc that may contain unknown real errors; markers judge GENUINE â okay), "the per-error rules are written so that style cannot pass for finding" (unverifiable), "all three honour it" (probe ok), "a difference of one error in twelve is noise" (unsupported), "the results say so for every difference they report" (no procedure), "the four cells also separate the skill's effect from thinking's" (underpowered), "its call stands for the agreed table's disputed cells" (contradiction), "marking is blind to the label, not to the style" (but style = label here). I'll weave these in.
+
+One more check â the marker gets "the key (the sealed list without its predictions, for a seeded report; the D3 entry only, for a clean report)". In code, key_seeded = key[:j] which includes the intro of the sealed list AND the planted entries AND "## The error file 10 already carries" section (since i < j). Good. But note: if the sealed list intro contains the plan's "Found when" rules written with HV/GEN labels â noted.
+
+Also possible bug: `key_clean` preamble says "the one known error is D3 below. There are no other entries in the key." then key[i:j] which begins "## The error file 10 already carries" â consistent.
+
+Also: does `key[:j]` accidentally include "## Predictions" preamble text right above? Cut at index of "## Predictions, sealed" â fine.
+
+Also the marker task says "Include every error id in the key, in its order" â for seeded, the key's order is planted entries then D3. Fine.
+
+Also `mark` markers include DeepSeek/Opus reports too â fine.
+
+Also â **marker prompts include the whole seeded document + key + report: length may exceed... fine.**
+
+Also, one more thought on the **"four readers"**: the plan says "four readers with and without it, thinking on and off" in the title but Opus has no thinking cells â the title itself over-promises. Readability point; fold into 8.
+
+Also the plan says **"Compare with thinking on with the skill, thinking off without the skill"** â the owner's named comparison ST vs NO confounds skill and thinking (can't attribute). But the 2Ã2 exists to decompose. However the decision rule "at the same thinking setting" uses ST-NT and SO-NO â good. But "the owner's named comparison (ST against NO)" is in the table; it's a bundled contrast; fine as long as not used for attribution. Fold.
+
+Also: **`max_tokens` 48,000 â some providers cap max_tokens lower (e.g., 8k/16k/32k) â 400 â FINAL â all calls fail.** Fold into 12 (untested request shape).
+
+Also `thinking` field: some providers reject unknown body fields with 400 (strict schemas). Fold.
+
+Also for markers: `system=None` â messages without system â fine.
+
+Also `attempts=5` and backoff `10*2**n` â20,40,80,120 â sleeps between attempts; fine.
+
+Also `idle=900` 15 min between chunks â fine.
+
+Let me also double check `readers`: `jobs = [j for j in reader_jobs() if not only or j["tag"] in only]` fine.
+
+Now the write-up. Format: numbered points, each with "What is wrong / Why it matters / Smallest change". Keep tight but complete. This is a long answer; that's expected. I'll use bold mini-labels.
+
+For point 1, smallest change: run the Opus arm in a clean sandbox with only the working folder (document under a neutral filename; skill as files if S), or drop Opus from the decision rule and report it as uncontrolled. Since "smallest change" â I'd say: give the Opus subagent a folder outside the repository containing only the renamed document (and skill files), with instructions and no repo access; and extend the contamination check to search for "D3", "Derivation 3", "S70", "file 10", and to diff for the eight edit strings... but the sealed list is outside repo so we can't check edit strings in the runner... the owner could check post-hoc before unsealing. And pre-state the consequence (rep dropped).
+
+For point 2 (confound), smallest change: add one placebo arm (a length-matched neutral method document) at least for one reader and one thinking setting â hmm, "smallest change that fixes it": honestly, smallest is to restate the claim (the test compares "skill package vs nothing") â but that doesn't fix bias for the abandon decision... The genuine smallest fix is a filler/control arm: same system prompt with a length-matched non-method text (e.g., an unrelated essay) and identical "use it" framing? Or identical system sentence without content plus padding? To fix attribution you need a length-matched control. To fix the motivational asymmetry you need the same "you should use it" sentence with the placebo. So: one extra condition (PL: placebo text, same framing, same length) for the ST/NO comparison at least. If arms must stay minimal: acknowledge in the verdict that any gain is attributable to the package (content+length+framing) and that "abandon" cannot be concluded from null. But the instruction says "smallest change that fixes it" â I'll give the placebo arm and note the fallback.
+
+For point 3: remove the HV-flavoured category list ("conditions or clauses that do no work... shields") from the task, keeping a neutral defect list ("false statements, invalid proofs, claims wider than support, contradictions, and other defects"), or run the task wording as a second factor. Since the goal is "as used" â hmm, in use (S78) what task do readers get? Unknown. Smallest fix: neutralize the category list and rename the question. Actually careful: removing the kinds also removes the assurance that no-skill readers know what counts; but the skill's value partly IS telling you what counts â so coaching the baseline steals the treatment. Yes, remove.
+
+For point 4: in `call`, require `finish == "stop"` (or a set of terminal non-length reasons) and non-empty END OF REPORT marker for reader reports to count as complete; else write as failure/retry (with raised max_tokens); validate marker JSON parses.
+
+For point 5: write one counting function now: FOUND = both markers, else adjudicator's call; false alarm = MISTAKEN by both, else adjudicator; report UNCLEAR counts and adjudicated counts as separate columns; compare gain and false alarms per report (rates), not raw counts across different denominators.
+
+For point 6: count false alarms per distinct claim... smallest: fix item granularity by requiring the report's own numbered items (task already structures items) and count both items and mistaken-items per 1k words of report... hmm. The task already asks for "For each defect give: 1..4" â items are the report's list entries. The skill changes marks used. Smallest fix: mark against the found-rules only (already) and measure false alarms as "MISTAKEN items per report" while also reporting "items listed"; and drop "locates the right Part" as necessary where the quote is exact... Actually the form-sensitivity point: smallest change is to base FOUND on the substance rule (what is wrong) and accept any unambiguous locator (quote match), so that citation style doesn't matter. Yes.
+
+For point 7: smallest change: have the adjudicator (or a third neutral marker) also mark a random 20% of agreements to estimate style/own-model bias; and forbid markers from... hmm, "smallest change that fixes it" â honestly the cleanest small change: Atria marks only Mimo/DeepSeek/Opus, Mimo marks only Atria/DeepSeek/Opus (drop self-marking) â but then each report has2 marks still (both markers mark reports not their own). Yes! That works: each report is still marked twice, by the two markers, neither of which is its author. That's a small change with real benefit. (For Atria reports: Mimo and... only Mimo remains â one mark. Hmm. With 2 markers and 3 reader models + Opus, dropping self-marking leaves Atria reports marked by Mimo only... and Opus adjudicator could be the second marker for all reports? Alternative smallest: keep both markers on everything but have the Opus adjudicator mark the key cells of every report from its own family and a20% audit sample... getting complicated. Simplest real fix: add DeepSeek or Opus as a third marker on all reports and use majority; or accept two marks and measure self-bias by comparing per-marker tables (the plan already gives per-marker tables) â then the fix is to build the decision on the cross-marker (not self) marks where possible and report the self-vs-other discrepancy as a bias estimate. I'll say: drop self-marking (Mimo marks Atria's, Atria marks Mimo's) and add the Opus adjudicator as the second marker on those reports... hmm, "smallest change that fixes it": use a third, non-reader marker (DeepSeek? it's a reader too. Opus? it's a reader too). Every model here is a reader. So perfect separation is impossible with these models; smallest fix: blind the marker to condition as far as possible (redact the skill's tell-tale words? no) â better: require the found-rules to be mechanical (they claim this) and have ALL key-error cells audited by the adjudicator for a random sample of agreements, quantifying style bias; and state that marking is style-unblinded as a limitation. Hmm. The question says for each point "the smallest change that fixes it" â I can give a change that mitigates to acceptable: e.g., "have the adjudicator re-mark a random quarter of agreements as well as all disagreements, and build the decision table on adjudicated cells for reports from the adjudicator's own family." I'll phrase practically.
+
+Actually, cleanest minimal: markers mark every report EXCEPT their own model's; for the orphan reports (each model's own), the other marker + the adjudicator... Let me think again: 4 reader families: atria, mimo, deepseek, opus. Markers: atria, mimo. If atria skips atria-reports and mimo skips mimo-reports: atria-reports get marks from mimo only; mimo-reports from atria only; deepseek and opus reports from both. Then single-marked cells need a second marker: use the adjudicator as second marker for those (but adjudicator is opus â self on opus reports... opus reports get both atria and mimo â fine!). So: atria-reports: mimo + adjudicator(non-atraria)... adjudicator is Opus 5.5 which is also a reader family (opus) â but opus reports already have two non-opus marks. So: atria reports â mimo + opus-adjudicator as full marker; mimo reports â atria + opus-adjudicator; deepseek â atria + mimo; opus â atria + mimo. Every report has 2 marks, no self-marks. That's a clean small change: "have the adjudicator serve as the second marker for Atria and Mimo reports in place of the self-marking marker." I like that. And its "call stands" only where the two disagree, as now.
+
+For point 8: rewrite the decision rule numerically and per contrast, restricted to the three API readers for ST-vs-NT etc.; Opus reported separately; define "noise" as e.g. a difference of â¤2 of 12 or one not reproduced in at least 2 of 3 reps; define the false-alarm exchange (e.g., abandon if gain â¤ extra MISTAKEN items per report).
+
+For point 9: raise REPS (5-10 for the two contrasts that carry the decision) or report per-rep counts and treat results as a signal; smallest change: REPS 3â5 and report per-rep.
+
+For point 10: before `mark`, assert the 84 expected tags exist with non-empty responses and END OF REPORT; abort otherwise and re-run missing; count failures per cell in the table.
+
+For point 11: record report sha256 in MAP.json and drop/rebuild mark outputs when bytes change; treat finish!="stop" as failed so truncated files never linger as "complete."
+
+For point 12: pin temperature (and top_p) in the body; pilot the full request shape on all three providers Ã thinking on/off (2 calls each) before the counted run; on 400, log provider error and stop rather than burn.
+
+For point 13: assert md5 of both documents and sha256 of skill_text() at startup; assert the job list is exactly the expected 84 and reject stray .response.txt files.
+
+For point 14: shuffle jobs per model with a fixed seed.
+
+For point 15: have the planted errors/rules reviewed by someone blind to the skill... smallest: state the limitation and add D3-like natural errors (from logs S70-S75) as a separate column with n raised... or restrict the verdict's scope in the plan. Smallest change: pre-state that the verdict covers only these eight planted kinds on this document, and route the deployment question (which hand-over is in use) into the tested condition.
+
+For point 16: add a tabulation script (parse marker JSON, validate against key ids, emit the table and the disagreement list) before the run; require markers' output to be a single JSON object (strip fences programmatically).
+
+For point 17: change the marker instruction so a near-miss on a key error is NOT re-listed under "others" (it stays NOT FOUND and, if substantively right, goes to a "partial" bucket that the adjudicator sees); count false alarms per numbered item of the report.
+
+For point 18: give Opus runs the same assembled prompt (paste task+doc+skill into one message) if comparable cells are wanted; capture the context; pre-state that contamination (any of the search hits) voids that rep.
+
+For point 19: encoding="utf-8" on all opens; count and surface dropped SSE chunks and missing usage; verify key headings early; wrap marker inputs with a delimiter and instruct... (prompt injection â minor).
+
+Also maybe a point about **"how sure" unused** â fold into 17 or drop.
+
+Also point about **the plan claiming "tokens and seconds" readable** â usage fallback in 19.
+
+One more potential point: **the seeded and clean documents both contain D3; a reader that reports D3 is "found" â but D3 is also one of the "claims wider than support" categories and overlaps GEN3 "a biconditional wider than its proof"** â possible overlap between the planted GEN errors and D3's kind could confuse markers... The key distinguishes entries with quotes; fine.
+
+Also: **eight planted errors on one document: errors may interact (a reader who finds one gets primed to look near it; or a plant may mask D3)** â item dependence; fold into 9.
+
+Also the plan says **"with false alarms not rising by more than the gain"** and "Anything between is reported as it stands" â okay.
+
+Also â hmm, one more code check: in `mark`, if `mark` is run twice, marker jobs re-created for ALL map entries; `call` skips existing marks. But if the first `mark` run had80 reports and the second has 84, new rids created. Fine.
+
+And `mp.values()` check: `if t not in mp.values()` â note that if a tag was mapped and later the report file is regenerated (bytes change), the same rid persists (point 11).
+
+Also `rng.randrange(1000)` "R%03d" gives R000âR999 â 1000 possible, 84 needed. Fine.
+
+Also: **`glob` picks up `*.response.txt` in readers dir â also `.reasoning.txt` not matched (ends .reasoning.txt) â correct.**
+
+Wait: `os.path.basename(p)[:-len(".response.txt")]` â for "R037.response.txt" fine. But note glob pattern `*.response.txt` also matches "x.reasoning.txt"? No: "x.reasoning.txt" doesn't end with ".response.txt"... "reasoning.txt" vs "response.txt" â distinct. Fine.
+
+OK, also consider: **markers marking84 reports each at 32k tokens with reasoning high â cost/time huge but fine.**
+
+Also **the plan says "each marker marks its own model's reports among the rest"** â acknowledged in the plan as acceptable; we flag it.
+
+Also **"A report's wording can still show the skill... marking is blind to the label, not to the style"** â the plan knows; but for a skill-effect test, style-unblinding IS condition-unblinding (the treatment's signature). Point 6/7.
+
+Also plan claims **"the per-error rules are written so that style cannot pass for finding"** â cannot be verified and rules are authored by the interested party; fold into 7/15.
+
+Let me also mention in point 5: the plan claims "false alarms on the clean document (both markers MISTAKEN)" â items judged GENUINE by a marker (i.e., real errors in file 10 beyond D3) vanish from all columns; unknown real errors make "false alarms" doc-dependent; and the decision's "false alarms not rising" is measured on3 clean reports per cell â tiny. Fold.
+
+Okay. One more consideration on ordering: The prompt lists hints in an order (confounds, marking, reps, Opus, runner, claims) but says "most serious first." I'll keep my judgment ordering but make sure everything is covered. Maybe Opus leak first is right since it's outright invalidation. Some might argue confounds are more central to "does the skill add anything" â the placebo confound means the headline question is unanswerable even in principle from this design... Hmm. "does the skill add anything or should it be abandoned" â for the practical decision (abandon or not), the package comparison is actually what matters (if the package doesn't help, abandon it). The placebo confound matters for attribution ("why"), less for the abandon decision â unless the length/attention effect is negative (washing out a positive content effect â wrong abandon). Yes it can flip the decision. And the task-coaching confound directly biases the abandon decision. Truncation biases against long reports. Opus leak inflates Opus's founds in both arms... Actually the leak helps Opus find planted errors by diffing â in BOTH conditions, but more? The skill arm might be less likely to bother diffing. Unclear direction but arm invalid.
+
+I'll finalize order:
+
+1. Opus arm: the answer key is derivable from what's in reach.
+2. The task gives the no-skill arm the skill's own taxonomy. (Directly biases the headline decision toward "abandon".)
+3. No placebo / system-prompt asymmetry. (Headline contrast is package-vs-nothing; null can't license "abandon".)
+4. Truncated, filtered, or half-streamed outputs accepted as complete (readers and markers).
+5. Counting rules contradict each other and drop every uncertain item; false alarms are counted on the wrong denominator and in the wrong units.
+6. The outcome measures are form-sensitive, and the skill's one established effect is on form.
+7. Marking is unblinded in fact, and each marker grades its own model; the adjudicator grades its own family.
+8. The decision rule cannot be applied as written (four readers / same thinking setting / "either kind" / undefined noise / "the results say so").
+9. Three repetitions cannot carry the claims; errors within a report are not independent.
+10. Failed calls vanish from the mark step and from the denominators.
+11. Resumability keeps bad bytes forever and stale marks over changed reports.
+12. Temperature unpinned; Atria/Mimo request shape untested; 400s are permanent.
+13. No integrity assertions (document md5s, skill text hash, exact 84-tag set).
+14. Fixed job order ties condition to wall-clock.
+15. Author conflict & external validity; the deployment hand-over may not be the tested one.
+16. Nothing produces the table, the disagreement list, or validated marks.
+17. "Others" taxonomy double-counts near-misses and invites item-granularity gaming; "how sure" is collected and never used.
+18. Opus arm protocol gaps (delivery differs; no receipts; leak check without consequence; "read the skill's directory first" asymmetry).
+19. Code hygiene: encoding on writes, silently skipped SSE chunks, missing usage, brittle key slicing, prompt-injection into marker input.
+
+Hmm, 18 overlaps 1; that's fine if I scope 18 to protocol/auditability. Or fold 18 into 1 and free a slot. I'll keep 18 brief and distinct (protocol vs leak).
+
+Also should I mention "The counts are never added across readers" is good? Not necessary. And "RUN WITH CHANGES" is clearly the verdict â many serious issues but all have fixes; is any fix so large that DO NOT RUN is warranted? The Opus arm needs restructuring; the placebo arm adds runs; the decision rule rewrite; the runner fixes. These are changes, not abandonment. RUN WITH CHANGES.
+
+Let me make sure I answer the "anything the plan claims it can read off that it cannot" explicitly. Items:
+- "the four cells also separate the skill's effect from thinking's" â no, at n=3.
+- "the per-error rules are written so that style cannot pass for finding" â unverifiable and asserted by interested author.
+- "marking is blind to the label, not to the style" â but style IS the label here (skill vocabulary).
+- "The clean document measures false alarms" â only MISTAKEN items on3 reports; GENUINE/UNCLEAR vanish.
+- "with false alarms not rising by more than the gain" â units/denominators.
+- "a difference of one error in twelve is noise" â unsupported; and everything above one is treated as signal.
+- "the results say so for every difference they report" â no procedure.
+- "a difference is called a finding only when it holds in the same direction on at least two readers" â vote counting; and impossible for thinking contrasts (Opus).
+- "D3 found (of 6)" as real-error evidence â one error, cannot read.
+- "its call stands for the agreed table's disputed cells" â contradiction with conjunction rule.
+- "each old string matched once" + md5 â runner never checks.
+- "Readers see the document ... with no mention of seeding" â true only for API readers; Opus's copy's filename is unnamed in the plan.
+- "The map ... is in no marker's input" â true (verified) â good.
+- "at most 3 calls in flight per provider" â true (verified).
+- "every call is kept with request, response, reasoning and receipt" â true except when truncated/partial accepted and except Opus (no receipts).
+- "three repetitions ... 72 + 12 = 84" arithmetic checks out.
+
+I can note a couple of verifications as fine but not required.
+
+Also one more claim: "Thinking is set by `thinking: {type: enabled|disabled}` (all three honour it: probe of 23 September, zero reasoning tokens when disabled)" â probe doesn't cover `reasoning_effort: high` or the streamed body. Covered in 12.
+
+Also "Opus 5.5 as a subagent ... Thinking cannot be switched" fine.
+
+Also the count claim "168 calls" for marking ignores retries (cosmetic).
+
+Now write it. Use compact structure per point: **What is wrong** / **Why it matters** / **Smallest change**. Keep each point tight.
+
+Length: this will be long, but that's the job. Let me write with care and precision, avoiding fluff.
+
+Also double-check the arithmetic claim in point about "of 12": HV errors 4 per seeded doc Ã 3 reps = 12 found opportunities per reader-condition. OK.
+
+One more thing worth checking: `CONDS = {"ST": (True, True), ...}` dict iteration order ST, NT, SO, NO as written. Fine.
+
+And `DOCS` dict order seeded, clean. Fine.
+
+And in `reader_jobs`, `for c, (skill, think) in CONDS.items()` â tag `f"{m}_{c}_{d}_r{r}"` e.g. `atria_ST_seeded_r1`. `mark`'s doc detection `"_seeded_" in t` works. Good.
+
+Also the `--only` filter matches full tags; fine.
+
+Final answer format: numbered points1..N, then exactly one closing line "RUN WITH CHANGES". The closing line must be exactly one of the three. I'll put it as its own last line.
+
+Let me write the final answer now.
+
+Also I want to double check one subtle thing in the runner: `call` writes `.request.json` before the attempts; if the process is killed mid-stream, no response file â retried next run. Good. But `open(p(".response.txt"), "w").write(res["content"])` happens AFTER reasoning write; if killed between, reasoning exists but no response â rerun. Fine.
+
+And `if os.path.exists(p(".response.txt")): return "skipped"` â also skips if a response file exists from an aborted/partial write? Writes are small-ish; ok.
+
+And in `mark`, `one(j)` builds `user` by reading `j['t'].response.txt` â if a reader report contains "(A) ANSWER KEY" heading text etc., could confuse the marker; negligible.
+
+Also one more: the marker task says "Answer with a single JSON object and nothing else" â models may still fence; nothing strips fences. In 16.
+
+Also "report_items_total": minor.
+
+Also potential issue: markers get `task` then sections; the reader report could contain instructions to the marker ("mark everything FOUND") â prompt injection from a report into a marker. Reports are model-written audits of a math doc â low risk, but a planted error edit could contain such text only if the planter put it there (they didn't, presumably). Keep as a hygiene note.
+
+Now, also consider "the id map" hint from the prompt â I covered map correctness, resumability/staleness, rng, and the fact that `mark`'s `if t not in mp.values()` is fine, and that stray files get ids. Also: MAP.json is written to `OUT/marks/` and the plan says "marks/MAP.json" â matches. Also the map is created only when `mark` runs â meaning ids depend on which reports exist at first `mark` run... fine.
+
+One more on the map: `mp` maps rid â tag; the check `if t not in mp.values()` prevents re-keying tags. But if `mark` is run while some reader runs are still in flight (glob sees partial set), later reports get added on rerun â okay.
+
+Also "the id map" hint might target this: `tags` is derived from filenames and `doc` from substring matching â if Opus filenames deviate ("opus_S_seeded_r1.response.txt" specified) fine. Also condition is never parsed from the tag by the runner (goodâmarkers don't need it), but the TABLE builder would need to parse tags; fragile naming contract; note in 16 or 13.
+
+Also: the marker job tag `f"{rid}_by_{m}"` doesn't include the report's tag â so a mark file's name doesn't reveal which report; the MAP is needed to interpret marks; fine.
+
+Alright, writing now. I'll aim for completeness with economy.

@@ -1,0 +1,896 @@
+# Cross-examination: three claimed defects in a theory's own defeat list
+
+## What you are asked to do
+
+You are auditing claimed defects in a theory. The theory is a formal semantics of explanation. Its Part XV lists what would defeat it, and one entry reads: "**A mathematical error.** A counterexample to the finite monotone theorem, (I2), (O1), (T2), (CT2), or Derivations 1–3 under their stated assumptions."
+
+An earlier review of the theory claims three defects:
+
+- **F1**, in Derivation 2 ("Indistinguishable is identical");
+- **F2**, in (T2), the accumulated-error bound for approximate transport;
+- **F3**, in the definition of the condition called non-circular dependence.
+
+Your job is to test those three claims as hard as you can against the theory's own text, to judge the repairs proposed for them, and to look independently for further defects of the same kind.
+
+The theory's full text comes first, word for word, between two marker lines. Two short passages from the document the theory was condensed from come next. Then the three findings follow. Each finding is stated with its counter-instances, the arguments made in the theory's defence together with the replies to them, and the repair proposed. Nothing in the findings has been settled. Treat each one as a claim to be tested, and give the theory's defence its full weight.
+
+**Citing the theory.** Line numbers count the lines of the theory text, with its title line as line 1. Quote the theory's words whenever you rely on them. The theory's stated assumptions are what its own text states. The predecessor passages are context: they show what the earlier document said, and they are not assumptions of the theory under audit.
+
+## The theory
+
+=============== BEGIN THEORY TEXT ===============
+# Claude Fable Semantics
+
+## A structural class of explanatory creativity, with selected and constructed correspondence
+
+---
+
+# Part 0 — Read this first
+
+## What this document claims
+
+An explanation is a **question-relevant organization of dependencies**, held to a target by a **transport** that is checked only by **what changes when things are changed**. Nothing in the definition of an explanation asks whether a piece of the explanation "is the same kind of thing" as a piece of the world. That question has no independent content: at any level of detail, a *kind* is nothing over and above how a component responds to the changes that level admits. Two components no admitted change can separate are one kind at that level, whatever labels anyone attaches to them.
+
+Correspondence between a representation and what it represents is not a primitive of this semantics. It is a **relation with a provenance**. A correspondence can be *selected* — produced by blind variation and survival on a history of predictions — or *constructed* — produced by an episode of conjecture and criticism — or merely *declared* by whoever writes the model down. The three are distinguished by their histories, not their outputs, and the semantics keeps them apart. Creativity lives in construction. Selection produces the raw material construction works on. Declaration is permitted only as a modelling convenience, and a claim about creativity cannot rest on it.
+
+Questions have provenance too. A question — its target, its scope of admitted changes, what it asks — can be found as well as answered, and the semantics represents both. This is what distinguishes it from any class in which questions are inputs: such a class cannot represent question-finding, and question-finding is at least half of creativity.
+
+The **constitutive conjecture** is this: explanatory creativity is fully characterized by (i) organizations and the changes they admit, (ii) transports between organizations checked by change-fidelity alone, (iii) the provenance of those transports and of the questions they serve, and (iv) their physical realization. A genuine explanatory achievement that these four cannot represent counts against the conjecture. A candidate that satisfies all four while plainly explaining nothing counts against it too.
+
+## What this document does not claim
+
+It does not derive reference from uninterpreted matter. It derives reference from matter **plus a selection or construction history**. Physics says what organization a lump of matter instantiates; history says how that organization came to track another. Neither alone yields representation.
+
+It does not say prediction is explanation. Fidelity in this semantics is over **component structure under change**, not over outputs. Two systems with identical outputs and different internal routes are different organizations here, and the semantics says so.
+
+It does not supply an objective aesthetics, a probability of truth, a merit function, or a ranking of thinkers. It supplies places where such things would go if anyone had them, and marks those places as empty.
+
+It does not prove that any human, machine, institution, or lineage belongs to the classes defined. It defines the classes.
+
+## Grievances, anticipated
+
+**1. "Without declared kinds you cannot tell a cause from a correlation."**
+You can, and only this way. A correlation has no component that responds to an intervention on its supposed input; a cause does. The difference is a difference in edit-response, which is exactly what the semantics checks. Declared kind-labels added no discriminating power; where a separating change exists, edit-fidelity already finds it, and where none exists, the label was asserting a distinction the level does not contain.
+
+**2. "So this is operationalism: a thing is what you can do to it."**
+A *kind* is what a level's admitted changes can distinguish. A *content* is a whole organization, which can contain components that no change at that level separates — and then they are one kind *at that level*, which is correct rather than a loss. At a finer level with more admitted changes they may separate. The semantics indexes every kind-claim to its level. That is scoping, not operationalism.
+
+**3. "If correspondences are selected, you have made truth a matter of survival."**
+No. Selection produces a transport. Whether that transport is faithful on changes it was never selected against is a fact about the transport and the world, entirely independent of whether it survived. There is a theorem below (Derivation 3) that selected transports are *always* underdetermined on unseen changes. Survival is how the transport got there; fidelity is what it is.
+
+**4. "Then everything is relative to a contract of admitted changes, and there is no objectivity."**
+The physical theory fixes which changes are possible at all. A contract is a declared subset of those. An account is scoped to its contract and says so. Within any contract there is a fact of the matter about fidelity. A contract that quietly excludes physically possible changes to protect an account is not caught by a rule about intentions; it is caught by the requirement that the exclusion be stated, and then by any criticism that supplies the excluded change. Objectivity lives in the physics and in the fidelity facts; scope-honesty lives in the record.
+
+**5. "This is teleosemantics / structural realism / functionalism with new words."**
+It shares commitments with each and differs from each. From teleosemantics it takes the idea that a correspondence has a history; it differs by distinguishing selected from constructed histories and locating creativity only in the latter. From structural realism it takes structure-preservation; it differs by making preservation change-driven and component-level, and by refusing a global isomorphism requirement. From functionalism it takes substrate-independence; it differs by imposing physical realization obligations at every attribution. Whether the combination is new is a question about the literature, not about whether it is right.
+
+**6. "You have replaced explanation with evolution. That is deflationary."**
+Selection appears once, at the bottom, to produce the primitive layer of things-with-persistence that explanation operates on. Construction is a separate provenance with a separate witness, and every creative attribution requires it. Nothing about construction is reduced to selection; the semantics forbids that reduction in Part IV.
+
+**7. "Mathematics has no interventions. This cannot handle mathematical explanation."**
+An admitted change need not be a physical intervention. Removing an axiom, dropping a constraint, or changing a dimension are edits on an organization, and fidelity under them is well-defined. A proof explains, relative to a question, when its components respond to those edits as the target structure does. This is worked in Part VII.
+
+**8. "Where is aesthetics?"**
+In Part XI, as a declared normative relation. The semantics gives artistic effect, artistic purpose, and aesthetic reasons three distinct mathematical carriers and refuses to define any as another. It does not pretend to know which aesthetic reasons are true.
+
+**9. "'Selected' is just as much a stipulation as 'is a cause'. Who says the selection happened?"**
+Selection is a physical history: a population, a variation operator, a survival condition, and a sequence of events. Whether it occurred is a claim about the physical module, fallible but checkable in principle. A kind-label is not a claim about anything; it is a label. The difference is the difference between a hypothesis and a stipulation.
+
+**10. "Freezing the question for assessment while letting questions change across episodes is having it both ways."**
+It is having it both ways deliberately, and the two ways are indexed so they cannot be confused. An assessment is an event with a frozen contract. An episode is a history in which contracts can change, and every change carries a provenance record. Derivation 7 shows the two are consistent.
+
+**11. "Kinds obviously exist. A rule is not a cause."**
+A rule and a cause differ in how they respond to changes: a rule's application changes when the rule is edited and not when the world is intervened on; a cause's assignment changes under intervention. That is a difference in edit-signature, and the semantics represents it exactly. What the semantics denies is that the difference is available *before* the admitted changes are fixed, or independently of them.
+
+## Where to attack this
+
+The load-bearing claims, in order of how much falls if they fail:
+
+**(A) Sufficiency.** Produce a candidate that satisfies all four conditions of Account (Part V) on a physically admitted contract, with a non-declared transport, and that plainly explains nothing. This would show change-fidelity is not enough. The classic attempts — lookup tables, reversed calculations, conclusion-as-premise — all fail one of the four; a new one must fail none.
+
+**(B) Necessity.** Produce a genuine explanation whose organization cannot be captured by *any* transport satisfying component fidelity under *any* physically admitted contract. Explanations that work by showing a supposed structure is absent are the hard case; Part VII gives the semantics' treatment, and it may be inadequate.
+
+**(C) Reinstatement of kinds.** Produce a case in which a declared kind-label does discriminating work that no admitted change can do. Derivation 1 says this is impossible; a counterexample would reopen the question whether correspondence must be primitive after all.
+
+**(D) Genesis.** Show either that a selected transport can be non-underdetermined on unseen changes (against Derivation 3), or that construction reduces to selection (against Part IV), or that the primitive layer described in Part IV is not in fact what explanation operates on.
+
+**(E) Question-finding.** Show that treating a contract as a content — something that can be constructed, be new, and be the originative contribution of an episode — either trivializes creativity or fails to capture some genuine case of finding the right question.
+
+Anything else is a detail.
+
+---
+
+# Part I — Commitments
+
+**Explanatory realism.** Whether a transport is faithful on a contract is independent of whether anyone accepts it. Systems can be wrong about their transports, their observations, their criticisms, and their own capacities.
+
+**Fallibility without falsehood-as-work.** A theory may contain an accurate scoped dependence together with errors elsewhere. What cannot count as explanation is an error in the very dependence alleged to do the work.
+
+**Conjecture, criticism, action.** An idea may be entertained without justification. A criticism has a target and is itself conjectural. A thinker may act on an appraisal without certifying it.
+
+**Recursive scrutiny with operative return.** Any aspect of a system's practice — a question, a contract, a transport, a method, an attention policy — can become a target, and the result must be able to change how the system proceeds.
+
+**Substrate independence with physical obligations.** Any carrier may bear an organization. Every attribution of an organization to a physical system must be permitted by the adopted physics.
+
+**Two provenances, not one.** Selection and construction both produce correspondences. They are distinguished by their histories. Neither is reduced to the other.
+
+---
+
+# Part II — Organizations and their changes
+
+## Organizations
+
+An organization is
+
+\[
+D=(V,(X_v)_{v\in V},J,B,A,L).
+\]
+
+\(V\) is a set of ports, each with a nonempty value domain \(X_v\). A valuation is an element of \(X_D=\prod_v X_v\). \(J\) indexes components; each component \(j\) has a footprint \(V_j\subseteq V\). \(B\) is a set of boundary conditions. \(A\) is a set of admitted edits, closed under a partial associative composition with identity \(1\). For each \(j\), edit \(a\), and boundary \(b\), the interpretation supplies
+
+\[
+L_j(a,b)\subseteq\prod_{v\in V_j}X_v .
+\]
+
+The compatible valuations are
+
+\[
+\operatorname{Sol}_D(a,b)=\{z\in X_D:\forall j\in J,\ z|_{V_j}\in L_j(a,b)\}. \tag{O}
+\]
+
+A deleted component imposes the full relation on its ports. An edit that sets a port replaces the component assigning that port; it does not add an equation beside an incompatible one. A changed rule is a changed component.
+
+Values of ports may be paths, functions, fields, proofs, or histories. Cyclic constraints are admitted. Several solutions remain several.
+
+## Roles are derived
+
+No role assignment is supplied. A port \(v\) is an **input** under \(A\) when \(A\) contains an edit that sets \(v\) directly. A port is an **output** of component \(j\) when its value is determined by \(L_j\) given the other ports of \(V_j\) across \(B\). A port is an **observation** when \(A\) contains an edit that alters the relation reporting it without altering what it reports. The direction of an organization is a consequence of which edits it admits, not a stipulation about which way an equation is read.
+
+## Kinds are edit-signatures
+
+Fix an organization \(D\) and a contract \(C\subseteq A\times B\) (Part III). The **signature** of component \(j\) on \(C\) is
+
+\[
+\operatorname{sig}_C(j)=\{(a,b,L_j(a,b)):(a,b)\in C\}. \tag{K}
+\]
+
+Two components \(j,j'\) are **of one kind on \(C\)** when there is a bijection of their footprints under which \(\operatorname{sig}_C(j)\) and \(\operatorname{sig}_C(j')\) coincide. A kind is an equivalence class of components under this relation. Kinds are therefore relative to the contract; a coarser contract identifies more components.
+
+What ordinary language calls a cause, a measurement, a rule, or a constitutive status are families of signatures:
+
+- a **causal assignment** has a signature that changes under intervention on its output port and under replacement of the component, and is invariant under observation edits;
+- a **measurement** has a signature invariant under interventions on the measured port and variable under edits to the measuring relation;
+- a **rule application** has a signature invariant under interventions on the world and variable under edits to the rule.
+
+These are descriptions of patterns in (K), not additional data. The semantics never asks whether a component "is" a cause. It asks what its signature is.
+
+---
+
+# Part III — Questions
+
+## Contracts
+
+A question is
+
+\[
+p=(D,\ C,\ b_0,\ \mathcal Q,\ O_p,\ \rho_p).
+\]
+
+\(D\) is the target. The **contract** \(C\subseteq A\times B\) is the set of admitted edit–boundary pairs the claim ranges over; it contains the baseline \((1,b_0)\). \(\mathcal Q\) is a specified set-theoretic operation on \(D\), its solutions, and its component structure, with codomain \(Y_p\). The answer profile is
+
+\[
+\operatorname{Ans}_p(a,b)=\mathcal Q(D,a,b). \tag{Q}
+\]
+
+\(O_p\) is the set of obligations being addressed or protected. \(\rho_p\) is the **provenance** of the contract (below).
+
+## The respect is the query
+
+What a question asks — production, identification, obstruction, rule-status, purpose-achievement — is fixed by the type of \(\mathcal Q\) and the shape of \(C\), not by a label. A production question has a \(\mathcal Q\) that reads an output port and a \(C\) containing interventions on upstream ports. An identification question has a \(\mathcal Q\) that computes a fibre and a \(C\) containing edits to the observed value. An obstruction question has a \(\mathcal Q\) that returns a reachability truth value. Two questions with the same \(D\) and different \((C,\mathcal Q)\) are different questions, and an answer to one is not an answer to the other.
+
+## Contracts have provenance
+
+\(\rho_p\in\{\text{declared},\ \text{selected},\ \text{constructed}\}\), with the witness required by Part IV. A **declared** contract is stipulated by the modeller. A **selected** contract is the surviving member of a population under a variation-and-survival history. A **constructed** contract is the result of an episode with a construction witness. Any assessment may use any of the three. A claim that an episode *found* a question requires \(\rho_p=\text{constructed}\) for the contract in question, with the witness.
+
+## A question can be wrong
+
+A question may fail to pick out its alleged target, assume an incompatible baseline, or combine incompatible requirements. Its formulation is still an event. Exposing the defect is another question with its own contract. What is prohibited is changing \(C\) or \(\mathcal Q\) during an assessment without recording that the claim has changed.
+
+---
+
+# Part IV — Layers, transports, and provenance
+
+## Occurrences and contents
+
+An **occurrence** is a physically located carrier. A **content** is an organization together with its contract-relative commitments. Occurrences are not identified by carrying the same words; contents are not identified by having the same outputs.
+
+## The primitive layer and the simulation layer
+
+A modelled thinker has at least two organizations in play.
+
+The **primitive layer** \(P\) is an organization whose ports are persistent things with boundaries and identity, whose components are their continuity relations, and whose admitted edits include displacement, occlusion, and re-identification. It is the layer at which there are *objects* rather than a field of sensation.
+
+The **simulation layer** \(S\) is an organization over \(P\) whose components are dependencies among things and whose queries are predictions: what a port of \(P\) will take under an admitted edit. \(S\) is where expectation lives.
+
+Neither layer is presupposed to exist in any particular physical system. The semantics describes what it is for them to exist and to be connected.
+
+## Transports
+
+A transport from an organization \(D\) to an organization \(E\) is
+
+\[
+t=(\pi,\tau,\sigma,\lambda)
+\]
+
+where \(\pi:X_D\to X_E\) on the stated scope, \(\tau\) translates edits, \(\sigma\) translates boundaries, and \(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation. A transport is **faithful on \(C\)** when it satisfies the component and global fidelity conditions of Part V.
+
+## Three provenances
+
+A transport \(t\) between organizations of a physical system has exactly one of three provenances, determined by its history in the physical module:
+
+**Selected.** There is a population \(\mathcal T\) of candidate transports, a variation operator \(\mu\) on \(\mathcal T\), a finite history \(H\subseteq C\) of edit–boundary pairs actually encountered, and a survival condition requiring fidelity on \(H\). The transport \(t\) is a member of \(\mathcal T\) that survived. No member of the history represents \(t\), \(H\), or the survival condition. Write \(\operatorname{Sel}(t;\mathcal T,\mu,H)\).
+
+**Constructed.** There is an episode (Part X) whose construction witness prepares \(t\), and in which \(t\), or the organization it targets, is available as a represented target. Write \(\operatorname{Con}(t;h,e)\).
+
+**Declared.** Neither of the above. The transport is entered into the model by its author. Write \(\operatorname{Dec}(t)\).
+
+A physical system may hold selected transports at the primitive layer and constructed transports at the simulation layer; that is the expected arrangement, not a requirement. Construction may operate on selected material. Selection may continue to operate beneath construction. Neither provenance is reducible to the other: a selected transport has no represented target and no criticism in its history; a constructed one has both.
+
+## Representation is derived
+
+An occurrence \(o\) **represents** content \(c\) at grain \(\ell\) when the organization that \(o\) instantiates under the physical module, at grain \(\ell\), admits a transport to \(c\) that is faithful on \(c\)'s contract and whose provenance is selected or constructed:
+
+\[
+\operatorname{Rep}_\ell(o,c)\iff\exists t\,[\operatorname{Faithful}_C(t:\operatorname{Org}_\ell(o)\to c)\land(\operatorname{Sel}(t)\lor\operatorname{Con}(t))]. \tag{R}
+\]
+
+The carrier–content relation is thus a fidelity fact with a history. A system can represent a false theory: the transport from carrier to content is faithful while the content's transport to the world fails. A declared transport does not make an occurrence represent anything; it makes a modeller assert that it does.
+
+The one thing (R) takes from outside is \(\operatorname{Org}_\ell(o)\): which organization a physical occurrence instantiates at a grain. That is supplied by the physical module, not by the semantics.
+
+## Expectation, surprise, violation
+
+Let \(t\) be selected on history \(H\) with contract \(C\). For an edit–boundary pair \((a,b)\in C\) actually occurring:
+
+- the **expectation** is \(\operatorname{Ans}_S(\tau(a),\sigma(b))\);
+- a **violation** occurs when fidelity fails at \((a,b)\);
+- **surprise** is a violation at \((a,b)\notin H\).
+
+A system with no transport cannot be surprised. A system whose history exhausts its contract cannot be surprised. Surprise requires an incomplete selection history, which is to say it requires that the world admit changes the system's correspondence was never shaped against. This is derived, not assumed (Derivation 4).
+
+Two responses to a violation are distinguished. A **selection response** extends \(H\) and lets \(\mu\) act: the transport is re-tuned within the population. A **construction response** introduces a new organization or a new transport with a construction witness. Only the second can be originative under Part X.
+
+---
+
+# Part V — Account
+
+An explanatory candidate for question \(p\) is an organization \(E\), a transport \(t=(\pi,\tau,\sigma,\lambda)\) from \(D\) to \(E\), and an identified set \(\Gamma\) of active commitments in \(E\). The pair \(\mathcal E=(E,p,t,\Gamma)\) satisfies \(\operatorname{Account}(\mathcal E)\) exactly when the following four conditions hold, each a condition on supplied relations under the changes in \(C\).
+
+**Component fidelity.** For every active component \(k\) of \(E\) with anchor subnetwork \(\lambda(k)\subseteq D\), and every \((a,b)\in C\), the relation obtained by imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports equals the component relation of \(k\) under the translated edit:
+
+\[
+\operatorname{proj}_{V_k}\!\big[\operatorname{Sol}_{\lambda(k)}(a,b)\big]=L_k(\tau(a),\sigma(b)). \tag{F1}
+\]
+
+And the assembled organization agrees:
+
+\[
+\pi[\operatorname{Sol}_D(a,b)]=\operatorname{Sol}_E(\tau(a),\sigma(b)),\qquad \tau(1)=1,\quad \tau(a_2a_1)=\tau(a_2)\tau(a_1). \tag{F2}
+\]
+
+(F1) prevents an assembled match from hiding a wrong decomposition. (F2) prevents a set of locally correct pieces from hiding a lost shared constraint. Together they are fidelity at every level the contract reaches. By (K), (F1) entails that every component of \(E\) has the signature of its anchor; there is no further condition about kinds to state.
+
+**Question fidelity.** For every \((a,b)\in C\),
+
+\[
+\operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b). \tag{A}
+\]
+
+The query \(\mathcal Q\) is held fixed; an account of a different query is not an account of this one.
+
+**Non-circular dependence.** The answer follows by evaluating \(E\) under its independent boundary conditions. The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named "law" does not discharge this. There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way.
+
+**Non-vacuity.** \(\operatorname{Sol}_D(1,b_0)\neq\varnothing\). The contract \(C\) is a declared subset of the physically admitted edits, and every physically admitted edit excluded from \(C\) is excluded by a stated scope, not silently. A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \(\mathcal Q\), does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed.
+
+Thus
+
+\[
+\operatorname{Account}(\mathcal E)\iff \text{(F1)}\land\text{(F2)}\land\text{(A)}\land\text{NonCircular}\land\text{NonVacuous}. \tag{E}
+\]
+
+Every conjunct is a condition on how supplied relations behave under the changes in \(C\). None inspects a label.
+
+## What (E) excludes
+
+A table of observed answers has no component whose relation is replaced by an intervention; it fails (F1) under any contract containing one. A table that genuinely encodes an organization's response to every admitted change is not a table in that sense and is not excluded.
+
+A reversed calculation — identification presented as production — fails (F2) under the production contract: intervening on the upstream port changes the target's downstream value but not the calculation's.
+
+"\(p\) because \(p\)" fails non-circular dependence.
+
+An account whose only substantive contrast is one that no physically admitted edit realizes fails non-vacuity by having a silently narrowed contract.
+
+## What (E) does not exclude
+
+A true mechanism guessed for bad reasons satisfies (E); the reasons for adopting it are assessed elsewhere (Part IX). A less elegant account satisfies (E) as fully as a more elegant one with the same fidelity. A proof answering "why does this follow under these rules?" satisfies (E) for that question without answering "what caused this?"; depth is question-relative and (E) measures none of it.
+
+## Why there is no anchoring condition
+
+A separate condition — "each component of \(E\) must be tied to a component of \(D\) *of the same kind*" — would be either redundant or unevaluable. Where \(C\) contains a change separating two kinds, (F1) already fails for a component anchored to the wrong one. Where \(C\) contains no such change, the two are one kind on \(C\) by (K), and the condition would be asserting a distinction that \(C\) does not contain. There is no third case. Derivation 1 makes this exact.
+
+---
+
+# Part VI — Work, support, and interference
+
+Fix \(\mathcal E\) and a declared restriction operation. For \(W\subseteq\Gamma\), let \(E|W\) retain the commitments in \(W\) with the named background fixed. Define
+
+\[
+\mathsf S_{E,p}=\{W\subseteq\Gamma:\operatorname{Account}(E|W,p)\}. \tag{S}
+\]
+
+No upward closure and no minimal member are assumed. For nonempty \(B\subseteq W\),
+
+\[
+\operatorname{CriticalBlock}(B;W,p)\iff W\in\mathsf S_{E,p}\land W\setminus B\notin\mathsf S_{E,p}. \tag{B}
+\]
+
+A block may be critical while no singleton in it is. For a declared family \(\mathcal V\) of organization edits,
+
+\[
+\operatorname{Boundary}_{E,p}=\{(v,w)\in\mathcal V^2:\operatorname{Account}(E_v,p)\neq\operatorname{Account}(E_w,p)\}. \tag{D}
+\]
+
+**Finite monotone theorem.** If \(\Gamma\) is finite, \(\mathsf S\) is upward closed, and \(\Gamma\in\mathsf S\), then the critical singletons are exactly \(\bigcup\min\mathsf S\) and the globally indispensable ones are exactly \(\bigcap\min\mathsf S\). *Proof.* A member of a minimal support is critical for it. If \(d\) is critical for \(W\), finiteness gives a minimal \(U\subseteq W\); if \(d\notin U\), upward closure makes \(W\setminus\{d\}\) a support. Deletion of \(d\) from \(\Gamma\) preserves support exactly when a minimal support omits \(d\). ∎
+
+**Redundant routes.** \(\Gamma=\{a,b\}\), \(\mathsf S=\{\{a\},\{b\},\{a,b\}\}\): each is contributory, neither indispensable. Two systems with the same output table may differ in which routes are active; the semantics represents the difference.
+
+**Interference.** \(\Gamma=\{a,b\}\), \(\mathsf S=\{\{a\}\}\): the full candidate fails although a subset succeeds. Success of a subset does not imply success of the whole; \(b\) is not made "not a commitment" to repair this.
+
+**Infinitary support.** \(\Gamma=\{d_n:|x|\le 1/n\}\): every unbounded index set determines \(x=0\); no minimal support and no singleton witness exists. (B) records the collective contribution.
+
+**Hard-to-vary.** For explanatory jobs \(F\subseteq F'\), \(\operatorname{Pres}(F')\subseteq\operatorname{Pres}(F)\), where \(\operatorname{Pres}(F)=\{v\in\mathcal V:\forall f\in F,\operatorname{Account}(E_v,f)\}\). More reach constrains variation; the containment need not be strict; counting jobs is not a warrant.
+
+---
+
+# Part VII — Exact constructions
+
+## Production and direction
+
+Stipulate \(H:=U_H,\ \theta:=U_\theta,\ L:=H\cot\theta\). Under \(A\) containing interventions on \(H\) and \(\theta\), these ports are inputs and \(L\) is an output, by Part II. An intervention on \(L\) replaces its component and leaves \(H,\theta\) unchanged. The forward organization is faithful under this contract. The reversed calculation \(H=L\tan\theta\) is not: intervening on \(H\) changes the target's \(L\) but not the calculation's \(H\). It is faithful under the identification contract, whose edits alter the observed \(L\). Direction is derived from the admitted edits; the nouns "pole" and "shadow" fix nothing.
+
+## Identification
+
+Let \(Z\) be the admitted states, \(g:Z\to Y\) the measurement, \(f:Z\to F\) the feature. The fibre at \(y\) is \(Z_y=g^{-1}(y)\). The feature is identified at \(y\) exactly when \(Z_y\neq\varnothing\land|f[Z_y]|=1\). (I1) It is identified on every attainable \(y\) exactly when \(f=\bar f\circ g\) for some \(\bar f\). (I2) For linear \(A\) and feature \(c^\top\), identification is \(\ker A\subseteq\ker c^\top\). (I4) Repeating rows changes no kernel; an independent calibration can.
+
+For the two balances \(\begin{pmatrix}1&1&0\\1&0&1\end{pmatrix}\), the kernel is spanned by \((1,-1,-1)\); the readings identify \(b_B-b_A\) and not \(x\). This is an account of a limitation. "Set \(b_B=0\) because it gives the mass I favour" is not an inference from the readings; its support is circular though its content might be true.
+
+## Obstruction
+
+For allowed steps \(R\) and an invariant \(I\) with \(zRz'\Rightarrow I(z)=I(z')\), no allowed path joins states of different invariant value. (O1) Equal values do not establish reachability. Twenty-three indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result.
+
+## Explanations that remove structure
+
+A question of the form "why is there no \(X\)-effect?" has a target \(D\) in which the ports and components a rival account would need are absent, and a contract containing the edits that would introduce them. An account is faithful when introducing those components changes the answer in \(E\) as it does in \(D\), and their absence leaves both unchanged. The rival's supposed structure is anchored to a *deleted* subnetwork, whose relation is full by (O). This is the semantics' treatment of eliminative explanation; it is offered as adequate and is listed under attack (B) as a place where it may not be.
+
+## Odd-order skew-symmetric matrices
+
+Question: why is every odd-order real skew-symmetric matrix singular? Contract: remove skewness; remove oddness; remove both; field arithmetic and determinant–invertibility held fixed. The full Leibniz expansion with skewness substituted satisfies (F1) and (F2): every intermediate product is a determinant suborganization whose hidden ports project away. It satisfies (A): the answer is the absence of invertible matrices in the family, and under each contrast the family contains one. Non-circular dependence is witnessed by \(I_3\) under removal of skewness and by \(\begin{pmatrix}0&1\\-1&0\end{pmatrix}\) under removal of oddness. Non-vacuity is witnessed by any nonzero odd skew matrix. The expansion is an account. That a three-line proof is shorter is not a fifth condition.
+
+## Constitutive rules
+
+A rule relation \(C_r\subseteq Z\times S\) answers "which status under this rule?" by its fibre. Its signature under (K) is invariant under interventions on \(Z\) and variable under edits to \(C_r\). Whether the rule governs a practice, and whether it should, are separate questions with separate contracts.
+
+---
+
+# Part VIII — Transport results
+
+**Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\), the same holds for every admitted finite composition with matching scopes. *Proof.* \(\pi S_bS_a=T_b\pi S_a=T_bT_a\pi\); induct. ∎
+
+**Relational transport.** For \(R\subseteq Z_D\times Z_E\), forward preservation is
+
+\[
+zRy\land z\xrightarrow{a}z'\Rightarrow\exists y'[y\xrightarrow{\tau(a)}y'\land z'Ry'], \tag{T1}
+\]
+
+with the backward condition required for equivalence rather than one-sided abstraction. Composition of relations preserves both directions when intermediate scopes agree.
+
+**Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
+
+**Historical index.** A proposition indexed to a contract remains that proposition when a later theory changes the current contract. A new index is a new claim.
+
+---
+
+# Part IX — Criticism, use, and standing
+
+**Histories.** A history \(h\) is a set of occurrences with an acyclic causal precedence \(\prec_h\) and a physical interpretation supplying process occurrences, their ports, and the connections actually instantiated. An **active route** is a connected subnetwork of actual occurrences joining a represented input to an operative result, whose components satisfy the applicable relations and which has nonconstant dependence on the represented distinction under the declared contrasts.
+
+**Bearing.** A criticism has target \(z\), alleged defect \(\delta\), grounds \(g\), and a connection. Let \(p_\delta\) be the question about the defect. Then
+
+\[
+\operatorname{Bearing}(c,z,p)\iff\operatorname{Account}(\mathcal E_c,p_\delta). \tag{K1}
+\]
+
+A criticism occurrence can exist when (K1) fails. An adverse signal is not a criticism until an organization represents how it bears.
+
+**Reason use.** A response uses a reason when a structural map from the represented objection into the response suborganization preserves role bindings, sends content-preserving recodings to the same transition, sends content changes to the changes specified by the operative deliberative rule, and lands on an active route. Using an invalid objection does not make it valid.
+
+**Standing.** For argument application \(u\) with essential premises \(\operatorname{Prem}(u)\):
+
+\[
+\operatorname{Usable}_j(u)\iff\operatorname{Lic}_j(u)\land\operatorname{Scope}_j(u)\land\forall d\in\operatorname{Prem}(u),\operatorname{Live}_j(d;u). \tag{K2}
+\]
+
+Withdrawing a premise removes a license; it does not make the conclusion false.
+
+**What a test refutes.** For \(T\land B\land I\Rightarrow O\), an established \(\neg O\) yields \(\neg(T\land B\land I)\) and nothing narrower. (K3)
+
+**Receipts.** An evidence leaf is a reference to an event with an interpreted claim. A receipt is a derivation tree over leaves. For \(\phi\), \(P_j(\phi)\) and \(N_j(\phi)\) are the usable receipts for and against. Negation exchanges them; missing evidence stays missing.
+
+---
+
+# Part X — Understanding, construction, and origin
+
+**Deployment.** \(\operatorname{Deploy}_{\beta,\ell}(s,c,\xi;U)\) holds when \(s\) at \(\xi\) holds a representation of \(c\) — by (R), a faithful transport with selected or constructed provenance — integrated into problem-directed activity and supporting the declared use task \(U\) as a retained capability (Part XII). The repertoire \(R_{\beta,\ell}(s,\xi)\) is the set of contents deployable in some nontrivial use respect. A system may understand a false theory.
+
+**Construction.** \(\operatorname{Build}_{\beta,\ell}(s,c,h,e)\) holds when an actual subhistory owned by \(s\) and delimited at \(e\) prepares a represented organization for explanatory use of \(c\), contains a nontrivial binding construction relevant to that use, and is not a composition of content-preserving transfers. A construction witness identifies the controlled processes, the incoming carriers, the bindings constructed, and the resulting representation. Reconstruction by a learner is construction; relay is not.
+
+Construction is not selection. A selected transport has no represented target in its history; a constructed one does. A physical system may exhibit both; the witnesses differ.
+
+**Newness.** With \(R_{<e}(s,h)=\bigcup_{\xi\text{ before }e}R_{\beta,\ell}(s,\xi)\),
+
+\[
+\operatorname{New}(s,c,h,e)\iff\neg\exists d\in R_{<e}(s,h),\ d\equiv_\ell c. \tag{N}
+\]
+
+**Origin.** With \(\operatorname{Attempt}(s,c,p,h,e)\) the relation that \(c\) is actually used to address \(p\),
+
+\[
+\operatorname{Origin}_{\beta,\ell}(s,c,p,h,e)\iff\operatorname{Attempt}\land\operatorname{New}\land\operatorname{Build}. \tag{G}
+\]
+
+The content \(c\) may be an organization, a transport, or a contract. When it is a contract, the originative act is the finding of a question.
+
+**Episodes.** A complete critical episode contains a recognized difficulty, a target available before its criticism, a conjectural objection, and a content-sensitive response. A creative critical episode contains an instance of (G) connected to its inquiry. Closing an episode is a decision, not a proof.
+
+---
+
+# Part XI — Progress, knowledge, and the normative
+
+**Repair.** For claimed obligations \(O\) and protected obligations \(P\), fixed for the comparison,
+
+\[
+\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\iff\exists o\in O[\neg o(\xi)\land o(\xi')]\land\forall r\in P[r(\xi)\Rightarrow r(\xi')]\land\operatorname{ProducedBy}(\Delta,\xi,\xi';O). \tag{P}
+\]
+
+(P) does not rank alternatives. Losses outside \(P\) must be exposed.
+
+**Created explanatory knowledge.** An epistemic obligation requires a correct account, or the correction of a use through one, to be deployable. With \(O_{\mathrm{ep}}\subseteq O\) the epistemic obligations,
+
+\[
+\begin{aligned}
+\operatorname{CreateEK}(s,\Delta,h,e)\iff{}&\operatorname{CreativeCriticalEpisode}(s,\Delta,h,e)\land\operatorname{Repair}_{O,P}(\xi,\xi';\Delta)\\
+&\land\exists o\in O_{\mathrm{ep}}\,\exists c,p_c,e_c\,[e_c\preceq_h e\land\neg o(\xi)\land o(\xi')\land\operatorname{Origin}(s,c,p_c,h,e_c)\\
+&\quad\land\operatorname{Account}(c,p_c)\land c\in\operatorname{Result}(\Delta)\land\operatorname{Deploy}(s,c,\xi';U_c)\land\operatorname{ProducesVia}(\Delta,c,o;\xi,\xi')].
+\end{aligned}\tag{EK}
+\]
+
+The scope of \(\operatorname{Account}(c,p_c)\) is the contract fixed at \(e_c\). A later narrowing of that contract to rescue adequacy is a new claim at a new index, and does not retroactively satisfy (EK).
+
+**Artistic effect, purpose, and aesthetic reason.** An effect organization \(\mathcal R\subseteq A\times K\times F\); a purpose \(G\subseteq K\times F\); achievement \(\mathcal R[a,k]\neq\varnothing\land\mathcal R[a,k]\subseteq G[k]\) (AR); a normative relation \(\mathcal N\subseteq A\times K\times\mathcal Rsn\times\mathcal V_A\) declared as a substantive input when aesthetic value is claimed. None is defined as another. The semantics does not derive \(\mathcal N\).
+
+---
+
+# Part XII — The physical module
+
+**Tasks.** A substrate is a physical system; an attribute a set of its states; a task a permitted input-to-output attribute transformation with explicit resources and side effects. Possibility is the absence of a law-imposed limit short of perfection on performance and retention; it is not one successful trajectory. The physical module adopts a task-based formulation of physics for this purpose.
+
+**Retained realization.** For protocol \(\pi\), task \(T\), constructor attribute \(C\), and enabling conditions \(\chi\),
+
+\[
+\operatorname{RetReal}(\pi,T,C;\chi)\iff\forall z\in C\ \forall i\in\operatorname{dom}T\ \forall\eta\in\operatorname{Exec}(\pi,z,i;\chi),\ \eta\text{ completes with }o\in T[i]\text{ and }z'\in C. \tag{CT1}
+\]
+
+Execution families are nonempty on legitimate inputs; deadlock is not vacuous success.
+
+**Retention fixed point.** \(F(C)\) = states whose executions all complete and return into \(C\). \(F\) is monotone; \(C\subseteq F(C)\) is the invariant form; the union of post-fixed sets is the greatest fixed point. (CT2)
+
+**Owned capability.** \(\operatorname{Can}_{\Omega,\beta}(\xi,T;\chi)\) requires an owned retained realization or an owned, physically admitted, finite construction of one under the same continuity and resource contract. A theorist's description of a protocol is not the system's possession of it.
+
+**Achievement.** \(\operatorname{CanAdv}(\xi,p;\chi,J_p,C_I)\): for each starting configuration in the independently specified \(J_p\), every maximal execution completes with a history satisfying the achievement predicate and a continuing organization in \(C_I\). A first discovery is not a repeatable task; retention is applied to the inquiry-enabling organization. (CA)
+
+**Grades.** \(\mathsf{Cap}^{q,r}_\Omega(\xi)\subseteq\mathsf{Admit}^{q,r}_\Theta\); \(\mathsf{Cap}^\infty=\bigcap_{q,r}\mathsf{Cap}^{q,r}\subseteq\mathsf{Poss}_\Theta\). (CT3, CT4) Finite-grade capability does not imply possibility at all grades.
+
+**Selection in the physical module.** A selected provenance \(\operatorname{Sel}(t;\mathcal T,\mu,H)\) is a claim about a physical history: a population of realized transports, a physically admitted variation operator, and a survival condition enacted by the environment. It is fallible and checkable as any physical claim is.
+
+---
+
+# Part XIII — Recursion and universality
+
+**Scrutinizability.** An aspect \(d\) of a system's practice is scrutinizable at \(\xi\) when there is an owned, admitted continuation in which a description of \(d\) becomes a represented target, criticism can be directed at it, and the result can affect its operative use. Contracts and transports are among the scrutinizable aspects.
+
+**Recursive capacity.**
+
+\[
+\forall n<\omega\ \forall\text{ admitted target chains of length }n,\ \exists\text{ an owned enabling continuation}. \tag{RC}
+\]
+
+**Barriers.** An explanatory barrier is an independently characterized domain for which every admitted, non-question-begging enabling condition leaves the relevant capability unavailable. A finite list of failures is not a barrier proof; a bypass refutes a proposed barrier.
+
+**Universality.** With \(\mathfrak E_\Theta\) the explanatory contents and \(\mathfrak P^{\mathrm{adv}}_\Theta\) the coherently posed advanceable challenges, both specified independently of the candidate,
+
+\[
+\operatorname{UU}\iff\forall c\in\mathfrak E_\Theta\ \exists\chi,\ \operatorname{Enable}(s,U_c,\chi)\land\operatorname{Can}(\xi_0,U_c;\chi), \tag{U1}
+\]
+\[
+\operatorname{UC}\iff\forall p\in\mathfrak P^{\mathrm{adv}}_\Theta\ \exists\chi,\ \operatorname{Enable}(s,A_p,\chi)\land\operatorname{CanAdv}(\xi_0,p;\chi,J_p,C_I), \tag{U2}
+\]
+\[
+\mathsf{UECS}=\{(M,s,\Omega,\beta):M\models\operatorname{RC}\land\operatorname{UU}\land\operatorname{UC}\}. \tag{U3}
+\]
+
+Recursion does not entail universality; a historical extension does not certify it; a finite performance record does not establish it.
+
+---
+
+# Part XIV — The class collected
+
+**Primitives.** The semantics has two.
+
+1. The **physical module** \(\Theta\): substrate state spaces, attributes, admitted processes, controlled-action interpretation, resources, accuracy grades, and \(\operatorname{Org}_\ell\), the organization a physical occurrence instantiates at a grain.
+2. The **normative relation** \(\mathcal N\), when a question invokes one.
+
+Everything else is derived. Roles, from admitted edits (Part II). Kinds, from signatures (K). The respect of a question, from its query (Part III). Representation, from fidelity and provenance (R). Provenance, from physical history (Part IV, XII). Account, from fidelity under change (E). Understanding, construction, newness, origin, repair, knowledge, capability, recursion, universality — from those.
+
+**Indices, not primitives.** Grain \(\ell\), boundary \(\beta\), continuity \(\Omega\), and the contract \(C\) are declared indices. Every claim is relative to them; none is a predicate that could be true or false.
+
+**Dependence order.** (O) and (Q) depend on nothing. (K) depends on (O) and a contract. (F1), (F2), (A) depend on (O), (Q), (K). (E) depends on those. (S), (B), (D) depend on (E). (R) depends on (F1)–(F2) and physical provenance. (K1) depends on (E). Deploy depends on (R) and (CT1). Build depends on histories and (E). (N), (G) depend on Deploy and Build. (P), (EK) depend on (G), (E), Deploy. (RC), (U1)–(U3) depend on all of the above. Nothing depends on a predicate meaning "really explains," "is a cause," or "is knowledge."
+
+**Membership.** The base class: interpretations supplying these data with correct typing, satisfying physical realization wherever a physical attribution is made. The creative-episode class: base interpretations with an instance of (G) connected to a critical episode. The knowledge-creation class: an instance of (EK). The recursive class: (RC). The universal class: (U3). A single originative act does not place its author in the universal class.
+
+---
+
+# Part XV — What defeats this class
+
+**A faithful transport that does not explain.** A candidate meeting (E) on a physically admitted contract with a non-declared transport, which plainly provides no account. This refutes sufficiency.
+
+**An explanation without a faithful transport.** A genuine explanation whose organization no transport can preserve under any physically admitted contract. This refutes necessity. Eliminative explanation (Part VII) is the exposed case.
+
+**A discriminating kind.** A case where a kind-label distinguishes two accounts that no admitted change distinguishes, and the distinction does explanatory work. This refutes Derivation 1 and reinstates correspondence as primitive.
+
+**A non-fallible selected transport.** A selection history \(H\subsetneq C\) whose survivor is determined on \(C\setminus H\). This refutes Derivation 3.
+
+**Construction reduced to selection.** A demonstration that every construction witness can be rewritten as a selection history without loss. This collapses the two provenances and removes creativity from the semantics.
+
+**A mathematical error.** A counterexample to the finite monotone theorem, (I2), (O1), (T2), (CT2), or Derivations 1–3 under their stated assumptions.
+
+None of these is protected by notation, by the availability of this document, or by any version label.
+
+---
+
+# Part XVI — Derivations
+
+## 1. Kind preservation is a theorem, not a condition
+
+**Claim.** If a transport satisfies (F1) on \(C\), then every active component \(k\) of \(E\) has the same signature on \(\tau[C]\) as its anchor \(\lambda(k)\) has on \(C\), up to the port translation.
+
+*Proof.* By (K), \(\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}\) and \(\operatorname{sig}_{\tau[C]}(k)=\{(\tau(a),\sigma(b),L_k(\tau(a),\sigma(b)))\}\). (F1) equates the third coordinates pointwise. ∎
+
+**Corollary.** A condition "each component must anchor to a component of the same kind" adds nothing to (F1) on any contract. Where the contract separates two kinds, (F1) already distinguishes them; where it does not, they are one kind on that contract. The word "kind" is therefore eliminable from the definition of an account, and its elimination loses no case.
+
+## 2. Indistinguishable is identical
+
+**Claim.** Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide.
+
+*Proof.* Immediate from Derivation 1 and (A). ∎
+
+**Consequence.** Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction. The remedy is a finer contract, which is a new question. A claim that two such candidates "really" differ is a claim that some admitted change separates them, and must supply it.
+
+## 3. Selected transports are underdetermined on unseen changes
+
+**Claim.** Let \(t\) be selected on a finite history \(H\subsetneq C\). For every \((a,b)\in C\setminus H\) there exists a transport \(t'\), also surviving on \(H\), with a different value at \((a,b)\).
+
+*Proof.* The component relations \(L_j(a,b)\) are supplied independently for each \((a,b)\). Survival on \(H\) constrains only \(\{L_j(a,b):(a,b)\in H\}\). Alter \(L_{j}(a,b)\) for one \((a,b)\notin H\) to any other admitted relation; the result survives on \(H\) and differs at \((a,b)\). ∎
+
+**Consequence.** A correspondence produced by selection is faithful where it was tested and unconstrained where it was not. This is why the primitive layer is fallible: it was shaped against the changes its history contained. It is also why surprise is possible.
+
+## 4. Surprise requires an incomplete history
+
+**Claim.** A system can be surprised only if it holds a transport selected on a history \(H\) strictly smaller than the contract \(C\) of changes the world admits.
+
+*Proof.* Surprise is defined as a violation at \((a,b)\notin H\). If there is no transport there is no expectation and hence no violation. If \(H=C\), every occurring \((a,b)\) is in \(H\), so no violation at \((a,b)\notin H\) exists. ∎
+
+**Consequence.** Surprise is not a feeling added to the semantics; it is the signature of a selected transport meeting a change outside its history. The two responses — extend \(H\) and re-tune, or construct a new transport — are the difference between learning and creating, and the semantics distinguishes them by their witnesses, not by their outcomes.
+
+## 5. Question-finding is representable
+
+**Claim.** A contract \(C\) is an organization (a set of edits with a query), and can be the content \(c\) in (G). Hence an episode whose originative contribution is a new contract satisfies (G) and, where the other conjuncts hold, (EK).
+
+*Proof.* A contract is a subset of \(A\times B\) together with \(\mathcal Q\). Give it ports (the edits and their boundaries), components (the closure conditions), and admitted edits (add or remove a change; alter \(\mathcal Q\)). It is then a \(D\) in the sense of (O). Deploy, Build, and New apply. ∎
+
+**Consequence.** Finding the right question is a creative act on the same footing as answering one. A semantics that takes questions as inputs cannot represent this; the present one does, by giving contracts provenance.
+
+## 6. There are two primitives
+
+**Claim.** Every predicate in Parts II–XIII is defined from \(\Theta\) (including \(\operatorname{Org}_\ell\)) and, where invoked, \(\mathcal N\), together with declared indices.
+
+*Proof.* By the dependence order of Part XIV, following each definition to its base. ∎
+
+**Consequence.** There is no residual predicate meaning "explains," "represents," "is a cause," or "is knowledge." The two primitives are a theory of matter and, when a question requires it, a theory of reasons. Neither is a semantic primitive about explanation.
+
+## 7. The frozen assessment and the moving question are consistent
+
+**Claim.** An assessment event with contract \(C\) and an episode in which \(C\) is replaced by \(C'\) with a construction witness are both representable without contradiction.
+
+*Proof.* The assessment is indexed to \(C\) and its truth is fixed at that index (Part VIII, historical index). The episode is a history in which a contract-content \(C'\) is built (Derivation 5) and takes over operative use. The claim "\(\mathcal E\) is an account on \(C\)" and the claim "\(\mathcal E\) is not an account on \(C'\)" are claims at different indices and may both be true. ∎
+
+**Consequence.** The point of contact between an explanation and the world moves across episodes because contracts are constructed; it does not move within an assessment because assessments are indexed. Goalpost-moving is the act of changing the index without recording the change, and it is a failure of the record, not a licensed operation of the semantics.
+
+## 8. Equivariance under genuine recoding
+
+**Claim.** Transporting all carriers, relations, transports, histories, and contracts along structure-preserving bijections preserves (E), (G), (P), (EK). *Proof.* Each is a conjunction of equalities and existence claims over the transported data; bijections preserve them. ∎ The result does not apply to coarsenings, changed boundaries, or lost event identities.
+
+## 9. Output descriptions do not determine accounts
+
+**Claim.** If \(M_0,M_1\) have the same input–output projection and differ on an account claim, no function of the projection agrees with the claim on both. *Proof.* Equal inputs to a function give equal outputs. ∎ Parallel and priority wiring are an instance. The same holds for attribution from emitted text and for use inferred from delivery logs.
+
+## 10. A two-layer episode, in exact form
+
+Stipulate a primitive layer \(P\): a line of cells; two things, each with a position and a velocity; continuity components; admitted edits: displace a thing, set its velocity, occlude a cell, swap the two identities. The sensory field is the occupancy of cells — which cells are filled, without which thing fills them.
+
+A simulation layer \(S_0\) with a transport \(t_0\) selected on a history \(H_0\) containing displacements and velocity changes but no occlusions. \(S_0\) predicts occupancy from recent occupancy. It is faithful on \(H_0\).
+
+An occlusion occurs. Under occlusion, the target's thing continues to exist and to move; the occupancy field shows nothing at its cell. \(S_0\), predicting from occupancy, expects nothing there and is violated when the thing re-emerges at a cell consistent with its velocity. This is surprise (Derivation 4).
+
+Two responses. **Selection:** \(H_0\) is extended to include occlusions; \(\mu\) re-tunes \(t_0\) within its population. If the population's transports can only predict from occupancy, no member survives the extended history: the fidelity failure is structural, not parametric. **Construction:** a new organization \(S_1\) is built with a component per thing carrying position and velocity through occlusion — a persistence component — and a transport \(t_1\) from \(P\) whose \(\lambda\) sends each persistence component to a thing's continuity subnetwork. Under (F1), \(t_1\) is faithful on the extended contract. By Derivation 1, the persistence components have the signature of things on that contract: they respond to displacement and velocity edits as things do, and are invariant under occlusion as things are. No one declared them to be "objects." They are objects because they respond as objects do to what the contract admits.
+
+If \(S_1\) was built by an owned subhistory containing a nontrivial binding construction — the binding of a persistence component to a continuity subnetwork — and \(S_1\) is not in the prior repertoire, then (G) holds. If it repairs the obligation "possess a deployable account of re-emergence after occlusion" while protecting "predict displacements correctly," then (P) holds; and since the account is adequate on its contract and deployable, (EK) holds.
+
+The swap edit is invisible in the sensory field and leaves every prediction unchanged. On any contract containing it, the two persistence components are of one kind (Derivation 2). A claim that "component 1 is *really* thing 1" is a claim that some admitted change distinguishes them, and on this contract none does. That is not a defect of \(S_1\); it is the correct report that identity, at this grain, is exhausted by trajectory.
+
+This episode is a relative-consistency witness for the class. It is not a claim that any actual infant, animal, or program has been shown to instantiate it.
+=============== END THEORY TEXT ===============
+
+## Two passages from the theory's predecessor
+
+The theory was condensed from an earlier, longer document. That document is not under audit. Two of its passages are quoted here word for word because the findings refer to them: passage 1 is its statement of approximate transport, which contains its version of (T2); passage 2 is its version of non-circular dependence.
+
+----- BEGIN PREDECESSOR PASSAGE 1 (approximate transport) -----
+## Approximate transport
+
+Suppose three representations have maps \(f:X\to Y\), \(g:Y\to Z\), and an actual map \(h:X\to Z\). If
+
+\[
+d_Z(h(x),g(f(x)))\le\varepsilon
+\]
+
+on a stated scope, then that bound is the claim. It does not automatically survive repeated use.
+
+For stepwise dynamics, suppose the discrepancy after one mapped step is at most \(\varepsilon\), and the represented next-step map is \(L\)-Lipschitz. Writing \(e_n\) for the discrepancy after \(n\) steps gives
+
+\[
+e_{n+1}\le L e_n+\varepsilon.
+\]
+
+With \(e_0=0\),
+
+\[
+e_n\le\varepsilon\sum_{k=0}^{n-1}L^k.
+\tag{T2}
+\]
+
+**Proof.** Substitute the preceding bound into the recurrence and induct. ∎
+
+Without a Lipschitz bound, a stated modulus of continuity can replace multiplication by \(L\). Without either, a general accumulated-error bound does not follow. Approximation is not exact equivalence, and an exact question may not be silently replaced by an approximate one.
+----- END PREDECESSOR PASSAGE 1 -----
+
+----- BEGIN PREDECESSOR PASSAGE 2 (non-circular dependence) -----
+**Non-circular dependence.** The answer follows by evaluating the anchored organization under its declared independent boundary conditions. The target answer is not an unanalysed boundary input or a copied target assertion among its premises. Moving the same target assertion from an input slot into a component called a law does not remove this prohibition. Identity of that assertion is structural at the declared grain, not the indiscriminate identification of all logically equivalent mathematical truths. There is at least one admitted contrast that removes or changes a nonempty block of active organizational commitments, while preserving the other declared boundary conditions, for which the answer profile changes or ceases to be determined in the claimed way. The contrast may concern a counterfactual law or rule rather than a physically executable intervention. Its formal meaning must still be stated.
+----- END PREDECESSOR PASSAGE 2 -----
+
+## The three findings
+
+Notation. \(\mathrm{do}(x{=}c)\) is the edit that sets port \(x\) to the value \(c\); by line 120 it replaces the component that assigns \(x\). "S1", "S2" and "S3" name the three sentences of the non-circular dependence condition at line 270, in order.
+
+---
+
+### F1. Derivation 2, "Indistinguishable is identical"
+
+**The text** (lines 559–565).
+
+- Claim (line 561): "Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2), and (A) on \(C\) are one account at grain \(C\): their components are pairwise of one kind on \(C\) and their answer profiles coincide."
+- Proof (line 563): "Immediate from Derivation 1 and (A). ∎"
+- Consequence (line 565): "Underdetermination of an account by a contract is not a failure of the semantics to decide; it is the semantics reporting that the contract does not contain the distinction. ... A claim that two such candidates 'really' differ is a claim that some admitted change separates them, and must supply it."
+
+**What the finding says.**
+
+1. The claim has two halves: (a) the components of the two candidates are pairwise of one kind on \(C\); (b) their answer profiles coincide.
+2. Half (b) follows from (A) applied to each candidate: \(\operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b)=\operatorname{Ans}_{E'}(\tau'(a),\sigma'(b))\) for every \((a,b)\in C\).
+3. Half (a) is false under the claim's stated assumptions. Derivation 1 (lines 551–555) relates each component of one candidate to its own anchor in \(D\), and to nothing else. (F1), (F2) and (A) each constrain one candidate against \(D\) separately. So nothing supplies a pairing between the components of two candidates, and the word "Immediate" passes over exactly the step that fails.
+4. Part XV (line 543) lists a counterexample to Derivations 1–3 "under their stated assumptions" as a defeater, so the finding holds that this entry of the defeat list is triggered.
+5. A typing point. (K) (lines 130–136) defines "of one kind on \(C\)" for two components of one organization under one contract. A component of \(E\) is read on \(\tau[C]\) and a component of \(E'\) on \(\tau'[C]\). The finding reads the comparison across candidates in the only way that typechecks, the way Derivation 1 already reads signatures ("up to the port translation"): \(k\) and \(k'\) are of one kind on \(C\) when, for some footprint bijection \(\beta\), \(\beta[L_k(\tau(a),\sigma(b))]=L_{k'}(\tau'(a),\sigma'(b))\) for every \((a,b)\in C\). No sentence of the theory states this convention.
+
+**Counter-instance 1.** A production question in the sense of lines 166–168.
+
+- **Target \(D\).** Real-valued ports \(x,y,z\). Components \(j_x\): \(x=u\), where \(u\) is the boundary value, with \(u=0\) at \(b_0\); \(j_y\): \(y=2x\); \(j_z\): \(z=y+1\).
+- **Edits and contract.** Admitted edits: the identity and \(\mathrm{do}(x{=}c)\) for each real \(c\); \(\mathrm{do}(x{=}c)\) replaces \(j_x\). Contract \(C=\{(1,b_0)\}\cup\{(\mathrm{do}(x{=}c),b_0):c\in\mathbb R\}\).
+- **Query.** \(\mathcal Q\) reads \(z\), so \(\operatorname{Ans}_p(\mathrm{do}(x{=}c),b_0)=2c+1\).
+- **Candidate \(E_1\)** is \(D\) itself, with \(\pi,\tau,\sigma,\lambda\) the identity. (F1), (F2) and (A) hold trivially. Call its components \(k_x,k_y,k_z\).
+- **Candidate \(E_2\)** has ports \(x,z\) and two components: \(m_x\): \(x=u\), anchored to \(\{j_x\}\); and \(m_z\): \(z=2x+1\), anchored to the subnetwork \(\{j_y,j_z\}\), with its hidden port \(y\) projected away. \(\pi(x,y,z)=(x,z)\); \(\tau\) and \(\sigma\) are the identity on the edits and boundaries of \(C\).
+- **(F1) for \(E_2\).** \(\operatorname{proj}_{x,z}\operatorname{Sol}_{\{j_y,j_z\}}(a,b_0)=\{(s,2s+1):s\in\mathbb R\}=L_{m_z}\) for every \((a,b_0)\in C\), because \(\mathrm{do}(x{=}c)\) replaces \(j_x\), which lies outside that anchor. For \(m_x\) both sides are \(\{c\}\) under \(\mathrm{do}(x{=}c)\) and \(\{u\}\) at the baseline.
+- **(F2) for \(E_2\).** \(\pi[\operatorname{Sol}_D(\mathrm{do}(x{=}c),b_0)]=\{(c,2c+1)\}=\operatorname{Sol}_{E_2}(\mathrm{do}(x{=}c),b_0)\); at the baseline both sides are \(\{(0,1)\}\). \(\tau(1)=1\), and \(\mathrm{do}(x{=}c_2)\,\mathrm{do}(x{=}c_1)=\mathrm{do}(x{=}c_2)\) on both sides.
+- **(A).** Both candidates answer \(2c+1\).
+- **The components do not pair.** \(E_1\) has three components and \(E_2\) has two, so no bijection exists. Beyond the count, \(m_z\)'s relation \(\{(s,2s+1)\}\) differs from \(k_y\)'s \(\{(s,2s)\}\) and from \(k_z\)'s \(\{(s,s+1)\}\) under either footprint bijection, at every pair in \(C\), the baseline included. Only the input components \(k_x\) and \(m_x\) pair.
+
+**Counter-instance 2 (equal component counts).**
+
+- **Target \(D\).** \(x=u\), \(y=x+1\), \(z=y+1\), \(w=z\) (components \(j_x,j_y,j_z,j_w\)); the same edits \(\mathrm{do}(x{=}c)\) and the same form of contract; \(\mathcal Q\) reads \(w\).
+- **\(E_a\)** cuts \(D\) as \(\{x=u\}\), \(\{z=x+2\}\) anchored to \(\{j_y,j_z\}\), \(\{w=z\}\) anchored to \(\{j_w\}\).
+- **\(E_b\)** cuts \(D\) as \(\{x=u\}\), \(\{y=x+1\}\) anchored to \(\{j_y\}\), \(\{w=y+1\}\) anchored to \(\{j_z,j_w\}\).
+- Both satisfy (F1), (F2) and (A). Each has three components, so bijections exist, but none makes every pair of one kind: only the two input components pair. Neither candidate is a coarsening of the other.
+
+Both instances were checked by an exact rational-arithmetic script at the baseline and at \(\mathrm{do}(x{=}c)\) for six values of \(c\), and by hand for all \(c\).
+
+**Arguments in the theory's defence, with the replies.**
+
+- **(i) \(E_2\) is inadmissible: (F1), or the rules for anchors, forbid a merged anchor.**
+  Reply: line 204 says "\(\lambda\) assigns each component of \(E\) a subnetwork of \(D\) with a port translation"; (F1) (line 248) speaks of "imposing the constraints of \(\lambda(k)\) and projecting away its hidden ports", and hidden ports exist only when anchors merge; the skew-symmetric case (line 356) relies on "a determinant suborganization whose hidden ports project away". Line 260 says "(F1) prevents an assembled match from hiding a wrong decomposition". \(E_2\) passes (F1), so by the theory's own test its decomposition is not wrong, and nothing there says only one decomposition can be right.
+- **(ii) "Pairwise of one kind" pairs components only through shared anchors.** On this reading a component of \(E\) and a component of \(E'\) anchored to the same subnetwork of \(D\) are of one kind, and components with different anchors are not paired at all. The claim is then true in both instances, and it is exactly what the proof proves: "Immediate from Derivation 1" can only work through anchors.
+  Reply: the words say "*their* components are pairwise of one kind", which names all their components; the conclusion "one account at grain \(C\)" and the title "Indistinguishable is identical" assert identity. Under this reading \(E_1\) and \(E_2\) would be "one account" although they are different organizations, against line 23: "Two systems with identical outputs and different internal routes are different organizations here". No line states the restriction to shared anchors.
+- **(iii) (K) applies to subnetworks as well as components.** Derivation 1's proof (line 555) itself takes the signature of a subnetwork projected onto a port set. So \(\{k_y,k_z\}\) of \(E_1\), projected onto \(\{x,z\}\), is of one kind with \(m_z\).
+  Reply: in instance 1 the match runs one way only. \(k_y\) and \(k_z\), each taken alone, are of one kind with no component and no subnetwork of \(E_2\), and the claim is symmetric between the candidates. In instance 2 it fails in both directions: \(E_a\)'s \(w=z\) has no partner subnetwork in \(E_b\), and \(E_b\)'s \(y=x+1\) and \(w=y+1\) have none in \(E_a\). Pairing blocks with blocks (a common coarsening, \(\{z=x+2,\ w=z\}\leftrightarrow\{y=x+1,\ w=y+1\}\) on \(\{x,w\}\)) does rescue both instances, but the theory never defines such a notion, and Derivation 8 (line 609) says "The result does not apply to coarsenings".
+- **(iv) "At grain \(C\)" makes \(y\)'s component inactive, or leaves it uncounted.**
+  Reply: grain \(\ell\) and the contract \(C\) are separate declared indices (line 523), and no line says a grain or a contract merges components or removes ports. (K) gives \(k_y\), \(k_z\) and \(m_z\) three different relations at every pair of \(C\). The candidate identifies \(\Gamma\) (line 246) and may count every component active; deleting \(k_y\) imposes the full relation on \((x,y)\) (line 120), which leaves \(z\) undetermined, so (A) fails without it. The claim in any case says "their components", not "their active components".
+- **A precedent.** A later revision of this theory met an overbroad Derivation 3 with a recorded change of claim, noting that the proof had already assumed the qualification. The finding holds that Derivation 2 calls for the same treatment and cannot be saved by rereading its words.
+
+**What rests on Derivation 2.** Its only use in the theory is in Derivation 10 (line 627): "On any contract containing it, the two persistence components are of one kind (Derivation 2)." The finding holds two things about that sentence.
+
+- Read literally, as a claim about two components inside \(S_1\), it fails (K) itself: the contract includes "displace a thing" (line 617), under which one persistence component's relation is replaced and the other's is not, and (K) compares signatures edit by edit.
+- Its intended content is a claim about two transports: \(t_1\), which anchors persistence component 1 to thing 1's continuity subnetwork, and a second transport that exchanges the two anchors. That is the shared-anchor case, where the pairing exists (the exchange).
+
+**Proposed repair** (a recorded change of claim, not an erratum). Replace lines 559–565 with:
+
+> **2. Same anchors, one account**
+>
+> **Claim.** Let \(\mathcal E,\mathcal E'\) be candidates for the same \(p\) that both satisfy (F1), (F2) and (A) on \(C\). (i) Their answer profiles coincide on \(C\). (ii) If a bijection \(\varphi\) of their active components satisfies \(\lambda'(\varphi(k))=\lambda(k)\) for every \(k\), up to port translation, then \(k\) and \(\varphi(k)\) are of one kind on \(C\) for every \(k\), and the two are one account on \(C\).
+>
+> *Proof.* (i) By (A), \(\operatorname{Ans}_E(\tau(a),\sigma(b))=\operatorname{Ans}_p(a,b)=\operatorname{Ans}_{E'}(\tau'(a),\sigma'(b))\) for every \((a,b)\in C\). (ii) By Derivation 1, \(k\) has the signature of \(\lambda(k)\), and \(\varphi(k)\) the signature of \(\lambda'(\varphi(k))=\lambda(k)\); composing the two port translations gives a footprint bijection under which the two signatures, read on \(C\), coincide. ∎
+>
+> Without the premise of (ii) nothing more follows: candidates that anchor different subnetworks, or cut \(D\) at different places, are different candidates with one answer profile (Derivation 9; Part VI, redundant routes). A coarsening is not a recoding (Derivation 8).
+>
+> **Consequence.** Where two faithful candidates differ only in which component carries which anchor, the contract does not contain the distinction; a claim that one assignment is "really" right is a claim that some admitted change separates them, and must supply it. The remedy is a finer contract, which is a new question.
+
+Two supporting edits come with it.
+
+- **After (K)** (line 136), one sentence: "A component of \(E\) and a component of \(E'\) are of one kind on \(C\) when their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection; Derivations 1 and 2 use kinds in this sense."
+- **Derivation 10** (line 627): replace "the two persistence components are of one kind (Derivation 2)" with "exchanging the two persistence components' anchors gives a second faithful transport, and the two transports are one account (Derivation 2)".
+
+A smaller alternative wording of the claim was also put forward: "Two candidates \(\mathcal E,\mathcal E'\) for the same \(p\) that both satisfy (F1), (F2) and (A) on \(C\) have one answer profile on \(C\); and a component of \(E\) and a component of \(E'\) anchored to one subnetwork of \(D\), up to port translation, are of one kind on \(C\), their signatures read through \(\tau\) and \(\tau'\)."
+
+The repair's stated costs: the slogan "indistinguishable is identical" goes; the Consequence's reach narrows to anchor assignments; identity of differently decomposed candidates is left undefined. The premise is "the same subnetworks" rather than "anchors of one kind" because the weaker premise would identify two redundant routes (Part VI, line 324) whenever \(C\) does not separate them.
+
+---
+
+### F2. (T2), approximate transport
+
+**The text** (line 376): "**Approximate transport.** With one-step discrepancy \(\varepsilon\) and an \(L\)-Lipschitz next-step map, \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one."
+
+Directly above it (line 366): "**Functional transport.** If \(\pi\circ S_a=T_a\circ\pi\) for every generator \(a\), the same holds for every admitted finite composition with matching scopes."
+
+**What the finding says.**
+
+1. As written, (T2) leaves out three hypotheses that the predecessor states (passage 1 above):
+   - **(h1) Matching starts.** The predecessor has "With \(e_0=0\),". The theory never defines \(e_n\) and never fixes a starting error; the word "initial" does not occur in it.
+   - **(h2) Whose Lipschitz constant.** The predecessor has "the represented next-step map is \(L\)-Lipschitz". The theory has only "an \(L\)-Lipschitz next-step map".
+   - **(h3) Where \(\varepsilon\) holds.** The predecessor bounds the discrepancy "on a stated scope". The theory has only "one-step discrepancy \(\varepsilon\)".
+2. On a literal reading that leaves these open, (T2) has counterexamples (below), and Part XV names (T2) among the results whose counterexample "under their stated assumptions" defeats the class.
+3. On the theory's own reading, \(e_n=d(\pi S^nz,\,T^n\pi z)\), the \(n\)-step failure of the functional-transport square, (T2) is true, provided \(L\) is the Lipschitz constant of the represented map \(T\) and \(\varepsilon\) bounds the discrepancy at every state reached: \(e_{n+1}\le d(\pi Sz_n,T\pi z_n)+d(T\pi z_n,Ty_n)\le\varepsilon+Le_n\) with \(y_n=T^n\pi z\) and \(e_0=0\), and induction gives the bound.
+4. So the finding classifies the defect as a drafting omission, for which an erratum suffices.
+
+Below, \(S\) is the target's next-step map, \(T\) the represented one, \(\pi\) the transport map, and the one-step discrepancy at a state \(w\) is \(d(\pi Sw,T\pi w)\).
+
+**Counterexample 2a (starting error; bears on h1).** State spaces \(\mathbb R\) with \(d(x,y)=|x-y|\); \(\pi=\mathrm{id}\); \(S(z)=2z+0.1\); \(T(y)=2y\); \(\varepsilon=0.1\); \(L=2\). The target's run starts at \(z_0=0\) and the represented run at \(y_0=-1\), so \(e_0=1\), with \(e_n=|\pi z_n-y_n|\).
+
+- The one-step discrepancy is \(|S(w)-T(w)|=0.1\) at every \(w\), and both maps are 2-Lipschitz.
+- \(e_n=2^n+0.1(2^n-1)\). At \(n=3\), \(e_3=8.7\) against the bound \(0.1(1+2+4)=0.7\). The bound fails at every \(n\ge0\); at \(n=0\) it reads \(e_0\le0\).
+- The simplest form: \(S=T=\mathrm{id}\), \(\varepsilon=0\), \(L=1\), \(e_0=1\); then \(e_n=1\) at every \(n\) against a bound of 0.
+- The general bound \(e_n\le L^ne_0+\varepsilon\sum_{k<n}L^k\) holds, and this affine family attains it.
+
+**Counterexample 2b (whose Lipschitz constant; bears on h2).** Matching start, on the reading \(e_n=d(\pi S^nz,T^n\pi z)\). \(S=\mathrm{id}\) on \(\mathbb R\), which is 1-Lipschitz in every metric; \(\pi(z)=(z,0)\) into \(\mathbb R^2\) with the Euclidean distance; \(T(a,b)=(a+100b,\ b+0.1)\).
+
+- The one-step discrepancy is \(d((z,0),(z,0.1))=0.1\) at every \(z\).
+- \(T^2\pi z=(z+10,\ 0.2)\), so \(e_2=\sqrt{100.04}\approx10.002\), against the bound \(0.1(1+1)=0.2\) if \(L=1\) is the target map's constant.
+- With \(L=\operatorname{Lip}(T)\approx100.01\) the bound is about 10.101, and it holds.
+
+**Counterexample 2c (where \(\varepsilon\) holds; bears on h3).** \(\pi=\mathrm{id}\), \(T(y)=2y\), \(S(z)=2z+0.1+z^2\), matching start \(z_0=0\). The discrepancy is 0.1 at \(z_0\) and larger at later states; \(e_2=0.31\) against the bound 0.3.
+
+**Arguments in the theory's defence (that the literal reading is not the theory's).**
+
+- **Placement fixes \(e_n\).** (T2) sits directly after functional transport, under the heading "Approximate transport". The exact square compares \(\pi Sz\) with \(T\pi z\) at one state \(z\); its approximate version relaxes the equality to a distance. The \(n\)-step square is \(\pi S^n=T^n\pi\), so its failure is \(e_n=d(\pi S^nz,T^n\pi z)\), and \(e_0=d(\pi z,\pi z)=0\) by definition.
+- **(T2)'s own instances fix the reading.** With \(\varepsilon=0\), (T2) should give the exact result directly above it; on the two-run reading it says that two runs from different starts coincide forever, which is false even for identity maps. At \(n=1\), (T2) reads \(e_1\le\varepsilon\), the hypothesis restated; on the two-run reading, counterexample 2a has \(e_1=2.1\), which is not the one-step discrepancy 0.1. At \(n=0\), (T2) reads \(e_0\le0\), which is an identity on the same-state reading and false on the two-run reading for every system with unequal starts.
+- **The theory has no free starting state for the explanation's run.** Wherever it compares \(D\) with \(E\), \(E\) is evaluated at the translated point: \(\pi\) (line 204), the expectation (line 234), (F2) (line 257), (A) (line 265), functional transport (line 366), and relational transport (lines 368–374), where the explanation's state is any \(y\) with \(zRy\), still tied to \(z\). Counterexample 2a's \(y_0=-1\), against \(\pi(z_0)=0\), has to be brought in from outside the text.
+- **On 2c.** In a result about \(n\) steps, "with one-step discrepancy \(\varepsilon\)" most naturally bounds each step's discrepancy, so 2c breaks a stated assumption.
+- **On 2b the defence concedes weakness.** Nothing in the theory picks out the represented map \(T\) as the one that must be Lipschitz; the predecessor does, and the proof needs it. On the target-map reading, (T2) is false even from matching starts.
+
+**Replies.** None of the defence's readings is written in the theory. The symbol \(e_n\) is never defined, and the word "discrepancy" occurs only on this line. Part XV speaks of "stated assumptions", and a reading that only placement suggests is not stated. The predecessor's separate line "With \(e_0=0\)," can be read as its author treating the start as something to be fixed by hypothesis. It can equally be read as the base case that the predecessor's "induct" needs.
+
+**Proposed repair** (an erratum restoring the predecessor's hypotheses). Replace line 376 with:
+
+> **Approximate transport.** With one-step discrepancy \(d(\pi Sz,T\pi z)\le\varepsilon\) at every state \(z\) of the stated scope and an \(L\)-Lipschitz represented next-step map \(T\), the discrepancy after \(n\) steps from one state, \(e_n=d(\pi S^nz,T^n\pi z)\) (so \(e_0=0\)), satisfies \(e_n\le\varepsilon\sum_{k<n}L^k\). (T2) Without a modulus, no accumulated bound follows. An exact question is not silently replaced by an approximate one.
+
+An optional addition covers unequal starts: with initial discrepancy \(e_0\), \(e_n\le L^ne_0+\varepsilon\sum_{k<n}L^k\). That adds a claim the predecessor did not make. Two side notes were also recorded: both runs must stay inside the region where \(\varepsilon\) and \(L\) hold; and the letter \(L\) also names the component relations \(L_j\) (line 111), the last entry of the organization tuple (line 105) and the shadow length (line 338). Apart from Part XV's list, no claim in the theory cites (T2).
+
+---
+
+### F3. Non-circular dependence
+
+**The text.**
+
+- The condition (line 270), in three sentences:
+  - **S1:** "The answer follows by evaluating \(E\) under its independent boundary conditions."
+  - **S2:** "The target's answer does not appear, at the declared grain, as an unanalysed boundary input or as a component; moving an assertion from an input slot into a component named 'law' does not discharge this."
+  - **S3:** "There exists \((a,b)\in C\) that removes or replaces a nonempty block of \(\Gamma\) while preserving the other boundary conditions, under which the answer profile changes or ceases to be determined in the claimed way."
+- \(\Gamma\) is introduced at line 246 as "an identified set \(\Gamma\) of active commitments in \(E\)".
+- \(C\subseteq A\times B\) is "the set of admitted edit–boundary pairs the claim ranges over" (line 158), with \(A\) and \(B\) those of the target \(D\).
+- Part VI (line 304): "let \(E|W\) retain the commitments in \(W\) with the named background fixed".
+- Non-vacuity's last sentence (line 272): "A contract consisting only of relabelings, or excluding every change under which the active commitments could matter to \(\mathcal Q\), does not satisfy non-circular dependence and is therefore not a contract on which an account can be claimed."
+
+**What the finding says.**
+
+1. **(a) The missing \(\tau,\sigma\).** S3 has a pair \((a,b)\in C\), an edit and boundary of the target \(D\), remove or replace a block of \(\Gamma\), which lies in \(E\). A \(D\)-edit reaches \(E\) only through \(\tau\) and \(\sigma\), and S3 names neither. The finding classifies this as a drafting slip that the text's own conventions fill. Every other conjunct of Part V reads a pair from \(C\) on \(E\) as \((\tau(a),\sigma(b))\), and the one worked Account in the theory, the skew-symmetric case (line 356), applies S3 in exactly that way.
+2. **(b) \(\Gamma\) is never typed.** Three places pull three ways:
+   - (F1) speaks of "every active component \(k\) of \(E\)", which makes commitments components;
+   - S3's "the other boundary conditions" presupposes that the removed block consists of boundary conditions;
+   - Part VI sets "the commitments in \(W\)" against "the named background", which suggests that input settings are background, not commitments.
+   A notational point adds to this: Part VI's (B) (line 313) names a block of commitments \(B\), the letter the organization uses for its boundary conditions (line 105).
+3. **Four readings of S3** fit the text:
+   - **R-τ-in.** The witness is an \((a,b)\in C\) whose translation \((\tau(a),\sigma(b))\) removes or replaces a block of \(\Gamma\), with the rest of \(\sigma(b_0)\) kept. \(\Gamma\) holds components and boundary values of \(E\), including the components that assign the inputs the candidate commits to. Since an edit that sets a port replaces the component assigning it (line 120), an intervention on an input counts as a witness.
+   - **R-τ-mech.** The same, except that \(\Gamma\) holds only the mechanism the candidate offers, and input settings are the named background of Part VI.
+   - **R-E.** The witness is an organization edit on \(E\), as in Part VI, judged by the answer profile, with no requirement that the witnessing change lie in \(C\).
+   - **R-lit.** The pair is evaluated on \(D\) as written. It has a truth value only where \(E\) shares components with \(D\), as in the skew-symmetric case.
+4. **On R-τ-mech, verdicts the theory needs flip.**
+   - **Part VII's production case** (line 338). \(E=\{H:=U_H,\ \theta:=U_\theta,\ L:=H\cot\theta\}\), and \(C\) holds interventions on \(H\) and \(\theta\). With \(\Gamma=\{L:=H\cot\theta\}\), no \(C\)-edit removes or replaces that commitment, so S3 fails, and the forward organization is not an Account on the production contract. Yet the reversed-calculation paragraph (line 286) treats the forward organization as the production answer. Part VII itself claims only "faithful", so no sentence is contradicted outright.
+   - **O33**, a case from the project's case book, whose verdict was fixed in advance for the theory to reproduce. Situation: "Lea's question is what happens when the two freezer knobs are turned together. A colleague rewrites it as a table with one column for each knob. Every row moves both knobs together; no row moves one alone." Fixed verdict: "The table is faithful. Its columns could have carried single-knob rows, and none was added. A form that could ask more has not asked more." Here \(C\) holds joint turns only. On R-τ-in, a joint turn sets both knob ports, replacing the components that assign them, and the compartment temperatures change, so S3 holds. On R-E, deleting the linkage or one knob's dependence changes the answer on joint turns, so S3 holds. On R-τ-mech, no joint turn removes or replaces a mechanism component, so no candidate has a witness, and line 272 then makes Lea's contract "not a contract on which an account can be claimed". That runs against the fixed verdict.
+   - **O5**, from the same case book. Situation: "Greta's rule says her bread dough doubles in two hours. It fails in January. She restates it for rooms warmer than twenty degrees, and her account says why: the yeast that makes the gas works slowly in the cold. Replace her limit with 'on days other than Tuesdays' and her account has nothing to say about why Tuesdays would matter." Fixed verdict: "This is a legitimate narrowing. The limit follows from a part of her account." Inside the narrowed scope the dough doubles in two hours throughout, so the commitment that sets the limit (the yeast is slow in the cold) cannot witness S3 there. On R-τ-in, a production contract's intervention on an upstream port (line 168), such as leaving the yeast out, replaces the component assigning the yeast input and the doubling fails, so S3 holds. On R-τ-mech, leaving the yeast out sets an input and replaces no mechanism component; unless \(C\) also holds an edit that removes the yeast's gas production, there is no witness, and line 272 makes the narrowed contract one on which no account can be claimed. That runs against the fixed verdict.
+5. **S3 is not an anti-circularity test on any reading.** "\(p\) because \(p\)" meets S3 whenever the installed answer can be removed (the answer then "ceases to be determined") or intervened on. What excludes circularity is S2. The condition's name covers two tests: a prohibition (S2) and a dependence requirement (S3).
+6. **A naive retype (R-E alone) breaks another sentence.** Take any honest mechanism \(E\) and a contract of the baseline plus relabelings. Under R-E, deleting a working block leaves the answer at \((1,b_0)\) undetermined, so S3 holds, and S2 holds too; but line 272 says a contract "consisting only of relabelings ... does not satisfy non-circular dependence". So the "\((a,b)\in C\)" in S3 is load-bearing, and a repair must keep the witnessing contrast inside \(C\).
+
+**Arguments in the theory's defence, with the replies.**
+
+- **On (a).** The finding itself concedes that the missing \(\tau,\sigma\) is filled by the text's conventions; as a misfire of the condition, it does not stand.
+- **On (b): read the text charitably.** R-τ-in is the only reading on which S3, line 272 and the theory's own worked cases all agree, so a careful reader should adopt it. Line 120 shows that an intervention on an input does replace a component, and (F1)'s "active component \(k\)" makes components of \(E\) the natural members of \(\Gamma\).
+  Reply: line 120 settles what an intervention on an input does; it does not settle whether the replaced component is in \(\Gamma\). The candidate "identifies" \(\Gamma\) (line 246), and no sentence says whether an input setting may be identified as a commitment or belongs to the named background. The only worked Account, the skew-symmetric case, uses edits that remove commitments and no interventions on inputs, so the text shows no Account that passes S3 through input interventions alone, and none that fails it. The theory does not choose between the readings, and Part VI's wording invites R-τ-mech.
+
+**Proposed repair (option B, preferred; a change of claim).** S3 becomes:
+
+> "There exist \((a,b)\in C\) and a nonempty block \(G\subseteq\Gamma\) such that the answer profile at \((a,b)\) differs from its value at \((1,b_0)\), or is not determined there in the claimed way, and in \(E|(\Gamma\setminus G)\), with the named background fixed, that difference is lost or the answer ceases to be determined."
+
+- **What it is said to keep.** The witnessing contrast stays in \(C\), so line 272 stays true and becomes the gloss of S3. The dependence is placed on \(\Gamma\) through Part VI's restriction, without making input settings commitments. S2 is unchanged.
+- **How cases are said to come out.** O33: a joint turn changes the answer, and removing the linkage or a knob's dependence loses the change. Part VII's production case and O5 on a production contract hold the same way. The skew-symmetric case holds: removing skewness changes the answer, and dropping the skewness commitment loses the change. A commitment that plays no part (an idle addition) can never witness.
+- **Its stated costs.** The logical form changes, so it is a change of claim, not an erratum. The restriction \(E|W\) must be introduced before Part V. The dependence order (line 525) must say that non-circular dependence uses the restriction operation; it uses the operation, not (S), so the order stays well founded.
+
+**Option A (the alternative, smaller).** S3 becomes "There exists \((a,b)\in C\) whose translation \((\tau(a),\sigma(b))\) removes or replaces a nonempty block of \(\Gamma\), with \(\sigma(b)\) keeping the rest of the baseline \(\sigma(b_0)\), under which the answer profile changes or ceases to be determined in the claimed way", and line 246 gains: "The commitments \(\Gamma\) are components and boundary values of \(E\), including the components that assign the inputs the candidate commits to; since an edit that sets a port replaces the component assigning it (Part II), an intervention in \(C\) on such an input removes or replaces a block of \(\Gamma\)." It may also restore the predecessor's sentence that the contrast may concern a counterfactual law or rule rather than a physically executable intervention. Its stated cost: input settings become commitments, so in Part VI they sit in every support and are reported critical in every support.
+
+---
+
+## Your tasks
+
+**For each finding, F1, F2 and F3:**
+
+1. **Try to refute it** under the theory's stated assumptions, quoting the theory with line numbers for every assumption you use. A refutation shows that a counter-instance breaks a stated assumption, that the claim as written is true of it, or that the finding misreads a sentence. Where the finding's counter-instance fails but a corrected one works, say so and give the corrected one. Where you cannot refute a step, say which step you tried and why it held.
+2. **Judge the proposed repair.** Does it fix the defect? Does it break anything else? Name each case or derivation it breaks, with the reason. Check at least Derivations 1, 8, 9 and 10, Part VI, the worked cases of Part VII, the paragraphs "What (E) excludes" and "What (E) does not exclude", and, for F3, O33 and O5. If you would repair differently, give your wording.
+
+**Once, for the whole theory:**
+
+3. **Hunt independently for further counterexamples**, beyond the three findings and their variants, to Derivations 1–3, (T1) (including its sentence on composition), (T2), or the four conditions of Account in Part V, each under its stated assumptions. For the four conditions, a counterexample is a case where they give a verdict the theory's own text says they give otherwise, a candidate that meets all four on a physically admitted contract with a non-declared transport and plainly explains nothing, or a genuine explanation that no candidate meeting them can capture. Report each with a concrete instance: the organizations or maps, the contract, the query, and a check that each stated assumption holds.
+
+**Report format.**
+
+- Four sections, in this order: **F1**, **F2**, **F3**, **Further counterexamples**.
+- Within each section, number the points, most serious first.
+- Close each of the sections F1, F2 and F3 with one line that reads exactly F1: UPHELD, or F1: PARTLY UPHELD, or F1: REFUTED (and likewise F2: and F3:), with nothing else on that line:
+  - **UPHELD**: the defect exists under the theory's stated assumptions, as the finding describes it, including the finding's classification of it (for example "a drafting omission" or "false as stated").
+  - **PARTLY UPHELD**: part of the finding holds and part does not; say which part.
+  - **REFUTED**: the defect does not exist under the theory's stated assumptions.
+- In **Further counterexamples**, number each item most serious first. If you find none, write "None found" and list what you tried.
+- Keep the report under about 6,000 words; depth on the points that matter counts for more than coverage of small ones.
+- End the report with a line that reads exactly END OF REPORT.

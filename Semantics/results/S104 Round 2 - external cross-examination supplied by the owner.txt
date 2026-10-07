@@ -1,0 +1,494 @@
+Adversarial Cross-Examination of “Claude Fable Semantics”
+
+I treated “Claude Fable Semantics” as a proposed theory to be challenged, not merely a vocabulary to be illustrated.
+
+Verdict
+
+It is promising as a framework for auditing explanatory claims, but it has not established its stronger claim to fully characterize explanatory creativity. I found a concrete problem in its treatment of explanatory contribution, an unresolved dependency problem in its definition of representation, and a substantial mismatch between its definition of surprise and the phenomena a cognitive-science application would need to explain.
+
+However, I did not find a decisive counterexample satisfying the document’s full requirements for refuting the sufficiency of Account. Several obvious attacks are already answered by the text. The distinction between a demonstrated defect, a missing argument, and an empirical limitation matters here.
+
+I also ran executable, exhaustive checks on small Boolean organizations. Those are constructed tests of the formalism—not experiments on people.
+
+1. What survives an adversarial reading
+
+The strongest part is the combination of component fidelity, global fidelity, and question fidelity. Requiring all three prevents a correct answer from automatically vindicating the proposed internal mechanism. A collection of locally correct pieces can also fail when assembled, which is a worthwhile distinction.
+
+The framework also correctly separates a representation of an erroneous theory from an erroneous representation of that theory. Likewise, it explicitly permits inexplicit, distributed, and temporally extended representations. Consequently, “people can understand false theories” and “people sometimes reason without verbalizing the steps” are not counterexamples to it.
+
+Its treatment of changing questions is another strength. A narrower claim can succeed without repairing the failure of the original, broader claim. Keeping those historical indices separate prevents one familiar form of retrospective goalpost-moving.
+
+These are substantive strengths. But they do not establish that the resulting class captures everything that deserves to be called explanatory creativity.
+
+2. The strongest formal attacks
+
+2.1 The contribution test can make irrelevant material “indispensable”
+
+Cross-examination question:
+Does a component count as explanatory work because it matters to the question, or merely because deleting it makes some part of the model less faithful?
+
+The definitions currently permit the second.
+
+Part VI defines a route as a subset of commitments that still meets Account. A block is critical when deleting it destroys that status. Thus failure of any Account condition can establish criticality—not just loss of the question-relevant dependence.
+
+Here is an exact counterexample to interpreting that criticality as question-relevant contribution.
+
+Take four Boolean variables and two independent dependencies:
+
+k: Y = X
+d: V = U
+
+The question concerns the value of Y under changes to X. The other circuit, U → V, is unrelated.
+
+Let the target and candidate initially be identical. Use identity transports and identify both components as commitments:
+
+Γ = {k, d}.
+
+The contract contains the baseline and all partial interventions setting X and U. With Boolean values, that gives nine edit descriptions, including the identity. Background assignments set unset inputs to zero.
+
+The full candidate satisfies the conditions:
+
+- Its components and assembled solutions match the target.
+- Its answer to the question matches.
+- Changing X changes Y, and deleting k makes Y undetermined.
+
+Now delete only d, retaining the ports as the document’s deletion operation allows.
+
+Nothing happens to the answer about Y. But V becomes unconstrained. The candidate therefore admits valuations the target does not admit, so global fidelity, F2, fails.
+
+The exhaustive check gives:
+
+Candidate: Both k and d
+Component fidelity: Pass
+Global fidelity: Pass
+Answer about Y: Correct
+
+Candidate: Only k
+Component fidelity: Pass
+Global fidelity: Fail
+Answer about Y: Still correct throughout the contract
+
+Consequently, CriticalBlock({d}; {k,d}, p) holds. Indeed, d is globally indispensable under the stated definition—even though deleting it never changes or undermines the answer about Y.
+
+Diagnosis
+
+The definition conflates indispensability to the fidelity of the whole represented organization with contribution to explaining this question.
+
+A possible defense is that d should never have been included among the active commitments. But the document explicitly allows commitments that do no work and provides definitions intended to identify that situation. Requiring the correct relevance judgment before applying the test would defeat that purpose.
+
+Another defense is to remove the disconnected ports and alter the global projection when deleting d. That could repair the example, but it requires an explicitly different restriction operation. It is not what the unchanged identity projection does.
+
+Verdict:
+A demonstrated classification problem in the interpretation of explanatory contribution. It is not, by itself, a refutation of Account sufficiency: the full candidate still explains Y through k.
+
+Repair:
+Distinguish structural-fidelity criticality from question-relative explanatory contribution. The latter needs a relevance condition or an explicit question-preserving reduction, not merely failure of Account after deletion.
+
+2.2 Representation and construction appear to depend on each other
+
+Cross-examination question:
+What makes the first constructed representation a representation, without presupposing that it already represents?
+
+The representation clause says, schematically:
+
+Rep ⇔ Faithful ∧ (Sel ∨ Con).
+
+Constructed provenance, in turn, requires an episode with a construction trace and a represented target. Construction is described as preparing a represented organization, and its trace includes the resulting representation.
+
+On the literal reading, the dependencies therefore include:
+
+Rep → Con → Build → Rep.
+
+Some references to representation can legitimately concern earlier representations. A learner can use an already represented problem to construct something new. But the requirement that the result already be a representation is the troublesome edge.
+
+In a stripped-down instance, the clauses risk saying:
+
+“This occurrence represents because it was constructed; it was constructed because the relevant physical process produced this representation.”
+
+That does not uniquely determine whether the occurrence represents.
+
+The document explicitly warns against a representation grounded only in its own construction. That is the right warning. However, its stated dependency order omits the apparent dependence of Build on representation and then asserts that there is no cycle. The warning does not itself supply the missing construction.
+
+Strongest defense:
+“Construction trace” is intended to be independently recognizable from physical processes, role bindings, and transformations, without applying Rep to its output.
+
+That could work. But it needs to be the actual definition.
+
+Repair:
+Define a raw physical construction relation first. Its premises may refer to representations at strictly earlier stages; its output should initially be a carrier with specified structural properties. Then derive representation of that output. A ranked inductive definition would make the intended grounding explicit.
+
+Verdict:
+An unresolved foundational dependency, not a proof that no coherent version of the framework exists.
+
+2.3 Functional determination does not uniquely identify outputs
+
+Cross-examination question:
+Has direction been derived, or has it been placed inside the interpretation of edits?
+
+Part II says a port is an output of a component when its value is determined by that component’s relation given the other ports.
+
+For the Boolean relation
+
+L = {(0,0),(1,1)},
+
+both Y is determined by X and X is determined by Y.
+
+Thus the literal criterion classes both ports as outputs. It does not distinguish the assignment Y := X from X := Y. A finite check confirms that directly.
+
+The intervention machinery can distinguish the directions once it specifies which component gets replaced by an intervention. But the text also describes that replacement as replacing the component that “assigns” the port. That assignment relation needs either an independent definition from the edit structure or explicit inclusion in the supplied data.
+
+A related issue affects the proposed signatures of causal assignments, measurements, and rule applications. For a component Y := X, intervening upstream on X changes the solution but normally leaves the relation Y = X unchanged. A measuring component N := X has the same property. Their distinction cannot come merely from whether their own relation changes under that upstream intervention.
+
+This is not an argument that measurements cannot be causal processes; they can be. It is an argument that the listed patterns do not automatically provide the sharp semantic classification the surrounding prose suggests.
+
+Verdict:
+Repairable under-specification. Argument 1 establishes preservation of the document’s defined signatures. It does not independently establish that those signatures exhaust every scientifically important sense of kind.
+
+2.4 The proposed falsification tests are narrower than some of the claims
+
+Cross-examination question:
+Would the document accept the logical negation of its own necessity claim as a counterexample?
+
+For necessity on a specified question p, the relevant form is:
+
+Explains(E,p) ⇒ Account(E,p).
+
+A counterexample would explain that question while failing Account on that question’s contract.
+
+But Part XV asks for a candidate whose organization cannot be preserved by any transport under any contract on its target. That is a much stronger demand on the critic. A candidate might fail the proposed necessity condition on the actual question while being representable on some other, narrower question.
+
+There are two distinct theses:
+
+Every explanation of a specified question meets these conditions there.
+
+and
+
+Every explanation is structurally representable somewhere under some contract.
+
+Their counterexamples differ.
+
+Likewise, the sufficiency challenge adds a non-declared-provenance requirement, although Account itself does not require that provenance and explicitly does not depend on how the mechanism was guessed.
+
+Verdict:
+The statements of the central claims and their admissible refutations need to be aligned. Otherwise, a critic can defeat one claim while the document answers by defending a weaker one.
+
+3. Applying it to cognitive science
+
+There are two importantly different applications:
+
+1. Explaining a cognitive system:
+A scientist uses the semantics to assess a model of memory, learning, or attention.
+
+2. Assessing a cognitive system as an explainer:
+The semantics decides whether the system itself represents, criticizes, constructs, or creates an explanation.
+
+The first application is considerably easier to make operational than the second.
+
+3.1 Neural readout versus causal mechanism: a successful test
+
+Consider this stipulated memory system:
+
+M := X
+N := M
+Y := M
+
+where X is a cue, M a memory state, N a recorded signal, and Y a response.
+
+A scientist proposes:
+
+Y := N.
+
+Under ordinary cue changes, the proposal predicts perfectly. The signal and response always agree.
+
+Moreover, this is not merely an output-table example: on that restricted contract, the relation between N and Y can be obtained by projecting the target subnetwork N := M, Y := M. The candidate can meet the component and global matching conditions there.
+
+Now extend the contract to include an intervention that changes the readout without changing memory:
+
+X = 1
+do(N = 0).
+
+The target gives:
+
+M = 1, N = 0, Y = 1.
+
+The proposed mechanism gives Y = 0.
+
+In the finite implementation, this intervention breaks F1, F2, and answer fidelity.
+
+This is a real success for the framework. It forces the distinction between an adequate scoped dependency and a stronger causal attribution.
+
+The relevance to neuroscience is methodological: a known-mechanism system can be used to test whether familiar analyses recover real computational organization rather than correlations and lesion effects alone.
+
+Where the application stops:
+The formalism does not discover which neural intervention isolates the readout, or whether an experimental manipulation also changes memory. Those are substantive empirical assumptions.
+
+3.2 Surprise: the clearest cognitive mismatch
+
+The document defines surprise as a fidelity violation by a selected transport at an encountered pair outside its selection history. A constructed transport can be violated, but its violation is explicitly not surprise.
+
+There are two independent problems.
+
+A. A correct probabilistic model can generate surprising outcomes
+
+Suppose a learner correctly represents a process:
+
+P(A) = 0.99
+P(B) = 0.01.
+
+The rare outcome B occurs.
+
+Nothing about the occurrence falsifies the model. The model explicitly allows it at the correct probability. Nevertheless, its statistical unexpectedness is high:
+
+-log2 P(B) ≈ 6.64 bits.
+
+This is a constructed mathematical example, not a claim that psychological surprise is exhausted by that formula. Its point is simpler:
+
+Unexpectedness does not require an objectively unfaithful representation.
+
+That distinction matters for cognitive science. Surprise-like responses are often studied in settings where low-probability but model-consistent outcomes still produce strong prediction-error or orienting responses.
+
+The framework can accommodate probability distributions as structured contents. Its refusal to supply a probability on claims does not prohibit modeling a probabilistic cognitive process. Therefore, the problem is not an inability to write down probabilities. It is the identification of surprise with fidelity failure.
+
+B. Why should provenance decide whether a violation is surprise?
+
+Imagine two agents with the same expectation and the same response to an unexpected outcome.
+
+One acquired the expectation through selection. The other formulated it through conjecture and criticism.
+
+The document calls the first event surprise and the second merely violation.
+
+That distinction may be useful for classifying histories. But a cognitive application needs an argument that this historical distinction identifies a relevant difference in the psychological process being studied.
+
+Otherwise, it excludes part of the intended phenomenon by definition.
+
+Strongest defense:
+“Surprise” is deliberately a technical term for one particular event class.
+
+That defense succeeds against a charge of logical inconsistency. Argument 4 remains true because it follows from the definition. But the price is that the framework’s surprise is not a general account of psychological surprise.
+
+Repair:
+Distinguish statistical unexpectedness, subjective prediction discrepancy, recognized model inadequacy, and the provenance of the expectation. Those can interact without being defined as the same thing.
+
+Verdict:
+A strong coverage objection to a general cognitive application, not a counterexample to the definitional theorem.
+
+3.3 Infant exploration: representable, but not yet classified
+
+The document’s final example describes a selected occupancy predictor failing under occlusion, followed by construction of an object-persistence model. It explicitly says this is not an attribution to an actual infant, animal, or program.
+
+Empirically, expectation-violating events can alter infants’ subsequent learning and exploration.
+
+The framework can describe such a case using an object layer, predictions, a represented difficulty, and a subsequent construction or selection response.
+
+But now cross-examine the attribution:
+
+What evidence determines that the infant represented a defect in its own account, rather than changing attention or exploratory behavior after an unexpected event?
+
+A second question follows:
+
+What establishes a newly constructed explanatory binding, rather than recruitment of an existing capacity or adjustment within a previously available organization?
+
+These are not resolved by observing successful exploration.
+
+The document allows tacit representations, so demanding verbal reports would be an unfair test. But allowing tacit representations does not establish that the particular representations required by Build or a critical episode were present.
+
+There is also a technical caution about the occupancy example. “Predicts from occupancy” does not, by itself, establish a memoryless architecture. A predictor using occupancy histories may preserve information through occlusion. To establish the claimed impossibility for a selected population, one must specify its state and memory restrictions, not just describe its sensory input.
+
+Verdict:
+The empirical behavior is compatible with the framework. It does not identify the framework’s proposed internal provenance or establish CreateEx.
+
+This is a case where representability succeeds while empirical classification remains underdetermined.
+
+3.4 Model-based learning: the framework does not inherit a ready-made psychological distinction
+
+It is tempting to identify:
+
+selection ≈ model-free learning
+construction ≈ model-based learning.
+
+That mapping does not follow.
+
+In reinforcement-learning research, model-based and model-free influences can both contribute to human behavior and neural signals.
+
+In the present semantics, however, model-based planning need not automatically be construction. A system can use a learned transition model through a retained procedure without newly constructing a binding or criticizing a represented target during the relevant episode.
+
+Conversely, a criticism-and-revision process could modify a comparatively simple value-based policy.
+
+The distinctions concern different things:
+
+Model-based versus model-free concerns the computational organization of learning and choice.
+
+Selected versus constructed concerns the specified history of a correspondence.
+
+A cognitive application must measure both rather than substituting one for the other.
+
+The framework can encode particular learning rules, memory limits, or arbitration mechanisms. But those supplied mechanisms—not Account or provenance alone—would determine trial-by-trial choice predictions.
+
+Verdict:
+Potentially useful descriptive structure, but not yet a psychological process theory.
+
+3.5 Finding questions: recording the event is not explaining its occurrence
+
+Treating questions as constructible contents is useful. It lets a model record that an agent changed the target, admitted changes, or query rather than merely producing a new answer.
+
+But consider an actual cognitive question:
+
+Why did this learner investigate the hidden mechanism rather than memorize the visible regularity?
+
+Or:
+
+Why did asking for an explanation change the learner’s next generalization?
+
+The semantics can record changes in aims, hypotheses, and questions. What it does not yet supply is the mechanism selecting one of those changes.
+
+That is a legitimate boundary for a semantics. It becomes a problem when representability is treated as the explanatory achievement itself.
+
+Verdict:
+Argument 5 establishes an encoding possibility, not a theory of why particular questions are found.
+
+4. Further adversarial questions
+
+4.1 Do declared indices make the assessment objective—or merely conditional?
+
+The document is right that a fact can be objective relative to a specified contract. Conditionality is not subjectivity.
+
+But the scientific assessment also depends on the choice of target, grain, decomposition, counterparts, admitted changes, and scope. The document explicitly leaves the justification of a restricted scope as a substantive, criticizable input.
+
+The issue is therefore not:
+
+“Everything is relative, so nothing matters.”
+
+It is:
+
+How much of the desired classification can be obtained by choosing those inputs after seeing the result?
+
+Recording those choices makes retrospective adjustment visible. It does not establish that the resulting question is the one a scientific theory needed to answer.
+
+For cognitive-science applications, the protection should be procedural: specify the relevant grain, contrasts, component mappings, and admissible revisions before testing the decisive cases.
+
+Otherwise, the framework risks becoming a precise language for describing whatever interpretation the investigator already favors.
+
+4.2 Are selection and construction separate mechanisms, or separate labels on histories?
+
+The qualified underdetermination result in Argument 3 is sound: if two transports survive the same history and differ elsewhere, survival on that history does not distinguish them there. The population restriction is doing important work.
+
+But that result does not establish a general discontinuity between selection and creative construction.
+
+An evolutionary search procedure could contain representations of candidates, explicit counterexamples, and content-sensitive revision. Under the document’s definitions, that history might qualify as construction rather than pure selection.
+
+That is not a contradiction. It shows that “selection” here is narrower than a generic variation-and-selection algorithm.
+
+The adversarial demand:
+Identify what a construction mechanism does that is not already captured by the independently specified physical processes, representations, memory, and feedback in its history.
+
+The prohibition on represented targets in selected histories guarantees a classificatory difference. It does not, by itself, establish a mechanistic irreducibility result.
+
+4.3 Does exact fidelity exclude explanatory idealization?
+
+F1, F2, and answer fidelity are exact equalities. The text supplies an approximate transport bound, but does not directly replace Account with a general approximate-account relation.
+
+A cognitive model may capture a dependence while simplifying its realization. The document has two available responses: identify an exact coarse-grained dependence, or formulate a question explicitly about an approximation or bound.
+
+Both can be legitimate.
+
+But neither automatically shows that every useful explanatory idealization can be handled without changing what it was originally offered to explain.
+
+The text deliberately distinguishes an erroneous explanatory candidate from a genuine account. That is coherent. The burden is to show that its exactness requirement tracks the intended scientific distinction rather than classifying most working explanations as merely candidates.
+
+Verdict:
+A substantive necessity question, not an immediate contradiction. A worked cognitive idealization is needed, with the coarse-graining and preserved dependence written out.
+
+4.4 Does the argument machinery explain reasoning?
+
+Usable records whether an agent admits the inference form, respects its scope, and retains its premises. It explicitly permits premises accepted without their explanations.
+
+This can model the conditional consequences of an agent’s commitments. It does not yet explain why the agent adopts one premise, notices one conflict, abandons one assumption, or stops inquiry at one point.
+
+The document calls these choices. That is not a logical error. But in cognitive science, those choices are among the principal phenomena requiring explanation.
+
+Similarly, redescribing an argument for a conclusion as an argument against its denial does not by itself explain the psychological operation or settle its epistemic status.
+
+Verdict:
+Useful bookkeeping for reasoning episodes; incomplete as a theory of reasoning dynamics.
+
+4.5 Can the capability conditions accommodate ordinary fallible performance?
+
+RetReal quantifies over every admitted execution: all must complete successfully and return to the retained constructor attribute.
+
+Suppose a modeled cognitive task has a small but nonzero probability of failure, and those failures belong to the execution family. Then this condition fails, even when performance would ordinarily count as a retained ability.
+
+The document includes tolerances, so it has resources for responding. But it needs to show explicitly how reliability is represented—particularly whether tolerance applies to a distribution of executions rather than only to the quality of each output.
+
+At the universal level, the existential enabling conditions need equally careful treatment. “Non-question-begging” must exclude supplying the very explanation or discovery being attributed, while still permitting genuine teaching and scaffolding.
+
+The document correctly says finite performance does not establish universality. Nothing in this review demonstrates that the universal class is empty; equally, nothing here establishes membership for humans or machines.
+
+5. Attacks I would not count as successful
+
+A genuinely adversarial review should discard its own weak objections.
+
+“A complete counterfactual lookup table cannot explain.”
+The document explicitly allows such a table when it preserves the required component structure and meets the other conditions. Calling it a table is not an independent argument against explanation. I did not find a decisive sufficiency counterexample merely by repackaging a mechanism this way.
+
+“The transport could hide the answer.”
+This is a serious attack surface because the translations are flexible. But the non-circularity clause may exclude straightforward versions. Encoded variants require a more exact account of structural answer-identity at the declared grain before they can be adjudicated. I would call that an unresolved formalization obligation, not an exhibited counterexample.
+
+“New questions or new components are impossible because the organizations have fixed port sets.”
+Some of the exact constructions need clearer encoding: adding structure requires dormant slots, structure-valued ports, or a meta-organization. But the allowed value domains are broad enough that this looks repairable. It is not a demonstrated expressive impossibility.
+
+“The finite-monotone theorem is wrong.”
+I checked every upward-closed route family containing the full commitment set for one through four commitments: 193 families, with no counterexample. The relevance problem above survives precisely because the theorem can be correct while its criticality predicate is interpreted too strongly.
+
+The small mathematical results generally do much less than the central philosophical claim. Their correctness should not be mistaken for proof of the constitutive conjecture.
+
+6. What a serious next application should look like
+
+The most informative benchmark would combine a known mechanism with controlled opportunities for learning and question revision.
+
+Use a small artificial causal environment with hidden state, an independently editable measurement channel, and changes to the underlying mechanism. Include an unrelated subsystem to test explanatory relevance.
+
+Then fix the candidate classifications before revealing the critical interventions.
+
+The benchmark should ask whether the framework distinguishes:
+
+- A readout from a cause. The finite test shows it can, given the separating intervention.
+- An irrelevant faithful component from an explanatory contribution. The current criticality definition fails the constructed test.
+- Selection, retrieval, and new construction. This requires process histories and independently specified criteria—not just successful answers.
+
+For a human version, behavior and verbal reports may leave the internal attribution unresolved. That uncertainty should remain an empirical result, not be filled by whichever tacit representation makes the classification work.
+
+Crucially, there should also be predictions about which questions agents pursue, which interventions they choose, and what transfers to new contexts. Without such additional commitments, the benchmark tests an annotation scheme rather than a cognitive process theory.
+
+7. Overall verdict and revision priorities
+
+Central issue: Component/global/question fidelity
+Result: Survives a useful causal stress test
+
+Central issue: Question-relative explanatory contribution
+Result: Concrete misclassification under the stated deletion setup
+
+Central issue: Non-circular grounding of representation
+Result: Unresolved dependency in the written definitions
+
+Central issue: Elimination of kinds
+Result: Signature-preservation result is valid; broader semantic conclusion remains unestablished
+
+Central issue: Selection versus construction
+Result: Distinguishable by definition; mechanistic significance needs further argument
+
+Central issue: Surprise
+Result: Too narrow for a general cognitive-science application
+
+Central issue: Question-finding
+Result: Representable, but its occurrence is not thereby explained
+
+Central issue: Full necessity and sufficiency
+Result: Not established; the stated falsification tests need alignment
+
+The highest-priority revisions are to separate explanatory relevance from whole-model fidelity, ground construction without presupposing its resulting representation, and separate surprise from objective fidelity failure. The next priority is an operational account of the key inputs—especially component mappings, construction traces, and scope choices—so that empirical applications constrain those inputs rather than infer them from the classification desired.
+
+My strongest conclusion is not that the framework is useless or refuted wholesale. It is that its strongest demonstrated achievement is an audit language for scoped explanatory structure, whereas its strongest advertised achievement is a full characterization of explanatory creativity. There is still a substantial gap between those.
+
+The decisive question for revision is:
+
+What does the framework force us to conclude about a difficult case before we adjust its grain, contract, counterparts, and provenance description to fit the outcome?

@@ -1,0 +1,76 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-log-entry-draft",
+ "job": "draft_log_entry",
+ "kind": "records",
+ "purpose": "Draft a log entry for the owner's answers step of round 2 from a facts file Opus wrote. The draft stays in the scratchpad; Opus reads it before anything goes into the records.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-log-entry-draft",
+ "inputs": [
+  {
+   "path": "Semantics/tools/sonnet_harness/specs/r2 log entry - facts.json",
+   "md5": "752097117833c98421288c7a57ccabb8"
+  }
+ ],
+ "steps": [],
+ "agent": {
+  "read": [
+   "{H}/specs/r2 log entry - facts.json"
+  ],
+  "write": "{OUT}/draft.md",
+  "instructions": [
+   "Read the facts file. Do not open any other file.",
+   "Write draft.md: one paragraph, at most 180 words, beginning 'S104 (the owner's answers).' and saying, in plain terse words, what was written where and what the numbers became.",
+   "Use only the facts in the file: every number, id, md5, commit and file name must be copied from it. Add no reason, no judgement, no fact of your own.",
+   "Do not use these words: true, false, prove, proof, support, fit, verify, confirm, valid, correct, establish, derive, belief, authority, foundation."
+  ],
+  "output_schema": {}
+ },
+ "check_steps": [
+  {
+   "name": "every fact-like token in the draft stands in the facts; words; S23 list",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/records.py",
+    "check",
+    "--draft",
+    "{OUT}/draft.md",
+    "--facts",
+    "{H}/specs/r2 log entry - facts.json",
+    "--max-words",
+    "180"
+   ],
+   "timeout_s": 60,
+   "save": "check.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "nothing unsupported",
+   "file": "check.json",
+   "path": "unsupported",
+   "empty": true
+  },
+  {
+   "name": "no word on decision S23's list",
+   "file": "check.json",
+   "path": "s23_list_hits",
+   "empty": true
+  },
+  {
+   "name": "at most 180 words",
+   "file": "check.json",
+   "path": "words",
+   "lte": 180
+  }
+ ],
+ "on_fail": "escalate to Opus with the draft and check.json",
+ "never": [
+  "write into records/ or any file outside the out folder",
+  "add a fact",
+  "judge",
+  "open a key file",
+  "call GLM",
+  "commit"
+ ]
+}

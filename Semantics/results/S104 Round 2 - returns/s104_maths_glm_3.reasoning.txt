@@ -1,0 +1,250 @@
+Let me carefully work through this task. This is part 3 of 17 of a report comparing a formalization ("the maths") against a text ("the semantics") about explanation. I need to analyze definitions D4.1–D4.6, claims FC03–FC18, inventions I10–I94, unrecorded choice U4, and round-1 matter 1.
+
+Let me work through each item.
+
+**(a) Does each formal statement say what the sentence says?**
+
+D4.1 (K) — sig_C(j) = {(a,b,L_j(a,b))}. Direct formalization of L116. Seems fine. Nothing to add.
+
+D4.2 — L119: "there is a bijection of their footprints under which sig_C(j) and sig_C(j') coincide." The maths adds X_v = X_β(v) (equal value domains) and defines β_*. The text says "a bijection of their footprints" — the maths reads this as a bijection between the port sets requiring equal value domains, comparing values as elements (I10). The text doesn't say whether values can be recoded. So I10 is an invention. Also the text says the signatures "coincide" under the bijection — the maths takes β_*(R) renaming coordinates. That seems faithful. The invention of "equal value domains" vs "value bijection" is I10's own content — the text doesn't settle it.
+
+D4.3 — Reading through a transport. Text L119: "their signatures, read on C through τ and τ', coincide under a footprint bijection". The maths invents σ for boundaries (I12). The text names only τ; but signatures depend on boundary too, so some choice was forced. Faithful modulo I12.
+
+D4.4 — Signature of a counterpart. Text L556: "By (K), sig_C(λ(k)) = ...". The maths extends (K) to subnetworks — an invention (I13), with the honest note that this is an extension not something (K) gives. Round-1 matter 1.
+
+D4.5 — Changes/Inv. Text L123–125 and L347. The maths compares with the identity edit at the same boundary (I09). Faithful given I09.
+
+D4.6 — Families. L123: "a causal assignment has a signature that changes under intervention on its output port and is invariant under observation edits". Causal_C(j) := Changes_C(j, Set_{o_j}) ∧ Inv_C(j, Obs). Note: o_j is "the port j assigns" — the text says "its output port" which the maths fills via asg (I04). Faithful.
+
+FC03 — equivalence relation. The maths says "holds on all models tried" but actually this should hold by construction — an equivalence relation given a bijection-based definition... Wait, actually is ~_C transitive? β composition works: if β: V_j→V_j' and β': V_j'→V_j'' with equal domains, then β'∘β works, domains equal by transitivity of equality. So it holds by pure logic, no models needed. But they searched anyway. Note in the report: this holds by construction, not just on models tried. Actually careful: the requirement "X_v = X_β(v) for every v" is preserved by composition. Reflexive: identity. Symmetric: β⁻¹. So yes it's an equivalence relation by pure reasoning — the search status "holds on all models tried" understates; it holds unconditionally. I can note that.
+
+FC04 — coarser identifies more. Text: "a coarser contract identifies more components, and two components of one kind on C may separate on a finer contract." The maths: C' ⊆ C ⇒ (j ~_C j' ⇒ j ~_C' j'). That matches I11. Part (b) is a witness claim. Fine. But wait — does the coarser direction actually hold always? Yes: fewer constraints on the bijection. This is also by construction. And the witness is trivially constructible. Fine.
+
+But note a subtlety: coarser as C' ⊆ C means coarser has *fewer* pairs; but intuitively a "coarser contract" tests less so identifies more. The maths matches the intuition. But the other choice (a) in I11 — coarser as quotient — the text doesn't settle. Does the text settle it? L119 says "a coarser contract identifies more components" — under reading (b) of I11 ("fewer distinguishable pairs"), the claim "coarser identifies more" becomes tautological. Under I11's reading it's a substantive claim. The text doesn't settle; I11 is legitimate invention.
+
+FC05 — the counterexample. Reading (ii) of "an edit under which the two relations stay equal does not separate the components." The counterexample: two components of one kind on C via swap bijection; at a new pair, relations are equal under the *identity* bijection but not under the swap; so under reading (ii) ("some footprint bijection") the premise holds but the conclusion (still of one kind on C∪{x}) fails. The maths' own FC05 formal statement uses reading (i), under which it held. So this is a counterexample to a *reading*, not to the text as the maths formalizes it. What does the text mean? "an edit under which the two relations stay equal does not separate the components." Natural reading: the two relations (as related by the witnessing bijection? or as sets?) — ambiguous. Under U4's third reading: the edit leaves each relation as it was at (1,b) — then it fails only when baseline not in C. Hmm.
+
+Actually let me think about what the text most plausibly means. The sentence: "and an edit under which the two relations stay equal does not separate the components." "The two relations stay equal" — the relations L_j(a,b) and L_j'(a,b) stay equal... equal to what? Two readings: (i) stay equal to each other (as related by the witnessing bijection), or (ii) stay equal to what they were. "Stay equal" suggests remaining in the state they were — i.e., each relation is unchanged by the edit. That's U4's reading! "Stay equal" — equal as they were. Hmm, actually "the two relations stay equal" could mean "remain equal [to each other]" or "stay [as they were], equal[ly]". U4's reading: the edit leaves each of the two relations as it was at (1,b). Under that reading the claim fails only when (1,b) ∉ C — which suggests the text needs the baseline in C, which L141 does say ("it contains the baseline (1,b0)"). So contracts hold the baseline! Then U4's reading holds on all contracts as defined by L141. So U4's reading is arguably the text's own reading, and it holds given L141. That's a nice point: the third reading is the natural one, and it holds because contracts contain the baseline.
+
+Wait, but the check searched models "meeting its premise" — 82 separated, all with (1,b) ∉ C. Since L141 requires the baseline, contracts have (1,b0). But does C contain (1,b) for the *same* boundary b? U4 says "the pair (1,b) was not in C" — so when the contract contains the baseline at that boundary, the reading holds. So under U4's reading plus L141, the sentence holds. Good — I should recommend: adopt U4's reading, or note the text is ambiguous among three readings and should say which.
+
+Proposal: rewrite L119's clause to disambiguate. E.g.:
+
+"and an edit that leaves each of the two relations as it was at the baseline does not separate the components."
+
+Or keep reading (i): "and an edit under which the two relations remain related by a bijection that witnesses their being of one kind does not separate the components."
+
+Which should stand? Reading (i) makes the sentence trivially true (by definition, since the witnessing bijection still serves all pairs). Reading (ii) makes it false (FC05 counterexample). Reading U4 makes it substantive and true given L141. So the text's sentence, if it is to say anything non-trivial and true, should be read as U4 or (i). Actually reading (i) is trivial — so the sentence adds nothing under (i). Under U4 it says something: an edit under which neither relation changes (each stays as at baseline) doesn't separate them. That's also nearly trivial given the definition: if L_j(a,b) = L_j(1,b) and L_j'(a,b) = L_j'(1,b), and β witnessed ~ on C ⊇ {(1,b)}, then β serves the new pair too. Yes trivial given baseline in C. Hmm, everything is trivial except reading (ii), which is false. So the sentence is either trivial or false. That itself is worth saying: the sentence as it stands either says nothing beyond D4.2 (readings i and U4-with-baseline) or is false (reading ii). Recommendation: cut it or reword to the (i)/U4 content explicitly as a remark, not a claim. Per the rules, I should propose exact wording. Perhaps:
+
+Replace with: "and an edit under which each of the two relations is as it was at the baseline does not separate the components."
+
+That makes the triviality explicit and true.
+
+FC15 — τ[C] is a contract. Text L141: contract contains baseline; L242 τ(1)=1. The maths' formal statement: "as far as a contract is a set of pairs holding the baseline". This is a weak reading — L141 may say more about contracts (I don't have L141 fully, only "it contains the baseline (1,b0)"). So FC15 is partial; also needs σ(b0) to be a boundary of E, which follows from σ: B_D ⇀ B_E. Note "⇀" partial — σ(b0) must be defined; the formal statement assumes b0 ∈ dom σ. Fine. Also, τ[C] requires σ defined on all of C's boundaries. If C holds pairs with b ∉ dom σ, τ[C] isn't defined. I12 invented τ[C] := {(τ(a),σ(b))}. The claim should carry the premise that t translates every pair of C. That's D5.1's "t translates (a,b)". Minor.
+
+FC16 — reading through t agrees with (K) on τ[C]. This is essentially by construction (the function composition). Holds trivially. Fine.
+
+FC17 — Argument 1: (F1) makes each commitment's signature its counterpart's. Formal: F1_C ⇒ ∀k∈Γ∀(a,b)∈C: L_k(τ(a),σ(b)) = proj Sol. That's literally D5.4 restated plus I13. So it holds by construction. Note: the text says "no active component k of E has a signature on τ[C] that differs from the one its counterpart λ(k) has on C, up to the port translation". The formal statement equates them pointwise — but "up to the port translation" — the maths builds the port translation into proj (D5.2). So pointwise equality after carrying by λ. Faithful given I12–I15. The claim is a restatement of (F1) plus I13's extension; holds by construction rather than by search. I should note that: it's true by definition, and the search adds nothing. Also note: the text's "up to the port translation" is precisely what I94's untranslated reading denies; the text's own words "up to the port translation" settle I94 against the untranslated reading. Good point for (c): L119's "up to the port translation" settles that the counterpart's signature is carried by the port translation — so I94's untranslated reading is not the text's; FC18's counterexample rests only on I94 and tells against that invention, not the text.
+
+FC18 — the counterexample. Under I94's untranslated reading, (F1) holds but no footprint bijection exists because domains differ ({1} vs {0,1}) and I10 requires equal domains. The failure comes from value maps κ collapsing domains. Under D4.4's reading, holds. So: counterexample only to the invention combination (I94 + I10's equal-domains). The text L558: "A condition 'each component's counterpart must be a component of the same kind' adds nothing to (F1) on any contract." and "The word 'kind' is therefore eliminable..." Under the text's own words "up to the port translation" (L554), the counterpart's signature is carried to V_k, so the comparison is between relations on the same footprint and same domains? Wait — even under D4.4, the value maps κ may be non-injective, collapsing {0,1}→{1}. Then sig_C(λ(k)) is a relation on V_k with E's domains — so domains match, and identity footprint bijection exists. But does the *signature coincide*? Under (F1), yes pointwise with L_k(τ(a),σ(b)). So SameKind holds with β = identity. Yes, holds by construction. So FC18 under D4.4 is: F1 ⇒ sig^t = sig_C(λ(k)) pointwise ⇒ coincide under identity bijection. Trivially true. Good.
+
+So FC18's counterexample is purely to I94. And the text settles I94? L119's counterpart sentence says "read on C directly with its hidden ports projected away, up to the port translation" — "up to the port translation" means the port translation is applied, i.e., D4.4's reading. So the text settles it; I94's untranslated reading is not a reading of the text. Hmm — but one might argue "read on C directly" pushes the other way. The sentence: "its counterpart λ(k), read on C directly with its hidden ports projected away, up to the port translation". I read: read directly (not through τ), project hidden ports, up to the port translation (carry by θ/κ). D4.4 is faithful. So: text settles it; the counterexample tells only against the invention. No change to the text needed. But maybe recommend recording in the register that the text settles it — actually the register exists; the report should say the text settles I94.
+
+However, there's a residual: does the text settle I10's equal-domains requirement? "a bijection of their footprints" — a bijection between footprints (port sets); values compared... The text doesn't say whether a value recoding is allowed. With κ non-injective, counterpart and component can be of one kind only under D4.4 because domains are E's. Fine.
+
+But deeper attack for (d): FC18 under D4.4 — is SameKind really implied? SameKind_C defined as "the signature of k read through t and sig_C(λ(k),θ_k) coincide under a footprint bijection". sig^t_C(k) is a function on C to relations on V_k (E domains). sig_C(λ(k)) is a function on C to relations on V_k (E domains, after κ). F1 gives pointwise equality. Identity bijection: need X_v = X_v — same set, trivially. So yes, by construction. Holds unconditionally. Fine.
+
+**(d) Attack the claims that held.**
+
+FC03: holds by pure logic (composition of bijections). Beyond models: unconditional. No counterexample possible. But attack the *sentence*: "A kind is an equivalence class of components under this relation." Fine.
+
+FC04(a): also by construction. (b): witness by construction — take two components with identical relations on a pair subset but differing on an extra pair. Trivial.
+
+FC05(i): "signatures use relations only" — by construction (D4.1 defines sig from L only). Holds unconditionally.
+
+Attack FC15: τ[C] contract — the gap: if σ or τ is undefined on some pair of C. Also L141 might require more of a contract (e.g., closed under composition of edits? "it contains the baseline" suggests other clauses exist). If a contract requires closure under edit composition (e.g., if (a,b),(a',b) ∈ C then (a'a,b) ∈ C), then τ[C] may fail: τ(a'a) may be undefined even if τ(a), τ(a') defined (partial τ, I17). So a hand counterexample to the *sentence* "τ[C] is a contract" beyond what was formalized: contract = closed under products; τ partial or τ not a homomorphism on products. E.g., C = {(1,b),(e,b),(e²,b)} with τ(e)=e' but e'·e' undefined in A_E... then τ[C] = {(1,b'),(e',b')} lacks (e'², b'). If contracts require closure, τ[C] is not a contract. I rely on L141 beyond what's given — I must say so. The report says "where you rely on a line not given here, say so." L141 is only partially quoted ("it contains the baseline (1,b0)") — the "it" refers to something earlier in the line, so L141 has more content I can't see. I'll flag this: FC15 formalizes only the baseline clause; whether τ[C] is a contract in full depends on L141's other clauses, which are not given here.
+
+Attack FC16: by construction. Nothing.
+
+Attack FC17: by construction (F1 restated). But attack the *text's* claim at L554–556 more broadly: the Claim says "no active component k of E has a signature on τ[C] that differs from the one its counterpart has on C, up to the port translation." Fine. But L245: "By (K), no component of E whose signature on C differs from its counterpart's meets (F1)" — note "on C" here vs "on τ[C]" at L554 — an inconsistency? L245 says "signature on C" for a component of E; components of E have signatures on contracts of E, i.e., on τ[C], not on C (C is D's contract). Possibly loose wording at L245. Worth noting as an unrecorded choice? It's quoted under FC17. I could note: L245's "on C" should read "on τ[C]" (or "read on C through τ"). Proposal for exact wording — but I don't have the full line L245, only the fragment. I can propose the fragment-level fix: replace "whose signature on C differs" with "whose signature on τ[C] differs" — but rules say give whole sentence as it would stand; I only have a fragment. I'll note it and give the changed fragment, acknowledging the rest of the line is not given.
+
+Attack FC18 beyond: under D4.4 holds by construction. Could a counterexample arise with λ(k) empty subnetwork? I14 allows empty N. Then Sol_∅(a,b) = ∏ over empty = {()} — single empty tuple; proj to V_k = {() projected} = ... κ maps over V_k which is empty? If k has ports, proj of {()} gives the tuple over V_k of... there's no z values for v ∈ V_k since θ_k[V_k] ⊆ V_∅ = ∅ forces V_k = ∅ (θ injective into empty). So k has no ports; fine. Edge case OK.
+
+Another attack: Γ vs J — "active component" means member of Γ (I15). The Claim at L554 says "no active component"; (F1) is stated for k ∈ Γ (D5.4). Consistent.
+
+**(c) Inventions:**
+
+I10 — does the text settle? "a bijection of their footprints under which the signatures coincide" — the text says bijection of footprints (ports), says nothing about values. Equal-domains-with-values-compared-as-elements vs value bijections: not settled. Which should the text carry? Decision-relevant: FC18 needs either D4.4's reading or I10's value-bijection alternative. Under S23 constraints (no grading etc.) — value recoding seems more in the spirit? Hmm. "coincide under a footprint bijection" — a bijection of footprints is a port renaming; for signatures to coincide, values must be compared; if value domains differ, no bijection of footprints alone can make signatures coincide... Actually a footprint bijection with X_v = X_β(v) required. The text doesn't say X_v = X_β(v). If we drop that, "signatures coincide" under β is undefined (tuples over different domains). So the text forces *some* value handling. Options: require equal domains (I10) or allow value bijections (I10a). I10a is "kinds up to recoding of values" — coarser. Which stands? For the theory of explanation: two components of one kind — is a thermometer reading in Celsius of one kind with one in Fahrenheit? Intuitively same kind (recoding). But kinds feed "hard to vary" and Argument 1's eliminability. I should propose wording but the rules say don't move values... "Where values are placed is the owner's question" — that's about value placement, different thing. I think I can propose: keep I10 (equal domains) but the text should say it. Proposed wording for L119:
+
+"Two components j, j′ are of one kind on C when their footprints carry the same value domains port for port and there is a bijection of the footprints, preserving each port's values, under which sig_C(j) and sig_C(j′) coincide."
+
+Hmm, "preserving each port's values" — means X_v = X_β(v). Good.
+
+I11 — text: "a coarser contract identifies more components". Doesn't settle subset-vs-quotient. Propose: "A contract C′ is coarser than C when it holds a subset of C's pairs (with the same baseline)". Actually is that right to write in? The maths' reading makes the following claim substantive; the quotient reading makes it tautological. Propose the subset reading as wording. Or say it should stay open? I'll propose wording naming I11.
+
+I12 — text L119 names only τ for reading signatures through; boundaries must also be translated (signatures are functions of (a,b)). The text at L554 says "signature on τ[C]" — τ[C] itself names only τ applied to C, but C is a set of pairs. So the text's own "τ[C]" is loose; σ is forced. Propose: at L119 or nearby, "read on C through τ and σ (edits by τ, boundaries by σ)". Exact wording replacing L119's phrase: "their signatures, read on C through τ and σ′" — hmm the original: "their signatures, read on \(C\) through \(\tau\) and \(\tau'\), coincide under a footprint bijection". Proposal: "their signatures, read on \(C\) through \(\tau\), \(\tau'\) and the boundary translations, coincide under a footprint bijection". And L554 "a signature on τ[C]" → "a signature on τ[C], where τ[C] comprises the pairs (τ(a), σ(b)) for (a,b) in C". Give full replacement sentences.
+
+I13 — text says "By (K)" at L556 for a subnetwork; (K) is stated for components. The text should either extend (K) or say the counterpart is read as a composite component. Propose wording at L556: "By (K), applied to λ(k) read as one component whose relation on (a,b) is proj^λ_{V_k} Sol_{λ(k)}(a,b), sig_C(λ(k)) = {...}". That's I13's other choice (a), arguably cleaner: treat subnetwork as composite component so (K) applies as written. Either way, text needs the bridge (round-1 matter 1).
+
+I14 — big invention. Text L189 "a subnetwork of D with a port translation"; L233 "imposing the constraints of λ(k), projecting away its hidden ports and carrying what remains to V_k by the port translation". Does the text settle Sol_N (constraints of N alone vs whole D)? L233 says "imposing the constraints of λ(k)" — that reads as N's constraints alone, not the whole of D. So choice (a) ("Sol of λ(k) in the context of the whole of D") is ruled out by L233? "imposing the constraints of λ(k), projecting away its hidden ports" — yes, the constraints of λ(k), i.e., of the subnetwork. So the text settles I14's choice (a) against. Value maps κ: L233 says "carrying what remains to V_k by the port translation" — carrying suggests maps on values, so value maps are in; the text doesn't say the identity-only. Non-injective κ allowed? Not settled. FC18's counterexample exploits non-injective κ under I94 only; under D4.4 it's harmless. I could propose the text say value maps are arbitrary maps (or bijections). Hmm — should κ be injective? If κ collapses values, information is lost; (F1) then says E's component is a coarsening. For a theory of explanation, a candidate may coarsen the target. Keep as is; maybe stay open. I'll say the text settles constraints-of-N-alone (quote L233) and doesn't settle injectivity of κ; suggest it stay open or note.
+
+I93 — the two readings; U4's third. Text ambiguous; propose wording (see FC05).
+
+I94 — text settles via "up to the port translation"; the untranslated reading should be struck from the register as a reading of the text, or kept only as a stress test. Say: L119's "up to the port translation" settles it; quote.
+
+U4 — third reading; propose adopting it with baseline clause; note it held whenever (1,b) ∈ C, and L141 puts the baseline in a contract, so under L141 this reading holds on every contract. Recommend wording.
+
+**Round-1 matter 1:** (K) beyond components. Needs change: either extend (K) to subnetworks explicitly, or define the counterpart's reading as a composite component. Propose exact wording at L556.
+
+Also I should address (b) for each counterexample:
+
+FC05 counterexample: only against I93 reading (ii). The text, to remove the ambiguity, should reword. Under reading (i) the sentence is true but trivial; under (ii) false; under U4 true given baseline. Which should the text carry? The sentence as written most naturally reads... "an edit under which the two relations stay equal" — I lean: relations stay equal to each other as they were related? Actually "stay equal" with two subjects most naturally means "remain equal to each other". Equal to each other *as sets of tuples* requires same footprint or positional identification (I93's other choice (a)). Hmm. Under "equal as sets with footprints identified by position" — in FC05's model, L_c1(e1,b0) = {(0,1),(1,1)} and L_c0(e1,b0) = {(0,1),(1,1)} — they ARE equal as sets! And at (1,b0): {(0,0),(0,1)} vs {(0,0),(1,0)} — not equal positionally. So c1, c0 are NOT of one kind under positional reading (they're only related by swap). So under I93's other choice (a) (positional equality), the premise "two relations stay equal" at e1 holds (they're equal), but were the components of one kind to begin with? Under positional reading of ~_C? No — ~ uses bijections. Mixed. This is getting deep; the point: the sentence trades on an ambiguity between "equal" (same relation) and "coincide under the witnessing bijection". My recommendation: reword to the witnessing-bijection reading (i), making explicit that it's the same bijection:
+
+"and an edit under which the two signatures still coincide under a bijection that witnesses their being of one kind on C does not separate the components."
+
+That's true (trivially) and unambiguous. Alternatively U4's wording. I'll offer (i)-wording as primary since it preserves "equal" as coincide-under-bijection, and mention U4's alternative. Actually, trivial claims have a place as remarks. Or simplest: delete the clause? Rules say propose exact wording; deletion is a proposal. I'll propose the (i)-wording.
+
+FC18 counterexample: only against I94 (+I10); text settles via "up to the port translation"; no change to text needed; the register should note the text settles it.
+
+Now (a) entries per definition:
+
+- D4.1: faithful; nothing to add.
+- D4.2: faithful given I10; note the text doesn't fix value handling.
+- D4.3: faithful given I12; note σ forced but unnamed in text.
+- D4.4: extension (I13) — the maths says "By (K)" gives it, but (K) doesn't; the maths honestly marks it; the text's L556 "By (K)" overreaches; change text (matter 1).
+- D4.5: faithful given I09 (identity-edit comparison); note L123's "observation edits" vagueness is deferred (D2.4) — FC08/FC09 not in this part. Fine.
+- D4.6: L121 names four things, bullets give three (FC09, not this part). The families match L123–125 given I06–I08. Note Causal uses Set_{o_j} — "its output port": text "output port" vs maths asg(o_j)=j (I04). Fine.
+
+Claims:
+
+- FC03: says what the sentence says; holds unconditionally (by construction), not merely on models tried.
+- FC04: faithful given I11.
+- FC05: formal statement uses reading (i); the counterexample targets reading (ii) — the claim and the sentence part company only through I93's ambiguity; see (b).
+- FC15: formalizes only the baseline clause of L141; the sentence "τ[C] is a contract" (L554 "has a signature on τ[C]") needs τ[C] to be a contract in L141's full sense, which isn't given here; flag reliance on unseen parts of L141. Also needs t to translate every pair of C (I17) — add premise.
+- FC16: faithful; by construction.
+- FC17: faithful given I12–I15; by construction (D5.4 + I13), search adds nothing; note L245's "on C" vs "on τ[C]" looseness.
+- FC18: faithful under D4.4; the SameKind condition built with identity bijection makes it trivial; the interesting content is that "kind" is eliminable — which follows since (F1) gives pointwise equality, stronger than kind-equivalence. Fine.
+
+(d) hand attacks:
+
+1. FC15 beyond bounds: closure of contracts. If L141 requires closure under composition (likely, since edits compose — the model in FC05 has "composition (other than with 1): e1·e1=undef", suggesting contracts/edit sets have structure), then τ[C] can fail: τ(e1)=e1' with e1'·e1' defined ≠ τ(e1·e1)? But τ needn't be a homomorphism (I18 mentions homomorphism clause of (F2) not pointwise). Construct: D: A_D = {1, e, f}, e·e = f. C = {(1,b),(e,b),(f,b)}. E: A_E = {1, e'}, e'·e' = e'. τ(e) = e', τ(f) = e'. Then τ[C] = {(1,b'),(e',b')} — if a contract must contain (e'·e', b') = (e',b') it's there. Bad example. Make τ(f) undefined: but then τ[C] only over translated pairs... I12 defines τ[C] from pairs where defined? τ[C] := {(τ(a),σ(b)) : (a,b) ∈ C} — if τ(f) undefined, τ[C] ill-defined; FC15 presumes τ defined on C. Better: E with e'·e' = g' ≠ e'. τ(e)=e'. C = {(1,b),(e,b)} closed? (e·e,b)=(g_D? ) — I need e·e defined in D for closure to bite: D: e·e = f, C = {(1,b),(e,b)} not closed unless (f,b) ∈ C. So C = {(1,b),(e,b),(f,b)}, τ(e)=τ(f)=e' gives τ[C] = {(1,b'),(e',b')} closed under e'·e'=e'? if e'·e'=e' yes. Set e'·e' = h' distinct: then τ[C] lacks (h',b') though (e'·e',b') should be in it. So τ[C] not closed → not a contract (if L141 demands closure). This rests on: L141's unseen clauses, I12, I17. Present as a conditional attack: whether it bites depends on L141's other clauses, not given here.
+
+2. FC17/FC18 attack via I14's empty subnetwork or κ non-injective — covered; under D4.4 identity works. Another: what if two ports of V_k map to the same value pattern... θ injective, fine.
+
+3. FC03/FC04: unconditional; no attack. Say so.
+
+4. FC16: unconditional.
+
+5. FC05(i): unconditional by D4.1's construction.
+
+Also maybe attack FC18's *sentence* L558: "The word 'kind' is therefore eliminable from the definition of an account, and its elimination loses no case." The formal claim covers contracts C; "on any contract" — matches. OK.
+
+One more (a) check — FC04 formal: "C' ⊆ C ⇒ (j ~_C j' ⇒ j ~_C' j')" — text: "a coarser contract identifies more components". Maths direction: coarser = fewer pairs ⇒ more identification. Consistent. Fine.
+
+Word budget: ~3000 words. Five sections with entries. Let me draft concisely.
+
+Headings: (a) D4.1–D4.6, FC03–FC18; (b) FC05, FC18; (c) I10, I11, I12, I13, I14, I93, I94, U4; (d) FC15, FC17/FC18 (L245), FC03/04/16; (e) matter 1.
+
+Note on L347 quoted under D4.5 — fine.
+
+For (e) matter 1: propose wording at L556. Original fragment: "By (K), sig_C(λ(k)) = {(a,b, proj^λ_{V_k} Sol_{λ(k)}(a,b))}" (from I13's quote; the FC17 quote gives "L556 | (F1) equates the third coordinates." — different lines of L556? L556 seems to contain "By (K), ... " per I13. I'll use I13's quote.)
+
+Proposed replacement for the L556 sentence (I only have the fragment "\operatorname{sig}_C(\lambda(k))=\{(a,b,\operatorname{proj}^{\lambda}_{V_k}\operatorname{Sol}_{\lambda(k)}(a,b))\}" preceded by "By (K),"). Proposal:
+
+```
+By (K), read on λ(k) taken as one component of D whose relation at (a,b) is proj^λ_{V_k} Sol_{λ(k)}(a,b), sig_C(λ(k)) = {(a,b, proj^λ_{V_k} Sol_{λ(k)}(a,b))}.
+```
+
+That writes I13's other choice (a) into the text — name it.
+
+For I12 wording — L119 sentence replacement:
+
+Original: "A component of E and a component of E′ are of one kind on C when their signatures, read on C through τ and τ′, coincide under a footprint bijection"
+
+Replacement:
+```
+A component of E and a component of E′ are of one kind on C when their signatures, read on C through τ and τ′ and through the boundary translations of the two transports, coincide under a footprint bijection
+```
+
+And for τ[C], propose adding at L554 or as gloss — the line L554 is long; propose replacing "has a signature on τ[C]" with "has a signature on τ[C] = {(τ(a), σ(b)) : (a,b) ∈ C}". Give as fragment change with acknowledgment.
+
+For I10 wording — L119 first sentence replacement:
+
+Original: "Two components j,j′ are of one kind on C when there is a bijection of their footprints under which sig_C(j) and sig_C(j′) coincide."
+
+Replacement:
+```
+Two components j,j′ are of one kind on C when there is a bijection of their footprints, carrying each port to a port with the same values, under which sig_C(j) and sig_C(j′) coincide, values compared as values.
+```
+
+Names I10.
+
+I11 wording — replacement of the L119 sentence:
+
+Original: "Kinds are therefore relative to the contract; a coarser contract identifies more components, and two components of one kind on C may separate on a finer contract."
+
+Replacement:
+```
+Kinds are therefore relative to the contract: a contract is coarser than another when it holds a subset of its pairs at the same baseline, and a coarser contract identifies more components, while two components of one kind on C may separate on a finer contract.
+```
+
+Names I11.
+
+I93/FC05 wording — replacement:
+
+Original: "and an edit under which the two relations stay equal does not separate the components."
+
+Replacement (reading i):
+```
+and an edit under which the two signatures still coincide under a bijection that witnesses the two components being of one kind on C does not separate them.
+```
+
+Or U4 reading:
+```
+and an edit that leaves each of the two relations as it was at the baseline does not separate the components.
+```
+
+Note U4's reading holds given L141 (baseline in contract).
+
+I14: text settles constraints-of-λ(k)-alone via L233 ("imposing the constraints of λ(k)"); value maps settled as existing ("carrying what remains to V_k by the port translation") but injectivity open; propose to leave open or state. I'll say: quote L233 as settling (a); κ's injectivity should stay open (or the text says "carrying" permits any map — no wording needed; say why it should stay open: whether a candidate may coarsen values is a substantive question the text elsewhere treats). Keep short.
+
+I94: text settles — quote L119 "read on C directly with its hidden ports projected away, up to the port translation": "up to the port translation" carries the counterpart to V_k, so D4.4 is the text's reading; the untranslated reading should be marked as not a reading of the text. FC18's counterexample tells only against I94 with I10.
+
+Also (b) FC18: not a counterexample to the text; no change needed.
+
+(b) FC05: counterexample to reading (ii) only; text ambiguous; propose rewording (above). Under reading (i) the claim holds unconditionally.
+
+Matter 1 (e): needs change; wording above.
+
+Also for FC17 note L245. L245 fragment: "By (K), no component of E whose signature on C differs from its counterpart's meets (F1)". Proposal: "on C" → "on τ[C]". I only have the fragment; give the fragment change and say the rest of the line is not given.
+
+Now let me also double check FC05's model by hand (the second check did; I can confirm): L_c1(1,b0) = {(0,0),(0,1)}, L_c0(1,b0) = {(0,0),(1,0)}. Swap β: p0↔p1: β_*{(0,0),(0,1)} = {(0,0),(1,0)}. Yes, witness. At (e1,b0): L_c1 = {(0,1),(1,1)}, L_c0 = {(0,1),(1,1)} — equal under identity; β_*{(0,1),(1,1)} = {(1,0),(1,1)} ≠ L_c0(e1,b0). So under reading (ii) premise holds (some bijection — identity), but on C∪{(e1,b0)} need one bijection for both pairs: identity fails at (1,b0) ({(0,0),(0,1)} vs {(0,0),(1,0)}), swap fails at (e1,b0). Correct. Confirmed by hand.
+
+Also check: is there any bijection at the new pair equal? identity works. Yes.
+
+(d) attack FC15 more concretely — write the model:
+
+organization D: ports p0 ∈{0,1}; boundaries {b0}; edits A_D = {1, e, f}, composition e·e = f.
+C = {(1,b0), (e,b0), (f,b0)} (closed under composition at b0, holds baseline).
+organization E: edits A_E = {1, e′}, e′·e′ = e′... need e′·e′ ≠ e′: A_E = {1, e′, h}, e′·e′ = h. Boundaries {b0′}. τ(1)=1, τ(e)=e′, τ(f)=e′. σ(b0)=b0′.
+τ[C] = {(1,b0′),(e′,b0′)}. If a contract of E must be closed under composition, (e′·e′, b0′) = (h, b0′) ∉ τ[C]. So τ[C] is not a contract — provided L141 demands closure. I rely on L141 beyond the baseline clause, which is not given here. Rests on I12, I17.
+
+Good. Also attack FC15 via partial σ: if σ undefined at some b in C, τ[C] undefined — but FC15's premise "τ, σ map into A_E, B_E" sidesteps. Mention as premise gap: FC15 should require t to translate every pair of C (D5.1), i.e., premise strengthening.
+
+(d) attack FC18's sentence beyond D4.4: none found; holds by construction. Attack FC03: none, unconditional. FC16: unconditional.
+
+Also attack FC04(b) trivially constructible — fine, no need.
+
+Word count: aim ~2400 words. Write the report.
+
+Structure:
+
+(a) entries: D4.1 (nothing), D4.2, D4.3, D4.4, D4.5, D4.6 (brief), FC03, FC04, FC05, FC15, FC16, FC17, FC18. Then one line for items with nothing to add: D4.1, D4.5, D4.6, FC04? FC04 has something (by construction). Keep brief.
+
+Let me write.
+
+Also note for FC17: "holds by construction" status rather than searched — the report's own status list includes "holds by construction"; suggest the register re-status FC03, FC04(a), FC16, FC17, FC18-D4.4 as holds-by-construction since they follow from D4.1–D5.4 by pure reasoning, so "holds on all models tried" understates them. Good point.
+
+Matter 1 (e): change needed at L556 (wording above); also L245's "on C". Actually L245 belongs under (a) FC17 note.
+
+Write now, keeping under ~3000 words.

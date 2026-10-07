@@ -1,0 +1,343 @@
+Let me look at the files.
+
+Now I need to cross-examine the plain-words file against the results. Let me note details.
+
+Check numbers in plain words vs results:
+
+Section 1: "between 48 and 65 of 77 possible sums were done by at least one program in ten, in the three runs" — matches growing list common 65/48/55. "That is more than any other environment tried, in every run" — matches E4 "more" by plan's rule. "and more than an environment that paid for all 77 sums from the start (at most 41)" — fixed large: 32/41/0 Avida, 32/41/13 test processor. "at most 41" — fine.
+
+"An environment that paid for one hard sum only taught nothing. No program ever did that sum, in any run... exactly the same, number for number, as runs where nothing was paid at all." Matches.
+
+"the number of sums the population could do rose for a while and then stopped rising, mostly within the first quarter to half of the run" — Results say "most by update 10,000 to 25,000" for growing list; "most of it in the first 10,000 to 25,000 updates". But "in every one" — hmm, but results say FIXED LARGE seed 2 was still rising at end (new high at 48,250, rise of 13 over last 10k; "still rising at the end"). Also plain words section 4 says "except one run of the all-77 environment, still rising at the end". So section 1's "In every one, the number of sums the population could do rose for a while and then stopped rising" contradicts the exception noted later. That's an internal inconsistency and stronger than results. Also "mostly within the first quarter to half" — 10,000-25,000 of 50,000 = first 20%-50%, "quarter to half" roughly ok.
+
+Also section 1: "never beyond the 77 sums the list was made from" — trivially true since only 77 counted. Fine.
+
+Section 2 words: "68 sums on three numbers; together with the nine, they are every such combination it knows, 77 in all" — fine.
+
+"NOT takes 1 step; EQU takes 5; the hardest of the 77 takes 10 or more" — matches departure 4.
+
+Section 3 example: growing list run 1: "at the start only NOT and NAND paid. After 1,500 time steps (Avida calls them updates) both were common" — first appearances growing seed 1: NOT 1500, NAND 1500. Both common at 1500. OK. "so at 2,000 the three sums of level 2 were added" — seed 1: levels 2 to 9 added at 2,000 to 9,000. Level 2 has 3 tasks (from results section 5 level 2: growing seed1 "3 (2250)"). OK. "one of them was common by 2,250, so at 3,000 level 3 was added" — level 2 first common 2250, level 3 added 3000. OK. "up to level 9 at 9,000" OK. "By 10,000 the population did 43 sums commonly" — matches Avida count 43. "by 25,000 it did 62" — matches. "at the end, 50,000, it did 65, and 74 were present" — matches.
+
+Table: growing list row matches. "all 77 from the start" row: "32, 41, and 0 (13 when counted the second way, section 5)" and present "54, 67, 32 (51 the second way)". Matches.
+
+"common sums pay less": 17,9,8 / 45,29,26 — matches Avida. Note test processor gives 16,9,8 / 42,27,23; plain words uses Avida count without saying which. Hmm — section 5 says "For the other runs the two ways of counting agree exactly at most of the times compared, and otherwise within 6 sums." So using Avida's count is defensible. But for the "one hard sum" and "nothing pays" rows, both readings agree.
+
+"fixed list": 7,8,8 / 20,30,19 — Avida's present; test processor 22,31,23. Plain words doesn't say which reading the table uses. Minor.
+
+Section 4: "One hard sum only... The easier sums turned up here and here by chance (NOT, NAND, ORN and ANDN in every run)" — results section 5: "NOT, NAND, ORN and ANDN were performed by some program in every seed, AND and OR in two, NOR, XOR and EQU in none". Plain words omits AND/OR in two — says "turned up here and there by chance (NOT, NAND, ORN and ANDN in every run)". That's consistent, just incomplete. OK.
+
+"With the easier sums paid as well (the fixed list), EQU became common in all three runs." Matches.
+
+"Paying for more kinds of sum gave more new sums. Nine sums on offer: 7 or 8 became common. All 77 on offer: 13 to 41 (counting run 3 the second way, section 5)." — Hmm, "gave more" — is 13 to 41 vs 7-8 "more" by plan's rule? 13/32/41 vs 7/8/8: every seed of fixed large above every seed of fixed graded? 13 > 8, yes. So separated. OK. But wait, is this "paying for more kinds gave more" — comparing fixed large vs fixed graded. OK.
+
+"the growing list and the all-77 environment were paying for (nearly) the same 77 sums from update 11,000 on" — matches.
+
+"Making common sums pay less did not clearly change the count against the fixed list with the same nine sums (17, 9, 8 against 7, 8, 8)" — matches E6 "not separated". Good — "did not clearly change" avoids overclaiming.
+
+"Sums once common were mostly kept: 73 to 100 in 100 of the sums that had ever been common were still common at the end, in every run but one (section 5)." — Results section 6: shares Avida count: FIXED GRADED 0.875/0.889/1.0, GROWING 0.956/0.857/0.887, COMMON PAY LESS 0.81/1.0/0.727, FIXED LARGE 0.914/0.872/0.0. So lowest besides fault is 0.727 → 73 in 100. OK "in every run but one" — the exception is FIXED LARGE seed 3 (0.0 Avida). But the test processor gives 0.619 for that run. Plain words says "in every run but one (section 5)" — the exception being the fault run. Hmm, with the second reading the fault run is 0.619 = 62%, still below 73. "73 to 100 ... in every run but one" — the run that's the exception is below either way, fine. Actually is it right to attribute that run to section 5's fault? Test processor 0.619, still below 73. OK.
+
+"The count stopped rising everywhere." Then: "For example, in the growing list, runs 1 and 3 made their last new high at 37,000 and 31,500" — matches. "after 25,000 no growing-list run added more than 4 sums" — matches ("after 25,000 it rose by at most 4 in any seed"). "The fixed list stopped at 7 to 9." — highest common count FIXED GRADED 7/9/8. OK. "Claude had expected the growing list and the all-77 environment to keep rising to the end; they did not, except one run of the all-77 environment, still rising at the end (37 common at 45,000, 41 at 50,000)." — matches section 4 bullet. But heading "The count stopped rising everywhere" contradicts "except one run... still rising at the end". Internal inconsistency, and also contradicts results: FIXED GRADED seed 2 new high at 43,250 (rise of 0 over last 10k but new high at 43,250 — "last new high 43250, levelled off no"). So by Avida's count FIXED GRADED seed 2's last new high is 43,250 which is within last fifth, not "stopped rising". And test processor: FIXED GRADED seeds 1 and 3 new highs at 50,000 and 45,000, growing seed 2 at 25,000 by test processor. Hmm. Results summary says "Every environment's count levelled off within the 50,000 updates... none kept rising to the end" — but that's about "levelled off" defined as last new high at or before 40,000 (M4). Actually results section 4 table "levelled off" column: FIXED GRADED yes/no/yes; growing yes/no/yes; fixed large yes/no/yes. So results themselves say "every environment's count levelled off" while marking seed 2 as "no" in three environments. Hmm, results' summary statement is itself a bit loose, but my job is the plain-words file. Plain words section 1 says "In every one, the number... rose for a while and then stopped rising" — flatly contradicted by its own section 4 exception and by results (fixed graded seed 2 new high at 43,250; test processor new highs at 45k/50k). This is an objection: overstatement. Section 4's heading "The count stopped rising everywhere" likewise.
+
+Actually, careful reading of results summary: "Every environment's count levelled off within the 50,000 updates, the growing list's included; none kept rising to the end." That's the results' own claim. But then their own tables mark seeds as "no" for levelled. The plan's M4 definition: last new high at or before 40,000. Fixed graded seed 2: last new high 43,250 → not levelled by that definition. So results' bullet is inconsistent with its own table, but that's the results file, not mine to examine? My job is plain words against results. The plain words could cite the results bullet. Still, plain words says "stopped rising, mostly within the first quarter to half of the run" — the results say "most by update 10,000 to 25,000" for growing; for fixed graded the last new highs are 17,500/43,250/21,000. "mostly within the first quarter to half" — 43,250 is more than three quarters. Hmm, "mostly" hedges. The main objection stands: "In every one... then stopped rising" vs the all-77 run still rising at the end.
+
+Wait — plain words section 1 sentence: "In every one, the number of sums the population could do rose for a while and then stopped rising, mostly within the first quarter to half of the run, and never beyond the 77 sums". Then section 4 and 7 repeat with exception noted in section 4 only. Section 7: "What none of them did was keep going" — that's about the levelling within 77, defensible since even seed 2 rising by 13 over last 10k... actually seed 2 of fixed large rose by 13 in last 10,000 — that's continuing. Hmm "keep going" in section 7 means beyond the list / indefinitely. It's a bit strong but the framing "when the population had filled what it could of that list, learning stopped" — seed 2 hadn't filled what it could. Borderline. The clearest objection: section 1 "In every one ... stopped rising" contradicted by section 4's own exception and by results.
+
+Section 4 reuse example: "in the most common program of growing-list run 1 (134 instructions, doing 64 sums), for each pair of sums... on average 60 in 100 of the instructions the later sum needs are also needed by the earlier one, where chance would give 18 in 100." Matches growing_seed1: length 134, 64 tasks, mean shared 0.5988, expected 0.1809. 60 in 100 ≈ 0.5988 ✓, 18 in 100 ✓. "In all 12 runs where this could be measured, the overlap was above chance." ✓.
+
+"But part of it may simply be the instructions that read the numbers in" ✓ matches unsure note.
+
+Section 5: counting fault. "at 10 of the last 19 piece ends" — results: "no common task at 10 of the 19 piece ends" (from 32,000 on, i.e., updates 32,000...50,000 = 19 pieces). Plain words says "10 of the last 19 piece ends" ✓. "Running every saved program alone in Avida's test processor... showed 13 common at each of those times." — Results: test processor readings at 35,000, 45,000, 50,000: 13 common. "at each of those times" — the 10 piece ends are 32,35,36,42,43,45,46,47,49,50 thousand. The test processor only measured at 5,000 steps: 35,000, 45,000, 50,000 are the only ones among the 10 that coincide. So "showed 13 common at each of those times" overstates — only 3 of the 10 times were measured. Results section 2: "except FIXED LARGE LIST seed 3 at 35,000, 45,000 and 50,000: 0 by Avida's count, 13 by the test processor". So plain words says "at each of those times" for 10 times, but only 3 measured. That's an objection: overstatement. Fix: "showed 13 common at each of the three of those times that the second reading covers (35,000, 45,000 and 50,000)". Actually wait — is 13 at 35k, 45k, 50k, so plausibly also at others, but not measured. The sentence as written claims measurement at 10 times. Objection.
+
+"So the table above uses 13 for that run" — table row all-77: "32, 41, and 0 (13 when counted the second way, section 5)" — hmm, the table gives both, doesn't "use" 13. Minor wording; table presents both. Fine, arguably.
+
+"For the other runs the two ways of counting agree exactly at most of the times compared, and otherwise within 6 sums." — Results: agree exactly at all ten saved updates in FIXED GRADED, ONE HARD, NO REWARDS, COMMON seed 2; elsewhere differ by 1 to 6. "at most of the times compared" — is it "most"? For growing list: seed 1 differences? We have tables; e.g. growing seed1 at 25k: 62 vs 65 (3). Growing seed 2 at 25,000: 44 vs 50 (6). Not clear "agree exactly at most of the times". The results don't give a count of exact agreements. The claim "agree exactly at most of the times compared" is not in the results — results only say they differ by 1 to 6 elsewhere. So the plain-words claim is unsupported/possibly false. Objection (minor): unsupported claim. Fix: "for the other runs the two ways differ by at most 6 sums where they differ" per results section 2.
+
+Section 6 Tested: "the 77 sums counted every 250 updates in the world and every 5,000 updates in the test processor" — matches. "Before running: that listing a sum without paying for it changes nothing (checked: the run came out identical)." ✓.
+
+"Changed from the plan": second way of counting; 1,001 updates; search capped at 9. ✓ matches departures 1,2,4. Omits departures 5,6,7 — those are internal, fine for plain words? Departure 5 (reuse first run on seed-1 runs) and 6 (runner's note), 7 (pkill) — arguably not owner-relevant. OK.
+
+"Not tested": matches section 11. "whether the growing list's lead comes from the order of pay or from its smaller pay in the first 10,000 updates" ✓.
+
+"Unsure": "three runs of each environment is few; 'more' here means every run of one above every run of the other, and several comparisons did not meet that." ✓. "Cutting runs into pieces may itself have changed them a little (the S114 check found no consistent difference for the fixed list, and a small lean to fewer common sums for 'common sums pay less')." ✓ matches section 9.
+
+Section 7: "the environments that taught new things were those that paid for easy things as well as hard ones" — hmm, "as well as hard ones" — the fixed list paid for easy and hard (nine tasks incl. EQU). Growing list. "common sums pay less" also nine tasks. OK.
+
+"a single hard problem taught nothing, and paying for nothing taught nothing" ✓.
+
+Section 8: next step, one, "Which way to take it is yours to choose." ✓ S21. Marked as proposal, not chosen.
+
+Now style/wording rules:
+
+- S23 forbidden words in Claude's own sentences: check plain words for "true", "believe", "support", "better than", "established", "derived", etc. Scan... "support" not present. "true" — not present I think. Let me grep.
+
+- S43: "model" — check. Should say "candidate"/"explanation" for theory judgments; plain words doesn't discuss theory much. Check for "model".
+
+- Marked as written before GLM check: yes, line 3 "*A note first. Written on 30 September 2026 by a Claude agent, for you, before GLM's check*" ✓.
+
+- Starts with direct answer ✓.
+
+- Ends with one next step ✓ (one proposal with sub-options? "run an environment whose new problems come from the program population itself (for example...)" — one next step with an example. OK).
+
+- Terms (S61): need to check the owner's terms file — uses "Avida programs", "program population", "computational capability", "instruction change", "Avida execution environment". Plain words uses "sum" for logic task — but the terms file presumably mandates "computational capability" for logic tasks. Plain words section 2 says: "A new sum is what your terms call a new computational capability". Hmm — the owner's terms say use "computational capability"; plain words substitutes "sum" throughout, only mentioning the term once. The brief says "the owner's Avida terms used (S61...), one word for each thing throughout". Is "sum" a violation? The owner's glossary says "Use these terms when describing experiments involving Avida digital organisms." If "computational capability" is the mandated term for logic tasks, calling them "sums" throughout breaks that. But plain words is for a non-programmer owner; the agent explains "sum" = logic task = computational capability. Also "instruction change" used ✓. Let me read the terms file to check the exact mandated terms. Also "distinct instruction sequence" — plain words section 5 doesn't mention genotype; uses "every saved program alone" — hmm, results say "every distinct instruction sequence"; plain words says "every saved program" — slight difference (running every program vs every distinct sequence). Minor.
+
+Also "machines" vs "programs": the owner said "these machines". Fine.
+
+Let me read the terms file, the plan, the rule file, style file, and grep for forbidden words.
+
+Also check the note's file references: plain words note says records kept in "Semantics/records/Semantics - Avida terms, given by the owner.md" while brief says `S113/the owner's Avida terms.md` — that's a copy; internal path, fine (the plain words references the project record paths). Results file title reference: "Semantics/results/S113 Which execution environments learn - results.md" ✓ consistent.
+
+Check "one word for each thing throughout": plain words uses "sum" consistently; "environment" consistently; "common"/"present" defined ✓. "time steps (Avida calls them updates)" — then uses "updates" ✓. But "piece" used in section 5 without definition before use? Section 5: "each run was cut into 50 pieces: after every 1,000 updates the whole population was saved, and the next piece started by loading it" — defined there ✓. "test processor" defined ✓ ("a separate small simulated computer that runs one program at a time").
+
+Section 2: "as in the earlier runs" for pay more at higher level — references S111, fine.
+
+Potential number issue section 1: "at most 41" — test processor also max 41 ✓.
+
+Section 1: "it started by paying only for the two easiest sums" — NOT and NAND are level 1, two tasks ✓.
+
+"each time the population had made one of the hardest sums on offer common, it added the next harder ones" — table says "the next level added whenever one sum of the top level was common" ✓. Section 3 table: "the next level added whenever one sum of the top level was common" ✓.
+
+Section 3: "which does no sum" for starting program ✓ ("performs no task").
+
+Check "48 and 65" phrasing: "between 48 and 65 of 77 possible sums were done by at least one program in ten, in the three runs" — fine.
+
+Now check "no difference inside the seeds' spread told as a difference": section 4 "Making common sums pay less did not clearly change the count" ✓ good. Section 1 "That is more than any other environment tried, in every run" — that's the plan's rule, satisfied for growing vs each other? Growing 65/48/55 vs common-pays-less 17/9/8 ✓; vs fixed graded 7/8/8 ✓; vs all-77 32/41/13 ✓ (48>41 ✓). OK.
+
+Section 4: "Paying for more kinds of sum gave more new sums." Compare common-pays-less (9 sums) 17/9/8 vs fixed graded (9 sums) 7/8/8 — not separated. So the claim "more kinds → more" — nine vs 77 comparison only. Fine as stated with examples given.
+
+Hmm wait: "All 77 on offer: 13 to 41 (counting run 3 the second way, section 5)." Using second way for run 3 (13) but first way for others (32, 41)? Mixing readings to get the range. Results E2... For the fixed large vs fixed graded comparison, mixing readings per-seed is favorable but both readings separate anyway. Section 12 of results does the same: "77 tasks all offered at once gave 13 to 41 (by the test processor; Avida's count gave 0 in one seed)". OK, and plain words flags it.
+
+Now, "one hard sum" row present numbers 3/2/0 match both readings ✓.
+
+Another check: section 3 example "After 1,500 time steps... both were common" — first common NOT 1500, NAND 1500 for growing seed 1 ✓. "so at 2,000 the three sums of level 2 were added; one of them was common by 2,250" — level 2 first common 2250 ✓ ("3 (2250)" = 3 tasks ever common, earliest 2250). "so at 3,000 level 3 was added; and so on, one level at a time, up to level 9 at 9,000" ✓.
+
+"By 10,000 the population did 43 sums commonly" ✓ (Avida). Test processor at 10k: 43 ✓.
+
+"by 25,000 it did 62" ✓ (Avida 62; test 65 — plain words uses Avida; fine, states one reading implicitly). Hmm, plain words never says which reading its running example uses. Minor.
+
+Now grep for forbidden words in the plain-words file: "true", "believe", "support", "prove", "verified", "established", "better", "worse", "authority", "foundation", "derived", "fit"/"fits" (fits is forbidden!). Search: I don't recall seeing any. "preference"? Let me grep.
+
+Also S20 no ranking: section 1 says "the environment that made the program population learn the most new things" — is that a ranking? It's a measured comparison, not grading explanations. Ranking prohibition in S20 concerns grading explanations/theory versions. Probably fine; results do the same ("the most in every seed").
+
+Also check nothing settled: "So a pay for something that no program can nearly do yet never reaches the population." — Hmm, that's a general law stated flatly, beyond these runs. Results say "A reward for something no program can yet nearly do does not reach the program population" in section 12 too, as observation. The results also frame as "Observations from these 18 runs only, settling nothing". The plain words "So... never reaches" — generalization presented as settled? It says "So a pay ... never reaches the population." That's stronger than the three runs; but preceded by "With the easier sums paid as well (the fixed list), EQU became common in all three runs." Then "So..." draws a general conclusion without "in these runs". Section 7 says "in these runs". Borderline; the results file itself words it as an observation bullet. The plain-words section 4 lacks the "in these runs" qualifier on that sentence. Could be a minor objection: general claim stated without scope. Given S28, mark it.
+
+Also "What none of them did was keep going" (section 7) — with "Put together, in these runs" scoping at start. The sentence "each environment's supply of problems was a list written in advance, and when the population had filled what it could of that list, learning stopped" — but fixed large seed 2 hadn't filled/stopped. Overstatement again — ties into the "stopped rising everywhere" issue.
+
+Let me now read the other files: terms, plan, rule for reading, style file, exact commands maybe, and grep forbidden words.
+
+Also check "written before the GLM check" marked — yes line 3.
+
+Also requirement: "a concrete example before each general point" — mostly followed.
+
+Also check numbers: section 4 "except one run of the all-77 environment, still rising at the end (37 common at 45,000, 41 at 50,000)" ✓ results bullet.
+
+Section 5: "many programs did not copy themselves within a whole piece" ✓.
+
+"An agent working on log S114 found the same fault independently, from Avida's source." ✓.
+
+Now check that section 1 "mostly within the first quarter to half of the run": growing last new highs 37,000/42,500/31,500 — 42,500 is 85%! Wait, section 0 of results says "most by update 10,000 to 25,000; last new high 37,000 / 42,500 / 31,500". Plain words section 1: "rose for a while and then stopped rising, mostly within the first quarter to half of the run" — for growing seed 2, last new high 42,500 = last 15%. "mostly" — the bulk of the rise was early (44 at 25k vs 48 final). Hmm. Results section 12: "most of it in the first 10,000 to 25,000 updates" — "most of it" refers to the rise amount. Plain words says "stopped rising, mostly within the first quarter to half of the run" — ambiguous; reading as "the stopping happened mostly within..." which is wrong for seed 2 (42,500) and fixed graded seed 2 (43,250). Also common-pays-less 31,750/33,000. So the claim leans wrong. Results' own claim "most of it in the first 10,000 to 25,000" is about the amount of rise, defensible. Plain words changes meaning to when it stopped. Objection (moderate): reword to "most of the rise came in the first 10,000 to 25,000 updates".
+
+Combined with X about "In every one... stopped rising" — I'll make these one or two objections.
+
+Now, one more: section 1 "and never beyond the 77 sums the list was made from" — trivially guaranteed by counting; could mislead ("never beyond" implies it could have gone beyond). Minor; skip or note.
+
+Check "one hard sum only" environment description: "EQU only" ✓. Present 3/2/0 ✓.
+
+Check the note: "It uses your Avida terms (the list you gave, kept in 'Semantics/records/Semantics - Avida terms, given by the owner.md') and none of the words you asked to be removed, except inside quotations." — Claim to use the owner's terms, but substitutes "sum" for logic task throughout. If the terms file mandates "computational capability", this claim is false-ish. Let me read the terms file.
+
+Let me read remaining files.
+
+Note: plain words 112 also used "sum" for logic task, and it passed a GLM check (corrected). So "sum" is an established convention with the owner. Fine.
+
+Now check the terms: plain words uses "instruction change" ✓ (section 2), "program population" ✓, "Avida program" — plain words says "Avida programs" ✓, "instruction sequence" — plain words doesn't use it much; section 5 says "every saved program alone" where results say "every distinct instruction sequence". Minor. "environment" → "Avida execution environment" ✓ defined. "task performance"? Plain words doesn't mention Avida crediting. Fine.
+
+Terms prefer "instruction ablation" — plain words section on reuse says "whether the instructions a later sum needs overlap with those an earlier sum needs" — it never describes the ablation method! Section 4 "Later sums reuse earlier ones' instructions" — an owner reading this would not know how that was measured (by removal). Plain words 112 explained removal. Here: section 3 "What was counted" mentions "whether the instructions a later sum needs overlap with those an earlier sum needs" — but how "needs" was determined (by removing each instruction and seeing whether the sum stops) is never explained. The owner's terms list "knockout → instruction ablation" as a term to prefer. Is that an objection under "every unavoidable technical word explained"? "needed instructions" is used without explanation of how "needed" was measured. Hmm, section 6 Tested says "the overlap of needed instructions in the most common program of each run" — still no method. This is a gap: the owner can't tell what "needs" means. Moderate objection: add one sentence, e.g. "an instruction is 'needed' for a sum if, when it is replaced by a do-nothing instruction and the program run alone, the sum stops (instruction ablation, in your terms)".
+
+Now grep for S23 forbidden words in the plain words file. Let me grep.
+
+Also check the JSON for consistency of a few numbers? The tables in results .md are said to be copied from .json by the printer. I could spot-check a couple of numbers in the .json. My job: plain words against results (md and json). Let me check a few numbers in json: growing seed2 at 25,000 (44 vs 50), fixed_large seed3 present test processor at 50k = 51, growing seed1 reuse 0.5988. Also "13 common at each of those times" issue.
+
+Also check "10 of the last 19 piece ends" — results list 10 updates: 32,35,36,42,43,45,46,47,49,50 (thousands) — that's 10, of pieces 32..50 = 19 pieces. ✓.
+
+Also "every 5,000 updates in the test processor" ✓ (180 saved populations / 18 runs = 10 per run ✓).
+
+Let me grep the plain words file for forbidden words.
+
+Clean on both. Now check the plan briefly (for what was promised to the owner, and "changed from the plan" claims), and spot-check the JSON. Also check exact commands for departures? That's job 3's territory mostly. Focus: plain words vs results.
+
+Let me look at the plan to verify claims like "the second way of counting", "search stopped at 9 steps", and the definitions of "more" (plan's rule) that plain words quotes ("more here means every run of one above every run of the other").
+
+Now check a few things in plain words against plan/results more carefully.
+
+1. Plain words section 2: "a sum paid in these runs pays more the higher its level, as in the earlier runs" ✓.
+
+2. Plain words section 3 table "growing list" description: "the next level added whenever one sum of the top level was common" ✓ plan rule (performed by ≥10% = common).
+
+3. "each for 50,000 updates" — but departure 2 says runs are 50,050 updates. Plain words section 6 admits this ("each piece in fact ran 1,001 updates... so a run is 50,050 updates"). Slight tension: section 3 says "each for 50,000 updates" then section 6 corrects. Acceptable since flagged.
+
+4. "every run starting from the same program, which does no sum" ✓.
+
+Now the "level" claim in section 3 example: "at 2,000 the three sums of level 2 were added" — level 2 has 3 tasks ✓.
+
+"one of them was common by 2,250, so at 3,000 level 3 was added" ✓ (level 2 earliest common 2250).
+
+Also check: "After 1,500 time steps (Avida calls them updates) both were common" — for seed 1, NOT 1500, NAND 1500 ✓. But wait — level 2 was added at 2,000, meaning the rule fired after the piece ending at... The rule: after each piece, if a level-1 task ≥10%, add level 2. NOT common at 1500 → at piece end 2,000? Pieces are 1,000 updates; piece 1 ends at 1,000, piece 2 ends at 2,000. First common at 1,500 is within piece 2; at piece 2's end (2,000), the check fires, level 2 rewarded in piece 3 (starting at 2,000). Plain words: "After 1,500 ... both were common, so at 2,000 the three sums of level 2 were added" — fine.
+
+5. Section 4: "The fixed list stopped at 7 to 9." — highest common counts 7/9/8 ✓.
+
+6. "Claude had expected the growing list and the all-77 environment to keep rising to the end; they did not, except one run of the all-77 environment" — E5: expectation "still rising after 40,000 in at least two seeds" for both. Result: growing: Avida seeds 1,3 levelled, seed 2 not; test processor all three levelled. Fixed large: seeds 1,3 levelled, seed 2 not. So expectation against ✓. Plain words fine.
+
+7. Section 4 "Sums once common were mostly kept: 73 to 100 in 100 ... in every run but one". Wait — the shares: is the low end 0.727 → 73 ✓, and exception run (fixed large seed 3) 0.0 by Avida / 0.619 by test processor. "in every run but one" — the exception is that one. But the test-processor number for the exception (0.619 = 62) is below 73 too, so it's consistent either way. ✓.
+
+But hold on: which reading are the 73–100 numbers from? Avida's: 0.727–1.0 excluding the fault run. Test processor: 0.619 (fault run), others 0.8–1.0? Section 6 bullet: test processor FIXED GRADED 0.875/0.889/1.0, GROWING 0.956/0.852/0.902, COMMON 0.941/1.0/0.8, FIXED LARGE 0.941/0.911/0.619. So test processor low end excluding fault = 0.8. Avida low end excluding fault = 0.727 → 73. So "73 to 100" comes from Avida's count. Fine, not stronger.
+
+8. Section 5: "So the table above uses 13 for that run" — but the table shows both "0 (13 when counted the second way)". Saying "uses 13" is a loose description; the table presents 13 parenthetically. Minor. Actually "uses 13" is wrong-ish: the table shows both, and elsewhere comparisons use both readings. But for the key comparison "more than an environment that paid for all 77 sums from the start (at most 41)" — uses 41 max, fine either reading. I might mention as a nit but probably not.
+
+Actually wait, there's a subtle thing: section 1 says growing list "more than any other environment tried, in every run". Growing min 48 (Avida) / 46 (test processor). Test-processor growing seed 2 = 46 vs fixed large max 41 ✓. Fine, and plain words table shows 65/48/55 (Avida) while test gives 65/46/55 — table uses Avida reading without saying so. Table header doesn't say which reading. For growing list, the two readings differ by up to 3 (seed 2 at 50k: 48 vs 46). Minor — but "every number in it is in the results with the same meaning" — 48 is in results (Avida). OK.
+
+9. Now the bigger issues to raise:
+
+X1: "showed 13 common at each of those times" — only 3 of the 10 piece ends coincide with test-processor samples (35k, 45k, 50k). Results: "FIXED LARGE LIST seed 3 at 35,000, 45,000 and 50,000: 0 by Avida's count, 13 by the test processor". Overstates the evidence. Fix: "showed 13 common at each of the three of those times the second reading covers (updates 35,000, 45,000 and 50,000)".
+
+X2: Section 1 "In every one, the number of sums the population could do rose for a while and then stopped rising" contradicted by its own section 4 ("except one run of the all-77 environment, still rising at the end") and by results (FIXED LARGE seed 2 last new high 48,250, rise of 13 in the last 10,000; FIXED GRADED seed 2 last new high 43,250). Fix: add "with one exception noted in section 4" or "in all but one of the eighteen runs". Actually also fixed graded seed 2 by Avida count didn't level (levelled off "no"). Results summary says "Every environment's count levelled off within the 50,000 updates" — the results' own framing is "levelled off" per environment M4... whatever. The plain words statement is absolute; the exception exists. Also section 4 heading "The count stopped rising everywhere" with the exception in the body. Fix the heading and section 1.
+
+X3: "mostly within the first quarter to half of the run" — results say "most by update 10,000 to 25,000" (of the rise) for the growing list; but last new highs run to 48,250 across environments. The plain-words phrasing shifts "most of the rise came early" into "the stopping happened within the first quarter to half". For FIXED GRADED seed 2 (43,250), COMMON PAY LESS seeds 2,3 (31,750, 33,000), FIXED LARGE seed 2 (48,250), the last new high is later than half. Fix: "and most of the rise came in the first 10,000 to 25,000 updates".
+
+X4: "For the other runs the two ways of counting agree exactly at most of the times compared" — results say they "agree exactly at all ten saved updates in [4 environment-seed combos]" and "elsewhere they differ by 1 to 6". "At most of the times compared" across all runs is not established by the results. Fix: "and otherwise differ by at most 6 sums" (results section 2).
+
+Hmm, is that really unsupported? The results: agree exactly at all ten in FIXED GRADED (3 seeds), EQU only (3), no rewards (3), common pays less seed 2 → 10 combos exact. Elsewhere (growing 3, common 1&3, fixed large 1&2 = 6 combos) they "differ by 1 to 6 tasks" — "differ" might mean at some times. If in those 6 combos they differ at most times, then "agree exactly at most of the times compared" would be false (60 exact vs 60 differing). Actually we can check the JSON tables: growing seed1 Avida vs test at 5k..50k: 7/7, 43/43, 53/54, 53/54, 62/65, 64/65, 65/65, 65/65, 65/65, 65/65 → agree exactly at 5 of 10. Growing seed 2: 9/9, 24/24, 29/29, 35/34, 44/50, 45/44, 45/49, 47/45, 48/46, 48/46 → 3/10 exact. Growing seed 3: 9/9, 58/56, 52/52, 54/54, 54/54, 54/54, 55/55, 55/55, 55/55, 55/55 → 9/10 exact. Common seed1: 7/7, 14/13, 15/14, 16/16, 16/16, 16/16, 16/16, 16/16, 17/16, 17/16 → 6/10. Common seed3: 5/5, 7/7, 7/7, 7/7, 8/8, 9/9, 9/8, 8/8, 8/8, 8/8 → 8/10. Fixed large seed1: 10/10, 23/23, 24/24, 24/24, 28/28, 29/29, 32/32, 31/31, 32/31, 32/32 → 8/10. Fixed large seed2: 8/8, 22/21, 28/28, 26/26, 26/26, 27/27, 27/27, 28/28, 37/37, 41/41 → 9/10. Total exact: 10 combos ×10 exact = 100, plus 5+3+9+6+8+8+9 = 48 → 148 of 180 ≈ 82% — "at most of the times compared" is actually true! Good, so no objection there; the claim holds when counted from the results tables. Drop X4. But note it's derived, not stated — fine, it's true and checkable.
+
+X5: Reuse measure method never explained in plain words — "whether the instructions a later sum needs overlap with those an earlier sum needs" (section 3) and section 4 example "the instructions the later sum needs" — how "needs" is established (replacing each instruction with a do-nothing and running the program alone, i.e. instruction ablation, a term in the owner's list) is never said. The owner reading it cannot know what was done. Plain words 112 explained removal at length. Objection: add one plain sentence before section 4's reuse point, e.g.: "An instruction is 'needed' for a sum if, when it is replaced by a do-nothing step and the program is run alone, the sum stops while the copying goes on (this is the instruction ablation of your list)."
+
+X6: Section 4, "So a pay for something that no program can nearly do yet never reaches the population." — stated without the "in these runs" scope; S28/nothing settled. Results section 12 words the same content as an observation ("A reward for something no program can yet nearly do does not reach the program population" — also unqualified there, under "Observations from these 18 runs only, settling nothing"). Given the results file scopes the whole list, and plain words section 7 scopes "in these runs" but section 4 doesn't, I'd raise it as a minor: add "in these runs". Also the general point in section 7 "For learning to go on, the problems themselves would have to keep coming from somewhere other than a fixed list" — that's an inference/hypothesis, phrased as "would have to" — it goes beyond the runs (a longer fixed list might extend learning; the results say "none was built to"). Hmm: "For learning to go on, the problems themselves would have to keep coming from somewhere other than a fixed list" — this is stronger than what was shown: the results say "None supplied problems beyond the designer's list, and none was built to" — i.e., can't tell whether a fixed list alone, longer, would keep learning going. And plain words itself lists "a list that grows beyond what was written in advance" and "longer runs" under Not tested. A longer fixed list is a fixed list; so "would have to keep coming from somewhere other than a fixed list" is not established — an unbounded fixed list (or a much longer one) is a counterexample not tested. Objection (moderate): soften to "none of these environments had such a source; whether a longer fixed list would have kept it going was not tested" or similar. Actually plain words' own Not-tested list includes "longer runs" and "a list that grows beyond what was written in advance" but not "a longer fixed list". The sentence in section 7 claims necessity. I'll raise it.
+
+X7: Section 1: "By the end, between 48 and 65 of 77 possible sums were done by at least one program in ten" — 48 vs 46: Avida count says 48; test processor 46. Table shows 48. Fine.
+
+Check "at most 41" ✓.
+
+X8: Section 3 table row "all 77 from the start": present "54, 67, 32 (51 the second way)" ✓ results.
+
+Check "one hard sum only ... present 3, 2, 0" ✓ both readings.
+
+X9: Section 4 "the growing list and the all-77 environment were paying for (nearly) the same 77 sums from update 11,000 on" — results section 1: "in all three seeds the growing list reached 73 to 77 rewarded tasks by update 11,000". ✓.
+
+X10: Note at top says "It uses your Avida terms ... and none of the words you asked to be removed" — check for forbidden-ish words more broadly: "reason to believe", "accept"? Let me grep for "accept", "prefer", "expectation" fine. "Claude had expected" — expectation words allowed? S23 doesn't forbid "expect". OK. Also check "prove" etc — grep found none. "supports" none. Good.
+
+Check "one word for each thing throughout": section 2 defines "sum" and uses it; "environment"; "common"/"present"; "level"; "updates" (defined via "time steps (Avida calls them updates)" — slightly odd but fine); "piece" defined; "test processor" defined; "seed" ("different chance events (called seeds)") ✓. "the most common program" — used in section 4 without definition ("the most common program of growing-list run 1") — plain language, fine; the owner knows "common" has a defined meaning for sums, and here "most common program" means the program carried by the most programs — could confuse with the defined "common". Minor; plain words 112 used "the most common program" too. Skip.
+
+Also: "instruction change" defined and used ✓ (terms prefer). Terms: "distinct instruction sequence" — plain words section 5: "Running every saved program alone in Avida's test processor" — results say every distinct instruction sequence. "Every saved program" (each program?) vs each distinct sequence — for the owner, fine-ish but it says every saved program, while actually each distinct instruction sequence was run once and credited to all carriers. Not materially misleading for the owner; the count "a task counted as performed by all the programs carrying a sequence that performs it" is a detail. I'll skip or mention as nit. Given the 3,000-word budget and "terse", I'll keep main objections.
+
+Now the "13 at each of those times" — double-check: results section 2 explicitly: "FIXED LARGE LIST seed 3 at 35,000, 45,000 and 50,000: 0 by Avida's count, 13 by the test processor". And section 2 first para says Avida's count showed no common task at 10 of the 19 piece ends. Plain words merges: "Avida's own count said, at 10 of the last 19 piece ends, that no sum was common. Running every saved program alone ... showed 13 common at each of those times." Yes, X1 stands. Also "each of those times" — the saved populations exist only every 5,000 updates, so it couldn't have been measured at 32,36,42,... Confirmed objection, most serious (a factual overstatement about the evidence).
+
+Another check — section 5: "So the table above uses 13 for that run; the record gives both counts everywhere." Results don't give both counts everywhere — the test processor reading is at 5,000-update steps only, and "the record gives both counts everywhere" is false (results give Avida's count at 250-update steps, test at 5,000 steps only; e.g. first appearances by test processor not given). Minor overstatement: fix "the record gives both counts at every 5,000 updates, and Avida's own count every 250". Combine with X1.
+
+Also section 5 "In one run of the all-77 environment (run 3), the simulated computer's time was shared so unevenly that many programs did not copy themselves within a whole piece" ✓ results (44 births/update vs 3,591 programs).
+
+Now section 6 "Tested": "the 77 sums counted every 250 updates in the world and every 5,000 updates in the test processor; the overlap of needed instructions in the most common program of each run." ✓. "Before running: that listing a sum without paying for it changes nothing (checked: the run came out identical)." ✓ plan/results.
+
+"Changed from the plan": ✓ three items. Also missing from the plain words' "changed" list: departure 5 (reuse first tried on seed-1 runs) — arguably owner-irrelevant. Skip.
+
+"Not tested" list ✓ mirrors results section 11. Good.
+
+"Unsure" ✓.
+
+Section 7: "the environments that taught new things were those that paid for easy things as well as hard ones" — all four rewarding environments paid for easy+hard; consistent. "taught" — fine.
+
+Section 8 next step: "Log S115 is already checking designs of this kind proposed by GPT 6 Astra." — hmm, S115 referenced; fine. "Which way to take it is yours to choose." ✓ S21.
+
+Now the style comparison with 112: similar, fine.
+
+One more check: section 1 quote of owner: "what kind of execution environment can use these machines to progressively learn how to do new things" ✓ S63.
+
+Also check the note's claim "before GLM's check" ✓ marked.
+
+Check that plain words doesn't choose for the owner: section 8 proposes, says owner chooses ✓. Section 7 "Put together, in these runs: the environments that taught new things were those that paid for easy things as well as hard ones, and the one that taught the most was the one that added harder problems..." — is "the one that taught the most" a ranking (S20)? S20 forbids grading explanations/theory versions. This ranks environments by measured outcome, which the owner asked for ("what kind of execution environment"). The reading rule item 5: "No finding ranks anything (S20)" — hmm. "No finding ranks anything." That's broad. But the whole test is a comparison the owner ordered ("Do it" to the proposed test of counting capabilities). The results also say "the most in every seed". I think ranking environments by measurement is the job itself; S20 is about grading explanations. I won't object, maybe not even mention.
+
+Also "direct answer first" ✓.
+
+Now check numbers again for section 4, first bullet: "The easier sums turned up here and there by chance (NOT, NAND, ORN and ANDN in every run), but none became common, because nothing paid for them." ✓ results.
+
+"With the easier sums paid as well (the fixed list), EQU became common in all three runs." ✓ (17,500/5,250/21,000).
+
+Section 4 second bullet: "Nine sums on offer: 7 or 8 became common." ✓. "All 77 on offer: 13 to 41" ✓.
+
+"the growing list ended with more in every run" ✓.
+
+"Starting with the easy sums and adding harder ones only when the population was ready left it able to do more than offering everything at once. Why, these runs do not show." ✓ scoped.
+
+Third bullet: "in one run it went on to seven or eight three-number sums that nobody paid for" — results section 12: "in one seed it went on to seven or eight three-input tasks (by the two readings)". ✓.
+
+Fourth bullet ✓.
+
+Reuse example: "on average 60 in 100 ... where chance would give 18 in 100" ✓ 0.5988/0.1809.
+
+"In all 12 runs where this could be measured, the overlap was above chance." ✓.
+
+Now one more possible check: growing-list example says "at the end, 50,000, it did 65, and 74 were present" ✓ Avida.
+
+Section 1: "By the end, between 48 and 65 of 77 possible sums were done by at least one program in ten" ✓.
+
+Also "it started by paying only for the two easiest sums, and each time the population had made one of the hardest sums on offer common, it added the next harder ones" ✓.
+
+Now, "the hardest of the 77 takes 10 or more" ✓ (3AB lower bound).
+
+"EQU takes 5" ✓.
+
+"NOT takes 1 step" ✓.
+
+Level described as "The number of steps is the sum's level, and a sum paid in these runs pays more the higher its level" — for common pays less, pay runs down; "pays more the higher its level" is the base value; slight simplification, acceptable ("a sum paid ... pays more the higher its level, as in the earlier runs" — but in common-pays-less it can pay less when many do it, which section 3's table describes). Fine.
+
+Another possible issue: section 1 "That is more than any other environment tried, in every run, and more than an environment that paid for all 77 sums from the start (at most 41)." Check growing vs common-pays-less: 48 > 17 ✓. OK.
+
+Now the test-processor growing seed 2 at 50k = 46, but plain words' table shows 48 (Avida) — noted as fine.
+
+Now, the JSON: let me spot check one or two values to ensure the .md tables match the .json (the tables were supposedly printed from it). Quick grep in the json for e.g. "0.5988" and fixed_large seed3 test values. Let me do it.
+
+Also check the "runs/the exact commands.txt" for the departure list quickly? Not necessary for my angle, but the plain words' "changed from the plan" claims should match. I'll trust results departures.
+
+Let me spot-check JSON.
+
+No Bash. Fine, Grep is enough. Spot-check a couple more JSON values: fixed_large seed 3 test-processor common at 35k/45k/50k = 13, present 48/50/51. Grep around "fixed_large_seed3" maybe. Also growing test common at 50k = 46. Let me grep for a few.
+
+Different structure. Let me look at some of the JSON structure around a known value, e.g. near line 12759 (the reuse summary) and the counts over time. Grep for "35000" with context in the json.
+
+The JSON matches the .md tables (growing 65/45/55 at 35k, etc.). Good enough — the tables in .md are printed from the JSON, and my spot checks agree.
+
+Now check the "kept" shares and the "10 of 19 piece ends" claim — the piece-end times: 32,35,36,42,43,45,46,47,49,50. In the results, listed. The test processor samples every 5,000 → 35,000, 45,000, 50,000 overlap. Confirmed X1.
+
+Also check whether results anywhere say test processor showed 13 at "each" of the ten times — no, only at the three.
+
+Also verify the plain words' claim "For the other runs the two ways of counting agree exactly at most of the times compared" — I computed 148/180 exact from the .md tables ≈ most. True. Drop.
+
+One more: plain words section 5 "An agent working on log S114 found the same fault independently, from Avida's source." Results: "The S114 check of GPT 6 Astra's reply found the same mechanism independently (claim 3 of reply 06 in results/S115 Checking the Astra returns/)". Plain words calls it "log S114" but the results file says the S114 check is recorded under S115 folder. Ambiguous attribution: results section 2 says "The S114 check of GPT 6 Astra's reply found the same mechanism independently (claim 3 of reply 06 in `results/S115 Checking the Astra returns/`)" — so the check was made in log S114 and is recorded in S115? Departure 2 says "found by the S115 check of reply 06". Plain words says "An agent working on log S114 found the same fault independently, from Avida's source." Minor attribution wobble — the results themselves use both S114 and S115 for it. Not a plain-words error worth objecting to, maybe a nit. Skip.
+
+Now, "every unavoidable technical word explained in one plain sentence before its first use": check "seed" — explained ✓ ("different chance events (called seeds)"). "update" ✓. "nand" ✓ ("Avida has one instruction that combines numbers (nand)"). "level" ✓. "present"/"common" ✓ — but note "common" is used in section 1 ("done by at least one program in ten" — explained inline) before section 2 defines it. Section 1 says "done by at least one program in ten" — plain enough. Fine.
+
+"the most common program" — mild.
+
+"resource"/"store that runs down" in the table: "each paid from a store that runs down when many programs use it" — plain ✓.
+
+Now compile objections:
+
+X4.1 (most serious): Section 5, "showed 13 common at each of those times" — measured at only 3 of the 10 times. Fix sentence.
+
+X4.2: Section 1 "In every one ... rose for a while and then stopped rising" + section 4 heading "The count stopped rising everywhere" — contradicted by the exception (fixed-large seed 2, last new high 48,250, +13 in last 10,000) and fixed-graded seed 2 (43,250). Fix: "in all but one of the eighteen runs" / reword heading "The count stopped rising almost everywhere".
+
+X4.3: Section 1 "mostly within the first quarter to half of the run" — results say "most by update 10,000 to 25,000" about the growing list's rise; last new highs run to 48,250. The plain words turns "most of the rise came early" into "the stopping happened by the half". Fix: "and most of the rise came in the first 10,000 to 25,000 updates".
+
+X4.4: Section 7 "For learning to go on, the problems themselves would have to keep coming from somewhere other than a fixed list" — necessity claim not tested (a longer fixed list, or runs longer than 50,000, not tested; the results say only "none supplied problems beyond the designer's list, and none was built to"). Fix: "In none of them did the problems come from anywhere but a fixed list; whether a longer fixed list would have kept the learning going was not tested."
+
+X4.5: Section 4 "So a pay for something that no program can nearly do yet never reaches the population." — unscoped general law (S28). Fix: append "in these runs".
+
+X4.6: The reuse measure: "needed" never explained — the method (replace each instruction with a do-nothing and run the program alone; instruction ablation in the owner's terms) is absent, though section 3 lists it among what was counted and section 4 gives its numbers. Fix: add one sentence in section 3's "What was counted" or before the section 4 point.
+
+X4.7 (minor): Section 5 "the record gives both counts everywhere" — the second reading exists only every 5,000 updates (and its first appearances not at all). Fix: "the record gives both counts at every 5,000 updates, and Avida's own count every 250".
+
+Also possibly minor: table doesn't say which reading it prints (Avida's count), while the all-77 row mixes readings. Could add a note. I'll fold into X4.7 or separate small one. Maybe mention as X4.8 minor: the table's numbers are Avida's own count except run 3 of all-77 which is the second way — the note "(13 when counted the second way, section 5)" does flag it. And section 5 says "the table above uses 13 for that run" — but the table shows 0 with 13 parenthetical; "uses 13" is inaccurate: the table gives both. Hmm — actually the sentence is defensible as "the comparison uses 13". I'll fold a small note into X4.7.
+
+Order by seriousness: X1 (false evidence claim), X2 (overstatement in the direct answer), X3, X4, X5, X6, X7.
+
+Checked, no objection: direct answer first (§1 quotes S63 verbatim); all other numbers (table §3, example §3, §4 reuse 60/18 per 100, first appearances, keeping 73–100, +13 rising run 37→41, 10 of 19 piece ends, 1,001-update and 9-step departures, tested/not-tested/unsure lists) match results .md/.json with same meaning; no seed-spread difference told as a difference (E6 "did not clearly change" matches "not separated"); "more" claims meet the every-run rule; S23 forbidden words absent from Claude's own sentences; no "model", no biological terms, owner's terms used (Avida program, program population, instruction change, Avida execution environment), "sum" as in plain words 112 with the term "computational capability" named at first use; marked written before GLM's check; ends with one next step, choice left to the owner (S21); nothing settled beyond X4.5; style matches plain words 112.
+
+Not reached: the exact commands and configuration (jobs 1–3 cover them); whether the scripts compute what the results say (job 2); whether the plan's design answers the question (job 1); the raw Avida output (not in the folder, per rule item "Unsure" — claim it cannot check listed as not reached).
+
+Word the report. Also each objection needs "the exact fix".

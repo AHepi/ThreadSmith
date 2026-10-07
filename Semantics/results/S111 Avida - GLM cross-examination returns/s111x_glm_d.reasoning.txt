@@ -1,0 +1,408 @@
+Let me start by reading the files in the sandbox.
+
+Now let me read the other files: the plan, the summary tables, the rule for reading, the record, and the plain words 110 style file. Let me read the summary tables to check the numbers.
+
+Now let me read the summary tables to verify the numbers in the plain-words file. Read all four summary tables.
+
+Now let me read the remaining files: the build notes, exact commands, the records, and plain words 110 for style. Also check the scripts briefly if needed. Let me read the decisions record and plain words 110.
+
+Now let me check the exact commands and the results .json, and the decisions record (already quoted in brief, but let me confirm). Let me read `runs/the exact commands.txt` and `S111/2 the three properties measured.json` for numbers.
+
+Now let me carefully check the plain-words file (`S111/3 plain words.md`) against the results. Let me go section by section.
+
+**Section 1 (What happened):**
+
+- "One small program, 100 instructions long" ✓
+- "left for 50,000 time steps, nine times over" ✓ (50,000 updates). Plain file uses "time steps" — check that "update" vs "time step" is consistent. In section 2: "A program that has run for a long time dies of old age." In section 1: "the one program became about 3,600 programs within the first 1,000 time steps" ✓ (C5: by update 1,000 every world held 3,566 to 3,600 organisms). "the population lasted to the end" ✓. "over about 6,300 to 16,000 generations of copies" — results: 6,310 to 15,940. Plain file section 5 says "6,300 to 15,900 generations". Section 1 says "about 6,300 to 16,000". 15,940 → "about 16,000" ok; 6,310 → "about 6,300" ok. Rounding stated as "about" — fine.
+- "they learned to do small sums on numbers the world gave them, because the world rewarded that" — "small sums"? Hmm, the tasks are logic tasks. "small sums" is loose but plain. Actually describing NOT/NAND as "sums" — the plain file later says "The **sums**, called tasks in Avida". OK, it's consistent within the file ("sums" is one word for the thing). Wait — one word for each thing: "sums" is used in section 6 and "the hardest of the nine sums on offer" in section 1. Consistent.
+- "in six of the nine runs they learned the hardest of the nine sums on offer" — EQU in six runs ✓.
+
+- "Copied. The copying is done by 15 of the program's 100 instructions" ✓ 15 knockouts stop. "switch off any one of those 15 and the program no longer makes a copy of itself" ✓. "Not one of 10,000 random programs of the same length could copy itself" ✓.
+
+- "Resists change. ... most single changes to an evolved program (69% to 79%) leave it still able to copy itself" — results: at update 50,000, viable 0.698 to 0.758 by condition means; range across seeds... "69% to 79%" — results section 3 "(69% to 79% across the nine runs)". ✓ The results .md says "most single changes leave copying in place (69% to 79% across the nine runs)". Check across seeds: min 0.688, max 0.786 at 50000... hmm 79%? Per-seed at 50,000: max is 0.786 (default seed3). But results .md itself says "69% to 79% across the nine runs" — hmm, that's the results file's own claim. Per-seed values at 50,000: low 0.688–0.714; default 0.719–0.786; high 0.740–0.779. So range 68.8% to 78.6%. Results says "69% to 79%" — rounding 78.6 to 79 is fine-ish. The plain file says 69% to 79%, matching the results .md. Also note the plain file says "21% to 31% no longer do" — results "21% to 31%". OK consistent.
+
+  But wait — the plain file section 4 says "In the nine runs, **69% to 79% of these one-change programs still copy themselves**; 21% to 31% no longer do." That's for update 50,000 only? The results say evolved at update 50,000 range viable 0.688–0.789 (hmm high seed1 0.779). Actually across all three moments (10,000, 30,000, 50,000), viable range would be 0.688 to 0.807 (default seed1 at 10,000 = 0.807). The results .md says in "Shown" section: "most single changes leave copying in place (69% to 79% across the nine runs)". Which matches 50,000 only. The plain file matches the results file. Fine — no objection; plain file matches results.
+
+  However, the plain file says "most single changes to an evolved program (69% to 79%)" without saying it's at the end (update 50,000). It says in section 4's example "take the most common program in a run at the end". So it's implied. Fine.
+
+- "programs that evolved with more copying mistakes lose less to a change" — results support via neutral share and within-1% (high above low). The plain file says in section 4: "the share of one-change programs that copy themselves at exactly the same speed was 14% to 19% at the low rate and 27% to 36% at the high rate". Check: neutral at 50,000: low mean 0.169 (0.139–0.188), high mean 0.312 (0.272–0.361). So low range 13.9%–18.8% → "14% to 19%" ✓; high 27.2%–36.1% → "27% to 36%" ✓. "every high-rate run was above every low-rate run" — per-seed at 50,000: low 0.188, 0.139, 0.181; high 0.272, 0.301, 0.361. Min high 0.272 > max low 0.188 ✓ (results state this).
+
+  Hmm, but the plain file says "at exactly the same speed" for neutral — neutral means fitness within one part in a million. OK plain rendering.
+
+- "the 15 copying instructions stay the same across the population far more than the other 85 do" ✓.
+
+- "Remains. The population and its line of descent remained to the end. But not one program identical to the first remained, and even its copying instructions were rewritten into a faster version." ✓.
+
+- "And a program that cannot copy itself also remains, for as long as you like, in a world where nothing dies of old age." — K3: 2,000 updates. "for as long as you like" — hmm, that's stronger than results: K3 ran 2,000 updates. "for as long as you like" is a statement stronger than the results. The results say "remained for the whole 2,000 updates, making nothing". Plain section 5 says "stayed for all 2,000 time steps". But section 1 says "for as long as you like" — that's stronger than measured (it lasted 2,000 updates; nothing was run longer). This is an overstatement. Objection candidate: X — "for as long as you like" overstates K3 (2,000 updates only, and it's a world where nothing dies of old age — but other removal exists? In K3 the knocked-out program alone; overwriting can't happen since no offspring. So "as long as you like" is an extrapolation beyond the run). Exact fix: "also remains — in the control it stayed for all 2,000 time steps — in a world where nothing dies of old age." Medium seriousness.
+
+**Section 1 "What it means":** "The three properties can be found, measured, in programs that hold no problem, do no criticism..." fine. "Whether 'causes itself' should ask for more than that is yours to say. Nothing here settles it." Good (S28, S21).
+
+**Section 2:**
+
+- "a grid of 3,600 places, each holding one program" ✓ 60×60.
+- "A program that has run for a long time dies of old age." ✓
+- rates: "about 1 in 400 copied instructions (low), 1 in 133 (Avida's usual), 1 in 50 (high)". Check: 0.0025 = 1/400 ✓; 0.0075 = 1/133.3 ✓; 0.02 = 1/50 ✓.
+- First program: "5 at the start that make room for a copy and find its end, 86 in the middle that do nothing at all, and 9 at the end" ✓ (matches corrected description).
+- "It takes 389 steps to make one copy." ✓ (389 instructions executed per copy).
+
+Wait — but the "copying mistake" rate description: "Sometimes, when an instruction is copied, the world writes a random instruction instead: a **copying mistake**." Also there are insertions/deletions (one inserted and one deleted instruction each with probability 0.05 per birth). The plain file never mentions insert/delete mutations. Is that an objection? The results mention them (avida.cfg defaults). The plain file describes mutations as only copying mistakes. Hmm — this is simplification; the owner isn't a programmer, and the copy error is the varied parameter. But the plain file says "Sometimes, when an instruction is copied, the world writes a random instruction instead" as if that's the only mutation. Given fidelity expectations ("close to what the rates alone lead one to expect" — expected includes 0.95×0.95 for ins/del!). Section 3: "in the world, about 69 in 100 copies were exact at the low rate, 40 at Avida's usual rate, and 13 at the high rate, close to what the rates alone lead one to expect." The "expected" figure in the results is (1−rate)^100 × 0.95 × 0.95 — i.e., the rates *plus* insertion/deletion. The plain words file says "close to what the rates alone lead one to expect", which is subtly off: the expectation includes the 0.95×0.95 factor for the inserted/deleted instructions. Without that factor, expected would be 0.776 (low) vs observed 0.693 — not that close. With it, 0.703–0.710 vs 0.693 — close. So "the rates alone" is wrong/misleading; it's the copying-mistake rates together with the one-in-twenty insert/delete chances. Also the plain file never explains the insert/delete mutations at all, which affected genome lengths (mean lengths 87–109). Objection candidate: the plain file omits the second kind of mutation (insertion and deletion, each 1 in 20 per copy) although the results list it and it enters the "expected" fidelity. Exact fix: add one sentence to section 2: "At each split the world also, with a chance of 1 in 20 each, adds one random instruction to the copy or removes one." And in section 3 change "close to what the rates alone lead one to expect" to "close to what the rates, with the added and removed instructions, lead one to expect."
+
+Actually let me check numbers: section 3 says "about 69 in 100 copies were exact at the low rate, 40 at Avida's usual rate, and 13 at the high rate". Results table: in the worlds births with identical offspring: 0.693, 0.400, 0.131 ✓.
+
+**Section 3 (Copied):**
+
+- Knockout description: "Switch off the 'copy one instruction' step, and the program runs, makes room, and never fills it: no copy." — that's a story; results just say knockout of h-copy stops self-copying. The "runs, makes room, and never fills it" is an inference; plausible reading of Avida semantics. Fine-ish; it's an interpretive addition not in the results. Minor. Given the plain file's job is to be faithful to the results, "makes room and never fills it" is a mechanism claim not measured. But it follows directly from knocking out h-copy. I'd consider it minor; maybe not worth an objection. Possibly a minor objection: statement not in the results. But the plain file is allowed to explain mechanisms? The check list says "every number and every statement in the plain file is in the results, with the same meaning". "makes room, and never fills it" is an interpretation not in the results. I'll consider a low-priority objection.
+
+- "Doing this for each of the 100 instructions in turn: **15 stop the copying**, the 5 at the start, the first of the middle ones (the instruction before it reads it as a marker), and the 9 at the end." Wait — results: essential sites are 1–6 and 92–100. That's 6 at the start + 9 at the end = 15. The plain file says "the 5 at the start, the first of the middle ones ... and the 9 at the end" = 5+1+9 = 15 ✓. And note "the instruction before it reads it as a marker" — results say "Site 6, the first filler instruction, is in the set: mov-head reads it as a label." ✓ consistent.
+
+- "The other 85 change nothing, not even the speed." ✓ (fitness ratio 1.0).
+
+- Controls: "100 of them put into the world made no copies and were all gone, dead of old age, after 66 time steps." ✓ K1 last_update_with_organisms 66, births 0. "The first program with its 'copy one instruction' step switched off, put into the world alone, made no copies and was gone after 65." ✓ K2: 65.
+
+  Hmm: "dead of old age" — results say "they die of age" (build notes DEATH_METHOD 2 default). ✓.
+
+- "How often a copy is exact depends on the rate the world sets: in the world, about 69 in 100 copies were exact at the low rate, 40 at Avida's usual rate, and 13 at the high rate, close to what the rates alone lead one to expect." — expected numbers are 0.703–0.710 / 0.425–0.438 / 0.120–0.130, observed 0.693 / 0.400 / 0.131. "close" is fine; "the rates alone" is the issue noted above (the expectation includes the 0.95×0.95 ins/del factor). Actually wait — could "the rates" be read as including all mutation rates? "the rate the world sets" earlier refers to the copying mistake rate. And the plain file only ever describes copying mistakes, so a reader would compute (1−1/400)^100 ≈ 0.78 for low, vs observed 0.69 — not close. So the sentence misleads. Objection stands.
+
+**Section 4 (Resists change):**
+
+- "take the most common program in a run at the end, and make every program that differs from it in exactly one instruction (for 100 instructions, 2,500 of them)" — hmm: "for 100 instructions, 2,500 of them". 100 sites × 25 alternatives = 2,500 ✓. But evolved lengths are 75–128, not 100. The plain file's parenthetical "(for 100 instructions, 2,500 of them)" refers to the ancestor case; for evolved genotypes it'd be length × 25. The results table's evolved numbers come from length×25 mutants. The plain file says "for 100 instructions, 2,500 of them" — as a general example. Slightly loose but not wrong as an illustration of the ancestor. Evolved lengths differ (89–106 mean). Minor. Could be an objection: the plain file implies all programs are 100 long; results show mean lengths 87.8–109.4. Minor wording. Maybe fold into a minor objection.
+
+- "In the nine runs, 69% to 79% ... 21% to 31% no longer do." ✓ matches results.
+
+- "by the end, the share of one-change programs that copy themselves at exactly the same speed was 14% to 19% at the low rate and 27% to 36% at the high rate, and every high-rate run was above every low-rate run." ✓ (neutral shares). 
+
+  Wait — "copy themselves at exactly the same speed" = neutral = viable and fitness unchanged within one part in a million. Fitness unchanged ≈ same speed. OK.
+
+- "Researchers have reported something like this before under the name 'survival of the flattest'; here it rests only on these runs." ✓ matches.
+
+- "The high-rate programs were also shorter, which the comparison does not separate." ✓.
+
+- Second: "at the end of a low-rate run, 84% of the programs (on average over the three runs) still had the first program's instruction at the places of the 15 copying instructions; at the other 85 places, only 18% did." ✓ low: 0.836→84%? Hmm 0.836 rounds to 84%. ✓ non-essential 0.178 → 18% ✓.
+
+  "The copying places stayed the same far more than the rest in every run, at every one of the six moments measured." ✓ 54 of 54.
+
+  Wait — "six moments measured": saved populations at 1,000, 10,000, 20,000, 30,000, 40,000, 50,000 = six moments ✓.
+
+- "With the copying mistakes switched off entirely, nothing changed at all: after 5,000 time steps all 3,600 programs were still the first program." — K5 also switched off insert/delete (command sets DIVIDE_INS_PROB 0, DIVIDE_DEL_PROB 0). The plain file says "with the copying mistakes switched off entirely" — but the control switched off all three mutation kinds. If only copying mistakes were off, ins/del would still cause change. So the plain description misstates the control. Objection: K5 turned off copy errors AND insertion AND deletion; the plain file attributes the result to switching off copying mistakes alone. Fix: "with all three kinds of change switched off". This is a real mismatch (same root as the missing ins/del description). I'll merge or make separate objections. I think: X4.1 (ins/del omissions) covering section 2, section 3 "rates alone", and K5 in section 4 — or separate. The brief wants each objection with exact fix. I'll make one objection about the omission of insert/delete mutations affecting three places, or split into two (fidelity expectation; K5 description). Probably cleaner: one objection "the second kind of mutation is never mentioned" with the three consequences, exact fixes for each. Actually the report format prefers each objection atomic. Let me do:
+
+  - X4.a: Section 2 omits the insert/delete mutation; and section 3's "close to what the rates alone lead one to expect" is wrong (the expectation used includes 0.95×0.95 for ins/del). Fix sentences.
+  - X4.b: Section 4's K5 description "With the copying mistakes switched off entirely" — the control switched off all mutations (command line: `-set COPY_MUT_PROB 0 -set DIVIDE_INS_PROB 0 -set DIVIDE_DEL_PROB 0`). Fix sentence.
+
+- "In all six runs at the low and usual rates, the first program's 9 copying instructions, letter for letter, were gone from every program by time step 20,000." — Results: "the ancestor's exact copy loop zvfcaxgab was gone from every organism by update 20,000 in all six low and default runs" ✓. Check the over-time table: low seed2 at 10000 copy loop 0.01; at 20000 0.00 ✓. All six at 20000 are 0.00 ✓.
+
+- "The most common programs now copy two or three instructions each time round the loop instead of one: faster, the same job, different instructions." ✓ results: "copy two or three instructions per pass of the loop".
+
+- "no instruction in Avida's set checks a copy against the original" ✓ build notes.
+
+**Section 5 (Remains):**
+
+- "never fewer than 3,481 programs from time step 1,000 to the end" ✓ (min 3481).
+- "all descended from the one first program, over 6,300 to 15,900 generations" — results 6,310 to 15,940. 15,940 → "15,900"?? 15,940 rounds to 15,900? To the nearest hundred, 15,940 → 15,900. Yes (nearest hundred: 15,900 vs 16,000 — 15,940 is closer to 15,900? 15,940 − 15,900 = 40; 16,000 − 15,940 = 60. So nearest hundred is 15,900). ✓. But section 1 says "about 6,300 to 16,000 generations". Inconsistent rounding between section 1 (16,000) and section 5 (15,900), both meaning 15,940. "one word for each thing" — numbers should be consistent. Minor. Actually 15,940 with "about" could be 16,000 in one place and 15,900 in another — sloppy but both within rounding. Is it an objection worth raising? The brief says "no rounding that changes a comparison". Both are honest roundings. Minor; maybe skip or note as minor inconsistency. I'll skip — actually a consistency objection could be minor X. Hmm. Let me keep it as a small note in a minor objection. Probably not worth a full objection slot. I'll fold it in as a minor one at the end.
+
+- "What of the first program remained at the end: not one program identical to it, in any run." ✓ 0 in all.
+- "Its 9 copying instructions, letter for letter, were in no program at the low and usual rates, and in 0% to 49% at the high rate." ✓ (high: 0, 0.0008, 0.4873 → "0% to 49%").
+- "Its copying places held its instructions in 58% to 84% of cases (averages by rate)." ✓ (0.582 to 0.836).
+- "the ability to make an exact copy of itself remained in 65% to 86% of the programs (averages by rate)" ✓ (0.650 to 0.857 → 65% to 86% ✓).
+- "at the high rate about a third of the programs cannot copy themselves" ✓ (0.650, so ~35%).
+- Controls: "The random programs and the switched-off first program were gone within 66 time steps, dead of old age." ✓ (66 and 65). K3: "stayed for all 2,000 time steps" ✓. K4: "gone by time step 500, its place taken by the working program's copies" ✓ (knocked_out_alive_at_500 = 0).
+
+**Section 6 (Marletto's test):**
+
+- Quote ✓ matches.
+- "The hardest, EQU, is a number that marks, digit by digit, where two numbers agree." — results: "EQU (the hardest, equality of two numbers bit by bit)". Plain says "where two numbers agree" ✓. "digit by digit" vs "bit by bit" — the numbers are 32-bit; "digit by digit" is a plain rendering of bit-by-bit. Acceptable? "digit" for "bit" — hmm. A bit is a binary digit, so "digit by digit" is fine in plain words. OK.
+- "EQU was learned in six of the nine runs." ✓.
+- "In one low-rate run, the most common program does EQU with 26 instructions that have nothing to do with copying" — results section 5: "in the dominant of low seed 2, for instance, IO, nand, swap, push, pop, sub and their labels" — 26 task-only sites for EQU in low seed2 ✓ (from Marletto table: main_low_seed2 EQU task-only 26 ✓).
+- "Switch those off in that one program and it stops doing EQU but still copies itself." ✓ (task-only sites definition).
+- "the share of programs doing EQU drops by 1.4 points, because that program makes up only 44 of the 3,600" — check: low seed2 EQU no-cap: as found 0.764, dominant only 0.750 → drop 1.4 points ✓. Dominant holds 44 of 3,600? Results say "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs". Which run holds 44? Presumably low seed2's dominant. Hmm, need to check: 0.994→0.972 capped drop of 2.2 points with coverage 1997/3600... For no-cap: 0.764→0.750, drop 1.4 points. If the dominant fraction were 44/3600 ≈ 1.22%, and knocking out its task sites removes EQU from those 44 organisms (which were performers), the drop would be ~1.22 points plus whatever covered non-performers. Observed 1.4 points. Plausible that low seed2's dominant holds 44. I can't verify exactly from summary tables whether 44 belongs to low seed2, but the numbers are consistent. In the raw .json, EQU dominant drop by run: low2 0.764−0.750=0.014; low3 0.819−0.810=0.009; default1 0.528−0.524=0.004; default2 0.572−0.569=0.003; high1 0.324−0.322=0.002; high2 0.299−0.298=0.001. So drops range 0.1 to 1.4 points ✓ "(in the six runs, the drop was 0.2 to 1.4 points)". Plain says "0.2 to 1.4" ✓ (min 0.001→0.1? hmm: high2 drop is 0.001 = 0.1 points; default2 0.003 = 0.3 points; high1 0.002 = 0.2 points). Results .md says "lowers the population's share performing EQU by 0.2 to 1.4 points". The min across the six runs is 0.001 (high2) = 0.1 points. Results say 0.2 to 1.4. Hmm — but the results .md says 0.2 to 1.4, and plain repeats 0.2 to 1.4. Is 0.2 to 1.4 accurate? Computed: high seed2: 0.299−0.298 = 0.001 → 0.1 points. That's below 0.2. The results file's claim "0.2 to 1.4 points" seems slightly off (0.1 to 1.4). But my job is the plain file against the results — the plain file matches the results file, so no objection from my angle (job 2 checks the numbers). Actually the plain file must match the results; it does. The results' own accuracy is job 2's angle. I could note it but it's other agents' domain. I'll leave it — maybe mention as not-reached/other angle? The brief says my job is the plain file against the results. If the results themselves are wrong, that's job 2. Skip.
+
+- "Now switch off, in every program, its own EQU instructions (found for each program separately). The share of programs doing EQU falls to 1% to 4%" — results: "EQU is performed by 1.1% to 4.4% of the covered organisms". "falls to 1% to 4%" — 4.4% rounds to 4%; 1.1% to 1%. ✓ ok.
+- "93% to 100% of them still copy themselves" ✓ (0.932 to 1.0).
+- "about 19 to 26 instructions per program" ✓ (19 to 26).
+- "For the simplest sum, NOT, about a fifth of the programs still did it afterwards (up to 46% in one run)." — results: "most for NOT (21% on average, up to 46%)". Plain: "about a fifth" ✓ (20.9%), "up to 46%" ✓.
+
+  Wait, is NOT "the simplest sum"? Results don't call NOT the simplest. The plan lists tasks NOT, NAND, AND... "the hardest, EQU" is in results. NOT being simplest is an inference (single input). Minor, unobjectionable? The results don't state NOT is simplest. Hmm. Plain words "the simplest sum, NOT" — a claim not in the results but obviously true from the logic (NOT takes one input). Low priority. Maybe skip.
+
+**Section 7 (Tested, not tested, unsure):**
+
+- "the plan's description of the first program was slightly off (it said 85 do-nothing instructions and a copying part of 10; there are 86 and 9)" ✓ departure 1.
+- "a second, looser measure of 'the same speed' was added (within 1%), because the plan's measure counted a change of one step in 389 as a change" ✓ departure 2.
+- "the share of programs still able to copy themselves was added, because the letter-for-letter measures came to nothing in most runs" ✓ departure 3.
+- "in Marletto's test the planned limit of 300 programs covered too few of the population, so the test was also run on 90% of the population, and switching off only the instructions that do not also copy was added, because switching off all of them stops the copying too" ✓ departures 4a, 4b.
+- "The first try of four control runs failed from a missing line break in a file and was run again." ✓ departure 5 ("K2, K3 and K4 failed... and K1 ran without nop-X defined" — four control runs). ✓.
+- "Not tested: changes that add or remove an instruction (only swaps were tested); a head-to-head race between programs evolved at different rates (how 'survival of the flattest' was first studied); longer runs; other worlds." ✓ matches ("other environments, other instruction sets" — plain says "other worlds"; environment = world in plain terms ✓).
+- "Unsure: three runs per rate is few; the high-rate programs were shorter, which could matter; lining up an evolved program against the first one is rough where the first one repeats the same instruction 86 times; Avida's own count of programs doing a sum is higher than the test computer's (for example 59% against 32% for EQU in one run), and why was not checked." ✓ matches results section 7.
+
+**Section 8:** observations; "nothing is settled" ✓ (S28). Checks against results section 8 ✓. "instructions for EQU that pass Marletto's test" in six runs ✓.
+
+**Section 9 (One next step):** one next step ✓; "Which way to take it is yours to choose" (S21) ✓.
+
+**Words check (S23):** scan the plain file for forbidden words: fits, supports, verified, proves, disproves, reason to believe, belief, better than, worse than, true, not true, established, authority, foundation, derived... Let me search. The plain file: "true" appears? Search: "usual" ... "Not one of 10,000 random programs" ... I need to grep. Words like "exactly" are fine. "fitness" doesn't appear in plain file? It says "not even the speed" — good. Let me grep for forbidden terms.
+
+Also "one word for each thing": "copy" / "copies" used; "offspring"? Not used in plain. "child"? no. "programs" for organisms ✓ ("here they are simply called programs"). "world" for the simulated computer ✓. "time steps" for updates — consistent? Section 1 "50,000 time steps", "1,000 time steps"; section 3 "66 time steps"; section 4 "time step 20,000"; section 5 "2,000 time steps". Results say "updates". Plain consistently uses "time steps" ✓ — one word for the thing.
+
+Hmm wait: section 2 defines "**update**"? No — it never mentions updates. Good, consistent.
+
+"the first program" for ancestor — consistent ✓. "switch off" for knockout ✓ consistent. "one-change programs" ✓. "sums" for tasks ✓ (defined in section 6: "The **sums**, called tasks in Avida" — good). But section 1 already uses "small sums" before section 6's definition. Section 1: "they learned to do small sums on numbers the world gave them" — the word "sums" is used in section 1 before it's explained in section 6. Technical-word-before-first-use rule: "every unavoidable technical word explained in one plain sentence before its first use". "Sum" is an everyday word, though used here in a special sense. The example-first rule: "a concrete example before each general point" — style. Hmm, section 1 is a summary; plain 110 similarly had a summary first. Style acceptable.
+
+Also section 1: "three rates of copying mistakes" ✓ defined in section 2... wait, section 1 uses "copying mistakes" before section 2 defines it ("a **copying mistake**"). The definition comes in section 2, after first use in section 1. The rule says every unavoidable technical word explained in one plain sentence before its first use. "Copying mistake" first used in section 1 ("three rates of copying mistakes"), defined in section 2. But it's fairly self-explanatory. Borderline. Similar with "copy", "switch off". Hmm. Given the summary nature of section 1, plain 110 did the same (used "change map" in summary then defined later: "A *change map* is a chart..." in section 3, after mention in section 1). So style-wise consistent with 110. I won't object, or maybe minor.
+
+Now check for S23 words via grep.
+
+Also check "it is marked as written before the GLM check" ✓ note first paragraph.
+
+"no word decision S23 removes in Claude's own sentences" — need to check: "true" appears? Let me grep: "still able to copy itself"... Let me actually grep the file.
+
+Also check: "accepted", "established", "foundation", "prove", "support", "fit(s)" — "fit" might appear as in "do not fit"? Let me grep.
+
+Also check "nothing chosen for the owner" (S21): "the next step I propose... Which way to take it is yours to choose" ✓ good. "Whether 'causes itself' should ask for more than that is yours to say" ✓.
+
+S28 nothing settled: "Nothing here settles it" ✓; section 8 "Observations only; nothing is settled" ✓.
+
+S43: "model" must not be used for what the theory judges — the plain file doesn't discuss theory candidates; check no "model" word. Let me grep.
+
+Now, the numbers to double check more carefully:
+
+Section 1: "the one program became about 3,600 programs within the first 1,000 time steps" — C5: by update 1,000 every world held 3,566 to 3,600 ✓ "about 3,600".
+
+Section 4 example: "make every program that differs from it in exactly one instruction (for 100 instructions, 2,500 of them)". Also "(25 per site)" in results. The plain file says "for 100 instructions, 2,500 of them" — the evolved most-common programs have lengths 75–128 (dominant at 50,000: 100, 110, 108, 105, 128, 89, 93, 75, 99). So "2,500" only fits the ancestor and low seed1's dominant. The plain statement could mislead but says "(for 100 instructions, 2,500 of them)" which conditions on 100 instructions. Acceptable? The reader may think all programs are 100 long. Given section 1 said the first program is 100 long, and the evolved ones changed length (plain file never mentions length changes! Results report mean genome lengths 87.8–109.4 and "The high-rate programs were also shorter"). Plain section 4 says "The high-rate programs were also shorter, which the comparison does not separate." — so it does mention shorter programs. OK so the reader knows lengths change. The parenthetical is fine.
+
+Section 6: "In one low-rate run, the most common program does EQU with 26 instructions that have nothing to do with copying (they read numbers in and out, and combine and shuffle them)." ✓ matches dominant of low seed 2 (26 task-only sites: IO, nand, swap, push, pop, sub).
+
+"Across the population, though, almost nothing changes: the share of programs doing EQU drops by 1.4 points, because that program makes up only 44 of the 3,600" — the 44 claim: I can't verify from summary tables directly (they don't give dominant counts). The results .md says "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs". It doesn't say which run holds 44. The plain file pins 44 to low seed2. If the dominant of low seed2 actually held, say, 50 organisms... Can I check consistency? In capped table for low_seed2, coverage 1997/3600 at 300 genotypes; the dominant fraction isn't given. From drop math: capped drop for low2 EQU: 0.994→0.972 = 2.2 points over covered 1997... The no-cap drop 1.4 points of 3600 = ~50 organisms stopped performing. The dominant holds ~44 of them plus ~6 covered organisms that were the only performers in their genotype? Hmm, actually knocking out the dominant's sites removes the dominant's performers (44 if it held 44 and all performed). 1.4 points of 3,240 covered = 45 organisms. Close to 44. Consistent. Fine — job 2's angle anyway.
+
+Also section 6: "about 19 to 26 instructions per program, separate from the copying instructions, spread over thousands of copies" ✓.
+
+"Not completely: some programs can do a sum in more than one way, so switching off what the one-at-a-time test finds does not always stop it." ✓ matches results.
+
+Now S23 words. Let me grep the plain file for: true, prove, support, verif, belie, establish, authorit, found(ation), deriv, better, worse, accept.
+
+"true" — I don't recall seeing "true" in plain words. There's "usual" (Avida's usual). Let me grep to be sure.
+
+Also "the world's fresh mistakes" fine.
+
+Also check the statement in section 2: "Avida is a research program, made at Michigan State University" ✓ (Ofria and colleagues, MSU).
+
+Section 2: "The world hands out time to run instructions, a little to every program." — Avida hands out time in proportion to merit (rewarded tasks get more). Plain file section 6: "rewards it with more running time". Section 2's "a little to every program" might obscure the merit-proportional scheduling, but section 6 explains the reward. Fine.
+
+Section 2: "When a program splits off a copy of itself, the copy goes into a neighbouring place, taking it over from whatever program was there." ✓.
+
+"death after executing 20 times the genome's length" → "A program that has run for a long time dies of old age" ✓ plain.
+
+Section 2 note: "It takes 389 steps to make one copy." ✓.
+
+Now let me check the "Marletto's test" description: "knowledge 'is exactly the thing one would ultimately have to eliminate in order to prevent a particular transformation from being performed reliably.'" ✓ same quote as results.
+
+Now check style requirement: "a concrete example before each general point". Section 3 starts with "**An example first.**" ✓. Section 4: "An example: take the most common program..." ✓. Section 5: starts with "**The population remained**" — no example first; it's a statement of measures. Section 6 has "**An example.**" ✓. Section 8? lists. Overall consistent with plain 110 style (examples first in most sections). Section 5 lacks an example — minor style point. Probably not an objection.
+
+"it starts with what happened and what it means for the owner's idea" ✓ section 1.
+
+"it is marked as written before the GLM check" ✓.
+
+"it ends with one next step" ✓ section 9.
+
+Now, one important check: section 1 "The three properties were each found, and each has two halves." — Hmm, "each has two halves" — copied has two halves (program/world); resists change in two ways...; remains... "each has two halves" is a claim about the structure. For "remains", the two halves are program (copied faster than removed) and world (removes). OK consistent with results' "Program or world" paragraphs.
+
+Also section 1: "and the world's rules are the other part. Whether 'causes itself' should ask for more than that is yours to say." ✓.
+
+Now the K3 "for as long as you like" — I flagged. Results say 2,000 updates. "for as long as you like" is stronger than results. Fix: "also remains — it stayed for the whole 2,000 time steps of its run — in a world where nothing dies of old age." I'll raise as objection (overstatement).
+
+Also section 5 controls: "The same switched-off program, alone in a world where nothing dies of old age, stayed for all 2,000 time steps, doing nothing." ✓ — so section 5 states it correctly; section 1's "for as long as you like" is the overstatement. Good, exact fix targets section 1.
+
+Now check statement: section 3 "The first program with its 'copy one instruction' step switched off, put into the world alone, made no copies and was gone after 65." ✓.
+
+Another check — section 4 second part: "The copying places stayed the same far more than the rest in every run, at every one of the six moments measured. With the copying mistakes switched off entirely, nothing changed at all: after 5,000 time steps all 3,600 programs were still the first program." — K5 issue as flagged.
+
+Also "In two ways. First, most single changes to an evolved program (69% to 79%) leave it still able to copy themselves" wait, section 1 bullet: "leave it still able to copy itself" ✓.
+
+Now, does the plain file say anything about the world's grid death "taking over"? Section 5: "its place taken by the working program's copies" ✓.
+
+Now the "unavoidable technical words": "instruction" — explained in section 2 ✓ but used in section 1? Section 1: "the copying is done by 15 of the program's 100 instructions" — used before section 2's definition. Again the summary-first structure; plain 110 did the same (e.g., "constructor theory" used in section 1 summary, explained in section 2). Consistent with the style model. Not an objection, or very minor. I'll skip.
+
+"fitness"/"speed": plain avoids "fitness", uses "speed" ✓ good.
+
+Check for S23 forbidden words — let me grep now. Also "model".
+
+Let me also double-check "the hardest of the nine sums on offer" learned in six of nine runs ✓ (EQU in 6).
+
+And "they learned to do small sums on numbers the world gave them, because the world rewarded that" — the world rewards with more running time ✓ section 6.
+
+Also section 6: "The world hands a program numbers, and rewards it with more running time if it writes back certain combinations of them." ✓.
+
+Section 6: "EQU, is a number that marks, digit by digit, where two numbers agree" — EQU checks equality of two numbers bit by bit; the output is a number marking where they agree? Actually in Avida, EQU task: the organism must output the bitwise EQUALITY of the two inputs — i.e., a number whose bits are 1 where inputs agree. So "a number that marks, digit by digit, where two numbers agree" ✓ accurate.
+
+Now "about a fifth of the programs still did it afterwards (up to 46% in one run)" — results: "most for NOT (21% on average, up to 46%)". ✓.
+
+Now, checking one more number: section 4 "84% of the programs (on average over the three runs)" — 0.836 → 84% ✓; "only 18% did" — 0.178 → 18% ✓. But note the range: low essential 0.682–0.930 across seeds. Plain says "(on average over the three runs)" ✓ honestly marked.
+
+Now grep for forbidden words.
+
+Also one more check on section 7: "The first try of four control runs failed from a missing line break in a file and was run again." Results departure 5: "the first attempt of K2, K3 and K4 failed at once ('Unknown instruction 'nop-X'': the added line ran onto the last line of the instruction file, which has no final newline), and K1 ran without nop-X defined; nothing from that attempt is used. Fixed in the scripts, and all five controls rerun." — Plain says "four control runs failed from a missing line break" — but K1 didn't fail from the missing line break; it ran (without nop-X defined, so invalid). Plain simplifies: "The first try of four control runs failed from a missing line break in a file and was run again." Actually three failed (K2, K3, K4) from the line break; K1 ran but wrongly (no nop-X). Four control runs were rerun... wait, "all five controls rerun". Hmm. The plain statement "The first try of four control runs failed from a missing line break" — inaccurate in detail: only three failed from the line break; K1's first try was wrong for a related reason (nop-X not defined). And five controls were rerun, not four. Is this a meaning-changing inaccuracy? It's a minor inaccuracy in the departures list. The plain file says four failed from the missing line break; results say three failed from it and one ran wrongly. Objection (minor): exact fix: "The first try of the control runs failed (three stopped at once from a missing line break in a file; the fourth ran wrongly without the switch-off instruction); all five were run again." Worth raising as a minor objection since the brief asks every statement be in the results with the same meaning.
+
+Now grep for S23 words in the plain file.
+
+Also check "accepted/accept": section... "tentatively" not needed here.
+
+Let me run greps.
+
+Clean on S23 words and "model". Now check consistency of terms: "copy" vs others; "offspring"/"child" not used. Let me grep quickly.
+
+Confirmed: DIVIDE_INS_PROB 0.05 and DIVIDE_DEL_PROB 0.05 (per divide, max one each). So my objection about insert/delete omission is well-grounded: results section 1 says "one inserted and one deleted instruction each with probability 0.05 per birth", and the expected fidelity uses ×0.95×0.95.
+
+So the plain file:
+1. Never mentions insertion/deletion mutations (the world also adds or removes one instruction at each split, 1 in 20 each) — but reports numbers that depend on them: "close to what the rates alone lead one to expect" (the expectation includes the 0.95×0.95), K5 "with the copying mistakes switched off entirely" (K5 also switched off ins/del), genome length changes (87.8–109.4 mean length) hinted only by "high-rate programs were shorter". This is the most substantive objection: a reader of the plain file cannot make sense of the fidelity claim, and the K5 description misattributes what was switched off.
+
+2. Section 1: "for as long as you like" overstates K3 (2,000 time steps).
+
+3. Section 7: "The first try of four control runs failed from a missing line break" — results say three failed from the line break and one (K1) ran without the switch-off instruction; all five were rerun.
+
+4. Generations rounding inconsistency: section 1 "about 6,300 to 16,000", section 5 "6,300 to 15,900" (results: 6,310 to 15,940). Minor consistency point.
+
+Let me also double-check whether section 4's "at every one of the six moments measured" matches — six saved population moments (1,000 to 50,000, every 10,000): 1,000, 10,000, 20,000, 30,000, 40,000, 50,000 = six ✓. And "54 of 54" in results = 9 runs × 6 saves ✓.
+
+Check section 5 "never fewer than 3,481 programs from time step 1,000 to the end" — ✓.
+
+Check section 3 "How often a copy is exact depends on the rate the world sets: in the world, about 69 in 100 copies were exact at the low rate, 40 at Avida's usual rate, and 13 at the high rate" ✓ 0.693/0.400/0.131.
+
+Now, also the results file says for the fidelity table the sampled-in-test-processor numbers 723/436/124 — the plain file doesn't mention those, fine.
+
+Check "Not one of 10,000 random programs of the same length could copy itself" ✓ K1.
+
+Another check: section 2 says "The **world** is Avida's simulated computer: a grid of 3,600 places". ✓ 60×60.
+
+"When a program splits off a **copy** of itself" — defined "copy" ✓.
+
+Section 2: "Sometimes, when an instruction is copied, the world writes a random instruction instead: a **copying mistake**." — and note the build notes say the random instruction can be the same one ("it can redraw the same one"). The plain says "writes a random instruction instead" — "instead" implies it's always different, but the source shows the random draw can produce the same instruction. This is a small inaccuracy: "instead" suggests replacement with a different instruction. Results .md notes "(it can: source/cpu/cInstSet.cc 83-88)". Is this worth an objection in plain words? The plain statement "writes a random instruction instead" — a random instruction that might happen to be the same one. Minor, but the brief says no statement stronger than the results. "instead" does slightly overstate. I could fold this into a minor objection. Given plain-words purpose, I think it's a legitimate small objection: fix "the world sometimes writes in a random instruction (which can even be the same one again)". I'll list it as minor.
+
+Also section 2: "A program that has run for a long time dies of old age." ✓.
+
+Also "It takes 389 steps to make one copy." ✓.
+
+Now style comparison with plain 110: it starts with a note, section 1 "What was found..." vs plain 111 "What happened..." ✓. Ends with next step ✓. Section "What the check changed" is in 110 because it post-dates check; 111 is pre-check ✓ marked.
+
+Check requirement "every unavoidable technical word explained in one plain sentence before its first use": candidates:
+- "instruction" — defined section 2, first used section 1 ("100 instructions", "15 of the program's 100 instructions"). Used before definition. As noted, 110 has the same pattern ("change map" in section 1 summary, defined in section 3). So consistent with the style model — I'll treat as no objection (or fold into a minor?). I'll mention in "checked, no objection" that I considered it and it matches 110's summary-first pattern. Hmm, better to note briefly.
+- "EQU" — defined in section 6 at first use ✓ ("The hardest, EQU, is a number that marks..."). Wait, "EQU was learned in six of the nine runs" appears after the definition in section 6? Order: "**The sums**, called tasks in Avida: the world hands a program numbers... The hardest, **EQU**, is a number that marks, digit by digit, where two numbers agree. EQU was learned in six of the nine runs." ✓ defined before use. But section 1 uses "the hardest of the nine sums" without EQU ✓ fine.
+- "sums" — defined section 6, used section 1. Same pattern.
+- "test computer" — defined section 2 ✓ before uses in 3, 4, 6? Section 2: "Avida can also run one program alone in a private **test computer**" ✓ before first use in section 3 ("checked in the same way" — controls "checked" where? section 3 "Not one of 10,000 random programs of 100 instructions made an exact copy of itself" — where? In the test computer, but not stated. Hmm: "Controls: things that should not copy, checked in the same way." — "in the same way" refers to...? The preceding paragraph was about switching off instructions. The random programs were checked in the test computer (K1 first part) per the plan. "checked in the same way" is ambiguous — the random-program check (test computer) is not the same as switching off. Minor ambiguity. Also "100 of them put into the world" distinguishes. I think "checked in the same way" is mildly confusing but acceptable: the immediately preceding general point was "Doing this for each of the 100 instructions in turn..." Hmm, actually "the same way" more plausibly refers to running in the test computer, which was mentioned in section 2 but not in section 3. Minor clarity point, probably not an objection. Skip or minor.
+
+Also section 3: "Not one of 10,000 random programs of 100 instructions made an exact copy of itself" — the K1 random programs were tested in the test computer ✓ per plan ("10,000 random genomes... tested in the test processor for viability"). Plain doesn't say where. Minor.
+
+Now, bigger question: does the plain file anywhere state something stronger than results on the "resists change" second kind? Section 4: "the second is the world removing the copies that broke" ✓ matches.
+
+Section 8: "**They have** copying caused by their own instructions; an arrangement that keeps what they do through most single changes; parts that stay the same while the rest changes; a line that lasted thousands of generations; and, in six runs, instructions for EQU that pass Marletto's test." ✓.
+
+Check "pass Marletto's test" — results: "by Marletto's test, eliminating them in one genotype leaves... eliminating in every genotype leaves..." — "pass" is fair.
+
+Now let me also verify section 4's first-way numbers again: "the share of one-change programs that copy themselves at exactly the same speed was 14% to 19% at the low rate and 27% to 36% at the high rate, and every high-rate run was above every low-rate run." — results: per seed at 50,000, neutral: low 0.188, 0.139, 0.181; high 0.272, 0.301, 0.361 → "14% to 19%" (13.9→14, 18.8→19 ✓), "27% to 36%" ✓, every high above every low ✓. But careful: the plain file says this measure is "at exactly the same speed" — the results call it "neutral" (fitness within one part in a million). Also the plain file added measure (within 1%) is described in section 7 as "a second, looser measure of 'the same speed' was added (within 1%)". Consistent.
+
+But note: the plain file here reports the *neutral* (exact) measure ranges as 14–19 and 27–36. ✓.
+
+One more check: section 4 "First, most single changes to an evolved program (69% to 79%) leave it still able to copy itself, and programs that evolved with more copying mistakes lose less to a change." — "lose less to a change": supported by neutral/within-1% high above low; the viable share at 50,000 also high above low. OK.
+
+Now — does the plain file ever claim "69% to 79%" across all moments or just end? Results "Shown" says "across the nine runs" (at 50,000, means 0.698–0.758; across seeds 0.688–0.786 → 69% to 79%). ✓.
+
+Also check section 4 heading claim "21% to 31% no longer do" ✓ (0.214–0.312 → 21–31 ✓).
+
+Now, K5 in the plain: "With the copying mistakes switched off entirely, nothing changed at all: after 5,000 time steps all 3,600 programs were still the first program." Also note K5's copy fidelity share 1.0 ✓ and genotypes 1 ✓. But the misattribution stands: the run command sets COPY_MUT_PROB 0, DIVIDE_INS_PROB 0, DIVIDE_DEL_PROB 0. If only copy errors were off, insertions/deletions at 0.05 each would change genomes. So the plain sentence is wrong about what was switched off. Objection.
+
+Also: is there anywhere the plain file says "the copying mistakes switched off entirely" — yes section 4. Fix: "With every kind of change switched off — copying mistakes and the added and removed instructions — nothing changed at all..."
+
+Now assemble objections, most serious first:
+
+X4.1 — The plain file leaves out the second kind of change (insertion/deletion, 1 in 20 each at each split), and two claims depend on it: (a) section 3 "close to what the rates alone lead one to expect" — the results' expectation is (1−rate)^100 × 0.95 × 0.95, which includes the added/removed instructions; from copy-error rates alone one would expect about 78 in 100 at the low rate, not 69; (b) section 4's K5 description. Actually I said I'd split. Let me decide: one objection for the omission with its consequences, or two? The omission is the root; the fixes differ. I'll make X4.1 the omission + fidelity sentence, X4.2 the K5 misstatement. Actually they're both symptoms of the same omission; but "each objection ... exact fix" — fine to have two rows.
+
+Ordering by seriousness:
+1. X4.1: section 3 "close to what the rates alone lead one to expect" — a wrong statement (the reader given only the plain file would find the numbers not close), rooted in the omission of insertion/deletion. Fix: add to section 2: "At each split the world also, one time in twenty each, adds one random instruction to the copy or takes one away." and change section 3 to "close to what those rates, with the added and removed instructions, lead one to expect."
+2. X4.2: section 4 "With the copying mistakes switched off entirely" misdescribes K5 (all three mutation kinds were set to 0). Fix sentence.
+3. X4.3: section 1 "for as long as you like" overstates K3 (2,000 time steps measured; results say "remained for the whole 2,000 updates"). Fix: "also remains — in the control run it stayed for all 2,000 time steps — in a world where nothing dies of old age."
+4. X4.4: section 7 "The first try of four control runs failed from a missing line break" — results: three (K2–K4) failed from the missing line break; K1's first try ran wrongly without the switch-off instruction defined; all five controls were rerun. Fix sentence.
+5. X4.5: minor — section 2 "the world writes a random instruction instead" — the draw can produce the same instruction (results: "an error can redraw the same one", cInstSet.cc 83-88); "instead" says it is always different. Fix: "the world sometimes writes in a random instruction, which can even be the same one again".
+6. X4.6: minor — generations rounding differs between section 1 ("about 6,300 to 16,000") and section 5 ("6,300 to 15,900"); results 6,310 to 15,940. Fix: use "about 6,300 to 15,900" in both (15,940 is nearer 15,900 than 16,000 — actually both fine but pick one).
+
+Hmm, is X4.5 too pedantic? The plain file for a non-programmer... "writes a random instruction instead" — in the source, the random instruction replaces, and can be identical. The word "instead" primarily conveys replacement. I think it's a legitimate small point since the results explicitly note it (it matters for the expected-fidelity calculation's upper end). I'll keep it as a minor objection but low.
+
+Anything else? Let me re-scan the plain file for statements not in results:
+
+Section 1: "because the world rewarded that" ✓. "in six of the nine runs they learned the hardest of the nine sums on offer" ✓.
+
+Section 2: "5 at the start that make room for a copy and find its end, 86 in the middle that do nothing at all, and 9 at the end that copy one instruction at a time, check whether the end has been reached, and if so split off the copy." ✓ matches results' description ("a 5-instruction head (wzcag), 86 filler... 9-instruction copy loop (zvfcaxgab)") and the results section 2 ("ask for room, find the ends, copy one instruction, check for the end and split").
+
+Wait — plan said the head is `wzcag` = h-alloc, h-search, nop-C, nop-A, mov-head? Let me check the instruction set names. Not needed.
+
+Section 3: "Switch off the 'copy one instruction' step, and the program runs, makes room, and never fills it: no copy." — mechanism story not in results; the results only say knockout of h-copy stops exact self-copying. This is an addition. Is it a statement "in the results with the same meaning"? It's an inference from Avida's rules (build notes: h-copy copies one instruction). I could raise as minor: not measured, presented as observed. Actually it's phrased as what happens ("the program runs, makes room, and never fills it") — an unmeasured mechanism claim. Given the brief's strictness, list as minor objection: fix by "Switch off the 'copy one instruction' step and no copy is made" or mark it as what the instruction does rather than what was watched. Hmm — it is pretty safe. But the brief says every statement in the plain file is in the results. I'll list it as a minor objection (X4.7?) with exact fix: delete "runs, makes room, and never fills it:" → "the program no longer makes a copy of itself". Actually careful: the example in section 3 begins "An example first. Take the first program and switch off one instruction..." — these are fine. I'll include as low-priority.
+
+Also section 3: "Switch off one of the 86 do-nothing instructions in the middle, and it copies itself exactly as before." — except the first of the middle ones (site 6)! The plain file's own next paragraph says the first of the middle ones stops copying. The example says "Switch off one of the 86 do-nothing instructions in the middle, and it copies itself exactly as before" — true for 85 of the 86. The immediately following paragraph corrects it ("the first of the middle ones (the instruction before it reads it as a marker)"). So within the same section it's refined. Is the example misleading? It says "one of the 86" — one of them (the first) breaks it. A pedantic reader could object; but the next paragraph explicitly covers it. I'd call it no objection since the file says so ("15 stop the copying, the 5 at the start, the first of the middle ones..."). OK.
+
+Section 5: "at the high rate about a third of the programs cannot copy themselves, being the world's fresh mistakes, and the population goes on through the others." ✓ matches results.
+
+Section 6: "So the test picks out something definite: about 19 to 26 instructions per program, separate from the copying instructions, spread over thousands of copies. Taking them out of one program leaves EQU done almost as reliably as before; taking them out of every program nearly stops it." ✓.
+
+Section 6: "(in the six runs, the drop was 0.2 to 1.4 points)" ✓ matches results .md.
+
+Section 7 "Unsure" items all match. ✓.
+
+Now "what was tested, what was not and what is unsure are all said" ✓ section 7.
+
+"one word for each thing throughout" — check: "programs" (not organisms) ✓; "world" ✓; "copy" ✓ (never offspring/child); "time steps" ✓ (never updates); "first program" ✓ (never ancestor — wait, section 4: "the first one repeats the same instruction 86 times" — "the first one" = first program ✓); "switch off" ✓; "sums" ✓ (also "the sums" for tasks); "one-change programs" ✓; "copying mistake" ✓. Also "grid of 3,600 places" and "neighbouring place" — "place" consistent with "cell"? plain uses "place" consistently ✓ (section 5 "its place taken"). Good.
+
+"a concrete example before each general point" — sections 3, 4, 6 have examples; sections 5, 8 don't, but section 5's matter is itself concrete. Section 8 has no example. Hmm. 110's sections similarly mixed. I'll put in checked-no-objection.
+
+"it starts with what happened and what it means" ✓. "marked as written before the GLM check" ✓. "ends with one next step" ✓. S23 words: none found (also check "rank/ranking/better"). "Researchers have reported something like this before" — no ranking of explanations ✓.
+
+Wait, one more S23 check: "correct" — not forbidden. "exact" fine. "established" none. Good.
+
+S43 "model" — none ✓.
+
+Also check quotation handling: only quotations are the owner's properties (paraphrase in section 1: "You described knowledge as information that can cause itself to be copied..." — paraphrase, not quotation marks) and Marletto's quote (quotation) ✓.
+
+One more: section 1 "The answer was the self-copying programs of artificial-life research" — matches the story (Claude named digital organisms). ✓.
+
+Also: does the plain file say anywhere "we found the three properties" too strongly? Section 1: "The three properties were each found" — results: "Shown, by the plan's lines" for each, with "Against" items also noted. The plain file does report the against-side (e.g., "21% to 31% no longer do", "not one program identical to the first remained", "the copying instructions changed too"). "The three properties were each found" is the results' own summary ("Shown"). And plain qualifies with "each has two halves" and the caveat. OK.
+
+One more potential issue: section 1 bullet "Copied." says "switch off any of the other 85 and nothing changes" ✓ (fitness ratio 1.0).
+
+Now the fidelity numbers in plain section 3: "about 69 in 100 copies were exact at the low rate, 40 at Avida's usual rate, and 13 at the high rate" — these are the in-world birth figures ✓ labelled "in the world" ✓.
+
+I think my objection list is set. Also should I check the scripts? My angle is the plain file against the results; scripts not needed except where numbers are questioned. I checked consistency with summary tables. Good.
+
+Not reached: verifying numbers against raw run output (not in folder — that's job 2 anyway / impossible here); the EQU "44 of the 3,600" dominant count for low seed2 (dominant counts per run are not in the summary tables; results .md gives only the range 5 to 44 — cannot confirm which run held 44); whether Avida's rules are as the build notes say (job 2/3 territory, no source here).
+
+Actually wait — the "44 of the 3,600" attribution: plain says the low-rate run where the drop was 1.4 points has a dominant of 44. Results say "the most common genotype holds 5 to 44 of about 3,600 organisms in those runs". From my computed drops (no-cap), the 1.4-point drop is low seed2. Whether low seed2's dominant is exactly 44 — not derivable from summaries, but consistent (drop of 1.4 points ≈ 50 organisms of 3,240 covered). I'll list as not reached (needs the raw population files or the script's detailed output).
+
+Also "the simplest sum, NOT" — results don't state NOT is simplest; but results do call EQU "the hardest". NOT being simplest is uncontroversial (single-input). Skip or fold as minor? I'll mention in checked-no-objection? No — it's a statement not in the results. Hmm. The brief: "every number and every statement in the plain file is in the results, with the same meaning". "The simplest sum, NOT" is a small addition. But results table order NOT first and EQU hardest; "simplest" for NOT is a fair plain rendering (NOT takes one number). I'll note it as a trivial addition in checked? To be safe, I'll fold it into a minor objection? I have already 6-7 objections. I'll add it as part of minor X4.6 or as its own tiny one. Let me make X4.7 combine two tiny wording points: "instead" nuance is separate. Let me finalize:
+
+X4.1 (most serious): missing insertion/deletion + "rates alone" expectation claim.
+X4.2: K5 misdescribed as copying mistakes only.
+X4.3: K3 "for as long as you like".
+X4.4: section 7 control-rerun description inaccurate (four failed from line break; actually three failed, one ran wrongly; five rerun).
+X4.5: knockout example mechanism story ("runs, makes room, and never fills it") presented as observed; not in results. Fix: rephrase to what was measured or attribute to what the step does.
+X4.6: "writes a random instruction instead" — can be the same instruction (results/build notes say so); "instead" overstates. Fix wording.
+X4.7: generations rounded two ways in one file (16,000 vs 15,900); also "the simplest sum, NOT" is not in the results (results say only "the hardest, EQU"). Fix: use one rounding; say "NOT, the simplest of the nine" only if... fix: "For NOT, one of the simplest sums, about a fifth..." Hmm exact fix: "For the sum NOT, about a fifth of the programs still did it afterwards".
+
+Wait — also double-check X4.4 wording: plain "The first try of four control runs failed from a missing line break in a file and was run again." Results: "the first attempt of K2, K3 and K4 failed at once ('Unknown instruction nop-X': the added line ran onto the last line of the instruction file...), and K1 ran without nop-X defined; nothing from that attempt is used. Fixed in the scripts, and all five controls rerun." So: three failed from the line break; K1 ran (wrongly) for another reason; five rerun. Plain says four failed from the line break. Inaccurate in count and cause. Fix: "The first try of the control runs went wrong (three stopped at once from a missing line break in a file; the fourth ran without the switch-off instruction in it); nothing from it was used, and all five controls were run again."
+
+Also check plain section 7 first sentence: "Tested: the three properties, as set out in the plan written before anything was run; the controls; Marletto's test on the sums." ✓.
+
+Now word count of report — keep terse.
+
+Also (b) checked-no-objection list: numbers in sections 1–6 and 8 (15/85 knockouts; 389 steps; rates 1/400, 1/133, 1/50; 69/40/13 fidelity; 10,000 random programs; K1 66, K2 65, K3 2,000, K4 500; 69–79% viable and 21–31%; 14–19% and 27–36% neutral with every high above every low; 84%/18%; 54-of-54 across six moments; copy loop gone by 20,000 in six runs; 3,481 minimum; 0 identical; 0–49% copy loop at high; 58–84%; 65–86%; EQU six of nine; 26 instructions, 1.4 points, 44 of 3,600 (consistent); 1%–4%; 93–100%; 19–26; NOT ~fifth, up to 46%; departures/not-tested/unsure lists; S23 words none; S21/S28 respected; marked pre-check; one next step; one-word-per-thing; style beside file 110.
+
+(c) not reached: raw run output not present (numbers judged only against summary tables and .json — consistency confirmed); the exact dominant count 44 for low seed2 not in summaries; Avida source not present (rules taken from build notes).
+
+One more scan: does the plain file anywhere misuse "the same" numbers? Section 4: "at the end of a low-rate run, 84% of the programs (on average over the three runs) still had the first program's instruction at the places of the 15 copying instructions" — "at the end of a low-rate run... on average over the three runs" — slight tension ("a run" vs average over three runs) but it says average. Fine.
+
+Also section 5: "in 0% to 49% at the high rate" ✓ (0, 0.0008, 0.4873 → 0.00008%? 0.0008 = 0.08%, rounds to 0% ✓).
+
+Also section 1 bullet Remains: "even its copying instructions were rewritten into a faster version" ✓.
+
+OK. One more: does the plain file state the world rewards sums with "more running time" — section 6 ✓; matches results ("pays for it in processor time").
+
+Also — "Avida's usual" for default rate ✓ results call it "Avida's own".
+
+I'm fairly confident in the objection list. Let me also double-check the claim in X4.1 about expected from rates alone: (1−0.0025)^100 = e^{−0.25}≈0.7787. Observed 0.693. So indeed not "close" — the plain sentence's "close to what the rates alone lead one to expect" would be false for a reader computing from the plain file's own information. Good.
+
+Also should I mention that section 2's mutation description omits that these ins/del apply "at each split" — covered.
+
+Also, X4.2's severity: the plain reader believes switching off copy errors alone freezes the population — a substantive misreading of what the no-mutation control shows. Yes, serious-ish, second.
+
+Now write the report. Format: (a) objections table, most serious first; (b) one line; (c) not reached lines. Last line exactly END OF REPORT.

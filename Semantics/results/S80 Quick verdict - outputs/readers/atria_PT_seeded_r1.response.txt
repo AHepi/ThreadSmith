@@ -1,0 +1,63 @@
+# Review of "Claude Fable Semantics"
+
+**Brief.** Correctness audit of a theory document: false statements, proofs that fail, claims wider than their support, internal contradictions. I read all sixteen Parts and checked the definitions, theorems, proofs, and examples in Part VI, Part VII, Part VIII, Part XII, and Part XVI.
+
+**Summary of the document.** It defines explanation as a question-relative, change-fidelity-checked transport between organizations, with three provenances (selected / constructed / declared) for transports and contracts, and derives consequences for kinds, surprise, question-finding, criticism, creativity, and physical realization.
+
+**Overall assessment.** The architecture is internally coherent in most places, and several derivations (1, 2, 5, 8, 9) check out. But there are at least six defects, including a stated theorem whose conclusion is the reverse of its own proof, a provenance clause that collapses the selection/construction distinction the whole theory rests on, and a central non-circularity condition that does not exclude the cases it claims to.
+
+---
+
+**1. Part VI, "Finite monotone theorem."**
+
+(a) Part VI, heading "Work, support, and interference," the Finite monotone theorem.
+
+(b) "If Γ is finite, 𝖲 is upward closed, and Γ∈𝖲, then the critical singletons are exactly ⋂min𝖲 and the globally indispensable ones are exactly ⋃min𝖲."
+
+(c) Both sets are swapped. Take the document's own "Redundant routes" example immediately below: Γ={a,b}, 𝖲={{a},{b},{a,b}}. Then min𝖲={{a},{b}}, so ⋂min𝖲=∅ and ⋃min𝖲={a,b}. The theorem as stated would make the critical singletons ∅ and the indispensable ones {a,b}, but the example says "each is contributory, neither indispensable." The attached proof in fact establishes the opposite of the claim: "A member of a minimal support is critical for it" gives critical = ⋃min𝖲, and "Deletion of d from Γ preserves support exactly when a minimal support omits d" gives indispensable = ⋂min𝖲. Correction: swap the two right-hand sides.
+
+**2. Part IV, "Three provenances."**
+
+(a) Part IV, heading "Three provenances," second paragraph of the "Constructed" clause.
+
+(b) "…or t is the survivor of a variation-and-survival history on a population that contains it, which serves as its construction witness."
+
+(c) Every selected transport satisfies this clause, so Selected ⟹ Constructed, contradicting the opening "A transport t … has exactly one of three provenances." It also contradicts the later sentence in the same Part, "a selected transport has no represented target and no criticism in its history; a constructed one has both," since the clause licenses Con(t) for a history with no represented target. Since the document locates creativity *only* in construction (Part 0, grievance 6; Part X), this clause collapses the distinction the theory is built on. Correction: delete the clause, or restrict it to variation-and-survival histories that themselves contain a represented target.
+
+**3. Part V, "Non-circular dependence."**
+
+(a) Part V, heading "Non-circular dependence," final sentence of the item.
+
+(b) "There exists (a,b)∈C that removes or replaces a nonempty block of Γ while preserving the other boundary conditions, under which the answer profile changes, ceases to be determined in the claimed way, or is left as it was."
+
+(c) As formalized, the condition is satisfied by the very cases it is meant to exclude. For "p because p," the answer sits in Γ as an unanalysed input or component; the edit that removes that block makes the answer "cease to be determined in the claimed way," satisfying the existential — yet "What (E) excludes" says "'p because p' fails non-circular dependence." Likewise, a contract of pure relabelings that removes a block and "is left as it was" satisfies the third disjunct, yet the text says such a contract "does not satisfy non-circular dependence." The third disjunct makes the condition near-vacuous; the informal prose ("the target's answer does not appear … as an unanalysed boundary input") is doing all the work. Correction: require that removing the block *changes* the answer profile or breaks its determination in a specified way, and drop "or is left as it was."
+
+**4. Part XVI, "Derivation 3."**
+
+(a) Part XVI, heading "3. Selected transports are underdetermined on unseen changes."
+
+(b) "Alter L_{j}(a,b) for one (a,b)∉H to any other admitted relation; the result survives on H and differs at (a,b)."
+
+(c) The proof never shows the altered object is a member of the population 𝒯 (survival is defined relative to 𝒯), nor that it is still a transport at all: changing one component relation can break (F2)'s global equality π[Sol_D]=Sol_E or the homomorphism conditions on τ. A counterexample to the claim under its stated assumptions is a singleton population 𝒯={t}: then no t′∈𝒯 differs at any point, while H⊊C is finite. The intended underdetermination thesis needs an added assumption that 𝒯 is rich enough (e.g., closed under component-relation variation that preserves (F2)), or the claim must be weakened to "unless the population constrains the unseen point."
+
+**5. Part V, "Baseline coherence."**
+
+(a) Part V, heading "Baseline coherence."
+
+(b) "Sol_E(1,σ(b₀))≠∅: the components of E are jointly satisfiable at the baseline. This is an independent requirement; it is not implied by the conditions above."
+
+(c) It is implied. Part III states the contract contains the baseline (1,b₀). Applying (F2) there gives π[Sol_D(1,b₀)]=Sol_E(1,σ(b₀)); non-vacuity gives Sol_D(1,b₀)≠∅; and π is a function X_D→X_E, whose image of a nonempty set is nonempty. Hence Sol_E(1,σ(b₀))≠∅ follows from (F2) ∧ non-vacuity. The conjunct is harmless but the independence claim is false.
+
+**6. Part VII, "Obstruction."**
+
+(a) Part VII, heading "Obstruction," second sentence.
+
+(b) "Twenty-four indivisible tokens cannot be split equally three ways; permitting division changes the state space and does not refute the scoped result."
+
+(c) Arithmetically false: 24 = 3 × 8, so an equal three-way split exists with no token divided. If the intended point is that some totals are indivisible by the number of recipients, a total not divisible by three (e.g., 25) is needed; as written the example states something a reader can check to be wrong, which weakens the otherwise correct scoped-invariant point it illustrates.
+
+---
+
+**Coverage.** I checked all definitions and numbered conditions in Parts II–XIV, all ten Derivations in Part XVI, the worked constructions in Part VII (production/identification/obstruction/skew-symmetric), the transport results in Part VIII, the fixed-point and capability claims in Part XII, and the examples in Part VI. I did not check Part XI's (EK) or Part XIII's (U1)–(U3) against any external literature, since these are internal definitions; no external sources are cited. Derivations 1, 2, 5, 8, 9 and the Part VII identification results (I2), (I4) and the skew-symmetric example were checked and found correct.
+
+END OF REPORT

@@ -1,0 +1,67 @@
+S105 round 3, area 2 - runs (filled as they are made)
+Folder: results/S105 Round 3 - maths after the reading/area 2 model/  (copy of model after round 2/; md5s of core.py, args.py, claims_a.py, claims_b.py, claims_s41.py, run.py, inventions_model.py as the rule gives, checked at the copy)
+Every run: PYTHONHASHSEED=0 python3 -B -m model.run ... --scale 4 --time-cap 45 --no-write, under `timeout`, memory capped (ulimit -v) after one out-of-memory kill (FC47.new1's first form, below).
+Program booleans are written T and F throughout.
+
+== 1. Baseline: the unchanged copy, whole suite (timeout 1200 s): exit 0, total 414.2 s
+   105 HOLDS ON ALL MODELS TRIED, 3 COUNTEREXAMPLE FOUND, 7 NOT TESTED, of 115: as the answers record and the round's printout (md5 463685a01f3deeaf8021ac1699448137).
+   Diff against the printout, times removed: one line, FC14's file lookup ("read formal core.md: 115 definition lines" for "read formal core, after round 2.md: 118"): the copy's relative path; FC14 status unchanged (H).
+
+== 2. Code changes in the copy
+   model/core.py   SLOT_QUANTIFIER ∈ {every (default = D6.3 as it stands), some, some-exempt, some-exempt-set}; slot(), NC1() take `quantifier`; env S105_SLOT_QUANTIFIER sets it for a whole-suite run (W3; I136; R3A2-02)
+   model/claims_r3a2.py   new test claims FC23.new1 (W3), FC25.new1 (A2-T5), FC47.new1 (W5)
+   model/run.py    imports claims_r3a2
+
+== 3. New test claims
+   FC47.new1, first form (conflict() at every pair of C1, X over all arguments of height <= 3): killed (out of memory: core.all_R enumerates every relation assignment of the pole, D8.2's second disjunct). Replaced by D8.2's first disjunct (answers differ), which gives Conf at a pair of C, and X over arguments of height <= 2 plus the test's argument of height 3.
+   FC47.new1 (timeout 300 s): HOLDS ON ALL MODELS TRIED
+      conflict pairs in C1: 4 (first ('set(H=2)', 'b1_45'), target answer 2, ℰ_fwd answers 2, ℰ_rev answers 1); kind i; 57 arguments. ξ: |X_j(Acc(ℰ_rev))| = 4; Solved T; Prob_j F; ξ': |X_j(Acc(ℰ_rev))| = 0; Solved F; Prob_j T; ξ'': |X_j(Acc(ℰ_rev))| = 4; Solved T; Prob_j F
+   FC25.new1:  models_tried: 25920  hypothesis_met: 4050  holds on all models tried
+   FC23.new1 (timeout 900 s, parts (a)-(g); (f), (g) added after the whole-suite runs of section 4):
+     -- (a) Acc on the pole (E1) and the round-2 models under the four readings of D6.3's quantifier [computation] computed: as claimed
+     -- (b) W3's partial lookup meets (E) under D6.3 as it stands [there is] witness found
+     -- (c) 'some' excludes a candidate the other readings keep [there is] witness found
+     -- (d) 'some-exempt' keeps a candidate 'every' excludes [there is] witness found
+     -- (e) 'some' implies the other three [for all] holds on all models tried
+     -- (f) the exemption's two extents differ [there is] witness found
+     -- (g) the eliminative construction (L339) under the four readings [computation] computed: as claimed
+       readings ('every', 'some', 'some-exempt', 'some-exempt-set'). pole C1 (settings of H, θ): (T, T, T, T); pole C2 (C1 + settings of L): (T, F, T, T); pole C3 (baseline + settings of L): (T, F, T, T); M5 (FC23 (d)): (T, F, F, F); M13 (FC22 (b), S41 Q15): (T, T, T, T); M1 decorated lookup (FC23 (c)): (F, F, F, F); M2 lookup under I83 (FC23 (c)): (F, F, F, F); M3 one component on two ports (FC23 (c)): (F, F, F, F)
+       FC62's encoding: (T, F, F, F); second encoding: (T, T, T, T); slots of FC62's encoding under 'some-exempt': ['k_rest']
+     witnesses (b), (c), (d), (f): as in the verdicts file, section 2; (f): C = {(1,b1),(e1,b0)}, e1 sets p0 = 1 at b0 as the identity does: Acc (F,F,F,T)
+
+== 4. Whole suite under each reading of D6.3's quantifier (env S105_SLOT_QUANTIFIER; four runs at once, timeout 1500 s each; exit 0 each)
+   every:  3 COUNTEREXAMPLE  108 HOLDS  7 NOT  of 118; total 515.3 s
+   some:  5 COUNTEREXAMPLE  106 HOLDS  7 NOT  of 118; total 523.4 s
+   some-exempt:  4 COUNTEREXAMPLE  107 HOLDS  7 NOT  of 118; total 514.4 s
+   some-exempt-set:  4 COUNTEREXAMPLE  107 HOLDS  7 NOT  of 118; total 518.5 s
+   baseline (115 claims) -> every (118): only the three new claims added, each H; no other claim or part changes status
+   every -> some (claim and part statuses that change):
+     CLAIM FC26: HOLDS ON ALL MODELS TRIED -> COUNTEREXAMPLE FOUND
+     CLAIM FC62: HOLDS ON ALL MODELS TRIED -> COUNTEREXAMPLE FOUND
+     PART FC23 | (d) area 2: the slot quantifier (A2-02, left open): look: as expected -> look: not as expected
+     PART FC26 | a contract whose only non-baseline edits set L: look: not as expected -> look: as expected
+     PART FC26 | forward organization on C2: computed: as claimed -> computed: not as claimed
+     PART FC34 | NC1 can fail on C' while holding on C: witness found -> no witness found
+     PART FC62 | eliminative explanation: computed: as claimed -> computed: not as claimed
+   every -> some-exempt (claim and part statuses that change):
+     CLAIM FC62: HOLDS ON ALL MODELS TRIED -> COUNTEREXAMPLE FOUND
+     PART FC23 | (d) area 2: the slot quantifier (A2-02, left open): look: as expected -> look: not as expected
+     PART FC34 | NC1 can fail on C' while holding on C: witness found -> no witness found
+     PART FC62 | eliminative explanation: computed: as claimed -> computed: not as claimed
+   every -> some-exempt-set (claim and part statuses that change):
+     CLAIM FC62: HOLDS ON ALL MODELS TRIED -> COUNTEREXAMPLE FOUND
+     PART FC23 | (d) area 2: the slot quantifier (A2-02, left open): look: as expected -> look: not as expected
+     PART FC34 | NC1 can fail on C' while holding on C: witness found -> no witness found
+     PART FC62 | eliminative explanation: computed: as claimed -> computed: not as claimed
+   FC62's change under the three ∃ readings: its background component k_rest is the constant e = 0 at the baseline (a slot at (1,b0)); FC23.new1 (g): a second encoding of L339 (rest: e = 1 − u) keeps (E) under all four
+   FC34's part change: under an ∃ reading NC1 on C implies NC1 on C' ⊆ C (Det_C' ⊆ Det_C), so that remark's witness cannot exist; FC34's status unchanged
+
+== 5. The other two programs under each reading (timeout 600 s each; exit 0 each)
+   every: s104_external.py md5 86a67664a9a3584351fd4836a4140b69; s104_creative_transport.py md5 5ee81a543a9c4d91af10c520c6bcc569
+   some: s104_external.py md5 86a67664a9a3584351fd4836a4140b69; s104_creative_transport.py md5 5ee81a543a9c4d91af10c520c6bcc569
+   some-exempt: s104_external.py md5 86a67664a9a3584351fd4836a4140b69; s104_creative_transport.py md5 5ee81a543a9c4d91af10c520c6bcc569
+   some-exempt-set: s104_external.py md5 86a67664a9a3584351fd4836a4140b69; s104_creative_transport.py md5 5ee81a543a9c4d91af10c520c6bcc569
+   all four identical to each other, and to the round's printouts (1c346d5c…, 322b15b2…) but for the printouts' header lines: no FC-E or CT result turns on the quantifier
+
+== 6. Final check of the copy (after removing unused imports from claims_r3a2.py; timeout 600 s): FC23.new1 H (parts (a)-(g) as in section 3), FC25.new1 H, FC47.new1 H; total 44.1 s.
+   Every other file of model/ and both scripts byte-identical to model after round 2/ (md5 compared); core.py and run.py changed as in section 2; claims_r3a2.py new.

@@ -1,0 +1,60 @@
+====================================================================================================
+FC-E1  external 2.1: an unrelated commitment is critical and globally indispensable
+   Target D_E1: ports X, Y, U, V in {0,1}; c_X: X = 0, c_U: U = 0 (background); k: Y = X, d: V = U.
+   Edits (9): 1, set(U=0), set(U=1), set(X=0), set(X=1), set(U=0,X=0), set(U=0,X=1), set(U=1,X=0), set(U=1,X=1). Contract: every edit at b0. Query: the value of Y.
+   Full candidate, Γ = {k,d}: F1 yes, F2eq yes, Hom yes, F2 yes, A yes, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+     NC2 witness (pair, block): (('set(U=0,X=1)', 'b0'), ['k'])
+   E|{k} (I29, deletion): F1 yes, F2eq no, Hom yes, F2 no, A yes, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+     answers about Y across the contract: 1: target Y = 0, E|{k} Y = 0; set(U=0): target Y = 0, E|{k} Y = 0; set(U=1): target Y = 0, E|{k} Y = 0; set(X=0): target Y = 0, E|{k} Y = 0; set(X=1): target Y = 1, E|{k} Y = 1; set(U=0,X=0): target Y = 0, E|{k} Y = 0; set(U=0,X=1): target Y = 1, E|{k} Y = 1; set(U=1,X=0): target Y = 0, E|{k} Y = 0; set(U=1,X=1): target Y = 1, E|{k} Y = 1
+     at the baseline, π[Sol_D] = [(0, 0, 0, 0)] (ports X,Y,U,V); Sol of E|{k} = [(0, 0, 0, 0), (0, 0, 0, 1)]
+   Routes S_{E,p} = {}; min S = {}
+   CriticalBlock({d}; {k,d}) no; d globally indispensable yes; d contributory no; d does no work by itself (L313) no
+   Variant (a), d in the named background (Γ = {k}): (E) no; routes {}
+   Variant (b), the restriction of I104 (ports no component left constrains removed, π projected): E|{k}: F1 yes, F2eq yes, Hom yes, F2 yes, A yes, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+     routes {}; CriticalBlock({d}; {k,d}) no; d globally indispensable yes; d does no work by itself no
+   reproduced: no
+====================================================================================================
+FC-E2  external 2.3, first half: both ports of {(0,0),(1,1)} are outputs
+   D_fwd: L_k(1,b0) = [(0, 0), (1, 1)]; edits 1, set(X=0), set(X=1), set(Y=0), set(Y=1), set(X=0,Y=0), set(X=0,Y=1), set(X=1,Y=0), set(X=1,Y=1)
+     L109 output of k, relation read at the identity edit (I05): X yes, Y yes
+     L109 output of k, relation read at every edit that leaves L_k as it is (I106 (a)): X yes, Y yes
+     L109 output of k, relation read at every edit, those that alter k included (I106 (b)): X no, Y yes
+     asg (I04, I80): {'X': 'c_X', 'Y': 'k'}; inputs: ['X', 'Y']
+     asg (I04, identity excluded (I80 other choice)): {'X': 'c_X', 'Y': 'k'}; inputs: ['X', 'Y']
+   D_rev: L_k(1,b0) = [(0, 0), (1, 1)]; edits 1, set(X=0), set(X=1), set(Y=0), set(Y=1), set(X=0,Y=0), set(X=0,Y=1), set(X=1,Y=0), set(X=1,Y=1)
+     L109 output of k, relation read at the identity edit (I05): X yes, Y yes
+     L109 output of k, relation read at every edit that leaves L_k as it is (I106 (a)): X yes, Y yes
+     L109 output of k, relation read at every edit, those that alter k included (I106 (b)): X yes, Y no
+     asg (I04, I80): {'X': 'k', 'Y': 'c_Y'}; inputs: ['X', 'Y']
+     asg (I04, identity excluded (I80 other choice)): {'X': 'k', 'Y': 'c_Y'}; inputs: ['X', 'Y']
+   reproduced: yes
+====================================================================================================
+FC-E3  external 2.3, second half: a response and a reading of one port share their families
+   D_ro, C_single (baseline and every single setting), R-i: c_N causal no, measurement of ['X'], rule no | c_Y causal no, measurement of ['X'], rule no | both invariant under the settings of X: yes
+   D_ro, C_single (baseline and every single setting), R-ii: c_N causal yes, measurement of none, rule no | c_Y causal yes, measurement of none, rule no | both invariant under the settings of X: yes
+   D_ro, C_all (every edit), R-i: c_N causal no, measurement of ['X'], rule no | c_Y causal no, measurement of ['X'], rule no | both invariant under the settings of X: yes
+   D_ro, C_all (every edit), R-ii: c_N causal yes, measurement of none, rule no | c_Y causal yes, measurement of none, rule no | both invariant under the settings of X: yes
+   D_ro+recal, C_single plus recal(c_N), R-i: c_N causal no, measurement of ['X'], rule yes | c_Y causal no, measurement of ['X'], rule no | both invariant under the settings of X: yes
+   D_ro+recal, C_single plus recal(c_N), R-ii: c_N causal no, measurement of ['X'], rule yes | c_Y causal yes, measurement of none, rule no | both invariant under the settings of X: yes
+   Under I80's other choice (identity excluded) the families on D_ro are the same as under I80: yes
+   On D_ro, under both readings and on both contracts, c_N and c_Y share every family and are both invariant under the settings of X: yes
+   With recal(c_N) admitted and in the contract they no longer share their families: under R-i yes, under R-ii yes
+   reproduced: yes
+====================================================================================================
+FC-E4  external 3.1: a readout offered as a cause fails once the contract holds do(N = 0)
+   Target D_mem: c_X: X = 0, c_M: M = X, c_N: N = M, c_Y: Y = M; candidate E_readout: c_Yp: Y = N in place of c_Y, λ(c_Yp) = {c_N, c_Y} (M hidden); identity τ on the 81 edits.
+   Γ = {c_M, c_N, c_Yp}, C1 (cue changes): F1 yes, F2eq yes, Hom yes, F2 yes, A yes, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+   Γ = {c_M, c_N, c_Yp}, C2 (C1 and set(N=0,X=1)): F1 no, F2eq no, Hom yes, F2 no, A no, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+   Γ = {c_Yp}, C1 (cue changes): F1 yes, F2eq yes, Hom yes, F2 yes, A yes, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+   Γ = {c_Yp}, C2 (C1 and set(N=0,X=1)): F1 no, F2eq no, Hom yes, F2 no, A no, NC1 yes, NC2 yes, NonVacuous yes => (E) no
+   At set(N=0,X=1): target solutions (X,M,N,Y) [(1, 1, 0, 1)]; candidate's [(1, 1, 0, 0)]
+     (F1) for c_Yp there: proj of Sol_{c_N,c_Y} on (N,Y) = [(0, 0), (0, 1)]; L_c_Yp = [(0, 0), (1, 1)]
+   reproduced: no
+====================================================================================================
+FC-E5  external section 5: 193 route families, no counterexample to the finite monotone claim
+   |Γ| = 1: 2 upward-closed families containing Γ
+   |Γ| = 2: 5 upward-closed families containing Γ
+   |Γ| = 3: 19 upward-closed families containing Γ
+   |Γ| = 4: 167 upward-closed families containing Γ
+   total 193; the finite monotone claim fails on 0 of them
+   reproduced: yes

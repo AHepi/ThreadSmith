@@ -1,0 +1,83 @@
+RUNS: `--claim FC12.new1 --claim FC83 --claim FC98`, `--claim FC84.new1 --claim FC30.new1 --claim FC22 --claim FC72 --claim FC28`, `--claim FC77 --claim FC84`, all scale 4, cap 45 — every one "HOLDS ON ALL MODELS TRIED" as stated. The breaks below are in what the claims do not state.
+
+# (a) I161 — Sel excludes a construction trace in h(t) preparing t (D12.1, T9)
+
+**B1 | D12.1/D12.2/D12.3, L193, L211 | "Exactly one of three provenances" is secured only by I128's h(t); a transport selected and later re-prepared by a trace gets Sel or Con by an unmade choice.** Sel excludes ∃h′ ⊆ h(t): CT(h′,t); Con asks CT(h′,t) in an episode up to e. h(t) is "the one history of t, its preparing episode included" (I128), which names one preparing episode. If t is selected at o1 (Sel's conditions, no trace) and a construction trace in an episode ending at o2 ≻ o1 prepares t again (L405: a binding newly prepared is construction of that binding), there are two producing episodes and "the one history" is undefined. I128-reading (h(t) up to o1): Sel persists at the later holding (L211: "a carrier keeps its provenance"). I53-reading (whole history to the attribution): CT ⊆ h(t) blocks Sel and Con(t;h,e2) holds — provenance flips to Con. The text fixes neither (L193 "determined by its history"; L211 covers records, not re-construction). FC12.new1 and FC83 (run: no Sel ∧ Con on 146 chains + 8,640 transports) never hold one transport at two occurrences, so the case is outside their space.
+
+```python
+# not run (the chain model holds one transport per occurrence)
+def b1_two_readings():
+    n = 3
+    held  = [True, False, True]    # t held at o1 and at the attribution o3
+    trace = [False, True, False]   # a trace in the episode ending at o2 prepares t
+    selc  = [True, False, False]   # Sel's conditions for t met at o1
+    # I128: Sel(t) at o1 = True; the o2 trace lies outside h(t); provenance Sel at o1 and o3 (L211).
+    # I53 : CT at o2 ⊆ h(t) -> Sel(t) = False, Con(t; h, e2) = True (trace, Held(o1, cod t)): Con.
+```
+Expected: two readings, two provenances for one physical history. **Fix (maths)**: D12.2, beside the old — `Con(t;h,e) :⟺ some episode h′ of h up to e has CT(h′,t) ∧ Held_ℓ(o′,x) for some o′ ⪯ o_t of h′, x ∈ {t, cod t} ∧ ¬∃o″ ≺_h o_t holding t with Sel(t;·) [I170; other choice: provenance re-read on the whole history at each holding (L193 read whole)]`. Restores "exactly one" under both readings of h(t).
+
+**B2 | I56/D12.1, L201 | "A construction trace prepares t" has two readings, and the wider one contradicts the text.** Read exactly (the trace's output is t), Sel survives in a population whose parts were built by an earlier construction of t″ ≠ t — as L201 requires ("Selection may continue to operate beneath construction"). Read transitively (the trace prepared material t was assembled from), I161 blocks every such Sel. Prepares is a primitive (I56); nothing in the text fixes it; L201 fixes the exact reading. **Fix (maths)**: D12.2, `CT(h′,t) :⟺ h′ has a construction trace (D13.3) whose output is t [I56 read exactly; other choice: transitively through contents built from the trace's output — contradicts L201]`.
+
+Examined and held: the ¬CT clause equals ¬Con for traces at or before o_t (Held at o_t is automatic from t's own faithfulness), so I161 adds nothing beyond ¬Con there; L411's "a selected transport has no represented target in its history" is met under T′; records of selected carriers keep Sel by D12.4's inheritance, not by Sel of the record's own history (coherent). FC12.new1, FC83 run.
+
+# (b) I162 — the cut T′ (Held in Con, Build; Sel's exclusion by Rep at o ≺_h o_t)
+
+**B3 | D11.3/D18.1, L193 | The recursion is not well founded on histories the core admits: on an infinite descending chain T′ has no fixed point at all, and L193's "exactly one" fails with zero.** D11.3 asks ≺_h *acyclic* only; nothing restricts O_h to finite histories (D12.1's H ⊆ C finite is the selection history, not h). Take o_1 ≺ o_2 ≺ … below o_t, every o_n with held = Sel's conditions = True, trace = False. Under T′: Con(o_n) = False (no trace); Rep(o_n) ⟺ Sel(o_n); Sel(o_n) ⟺ ∀m>n ¬Rep(o_m). If all Rep are false, all Sel are true, so all Rep are true; if some Rep(o_k) is true, Sel(o_k) forces Rep false below o_k, which forces Sel and hence Rep true there. No assignment satisfies the equations: nothing gets any provenance, and Dec is wrong too (a full selection history mislabelled "entered into the model by its author", L199). D18.1 concedes "unique where ≺_h is well founded below o_t"; the second checker's §6 concedes the reliance. Not runnable (infinite); the proof is above. **Fix (maths)**: D11.3, beside the old — `≺_h acyclic and well founded below every occurrence [I167; other choices: acyclic only (round 2 — B3), well founded on all of O_h]`.
+
+**B4 | L195 (T9), L208 | The text as now written cannot select anything: T9 wrote Rep into L195 unstaged, and read with the text's own (R) at L208 that is the U reading, which has no fixed point for a selection.** FC98 (c), run: "reading U (as worded): two fixed points for a first construction and none for a selection". The staging that repairs this lives only in D18.1; L526 points there, L195 does not. A reader of L195 + L208 alone gets a definition of Sel that nothing satisfies on a pure selection history. **Fix (text, pointer)**: L195, old `x\in\{t,\ H,\ \text{survival condition},\ \operatorname{cod}t\}:\ \operatorname{Rep}(o,x)]` → new `x\in\{t,\ H,\ \text{survival condition},\ \operatorname{cod}t\}:\ \operatorname{Rep}(o,x)\ (D18.1)]`.
+
+**B5 | L195 (T9), D12.5 | The formula T9 wrote into the text applies (R) outside its domain.** Rep_ℓ(o,c) is typed for a content c (D12.5); H (a finite set of pairs) and the survival condition are not contents — D11.2 makes a content (E_c, C_c, Γ_c), and no definition makes H or surv one. The gap predates round 2 (I52), but T9 hardened it into the text as a formula. **Fix (maths)**: D11.2, add `a content may also be a finite H ⊆ C or a survival condition, each read through Θ as an organization (E8's construction) [I171; other choice: D12.1's exclusion ranges over t and cod t only]`.
+
+Examined and held: T′ vs K and T on the four computed cases (FC98 (c)–(e), run) — first construction Con (L405 met), built on selected material Sel+Con (L201 met), declared earlier holder does not block a selection (L211 met); Held is a faithfulness fact, so Build under T′ does not make creativity depend on declaration (L13 met); incomparable occurrences below o_t cause no trouble; FC84.new1 (d): one fixed point on all 8,456 chains ≤ 3.
+
+# (c) I163 — Ident by a varying observed value (D3.3, L151, L325)
+
+**B6 | D3.3, L151, L105 | obs(a,b) is undefined where g is not constant on Sol_D(a,b), and the two repairs disagree.** "The observed value g takes on Sol_D(a,b)" presupposes one value; L105 keeps "several solutions several", and Q15 (M13, FC22 (b), run) has just made multi-solution baselines first-class. On M13's baseline, g[Sol] = {0,1}. Image-reading: obs = g[Sol], compared as sets; singleton-reading: Ident asks |g[Sol]| = 1 at both pairs. They differ wherever one pair's image is a singleton and the other's is not, and the second reading excludes exactly the weathervane-like questions the owner has just admitted. The text says only "the observed value" (singular). **Fix (maths)**: D3.3, beside the old — `obs(a,b) := g[\operatorname{Sol}_D(a,b)]; Ident(p) :⟺ Q returns a fibre ∧ ∃(a,b),(a′,b′) ∈ C: obs(a,b) ≠ obs(a′,b′) [I168; other choice: |g[Sol]| = 1 asked at both pairs]`. On the pole (singletons throughout) Ident is unchanged; FC28 (R4) stays H.
+
+**B7 | D3.3, L151, L325 | I163 severs the classification from the contract's edits altogether.** Boundary-only variation is intended (FC28 R4 part, run: C_id varies the observed L over 8 values with no edit ≠ 1). But nothing now ties identification to the observed value's side: C = C1 ∪ {set(H=2)} on the pole (an edit of the identified quantity, which also moves obs) makes Ident true, and so does any contract whose obs differs for any reason. The text's own words ("a C containing edits to the observed value") are ambiguous between "edits of the port carrying the observed value" (excludes setH) and "edits that change the observed value" (admits it), and L325 breaks both readings; I163 drops the tie silently. Not a counterexample — a choice the text does not fix. **Fix (code, not run)**:
+
+```python
+# FC28.new1 (not run), in cases.py notation: Ident under D3.3 on the pole's contracts
+D = pole(); b0 = "b1_45"
+for C, why in [({(ONE,b0)} | {(ONE,b) for b in D.B}, "C_id: boundaries only"),
+               (frozenset([(ONE,b0)] + [(a,b0) for a in single_settings(D,["H"])]), "settings of H"),
+               (frozenset([(ONE,b0)] + [(a,b0) for a in single_settings(D,["L"])]), "settings of L")]:
+    print(why, ident_question(D, C))   # expect: True, True, True under I163;
+    # under L151's words ("edits to the observed value"): no / yes-by-reading / yes
+```
+Expected output: `True True True`. Register with I163: the source of variation is unconstrained (other choices: only boundaries; only edits altering obs).
+
+# (d) The owner's four answers as written
+
+**B8 | D16.XV, D12.1/D12.3, FC77, FC30.new1 | Q2 is written on Dec(t), and Dec(t) is hollow: by FC77 every physically admitted transport with Hom(τ) is Sel with H = ∅, so Acc ∧ Dec ⇒ ¬Expl does not reach the student's formula.** FC77 (run): "Sel(t;{t},id,∅) ⟺ Hom(τ), when Θ admits t" — 8,640/8,640. The student's copied pendulum formula is an admitted transport with a homomorphic τ; parameters (𝒯 = D15.8's population for any stated construction, μ, H = ∅) give Sel, so Dec(t) fails and the implication never fires — the write-in does not deliver "No, not if just declared" for its own case. FC30.new1 (run) could only manufacture a Dec witness by setting `admitted=False` in `provenance_of` (claims_s41.py l.49): the model's "declared" is a transport the physics rejects, not one whose link was declared. The escape (no construction stated ⇒ no population ⇒ no Sel) turns on "the stated construction", a free parameter nothing constrains. **Fix (maths)**: D12.1, add a conjunct — `and the survival condition is one the environment enacts (D15.8, L481), a declared input [I169; other choices: keep FC77's trivial witness (Dec then nearly empty, B8); require H ≠ ∅]`. FC77's verdict flips to the intended "nothing is selected by empty parameters"; FC30.new1 (a) then reaches the student's case. D16.XV also says less than the answer (no positive condition on Expl) — carried by the O3 fix below.
+
+**B9 | D13.8/I165, D11.3, D0.2 | "o′ immediately after o in h′" and q(o) are undefined; the gap is benign for records but must be registered.** D11.3 defines ≺_h and ⪯_h only; "immediately after" needs the covering reading (¬∃o″: o ≺ o″ ≺ o′). The covering and all-comparable-pairs readings coincide here, because Rec_h′(ρ_{q(o′)}) is keyed by the new contract, which the last covering step already records; on branching histories no differing case exists. q(o), "the contract operative at o, read through Θ", presupposes one operative contract per occurrence; an occurrence at which two questions are live has none (other choice: a set, compared pairwise). FC84.new1 (run, 4 parts, 8,456 chains) holds as stated. **Fix (maths)**: D13.8, add `o′ immediately after o in h′ :⟺ o ≺_{h′} o′ ∧ ¬∃o″ ∈ h′: o ≺ o″ ≺ o′; q(o) a function read through Θ [I172; other choices as above]`.
+
+**Q15 — held.** D6.4's symmetric contrast and Lost match L255's two conditions exactly, including all ⊥/y combinations (checked by hand: every lost contrast — both-determined-equal after deletion, or a determined answer becoming ⊥ — is caught by one of Lost's disjuncts). FC22 (b) run: NC2 witness (e, {c_y}), E = D meets (E). No worked case changed (FC26–FC28, FC62, FC63, FC99 unchanged).
+
+**Q23 — held, with one note.** FC72 (d)–(f) run: ¬PM alone, accepted, rules out design ∧ PM; the block holds of a premise alone (¬PM does not rule out PM); a premise not taken up is not usable. Note: after S41-Q23b, L397's own words ("usable by j when each of its steps is (K2)") read vacuously for a premise alone — the entire content rests on the (D9.6) pointer; and I166's premise-alone usability asks no Form_j and no Scope_j, so a j admitting no forms still rules out through accepted premises. Both are I166's registered choice; nothing to change.
+
+# (e) Other round-2 definitions and claims
+
+- **D6.3 (I135/I136)**: on a question whose δ_E has a singleton domain equal to Y_p, every component containing δ_E is a slot and NC1 fails for every candidate — harmless, NC2 fails there too (no contrast). Held.
+- **D18.1 one edge set (R5)**: NC's edges omit t and Γ by the same convention as (F1)–(A) ("the candidate's own data"); consistent. FC32 H. Held.
+- **D15.2 per execution (I153)**: ∀η form; the family-measure alternative rightly needs a measure no line gives. Held.
+- **Forms_cl (R15)** in D9.1/D9.7/D9.9: MP, MT, AndI, AndE are all in Forms_cl; FC71 (i′), (iii) hold. Held.
+- **D16.4 𝔓^adv_Θ (Q8)**: still a name read through Θ (NF12 open); (U2) stated given it. Admittedly undefined, not broken.
+- **D12.4 vs D12.1 on records**: a record of a selected carrier is Dec by D12.1–12.3 on its own history and Sel by D12.4's inheritance; the clash predates round 2 (I54), not a round-2 move. One line, no proposal.
+- **T9's other effect**: T9 wrote I161's invented conjunct into L195 as part of "its formal statement", making an invention text content; the counterexample is FC12.new1's part-3 witness (without the conjunct, Sel ∧ Con under T/T′), i.e. it secures L193 — but by a choice the text did not make (see B1 for where the choice runs out).
+
+# (f) What held under attack
+
+FC12.new1 (146 chains + 8,640 transports, four cuts, with/without I161); FC83 (146 chains; witness without I161 under T as stated); FC98 (a)–(e) including T′'s four computed cases; FC84.new1 (a)–(d); FC30.new1 (a)–(c); FC22 (a),(b); FC72 (a)–(f); FC28 incl. R4 part (C_id: obs takes 8 values, no edit ≠ 1); FC77 as stated; FC84; E1/E2 (FC26–FC28), E5 (FC62), E6 (FC63), E8 (FC107), E9 and the occlusion case L626–L630 (FC102 (b″), (b3), FC103, FC90) — all unchanged by the round's changes; D6.4/Lost; D9.9 with premises alone; D8.new1; D0.2's classed primitives (FC98 (b): the seven sinks are as D0.2 marks).
+
+# (o) The known open points O1–O6
+
+- **O1 (L61)**: text, formal — old `(Suff) sufficiency of the four conditions of Account` → new `(Suff) sufficiency of \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) (D16.XV)`. (Rests on B8's fix for Dec to carry weight.)
+- **O2 (L49)**: text, formal — old `when its components respond to those edits as the target structure does (Part VII)` → new `when it meets \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) on its question and contract (Part VII, D16.XV)`.
+- **O3 (L69)**: text, formal — old `an explanatory candidate meeting \(\operatorname{Account}\) on its contract` → new `an explanatory candidate meeting \(\operatorname{Account}(\mathcal E)\land\neg\operatorname{Dec}(t)\) on its contract (D16.XV)`.
+- **O4 (L397)**: text, delete — old `What a stated premise cannot do is stand in for the steps. ` (delete the span). A premise alone is an argument (D9.2, S41-Q23); the circularity block that follows is unaffected (FC72 (e)).
+- **O5 (L397)**: text, delete — old ` in that the argument has steps from it to what it rules out` (delete the span), leaving `A premise taken as given differs from such a premise: it finds that the candidate gives what the premise excludes.` The residual difference is the structural block, which holds of premises alone (FC72 (e)).
+- **O6**: no change needed. The orchestrator's reading holds and the material already carries it: L317's own clause — the ruling out "is already something done about the conflict with the claim, **which does not say where the rival is in error**" — is the distinction S27 draws (enough to trigger and to rule out, not enough to repair); the maths keeps them apart (Out_j, D9.8, vs Repair/ProducedBy, D14.2–D14.3), the choice shows as Accepted_j (S28), and D10.6's "solved" claims no repair. S27 and S28 are the owner's words and are not touched.
+
+END OF REPORT

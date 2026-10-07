@@ -1,0 +1,7 @@
+A multicenter trial of the oral anti-inflammatory agent XR-14 in patients with moderate rheumatoid arthritis reported a statistically significant reduction in hospitalization rates compared to standard-of-care. Across 412 randomized participants enrolled at eight centers, patients receiving XR-14 for 12 weeks showed a hospitalization rate of 3.1%, versus 7.8% in the control arm (p=0.02), alongside improved patient-reported pain scores on the standard 0-10 scale (mean reduction 2.1 vs 1.0 points). Adverse events were mild and comparable between arms, with no serious events attributed to the study drug.
+
+Enrollment criteria required patients aged 18-65 with no history of cardiovascular disease, hepatic impairment, or concurrent biologic therapy, and all participants were recruited from urban academic medical centers. Based on these results, the sponsor is preparing a regulatory submission recommending XR-14 as a first-line addition to standard care for moderate RA, with an anticipated broad label covering adult patients.
+
+The study team concluded that the drug's efficacy and safety profile support rapid adoption, citing the clear separation in hospitalization outcomes as the primary driver of this recommendation, and praised the trial's randomization and blinding procedures as methodologically sound throughout the 12-week treatment window.
+
+Task: before this claim is accepted, what must be questioned or tested?

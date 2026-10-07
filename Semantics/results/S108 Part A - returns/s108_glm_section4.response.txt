@@ -1,0 +1,82 @@
+# Part A, section 4 — report
+
+Baseline runs cited below were made with `python3 -m model.run --claim … --scale 4 --time-cap 40` from the sandbox folder; every "after" result is **not run**.
+
+## (a) The variants
+
+| id | item(s) varied | old → new | kind | why chosen | departs from |
+|---|---|---|---|---|---|
+| V4.1 | D16.XV, Expl rule | beside `Acc(ℰ) ∧ Dec(t) ⇒ ¬Expl(ℰ)` add `Acc(ℰ) ∧ Slot_C(ℰ) ⇒ ¬Expl(ℰ)` (Slot as D6.3, reading "every"); i.e. Expl :⟺ Acc ∧ ¬Dec ∧ ¬Slot | strengthen | re-inserts the written-in test at the level of *being* an explanation, where S45 removed it from (E) | **rejected by S45** ("Yes, take the test out": a written-in answer never stops a candidate being an explanation) |
+| V4.2 | D16.XV, Expl rule | delete the rule: `Expl(ℰ) :⟺ Acc(ℰ)` | delete | the other pole of the same axis: does provenance matter at all to being an explanation | **rejected by S41, Q2** ("No, not if just declared") |
+| V4.3 | D16.XV (Suff) shape + being-an-explanation | `¬Dec(t)` → `¬Dec(t) ∧ (Sel(t) ∨ CT(t))` in both | swap | asks whether provenance must be *positive*: are provenance-less stipulated candidates explanations? | none (no owner decision covers a transport with no provenance record) |
+| V4.4 | D16.XV, Uses(α) | `(E), Acc ∉ Uses(α)` → `Acc(ℰ) ∉ Uses(α)` (the instance reading, I196's other side) | swap | the two readings part exactly on arguments that cite a rival's Acc — "reasons why this and not that" (S23) | none as a decision; tension with S23's gloss of *argument*, which the symbol reading narrows |
+| V4.5 | D16.XV, (Nec) shape (L538) | `∀C′ on D ∀t′: ¬Faithful_{C′}(t′: D→E)` → `∀t′: ¬Faithful_C(t′: D→E)` | weaken | (Nec)'s exposure currently hides behind cross-contract preservability; restricted to C the reversed calculation can enter | none directly; touches L538's own words (S4, co-varied) |
+| V4.6 | D16.4, 𝔈_Θ | `{c : Acc((c,p,t,Γ,δ)) for some p,t,Γ,δ, δ the designation of Q in c …}` → drop `, δ the designation of Q in c` | delete | tests whether "explanatory content" for universality must answer the question it designates (the guard FC90.new1 (c) installed) | none; L497.s1 (S4) co-varies |
+| V4.7 | D16.3, Enable | `Enable(s,T,χ) :⟺ Θ admits χ ∧ NQB ∧ χ enabling in (CT1)'s sense` → `Enable(s,T,χ) :⟺ Θ admits χ ∧ χ enabling in (CT1)'s sense` | delete | the only content in NQB is the non-question-begging exclusion; deleting it measures its weight in the class | none as a decision; **blocked by FROZEN L495.s1** (see edges) |
+| V4.8 | D12.9, Underdet (+ (Prov)(i)'s middle conjunct read through it) | `Underdet(t;a,b;𝒯,H) :⟺ ∃t′∈𝒯 [t′∈𝒯 ∧ surv(t′,H) ∧ value_{t′}(a,b) ≠ value_t(a,b)]` → drop `surv(t′,H)`; (Prov)(i)'s `∃t′∈𝒯 surviving on H with value_{t′}≠value_t` → `Underdet(t;a,b;𝒯,H)` | weaken | makes (Prov)(i) — "what would rule the class out" on genesis — satisfiable, reopening a defeat condition the theory now holds closed by definition | none; the text's own L572.s2 "also surviving on H" is S4 and co-varies |
+
+## (b) The traces
+
+**V4.1.** Run (`--claim FC23.new2`): ℰ_one (the one-part shop sign) — "(E) after S106 True … Slot_C(ℰ_one, k): {'every': True, 'some': True, 'some-exempt': True, 'some-exempt-set': True}"; FC23.new2 (a): ℰ_two has `slots {'every': [] …}`, pins `[('r',('1','b0')), ('u',('tue','b0'))]`. Run (`--claim FC23.new3`): the pole's forward candidate — "C1: (E) True; pins 0 …; C2: (E) True; pins 8, all by c_L". Run (`--claim FC25.new2`): E_enc — "slot True" on C1 and C2.
+Before: ℰ_one, ℰ_two, E_enc, pole-on-C2 are all explanations (Acc ∧ ¬Dec). After (**not run**): ℰ_one, E_enc, E_rev-under-τ′ (slot `['r_L']` under every reading, FC27.new1 (d)) and the pole on C2 stop being explanations; ℰ_two and the pole on C1 remain. No candidate newly counts. The written-in answer moves from "bad explanation" to "no explanation" across the whole set of stipulated worked cases.
+
+**V4.2.** Run (`--claim FC30.new1` (a)): the pole's forward candidate with a declared transport and an argument not using (E) ruling out Expl — "L536 False; L17 (S41) False", i.e. not an explanation; (c): `Expl := Acc ∧ ¬Dec` meets both the S41 rule and (Suff) on every candidate. After (**not run**): the student's declared copy is an explanation; FC30.new1 (b)'s `Def_j(L17, S41) = Def_j(L536)` fails unless L536's "whose provenance is not declared" is deleted with it (then (Suff) claims sufficiency of Acc alone and the declared-copy argument defeats it — before: "defeats neither").
+
+**V4.3.** Run (`--claim FC25.new2` (a)): E_enc meets (E) on all 2350 hypothesis-met models; run (`--claim FC27.new1` (d)): E_rev under τ′ on C_H "meets (F1), (F2), (A), Dependence and non-vacuity … a written-in candidate, an explanation under S44, S45". Both candidates are stipulated in the encodings: no Sel witness, no CT subhistory, no declaration, so ¬Dec holds vacuously. Before: both are explanations. After (**not run**): both stop (no Sel ∨ CT); E9's t1 (Con) and a selected t0 are unaffected; the student's copy is excluded under both readings (Dec). Net effect: every provenance-less candidate — exactly the formal core's own worked cases — leaves the class of explanations while still meeting (E).
+
+**V4.4.** Run (`--claim FC30.new1` (h)): the argument `[MP] ⊢ ¬Expl_ℰ_fwd` with leaves `Acc_ℰ_rev`, `Acc_ℰ_rev → ¬Expl_ℰ_fwd`, ℰ_fwd constructed — "ℰ_fwd in (Suff)'s defeat set (L536): symbol False, instance True". Run (`--claim FC103.new1`): t1∘ψ meets (F1), (F2), (A) at all 3456 pairs, `one counterpart: True`, `separating pairs: 0 of 3456` — the Argument-2 premise. Before: an assessor who rules out Expl of the second candidate by citing the first candidate's Acc uses (E) at the symbol and defeats nothing. After (**not run**): the same argument puts ℰ in (Suff)'s defeat set; (Suff) then stands or falls with whether any j admits one-account arguments — the defeat of (Suff) becomes assessor-relative in a new way. Being-an-explanation itself is unchanged.
+
+**V4.5.** Run (`--claim FC27.new1` (b)): under τ, E_rev fails (F2) on C1 ("F2eq fails at ['set(H=2)','set(H=3)',…]"); run (`--claim FC27.new1` (d)): under τ′ on C_H, "every conjunct of (E) holds" — a faithful transport of E_rev exists on a contract on D. Before: the ∀C′ conjunct is false for E_rev, so no argument establishing Expl(E_rev) can defeat (Nec). After (**not run**): `∀t′ ¬Faithful_C1` holds for E_rev, so an argument not using (E) establishing Expl(E_rev) defeats (Nec); the same holds for the eliminative candidates of Part VII (E5). No candidate's Acc or Expl changes; what changes is which arguments count against the necessity claim.
+
+**V4.6.** Run (`--claim FC90.new1` (c)): the pole's forward candidate — "δ_E = L: (True, …); δ_E = H: (False, {… 'A': False …})". The only Acc-witness of E_pole already carries the designation, so on every encoded case 𝔈_Θ is unchanged by the variant (**not run**; expectation: same membership on E1–E9). The variant bites only on a content whose every Acc-witness mis-designates; settling its reach needs a generated search pairing contents with wrong designations, which Part A cannot run. Effect on explanation's definition is indirect: "explanatory content" in UU would no longer imply "answers the question it designates".
+
+**V4.7.** No claim computes Enable (FC110: NOT TESTED). Trace is formal (**not run**): U1's witness condition weakens to `∃χ [Θ admits χ ∧ Can(ξ0,U_c;χ)]`, so a χ whose realization relays a representation of c from outside β (the NQB exclusion) now enables; UU and UC are met more easily; UECS grows; RC untouched (D16.2 FROZEN); **no candidate's Acc, Expl or defeat set changes** — the variant moves the class, not explanation.
+
+**V4.8.** Run (`--claim FC80` (a)): "all survivors on H agree at (a,b) ⇒ that value is a function of (𝒯,H)" holds on 7383 models. Run (`--claim FC80` (d)): witness `t′ = t with L_k0 altered at ('1','b0') for (a,b)=('1','b0') ∉ H does not survive on H`. Before: a differing member that H eliminated does not make the value underdetermined, and (Prov)(i) — `Sel ∧ (a,b)∈C∖H ∧ differing survivor ∧ value a function of (𝒯,H)` — is unsatisfiable by definition (FC80 (a)). After (**not run**): that t′ counts toward Underdet, so a differing *non*-survivor no longer blocks the underdetermination claim, and (Prov)(i) with its middle conjunct read as Underdet becomes satisfiable (a differing non-survivor does not break the value's being a function of (𝒯,H)): a selected transport's unseen value determined by its history while its population admits a differing member would **rule the class out on genesis** — currently held impossible.
+
+## (c) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| V4.1 | moves | Expl gains `¬Slot`; D18.1's graph: Slot becomes an ancestor of Expl/(Suff) | the written-in test re-enters through the explainer, not the account | not settled (needs the graph recomputed) |
+| V4.1 | changes with | L17, L49, L61, L69 (S1); the L267–L277 table (S2); FC23.new2/.new3, FC25.new2, FC30.new1 (S4/S2) | every sentence writing `Account(ℰ) ∧ ¬Dec(t)` and the row "a written-in answer never stops…" reverse | yes (runs above show the slot/pin facts) |
+| V4.1 | blocks | none FROZEN | the rule strengthened is S4's own; the exclusion is the owner's, not a frozen line | yes |
+| V4.2 | moves | Expl := Acc; being an explanation loses ¬Dec | provenance leaves explanation entirely | yes |
+| V4.2 | changes with | L17/L49/L61/L69 (S1); D16.XV (Suff) shape; FC30.new1 | the one-defeat-set identity FC30.new1 (b) is what breaks | yes |
+| V4.2 | constrains | FC30 ((E) takes no provenance) | still true — Acc unchanged; only Expl moves | yes |
+| V4.3 | constrains | D12.3/D12.4 (S2), provenance per holding | whether "no record at all" is possible decides if V4.3 is vacuous or not | not settled (needs a provenance-less case computed; I90 currently forces one of three) |
+| V4.3 | moves | Expl and (Suff)'s range | explanation demands positive provenance | yes |
+| V4.3 | changes with | L17 etc. (S1); FC25.new2's reading | the encoding table stops being an explanation, so the worked cases change role | yes |
+| V4.4 | constrains | X_j / Out_j, D9.x (S2) | the widened defeat set is still assessor-relative; nothing overrides j's choice (S21) | yes |
+| V4.4 | moves | (Suff) and (Nec) defeat sets only | "not using (E)" shrinks from symbol to instance; being-an-explanation unchanged | yes (FC30.new1 (h) computed both) |
+| V4.5 | constrains | L606.s4 (S4, Argument 7), FC99 | "ℰ can meet (E) on C and fail on C′" is the resource the variant trades on | yes (FC99 run) |
+| V4.5 | changes with | L538.s1 (S4, co-varied); FC30.new1 (g); Part VII's exposure (E5 stays FROZEN, only its use changes) | (Nec)'s exposed case widens from eliminative to every unpreservable-on-C candidate | not settled (needs FC62 under the varied shape) |
+| V4.6 | constrains | D5.3/I20 (S1, designation) | δ's role is fixed upstream; the variant only stops reading it | yes |
+| V4.6 | moves | 𝔈_Θ, UU, UECS; nothing in (E) | universality's domain loosens from designation | not settled (reach unknown without a search) |
+| V4.7 | **blocks** | **L495.s1 FROZEN** (barriers: "every admitted, **non-question-begging** enabling condition leaves the capability unavailable") | with NQB out of Enable, the barrier sentence can no longer be read through Enable: the two "non-question-begging" conditions diverge | yes |
+| V4.7 | moves | UECS only | no conjunct of (E), no defeat set, no Expl reads Enable | yes |
+| V4.8 | constrains | D12.1 surv (S2); L574.s2 FROZEN | surv supplies the dropped conjunct; L574.s2 (relations independent per pair) supports the alteration step and does not block | yes |
+| V4.8 | moves | (Prov)(i) from closed-by-definition to open | "what would rule the class out" changes content | not settled (needs FC80 re-run with the co-varied (Prov)(i)) |
+| V4.8 | changes with | L572.s2, L574.n4, L576.s1/.s4 (S4, co-varied); FC80 (S4) | Argument 3's wording and consequence shift together | yes |
+
+One edge I could not settle at all: whether any FROZEN item blocks V4.4. The nearest is L556.s3 ("(F1) equates the third coordinates pointwise"), which is about Argument 1's proof, not about argument *use*; nothing frozen defines Uses(α). What would settle it: an owner ruling on whether citing a rival's being an account is "using (E)".
+
+## (d) Section-4 items not varied, and why
+
+- **D16.5 (Classes)** — pure extensions; FC110 (not tested) records that no membership is asserted, so varying them cannot move explanation's definition, only labels.
+- **E9 (the two-layer episode)** — the owner's worked case; its t1/t1∘ψ pair is used here as a trace instrument (V4.4). Varying it would vary the case, not the semantics. The natural variant — admitting an edit that displaces only one thing, breaking ψ[C] = C — is left to Part B; FC103.new1 (c) (0 separating pairs) is its baseline.
+- **D18.1 (dependence graph)** — the map itself; it is what the other variants are traced on (V4.1 moves an edge in it as an effect). Varying it first would erase the instrument.
+- **D18.2 (bijections) / Argument 8** — a constraint every variant must respect rather than a variable; note V4.1 is safe (pin at one pair is carried along by φ), V4.3 is not obviously φ-invariant (Sel/CT are history facts, and D18.2 carries occurrences), which is a reason it was not pushed further.
+- **(Elim) and (QF) shapes in D16.XV** — their Work, "fails to capture" and "not creative" are undefined by record (D0.2, r4); formalizing them would be new content, not a variation of a stated condition.
+
+## (e) Inventions the variants rest on
+
+- **V4.1**: Slot's quantifier reading (the four readings of D6.3, registered with FC23.new2). Other choices: "some", "some-exempt", "some-exempt-set". The trace is reading-independent (ℰ_one is a slot under all four).
+- **V4.3**: provenance is per-holding and possibly absent (D12.3/D12.4, I90 as the program has it forces Dec/Con/Sel). Other choice: provenance total on every transport — V4.3 then changes nothing.
+- **V4.4**: I196, the two readings of "not using (E)". Other choice: the symbol reading (current, r4).
+- **V4.5**: preservability read at contracts C′ other than the question's own (D5.5 applied off-question). Other choice: only declared contracts of the question count as C′ — then the current (Nec) is closer to the variant than to its own wording.
+- **V4.6**: I75/I183, 𝔈_Θ's membership condition. Other choice: require δ = the designation for *every* Acc-witness (stronger than either the current or the varied form).
+- **V4.7**: I154, NQB's shape ("relayed from outside β" read at the realization). Other choice: NQB read at χ itself; both are deleted by V4.7, so the choice is idle here.
+- **V4.8**: reading (Prov)(i)'s middle conjunct through D12.9 rather than as spelled inline in D16.XV. Other choice: keep it inline — then V4.8 changes Argument 3's wording only and (Prov)(i) stays closed.
+
+END OF REPORT

@@ -1,0 +1,88 @@
+# Part A, section 2 (transports, provenance, account, conflict) — report
+
+Baseline commands run: `--claim FC26 --claim FC27 --claim FC22 --claim FC23`, `--claim FC25.new2 --claim FC30.new1 --claim FC44 --claim FC52`, `--claim FC28 --claim FC40`, `--claim FC23.new2 --claim FC72.new2` (all at default scale/time). All results quoted below are from these runs; everything "after" is **not run**.
+
+## (a) The variants
+
+| id | item(s) varied | old → new | kind | why chosen | departs from |
+|---|---|---|---|---|---|
+| V2.1 | D6.4 (NC2), L255.n2 | NC2(ℰ) :⟺ ∃(a,b)∈C: Contrast(E; x) — the Lost clause and the block G deleted | weaken | severs the only conjunct of (E) that ties the answer to Γ | none |
+| V2.2 | D6.4 (NC2) | G restricted: ∃d∈Γ: Contrast(E;x) ∧ Lost(E,{d};x) | strengthen | ties Dependence to one-commitment work; collective blocks stop witnessing | none |
+| V2.3 | D6.4 (NC2) | witness pair required a ≠ 1 (∈ C, a ≠ 1) | strengthen | makes Dependence read edits only; boundary-only contrasts stop counting | none |
+| V2.4 | D6.7 ((E)), L261.n1 | Acc(ℰ) :⟺ F1 ∧ F2 ∧ A ∧ NC0 ∧ **NC1** ∧ NC2 ∧ NonVacuous | strengthen | puts the written-in test back as a conjunct | rejected by S45 ("Yes, take the test out"), with S44 |
+| V2.5 | D12.1 (Sel), L195 | "H ⊆ C finite and nonempty" → "H ⊆ C finite" (I52's other choice) | weaken | with H = ∅ a stipulated population makes any transport Sel | departs in effect from S41 Q2 ("No, not if just declared") |
+| V2.6 | D8.2 (Conf), L315.n2 | "For (a,b) ∈ A_D × B_D … in C or outside it" → "For (a,b) ∈ C" | weaken | confines conflict to the contract | blocks FROZEN L315.s1, L317.s6; departs in effect from S20 ("If two discovered variations fit, that constitutes a problem") |
+| V2.7 | D8.5 (ConfCl), L315.n11 | ConfCl(ℰ,χ;a,b) :⟺ [∃R Ans^R_p(a,b)=y ∧ ∀R(Ans^R_p(a,b)=y ⇒ R ∉ Allow_χ(a,b))] (second disjunct deleted) | weaken | a claim conflicts only through the candidate's answer, never through the relations it needs | rejected by S27 (perpetual motion enough to trigger a conflict) |
+| V2.8 | D9.8 (Out), L315.s6–s7 | Out_j('Acc(ℰ)') :⟺ ∃α ∈ X_j('Acc(ℰ)') with **Acc(ℰ) ∈ Uses(α)** (I196's instance reading) | swap | changes which arguments rule a candidate out, hence (Suff)'s defeat set | none |
+
+## (b) The traces
+
+**V2.1 — Dependence without loss.** Case (program notation, not run): D with ports x,y,z ∈ {0,1}; comps cx:(x), cy:(x,y), dz:(z); B = {b0}; A = {1,e}, e·e = undef; L_cx(1,b0) = full, L_cx(e,b0) = {(1)}; L_cy(·,b0) = {(0,0),(1,1)}; L_dz full at both pairs. p: Q_w reads y, δ_D = y, C = {(1,b0),(e,b0)}. ℰ = D with the identity transport, Γ = {dz}, λ(dz) = ({dz}, z:=id(z)); δ_E = y. Before: F1 ✓, F2 ✓, A ✓, NonVacuous ✓ (Sol_D(1,b0) = {(0,0,*),(1,1,*)}); Ans_p(1,b0) = ⊥, Ans_p(e,b0) = 1; the only block of Γ is {dz}, and E−{dz} answers the same → ¬Lost → ¬NC2 → ¬Acc. After V2.1: Contrast at (e,b0) holds → Acc(ℰ) = True (still not an explanation: identity transport declared). Newly meeting (E): every candidate all of whose commitments do no work (L313's case) whose answers vary over C — the written-in and the idle-commitment candidate alike. Which stop: none.
+
+**V2.2 — singleton block.** Case: L311's infinitary Γ = {d_n : n ∈ ℕ}, d_n the constraint |x| ≤ 1/n (FC40 run: routes = unbounded index sets, every critical block infinite, no one-commitment route). Before: NC2 witnessed by any unbounded G (deleting it frees x; contrast x = 0 vs free lost) — not run as NC2, derivation from D6.4; the candidate meets the rest of (E) as FC72.new2 (a) does for its own. After V2.2: deleting one d_n leaves sup 1/m = 0 over the rest → contrast stays → ¬Dependence → the infinitary candidate stops meeting (E), stops being an explanation. Also L307's redundant candidate (Γ = {a,b}, each alone a route, FROZEN L307.s1): before, G = {a,b} witnesses NC2 → meets (E); after, no singleton loses the contrast → stops meeting (E). Newly counting: none.
+
+**V2.3 — witness needs an edit.** Case: the reversed calculation on the identification contract (FC28 run: on C_id = {1}×B, E_rev meets (F1), (F2), (A) on all 9 boundaries, answers {u_H} vary). Before: NC2 witnessed at (1,b), b ≠ b0, contrast {1} vs {2}, lost by G = {r_L} (L freed → (T,L) not single → ⊥ where determined) — NC2 derivation not run; so E_rev meets (E) on C_id. After V2.3: every pair of C_id has a = 1 → no witness → ¬Dependence → E_rev stops meeting (E) on C_id; and so does E_fwd (identity) on C_id, and every candidate on every contract of the form {1}×B: identification questions (E2, L329) admit no accounts at all. Unaffected: M13 weathervane (FC22 run: witness (e,b0), a ≠ 1; meets (E) before and after).
+
+**V2.4 — NC1 back in (E).** Baselines run: FC26 (E_fwd meets (E) on C1 and C2, NC1 True there); FC25.new2 (c) (E_enc meets (E) on C1, C2; slot True; round 3's (E) False); FC23 (c) (M1, M2, M3 meet (E) after S106, round 3's False); FC23.new2 (a), (b) (the shop sign ℰ_two and ℰ_one meet (E); ℰ_one a slot under every reading); FC72.new2 (a) (ℰ_myth1, one part with the answer written in, meets (E), slot 'bargain'). After V2.4 (= round 3's (E), computed in those same printouts): E_enc, ℰ_one, ℰ_myth1, M1–M3, and every lookup E_lk (FC23 (e)) stop meeting (E) and stop being explanations; E_fwd, ℰ_two, ℰ_myth2 stay (NC1 True). Newly counting: none.
+
+**V2.5 — Sel with H = ∅.** Baseline run, FC30.new1 (e): with H ≠ ∅ (as D12.1 stands) the student's holding is Dec — "D12.1 with H ≠ ∅ (R3A1-05): Sel's conditions False; fixed points [{}]; Dec True; in Def(L17, S41) False" — and (a): Acc(ℰ_fwd) True. After V2.5: "D12.1 after round 2 (H = ∅ allowed): Sel's conditions True; fixed points [{'o1': 'Sel'}]; Dec False" — the student's declared copy, meeting (E) (FC26), now satisfies Acc ∧ ¬Dec: it counts as an explanation, and by frozen (R) the carrier represents the content with nothing ever encountered. So Dec shrinks to "no population and no trace"; every declared transport for which a population 𝒯 and survival condition are merely stipulated becomes Sel.
+
+**V2.6 — conflict only inside C.** Baseline run, FC72.new2 (b): the tilt and the myth on the Greeks' contract "conflict only in the south, outside the Greeks' contract: rivals True; kind ii". After V2.6: Conf holds at no pair outside C → tilt and myth are not rivals → no problem of the second kind exists for anyone; D10.4's ETV_j(ℰ;p) is false of every candidate; L317.n14's finer contract still separates them (FC72.new2 (d) unaffected: that conflict is inside the finer C). No candidate's meeting (E) changes; what changes is which pairs of candidates pose problems and which criticisms "easy to vary" can name.
+
+**V2.7 — conflict with a claim through the answer only.** Case (program notation, not run): D with ports w,y ∈ {0,1}; comp c:(w,y); B = {b0}; A = {1}; L_c(1,b0) = {(1,0)} (the candidate's part makes the wheel turn, w = 1, and the answer y = 0). p: Q_w reads y; C = {(1,b0)}; ℰ = D, identity transport, Γ = {c}, δ_E = y. χ = "perpetual motion is impossible": Allow_χ(1,b0) = {R : R_c = {(0,0)}}, Applies = yes. Before: Meets_ab(ℰ,R) forces R_c = {(1,0)} ∉ Allow_χ → second disjunct → ConfCl(ℰ,χ;1,b0) (first disjunct fails: the allowed R also answers y = 0). After V2.7: no conflict; the argument that rules out Acc(ℰ) for an assessor tentatively accepting χ (L315.s14) lapses; ℰ stays not ruled out. Every conflict that runs through what the candidate's parts must do, not through its answer, disappears.
+
+**V2.8 — ruling out must use the candidate's own Acc.** Baseline run, FC30.new1 (h): an argument usable by j whose only use of (E) is Acc(ℰ′) (another candidate) rules out Expl(ℰ_fwd); "ℰ_fwd in (Suff)'s defeat set (L536): symbol False, instance True; with the record argument: symbol True, instance True". After V2.8 (instance): such arguments put ℰ in (Suff)'s defeat set; the record argument (r, r → ¬Expl(ℰ)) is unaffected. No candidate's meeting (E) changes; (Suff)'s defeat set grows by the arguments that reach a candidate only through another's Acc.
+
+## (c) The edges
+
+| variant | kind | item | why | settled |
+|---|---|---|---|---|
+| V2.1 | moves | Dependence (D6.5), a conjunct of (E) | Dependence stops reading Γ; "commitments that do no work" (L313, S2) become accounts | yes |
+| V2.1 | changes with | D7.2 routes (S), L289 FROZEN | ∅ can enter S (contrast with no commitments); frozen L293.s1, L299.s1 still readable, but the frozen examples L307/L309 must be recomputed under the varied NC2 | partly — computing S under V2.1 on L307/L309's set systems would settle it |
+| V2.1 | constrains | L275.n1 (S2) | the unrealizable-contrast case still fails (contrast must sit at a pair of C, FC29) | yes |
+| V2.2 | blocks | L311.s2 FROZEN ("(B) records the collective contribution") | under V2.2 no collective block witnesses Dependence, so (B)'s collective case and (E) come apart at the infinitary candidate | yes |
+| V2.2 | constrains | L299.s1 FROZEN (a block critical while no singleton is) | readable (about S), but such a candidate now fails (E) | yes |
+| V2.2 | changes with | D10.4/D10.6 (S4's claims read problems) | fewer problems posed, none of the second kind from collective candidates | yes |
+| V2.3 | blocks | L329.s3 FROZEN (identification, (I1)) + E2 | under V2.3 no candidate meets (E) on any {1}×B contract, so the text's identification accounts (L331.s2 "This is an account of a limitation") stop being accounts | yes |
+| V2.3 | changes with | D3.3 (S1, identification contracts) | S1's contract classification would need contracts that vary only the boundary re-read | yes |
+| V2.3 | constrains | L253.s1 FROZEN (query fixed) | untouched; only the witnessing pairs move | yes |
+| V2.4 | blocks | — (owner decision, not a frozen item) | S45 removed NC1; no frozen sentence contradicts it (S106 changed them) | yes |
+| V2.4 | moves | (E) itself; what Bearing reads | D9.10 (S3): Bearing(c,z,p) :⟺ Acc(ℰ_c) — the myth's slot connection (FC107, FC72.new2 (c)) stops having bearing | yes |
+| V2.4 | changes with | D16.XV (S4), (Suff)/(Nec) L536/L538 | Expl shrinks; both defeat sets and the (Nec) attack list change | yes |
+| V2.5 | constrains | L195.s1 FROZEN ("a finite history H ⊆ C of pairs actually encountered") | ∅ is finite and vacuously encountered: constrains, does not block | yes |
+| V2.5 | blocks | L211.s3 (S2) in effect | a transport declared by its author, with a stipulated population, makes the occurrence represent — against "a declared transport does not make an occurrence represent anything" as the owner used it in Q2 | yes (as an effect, not a formal clash) |
+| V2.5 | moves | Dec (D12.3), hence Expl := Acc ∧ ¬Dec and (Suff) L536 | declared candidates with a stipulated population become explanations | yes |
+| V2.6 | blocks | L315.s1 FROZEN (rivals: conflict "in C or outside it"), L317.s6 FROZEN (kind ii) | the kind-ii problem these define cannot exist | yes |
+| V2.6 | moves | nothing in (E); what meeting (E) says | no candidate's Acc changes; problems, ETV and the (Nec) attack route through easy-to-vary change | yes |
+| V2.7 | blocks | L315.s12 (S2) in effect | the bare perpetual-motion claim no longer conflicts with a candidate whose answer it allows — against S27's own example | yes |
+| V2.7 | constrains | D8.4 (frozen): Allow_χ, Applies | unchanged; only the route through Meets_ab is cut | yes |
+| V2.7 | changes with | D8.6 (frozen, ConfG_χ) | formally unchanged, but its antecedent ("every such R lies outside Allow") no longer feeds any ruling out of a single candidate | yes |
+| V2.8 | constrains | D16.XV (S4): "Acc ∉ Uses(α)" | the variant is the other reading of that phrase (I196) | yes |
+| V2.8 | moves | (Suff)'s defeat set (L536) | grows by arguments reaching a candidate only through another's Acc | yes |
+
+Edges I could not settle: whether V2.1 keeps frozen L309.s1 (interference: the full candidate fails (E) although a subset meets it) true — it needs the recomputation of S on that set system under contrast-only Dependence; nothing in this sandbox can run it.
+
+## (d) Items of my section not varied, and why
+
+- **D5.7** (faithful; question fidelity): the extent of "fidelity" is open at L630 alone (FC104), which is section 3's text; varying it here would duplicate S3's work.
+- **D6.8, D6.9**: packaging of the four headings, and relabelings feed FC21's closure (L257.n3) — small, and better varied through D6.4.
+- **D7.4** (Boundary): δ_v carried, settled in round 4 (FC42.new1); varying it moves nothing in (E).
+- **D8.new1** (one counterpart): I36 was fixed in round 2 and FC44 (run) shows both readings already computed; nothing new to map.
+- **D8.3** (Offered primitive): "offered" is a declared record; strengthening it would invent content S20 forbids (no list of rivals supposed).
+- **D10.3, D10.6** (test; solved): K3 (D9.9, frozen) fixes what a test's record can rule out; varying D10.3 alone moves nothing (both readings still rule out at least one of two differing answers).
+- **D11.2** (content): typing transports and histories as contents feeds (R) (frozen L207); out of reach here.
+- **D12.2, D12.7, D12.8** (Con; violation; responses): S47 settled what Con asks; violation's extent is FC104's open point (S3); responses feed no conjunct of (E).
+- **E1, E2**: encodings, inventions I65, I63/I64; I193 was settled in round 4 and I163 by FC28's second check.
+
+## (e) Inventions the variants rest on (with the other choices)
+
+- **I21** (undetermined answers as ⊥, ⊥ = ⊥, ⊥ ≠ y): Contrast and Conf read it; other choice — ⊥-insensitive readings, under which M13 and the ⊥-routes of Lost vanish. V2.1–V2.3 keep I21.
+- **I22/I25** (Dependence is the conjunction of L255's sentences; NC0 a gloss): V2.1–V2.3 vary exactly how the sentences conjoin; other choices are the variants themselves.
+- **I26** (relabelings, D6.9): V2.3 keeps it; its other choice (⊥ ≠ ⊥) would change FC21's closure, not used here.
+- **I52** (H nonempty in D12.1): V2.5 is its registered other choice ("H ⊆ C finite"); a third choice — H nonempty and proper in C — would keep surprise possible while still shrinking Dec.
+- **I136/I184** (slot quantifier; pin): V2.4 uses the default 'every'; other choices some / some-exempt / some-exempt-set — FC23.new1 (h): (E) after S106 is the same under all four, so V2.4's effect is quantifier-independent.
+- **I137** (D8.5's ∃R): V2.7 keeps the existence clause in the first disjunct; other choice — no existence clause (FC52's first part), under which V2.7 conflicts with nothing at pairs where no R lets the candidate meet.
+- **I196** ('not using (E)' at the symbol or the instance): V2.8 is the instance reading; the symbol reading is the default (FC30.new1 (h)).
+- **New inventions made here**: V2.3's "a pair of C" read as "a pair with a ≠ 1" (other choices: any pair of C, as now; pairs other than (1,b0)); V2.2's "a nonempty block" read as "a singleton" (other choices: nonempty, as now; a block critical in some route W ∈ S).
+
+END OF REPORT

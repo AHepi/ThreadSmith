@@ -1,0 +1,107 @@
+# Part A, round 2, section 1 (S1): report
+
+Baselines run here (`python3 -m model.run --claim … --scale 4 --time-cap 45 --brief`): FC23.new2, FC22, FC107, FC84.new1, FC21, FC27, FC28, FC30, FC34. Every "after" is marked **not run**.
+
+## (a) The variants
+
+| id | item / reading varied | old → new | kind | share | owner decision departed from |
+|---|---|---|---|---|---|
+| R2V1.1 | S108-1-I5 (C2's reading): ρ_p unrecorded ⇒ declared | `Question` carries no ρ_p → ρ_p a recorded field; V1.5's conjunct kept: `Acc_{V1.5}(ℰ) :⟺ Acc(ℰ) ∧ ρ_p ∈ {selected, constructed}` (D3.4.v1) | other choice of a reading | gap 1 (S108-1-I5) | none |
+| R2V1.2 | D3.4 / L155.s6: a found question with its trace | `constructed :⟺ ∃h′ [Rec_{h′}(C→C′) = constructed ∧ Prepares(h′, C′ as a content)]`; `Found(p′) :⟺ ρ_{p′} = constructed` (D3.4.v2) | other (an encoding) | gap 3 (e1.37) | none |
+| R2V1.3 | the bridge's brief (S41 Q6), ρ_p recorded | case only: FC84.new1 (a1)'s chain with `rho(C_brief) = declared` (second case `= constructed`); Episode/Con read it: `Rec_{h′}` carries ρ (D13.8 wiring, S3's) | other choice of a reading | gaps 1 and 3 (e1.38, C2's Q6 flag) | under `declared`: S41 Q6 ("Yes, it can"); S47 ("The math doesn't ask for anything") |
+| R2V1.4 | L15.s2 (a question can be found) | `Found(p) :⟺ ρ_p ∈ {selected, constructed}` (was: `= constructed`, L155.s6) | weaken | gap 2 (L15) | none (blocks the text's L155.s6) |
+| R2V1.5 | L17.s1 (the constitutive conjecture's list) | the four without (iii): D16.XV's "not using" set `U := {(O),(Q), transports ∧ change-fidelity, Θ}` (provenance dropped) | delete | gap 2 (L17) | none |
+| R2V1.6 | L11.s1 (the opening statement) | `Expl(ℰ) :⟺ (A) ∧ Dependence ∧ NonVacuous ∧ ¬Dec(t)` (was `Account ∧ ¬Dec(t)`, i.e. + (F1) ∧ (F2)) | weaken | gap 2 (L11) | none (blocks the text's L23.s1) |
+| R2V1.7 | L119.s1 (one kind on C) | `j ~_C j′ :⟺ V_j = V_j′ ∧ sig_C(j) = sig_C(j′)` (footprints as ordered tuples; the bijection β dropped, D4.2's I10) | swap | gap 2 (L119) | none (blocks D4.2) |
+| R2V1.8 | L141.n3 (the query's codomain) | `Y_p := X_{δ_D}` (⊥ as D3.2; was: Y_p free) | strengthen | gap 2 (L141) | none |
+| R2V1.9 | L159.s3 / D3.1 (what a contract may hold) | `Question(p) ⇒ ∀(a,b) ∈ C: Θ_admits(a)`; a C holding an unadmitted pair names no question | strengthen | gap 2 (L159) | **S25** ("'Physically possible or impossible' … has nothing to do with explanation"), S26–S27 |
+| R2V1.10 | S108-1-I1 (ℰ_bv's relation at a ≠ 1), third reading | (iii) `L_bv(a,b) := ∪_{b′∈B} proj_{V_{c_bv}} Sol_D(a,b′)` (constant in the boundary; (i) the one solution, (ii) the baseline relation, both run in round 1) | other choice of a reading | gap 1 (S108-1-I1) | none |
+
+## (b) The traces
+
+**R2V1.1 (ρ_p recorded).** Before (run): FC22 (b) — M13 (the weathervane, S41 Q15) `(E): True`, NC2 witness `(('e','b0'), ['cy'])`; FC23.new2 (a) — the owner's two-part sign `(E) after S106: True`, Dependence witness `(('tue','b0'), ['r'])`; FC107 — p_δ's identity candidate `Acc True`. After (**not run**): with `rho="selected"` or `"constructed"` on those questions, Acc under V1.5's conjunct is unchanged (True); with `rho="declared"` it is False. **C2's flags S44 and S41 Q15 stand only where ρ_p is unrecorded (S108-1-I5's default) or declared; they go where the owner's questions' contracts are recorded as selected or constructed.** C2's whole computed effect is an artifact of the missing field, not of its formula; round 1's hand-set runs agree ("ρ_p constructed or selected: T both"). (E) itself reads no ρ_p except through the conjunct (FC30, run: `core.account reads cand.E, cand.p … only`). New candidate definition: none beyond C2, now scoped.
+
+**R2V1.2 (found question with its trace).** Case (**not run**), in the program's notation: FC84.new1 (b)'s chain `o1 ≺ o2`, `contracts = ['C_brief', 'C′']`, `records = [False, 'constructed']`, trace at o2 preparing C′ as a content (E8's arrangement, the contract as an organization); `p′ = Question(D, C′, …, rho='constructed')`. Expected: D3.4's slot and L155.s6's `Found` both readable and true; under V1.5 the conjunct `ρ_p ∈ {selected, constructed}` true; no Acc move. Settles e1.37 (below).
+
+**R2V1.3 (the bridge's brief).** Before (run): FC84.new1 (a1) — `S41: Con at o2 [True]; Build True; no question about the brief occurred: True`. After (**not run**), with `rho(C_brief) = 'declared'` and Episode/Con reading ρ (a change in D13.8, S3's): the brief names no question; q(o) names nothing; `Con at o2 [True → False]`, `CreateEx` 1024 → 0 valuations. With `rho='constructed'`: unchanged (Con T, Build T). **C2's S41 Q6 flag stands exactly where the brief's ρ_p is declared and falls where it is recorded selected or constructed; round 1 could not compute either side.** Departs from S41 Q6 and S47 as named in (a).
+
+**R2V1.4 (Found at selected too).** Case (**not run**): FC84.new1 (a3) case (e)'s chain, `q(o1) = Q_B` ("a question found at o1"), the record's value `selected` ⇒ `Found(p_brief)` true under the variant, false under D3.4. Effects: (QF)'s cases grow (a question that survived in a population counts as found); D13.8's records and D16.4's 𝔓^adv quantify over more found questions; nothing in (E) moves (Found is read by no conjunct). Blocks L155.s6 (FROZEN) outright.
+
+**R2V1.5 (the conjecture without provenance).** Trace (**not run**, derivable): Expl still reads ¬Dec(t); the argument "Dec(t) ⇒ ¬Expl(ℰ)" uses provenance alone, so under the reduced list it is an argument *not using* the (reduced) four that rules out the explanation-claim of a candidate the rest represents. Baseline (run): FC23.new2 (f) computes the declared rows (`ℰ_two, Dec …: L536 False; L17 (S41) False`). After: (Suff)'s defeat set takes in **every declared candidate with Acc** — the student's copy (FC30.new1 (d)), CT8's R2/R4, FC-E 7 — so the conjecture is ruled out outright, for anyone who can use that argument. Finding: L17.s1's clause (iii) is load-bearing precisely because Expl keeps ¬Dec(t); it cannot be dropped alone. Candidate definition of explanation: none (Expl unchanged); a constraint on (Suff).
+
+**R2V1.6 (the opening statement without fidelity).** Baselines (run): FC27 (τ′ look) — E_rev under τ′ on C1: `conjuncts {'F1': True, 'F2': False (Hom), 'A': True, 'Dep': True, 'NonVacuous': True}`; FC21 (d) — the relabeling candidate with τ(1) ≠ 1: `A True, Dependence witness (('1','b0'), ['k']), F2 False`. After (**not run**, with a Con-history for ¬Dec): **both become explanations**; every Acc-candidate stays (Acc ⇒ (A) ∧ Dep ∧ NonVac); nothing drops; the two-part sign, the vane, E_enc, "p because p" all stay. So Expl grows by exactly the candidates failing only (F1)/(F2): the reversed calculation under τ′ on the production contract, and the relabeling candidate. New candidate definition of explanation (**C-new**): question-relevant dependence with a non-declared link, no fidelity. Blocks L23.s1 (S1: "It does not say prediction is explanation").
+
+**R2V1.7 (kinds without the bijection).** Case (**not run**), program's notation: `D = _org("D", ["x","y"], {x:(0,1), y:(0,1)}, ["j","j′"], {j:["x","y"], j′:["y","x"]}, ["b0"], [ONE], {("j",ONE,"b0"): {(0,1)}, ("j′",ONE,"b0"): {(1,0)}})`; C = {(1,b0)}. Under D4.2: `one_kind(D,"j",D,"j′",C)` true (β = swap); under the variant: false (footprints differ as ordered tuples). Effects (**not run**): no conjunct of (E) moves (FC30, run: account reads no ~_C); FC03 (equivalence) expected to keep holding (equality of signature functions on equal footprints is an equivalence); FC05's antecedent rarer; Argument 2's exchange case (claims_r3a3 (b): "each k and its image are of one kind on C") loses its premise wherever the exchange swaps footprint order — L317.s13's "the target pairs its components one way and not the other" loses its kind-theoretic expression. Blocks D4.2 (FROZEN).
+
+**R2V1.8 (the codomain fixed).** Before (run): FC28 — C_id `meets (F1), (F2), (A)`; `Ident(p) holds on C_id (I163)`. After (**not run**): fibre queries and reachable/unreachable answers are unaskable (their values are not port values); Ident and Obst have no instances (D3.3); **C_id ceases to be a question**, so E_rev's being an explanation there says nothing; E2 (identification, L329) and E4 (obstruction, L335) carry no question; the weathervane's and the sign's questions (port queries) are untouched, as is every port question's (E). Blocks L151.n3 and L151.s4 (S1); constrains D3.2 (FROZEN); changes with D3.3, E2, E4 (S2/S1).
+
+**R2V1.9 (the contract Θ-restricted).** Case (**not run**), L315.s16's pattern: the pole's D with `del c_L ∈ A`, `Θ_admits = A ∖ {del c_L}` (Θ by hand, I90), `p_del = Question(D, {(1,b1_45), (del c_L, b1_45)}, b1_45, PortQuery(), "L")`. Before: the identity candidate meets (E) on p_del (expected, by the lookup pattern; not run). After: p_del names no question; nothing explains what the pole does with c_L deleted. Where Θ admits every edit the variant is idle. Moves which questions exist, by the same route as V1.5 but from the contract's side. Blocks L75.s3 and L75.s7 (S1); changes with L275.s2 (S2). **This is the reading the owner rejected in S25** ("a pretty big hole"), named here as the decision it departs from.
+
+**R2V1.10 (ℰ_bv's third reading).** Case (**not run**): ℰ_bv on C1 (each edit of C1 at one boundary only): under V1.1 + (iii), `proj^λ = L_bv` at every pair as under (i) ⇒ ℰ_bv stays admitted; under (ii) it does not (round 1, computed). Answer to the share's question: **no third reading the text allows changes candidate C1's flag (S44)** — the flag rests on the owner's two-part sign, whose drop was computed directly (round 1: r and u fail (F1) under V1.1 at ('tue', b0), `proj Sol_{λ(r)} = {blue}` vs `L_r = full`), and ℰ_bv enters no owner case. S108-1-I1 decides only what C1 *admits* (ℰ_bv), not what it drops or its flag.
+
+## (c) The claimed-only edges of my share
+
+| edge | proposed settle | outcome expected | run? |
+|---|---|---|---|
+| e1.02 (V1.1 changes with L233.s1) | the reading: "imposing the constraints of λ(k)" = imposing them **on D**, then projecting ("projecting away its hidden ports" names the projection either way); both readings are covered by the words | **contradicted** — L233.s1 need not change; reclassify as *constrains* (the wording covers I14 and V1.1) | not run (a reading) |
+| e1.03 (V1.1 changes with L556.n2) | the reading: the sentence states the two signatures as formulas of `Sol_{λ(k)}` and `proj^λ`; under V1.1 they change value, not form; Argument 1's use is its conclusion, computed by FC17/FC18 (round 1, e1.04: both hold) | **contradicted** — no change needed | not run (a reading, on a computed base) |
+| e1.14 (V1.2 blocks L103.s2) | the reading: the sentence says a setting edit does not *leave the assigning component's old relation in place*; under V1.2 the assigning component is still replaced by a slice (round 1, computed) and nothing is added; Sol_D's emptiness (69% of new pairs) is a new incompatibility with *altered* components, not a relation left *beside* the slice | **contradicted** — L103.s2 not blocked (the other reading, "any juxtaposition with no solution", would keep it; the words say "adds", and V1.2 adds nothing) | not run (a reading, on a computed base) |
+| e1.36 (V1.5 blocks L155.s2, L155.s5) | derivation: V1.5's domain {selected, constructed} + L155.s2's `declared := neither` + L155.s5's "any assessment may use any of the three" are jointly inconsistent as formal statements | the edge **stands by derivation**; nothing computable — I cannot settle it further; what would: the owner's yes or no on C2 itself (S52's later step) | not run (nothing to run) |
+| e1.37 (V1.5 constrains L155.s6, D3.1) | R2V1.2's encoding (a found question with its trace, ρ_p recorded) | **computed** (expected): the slot and Found stay readable; the edge stands | not run |
+| e1.38 (V1.5 changes with D13.8 q(o)/Rec) | R2V1.3 (q(o) given a ρ_p; Episode and Con computed under V1.5; needs the Rec-carries-ρ wiring in D13.8, S3's) | **computed** (expected): with ρ = declared, Con at the output F and CreateEx 0 of 1024; the edge stands | not run |
+| e1.39 (V1.5 changes with D16.4 𝔓^adv) | R2V1.1's questions with ρ_p recorded, read as a finite 𝔈_Θ (the case scripts' (p, t, Γ)) | **computed** (expected): membership loses every declared-contract candidate, keeps the selected and constructed ones; the edge stands | not run |
+| e1.40 (V1.5 changes with (QF) L544) | cannot be settled from S1: 'fails to capture' and 'not creative' are undefined (D16.XV's own list of undefined terms) | unsettled; what would: definitions of the two terms (S4). Independently: R2V1.4 moves (QF)'s cases through Found without touching those terms | not run |
+
+## (d) The edges
+
+| variant | kind | item (id, section / part of the explanation definition) | why, one line | settled |
+|---|---|---|---|---|
+| R2V1.1 | constrains | D3.1 (FROZEN), D3.4 (S1) | ρ_p's slot is D3.1's own; recording it is the reading V1.5 needs | not run (case-level) |
+| R2V1.1 | moves | X:(E) as C2 has it | the conjunct's whole effect conditional on the recording; flags S44, S41 Q15 go under recorded ρ_p | not run |
+| R2V1.1 | changes with | e1.39's 𝔈_Θ (D16.4, S4) | a finite 𝔈_Θ over recorded questions separates the two sides | not run |
+| R2V1.2 | constrains | L155.s6 (FROZEN), D3.1 (FROZEN) | found ⇒ constructed stays readable with the trace encoded | not run |
+| R2V1.2 | changes with | E8 (FROZEN) | the trace takes E8's arrangement (the contract as a content) | not run |
+| R2V1.3 | moves | X:Expl on the bridge's episode (Con, Build, CreateEx; D13.6/D14.7, S3) | with the brief declared and Episode reading ρ, the bridge's created explanation goes | not run |
+| R2V1.3 | changes with | D13.8 Rec (S3) | Rec must carry ρ for the case to compute | not run |
+| R2V1.4 | blocks | L155.s6 (FROZEN) | a selected contract counts as found | by wording |
+| R2V1.4 | changes with | (QF) L544 (S4), D16.4 𝔓^adv (S4), D13.8 (S3) | question-finding's cases and the class's quantifiers grow | not run |
+| R2V1.5 | constrains | L17.n2 (S1) | the conflict clause's "these four" loses (iii) with it | by wording |
+| R2V1.5 | changes with | D16.XV (S4), X:(Suff), X:(Nec) | the "not using" set shrinks; (Suff) defeated for every declared Acc-candidate | not run (derivable) |
+| R2V1.6 | blocks | L23.s1 (S1) | prediction (agreement of answers) plus a carried contrast becomes explanation | by wording |
+| R2V1.6 | moves | X:Expl | E_rev under τ′ on C1 and the relabeling candidate in; nothing out | not run (conjuncts computed, run) |
+| R2V1.6 | changes with | L49.n3, L69.n3 (S1), D16.XV (S4), X:(Suff), X:(Nec) | the pointer sentences write Account ∧ ¬Dec(t); the defeat sets re-quantify | not run |
+| R2V1.7 | blocks | D4.2 (FROZEN) | the bijection is D4.2's own content | by wording |
+| R2V1.7 | changes with | L119.n4, L119.n5 (S1), Argument 2's claim (S4), L317.s13 (S2), FC03–FC05 (claims) | kinds between candidates and the pairing claim recompute | not run |
+| R2V1.7 | independent of | X:(E), X:Expl | account reads no ~_C (FC30, run) | computed (round 1, FC30) |
+| R2V1.8 | blocks | L151.n3, L151.s4 (S1) | no question can meet Ident's or Obst's conditions | by wording |
+| R2V1.8 | constrains | D3.2 (FROZEN) | the codomain is narrowed inside what D3.2 allows | by wording |
+| R2V1.8 | changes with | D3.3 (S1), E2, E4 (S2), C_id's reading (E1, S2) | the identification and obstruction respects lose every instance | not run |
+| R2V1.9 | blocks | L75.s3, L75.s7 (S1) | a question's range of changes would be defined by Θ | by wording |
+| R2V1.9 | changes with | L275.s2 (S2), L315.s16 (S2) | contrasts only at unadmitted pairs and the pendulum's deleted friction | not run |
+| R2V1.9 | moves | which questions exist (as V1.5, from the contract's side) | p_del names nothing | not run |
+| R2V1.10 | constrains | S108-1-I1's family (round 1's invention) | (iii) is a third choice beside (i) and (ii) | not run |
+| R2V1.10 | independent of | candidate C1's flag (S44) | the flag rests on the two-part sign, computed T→F under V1.1 regardless of L_bv | computed (round 1) + not run (the (iii) case) |
+
+## (e) Items of my share not reached
+
+- **L13.s1–s7** (correspondence's provenance): their maths is D12.1–D12.3 (S2); round 2's ρ_p work covers the question side only; the transport side is section 2's share (C7, C12 already touch it).
+- **L141.s1** ("D is the target"): no maths of its own beyond FROZEN D3.1; varying it would duplicate R2V1.9's edge.
+- **L151.s1, L151.s5, L151.s7**: L151.s1 was reached by V1.4 (round 1) and is carried by R2V1.8's edges; the rule-status and purpose respects (L151.s5) live in Part VII/XI (S2/S3).
+- **L159.s4–s7** (narrowing and its assessment): D3.5/D3.7 are FROZEN and V1.7 was ruled to Part B; nothing left in S1 to vary without repeating it.
+- **L119.s6, L119.s7, L121, L127**: kinds-relative-to-contract is computed by FC04/FC13; the families were round 1's V1.3/V1.8; a direct D4.6 variant would move only the families, which those two variants already moved.
+- **The remaining ~120 untouched S1 sentences** (grievances, commitments, Part I): most state what the semantics does not do; their formal statements are the negations the named claims already test (e.g. L8.s3 by e3.01, S3's); a variant of each would add a block already recorded by those claims.
+- **D0.2**: V1.7's route (Excl) ruled to Part B; its remaining primitives are listed by FC98 (not tested), which needs no variant to stay a gap.
+
+## (f) Inventions the variants rest on
+
+- **R2V1.1, R2V1.4** — I127 (ρ_p's three values), with ρ_p supplied per question. Other choices: unrecorded ⇒ declared (S108-1-I5, round 1's); unrecorded ⇒ unknown, the case left out (V1.5 computes nothing).
+- **R2V1.2, R2V1.3** — I165 (Rec_h′) extended to carry a provenance value. Other choices: records carry none (as now); the trace's extent (at o_t vs spanning the change, the map's O3).
+- **R2V1.3** — I90 (Θ by hand) and I191/I192 (the bridge's labels). The wiring of ρ into Episode is a change in D13.8 (S3), named as a changes-with edge, not made here.
+- **R2V1.5** — the reading of "not using these four" as one set U (D16.XV's). Other choices: U fixed per defeat shape, as D16.XV has it.
+- **R2V1.6** — the reading of L11.s1's "held to a target by a transport that is tested…" as naming (F1) ∧ (F2). Other choices: naming Faithful_C alone; naming only change-fidelity's extent.
+- **R2V1.7** — I10 (the footprint bijection) dropped. Other choices: kept (D4.2); bijection up to port-translation only.
+- **R2V1.8** — I20 (δ) and I21 (⊥) kept; Y_p fixed. Other choices: Y_p free (D3.2); Y_p free but ⊥ excluded.
+- **R2V1.9** — I90 (Θ by hand); "admitted" read as Θ-admitted. Other choices: unadmitted pairs dropped from C (the question restricted) rather than the question failing; Θ read at a grain.
+- **R2V1.10** — S108-1-I1's family: (i) the one solution of D at (a,b); (ii) L_bv(1,b); (iii) the boundary-constant union; a fourth (the answer port's value alone) would make c_bv a slot and is excluded by S45's keeping of Slot as defined content.
+
+END OF REPORT

@@ -1,0 +1,678 @@
+Let me start by reading the files in the sandbox.
+
+Now let me read the scripts and results.
+
+Now let me read the runner script and the summarise script, plus the results.
+
+Now read the results .md, the exact commands, and the rule file. The .md is probably large. Let me read it.
+
+Now, read the exact commands and check consistency. Also read the json partially (it might be big; but I can grep). Let me read `runs/the exact commands.txt` and check build notes for the Avida rules (input rotation, nop-X, etc.).
+
+Now check the numbers in the .md against the .json, and against the code.
+
+Key numbers from .md:
+- Singles: 2,330,137 programs run. Total sites over 23,332 sequences + base evaluations? Let me think. Actually the count "2,330,137 Avida programs run" for singles. Total instruction sites sum over all 23,332 sequences ≈ 2.33M. Mean length ~100. 23,332 × 100 = 2.33M. Consistent. Note base runs aren't counted, fine.
+
+- Pairs: 52,428,814 programs run. pairs among V (viable single sites) for replicating task performers: C(|V|,2). Sum over sequences. |V| ~ maybe mean 100ish → ~5,000 pairs per sequence × 10,500 sequences = 52M. Plausible.
+
+- Program-task pairs: 83,725. Section 3 says "for every performing sequence and task it is the step at which the trace's own task count goes from 0 to 1 (83,725 of 83,725)". And section 2: 82,061 of 83,725 (98.0%) stopped by one site. Let's check: sum over tasks of sequences performing = 12,732+12,161+7,246+12,159+10,566+11,214+9,590+2,673+5,384 = let's compute: 12,732+12,161=24,893; +7,246=32,139; +12,159=44,298; +10,566=54,864; +11,214=66,078; +9,590=75,668; +2,673=78,341; +5,384=83,725. Good, consistent.
+
+- size1 sum: 12,014+11,698+7,239+11,850+10,565+11,048+9,590+2,673+5,384 = 12,014+11,698=23,712; +7,239=30,951; +11,850=42,801; +10,565=53,366; +11,048=64,414; +9,590=74,004; +2,673=76,677; +5,384=82,061. ✓ matches "82,061".
+
+- size 2 sum: 671+463+7+265+1+166+0+0+0 = 1,573. ✓ matches "1,573 needed a pair".
+
+- size 3 or more: 2 (NOT). ✓ "two needed a set of three".
+
+- none found: 45+0+0+44+0+0+0+0+0 = 89. ✓ "89 (NOT and ORN only, 95 Avida programs)".
+
+- Total: 82,061+1,573+2+89 = 83,725 ✓.
+
+- 98.0%: 82,061/83,725 = 0.98012 ✓. "98.6% counted by Avida program" — can't check without json but plausible.
+
+Now check the code against the plan more carefully.
+
+**Singles**: every single site of every genotype — code does that (all i in range(len(s))). ✓ Note: singles also records base. Also "stops" definition: (c&1)==1 and task not done. ✓ matches plan ("still copies, no longer does the sum").
+
+But wait — in the code, `code(row)` uses row['viable'] and row['task.%d'%k] > 0. `viable` in Avida means "forms a colony" per the md (copy exact or leads back to it). The plan says "still makes an exact copy of itself". The results discovered "viable" is broader (colony formation; 1,549 sequences split without replicating and are credited). The md handles this in section 6 departure 3. Hmm, but there's a subtlety: `stops()` requires `(c & 1) == 1`, i.e. the ablated program is "viable". If viable includes programs whose copy leads back to it (not exact), then "still replicates" is a slightly different condition than the plan's "still makes an exact copy of itself". The md acknowledges this. This is arguably a limit that should be checked: does "viable" include programs that merely form a colony? The md says viable = "the copy is exact, or leads back to the program, cTestCPU.cc 282-313". So a program that is viable but not exactly self-copying would count as "still replicating". But the 1,549 non-replicating splitters are those with base viable == 0? Wait — section 1 says "14,965 sequences replicate in the test processor (Avida's 'viable'...)"; and "8,367 sequences do not replicate; 1,549 of these still split off a copy and are credited with tasks". So they treat viable == replicate, and non-viable ones that still split are counted apart. Hmm, but if viable means "forms a colony", does forming a colony require an exact copy? In Avida's test CPU, "viable" for genotype means the genotype can form a colony — I recall `cTestCPU::TestGenotype` marks viable if the genotype's copy divides with an exact match or the copy is a known genotype leading back... Actually the md's parenthetical "the copy is exact, or leads back to the program" is their reading. So a program whose copy differs but is "in the lineage loop" could be counted viable. That's a potential limit but they disclosed it. Not a major objection; it's disclosed in section 1 and 6.3.
+
+But here's a subtle issue for the ablation: an ablated program that is "viable" in the colony sense but whose copy is not exact would count as "still replicating" in the `stops` test. If such programs exist among the ablated variants, a "minimal removal" could include a case where the ablated program doesn't make an exact copy. The md's check: "The tasks the trace credits equal the test processor's for all 14,965 replicating sequences" — doesn't address ablated ones. This is minor; can be raised as an objection of the "limit not stated" kind? Actually the definition in section 2 says "A set stops a task if, with it ablated, the program still replicates in the test processor and the task is no longer credited" — with "replicates" defined in section 1 as Avida's viable. And section 1 discloses viable's meaning. I think it's adequately disclosed. Skip or minor.
+
+**Pairs**: plan says "every pair of sites of every genotype, among the sites whose single removal leaves the program copying (exhaustive to size 2). A pair counts as minimal for a sum if neither of its sites stops the sum alone."
+
+Code pairs_work: V = sites whose single ablation leaves viable. prs = all combinations(V,2). For each base sum t, keep p if stops(c,t) and neither single stops. ✓ matches. Also run_pairs filters recs to those viable and with tasks. ✓.
+
+One subtlety: pairs are enumerated among sites whose single ablation leaves the *program copying*, per plan. ✓ matches V.
+
+But note: a pair {i,j} where single ablation of i does NOT leave copying is excluded. Could a minimal pair involve a site whose single ablation stops replication, but pair-ablating... no — pair ablation includes i ablated, so it also stops replication (monotonic? Not necessarily monotone in Avida? Ablating i alone stops copying; ablating i and j — the program with i ablated stops copying; adding j ablated can't restore copying? In general, ablation could change control flow such that ablating more restores copying — control flow isn't monotone. E.g., i is a jump that when ablated causes an infinite loop; ablating j too could fix the loop. So in principle a minimal pair could include a site whose single ablation stops replication. The plan explicitly restricts to sites whose single ablation leaves copying, so this is a stated limit of the plan. Is it stated in results? Section 2 says "every pair of sites whose single ablation leaves replication was ablated in every replicating sequence that performs a task". And section 7 "Not tested" doesn't mention this. Hmm — the plan stated the restriction; the results state the restriction in the "How" of section 2. It's arguably a limit that leaves open minimal sets involving replication-breaking sites; but by the definition of "stops a task" (must still replicate), such a pair couldn't "stop the task" anyway — wait, if the pair ablated leaves the program copying (both ablated), and stops the task, and neither alone stops the task — for i alone, ablating i stops replication, so i alone does NOT "stop the task" (task stopping requires replication to continue). So such a pair would be a genuine minimal pair under the definition, and it's excluded by the search. This is a real gap but consistent with the plan. Is it disclosed as a limit? The plan says pairs "among the sites whose single removal leaves the program copying (exhaustive to size 2)" — the parenthetical "exhaustive to size 2" is thus not strictly true: exhaustive to size 2 only within V. The results section 2 similarly says "every pair of sites whose single ablation leaves replication was ablated", and section 7 Not tested says "sets of three or more beyond the greedy search" but doesn't mention that pairs containing a replication-breaking site are untested. Given control-flow non-monotonicity is real in Avida, this is a legitimate objection about limits not fully stated. Severity: low-moderate. The fix: add to section 7 Not tested: "pairs (and larger sets) that include a site whose single ablation stops replication (such a pair can still leave replication when both are ablated, since ablation can also restore control flow); none was searched".
+
+Actually wait — is it plausible? For a pair {i,j} with i alone breaking replication: with i ablated, program doesn't replicate. With i and j ablated, it replicates. That requires j's ablation to fix what i's ablation broke. Possible (e.g., i ablated removes an instruction that then changes label matching; j ablated fixes lengths). Rare. Still a stated-limit gap. I'll include as a minor objection.
+
+**Triples**: plan step 4: "for the nine most common genotypes: every triple of such sites as well, to see how many minimal sets of size 3 the irreducible-set search misses." Code triples_run: r = singles[0] — comment "the most common genotype (living() sorts by organisms)". But wait: `load(run,'singles')` reads the singles jsonl in order written; singles were written in batches of 200 from pop sorted by (-organisms, seq), and ex.map preserves order. So singles[0] is the most common. ✓.
+
+trip = combinations(V,3) where V = viable single sites. For each task in base_sums (all tasks of the base program), keep x if stops(c,t), no single site in x stops, and no pair in x is a minimal pair. ✓ Correct definition of minimal triple.
+
+But hold on: minimal triple requires also that no *other* pair (not necessarily within the triple) is a minimal pair? No — minimality of the triple itself: no proper subset stops. Proper subsets are the 3 singles (must not stop) and the 3 pairs (must not stop). The code checks the pairs within the triple against the list of minimal pairs found. But a pair within the triple might "stop" the task while not being in the minimal_pairs list... no: minimal_pairs lists pairs that stop and neither site alone stops. If a pair {a,b} ⊂ x stops t, then since singles in x don't stop, {a,b} stops and neither alone stops → it's in minimal_pairs. So checking `any(p in pair_sets[t])` is right. ✓
+
+**Irreducible**: plan step 3: start from route sites ∩ V; if removing that set stops the sum, put sites back one at a time in 5 random orders, keeping each back if sum stays stopped; "each order ends in a set from which no single site can be put back. If the start set does not stop the sum, start instead from all sites whose single removal leaves copying; if that does not stop it with copying left, the pair is recorded as 'not stopped by the search'".
+
+Code: For each (seq,t) not stopped by single or pair: todo with rs = sorted(route_sites ∩ V), V sorted. Test starts: evaluate knock(seq, rs). alt = those where not stops. For those, evaluate knock(seq, V) (all copying-safe sites). kind = 'routes' or 'all copying-safe sites' if stops else None. Then chains per order with random shuffles, passes.
+
+Wait, there's a bug candidate: `alt = [k for k,(row,(seq,t,rs,V)) in enumerate(zip(starts, todo)) if not stops(code(row), t)]` — `t` here: in a list comprehension, `t` is bound from the tuple unpacking. Yes `for k, (row, (seq, t, rs, V)) in enumerate(...)` — fine.
+
+starts2 evaluates knock for alt. kind[k] = 'all copying-safe sites' if stops else None. Then for each k, start = rs if kind=='routes' else V. Chains: 5 random orders (rng shared across all k and orders — seeded once per run, rng = random.Random(1120) — deterministic per run but shared; fine).
+
+Chain loop: for each live chain, site = order[pos], trial knock(current - {site}). If stops → discard site, changed=True. pos+=1; if pos >= len(order): if changed: order = [s in current]; pos=0; changed=False; if not order: done. Else done.
+
+Hmm: when changed and order filtered to remaining current, it re-passes. Each pass tries putting back each remaining site once. End: a set from which no single site can be put back (the last pass changed nothing). ✓ matches plan "repeat whole passes until a pass puts nothing back".
+
+Wait, there's a subtle deviation from the plan: plan says "put sites back one at a time, in 5 random orders, keeping each one back if the sum stays stopped". The code, in a second pass, only re-tries sites still in `current` (not yet put back) — correct, since sites already put back should stay.
+
+Another subtlety: initial set — the code does not check that removing the *start* set keeps the program copying. Wait: `stops(code(row), t)` includes the (c&1)==1 check, so the start set must leave the program copying. But the start set rs ⊆ V, each site individually copying-safe; jointly they may break copying. In that case `stops` is False, and it falls back to all V — but V ⊇ rs so if rs breaks copying jointly, V would too... wait no: stops(c,t) requires (c&1)==1 AND task not done. If rs breaks copying, stops is False → alt → try V; V ⊇ rs so V also breaks copying → stops False → kind None → "not stopped: None"? Actually kind[k] = None, and in the summary, irr_kind['not stopped: ' + str(ir['start_kind'])] → 'not stopped: None'. Hmm but the results say the "none found" 89 are "for which ablating every route site that leaves replication, and then every such site in the program, did not stop the task with replication left". That matches kind None. But note a case distinction is lost: rs stops copying (vs rs leaves copying but task still done). Both funnel to the same fallback. The plan says "if that does not stop it with copying left" — matches. Fine.
+
+But there is a real gap: the irreducible search starts either from route sites ∩ V or from all of V. If the route set doesn't stop the task and V doesn't stop the task, recorded as not stopped. But there might exist a minimal set of 3+ sites that is a subset of neither... well, any set that stops the task with copying left must be ⊆ V? No! A minimal set of size ≥3 could include a site whose single ablation breaks replication but which in combination keeps it (as discussed above). So "none found" doesn't mean no set exists. Also a stopping set might be a subset of V but not found because the greedy removal from V... wait if V itself stops the task, then some minimal subset exists ⊆ V, and greedy will find *some* irreducible set. So "not stopped" only when V doesn't stop. The md section 5 says "for which ablating every route site that leaves replication, and then every such site in the program, did not stop the task with replication left" — accurate. And they interpret "their task's instructions are all also required for replication". Hmm, "required for replication" = single ablation breaks replication. But the claim "every instruction of their task is also an instruction of their replication (they sit in the replication loop)" is an inference. Ablating all of V leaves copying and the task still credited. That doesn't strictly show each task instruction is in the replication loop; it shows removing all copying-safe sites doesn't stop it. The 89 "could not be made to stop by ablation while replicating" — accurate given the search; the explanation is tentative. It's phrased as explanation ("because"). Given S28/S23 (nothing settled, tentative), a causal "because" claim from the search alone... they did check roles presumably. Minor.
+
+Now check the "irreducible" gating condition in code: `if any(stops(c, t) for c in r['sites']) or pairs[seq]['minimal_pairs'].get(t): continue`. ✓ only pairs not stopped by 1 or 2.
+
+But wait — there's an inconsistency: irreducible_run requires traces[seq] to exist: `traces[seq]` KeyError if missing. All sequences traced, fine.
+
+route_sites(trace_rec, t): from trace's routes; restricted to V. Note the plan says start set = "every output the sum's check accepts, and the instructions that made it". ✓.
+
+**Now the summary code vs the .md numbers.**
+
+Section 2 numbers came from json presumably. Let me check some in the .md against the code's logic:
+
+- "Over the nine tasks, 82,061 of 83,725 program-task pairs (98.0%) are stopped by one site." — computed above ✓.
+
+- "98.6% counted by Avida program": sum of by-program size1 / total programs. Can't verify without json; check json.
+
+- "required instructions per sequence: mean (range)" — NOT 5.2 (0-31). Note: `n_required.append(len(one))` — number of single sites that stop. Mean over doers. Range min 0 (pairs only) ✓ consistent with "the table's '0' minimum is the programs stopped only by pairs". NOR min 3, XOR min 18 — interesting but plausible.
+
+- "In the other 2.0%: 1,573 needed a pair ... two needed a set of three, and 89 ... could not be made to stop" ✓.
+
+Wait — size 3 counts from `ir and ir['sets']` — k='3 or more (irreducible-set search)'. NOT has 2. And "In two NOT programs the irreducible-set search found sets of size 3 (and 5, 6)" — section 5. So two sequences, sizes 3, 5, 6? "found sets of size 3 (and 5, 6)" - meaning across orders, sets of sizes 3, 5, and 6 were found. OK.
+
+- "Pairs also exist beside single sites: minimal pairs total 876,577 over all tasks and programs" — from json presumably.
+
+- "836,544 programs run" for triples: 9 runs, C(|V|,3) summed. |V|~100 → C(100,3)=161,700 × 9 = 1.45M. 836,544 implies mean C(v,3) ≈ 92,949 → v ≈ 81 per sequence. Plausible if most common sequences are ~85-100 instructions with some replication-required sites. OK.
+
+- Section 5 "Instructions outside every circuit": 1,459,777 sites over 14,719 performing sequences → mean length ~99.2. And singles 2,330,137 over 23,332 sequences → mean ~99.86. Consistent.
+
+Check: 437,714 (30%) + 230,290 (16%) + 720,706 (49%) + 71,067 (5%) = 1,459,777. Sum: 437,714+230,290=668,004; +720,706=1,388,710; +71,067=1,459,777 ✓. Percent: 437,714/1,459,777=29.99% ✓; 230,290/1,459,777=15.78% ✓; 720,706/1,459,777=49.37% ✓; 71,067/1,459,777=4.87% ✓.
+
+- "Replication-required sites: their ablation stops the task's credit in 80% of cases (1,081,852 of 1,359,165)". From `repl_sites` counter: summed over tasks over doers of sites where not viable. 1,359,165 = sum over 9 tasks of (number of doers × number of non-viable single sites). Hmm: 83,725 pairs × mean non-viable sites... 1,359,165/83,725 ≈ 16.2 non-viable sites per sequence. Plausible.
+
+Wait, but the counter increments once per (task, site) — so a site required for replication counts once per task performed by the sequence. OK.
+
+- "in the traces of each run's most common sequence with one replication-required site ablated, the task outputs are still written in most cases (all tasks in 125 of 159 such traces, some in 24, none in 10)" — from without_replication counts: 9 runs × ~17.7 replication-required sites = 159. ✓ plausible.
+
+- Section 1: 23,332 sequences, 32,193 programs. 14,965 replicate (23,813 programs); 14,719 of them perform ≥1 task (23,553 programs). 8,367 do not replicate; 23,332−14,965 = 8,367 ✓. 1,549 of these credited with tasks (1,552 programs).
+
+- Table programs: NOT 21,366 programs of 32,193 = 66.36% ✓ (66.4%).
+
+- Section 2's claim "98.0% of the program-task pairs (98.6% counted by Avida program)". Check json for by_program.
+
+Now check json for these fields. Let me grep the json for key values. The json is large probably; I'll read selectively.
+
+Also need to check the "triples" reported numbers: "exhaustive triples found further minimal sets of size 3 (0 to 254 per task: in default seed 1's, 254 for NOT)".
+
+Also check consistency: section 2 example "NOT, low seed 2's most common NOT sequence (44 Avida programs, 110 instructions)". Section 3.1 says NOT (low seed 2, 44 programs). OK.
+
+Also the "without_copying" definition: ess = sites where single ablation makes viable=0 — "replication-required sites". The plan said "a removal that stops the copying" — code counts sites where the program is no longer viable. But per the viable caveat: viable=0 might include programs that still split (like the 1,549). For the most common sequences (replicating), a site whose ablation gives viable=0 — does it stop splitting? The without_copying trace records x['divided'] from the trace — recorded in json but not reported in md (md reports 'sums_written_in_trace' via tasks_in_trace). Actually the record includes 'divided' but the summariser only uses 'sums_written_in_trace'. Fine.
+
+Hmm wait, one thing: in `without_copying_run`, `sums_written_in_trace': x['tasks_in_trace']` — tasks in trace presumably means tasks whose outputs were written (accepted?) during the trace. Need R's semantics. Not critical.
+
+Now some cross-checks I should do on the json. Let me look at the json to verify: tasks.NOT smallest_ablation_stops... by_sequence {'1': 12014, '2': 671, '3 or more...': 2, 'none found': 45}, by_program percentages 95.5%; sequences 12,732; programs 21,366.
+
+Also check "required instructions per sequence mean (range)" etc.
+
+Also potential issue: in summariser, for task entry 'sequences' counts only doers with viable base ✓.
+
+Now the bigger checks:
+
+**Does the singles stage evaluate base and each single? Yes. `flat` built for all seqs in batch of 200 items; note chunk: evaluate called with len(seq)*200 sequences at once = ~20,000 > CHUNK 4000, handled by internal chunking ✓.**
+
+**Potential bug: in singles_work, `items` are (seq, n) tuples; seqs list; rows aligned by order — evaluate returns rows in order and verifies sequence matches ✓ (it checks r['sequence'] != s). Good — this also catches the NULL letter 'A' sequences? Wait: the knocked sequences contain letter 'A' (nop-X). When Avida writes out the sequence in out.dat, does it write back the same letters including 'A'? The instset maps letters a..z + A. Avida's LOAD_SEQUENCE/DETAIL sequence output — presumably writes letters per instruction. nop-X assigned letter A. OK, they verified equality so it worked.
+
+Hmm, one thing: `_folder` writes instset with names for a..z then nop-X for A. In evaluate, `with_null=True` default — used everywhere including environment tests with `names` overridden (E-tests script not my job, but the ablation script uses default). Fine.
+
+**Cross-check "pairs_tested" vs 52,428,814.** Not directly verifiable.
+
+**Check the claim in section 2 How: "for the 91 program-task pairs with no stopping set of one or two sites, the irreducible-set search"**. Wait: pairs with no size-1 or size-2 set = 2 (size 3+) + 89 (none found) = 91. ✓ consistent.
+
+**Check the claim "1,664 program-task pairs that no single site stops"**: 1,573 + 2 + 89 = 1,664 ✓. And breakdown "NOT 712 of 718": NOT pairs not stopped by single = 671+2+45 = 718 ✓ 712 have >1 route. NAND 463 of 463... wait text says "NAND 452 of 463" — 463 ✓ (463 pairs + 0 others). ORN 308 of 309: 265+44 = 309 ✓. ANDN 166 of 166 ✓ (166 pairs). AND 7 of 7 ✓. OR 1 of 1 ✓. Good.
+
+**Now check the .json numbers.** Let me grep.
+
+Also I should check the build notes for input rotation and nop-X claims and `cTestCPU.cc` lines — quickly.
+
+Also check plan vs results on "stops a sum" wording and "task still credited (the ablated program still splits)" counter: in summariser repl_sites counts, for replication-required sites, whether task still credited — meaning viable=0 but task credited (program still splits). md: "their ablation stops the task's credit in 80% of cases (1,081,852 of 1,359,165), because the program no longer splits (a program that never splits is credited nothing)". Hmm — the "because" is an inference again; 20% still credited → still splits. OK.
+
+Now potential inconsistency: 1,081,852/1,359,165 = 79.6% ✓ "80%".
+
+**Check counts "credited_with_it_but_not_replicating": 1,549 sequences ... each of them has, for each of its tasks, a single site whose ablation stops the credit" (section 5). In summariser, nonrep_single counts per task. The md claims for each task. Fine if json shows with_a_single_site == sequences for each task.
+
+Now examine some possible real objections:
+
+**Objection A: the `stops` test and pairs where one site breaks replication alone** (discussed above). The results say "The search is exhaustive only to pairs (to triples in nine sequences)" (section 5 Redundancy) and section 7 Not tested mentions deletion and sets ≥3 beyond greedy, but not this pair-gap. Section 2 "How" does state pairs were "among the sites whose single ablation leaves replication". Is that enough? The claim "exhaustive to size 2" in the plan and implied in results could mislead: minimal pairs containing a replication-breaking site are never tested. I'll raise as an objection with a fix sentence.
+
+Wait, actually think again: can a pair {i,j} where i alone breaks replication be a *minimal pair* under the definition? Requirements: stops(c_{i,j}, t) — with both ablated, program still replicates and task not done. i alone: not stops (since viable=0 → (c&1)==0 → not stops). j alone: not stops (either doesn't stop task or breaks replication). So yes it would qualify as minimal but is never tested. Real gap. Same for triples and the irreducible search (start sets ⊆ V). And for the "none found" 89: a minimal set might include such a site. The md says "could not be made to stop by ablation while replicating" — that's stated as search outcome, fine, but "because every instruction of their task is also an instruction of their replication" is stronger than shown. Actually hold on — is it shown? They could verify from roles: for the 89, are all route sites replication-required? If every route site's single ablation breaks replication, then... any stopping set with replication left must ablate ≥1 site of each route (hmm, not necessarily — a set could stop the task without cutting routes, e.g. by altering control flow). Actually they ablated ALL of V (all copying-safe sites) and the task was still performed. That's a strong result: even with every copying-safe site ablated, task still credited. So no subset of V stops it. Any stopping set S with replication left: S must include a site outside V (replication-breaking alone). Possible in principle. So "could not be made to stop by ablation while replicating" — as searched. The md's phrasing "for which ablating every route site that leaves replication, and then every such site in the program, did not stop the task with replication left" is accurate. Then "their task's instructions ... are all also required for replication (they sit in the replication loop)" — hmm, if ablating ALL copying-safe sites leaves the task performed, that suggests the task is performed by instructions that are all replication-required... plausible reading. But strictly, the task could be performed by route instructions that are copying-safe-but-jointly-insufficient... wait if all copying-safe sites are ablated and the task is still performed, then the route (as executed then) uses only replication-required sites. Tentative explanation; S23-acceptable? They present it as explanation with "because". Borderline; I might raise it as a minor wording point: "because" states a reason as settled. Given S23/S28, better "consistent with". Low priority.
+
+**Objection B: "required instructions per sequence" mean/range computed only over size-1 doers?** `n_required.append(len(one))` for every doer; for pairs-only doers len(one)=0. So mean includes zeros. md table shows mean 5.2 with range 0-31 for NOT. Fine and disclosed ("the table's '0' minimum is the programs stopped only by pairs"). OK.
+
+**Objection C: singles count 2,330,137 vs computed total sites.** Section 5 gives performing sequences' sites 1,459,777 for 14,719 sequences (mean 99.2). Singles total 2,330,137 across 23,332 sequences (mean 99.86). Non-performing sequences: 23,332−14,719 = 8,613 sequences... wait 14,719 performing & replicating; also 1,549 non-replicating credited ones — are they "performing"? Section 5 says "over the 14,719 performing sequences' 1,459,777 sites". So 14,719 = replicating performers. Non-replicating (8,367) sequences mean length: (2,330,137−1,459,777)/8,367 = 870,360/8,367 ≈ 104. Plausible (includes parasites/viable ones? whatever). Consistent enough.
+
+**Objection D: the triples run choice "most common genotype of each run" — plan says "nine most common genotypes (one per run)". Code takes singles[0] of each run = most common overall, not most common *task performer*. For tasks not performed by that sequence, no triples. Plan said "for the nine most common genotypes: every triple of such sites as well, to see how many minimal sets of size 3 the irreducible-set search misses". Results section 2: "for the most common sequence of each run, every triple (836,544 programs run)" — matches code and plan. But md section 2 Redundancy: "In the most common sequence of each run, exhaustive triples found further minimal sets of size 3 (0 to 254 per task: in default seed 1's, 254 for NOT)". OK.
+
+**Objection E: irreducible search's route sites ∩ V start.** The plan says start from route sites restricted to copying-safe; if that set doesn't stop, fall back to all V. Code ✓.
+
+**Objection F: In summariser, `k = '3 or more (irreducible-set search)'` counted when `ir['sets']` non-empty. But sets could have size 1 or 2? No — gated by no single and no pair. Could a greedy end-set have size 1? The end set stops the task (it's derived from a stopping start by removing sites while still stopping). If end set size 1, that single site stops → contradicts gate. Size 2 similarly. OK.
+
+But hmm — one subtle bug: chains start from `start` and the first pass tries removing each site. `c['current']` starts as set(start). If NO site can be removed, end = start (stops). Fine.
+
+Another: `results[c['k']]['sets']` appends sorted lists; duplicates across orders removed. But different orders may yield different sets — recorded. md says NOT's two sequences: sets of size 3 (and 5, 6). OK.
+
+**Objection G: md section 2 "876,577 minimal pairs" — check json.**
+
+**Objection H: Section 0 says "In the other 2.0%: 1,573 needed a pair of sites ... two needed a set of three, and 89 (NOT and ORN only, 95 Avida programs)".** 95 Avida programs for 89 pairs across 45 NOT + 44 ORN sequences. Plausible.
+
+**Objection I: "98.0% of the program-task pairs (98.6% counted by Avida program)"** — need json by_program.
+
+Let me now read the json selectively — grep for the key structures. The json may be huge (indent=1, includes circuits and worked examples). Let me check its size first via Glob? Can't run commands. Read with limit. Actually I can Grep with patterns.
+
+Let me grep for "smallest_ablation_stops" with context. Actually json indent=1 means each key on its own line. Grep for '"1"': too generic. Grep for '"by_program"' with -A 6.
+
+Also check triples: '"triples"' -A 40.
+
+Also check 'without_replication'.
+
+Let me also verify the owner's terms file and rule file quickly (short), and build notes for the rotation claim (cPopulationCell.h 214-218) and cTestCPU viable lines — not strictly needed but the md cites them; another agent (traces/circuits) likely covers. My job is ablation and limits. Focus.
+
+Also: **the plan's definition of minimal pair "kept only when neither site alone stops the task"** — code also requires both sites in V. ✓.
+
+**Check "size 1, by Avida programs" column: NOT 95.5%, NAND 97.2%, AND 99.9%, ORN 98.4%, OR 100.0%, ANDN 99.1%, NOR 100%, XOR 100%, EQU 100%.** Weighted overall 98.6% claimed. By-sequence overall is 98.01%. Since larger programs (more organisms) more likely size1, plausible.
+
+Hmm wait, check plausibility: by-program size1 share should be ≥ by-sequence for most tasks given positive correlation... NOT by-seq = 12,014/12,732 = 94.36%; by-program 95.5%. OK.
+
+Now, a subtle consistency check: NAND has 'none found': 0 and pairs 463 — but NAND min required 0? mean 5.3 range 0-23 ✓.
+
+**Now check the biggest potential numeric inconsistency: Section 2 How says "for the 91 program-task pairs with no stopping set of one or two sites, the irreducible-set search".** ✓ = 2+89.
+
+**"every pair of sites whose single ablation leaves replication was ablated in every replicating sequence that performs a task (52,428,814 programs run)"** — matches run_pairs filter (viable and tasks). ✓.
+
+**Singles: "Every single site of every sequence was ablated (2,330,137 Avida programs run)"** — matches run_singles over all living. ✓.
+
+Now let me verify json numbers. Let me grep.
+
+Also verify "triples_tested" sum = 836,544: 9 runs; the summariser includes 'triples_tested' per run in json.
+
+Also verify "minimal_triples" numbers 0..254 and "254 for NOT in default seed 1".
+
+Also check worked example NOT: "low seed 2's most common NOT sequence (44 Avida programs, 110 instructions)" and required sites listed: 12 push, 15 nop-C, 20 nand, 21 swap, 27 nop-C. Hmm site 15 nop-C — earlier in route description: "site 16 `pop` (with `nop-C` at 17)". Site 15 nop-C is the register choice of instruction before it? md says "15 `nop-C` (the register choice of the instruction before it)". The instruction before 15 is site 14 — what is it? Not stated. Hmm, the route sites: 11 IO, 12 push, 16 pop, 17 nop-C, 20 nand, 21 swap, 26 IO, 27 nop-C. Required: 12, 15, 20, 21, 27. So 15 is NOT in the route (16 pop's nop is 17). Site 15 is a nop-C modifying instruction at 14 (outside route). Role: 'register or head choice of an instruction outside the routes'. OK plausible — 15's ablation changes what instruction 14 does (e.g., a swap at 14), redirecting wiring, breaking NOT. Fine.
+
+Also check EQU example: required 25 sites listed... count them: IO at 27,41,47,53,66 (5), IO at 45,51,55 (3), nand 43,75,78,91 (4), add 60, inc 63, sub 65 (3), push 44, pop 90 (2), swap-stk 54, 88 (2), nop-C 28,61,67,76,79 (5), IO 92 (1) = 25 ✓ "Required: 25 sites". Good. mean 21.9 range 7-33 — but this sequence has 25 > ... range max 33 fine.
+
+Wait, section 2 table says EQU mean 21.9 (7-33). OK.
+
+Now the md says "No minimal pair" for that EQU sequence; but 'minimal_pairs_total' would be 0. Fine.
+
+Now, check the claim in Section 0: "on average 5 (NOT, NAND) to 27 (XOR) per program" — table says NOT 5.2, NAND 5.3, XOR 27.0. ✓.
+
+Section 0: "These are the program's required instructions for that task: on average 5 (NOT, NAND) to 27 (XOR) per program." ✓.
+
+Now check the json. Let me grep for numbers.
+
+Potential issues to check in json:
+1. tasks.NOT.sequences = 12732, programs 21366.
+2. smallest_ablation by_sequence counts.
+3. by_program.
+4. triples.
+5. minimal pairs total 876,577 — sum over tasks of len of ... wait, 'minimal_pairs' total per task isn't directly in entry; md says "minimal pairs total 876,577 over all tasks and programs". Where does that come from? In summariser, `pair_roles` counts only pairs of doers with traces (limited to 12 shown), and mp lists per sequence. Total minimal pairs = sum over doers of len(mp) — computable from raw data but not in the json entry explicitly... Actually there's no field for total minimal pairs! Let me check: entry has 'minimal_pair_roles' (only 12 shown, only for doers with traces), no total. The worked example has 'minimal_pairs_total' for one sequence. So 876,577 is not in the json — it must have been computed some other way, or it's in some other field. Hmm. The md says "The numbers: the .json beside this file, written by [the summariser]". If 876,577 appears nowhere in the json, that's a consistency issue (number unverifiable from the summary). Let me grep the json for 876577.
+
+Also "836,544" triples tested, "2,330,137", "52,428,814" — the singles/pairs run counts are printed by scripts (stdout), not in json. That's fine — they're run counts from logs. But 876,577 — grep.
+
+Let me also double-check 'reduced_circuits_output_checked...' and 'smallest_reduced_circuit_found' — not my angle.
+
+Focus areas for objections (my angle):
+1. Pair/triple/irreducible searches restricted to V (copying-safe single sites): minimal sets containing a replication-breaking-alone site are untested — limit not stated in section 7 / section 2 claims exhaustiveness. — objection.
+2. Check whether "98.6% by program" and other numbers match json.
+3. "minimal pairs total 876,577" provenance.
+4. The triples stage runs only the most common sequence per run — but if that sequence's tasks don't include, e.g., XOR, then no triple data for XOR in that run; md says "0 to 254 per task" — fine.
+5. Check that md's "size 1, by Avida programs" for ORN 98.4% etc. matches json.
+6. The irreducible search: only for pairs with no 1 or 2 set; but what about sequences where a size-1 set exists AND also larger minimal sets exist? Those larger sets aren't searched (by design; triples partially cover). md: "So the required instructions are the smallest removals, not the only ones." ✓ disclosed.
+7. A subtle one: the triples stage defines V from the most common sequence's singles; `pairs[seq]` needed — pairs file only contains replicating task performers; the most common sequence is presumably a performer ✓ else KeyError.
+8. In triples_run: `r = singles[0]` — comment says living() sorts by organisms; but singles.jsonl order = order written = batches order = pop order (sorted by (-n, seq)). ex.map preserves input order. ✓.
+
+Hmm wait — actually there's a potential issue in run_singles: `batches = [(run, pop[i:i+200])...]` and `ex.map(singles_work, batches)` — results in order, written in order. ✓.
+
+9. `P.evaluate` verifies row['sequence'] == s — for knocked sequences with 'A'. If Avida's DETAIL 'sequence' output... the check passed evidently.
+
+10. The `stops` definition and 'task.%d' fields: TASKS index k 0..8 matches Avida's task order NOT..EQU. Presumably verified in S111.
+
+11. Section 2 "How" says "every single site of every sequence was ablated (2,330,137 Avida programs run)". But singles also ran base programs (23,332) — not counted. Fine.
+
+12. Check: does the md anywhere use forbidden words (S23)? Scan: "true", "established", "prove"... Section 3 "The arithmetic steps are exact bit-by-bit identities... not approximations: for example nand(x,y)+x+1 equals x and not y for every pair of 32-bit numbers" — "exact", "equals" fine (math). "verified"? Search: section 5 "the generality check (200 input triples, computed on the actual numbers) covers them". No "verified". "believe" no. "supports" no. OK. Word "established"? No. "authority"? No. "true"? No... check "ground truth" no. Fine — mostly. "proved"? no. Good.
+
+"model"? S43: for what the theory judges say "candidate"/"explanation", never "model". The md doesn't discuss theory candidates. Fine.
+
+13. Check the limit statements: plan section 2 "Limits, stated now". Results section 7 "Not tested": "ablation by deleting an instruction...; sets of three or more beyond the greedy search (outside the nine most common sequences); task performance outside the test processor (in the world, with neighbours and changing inputs); whether the circuits found are the only ones...". Good coverage of: deletion ✓, ≥3 beyond greedy ✓, test processor only ✓. Replication-required instructions set apart ✓ (sections 2, 5).
+
+But "not all of them and not surely the smallest" for size-3 sets: section 7 says "sets of three or more beyond the greedy search" — but the greedy's non-completeness *within* the searched pairs (i.e., sets found by the greedy are irreducible but not necessarily smallest, and not all minimal sets found) — is that stated in the results? Section 2/0 says "two needed a set of three" — the greedy found sets of size 3 (and 5, 6) for those two; but is 3 the smallest for them? For those two NOT pairs, could there be a *different* set of size 3 or even... size <3 excluded by exhaustive singles/pairs (within V). But a set of size 3 containing a replication-breaking site wouldn't have been found by singles/pairs gating... wait singles covered ALL sites (not just V) for size 1. Pairs within V only. So for those two, a minimal pair {i,j} with i replication-breaking-alone is possible → "two needed a set of three" could be wrong (they might need only 2). This ties into objection A. The md section 0: "two needed a set of three" — stated flatly. Given the search restriction, should be "two were stopped by no set of one or two sites among the copying-safe sites; the irreducible-set search found sets of three (and five, six) for them". That's the exact fix.
+
+Also "the smallest removals" claim: "So the required instructions are the smallest removals, not the only ones" — fine given gating.
+
+14. Now check counts by program in json + triples + 876577. Let me grep the json.
+
+Also check tasks.NOT.by_program to verify 95.5%.
+
+Let me also check the json 'triples' and 'without_replication' sections.
+
+Let me grep now.
+
+So:
+- NOT by_program: 1: 20,408; 2: 908; none: 48; 3+: 2. Total = 21,366 ✓. md says 95.5% → 20,408/21,366 = 95.52% ✓.
+- NAND: 20,130 + 587 = 20,717 ✓. 20,130/20,717 = 97.17% ✓ 97.2%.
+- AND: 11,839+10 = 11,849 ✓; 99.92% ✓.
+- ORN: 20,464+291+47 = 20,802 ✓; 20,464/20,802 = 98.37% ✓ 98.4%.
+- OR: 19,076+1 = 19,077 ✓; 99.99%→100.0% ✓.
+- ANDN: 19,596+182 = 19,778 ✓; 19,596/19,778 = 99.08% ✓ 99.1%.
+- NOR: 18,045 ✓ 100%.
+- XOR: 5,782 ✓ 100%.
+- EQU: 10,765 ✓ 100%.
+
+Overall by program: size1 total = 20,408+20,130+11,839+20,464+19,076+19,596+18,045+5,782+10,765 = compute: 20,408+20,130=40,538; +11,839=52,377; +20,464=72,841; +19,076=91,917; +19,596=111,513; +18,045=129,558; +5,782=135,340; +10,765=146,105. Total program-task pairs = 21,366+20,717+11,849+20,802+19,077+19,778+18,045+5,782+10,765 = 21,366+20,717=42,083; +11,849=53,932; +20,802=74,734; +19,077=93,811; +19,778=113,589; +18,045=131,634; +5,782=137,416; +10,765=148,181. 146,105/148,181 = 98.59% ✓ "98.6%".
+
+NOT by_program 'none found' = 48 programs; md says 95 Avida programs total for 89 pairs: NOT 48 + ORN 47 = 95 ✓. Good.
+
+Now "876,577 minimal pairs" is NOT in the json. Also "2,330,137", "52,428,814", "836,544" not in json (those are run counts from stdout; the commands file doesn't show stdout either, but they're plausible run logs; not in folder). The md's header says "The numbers: the .json beside this file, written by [the summariser]". 876,577 total minimal pairs is not derivable from the json as far as I can tell — let me check for any field like minimal_pairs totals. Search for "minimal_pairs" in json.
+
+Triples: sum of triples_tested across 9 runs should equal 836,544. low_seed1: 76,076; low_seed2: 113,564. Let me get the rest. Also check minimal_triples max 254 (default seed 1 NOT).
+
+Triples_tested sum: 76,076+113,564+113,564+113,564+204,156+70,300+45,760+29,260+70,300.
+
+Compute: 76,076+113,564 = 189,640; +113,564 = 303,204; +113,564 = 416,768; +204,156 = 620,924; +70,300 = 691,224; +45,760 = 736,984; +29,260 = 766,244; +70,300 = 836,544. ✓ Matches the md's 836,544 exactly.
+
+Interesting: default_seed2's most common sequence has 204,156 triples → C(v,3)=204,156 → v ≈ 95? C(95,3) = 138,415... let me compute: v=100 → 161,700; v=110 → 215,820; v=108 → 205,320; v≈107.7. Sequence length 152. Plausible with ~45 replication-required sites. OK.
+
+Also, interesting: low_seed2's triples_tested = 113,564 → v ≈ 84 (C(84,3)=95,284; C(88,3)=109,736; C(89,3)=113,564 — yes C(89,3) = 89*88*87/6 = 113,564 ✓). So V=89 sites of a 110-instruction sequence. md says the NOT example (low seed 2's most common) has 110 instructions ✓ (sequence length: let me count "wzjagckwvkyyovncpccaurnaaaycucucbwycuabqjbbjfafwcuqruwdbycodvbftcuycdrccwucocypxnvvtdbkkatyptyrbykbzvvvfcaxgab" — claimed 110. Trust.)
+
+So 89 copying-safe sites; 21 replication-required sites (110−89=21 ✓ matches without_replication low_seed2: replication_required_sites 21). Nice cross-consistency: 89+21=110 ✓.
+
+low_seed1: 76,076 = C(v,3)? v=79: 79*78*77/6 = 79,079. v=78: 76,076 ✓ (78*77*76/6 = 76,076). So V=78; replication_required_sites 22 → length 100. Sequence length... "wzcagctrwcxlavicnclszfzechsxuwytcuyvucuyycuuvsvmjqtcjyncwpuuyjdacccxavuscxuvubmcwdqbuycyzvvvfcaxvvgab" — count later; plausible 100.
+
+default_seed1: 113,564 → v=89; replication_required_sites? need json; length should be 89 + r.
+
+default_seed2: 204,156 = C(v,3)? v=108: 108*107*106/6 = 204,156 ✓. So v=108; sequence length 152 → replication-required 44.
+
+default_seed3: 70,300 = C(v,3)? v=76: 76*75*74/6=70,300 ✓ v=76; length 84 → 8 repl-required.
+
+high_seed1: 45,760 = C(v,3)? v=64: 64*63*62/6=41,664. v=66: 66*65*64/6=45,760 ✓ v=66; length 78 → 12.
+
+high_seed2: 29,260 = C(v,3)? v=57: 57*56*55/6=29,260 ✓ v=57; length 70 → 13.
+
+high_seed3: 70,300 → v=76; length 92 → 16.
+
+low_seed3: 113,564 → v=89; length 110 → 21.
+
+Now the md says "all tasks in 125 of 159 such traces, some in 24, none in 10". Total replication-required sites: 22+21+?+?+44+8+12+13+16. Known so far: low1 22, low2 21. Sum must be 159: 22+21+x3+x4+44+8+12+13+16 = 136 + x3 + x4 = 159 → x3+x4 = 23. low_seed3 length 110 v 89 → 21; default_seed1 length? v=89; sequence "kwuywfjagclwnubdxilpyutupfycfqpxrycjusbfmybuoynyyaccufbfbjijfrcucuaynrcpurcaucyarqyusmycyfrdezvvfcaxvgab" — hmm. If low3=21, default1=2? That seems low (89 v-sites + 2 = 91 length?). Let me check: default_seed1's most common sequence — from md section 3.1, OR example is "default seed 1, 12 programs". Hmm I need the lengths. Actually let me count low_seed2 length to validate 110: the sequence string — I'll trust it.
+
+Actually maybe default_seed1's repl sites = 2? Unlikely. Let me just read the without_replication json block fully.
+
+Replication-required totals: 22+21+19+15+20+13+19+12+18 = 22+21=43; +19=62; +15=77; +20=97; +13=110; +19=129; +12=141; +18=159 ✓ = 159. And "all" counts: 21+20+18+11+10+12+13+11+9 = 125 ✓; "some": 1+3+10+3+7 = 24 ✓; "none": 1+1+1+1+3+1+2 = 10 ✓. All consistent with md.
+
+Wait: default_seed3 repl sites 13, but I derived v=76 and length 84 → 8 repl-required. Contradiction? Let me recount: default_seed3 sequence length: "wfojagcfunxwalnwzjpjycblnqurqyubarjuoebbryxjpbuexdcvyubyusedycmqyuwuwmsfyuyizvvvfcaxvvgab". Let me count in chunks of 10: wfojagcfun (10) xwalnwzjpy (20) cjblnqurqy (30)... let me carefully: 
+"wfojagcfun" 10
+"xwalnwzjpy" wait the string: wfojagcfun xwalnwzjpy cjblnqurqy ubarjuoebb ryxjpbuexd vyubyusedy cmqyuwuwms fyuyizvvvf caxvvgab — hmm let me count exactly: after 80 chars "fyuyizvvvf" then "caxvvgab" 8 → 88? But triples_tested for default_seed3 = 70,300 = C(76,3), so v=76, and 76+13 = 89 ≠ 88ish. Hmm, my chunk counting is unreliable. Let me not worry — maybe length 89. Actually high_seed3: 70,300 too (v=76), repl 18 → length 94. Sequence "barjdwwimyjagctqvdxclyatzsvmvrcyeeaxucfgpegyrtyyvcsnalptuwpcayaenovrsazznbnkvvonzfyurvfcaxgwab": chunks of 10: barjdwwimy(10) jagctqvdxc(20) lyatzsvmvr(30) cyeeaxucfg(40) pegyrtyyvc(50) snalptuwpc(60) ayaenovrsa(70) zznbnkvvon(80) zfyurvfcax(90) gwab(94). Length 94 ✓ = 76+18 ✓. 
+
+default_seed3: count: wfojagcfu(9)... "wfojagcfunxwalnwzjpjycblnqurqyubarjuoebbryxjpbuexdcvyubyusedycmqyuwuwmsfyuyizvvvfcaxvvgab": chunks: wfojagcfun(10) xwalnwzjpy? — actual letters: w f o j a g c f u n | x w a l n w z j p y | c j b l n q u r q y | u b a r j u o e b b | r y x j p b u e x d | v y u b y u s e d y | c m q y u w u w m s | f y u y i z v v v f | c a x v v g a b = 88? That gives 88, but expected 89. Let me recount chunk 3: "cjblnqurqy" — original: "...xwalnwzjpjycblnqurqyubarjuoebb..." After "xwalnwzjp" (chars 11-19?), I'm miscounting. This is error-prone; the internal consistency (C(v,3) exact match for all nine, and 76,076, 113,564 etc. all matching binomial coefficients exactly) is strong evidence. Let me verify one: 113,564 appears for low_seed2, low_seed3, default_seed1 — C(89,3) = 89×88×87/6 = 89×88=7832; 7832×87=681,384; /6 = 113,564 ✓. And low2 repl=21, low3 repl=19, default1 repl=15 → lengths 110, 108, 104 respectively. The md says low seed 2's NOT example is 110 instructions ✓ and low seed 3's EQU example 108 instructions ✓ (md section 2.1: "EQU, low seed 3's most common EQU sequence (28 Avida programs, 108 instructions)" — and low_seed3's most common sequence has 28 programs ✓ 108 length ✓). Great consistency.
+
+default_seed2: C(108,3)=204,156 ✓, repl 20 → length 128. Sequence: "ahncdlmyufyuryucbetwpndbtjaevcoqwymyuxruhbogcopcuyydjfycyucypuoyuyycullzenvujdjfzzqpjxuxnlfmzyzkxyhxvqtxkevncypujyjnsqzszvvfcjga" — 10-char chunks: ahncdlmyuf(10) yuryucbetw(20) pndbtjaevc(30) oqwymyuxru(40) hbogcopcuy(50) ydjfycyucy(60) puoyuyycul(70) lzenvujdjf(80) zzqpjxuxnl(90) f mzyzkxyhxv(100) vqtxkevncy(110) pu jyjnsqzsz(120) vvcjga(126)? Hmm 126 vs 128. Again my counting is unreliable by hand. Fine.
+
+So the triples and without-replication numbers are internally consistent. 
+
+Now the "876,577 minimal pairs" — not in json, not derivable from anything in the folder. It's the only headline number in section 2 with no traceable source. The md header says "The numbers: the .json beside this file". Also "Pairs also exist beside single sites: minimal pairs total 876,577 over all tasks and programs". Sum over doers of len(mp) would include pairs from pairs.jsonl for every performer. The summariser doesn't compute that total. So this number cannot be checked against the summary; either it came from an ad-hoc computation not shown, or... Objection: number without a source in the repository files; fix: add 'minimal_pairs_total' per task to the json (one line in the summariser) or strike the number.
+
+Similarly, run counts 2,330,137 / 52,428,814 / 836,544: 836,544 is verified. 2,330,137: total sites. Can I sanity check total sites = sum of lengths over 23,332 sequences? Mean 99.86 — plausible. 52,428,814 pairs: sum over replicating performers of C(v,2). Performers: 14,719 sequences. Mean C(v,2) = 52,428,814/14,719 ≈ 3,562 → v ≈ 85 mean. Mean length ~99 with ~14 repl-required sites... plausible given the most-common sequences have v 76–108 of lengths 78–152 (repl sites 12–22). Mean v ~85, plausible. OK.
+
+Now check other md claims against json: 'required_instruction_kinds' shares e.g. NOT IO 31%? And 'distinct_required_instruction_strings' 1,704 for NOT. And roles percentages. And 'ablation_against_routes' 83% (751,212 of 904,433). Let me grep some.
+
+Also check the by-sequence table against json by_sequence — I already verified totals arithmetic; let me verify one task's by_sequence from json directly.
+
+Let me verify the md's "83% of all required sites (a sum over the nine tasks: 751,212 of 904,433) lie in the credited route".
+
+Sum of "required sites in the credited route" over nine tasks = 52,990 (NOT) + 57,454 (NAND) + 71,506 (AND) + 71,816 (ORN) + 113,751 (OR?) + 101,115 (ANDN?) + ... I have partial values. The order in json: NOT, NAND, AND, ORN, OR, ANDN, NOR, XOR, EQU. Values so far: NOT 52,990; NAND 57,454; AND 71,506; ORN 71,816; OR 113,751; ANDN 101,115; need NOR, XOR, EQU.
+
+And "required sites": NOT 66,377; NAND 65,056; AND 91,694; ORN 86,514; OR 137,190; ANDN 115,598; ...
+
+Let me get the remaining three (NOR, XOR, EQU) blocks.
+
+Sum "required sites in the credited route": 52,990+57,454+71,506+71,816+113,751+101,115+127,728+58,768+96,084 = 
+52,990+57,454=110,444
++71,506=181,950
++71,816=253,766
++113,751=367,517
++101,115=468,632
++127,728=596,360
++58,768=655,128
++96,084=751,212 ✓ md's 751,212.
+
+Sum "required sites": 66,377+65,056+91,694+86,514+137,190+115,598+151,571+72,280+118,153 =
+66,377+65,056=131,433
++91,694=223,127
++86,514=309,641
++137,190=446,831
++115,598=562,429
++151,571=714,000
++72,280=786,280
++118,153=904,433 ✓ md's 904,433. 751,212/904,433 = 83.05% ✓.
+
+"Route sites that are not required: 15% (EQU) to 50% (NOT)": NOT 52,990/105,880 = 50.05% ✓. EQU: 96,084/credited route sites (EQU block, line ~6440ish "credited route sites" for EQU). EQU block: required 118,153, in credited route 96,084. Need credited route sites for EQU: presumably ~113,0xx → 96,084/x = 85% → x ≈ 113,040. Plausible.
+
+Note: interesting — "required sites in the credited route" == "credited route sites that are required" identical in all blocks ✓ (they're the same intersection, computed both directions — consistent).
+
+Now md section 2 "Redundancy. Of the 1,664 program-task pairs that no single site stops, 1,646 have more than one route (NOT 712 of 718, ...)". Check NOT: 'no single site stops it, more routes': 712; 'no single site stops it, one route': 6. 712+6 = 718 ✓ (671 pairs + 2 irr + 45 none = 718 ✓). Sum across tasks of 'no single site stops, more routes': NOT 712, NAND?, need NAND block: 'no single site stops it, more routes' for NAND — check. 1,646 total claimed. NOT 712 + NAND 452 + ORN 308 + ANDN 166 + AND 7 + OR 1 = 1,646 ✓ per md. And "one route" cases: NOT 6, so 18 pairs no-single-stop have one route (6 NOT + presumably others). Fine.
+
+Now the roles/kinds percentages — spot check NOT kinds: md says IO 31%, nand 16%, nop-C 18%, swap 11%, nop-A 3%. Sum of kinds1 counts should = required sites 66,377. Check json 'required_instruction_kinds' for NOT. Let me grep quickly.
+
+Also section 0 claim "1,573 needed a pair of sites (almost always the task has a second route that one ablation leaves standing)". OK.
+
+Now check the biggest remaining md numbers vs json: 'distinct_required_instruction_strings' NOT 1,704; 'required_instructions_per_sequence' NOT mean 5.2 range 0-31.
+
+And check 'credited_with_it_but_not_replicating' for tasks: sequences 1,549 total over... wait, 1,549 is the count of sequences performing ≥1 task among non-replicating. Per task the numbers differ. md section 5: "1,549 sequences (1,552 Avida programs) split but do not replicate and are still credited with tasks; each of them has, for each of its tasks, a single site whose ablation stops the credit". Check per-task: with_a_single_site == sequences for each task. Let me grep that block.
+
+NOT kinds: total should be 66,377. IO 20,644/66,377 = 31.1% ✓ 31%. nand 10,905/66,377 = 16.4% ✓ 16%. nop-C 12,087/66,377 = 18.2% ✓ 18%. swap 7,456/66,377 = 11.2% ✓ 11%. nop-A 1,990 = 3.0% ✓. dec 2,613 = 3.9% ✓ 4%. pop 1,759 = 2.65% ✓ 3%. inc 1,492 = 2.2% ✓ 2%. if-less 1,471 = 2.2% ✓ 2%. Good.
+
+Nonrep credited: sequences sum = 1,226+1,180+728+1,199+991+1,180+1,004+274+568 = 1,226+1,180=2,406; +728=3,134; +1,199=4,333; +991=5,324; +1,180=6,504; +1,004=7,508; +274=7,782; +568=8,350. Hmm — that's the count of (sequence, task) pairs among non-replicating, summed over tasks: 8,350. md says "1,549 sequences (1,552 Avida programs) split but do not replicate and are still credited" — that's sequences performing ≥1 task, distinct across tasks. Sum over tasks (8,350) ≥ 1,549, consistent (each sequence does multiple tasks). Programs: 1,229+1,183+730+1,202+994+1,183+1,007+276+571 = 8,355 = 8,350 + 5 dupes. Consistent.
+
+"each of them has, for each of its tasks, a single site whose ablation stops the credit": with_a_single == sequences for every task ✓ (1,226=1,226 etc.). Good.
+
+Replication-required sites totals: sum of "task no longer credited" = 163,620+157,400+96,099+156,808+136,315+142,782+123,120+35,743+69,965 = 
+163,620+157,400=321,020
++96,099=417,119
++156,808=573,927
++136,315=710,242
++142,782=853,024
++123,120=976,144
++35,743=1,011,887
++69,965=1,081,852 ✓ md's 1,081,852. Total = 1,081,852 + sum still credited: 42,188+40,784+23,967+40,061+34,646+37,355+31,741+9,262+17,309 = 42,188+40,784=82,972; +23,967=106,939; +40,061=146,.. 106,939+40,061=147,000; +34,646=181,646; +37,355=219,001; +31,741=250,742; +9,262=260,004; +17,309=277,313. Total = 1,081,852+277,313 = 1,359,165 ✓ md's 1,359,165. 1,081,852/1,359,165 = 79.6% ✓ "80%".
+
+Excellent — the md's numbers are highly consistent with the json. 
+
+Remaining items to check:
+1. The by-sequence size table vs json 'by_sequence' — I verified arithmetic consistency with md and by_program; let me spot-check NOT by_sequence in json. Also 'required_instructions_per_sequence' NOT mean/range, 'distinct_required_instruction_strings' 1,704, and 'irreducible_search_start' for NOT and ORN (should show 'routes' 2 for NOT and 'not stopped: ...' 45/44). The md doesn't state start kinds; fine.
+
+2. Section 5 says "In two NOT programs the irreducible-set search found sets of size 3 (and 5, 6)". Check json tasks.NOT... the irreducible sets aren't in the summary (only start_kind counts). Actually irr_kind counted: 'routes' += 1 for the two NOT (k='3 or more'). Sets sizes not in json — the md's "(and 5, 6)" presumably from raw irreducible.jsonl. Unverifiable but plausible. Not objection-worthy? It's a claim not in the json; the header says numbers are the json. Minor; same class as 876,577 but smaller. Actually wait — maybe it IS checkable: 'irreducible_search_start': {'routes': 2}? Let me check NOT's block. Line 2330 showed ORN's "irreducible_search_start": { — let me look at NOT and ORN entries.
+
+3. Check the md claim: "for the 91 program-task pairs with no stopping set of one or two sites, the irreducible-set search of the plan" ✓ arithmetic.
+
+4. Now the deeper issues for objections. Let me finalize the list:
+
+**X2.1 — "every pair"/"exhaustive to size 2" excludes pairs containing a site whose single ablation stops replication.** In Avida, ablation is not monotone: a site whose single ablation stops replication can, together with another ablated site, leave the program replicating (control flow changes). Such a pair could be a minimal pair under the work's own definition (the site alone does not "stop the task" because the task-stopping requires replication to continue), yet `pairs_work` enumerates only V×V (script line ~104: `V = [i for i, c in enumerate(r['sites']) if c & 1]`). Same restriction in triples (line 229) and the irreducible start sets (lines 159–160). Consequences: the claims "1,573 needed a pair", "two needed a set of three", "89 could not be made to stop", "exhaustive to size 2" are all bounded by this restriction; section 7 (Not tested) does not list it. Fix: state the limit; e.g., add to section 7 Not tested: "pairs or larger sets that include a site whose single ablation stops program replication (ablation can restore as well as break control flow, so such a set can leave the program replicating); none was searched", and soften "exhaustive to size 2" in section 2 to "exhaustive to size 2 among the sites whose single ablation leaves replication".
+
+Actually wait — section 2 "How" already says "every pair of sites whose single ablation leaves replication was ablated" — the restriction is stated there. But the *consequence* (a smaller minimal set may exist outside V; the "size 2"/"size 3"/"none found" classifications are conditional) is not stated, and section 0 flatly says "two needed a set of three, and 89 ... could not be made to stop by ablation while replicating". The 89 claim "could not be made to stop by ablation while replicating" is actually false as stated — they could in principle be stopped by a set including replication-breaking-alone sites. The accurate statement: "no set among the sites whose single ablation leaves replication stopped them". Section 5 says exactly that ("ablating every route site that leaves replication, and then every such site in the program, did not stop the task"), but section 0's phrasing overreaches. Objection with exact fix.
+
+Severity: this is the most serious because it touches the headline claim (what had to be removed; "none found"). Though the practical probability is low.
+
+**X2.2 — "minimal pairs total 876,577" has no source.** Not in the json (grep found no 876577); the summariser computes no such total (`minimal_pair_roles` only counts pairs of doers that have traces, capped at 12 kinds displayed; worked examples have per-sequence `minimal_pairs_total`). The md header says "The numbers: the .json beside this file". Fix: add per-task `minimal_pairs_total` to the summariser output (count `sum(len(mp) for doers)`) and the json, or delete the number from section 2 ("Redundancy").
+
+Let me double check that minimal_pair_roles counts only doers WITH traces: yes, inside `if tr is None: continue`... wait, look: `if one: ... if tr is None: continue` — the `for p in mp` loop is after `if e:` (routes exist). Actually code: after `if tr is None: continue`, then `e = tr['sums'].get(T)`; `if e:` block contains pair_roles update. So pairs counted only for doers with traces and routes. NOT doers all have traces? 'no trace' count in tp_vs_trace — check json 'trace_reading'. Probably all traced. But even so, the md total 876,577 vs sum of pair_roles — pair_roles for NOT sums: 19,297+14,438+11,541+10,314+9,465+9,307+8,614+8,589+7,718+7,092+6,962 = let me sum: 19,297+14,438=33,735; +11,541=45,276; +10,314=55,590; +9,465=65,055; +9,307=74,362; +8,614=82,976; +8,589=91,565; +7,718=99,283; +7,092=106,375; +6,962=113,337 — but that's only top 12 of the counter. So 876,577 over all tasks is plausible in magnitude (9 tasks × ~100k). Can't verify. Keep objection: unsourced number.
+
+**X2.3 — The "two needed a set of three" (size classification from the greedy search) is not necessarily the smallest.** The irreducible sets found (sizes 3, 5, 6) are irreducible but the greedy with 5 orders doesn't guarantee the smallest; also different orders give different sizes (3 and 5 and 6 for the same pair?). md section 5 says "found sets of size 3 (and 5, 6)" — ambiguous: two sequences, one got sets of size 3 and 5 and 6 across orders? Then the smallest known is 3 but smallest possible unknown (could be another 3-set or... no, can't be <3 within V; could be a pair outside V per X2.1). Section 0 says "two needed a set of three" — "needed" states necessity; only "were stopped by sets of three (and larger) found by the search" is shown. Fix wording. Also the plan's own limit ("not all the minimal sets and not necessarily the smallest") — results section 7 says "sets of three or more beyond the greedy search (outside the nine most common sequences)" which covers "not all" for other sequences but the "not necessarily the smallest" limit for the two NOT programs isn't restated where section 0 leans on it. Merge with X2.1? Keep as separate small wording objection.
+
+**X2.4 — `without_copying` uses sites whose single ablation makes the program non-viable as "replication-required", but "viable" ≠ "replicates".** Per section 1's own reading (cTestCPU.cc 282-313), viable means forming a colony (copy exact OR leads back to the program); conversely, a program that splits with an exact copy... hmm. Actually the risk: a site whose ablation gives viable=0 might still split and write outputs — which is exactly what the traces then check (125 of 159 still write all outputs). The md section 5 handles this correctly ("They are part of what stops the credit, not part of the circuit"). And the naming "replication-required sites" vs definition "not viable": for the 20% "task still credited (the ablated program still splits)" the summariser itself shows viable=0 programs still splitting. So "replication-required" is a misnomer for those: ablation stops *viability*, not splitting. Where does this matter? Section 2: "replication-required instructions, whose ablation stops every task by stopping replication" is the brief's framing; the md is careful. Minor naming point: "replication-required" should be "viability-required (whose ablation stops Avida counting the program viable)". Is it worth an objection? The md's phrase in section 2 table... section 5 "Replication-required sites: their ablation stops the task's credit in 80% of cases ... because the program no longer splits (a program that never splits is credited nothing)". Hmm — "because the program no longer splits" — is that shown? For the 80%, task no longer credited; the without_copying traces show 10/159 write none. The claim "no longer splits" — the 80% presumably no longer split (never splits → credited nothing). But some might split without exact copy and still not be credited? Avida credits tasks of the last split (cAnalyzeGenotype.cc 590), so splitting with tasks → credited. If task no longer credited and it splits, its last split had no tasks. Possible. So "because the program no longer splits" is an inference not directly verified (the json's without_copying records 'divided' per trace but only for the 159 most-common-sequence sites). Minor objection: wording overreaches; fix: "consistent with the program no longer splitting (a program that never splits is credited nothing; the 159 traced cases split in N of ..." hmm — do we know? The 'divided' field exists in raw output. The fix: check 'divided' in the 159 records and report it, or soften to "most often because the program no longer splits". Actually the traces: 125 of 159 write all tasks — meaning they split? Writing outputs doesn't require splitting. tasks_in_trace = outputs written. 'divided' separately recorded. md doesn't report divided. So fix: report the recorded 'divided' counts (already in the raw output, no rerun needed) or drop "because".
+
+**X2.5 — triples run per "most common sequence of each run" tests triples only for the tasks that sequence performs.** md says "every triple" — fine, matches plan. No objection.
+
+**X2.6 — Check `triples_run` gating: minimal triple requires no single site in x stops. But it checks `any(stops(r['sites'][i], t) for i in x)` — r's singles. ✓. And pair check vs pair_sets from pairs file ✓.
+
+**X2.7 — a code-level check of `irreducible_run`: `pairs[seq]` — every performer is in pairs file ✓ (run_pairs filtered same condition). `traces[seq]` KeyError if no trace — presumably all traced.
+
+One more potential issue: in `irreducible_run`, `alt`/`starts2` — when the routes-set start doesn't stop, it evaluates V-knock. But it never tests whether rs ⊆ V knock... rs already ⊆ V by construction. OK.
+
+Another: the plan says the irreducible search's start set should be "the set of all sites in the trace's routes for that sum ... restricted to the sites whose single removal leaves copying" ✓.
+
+Another potential deviation: plan says "in 5 random orders" per pair; code uses one shared rng seeded 1120 per run — deterministic, fine, but the five orders for a given pair are drawn from the shared stream, so not reproducible per-pair independently — no objection.
+
+**X2.8 — `singles` run count claim "2,330,137 Avida programs run"**: equals sum of lengths. Not verifiable in folder; consistent with means. No objection (can't check).
+
+**X2.9 — Section 2's "52,428,814 programs run" and the timing departure (section 6.5: pairs took 2 workers 4 hours vs plan's 1.5 h on 3)** — disclosed. No objection.
+
+**X2.10 — `stops` requires viable bit; but `code()` sums tasks `> 0`; `viable` read as int. Fine.
+
+**X2.11 — One more check: the md's claim "for the 91 program-task pairs with no stopping set of one or two sites, the irreducible-set search" and json 'irreducible_search_start'. For NOT: expect {'routes': 2, 'not stopped: routes'?: 45}? Wait — the 45 'none found' NOT: kind None happens when neither rs nor V stops. irr_kind['not stopped: None'] += 1. But note: for kind None the record has start_kind None. In json: 'not stopped: None': 45 presumably. ORN: 'routes'? ORN block line 2330: "irreducible_search_start": { — let me read it to confirm 44 and NOT's 2/45. Let me grep.
+
+Also confirm md section 5's "all in two runs" for the 89 — check json 'runs_with_doers'... not directly; the 95 programs claim. Skip.
+
+Let me check the NOT and ORN irreducible_search_start blocks and by_sequence blocks.
+
+All by_sequence values match the md table. NOT: 12,014/671/2/45 ✓; ORN 11,850/265/44 ✓; NAND 11,698/463 ✓; AND 7,239/7 ✓; OR 10,565/1 ✓; ANDN 11,048/166 ✓; NOR 9,590 ✓; XOR 2,673 ✓; EQU 5,384 ✓.
+
+irreducible_search_start: NOT {'not stopped: None': 45, 'routes': 2}; ORN {'not stopped: None': 44} ✓ consistent with md section 5. Note the label 'not stopped: None' is opaque in the json (start_kind None = neither the route sites nor all copying-safe sites stopped the task with replication left). Minor cosmetic; the md explains it correctly in section 5.
+
+Also "required_instructions_per_sequence": NOT mean 5.21 → md 5.2 ✓, range 0–31 ✓; NAND 5.35 → 5.3 ✓ 0–23 ✓; AND 12.65→12.7 ✓ 0–34; ORN 7.12→7.1 ✓ 0–29; OR 12.98→13.0 ✓ 0–29; ANDN 10.31→10.3 ✓ 0–36; NOR 15.81→15.8 ✓ 3–36; XOR 27.04→27.0; EQU 21.95→21.9. All ✓.
+
+Note interesting: NOT max 31 with mean 5.21; the EQU example claims 25 required for one sequence ✓ within 7–33.
+
+Now 'distinct_required_instruction_strings' — check NOT = 1,704.
+
+Also section 5 leftover: "437,714 (30%) are in some route of some task (5,477 of these also required for replication)". Check json leftover.sites_of_task_performing_sequences.
+
+Also trace_reading: 'no trace' count; 'replicating: same tasks'.
+
+Let me grep those two.
+
+Important find in the leftover check:
+
+md section 5: "over the 14,719 performing sequences' 1,459,777 sites: 437,714 (30%) are in some route of some task (5,477 of these also required for replication)". json: 'in a route only': 432,237; 'in a route and required for replication': 5,477. So "in some route" total = 432,237 + 5,477 = 437,714 ✓ consistent. And required for replication only 230,290 ✓, executed no route 720,706 ✓, never executed 71,067 ✓. Total 1,459,777 ✓. Good — md consistent.
+
+trace_reading: 'replicating: same tasks': 14,965; 'fails replication': 8,367; no 'no trace', no 'tasks differ' — consistent with md section 3 claim ("The tasks the trace credits equal the test processor's for all 14,965 replicating sequences"). Note this counts all 23,332 = 14,965+8,367 ✓.
+
+distinct_required_instruction_strings: NOT 1,704 ✓; NAND 705 ✓; AND 1,184 ✓; ORN 1,676 ✓; OR 1,361 ✓; ANDN 1,553 ✓; NOR 1,639 ✓; XOR 458 ✓; EQU 742 ✓ — all match the md table.
+
+Section 2 "The exact strings differ: 458 (XOR) to 1,704 (NOT) distinct strings" ✓.
+
+Hmm wait — one detail in the md table column header: "distinct strings of required instructions" — for the "size 1" rows it's the count of distinct strings of ALL required sites (concatenated), per req_strings — fine.
+
+Now — an interesting check on the md worked example in section 2.1: "Its route ... site 16 `pop` (with `nop-C` at 17)". But json worked example NOT shows site 16 "pop nop-C" — instruction "pop nop-C" at site 16 (pop with nop-C as its modifier at... hmm "site 16, instruction 'pop nop-C'" — the json prints site 16 with instruction "pop nop-C". In the md, "site 16 `pop` (with `nop-C` at 17)". So the modifier nop is at site 17, and the json's route 'sites' includes both. Fine.
+
+Required for NOT example: sites 12, 15, 20, 21, 27. Check json worked example NOT 'required_instructions'. Let me look at lines ~8300-8400. Also the 'minimal_pairs' 9 for NOT example ("Nine minimal pairs exist beside these five") vs json minimal_pairs_total: 9 ✓ (first worked example had 9).
+
+Also check md: "44 Avida programs, 110 instructions" — json programs 44 ✓ for low_seed2 most common.
+
+Now the EQU example: "low seed 3's most common EQU sequence (28 Avida programs, 108 instructions)" — json triples low_seed3 programs 28 ✓.
+
+Hmm, md section 2.1 says "low seed 3's most common EQU sequence" — but the worked example used is the most common *reduced circuit* representative, which happens to be low seed 3's most common sequence. Fine.
+
+Now the remaining checks on the ablation angle:
+
+1. md section 2 "How" — "for the 91 program-task pairs with no stopping set of one or two sites, the irreducible-set search of the plan" ✓.
+
+2. md section 2 Redundancy: "In the most common sequence of each run, exhaustive triples found further minimal sets of size 3 (0 to 254 per task: in default seed 1's, 254 for NOT)" — json default_seed1 NOT 254 ✓; max over all = 254 ✓ (default_seed2 ANDN 96 etc.).
+
+3. Now check roles percentages quickly for one task (NOT): required_instruction_roles: mover 10,047; register choice 9,597; ... md says by role weighted by programs: "register choices 16% to 24%", "gates 14-21%", "input reads 10-23%", "movers 7-16%", "arithmetic 3-18%", "output write 3-13%", "IO outside the routes 1-11%", "control 1-6%", "register or head choices outside 2-9%". That's from roles1_w (weighted). Can't fully check but magnitude fine. Skip.
+
+Now, the 'sites' key in route: `ro['sites']` is a dict site->roles in the trace record? In summariser: `ro['sites'].get(str(site), [])` — so route 'sites' is a dict. In worked example: 'credited_route': {k: ... for k in ('reduced', ..., 'letters', 'sites')}. OK.
+
+Now think again about whether there are any genuine *code bugs* to object to.
+
+Potential bug 1: In `irreducible_run`, the fallback: `alt` computed from `zip(starts, todo)`; then `starts2` for alt; then `kind` assignment: `for k, row in zip(alt, starts2): kind[k] = 'all copying-safe sites' if stops(...) else None`. ✓.
+
+Potential bug 2: In the chain loop, when a trial's knock is evaluated, `knock(c['seq'], sorted(c['current'] - {site}))` — note `current - {site}`: if site was already put back in an earlier pass... order only contains sites in current at pass start; and `c['current'].discard(site)` only when stops. Wait: careful — the semantics: "keeping each one back if the sum stays stopped". I.e., try putting site back (ablate everything except site); if the sum stays stopped without it, keep it out (discard from current). The code trials `current - {site}` and if stops → discard. ✓ correct direction.
+
+Potential bug 3: In `triples_run`, `pair_sets` from pairs file uses `pairs[seq]['minimal_pairs']` — seq is the most common sequence; it's in the pairs file only if it replicates and performs ≥1 task. All nine most common sequences perform tasks (json shows tasks). ✓.
+
+Potential bug 4: `triples_run` counts minimal triples per task among base_sums — the triple must stop t and no subset stops. ✓.
+
+Potential bug 5: `singles_work` — base and sites: `P.evaluate(seqs)` then flat kos. But note `flat` order: for s in seqs for i in range(len(s)) — matches rows slice per item ✓.
+
+Potential bug 6: In summariser's worked example, `mp[:6]` shown of minimal_pairs — fine.
+
+Potential bug 7: The `stops` check for the '3 or more' classification: `ir and ir['sets']` — sets from any of the 5 orders. The classification "size 3 or more" takes whatever found; md section 0 says "two needed a set of three" — the smallest found was 3, but also 5 and 6 found. md section 5 says "found sets of size 3 (and 5, 6)". So section 0's "needed a set of three" is loosely right if a 3-set was found and no smaller exists (within V). But "needed" implies necessity — a 3-set exists and irreducible; no 1 or 2-set within V; a 2-set outside V untested. So section 0 slightly overstates. This merges into X2.1.
+
+Potential bug 8: `route_sites` uses trace_rec['sums'][t]['routes'] — routes as read by the trace reader. If the trace reader misread, start set wrong — but fallback covers.
+
+Potential issue 9: The irreducible search is run only for pairs with no 1-or-2 set. But the plan's step 3 said "for each program and sum with no removal set of size 1 or 2" ✓.
+
+Potential issue 10: `ORDERS = 5` ✓ plan.
+
+Potential issue 11: In the summariser, `irr_kind[ir['start_kind']] += 1` for found sets; but json showed 'not stopped: None' label — str(None). Cosmetic.
+
+Now, one more important cross-check: the md section 2 claim "82,061 of 83,725 program-task pairs (98.0%)" — these are sequence-task pairs really. "program-task pairs" wording: the md uses "program-task pairs" for sequence-task pairs in several places ("1,664 program-task pairs that no single site stops" = by sequence). Section 0 distinguishes: "98.0% of the program-task pairs (98.6% counted by Avida program)". So "program-task pair" means distinct-sequence-task pair; slightly confusing given "program" now means one Avida program in the population (S61 terms!). Under the owner's terms, "Avida program" = one program in the population; "program-task pair" then suggests organism-task. The md itself uses "by Avida program" for the weighted count. So calling sequence-task pairs "program-task pairs" conflicts with the S61 term "program". Minor terminology inconsistency; worth a small objection? It could confuse the owner reading "89 program-task pairs ... 95 Avida programs". Actually md section 0: "and 89 (NOT and ORN only, 95 Avida programs)" — there they distinguish. I'd flag as minor wording: replace "program-task pairs" with "sequence-task pairs" where it means by distinct sequence. That's a genuine fixable inconsistency in terms (S61 binds). Medium-low severity.
+
+Now check the environment tests counting: "Counted over the sequences that replicate and perform the task unchanged" — summariser env loop: skips if T not in unchanged sums or not unchanged viable ✓ matches.
+
+That's job (d)/(c) territory though. My angle: ablation. But section 4's counting matches the ablation set — fine.
+
+Now, are the limits stated where results lean on them?
+
+- Section 2's "size 1... none found" table leans on the pair/irreducible limits. Section 5 "Redundancy" states: "The search is exhaustive only to pairs (to triples in nine sequences)." — but that sentence itself is inaccurate in the same way as X2.1 (exhaustive only to pairs *among copying-safe sites*). Combined into X2.1.
+
+- The greedy's non-minimality: plan said "not all the minimal sets and not necessarily the smallest"; results section 7 "Not tested: ... sets of three or more beyond the greedy search (outside the nine most common sequences)" — covers "not all" and implicitly outside nine sequences; but "not necessarily the smallest" for the two NOT pairs (sets of 3, 5, 6 — different sizes from different orders) is not restated; section 0 "two needed a set of three" leans on it. → X2.3.
+
+- nop-X vs deletion: stated in section 7 ✓ and in section 2 "How" ("Replacing an instruction means...")? Section 1/terms: "instruction ablation replaces one instruction by nop-X". Plan had it. Section 7 Not tested ✓. Good.
+
+- Test processor fixed inputs only: stated section 7 ✓.
+
+- Replication-required set apart: ✓ sections 2, 5.
+
+Now X2.2 (876,577 unsourced). Also similar: "2,330,137", "52,428,814" run counts — these are plausible script stdout counts, and the commands file logs the runs; they're run sizes, not results; acceptable. But 876,577 is a result count. Also "(and 5, 6)" sizes of irreducible sets — not in json either. Hmm, is there anything in json with irreducible sets? 'irreducible_search_start' only. So both 876,577 and "3 (and 5, 6)" are numbers in the md with no backing in the json. The md's note says "The numbers: the .json beside this file, written by [summariser]" — that claim itself is then inaccurate. One objection covering unverifiable numbers, with fix: add to the summariser a per-task 'minimal_pairs_total' and the irreducible sets' sizes per found pair, rerun the summariser (no Avida needed), and put the numbers in the json.
+
+Wait — actually, can the summariser produce minimal_pairs_total? It reads pairs.jsonl via data[run][1]; summing len(mp[T]) over doers is easy. Yes.
+
+Now, another possible check: md says "876,577 over all tasks and programs" — "over all tasks and programs" suggests counted per program (weighted)? or per sequence? Ambiguous. Even more reason.
+
+Now think about whether "1,573 needed a pair of sites (almost always the task has a second route...)" is supported: NOT 712/718 more routes etc. ✓.
+
+Now potential objection about the definition of "minimal pair" in results vs plan: plan "A pair counts as minimal for a sum if neither of its sites stops the sum alone" ✓ code.
+
+Another check: md section 2 "How": "every pair of sites whose single ablation leaves replication was ablated in every replicating sequence that performs a task (52,428,814 programs run)". Code: run_pairs filters recs to (base viable) and (base>>1) — replicating performers ✓.
+
+Another: "for the most common sequence of each run, every triple (836,544 programs run)" ✓ verified 836,544.
+
+Another subtle one: the triples stage's V is the most common sequence's copying-safe sites, and minimal triples are found for the tasks that sequence performs — the md's use: "exhaustive triples found further minimal sets of size 3 (0 to 254 per task)" — for tasks the sequence doesn't perform there's no entry; fine.
+
+Now let me check the NOT worked example required sites against json to be thorough (read lines 8255-8400).
+
+The worked example matches the md section 2.1 exactly (required 12, 15, 20, 21, 27; minimal pair example "the two IO at sites 10 and 11" ✓; nine minimal pairs ✓).
+
+Note md 2.1 says "**Not required although on the route**: the input read at 11 ... and the output write at 26 ...". And indeed 11 and 26 not in required list ✓. And "a later IO, at site 34, writes out a three-nand NOT circuit instead: rerun in the scratch space" — a rerun claim, unverifiable here (fine, flagged as rerun).
+
+Now, remaining checks for my angle:
+
+1. Check `runs/configuration` briefly to confirm environment.cfg has 9 tasks and avida.cfg analysis settings consistent with RECALCULATE etc. Quick look at build notes for the input rotation citation and nop-X. Also verify the fixed inputs claim 0x0f13149f etc. against build notes.
+
+2. Check the terms file briefly to make sure md uses the owner's terms (already looks fine).
+
+Let me quickly grep build notes for "0x0f13149f", "nop-X", "cPopulationCell", "rotation".
+
+The build notes confirm nop-X and viable reading. Note viable = "divides and its offspring is identical... or its offspring's line cycles back to it". So "still replicates" ≈ viable is a fair reading; the non-replicating splitters are viable=0 but split. OK, disclosed.
+
+Check the fixed inputs and rotation: grep didn't show 0x0f13149f or cPopulationCell in build notes. Let me grep specifically.
+
+The build notes don't mention the fixed inputs or the input rotation. The md's citation "cPopulationCell.h 214-218: each IO reads the next of the three numbers in turn" and the fixed inputs citation `cEnvironment.cc 1284-1288` are not checkable in this folder (Avida's source not present) — that's for the circuits agent mostly. The rotation claim matters for my angle (the "IO outside the routes" role in ablation results). Not reached: source not in folder.
+
+Now let me quickly check configuration files to make sure environment.cfg lists the 9 tasks and avida.cfg... it's S111's config; the analysis runs copy avida.cfg and environment.cfg. In analysis mode, does environment.cfg matter for task checks? The tasks' logic ids come from environment.cfg. Fine — quick check.
+
+Consistent with TASKS order (NOT..EQU) and task indices 0..8.
+
+Now the plain words file — job 4 covers it, but my angle limits might appear there. Quick check of plain words for the ablation limits (does it state the search limits where it leans on them?). Let me skim it.
+
+Plain words section 3:
+
+- "**In the other 2 in 100**, no single removal stopped the sum, because the program did it in two places; there, a pair of instructions had to go together, one from each place. Two programs needed three." — flat claims again; "had to go together" and "needed three" (X2.1 applies here too). Also "because the program did it in two places" — for 1,646 of 1,664 yes more than one route; for 18 no (one route or no route) — "almost always" would be accurate; the plain words says it flatly. Actually results md says "almost always". Plain words drops the qualifier. Minor; also the rotation-pair case ("or of the rotation and one route") — "one from each place" is close enough.
+
+- "**89 program-and-sum pairs** ... could not be stopped this way at all: every instruction of their sum is also one of the instructions they need to copy themselves, so removing any of them stops the copying too." — This is wrong in its letter: "removing any of them stops the copying too" — the search result was that removing ALL copying-safe sites at once didn't stop the task; individual route instructions may be copying-safe but jointly insufficient... wait. Let me think about what's actually known for the 89: route sites ∩ V ablated together → task still done; then all V ablated → task still done. So the task survives ablation of every copying-safe site. The claim "every instruction of their sum is also one of the instructions they need to copy themselves" — "their sum's instructions" = route sites; if a route site were copying-safe (in V), then it was ablated in the all-V test and the task was still performed — but by what? After ablating ALL of V, the performed task's route must use only non-V (replication-required) sites. So in the all-V-ablated program the task is done by replication-required instructions. But the ORIGINAL program's route sites might include copying-safe sites (whose ablation alone doesn't stop the task, fine). Hmm, so is "every instruction of their sum is also one of the instructions they need to copy themselves" shown for the original program's routes? Not exactly. What's shown: no set of copying-safe sites (up to the whole V) stops the task. The explanation "their task's instructions are all also required for replication" is an interpretation. For plain words, "every instruction of their sum is also one of the instructions they need to copy themselves, so removing any of them stops the copying too" states it as fact — and it's checkable from the data they have: are all route sites of those 89 non-V? They could check (route_sites ∩ V per pair). If some route site is in V, the claim is false as stated. Actually wait — if a route site i is in V (copying-safe) and the pair is in the 89, then i alone doesn't stop the task (correct, else size 1) and no pair with i stops it... possible. So the claim could be false. But also they'd know from `overlap` data... not reported for these. So: objection — the explanation of the 89 goes beyond what the search shows; the accurate statement is "removing every instruction whose removal leaves the program copying, all at once, did not stop the sum; so no removal that keeps the program copying stops it". And "every instruction of their sum is also one of the instructions they need to copy themselves" is a further claim needing a check (route sites ∩ V = ∅ for these pairs) that the data can give but the results don't report. Fix: report that check (from existing singles + traces data, no rerun of Avida needed) or reword.
+
+This is a decent objection (X2.4 maybe). The results md section 5 phrases it as "their task's instructions (an IO, a nand, a mover) are all also required for replication (they sit in the replication loop)" — same issue but softer. The plain-words version is flatly asserted with a "so... too" consequence. Given S23/S28 (nothing settled; tentative), this causal flat claim is the kind of thing to fix. But note job 4 covers plain words vs results; my angle includes the ablation claims insofar as they're the search's limits. The 89-explanation is squarely mine.
+
+Also plain words "every pair of instructions in every program that copies itself and does a sum (52 million runs)" — "every pair of instructions" again hides the V restriction. Same X2.1 class; include plain words fix.
+
+Also plain words section 3: "For **98 in 100** program-and-sum pairs, one instruction was enough" ✓ consistent.
+
+Now, one more possible check: md section 0 "In the other 2.0%: 1,573 needed a pair of sites (almost always the task has a second route that one ablation leaves standing), two needed a set of three, and 89 (NOT and ORN only, 95 Avida programs) could not be made to stop by ablation while replicating, because every instruction of their task is also an instruction of their replication." — same issue in section 0.
+
+OK. Now consider: is the "routes ∩ V" start set choice a problem for the two NOT pairs? kind 'routes' — start stopped the task, greedy found 3/5/6-sets. Fine.
+
+Another check on the triples claim in plain words: "every three together in the nine most common programs" — but only triples of copying-safe sites (V), and only for the tasks those programs perform. Plain words "every three together" — again the V restriction unstated, and tasks restriction. Same class.
+
+Now let me also double check the "98 in 100" plain-words: "In almost every Avida program (98 in 100)" — by program 98.6% ✓.
+
+Another check: plain words "about 22 for EQU" (21.9 ✓), "about 27 for XOR" ✓.
+
+Now the md section 2 claim: "In the most common sequence of each run, exhaustive triples found further minimal sets of size 3 (0 to 254 per task: in default seed 1's, 254 for NOT)." — from json: max per task across runs: NOT 254 ✓; ANDN 96; ORN 35... "0 to 254" ✓.
+
+One more consistency: md section 5 "Redundancy: 1,573 program-task pairs need a pair (section 2); the triples in the nine most common sequences show more minimal sets beyond the required instructions." ✓.
+
+Now, is there anything wrong with `code()`/`stops()` regarding 'task.%d' semantics — 'task.k' counts from DETAIL; after ablation, the count is for the ablated program's last split ✓.
+
+One more potential objection: **the singles stage for non-replicating sequences**: they ablated every single site of every sequence including non-replicating ones (23,332), but `stops` requires viable; for the 1,549 non-replicating-but-credited sequences, `nonrep_single` uses a different check: `not ((c >> 1) & (1 << TASKS.index(T)))` — i.e., task no longer credited regardless of viability ✓ consistent with md section 5 claim "each of them has, for each of its tasks, a single site whose ablation stops the credit" ✓ verified in json.
+
+Now — one more thing to check: md section 2 "How" says singles "every single site of every sequence was ablated (2,330,137 Avida programs run)". But actually the singles stage evaluated base + singles: 23,332 + 2,330,137. Fine.
+
+Also the md's "about 2.3 million" in plan ✓.
+
+Potential objection about **`without_copying` labels**: `'sums_written_in_trace': x['tasks_in_trace']` — 'tasks_in_trace' from the trace reader presumably = tasks whose accepted outputs were written. The md says "the task outputs are still written in most cases (all tasks in 125 of 159 such traces, some in 24, none in 10)". Hmm: 'all' if set(w['sums']) ⊆ set(x['sums_written_in_trace']) — where w['sums'] = base_sums of the ORIGINAL sequence. OK ✓.
+
+But subtle: without_copying_run computes ess = sites whose single ablation is non-viable — including sites whose ablation still splits. The md calls them "replication-required sites". For the 20% "still splits" class, the naming is off, but the md reports this split explicitly. OK.
+
+Now the "because the program no longer splits" claim — the json records 'divided' but it's not summarized. I'll fold this into an objection: report 'divided' (already recorded) or soften.
+
+Let me now also verify md's "1,664" usage: "Of the 1,664 program-task pairs that no single site stops, 1,646 have more than one route in the trace". From json NOT: 'no single site stops it, more routes': 712, 'one route': 6. Need the sum across tasks of 'no single site stops it, more routes' = 1,646? NOT 712 + NAND? + AND? + ORN 308 + OR? + ANDN 166... md gives: NOT 712 of 718, NAND 452 of 463, ORN 308 of 309, ANDN 166 of 166, AND 7 of 7, OR 1 of 1 → sum = 712+452+308+166+7+1 = 1,646 ✓. And totals: 718+463+309+166+7+1 = 1,664 ✓ (EQU, XOR, NOR contribute 0). Check NAND json block for 'no single site stops it, more routes': 452? Let me grep quickly for confirmation of a couple.
+
+Odd — path restriction glitch (the file is a symlink probably). Earlier greps on the same path worked. The error says the file is outside the working dir — maybe it's a symlink and resolution fluctuated? Earlier calls succeeded with the same absolute path. Retry with the same path.
+
+Confirmed: NOT 712/6, NAND 452/11, AND 7/0, ORN 308/1, OR 1/0, ANDN 166/0 → more-routes sum 1,646 ✓; totals: 718+463+7+309+1+166 = 1,664 ✓. NOR/XOR/EQU have no single-site-stopping failures (all size 1) — consistent with their tables.
+
+Everything checks out numerically. Now compile the objections.
+
+Final objection list (most serious first):
+
+**X2.1 — The pair, triple and irreducible searches never test sets containing a site whose single ablation stops replication; results state exhaustiveness and necessity beyond that.**
+- Place: `scripts/s112_find_minimal_removals.py` line 104 (`V = [i for i, c in enumerate(r['sites']) if c & 1]` in pairs_work), line 229 (triples), lines 159–160 (irreducible); results section 0 ("two needed a set of three, and 89 ... could not be made to stop by ablation while replicating"), section 2 ("How"), section 5 ("Redundancy... exhaustive only to pairs"); plain words section 3.
+- Reason: under the work's own definition, a site whose single ablation stops replication does not "stop the task" (stopping requires replication to continue), so a minimal pair (or triple, or the smallest set for the 89) can contain such a site: ablation in Avida changes control flow, so a second ablation can restore replication while the task is gone. None of these sets was searched. The claim "could not be made to stop by ablation while replicating" (section 0) is therefore stronger than the search; section 7 (Not tested) does not list it.
+- Fix: add to section 7 Not tested: "removal sets that include a site whose single ablation stops program replication (a further ablation can restore the changed control flow, so such a set can leave the program replicating); none was searched"; change section 0's "could not be made to stop by ablation while replicating" to "were stopped by no removal set among the sites whose single ablation leaves program replication"; change section 5's "The search is exhaustive only to pairs" to "exhaustive only to pairs among the sites whose single ablation leaves program replication"; in plain words section 3, "every pair of instructions" → "every pair of instructions whose single removal leaves the program copying".
+
+**X2.2 — The explanation given for the 89 unstopped pairs states more than the search shows.**
+- Place: results section 0 and section 5; plain words section 3 ("every instruction of their sum is also one of the instructions they need to copy themselves, so removing any of them stops the copying too").
+- What shows it: the search showed only that the task survives ablation of all copying-safe sites at once (`kind[k] = None`, script lines 163–169; md section 5: "ablating every route site that leaves replication, and then every such site in the program, did not stop the task with replication left"). Whether each of the 89's route sites is individually replication-required (outside V) is recorded in the data (singles vs the trace's route sites) but is not reported; if some route site is copying-safe, the stated explanation is wrong as written. And "so removing any of them stops the copying too" claims a consequence not checked for these sites.
+- Fix: report, per the 89 pairs, the count of their route sites that lie outside V (computable from the existing singles and trace records, no Avida rerun); until then, reword plain words to: "removing every instruction whose removal leaves the program copying, all at once, did not stop the sum; the sums of these programs appear to be done by instructions the program also needs for copying".
+
+**X2.3 — "minimal pairs total 876,577" and the irreducible sets' sizes "(and 5, 6)" have no source in the summary.**
+- The md header: "The numbers: the `.json` beside this file, written by `s112_summarise_...`"; the summariser computes no total of minimal pairs (`minimal_pair_roles` counts only pairs of doers with routes and shows 12 kinds; `minimal_pairs_total` exists only per worked example: 9, 9, 13, 46, 3, 7, 4, 2, 0) and no irreducible set sizes; grep of the .json finds neither 876577 nor the set sizes.
+- Fix: add to the summariser a per-task `minimal_pairs_total` (sum of `len(mp)` over doers, one line) and the irreducible sets' sizes for the two found pairs (already in `s112/removals/*.irreducible.jsonl`), rerun the summariser (no Avida run needed), and let the .md cite the .json; or delete the two numbers.
+
+**X2.4 — "their ablation stops the task's credit ... because the program no longer splits": the splitting was recorded but not reported.**
+- Place: results section 5 (Replication-required sites).
+- The records hold `divided` per traced case (`without_copying_run`, script line 272), and the summary drops it (summariser lines 416–421); without it, "because the program no longer splits" is a reading, not a count (a program can split and be credited nothing).
+- Fix: report the `divided` counts of the 159 records (already in `s112/removals/*.without_copying.json`) next to the 125/24/10 counts, or write "consistent with the program no longer splitting".
+
+**X2.5 — "program-task pairs" is used for distinct-sequence-task pairs, against the owner's terms (S61).**
+- S61/section 1: "an Avida program is one program in a program population; a distinct instruction sequence is what the plan called a genotype". Section 0: "98.0% of the program-task pairs (98.6% counted by Avida program)" — the 98.0% is over distinct instruction sequences (12,014 of 12,732 etc.), so the 83,725 "program-task pairs" are sequence-task pairs; the same phrase then also covers the weighted count in the same sentence.
+- Fix: replace "program-task pairs" with "sequence-task pairs" wherever the count is by distinct instruction sequence (sections 0, 2, 5), keeping "by Avida program" for the weighted counts. Same in plain words section 3 ("program-and-sum pairs").
+
+**X2.6 — the plain-words "In the other 2 in 100 ... because the program did it in two places" drops the results' own qualifier.**
+- Results section 2: "almost always the task has a second route" (18 of 1,664 have one route or none: json "no single site stops it, one route": 6+11+1 = 18). Plain words states the cause for all.
+- Fix: "almost always because the program did the sum in two places".
+
+Also possibly: the triples in plain words "every three together in the nine most common programs" — covered by X2.1 fix? The V restriction for triples: plain words says "every three together" — same fix, add "whose single removal leaves the program copying". I'll fold into X2.1.
+
+Anything else? Check for S23 forbidden words in the files I read... scan quickly: "supports"? No. "verified"? No. "proves"? No. "true" — md line: "the copy is exact, or leads back to the program" fine; `build notes` "copied true" is Avida's own term in quotes. Plain words: "that was right for 99 in 100" — "right" instead of "matched"; fine. "exact" fine.
+
+Ranking candidates: no ranking of candidates here. "Nothing settled": md header says "Observations only; nothing is settled (S28)" ✓. But section 0's causal "because" claims (X2.2) border on settling an explanation; that's covered.
+
+Checked, no objection list:
+- singles stage code vs plan (exhaustive, all sites, base recorded; row order verified against Avida's own sequence echo, evaluate() line 114).
+- stops() definition matches plan (viable + task gone); viable's broader meaning disclosed (results §1, §6.3; build notes cTestCPU.cc 282–313).
+- pairs stage: gating (only performers), V×V enumeration, minimality condition (line 115) match plan §2.
+- triples stage: correct minimality condition (singles within triple + pairs within triple vs minimal_pairs), most-common sequence identification (living() sort order preserved through batches and ex.map).
+- irreducible search: route-sites start ∩ V, fall-back to V, "not stopped" recording, 5 seeded random orders, repeated passes until nothing put back; end sets irreducible.
+- Counts: 83,725 total; 82,061/1,573/2/89 by sequence; by-program 146,105/148,181 = 98.6%; per-task by-sequence and by-program values; kinds and roles shares (NOT spot-check); 1,664/1,646 redundancy; 751,212/904,433 = 83%; 52,990/105,880 = 50% (NOT); 1,081,852/1,359,165 = 80%; 836,544 triples (sums to exact binomial coefficients C(v,3) per run, v consistent with lengths minus replication-required sites); 159 = sum of replication-required sites, 125/24/10; 437,714 = 432,237+5,477; 1,459,777 total; 23,332 = 14,965+8,367; 1,549 non-replicating credited, per-task with_a_single == sequences; distinct required strings per task; mean/range per task; worked examples' sites, roles and pair counts vs .json.
+- Limit statements present: nop-X vs deletion (§2 How, §7), test processor only (§7), replication-required set apart (§2, §5), triples only in nine most common (§2, §5, §7).
+- Environment tests counted over the same replicating performers as the ablations (summariser lines 389–392).
+- Departures logged (exact commands; §6).
+
+Not reached:
+- The absolute run counts 2,330,137 (singles) and 52,428,814 (pairs): raw output not in the folder; consistent in magnitude with the site counts and C(v,2) estimates but not checkable.
+- Avida's own semantics behind the numbers (viable, task credit of the last split, the input rotation `cPopulationCell.h 214-218`, fixed inputs `cEnvironment.cc 1284-1288`): Avida's source is not in the folder; judged only as the scripts and build notes read it.
+- The three scratch-space reruns cited in §2.1/§4 (the NOT example's IO at 11 and 26, the EQU example's IO at 45): no raw output in the folder.
+
+Word count fine. Write the report as a table. Keep terse.

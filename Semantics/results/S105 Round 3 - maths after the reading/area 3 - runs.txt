@@ -1,0 +1,59 @@
+S105 round 3, area 3 (L373-L632) - runs, filled as they are made
+Folder: results/S105 Round 3 - maths after the reading/area 3 model/ (copy of model after round 2/; md5s of core.py, args.py, claims_a.py, claims_b.py, claims_s41.py, run.py, inventions_model.py as the rule gives, checked at the copy).
+Every run from that folder: PYTHONHASHSEED=0 timeout <s> python3 -B -m model.run ... --scale 4 --time-cap 45 --no-write. Booleans T/F.
+
+== 1. Baseline, unchanged copy, whole suite (timeout 900 s): exit 0, total 395.4 s
+   105 HOLDS, 3 COUNTEREXAMPLE (FC18, FC23, FC63), 7 NOT TESTED (FC31, FC35, FC89, FC94, FC104, FC105, FC110), of 115: as the answers record.
+   Diff against the round's printout (times removed): FC14's file-name line only (the copy's relative path), status unchanged; as area 2 found.
+
+== 2. Code changes in the copy (area 3 model/)
+   model/claims_b.py   DEP extended (28 -> 82 nodes; round 2's graph kept as DEP_R2); D_TO_NODE (every paragraph D1.1-D16.XV of the formal core -> its node); D0_2 (D0.2's list as node names) and D0_2_R3A3 (the sinks it lacked, classed); DEP_EXPLUSE_PRIMITIVE (round 2's D13.3); dep_edges/dep_cycle take a graph and `through`; FC98 (a) names the cycle through (R), FC98 (b) compares the sinks with D0.2 (S2(i), S2(ii), S2(iii), S3, S-b)
+                       sel(..., env=None): the survival condition's further requirement on values at H (W6); None = D12.1 as after round 2
+   model/claims_a.py   FC18: the untranslated reading (I94) kept as a look, its counterexample printed; the claim is D4.4's reading (W8)
+   model/claims_r3a3.py (new)   FC98.new2 (S1), FC72.new1 (B-Q23n, O4-O6), FC80.new1 (W6), FC32.new1 (S2, S3, S-b), FC90.new1 (S2(iii), S-e-Acc), FC102.new1, FC103.new1 (K4)
+   model/e9.py (new)   E9 built: P (object layer), S1 (persistence), S0 (window-2 predictor), t1, t1∘ψ, t0 [R3A3-09]
+   model/run.py        imports claims_r3a3
+
+== 3. Runs (each: exit 0; statuses as printed)
+   FC98.new2 (4.4 s): HOLDS.
+     (a) S1's witness run (infinite descending chain, all held, Sel's other conditions met, no trace; T'): {o_1} fails at o_2, {o_2} at o_3; every finite R ⊆ {o_0..o_12} (8,192) fails; an infinite R fails by construction: NO fixed point (B3 right; S1's 'two incomparable fixed points' wrong; its conclusion stands).
+     (b) truncations m = 1..8: one fixed point each, {o_(m-1)}; the limit ∅ fails at o_0.
+     (c) well-founded finite histories: every strict partial order on <= 3 occurrences, all held/Sel/trace inputs (9,928): one fixed point under K, T, T' in all; U in 2,885. 4 occurrences, all held (56,064): T' one fixed point in all.
+     (d) infinite chain, finite R: T has one fixed point (∅); U none.
+   FC72.new1 (0.1 s): HOLDS.
+     (a) j0 accepts nothing: L397's words alone ('usable by j when each of its steps is (K2)'): ¬PM alone usable T, rules out design ∧ PM T; D9.6 (I166): usable F. j accepts ¬PM: T, T.
+     (b) 684 random (φ, ψ) with Incons: 466 ruled out by ψ alone (no step), 218 blocked (¬φ a conjunct of ψ); RO(ψ alone, φ) ⟺ not blocked in every one; ¬PM alone rules out design ∧ PM with no step; not PM.
+     (c) Incons(design ∧ PM, ¬PM) T (no assessor in it); Out_j T (accepts ¬PM); Out_j0 F; j's accepted set unchanged by the ruling out.
+     (d) rivals acc1 (→ PM), acc2, ¬(acc1 ∧ acc2): j with ¬PM: Out(acc1) T, Out(acc2) F; jn without: F, F.
+   FC72 (0.0 s): HOLDS, parts unchanged.
+   FC18 (2.9 s): COUNTEREXAMPLE -> HOLDS. D4.4's reading: 17,280 models, 10,855 meeting the hypothesis, holds; I94's reading now a look, 'as expected' (counterexample found, 972 models, the same written-out counterexample as the round's printout).
+   FC80.new1 (3.4 s): HOLDS.
+     (a) witness at model 4 (proper target, nonempty solutions): two members of 𝒯 faithful on H = {(1,b0)} with different values of a background component at (1,b0); an environment keeping the first: the second Sel under D12.1 as after round 2 (T), not with surv (F).
+     (b) 10,128 models, 5,318 meeting the hypothesis: L574's step holds under an environment's condition on values at H.
+   FC80 (6.2 s): HOLDS, parts unchanged.
+   FC98 (0.0 s): HOLDS. (a) now prints the cycle through (R) as '(R) → Con → (R)' (was '(R) → Sel → (R)': the extended graph has both; DFS order); (a') K, T, T': no cycle; (b) look: sinks outside the text's lists now 38, of which D0.2 as after round 2 lacks 12; (c)-(e) unchanged.
+   FC32 (0.0 s): HOLDS, parts unchanged.
+   FC32.new1 (0.0 s): HOLDS.
+     (a) 114 paragraphs read from the formal core (§§1-16), all mapped; DEP 82 nodes (round 2: 28); holders round 2 lacked: (B), (CT2), (D), (K3), (S), Appraisal, Arg, CanAdv, Cand, Claims, Classes, Conf, ConfCl, Content, Dec, DefeatConds, Defects, ETV, Enable, Event, Exposure, Families, Kind, Layers, Match, OutCand, Prob, ProvC, RC, RO, Repertoire, Resp, Respects, Riv, Riv_χ, Roles, Scr, Surp, Task, Test, Tol, Transport, UECS, Underdet, 𝒯pop.
+     (b) U: cycles (through (R): (R) → Con → (R)); K, T, T': none.
+     (c) sinks D0.2 (round 2) lacks: C_I, Desc, Expl, ImmAfter, J_p, UsesClaim, parts, stated construction, surv, trans, 𝒱, 𝔓adv; after area 3: none.
+     (d) 61 dependences L526 states (grouped subjects collective): all paths. Build ⇝ (E): F with ExplUse a primitive, T with R3A3-05. (K3) in round 2's DEP: F; (K3) ⇝ (K2) now T. Sel's direct edges (F1), (F2), CT (round 2: none). Distributive reading: New on Build F; (P) on (G), (E), Deploy F, F, F.
+     (e) only DefeatConds reaches the atom Expl.
+   FC90.new1 (0.3 s): HOLDS.
+     (a) Acc: ℰ_fwd T, ℰ_rev F (core.account; FC27). (Build, (EX)): ℰ_rev under R3A3-05 (T, F); under 'the claim must hold' (F, F); ℰ_fwd (T, T) under every reading.
+     (b) C1 is ℰ_fwd's contract: T; ExplUse(o, C1): R3A3-05 T, P5 F.
+     (c) Acc(pole forward, δ_E = L) T; δ_E = H F (A fails).
+   FC102.new1 (23.2 s): HOLDS.
+     (a) B0: 72 of 108 initial states; |H0| = 1,080; Sel(t0; 𝒯, μ, H0) T; occlusion pairs violated 992 of 1,080; at a re-emergence 858 (first ('occ', 'b0m1m')); Surp T.
+     (b'') occlusion pairs sharing observed frames and differing later: 15 of 28 frame pairs.
+     (c) |C| = 3,456 (32 edits × 108 initial states): no pair fails (F1, F2eq, A); Hom T.
+   FC103.new1 (21.5 s): HOLDS.
+     (a) ψ[C] = C T; Ans_p∘ψ = Ans_p T; per-pair equality of (F1, F2eq, A) for t1 and t1∘ψ over 3,456 pairs T; Hom T, T.
+     (b) one counterpart T; one kind (core.one_kind, both ways) T.
+     (c) separating pairs 0 of 3,456.
+   s104_external.py, s104_creative_transport.py (timeout 300 s each): exit 0; output identical to the round's printouts (their first header line aside).
+
+== 4. Whole suite after area 3 (timeout 1500 s): exit 0, total 462.7 s
+   113 HOLDS, 2 COUNTEREXAMPLE (FC23, FC63), 7 NOT TESTED (FC31, FC35, FC89, FC94, FC104, FC105, FC110), of 122 (115 + 7 new).
+   Against the baseline, claim by claim (labels, statuses and every printed line, times removed): changed FC18 (CEX -> H; its I94 part a look, as expected) and FC98 ((a)'s cycle printed through (R) as (R) → Con → (R); (b)'s look lists the extended graph's sinks); new FC32.new1, FC72.new1, FC80.new1, FC90.new1, FC98.new2, FC102.new1, FC103.new1, each HOLDS; every other claim identical.
+   FC102 (a), (c) and FC103 (a)-(c) stay NOT TESTED parts of FC102, FC103 as committed; FC102.new1, FC103.new1 compute them on E9 (the integrator may fold them in).

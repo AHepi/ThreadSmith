@@ -1,0 +1,294 @@
+{
+ "log": "S114",
+ "written": "2026-09-30",
+ "reply": "tests/S114 Return from GPT 6 Astra - execution environments report.md",
+ "avida_build": "47f13dadb547fcf10f620ace60247f38b30b8b16",
+ "reply_tag": "c6179ffc617fdbc962b5a9c4de3e889e0ef2d94c",
+ "tag_vs_build": "no difference in any checked file or function; differing files concern groups of cells, parasites, DEATH_PROB_PARENT (default 0), REQUIRE_SINGLE_REACTION (default 0), duplication actions",
+ "counts": {
+  "holds": 37,
+  "holds in part": 3,
+  "not checked": 1
+ },
+ "claims": [
+  {
+   "n": 1,
+   "claim": "SavePopulation stores instruction sequences, locations and selected metadata",
+   "verdict": "holds",
+   "where": "source/main/cPopulation.cc 6362-6560; source/systematics/Genotype.cc 356-389"
+  },
+  {
+   "n": 2,
+   "claim": "LoadPopulation creates programs afresh",
+   "verdict": "holds",
+   "where": "cPopulation.cc 6829, 7018, 7025"
+  },
+  {
+   "n": 3,
+   "claim": "LoadPopulation approximates remaining execution time by adjusting merit",
+   "verdict": "holds",
+   "where": "cPopulation.cc 7053-7062"
+  },
+  {
+   "n": 4,
+   "claim": "CPU registers, stacks, instruction pointers not restored",
+   "verdict": "holds",
+   "where": "not written by SavePopulation; new program object"
+  },
+  {
+   "n": 5,
+   "claim": "random-generator state not restored",
+   "verdict": "holds",
+   "where": "not in saved file; S113 reseeds each piece"
+  },
+  {
+   "n": 6,
+   "claim": "resource dynamics not restored",
+   "verdict": "holds",
+   "where": "no resource field in saved file; S113 runner carries levels via initial="
+  },
+  {
+   "n": 7,
+   "claim": "restart-induced replenishment could conceal depletion",
+   "verdict": "holds in part",
+   "where": "a reload resets resources to initial= (default 0: emptied); S113 carries levels"
+  },
+  {
+   "n": 8,
+   "claim": "the same pieces for every environment do not remove interaction with resources or curriculum",
+   "verdict": "holds",
+   "where": "restart audit: resource swings after each reload; lean to fewer births and common capabilities with resources; curriculum not tested"
+  },
+  {
+   "n": 9,
+   "claim": "omitting LoadPopulation update argument: local time starts at zero",
+   "verdict": "holds",
+   "where": "source/actions/SaveLoadActions.cc 73, 89"
+  },
+  {
+   "n": 10,
+   "claim": "SavePopulation filename=detail:save_historic=0 is valid",
+   "verdict": "holds",
+   "where": "SaveLoadActions.cc 151-160; ran"
+  },
+  {
+   "n": 11,
+   "claim": "native restart-audit event files run on stock Avida",
+   "verdict": "holds",
+   "where": "ran: two segments exit 0"
+  },
+  {
+   "n": 12,
+   "claim": "process:value=0:type=pow gives multiplier one",
+   "verdict": "holds",
+   "where": "source/main/cEnvironment.cc 1727, 1756-1757"
+  },
+  {
+   "n": 13,
+   "claim": "value=1:type=pow gives two at full quality",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1637-1639; cReactionProcess.h 77"
+  },
+  {
+   "n": 14,
+   "claim": "unrewarded reaction can consume resource or produce byproduct",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1660-1722, 1825-1832"
+  },
+  {
+   "n": 15,
+   "claim": "task recording follows requisite checks",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1335, 1349-1353, 1386"
+  },
+  {
+   "n": 16,
+   "claim": "product transfers resource quantity, not output integer",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1825-1832"
+  },
+  {
+   "n": 17,
+   "claim": "requisite:reaction concerns the program own reaction history",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1420-1460; cPhenotype.cc 1515"
+  },
+  {
+   "n": 18,
+   "claim": "task args comma-separated; process and requisite args colon-separated",
+   "verdict": "holds",
+   "where": "cArgSchema.h 81; cEnvironment.cc 149, 302"
+  },
+  {
+   "n": 19,
+   "claim": "stock copy-change probability 0.0075",
+   "verdict": "holds",
+   "where": "cAvidaConfig.h 309; support/config/avida.cfg 49"
+  },
+  {
+   "n": 20,
+   "claim": "stock DIVIDE_INS_PROB and DIVIDE_DEL_PROB 0.05",
+   "verdict": "holds",
+   "where": "cAvidaConfig.h 333-334; support/config/avida.cfg 63-64; cHardwareBase.cc 387-412"
+  },
+  {
+   "n": 21,
+   "claim": "0.0075 is not the total instruction-change rate",
+   "verdict": "holds",
+   "where": "as 20"
+  },
+  {
+   "n": 22,
+   "claim": "the appendix settings exist",
+   "verdict": "holds",
+   "where": "cAvidaConfig.h 283-551 (38 names)"
+  },
+  {
+   "n": 23,
+   "claim": "the current experiments omitted settings remain unknown",
+   "verdict": "holds",
+   "where": "true for the brief; now known: S111 avida.cfg identical to stock"
+  },
+  {
+   "n": 24,
+   "claim": "test CPU, manual inputs, output hooks exist",
+   "verdict": "holds",
+   "where": "cTestCPU.h; cCPUTestInfo.h 54-55, 89; cOrganism.cc 379-399"
+  },
+  {
+   "n": 25,
+   "claim": "PositionOffspring, ScheduleOrganism, ActivateOffspring, ActivateOrganism, UpdateMerit exist",
+   "verdict": "holds",
+   "where": "cPopulation.cc 5253, 5766, 624, 1353, 8003"
+  },
+  {
+   "n": 26,
+   "claim": "controller in cWorld, actions registered through cActionLibrary.cc, CMakeLists",
+   "verdict": "holds in part",
+   "where": "actions registered in group Register functions (PopulationActions.cc 6211) called at cActionLibrary.cc 38-43"
+  },
+  {
+   "n": 27,
+   "claim": "match_number target/threshold/halflife; exact match; twofold reward",
+   "verdict": "holds",
+   "where": "cTaskLib.cc 2329-2359"
+  },
+  {
+   "n": 28,
+   "claim": "SetTaskArgInt changes first integer argument of task 0",
+   "verdict": "holds",
+   "where": "EnvironmentActions.cc 1072-1101"
+  },
+  {
+   "n": 29,
+   "claim": "no resource lines: no finite-resource consumption",
+   "verdict": "holds",
+   "where": "cEnvironment.cc 1637-1639"
+  },
+  {
+   "n": 30,
+   "claim": "earned reward persists after a target change",
+   "verdict": "not checked",
+   "where": "not traced"
+  },
+  {
+   "n": 31,
+   "claim": "InjectRange end cell exclusive",
+   "verdict": "holds",
+   "where": "PopulationActions.cc 437, 464"
+  },
+  {
+   "n": 32,
+   "claim": "LOAD, FILTER, RECALCULATE, DETAIL exist",
+   "verdict": "holds",
+   "where": "cAnalyze.cc 11208, 11211, 11312, 11230"
+  },
+  {
+   "n": 33,
+   "claim": "RECALCULATE 0 -1 0 a b c supplies three manual inputs",
+   "verdict": "holds",
+   "where": "cAnalyze.cc 10261-10290; wrong count silently ignored unless verbose (10279-10283)"
+  },
+  {
+   "n": 34,
+   "claim": "DETAIL columns and FILTER syntax",
+   "verdict": "holds",
+   "where": "cAnalyzeGenotype.cc 205-275"
+  },
+  {
+   "n": 35,
+   "claim": "native analysis example runs",
+   "verdict": "holds",
+   "where": "ran: exit 0, probe-000.dat; cAvidaConfig.h 300"
+  },
+  {
+   "n": 36,
+   "claim": "stock Avida rejects unknown S114 actions",
+   "verdict": "holds",
+   "where": "ran: error unable to load event S114BountyInit, exit 255; cEventList.cc 56-59, 98"
+  },
+  {
+   "n": 37,
+   "claim": "5.4 billion scheduled instructions",
+   "verdict": "holds",
+   "where": "3600 x 30 x 50000; cAvidaConfig.h 548"
+  },
+  {
+   "n": 38,
+   "claim": "22.1 billion probe requests",
+   "verdict": "holds",
+   "where": "6 x 3600 x 512 x 2000"
+  },
+  {
+   "n": 39,
+   "claim": "restart audit about 0.6 CPU-hours",
+   "verdict": "holds",
+   "where": "measured: 0.55-0.73 CPU-hours"
+  },
+  {
+   "n": 40,
+   "claim": "tag 2.14.0 is c6179ff",
+   "verdict": "holds",
+   "where": "cloned tag resolves to c6179ffc617f"
+  },
+  {
+   "n": 41,
+   "claim": "owner Avida corresponds to pinned tag",
+   "verdict": "holds in part",
+   "where": "build is 47f13dad; no difference in checked code"
+  }
+ ],
+ "found_not_in_reply": [
+  "generation count set to 0 on reload (cPhenotype.cc 701)",
+  "record of tasks emptied on reload (cPhenotype.cc 673; tasks.dat counts it, cPopulation.cc 6011)",
+  "merit on reload is the sequence average over all completed copies (Genotype.cc 309-311, 381; cPopulation.cc 7042-7051)",
+  "count.dat counts every loaded program as a birth in the first update after a reload",
+  "SavePopulation default save_historic=1 (SaveLoadActions.cc 157)"
+ ],
+ "stock_or_source_change": {
+  "restart audit": "stock, ran",
+  "native analysis example": "stock, ran",
+  "B1": "source change (3 actions, output collector)",
+  "B2": "source change",
+  "B3": "source change",
+  "C": "source change",
+  "D generated problems and probes": "source change (runner)",
+  "D logic tasks": "stock analyze",
+  "D ablation": "stock",
+  "D learning cost restarts": "stock LoadPopulation"
+ },
+ "insertion_deletion": {
+  "settings": "COPY_MUT_PROB 0.0075 (0.0025, 0.02 in S111 conditions); DIVIDE_INS_PROB 0.05; DIVIDE_DEL_PROB 0.05; nothing else",
+  "described": {
+   "S111 plan line 17": "correct",
+   "S111 results lines 11/13": "correct",
+   "plain 111 section 2": "correct (or is loose)",
+   "S112 files and plain 112": "incomplete, no number affected",
+   "S113 plan section 3": "correct",
+   "S113 runner note": "incomplete",
+   "S114 brief": "incomplete",
+   "Decision S66 Claude reading": "does not hold for S111 and S113 plan"
+  },
+  "numbers_changed": "none"
+ }
+}

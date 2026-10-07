@@ -1,0 +1,128 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-tabulation-part12-known-answer",
+ "job": "compare_with_known_answer",
+ "kind": "mechanical",
+ "purpose": "Compare the two part-12 sheets (harnessed and bare) with Opus's rows for part 12 in round 2's tabulation: items found and missed, challenge marks, items sent to a checker, blocks, lines, passages, wordings exact or not. Run by the verifier or the orchestrator, never by the agent that filled a sheet.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-tabulation-part12-known-answer",
+ "inputs": [
+  {
+   "path": "Semantics/results/S104 Round 2 - tabulation of the replies, before any ruling.md",
+   "md5": "40be38955b3d9efd9d052de59bc6ffd6"
+  },
+  {
+   "path": "Semantics/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt",
+   "md5": "a913542b044d59a1f9f4472fa713266b"
+  },
+  {
+   "path": "Semantics/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt",
+   "md5": "acc7ae0bc2ff842a247df006e245aff3"
+  }
+ ],
+ "steps": [
+  {
+   "name": "harnessed sheet against Opus",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/tabulation.py",
+    "compare",
+    "--extraction",
+    "{TEST_ROOT}/{RUN}/r2-tabulation-part12-harnessed/filled.json",
+    "--tabulation",
+    "{SEM}/results/S104 Round 2 - tabulation of the replies, before any ruling.md",
+    "--part",
+    "12",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt:M12:Mimo",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt:G12:GLM"
+   ],
+   "timeout_s": 60,
+   "save": "harnessed.json"
+  },
+  {
+   "name": "bare sheet against Opus",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/tabulation.py",
+    "compare",
+    "--extraction",
+    "{TEST_ROOT}/{RUN}/r2-tabulation-part12-bare/extraction.json",
+    "--tabulation",
+    "{SEM}/results/S104 Round 2 - tabulation of the replies, before any ruling.md",
+    "--part",
+    "12",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt:M12:Mimo",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt:G12:GLM"
+   ],
+   "timeout_s": 60,
+   "save": "bare.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "harnessed: no pair Opus found is missed",
+   "file": "harnessed.json",
+   "path": "missed",
+   "empty": true
+  },
+  {
+   "name": "harnessed: items to a checker as Opus",
+   "file": "harnessed.json",
+   "path": "goes_to_checker_diff",
+   "empty": true
+  },
+  {
+   "name": "harnessed: all 16 wordings exact",
+   "file": "harnessed.json",
+   "path": "wordings_sheet_exact",
+   "equals": 16
+  },
+  {
+   "name": "harnessed: blocks as Opus",
+   "file": "harnessed.json",
+   "path": "blocks_diff",
+   "empty": true
+  },
+  {
+   "name": "harnessed: lines as Opus",
+   "file": "harnessed.json",
+   "path": "lines_diff",
+   "empty": true
+  },
+  {
+   "name": "harnessed: marks as Opus",
+   "file": "harnessed.json",
+   "path": "said_diff",
+   "empty": true
+  },
+  {
+   "name": "bare: no pair Opus found is missed",
+   "file": "bare.json",
+   "path": "missed",
+   "empty": true
+  },
+  {
+   "name": "bare: items to a checker as Opus",
+   "file": "bare.json",
+   "path": "goes_to_checker_diff",
+   "empty": true
+  },
+  {
+   "name": "bare: all 16 wordings exact",
+   "file": "bare.json",
+   "path": "wordings_sheet_exact",
+   "equals": 16
+  }
+ ],
+ "on_fail": "record the differences in the note; the rows that differ are what Opus's check must catch",
+ "never": [
+  "open a key file",
+  "call GLM",
+  "commit"
+ ]
+}

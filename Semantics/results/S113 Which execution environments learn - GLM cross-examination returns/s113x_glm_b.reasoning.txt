@@ -1,0 +1,641 @@
+Let me start by exploring the folder structure.
+
+Right, no commands run. I need to use Read, Glob, Grep tools only.
+
+Now let me read the scripts.
+
+Let me note some observations:
+
+1. In `measure`, `drops` counting: `was_common[i] and not present[i]` — the plan says "the number of times a task went from common to performed by no program". The code counts `drops` when a task was previously common at the last sample and is now not present. But note the `elif not present[i]: was_common[i] = False` — so once it drops to none, it resets; that seems fine. But there's a subtlety: `was_common[i] and not present[i]` counts consecutive samples. Actually plan M3: "the number of times a task went from common to performed by no program". The code counts the number of samples at which a task that was common at the previous sample is now performed by none. That matches roughly. But note "was_common" is only set when common at a sample, so a task common at sample t and not present at t+1 counts 1. OK.
+
+2. `last_new_high` starts with `high = -1`, `last_new_high = 0`. If common count is 0 the whole run (equ_only, no_rewards), last_new_high stays 0... but results say last new high 250/250/250 for those. Hmm, wait — at update 250, the common count... For equ_only, common count is 0 everywhere per the tables. But results.md table section 4 says "last new high of common: 250 / 250 / 250" for ONE HARD TASK ONLY. With all zeros, high starts -1, first sample c=0 > -1, so last_new_high = 250. So the last new high of an all-zero series is the first sample, 250. That's an artifact: a run where nothing ever became common is marked "levelled off: yes" with last new high 250. The plan M4 defines "the last update at which the count of common tasks reached a new highest value" — for an always-0 series, every update has count 0 = highest 0... actually the "new highest value" only happens once (first sample). Reporting 250 is defensible but "levelled off: yes" for a run that never rose is misleading; results.md says "never rose" so it's handled. Minor.
+
+3. `undercount_check` compares `tasks.dat` sums: sum of all task counts at piece k's first sample (update 250) vs previous piece's last sample (update 1000). But wait — the departure says each piece ran 1,001 updates, samples at 0(?)... Actually assert len(t)==4 means 4 samples per piece: at updates 250, 500, 750, 1000. So piece k's first sample is at update 250 within the piece → global update k*1000+250. And previous piece's last is (k-1)*1000+1000 = k*1000. Hmm, `samples.append((k*1000 + int(tr[0]), ...))` — so piece 0's samples are 250, 500, 750, 1000. Piece 1's are 1250... but wait, if each piece runs updates 0 to 1000 inclusive, then piece 1's update 250 label is 1250 globally, but piece 0's update 1000 == piece 1's update 0. The overlap of one update means global update labels k*1000+tr[0] double-count update 1000/0 boundary? Piece 0 last sample labeled 1000, piece 1's update 0 not sampled (first sample at 250 → 1250). OK so labels are consistent.
+
+But there's an issue: samples at update 250 of a piece are taken "as Avida gives them". Fine.
+
+4. The undercount check in the results table: "pieces 146" for environments with 150 pieces — because range(1, done) = 149 pieces... wait, done=50, range(1,50) = 49 pieces per run × 3 seeds = 147. Hmm, results says 146 for fixed_graded. And 105 for equ_only: 49×3=147 but only 105 because `if sa > 0` skips pieces where previous piece end sum was 0. Hmm, 147-105=42 skipped. Hmm wait but for fixed_graded also 147 minus 1 skipped = 146. OK.
+
+Wait, actually, is it 147 or 149? `for k in range(1, state['done'])` with done=50 gives k=1..49, 49 iterations. 49×3 = 147. Results: FIXED GRADED 146, GROWING 146, COMMON PAYS LESS 146, FIXED LARGE 146 — each 147 minus 1 piece with sa==0 (probably piece 0 end? No — k starts at 1, so sa is piece k-1's end for k=1 → piece 0's end. Hmm, at piece 0's end sum>0 surely for these... maybe one piece somewhere had sum 0 (e.g., fixed_large seed 3 fault). Actually per environment it aggregates 3 seeds, so 147 total minus 1 = 146; plausible.
+
+Hmm, but wait: the plan says "measured by comparing the 250 and 1,000 counts within pieces and reported" (section 5 preamble). Actually the plan says the undercount is "measured by comparing the 250 and 1,000 counts within pieces". The code instead compares piece k's 250 count against piece k-1's 1000 count. That's a different comparison than the plan's (within-piece 250 vs 1000). The results.md section 2 says "performances counted 250 updates after a load, against the previous piece's end". So the code matches the results' description but not the plan's exact wording. The plan's wording "comparing the 250 and 1,000 counts within pieces" — hmm, ambiguous: could mean comparing (the 250 count of a piece) and (the 1000 count, i.e. the end of the previous piece)? Actually "within pieces" suggests within the same piece: 250 vs 1000 of the same piece. That comparison would be confounded by growth within the piece. The cross-piece comparison is more directly the undercount. This is a mild mismatch between plan and script worth noting; but the results describe accurately what was done. Minor objection maybe.
+
+5. `s111_check`: `common_end` computes over `last[1:]` — all 9 tasks in S111's tasks.dat (S111 environment had only nine tasks listed, so tasks.dat has 9 columns). `progs[int(last[0])]` — fine. `first_any_equ` uses r[9] — column index 9 = the 9th task (EQU) since column 0 is update. Good.
+
+6. In `comparisons`, E2's 'against the expectation': `any(x is not None and x >= 3 for x in nr)` — plan says "Against: any seed with 3 or more common at 50,000, or NO TASK REWARDS not fewer than FIXED GRADED". `others.get('fixed_graded') != 'fewer'` — matches. OK.
+
+E5's 'against the expectation': plan: "Expectation: in FIXED GRADED and ONE HARD TASK ONLY the count ... levels off ... in every seed; in GROWING LIST and FIXED LARGE LIST it is still rising after 40,000 in at least two seeds. Against: the reverse in either pair." Code: `any(x is False for env in ('fixed_graded','equ_only') ...)` = first part violated; `or any(sum(1 for x in lo.get(env,[]) if x is False) < 2 for env in ('growing','fixed_large'))` — "still rising in at least two seeds" means levelled_off False in ≥2 seeds; against if <2. Matches.
+
+E6: plan expectation: "COMMON TASKS PAY LESS ends with at least as many common capabilities as FIXED GRADED, and more of the nine present at the end by any program; its programs spread over tasks rather than all performing all of them. Against: fewer common capabilities than FIXED GRADED." Code: `'against the expectation': r == 'fewer'`. Matches. But the code doesn't check "at least as many" direction... The expectation includes "at least as many" — if fewer, against. Code matches. Results.md notes "the expected 'more of the nine present' is not shown either" — but wait, the code reports two-input present: common_pays_less 9/9/9 vs fixed_graded 8/9/9. By the plan's rule, is 9/9/9 vs 8/9/9 "more"? min(9,9,9)=9 > max(8,9,9)=9? No, 9 > 9 is false. So "not separated". The plan's expectation "more of the nine present by any program" — not separated means the expectation's second clause is not met, but "Against" was only defined as "fewer common capabilities". Results.md says "Not against (the 'against' was 'fewer'), but the expected 'more of the nine present' is not shown either." OK, honest.
+
+E7: `'against the expectation': any(statistics.median(v) < 0.9 for env, v in keep.items() if v and env != 'no_rewards')`. Plan: "Expectation: in the rewarding environments at least 90% ... in NO TASK REWARDS, tasks that were ever common are not kept. Against: under 90% kept in any rewarding environment's middle seed." Hmm — "any rewarding environment's middle seed" — the code uses median of the three shares, which is the middle seed's share. OK. But env != 'no_rewards' — 'equ_only' is a rewarding environment with no tasks ever common, keep['equ_only'] = [] (empty list) so `if v` skips it. OK. Matches.
+
+7. Now `compare()` — the plan's rule: "'more' between two environments means: every seed of one above every seed of the other (smallest of one above largest of the other)". Code: `min(a) > max(b)` → 'more'. Matches. Note it silently drops None values — with equ_only's first_common None for equ — for E1 they don't use compare; they count seeds. OK.
+
+8. `measure` — 'series': `upd[3::4]` — takes every 4th sample starting at index 3 → updates 1000, 2000, ... i.e., the 1000-multiples. OK.
+
+9. Potential issue: `ten_before = at(common_count, upd[-1] - 10000)`. upd[-1] = 50000, so 40000. Fine.
+
+10. M1's "common" definition: `progs > 0 and c/progs >= COMMON` — 10% share. Plan says "at least 10%". `>= 0.10` matches.
+
+11. Growing rule check — need to look at the runner. Let me read the runner script.
+
+Also potential issue: in `read_run`, `int(cr[2])` — count.dat column 2 = number of programs? Need to check build notes for count.dat columns. Let me read the other scripts and build notes.
+
+Important observations on the runner:
+
+1. **Piece seed**: plan section 3 says "Piece k of seed s runs with Avida seed 1000 s + k." Code: `piece_seed = seed * 1000 + k`. Matches. But results.md says "Runs with the same seed number used the same Avida seeds piece by piece in every environment." OK.
+
+2. **COPY_MUT_PROB set on the command line**: `-set COPY_MUT_PROB 0.0075` — is that in avida.cfg already? The plan says S111's avida.cfg unchanged. Setting it explicitly is harmless if it matches. But note: does avida.cfg use COPY_MUT_PROB or COPY_MUT_RATE? Need to check avida.cfg. Also the runner only sets copy error rate; the insert/delete rates come from avida.cfg (departure 6 mentions this).
+
+3. **The growing list rule**: plan section 4: "After each piece, if at least one task of the highest level now rewarded is performed by at least 10% of the program population (Avida's tasks.dat count at the piece's end, divided by the number of programs in count.dat), the next level is added". Code `next_unlocked`: `at_top = tasks with level == unlocked` — i.e., the highest level now rewarded. `any(shares[t] >= COMMON)`. Matches. One level per piece: returns unlocked+1 at most. Matches. "Once added, a level stays rewarded" — unlocked only increases. Matches.
+
+But subtle: the plan says "the next level is added to the rewarded list (all its tasks, value = level)". The code's environment_text rewards `level <= unlocked`. So after unlocking level n+1, all tasks with level <= n+1 are rewarded. Consistent.
+
+Wait — there's a subtlety with level numbering: ranks use `fewest_nand_steps` as the level; 3AB got 10 as a *lower bound*. Fine.
+
+Another subtlety: **the initial state**: `state = {'unlocked': 1, ...}` — starts with level 1 rewarded (NOT, NAND). Matches plan.
+
+4. **The growing check uses `shares_at_end` which reads tasks.dat and count.dat last rows.** count.dat column index 2 = "number of organisms"? Need to verify from build notes or avida docs. count.dat columns in Avida 2.x: update, average fitness...? Actually count.dat typically has: Update, Organizations, Ave Fitness...? Let me check the build notes. In Avida, `count.dat` columns are: Update, Cells with organisms?, ... Hmm. I should grep the build notes.
+
+5. **Resource carry-over**: `resources_left` reads resource.dat, parses header lines beginning with '#' containing ':' and digit... The comment says "columns: update, then one per resource" — `last = rows[-1]`, `for i, n in enumerate(names[1:], start=1)`. The names list: header lines in resource.dat give resource names. names[1:] assumes the first name is... hmm, resource.dat header might be "# Update resNOT resNAND ..." Actually they parse `names` from comment lines where line[1:].strip()[:1].isdigit() — that seems odd: header lines like "# 1:Update 2:resNOT ..."? They take `line.split(':', 1)[1].strip()` as the name. So names = ['Update', 'resNOT', ...] maybe, and names[1:] skips 'Update'. Plausible. But if the header spans multiple lines or the resource names contain ':'... Can't verify without raw output. It's plausible.
+
+Wait, there's a subtle bug: the resource initial value is read from resource.dat's last row, which is at update 1000 of the piece. Then `environment_text` writes `:initial=%.6f`. But the plan says the amount left is carried into the next piece as its starting amount. OK.
+
+But: outflow happens during... fine.
+
+6. **`shares_at_end` division**: `tasks[i+1]/programs if programs else 0.0` — programs from count.dat. OK.
+
+7. **A potentially serious issue in the growing rule**: `next_unlocked` checks tasks at level == unlocked ("the highest level now rewarded"). But what if no task of the top level is *ever* performable... it just never grows; fine.
+
+Another: the check is at the piece's end (tasks.dat last row = update 1000). But due to the counting fault (loaded programs have empty records), the share at a piece's end may be *understated* — meaning the growing list may grow *slower* than the true population ability. Also the share can be overstated? Not really. This is a limit: the growing rule itself is subject to the undercount fault. Is that stated? The results section 2 discusses the fault for measures; the growing rule uses the same count. In growing runs the undercount was less severe (middle ratio 0.92). Hmm, results say growing's levels were added fast anyway. Not a big deal but worth mentioning as a limit leaning on the growing list's rule.
+
+8. **`events_text`**: `u 250:250:%d PrintTasksData` — every 250 from 250 to 1000 → 4 samples. PrintAverageData etc. only at 1000. PrintResourceData at 1000. OK.
+
+Note `u begin Inject default-heads.org` only for first piece; later `u begin LoadPopulation start.spop`. Good.
+
+9. **Exit at update PIECE** — departure 2 says each piece ran 1,001 updates (labels 0..1000). Fine, recorded.
+
+10. **Avida seed same for equ_only and no_rewards etc.** — yes, piece_seed = seed*1000+k regardless of env, so equ_only and no_rewards are literally identical runs given no reward ever paid... wait, they're not identical: environment.cfg differs (EQU rewarded at value 5 vs 0), but since no program performs EQU, the runs are identical. Results note this. But note a subtle issue: with the same seeds, EQU_ONLY and NO_REWARDS are the *same* runs — so they're not independent replicates; but they're compared as separate environments in E2's "not separated from ONE HARD TASK ONLY (the same runs)". OK, honest.
+
+11. **Timeout and failure handling**: if a piece fails, run stops — all 900 exited 0.
+
+12. Potential issue: the runner **deletes the previous piece's spop unless k % 5 == 0**, so populations are kept every 5,000 updates — matches plan ("the saved program population is kept every 5,000 updates"). KEEP_EVERY=5: keeps when (k % KEEP_EVERY) == 0, i.e. after pieces 0, 5, 10... = updates 1000, 6000, 11000... Wait! That keeps populations at updates 1,000, 6,000, 11,000, ..., 46,000 — NOT at 5,000, 10,000, ..., 50,000!
+
+Hmm wait. Let's be careful. After piece k finishes (piece k ends at update (k+1)*1000), the code considers deleting prev = piece k-1's spop, which ended at update k*1000. The condition: `if prev and (k % KEEP_EVERY) != 0: remove prev's spop`. So piece k-1's spop (at update k*1000) is kept when k % 5 == 0, i.e. updates 5000, 10000, ..., 50000. 
+
+But also this piece's own spop (piece k, at update (k+1)*1000) will be considered for deletion in iteration k+1, where it is prev, and kept when (k+1) % 5 == 0 → update (k+1)*1000 multiple of 5000. Consistent. So kept spops are at 5,000, 10,000, ..., 50,000. Good, matches.
+
+But note also that the LAST piece (k=49)'s spop is never deleted (no next iteration), so 50,000 kept. Good.
+
+13. `run_one` copies avida.cfg etc. from S111CONF. But `S111CONF` is `results/S111 Avida - the runs/configuration` — in the sandbox we have `runs/configuration from log S111/`. Fine.
+
+Now, an important check: does avida.cfg's COPY_MUT_PROB equal 0.0075? And what are the insert/delete rates? Let me read avida.cfg.
+
+Also need to check the events file in runs/configuration to compare with events_text.
+
+Let me now read the remaining scripts: rank, reuse, measure_capabilities (added later), print tables. And configuration files. And build notes for tasks.dat/count.dat column meanings.
+
+Analysis of the ranking script:
+
+The search: breadth-first over *sets of numbers* (truth tables) reachable. Key question: does the BFS find the fewest steps? The frontier is the set of reachable sets after `step` steps. For each frontier set s, it extends by one nand. This is BFS over sets, so the first time a table z appears, it's at minimal step count... within the kept (BFS) phase. But note the "keep_limit" switch: `while need and step < max_steps and len(frontier) <= keep_limit`. If frontier exceeds keep_limit, it stops the BFS and does depth-first `grow` from the frontier without keeping. Claim: "the answer is the same". Depth-first from frontier sets of size `step` extends by up to `extra` steps, finding targets reachable within step+extra. Since the frontier holds ALL reachable sets at depth `step` (complete BFS to that point), DFS from them explores exactly the circuits of ≤ step+extra steps. So minimal counts found are correct up to max_steps=9. One subtlety: `found` is collected per `extra` iteration, and `best[z] = step + extra` — but a table found at iteration extra was NOT findable at any smaller extra (else found earlier), so minimal. Correct.
+
+But: does BFS terminate before keep_limit at step 9? The log would tell (not available). The ranking JSON exists; let me check it. Also: `best = {A:0, B:0, C:0}` — inputs are free. Each step is nand of two available numbers (may be same number twice: `items[i:]` includes x itself). Results reusable. This is a fair model of `nand` on bytes. One question: Avida's tasks compare full 32-bit outputs? The logic ids are 8-bit tables (bitwise over 3 input bits). Avida's tasks check specific input sequences; the "logic id" abstraction is from Avida's own source (SetupTests). Fine.
+
+A subtle point: circuits compute on the *three inputs*, but in Avida a program can also use constants? In the default instruction set there's no constant-loading instruction? Actually there IS: `set` doesn't exist... hmm, instset-heads.cfg has 26 instructions. Is there an instruction to load a constant? Typically not in the default heads set. But note: NOT is computed as nand(x,x) — 1 step. Consistent with S111's reward values (1,1,2,2,3,3,4,4,5) matching — good cross-check.
+
+However, a deeper issue: the search computes each task as a function of all three inputs A, B, C. But two-input tasks are functions of two inputs; they accept multiple logic ids (under input swaps). Fine.
+
+Another check: `assert len(steps) == 1` — a task's ids all have the same step count (a task accepts one function under input swaps; nand-step count is invariant under input permutation... is it? NAND circuit complexity is invariant under permuting inputs, yes). OK.
+
+The cut at 9 steps and 3AB's lower bound of 10 is recorded in plan §2 and departure 4. Note that for two-input tasks, only 2 of 3 inputs are relevant, but the search gives the same counts (1,1,2,2,3,3,4,4,5 matches S111). Good.
+
+One possible objection: the BFS enumerates sets of *tables*, not circuits — the minimal step for a table z is the minimal number of nands to compute z from A,B,C allowing intermediate garbage. That's the right definition ("fewest nand steps a circuit needs to compute it").
+
+Memory: they said it ran out of memory at 10 (departure 4). Fine.
+
+Now check the ranking JSON.
+
+Check the plan's claim in §1: "5 of the 256 ids are accepted by no task: 0, 255 and the three inputs" — inputs are 170 (A), 204 (B), 240 (C). JSON lists 0, 170, 204, 240, 255. Matches.
+
+Level table check: plan §2 table says level 2 has AND, ORN, 3BO; level 3 has OR, ANDN + 5 three-input tasks (7 total: OR, ANDN, 3AG, 3BA, 3BS, 3BZ, 3CI); etc. Counts: 2,3,7,11,12,16,12,10,3,1 = 77. Good.
+
+Now the reuse script.
+
+Reuse script analysis:
+
+1. `most_common_at_end`: parses spop; `n, seq = int(w[4]), w[16]`. Need to check the spop format columns. Build notes might describe. `w[4]` = number of programs with this genotype? `w[16]` = the sequence (genome). Need to check the build notes for SavePopulation format.
+
+2. Ablation: `evaluate([seq[:i] + NULL + seq[i+1:] ...])` — NULL = 'A', which is the character mapped to nop-X (added as inst 27 with comment "# A"). Wait — in instset-heads.cfg instructions are assigned letters; nop-X was appended with `# A` marking its symbol as 'A'? The comment "# A (log S113 analysis only...)" — presumably Avida assigns the char after the comment. OK.
+
+3. `req[t] = [i for i,r in enumerate(abl) if r['viable'] and not r['tasks'][j]]` — required = ablation stops task while still replicates. Matches S112's definition and plan M6.
+
+4. `expected = len(req[a]) / free` where free = len(seq) - len(repl). The plan: "the share expected if the later task's required instructions were placed at random among the program's instructions not required for replication". The expectation = (earlier task's required count) / (non-replication instructions). The share of the later's required instructions that would fall within the earlier's required set, if placed uniformly at random among the free positions. Expected share = |req[a]| / free... Hmm — but careful: positions available = all positions minus replication-required = free. The earlier task's required instructions are a subset of free positions (since req[a] positions are viable ablations). So a random placement of |req[b]| distinct positions among free positions: expected overlap share = |req[a]|/free. Correct as hypergeometric expectation. Good.
+
+BUT: there's a subtle problem noted in results §7 "Unsure": required instructions include shared input reads. Also, the random expectation assumes the later task's required instructions are placed uniformly among free positions — stated in results §7 as a limit. Good.
+
+5. Pair ordering: `fa < fb` strictly, first appearance per run by "any program" reading (Avida world count). Matches plan ("by M2 in that run, 'by any program'"). Pairs with equal first appearance are dropped (fa < fb strictly). Note: two tasks first appearing at the same sample are excluded — is that stated? Minor; the plan says "the earlier ... and the later", so equal-time pairs are ambiguous; excluded silently. Also pairs where a==b skipped by fa<fb.
+
+6. `mean_expected` compares against `mean_shared` per run; E8 judged by "the average share no larger than the random expectation". Results: 12 of 12 above. OK.
+
+7. One program per run: limit stated in plan ("if the time allows") and results.
+
+8. The test-processor environment: `environment_text('no_rewards', ...)` — all 77 tasks at value 0 — so tasks are *counted* (performed) but not rewarded. In analysis mode, rewards don't matter anyway. OK.
+
+9. Potential issue: `evaluate` uses `-s 1` seed and analysis mode with RECALCULATE — deterministic. Fixed inputs of the test processor — stated in results §11 ("The world's inputs: the test processor uses its own fixed inputs").
+
+10. Issue: the ablation count = len(seq) evaluations per run; each ablated program checked for viability and tasks. Ablation of an instruction in a *self-copying* program: sequence includes the copy loop; fine.
+
+11. `one_run` uses `C.measure(samples, tasks, {})['first_any']` — first appearance per run in world counts. OK.
+
+12. Potential mismatch with plan M6: plan says "the share of the later task's required instructions that are also required for the earlier is compared with the share expected..." — code does exactly. And "More sharing than that expectation is read as the later task's circuit reusing parts of the earlier's." OK.
+
+Now, `most_common_at_end` picks the most common genotype *at update 50,000* from `piece_49/data/detail-1000.spop`. In growing runs, that sequence performed 64 tasks (seed 1). Fine.
+
+One thing: results table says "programs with this sequence: 14 / 41 / ..." for fixed_graded. OK.
+
+Now `s113_measure_capabilities_in_the_saved_program_populations.py` and the table printer. Also the exact commands, configuration files, build notes (for count.dat column 2 and spop columns), and avida.cfg (COPY_MUT_PROB).
+
+Notes on this script:
+
+1. `common = [s[kind][j] / s['programs'] >= COMMON ...]` — no `programs > 0` guard, but programs is total from spop sums, always > 0. OK.
+
+2. `rise_of_common_over_last_10000': com[MARKS[-1]] - com[MARKS[-3]]` — MARKS[-3] = 40000. Correct.
+
+3. `read_spop` skips lines with n == 0. But in `most_common_at_end` (reuse script) zero-count lines can win only if all are 0; fine.
+
+4. In `one_snapshot`, `piece = mark // 1000 - 1` — mark 5000 → piece 4, which ends at update 5000. Good.
+
+But wait — the runner deletes spops except multiples of 5,000. It keeps piece k-1's spop when k%5==0. Piece 4's spop (update 5000) kept when k=5 processed. Yes.
+
+5. Common threshold in the test-processor reading: counts each program carrying a sequence that performs the task, including *non-replicating* sequences. That's why both readings given. OK, stated.
+
+Now the table printer script.
+
+Table printer: reads only from `per run` (world count) for most tables. The "tasks ever common, by level" table: `ranks[t] = f['level']` built from `first_appearance` across envs — the level from ranks json. OK.
+
+One inconsistency check: results.md §5's level table shows for FIXED LARGE LIST seed 1 "level 3: 7 (1750)" etc. The printer prints `'%d (%s)' % (len(ts), min(fc[t]...))`. Fine.
+
+Now check results.json consistency with results.md. Also check "the exact commands.txt", configuration files, build notes for count.dat columns and spop format, and avida.cfg for COPY_MUT_PROB.
+
+Now the configuration files.
+
+Consistent. Note: the common_pays_less first piece starts resources with no `initial=` — defaults to 0. Plan says "the first piece starts at Avida's default, 0". Matches. Later pieces get `:initial=<left>`. Matches plan §4.
+
+Now avida.cfg (S111) — check COPY_MUT_PROB and other rates; check that piece seeds and settings match. And the build notes for count.dat columns and spop format.
+
+COPY_MUT_PROB 0.0075 in avida.cfg — matches the runner's `-set`. DIVIDE_INS_PROB 0.05, DIVIDE_DEL_PROB 0.05 — matches plan §3 "one inserted and one deleted instruction each with probability 0.05 per copy". Departure 6 already noted the runner's note mentioning only the first.
+
+Now, the build notes — check count.dat column 2 and spop format columns 4 and 16, and tasks.dat columns.
+
+The build notes are thin on count.dat column layout and spop format. The count script reads `cr[2]` as programs. In Avida's count.dat, the columns are: Update, Organisms?... Actually let me recall Avida's `count.dat`: it's printed by `PrintCountData` in cPopulation.cc: columns are Update, ... hmm. In Avida 2.x, count.dat columns: `Update Cells_Occupied Avg_Fitness ...`? I don't remember exactly. Let me think.
+
+From Avida source (cStats::PrintCountData or cPopulation), count.dat header is like:
+`# Gen Time    Update    AvlFitness ...`? No, that's average.dat.
+
+Actually, in Avida, `count.dat` contains counts of genotypes: columns "Update", "Organisms", ... Hmm. I recall the file `count.dat` has columns: `Update, ave_epoch...`? Let me think about what I know from Avida documentation: The data files: average.dat, count.dat, tasks.dat, resource.dat, dominant.dat...
+
+count.dat: "genotype counts" — columns: Update, # orgs, # genotypes, ... Hmm.
+
+Actually from Avida 2.14 source, `cPopulation::PrintCountData` prints: Update, cells occupied? Let me try to remember from cStats.cc: `PrintCountData` prints columns: "Update", "Organisms", "Creatures"? I genuinely can't recall.
+
+The runner comment says `programs = count[2]  # count.dat column 3: number of organisms`. The count script uses `int(cr[2])`. Both use column index 2 (third column). If count.dat columns are "Update, Organisms(?), ..." — hmm. In Avida, count.dat header (from source) is:
+
+```
+# 1:Update 2:Organisms 3:...
+```
+
+Hmm, I'm not sure. Given both scripts agree and results are self-consistent (programs_at_end 3,484–3,600, world holds 3,600), column 2 = number of organisms is plausible: results §9 "Programs at 50,000: 3,484 to 3,600 in every run (the world holds 3,600)". Consistent.
+
+Wait — actually there's a subtlety: count.dat column 2 might be "avascular"... I'll accept; the consistency check (world holds 3,600) supports it.
+
+The spop format: `w[4]` = number of organisms with this genotype? and `w[16]` = genome sequence. Avida's detail.spop format: each line: `# id...`? The detail spop lines have fields: genotype number? parent?... Actually format: `genotype_id parent_id ... depth? ... number? ... genome`. I can't verify from here; but the reuse results give "programs with this sequence: 776" for a 22-instruction program in equ_only seed 3 — plausible (a small replicator taking over). And total programs sums to ~3,600 in the test processor script presumably. Results §2 doesn't state totals. Plausible.
+
+Now let me look at results.json to cross-check a few numbers with results.md, especially: E1 numbers, the undercount table, reuse totals ("4,205 above, 394 below, 727 equal (5,326 pairs)"), growing steps, "pairs sharing nothing" sums, and the tables.
+
+Check: reuse table sums: pairs: 19+26+26+0+0+0+0+0+0+0+1604+884+1377+99+34+26+386+769+76 = let's compute: 19+26=45, +26=71, +1604=1675, +884=2559, +1377=3936, +99=4035, +34=4069, +26=4095, +386=4481, +769=5250, +76=5326. Matches "5,326 pairs". above: 10+24+14+1604+252+1116+81+28+17+226+768+65 = 10+24=34,+14=48,+1604=1652,+252=1904,+1116=3020,+81=3101,+28=3129,+17=3146,+226=3372,+768=4140,+65=4205. Matches. below: 9+2+12+0+202+60+18+6+9+64+1+11 = 9+2=11,+12=23,+202=225,+60=285,+18=303,+6=309,+9=318,+64=382,+1=383,+11=394. Matches 394. Equal = 5326-4205-394 = 727. Good.
+
+Now, potential arithmetic checks on the "levelled off" for equ_only: last new high 250 — the artifact I noted. The results table §4 shows "250 / 250 / 250" and "yes / yes / yes". The plan defines M4 for counts; a series that never rose trivially satisfies "last new high at or before 40,000" but "never rose" is stated in §0 table. Not really an objection — E5's expectation for equ_only was "levels off in every seed", satisfied vacuously. Fine, maybe a minor note.
+
+Now check the results.json for numbers. It's probably big. Let me check key parts.
+
+No commands. Use Read on the results.json — check its size first via Glob? Just read parts. It's probably long. Let me grep for key entries.
+
+Note results.md section 2 table doesn't include the "largest" column (12.731, 17.577) — ratios above 1 mean more performances counted 250 updates after a load than at previous piece end, which is normal growth. Fine.
+
+But an important observation about the undercount check: the ratio compares piece k's update-250 sum to piece k-1's update-1000 sum. But the fault means counts *just after load* are too low; comparing to the previous piece's end (which itself is the "true" state at the save) measures the drop. However, there is a confound: the population changes during 250 updates. The middle ratio 0.92 for growing suggests a modest drop. OK, it's a rough measure; the plan promised "measured by comparing the 250 and 1,000 counts within pieces". Actually re-reading the plan: "since a loaded program's record of its tasks is empty until it completes one copy, these counts may be a little low; this is measured by comparing the 250 and 1,000 counts within pieces and reported". Hmm — "the 250 and 1,000 counts within pieces". The script compares piece k's 250 count with piece k-1's 1000 count — that's cross-piece, not within-piece. Within-piece (250 vs 1000 of the same piece) would measure growth, not the load drop. The cross-piece comparison is arguably the right measure of the load drop, but it confounds population change. Either way the script deviates from the plan's stated method. Since it's a check reported in results and the results describe it correctly ("against the previous piece's end"), this is a plan-vs-script mismatch worth a minor objection: the plan's promised measurement was not the one made, and neither file records this as a departure. Actually results.md §2 says "The per-environment check the plan named (performances counted 250 updates after a load, against the previous piece's end; ...)" — it claims this is the check the plan named, but the plan's wording differs. Minor.
+
+Let me now check the growing steps and comparisons in the json.
+
+Consistent with results §1. Now check the comparisons block in the json and a couple of per-run entries, and the reuse block. Also check the "test processor reading" comparisons.
+
+Wait — E1's "against the expectation" boolean: code computes `bool(n_eo >= n_fg and med(eo) <= med(fg))`. With n_eo=0, n_fg=3 → False. Right, expectation was "EQU becomes common in fewer seeds of equ_only than of fixed_graded" — found 0 < 3, so not against. Good.
+
+But results.md §8 E1 says "middle first-common update [null, 17500]". Fine.
+
+Hmm — one thing in E1: the code's condition `n_eo >= n_fg and med(eo) <= med(fg)` — the plan's "Against" is: "EQU common in as many ONE HARD TASK ONLY seeds as FIXED GRADED seeds, at a middle first-common update no later." That is: n_eo >= n_fg AND med(eo) <= med(fg). Matches. But if med(eo) is None and n_eo==n_fg... edge case, fine.
+
+Now let me check the reuse block and per-run data in the json, plus the side-by-side check and the fixed_large_seed3 numbers. Also verify some consistency between results.md §2 claim "they agree exactly at all ten saved updates in FIXED GRADED, ONE HARD TASK ONLY and NO TASK REWARDS (all seeds) and COMMON TASKS PAY LESS seed 2" — hard to verify without raw data, but the side-by-side table is in the json. Let me spot check a few.
+
+Consistent. Now let me check the reuse section in the json and the "plain words" file, the rule for reading file, and the owner's Avida terms (mostly for other agents, but check that the results don't use forbidden words — that's more the content angle; my angle is measures and scripts; still the brief says owner's words bind; but other agents likely cover. I'll focus on measures/scripts but may note any egregious S23/S43 violation in the files I examine... Actually the brief says section 4 is my job; the binding constraints apply "For what the theory judges" — I'll do a quick check of the plain words file since it's in my folder list? It's not in my file list actually — S113/3 plain words.md is in my folder. My section doesn't ask me to check it. Skip unless quick.
+
+Let me read the reuse json block quickly and then verify the ranking JSON's 3AB entry and level table vs plan.
+
+Now, an interesting point about the ranking: plan §2 says level 3 includes "OR, ANDN, 3AG, 3BA, 3BS, 3BZ, 3CI" (7). Let me verify counts per level in the json quickly with a grep-count of "fewest_nand_steps": N. Let me count.
+
+Count occurrences: level 1: 2 (lines 19,28). Level 2: 2 (37,49) among two-input; wait, plan says level 2 has 3 (AND, ORN, 3BO). In the grep, line 439 has "fewest_nand_steps": 2 — that's a three-input task (3BO presumably). So level 2 = 3. Level 3: lines 58, 70, 147, 313, 475, 538, 640 = 7. Matches plan (7). Level 4: 79, 88, 154, 223, 250, 286, 529, 628, 652, 700, 724 = 11. Matches. Level 5: 97, 232, 367, 412, 430, 466, 493, 556, 568, 592, 664, 688 = 12. Matches. Level 6: 182, 196, 205, 268, 295, 322, 331, 349, 376, 394, 502, 511, 547, 604, 616, 712 = 16. Matches. Level 7: 104, 119, 140, 214, 259, 277, 340, 385, 448, 520, 580, 676 = 12. Matches. Level 8: 126, 161, 168, 175, 241, 358, 403, 421, 457, 484 = 10. Matches. Level 9: 133, 189, 304 = 3. Matches. Level 10: 111 = 1. Total: 2+3+7+11+12+16+12+10+3+1 = 77. Matches plan table exactly. 
+
+Now, verify tasks list order in json matches reaction order in environment cfg (AA..CP). Yes, seems alphabetical.
+
+Now let's check the two-input tasks in growing seed 2: results.md §5 growing row "XOR: 6250 / - / -". OK.
+
+Now think about deeper objections. Let me list candidate objections:
+
+**A. M2 first appearance and the piece-load undercount.** First appearance is measured on Avida's world count samples every 250 updates, which are subject to the load undercount — but first appearance "by any program" needs just one program counted; the fault makes counts low but not zero typically. More important: the reuse measure's pair ordering uses world-count first appearance; with 250-update samples, two tasks often first appear at the same sample and such pairs are silently dropped. Results §7 says "The order 'earlier, later' is by first appearance in the run" — doesn't mention the equal-sample exclusion or the sampling resolution limit. Check growing_seed2: pairs 884 vs 46*45=2070 ordered pairs; 46 tasks → 1035 unordered pairs; only 884 have strict order. So ~151 pairs dropped for equal first sample. Is that stated anywhere? Not in results.md §7. Minor objection: pairs whose two tasks first appear at the same 250-update sample are silently excluded from M6; the count is not stated.
+
+**B. The undercount check measurement deviates from the plan's stated method** (plan §5: "comparing the 250 and 1,000 counts within pieces"; script compares piece k's 250 against piece k-1's 1000). Results.md §2 calls it "the per-environment check the plan named". Not recorded as a departure. Fix: correct the sentence in results §2 or record it in departures.
+
+**C. `last_new_high` for runs that never rose** — equ_only/no_rewards get "last new high 250 / 250 / 250, levelled off yes" from the first sample where count = 0 > -1 (initial high = -1). The plan M4's "levels off" is then vacuously yes. Results §0 says "never rose", so no harm; but E5's expectation ("levels off in every seed" for ONE HARD TASK ONLY) is counted as confirmed by a vacuous truth. Minor. Actually the code sets `high=-1` so the first sample (even 0) sets a "new high". If instead they'd initialized high=0, last_new_high would be None. Reporting "250" as the last new high when the count was 0 at 250 and always 0 is an artifact. It doesn't change any verdict. Minor objection with exact fix: initialize `high = 0` (or report "never rose").
+
+Wait, actually — is it true that common count is 0 at 250 for equ_only? Yes per tables. So last_new_high=250 comes from count 0. The fix: treat 0 as no rise; e.g. `high = 0` initial.
+
+**D. The growing list's rule uses the same faulty end-of-piece count** — the rule reads `tasks.dat` at piece end where loaded programs' records may be empty; the plan's rule is defined exactly that way ("Avida's tasks.dat count at the piece's end"), so the code implements the plan. But the discovered fault means the growing list may unlock a level *later* than the true population state would warrant (or never). Is this limit stated? Results §2 discusses the fault for measures; §1 reports the growing steps; nowhere does it say the growing rule itself is fed by the potentially undercounted count. The undercount table for growing shows middle ratio 0.92, smallest 0.305, 5 pieces under 0.5 — so the unlock signal could in principle be missed or delayed in some pieces. In practice levels unlocked fast. But it's a limit that leans on a result (the growing list's history and E4) and is not stated. Objection: state in §2 or §11 that the growing list's unlock decisions use the same end-of-piece count that undercounts after a load.
+
+**E. M1 "common" at the 10% share uses count.dat programs, which counts all programs including empty-record ones.** That's the definition; fine.
+
+**F. The reuse random expectation** — the assumption stated; the "unsure" paragraph covers shared input reads. OK, stated.
+
+**G. `expected = len(req[a]) / free`** — this is the expected *share* only if the later task's required instructions are placed at random among the free positions *without* regard to... Actually expected overlap fraction = |req[a]|/free only if positions are drawn uniformly from free positions. But req[a] ⊆ free? Is req[a] guaranteed ⊆ free? req[a] positions are those where ablation leaves the program viable; replication-required positions are where ablation makes it non-viable. So req[a] ∩ repl = ∅ by construction. So req[a] ⊆ free positions. Good, expectation correct.
+
+However, there's a subtle issue: for a task b whose required set overlaps req[a], the shared share uses set intersection over req[b] — fine.
+
+**H. `one_run` uses first appearance from the whole run's world count, including tasks never performed by this specific sequence.** The plan says pairs "of tasks the program performs... the earlier (by M2 in that run...)". Matches plan. The limit (order by population first appearance, not this program's ancestry) is stated in results §7. OK.
+
+**I. The neutral check (plan §3)**: 1,000-update piece, only NOT appeared — the check is weak, and the plan admits it ("this checks the listing, not a population doing many tasks"). Stated. But note: the check used seed 1000 = same seed as fixed_graded seed 1 piece 1 — irrelevant.
+
+Wait, actually there's something more important: the claim "identical counts" for the neutral check — with 77 tasks listed at value 0. But in common_pays_less, resources exist. Fine.
+
+**J. count.dat column 2.** Need verification that cr[2] is number of organisms. In Avida's count.dat, columns are (from cPopulation::PrintCountData or cStats): "Update  ave_epoch  organisms  ..." Hmm. Let me think harder. In Avida 2.x, `count.dat` header:
+
+I recall from Avida docs: count.dat contains genotype counts per update: columns "Update, Organisms, Genotypes, Threshold..." Hmm.
+
+Actually, let me search my memory of the Avida source: `void cStats::PrintCountData()`? There's `cPopulation::PrintCountData(std::ostream& fp)` in cPopulation.cc which prints... I believe it prints: `fp << GetUpdate() << " " << ...` Something like "cells occupied" etc. The runner's comment says "count.dat column 3: number of organisms" and both scripts use index 2. If column 1 (index 1) were organisms and index 2 something else, the results would be nonsense; but results are consistent (programs ~3,591-3,600 = world size 3,600; the fixed_large seed3 text says "3,591 programs (count.dat of pieces 33 to 35)"). Self-consistent. I'll accept.
+
+Hmm, wait — actually I remember Avida's count.dat: the columns are `Update, AvlOrganisms(?), Organisms...`. I can't resolve without source; it's in "not reached" territory? The brief says "the columns read from Avida's tasks.dat, count.dat, resource.dat and the saved population, as the scripts read them". I can check consistency: `int(cr[2])` gives ~3,591 for a full world — plausible for "number of organisms". If cr[2] were, say, "number of genotypes", values would be much smaller (~hundreds) and "programs at end 3,484–3,600" matches world size. Also shares (task counts / programs) produce sensible 10% thresholds. And the fixed_large seed 3 text explicitly cites 3,591 programs. So column reading is consistent. OK.
+
+**K. tasks.dat column order** = the reaction order in environment.cfg = ranks order. The count script asserts `len(tr) == len(tasks)+1`. Fine.
+
+**L. `read_run` asserts exactly 4 samples per piece** (`assert len(t) == len(c) == 4`). With events `u 250:250:1000`, samples at 250,500,750,1000 = 4. Good. But wait — the events file says `u 250:250:1000` — does the third parameter mean "until update 1000"? Yes. Departure 2 says pieces run 1,001 updates (0..1000). Samples at 250,500,750,1000. Good.
+
+**M. Piece overlap: update 1000 of piece k and update 0 of piece k+1 are the same update?** Not sampled at 0, fine. But *global labeling*: `k*1000 + tr[0]` — for piece k+1, update 250 → (k+1)*1000+250. Good. But actually there's a real overlap: piece k runs updates 0..1000 (inclusive, 1001 updates), and piece k+1 starts at update 0 again — i.e., the run redoes update 1000? No: piece k+1 loads the population saved at its update 1000 and runs from update 0..1000. So each piece executes 1,001 updates; total 50,050 update labels. The results label things as piece*1000+in-piece update. So "update 50,000" = piece 49's update 1000. Fine — departure 2 records this.
+
+**N. M3 "the number of times a task went from common to performed by no program"** — code counts consecutive-sample transitions from common (at previous sample) to not present. But the plan says "went from common to performed by no program" — code requires was_common at the *immediately preceding sample*. What if a task is common at t, present-but-not-common at t+1, not present at t+2? Then was_common[t+1] = True (elif not present resets only when not present). Look: `if common[i]: was_common[i]=True; elif not present[i]: was_common[i]=False`. So present-but-not-common leaves was_common unchanged (stays True). So common at t, present at t+1, none at t+2 → counted. Good, matches "went from common to none" with the intermediate allowed. OK.
+
+But subtle: drops counts per (task, sample) transition; a task that repeatedly oscillates common→none→common counts multiple times. Plan ambiguous; fine.
+
+**O. fixed_large seed 3's E4 impact.** The headline E4 claim "more, by both readings" — by the test processor, 65/46/55 vs 32/41/13: min(growing)=46 > max(fixed_large)=41. Yes "more". OK.
+
+But note: E4's verdict by Avida's count relies on the faulty 0 in fixed_large seed 3. The results give both readings, and the test processor supports "more". Fine, honest.
+
+**P. `compare` drops None values silently** — e.g., in test-processor reading first_common comparisons. Where used for common_at_end, no Nones. OK.
+
+**Q. The "smallest"/largest columns in the results §2 table are missing "largest"** — results.md table shows middle and smallest and pieces under 0.5; json has largest too. Not an error.
+
+**R. E7's test uses median across seeds** — plan says "middle seed"; matches.
+
+**S. E2's 'against the others' uses compare on common_at_end** — plan E2: "NO TASK REWARDS ends with the fewest common capabilities of the six (at most 2 at update 50,000 in every seed). Against: any seed with 3 or more common at 50,000, or NO TASK REWARDS not fewer than FIXED GRADED." Code: `others.get('fixed_graded') != 'fewer'`. Matches. But "fewest of the six" — also vs equ_only (same runs, not separated) and vs fixed_large (not separated by world count). Results §8 honestly reports. The expectation "fewest of the six" is technically contradicted by not being fewer than equ_only? No — same runs, identical, so "fewest" ties. Fine.
+
+**T. Reuse: `most_common_at_end` tie-breaking**: `if best is None or n > best[0]` — takes first-encountered max. Fine.
+
+**U. Reuse ablations of instructions required for replication**: req[t] requires the ablated program still viable; matches S112's definition as stated.
+
+**V. In `evaluate`, environment listed all tasks value 0 — but wait, in analysis mode, does Avida even check tasks when value 0?** The task counts come from RECALCULATE's test CPU runs; tasks performed are recorded regardless of reactions. In S111/S112 this approach was used. OK.
+
+**W. The `expected` denominator `free` uses the *whole program's* non-replication instructions; but the later task's required instructions are drawn "at random among the program's instructions not required for replication"** — matches plan.
+
+**X. Growing rule: "if at least one task of the highest level now rewarded is performed by at least 10%"** — code checks tasks at level == unlocked. But wait: what if the highest level rewarded has no tasks performable and unlock stalls, while *lower* levels just added... matches plan exactly. OK.
+
+But here's a real subtlety: the plan says "at least one task of the highest level now rewarded is performed by at least 10% of the program population (Avida's tasks.dat count at the piece's end...)". Code: shares at end of piece; `>= COMMON`. Matches.
+
+**Y. `environment_text` common_pays_less: `init = '' if not resources else ':initial=...'` — for the first piece resources=None → no initial → default 0. Later pieces get initial. But if `resources` dict lacks a key (e.g., resource name parse failure), `.get(..., 0.0)` → initial 0.0, silently resetting a resource. The parsing `resources_left` relies on resource.dat header format. Can't verify without raw output. The neutral consistency: results show common_pays_less behaves sensibly. Hmm. If the header parse failed, names would be empty and res dict empty → all resources reset to 0 each piece → resources would take ~100 updates to rebuild from inflow 100/update... Actually with inflow 100/update and frac 0.0025, resource rebuilds to ~10,000 in 100 updates; within a 1,000-update piece it would settle anyway. But the plan says carry-over matters. There's a check available: is there any report of resource.dat reading? Results don't discuss the resources check. The brief says "the columns read from Avida's ... resource.dat ... as the scripts read them" — I can flag that the header parsing of resource.dat is unverified and that a silent parse failure would silently reset each resource to 0 at every piece (making common_pays_less systematically *less* depleted at piece starts than intended) — and no check of it is reported. That's a fair objection: unverifiable from the folder; the exact fix is to report a check (e.g., print the parsed names/amounts once) or state the carried amounts in the results.
+
+Hmm wait — actually, even if parsing worked, there's a real design question: the initial amount carried is the amount at the previous piece's end, but the save/load boundary re-runs... fine.
+
+Actually, let me reconsider the parsing code:
+
+```python
+names, rows = [], read_dat(path)
+for line in open(path):
+    if line.startswith('#') and ':' in line and line[1:].strip()[:1].isdigit():
+        names.append(line.split(':', 1)[1].strip())
+```
+
+So header lines like "# 1:Update 2:resNOT 3:resNAND ..." — wait, Avida resource.dat headers are of the form:
+`# 1:resource_name ...`? Typically Avida data file headers are one line per column? Actually Avida prints header lines like:
+```
+# 1:Update 2:resNOT 3:resNAND ...
+```
+Hmm, that's one line with multiple colon-separated entries, in which case `line.split(':', 1)[1].strip()` = "Update 2:resNOT 3:..." — one giant name, and names would have length 1, names[1:] empty → res = {} → all initial 0.0!
+
+Or Avida prints one header line per column:
+```
+# 1:Update
+# 2:resNOT
+...
+```
+In that case names = ['Update', 'resNOT', ...], names[1:] gives resources. I believe Avida's data files have one header line per column (e.g. tasks.dat header lines "# 1:Update\n# 2:not\n# 3:nand\n..."). Yes — Avida's standard data file header format is one line per column ("# 1:label"). And `line[1:].strip()[:1].isdigit()` checks the first non-# char is a digit. Good. So parsing is plausibly right.
+
+But there's still no reported check that the carry amounts were read. Given brief instructions to judge numbers "by their consistency with the code and with each other", I can note this as unverifiable. Since Avida runs are deterministic and the code looks right, I'd rank this low or put under "not reached".
+
+**Z. Bigger question — M1 samples "the counts at the first 250 updates of a piece are taken as Avida gives them"**: stated in plan §5. OK.
+
+**AA. results.md §0 table: "present at 50,000" column for equ_only "3 / 2 / 0"** — matches §4 table. OK.
+
+**BB. `spread` middle = median.** Plan M5: "the smallest, middle and largest of the three seeds". OK.
+
+**CC. E4 'result (any)'**: "not separated by three seeds" — results §8 says "not separated by three seeds" for present. In json? E4 has result (any) presumably 'not separated by three seeds'. Results §8 says "Present at 50,000: 74/67/72 against 54/67/32 (74/65/72 against 54/67/51): not separated by three seeds." Both readings: min(growing)=67 vs max(fixed_large)=67 → not separated (67 > 67 false). Correct.
+
+**DD. Reuse: 'pairs above' counted as shared > expected per pair** — plan E8 "Against: the average share no larger than the random expectation" — judged on means; results report means and counts. OK.
+
+**EE. The undercount affects the *first 250 samples* used in M2 first appearance**: first appearance uses the earliest sample where count>0; after a load, counts are understated, which could delay first appearance by up to a piece. For cross-environment comparisons all environments share the pieces, so fair. Not an objection.
+
+**FF. Something about the plan's M6 "if the time allows" and "the most common distinct instruction sequence of each run"** — one program per run; stated in results §7 (implicitly — the table gives one row per run). Plan itself states it. OK.
+
+**GG. The ranking script's step semantics**: "each step is the nand of two numbers already available, which may be the same number twice; a result may be used more than once" — matches plan §2. The BFS enumerates sets, so recomputation allowed. One question: the search's completeness — circuits of n steps = sequences of n nands where each nand's operands are previously computed values. BFS over sets explores each *set* once; a minimal circuit for z might require computing intermediate values not in a set on the shortest path? No — BFS over sets: any circuit of length n corresponds to a sequence of added values, giving a set-path of length n; the union set at each prefix. BFS explores all sets reachable in ≤ n steps, so any z computable in n steps is found. Complete. Good.
+
+The keep_limit=1,500,000 — if the frontier exceeded it before step 9, the BFS stops and switches to DFS from the frontier, which is still complete (explores all extensions). "the answer is the same" — true. But note: `while need and step < max_steps and len(frontier) <= keep_limit` — the check is on the *current* frontier before extending; if extending blows memory... anyway, they report it ran. Fine.
+
+One more check: the two-input tasks in the ranking are computed from the 3 inputs; e.g., NOT's logic ids [15, 51, 85] — these are functions of 3 bits. Fine.
+
+**HH. results.md §5 note: "Only 4 tasks, all level 7 in seed 1 (3AP, 3AU, 3BP, 3CL), became common before their level was rewarded (at 6,250, with level 7 rewarded from 7,000)."** Wait — json says common before rewarded: seed1: 4 tasks. But hold on: how can a task be common before rewarded in the growing list? Tasks unrewarded can still be performed. Fine. But note the counting: `u < rewarded_from[levels[t]]`. rewarded_from[level] = update_end = (k+1)*1000 = the piece boundary. So level 7 rewarded from update 7,000 means piece 6 onward... and 6,250 < 7,000. OK consistent.
+
+Hmm wait, results.md says seed1 "levels 2 to 9 added at updates 2,000 to 9,000" and json shows level 9 from 9,000; level 10 never. Then "common before their level was rewarded: 4" — but results §5 bullet says these were level 7 tasks common at 6,250 while level 7 rewarded from 7,000. Consistent.
+
+But wait — there's a subtle inconsistency: results §1 says growing seed 1 added "levels 2 to 9 at updates 2,000 to 9,000, one per piece". But the rule says at most one level per piece; level 2 from update 2,000 means added after piece 0. OK.
+
+**II. growing seed 2**: levels 2-5 at 2,000-5,000; level 6 at 9,000. So pieces 5,6,7 (updates 5,000-8,000) did not add a level — no level-5 task was ≥10% common at those piece ends. But results §5 level table for growing seed 2 shows level 5: 11 (9000) — earliest level-5 common at 9,000. Consistent: level 6 unlocked after the piece ending 9,000, i.e., "rewarded from update 9,000"... wait, if a level-5 task first became common at the sample 9,000 (piece 8's end at update 9,000), then the unlock happens after piece 8 → rewarded from update 9,000 (piece 9 starts at label 9,000... piece 9 covers labels 9000-1000?). Piece 9 covers global labels 9,000+0..1000 = 9,000..10,000. Hmm, and piece 8's end sample is at global 8*1000+1000 = 9,000. So "rewarded from update 9,000" but the level-5 task was *first common* at update 9,000, the very same sample that triggered the unlock. OK consistent.
+
+**JJ. Now the biggest-picture checks on the numbers' consistency:**
+
+- results §0 "GROWING LIST ... last new high 37,000 / 42,500 / 31,500" matches §4 table. ✓.
+- §4 fixed_graded "levelled off yes/no/yes" but §0 table "when the common count stopped rising: 17,500 / 43,250 / 21,000". ✓.
+- §0 says "Every environment's count levelled off within the 50,000 updates" — but §4 shows FIXED GRADED seed 2 last new high 43,250 (not levelled by 40,000), growing seed 2 at 42,500, fixed_large seed 2 at 48,250! §0 bullet says "**Every environment's count levelled off** within the 50,000 updates, the growing list's included; none kept rising to the end." But E5 says these seeds did NOT level off by 40,000 (the plan's criterion). §0's claim uses a different, looser sense: "levelled off within the 50,000" meaning last new high ≤ 48,250 < 50,000? For fixed_large seed 2, last new high 48,250 — that's 1,750 updates before the end; claiming "levelled off" is a stretch, and directly in tension with §8 E5 ("Against the expectation" because still rising after 40,000). §0's "Every environment's count levelled off within the 50,000 updates" contradicts the plan's own definition of levelling off (last new high at or before 40,000) for 4 of 18 runs (fixed_graded seed 2: 43,250; growing seed 2: 42,500; fixed_large seed 2: 48,250; and by test-processor reading fixed_graded seeds 1,3 and fixed_large seed 2 at 50,000 — a new high *at* 50,000 means still rising at the end). This is an overstatement in the summary and in §12 ("in every one the count of common capabilities rose for a while and then levelled off"). Objection: §0 bullet and §12 overstate; exact fix: reword to "no environment's count was still rising at 50,000 except where a new high came at 50,000 itself (test processor: FIXED GRADED seeds 1 and 3)..." Hmm wait, test-processor reading for fixed_graded seed 1: last new high 50,000 — that means the common count reached a new high at the very last sample, i.e., it did NOT level off by the end. So "none kept rising to the end" is contradicted by the test-processor reading of fixed_graded seeds 1 and 3 (last new high at 50,000 and 45,000; at 50,000 literally rising at the end). §0's claim is false under the second reading and overstated under the first (a last new high at 48,250 in a 50,000-update run is not "levelled off" in any meaningful sense; the plan set 40,000 precisely to require 10,000 updates of no new high).
+
+This is a genuine objection about how results are described — and §12 repeats it ("None of these environments made learning go on: in every one the count ... rose for a while and then levelled off"). But careful: §12's point is that none kept rising to the end *of the run*; with the last new high at 48,250, there are 1,750 updates without a new high — "levelled off" by plan's definition requires 10,000. The plan's defined term "levels off" = last new high ≤ 40,000. Using "levelled off" in §0 for runs whose last new high is 43,250–48,250 conflicts with the plan's defined term. And E5 was ruled "Against the expectation" partly because of these. So §0 and §12 should say: 4 of the 18 runs (world count) made a new high after 40,000; by the test-processor reading, FIXED GRADED seeds 1 and 3 made a new high at 50,000/45,000. The exact fix: reword §0 bullet to "no environment's common count kept rising through 50,000; the plan's 'levels off' (no new high after 40,000) held in 14 of 18 runs by Avida's count (against E5's expectation)".
+
+Hmm wait, let me count: world count levelled_off per §4: fixed_graded yes/no/yes; equ yes×3; no_rewards yes×3; growing yes/no/yes; cpl yes×3; fixed_large yes/no/yes. Not levelled: fixed_graded s2 (43,250), growing s2 (42,500), fixed_large s2 (48,250) = 3 of 18. By test processor: fixed_graded no/yes/no; fixed_large yes/no/yes → not levelled: fg s1 (50,000), fg s3 (45,000), fl s2 (50,000) = 3 of 18. OK so 15 of 18 levelled by world count. §0's blanket claim still conflicts with the plan's defined term for 3 seeds. Objection stands, moderate severity (it's the summary the owner reads).
+
+**KK. §0 table row FIXED LARGE "32 / 41 / 0 (Avida's count; 13 in seed 3 by the test processor...)"** — good, flagged.
+
+**LL. §0 "Capabilities once common were mostly kept ... (73% to 100% per seed where any were common)"** — §6 gives shares 0.727 (cpl s3) to 1.0. 73% ✓. "none of the environments lost capabilities wholesale except by a counting fault in one run" — fixed_large s3 0.0 by world count = wholesale, attributed to fault; test processor 0.619. OK.
+
+**MM. E6 "not separated" but also "the expected 'more of the nine present' is not shown either"** — plan's E6 expectation has three parts; only the first two measurable; the third ("its programs spread over tasks rather than all performing all of them") is never measured or reported. The results don't measure "spread over tasks". Is that stated? §8 E6 doesn't mention the third clause. Minor: an expectation clause left unmeasured and unremarked. Fix: add a line in §8 E6 that the third clause ("programs spread over tasks") was not measured.
+
+**NN. Plan §5 M1(b): "both over time, with the nine two-input and the 68 three-input tasks also counted apart"** — done (tables). ✓
+
+**OO. Plan M4 "also the rise over the last 10,000 updates"** — done. ✓
+
+**PP. M2 "first appearance ... and the first at which it is common"** — done for two-input in md; json has all 77. ✓
+
+**QQ. The reuse measure ran `C.measure(samples, tasks, {})['first_any']`** — measure called with levels={} — fine since only first_any used.
+
+**RR. A subtle one in `measure`'s `at()` helper**: `upd.index(u)` — O(n) fine.
+
+**SS. `rise_of_common_over_last_10000` when ten_before is None** → None; for 50,000-update runs always present. OK.
+
+**TT. `by_environment` for 'highest_common' etc uses `if runs[0] and f in runs[0]`** — fine.
+
+**UU. In `main`, growing steps derived from `h.get('unlocked_after_piece', 0) > h['unlocked_during_piece']`** — for non-growing envs, no such key; only env=='growing'. ✓
+
+**VV. results.md §2 table "pieces 146/105"** — json ✓.
+
+**WW. §2 "they agree exactly at all ten saved updates in FIXED GRADED, ONE HARD TASK ONLY and NO TASK REWARDS (all seeds) and COMMON TASKS PAY LESS seed 2"** — I could spot-check via the side-by-side json: e.g. fixed_graded_seed1 common at marks world: 5,6,6,6,6,6,6,6,6,7 vs tp: 5,6,6,6,6,6,6,6,6,7 ✓ (from tables). present: world 20/18/21... vs tp 21/19/18/22... §3 tables show present world fixed_graded seed1: 20 23 21 19 19 19 18 17 18 20 vs tp: 21 19 18 22 19 19 18 18 20 22 — differ, fine (claim was only about common for those envs? The claim says "they agree exactly at all ten saved updates in FIXED GRADED ... (all seeds)" — for common they agree; for present they do NOT agree (20 vs 21 at 5k). The sentence: "The two readings side by side, common tasks: they agree exactly at all ten saved updates in FIXED GRADED..." — scoped to common. ✓ honest.
+
+**XX. Now, one more check: results.md §4 test-processor table "last new high 5000 / 5000 / 5000" for equ/no_rewards** — same artifact as CC above: with no task ever common, last_new_high = first mark (5000), since high starts at -1. Same minor artifact (C).
+
+**YY. Another check on `summarise`: `levelled_off': last_high <= 40000`** — last_high could be None if com values... high starts -1 so first mark always sets. Fine.
+
+**ZZ. The reuse script's `first_any` from world count could include tasks first performed *by a different lineage*; stated. ✓
+
+**AAA. `evaluate` timeout 1800s for up to ~134 ablations per run; fine.
+
+**BBB. In the reuse script, `abl` evaluates seq with each instruction replaced; `repl` = non-viable; `req[t]` requires `r['viable']` — an ablation that makes program non-viable counts as required for replication, not for task. ✓ matches plan.
+
+**CCC. `pairs` loop `for a in performed: for b in performed:` with `fa < fb` — includes pair (a,b) only once. ✓
+
+**DDD. One more: `NULL='A'` replaces the instruction with nop-X's symbol. But does instset-heads.cfg already use symbol 'A' for another instruction? The comment says "# A". If 'A' were already used (e.g., for 'add'?), the config would conflict. Default heads instset symbols: a=copies? Let me check instset-heads.cfg quickly.
+
+26 instructions with symbols a–z (lowercase). 'A' (uppercase) is free. Good — nop-X appended with symbol 'A'. ✓
+
+Also note: default ancestor 100 instructions; the sequences in spop format use these letters. `w[16]` — plausible genome field.
+
+Now, one thing to double check: in the reuse script's `evaluate`, the environment lists reactions for all 77 tasks with value 0 — but does Avida's analysis mode count "task.%d" fields as performed regardless of reactions? In S111/S112 this same setup was used; fine.
+
+Now let me check a piece of the results.json reuse block and a couple of "per run" reuse entries to verify vs the md table.
+
+Wait: required_per_task for "not" = 4, "orn" = 3, "nand" = 14. Hmm — NOT needs only 1 nand step minimum but here 4 instructions required (including input reads etc.). Fine.
+
+Interesting: "and" missing from growing_seed1's required_per_task? tasks_performed=64 includes and? The list starts not, nand, orn, or, andn... "and" is missing between nand and orn! But §5's growing row shows AND first common at 5500/13500/9750 for seed 1 — 5500. Hmm, but tasks performed by *this sequence* (most common at 50k) need not include AND. In §7 table growing_seed1 tasks performed 64. And "first appearance AND any: 2750". The most common sequence may not perform AND. OK, not an inconsistency per se. Wait, but results §5 first-common AND growing seed1 = 5500; ever-common includes AND. The most common sequence at 50,000 doesn't do AND. Plausible (AND is subsumed?). Fine.
+
+Now, let me look at the plan's M6 definition of pairs ordering: "For each pair of tasks the program performs, the earlier (by M2 in that run, "by any program") and the later". Fine.
+
+Also, check "expected = len(req[a]) / free" against plan: "the share expected if the later task's required instructions were placed at random among the program's instructions not required for replication". Note: the expected share computed this way assumes random placement among free positions *including positions required for other tasks* — yes, uniform among free. ✓.
+
+One more possible objection: the mean_shared aggregates pairs *within* a run with unequal weights, and "pairs above expected" counts per pair where expected varies by pair (depends on |req[a]|). That's fine.
+
+Now the E8 judgement in the count script? E8 isn't computed in comparisons() — only E1–E7. Results §8 E8 written by hand from reuse summary. OK.
+
+Now — check "growing list steps" rewarded_from_update semantics vs first appearance comparisons in §5 bullet: "seed 2's level 6, rewarded from 9,000, first common at 10,000" — hmm, level 6 tasks first common at 10,000 which is piece 9's end (9*1000+1000=10,000). Wait "rewarded from 9,000" = piece 9 starts (label 9,000). First level-6 task common at 10,000. ✓.
+
+Wait, earlier I said level 6 added at 9,000 because level-5 task first common at 9,000 (piece 8 end). ✓ consistent with §1 "level 6 at 9,000 (no level-5 task was common before)".
+
+Now let me double-check one more computational claim: §2's "no common task at 10 of the 19 piece ends (32,000, 35,000, ...)" — piece ends from 32,000 to 50,000 = 19 pieces (32..50). 10 of 19 listed. ✓ internally consistent.
+
+Now, results §4 world-count table for fixed_large seed3 shows last new high 28,000 and "levelled off yes" even though the run collapsed to 0 common — again the artifact: "levelled off" for a run that *lost* all common capabilities by a counting fault. The verdict "levelled off" is vacuous/misleading there; §2 flags it. OK, part of objection C maybe.
+
+Now the growing list §1 claim: "in all three seeds the growing list reached 73 to 77 rewarded tasks by update 11,000". Seed1: levels 2-9 added by 9,000 → 73 tasks (levels 1-9 = 76? count: 2+3+7+11+12+16+12+10+3 = 76; level 10 = 1 → 77). Wait §1 says seed1 "level 10 (the one task 3AB) never added" → 76 tasks rewarded, not 73. Seed2: "levels 9 and 10 never added (73 of 77 tasks rewarded at the end)" — levels 1-8 = 66? 2+3+7+11+12+16+12 = 63. Hmm: 2+3=5, +7=12, +11=23, +12=35, +16=51, +12=63, +10=73. So levels 1-9 = 73 (seed2 has level 9? no wait). Let me recount seed2: "levels 2 to 5 at 2,000 to 5,000; level 6 at 9,000, 7 at 10,000, 8 at 11,000; levels 9 and 10 never added" → levels 1-8 rewarded = 2+3+7+11+12+16+12 = 63 tasks. But the text says "(73 of 77 tasks rewarded at the end)". That contradicts: levels 1-8 = 63 tasks, not 73!
+
+Hmm wait, let me recount level sizes: L1=2, L2=3, L3=7, L4=11, L5=12, L6=16, L7=12, L8=10, L9=3, L10=1. Sum L1..L8 = 2+3+7+11+12+16+12+10 = 73! Let me recompute: 2+3=5; 5+7=12; 12+11=23; 23+12=35; 35+16=51; 51+12=63; 63+10=73. Yes 73 (I mis-added before: L7=12 → 51+12=63, L8=10 → 73). So seed2 with levels 1-8 = 73 tasks ✓.
+
+Seed1: levels 2-9 added → L1..L9 = 73+3 = 76 tasks. §1 says seed1: "level 10 (the one task 3AB) never added" → 76 rewarded. And "the growing list reached 73 to 77 rewarded tasks by update 11,000" — seed2 reached 73 at 11,000 ✓; seed1 reached 76 by 9,000 ✓ (within "by 11,000"); seed3 77 at 10,000 ✓. OK consistent.
+
+§1 seed1 "levels 2 to 9 added at updates 2,000 to 9,000, one per piece" — 8 levels over pieces 0-7 ✓.
+
+Now check json growing_seed1 highest_level_rewarded_at_end — presumably 9. And §5 level table seed1 shows level 10: "0/0/1 (10000)" for seed 3 ✓ (level 10 added at 10,000, 3AB common at 10,000).
+
+Interesting: seed 3 added level 10 at 10,000 — that requires a level-9 task common at piece 9's end (update 10,000): level 9 row shows "0 / 0 / 1 (9250)" — 3AE/3AM/3AZ first common 9,250 ✓.
+
+Now — the level table row for growing seed1 level 4: "11 (4250)" — all 11 level-4 tasks common ✓, matches "11 (4250)". ✓.
+
+Another consistency check on §5: growing seed1 level 7 "10 (6250)" but 12 level-7 tasks; 4 common before rewarded... consistent with ever-common counts in §6 (seed1 ever common 68 = 76 rewarded minus 8 never common + 4? whatever).
+
+Now, plain words file — not my angle, skip. The rule for reading — skip.
+
+Now let me also verify the results.md §7 reuse table numbers against the json for one or two runs (fixed_large_seed1: length 245, required 62 of 245 — 62 required for replication seems huge but plausible for a 245-instruction program; tasks 31, pairs 386).
+
+Let me quickly grep.
+
+Interesting: growing_seed2's most common sequence performs `not` with 0 required instructions, `nand` 0, `orn` 0, `andn` 0 — a task performed by the base program whose ablation at *no* single position stops the task while remaining viable. For such tasks, `req[b]` may be empty → pairs with b as later are skipped (`not req[b]`). And as earlier task `a`, expected = len(req[a])/free = 0 → shared (0) > expected (0) false; counted as "below"? shared=0 (any req[b] disjoint) vs expected 0 → shared < expected false, = equal. Hmm — pairs where the earlier task has 0 required instructions get expected 0 and shared ≥ 0; pairs with shared>0 would count "above" with expected 0! E.g., earlier task 'not' (req 0), later 'equ' (req 7): if overlap 0 → equal (not above); any overlap > 0 counts as "above expectation" trivially. Actually wait: shared = |req[a] ∩ req[b]|/|req[b]| = 0/7 = 0 when req[a] empty. So shared = 0 = expected → equal. OK no distortion. But pairs where req[b] is empty are dropped silently (later task has no required instructions — ablation-proof). How many? growing_seed2: 46 tasks performed, several with req 0 (not, nand, orn, andn, or=4...). Pairs = 884 vs max 46*45=2070; strict-order filter and req[b] nonempty both cut. The dropping of req[b]-empty pairs is inherent to the measure (share undefined). Not stated but reasonable. Minor; could fold into objection A about unstated exclusions.
+
+Also note "not": 0 required in growing_seed2 — meaning NOT is robust. Fine.
+
+Now, an important check on the reuse measure vs plan: plan says "every single instruction is ablated (replaced by nop-X), and the required instructions for each task are those whose ablation stops that task while program replication continues". Code matches.
+
+Now let me re-examine the undercount objection B more carefully, and check plan §5's exact words: "the counts at the first 250 updates of a piece are taken as Avida gives them; since a loaded program's record of its tasks is empty until it completes one copy, these counts may be a little low; this is measured by comparing the 250 and 1,000 counts within pieces and reported". Code compares piece k's 250 with piece k-1's 1000. Definitely different from "within pieces". Results §2 calls it "The per-environment check the plan named (performances counted 250 updates after a load, against the previous piece's end; ...)". So results.md misattributes. Objection B stands: fix = change results §2 wording to "a check of the load undercount (differing from the plan's within-piece comparison, which would not isolate the load)" and add to departures; or implement the within-piece comparison.
+
+Actually — hmm, which is better? The within-piece comparison (250 vs 1000 of same piece) cannot isolate the load drop (growth confound). The cross-piece one is better science but confounded by 250 updates of evolution and by births/deaths. Both rough. The objection is about misrepresentation, not the method.
+
+Next: check the reuse script's departure 5: first run on seed-1 runs only to test; numbers from full run. Fine.
+
+Now, check E6's third clause and E4's wording. Also check §12 wording vs S23/S43 forbidden words? "model" — grep the results for "model"? Not my angle, but the binding says never "model" for what the theory judges. Quick grep for forbidden words in results.md/plain words? The brief section 4 focuses on measures/scripts. Other agents cover wording presumably. I'll do one quick grep for "model" in S113 files to be safe... Actually S43 is about the theory's candidates, not Avida. The files consistently say "candidate" nowhere needed. Skip — not my angle, and other cross-examinations cover the words. But a 10-second grep is cheap.
+
+Let me also double check the count script's E2 'against the expectation' logic edge: nr = [0,0,0]; any(x>=3) false; others fixed_graded == 'fewer' → False. ✓
+
+And E7: keep includes equ_only (rewarding env) with empty list — skipped. But hmm: "in the rewarding environments at least 90% of the tasks ever common are common at 50,000" — for equ_only, no tasks ever common, vacuous. Code's any(median<0.9 for env != no_rewards and v nonempty). ✓.
+
+Now, checking "the count of a common task falling to no program" (M3) — code counts transitions common→not-present at consecutive samples. But plan M3: "the number of times a task went from common to performed by no program". What about common → present but zero at next sample... same thing. What about a task that goes common → not present → common → not present: counts 2. ✓.
+
+However, there's a subtle bug-ish behavior: `was_common` is set False only at samples where not present. Suppose task common at t, then not present at t+1 (drop counted, was_common=False), then present-but-rare at t+2, then not present at t+3 — no second count (correct, since it wasn't common in between). ✓ good.
+
+But drops due to the *load artifact*: at the first sample of a piece (250), counts can be artificially low → spurious "drops" and spurious "not present" (affecting M3's drops and 'ever_common_performed_by_none_at_end' if the last sample were a 250 — it's not, last sample is piece end 1000... wait, piece end IS also after a load? No — the load happens at piece start; by piece end (update 1000 of the piece) programs have had 1,000 updates; but the fixed_large seed3 fault shows even piece-end counts can be near-zero. So drops counts (growing seed1: 2, fixed_large seed3: 11) may be counting artifacts. Results §6 table shows these numbers; §2 explains the fault; §6 doesn't explicitly caveat the "times a common task fell to none" numbers as possibly artifacts. Minor — could mention.
+
+Now the biggest remaining item: "does the growing list's rule in the runner match the plan (the level, the 10% share read from tasks.dat and count.dat at a piece's end, one level per piece)". Code: yes. One deviation check: plan says "at least 10% of the program population"; code `shares[t] >= COMMON` where share = tasks_count/programs at piece end. ✓. "the next level is added ... (all its tasks, value = level)" ✓. "At most one level is added per piece" ✓ (returns unlocked+1 max). "Once added, a level stays rewarded" ✓.
+
+Edge: what if two levels could be added (top level task common AND the next)? Only one added per piece ✓.
+
+But here's a subtle mismatch: the rule says "if at least one task of the highest level now rewarded is performed by at least 10%". Code: `at_top = [t for t, level in ranks if level == unlocked]`. Note ranks levels are ints; unlocked starts 1. But level 10's only task (3AB) has a *lower bound* level 10 — fine.
+
+Also `next_unlocked` returns unlocked+1 — levels are consecutive ints ✓ (levels 1..10).
+
+One more: the plan says the growing rule reads "Avida's `tasks.dat` count at the piece's end, divided by the number of programs in `count.dat`". Code: shares_at_end uses last row of each ✓.
+
+**Now the piece seed reuse concern**: "Runs with the same seed number used the same Avida seeds piece by piece in every environment" — so fixed_graded seed 1 and fixed_large seed 1 share random streams initially; the environments' runs are *not independent replicates* across environments. For the comparison rule (min of one > max of other), correlated seeds actually make comparisons more robust (paired), but the rule treats them as independent. Not an error per se; the exact commands note it ("so their random sequences start alike"). It's disclosed. Common random numbers is a variance-reduction technique. No objection; maybe worth noting as a limit? It's stated in exact commands §4 note. Not in results.md §1? Results §1: "Runs with the same seed number used the same Avida seeds piece by piece in every environment." Stated. OK.
+
+**Another possible issue: the runner's `-set COPY_MUT_PROB 0.0075`** — redundant with avida.cfg. Harmless.
+
+**The runner's timeout handling**: `timeout 900` per piece; if a piece times out (rc 124), `ok=False`, run stops, state['done'] not incremented, piece rerun from scratch on restart — but a rerun would use the same seed, so it would time out again. All 900 exited 0. Fine.
+
+**A real potential problem: `run_one` while loop restarts from state.json — if a piece was interrupted mid-run, pdir is removed and rerun. ✓.
+
+Now let me quickly check the plain words file since it's listed among files (though §4 doesn't assign it to me; other agents handle the words). I'll skim it for measure-related claims that misstate numbers — that IS my angle (the measures).
+
+Plain words check for measure-related accuracy:
+
+1. §1: "between 48 and 65 of 77 possible sums were done by at least one program in ten" ✓ (common at end 65/48/55).
+2. "more than an environment that paid for all 77 sums from the start (at most 41)" — fixed_large common at end by world count: 32/41/0; test processor 32/41/13. Max 41 ✓.
+3. §3 example: growing seed 1: "at 2,000 the three sums of level 2 were added; one of them was common by 2,250, so at 3,000 level 3 was added... up to level 9 at 9,000. By 10,000 the population did 43 sums commonly, by 25,000 it did 62, and at the end 65, and 74 were present." Check vs §3 table: growing seed1 at 10k: 43 ✓; 25k: 62 ✓; 50k: 65 common, 74 present ✓.
+   Also "After 1,500 time steps both were common" — first_common NOT=1500, NAND=1500 ✓.
+4. §4 "The count stopped rising everywhere... except one run of the all-77 environment, still rising at the end (37 common at 45,000, 41 at 50,000)". Hmm — but §4 of results.md also shows fixed list seed 2 last new high 43,250, growing seed 2 42,500 — "stopped rising everywhere" with exceptions only for one all-77 run? The fixed list's seed 2 made a new high at 43,250 (rise from 7 to 8 in last 10,000); growing seed 2 at 42,500. And test processor reading: fixed list runs 1 and 3 new high at 50,000/45,000. Plain words §4 says "The count stopped rising everywhere" — overstated in the same direction as results §0. It does mention the all-77 exception. Also, "For example, in the growing list, runs 1 and 3 made their last new high at 37,000 and 31,500" ✓. But "everywhere" is contradicted by fixed list run 2 (43,250), growing run 2 (42,500), and by the test-processor reading of the fixed list (new high at 50,000 in run 1). Same objection as JJ, applied to plain words §1 ("But no environment tried here made the learning go on... rose for a while and then stopped rising, mostly within the first quarter to half of the run") — "mostly" hedges; §4 "stopped rising everywhere" is flat. I'll fold plain-words into objection JJ.
+
+5. §5: "the two ways of counting agree exactly at most of the times compared" — results §2 says agree exactly at all ten saved updates for 4 of 6 envs (all seeds) + cpl seed 2... Actually "they agree exactly at all ten saved updates in FIXED GRADED, ONE HARD TASK ONLY and NO TASK REWARDS (all seeds) and COMMON TASKS PAY LESS seed 2; elsewhere they differ by 1 to 6". Plain words "agree exactly at most of the times compared" ✓ fair.
+
+6. §4 "Sums once common were mostly kept: 73 to 100 in 100 ... in every run but one (section 5)" — results: fixed_large seed3 by world count 0.0 (the counting fault). "every run but one" ✓.
+
+7. §6 "Changed from the plan, and said so in the record" — lists second reading, 1,001 updates, ranking cut. Doesn't list the undercount-check method change (objection B) or departure 6/7. Fine-ish; the record lists them.
+
+Now — plain words §2: "the hardest of the 77 takes 10 or more" ✓ lower bound honest.
+
+§3 table "all 77 from the start ... 32, 41, and 0 (13 when counted the second way, section 5)" ✓.
+
+OK. Now let me also verify the results.md §5 first-common table against json for one cell: fixed_graded XOR "- / 43250 / -" and ANDN "46750 / 2750 / 6750". Fine, trust.
+
+Let me now check the json 'check: world count against test processor' for the claim in §2 about agreement, spot check fixed_graded_seed2 (cpl seed 2 agrees exactly):
+
+Common at 5,000: world 6, tp 6 ✓; at 10,000: 7, 7 ✓. Present: world 17 vs tp 18 at 10,000 — §2's claim about agreement was scoped to *common*. ✓.
+
+Now let me settle the objections list, ranked by seriousness:
+
+**X2.1 — §0/§12 "Every environment's count levelled off" conflicts with the plan's defined term and with the file's own E5 verdict.** The plan defines "levels off" as last new high ≤ 40,000. Three seeds (FIXED GRADED 2 at 43,250; GROWING 2 at 42,500; FIXED LARGE 2 at 48,250) fail it by Avida's count; by the test processor FIXED GRADED 1 and 3 have their last new high at 50,000 and 45,000 (rising at the very end). §0 says "Every environment's count levelled off within the 50,000 updates... none kept rising to the end", §12 "in every one the count ... rose for a while and then levelled off", plain words §4 "The count stopped rising everywhere". E5 itself is reported "Against the expectation". Fix: reword §0 bullet, §12 bullet, plain words §4 to name the exceptions, e.g. §0: "In 15 of 18 runs by Avida's count (and 15 of 18 by the test processor) the count levelled off by the plan's rule; FIXED GRAED seed 2 (43,250), GROWING seed 2 (42,500) and FIXED LARGE seed 2 (48,250) made a new high after 40,000, and by the test processor FIXED GRADED seeds 1 and 3 at 50,000 and 45,000."
+
+**X2.2 — M6 silently drops pairs**: (i) pairs whose two tasks first appear at the same 250-update sample (fa < fb strict); (ii) pairs whose later task has no required instructions (req[b] empty). Growing seed 2: 46 tasks performed, 1,035 unordered pairs, only 884 counted. Neither exclusion is stated in plan §5 M6 or results §7. Fix: state both exclusions in §7 with the counts dropped per run (a one-line addition; the script already has the data to print them).
+
+**X2.3 — The undercount check is not the one the plan promised, and results.md misattributes it.** Plan §5: "measured by comparing the 250 and 1,000 counts within pieces"; script `undercount_check` compares piece k's 250 sample with piece k−1's 1,000 sample. Results §2 calls it "The per-environment check the plan named". Not in departures. Fix: add to §10 departures: "The undercount check compares the count 250 updates after a load with the previous piece's end, not the 250 and 1,000 counts within a piece as planned (the within-piece comparison cannot separate the load from growth)" — or implement the planned comparison too.
+
+**X2.4 — The growing list's unlock decisions are fed by the same end-of-piece count that the file itself shows undercounts after a load; nowhere stated.** §2 documents the fault for the measures but not that the rule itself (plan §4) reads that count; the growing runs' middle ratio 0.92, smallest 0.305, 5 pieces under 0.5 mean an unlock could be delayed or missed. Exact fix: a sentence in §2 or §11: "The growing list's rule reads the same end-of-piece count; where that count is low after a load, a level's unlocking can be delayed by a piece (§1's steps are therefore earliest-times-too)."
+
+**X2.5 — "last new high" reported for runs that never rose (artifact of initial high = −1).** ONE HARD TASK ONLY and NO TASK REWARDS get "last new high 250/250/250, levelled off yes" (and 5,000 in the test-processor reading) although the common count was 0 throughout; FIXED LARGE seed 3 gets "levelled off: yes" with last new high 28,000 for a run that ended at 0 common. `measure`: `last_new_high, high = 0, -1`. Fix in code: `high = 0`; and in §4 table print "never rose" for those six runs; E5's verdict is unaffected.
+
+**X2.6 — E6's third expectation clause ("its programs spread over tasks rather than all performing all of them") is never measured and never said to be unmeasured.** §8 E6 reports only the first two clauses. Fix: one line in §8 E6 or §11: "the third clause of E6 (programs spreading over tasks) was not measured."
+
+**X2.7 — resource.dat header parsing unverifiable / silent fallback to initial 0.** `resources_left` builds names from comment lines; if the parse yields nothing, `resources.get(..., 0.0)` silently resets every resource to 0 at every piece, and no check of the carried amounts is reported anywhere. COMMON TASKS PAY LESS's E6 verdict leans on the carry-over. Fix: report the parsed amounts once (e.g., add to the runner's log line or state in §9 the carried amounts of one piece), or have `resources_left` raise if names is empty. This is a "state or check" fix, not a numbers fix.
+
+Hmm, is X2.7 fair? The brief says "judge the numbers from the scripts, the configuration and the results" and asks me to check "the columns read from Avida's ... resource.dat ... as the scripts read them". The parsing comment says "columns: update, then one per resource" with names[1:] skipping the first name — this assumes the first header name is "Update". If resource.dat's header happened to be "# 1:Update" then fine. If resource.dat has no per-column header of that shape, names empty → res {} → initial=0.0 for all — silent. There's no way to verify from the folder, and no reported check. I'd phrase it as: unverifiable from what is in the folder; the exact fix is the reported check or the raising guard. Reasonable objection, moderate.
+
+Also possible: **the `initial=` amounts written with `%.6f`** — fine.
+
+**X2.8?** — The seed sharing across environments (same Avida seed per piece for all environments with the same seed number) — disclosed in exact commands and results §1. It affects the comparison rule's independence assumption (the rule compares min/max across seeds as if independent). Common random numbers actually pair the runs. Not an objection since disclosed; skip or mention in (b)? It's a limit "stated where a result leans on it"? The comparison rule leans on between-seed spread; correlated streams across environments don't invalidate that. Skip.
+
+**Another check — the count script's `read_run` `int(cr[2])`**: count.dat columns. Let me double check by finding whether results mention count.dat column meaning anywhere... The runner comment says "count.dat column 3: number of organisms". In Avida, count.dat is printed by cStats::PrintCountData... I recall Avida's count.dat actually has header "# 1:Update 2:Organisms..."? Hmm — wait, actually I now recall that in Avida, `count.dat` columns are "Update, Cells with Organisms(?), Average Fitness(?)..." Not sure. There's a well-known Avida file "count.dat" with columns: `Update  ave_genotype_depth?`... I can't resolve. The internal consistency (3,484–3,600 ≈ world size 3,600) strongly suggests column index 2 is organism count. But wait — could cr[2] be "number of genotypes"? No: 3,591 programs cited vs "44 births per update against 3,591 programs (count.dat of pieces 33 to 35)". So they read ~3,591 from count.dat — that's organism count. ✓ (b).
+
+Also tasks.dat: columns = reactions in environment order ✓ asserted length 77+1.
+
+**One more possible objection: M2's first appearance sampled every 250 updates** — a limit stated in plan §5 ✓.
+
+**Three seeds limit** — stated (plan §7, plain words §6 "Unsure"). ✓
+
+**One program per run for reuse** — plan §5 "the most common distinct instruction sequence of each run" — stated. ✓ But a subtler limit: the most common sequence at 50,000 may carry only a minority of the population (e.g., fixed_large_seed1: 4 programs of ~3,600!). The reuse measure generalizes from a sequence held by 4 programs (0.1% of the population). Results §7 table shows "programs with this sequence" so the reader can see it, but no caveat that in fixed_large seed 1 the measured program is 4 of ~3,600 — M6's bearing on "the run" is thin there. Exact fix: a sentence in §7 noting the most common sequence can be as few as 4 of ~3,600 programs (fixed_large seed 1), so M6 there describes one program, not the population. Moderate-minor.
+
+**E8 judgement "in most pairs"** — plan expectation "the later task's required instructions share more ... in most pairs. Against: the average share no larger than the random expectation." Results: 12 of 12 runs mean above. ✓. Growing seed 2: 252 above / 202 below — "most pairs" fails per-pair there (mean 0.1258 vs 0.0508 still above). Fine.
+
+Also check: §7 bullet "Over all pairs: 4,205 above the expectation, 394 below, 727 equal (5,326 pairs)" ✓ verified.
+
+**Check the reuse table's "mean expected" for growing_seed1: 0.1809** vs plain words "chance would give 18 in 100" ✓.
+
+Now, is there anything wrong with `expected = len(req[a]) / free` when req[a] positions ⊆ free but the *later* task's required positions drawn at random could land on positions required for *replication of the later task itself*... no, by construction req[b] ⊆ free too. The hypergeometric mean is |req[a]|/free. ✓ Correct.
+
+One more on the count script: `'share_at_end': round(end_counts[i]/end_progs, 4)` fine.
+
+`series` key: upd[3::4] — every 4th starting at index 3: indices 3,7,11,... = updates 1000, 2000,... ✓.
+
+**by_environment marks**: `e['common_at_marks']` uses spread over seeds ✓.
+
+**Check results.md §3 world-count common FIXED LARGE seed3 at 35k=0, 45k=0, 50k=0 while present 18/32/32** ✓ json consistent.
+
+Now, one more look at whether "the count of a common task falling to no program" (M3) in fixed_large seed3 = 11 — likely artifact-driven; §6 doesn't caveat. I'll fold into X2.5 or a separate small one. Actually §6's numbers are directly affected by the counting fault (drops 11 in fl seed3). A caveat line exists in §0 ("except by a counting fault in one run") for keeping. For "times a common task fell to none" specifically, no caveat. Fold minor into X2.5 fix? Keep separate small objection? I'll merge into X2.5's fix (report "never rose"/artifact-affected cells) — hmm, cleaner: make X2.5 about the last-new-high artifact and add a note that §6's "times fell to none" column for FIXED LARGE seed 3 (11) is dominated by the same fault and should carry the §2 caveat. Good.
+
+Now (b) checked-no-objection list: plan §4 growing rule vs runner (`next_unlocked`, shares_at_end, one level per piece, levels stay); plan §6 comparison rule vs `compare` and each E1–E8 verdict flag; M1 present/common definitions and 10% share; M2 first any/common; M3 kept/lost/drops logic; M4 last-new-high and rise; M5 spread; ranking script's BFS/DFS completeness, 9-step cut, 3AB lower bound, level counts matching plan §2 table and S111's 1-1-2-2-3-3-4-4-5; environment files match `environment_text` (values, resources, requisites, `nop-X` symbol 'A' free); events files match `events_text`; piece seeds 1000s+k; avida.cfg COPY_MUT_PROB 0.0075 consistent; reuse arithmetic 5,326/4,205/394/727; random-expectation formula; json↔md table agreement (spot checks); results' internal consistency (growing steps, level table, first appearances).
+
+(c) Not reached: raw Avida output (not in folder) — cannot verify count.dat column 2 = organisms beyond internal consistency, the spop columns w[4]/w[16], resource.dat header shape (raised as X2.7 instead), the claim that equ_only and no_rewards tasks.dat lines are byte-identical, the S114/S115 cross-references, the test-processor counts themselves, the neutral check outputs, timing claims (7h43m), 345 MB.
+
+Hmm wait, actually — one more thing to check: the count script asserts `len(tr) == len(tasks) + 1` — tasks from RANKS json in *ranks order*, and environment.cfg writes reactions in the same ranks order — consistent, and tasks.dat columns follow reaction order presumably. But is tasks.dat column order the reaction order or the task-library order? In Avida, tasks.dat columns are in the order tasks were added to the environment — which is the reaction file order. Since the plan's neutral check confirmed nine tasks' counts identical with 77 listed, the column order assumption held there for the nine. For the 68 three-input ones, if Avida ordered tasks.dat by internal task ID rather than file order, then... the environment lists them in order AA..CP which is presumably also library order. And any mismatch would show as absurd first-appearances (e.g., a level-9 task common at 1,500). Results look sensible (level ordering pattern in §5). Also the count script asserts `tr[0] == cr[0]`. Fine.
+
+Actually, hmm, one more real check: Avida's tasks.dat counts — "how many programs have the task in the record of their last completed copy". The count script divides by `cr[2]` (all organisms). Plan M1(b) says "performed by at least 10% of the program population" ✓.
+
+One more check on E4's presentation: §0 "By 'present' alone they are not separated (67 against 67 in seed 2)" ✓ min(growing any)=67, max(fixed_large any)=67.
+
+And §0 row GROWING "when the common count stopped rising: most by update 10,000 to 25,000; last new high 37,000/42,500/31,500" — includes 42,500 > 40,000 right next to "Every environment's count levelled off". Good ammunition for X2.1.
+
+Also check plain words §1 "mostly within the first quarter to half of the run" — 50,000/4 = 12,500; half = 25,000. "most by 10,000-25,000" ✓ but seed 2 last highs at 42,500/43,250/48,250 across envs... "mostly within the first quarter to half" refers to when most of the rise happened. It's hedged. The flat claim is §4 "The count stopped rising everywhere." Include.
+
+Word budget ~3,000. Write the report now.
+
+One more possible objection to consider — **the `measure` function's `drops` uses `was_common` set at any earlier sample and only reset when not present**: consider task common at t, then never present again until end: counted once ✓.
+
+And **`ever_common_performed_by_none_at_end`** ✓ matches plan M3 "how many are performed by no program at 50,000".
+
+Also the plan M3 says "of the tasks that were ever common, how many are common at update 50,000, and how many are performed by no program at 50,000; the number of times a task went from common to performed by no program" ✓ all three present.
+
+Let me also double-check X2.2 numbers: growing_seed2 46 tasks performed → unordered pairs 46·45/2 = 1,035; counted 884. Exclusions: equal first-appearance and empty req[b]. Also pairs where a==b excluded by fa<fb. From the required_per_task, 'not','nand','orn','andn' have 0 required (4 tasks); those can't be 'later'. Growing seed2 has 617 pairs sharing nothing — consistent with many tasks having disjoint required sets. OK.
+
+Also for fixed_large_seed1: 31 tasks → 465 unordered pairs, 386 counted; 160 sharing nothing.
+
+For the report, ids X2.1.... Order by seriousness:
+
+1. X2.1 levelling-off overstatement (§0, §12, plain words §4) — affects the owner-readable conclusion.
+2. X2.4 growing rule fed by undercounted count, unstated.
+3. X2.2 M6 silent pair exclusions.
+4. X2.3 undercount check method ≠ plan, misattributed as "the check the plan named", not in departures.
+5. X2.7 resource carry-over parse unverified/silent-zero fallback, no check reported.
+6. X2.5 last-new-high artifact (never-rose runs get "250"; "levelled off yes"); §6 drops column artifact.
+7. X2.6 E6 third clause unmeasured, unstated.
+8. X2.8 M6's most-common sequence can be 4 of ~3,600 programs; no caveat that the measure describes one program.
+
+Maybe X2.8 before X2.6. Order: 1,2,3,4,5,6,8,7.
+
+Hmm, one thing I should double check for X2.4 fairness: does anything already say it? Results §1 describes steps; §2 describes fault; §11 "Whether the pieces changed the course of the runs". No mention of the rule being affected. Confirmed unstated.
+
+For X2.1, check plain words §1 too: "the number of sums the population could do rose for a while and then stopped rising, mostly within the first quarter to half of the run" — hedged with "mostly", acceptable; the flat one is §4 "The count stopped rising everywhere." with the one all-77 exception mentioned. Also §1 "But no environment tried here made the learning go on" — that's about the 77-list limit, fine.
+
+Also verify X2.1's test-processor numbers: §4 test-processor table FIXED GRADED last new high "50000 / 40000 / 45000", levelled "no / yes / no" ✓; FIXED LARGE "35000 / 50000 / 5000" levelled "yes / no / yes" ✓.
+
+Now write the report. Keep terse. Also (b) and (c).

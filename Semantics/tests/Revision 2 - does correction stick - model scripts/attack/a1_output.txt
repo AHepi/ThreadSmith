@@ -1,0 +1,54 @@
+====================================================================================================
+A1  THE WITNESS UNDER FULL (E), ONE INTERPRETATION PER FAMILY
+====================================================================================================
+E0 (own transport) on each job, full (E):
+   j_seen    Account=True  
+   j_eshade  Account=True  
+   j_fail    Account=False A@wet/windy/early/sunS F2@wet/windy/early/sunS F1@wet/windy/early/sunS
+   j_open    Account=False A@dry/calm/early/sunS F2@dry/calm/early/sunS F1@dry/calm/early/sunS
+
+Sanity: the corrected candidate is an account on the open question (all 16 pairs), full (E):
+   Emb-1 (sun'=id, var=early)         True
+   Emb-2 (rule: N if early else id(Sun)) True
+   answers of the two corrected candidates agree at every pair? True
+
+Literal hypothesis "E1_v0 = E0": port sets
+   E0 ports           : ['Sun', 'W', 'Wi', 'first']
+   every Emb-1 member : ['Sun', 'V', 'W', 'Wi', 'first', 'ovr'] (an organization edit cannot delete a port)
+   Emb-2 v0 ports     : ['Sun', 'V', 'W', 'Wi', 'first'] (E0 plus the input V, read by nothing)
+   any Emb-1 member with E0's port set? False
+
+----------------------------------------------------------------------------------------------------
+Account read as (A) ONLY, as in ratchet/models
+----------------------------------------------------------------------------------------------------
+F = {j_seen}   [E0 own, full (E): does F? True  does f*? False]
+   Emb-1, v0 = var switched off (beta)            |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(sun'=id, var=early)}
+   Emb-1 + v0 = sun restored, var deleted (alpha) |Pres(F)|=3 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(sun'=id, var=early)}
+   Emb-2, v0 = rule ignoring V                    |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(rule: N if early else id(Sun))}
+F = {j_seen, j_eshade}   [E0 own, full (E): does F? True  does f*? False]
+   Emb-1, v0 = var switched off (beta)            |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(sun'=id, var=early)}
+   Emb-1 + v0 = sun restored, var deleted (alpha) |Pres(F)|=3 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(sun'=id, var=early)}
+   Emb-2, v0 = rule ignoring V                    |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(rule: N if early else id(Sun))}
+
+----------------------------------------------------------------------------------------------------
+Account read as FULL (E): (A), (F1), (F2), NonCircular
+----------------------------------------------------------------------------------------------------
+F = {j_seen}   [E0 own, full (E): does F? True  does f*? False]
+   Emb-1, v0 = var switched off (beta)            |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(sun'=id, var=early)}
+   Emb-1 + v0 = sun restored, var deleted (alpha) |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? False  Pres(F+f*)={(sun'=id, var=early)}
+      v0 fails: F2@dry/calm/late/sunS F2@dry/calm/late/shadeS
+   Emb-2, v0 = rule ignoring V                    |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(rule: N if early else id(Sun))}
+F = {j_seen, j_eshade}   [E0 own, full (E): does F? True  does f*? False]
+   Emb-1, v0 = var switched off (beta)            |Pres(F)|=1 |Pres(F+f*)|=1  strict? False  v0 in Pres(F)? False  Pres(F+f*)={(sun'=id, var=early)}
+      v0 fails: F2@dry/calm/early/shadeS F1@dry/calm/early/shadeS
+   Emb-1 + v0 = sun restored, var deleted (alpha) |Pres(F)|=1 |Pres(F+f*)|=1  strict? False  v0 in Pres(F)? False  Pres(F+f*)={(sun'=id, var=early)}
+      v0 fails: F2@dry/calm/late/sunS F2@dry/calm/late/shadeS; F2@dry/calm/late/sunS F2@dry/calm/early/shadeS
+   Emb-2, v0 = rule ignoring V                    |Pres(F)|=2 |Pres(F+f*)|=1  strict? True   v0 in Pres(F)? True   Pres(F+f*)={(rule: N if early else id(Sun))}
+
+----------------------------------------------------------------------------------------------------
+What v0 (beta) asserts that E0 did not: its ovr port against the target's variety effect
+----------------------------------------------------------------------------------------------------
+   dry/calm/late/sunS         E0 answer ['S'] v0 answer ['S'] v0 ovr [0]  target ovrD 0
+   dry/calm/late/shadeS       E0 answer ['N'] v0 answer ['N'] v0 ovr [0]  target ovrD 0
+   dry/calm/early/shadeS      E0 answer ['N'] v0 answer ['N'] v0 ovr [0]  target ovrD 1
+   wet/windy/early/sunS       E0 answer ['S'] v0 answer ['S'] v0 ovr [0]  target ovrD 1

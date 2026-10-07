@@ -1,0 +1,200 @@
+{
+ "spec": "sonnet-harness task v1",
+ "id": "r2-tabulation-part12-bare",
+ "job": "tabulate_replies",
+ "kind": "extraction",
+ "purpose": "The same tabulation of part 12 with no block table: the agent must find the proposal blocks, number them and copy their wordings itself. It measures what the harness's block table and program copy fix. Compared with Opus's rows afterwards by the separate known-answer spec, which the agent never sees.",
+ "out_dir": "{TEST_ROOT}/{RUN}/r2-tabulation-part12-bare",
+ "inputs": [
+  {
+   "path": "Semantics/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt",
+   "md5": "a913542b044d59a1f9f4472fa713266b"
+  },
+  {
+   "path": "Semantics/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt",
+   "md5": "acc7ae0bc2ff842a247df006e245aff3"
+  },
+  {
+   "path": "Semantics/tests/S104 Round 2 - the maths against the words - part 12, Arguments, criticism and reason use.md",
+   "md5": "3ccfd162f7e0a79e6554940391b94c36"
+  },
+  {
+   "path": "Semantics/tests/103 The semantics, standing alone, after round 1.md",
+   "md5": "f31ebb1f050783f1a84f6136cec20fcd"
+  }
+ ],
+ "steps": [
+  {
+   "name": "the bare sheet: items from the brief, empty rows, no block table",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/tabulation.py",
+    "--no-blocks",
+    "sheet",
+    "--brief",
+    "{SEM}/tests/S104 Round 2 - the maths against the words - part 12, Arguments, criticism and reason use.md",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt:M12:Mimo",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt:G12:GLM",
+    "--out",
+    "{OUT}/sheet.json"
+   ],
+   "timeout_s": 60,
+   "save": "sheet.stdout.json"
+  }
+ ],
+ "agent": {
+  "read": [
+   "{OUT}/sheet.json",
+   "{SEM}/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt",
+   "{SEM}/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt"
+  ],
+  "write": "{OUT}/extraction.json",
+  "instructions": [
+   "Read sheet.json, then both replies whole. Do not open any other file.",
+   "Fill every row of the sheet (one per item and reader) and write the sheet, with 'part': 12 added, to extraction.json. Keep every row; add none.",
+   "said: 'challenges' if any point of this reader on this item does one of: says the maths says other than the sentence; says a counterexample tells against the text; says the text settles an invention (an I, H or U item) or should carry wording that settles it; gives a counterexample to a claim that held; proposes a change for a round-1 matter; proposes any change to the text, the maths or the register. 'does not challenge' if the reader says something on the item but none of those. 'nothing to add' if the reply only names the item in a list of items with nothing to add. 'no point' if the reply never names it. In doubt between the first two: 'challenges'.",
+   "reply_lines: every passage [first, last] of the reply where this reader speaks of this item: from the line whose bold header names the item to the end of that paragraph (for a 'nothing to add' list, that one line). An item named in a header together with others shares that passage.",
+   "blocks: number the fenced blocks (``` lines) of each reply in order of appearance: M12-B1, M12-B2, … for Mimo, G12-B1, … for GLM. Give the ids of the blocks inside this row's passages, and of any block the passage points to ('wording under D9.4', 'proposal above', 'see (e)').",
+   "lines_to_change: the lines of the text (Lnnn) those blocks would change, as each block's own first line names them. wordings: for each of those blocks, {\"block\": id, \"text\": the lines between its two fence lines, copied exactly, joined by newlines}.",
+   "Never judge whether a point holds, never rule, never edit a reply or the sheet."
+  ],
+  "output_schema": {
+   "type": "object",
+   "required": [
+    "part",
+    "rows"
+   ],
+   "properties": {
+    "part": {
+     "type": "integer"
+    },
+    "rows": {
+     "type": "array",
+     "minItems": 62,
+     "items": {
+      "type": "object",
+      "required": [
+       "item",
+       "reader",
+       "said",
+       "reply_lines",
+       "blocks",
+       "lines_to_change",
+       "wordings"
+      ],
+      "properties": {
+       "item": {
+        "type": "string"
+       },
+       "reader": {
+        "type": "string",
+        "enum": [
+         "Mimo",
+         "GLM"
+        ]
+       },
+       "said": {
+        "type": "string",
+        "enum": [
+         "challenges",
+         "does not challenge",
+         "nothing to add",
+         "no point"
+        ]
+       },
+       "reply_lines": {
+        "type": "array",
+        "items": {
+         "type": "array",
+         "items": {
+          "type": "integer"
+         }
+        }
+       },
+       "blocks": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
+       "lines_to_change": {
+        "type": "array",
+        "items": {
+         "type": "integer"
+        }
+       },
+       "wordings": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "required": [
+          "block",
+          "text"
+         ],
+         "properties": {
+          "block": {
+           "type": "string"
+          },
+          "text": {
+           "type": "string"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "check_steps": [
+  {
+   "name": "the sheet as filled: rows complete, ids real, lines inside the replies, lines named by the blocks",
+   "argv": [
+    "{PY}",
+    "-B",
+    "{H}/tabulation.py",
+    "check",
+    "--extraction",
+    "{OUT}/extraction.json",
+    "--brief",
+    "{SEM}/tests/S104 Round 2 - the maths against the words - part 12, Arguments, criticism and reason use.md",
+    "--text",
+    "{SEM}/tests/103 The semantics, standing alone, after round 1.md",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_mimo_12.response.txt:M12:Mimo",
+    "--reply",
+    "{SEM}/results/S104 Round 2 - returns/s104_maths_glm_12.response.txt:G12:GLM"
+   ],
+   "timeout_s": 60,
+   "save": "check.json"
+  }
+ ],
+ "checks": [
+  {
+   "name": "sheet complete and consistent (copied wordings equal to the blocks byte for byte)",
+   "file": "check.json",
+   "path": "ok",
+   "equals": true
+  },
+  {
+   "name": "62 rows",
+   "file": "check.json",
+   "path": "rows",
+   "equals": 62
+  }
+ ],
+ "on_fail": "escalate to Opus with check.json and the rows it names",
+ "never": [
+  "judge whether a point holds",
+  "rule on an item",
+  "rewrite a reply's wording",
+  "open a file not listed under read",
+  "open a key file",
+  "call GLM",
+  "commit"
+ ]
+}

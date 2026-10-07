@@ -1,0 +1,1 @@
+python runner.py --avida ../avida-source/cbuild/bin/avida --source ../avida-source --out ../evidence/tiny_replay --seed 4102 --arm replay --donor ../evidence/tiny_checked --pieces 2 --width 8 --height 8

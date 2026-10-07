@@ -1,0 +1,121 @@
+# Part A, round 2 — section 2 (transports, provenance, account and conflict)
+
+Baseline runs quoted below were made with `python3 -m model.run --claim … --brief` in this sandbox; every "after" value is marked **not run**.
+
+## (a) The variants
+
+| id | item(s) / reading varied | old → new (formula) | kind | share part | departs from |
+|---|---|---|---|---|---|
+| R2V2.1 | the encoding of the owner's change (the wind): edit only (M13) / boundary only (FC28.new2's `D_vane`) / **mixed** | `D_vane^mix`: V={W,P}; X_W={0,1}, X_P={n,s}; J={cW,cP}; V_cW={W}, V_cP={W,P}; B={b_still,b_north}; A={1,setW1}; L_cW(1,b_still)={(0,)}, L_cW(1,b_north)={(1,)} (boundary), L_cW(setW1,b)={(1,)} both b (edit); L_cp(a,b)={(0,n),(0,s),(1,n)} ∀(a,b); p_mix: Q=Q_w on P, δ_D=P, C={(1,b_still),(1,b_north),(setW1,b_still)}; ℰ_mix=(D,p,id,τ={1↦1,setW1↦setW1},σ=id,λ=id,Γ={cW},δ_E=P) | other choice of a reading | 1 (edit or boundary) | none |
+| R2V2.2 | D6.3's quantifier (I136) on its own; and with V2.4 on | SLOT_QUANTIFIER ∈ {every, some, some-exempt, some-exempt-set}; (E) unchanged / (E) := round 3's | other choice of a reading | 1 (D6.3's quantifier) | none as it stands; with V2.4 on, S44 under the three non-'every' readings |
+| R2V2.3 | the hand-set histories (I90; P-S2-3) | histories replaced by: (a) provenance computed on chains (`prov_fixed_points`, as FC30.new1 (d)); (b) H = {(e,b0)} with a survival condition the transport fails | other choice of a reading | 1 (histories) | none |
+| R2V2.4 | D12.3 (transfer; with D12.4) | **D12.3.v1**: a holding (t,o′) reached from (t,o) by a copy of the carrier's whole content (relay or record of t as one content, D11.2) has prov(t,o′) := prov(t,o) — D12.4's rule with parts := {t} | strengthen | 1 (student's copy, inherited provenance) | **S41 Q2** ("No, not if just declared") |
+| R2V2.5 | D6.9 (Relabeling) | **D6.9.v1**: a is a relabeling for p :⟺ at every b with (a,b) ∈ C: Ans_p(a,b) = Ans_p(1,b0) **≠ ⊥** (I26's registered choice re-taken) | strengthen | 2 (untouched, upstream of (E)) | none |
+| R2V2.6 | D11.2 (Content) | **D11.2.v1**: delete the second sentence (H, surv, 𝒯, contracts and transports as contents by L590's construction) | delete | 2 | **S41 Q2** (the copy becomes an explanation) |
+| R2V2.7 | D5.7 (Faithful) | **D5.7.v1**: Faithful_C(t) := F1_C ∧ F2_C ∧ A_C (the wide extent everywhere; Viol := Viol⁺) | swap | 2 | none named (blocks a FROZEN item, see (d)) |
+| R2V2.8 | D6.7 (Account) — round 1's V1.6 formula, no added sentence | **D6.7.v**: Acc(ℰ) :⟺ F1_C ∧ F2_C ∧ A_C ∧ Dependence ∧ NonVacuous ∧ ¬BadTarget(p) ∧ ¬BadReq(p), BadTarget/BadReq as D3.6 [S1] from a Desc | strengthen | 4 | **S44**, **S41 Q15** (under phenomenon-level Desc only) |
+| R2V2.9 | D6.8 (the four conditions) | **D6.8.v1**: five headings — Component fidelity := (F1); Assembly := (F2); Question fidelity; Dependence; Non-vacuity; (E) unchanged | re-order (naming) | 2 | none |
+| R2V2.10 | D12.7 (violation) | **D12.7.v1**: Viol(t;a,b) :⟺ ¬(F1 ∧ F2eq ∧ A) at (a,b) (Viol⁺ as the only violation) | strengthen | 2 (other untouched) | none |
+| R2V2.11 | new claims FC21.v1, FC21.v2 | **FC21.v1**: ∃ℰ: F1 ∧ F2 ∧ A ∧ NonVacuous ∧ Contrast(E;x) at some (a,b) ∈ C ∧ no ∅≠G ⊆ Γ with Lost(E,G;x). **FC21.v2**: ∃ℰ meeting (E) with S_{E,p} = {{a},{b},{a,b}} on Γ = {a,b} | other (claims) | 4 ("also": e2.38, e2.39) | none |
+
+## (b) The traces
+
+**R2V2.1 (mixed encoding).** Off: ℰ_mix meets every conjunct — Ans(1,b_still)=⊥, Ans(1,b_north)=n, Ans(setW1,b_still)=n; Contrast at (1,b_north) and at (setW1,b_still); deleting cW (full relation on W) makes both pairs answer ⊥ = baseline ⊥ → Lost; NC2 witness ((setW1,b_still),{cW}) and ((1,b_north),{cW}). F1/F2/A/Hom automatic (E = D, τ, σ, λ identity). **Before (run):** the boundary-only encoding of the same case is `FC28.new2`'s D_vane with A = {1} — there V2.3 drops everything on the question (second checker, round 1 map §2 V2.3 row); edit-only (M13): nothing moves (`FC22 (b)`, run: "(E): True … witness (('e','b0'),['cy'])"). **After (not run):** under V2.3 on D_vane^mix, ℰ_mix keeps Acc T (witness at the edit pair). So C5's drop of the owner's vane and two-part sign is an artifact of the *pure* boundary encoding: any encoding in which the change also reaches the target as an edit keeps them. **C5's flags:** S41 Q15 and S44 flagged on the boundary-only reading (round 1, computed), unflagged on the edit and mixed readings. C1 still drops the sign under all three (its drop is in (F1), upstream of the encoding).
+
+**R2V2.2 (quantifier).** **Run** (`--claim FC23.new2`): "(a) … after S106 (T,T,T,T), round 3's (E) (T,F,F,F); slots under each reading {'every': [], 'some': ['r','u'], …}". So with (E) as it is: no candidate moves under any reading (FC23.new1 (h); the four-reading row T,T,T,T). With V2.4 on (round 3's (E)): the owner's two-part sign (S44's case) drops under some / some-exempt / some-exempt-set and stays under 'every'; ℰ_one (the program's companion) drops under all four; M13 stays (T,T,T,T); pole C1 stays, C2/C3 drop under the three non-'every' readings. **C6 and C11** keep their S45 flag under 'every' and gain the S44 flag under the other three; **no other candidate of C1–C13 reads the quantifier.** After: **not run** (all values already computed by the cited claims).
+
+**R2V2.3 (histories).** (a) Chains: **run** (`--claim FC30.new1`): "(d) … H = ∅, U: fixed points [{'o1':'Con'}]; Dec(t) at o2 [True, True]". So with provenance computed from a chain, C7's round-1 count (28 of 28 worked, hand-set) shrinks to holdings with **no earlier representation of t or cod t** (D12.1's ¬∃o ≺ o_t Rep(o,x) bites with H = ∅ too); the student's copy stays Dec — C7 does not reach it, as N15 found. (b) Tried pairs that nothing survives: since D12.1 has H ⊆ C and Acc ⇒ Faithful_C ⊇ Faithful_H, **every account survives its own H**; the case that stays Dec is a non-account. Small case (not run): ℰ_bad = R2V2.3-case: D as in M13 with L_cy(e,b0) = {(0,1),(1,0)} in E — F1 F at (e,b0) → Acc F; with H = {(e,b0)}: surv F → Sel F → Dec T, off and under V2.5 alike. **C7's flag (S41 Q2) stands, narrowed** to holdings with nothing tried and nothing earlier represented.
+
+**R2V2.4 (whole-t inheritance).** **Before (run, `--claim FC30.new1`):** the student's copy "Dec (Sel False, Con False, Dec True) … L17 (S41) False" — not an explanation. **After (not run):** prov(t,o2) = Con (inherited) → Dec F → Account ∧ ¬Dec(t) T (Acc T) → **the student's declared formula becomes an explanation**; it enters Def(L536) (Suff). Plainly: this departs from S41 Q2. C13 (V4.3) under its reading (c) is no longer idle; C12's and C7's flags are unchanged.
+
+**R2V2.5 (D6.9.v1).** Small case (not run): p0 ∈ {0,1}; h on (p0); B={b0}; A={1,a}; L_h(1,b0) = L_h(a,b0) = full; C = {(1,b0),(a,b0)}; Ans ⊥ at both pairs. Every edit of C a relabeling: T off (⊥ = ⊥), F under v1; NC2 F both readings (⊥ = ⊥ gives no contrast); no candidate meets (E) on it either way. **Nothing meets (E) differently under any D6.9 reading: no conjunct of Acc reads D6.9** (checked in `core.account`; only FC21 reads it) — the D18.1 edge D6.9 → Dep is by citation. Moves: FC21 (a2)'s coverage (the two readings of D6.9 coincide once '≠ ⊥' returns) and L257.n3's antecedent, never a candidate.
+
+**R2V2.6 (D11.2.v1).** The clause ¬∃o ≺ o_t Rep(o, x) loses its type for x ∈ {H, surv} → dropped → Sel ≈ membership ∧ surv. **Before (run, `--claim FC77`):** "the other choice … Sel(t;{t},id,∅) ⟺ Hom(τ), when Θ admits t"; `FC97.new1` (run) types H and surv as contents. **After (not run):** on a history with one tried pair, every account becomes Sel (its own H ⊆ C is faithful) → Dec F → **every such account is an explanation**, including the student's copy (an earlier representation no longer blocks Sel) — flag S41 Q2, as R2V2.4 but by a different door. On nothing-tried holdings Dec T remains (H ≠ ∅ required, D12.1 as it stands).
+
+**R2V2.7 (D5.7.v1).** **Before (run, `--claim FC104.new1`):** "(a) … (1, b1_45): F1 True, F2eq True, (A) False"; "(b) Sel True; Viol (narrow) False; Viol⁺ (wide) True at ('1','b1_45') ∈ H". **After (not run):** (i) surv reads the wide extent → a selected transport wrong in its answers on its own H is not Sel → its holding is Dec → candidates with Acc T stop being explanations (FC104.new1 (a)'s case: Sel T → F); (ii) Rep reads it too → fewer representations → D12.1's exclusion clause weaker → Sel easier at holdings with earlier representations (same direction as R2V2.6). Blocks L189.s2 (see (d)), so by the template's rule it is not a reading of the frozen words.
+
+**R2V2.8 (D6.7.v, V1.6's formula).** The Desc per worked case (my invention; other choices in (f)):
+
+| case | Desc (phenomenon level) | BadTarget | effect (not run) |
+|---|---|---|---|
+| the sign (S44) | "red on Mondays, blue on Tuesdays" | T (D_sign and D_sign_day both meet it) | ℰ_two, ℰ_one, E_enc all stop meeting (E) → nothing explains the sign |
+| the vane (Q15) | "any direction in still air, north in a north wind" | T (M13's D, D_vane, D_vane^mix) | M13 and E_enc stop → nothing explains "north" |
+| the pole (E1) | "the shadow of a pole of height H at elevation θ" | F (one organization up to renaming) | no move |
+| the balances (E3/L331) | "two readings of one mass with biases" | F | no move |
+| the student's formula | "the pendulum's period as a function of length" | F | no move (Dec does the work) |
+| the bridge (FC84.new1) | "a fixed brief" | not computable (no candidate built) | — |
+
+With the target-level Desc ("the target D as given"): BadTarget F everywhere, BadReq F on every worked case → **0 moves**; the variant is idle. So D6.7.v's whole effect turns on Desc's grain (I76): at phenomenon grain it empties the sign's and the vane's questions — plainly departing from S44 and S41 Q15; at target grain it moves nothing. e1.45–e1.47 settled in (d).
+
+**R2V2.9 (D6.8.v1).** No candidate moves ((E) reads the same conjuncts; FC31 stays not-tested, now for five headings instead of four). Shows D6.8 upstream of Expl by citation only.
+
+**R2V2.10 (D12.7.v1).** Nothing in (E) or Dec moves. **Before (run, `--claim FC104.new1` (b)):** "Sel ∧ Viol(a,b) ⇒ (a,b) ∉ H holds only under the narrow extent". **After (not run):** Surp(t;(1,b1_45)) T with the pair in H → L223.s2–s3's ground ("one of them must occur" outside the shaping history) fails; SelResp becomes available at a pair of H (D12.8). FC104.new1 (b) turns "as claimed" → not as claimed.
+
+**R2V2.11 (FC21.v1/v2).** Witnesses exist in round 1's runs: v1 — the MID proper witness "p0 ∈ {0,1}; C = {(1,b0), (both alts,b0)}; Γ = {k1}; the contrast (0 vs ⊥) carried by background k0" (57 / 74 / 8 generated); v2 — the built L307 case (target x → y, one edit setting x = 1; a, b both y = x): "(E) T, S = {{a},{b},{a,b}}, witness ((e,b0),{a,b})" (17 generated realize it). As suite claims they would compute: v1 holds under D6.4's negation and fails under D6.4; v2 holds under D6.4 and fails under V2.2. **Not run**; settles e2.39 and e2.38.
+
+## (c) The claimed-only edges of my share
+
+| edge | settle by | outcome expected | |
+|---|---|---|---|
+| e2.03 (V2.2 blocks L311.s2) | a symbolic set-system case in the printouts' format (not the program's finite powerset): Γ = {d_n : n ∈ ℕ} over X = ℝ, d_n := |x| ≤ 1/n, S := {W : W unbounded in ℕ} (Inv-R2-7). Under V2.2: W unbounded ⇒ W∖{n} unbounded ⇒ no singleton loses the contrast; W bounded ⇒ no contrast; so S = ∅, no route, (B) never applies | computed (blocks) | not run |
+| e2.26 (V2.2 blocks L313.n3) | the same case (as R4): with S = ∅ no block is critical in any route, so "a block of such commitments can still be critical" has no instance | computed (blocks) | not run |
+| e2.06c (V2.3 blocks L331.s2 and E2) | the balances as a question with a candidate (Inv-R2-5): D_bal: ports x,bA,bB,r1,r2,d over a small finite field; comps cx,cA,cB (each pins its port per boundary), cr1 (r1 = x+bA), cr2 (r2 = x+bB), cd (d = r2−r1); B = {b1,b2} with (u_B−u_A) differing; A = {1}; C = {1}×B; Q = Q_w on d; ℰ_bal = D, Γ = {cd}. Ans varies across b1,b2; deleting cd → d free → ⊥ at both → Lost. Off: Acc T; under V2.3: F (every witness pair has a = 1). Kernel facts already run (`--claim FC59`: "ker G = span{(1,−1,−1)}"). Strict reading of "account" (meets (E)): computed (blocks L331.s2); loose reading (the finding, no (E)): no block. E2 itself reads no (E) (e2.06a, contradicted) — only its claim line moves | computed, under the strict reading | not run |
+| e2.07 (V2.3 changes with D3.3) | compose section 1's V1.4 run (Ident with a ≠ 1: C_id not an identification contract, 0 Acc moves) with V2.3 on C_id: both bite on the same contracts; under the composition, what V2.3 excludes on {1}×B is no longer an identification question, so L325.n6's "faithful under the identification contract" loses its referent | computed (changes with stands) | not run |
+| e2.09 (V2.4 blocks — the owner's S45) | the owner's yes or no in the later step (S52) | noted only | — |
+| e2.11b (V2.4 changes with (Nec)) | compute (Nec)'s defeat set with ℰ = E_enc on C1 (Acc T now, F under V2.4) and j accepting Expl(ℰ): exposure's third conjunct ∀C′∀t′ ¬Faithful is read by t itself (faithful on C) → not exposed under D6.4 and V2.4 alike | contradicted (no (Nec) defeat set moves with V2.4; the attack list reads faithfulness, not (E)) | not run |
+| e2.16c (V2.6 moves the (Nec) attack route through ETV) | encode the argument with premise ETV_j(ℰ;p) and conclusion ¬Expl(ℰ): it rules out Expl, so it can serve (Suff)'s defeat set, never (Nec)'s (which needs an argument ruling out ¬Expl); with V2.6 ETV holds of nothing anyway | contradicted (the route reaches no (Nec) defeat set; keep the edge as *independent of* for X:(Nec)) | not run |
+| e2.19 (V2.7 changes with D8.6) | encode L315.s13–s14's argument: α := one MP step, leaves {record: ConfCl(ℰ,χ;a,b) (computed), assumption: (ConfCl ∧ (a,b) ∈ C ∧ χ) ⇒ ¬Acc(ℰ)}, concluding ¬Acc(ℰ), for j tentatively accepting χ. Case (round 1's V2.7 case): D w,y; c on (w,y); L_c(1,b0) = {(1,0)}; χ allows only R_c = {(0,0)}. Off: ConfCl T (second disjunct), α usable; under V2.7 ConfCl F → no record to cite → α not constructible → ConfG_χ feeds no ruling out | computed (changes with) | not run |
+| e2.33 (V2.7 changes with L317.n8 / D10.6) | the same α on the 23 generated (candidate, pair) that meet (E) and lose ConfCl under V2.7 (20 at a pair of C): off, α gives Out_j('Acc(ℰ)') — the problem solved with no test; under V2.7 the ground goes | computed (changes with) | not run |
+
+## (d) The edges
+
+| variant | kind | item | why (one line) | settled |
+|---|---|---|---|---|
+| R2V2.1 | constrains | FC28.new2 [claim] | D_vane is one of the readings; its row reads the boundary encoding only | computed (run) |
+| R2V2.1 | changes with | D3.3 [S1] | the mixed encoding gives Ident's clause an edit pair as well as boundary pairs | not |
+| R2V2.1 | moves | C5's flags (S41 Q15, S44) | flagged on the boundary reading only; the encoding decides | computed (cited runs) |
+| R2V2.2 | independent of | X:(E) | (E) reads no quantifier after S106 (FC23.new1 (h)) | computed (run) |
+| R2V2.2 | changes with | C6, C11's flags | S44 comes with the three non-'every' readings | computed (run) |
+| R2V2.3 | changes with | X:Dec, X:Expl | C7's reach shrinks on chains to holdings with nothing earlier represented | computed (run) |
+| R2V2.3 | constrains | L195.n4 / D12.1's exclusion clause | an earlier representation blocks Sel with H = ∅ too | computed (run) |
+| R2V2.4 | constrains | L211.s4 [S2], D12.4 [FROZEN] | the sentence is the variant's ground; D12.4's parts rule is its lever | not |
+| R2V2.4 | changes with | D13.3 [S3], FC30.new1 (d),(f) | TransferComposite reads the copy; both parts' Dec values flip | not |
+| R2V2.4 | moves | X:Dec, X:Expl, X:(Suff) | the copy becomes an explanation and enters Def(L536) | not |
+| R2V2.5 | constrains | L257.n3 [S2] | the antecedent "only relabelings" covers less; the exclusion itself stands by Contrast | not |
+| R2V2.5 | changes with | FC21 (a2) | the two readings of D6.9 coincide under '≠ ⊥' | not |
+| R2V2.5 | independent of | X:(E), X:Expl | no conjunct reads D6.9 (D18.1's edge is citation-only) | computed |
+| R2V2.6 | blocks | FC97.new1 [claim] | H and surv lose their type as contents; the claim has no reading | not |
+| R2V2.6 | changes with | E8 [FROZEN], L590.s1–s2 [S4] | the construction sentence is deleted with the typing | not |
+| R2V2.6 | moves | X:Dec, X:Expl | every account on a tried history becomes Sel → an explanation (flag S41 Q2) | not |
+| R2V2.7 | blocks | L189.s2 [FROZEN] | the frozen words name component and global fidelity only; the variant puts (A) inside "faithful" | not |
+| R2V2.7 | changes with | D12.1, D12.7, L220.n1 [S2]; FC104.new1 (b), FC104 [claims] | surv, Viol and the open extent line move together | partly (run before) |
+| R2V2.7 | moves | X:Dec | surv harder on wrong answers at H; Rep harder → the exclusion clause weaker | not |
+| R2V2.8 | constrains | L161.s1–s3 [FROZEN], D6.6 [FROZEN], D3.6 [S1] (e1.45) | defective questions stay questions; NonVacuous keeps BadBaseline; the variant adds, not replaces | not |
+| R2V2.8 | changes with | X:(Suff), X:(Nec), FC106 [claim], D3.6 [S1] (e1.46) | the defeat sets lose every ℰ on a defective p (Acc F); FC106's defects computable once Desc is given | not |
+| R2V2.8 | moves | X:(E), X:Expl (e1.47) | at phenomenon-Desc grain the sign's and vane's questions empty | not |
+| R2V2.9 | changes with | L231.s3 [S2], FC31 [claim] | "four conditions" and the claim's count move with the headings | not |
+| R2V2.9 | independent of | X:(E), X:Expl | naming only | computed (by construction) |
+| R2V2.10 | constrains | L220.n1, L221.n1, L223.s2–s3 [S2] | violation and surprise's ground read the wide extent | not |
+| R2V2.10 | changes with | D12.8 [S2], D12.1 [S2] | SelResp at pairs of H; Sel ∧ Viol ⇒ (a,b) ∉ H fails | not |
+| R2V2.11 | changes with | e2.38, e2.39 (the suite's blind spots) | the two claims separate D6.4 from V2.1 and V2.2 | not (witnesses exist) |
+
+## (e) Not reached
+
+- **D8.new1, D10.3, D12.8 as varied items**: upstream of no part of the explanation definition (map §6.1); their edges run to conflict, tests and responses only; the variants' budget went to the four readings, the four upstream definitions, D6.7.v and the claimed-only edges. D12.7 (the cheapest, with FC104.new1 as computed ground) was taken as their representative (R2V2.10).
+- **The untouched middle sentences of S2** (100, map §6.4): none is upstream of the explanation definition; those the claimed-only edges name (L311.s2, L313.n3, L331.s2, L315.s12, L317.n8) are reached through (c).
+- **E1, E2 as encodings varied in their own right**: E2 is reached through e2.06c's case; E1's candidate is settled by FC27.new1 and already moved by V2.1–V2.4 in round 1.
+- **e2.09**: the owner's yes or no in the later step (S52); noted only.
+
+## (f) Inventions
+
+| id | choice | other choices |
+|---|---|---|
+| Inv-R2-1 | the owner's change encoded as an edit on one component and a boundary on another (D_vane^mix) | edit only (M13, I189); boundary only (FC28.new2's D_vane) |
+| Inv-R2-2 | Desc per worked case at phenomenon grain or target grain (I76's grain left open by D3.6) | per case, in R2V2.8's table; any Desc between the two grains |
+| Inv-R2-3 | D12.4's parts := {t} for a copy of the carrier's whole content | parts := component with its binding (as now, FC30.new1 (f)); the component alone (K3's reading) |
+| Inv-R2-4 | the chains of `prov_fixed_points` stand for the worked cases' histories (I90's other choice) | hand-set histories (P-S2-3); no history at all |
+| Inv-R2-5 | L331.s2's "account" read strictly, as meeting (E) | the loose reading: the mathematical finding, no (E) |
+| Inv-R2-6 | D6.9's '≠ ⊥' re-taken (I26's registered choice) | ⊥ = ⊥ (the area-2 reading, as it stands) |
+| Inv-R2-7 | L311's set system given symbolically (S = {W unbounded}), not through the program's finite powerset | a finite truncation Γ_N (refused in round 1, P-S2-4: it has a one-commitment route) |
+
+END OF REPORT

@@ -1,0 +1,195 @@
+diff --git a/avida-core/source/main/cAvidaConfig.h b/avida-core/source/main/cAvidaConfig.h
+index 14c8b3e62..46ed525cf 100644
+--- a/avida-core/source/main/cAvidaConfig.h
++++ b/avida-core/source/main/cAvidaConfig.h
+@@ -304,6 +304,11 @@ public:
+   CONFIG_ADD_VAR(MIGRATION_FILE, cString, "-", "NxN file that describes connectivity weights between demes");   
+   
+   
++  // Anticipation settings leave the stock input path selected by default.
++  CONFIG_ADD_VAR(ANTICIPATE_MODE, int, -1, "-1=off, 0=random, 1=repeat, 2=increment, 3=repeat then increment");
++  CONFIG_ADD_VAR(ANTICIPATE_SWITCH, int, 25000, "First update using increment in mode 3");
++  CONFIG_ADD_VAR(ANTICIPATE_START, int, -1, "-1=random initial value; 1..65536=diagnostic initial value");
++
+   // -------- Mutation config options --------
+   CONFIG_ADD_GROUP(MUTATION_GROUP, "Mutation rates");  
+   CONFIG_ADD_VAR(COPY_MUT_PROB, double, 0.0075, "Substitution rate (per copy)");
+diff --git a/avida-core/source/main/cOrganism.cc b/avida-core/source/main/cOrganism.cc
+index 943176891..15350c192 100644
+--- a/avida-core/source/main/cOrganism.cc
++++ b/avida-core/source/main/cOrganism.cc
+@@ -41,6 +41,9 @@
+ #include "cStats.h"
+ #include "nHardware.h"
+ 
++// Numeric exhaustion is explicit: an incrementing stream never wraps into replay.
++#include <climits>
++#include <stdexcept>
+ #include <algorithm>
+ #include <iomanip>
+ #include <iterator>
+@@ -158,6 +161,10 @@ cOrganism::cOrganism(cWorld* world, cAvidaContext& ctx, const Genome& genome, in
+   , m_queued_display_data(NULL)
+   , m_display(false)
+   , m_lyse_display(false)
++  // Initializing disabled stream state consumes no random numbers.
++  , m_anticipate_next(0), m_anticipate_last(0), m_anticipate_rule(-1)
++  , m_anticipate_ready(false), m_anticipate_read(false)
++  , m_anticipate_attempted(false), m_anticipate_match(false)
+   , m_input_pointer(0)
+   , m_input_buf(world->GetEnvironment().GetInputSize())
+   , m_output_buf(world->GetEnvironment().GetOutputSize())
+@@ -365,6 +372,56 @@ int cOrganism::ReceiveValue()
+   return out_value;
+ }
+ 
++// The world produces one pending value; a committed value stays fixed until read.
++void cOrganism::PrepareAnticipation(cAvidaContext& ctx)
++{
++  const cAvidaConfig& cfg = m_world->GetConfig();
++  int rule = cfg.ANTICIPATE_MODE.Get();
++  if (rule == -1) return;
++  if (rule < 0 || rule > 3 || cfg.ANTICIPATE_SWITCH.Get() < 0 ||
++      (cfg.ANTICIPATE_START.Get() != -1 &&
++       (cfg.ANTICIPATE_START.Get() < 1 || cfg.ANTICIPATE_START.Get() > 65536)))
++    throw std::invalid_argument("Invalid ANTICIPATE setting");
++  if (rule == 3) rule = m_world->GetStats().GetUpdate() >= cfg.ANTICIPATE_SWITCH.Get() ? 2 : 1;
++  if (m_anticipate_ready && (m_anticipate_rule == rule || m_anticipate_attempted)) return;
++  if (!m_anticipate_read || rule == 0) {
++    int value = 0;
++    if (!m_anticipate_read && cfg.ANTICIPATE_START.Get() != -1)
++      value = cfg.ANTICIPATE_START.Get() - 1;
++    else for (int bit = 0; bit < 16; ++bit) value = 2 * value + (ctx.GetRandom().P(0.5) ? 1 : 0);
++    m_anticipate_next = value + 1;
++  } else {
++    if (rule == 2 && m_anticipate_last == INT_MAX)
++      throw std::overflow_error("ANTICIPATE increment stream exhausted");
++    m_anticipate_next = m_anticipate_last + (rule == 2 ? 1 : 0);
++  }
++  m_anticipate_rule = rule;
++  m_anticipate_ready = true;
++}
++
++// Sequential reads consume the exact pending number, without rewinding on division.
++int cOrganism::GetNextInput(int& in_input_pointer)
++{
++  if (m_world->GetConfig().ANTICIPATE_MODE.Get() == -1)
++    return m_interface->GetInputAt(in_input_pointer);
++  PrepareAnticipation(m_world->GetDefaultContext());
++  m_anticipate_last = m_anticipate_next;
++  m_anticipate_read = true;
++  m_anticipate_ready = false;
++  m_anticipate_attempted = false;
++  return m_anticipate_last;
++}
++
++// Only the first output before a read is eligible; checking uses stored equality only.
++void cOrganism::BeginAnticipation(cAvidaContext& ctx, int value)
++{
++  m_anticipate_match = false;
++  if (m_world->GetConfig().ANTICIPATE_MODE.Get() == -1) return;
++  PrepareAnticipation(ctx);
++  m_anticipate_match = m_anticipate_read && !m_anticipate_attempted && value == m_anticipate_next;
++  m_anticipate_attempted = true;
++}
++
+ void cOrganism::DoInput(const int value)
+ {
+   DoInput(m_input_buf, m_output_buf, value);
+@@ -384,23 +441,29 @@ void cOrganism::DoOutput(cAvidaContext& ctx, const bool on_divide, cContextPheno
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, const int value)
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   m_output_buf.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, m_input_buf, m_output_buf, false, false);
+   else doOutput(ctx, m_input_buf, m_output_buf, false, false);
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
+ }
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, const int value, bool is_parasite, cContextPhenotype* context_phenotype) 
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   m_output_buf.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, m_input_buf, m_output_buf, false, (bool)is_parasite, context_phenotype); 
+   else doOutput(ctx, m_input_buf, m_output_buf, false, (bool)is_parasite, context_phenotype); 
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
+ }
+ 
+ void cOrganism::DoOutput(cAvidaContext& ctx, tBuffer<int>& input_buffer, tBuffer<int>& output_buffer, const int value)
+ {
++  BeginAnticipation(ctx, value); // Scope prediction credit to this explicit output.
+   output_buffer.Add(value);
+   if (m_world->GetConfig().USE_AVATARS.Get()) doAVOutput(ctx, input_buffer, output_buffer, false, false);
+   else doOutput(ctx, input_buffer, output_buffer, false, false);
++  m_anticipate_match = false; // Prevent later task rechecks from replaying credit.
+ }
+ 
+ 
+diff --git a/avida-core/source/main/cOrganism.h b/avida-core/source/main/cOrganism.h
+index 63b7e42ea..9711e5699 100644
+--- a/avida-core/source/main/cOrganism.h
++++ b/avida-core/source/main/cOrganism.h
+@@ -86,6 +86,11 @@ private:
+   Genome m_offspring_genome;              // Child genome, while under construction.
+ 
+   // Input and Output with the environment
++  // Private pending input and one-attempt state belong to this Avida program.
++  int m_anticipate_next, m_anticipate_last, m_anticipate_rule;
++  bool m_anticipate_ready, m_anticipate_read, m_anticipate_attempted, m_anticipate_match;
++  void PrepareAnticipation(cAvidaContext& ctx);
++  void BeginAnticipation(cAvidaContext& ctx, int value);
+   int m_input_pointer;
+   tBuffer<int> m_input_buf;
+   tBuffer<int> m_output_buf;
+@@ -246,8 +251,10 @@ public:
+   void Rotate(cAvidaContext& ctx, int direction) { m_interface->Rotate(ctx, direction); }
+ 
+   int GetInputAt(int i) { return m_interface->GetInputAt(i); }
+-  int GetNextInput() { return m_interface->GetInputAt(m_input_pointer); }
+-  int GetNextInput(int& in_input_pointer) { return m_interface->GetInputAt(in_input_pointer); }
++  // Both sequential read entry points consume the same private stream when enabled.
++  int GetNextInput() { return GetNextInput(m_input_pointer); }
++  int GetNextInput(int& in_input_pointer);
++  bool AnticipationMatch() const { return m_anticipate_match; }
+   tBuffer<int>& GetInputBuf() { return m_input_buf; }
+   tBuffer<int>& GetOutputBuf() { return m_output_buf; }
+   void Die(cAvidaContext& ctx) { m_interface->Die(ctx); m_is_dead = true; } 
+diff --git a/avida-core/source/main/cTaskLib.cc b/avida-core/source/main/cTaskLib.cc
+index afde3d256..c9eee6e17 100644
+--- a/avida-core/source/main/cTaskLib.cc
++++ b/avida-core/source/main/cTaskLib.cc
+@@ -84,6 +84,8 @@ cTaskEntry* cTaskLib::AddTask(const cString& name, const cString& info, cEnvReqs
+   // The following if blocks are grouped based on class of task.  Chaining too
+   // many if block causes problems block nesting depth in Visual Studio.net 2003.
+   
++  // Register the stream match without naming or evaluating a generating rule.
++  if (name == "anticipate") NewTask(name, "Next input match", &cTaskLib::Task_Anticipate);
+   if (name == "echo")      NewTask(name, "Echo", &cTaskLib::Task_Echo);
+   else if (name == "echo_dup")  NewTask(name, "Echo_dup",  &cTaskLib::Task_Echo);
+   else if (name == "add")  NewTask(name, "Add",  &cTaskLib::Task_Add);
+@@ -448,6 +450,12 @@ void cTaskLib::SetupTests(cTaskContext& ctx) const
+ }
+ 
+ 
++// Division-only checks cannot claim prediction credit.
++double cTaskLib::Task_Anticipate(cTaskContext& ctx) const
++{
++  return !ctx.GetOnDivide() && ctx.GetOrganism()->AnticipationMatch() ? 1.0 : 0.0;
++}
++
+ double cTaskLib::Task_Echo(cTaskContext& ctx) const
+ {
+   const tBuffer<int>& input_buffer = ctx.GetInputBuffer();
+diff --git a/avida-core/source/main/cTaskLib.h b/avida-core/source/main/cTaskLib.h
+index 638a7abca..a84da1cc6 100644
+--- a/avida-core/source/main/cTaskLib.h
++++ b/avida-core/source/main/cTaskLib.h
+@@ -93,6 +93,7 @@ private:
+   // performed.
+ 
+   // Basic Tasks
++  double Task_Anticipate(cTaskContext& ctx) const; // Reuse ordinary reaction accounting.
+   double Task_Echo(cTaskContext& ctx) const;
+   double Task_Add(cTaskContext& ctx) const;
+   double Task_Add3(cTaskContext& ctx) const;
